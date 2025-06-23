@@ -5,7 +5,7 @@
 %def_without pylint
 
 Name: freeipa-healthcheck
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -135,6 +135,9 @@ export PYTHONPATH="$(pwd)"
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Fri May 16 2025 Stanislav Levin <slev@altlinux.org> 0.18-alt1
+- 0.17 -> 0.18.
+
 * Wed Jun 05 2024 Stanislav Levin <slev@altlinux.org> 0.17-alt1
 - 0.16 -> 0.17.
 
