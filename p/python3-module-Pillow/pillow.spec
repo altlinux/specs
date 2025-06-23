@@ -1,6 +1,6 @@
 Name: python3-module-Pillow
 Version: 11.2.1
-Release: alt1
+Release: alt2
 
 Summary: Python Imaging Library
 License: MIT-CMU
@@ -24,6 +24,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(imagequant)
+BuildRequires: pkgconfig(libavif)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libwebpmux)
 BuildRequires: pkgconfig(xcb)
@@ -52,6 +53,9 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %python3_sitelibdir/pillow-%version.dist-info
 
 %changelog
+* Mon Jun 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 11.2.1-alt2
+- built with AVIF support (closes: 54883)
+
 * Wed Apr 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 11.2.1-alt1
 - 11.2.1 released
 
