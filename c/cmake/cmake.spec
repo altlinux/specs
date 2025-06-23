@@ -11,8 +11,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.0.1
-Release: alt2
+Version: 4.0.3
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -326,6 +326,9 @@ popd
 
 
 %changelog
+* Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 4.0.3-alt1
+- new version 4.0.3 (with rpmrb script)
+
 * Wed May 14 2025 Pavel Skrylev <majioa@altlinux.org> 4.0.1-alt2
 - added support for Cisco's mpi-selector to detect first default MPI
   compiler engine used in the system
