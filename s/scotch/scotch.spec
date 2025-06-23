@@ -5,7 +5,7 @@
 
 Name: scotch
 Version: 5.1.12b
-Release: alt6.svn20110910
+Release: alt7.svn20110910
 
 Summary: Package and libraries for sequential and parallel graph partitioning
 License: CeCILL-C
@@ -131,18 +131,8 @@ install -d %buildroot%_datadir/%name/grf
 install -d %buildroot%_datadir/%name/tgt
 %makeinstall
 popd
-install esmumps/src/esmumps/main_esmumps %buildroot%_bindir
-install esmumps/lib/libesmumps.a %buildroot%_libdir
 
-pushd examples
-mpif77 -g -I../src/libscotch -c scotch_example_1.f -o scotch_example_1.o
-mpif77 -o scotch_example_1 scotch_example_1.o -Wl,-R%_libdir/%mpiimpl/lib \
-	-L../lib -lscotchmetis -lscotcherrexit -lscotch -lscotcherr
-install -m755 scotch_example_1 %buildroot%_bindir
-install -p -m644 ../doc/ptscotch_user5.1.pdf ../doc/scotch_user5.1.pdf \
-	scotch_example_1.f \
-	%buildroot%_docdir/%name
-popd
+install esmumps/lib/libesmumps.a %buildroot%_libdir
 
 install -p -m644 grf/* %buildroot%_datadir/%name/grf
 install -p -m644 esmumps/tgt/* %buildroot%_datadir/%name/tgt
@@ -186,10 +176,33 @@ done
 popd
 rm -f %buildroot%_libdir/*.a
 
+# fix binary file names
+pushd %buildroot%_bindir
+rename "" scotch_ *
+popd
+
+# fix man file names
+pushd %buildroot%_man1dir
+rename "" scotch_ *
+sed -i 's|^.so man1/|.so man1/scotch_|' scotch_*
+popd
+
+install esmumps/src/esmumps/main_esmumps %buildroot%_bindir/scotch_main_esmumps
+
+pushd examples
+mpif77 -g -I../src/libscotch -c scotch_example_1.f -o scotch_example_1.o
+mpif77 -o scotch_example_1 scotch_example_1.o -Wl,-R%_libdir/%mpiimpl/lib \
+	-L../lib -lscotchmetis -lscotcherrexit -lscotch -lscotcherr
+install -m755 scotch_example_1 %buildroot%_bindir
+install -p -m644 ../doc/ptscotch_user5.1.pdf ../doc/scotch_user5.1.pdf \
+	scotch_example_1.f \
+	%buildroot%_docdir/%name
+popd
+
 %files
 %doc LICENSE_en.txt doc/CeCILL-C_V1-en.txt
-%_bindir/*
-%_man1dir/*
+%_bindir/scotch_*
+%_man1dir/scotch_*
 %dir %_datadir/%name
 
 %files -n lib%name
@@ -209,6 +222,9 @@ rm -f %buildroot%_libdir/*.a
 %_datadir/%name/tgt
 
 %changelog
+* Mon Jun 23 2025 Anton Midyukov <antohami@altlinux.org> 5.1.12b-alt7.svn20110910
+- NMU: add prefix 'scotch_' to name of binaries (Closes: 54343)
+
 * Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.1.12b-alt6.svn20110910
 - Fix FTBFS with gcc14.
 
