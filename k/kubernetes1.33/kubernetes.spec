@@ -7,11 +7,11 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     33
-%define kubernetes_patch     1
+%define kubernetes_patch     2
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt2
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -395,6 +395,11 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Mon Jun 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.2-alt1
+- 1.33.1 -> 1.33.2
+- Security fixes:
+  + CVE-2025-4563: Nodes can bypass dynamic resource allocation authorization checks
+
 * Wed May 28 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.1-alt2
 - Add CVE fixes information to changelog
 

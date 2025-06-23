@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     30
-%define kubernetes_patch     13
+%define kubernetes_patch     14
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -394,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Mon Jun 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.14-alt1
+- 1.30.13 -> 1.30.14
+
 * Tue May 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.13-alt1
 - 1.30.12 -> 1.30.13
 
