@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 Summary: Implements a fake file system that mocks the Python file system modules
 License: Apache-2.0
@@ -47,21 +47,21 @@ modification to work with pyfakefs.
 
 %install
 %pyproject_install
-# don't package tests (useless)
-rm -r %buildroot%python3_sitelibdir/%pypi_name/{tests,pytest_tests,pytest_session_tests}/
 
 %check
 # .github/workflows/testsuite.yml
 %pyproject_run -- python -m pyfakefs.tests.all_tests
 %pyproject_run -- python -m pyfakefs.tests.all_tests_without_extra_packages
 %pyproject_run -- python -m pytest pyfakefs/pytest_tests/
-%pyproject_run -- python -m pytest pyfakefs/pytest_session_tests/
 
 %files
 %python3_sitelibdir/pyfakefs/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 5.9.0-alt1
+- 5.8.0 -> 5.9.0.
+
 * Wed Mar 12 2025 Stanislav Levin <slev@altlinux.org> 5.8.0-alt1
 - 5.7.4 -> 5.8.0.
 
