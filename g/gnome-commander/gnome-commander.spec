@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.18
 %def_with exiv2
@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 %define xdg_name org.gnome.%name
 
@@ -93,6 +93,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1
+- 1.18.3
+
 * Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
 - updated to 1.18.2-5-gfdde0fe7
 - fixed build with gtest-1.17
