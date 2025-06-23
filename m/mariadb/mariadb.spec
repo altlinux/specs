@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.8.2
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -120,6 +120,7 @@ Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-11.4.7-disable-download-fmt.patch
+Patch105: mariadb-10.11.13-MDEV-36871.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -431,6 +432,7 @@ tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
+%patch105 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1117,6 +1119,10 @@ fi
 %endif
 
 %changelog
+* Mon Jun 23 2025 Alexei Takaseev <taf@altlinux.org> 11.8.2-alt2
+- MDEV-36871: mariadb-backup incremental segfault querying mariadb_backup_history
+- client.cnf, my.cnf, mysql-clients.cnf, server.cnf: Remove deprecated config charset options
+
 * Tue Jun 10 2025 Alexei Takaseev <taf@altlinux.org> 11.8.2-alt1
 - 11.8.2
 
