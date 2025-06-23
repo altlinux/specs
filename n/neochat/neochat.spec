@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.04.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Chat
@@ -10,6 +10,7 @@ Summary: Matrix client
 Url: http://www.kde.org
 License: GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-only AND GPL-3.0-or-later AND BSD-3-Clause
 
+Requires: qml6(QtLocation)
 Requires: kf6-kirigami kf6-purpose kf6-kquickcharts
 Requires: libkf6prison libkf6prisonscanner
 Requires: kf6-kirigami-addons
@@ -61,6 +62,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
+- fix requires
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
