@@ -1,5 +1,5 @@
 Name: gpu-screen-recorder
-Version: 5.0.0
+Version: 5.5.9
 Release: alt1
 Summary: This is a screen recorder that has minimal impact on system performance.
 Url: https://git.dec05eba.com/gpu-screen-recorder/about/
@@ -48,7 +48,7 @@ This package contains gui app for screen recorder
 
 %build
 %add_optflags %optflags_shared
-%meson
+%meson -Dnvidia_suspend_fix=false
 %meson_build
 cd gpu-screen-recorder-gtk
 %meson
@@ -68,13 +68,16 @@ cd ..
 
 %files gtk
 %_bindir/gpu-screen-recorder-gtk
+%_bindir/gsr-dbus-server
 %_desktopdir/com.dec05eba.gpu_screen_recorder.desktop
-%_datadir/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
 %_datadir/icons/hicolor/*/status/*.png
 %_datadir/icons/hicolor/*/apps/*.png
 
 
 %changelog
+* Tue Jun 17 2025 Oleg Proskurin <proskur@altlinux.org> 5.5.9-alt1
+- New version
+
 * Thu Jan 09 2025 Oleg Proskurin <proskur@altlinux.org> 5.0.0-alt1
 - New version (Closes: #51382)
 
