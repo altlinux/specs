@@ -8,7 +8,7 @@
 
 Name: plasma6-%rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -20,6 +20,7 @@ License: GPL-2.0-or-later
 #Requires: icon-theme-oxygen
 
 Source: %rname-%version.tar
+Patch1: alt-tooltip-colors.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -86,6 +87,7 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %define _K6buildsubdir BUILD6
@@ -146,6 +148,9 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 
 %changelog
+* Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
+- fix tooltip colors
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
