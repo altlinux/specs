@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		ae76e5efee9
+%define svnrev		d72b831a577
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.14
+Version: 7.0.15
 Release: alt1
 Epoch: 1
 
@@ -865,6 +865,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Jun 23 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.15-alt1
+- 7.0.15
+    * [ZBX-26588] fixed finished tasks queue size tracking which caused high cpu utilization by preprocessing manager (wiper)
+
 * Thu Jun 19 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.14-alt1
 - 7.0.14
 
