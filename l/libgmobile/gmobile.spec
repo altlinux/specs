@@ -14,13 +14,13 @@
 
 %define _name gmobile
 %define namespace Gm
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver_major 0
 %define api_ver 0
 %define sover 0
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classes and utilities for mobile devices
@@ -174,6 +174,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
