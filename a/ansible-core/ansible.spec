@@ -3,7 +3,7 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.18.6
-Release: alt1
+Release: alt2
 
 License: GPL-3.0
 Group: System/Configuration/Other
@@ -31,9 +31,9 @@ BuildRequires: python3-module-wheel
 
 Requires: ca-certificates >= 2015.10.29
 %py3_requires ansible
-%py3_requires yaml
 %py3_requires paramiko
 %py3_requires resolvelib
+%py3_requires yaml
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python3_sitelibdir/%rname/modules/*
@@ -55,6 +55,7 @@ are transferred to managed machines automatically.
 %package -n python3-module-ansible
 Summary: Python module for %name
 Group: Development/Python3
+Requires: python3(passlib)
 
 %description -n python3-module-ansible
 %summary.
@@ -87,6 +88,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Mon Jun 23 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.6-alt2
+- Required python3-module-passlib (ALT #54892).
+
 * Sat May 24 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.6-alt1
 - New version.
 
