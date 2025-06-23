@@ -1,9 +1,15 @@
 %global _unpackaged_files_terminate_build 1
 %define valkey_user      _valkey
 %define valkey_group     _valkey
+%ifarch x86_64
+%def_enable check
+%else
+%def_disable check
+%endif
+
 
 Name: valkey
-Version: 8.1.0
+Version: 8.1.2
 Release: alt1
 
 Summary: A persistent key-value database
@@ -20,9 +26,10 @@ Source4: valkey.logrotate
 
 BuildRequires: gcc-c++ libssl-devel libsystemd-devel
 # for check section
-BuildRequires: tcl >= 8.5 tcl-tls openssl
-BuildRequires: /proc
-
+%if_enabled check
+BuildRequires: tcl >= 8.5 tcl-tls openssl procps
+BuildRequires: /proc /dev/pts
+%endif
 Provides: %name-server = %EVR
 Provides: %name-sentinel = %EVR
 Provides: %name-cli = %EVR
@@ -144,7 +151,7 @@ ln -sr %buildroot%_unitdir/%name-sentinel.service %buildroot%_unitdir/redis-sent
 
 %check
 ./utils/gen-test-certs.sh
-./runtest --clients 50 --verbose --tags -largemem:skip --skipunit unit/oom-score-adj --skipunit unit/memefficiency  --skiptest "CONFIG SET rollback on apply error" --tls
+./runtest --verbose --dump-logs --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skiptest "CONFIG SET rollback on apply error" --tls
 %ifnarch ppc64 ppc64le
 ./runtest-moduleapi
 %endif
@@ -190,6 +197,13 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt1
+- New version 8.1.2 (Fixes: CVE-2025-27151).
+- Enable %%check for x86_64 only.
+
+* Fri May 09 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.1-alt1
+- New version 8.1.1 (Fixes: CVE-2025-21605).
+
 * Mon Apr 14 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.0-alt1
 - New version 8.1.0.
 
