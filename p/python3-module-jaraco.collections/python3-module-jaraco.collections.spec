@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
-Release: alt1.1
+Version: 5.2.1
+Release: alt1
 Summary: Collection objects similar to those in stdlib by jaraco
 License: MIT
 Group: Development/Python3
@@ -23,6 +23,8 @@ Patch0: %name-%version-%release.patch
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
+# requires internet
+%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
@@ -53,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 5.2.1-alt1
+- 5.1.0 -> 5.2.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
