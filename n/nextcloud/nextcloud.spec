@@ -2,8 +2,8 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 31.0.5
-Release: alt2
+Version: 31.0.6
+Release: alt1
 
 %define installdir %webserver_webappsdir/%name
 
@@ -168,6 +168,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Jun 23 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.6-alt1
+- New version.
+
 * Mon May 19 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.5-alt2
 - Do not show pride themes (thanks x1z53 <x1z53@alt-gnome.ru> for patch).
 
