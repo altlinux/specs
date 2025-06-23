@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.2
-Release: alt2
+Version: 0.6.1
+Release: alt1
 
 Summary: Run ASGI application with aiohttp
 License: Apache-2.0
@@ -64,6 +64,9 @@ and aiohttp together.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.1-alt1
+- Updated to 0.6.1.
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.5.2-alt2
 - Built to Sisyphus again.
 

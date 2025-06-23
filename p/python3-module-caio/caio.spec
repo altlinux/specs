@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.9.21
+Version: 0.9.24
 Release: alt1
 
 Summary: Linux AIO c python bindings
@@ -49,6 +49,9 @@ Python bindings for Linux AIO API and simple asyncio wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.24-alt1
+- Updated to 0.9.24.
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.21-alt1
 - Initial build for ALT Sisyphus.
 
