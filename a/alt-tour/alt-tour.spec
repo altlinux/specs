@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Tour
 
 Name: alt-tour
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 
 Summary: ALT Tour and Greeter
@@ -46,6 +46,9 @@ A guided tour and greeter for Alt with GNOME DE.
 %doc README.md
 
 %changelog
+* Tue Jun 24 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.9-alt1
+- remove changelog from metadata
+
 * Wed Jun 04 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.8-alt1
 - added about dialog to last page
 - updated slides images
