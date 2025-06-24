@@ -1,7 +1,7 @@
 %define  oname certomancer-csc-dummy
 
 Name:    python3-module-%oname
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 
 Summary: A Certomancer-based demo CSC server for integration tests
@@ -50,6 +50,9 @@ This is a testing tool, and it omits all sorts of essential security features:
 %python3_sitelibdir/certomancer_csc_dummy-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Automatically updated to 0.4.1.
+
 * Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt1
 - Automatically updated to 0.3.0.
 
