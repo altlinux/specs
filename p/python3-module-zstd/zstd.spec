@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.7.1
+Version: 1.5.7.2
 Release: alt1
 
 Summary: Zstd Bindings for Python
@@ -56,6 +56,9 @@ rm tests/test_speed.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 24 2025 Stanislav Levin <slev@altlinux.org> 1.5.7.2-alt1
+- 1.5.7.1 -> 1.5.7.2.
+
 * Mon Jun 09 2025 Stanislav Levin <slev@altlinux.org> 1.5.7.1-alt1
 - 1.5.7.0 -> 1.5.7.1.
 
