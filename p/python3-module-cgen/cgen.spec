@@ -1,20 +1,19 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname cgen
 
 Name: python3-module-%oname
-Version: 2020.1
+Version: 2025.1
 Release: alt1
 Summary: C/C++ source generation from an AST
 License: MIT
 Group: Development/Python3
 BuildArch: noarch
-Url: http://pypi.python.org/pypi/cgen/
+URL: https://pypi.org/project/cgen
+VCS: https://github.com/inducer/cgen
 
-# https://github.com/inducer/cgen.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %py3_requires decorator
 
@@ -25,16 +24,20 @@ C/C++ source generation from an AST.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 2025.1-alt1
+- Automatically updated to 2025.1.
+
 * Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 2020.1-alt1
 - Automatically updated to 2020.1.
 
