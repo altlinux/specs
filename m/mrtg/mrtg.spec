@@ -1,6 +1,6 @@
 Name: mrtg
 Version: 2.17.10
-Release: alt1
+Release: alt2
 
 Summary: Multi Router Traffic Grapher
 Group: Monitoring
@@ -19,7 +19,7 @@ Source8: README.ALT-ru_RU.KOI8-R
 
 Requires(pre,postun): sysstat
 
-BuildRequires: fontconfig freetype2-devel groff-base libgd2-devel libjpeg-devel libpng-devel perl-Math-BigInt perl-Net-SNMP zlib-devel
+BuildRequires: fontconfig freetype2-devel groff-base libgd-devel libjpeg-devel libpng-devel perl-Math-BigInt perl-Net-SNMP zlib-devel
 BuildRequires: perl-Pod-Parser
 
 %description
@@ -135,6 +135,9 @@ cp -r contrib %buildroot%_libmrtg/
 %_libmrtg/contrib/*
 
 %changelog
+* Tue Jun 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.17.10-alt2
+- NMU: Fixed FTBFS.
+
 * Fri Jan 21 2022 Ilya Mashkin <oddity@altlinux.ru> 2.17.10-alt1
 - 2.17.10
 

@@ -1,5 +1,5 @@
 Name:	 newsboat
-Version: 2.38
+Version: 2.40
 Release: alt1
 
 Summary: An RSS/Atom feed reader for the text console
@@ -88,6 +88,9 @@ cargo test
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jun 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.40-alt1
+- Updated to r2.40.
+
 * Thu May 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.38-alt1
 - Updated to r2.38.
 
