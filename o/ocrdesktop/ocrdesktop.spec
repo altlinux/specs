@@ -3,7 +3,7 @@
 
 Name:    ocrdesktop
 Version: 4.0
-Release: alt2
+Release: alt3
 
 Summary: Accessibility tool for use the current window with OCR technique
 License: GPL
@@ -37,22 +37,37 @@ clipboard. It also can emulate clicks on the text.
 %install
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/doc/%name
+mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_man1dir/
 
-install -m 755 ./%name %buildroot%_bindir/%name
+
+install -m 755 ./%name %buildroot%_datadir/%name/%name
 install -m 644 ./TODO %buildroot%_datadir/doc/%name
 install -m 644 ./ChangeLog %buildroot%_datadir/doc/%name
 install -m 644 ./docu/* %buildroot%_datadir/doc/%name
 install -m 644 ./README.md %buildroot%_datadir/doc/%name
 install -m 644 ./%name.1.gz %buildroot%_man1dir/
 
+# In order to work with Wayland, clear the WAYLAND_DISPLAY environment variable value (alt bug: 54263)
+cat << EOF > %buildroot%_bindir/%name
+#/usr/bin/env bash
+WAYLAND_DISPLAY= %_datadir/%name/%name "\$@"
+
+EOF
+
+chmod 755 %buildroot%_bindir/%name
+
 %files
 %_bindir/%name
+%_datadir/%name/%name
 %_man1dir/*
 %dir %_datadir/doc/%name
  %_datadir/doc/%name/*
 
 %changelog
+* Tue Jun 24 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt3
+- Fixed work in wayland (Closes: 54263)
+
 * Tue May 20 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt2
 - Added req to pyatspi (Closes: 54263)
 
