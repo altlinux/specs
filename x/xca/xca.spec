@@ -8,7 +8,7 @@
 
 Name: xca
 Version: 2.8.0
-Release: alt2
+Release: alt3
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
@@ -22,6 +22,7 @@ Patch0: alt-test_asn1time-do-not-force-TZ.patch
 Patch1: 0001-Fix-GOST-Certificate-view.patch
 Patch2: 0002-Add-support-for-GOST-key-generation-and-certificate-.patch
 Patch3: 0003-Add-fallback-handling-if-GOST-engine-is-not-loaded.patch
+Patch4: 0004-backport-to-p10-branch-and-minor-improvements.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -45,6 +46,7 @@ presented.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %cmake
@@ -71,6 +73,9 @@ LANG="C.UTF-8" TZ="GMT" \
 %_bindir/*
 
 %changelog
+* Tue Jun 24 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt3
+- Add compatibility with p10 and some improvements (thanks Nikita <sc4.nick@yandex.ru>)
+
 * Mon Jun 23 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt2
 - fix support GOST certificates and keys (ALT #53745) (thanks Nikita <sc4.nick@yandex.ru>)
 
