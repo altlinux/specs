@@ -2,8 +2,8 @@
 %define oname veusz
 
 Name: python3-module-%oname
-Version: 4.0
-Release: alt2
+Version: 4.1
+Release: alt1
 
 Summary: A Scientific Plotting Package
 License: GPL-2.0-or-later
@@ -25,6 +25,7 @@ BuildRequires: python3(tomli)
 BuildRequires: desktop-file-utils
 
 %add_python3_req_skip pyemf3 pyemf3.emr
+%py3_requires numpy.testing
 
 %description
 Veusz is a GUI scientific plotting and graphing package. It is designed
@@ -135,6 +136,10 @@ install -p Documents/man-page/veusz.1 -m 0644 %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Tue Jun 24 2025 Anton Midyukov <antohami@altlinux.org> 4.1-alt1
+- new version 4.1
+- disable feedback and version check by default
+
 * Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 4.0-alt2
 - bind desktop file to display icon in wayland
 
