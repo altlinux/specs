@@ -2,8 +2,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.14.1
-Release: alt1.1
+Version: 0.14.3
+Release: alt1
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images
 
@@ -56,6 +56,9 @@ sed -i "s/license = 'MIT'/license = {file = 'LICENSE.txt'}/" pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.14.3-alt1
+- Automatically updated to 0.14.3.
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 0.14.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
