@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 23.1.0
+Version: 25.1.0
 Release: alt1
 
 Summary: The secure Argon2 password hashing algorithm
@@ -56,6 +56,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/argon2
 
 %changelog
+* Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
+- Automatically updated to 25.1.0.
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 23.1.0-alt1
 - Build new version.
 - Build with check.
