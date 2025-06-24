@@ -4,7 +4,7 @@
 
 Name: webalizer
 Version: %majver.%minver.%suff
-Release: alt2
+Release: alt3
 
 Summary: Web/ftp/proxy server log analyser
 License: GPL-2.0
@@ -28,7 +28,7 @@ Source2: README.ALT-webalizer
 Summary(ru_RU.UTF-8): Анализатор логов web/ftp/proxy-серверов
 
 # Automatically added by buildreq on Sat Aug 16 2008
-BuildRequires: rpm-macros-apache rpm-macros-apache2 bzlib-devel libGeoIP-devel libdb4-devel libgd2-devel libpng-devel
+BuildRequires: rpm-macros-apache rpm-macros-apache2 bzlib-devel libGeoIP-devel libdb4-devel libgd-devel libpng-devel
 
 BuildRequires: zlib-devel bzlib-devel
 
@@ -179,6 +179,9 @@ done
 # - bak-around userdel -r in early packages?
 
 %changelog
+* Tue Jun 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.23.08.RB30-alt3
+- fix FTBFS with libgd
+
 * Fri Dec 04 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.23.08.RB30-alt2
 - fix unnecessary sample.conf install
 - fix -fno-common to be default in GCC 10
