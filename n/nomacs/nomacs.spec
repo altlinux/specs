@@ -3,7 +3,7 @@
 %global git_build    224
 
 Name: nomacs
-Version: 3.21.0
+Version: 3.21.1
 Release: alt1
 
 License: GPLv3+ and CC-BY
@@ -14,7 +14,7 @@ Url: http://www.nomacs.org
 #Source: https://github.com/%name/%name/archive/%name-%version.tar.gz
 #Source0:	https://github.com/%{github_owner}/%{name}/archive/%{version}.%{build}.tar.gz/%{name}-%{version}.%{git_build}.tar.gz
 Source0:	%name-%version.tar.gz
-Source1:	https://github.com/%{github_owner}/%{name}-plugins/archive/%{version}.tar.gz/%{name}-plugins-3.21.0.tar.gz
+Source1:	https://github.com/%{github_owner}/%{name}-plugins/archive/%{version}.tar.gz/%{name}-plugins-%{version}.tar.gz
 # desktop entries rename (https://github.com/nomacs/nomacs/issues/528)
 Patch0:		%{name}-3.16.%{git_build}-desktop.diff
 # plugins search path (https://github.com/nomacs/nomacs/issues/531)
@@ -72,7 +72,7 @@ Some usefull plugins for nomacs:
 #patch0
 #patch1
 #patch5 -p1
-%setup -T -D -a 1 -n %{name}-3.21.0
+%setup -T -D -a 1 -n %{name}-%{version}
 # plug them in
 mv nomacs-plugins-%{version}/* ImageLounge/plugins/
 #patch2
@@ -120,6 +120,9 @@ sed -i -e 's|Image Lounge|Image?Lounge|g' %{name}.lang
 
 
 %changelog
+* Tue Jun 24 2025 Ilya Mashkin <oddity@altlinux.ru> 3.21.1-alt1
+- 3.21.1
+
 * Sun Jun 01 2025 Ilya Mashkin <oddity@altlinux.ru> 3.21.0-alt1
 - 3.21.0 (Closes: #49295, #54570)
 
