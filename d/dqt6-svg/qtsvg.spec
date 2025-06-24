@@ -2,7 +2,7 @@
 %global qt_module dqtsvg
 
 Name: dqt6-svg
-Version: 6.8.2
+Version: 6.9.1
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -116,8 +116,7 @@ done
 %_dqt6_libdir/lib*.prl
 %_dqt6_libdatadir/lib*.so
 %_dqt6_libdatadir/lib*.prl
-%_dqt6_libdir/cmake/Qt?Svg/
-%_dqt6_libdir/cmake/Qt?SvgWidgets/
+%_dqt6_libdir/cmake/Qt?Svg*/
 %_dqt6_libdir/cmake/Qt?Gui/*Svg*.cmake
 %_dqt6_libdir/cmake/Qt?BuildInternals/StandaloneTests/*Svg*.cmake
 %_dqt6_archdatadir/mkspecs/modules/qt_lib_svg*.pri
@@ -132,6 +131,12 @@ done
 #%_dqt6_examplesdir/*
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 

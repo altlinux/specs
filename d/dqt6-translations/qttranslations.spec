@@ -1,7 +1,8 @@
+
 %global qt_module dqttranslations
 
 Name: dqt6-translations
-Version: 6.8.2
+Version: 6.9.1
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -24,7 +25,8 @@ BuildRequires: cmake dqt6-base-devel dqt6-tools dqt6-tools-devel
 
 %build
 %DQ6build \
-  -DQT_GENERATE_SBOM:BOOL=OFF
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 
 %install
 %DQ6install_qt
@@ -42,6 +44,12 @@ done
 %_dqt6_translationdir/catalogs.json
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 

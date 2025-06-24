@@ -1,9 +1,10 @@
+
 %global qt_module dqtwebsockets
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 Name: dqt6-websockets
-Version: 6.8.2
-Release: alt0.dde.2
+Version: 6.9.1
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebSockets component
@@ -109,6 +110,12 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %_dqt6_examplesdir/*
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
 - fix build requires
 

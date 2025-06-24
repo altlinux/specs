@@ -1,10 +1,10 @@
 %define repo dde-shell
-%define sover 0
+%define sover 1
 
 %def_without clang
 
 Name: deepin-shell
-Version: 1.0.10
+Version: 2.0.1
 Release: alt1
 
 Summary: Plugins for DDE
@@ -12,14 +12,16 @@ Summary: Plugins for DDE
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-shell
-Vcs: git://github.com/linuxdeepin/dde-shell.git
+Vcs: https://github.com/linuxdeepin/dde-shell.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-shell-1.0.10-alt-fixes-override.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-shell-2.0.1-alt-fixes-bad-symbols.patch
+Patch2: deepin-shell-2.0.1-alt-fixes-underlinked-libraries.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
-BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel
-BuildRequires: libdqt6-qmlcompiler
+BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel
+BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -47,6 +49,20 @@ Group: Development/C++
 %description -n lib%repo-devel
 Header files and libraries for %name.
 
+%package -n libds-notification-shared%sover
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libds-notification-shared%sover
+Library for %name.
+
+%package -n libds-notification-shared-devel
+Summary: Development package for libds-notification-shared
+Group: Development/C++
+
+%description -n libds-notification-shared-devel
+Header files and libraries for libds-notification-shared.
+
 %prep
 %setup -n %repo-%version
 %autopatch -p1
@@ -68,7 +84,7 @@ export READELF="llvm-readelf"
 %install
 %DQ6install
 %find_lang --with-qt %repo
-patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-rpath %_libdir/dde-shell
+patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificationcenterpanelplugin.so --add-rpath %_libdir/dde-shell
 
 %files -f %repo.lang
 %doc README.md LICENSE
@@ -82,7 +98,7 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-rpat
 %dir %_datadir/dde-dock/
 %dir %_datadir/dde-dock/icons/
 %dir %_datadir/dde-dock/icons/dcc-setting/
-%_datadir/dde-dock/icons/dcc-setting/*.svg
+%_datadir/dde-dock/icons/dcc-setting/*.dci
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/org.deepin.ds*/
 %_datadir/%repo/org.deepin.ds*/*.json
@@ -91,17 +107,15 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-rpat
 # the translations outside find_land
 %dir %_datadir/%repo/org.deepin.ds*/translations/
 %_datadir/%repo/org.deepin.ds.dock/translations/org.deepin.ds.dock.qm
-%_datadir/%repo/org.deepin.ds.notification/translations/org.deepin.ds.notification.qm
-%_datadir/%repo/org.deepin.ds.dock.clipboarditem/translations/org.deepin.ds.dock.clipboarditem.qm
-%_datadir/%repo/org.deepin.ds.dock.launcheritem/translations/org.deepin.ds.dock.launcheritem.qm
+%_datadir/%repo/org.deepin.ds.notificationbubble/translations/org.deepin.ds.notificationbubble.qm
+%_datadir/%repo/org.deepin.ds.notificationcenter/translations/org.deepin.ds.notificationcenter.qm
 %_datadir/%repo/org.deepin.ds.dock.multitaskview/translations/org.deepin.ds.dock.multitaskview.qm
-%_datadir/%repo/org.deepin.ds.dock.searchitem/translations/org.deepin.ds.dock.searchitem.qm
 %_datadir/%repo/org.deepin.ds.dock.showdesktop/translations/org.deepin.ds.dock.showdesktop.qm
 %_datadir/%repo/org.deepin.ds.dock.taskmanager/translations/org.deepin.ds.dock.taskmanager.qm
 %_datadir/%repo/org.deepin.ds.dock.tray/translations/org.deepin.ds.dock.tray.qm
-%_datadir/%repo/org.deepin.ds.dock.workspaceitem/translations/org.deepin.ds.dock.workspaceitem.qm
 %_datadir/%repo/org.deepin.ds.osd.default/translations/org.deepin.ds.osd.default.qm
 %_datadir/%repo/org.deepin.ds.osd.displaymode/translations/org.deepin.ds.osd.displaymode.qm
+%_datadir/%repo/org.deepin.ds.osd.windoweffect/translations/org.deepin.ds.osd.windoweffect.qm
 # ---
 %dir %_datadir/%repo/org.deepin.ds.example.applet/control/
 %_datadir/%repo/org.deepin.ds.example.applet/control/TextEx.qml
@@ -122,6 +136,15 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-rpat
 %dir %_libdir/cmake/DDEShell/
 %_libdir/cmake/DDEShell/DDEShell*.cmake
 
+%files -n libds-notification-shared%sover
+%_libdir/libds-notification-shared.so.%{sover}*
+
+%files -n libds-notification-shared-devel
+%_libdir/libds-notification-shared.so
+
 %changelog
+* Tue Jun 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.10-alt1
 - Initial build for ALT Sisyphus (for deepin-session).

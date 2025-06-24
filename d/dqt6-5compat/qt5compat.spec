@@ -3,8 +3,8 @@
 %global qt_module dqt5compat
 
 Name: dqt6-5compat
-Version: 6.8.2
-Release: alt0.dde.2
+Version: 6.9.1
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - Qt5 compatibility layer
@@ -116,6 +116,12 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
 - fix build requires
 

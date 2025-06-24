@@ -1,9 +1,9 @@
 %define repo dde-tray-loader
-%define soverdti 0
+%define soverdti 1
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 1.99.14
+Version: 2.0.1
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -17,7 +17,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel kf6-networkmanager-qt-devel
-BuildRequires: dqt6-wayland-devel libwayland-egl-devel
+BuildRequires: dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel
 
 Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
@@ -64,13 +64,6 @@ Group: Development/C++
 %description devel
 Header files and libraries for %name.
 
-%package -n libdde-tray-network-core-devel
-Summary: Development package for dde-tray-network-core plugin
-Group: Development/C++
-
-%description -n libdde-tray-network-core-devel
-Header files and libraries for dde-tray-network-core plugin.
-
 %prep
 %setup -n %repo-%version
 %autopatch -p1
@@ -78,8 +71,6 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
   $(find ./plugins -name '*CMakeLists.txt')
 
 %build
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-export LC_ALL=C.UTF-8
 %DQ6build \
   -DBUILD_SHARED_LIBS=ON \
   -DLIB_DESTINATION=%_lib \
@@ -90,7 +81,7 @@ export LC_ALL=C.UTF-8
 
 %install
 %DQ6install
-%find_lang --with-qt --output=dde-dock.lang dde-dock dde-tray-network-core dock-tray-network-plugin dock-wirelesscasting-plugin
+%find_lang --with-qt --output=dde-dock.lang dde-dock dock-wirelesscasting-plugin
 %find_lang --with-qt trayplugin-loader
 
 %files -f trayplugin-loader.lang
@@ -139,23 +130,11 @@ export LC_ALL=C.UTF-8
 %dir %_datadir/dock-wirelesscasting-plugin/translations/
 %_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin.qm
 %_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin_ky@Arab.qm
-%dir %_datadir/dde-tray-network-core/
-%dir %_datadir/dde-tray-network-core/translations/
-%_datadir/dde-tray-network-core/translations/dde-network-core.qm
-%_datadir/dde-tray-network-core/translations/dde-network-core_es_419.qm
-%_datadir/dde-tray-network-core/translations/dde-network-core_ky@Arab.qm
-%dir %_datadir/dock-tray-network-plugin/
-%dir %_datadir/dock-tray-network-plugin/translations/
-%_datadir/dock-tray-network-plugin/translations/dock-network-plugin.qm
-%_datadir/dock-tray-network-plugin/translations/dock-network-plugin_es_419.qm
-%_datadir/dock-tray-network-plugin/translations/dock-network-plugin_ky@Arab.qm
 # ---
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.dock/
 %_datadir/dsg/configs/org.deepin.dde.dock/*.json
-%dir %_datadir/dsg/configs/org.deepin.dde.tray.network/
-%_datadir/dsg/configs/org.deepin.dde.tray.network/org.deepin.dde.network.json
 
 %files -n dde-dock-devel
 %dir %_includedir/dde-dock/
@@ -164,12 +143,10 @@ export LC_ALL=C.UTF-8
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 %_pkgconfigdir/dde-dock.pc
 
-%files -n libdde-tray-network-core-devel
-%_libdir/libdde-tray-network-core.a
-%_includedir/libddetraynetworkcore/
-%_pkgconfigdir/dde-tray-network-core.pc
-
 %changelog
+* Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Wed Mar 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.99.14-alt1
 - Initial build for ALT Sisyphus (for deepin-session).
 - Obsoleted deepin-dock.

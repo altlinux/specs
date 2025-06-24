@@ -2,8 +2,8 @@
 %global qt_module dqtwayland
 
 Name: dqt6-wayland
-Version: 6.8.2
-Release: alt0.dde.3
+Version: 6.9.1
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
@@ -11,10 +11,6 @@ Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
 Source: %qt_module-everywhere-src-%version.tar
-# FC
-Patch1: qtwayland-adwaita-improve-border-painting.patch
-# upstream
-Patch10: qtwayland-update-wayland-xml-to-version-1.23.0.patch
 
 Requires: libdqt6-waylandcompositor
 Requires: libdqt6-waylandclient
@@ -54,6 +50,7 @@ AutoReq: no
 Requires: %name-common
 Requires: libwayland-client-devel libwayland-cursor-devel
 Requires: dqt6-base-devel
+Requires: libdqt6-waylandeglclienthwintegration libdqt6-wlshellintegration
 %description devel
 %summary.
 
@@ -155,9 +152,6 @@ Requires: libdqt6-core = %_dqt6_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
-%patch1 -p1
-#
-%patch10 -p1
 #
 #for d in gl nogl; do
 #mkdir $d
@@ -169,7 +163,6 @@ Requires: libdqt6-core = %_dqt6_version
     -DFEATURE_wayland_client:BOOL=ON \
     -DFEATURE_wayland_server:BOOL=ON \
     #
-
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -255,6 +248,12 @@ done
 %endif
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Fri Mar 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.3
 - fix build requires
 

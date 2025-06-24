@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.5.21
+Version: 0.5.21.0.7.7acf
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -16,11 +16,12 @@ Vcs: git://github.com/linuxdeepin/treeland.git
 
 Source0: %url/archive/%version/%name-%version.tar.xz
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja patchelf
 # Automatically added by buildreq on Fri Feb 21 2025
 # optimized out: cmake-modules dqt6-base-common dqt6-base-devel dqt6-declarative-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcap-ng libcrypt-devel libddm-auth-devel libddm-auth0 libddm-common-devel libddm-common0 libdisplay-info libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-qml libdqt6-qmlcompiler libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickcontrols2 libdqt6-quickcontrols2basic libdqt6-quickcontrols2fusion libdqt6-quickcontrols2imagine libdqt6-quickcontrols2material libdqt6-quickcontrols2universal libdqt6-quickeffects libdqt6-quicklayouts libdqt6-quickshapes libdqt6-quicktemplates2 libdqt6-quicktest libdqt6-shadertools libdqt6-test libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libpixman-devel libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-errors libxcbutil-icccm libxkbcommon-devel ninja-build openssl-config pkg-config python3 python3-base sh5 vulkan-headers wayland-devel xorg-proto-devel xz
-BuildRequires: cmake ddm-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-declarative-devel dqt6-wayland-devel dtk6-common-devel libdtk6declarative-devel libdtk6systemsettings-devel libjemalloc-devel libpam-devel libsystemd-devel libwayland-egl-devel libwlroots0.18-devel libxcbutil-icccm-devel treeland-protocols wayland-protocols
+BuildRequires: cmake ddm-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-declarative-devel dqt6-wayland-devel dtk6-common-devel libdtk6declarative-devel libdtk6systemsettings-devel libpam-devel libsystemd-devel libwayland-egl-devel libwlroots-devel libxcbutil-icccm-devel treeland-protocols wayland-protocols
 BuildRequires: libdqt6-qmlcompiler libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -106,11 +107,12 @@ This package provides development files for waylib.
 
 %prep
 %setup -a1
+%autopatch -p1
 sed -i 's|${TREELAND_DATA_DIR}/qml/Treeland|%_dqt6_qmldir|' \
   src/CMakeLists.txt
 sed -i 's|${TREELAND_DATA_DIR}/qml|%_dqt6_qmldir|' \
   src/modules/capture/CMakeLists.txt
-sed -i 's|STATIC|SHARED|' \
+sed -i '/add_library(\${TARGET}/a SHARED' \
   waylib/qwlroots/src/CMakeLists.txt
 sed -e 's|CMAKE_INSTALL_LIBDIR|DCMAKE_INSTALL_LIBDIR|g;' \
     -e 's|CMAKE_INSTALL_INCLUDEDIR|DCMAKE_INSTALL_INCLUDEDIR|g;' \
@@ -206,6 +208,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so --add-needed libt
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Mon Jun 23 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.21.0.7.7acf-alt1
+- New version 0.5.21-7-g7acf621 (Qt6.9).
+
 * Mon Apr 21 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.21-alt1
 - New version 0.5.21.
 

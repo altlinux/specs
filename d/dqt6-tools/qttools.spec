@@ -4,8 +4,8 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.8.2
-Release: alt0.dde.2
+Version: 6.9.1
+Release: alt1.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -35,7 +35,7 @@ Source23: qdbusviewer.desktop
 
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 #ifnarch %e2k
-BuildRequires: llvm-devel-static
+BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
@@ -162,6 +162,7 @@ Requires: libdqt6-core = %_dqt6_version
 %else
 %define qdoc_found 0
 %endif
+export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -178,7 +179,10 @@ Requires: libdqt6-core = %_dqt6_version
 >main.filelist
 %DQ6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+#DQ6install_qt --target install_docs
+#make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # Add desktop files
@@ -263,8 +267,8 @@ done
 %exclude %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
 %if %qdoc_found
-#%_datadir/dqt6/doc/qtassistant/
-#%_datadir/dqt6/doc/qtassistant.qch
+%_dqt6_docdir/qtassistant/
+%_dqt6_docdir/qtassistant.qch
 %endif
 
 %files -n dqt6-dbus
@@ -308,9 +312,9 @@ done
 
 %files doc
 %if %qdoc_found
-#%_datadir/dqt6/doc/*
-#%exclude %_datadir/dqt6/doc/qtassistant/
-#%exclude %_datadir/dqt6/doc/qtassistant.qch
+%_dqt6_docdir/*
+%exclude %_dqt6_docdir/qtassistant/
+%exclude %_dqt6_docdir/qtassistant.qch
 %endif
 %_dqt6_examplesdir/*
 
@@ -324,6 +328,18 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt1.dde.1
+- merge with new version
+
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- fix to build qdoc
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
+* Mon Mar 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
+- fix build docs
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
 - fix build requires
 - hide from app stores and menus (ALT #53326)

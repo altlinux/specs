@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.8.2
-Release: alt0.dde.2
+Version: 6.9.1
+Release: alt1.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -47,6 +47,8 @@ Source1: dqml6
 Source2: dqml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
+Patch1: 0001-qmlcachegen-fix-crash-on-unresolved-type-with-requir.patch
+Patch2: 0001-qmlimportscanner-Include-module-versions-again.patch
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -443,6 +445,8 @@ Requires: libdqt6-core = %_dqt6_version
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
+%patch1 -p1
+%patch2 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -473,7 +477,7 @@ export PATH=$PWD/bin_add:$PATH
 #build rpm-build-qml
 export BUILDFLAGS="-I../../include/QtQml/%version -I../../include/QtQml/%version/QtQml -I../../include/QtQml"
 pushd src/rpm-build-dqml
-#qmake_dqt6 rpmbqml6-qmlinfo.pro
+#qmake_dqt6 rpmbqml-qmlinfo.pro
 #make_build
 popd
 
@@ -492,7 +496,7 @@ done
 pushd src/rpm-build-dqml
 # FIXME rpmbdqml-qmlinfo
 ln -sr `which true` %buildroot/%_bindir/rpmbdqml6-qmlinfo
-#install -pD -m755 rpmbqml6-qmlinfo %buildroot/%_bindir/rpmbdqml6-qmlinfo
+#install -pD -m755 rpmbqml-qmlinfo %buildroot/%_bindir/rpmbdqml6-qmlinfo
 # end FIXME
 install -pD -m755 rpmbdqml6-prov-enum.pl %buildroot/%_bindir/rpmbdqml6-prov-enum.pl
 install -pD -m755 dqml6.prov %buildroot/%_rpmlibdir/dqml6.prov
@@ -601,7 +605,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_dqt6_qmldir/QtQuick/Controls/libqtquickcontrols2plugin.so
 %_dqt6_qmldir/QtQuick/Controls/plugins.qmltypes
 %_dqt6_qmldir/QtQuick/Controls/qmldir
-%_dqt6_qmldir/QtQuick/NativeStyle/
+#%_dqt6_qmldir/QtQuick/NativeStyle/
 %files -n libdqt6-quickcontrols2impl
 %_dqt6_libdir/libQt?QuickControls2Impl.so.*
 %files -n libdqt6-quickdialogs2
@@ -686,6 +690,15 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt1.dde.1
+- merge with new version
+
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- add upstream fixes
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
 - prevent bytes written limit by hasher-privd
 

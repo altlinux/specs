@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: dqt6-imageformats
-Version: 6.8.2
+Version: 6.9.1
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -101,6 +101,12 @@ done
 %endif
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
+- merge with new version
+
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 
