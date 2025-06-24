@@ -1,6 +1,6 @@
 %define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.14.0
+%define module_version	0.15.0
 %define module_release	alt1
 %define module_source_dir %nil
 
@@ -14,8 +14,8 @@ Url: https://github.com/umlaeute/v4l2loopback
 
 BuildRequires: help2man
 
-Source: %{module_name}-%version.tar
-Patch: %{module_name}-%version-%release.patch
+Source: %module_name-%version.tar
+Patch: %module_name-%version-%release.patch
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -23,13 +23,13 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Version: %module_version
 Release: %module_release
 Group: System/Kernel and hardware
-Summary: Linux %{module_name} - utilities
+Summary: Linux %module_name - utilities
 
 %package -n kernel-source-%module_name
 Version: %module_version
 Release: %module_release
 Group: Development/Kernel
-Summary: Linux %{module_name} - module sources
+Summary: Linux %module_name - module sources
 BuildArch: noarch
 
 %description
@@ -58,7 +58,7 @@ popd
 make utils
 
 %install
-PREFIX=%_prefix DESTDIR=%buildroot make install-utils install-man
+PREFIX=%prefix DESTDIR=%buildroot make install-utils install-man
 mkdir -p %buildroot%_udevrulesdir
 mkdir -p %buildroot%_usrsrc/kernel/sources/
 cp -a udev/*.rules %buildroot%_udevrulesdir/
@@ -77,6 +77,9 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 %attr(644,root,root) %_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
 
 %changelog
+* Tue Jun 24 2025 L.A. Kostis <lakostis@altlinux.ru> 0.15.0-alt1
+- 0.15.0.
+
 * Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
 - 0.14.0
 
