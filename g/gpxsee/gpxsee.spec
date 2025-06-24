@@ -1,0 +1,82 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+Name: gpxsee
+Version: 13.44
+Release: alt1
+
+Summary: GPS log file viewer and analyzer
+License: GPL-3.0
+Group: Sciences/Geosciences
+Url: https://github.com/tumic0/gpxsee
+
+Source: %name-%version.tar
+
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools
+BuildRequires: qt6-positioning-devel
+BuildRequires: qt6-serialport-devel
+BuildRequires: qt6-svg-devel
+
+Requires: qtpbfimageplugin-qt6
+
+%description
+GPXSee is a Qt-based GPS log file viewer and analyzer that supports all
+common GPS log file formats.
+
+Features
+- Opens GPX, TCX, FIT, KML, NMEA, IGC, CUP, SIGMA SLF, Suunto SML, LOC,
+  GeoJSON, OziExplorer (PLT, RTE, WPT), Garmin GPI&CSV, TomTom OV2&ITN,
+  ONmove OMD/GHP, TwoNav (TRK, RTE, WPT), GPSDump WPT, Velocitek VTK,
+  Vakaros VKX, 70mai GPS logs and geotagged JPEG files.
+- Opens geo URIs (RFC 5870).
+- User-definable online maps (OpenStreetMap/Google tiles, WMTS, WMS, 
+  TMS, QuadTiles).
+- Offline maps (MBTiles, OziExplorer maps, TrekBuddy maps/atlases,
+  Garmin IMG/GMAP & JNX maps, TwoNav RMaps, GeoTIFF images, BSB charts,
+  ENC charts, KMZ maps, AlpineQuest maps, Locus/OsmAnd/RMaps SQLite maps,
+  Mapsforge vector maps, QCT maps, GEMF maps, Osmdroid SQLite maps, Orux
+  maps,
+  ESRI World-File georeferenced images).
+- Elevation, speed, heart rate, cadence, power, temperature and gear
+  ratio/shifts graphs.
+- Support for DEM files (SRTM HGT).
+- Support for multiple tracks in one view.
+- Support for POI files.
+- Print/export to PDF/PNG.
+- Full-screen mode.
+- HiDPI/Retina displays & maps support.
+- Real-time GPS position.
+- Windows, macOS, Linux and Android builds.
+
+%prep
+%setup
+mv -v licence.txt license.txt
+
+%build
+lrelease-qt6 gpxsee.pro
+qmake-qt6 \
+          PREFIX=%_prefix \
+          CONFIG+=nostrip \
+          QMAKE_CXXFLAGS="%optflags" \
+          gpxsee.pro
+%make_build
+
+%install
+%makeinstall_std INSTALL_ROOT=%buildroot
+
+%find_lang %name
+
+%files -f %{name}.lang
+%doc license.txt CONTRIBUTING.md README.md
+%_bindir/%name
+%_desktopdir/%{name}.desktop
+%dir %_datadir/%{name}
+%_datadir/%{name}/*
+%_iconsdir/hicolor/*/*/*
+%_datadir/metainfo/%{name}.appdata.xml
+%_datadir/mime/packages/%{name}.xml
+
+%changelog
+* Tue Jun 24 2025 Nikolay Strelkov <snk@altlinux.org> 13.44-alt1
+- Initial build for Sisyphus
