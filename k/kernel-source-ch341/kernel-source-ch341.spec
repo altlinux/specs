@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	ch341
 %define module_version  1.0.0
-%define git b3629c3
+%define git b80a9c3
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt4.g%{git}
+Release: alt5.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: CH341 linux drivers for I2C / SPI and GPIO mode
 License: GPLv2
@@ -33,6 +33,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Jun 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt5.gb80a9c3
+- GIT b80a9c3 (with kernel 6.12+ fixes).
+
 * Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt4.gb3629c3
 - Remove -blacklist (not needed since 5.17, closes #53159).
 
