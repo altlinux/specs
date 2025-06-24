@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: %pypi_name
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: A tool and python library to interface with Ansible
 
@@ -75,6 +75,9 @@ standalone tool, or imported into a python project.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 24 2025 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1
+- New version.
+
 * Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
