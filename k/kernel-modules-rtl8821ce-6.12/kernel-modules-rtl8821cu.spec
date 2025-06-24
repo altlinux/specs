@@ -1,6 +1,6 @@
 %define module_name rtl8821ce
 %define module_version 5.5.2
-%define module_release alt12
+%define module_release alt13
 
 %define flavour	6.12
 %define karch %ix86 x86_64
@@ -9,7 +9,7 @@ BuildRequires(pre): kernel-headers-modules-6.12
 
 %setup_kernel_module %flavour
 
-%define _moduledir /lib/modules/%kversion-%flavour-%krelease
+%define _moduledir /lib/modules/%kversion-%flavour-%krelease/updates
 
 Name: kernel-modules-%module_name-%flavour
 Group: System/Kernel and hardware
