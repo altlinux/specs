@@ -1,5 +1,5 @@
 %define module_name	 evdi
-%define module_version 1.14.7
+%define module_version 1.14.9
 %define stage %nil
 %define rel 17
 
@@ -17,7 +17,7 @@
 %endif
 
 Name: displaylink-driver
-Version: 6.1.0
+Version: 6.1.1
 Release: alt1.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
@@ -140,6 +140,9 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Tue Jun 24 2025 L.A. Kostis <lakostis@altlinux.ru> 6.1.1-alt1.17
+- New release (6.1.1).
+
 * Thu Nov 14 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.0-alt1.17
 - New release (6.1.0).
 - evdi: updated to 1.14.7.
