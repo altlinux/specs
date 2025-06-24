@@ -1,16 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+
 %define plugname syntastic
 Name:		vim-plugin-%plugname
 Version:	3.10.0
-Release:	alt3
+Release:	alt4
 Summary:	Syntax checking hacks for vim
 Group:		Editors
 License:	WTFPL
 URL:		https://github.com/vim-syntastic/syntastic
-Source:		%name-%version.tar
-BuildArch:	noarch
 
-PreReq:		vim-common >= 4:7.0
-BuildRequires(pre): rpm-build-vim rpm-build-python3
+AutoReqProv:	nopython nopython3
+Requires:	vim-common >= 4:7.0
+
+BuildArch:	noarch
+Source:		%name-%version.tar
+BuildRequires(pre): rpm-build-vim
 Packager:	VIm Plugins Development Team <vim-plugins@packages.altlinux.org>
 
 %description
@@ -38,16 +42,15 @@ to the user. This can be done on demand, or automatically as files are saved.
 If syntax errors are detected, the user is notified and is happy because they
 didn't have to compile their code or execute their script to find them.
 
-  Note from upstream: "This project is no longer maintained. If you need a
+  NOTE FROM UPSTREAM: "This project is no longer maintained. If you need a
   syntax checking plugin for Vim you might be interested in Syntastic's
   spiritual succesor, ALE. Although it shares no code with syntastic and it
   takes a very different approach to design, ALE can be considered a natural
-  evolution of syntastic in terms of goals and functionality. Check it out, you
-  probably won't be disappointed." [2022]
+  evolution of syntastic in terms of goals and functionality. Check it out,
+  you probably won't be disappointed." [2022]
 
 %prep
 %setup -q
-
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
 %install
@@ -71,6 +74,10 @@ done
 %vim_runtime_dir/syntax_checkers/*
 
 %changelog
+* Fri Jun 20 2025 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt4
+- Apply minor patches.
+- spec: Remove dependence on Python3.
+
 * Sat Sep 23 2023 Vitaly Chikunov <vt@altlinux.org> 3.10.0-alt3
 - Final (upstream) update to 3.10.0-36-g8d5e37c2 (2022-07-10).
 - This project is no longer maintained and deprecated in favor of ale.
