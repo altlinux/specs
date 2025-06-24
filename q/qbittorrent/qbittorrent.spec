@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 5.1.0
+Version: 5.1.1
 Epoch: 1
 Release: %rel
 
@@ -134,6 +134,9 @@ desktop-file-install \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jun 24 2025 Ilya Mashkin <oddity@altlinux.ru> 1:5.1.1-alt1
+- 5.1.1
+
 * Wed Apr 30 2025 Ilya Mashkin <oddity@altlinux.ru> 1:5.1.0-alt1
 - 5.1.0
 
