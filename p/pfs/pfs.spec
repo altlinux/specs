@@ -20,8 +20,8 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Phosh File Selector Library
 Group: System/Libraries
@@ -157,6 +157,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Tue Jun 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.4-alt1
+- 0.0.4
+
 * Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1.1
 - moved pfs-open to -demo subpackage (ALT #54550)
 
