@@ -4,14 +4,14 @@
 %define jdk_version 21
 
 # taken from last openjdk spec
-%define jdk_archs x86_64 aarch64 loongarch64
+%define jdk_archs x86_64 aarch64 loongarch64 riscv64
 
 # https://github.com/bazelbuild/bazel/issues/600
 %brp_strip_none %_bindir/*
 %add_debuginfo_skiplist %_bindir/*
 
 Name: bazel
-Version: 8.2.1
+Version: 8.3.0
 Release: alt1
 
 Summary: A fast, scalable, multi-language and extensible build system
@@ -75,6 +75,9 @@ install -D -m644 scripts/zsh_completion/_bazel %buildroot%_datadir/zsh/site-func
 %_datadir/zsh/site-functions/_bazel
 
 %changelog
+* Tue Jun 24 2025 Anton Zhukharev <ancieg@altlinux.org> 8.3.0-alt1
+- Updated to 8.3.0.
+
 * Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 8.2.1-alt1
 - Updated to 8.2.1 (closes #54435).
 
