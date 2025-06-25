@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: icon-theme-%__name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Adwaita Colors Icon Theme
@@ -49,6 +49,9 @@ cp -r Adwaita-* %buildroot/%_iconsdir/
 %doc README*
 
 %changelog
+* Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - first build for Sisyphus (v2.4.1-8-gf153417)
 
