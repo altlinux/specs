@@ -4,8 +4,8 @@
 %def_disable doc
 
 Name: python3-module-%oname
-Version: 0.4.2
-Release: alt2.dev.git20131128.1.3
+Version: 0.5.2
+Release: alt1
 Summary: Python video metadata parser
 License: Apache-2.0
 Group: Development/Python3
@@ -20,6 +20,8 @@ BuildRequires(pre): rpm-build-python3
 %py3_provides %oname
 
 BuildRequires(pre): rpm-macros-sphinx3 python3-module-sphinx
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-chardet python3-module-pytest python3-module-urllib3 python3-module-yaml
 %if_with doc
 BuildRequires: diaoul-sphinx-themes
@@ -27,16 +29,6 @@ BuildRequires: diaoul-sphinx-themes
 
 %description
 Enzyme is a Python module to parse video metadata.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Enzyme is a Python module to parse video metadata.
-
-This package contains tests for %oname.
 
 %package pickles
 Summary: Pickles for %oname
@@ -68,10 +60,10 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with doc
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
@@ -80,20 +72,12 @@ ln -s ../objects.inv docs/
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%check
-python3 setup.py test
-exit 1
-
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
 %if_with doc
 %exclude %python3_sitelibdir/*/pickle
 %endif
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
 
 %if_with doc
 %files pickles
@@ -104,6 +88,9 @@ exit 1
 %endif
 
 %changelog
+* Wed Jun 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt1
+- Build new version.
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt2.dev.git20131128.1.3
 - temp. disable doc subpackages (firstly update the package)
 
