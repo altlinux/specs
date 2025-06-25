@@ -18,7 +18,7 @@
 %define langpack_ver 20230225
 
 Name: squid
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -326,6 +326,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Wed Jun 25 2025 Egor Ignatov <egori@altlinux.org> 7.0.2-alt1
+- 7.0.2
+
 * Tue Feb 25 2025 Egor Ignatov <egori@altlinux.org> 7.0.1-alt1
 - 7.0.1
 
