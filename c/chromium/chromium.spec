@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        137.0.7151.119
+Version:        138.0.7204.49
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -86,7 +86,7 @@ Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
 Patch021: 0021-FEDORA-System-brotli.patch
-Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
+# Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
@@ -117,10 +117,9 @@ Patch065: 0065-DEBIAN-stdatomic.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
-Patch069: 0069-DEBIAN-pdfium-libpng.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch073: 0073-FEDORA-chromium-136-rust-skrifa-build-error.patch
-Patch074: 0074-FEDORA-chromium-137-clang++-unknown-argument.patch
+Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
 %endif
@@ -376,7 +375,6 @@ export LDFLAGS="$LDFLAGS -stdlib=libc++ -L/usr/lib64 -lc++"
 
 # Debian:
 # enable_vr=false
-# enable_reading_list=false
 
 gn_arg=()
 gn_arg+=( custom_toolchain=\"//build/toolchain/linux/unbundle:default\" )
@@ -654,6 +652,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jun 25 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.49-alt1
+- New version (138.0.7204.49).
+- Security fixes:
+  + CVE-2025-6555: Use after free in Animation
+  + CVE-2025-6556: Insufficient policy enforcement in Loader
+  + CVE-2025-6557: Insufficient data validation in DevTools
+
 * Wed Jun 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 137.0.7151.119-alt1
 - New version (137.0.7151.119).
 - Security fixes:
