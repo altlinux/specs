@@ -32,7 +32,7 @@
 
 Name: curl
 Version: 8.14.1
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -232,6 +232,9 @@ popd
 %endif
  
 %changelog
+* Wed Jun 25 2025 Anton Farygin <rider@altlinux.com> 8.14.1-alt2
+- Added upstream patch to fix --ftp-pasv option (Closes: #54927)
+
 * Wed Jun 04 2025 Anton Farygin <rider@altlinux.com> 8.14.1-alt1
 - 8.14.0 -> 8.14.1 (Fixes: CVE-2025-5399)
 - turned on more tests
