@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.30.0
-Release: alt1
+Release: alt2
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
 Group: Development/Python3
@@ -12,6 +12,8 @@ URL: https://pypi.org/project/trio
 VCS: https://github.com/python-trio/trio
 BuildArch: noarch
 Source: %name-%version.tar
+# backported from 8771618c56cab079f7acd80aafe89255e8164408
+Patch: trio-0.30.0-Bump-dependencies-from-commit-79bdcf-3277.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -58,7 +60,7 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup
-
+%autopatch -p1
 sed -i 's/license = "MIT OR Apache-2.0"/license = {file = "LICENSE"}/' pyproject.toml
 sed -i '/license-files/d' pyproject.toml
 
@@ -90,6 +92,9 @@ sed -i '/license-files/d' pyproject.toml
 %python3_sitelibdir/%pypi_name/_core/_tests
 
 %changelog
+* Wed Jun 25 2025 Stanislav Levin <slev@altlinux.org> 0.30.0-alt2
+- NMU: fixed FTBFS.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 0.30.0-alt1
 - Automatically updated to 0.30.0.
 
