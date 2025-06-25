@@ -1,7 +1,7 @@
-%define soversion 3
+%define soversion 4
 
 Name:     libscenefx
-Version:  0.3
+Version:  0.4.1
 Release:  alt1
 
 Summary:  A drop-in wlroots replacement that allows eye-candy effects
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: pkgconfig(wayland-protocols) >= 1.27
 BuildRequires: pkgconfig(wayland-server) >= 1.22.0
-BuildRequires: pkgconfig(wlroots-0.18)
+BuildRequires: pkgconfig(wlroots-0.19)
 
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(glesv2)
@@ -25,6 +25,7 @@ BuildRequires: pkgconfig(gbm)
 
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xcb-ewmh)
 
 %description
 %summary.
@@ -63,6 +64,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/scenefx-0.%soversion.pc
 
 %changelog
+* Wed Jun 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.1-alt1
+- new version 0.4.1 (with rpmrb script)
+
 * Wed Jun 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3-alt1
 - new version 0.3 (with rpmrb script)
 
