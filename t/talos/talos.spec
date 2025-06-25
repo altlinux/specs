@@ -12,7 +12,7 @@
 %endif
 
 Name: talos
-Version: 1.10.3
+Version: 1.10.4
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -131,7 +131,7 @@ export TAGS_TALOSCTL="grpcnotrace"
 export GOPATH="$BUILDDIR:%go_path"
 export CGO_ENABLED=0
 
-#export NAME=Talos
+export NAME="ALT Orchestra"
 export SHA=%shortcommit
 #TODO: switch to registry.altlinux.org
 export USERNAME=alt-orchestra
@@ -140,7 +140,7 @@ export REGISTRY=altlinux.space
 #export PKGS=v1.7.0-21-gc58ed7f
 export TAG=v%version
 
-#echo -n ${NAME} > pkg/machinery/gendata/data/name
+echo -n ${NAME} > pkg/machinery/gendata/data/name
 echo -n ${SHA} > pkg/machinery/gendata/data/sha
 echo -n ${USERNAME} > pkg/machinery/gendata/data/username
 echo -n ${REGISTRY} > pkg/machinery/gendata/data/registry
@@ -183,6 +183,10 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Mon Jun 23 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.4-alt1
+- New version 1.10.4.
+- Add minimal ALT Orchestra branding
+
 * Fri May 30 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.3-alt1
 - New version 1.10.3.
 - Update HOME_URL and BUG_REPORT_URL.
