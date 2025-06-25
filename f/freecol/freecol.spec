@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: freecol
-Version: 0.11.6
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: FreeCol is opensource Colonization clone.
 Url: http://freecol.org
+Vcs: https://github.com/FreeCol/freecol
 Group: Games/Strategy
 License: GPL-2.0+
 
@@ -14,13 +15,14 @@ Source: %name-%version.tar
 Source1: %name.desktop
 Source2: %name.xpm
 
-Patch1: %name-%version-fedora-source-encoding.patch
-Patch2: CVE-2018-1000825.patch
+Patch1: %name-0.11.6-fedora-source-encoding.patch
+#Patch2: CVE-2018-1000825.patch
 
 BuildRequires: rpm-build-java
 BuildRequires: ant ant-nodeps
 BuildRequires: subversion
-BuildRequires: java-devel junit
+BuildRequires: java-devel junit 
+BuildRequires: git
 
 Requires: java
 
@@ -31,7 +33,7 @@ The objective of the game is to create an independent nation.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 export CLASSPATH=$(build-classpath junit)
@@ -54,7 +56,7 @@ cp -pr data/ %buildroot%_gamesdatadir/%name/
 
 cat > %buildroot%_bindir/%name <<EOF
 pushd %_gamesdatadir/%name >/dev/null 2>&1
-/usr/bin/java -Xmx256M -jar %_gamesdatadir/%name/FreeCol.jar $1 $2 $3 $4 $5 $6 $7 $8 $9
+/usr/bin/java -jar %_gamesdatadir/%name/FreeCol.jar $1 $2 $3 $4 $5 $6 $7 $8 $9
 popd >/dev/null 2>&1
 EOF
 
@@ -69,6 +71,9 @@ install -p %SOURCE2 %buildroot%_niconsdir/%name.xpm
 %_niconsdir/%name.xpm
 
 %changelog
+* Wed Jun 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
+- 0.11.6 -> 1.1.0
+
 * Mon Oct 19 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11.6-alt2
 - Applied security fix from Debian (Fixes: CVE-2018-1000825).
 - Updated license tag.
