@@ -33,7 +33,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.9
+Version: 2.0.12
 Release: alt1
 
 Summary: Firmware update daemon
@@ -265,6 +265,7 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfwupd*.so
+%_modulesloaddir/fwupd-i2c.conf
 %if_enabled flashrom
 %fwupd_pluginsdir/libfu_plugin_flashrom.so
 %endif
@@ -286,6 +287,7 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %fwupd_pluginsdir/libfu_plugin_modem_manager.so
 
 %files -n libfwupd-devel
+%_datadir/dbus-1/interfaces/org.freedesktop.fwupd.xml
 %_datadir/gir-1.0/Fwupd-2.0.gir
 %_includedir/fwupd-3
 %_libdir/libfwupd.so
@@ -305,6 +307,10 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Thu Jun 19 2025 Egor Ignatov <egori@altlinux.org> 2.0.12-alt1
+- 2.0.12
+- add introspection data file to -devel package as well (closes: #49681)
+
 * Mon May 12 2025 Egor Ignatov <egori@altlinux.org> 2.0.9-alt1
 - 2.0.9
 
