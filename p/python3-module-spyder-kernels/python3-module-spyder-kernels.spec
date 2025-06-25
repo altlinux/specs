@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.2
+Version: 3.0.5
 Release: alt1
 
 Summary: Jupyter Kernels for the Spyder console
@@ -58,6 +58,9 @@ code inside Spyder.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 25 2025 Stanislav Levin <slev@altlinux.org> 3.0.5-alt1
+- 2.5.2 -> 3.0.5.
+
 * Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 2.5.2-alt1
 - Updated to 2.5.2.
 
