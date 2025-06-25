@@ -1,6 +1,6 @@
 Name: traceroute
-Version: 2.1.0
-Release: alt2
+Version: 2.1.3
+Release: alt1
 Epoch: 1
 
 Summary: Traces the route taken by packets over an IPv4/IPv6 network
@@ -46,6 +46,11 @@ ln -s traceroute.1 %buildroot%_man1dir/traceroute6.1
 %_man1dir/*
 
 %changelog
+* Wed May 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.1.3-alt1
+- 2.1.0 -> 2.1.3.
+- Security fix:
+  + (fixes: CVE-2023-46316).
+
 * Wed Feb 27 2019 Dmitry V. Levin <ldv@altlinux.org> 1:2.1.0-alt2
 - Packaged tcptraceroute wrapper.
 
