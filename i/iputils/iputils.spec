@@ -1,6 +1,5 @@
 Name: iputils
-%define timestamp 20240905
-Version: %timestamp
+Version: 20250605
 Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
@@ -45,13 +44,7 @@ The iputils package contains basic utilities for monitoring a network:
 %ifnarch %e2k
 %add_optflags -Werror -Wno-error=variadic-macros
 %endif
-%ifarch s390 s390x
-	%add_optflags -fPIE
-%else
-	%add_optflags -fpie
-%endif
 
-export LDFLAGS='-pie'
 %meson \
 	-Dsystemdunitdir=%_unitdir \
 	-DINSTALL_SYSTEMD_UNITS=true \
@@ -116,6 +109,10 @@ fi
 %_mandir/man?/*
 
 %changelog
+* Wed Jun 25 2025 Mikhail Efremov <sem@altlinux.org> 20250605-alt1
+- Dropped -pie/-fpie compile options.
+- 20240905 -> 20250605 (fixes: CVE-2025-47268, CVE-2025-48964).
+
 * Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 20240905-alt1
 - meson: Don't use pre-generated man pages.
 - 20240117 -> 20240905.
