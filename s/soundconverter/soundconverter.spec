@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 4.0.6
-Release: alt3
+Version: 4.1.0
+Release: alt1
 
 Summary: A simple sound converter application for GNOME
 License: GPL-3.0-or-later
@@ -39,6 +39,8 @@ It reads and writes anything the GStreamer library can.
 %prep
 %setup
 %patch -p1
+
+sed -i 's|@PYTHON_MODULE@|%python3_sitelibdir/%name|' bin/soundconverter
 
 %build
 %pyproject_build
@@ -78,6 +80,9 @@ rm %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Jun 24 2025 Anton Midyukov <antohami@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt3
 - spec:
   + fix typo in changelog
