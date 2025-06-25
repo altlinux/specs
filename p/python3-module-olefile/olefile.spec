@@ -2,23 +2,25 @@
 %define modulename olefile
 Name: python3-module-olefile
 Version: 0.47
-Release: alt1
+Release: alt2
 
 Summary: Python package to parse, read and write Microsoft OLE2 files
 
-Url: https://pypi.python.org/pypi/olefile
+URL: https://pypi.org/project/olefile
+VCS: https://github.com/decalage2/olefile
 License: BSD
 Group: Development/Python3
 
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.io/packages/source/o/%modulename/%modulename-%version.zip
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 olefile is a Python package to parse,
@@ -35,16 +37,20 @@ McAfee antivirus quarantine files, etc.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/olefile
+%python3_sitelibdir/olefile-%version.dist-info
 
 %changelog
+* Wed Jun 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.47-alt2
+- Spec refactoring.
+
 * Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 0.47-alt1
 - Build new version.
 
