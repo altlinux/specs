@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 5332
+Version: 5753
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -147,11 +147,11 @@ cat <<-EOF >> cmake/build-info.cmake
 	set(BUILD_COMMIT "${commit::8} [%release]")
 EOF
 sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' ggml/src/CMakeLists.txt src/CMakeLists.txt
-sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' ggml/cmake/ggml-config.cmake.in
+sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' ggml/cmake/ggml-config.cmake.in tools/mtmd/CMakeLists.txt
 # We do not have Internet access (issues/13371).
 sed -i 's/common_has_curl()/0/' tests/test-arg-parser.cpp
-# Libs with unclear purpose.
-sed -i s/BUILD_SHARED_LIBS/0/ tools/mtmd/CMakeLists.txt
+# This test requires GPU.
+sed /test-thread-safety/d -i tests/CMakeLists.txt
 
 %build
 # Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake fails to strip build time RPATH
@@ -163,6 +163,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DLLAMA_CURL=ON \
 	-DGGML_BACKEND_DL=ON \
 	-DGGML_CPU=ON \
+	-DGGML_RPC=ON \
 %ifarch x86_64
 	-DGGML_CPU_ALL_VARIANTS=ON \
 %endif
@@ -194,8 +195,9 @@ install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 rm %buildroot%_bindir/test-*
 # Completions.
 install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-cli
-printf '%%s\n' llama-server llama-simple llama-run |
+printf '%%s\n' llama-server llama-simple llama-run llama-mtmd-cli |
 	xargs -ti ln -s llama-cli %buildroot%_datadir/bash-completion/completions/{}
+install -Dp %_cmake__builddir/bin/rpc-server %buildroot%_bindir/llama-rpc-server
 
 %check
 # Local path are more useful for debugging becasue they are not stripped by default.
@@ -215,14 +217,17 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_libdir/libllama.so.0.0.%version
 %_libdir/libggml.so.0.0.%version
 %_libdir/libggml-base.so.0.0.%version
+%_libdir/libmtmd.so.0.0.%version
 
 %files -n libllama-devel
 %_libdir/libllama.so
 %_libdir/libggml.so
 %_libdir/libggml-base.so
+%_libdir/libmtmd.so
 %_includedir/llama*.h
 %_includedir/gguf.h
 %_includedir/ggml*.h
+%_includedir/mtmd*.h
 %_cmakedir/ggml
 %_cmakedir/llama
 %_pkgconfigdir/llama.pc
@@ -235,6 +240,7 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_datadir/%name
 %dir %_libexecdir/llama
 %_libexecdir/llama/libggml-cpu*.so
+%_libexecdir/llama/libggml-rpc.so
 %_datadir/bash-completion/completions/llama-*
 
 %if_with cuda
@@ -245,12 +251,16 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 
 %if_with vulkan
 %files vulkan
-%_bindir/vulkan-shaders-gen
 %dir %_libexecdir/llama
 %_libexecdir/llama/libggml-vulkan.so
 %endif
 
 %changelog
+* Wed Jun 25 2025 Vitaly Chikunov <vt@altlinux.org> 1:5753-alt1
+- Update to b5753 (2025-06-24).
+- Install an experimental rpc backend and server. The rpc code is a
+  proof-of-concept, fragile, and insecure.
+
 * Sat May 10 2025 Vitaly Chikunov <vt@altlinux.org> 1:5332-alt1
 - Update to b5332 (2025-05-09), with vision support in llama-server.
 - Enable Vulkan backend (for GPU) in llama.cpp-vulkan package.
