@@ -2,7 +2,7 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20250529
+Version:   20250624
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,10 @@ cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 %_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Tue Jun 24 2025 Andrey Cherepanov <cas@altlinux.org> 20250624-alt1
+- Updated database.
+- Installed remmina-plugins for remmina (ALT #53663).
+
 * Thu May 29 2025 Kirill Izmestev <felixz@altlinux.org> 20250529-alt1
 - Updated database.
 
