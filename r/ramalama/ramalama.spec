@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: %pypi_name
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 Summary: RamaLama is a command line tool for working with AI LLM models
 Group: Development/Python3
@@ -70,6 +70,9 @@ make DESTDIR=%buildroot PREFIX=%prefix install-completions
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Jun 25 2025 L.A. Kostis <lakostis@altlinux.ru> 0.9.3-alt1
+- 0.9.3.
+
 * Tue Jun 17 2025 L.A. Kostis <lakostis@altlinux.ru> 0.9.2-alt1
 - Initial build for ALTLinux.
 
