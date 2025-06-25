@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.23
+Version: 6.1.32
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -135,13 +135,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 # package outside find_lang
 %dir %_datadir/%repo/translations/
 %dir %_datadir/%repo/translations/v1.0/
-%_datadir/%repo/translations/v1.0/datetime_country_es_419.qm
 %_datadir/%repo/translations/v1.0/datetime_country_ky@Arab.qm
-%_datadir/%repo/translations/v1.0/datetime_language_es_419.qm
 %_datadir/%repo/translations/v1.0/datetime_language_ky@Arab.qm
-%_datadir/%repo/translations/v1.0/keyboard_language_es_419.qm
 %_datadir/%repo/translations/v1.0/keyboard_language_ky@Arab.qm
-%_datadir/%repo/translations/v1.0/dde-control-center_es_419.qm
 %_datadir/%repo/translations/v1.0/dde-control-center_ky@Arab.qm
 
 %files -n lib%repo%sover
@@ -154,6 +150,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Wed Jun 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.32-alt1
+- New version 6.1.32.
+
 * Wed May 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.23-alt1
 - New version 6.1.23.
 
