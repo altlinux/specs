@@ -1,5 +1,5 @@
 Name:    jacktrip
-Version: 2.4.1
+Version: 2.6.0
 Release: alt1
 
 Summary: JackTrip: multi-machine audio network performance over the Internet
@@ -11,6 +11,7 @@ VCS:     https://github.com/jacktrip/jacktrip
 Packager: Sergey Gvozdetskiy <serjigva@altlinux.org>
 
 Source: %name-%version.tar
+Patch: %name-%version-alt-fix-meson.patch
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -24,6 +25,7 @@ BuildRequires: pkgconfig(Qt6Svg)
 BuildRequires: pkgconfig(Qt6WebEngineCore)
 %endif
 BuildRequires: pkgconfig(Qt6WebSockets)
+BuildRequires: pkgconfig(samplerate)
 BuildRequires: python3(yaml)
 BuildRequires: python3(jinja2)
 BuildRequires: qt6-tools
@@ -34,11 +36,13 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 
 %prep
 %setup
+%patch
 
 %build
 %meson \
     -Drtaudio=enabled \
-    -Dnovs=true
+    -Dnovs=true \
+    -Dlibsamplerate=auto
 
 %meson_build
 
@@ -56,6 +60,10 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Jun 25 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.6.0-alt1
+- 2.4.1 -> 2.6.0
+- added libsamplerate support
+
 * Tue Dec 17 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.4.1-alt1
 - 2.3.1 -> 2.4.1
 
