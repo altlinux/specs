@@ -1,5 +1,5 @@
 Name: handhelds-virtual-controller
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Set of tools to combine several input devices into one virtual controller on handheld game consoles
@@ -52,6 +52,10 @@ install -m 0644 gamecontrollerdb.handhelds.txt %buildroot%_datadir/gamecontrolle
 %_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Wed Jun 25 2025 Artyom Bystrov <arbars@altlinux.org> 0.8-alt1
+- Add new devices: Powkiddy x35s, RGB20 Pro, RGB20SX
+- Changed input devices
+
 * Wed Apr  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.7-alt1
 - Rename package
 - Add new device: Anbernic RG503
