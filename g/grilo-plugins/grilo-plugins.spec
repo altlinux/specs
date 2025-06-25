@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: grilo-plugins
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -159,6 +159,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.18-alt1
+- 0.3.18
+
 * Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.17-alt1
 - 0.3.17
 

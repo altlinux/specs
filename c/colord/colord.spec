@@ -1,8 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
+
+%define xdg_name org.freedesktop.colord
 
 %def_enable daemon
 %def_enable session_helper
-%def_enable reverse
 %def_enable introspection
 %def_enable vala
 %def_enable bash_completion
@@ -26,21 +27,23 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.7
-Release: alt1.1
+Version: 1.4.8
+Release: alt1
 
 Summary: Color daemon
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
 Url: http://colord.hughsie.com
+
+Vcs: https://github.com/hughsie/colord.git
 
 %if_disabled snapshot
 Source: http://www.freedesktop.org/software/%name/releases/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-# revert this
-Patch10: colord-1.4.7-up-1452a975ecae14299fb27d41522dfd32305481ce.patch
+# https://github.com/hughsie/colord/issues/188
+Patch10: colord-1.4.8-up-c1153fbcf.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -151,20 +154,20 @@ This package provides Colord reference manual
 
 %prep
 %setup
-%patch10 -R -p1
+%patch10 -p1
 
 %build
 %meson \
-	%{?_disable_reverse:-Denable-reverse=false} \
-	%{?_enable_vala:-Dvapi=true} \
-	-Ddaemon_user=%colord_user \
-	%{?_disable_argyllcms_sensor=-Dargyllcms_sensor=false} \
-	%{?_enable_print_profiles:-Dprint_profiles=true} \
-	%{?_disable_bash_completion:-Dbash_completion=false} \
-	%{?_enable_installed_tests:-Dinstalled_tests=true} \
-	%{?_enable_libcolordcompat:-Dlibcolordcompat=true} \
-	%{?_disable_systemd:-Dsystemd=false} \
-	%{?_disable_docs:-Ddocs=false}
+    -Ddaemon_user=%colord_user \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool argyllcms_sensor argyllcms_sensor} \
+    %{subst_enable_meson_bool print_profiles print_profiles} \
+    %{subst_enable_meson_bool completion bash_completion} \
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %{subst_enable_meson_bool libcolordcompat libcolordcompat} \
+    %{subst_enable_meson_bool systemd systemd} \
+    %{subst_enable_meson_bool docs docs}
+%nil
 %meson_build
 
 %install
@@ -197,6 +200,8 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 %_udevrulesdir/*.rules
 %_tmpfilesdir/%name.conf
+%_sysusersdir/%name-sysusers.conf
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %if_enabled session_helper
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
@@ -323,6 +328,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.8-alt1
+- 1.4.8
+
 * Tue Jan 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1.1
 - reverted 1452a975ecae14299 (ALT #49153)
 

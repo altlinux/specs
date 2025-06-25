@@ -1,19 +1,23 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 3.36
+%define xdg_name org.gnome.ColorProfileViewer
+
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Color profile manager for the GNOME desktop
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org/projects/gnome-color-manager/
+Url: https://gitlab.gnome.org/GNOME/gnome-color-manager
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-color-manager.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -92,15 +96,21 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_bindir/gcm-picker
 %_bindir/gcm-viewer
 %_datadir/%name/
-%_datadir/applications/*.desktop
+%_desktopdir/%xdg_name.desktop
+%_desktopdir/gcm-import.desktop
+%_desktopdir/gcm-picker.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/*
-%_datadir/metainfo/org.gnome.ColorProfileViewer.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc --no-dereference COPYING
 %doc README AUTHORS
 
 %changelog
+* Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt2
+- updated to 3.36.2-51-g5ce3b551
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
