@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.10.2
-Release: alt1.1
+Version: 2.11.0
+Release: alt1
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -79,6 +79,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1:2.11.0-alt1
+- Automatically updated to 2.11.0.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1:2.10.2-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
