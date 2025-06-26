@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 Summary: Never use print() to debug again
 License: MIT
@@ -52,6 +52,9 @@ rm -r %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 26 2025 Stanislav Levin <slev@altlinux.org> 2.1.5-alt1
+- 2.1.4 -> 2.1.5.
+
 * Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
 - 2.1.3 -> 2.1.4.
 
