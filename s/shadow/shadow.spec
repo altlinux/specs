@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.17.4
+Version: 4.18.0
 Release: alt1
 Epoch: 1
 
@@ -483,6 +483,12 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Jun 26 2025 Mikhail Efremov <sem@altlinux.org> 1:4.18.0-alt1
+- useradd,usermod: Use fields.h for valid_field().
+- lib/chkname.c: Use fields.h for valid_field().
+- remove_tcbdir.c: Use aprintf() instead of asprintf(3).
+- Updated to 4.18.0.
+
 * Wed Apr 09 2025 Mikhail Efremov <sem@altlinux.org> 1:4.17.4-alt1
 - useradd: Rely on fail_exit() for audit messages.
 - groupadd: Use fail_exit().
