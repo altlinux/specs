@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgit
-Version: 2.10
+Version: 2.11
 Release: alt1
 Epoch: 1
 
-Summary: Git GUI viewer built on Qt4/C++
+Summary: Git GUI viewer built on Qt/C++
 Group: Development/Tools
 License: GPLv2
 Url: https://github.com/tibirna/qgit
@@ -48,7 +48,7 @@ sed -i '/QMAKE_CXXFLAGS_RELEASE/s,-O2 ,%optflags ,g' src/src.pro
 
 %build
 qmake-qt5 qgit.pro
-%make_build 
+%make_build
 
 %install
 install -pDm755 bin/qgit %buildroot%_bindir/%name
@@ -58,6 +58,9 @@ install -pDm755 bin/qgit %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Jun 26 2025 Ivan A. Melnikov <iv@altlinux.org> 1:2.11-alt1
+- 2.11
+
 * Tue Jan 11 2022 Ivan A. Melnikov <iv@altlinux.org> 1:2.10-alt1
 - new version
 
