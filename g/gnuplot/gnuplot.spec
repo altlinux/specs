@@ -3,8 +3,8 @@
 
 Name: gnuplot
 Epoch: 1
-Version: 6.0.2
-Release: alt2
+Version: 6.0.3
+Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
 Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
@@ -268,6 +268,9 @@ rm -v demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Jun 09 2025 Grigory Ustinov <grenka@altlinux.org> 1:6.0.3-alt1
+- Automatically updated to 6.0.3.
+
 * Mon Jan 20 2025 Ivan A. Melnikov <iv@altlinux.org> 1:6.0.2-alt2
 - Workaround a Makefile race condition (fixes FTBFS
   on riscv64 and loongarch64).
