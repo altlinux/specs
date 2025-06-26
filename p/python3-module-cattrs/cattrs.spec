@@ -3,10 +3,10 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 24.1.3
+Version: 25.1.1
 Release: alt1
 
-Summary: Complex custom class converters for attrs.
+Summary: Complex custom class converters for attrs
 
 License: MIT
 Group:   Development/Python3
@@ -69,23 +69,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_install
 
 %check
-#https://github.com/python-attrs/cattrs/issues/575
-%pyproject_run_pytest -k "not test_simple_roundtrip and not \
-test_nested_roundtrip and not \
-test_optional_field_roundtrip and not \
-test_simple_roundtrip_tuple and not \
-test_simple_roundtrip_defaults_tuple and not \
-test_nested_roundtrip and not \
-test_310_union_field_roundtrip and not \
-test_optional_field_roundtrip and not \
-test_310_optional_field_roundtrip and not \
-test_omit_default_roundtrip and not \
-test_structure_simple_from_dict_default and not \
-test_union_field_roundtrip and not \
-test_nodefs_generated_unstructuring_cl and not \
-test_unmodified_generated_structuring and not \
-test_renaming and not \
-test_individual_overrides"
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.md
@@ -94,6 +78,9 @@ test_individual_overrides"
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.1-alt1
+- Automatically updated to 25.1.1.
+
 * Mon Apr 14 2025 Grigory Ustinov <grenka@altlinux.org> 24.1.3-alt1
 - Automatically updated to 24.1.3.
 
