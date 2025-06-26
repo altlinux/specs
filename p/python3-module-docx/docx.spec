@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Create and update Microsoft Word .docx files
@@ -49,6 +49,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/python_%modulename-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Automatically updated to 1.2.0.
+
 * Thu May 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
 - Automatically updated to 1.1.2.
 - Built with check.
