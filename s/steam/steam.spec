@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.83
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -28,7 +28,6 @@ Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
 Requires: libcurl
-Requires: libdbusmenu-gtk2
 Requires: libEGL
 Requires: libGL
 Requires: libnm
@@ -77,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Thu Jun 26 2025 Nazarov Denis <nenderus@altlinux.org> 1.0.0.83-alt2
+- Remove require on libdbusmenu-gtk2 (ALT #54946)
+
 * Mon Jun 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.0.0.83-alt1
 - Version 1.0.0.83
 
