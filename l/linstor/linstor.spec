@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.31.1
-Release: alt2
+Release: alt3
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -94,6 +94,7 @@ Summary: Linstor controller specific files
 Group: System/Servers
 Requires: linstor-common = %EVR
 Requires(post): java-21-openjdk
+Requires(post): java-common
 
 %description controller
 Linstor controller manages linstor satellites and persistant data storage.
@@ -114,6 +115,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 
 
 %post controller
+source %_sysconfdir/profile.d/javahome.sh
 %LS_PREFIX/bin/controller.postinst.sh
 %post_service linstor-controller
 #test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
@@ -152,6 +154,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Wed Jun 25 2025 Ivan Khanas <xeno@altlinux.org> 1.31.1-alt3
+- Set JAVA_HOME variable after installing controller. (Closes: 53487)
+
 * Fri May 30 2025 Ivan Khanas <xeno@altlinux.org> 1.31.1-alt2
 - Stop using binary gradle.
 
