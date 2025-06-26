@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Extensible control center
@@ -131,6 +131,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Thu Jun 26 2025 Alexander Davydzik <paladindev@altlinux.org> 0.3.1-alt1
+- show plugins list button when all plugins disabled (Closes: 54933)
+- translations improvements
+
 * Mon Jun 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.3.0-alt1
 - new plugins api features
 - added plugins list dialog
