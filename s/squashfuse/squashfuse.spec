@@ -3,7 +3,7 @@
 
 
 Name: squashfuse
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
 Summary: FUSE filesystem to mount squashfs archives
@@ -68,6 +68,9 @@ find ./ -name '*.la' -print -delete
 
 
 %changelog
+* Wed Jun 25 2025 Dmitrii Chuprov <cheese@altlinux.org> 0.6.1-alt1
+ - new version 0.6.1
+
 * Thu May 23 2024 Danil Shein <dshein@altlinux.org> 0.5.2-alt1
  - new version 0.5.2
 
