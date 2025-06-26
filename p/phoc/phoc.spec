@@ -1,26 +1,29 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.47
+%define ver_major 0.48
 %define api_ver 0
-%define beta %nil
+%define beta .rc1
 %define rdn_name sm.puri.Phoc
 %define xdg_name mobi.phosh.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 0.18.2
-%define gmobile_ver 0.1.0
-
-# since 0.45 system 0.18.2 may be used but patched version required
+%define wlroots_ver_major 0.19
+%define wlroots_ver %wlroots_ver_major.0
+# since 0.48 system 0.19.0 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+%define gmobile_ver 0.1.0
 %def_disable embed_gmobile
+# since 0.48
+%define gvdb_ver 4758f6f
+
 %def_enable gtk_doc
 %def_enable man
 %def_disable check
 
 Name: phoc
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -36,6 +39,7 @@ Source: %name-%version%beta.tar
 %endif
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 %{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
+Source3: gvdb-%gvdb_ver.tar
 
 %define glib_ver 2.74
 %define gmobile_ver 0.1.0
@@ -69,7 +73,9 @@ BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(hwdata)
 BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel glslang
-BuildRequires: pkgconfig(libliftoff)}
+BuildRequires: pkgconfig(libliftoff)
+# since 0.19 for 'color-management'
+BuildRequires: pkgconfig(lcms2)}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: libgtest-devel xvfb-run mutter-gnome /usr/bin/Xwayland}
@@ -89,14 +95,16 @@ This package provides development documentation for Phoc wayland
 compositor.
 
 %prep
-%setup -n %name-%version%beta %{?_enable_embed_gmobile:-a1} %{?_enable_embed_wlroots:-a2}
+%setup -n %name-%version%beta %{?_enable_embed_gmobile:-a1} %{?_enable_embed_wlroots:-a2} -a3
 %{?_enable_embed_gmobile:mv gmobile-%gmobile_ver subprojects/gmobile}
-%{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots
-pushd subprojects/wlroots
+%{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots-%wlroots_ver_major.x
+pushd subprojects/wlroots-%wlroots_ver_major.x
 for p in ../packagefiles/wlroots/*.patch; do
     patch -p1 -i $p
 done
 popd}
+
+mv gvdb-%gvdb_ver subprojects/gvdb
 
 %build
 %meson \
@@ -125,10 +133,12 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 
 %files
 %_bindir/%name
+%_bindir/%name-outputs-states
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
 %_iconsdir/hicolor/symbolic/apps/%xdg_name.svg
 %{?_enable_man:%_man1dir/%name.1*
+%_man1dir/%name-outputs-states.1*
 %_man5dir/%name.ini.5*
 %_man5dir/%name.gsettings.5*}
 %doc README.md NEWS
@@ -137,6 +147,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
+- 0.48_rc1
+
 * Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
 - 0.47.0
 

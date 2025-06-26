@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.47
-%define beta %nil
+%define ver_major 0.48
+%define beta .rc1
 %define libver 0.45
 %define gi_api_ver 0
 %define namespace Phosh
@@ -19,14 +19,15 @@
 # introspection is disabled by default
 %def_enable introspection
 %def_enable gtk_doc
+%def_enable vala
 %def_enable man
 # not installed
 %def_disable tools
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -47,11 +48,13 @@ Source10: gvc-%gvc_ver.tar
 # https://gitlab.gnome.org/World/Phosh/libcall-ui/
 Source11: libcall-ui-%callui_ver.tar
 
-Patch1: %name-0.28.0-alt-tcb-check.patch
+Patch1: %name-0.48.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
 Patch2: %name-0.43.0-alt-service.patch
 # https://bugzilla.altlinux.org/46978
 Patch3: %name-0.29.0-alt-service-dm.patch
+# https://bugzilla.altlinux.org/54947
+Patch4: %name-0.48-alt-tcb_egid_fix.patch
 
 %define gmobile_ver 0.1.0
 %define feedback_ver 0.7.0
@@ -77,7 +80,7 @@ Requires: sound-theme-phosh
 # since 0.45 to uninstall apps from app-grid
 Requires: gnome-software
 # since 0.46 (ALT #53890)
-Requires: xdg-desktop-portal-phosh
+Requires: xdg-desktop-portal-phosh >= %ver_major
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
@@ -121,6 +124,7 @@ BuildRequires: pkgconfig(appstream) >= %appstream_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0
 BuildRequires: gir(GnomeDesktop) = 3.0} gir(GnomeBluetooth) = 3.0
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core
@@ -174,9 +178,10 @@ This package contains development files for Phosh shared library.
 mv gvc-%gvc_ver subprojects/gvc
 mv libcall-ui-%callui_ver subprojects/libcall-ui
 }
-%patch1 -p2
+%patch1 -p1 -b .tcb
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
+%patch4 -p1 -b .tcb_egid_fix
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 # full path to capsh
 sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
@@ -189,6 +194,7 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 %meson \
     %{subst_enable_meson_bool shared_libs bindings-lib} \
     %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool man man} \
     %{subst_enable_meson_bool tools tools} \
@@ -251,6 +257,9 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/wifi-hotspot-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-scaling-quick-setting.so
 %_libdir/%name/plugins/scaling-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-media-players.so
+%_libdir/%name/plugins/media-players.plugin
+
 %doc NEWS README.md
 
 %files data
@@ -294,9 +303,15 @@ xvfb-run %__meson_test
 %_libdir/lib%name-%libver.so
 %_pkgconfigdir/lib%name-%libver.pc
 %{?_enable_introspection:%_girdir/%namespace-%gi_api_ver.gir}
+%{?_enable_vala:%_vapidir/lib%name-%libver.*}
 }
 
 %changelog
+* Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
+- 0.48_rc1
+- updated alt-tcb-check.patch (ALT #46389)
+- added alt-tcb_egid_fix.patch (ALT #54947)
+
 * Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
 - 0.47.0
 

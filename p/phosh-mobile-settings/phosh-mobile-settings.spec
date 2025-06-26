@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.47
-%define beta %nil
+%define ver_major 0.48
+%define beta .rc1
 %define gmobile_ver 0.2.1
 %define rdn_name mobi.phosh.MobileSettings
 
@@ -13,8 +13,8 @@
 %define gvc_ver 5f9768a
 
 Name: phosh-mobile-settings
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: Mobile Settings App for phosh and related components
 Group: Graphical desktop/GNOME
@@ -37,6 +37,8 @@ Source10: gvc-%gvc_ver.tar
 %define desktop_ver 44
 
 Requires: dconf feedbackd lm_sensors3
+# and ModemManager 1.25.1
+Requires: cellbroadcastd
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
@@ -102,6 +104,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
+- v0.48_rc1-7-g91a52c3
+
 * Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
 - 0.47.0
 
