@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Helpers to assist with building Python packages with compiled C/Cython extensions
@@ -48,5 +48,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/extension_helpers-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Thu Apr 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus.
