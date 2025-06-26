@@ -1,6 +1,6 @@
 %define distro kworkstation
 Name: installer-distro-%distro
-Version: 10.2
+Version: 11.0
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -17,13 +17,15 @@ Summary: Installer stage2
 Group: System/Configuration/Other
 Provides: installer-%distro-stage2 = %version
 Requires: installer-stage2
+Requires: x-cursor-theme-jimmac
 #modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
 Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
-Requires: x-cursor-theme-jimmac
+Requires: alterator-net-eth
+Requires: installer-feature-network-settings-copy
 
 %description stage2
 Centaurus Installer stage2.
@@ -36,7 +38,6 @@ Requires: installer-stage3
 #modules
 Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
-Requires: alterator-net-eth
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
@@ -65,6 +66,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Thu Jun 26 2025 Sergey V Turchin <zerg@altlinux.org> 11.0-alt1
+- move network setup step to stage2
+
 * Thu Apr 25 2024 Ajrat Makhmutov <rauty@altlinux.org> 10.2-alt1
 - select additional applications before partitioning the disk
 
