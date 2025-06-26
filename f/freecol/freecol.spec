@@ -2,7 +2,7 @@
 
 Name: freecol
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: FreeCol is opensource Colonization clone.
 Url: http://freecol.org
 Vcs: https://github.com/FreeCol/freecol
@@ -71,6 +71,10 @@ install -p %SOURCE2 %buildroot%_niconsdir/%name.xpm
 %_niconsdir/%name.xpm
 
 %changelog
+* Thu Jun 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt2
+- fixed launch via application shortcut in Plasma 
+- fixed the display of the icon application shortcut in the Gnome
+
 * Wed Jun 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
 - 0.11.6 -> 1.1.0
 
