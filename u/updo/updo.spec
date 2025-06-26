@@ -1,10 +1,10 @@
 %global import_path github.com/Owloops/updo
 
 Name: updo
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
-Summary: Uptime monitoring CLI tool with alerting and advanced settings
+Summary: Uptime monitoring CLI tool
 License: MIT
 Group: Other
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 
 %description
-%summary
+Uptime monitoring CLI tool with alerting and advanced settings.
 
 %prep
 %setup -a1
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Thu Jun 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.3-alt1
+- 0.2.2 -> 0.2.3
+
 * Wed Jun 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt1
 - 0.1.8 -> 0.2.2
 
