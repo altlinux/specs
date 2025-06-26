@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.8.6
+Version: 1.9.0
 Release: alt1
 
 Summary: Rust within Python
@@ -14,6 +14,7 @@ Source2: pyproject_deps.json
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(bzip2)
+#BuildRequires: pkgconfig(libzstd)
 BuildRequires: python3(semantic_version)
 %pyproject_builddeps_build
 
@@ -35,6 +36,8 @@ tar xf %SOURCE1
 %endif
 
 %build
+# zstd-sys three levels down doesn't like lto
+%define optflags_lto %nil
 export CARGO_HOME=${PWD}/cargo
 %pyproject_deps_resync_build
 %pyproject_build
@@ -49,6 +52,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.0-alt1
+- 1.9.0 released
+
 * Wed May 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.6-alt1
 - 1.8.6 released
 
