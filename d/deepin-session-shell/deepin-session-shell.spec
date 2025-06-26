@@ -3,24 +3,24 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 6.0.18
-Release: alt2
+Version: 5.6.4.0.420.59e7
+Release: alt1
+Epoch: 1
 
 Summary: Deepin desktop-environment - Session shell module
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-shell
+VCS: https://github.com/linuxdeepin/dde-session-shell.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-Requires: chkpwd-pam
+# Requires: chkpwd-pam
 
-BuildRequires(pre): rpm-build-ninja rpm-build-kf5 rpm-build-xdg deepin-gettext-tools
-# Automatically added by buildreq on Wed Oct 25 2023
-# optimized out: alt-os-release bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libcap-ng libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt liblightdm-gobject liblightdm-qt5 libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base dqt5-base-common dqt5-base-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel lightdm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel
+BuildRequires(pre): deepin-gettext-tools
+BuildRequires: cmake dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXcursor-devel libXrandr-devel libXtst-devel libcups-devel libdtk6widget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel lightdm-devel
 %if_with clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -39,18 +39,21 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 # sed -i '/kwin_wayland/s|/usr/bin/||' \
 #     files/wayland/kwin_wayland_helper-wayland \
-#     files/wayland/deepin-greeter-wayland
-sed -i 's|/usr/lib/x86_64-linux-gnu/|%_libdir/|' \
+#     files/wayland/launch-kwin-wayland
+sed -i 's|/usr/lib/x86_64-linux-gnu/qt5|%_libdir/dqt6|' \
     files/wayland/lightdm-deepin-greeter-wayland \
-    files/wayland/deepin-greeter-wayland
-sed -i '/QT_QPA_PLATFORM_PLUGIN_PATH/s|/usr/plugins/platforms|%_libdir/dqt5/plugins/platforms|' \
+    files/wayland/launch-kwin-wayland
+sed -i '/QT_QPA_PLATFORM_PLUGIN_PATH/s|/usr/plugins/platforms|%_libdir/dqt6/plugins/platforms|' \
     files/wayland/lightdm-deepin-greeter-wayland
-sed -i 's|/usr/lib/|%_libdir/|' \
-    src/global_util/modules_loader.cpp \
-    src/session-widgets/auth_module.h
+sed -i 's|/usr/lib/|%_libdir/|g' \
+    src/global_util/plugin_manager/modules_loader.cpp
+sed -i '/execute_process/s|/usr/lib/qt${QT_VERSION_MAJOR}/bin|%_dqt6_bindir|' \
+    CMakeLists.txt
+sed -i '/LIBRARY DESTINATION/s|lib/|${LIB_DESTINATION}/|' \
+    $(find ./plugins -name CMakeLists.txt)
 
 %build
 %if_with clang
@@ -58,28 +61,25 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+  -DLIB_DESTINATION=%_lib \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 chmod +x %buildroot%_bindir/deepin-greeter
 
 %files
+%dir %_sysconfdir/deepin/
+%dir %_sysconfdir/deepin/greeters.d/
 %config(noreplace) %_sysconfdir/deepin/greeters.d/00-xrandr
 %config(noreplace) %_sysconfdir/deepin/greeters.d/lightdm-deepin-greeter
 %config(noreplace) %_sysconfdir/deepin/greeters.d/10-cursor-theme
+%dir %_sysconfdir/lightdm/deepin/
+%config(noreplace) %_sysconfdir/lightdm/deepin/qt-theme.ini
 %config(noreplace) %_sysconfdir/pam.d/dde-lock
+%config(noreplace) %_sysconfdir/pam.d/deepin-lightdm-autologin
 %_bindir/deepin-greeter
 %_bindir/lightdm-deepin-greeter
 %_bindir/dde-lock
@@ -87,20 +87,25 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_desktopdir/dde-lock.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
-%_datadir/glib-2.0/schemas/com.deepin.dde.session-shell.gschema.xml
 %dir %_datadir/deepin-authentication/
 %dir %_datadir/deepin-authentication/privileges/
 %_datadir/deepin-authentication/privileges/lightdm-deepin-greeter.conf
-%dir %_libdir/dde-session-shell/
-%dir %_libdir/dde-session-shell/modules/
-%_libdir/dde-session-shell/modules/libvirtualkeyboard.so
+%_libdir/security/pam_inhibit_autologin.so
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/
 %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/org.deepin.dde.lightdm-deepin-greeter.json
 %dir %_datadir/dsg/configs/org.deepin.dde.lock/
 %_datadir/dsg/configs/org.deepin.dde.lock/org.deepin.dde.lock.json
-%_sysconfdir/lightdm/deepin/qt-theme.ini
+%dir %_datadir/dsg/configs/org.deepin.dde.session-shell/
+%_datadir/dsg/configs/org.deepin.dde.session-shell/org.deepin.dde.session-shell.json
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.session-shell.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.session-shell.json
+%_datadir/lightdm/lightdm.conf.d/50-deepin.conf
 
 %files devel
 %dir %_includedir/dde-session-shell/
@@ -109,6 +114,11 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Wed Jun 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.420.59e7-alt1
+- New version 5.6.4-420-g59e74747 (all new tags are gone).
+- Added VCS tag.
+- Switched to Qt6.
+
 * Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt2
 - Built via separate qt5 instead system (ALT #48138).
 

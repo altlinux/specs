@@ -6,21 +6,21 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.5.44
-Release: alt2
+Version: 6.5.68
+Release: alt1
 
 Summary: Deepin File Manager
 
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-file-manager
-Vcs: git://github.com/linuxdeepin/dde-file-manager.git
+Vcs: https://github.com/linuxdeepin/dde-file-manager.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch0: deepin-file-manager-6.5.42-alt-fixes-paths.patch
-Patch1: deepin-file-manager-6.5.42-alt-fixes-underlinked-elfs.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-file-manager-6.5.68-alt-fixes-paths.patch
 Patch2: deepin-file-manager-6.5.44-alt-options-uos.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
@@ -33,7 +33,8 @@ Provides: %repo = %EVR
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Tue Apr 01 2025
 # optimized out: boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libX11-devel libdde-shell0 libdeepin-pdfium1 libdeepin-qdbus-service0 libdfm6-burn1 libdfm6-io1 libdfm6-mount1 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdtk6widget-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libicu-devel libjson-c5 libp11-kit libpng-devel libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libpoppler2-cpp libqt6-core libqt6-gui libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-devel sh5 vulkan-headers xorg-proto-devel zlib-devel
-BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-qt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel
+BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-qt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel libdfm6-search-devel
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql
 BuildRequires: deepin-gettext-tools deepin-desktop-base libfreetype-devel libpng-devel
 
 %if_with clang
@@ -191,6 +192,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
 %_datadir/dbus-1/services/org.deepin.Filemanager.Daemon.service
+%_datadir/dbus-1/services/org.deepin.Filemanager.TextIndex.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.DiskEncrypt.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.MountControl.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.UserShareManager.service
@@ -216,6 +218,8 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.file-manager/
 %_datadir/dsg/configs/org.deepin.dde.file-manager/*.json
+%dir %_datadir/dsg/configs/org.deepin.dde.dock/
+%_datadir/dsg/configs/org.deepin.dde.dock/*.json
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
@@ -298,6 +302,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Jun 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.68-alt1
+- New version 6.5.68.
+
 * Thu Apr 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.44-alt2
 - Always use xdg-open (ALT #53701).
 

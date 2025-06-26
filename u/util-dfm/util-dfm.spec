@@ -1,9 +1,11 @@
+%define _libexecdir %_prefix/libexec
+
 %def_without clang
 
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.15
+Version: 1.3.30
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
@@ -14,7 +16,8 @@ Url: https://github.com/linuxdeepin/util-dfm
 Vcs: https://github.com/linuxdeepin/util-dfm.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: util-dfm-1.3.15-alt-pkgconfig-dqt6.patch
+Patch0: %name-%version-%release.patch
+Patch1: util-dfm-1.3.30-alt-pkgconfig-dqt6.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel dtk6-common-devel libdtk6core-devel liblucene++-devel
@@ -42,7 +45,7 @@ Summary: Library for %name
 Group: System/Libraries
 
 %description -n libdfm6-io%sover
-This package provides libdfm-io1 library for %name.
+This package provides libdfm-io library for %name.
 
 %package -n libdfm6-io-devel
 Summary: Development files for %name
@@ -56,7 +59,7 @@ Summary: Library for %name
 Group: System/Libraries
 
 %description -n libdfm6-mount%sover
-This package provides libdfm-mount1 library for %name.
+This package provides libdfm-mount library for %name.
 
 %package -n libdfm6-mount-devel
 Summary: Development files for %name
@@ -70,7 +73,7 @@ Summary: Library for %name
 Group: System/Libraries
 
 %description -n libdfm6-burn%sover
-This package provides libdfm-burn1 library for %name.
+This package provides libdfm-burn library for %name.
 
 %package -n libdfm6-burn-devel
 Summary: Development files for %name
@@ -79,12 +82,19 @@ Group: Development/Other
 %description -n libdfm6-burn-devel
 This package provides development files for libdfm-burn.
 
+%package -n dfm6-search-client
+Summary: dfm6-search-client by %name
+Group: Graphical desktop/Other
+
+%description -n dfm6-search-client
+This package provides dfm6-search-client aka dfm-search.
+
 %package -n libdfm6-search%sover
 Summary: Library for %name
 Group: System/Libraries
 
 %description -n libdfm6-search%sover
-This package provides libdfm-search1 library for %name.
+This package provides libdfm-search library for %name.
 
 %package -n libdfm6-search-devel
 Summary: Development files for %name
@@ -107,7 +117,6 @@ export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %DQ6build \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DPROJECT_VERSION=%version \
   -DVERSION=%version \
 #
@@ -154,6 +163,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_libdir/cmake/dfm6-burn/
 %_libdir/cmake/dfm6-burn/dfm6-burnConfig.cmake
 
+%files -n dfm6-search-client
+%_libexecdir/dfm6-search-client
+
 %files -n libdfm6-search%sover
 %_libdir/libdfm6-search.so.%sover
 %_libdir/libdfm6-search.so.%version
@@ -164,9 +176,12 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_includedir/dfm6-search/dfm-search/
 %_pkgconfigdir/dfm6-search.pc
 %dir %_libdir/cmake/dfm6-search/
-%_libdir/cmake/dfm6-search/dfm6-searchConfig.cmake
+%_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Thu Jun 26 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.30-alt1
+- New version 1.3.30.
+
 * Mon Apr 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.15-alt1
 - New version 1.3.15.
 - Fixed build with cmake 4.0.0.

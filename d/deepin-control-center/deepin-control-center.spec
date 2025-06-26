@@ -7,7 +7,7 @@
 
 Name: deepin-control-center
 Version: 6.1.32
-Release: alt1
+Release: alt2
 
 Summary: New control center for Linux Deepin
 
@@ -19,7 +19,7 @@ Vcs: https://github.com/linuxdeepin/dde-control-center.git
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
 Patch1: deepin-control-center-6.1.4-alt-qch.patch
-Patch2: deepin-control-center-6.1.23-alt-fixes-underlinked-libs.patch
+Patch2: deepin-control-center-6.1.32-alt-fixes-underlinked-libs.patch
 
 #FAILED: src/plugin-mouse/CMakeFiles/mouse.dir/mouse_autogen/OYYSJO5W5K/qrc_mouse.cpp.o
 #virtual memory exhausted: Cannot allocate memory
@@ -150,6 +150,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Thu Jun 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.32-alt2
+- Fixed underlinked accounts plugin.
+
 * Wed Jun 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.32-alt1
 - New version 6.1.32.
 
