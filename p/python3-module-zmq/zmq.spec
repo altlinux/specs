@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 26.4.0
+Version: 27.0.0
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -134,6 +134,9 @@ rm -v zmq/__init__.py
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 27.0.0-alt1
+- Automatically updated to 27.0.0.
+
 * Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 26.4.0-alt1
 - Automatically updated to 26.4.0.
 
