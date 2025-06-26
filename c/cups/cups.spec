@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.12
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -65,6 +65,7 @@ Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
 Patch513: ALT-fc-lspp.patch
 Patch514: ALT-checkpo.patch
+Patch515: ALT-2.4.12-chromatic-colormodel-names.patch
 
 # ALT SE related patches
 Patch552: ALT-ipp-alt-extension-copy-document.patch
@@ -182,6 +183,7 @@ services using the main CUPS library "libcups".
 %patch512 -p2
 %patch513 -p1
 %patch514 -p1
+%patch515 -p1
 
 # ALT SE related patches
 %patch552 -p1
@@ -403,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Thu Jun 26 2025 Constantin Sunzow <protvin@altlinux.org> 2.4.12-alt2
+- Additional chromatic color model names support (ALT 46437, 54542).
+
 * Tue Apr 08 2025 Anton Farygin <rider@altlinux.com> 2.4.12-alt1
 - 2.4.11 -> 2.4.12
 
