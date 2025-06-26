@@ -1,4 +1,4 @@
-%ifarch %ix86 ppc64le armh
+%ifarch %ix86
 %def_disable check
 %endif
 
@@ -24,6 +24,7 @@
 %endif
 %def_enable debug
 # External library support
+%def_enable amf
 %def_enable bzlib
 %def_enable chromaprint
 %def_enable frei0r
@@ -65,6 +66,7 @@
 %def_enable libplacebo
 %def_enable libpulse
 %def_enable librabbitmq
+%def_enable librav1e
 %def_enable librsvg
 %def_disable librtmp
 %def_enable librubberband
@@ -91,6 +93,7 @@
 %def_enable lv2
 %def_enable openal
 %def_enable opengl
+%def_enable opencl
 %def_enable sdl2
 %def_enable vaapi
 %def_enable vdpau
@@ -109,7 +112,6 @@
 %def_disable libmodplug
 %def_disable libmysofa
 %def_disable libopenmpt
-%def_disable librav1e
 %def_disable libshine
 %def_enable libsrt
 %def_disable libtensorflow
@@ -118,7 +120,6 @@
 %def_disable libxavs2
 %def_disable mbedtls
 %def_disable omx
-%def_disable opencl
 %def_disable pocketsphinx
 %def_disable vapoursynth
 %def_enable v4l2_m2m
@@ -137,7 +138,7 @@
 
 # nvidia cuda doesn't support arm, mips and others
 # https://developer.nvidia.com/nvidia-video-codec-sdk/download
-%ifarch %ix86 x86_64 aarch64 ppc64le
+%ifarch %ix86 x86_64 aarch64
 %def_enable cuvid
 %else
 %def_disable cuvid
@@ -151,9 +152,6 @@
 %define swresamplever 5
 %define swscalever 8
 %define avutilver 59
-%ifarch ppc64le armh
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%endif
 
 %ifarch %ix86
 %global optflags_lto %nil
@@ -162,7 +160,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	7.1.1
-Release:	alt2
+Release:	alt3
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -218,6 +216,7 @@ BuildRequires:	yasm
 %{?_enable_libopus:BuildRequires: libopus-devel}
 %{?_enable_libplacebo:BuildRequires: libplacebo-devel}
 %{?_enable_libpulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_librav1e:BuildRequires: librav1e-devel}
 %{?_enable_librsvg:BuildRequires: librsvg-devel}
 %{?_enable_librubberband:BuildRequires: librubberband-devel libstdc++-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
@@ -244,12 +243,14 @@ BuildRequires:	yasm
 %{?_enable_libzvbi:BuildRequires: libzvbi-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel lv2-devel}
 %{?_enable_openal:BuildRequires: libopenal-devel}
+%{?_enable_opencl:BuildRequires: ocl-icd-devel}
 %{?_enable_opengl:BuildRequires: libGL-devel}
 %{?_enable_sdl2:BuildRequires: libSDL2-devel}
 %{?_enable_vaapi:BuildRequires: libva-devel}
 %{?_enable_vdpau:BuildRequires: libvdpau-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_cuvid:BuildRequires: nv-codec-headers}
+%{?_enable_amf:BuildRequires: AMF-devel}
 
 %define common_descr \
 FFmpeg is a collection of libraries and tools to process multimedia content\
@@ -579,21 +580,10 @@ xz Changelog
 %if_enabled v4l2_request
 	--enable-v4l2-request \
 %endif
-%ifarch mips mipsel mips64 mips64el
-	--disable-mipsdsp \
-	--disable-mipsdspr2 \
-	--disable-loongson2 \
-	--disable-loongson3 \
-	--disable-mmi \
-	--disable-mips32r5 \
-	--disable-mips32r6 \
-	--disable-mips64r6 \
-	--disable-msa \
+%ifarch riscv64
+	--disable-rvv \
 %endif
-%ifarch mips mipsel
-	--disable-mipsfpu \
-	--extra-libs="-latomic" \
-%endif
+	%{subst_enable amf} \
 	%{subst_enable gpl} \
 	%{subst_enable version3} \
 	%{subst_enable pthreads} \
@@ -649,6 +639,7 @@ xz Changelog
 	%{subst_enable libopus} \
 	%{subst_enable libplacebo} \
 	%{subst_enable libpulse} \
+	%{subst_enable librav1e} \
 	%{subst_enable librsvg} \
 	%{subst_enable librtmp} \
 	%{subst_enable librubberband} \
@@ -702,16 +693,12 @@ xz Changelog
 	--disable-stripping \
 	--enable-pic \
 	--extra-cflags="%optflags" \
-%ifarch ppc64le armh
-	 --extra-ldflags='-flto -fuse-linker-plugin' \
-	 --ar=gcc-ar \
-%endif	
 %ifarch x86_64 aarch64
 	%{?optflags_lto:--enable-lto } \
 %endif
 	--extra-version='%release' \
 	#
-%make_build all checkasm
+%make_build V=1 all checkasm
 
 %install
 %makeinstall_std
@@ -719,6 +706,7 @@ xz Changelog
 %check
 export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavutil:libpostproc:libswresample:libswscale"
 tests/checkasm/checkasm
+%make_build V=1 alltools examples testprogs
 %make check
 
 %files
@@ -871,6 +859,15 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Thu Jun 26 2025 Anton Farygin <rider@altlinux.com> 2:7.1.1-alt3
+- built with amf support (closes: #54937)
+- built with opencl support
+- built with librav1e support (again)
+- sync with riscv64 changes:
+   + build testprogs in parallel
+   + run make in verbose mode when building
+   + disabled rvv for riscv64
+
 * Tue May 06 2025 Anton Farygin <rider@altlinux.com> 2:7.1.1-alt2
 - fixed build with libv4l2 1.30
 - built with libsmbclient (closes: #53816)
