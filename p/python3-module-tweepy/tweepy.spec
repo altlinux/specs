@@ -1,7 +1,7 @@
 %define oname tweepy
 
 Name:    python3-module-%oname
-Version: 4.15.0
+Version: 4.16.0
 Release: alt1
 
 Summary: Twitter library for python
@@ -18,8 +18,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
 
 Provides: tweepy = %version
 
@@ -29,9 +28,6 @@ entire API, and streaming API.
 
 %prep
 %setup
-
-sed -i 's/4.14/4.15/' tweepy/__init__.py
-
 
 %build
 %pyproject_build
@@ -47,6 +43,9 @@ rm -rf %buildroot%python3_sitelibdir/examples
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 4.16.0-alt1
+- Automatically updated to 4.16.0.
+
 * Thu Jan 16 2025 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt1
 - Automatically updated to 4.15.0.
 
