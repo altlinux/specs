@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.53.0
-Release: alt1
+Version: 2.54.0
+Release: alt1.1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,6 +68,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch: 0001-Allow-to-use-losetup-not-from-busybox.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -400,6 +401,25 @@ fi
 %endif
 
 %changelog
+* Wed Jun 25 2025 Anton Midyukov <antohami@altlinux.org> 2.54.0-alt1.1
+- Allow to use losetup not from busybox
+
+* Wed Jun 25 2025 Anton Midyukov <antohami@altlinux.org> 2.54.0-alt1
+- Feature runtime:
+  + Add boot option to preload kernel modules.
+  + Add boot option to blacklist some kernel modules.
+  + Use own utility to switch root.
+- Feature runtime-compressed-fs:
+  + This feature introduces support for building a compressed initramfs
+    to significantly reduce memory usage during system boot.
+- Guess device-tree:
+  + This feature scans the device tree [1] for compatible nodes and
+    determines which kernel modules are required for the current
+    hardware.
+- Guess loaded-modules:
+  + Drop this guess feature. This feature was needed as a workaround to
+    the problem of not being able to parse Device Tree (DT).
+
 * Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 2.53.0-alt1
 - Build System:
   + Add the ability to compile and work with musl system library.
