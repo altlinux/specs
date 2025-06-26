@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 Summary: Highly flexible, no magic input validation library
 License: MIT
@@ -58,7 +58,7 @@ This package contains tests for pycerberus.
 %files
 %doc *.txt docs
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.0.dist-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/test*
 %exclude %python3_sitelibdir/*/__pycache__/test*
 
@@ -67,6 +67,9 @@ This package contains tests for pycerberus.
 %python3_sitelibdir/*/__pycache__/test*
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Automatically updated to 0.7.1.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.7-alt1
 - Build new version.
 
