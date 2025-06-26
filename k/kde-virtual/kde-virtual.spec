@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.9
+Version: 6.0.10
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -253,7 +253,7 @@ Obsoletes: kde5-messenger-client-6-mix < %EVR
 Provides: kde-messenger-client = %EVR
 Provides: kde-messenger-client-mix = %EVR
 Requires: kde-common
-#Requires: neochat
+Requires: neochat
 Requires: tokodon
 #Requires: choqok
 #Requires: jami
@@ -352,6 +352,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Thu Jun 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.10-alt1
+- require neochat
+
 * Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 6.0.9-alt1
 - use thunderbird_arch macro for kde-email-client files
 
