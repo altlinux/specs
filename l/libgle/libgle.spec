@@ -6,15 +6,15 @@
 %define oname gle
 
 Name: lib%oname
-Version: 3.1.0
-Release: alt7.3.qa1
+Version: 3.1.2
+Release: alt1
 Summary: The GLE Tubing and Extrusion Library for OpenGL
-License: GPL
+License: GPL-2.0
 Group: System/Libraries
-Url: http://www.linas.org/gle/
+Url: http://www.linas.org/gle
+Vcs: https://github.com/linas/glextrusion.git
 
-Source: %url/pub/%oname-%version.tar.gz
-Patch: %name-3.1.0-alt-link.patch
+Source: %name-%version.tar
 
 BuildRequires: libXi-devel libXmu-devel libfreeglut-devel
 
@@ -62,11 +62,11 @@ and extrusions.
 This package contains documentation.
 
 %prep
-%setup -q -n %oname-%version
-#patch -p1
+%setup -q -n %name-%version
 
 %build
 export lt_cv_prog_cc_static_works=no
+%autoreconf
 %configure \
 	--disable-static
 %make_build libgle_la_LIBADD="-lGL -lGLU"
@@ -93,6 +93,9 @@ mv %buildroot%_docdir/%oname %buildroot%_docdir/%name-%version
 %doc %_docdir/%name-%version/html
 
 %changelog
+* Thu Jun 26 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.1.2-alt1
+- new version
+
 * Thu Jul 12 2018 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt7.3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
