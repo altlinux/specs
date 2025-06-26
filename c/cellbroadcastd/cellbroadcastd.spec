@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define libname libcellbroadcast
@@ -21,8 +21,8 @@
 
 
 Name: cellbroadcastd
-Version: %ver_major.0
-Release: alt0.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Cell broadcast daemon
 Group: System/Servers
@@ -43,7 +43,8 @@ Source1: gvdb-%gvdb_ver.tar
 %define gmobile_ver 0.4.0
 %define mm_ver 1.24.0
 
-Requires: %libname = %EVR
+# daemon is linked statically for now
+#Requires: %libname = %EVR
 Requires: ModemManager >= %mm_ver
 Requires: mobile-broadband-provider-info
 
@@ -118,6 +119,7 @@ sed -i 's/install: false/install: true/' %libname/meson.build
 
 %install
 %meson_install
+rm -f %buildroot%_libdir/*.a
 
 %check
 %__meson_test
@@ -154,6 +156,9 @@ sed -i 's/install: false/install: true/' %libname/meson.build
 %endif
 
 %changelog
+* Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt1
+- 0.0.1
+
 * Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.0-alt0.1
 - first build for Sisyphus (4818d8d)
 
