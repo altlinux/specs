@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -35,19 +35,26 @@ install -Dm755 %name %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,database,image}
 install -m755 dependencies.sh %buildroot%_datadir/%name/
+install -m755 winetricks_* %buildroot%_datadir/%name/
 install -m644 sha256sum.list %buildroot%_datadir/%name/
 install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
 install -m644 image/* %buildroot%_datadir/%name/image/
-cp -v winetricks_* %buildroot%_datadir/%name/
+
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
+install -m644 auto_completion/bash_completion/%name %buildroot%_sysconfdir/bash_completion.d/
 
 %files
 %doc LICENSE CHANGELOG COPYING THIRD-PARTY
 %_bindir/%name
 %_datadir/%name
+%_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Thu Jun 26 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.6-alt1
+- 0.4.6
+
 * Thu Jun 19 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
