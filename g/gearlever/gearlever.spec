@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: gearlever
-Version: 3.0.2
+Version: 3.3.3
 Release: alt1
 
 Summary: Manage AppImages
@@ -14,7 +14,11 @@ Url: https://mijorus.it/projects/gearlever/
 Vcs: https://github.com/mijorus/gearlever
 Source: %name-%version.tar
 
+Patch0: gearlever-3.3.3-alt-fix_get_appimage_offset_path.patch
+
 %add_python3_path %_datadir/%name
+
+%filter_from_requires /^\/usr\/bin\/bash/d
 
 AutoProv: nopython3
 
@@ -41,6 +45,7 @@ app metadata, update apps in-place or keep multiple versions side-by-side.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %meson
@@ -49,6 +54,7 @@ app metadata, update apps in-place or keep multiple versions side-by-side.
 %install
 %meson_install
 rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
+install -Dm755 "build-aux/get_appimage_offset.sh" "%buildroot%_libexecdir/%name/get_appimage_offset"
 %find_lang --with-gnome %name
 
 %check
@@ -57,6 +63,7 @@ rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
 %files -f %name.lang
 %_bindir/%name
 %_datadir/appdata/%APP_ID.appdata.xml
+%_libexecdir/%name/get_appimage_offset
 %_desktopdir/%APP_ID.desktop
 %_datadir/%name
 %_datadir/glib-2.0/schemas/%APP_ID.gschema.xml
@@ -64,6 +71,9 @@ rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Wed Jun 25 2025 Semen Fomchenkov <armatik@altlinux.org> 3.3.3-alt1
+- New version 3.3.3
+
 * Thu Mar 20 2025 Oleg Shchavelev <oleg@altlinux.org> 3.0.2-alt1
 - New version 3.0.2
 - Enable strict mode for unpackaged files
