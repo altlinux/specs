@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 3.2.0
-Release: alt1.1
+Version: 3.2.1
+Release: alt1
 
 Summary: Use portend to monitor TCP ports for bound or unbound states
 
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt1
+- Automatically updated to 3.2.1.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
