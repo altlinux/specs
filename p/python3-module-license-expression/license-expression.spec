@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 30.4.2
+Version: 30.4.3
 Release: alt1
 Summary: Comprehensive utility library to parse, compare, simplify and normalize license expressions
 License: Apache-2.0
@@ -51,6 +51,9 @@ using boolean logic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 26 2025 Stanislav Levin <slev@altlinux.org> 30.4.3-alt1
+- 30.4.2 -> 30.4.3.
+
 * Wed Jun 25 2025 Stanislav Levin <slev@altlinux.org> 30.4.2-alt1
 - 30.4.1 -> 30.4.2.
 
