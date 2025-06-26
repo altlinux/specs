@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.16.10
-Release: alt2
+Version: 1.16.12
+Release: alt1
 
 Summary: A Python handler for mkdocstrings
 License: ISC
@@ -75,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.16.12-alt1
+- Automatically updated to 1.16.12.
+
 * Wed Apr 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.16.10-alt2
 - Built with new inline-snapshot.
 
