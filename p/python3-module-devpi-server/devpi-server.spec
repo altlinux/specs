@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.15.0
+Version: 6.16.0
 Release: alt1
 Summary: Reliable private and pypi.org caching server
 License: MIT
@@ -22,6 +22,8 @@ Requires: python3-modules-sqlite3
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
+# not packaged yet
+%add_pyproject_deps_build_filter setuptools-changelog-shortener
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter pytest-github-actions-annotate-failures
@@ -36,6 +38,7 @@ Server for private package indexes and PyPI caching.
 %prep
 %setup
 %autopatch -p1
+cd server
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -43,9 +46,11 @@ Server for private package indexes and PyPI caching.
 %endif
 
 %build
+cd server
 %pyproject_build
 
 %install
+cd server
 %pyproject_install
 
 # tests are packaged on purpose because they are required by other devpi
@@ -53,6 +58,7 @@ Server for private package indexes and PyPI caching.
 # have third party dependencies (don't enable autoreq for python)
 
 %check
+cd server
 %pyproject_run_pytest -ra
 
 %files
@@ -64,6 +70,9 @@ Server for private package indexes and PyPI caching.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 26 2025 Stanislav Levin <slev@altlinux.org> 6.16.0-alt1
+- 6.15.0 -> 6.16.0.
+
 * Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 6.15.0-alt1
 - 6.14.0 -> 6.15.0.
 
