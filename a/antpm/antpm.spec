@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 Name: antpm
 Version: 1.24
-Release: alt1
+Release: alt2
 
 Summary: ANT+ information retrieval client for Garmin GPS products
 License: GPL-3.0
@@ -74,5 +75,8 @@ mv -v %buildroot%_bindir/gant %buildroot%_bindir/antpm-garmin-ant-downloader
 %_udevrulesdir/*.rules
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt2
+- Applied repocop fix for sisyphus_check
+
 * Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt1
 - Initial build for Sisyphus

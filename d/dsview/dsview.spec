@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 Name: dsview
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: GUI for DreamSourceLab USB-based instruments
 License: GPL-3.0
@@ -41,6 +42,10 @@ DreamSourceLab, including logic analyzers, oscilloscopes, etc.
 %install
 %cmake_install
 
+# move udev-rule file to the correct location
+mkdir -pv %buildroot%_udevrulesdir/
+mv -v %buildroot/usr/lib/udev/rules.d/60-dreamsourcelab.rules %buildroot%_udevrulesdir/
+
 %check
 %ctest
 
@@ -57,5 +62,8 @@ DreamSourceLab, including logic analyzers, oscilloscopes, etc.
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt2
+- Applied repocop fix for sisyphus_check
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
 - Initial build for Sisyphus

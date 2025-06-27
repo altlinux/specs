@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _tmpfilesdir /lib/tmpfiles.d
 
 Name: nwg-hello
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: GTK3-based greeter for greetd written in python
 License: MIT
@@ -64,5 +65,8 @@ install -Dm 644 %{name}.tmpfiles %buildroot/%_tmpfilesdir/%{name}.conf
 %_var/cache/%name/cache.json
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
+- Applied repocop fix for sisyphus_check
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus

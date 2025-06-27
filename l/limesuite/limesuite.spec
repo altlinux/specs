@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 Name: limesuite
 Version: 23.11.0
-Release: alt1
+Release: alt2
 
 Summary: Driver and GUI for LMS7002M-based SDR platforms
 License: Apache-2.0
@@ -42,6 +43,7 @@ or the Novena with LMS7 RF board.
 %setup
 %patch -p1
 sed -i 's|MODE="660"|MODE="666"|g' udev-rules/64-limesuite.rules
+sed -i 's|^Categories=.*|Categories=Development;Debugger;|' Desktop/lime-suite.desktop
 
 %build
 %cmake \
@@ -93,5 +95,8 @@ sed -i 's|MODE="660"|MODE="666"|g' udev-rules/64-limesuite.rules
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 23.11.0-alt2
+- Applied repocop fix for sisyphus_check, freedesktop-categories
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 23.11.0-alt1
 - Initial build for Sisyphus

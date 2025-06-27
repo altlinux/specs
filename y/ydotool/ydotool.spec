@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 Name: ydotool
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: Generic command-line automation tool (no X!)
 License: AGPL-3.0
@@ -58,5 +59,8 @@ echo "      Finally reboot the machine to activate the installed udev rule."
 %_udevrulesdir/80-uinput.rules
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.4-alt2
+- Applied repocop fix for sisyphus_check
+
 * Sat May 24 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus

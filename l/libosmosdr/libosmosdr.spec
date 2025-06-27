@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 %define sover 0
 %define libname %{name}%{sover}
 
 Name: libosmosdr
 Version: 0.1.r10.gba4fd96
-Release: alt1
+Release: alt2
 
 Summary: Software defined radio support for OsmoSDR hardware
 License: GPL-3.0
@@ -99,5 +100,8 @@ install -m 0644 -D osmosdr.rules %buildroot%_udevrulesdir/10-osmosdr.rules
 %_libdir/pkgconfig/libosmosdr.pc
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.r10.gba4fd96-alt2
+- Applied repocop fix for sisyphus_check
+
 * Mon Jun 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.r10.gba4fd96-alt1
 - Initial build for Sisyphus

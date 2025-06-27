@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _udevrulesdir /lib/udev/rules.d
 
 %define shortname airspy
 %define major 0
@@ -7,7 +8,7 @@
 
 Name: airspyone-host
 Version: 1.0.10
-Release: alt1
+Release: alt2
 
 Summary: AirSpy - tiny and efficient software defined radio receiver
 License: GPL-2.0 and MIT and BSD
@@ -100,5 +101,8 @@ find %buildroot -name "*.a" -delete -print
 %_includedir/lib%{shortname}/*.h
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.10-alt2
+- Applied repocop fix for sisyphus_check
+
 * Mon Jun 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.10-alt1
 - Initial build for Sisyphus
