@@ -1,6 +1,6 @@
 %define distro kworkstation
 Name: installer-distro-%distro
-Version: 11.0
+Version: 11.1
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -25,6 +25,7 @@ Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
 Requires: alterator-net-eth
+Requires: alterator-net-wifi
 Requires: installer-feature-network-settings-copy
 
 %description stage2
@@ -66,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 11.1-alt1
+- require alterator-net-wifi
+
 * Thu Jun 26 2025 Sergey V Turchin <zerg@altlinux.org> 11.0-alt1
 - move network setup step to stage2
 
