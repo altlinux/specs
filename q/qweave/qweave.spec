@@ -2,7 +2,7 @@
 
 Name: qweave
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Visualization of weaving patterns
 License: GPL-3.0
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(cups)
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' resources/qweave.desktop
 
 %build
 %cmake
@@ -44,5 +45,8 @@ BuildRequires: pkgconfig(cups)
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
 - Initial build for Sisyphus

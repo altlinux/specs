@@ -2,7 +2,7 @@
 
 Name: qdia
 Version: 0.53
-Release: alt1
+Release: alt2
 
 Summary: Simple schematic/diagram editor
 License: AGPL-3.0
@@ -26,6 +26,7 @@ Inspired by xcircuit.
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Graphics;Publishing;|' resources/qdia.desktop
 
 %build
 %cmake
@@ -43,5 +44,8 @@ Inspired by xcircuit.
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.53-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 0.53-alt1
 - Initial build for Sisyphus

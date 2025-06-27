@@ -2,7 +2,7 @@
 
 Name: gpxviewer
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Viewer for GPS traces collected in the GPX format
 License: GPL-3.0
@@ -32,6 +32,7 @@ also able to see the route on a map overlay.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Science;Maps;Geography;|' gpxviewer.desktop.in
 
 %build
 #%%python3_build
@@ -54,5 +55,8 @@ also able to see the route on a map overlay.
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus

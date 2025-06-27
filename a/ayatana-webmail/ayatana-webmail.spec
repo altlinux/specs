@@ -3,7 +3,7 @@
 %define moname  ayatanawebmail
 Name: ayatana-webmail
 Version: 24.5.17
-Release: alt1
+Release: alt2
 
 Summary: Webmail notifications and actions for any desktop
 License: GPLv3
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-webmail
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 ExcludeArch: ppc64le
@@ -45,6 +47,7 @@ enter your accounts settings in a configuration dialog.
 
 %prep
 %setup
+%patch -p1
 
 # Remove hashbangs on scripts installed into sitelib.
 find 'ayatanawebmail' -type 'f' -iname '*.py' -exec sed -i -e '0,/^\s*#!\s*\/.*$/d' '{}' '+'
@@ -86,6 +89,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
 %_desktopdir/ayatana-webmail.desktop
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.17-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.17-alt1
 - New version 24.5.17.
 

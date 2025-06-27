@@ -2,7 +2,7 @@
 
 Name: indicator-sensors
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Hardware sensors indicator
 License: GPL-3.0
@@ -34,6 +34,7 @@ etc) in the desktop panel for GNOME or as an Ayatana Indicator
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=System;Monitor;|' data/indicator-sensors.desktop.in
 
 %build
 ./autogen.sh \
@@ -64,5 +65,8 @@ find %buildroot -name '*.a' -print -delete
 %_libdir/indicator-sensors/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.4-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Wed Mar 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.4-alt1
 - Initial build for Sisyphus

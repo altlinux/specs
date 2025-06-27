@@ -2,7 +2,7 @@
 
 Name: nwg-readme-browser
 Version: 0.1.7
-Release: alt1
+Release: alt2
 
 Summary: WebKitGTK-based README file browser
 License: MIT
@@ -33,6 +33,7 @@ for sway and Hyprland in mind, it may also be used standalone.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Utility;Documentation;|' nwg-readme-browser.desktop
 
 %build
 %pyproject_build
@@ -53,5 +54,8 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.7-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.7-alt1
 - Initial build for Sisyphus

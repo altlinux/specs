@@ -2,7 +2,7 @@
 
 Name: syspeek
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: System monitor indicator
 License: GPL-3.0
@@ -33,6 +33,7 @@ or even HTop.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|^Categories=.*|Categories=System;Monitor;|' data/syspeek.desktop.in
 
 %build
 %pyproject_build
@@ -54,5 +55,8 @@ chmod a+x %buildroot/usr/bin/syspeek
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.1-alt2
+- Applied repocop fixes for freedesktop-desktop, freedesktop-categories
+
 * Tue Mar 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus with support of Ayatana Indicator

@@ -2,7 +2,7 @@
 
 Name: indicator-sysmonitor
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: Ayatana application indicator to show various system parameters
 License: GPL-3.0
@@ -35,6 +35,7 @@ Display CPU and Memory usage inside Budgie desktop panel applet
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=System;Monitor;|' indicator-sysmonitor.desktop
 
 %build
 # nothing to build here
@@ -58,5 +59,8 @@ make installbudgie DESTDIR=%buildroot
 %_libexecdir/budgie-desktop/plugins/budgiesysmonitor/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.2-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sat Mar 29 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.2-alt1
 - Initial build for Sisyphus

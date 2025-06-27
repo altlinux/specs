@@ -2,7 +2,7 @@
 
 Name: stickynotes
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Program that simulates the Sticky Notes for the MATE Desktop
 License: GPL-2.0
@@ -32,6 +32,7 @@ MATE applet: it allows you to create, view, and maintain sticky notes on your de
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=GTK;Utility;TextTools;|' data/stickynotes.desktop.in
 
 %build
 ./autogen.sh
@@ -53,5 +54,8 @@ MATE applet: it allows you to create, view, and maintain sticky notes on your de
 %_datadir/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.1-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.1-alt1
 - Initial build for Sisyphus

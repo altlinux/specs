@@ -2,7 +2,7 @@
 
 Name: nwg-shell
 Version: 0.5.49
-Release: alt1
+Release: alt2
 
 Summary: Meta-package for the nwg-shell project
 License: MIT
@@ -96,6 +96,7 @@ User may want to install the following additional optional components:
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Utility;Documentation;|' nwg-readme.desktop
 
 %build
 %pyproject_build
@@ -133,6 +134,9 @@ echo "                https://nwg-piotr.github.io/nwg-shell/ ."
 %_datadir/backgrounds/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt1
 - New version 0.5.49.
 

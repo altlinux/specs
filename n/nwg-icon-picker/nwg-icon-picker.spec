@@ -2,7 +2,7 @@
 
 Name: nwg-icon-picker
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: GTK icon chooser with a text search option
 License: MIT
@@ -29,6 +29,7 @@ from the search result in GIMP or Inkscape - if installed.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' nwg-icon-picker.desktop
 
 %build
 %pyproject_build
@@ -49,5 +50,8 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.1-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus

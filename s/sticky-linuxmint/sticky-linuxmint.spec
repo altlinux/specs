@@ -2,7 +2,7 @@
 
 Name: sticky-linuxmint
 Version: 1.24
-Release: alt1
+Release: alt2
 
 Summary: A sticky notes app for the linux desktop
 License: GPL-2.0
@@ -32,6 +32,7 @@ GTK3 toolkit.
 %setup -n %name-%version
 sed -i "s/__DEB_VERSION__/%{version}/" usr/lib/sticky/sticky.py
 sed -i 's|common-licenses/GPL|license/GPL-2.0|' usr/lib/sticky/sticky.py
+sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' data/sticky.desktop.in
 
 %build
 %meson
@@ -56,5 +57,8 @@ sed -i 's|common-licenses/GPL|license/GPL-2.0|' usr/lib/sticky/sticky.py
 %_datadir/sticky/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Tue Mar 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name: alarm-clock-applet
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Alarm Clock panel indicator
 License: GPL-2.0
@@ -35,6 +35,7 @@ application.
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=GNOME;GTK;Utility;Clock;|' data/alarm-clock-applet*.desktop.in
 
 %build
 %cmake -D ENABLE_GCONF_MIGRATION=OFF
@@ -57,5 +58,8 @@ application.
 %_datadir/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Tue Mar 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus

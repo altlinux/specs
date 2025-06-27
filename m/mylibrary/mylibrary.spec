@@ -2,7 +2,7 @@
 
 Name:    mylibrary
 Version: 4.1
-Release: alt1
+Release: alt2
 
 Summary: Home librarian
 License: GPL-3.0
@@ -40,6 +40,7 @@ or location.
 %setup
 %patch -p1
 chmod -x ru.mail.bobilev_yury.MyLibrary.desktop
+sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yury.MyLibrary*.desktop
 
 %build
 %cmake -D CMAKE_BUILD_TYPE=None \
@@ -82,6 +83,9 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/doc/MLPluginIfc/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 4.1-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Wed May 28 2025 Nikolay Strelkov <snk@altlinux.org> 4.1-alt1
 - New version 4.1.
 

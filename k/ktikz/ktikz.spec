@@ -2,7 +2,7 @@
 
 Name:    ktikz
 Version: 0.13.2
-Release: alt1
+Release: alt2
 
 Summary: Editor for the TikZ drawing language
 License: GPL-2.0-or-later
@@ -56,6 +56,8 @@ drivers including pdftex and dvips.
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Qt;KDE;Office;Publishing;|' data/ktikz.desktop
+sed -i 's|^Categories=.*|Categories=Qt;Office;Publishing;|' data/qtikz.desktop.template
 
 %build
 %K5build
@@ -88,5 +90,8 @@ install -pDm 644 doc/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.13.2-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Wed Feb 05 2025 Nikolay Strelkov <snk@altlinux.org> 0.13.2-alt1
 - Initial build for Sisyphus

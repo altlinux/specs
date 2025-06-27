@@ -2,7 +2,7 @@
 
 Name: files-indicator
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Indicator for easy access to recent files and folders
 License: MIT
@@ -45,5 +45,8 @@ cp -pv files-indicator.desktop %{buildroot}%{_desktopdir}/
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt2
+- Applied repocop fixes for freedesktop-desktop, freedesktop-categories
+
 * Sat Mar 29 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus with support of Ayatana Indicator

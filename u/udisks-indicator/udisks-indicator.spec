@@ -2,7 +2,7 @@
 
 Name: udisks-indicator
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Udisks Indicator to show disk usage
 License: MIT
@@ -43,6 +43,7 @@ kept and non-removable
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=System;Monitor;|' udisks-indicator.desktop
 
 %build
 # nothing to build here
@@ -59,5 +60,8 @@ cp -pv udisks-indicator.desktop %{buildroot}%{_desktopdir}/
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 2.0-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sat Mar 29 2025 Nikolay Strelkov <snk@altlinux.org> 2.0-alt1
 - Initial build for Sisyphus with support of Ayatana Indicator

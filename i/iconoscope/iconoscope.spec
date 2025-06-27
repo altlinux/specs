@@ -2,7 +2,7 @@
 
 Name: iconoscope
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: Explore the system's icon theme database
 License: GPL-3.0
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(gtk+-3.0)
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' data/iconoscope.desktop
 
 %build
 ./pymk.py iconoscope
@@ -36,5 +37,8 @@ BuildRequires: pkgconfig(gtk+-3.0)
 %_datadir/metainfo/*%{name}.appdata.xml
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Fri May 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9-alt1
 - Initial build for Sisyphus

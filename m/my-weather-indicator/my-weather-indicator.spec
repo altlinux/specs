@@ -2,7 +2,7 @@
 
 Name: my-weather-indicator
 Version: 0.10.18
-Release: alt1
+Release: alt2
 
 Summary: Get weather information for your town with My-Weather-Indicator
 License: MIT
@@ -88,5 +88,8 @@ chmod 755 "${pkgdir}"/usr/bin/my-weather-indicator
 %exclude %_datadir/fonts/truetype/encode-sans
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.18-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.18-alt1
 - Initial build for Sisyphus

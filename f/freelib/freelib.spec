@@ -2,7 +2,7 @@
 
 Name: freelib
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: Freelib is book library manager
 License: GPL-3.0
@@ -45,6 +45,7 @@ Freelib has the following features:
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' data/freelib.desktop
 
 %build
 %cmake \
@@ -72,5 +73,8 @@ Freelib has the following features:
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun Jun 22 2025 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt1
 - Initial build for Sisyphus (closes: #54218)

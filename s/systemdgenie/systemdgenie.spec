@@ -2,7 +2,7 @@
 
 Name: systemdgenie
 Version: 0.100.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Systemd managment utility
 License: GPLv2+
@@ -37,6 +37,7 @@ modification of configuration and unit files.
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Qt;KDE;System;Monitor;Security;|' src/org.kde.systemdgenie.desktop
 
 %build
 %K6build
@@ -57,6 +58,9 @@ modification of configuration and unit files.
 %_datadir/polkit-1/actions/org.kde.kcontrol.%name.policy
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.100.0-alt0.2
+- Applied repocop fixes for freedesktop-desktop, freedesktop-categories
+
 * Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 0.100.0-alt0.1
 - build with KF6 (closes: 53040)
 

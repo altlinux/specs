@@ -2,7 +2,7 @@
 
 Name: gromit-mpx
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: GTK+ based tool to make annotations on screen with multiple pointers
 License: GPL-2.0
@@ -33,6 +33,7 @@ draw lines with different strength, color, erase things, etc.
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Graphics;2DGraphics;|' data/net.christianbeier.Gromit-MPX.desktop
 
 %build
 %cmake \
@@ -58,5 +59,8 @@ rm -rv %{buildroot}%{_datadir}/doc/
 %_datadir/pixmaps/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt2
+- Applied repocop fix for freedesktop-categories
+
 * Sun Mar 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus
