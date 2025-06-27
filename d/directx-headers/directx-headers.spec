@@ -1,7 +1,7 @@
 %def_disable test
 
 Name: directx-headers
-Version: 1.615.0
+Version: 1.616.0
 Release: alt1
 
 Summary: Official DirectX headers available under an open source license
@@ -48,6 +48,9 @@ Additionally, this package provides several helpers for using these headers.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 27 2025 L.A. Kostis <lakostis@altlinux.ru> 1.616.0-alt1
+- Update to 1.616.0.
+
 * Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.615.0-alt1
 - Update to 1.615.0.
 
