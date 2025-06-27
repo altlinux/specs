@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -41,6 +41,7 @@ Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
+Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -134,6 +135,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 for f in src/kcms/compositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
@@ -199,6 +201,9 @@ done
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Jun 25 2025 Anton Golubev <golubevan@altlinux.org> 6.3.5-alt2
+- drop DRM-Master when opening a gpu file (fixes: 54221)
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
