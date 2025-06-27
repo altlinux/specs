@@ -3,7 +3,7 @@
 %define _pseudouser_home     /var/empty
 
 Name: uwsgi
-Version: 2.0.28
+Version: 2.0.30
 Release: alt1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
@@ -19,7 +19,10 @@ Source3: %name.sysconfig
 Patch1: %name-2.0.15-alt-no-rpath.patch
 Patch2000: %name-e2k.patch
 
-BuildRequires: libxml2-devel python3-devel
+BuildRequires(pre): rpm-build-python3
+Provides:       python3-module-%name
+%py3_provides   %name
+BuildRequires: libxml2-devel python3-devel python3-module-setuptools libpcre-devel
 
 %description
 uWSGI is a fast (pure C), self-healing, developer-friendly WSGI server,
@@ -32,11 +35,6 @@ includes a plugin loading technology that can be used to add support for
 other languages or platform. A Lua wsapi adaptor, a PSGI handler and an
 Erlang message exchanger are already available.
 
-%pre
-/usr/sbin/groupadd -r -f %_pseudouser_group ||:
-/usr/sbin/useradd -g %_pseudouser_group -c 'The uwsgi daemon' \
-	-d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
-
 %prep
 %setup
 %patch1 -p1
@@ -45,15 +43,20 @@ Erlang message exchanger are already available.
 %endif
 
 %build
-%make
+%pyproject_build
 
 %install
-install -dm0775 %buildroot%_logdir/%name
+%pyproject_install
 
-install -pDm0755 %name %buildroot%_bindir/%name
+install -dm0775 %buildroot%_logdir/%name
 install -pDm0755 %SOURCE1 %buildroot%_initdir/%name
 install -pDm0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
+
+%pre
+/usr/sbin/groupadd -r -f %_pseudouser_group ||:
+/usr/sbin/useradd -g %_pseudouser_group -c 'The uwsgi daemon' \
+	-d %_pseudouser_home -s /dev/null -r %_pseudouser_user >/dev/null 2>&1 ||:
 
 %post
 %post_service %name
@@ -68,8 +71,14 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %doc README contrib
+%python3_sitelibdir_noarch/*
+%python3_sitelibdir/*
 
 %changelog
+* Wed Jun 25 2025 Fr. Br. George <george@altlinux.org> 2.0.30-alt1
+- update to 2.0.30
+- restore python plugins
+
 * Thu Jan 09 2025 Oleg Solovyov <mcpain@altlinux.org> 2.0.28-alt1
 - update to 2.0.28
 
