@@ -1,5 +1,5 @@
 Name:    rosdep
-Version: 0.25.1
+Version: 0.26.0
 Release: alt1
 
 Summary: rosdep multi-package manager system dependency tool
@@ -40,6 +40,9 @@ specify a dependency on 'boost'.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jun 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.26.0-alt1
+- New version.
+
 * Fri Aug 23 2024 Andrey Cherepanov <cas@altlinux.org> 0.25.1-alt1
 - New version.
 
