@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -224,6 +224,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - updated to 48.2-1-g444c93e8b
 
