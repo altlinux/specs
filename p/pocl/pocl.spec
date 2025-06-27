@@ -1,22 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define llvm_ver 18.1
+%define llvm_ver 20.1
 %define soname 2
+%define git %nil
 %ifarch x86_64
+%def_with level0
 %def_with cuda
 # libcuda doesn't have debuginfo
 %filter_from_requires /libcuda\.so\.1/d
-
 %else
 %def_without cuda
+%def_without level0
 %endif
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 aarch64
 %def_with vulkan
 # remote client/server
 # http://portablecl.org/docs/html/remote.html
 %def_enable remote
 %def_with vsock
 %def_with traffic_monitor
+# still buggy
+%def_without avahi
+%def_with dht
 %else
 %def_without vsock
 %def_without traffic_monitor
@@ -26,15 +31,14 @@
 # RDMA used only by remote for HPC-like performance
 %def_without rdma
 # risc-v/loongarch64 might not supported
-# XXX disable until we migrate to llvm19.1
-%def_without openmp
+%def_with openmp
 
 # pocl detects LTO automatically
 %define optflags_lto %nil
 
 Name: pocl
-Version: 6.0
-Release: alt0.4
+Version: 7.0
+Release: alt1
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -48,11 +52,12 @@ Patch0: 0001-vulkan-remove-unsupported-clspv-args.patch
 # remote rely on some hidden rdma funcs
 Patch1: pocl-5.0-alt-unhide-rdma.patch
 Patch2: pocl-5.0-remote-fix-uthash.patch
-Patch3: pocl-6.0-pocld-gcc14-fix.patch
-# debian patches for GENERIC cpu target
-Patch100: deb-generic-cpu.patch
-Patch101: deb-blhc.patch
-Patch102: deb-distro.patch
+Patch3: 0001-CMake-resolve-paths-using-file-REAL_PATH.patch
+# https://github.com/pocl/pocl/issues/1528
+Patch4: pocl-6.1-x86-disable-fp16.patch
+Patch5: pocl-alt-use-system-llvmspirvlib.patch
+# debian
+Patch100: deb-blhc.patch
 
 BuildRequires(pre): cmake ctest
 BuildRequires: clang%{llvm_ver}
@@ -69,6 +74,11 @@ BuildRequires: zlib-devel
 BuildRequires: ninja-build
 BuildRequires: libstdc++-devel
 BuildRequires: python3-module-sphinx
+BuildRequires: opencl-cpp-headers
+BuildRequires: libLLVMSPIRVLib-devel llvm-spirv spirv-tools
+%ifarch x86_64 aarch64
+BuildRequires: libxsmm-devel libopenblas-devel
+%endif
 %if_with vulkan
 BuildRequires: clspv glslang glslc libvulkan-devel
 %endif
@@ -80,6 +90,15 @@ BuildRequires: rdma-core-devel
 %endif
 %if_with openmp
 BuildRequires: libomp%{llvm_ver}-devel
+%endif
+%if_with avahi
+BuildRequires: libavahi-devel
+%endif
+%if_with level0
+BuildRequires: libze-devel
+%endif
+%if_with dht
+BuildRequires: libopendht-devel
 %endif
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1082364
@@ -160,6 +179,15 @@ Requires: clspv
 pocl Vulkan OpenCL device
 %endif
 
+%if_with level0
+%package devices-level0
+Summary: pocl Level0 device
+Group: System/Libraries
+
+%description devices-level0
+pocl Vulkan Level0 device
+%endif
+
 %if_enabled remote
 %package devices-remote
 Summary: pocl remote client
@@ -210,13 +238,19 @@ Group: Graphics
 %prep
 %setup -q
 %autopatch -p1
+%ifnarch %ix86
+%patch4 -p1 -R
+%endif
 # Unbundle uthash/utlist
 find . -depth -type f -regex '\.\/include\/\(uthash\|utlist\)\.h' -print -delete
 
 %build
+%ifarch %ix86
+# lib/CL/devices/common_utils.c:57:5: error: '_mm_setcsr' needs target feature sse
+# _MM_SET_FLUSH_ZERO_MODE (_MM_FLUSH_ZERO_ON); --> #define _MM_SET_FLUSH_ZERO_MODE(x) (_mm_setcsr((_mm_getcsr() & ~_MM_FLUSH_ZERO_MASK) | (x)))
+%add_optflags -msse
+%endif
 export ALTWRAP_LLVM_VERSION=%{llvm_ver}
-# see README.PPC64le for details
-export PPC_CXXFLAGS=$(llvm-config --cxxflags|sed -e "s/std=c/std=gnu/")
 %if_enabled vulkan
 export VULKAN_SDK=%_libdir
 %endif
@@ -232,16 +266,12 @@ export VULKAN_SDK=%_libdir
     -DLLC_HOST_CPU="generic-rv64" \
 %endif
 %ifarch %ix86 x86_64
-    -DLLC_HOST_CPU=GENERIC \
     -DKERNELLIB_HOST_CPU_VARIANTS=distro \
 %endif
 %ifarch %ix86 %arm
     -DENABLE_EXAMPLES:BOOL=OFF \
 %else
     -DENABLE_EXAMPLES:BOOL=ON \
-%endif
-%ifarch ppc64le
-    -DLLVM_CXXFLAGS="$PPC_CXXFLAGS" \
 %endif
 %if_with cuda
     -DENABLE_CUDA=ON \
@@ -260,12 +290,24 @@ export VULKAN_SDK=%_libdir
 %if_with traffic_monitor
     -DENABLE_TRAFFIC_MONITOR:BOOL=ON \
 %endif #traffic_monitor
+%if_with avahi
+    -DENABLE_REMOTE_DISCOVERY_AVAHI:BOOL=ON \
+    -DENABLE_REMOTE_ADVERTISEMENT_AVAHI:BOOL=ON \
+%endif #avahi
+%if_with dht
+    -DENABLE_REMOTE_DISCOVERY_DHT:BOOL=ON \
+    -DENABLE_REMOTE_ADVERTISEMENT_DHT:BOOL=ON \
+%endif #dht
 %endif
 %if_with rdma
     -DENABLE_RDMA=1 \
 %endif
 %if_with openmp
     -DENABLE_HOST_CPU_DEVICES_OPENMP:BOOL=ON \
+%endif
+%if_with level0
+    -DENABLE_LEVEL0:BOOL=ON \
+    -DSTATIC_LLVM:BOOL=OFF \
 %endif
     -DPOCL_ICD_ABSOLUTE_PATH:BOOL=OFF \
     -DENABLE_POCL_BUILDING:BOOL=ON
@@ -292,7 +334,7 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 #done
 
 %files -n lib%{name}%{soname}
-%doc CHANGES TODO README.md README.PPC64le README.packaging LICENSE COPYING
+%doc CHANGES README.md SECURITY.md LICENSE* COPYING
 %_libdir/lib%name.so.2*
 %dir %_libdir/%name
 %_libdir/%name/lib%name-devices-basic.so
@@ -301,7 +343,6 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %dir %_datadir/%name
 %_datadir/%name/include
 %_datadir/%name/kernel-*-*-*-*-*.bc
-
 
 %files opencl-icd
 %_sysconfdir/OpenCL/vendors/%name.icd
@@ -328,6 +369,11 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %_libdir/%name/lib%name-devices-vulkan.so
 %endif
 
+%if_with level0
+%files devices-level0
+%_libdir/%name/lib%name-devices-level0.so
+%endif
+
 %if_enabled remote
 %files devices-remote
 %_libdir/%name/lib%name-devices-remote.so
@@ -337,6 +383,25 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Mon May 26 2025 L.A. Kostis <lakostis@altlinux.ru> 7.0-alt1
+- 7.0.
+- Switch to llvm20.1.
+- BR: build with libxsmm/openblas.
+- pocl: built with level0.
+- pocl/x86: set -msse as even basic mm requires _mm_setcsr()/_mm_getcsr().
+- remote: built with dht discovery/advertisment.
+
+* Mon Apr 21 2025 L.A. Kostis <lakostis@altlinux.ru> 6.1-alt0.1016.gc82ee3505
+- v6.0-RC2-1016-gc82ee3505.
+- cuda: fix memory leak (upstream pull #1891).
+- x86: disable fp16 even if host cpu supports.
+
+* Tue Jan 21 2025 L.A. Kostis <lakostis@altlinux.ru> 6.1-alt0.755.g2af8ed02c
+- v6.0-RC2-755-g2af8ed02c.
+- remote: add avahi (still buggy).
+- Drop GENERIC patches (use upstream solution).
+- Switch to llvm19.1 and enable OpenMP.
+
 * Fri Nov 15 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.4
 - Fix FTBFS with gcc14.
 

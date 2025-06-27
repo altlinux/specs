@@ -5,10 +5,10 @@
 %global optflags_lto %nil
 # libclc itself can be built by any LLVM but newer is preferred
 # cause it contains better optimisations and improvements
-%global llvm_version 19.1
+%global llvm_version 20.1
 
 Name: libclc
-Version: 19.1.1
+Version: 20.1.4
 Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
@@ -79,7 +79,7 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %cmake_install
 
 %files
-%doc LICENSE.TXT README.TXT CREDITS.TXT
+%doc LICENSE.TXT README.md CREDITS.TXT
 %_datadir/clc
 
 %files devel
@@ -87,6 +87,9 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed May 14 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.4-alt1
+- 20.1.4.
+
 * Mon Oct 07 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.1-alt1
 - 19.1.1.
 
