@@ -2,7 +2,7 @@
 %define appname id.waydro.Container
 
 Name: waydroid
-Version: 1.5.1
+Version: 1.5.4
 Release: alt1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
@@ -63,6 +63,9 @@ mkdir -p %buildroot%_sysconfdir && touch %buildroot%_sysconfdir/gbinder.conf
 %_datadir/desktop-directories/%name.directory
 
 %changelog
+* Fri Jun 27 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt1
+- 1.5.4.
+
 * Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
 - 1.5.1.
 
