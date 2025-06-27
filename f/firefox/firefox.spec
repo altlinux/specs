@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 139.0.4
+Version: 140.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Jun 26 2025 Ajrat Makhmutov <rauty@altlinux.org> 140.0-alt1
+- New version (140.0).
+- Security fixes:
+  + CVE-2025-6424: Use-after-free in FontFaceSet
+  + CVE-2025-6425: The WebCompat WebExtension shipped with Firefox exposed a persistent UUID
+  + CVE-2025-6426: No warning when opening executable terminal files on macOS
+  + CVE-2025-6427: connect-src Content Security Policy restriction could be bypassed
+  + CVE-2025-6428: Firefox for Android opened URLs specified in a link querystring parameter
+  + CVE-2025-6429: Incorrect parsing of URLs could have allowed embedding of youtube.com
+  + CVE-2025-6430: Content-Disposition header ignored when a file is included in an embed or object tag
+  + CVE-2025-6431: The prompt in Firefox for Android that asks before opening a link in an external application could be bypassed
+  + CVE-2025-6432: DNS Requests leaked outside of a configured SOCKS proxy
+  + CVE-2025-6433: WebAuthn would allow a user to sign a challenge on a webpage with an invalid TLS certificate
+  + CVE-2025-6434: HTTPS-Only exception screen lacked anti-clickjacking delay
+  + CVE-2025-6435: Save as in Devtools could download files without sanitizing the extension
+  + CVE-2025-6436: Memory safety bugs fixed in Firefox 140 and Thunderbird 140
+
 * Tue Jun 10 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.4-alt1
 - New version (139.0.4).
 - Security fixes:
