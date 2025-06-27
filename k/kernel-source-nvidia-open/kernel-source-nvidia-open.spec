@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	nvidia-open
-%define module_version  575.57.08
+%define module_version  575.64
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -11,9 +11,13 @@ Summary: NVIDIA Linux open GPU kernel module source
 License: MIT/GPLv2
 Group: Development/Kernel
 Url: https://github.com/NVIDIA/open-gpu-kernel-modules
+Vcs: https://github.com/NVIDIA/open-gpu-kernel-modules.git
+
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source0: %name-%version.tar
+# https://github.com/NVIDIA/open-gpu-kernel-modules/commit/c7e72135da83ff027755b4a61a3ff09a32fe00c3
+Patch: suspend-resume-fixes.patch
 
 BuildPreReq: kernel-build-tools
 BuildArch: noarch
@@ -23,6 +27,9 @@ NVIDIA Linux open GPU kernel module source.
 
 %prep
 %setup -c -q
+pushd %name-%version
+%patch -p1
+popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -32,6 +39,10 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Jun 26 2025 L.A. Kostis <lakostis@altlinux.ru> 575.64-alt1
+- 575.64.
+- Apply latest suspend/resume fixes from upcoming version.
+
 * Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 575.57.08-alt1
 - 575.57.08.
 
