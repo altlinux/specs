@@ -16,7 +16,7 @@
 
 Name: MySQL
 Version: 8.0.42
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -918,6 +918,10 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri May 30 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.42-alt2
+- quit forcing obsolete defaults for charset and symbolic links (closes: #53370)
+  + server.cnf: add a hint for activating sql strict mode
+
 * Mon May 19 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.42-alt1
 - new version
   + (fixes: CVE-2025-21574, CVE-2025-21575, CVE-2025-21577, CVE-2025-21579)
