@@ -1,16 +1,16 @@
 %define distro kworkstation
 Name: installer-distro-%distro
 Version: 11.1
-Release: alt1
+Release: alt2
 
-Summary: Installer files for Centaurus distro
+Summary: Installer files for Workstation K distro
 License: GPL-2.0-only
 Group: System/Configuration/Other
 
 Source: %name-%version.tar
 
 %description
-Installer files for Centaurus distro.
+Installer files for Workstation K distro.
 
 %package stage2
 Summary: Installer stage2
@@ -29,7 +29,7 @@ Requires: alterator-net-wifi
 Requires: installer-feature-network-settings-copy
 
 %description stage2
-Centaurus Installer stage2.
+Workstation K Installer stage2.
 
 %package stage3
 Summary: Installer stage3
@@ -49,7 +49,7 @@ Requires: alterator-grub
 Requires: alterator-luks
 
 %description stage3
-Centaurus Installer stage3.
+Workstation K Installer stage3.
 
 %prep
 %setup
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 11.1-alt2
+- fix package description (closes: 54951)
+
 * Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 11.1-alt1
 - require alterator-net-wifi
 
