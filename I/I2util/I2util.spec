@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: I2util
-Version: 5.1.4
+Version: 5.2.0
 Release: alt1
 Summary: I2 Utility Library & Tools
 
@@ -72,6 +72,9 @@ static %name library.
 %_includedir/*
 
 %changelog
+* Fri Jun 27 2025 Egor Ignatov <egori@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+
 * Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 5.1.4-alt1
 - new version 5.1.4
 
