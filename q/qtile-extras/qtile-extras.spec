@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtile-extras
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: A collection of mods made by elParaguayo for Qtile
@@ -26,6 +26,13 @@ BuildRequires: python3-module-setuptools_scm
 %setup
 %patch0 -p1
 
+# pyproject.toml backward compatibility with old setuptools
+setuptools_version="$(python3 -c 'import setuptools; print(setuptools.__version__)')"
+if [ "$(rpmvercmp "$setuptools_version" 77.0.3)" = -1 ]; then
+    sed -i.orig -e '/license-files/d' \
+        -e 's/^\(license = \)\(".*"\)$/\1{text = \2}/' ./pyproject.toml
+fi
+
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
@@ -47,6 +54,9 @@ sed -i '/strava/d' %buildroot%python3_sitelibdir_noarch/qtile_extras/widget/__in
 %python3_sitelibdir_noarch/qtile_extras-*.dist-info
 
 %changelog
+* Mon Jun 23 2025 Egor Ignatov <egori@altlinux.org> 0.32.0-alt1
+- New version 0.32.0.
+
 * Fri Mar 14 2025 Egor Ignatov <egori@altlinux.org> 0.31.0-alt1
 - 0.31.0
 

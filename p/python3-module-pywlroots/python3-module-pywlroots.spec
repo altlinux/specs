@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define wlroots_sover %nil
-
 %def_with check
 
 Name: python3-module-pywlroots
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Python binding to the wlroots library using cffi
 License: NCSA
@@ -14,6 +12,8 @@ Group: Development/Python3
 
 Url: https://github.com/flacjacket/pywlroots
 Source: %name-%version.tar
+Source1: wlr-%version.tar
+
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -22,10 +22,17 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-xkbcommon
 BuildRequires: python3-module-pywayland
 BuildRequires: libxkbcommon-devel
-BuildRequires: libwlroots%wlroots_sover-devel
 BuildRequires: libinput-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxcbutil-icccm-devel
+
+# wlroots is poorly maintained, so just vendor headers from libwlroots-devel
+# See: https://bugzilla.altlinux.org/54843
+# See: https://lists.altlinux.org/pipermail/devel/2025-June/219307.html
+BuildRequires: libwayland-server-devel
+BuildRequires: libpixman-devel
+BuildRequires: libwlroots12
+%global libwlroots_file libwlroots.so.12
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -37,10 +44,13 @@ pywayland to provide the Wayland bindings and python-xkbcommon to
 provide wlroots keyboard functionality.
 
 %prep
-%setup
+%setup -a1
 %patch0 -p1
 
+sed -i -e "/libraries=/ s/wlroots/:%libwlroots_file/" ./wlroots/ffi_build.py
+
 %build
+export CFLAGS="-I$PWD/wlroots/include"
 %__python3 ./wlroots/ffi_build.py
 %pyproject_build
 
@@ -60,6 +70,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %python3_sitelibdir/%{pyproject_distinfo pywlroots}
 
 %changelog
+* Mon Jun 23 2025 Egor Ignatov <egori@altlinux.org> 0.17.0-alt2
+- fix FTBFS: build with old libwlroots 0.17.4
+
 * Thu May 30 2024 Egor Ignatov <egori@altlinux.org> 0.17.0-alt1
 - new version 0.17.0
 

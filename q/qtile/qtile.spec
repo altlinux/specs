@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define wlroots_sover %nil
-
 %def_without check
 %def_without docs
 
 Name: qtile
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
@@ -18,7 +16,7 @@ Url: http://www.qtile.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-Requires: python3-module-pywlroots >= 0.16.4
+Requires: python3-module-pywlroots >= 0.17.0
 Requires: python3-module-cairocffi >= 1.6.0
 Requires: python3-module-xcffib >= 1.4.0
 
@@ -28,18 +26,24 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cairocffi
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-dbus-fast
-BuildRequires: python3-module-pywlroots
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-xcffib
 BuildRequires: python3-module-xkbcommon
 BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libwlroots%wlroots_sover-devel
 BuildRequires: libcairo-devel
 BuildRequires: libpango-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libinput-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
+
+# wlroots is poorly maintained, using vendored headers from python3-module-pywlroots
+# See: https://bugzilla.altlinux.org/54843
+# See: https://lists.altlinux.org/pipermail/devel/2025-June/219307.html
+BuildRequires: libwayland-server-devel
+BuildRequires: libpixman-devel
+BuildRequires: python3-module-pywlroots
+%global libwlroots_file libwlroots.so.12
 
 %if_with check
 BuildRequires: python3-module-pygobject3
@@ -79,7 +83,18 @@ BuildRequires: python3-module-numpydoc
 
 sed -i -e 's/pytest/pytest3/' docs/Makefile
 
+# pyproject.toml backward compatibility with old setuptools
+setuptools_version="$(python3 -c 'import setuptools; print(setuptools.__version__)')"
+if [ "$(rpmvercmp "$setuptools_version" 77.0.3)" = -1 ]; then
+    sed -i.orig -e '/license-files/d' \
+        -e 's/^\(license = \)\(".*"\)$/\1{text = \2}/' ./pyproject.toml
+fi
+
+sed -i -e "/libraries=/ s/wlroots/:%libwlroots_file/" \
+    ./libqtile/backend/wayland/cffi/build.py
+
 %build
+export CFLAGS="%optflags -I %python3_sitelibdir/wlroots/include"
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export CFFI_TMPDIR=$(mktemp -d -t cffi_tempidr.XXXXXXXXX)
 PYTHONPATH="$PWD" ./scripts/ffibuild -v
@@ -127,6 +142,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Mon Jun 23 2025 Egor Ignatov <egori@altlinux.org> 0.32.0-alt1
+- New version 0.32.0.
+
 * Fri Mar 14 2025 Egor Ignatov <egori@altlinux.org> 0.31.0-alt1
 - new version 0.31.0
 
