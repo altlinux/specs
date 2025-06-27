@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: cbonsai
-Version: 1.3.1
+Version: 1.4.2
 Release: alt1
 Summary: grow bonsai trees in your terminal
 License: GPL-2.0-only
@@ -40,5 +40,8 @@ export CFLAGS='%optflags'
 %_datadir/bash-completion/completions/cbonsai
 
 %changelog
+* Sat Jun 21 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.2-alt1
+- Update to v1.4.2 (2025-06-19).
+
 * Sat Oct 21 2023 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
 - First import v1.3.1-10-g50fe627 (2023-01-25).
