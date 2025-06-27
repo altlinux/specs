@@ -2,7 +2,7 @@
 
 Name: cubicsdr
 Version: 0.2.8
-Release: alt1
+Release: alt2
 
 Summary: Cross-Platform Software-Defined Radio Application
 License: GPL-2.0
@@ -34,6 +34,7 @@ hardware for which a SoapySDR module exists.
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Audio;HamRadio;AudioVideo;|' cmake/CubicSDR.desktop.in
 
 %build
 %cmake \
@@ -57,5 +58,8 @@ hardware for which a SoapySDR module exists.
 %_datadir/cubicsdr/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.8-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.8-alt1
 - Initial build for Sisyphus

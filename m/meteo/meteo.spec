@@ -2,7 +2,7 @@
 
 Name: meteo
 Version: 0.9.9.3
-Release: alt1
+Release: alt2
 
 Summary: A forecast application using OpenWeatherMap API
 License: GPL-3.0
@@ -40,6 +40,7 @@ Features:
 %prep
 %setup
 sed -i "s|/data/screens|/screens|g" README.md
+sed -i 's|^Categories=.*|Categories=Science;Maps;|' data/com.gitlab.bitseater.meteo.desktop.in
 
 %build
 %meson
@@ -60,5 +61,8 @@ sed -i "s|/data/screens|/screens|g" README.md
 %_datadir/metainfo/*%{name}.appdata.xml
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9.3-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sun Jun 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9.3-alt1
 Initial build for Sisyphus with support of Ayatana Indicator

@@ -3,7 +3,7 @@
 
 Name: gpxsee
 Version: 13.44
-Release: alt1
+Release: alt2
 
 Summary: GPS log file viewer and analyzer
 License: GPL-3.0
@@ -52,6 +52,7 @@ Features
 %prep
 %setup
 mv -v licence.txt license.txt
+sed -i 's|^Categories=.*|Categories=Science;Maps;Geography;|' pkg/linux/gpxsee.desktop
 
 %build
 lrelease-qt6 gpxsee.pro
@@ -78,5 +79,8 @@ qmake-qt6 \
 %_datadir/mime/packages/%{name}.xml
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 13.44-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Tue Jun 24 2025 Nikolay Strelkov <snk@altlinux.org> 13.44-alt1
 - Initial build for Sisyphus

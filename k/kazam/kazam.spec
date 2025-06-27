@@ -2,7 +2,7 @@
 
 Name: kazam
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Kazam - Linux Screen Recorder, Broadcaster, Capture and OCR with AI in mind
 License: GPL-3.0 and LGPL-3.0
@@ -66,6 +66,8 @@ sed -i s,"RELEASE = '.*'","RELEASE = '$(rpm --eval %%_priority_distbranch)'",g k
 
 ln -s ../data kazam/data
 
+sed -i 's|^Categories=.*|Categories=GNOME;GTK;AudioVideo;Recorder;|' data/kazam.desktop.in
+
 %build
 %python3_build
 %__python3 setup.py build_icons
@@ -106,5 +108,8 @@ cp -rva build/mo/* %buildroot%_datadir/locale
 %_datadir/%name/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sun Mar 16 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus with support of Ayatana Indicator

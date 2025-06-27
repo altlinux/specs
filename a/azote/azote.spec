@@ -2,7 +2,7 @@
 
 Name: azote
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: Wallpaper manager for wlroots-based compositors and some other WMs
 License: GPL-3.0 and BSD-1-Clause
@@ -48,6 +48,7 @@ supported.
 
 %prep
 %setup -n %name-%version
+sed -i 's|^Categories=.*|Categories=GTK;Settings;DesktopSettings;|' dist/azote.desktop
 
 %build
 %pyproject_build
@@ -69,5 +70,8 @@ install -Dm 644 -t %{buildroot}/%_desktopdir/ dist/%{name}.desktop
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.16.0-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sat May 10 2025 Nikolay Strelkov <snk@altlinux.org> 1.16.0-alt1
 - Initial build for Sisyphus

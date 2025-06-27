@@ -2,7 +2,7 @@
 
 Name: guake-indicator
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: Guake terminal app indicator
 License: GPL-2.0
@@ -37,6 +37,7 @@ default configuration file with some examples.
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=GNOME;GTK;System;TerminalEmulator;|' guake-indicator.desktop
 
 %build
 NOCONFIGURE=1 mate-autogen
@@ -62,5 +63,8 @@ desktop-file-install --dir=%buildroot%_datadir/applications guake-indicator.desk
 %_pixmapsdir/%name/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.5-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.5-alt1
 - Initial build for Sisyphus

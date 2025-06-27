@@ -2,7 +2,7 @@
 
 Name: dpscreenocr
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Program to recognize text on screen
 License: Zlib
@@ -25,6 +25,7 @@ dpScreenOCR is a program to recognize text on the screen
 
 %prep
 %setup
+sed -i 's|^Categories=.*|Categories=Graphics;OCR;Scanning;|' data/dpscreenocr.desktop
 
 %build
 %cmake
@@ -51,5 +52,8 @@ dpScreenOCR is a program to recognize text on the screen
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sun Jun 01 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus

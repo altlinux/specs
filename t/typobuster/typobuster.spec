@@ -2,7 +2,7 @@
 
 Name: typobuster
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight editor with text transformations and auto-correction.
 License: GPL-3.0
@@ -29,6 +29,7 @@ transformations and automatic correction of common typos.
 %prep
 %setup -n %name-%version
 %patch -p1
+sed -i 's|^Categories=.*|Categories=Utility;TextTools;TextEditor;|' typobuster.desktop
 
 %build
 %pyproject_build
@@ -49,5 +50,8 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt2
+- Applied repocop fix for freedesktop-desktop
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

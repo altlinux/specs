@@ -6,7 +6,7 @@
 
 Name: go-for-it
 Version: 1.9.6
-Release: alt2
+Release: alt3
 Summary: A stylish to-do list with built-in productivity timer
 License: GPLv3
 Group: Office
@@ -47,6 +47,7 @@ This package provides the development files for go-for-it.
 %prep
 %setup
 %patch -p1
+sed -i 's|^Categories=.*|Categories=GTK;Office;ProjectManagement;|' data/go-for-it.desktop.in.in
 
 %build
 %cmake \
@@ -81,6 +82,9 @@ This package provides the development files for go-for-it.
 %_datadir/vala/vapi/*.vapi
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.6-alt3
+- Applied repocop fix for freedesktop-desktop
+
 * Wed Mar 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.6-alt2
 - Fixed FTBFS.
 - Break BuildRequires to multiple lines.

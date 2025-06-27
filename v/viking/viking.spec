@@ -2,7 +2,7 @@
 
 Name:		viking
 Version:	1.10
-Release:	alt2
+Release:	alt3
 
 Summary:	GPS data editor, analyzer and viewer
 
@@ -67,6 +67,7 @@ to mark one but did slow down or stop.
 
 %prep
 %setup -q
+sed -i 's|^Categories=.*|Categories=Science;Maps;Geography;|' src/viking.desktop.in
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -95,6 +96,9 @@ make check
 %_datadir/help/C/%name/*
 
 %changelog
+* Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.10-alt3
+- Applied repocop fix for freedesktop-desktop
+
 * Fri Jun 20 2025 Nikolay Strelkov <snk@altlinux.org> 1.10-alt2
 - Added missed /usr/bin/unbuffer dependency for Log window
 - Added missed geoclue2 dependency for Location
