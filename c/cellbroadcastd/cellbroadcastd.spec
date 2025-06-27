@@ -13,7 +13,7 @@
 %def_disable vala
 %def_disable man
 %def_disable gtk_doc
-%ifarch %ix86 aarch64
+%ifarch %ix86
 %def_disable check
 %else
 %def_enable check
@@ -21,7 +21,7 @@
 
 
 Name: cellbroadcastd
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Cell broadcast daemon
@@ -136,10 +136,11 @@ rm -f %buildroot%_libdir/*.a
 %{?_enable_man:%_man1dir/fbcli.1.*
 %_man1dir/cbcli.1.*
 %_man8dir/%name.8.*}
-%doc README*
+%doc README* NEWS
 
 %files -n %libname
 %_libdir/%libname-%api_ver.so.*
+%doc README* NEWS
 
 %files -n %libname-devel
 %_includedir/%libname-%api_ver/
@@ -156,6 +157,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
+- 0.0.2
+
 * Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt1
 - 0.0.1
 
