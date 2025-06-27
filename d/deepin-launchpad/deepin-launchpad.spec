@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 1.0.11
+Version: 2.0.1
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -28,10 +28,16 @@ BuildRequires(pre): gcc-c++
 BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libsystemd-devel dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel libdde-shell-devel deepin-shell
 BuildRequires: libdqt6-qmlcompiler libdqt6-quickcontrols2
 
-Requires: libdqt6-core = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
-
 %description
 %summary.
+
+%package -n liblaunchpadcommon
+Summary: liblaunchpadcommon library for %name
+Group: System/Libraries
+Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
+
+%description -n liblaunchpadcommon
+This package provides liblaunchpadcommon library for %name.
 
 %prep
 %setup -n %repo-%version
@@ -53,17 +59,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %files -f %repo.lang
 %doc README.md
-%_bindir/%repo
 # package outside find_lang
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
 %_datadir/%repo/translations/dde-launchpad.qm
 # ---
 %dir %_datadir/dde-shell/
-%_datadir/dde-shell/org.deepin.ds.launchpad/
+%_datadir/dde-shell/org.deepin.ds.dock.launcherapplet/
 %_datadir/metainfo/org.deepin.dde.shell.launchpad.appdata.xml
-%_userunitdir/org.deepin.dde.Launcher1.service
-%_datadir/dbus-1/services/org.deepin.dde.Launcher1.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/dde-launchpad/
@@ -71,9 +74,15 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_datadir/dsg/configs/org.deepin.dde.shell/
 %_datadir/dsg/configs/org.deepin.dde.shell/org.deepin.ds.launchpad.json
 %dir %_libdir/dde-shell/
-%_libdir/dde-shell/org.deepin.ds.launchpad.so
+%_libdir/dde-shell/org.deepin.ds.dock.launcherapplet.so
+
+%files -n liblaunchpadcommon
+%_libdir/launchpadcommon.so
 
 %changelog
+* Fri Jun 27 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
 - New version 1.0.11.
 - Added vcs tag and fixed url tag.
