@@ -1,5 +1,5 @@
 Name: atf-meson
-Version: 2.9
+Version: 2.13
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -7,6 +7,8 @@ License: BSD
 Group: System/Kernel and hardware
 
 ExclusiveArch: aarch64
+
+BuildRequires: aarch64-none-elf-gcc
 
 Source: %name-%version-%release.tar
 
@@ -20,10 +22,16 @@ G12A SoC families.
 %setup
 
 %build
-for plat in axg gxbb gxl g12a; do
+export CROSS_COMPILE=aarch64-none-elf-
+for plat in gxbb; do
+	make distclean
 	make PLAT=$plat bl31
 	install -pm0644 -D build/$plat/release/bl31.bin out/$plat/bl31.bin
+done
+for plat in axg g12a gxl; do
 	make distclean
+	make PLAT=$plat
+	install -pm0644 -D build/$plat/release/bl31.img out/$plat/bl31.img
 done
 
 %install
@@ -34,6 +42,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Fri Jun 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.13-alt1
+- 2.13 released
+
 * Thu Jun 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.9-alt1
 - 2.9 released
 
