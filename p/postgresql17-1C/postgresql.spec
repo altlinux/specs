@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     5
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -872,9 +872,6 @@ fi
 %_libdir/%PGSQL/pg_freespacemap.so
 %_datadir/%PGSQL/extension/pg_freespacemap-*.sql
 %_datadir/%PGSQL/extension/pg_freespacemap.control
-%_libdir/%PGSQL/pg_hint_plan.so
-%_datadir/%PGSQL/extension/pg_hint_plan-*.sql
-%_datadir/%PGSQL/extension/pg_hint_plan.control
 %_libdir/%PGSQL/pg_prewarm.so
 %_datadir/%PGSQL/extension/pg_prewarm-*.sql
 %_datadir/%PGSQL/extension/pg_prewarm.control
@@ -1112,6 +1109,9 @@ fi
 %endif
 
 %changelog
+* Fri Jun 27 2025 Alexei Takaseev <taf@altlinux.org> 17.5-alt2
+- Update 1C patch
+
 * Sat May 31 2025 Alexei Takaseev <taf@altlinux.org> 17.5-alt1
 - 17.5
 - Update 1C patch
