@@ -27,7 +27,7 @@
 
 Name: phosh
 Version: %ver_major
-Release: alt0.9%beta
+Release: alt0.91%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -41,7 +41,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
-Source1: %name.pam
+Source1: %name-0.48.pam
 Source2: sm.puri.OSK0.desktop
 # https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
 Source10: gvc-%gvc_ver.tar
@@ -307,6 +307,10 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.91.rc1
+- phosh.pam: added 'account required pam_permit.so',
+  uncommented pam_gnome_keyring (ALT #54954)
+
 * Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
 - 0.48_rc1
 - updated alt-tcb-check.patch (ALT #46389)
