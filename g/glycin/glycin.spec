@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: glycin
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -196,6 +196,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 

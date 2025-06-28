@@ -1,15 +1,15 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name Pins
 %define binary_name pinapp
-%define ver_major 2.3
+%define ver_major 2.4
 %define rdn_name io.github.fabrialberio.%binary_name
 
 %def_enable check
 
 Name: pins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Create and edit app shortcuts
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 

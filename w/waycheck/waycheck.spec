@@ -1,5 +1,5 @@
-%define ver_major 1.6
-%define git_commit d9394aa4b332311c291e73eba5a6e26dc064b7a2
+%define ver_major 1.7
+%define git_commit 3d400164bcfb2616873be65e298df2df184a8971
 %define _name waycheck
 %define __name Waycheck
 %define rdn_name dev.serebit.%__name
@@ -56,6 +56,9 @@ you still need to implement.
 %doc README.md
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Wed Feb 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
