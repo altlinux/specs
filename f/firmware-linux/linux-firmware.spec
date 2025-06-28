@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20250613
-Release: alt2
+Version: 20250627
+Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
 
@@ -140,6 +140,9 @@ end
 /lib/firmware/mellanox
 
 %changelog
+* Sat Jun 28 2025 Vitaly Chikunov <vt@altlinux.org> 20250627-alt1
+- Update to 20250627 (2025-06-27).
+
 * Sun Jun 15 2025 Vitaly Chikunov <vt@altlinux.org> 20250613-alt2
 - Resolve nvidia/ad103-ad107 fw file conflicts (ALT#54809).
 
