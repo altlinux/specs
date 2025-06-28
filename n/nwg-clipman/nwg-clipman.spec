@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nwg-clipman
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: nwg-shell clipboard manager - a GTK3-based GUI for cliphist
@@ -50,5 +50,8 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Sat Jun 28 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.6-alt1
+- New version 0.2.6.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus

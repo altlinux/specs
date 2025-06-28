@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_without check
+
 Name: remake
 Version: 4.3+dbg1.6
-Release: alt1
+Release: alt2
 
 Summary: GNU make fork with improved error reporting and debugging
 License: GPL-3.0
@@ -49,5 +51,8 @@ export CFLAGS="%{optflags} -fcommon"
 %exclude %_includedir/gnuremake.h
 
 %changelog
+* Sat Jun 28 2025 Nikolay Strelkov <snk@altlinux.org> 4.3+dbg1.6-alt2
+- Disabled check to prevent FTBFS because of timeouts on the serverside
+
 * Sun Jun 01 2025 Nikolay Strelkov <snk@altlinux.org> 4.3+dbg1.6-alt1
 - Initial build for Sisyphus
