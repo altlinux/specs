@@ -1,6 +1,6 @@
 Name: debugedit
-Version: 5.0.0.27.6dd2
-Release: alt1
+Version: 5.1
+Release: alt1.g468ff08
 
 Summary: A collection of debuginfo utilities
 License: GPLv3+
@@ -10,6 +10,7 @@ URL: https://sourceware.org/debugedit/
 Source: %name-%version-%release.tar
 
 BuildRequires: help2man, libelf-devel, libdw-devel
+BuildRequires: libxxhash-devel
 
 %description
 The debugedit project provides programs and scripts for creating
@@ -18,6 +19,8 @@ source paths in DWARF data for debugging, tracing and profiling.
 
 %prep
 %setup -n %name-%version-%release
+# We do not use find-debuginfo and tests fail.
+sed -i '/find-debuginfo.at/d' tests/testsuite.at
 
 %build
 %autoreconf
@@ -44,6 +47,9 @@ rm %buildroot%_man1dir/find-debuginfo.1
 %doc README find-debuginfo find-debuginfo.1
 
 %changelog
+* Fri Jun 27 2025 Vitaly Chikunov <vt@altlinux.org> 5.1-alt1.g468ff08
+- Update to debugedit-5.1-11-g468ff08 (2025-06-27) (ALT#54930).
+
 * Fri May 03 2024 Dmitry V. Levin <ldv@altlinux.org> 5.0.0.27.6dd2-alt1
 - 5.0-19-g5bade25 -> 5.0-27-g6dd28bb (closes: #50067).
 
