@@ -2,7 +2,7 @@
 
 Name: mypaint
 Version: 2.0.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: A simple paint program
 Group: Graphics
@@ -91,16 +91,19 @@ subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/
+%_desktopdir/%name.desktop
+%_datadir/metainfo/mypaint.appdata.xml
 
 %files data
 %_datadir/%name/
 %_datadir/thumbnailers/%name-ora.thumbnailer
-%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/metainfo/mypaint.appdata.xml
 %doc README.md Changelog.md Licenses.md
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2.2
+- moved desktop and appdata files from -data to main package (ALT #47276)
+
 * Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2.1
 - "Fix pyobject enums in pygobject >= 3.51.0" (ALT #54192)
 
