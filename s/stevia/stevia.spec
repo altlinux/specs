@@ -3,7 +3,7 @@
 %define _name stevia
 %define binary_name phosh-osk-%_name
 %define ver_major 0.48
-%define beta .rc1
+%define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
 # enabled by default
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Stevia is an alternative keyboard for Phosh
 Group: Graphical desktop/GNOME
@@ -136,6 +136,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
+- 0.48.0
+
 * Mon Jun 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
 - first build for Sisyphus
 
