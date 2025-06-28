@@ -1,13 +1,15 @@
 Name: nautilus-dropbox
-Version: 2022.12.05
-Release: alt1.1
+Version: 2025.05.20
+Release: alt1
 
 Summary: Dropbox integration for Nautilus
 Summary(ru_RU.UTF-8): Интеграция Dropbox с Nautilus
 
 License: GPL-3.0-or-later and CC-BY-ND-3.0
 Group: Graphical desktop/GNOME
-Url: http://www.dropbox.com/
+Url: https://www.dropbox.com/
+
+Vcs: https://github.com/dropbox/nautilus-dropbox.git
 
 Source: https://www.dropbox.com/download?dl=packages/%name-%version.tar
 
@@ -43,19 +45,22 @@ Summary: Dropbox command-line utility
 Group: Networking/Other
 License: GPL-3.0-or-later
 Requires: wget >= 1.10.0
+Requires: python3-module-pygobject3
+Requires: typelib(Gtk) = 3.0
 
 %description -n dropbox
 The *dropbox* command provides a command line interface to the Dropbox.
 
 %prep
 %setup
+%python3_fix_shebang dropbox.in
 
 %build
 %autoreconf
 %configure \
     --disable-dependency-tracking \
     --enable-static=no \
-
+%nil
 %make_build
 
 %install
@@ -75,6 +80,9 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %_man1dir/*.1*
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.05.20-alt1
+- 2025.05.20
+
 * Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2022.12.05-alt1.1
 - fixed build (ALT #51330)
 
