@@ -1,5 +1,5 @@
 Name: swayfx
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: A Beautiful Sway Fork
@@ -87,6 +87,9 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 %_datadir/backgrounds/sway/*
 
 %changelog
+* Sat Jun 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5.3-alt1
+- new version 0.5.3 (with rpmrb script)
+
 * Wed Jun 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5.2-alt1
 - new version 0.5.2 (with rpmrb script)
 
