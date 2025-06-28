@@ -4,11 +4,11 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 18.1
+%global llvm_version 20.1
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.87.0
+Version: 1.88.0
 Release: alt1
 Epoch: 1
 
@@ -20,7 +20,6 @@ VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
-Patch001: 0001-Fix-profiler_builtins-build-script-to-handle-full-pa.patch
 
 Requires: /proc
 Requires: gcc
@@ -446,6 +445,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Jun 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.88.0-alt1
+- New version (1.88.0).
+
 * Tue May 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.87.0-alt1
 - New version (1.87.0).
 
