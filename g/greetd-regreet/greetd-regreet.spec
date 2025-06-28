@@ -1,6 +1,6 @@
 Name: greetd-regreet
 Version: 0.2.0
-Release: alt2
+Release: alt3
 License: GPL-3.0
 
 Summary: Clean and customizable greeter for greetd
@@ -96,13 +96,13 @@ install -vD %SOURCE2 %buildroot%_sysconfdir/greetd/greeters/regreet-cage.toml
 install -vD %SOURCE3 %buildroot%_sysconfdir/greetd/regreet-conf-sway
 install -vD %SOURCE4 %buildroot%_sysconfdir/greetd/regreet-conf-hyprland
 
-for i in sway hyprland; do
-cat > %buildroot%_sysconfdir/greetd/greeters/regreet-$i.toml <<EOF
+for i in sway Hyprland; do
+cat > %buildroot%_sysconfdir/greetd/greeters/regreet-${i,}.toml <<EOF
 [terminal]
 vt = 1
 
 [default_session]
-command = "$i -c %_sysconfdir/greetd/regreet-conf-$i"
+command = "$i -c %_sysconfdir/greetd/regreet-conf-${i,}"
 user = "_greeter"
 EOF
 done
@@ -137,6 +137,9 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/regreet-hyprl
 %config(noreplace) %_sysconfdir/greetd/regreet-conf-hyprland
 
 %changelog
+* Sat Jun 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt3
+- regreet-hyprland.toml: hyprland -> Hyprland (ALT bug 54975)
+
 * Wed May 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt2
 - add cage, hyprland and sway configs (ALT bug 54397)
 
