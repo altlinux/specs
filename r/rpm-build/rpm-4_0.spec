@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.205
+Version: 4.0.4.206
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -86,6 +86,9 @@ BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel >= 4.2.1
 BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 
 BuildRequires: debugedit
+%if 0%{?!_without_check:%{?!_disable_check:1}} || 0%{?_with_asan:1}
+BuildRequires: /proc
+%endif
 
 # Automatically added by buildreq on Thu Apr 23 2009 and edited manually.
 BuildRequires: libdb4.7-devel libelf-devel liblzma-devel libpopt-devel zlib-devel
@@ -197,6 +200,11 @@ Requires: rpminstall-tests-checkinstall
 %setup -n rpm-%version-%release
 
 %build
+%if_with asan
+%define optflags_lto %nil
+%add_optflags -fsanitize=address
+export ASAN_OPTIONS=detect_leaks=0
+%endif
 gettextize --force --quiet --no-changelog --symlink
 install -pv -m0644 /usr/share/automake/mkinstalldirs .
 autoreconf -fisv -I m4
@@ -316,6 +324,42 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %pre
 [ ! -L %_rpmlibdir/noarch-alt-%_target_os ] || rm -f %_rpmlibdir/noarch-alt-%_target_os ||:
 
+%check
+%ifarch x86_64 %ix86 aarch64
+# Build a real package. On normal builds build with ASan, on already ASan
+# builds build w/o ASan.
+CFLAGS="%optflags"
+if [ -z "${CFLAGS##*-fsanitize=*}" ]; then
+	ASAN=_by_asan
+	# Prevent build with ASan if we already in it by the user request.
+	touch "/tmp/check_with_asan"
+else
+	ASAN=_with_asan
+	WITH_ASAN='--with asan'
+fi
+ROOT="/tmp/check$ASAN"
+if [ ! -e "$ROOT" ]; then
+	# We'll build one ASan and one non-ASan version in whichever order.
+	mkdir -p "$ROOT/RPM"
+	ln -s /usr/src/RPM/{SOURCES,SPECS} "$ROOT/RPM"
+	export ASAN_OPTIONS=detect_leaks=0
+	# Run the lt- binary to allow to change argv0 to 'rpmb' for popt to
+	# understand '--with' alias.
+	ldd ./.libs/lt-rpmb
+	if ! (exec -a rpmb ./.libs/lt-rpmb \
+		-ba "$ROOT/RPM/SPECS/rpm-4_0.spec" \
+		--define "_topdir $ROOT/RPM" \
+		--buildroot="$ROOT/buildroot" \
+		$WITH_ASAN &> "$ROOT.log"); then
+		sed "s/^/%%check$ASAN: /" "$ROOT.log" | tail -100
+		exit 1
+	fi
+	tail /tmp/check_*.log
+	chmod -R u+w "$ROOT"
+	rm -rf -- "$ROOT"
+fi
+%endif
+
 %files -n librpmbuild
 %_libdir/librpmbuild-*.so
 
@@ -406,6 +450,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Jun 27 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.206-alt1
+- Improve handling of macro conditionals and blank lines in %%description.
+- spec: Add %%check section with ASan build tests.
+
 * Sat Jun 14 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.205-alt1
 - debuginfo: Quote filenames to allow spaces in them (ALT#53250).
 - debuginfo: Restore .build-id symlink for vmlinux binary.
