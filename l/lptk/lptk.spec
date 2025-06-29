@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name lptk
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name me.ogarcia.%_name
 
 %def_disable bootstrap
@@ -24,9 +24,11 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
+%define adw_ver 1.7
+
 BuildRequires(pre): rpm-macros-meson rpm-macros-rust
 BuildRequires: meson rust-cargo
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(openssl)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -71,6 +73,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 

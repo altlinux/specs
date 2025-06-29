@@ -14,11 +14,9 @@
 %def_disable gtk_doc
 %def_enable man
 %def_disable check
-# removed in 3.31.x
-%def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -34,6 +32,9 @@ Source: %name-%version%beta.tar
 %{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
 
 Patch3: %name-48.1-alt-invalid_user_shell.patch
+# https://bugzilla.altlinux.org/54831
+# https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3252
+#Patch10: XXX
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -173,7 +174,6 @@ BuildRequires: pkgconfig(tecla)
 %{?_enable_x11:BuildRequires: libX11-devel libXfixes-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
-%{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
 %description
 GNOME Shell provides core user interface functions for the GNOME 3 desktop,
@@ -220,8 +220,6 @@ cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
 # set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
 
-# browser plugin dir
-%{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
 %meson \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
@@ -258,7 +256,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_libdir/%name/*.typelib
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/Shew-0.typelib
-%{?_enable_browser_plugin:%browser_plugins_path/libgnome-shell-browser-plugin.so}
 
 %files data -f %name.lang
 %{?_enable_extensions_tool:%_datadir/bash-completion/completions/gnome-extensions}
@@ -316,6 +313,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

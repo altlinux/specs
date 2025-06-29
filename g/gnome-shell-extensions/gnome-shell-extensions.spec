@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -211,6 +211,9 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt2
 - moved Xorg Classic session files to separate package
 

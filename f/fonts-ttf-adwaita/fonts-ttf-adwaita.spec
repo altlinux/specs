@@ -1,13 +1,13 @@
 %define _name adwaita-fonts
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 
 Name: fonts-ttf-adwaita
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Adwaita fonts
-License: GPL-3.0-or-later and OFL-1.1
+License: OFL-1.1
 Group: System/Fonts/True type
 Url: https://gitlab.gnome.org/GNOME/adwaita-fonts
 
@@ -48,6 +48,9 @@ sed -i 's|\(fontsdir = \).*|\1'"'%_ttffontsdir/Adwaita'"'|' meson.build
 %doc README*
 
 %changelog
+* Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - first build for Sisyphus
 
