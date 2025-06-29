@@ -1,10 +1,11 @@
 Name: pdfmixtool
-Version: 1.1.1
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
-License: LGPL-3.0-only
+License: GPL-3.0-only
 Group: Office
 Url: https://www.scarpetta.eu/pdfmixtool
+Vcs: https://gitlab.com/scarpetta/pdfmixtool
 
 # Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
 Source: %name-%version.tar
@@ -26,6 +27,7 @@ BuildRequires: libp11-kit-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: libGraphicsMagick-c++-devel
+BuildRequires: libpoppler-qt6-devel
 
 Summary: PDF Mix Tool is a simple PDF editing application
 Summary(ru_RU.UTF-8): PDF Mix Tool - это простое приложение для редактирования PDF-файлов
@@ -71,6 +73,11 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Sun Jun 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
+- 1.1.1 -> 1.2.0
+- added VCS
+- changed license
+
 * Sat Jun 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt3
 - NMU: fixed FTBFS
 
