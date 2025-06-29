@@ -1,6 +1,6 @@
 Name: greetd-regreet
 Version: 0.2.0
-Release: alt3
+Release: alt4
 License: GPL-3.0
 
 Summary: Clean and customizable greeter for greetd
@@ -15,6 +15,7 @@ Source1: %name-development-%version.tar
 Source2: config.toml
 Source3: conf-sway
 Source4: conf-hyprland
+Source5: tmpfiles.conf
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -90,6 +91,7 @@ export POWEROFF_CMD="systemctl poweroff"
 install -Dm 755 target/release/regreet \
     %buildroot%_bindir/regreet
 
+install -vD %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 install -vD %SOURCE2 %buildroot%_sysconfdir/greetd/greeters/regreet-cage.toml
 
 # configs
@@ -121,6 +123,7 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/regreet-hyprl
 %files
 %doc regreet.sample.toml README.md
 %_bindir/regreet
+%_tmpfilesdir/%name.conf
 
 %files config-cage
 %_altdir/greetd-regreet-cage
@@ -137,6 +140,9 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/regreet-hyprl
 %config(noreplace) %_sysconfdir/greetd/regreet-conf-hyprland
 
 %changelog
+* Sun Jun 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt4
+- add tmpfiles config (ALT bug 54982)
+
 * Sat Jun 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt3
 - regreet-hyprland.toml: hyprland -> Hyprland (ALT bug 54975)
 
