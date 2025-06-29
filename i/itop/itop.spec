@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 3.2.0.2
+Version: 3.2.1.1
 Release: alt1
 
 Summary: IT Operations Portal
@@ -159,6 +159,15 @@ fi
 %files php8.3
 
 %changelog
+* Fri Jun 29 2025 Pavel Zilke <zidex@altlinux.org> 3.2.1.1-alt1
+- New version 3.2.1.1
+- Security fixes:
+ + CVE-2024-52601 : Secure Direct Object Reference + prevent Mass Data Leak
+ + CVE-2025-24021 : Prevent mass assignment of fields not present in form
+ + CVE-2025-24022 : Prevent Portal code injection
+ + CVE-2025-24026 : Fix redos in regex (snyk.io)
+ + CVE-2024-56157 : Fix self XSS in CSV Import
+
 * Fri Jan 17 2025 Pavel Zilke <zidex@altlinux.org> 3.2.0.2-alt1
 - New version 3.2.0.2
 - Added itop-php8.2
