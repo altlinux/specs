@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -118,6 +118,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.44.2-alt1
+- 3.44.2
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
 - 3.44.1
 - enabled %%check
