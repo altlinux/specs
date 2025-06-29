@@ -1,5 +1,5 @@
 Name: kernel-image-6.16
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.15
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
@@ -612,6 +612,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jun 29 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc4
+- Update to v6.16-rc4 (2025-06-29).
+- config: Disable CONFIG_NL80211_TESTMODE.
+- config: Enable more RTW88 hardware.
+
 * Mon Jun 23 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc3
 - Update to v6.16-rc3 (2025-06-22).
 - config: Enable more MediaTek wireless devices.
