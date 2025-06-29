@@ -36,7 +36,7 @@
 
 Name: frr
 Version: 10.2.2
-Release: alt1
+Release: alt2
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
 Group: Networking/Other
@@ -155,6 +155,14 @@ Adds GRPC support to the individual FRR daemons.
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
+
+%ifarch %e2k
+# EDG frontend doesn't have MSVC extensions
+sed -i 's/struct mgmt_msg_header;/uint16_t code, resv; uint32_t vsplit; uint64_t refer_id, req_id;/' \
+    lib/mgmt_msg_native.h
+# annoying warning
+%add_optflags -Wno-discarded-qualifiers
+%endif
 
 %build
 %autoreconf
@@ -325,6 +333,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Sun Jun 29 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.2.2-alt2
+- e2k build fix
+
 * Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
 - 10.2.2
 - Add patches from PVE project
