@@ -1,5 +1,6 @@
 %define _name gssdp
 %define ver_major 1.6
+%define namespace GSSDP
 %define api_ver 1.6
 
 %def_disable static
@@ -15,8 +16,8 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.3
-Release: alt1.2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
@@ -24,6 +25,7 @@ License: LGPL-2.1-or-later
 Url: https://www.gupnp.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/gssdp.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define meson_ver 0.54
@@ -32,7 +34,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define soup_ver 3.0.6
 
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-vala
-BuildRequires: meson vala-tools 
+BuildRequires: meson vala-tools
 BuildRequires: libgio-devel >= %glib_ver libsoup%soup_api_ver-devel >= %soup_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup%soup_api_ver-gir-devel}
@@ -93,9 +95,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_introspection:-Dintrospection=false} \
-    %{?_disable_sniffer:-Dsniffer=false} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool sniffer sniffer} \
     %{subst_enable_meson_bool man manpages}
 %nil
 %meson_build
@@ -124,10 +126,10 @@ A Device Sniffer tool based on GSSDP framework.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GSSDP-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GSSDP-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled sniffer
@@ -138,6 +140,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1.2
 - fixed typo (e2k -> %%e2k)
 

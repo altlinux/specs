@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: libgupnp-av
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -35,7 +35,7 @@ BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -127,7 +127,7 @@ GObject introspection devel data for the GUPnP A/V library
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%_name-%api_ver/
 %endif
 
 %if_enabled introspection
@@ -140,6 +140,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
+- 0.14.4
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
 - 0.14.3
 
