@@ -1,7 +1,7 @@
 %define app_id com.vscodium.codium
 
 Name:    codium
-Version: 1.99.32562
+Version: 1.101.14098
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -109,6 +109,9 @@ install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
 %_datadir/appdata/%app_id.metainfo.xml
 
 %changelog
+* Wed Jun 25 2025 Semen Fomchenkov <armatik@altlinux.org> 1.101.14098-alt1
+- 1.101.14098
+
 * Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.99.32562-alt1
 - 1.99.32562
 
