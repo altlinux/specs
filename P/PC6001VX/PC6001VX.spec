@@ -1,5 +1,5 @@
 Name:     PC6001VX
-Version:  4.2.5
+Version:  4.2.13
 Release:  alt1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
@@ -18,7 +18,7 @@ Source4: PC6001VX_ru.qm
 #Patch2: 0002-Fix-locale-choosing.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel ninja-build qt6-base-devel qt6-websockets-devel qt6-shadertools-devel qt6-5compat-devel qt6-multimedia-devel
+BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel ninja-build qt6-base-devel qt6-websockets-devel qt6-shadertools-devel qt6-5compat-devel qt6-multimedia-devel libswresample-devel qt6-tools
 
 %description
 Cross platform version of NEC PC-6001 emulator based on PC6001V. 
@@ -77,9 +77,9 @@ do
 install -D -m 0644 data/PC-6001_${N}.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
-cp -r compatible_rom/basic66-v042/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v042
-cp -r compatible_rom/basic66-v042/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v042
-cp -r compatible_rom/basic60-v076/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v076
+cp -r compatible_rom/basic66-v052/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v042
+cp -r compatible_rom/basic66-v052/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v042
+cp -r compatible_rom/basic60-v081/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v076
 cp -r fonts %buildroot%_datadir/%name/
 
 install -D -m 0644 %SOURCE1 %buildroot%_man6dir/%name.6
@@ -94,6 +94,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Wed Jun 11 2025 Artyom Bystrov <arbars@altlinux.org> 4.2.13-alt1
+- New version 4.2.13.
+
 * Thu Jan 25 2024 Artyom Bystrov <arbars@altlinux.org> 4.2.5-alt1
 - New version 4.2.5.
 
