@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 6.1
+Version: 7.0
 Release: alt1
 Summary: Practical and minimal image viewer
-License: GPLv3
+License: GPL-3.0
 Group: Graphics
-Url: https://github.com/jurplel/qView
+Url: https://interversehq.com/qview
+VCS: https://github.com/jurplel/qView
+
 Source: %name-%version.tar
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools
 
 %description
 qView is an image viewer designed with minimalism and usability in mind.
@@ -26,7 +27,7 @@ find -type f -name '*.cpp' -o -name '*.h' -print0 |
 
 %build
 export PREFIX=/usr
-qmake-qt5
+qmake-qt6
 %make_build
 
 %install
@@ -44,6 +45,10 @@ rm -rf %buildroot%_datadir/licenses/%name
 %doc LICENSE
 
 %changelog
+* Mon Jun 30 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.0-alt1
+- Updated to version 7.0.
+- Built with Qt6.
+
 * Mon Aug 21 2023 Alexander Makeenkov <amakeenk@altlinux.org> 6.1-alt1
 - Updated to version 6.1.
 
