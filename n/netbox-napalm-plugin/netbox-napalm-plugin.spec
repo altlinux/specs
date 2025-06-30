@@ -2,7 +2,7 @@
 
 Name:    netbox-napalm-plugin
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Summary: NetBox Napalm plugin
 License: Apache-2.0
@@ -14,7 +14,8 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox
+Requires: netbox >= 4.0.2
+Conflicts: netbox > 4.3.99
 Requires: python3-module-napalm
 
 BuildArch: noarch
@@ -45,6 +46,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %python3_sitelibdir/%{pyproject_distinfo %pname}
 
 %changelog
+* Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.1-alt2
+- Change max NetBox version to 4.3.99.
+
 * Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.1-alt1
 - New 0.3.1 version.
 

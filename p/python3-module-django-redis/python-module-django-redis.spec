@@ -2,7 +2,7 @@
 %define mod_name  django_redis
 
 Name: python3-module-%pypi_name
-Version: 5.4.0
+Version: 6.0.0
 Release: alt1
 
 Summary: Full featured redis cache backend for Django
@@ -34,6 +34,9 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 6.0.0-alt1
+- New 6.0.0 version.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 5.4.0-alt1
 - New 5.4.0 version.
 

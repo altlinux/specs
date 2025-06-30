@@ -1,5 +1,5 @@
 Name:    netbox-dns
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: NetBox DNS is a NetBox plugin for managing DNS data
@@ -41,6 +41,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-dns/README
 %_defaultdocdir/netbox-dns/README
 
 %changelog
+* Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.3.3-alt1
+- New 1.3.3 version.
+
 * Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 1.3.2-alt1
 - New 1.3.2 version.
 

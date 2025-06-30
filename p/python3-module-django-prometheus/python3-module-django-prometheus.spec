@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.4.1
 Release: alt1
 
 Summary: Export Django monitoring metrics for Prometheus.io
@@ -47,5 +47,8 @@ rm -fr %buildroot%python3_sitelibdir/django_prometheus/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 2.4.1-alt1
+- New 2.4.1 version.
+
 * Mon Oct 02 2023 Alexander Burmatov <thatman@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus.
