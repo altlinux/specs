@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.9
-Release: alt1
+Release: alt2
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -12,6 +12,11 @@ Group: Graphics
 Url: https://dcmtk.org/dcmtk.php.en
 VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
+Patch0: dcmtk-3.6.6-upstream-cve-2024-52333.patch
+Patch1: dcmtk-3.6.9-upstream-cve-2025-2357.patch
+Patch2: dcmtk-3.6.9-upstream-cve-2025-25472.patch
+Patch3: dcmtk-3.6.9-upstream-cve-2025-25474.patch
+Patch4: dcmtk-3.6.9-upstream-cve-2025-25475.patch
 
 Requires: lib%name%soname = %EVR
 BuildRequires: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
@@ -49,6 +54,7 @@ NB: a project using tuples from this library will fail to build
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i '/"fenv.h" HAVE_FENV_H/d' CMake/GenerateDCMTKConfigure.cmake
 # unportable magic with va_args
@@ -96,6 +102,15 @@ sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Sat Jun 28 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.9-alt2
+- Fixes:
+  + CVE-2024-47796 Crafted DICOM file can lead to out-of-bounds write
+  + CVE-2024-52333 Crafted DICOM file can lead to out-of-bounds write
+  + CVE-2025-2357  Manipulation leads to memory corruption
+  + CVE-2025-25472 Denial of Service via a crafted DICOM file
+  + CVE-2025-25474 Buffer overflow when processing invalid DICOM image
+  + CVE-2025-25475 Denial of Service via a crafted DICOM files
+
 * Thu Dec 12 2024 Anton Farygin <rider@altlinux.ru> 3.6.9-alt1
 - 3.6.8 -> 3.6.9
 
