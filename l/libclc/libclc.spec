@@ -8,7 +8,7 @@
 %global llvm_version 20.1
 
 Name: libclc
-Version: 20.1.4
+Version: 20.1.7
 Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
@@ -87,6 +87,9 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.7-alt1
+- 20.1.7.
+
 * Wed May 14 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.4-alt1
 - 20.1.4.
 
