@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.0
+Version: 4.0.3
 Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
@@ -16,7 +16,6 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -35,7 +34,6 @@ finds crashes and validates spec compliance.
 
 %prep
 %setup
-%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -56,6 +54,9 @@ finds crashes and validates spec compliance.
 %_bindir/st
 
 %changelog
+* Mon Jun 30 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.0.3-alt1
+- New version (4.0.3).
+
 * Wed Jun 11 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.0.0-alt1
 - New version(4.0.0).
 
