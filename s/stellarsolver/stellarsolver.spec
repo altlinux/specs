@@ -1,10 +1,10 @@
 %global sover 2
-%define libstellarsolver libstellarsolver%sover
+%define libstellarsolver libstellarsolver6_%sover
 
 %add_findreq_skiplist %_includedir/libstellarsolver/astrometry/*.ph
 
 Name: stellarsolver
-Version: 2.6
+Version: 2.7
 Release: alt1
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: https://github.com/rlancaste/stellarsolver/
 License: LGPL-3.0-or-later
 
 Source: %name-%version.tar
+Patch1: e8d809b183d1f752cd683e1dcad02678cac552f0.patch
 
 BuildRequires: cmake qt6-base-devel
 BuildRequires: libcfitsio-devel libgsl-devel wcslib-devel
@@ -42,6 +43,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake \
@@ -62,8 +64,8 @@ developing applications that use %name.
 
 %files -n %libstellarsolver
 %doc README.md LICENSE
-%_libdir/libstellarsolver.so.%sover
-%_libdir/libstellarsolver.so.*
+%_libdir/libstellarsolver6.so.%sover
+%_libdir/libstellarsolver6.so.*
 
 %files devel
 %_includedir/*
@@ -72,5 +74,8 @@ developing applications that use %name.
 %_libdir/pkgconfig/stellarsolver.pc
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 2.7-alt1
+- new version
+
 * Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 2.6-alt1
 - initial build
