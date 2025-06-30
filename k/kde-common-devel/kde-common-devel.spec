@@ -7,7 +7,7 @@
 
 Name: kde-common-devel
 Version: 14.12.1
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -48,6 +48,9 @@ install -D -m 0644 %SOURCE11 %buildroot/%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt2
+- fix to use with new cmake
+
 * Mon Jan 26 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
