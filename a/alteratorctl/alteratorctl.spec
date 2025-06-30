@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: CLI for alterator-explorer
 License: GPL-2.0+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alteratorctl
+URL: https://altlinux.space/alterator/alteratorctl
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel
@@ -42,13 +42,25 @@ A command line tool for using alterator DBus objects.
 %install
 %cmakeinstall_std
 ln -s %_bindir/%name %buildroot%_bindir/actl
+mkdir -p %buildroot%_datadir/bash-completion/completions/
+mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
+cp completions/completion \
+        %buildroot%_datadir/bash-completion/completions/%name
+cp completions/completion.fish \
+        %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
 %files
 %_bindir/%name
 %_bindir/actl
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Jul 01 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.10-alt1
+- Fixed typos (thx Elena Mishina).
+- Added Bash and Fish completion (thx Kozyrev Yuri).
+
 * Sat May 31 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.9-alt1
 - Fixing build requires and creating symbolic link named actl
 
