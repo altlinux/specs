@@ -9,14 +9,14 @@
 
 Name: linstor
 Version: 1.31.1
-Release: alt3
+Release: alt4
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
 
-%define java_arches x86_64 aarch64 loongarch64
+%define java_arches x86_64 aarch64 loongarch64 riscv64
 ExclusiveArch: %{java_arches}
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
@@ -154,6 +154,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Mon Jun 30 2025 Ivan A. Melnikov <iv@altlinux.org> 1.31.1-alt4
+- NMU: enable building on riscv64
+
 * Wed Jun 25 2025 Ivan Khanas <xeno@altlinux.org> 1.31.1-alt3
 - Set JAVA_HOME variable after installing controller. (Closes: 53487)
 
