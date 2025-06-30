@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jun 27 2025 Dmitry Terekhin <jqt4@altlinux.org> 3.2.1-alt1
+- pkg-groups: Use the selected edition
+
 * Mon Apr 28 2025 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1
 - pkg-size: Add live size to pakages size.
 - alterator-pkg-functions: Write pkg size to a custom file.
