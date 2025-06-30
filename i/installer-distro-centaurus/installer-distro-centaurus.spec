@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -60,6 +60,7 @@ cp -a * %buildroot%install2dir/
 # Don't expand groups lists
 mkdir -p %buildroot%_sysconfdir/alterator
 echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
+echo "use_edition=yes" >>%buildroot%_sysconfdir/alterator/pkg-groups.conf
 
 %files stage2
 %_sysconfdir/alterator/pkg-groups.conf
@@ -68,6 +69,11 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Mon Jun 30 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt3
+- 95-virt-env.sh: Rename centaurus to edition_server
+- Alterator modules must use editions
+- Save the edition selected in the installer
+
 * Fri Jun 20 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt2
 - 95-virt-env.sh: VM support
 
