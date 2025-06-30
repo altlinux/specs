@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -24,7 +24,7 @@ BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libX
 BuildRequires: qt5-x11extras-devel qt5-declarative-devel
 BuildRequires: qt5-phonon-devel qt5-tools-devel
 BuildRequires: qt5-speech-devel
-BuildRequires: libdbusmenu-qt5-devel
+#BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: libcanberra-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -87,6 +87,9 @@ KF5 library
 #%_K5srvtyp/*.desktop
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- build without libdbusmenu-qt
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
