@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 570.153.02
+Version: 570.169
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -149,6 +149,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt1
 - increase application icon size
 
