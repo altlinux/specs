@@ -1,16 +1,16 @@
 %define optflags_lto -flto=thin
 
 %define version_hi 2
-%define version_mid 2
+%define version_mid 4
 %define version_lo 0
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define git_date Thu Oct 31 16:22:11 2024
+%define git_date Sun Jun 29 22:47:12 2025
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash 2d5faa627ff54f3fb2a69a43286181bee071a1c3
+%define git_hash e4af1c424451c6b65c5c387404315cef77e9901b
 
 Name: pcsx2
-Version: 2.2.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -25,15 +25,12 @@ ExclusiveArch: x86_64
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch0: %name-shaderc.patch
-Patch1: %name-unique-lock.patch
-
 BuildRequires: bzlib-devel
 BuildRequires: clang
 BuildRequires: ctest
 BuildRequires: extra-cmake-modules
 BuildRequires: libGLU-devel
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXdamage-devel
@@ -53,10 +50,13 @@ BuildRequires: libexpat-devel
 BuildRequires: libffi-devel
 BuildRequires: libidn2-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libkddockwidgets-qt6-devel
 BuildRequires: liblz4-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
 BuildRequires: libpcre2-devel
+BuildRequires: libplutosvg-devel
+BuildRequires: libplutovg-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libshaderc-devel
 BuildRequires: libswresample-devel
@@ -68,7 +68,7 @@ BuildRequires: libwebp-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld
 BuildRequires: llvm
-BuildRequires: ninja-build
+BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-tools-devel
 
 %description
@@ -77,8 +77,6 @@ There is still lot of on going work to improve compatibility & speed.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %cmake \
@@ -126,6 +124,9 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Mon Jun 30 2025 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Nov 20 2024 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 
