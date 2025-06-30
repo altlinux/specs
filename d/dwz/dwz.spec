@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: dwz
-Version: 0.15
-Release: alt1.gited021b8
+Version: 0.16
+Release: alt1
 
 Summary: DWARF optimization and duplicate removal tool
 License: GPL-2.0-or-later
@@ -48,6 +48,9 @@ make check || { grep FAIL dwz.log; exit 1; }
 %_man1dir/dwz.1*
 
 %changelog
+* Mon Jun 30 2025 Ivan A. Melnikov <iv@altlinux.org> 0.16-alt1
+- Update to dwz-0.16.
+
 * Tue May 13 2025 Ivan A. Melnikov <iv@altlinux.org> 0.15-alt1.gited021b8
 - Update to dwz-0.15.
 - Build from master snapshot for a double-free (PR32934) fix.
