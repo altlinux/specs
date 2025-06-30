@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
 %define ver_major 0.48
-%define beta .rc1
+%define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
 %define namespace Phosh
@@ -26,8 +26,8 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major
-Release: alt0.91%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -307,6 +307,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
+- 0.48.0
+
 * Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.91.rc1
 - phosh.pam: added 'account required pam_permit.so',
   uncommented pam_gnome_keyring (ALT #54954)

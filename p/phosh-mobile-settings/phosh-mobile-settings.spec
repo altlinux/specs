@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define ver_major 0.48
-%define beta .rc1
+%define beta %nil
 %define gmobile_ver 0.2.1
 %define rdn_name mobi.phosh.MobileSettings
 
@@ -13,8 +13,8 @@
 %define gvc_ver 5f9768a
 
 Name: phosh-mobile-settings
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Mobile Settings App for phosh and related components
 Group: Graphical desktop/GNOME
@@ -104,6 +104,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
+- 0.48.0
+
 * Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc1
 - v0.48_rc1-7-g91a52c3
 
