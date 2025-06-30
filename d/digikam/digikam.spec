@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.6.0
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 %define sover %version
@@ -63,6 +63,7 @@ Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
 Patch102: fix-segfault-on-action-search.patch
 Patch103: alt-kf-deps.patch
+Patch104: digikam-fix-qt6.9-build.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-ifver rpm-macros-qt6-webengine libopencv-devel
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
@@ -186,6 +187,7 @@ pushd core
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
+%patch104 -p2
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -290,6 +292,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 8.6.0-alt3
+- fix to build with Qt-6.9
+
 * Thu May 29 2025 Sergey V Turchin <zerg@altlinux.org> 8.6.0-alt2
 - add fix against kdebug#504902
 
