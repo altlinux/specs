@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.6.0
-Release: alt1.1
+Version: 3.7.0
+Release: alt1
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -28,7 +28,6 @@ BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.messaging >= 5.29.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 7.4.0
-BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-webob >= 1.7.1
@@ -126,6 +125,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

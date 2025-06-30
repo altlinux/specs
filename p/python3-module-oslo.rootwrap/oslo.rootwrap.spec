@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.5.1
-Release: alt1.1
+Version: 7.6.0
+Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -116,6 +116,9 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 7.6.0-alt1
+- Automatically updated to 7.6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.7.1
-Release: alt1.1
+Version: 9.8.0
+Release: alt1
 
 Summary: OpenStack Oslo Configuration API
 
@@ -127,6 +127,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 9.8.0-alt1
+- Automatically updated to 9.8.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 9.7.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

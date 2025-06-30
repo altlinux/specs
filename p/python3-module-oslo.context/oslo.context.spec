@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.7.1
-Release: alt1.1
+Version: 6.0.0
+Release: alt1
 
 Summary: OpenStack Oslo Context library
 
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-debtcollector >= 1.2.0
 
 %if_with check
 BuildRequires: python3-module-fixtures >= 3.0.0
@@ -110,6 +109,9 @@ install -pDm 644 man/oslocontext.1 %buildroot%_man1dir/oslocontext.1
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
+- Automatically updated to 6.0.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.7.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

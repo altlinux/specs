@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: OpenStack library for creating OVSDB applications
@@ -109,6 +109,9 @@ export OS_TEST_PATH=ovsdbapp/tests/unit
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 2.12.0-alt1
+- Automatically updated to 2.12.0.
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1
 - Automatically updated to 2.11.0.
 

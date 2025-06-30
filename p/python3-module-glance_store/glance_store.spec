@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.9.1
+Version: 4.10.0
 Release: alt1
 
 Summary: OpenStack Image Service Store Library
@@ -147,6 +147,9 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt1
+- Automatically updated to 4.10.0.
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
 - Automatically updated to 4.9.1.
 

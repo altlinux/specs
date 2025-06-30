@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 43.0.0
+Version: 44.0.0
 Release: alt1
 
 Summary: OpenStack Integration Testing
@@ -145,6 +145,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 44.0.0-alt1
+- Automatically updated to 44.0.0.
+
 * Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 43.0.0-alt1
 - Automatically updated to 43.0.0.
 

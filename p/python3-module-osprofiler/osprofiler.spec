@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: OpenStack Profiler Library
@@ -38,13 +38,11 @@ BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-docutils >= 0.14
-BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pymongo >= 3.0.2
 BuildRequires: python3-module-elasticsearch >= 2.0.0
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-opentelemetry-sdk >= 1.16.0
 BuildRequires: python3-module-opentelemetry-exporter-otlp-proto-http
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -132,6 +130,9 @@ rm osprofiler/tests/unit/drivers/test_jaeger.py
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
+- Automatically updated to 4.3.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 

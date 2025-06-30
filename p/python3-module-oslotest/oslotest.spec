@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: OpenStack Oslo test framework
@@ -29,8 +29,6 @@ BuildRequires: python3-module-mock >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-hacking >= 6.1.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -117,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 

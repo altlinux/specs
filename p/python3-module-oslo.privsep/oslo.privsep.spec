@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.6.0
-Release: alt1.1
+Version: 3.7.0
+Release: alt1
 
 Summary: OpenStack library for privilege separation
 
@@ -36,8 +36,8 @@ BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-greenlet >= 0.4.14
 BuildRequires: python3-module-debtcollector >= 3.0.0
+BuildRequires: python3-module-greenlet >= 0.4.14
 %endif
 
 %if_with docs
@@ -118,6 +118,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

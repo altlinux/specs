@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.1
-Release: alt1.1
+Version: 4.2.1
+Release: alt1
 
 Summary: OpenStack Oslo Service library
 
@@ -46,6 +46,8 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: /proc
+BuildRequires: python3-module-cotyledon >= 2.0.0
+BuildRequires: python3-module-futurist >= 3.1.1
 %endif
 
 %if_with docs
@@ -123,6 +125,9 @@ install -pDm 644 man/osloservice.1 %buildroot%_man1dir/osloservice.1
 %endif
 
 %changelog
+* Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
+- Automatically updated to 4.2.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
