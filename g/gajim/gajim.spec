@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 2.2.0
+Version: 2.3.1
 Release: alt1
 
 Summary: a Jabber/XMPP client written in PyGTK
@@ -129,6 +129,9 @@ end
 %_datadir/%name/gui/*
 
 %changelog
+* Mon Jun 30 2025 Ilya Mashkin <oddity@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Wed May 21 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.0-alt1
 - 2.2.0
 
