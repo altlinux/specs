@@ -4,7 +4,7 @@
 %define libkirigamiaddonsstatefulapp libkirigamiaddonsstatefulapp%sover
 
 Name: kf6-%rname
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 %K6init
 
@@ -26,7 +26,7 @@ Requires: libkf6iconthemes
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-tools-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-ki18n-devel kf6-kconfig-devel kf6-kirigami-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kguiaddons-devel
@@ -87,6 +87,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiAddonsStatefulApp.so.*
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt1
+- new version
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt1
 - new version
 
