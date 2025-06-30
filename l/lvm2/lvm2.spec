@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.32
-%define dmversion 1.02.206
+%define lvm2version 2.03.33
+%define dmversion 1.02.207
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -491,6 +491,10 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Mon Jun 30 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.33-alt1
+- 2.03.33
+- avoid dependencies to btrfs-progs, xfsprogs (ALT#54697)
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.32-alt1
 - 2.03.32
 
