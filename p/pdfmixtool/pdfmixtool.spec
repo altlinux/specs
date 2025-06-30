@@ -1,6 +1,6 @@
 Name: pdfmixtool
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 License: GPL-3.0-only
 Group: Office
@@ -11,6 +11,7 @@ Vcs: https://gitlab.com/scarpetta/pdfmixtool
 Source: %name-%version.tar
 Patch0: %name-1.1-alt-desktop.patch
 Patch1: extract_images-1.1.1-alt-build.patch
+Patch2: CMakeLists-1.2.0-alt-fixes.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -55,6 +56,7 @@ PDF, извлекать страницы из файла PDF, редактиро
 
 %patch1 -p1
 %patch0 -p2
+%patch2 -p1
 
 %build
 %cmake \
@@ -73,6 +75,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Mon Jun 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt2
+- fix localization
+
 * Sun Jun 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - 1.1.1 -> 1.2.0
 - added VCS
