@@ -2,13 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.48
-%define beta .rc2
+%define beta %nil
 
 %def_enable check
 
 Name: xdg-desktop-portal-phosh
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Phosh Desktop Portal
 Group: Graphical desktop/GNOME
@@ -66,6 +66,9 @@ portal.
 
 
 %changelog
+* Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
+- 0.48.0
+
 * Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48-alt0.9.rc2
 - 0.48_rc2
 
