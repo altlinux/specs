@@ -2,9 +2,11 @@
 
 %define oname txaio
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 23.1.1
-Release: alt2
+Version: 25.6.1
+Release: alt1
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
@@ -19,11 +21,11 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-sphinx
+%if_with check
 BuildRequires: python3-module-twisted-core
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-mock
 BuildRequires: python3-test
+%endif
 
 %py3_requires asyncio
 
@@ -58,26 +60,8 @@ asyncio or Twisted as a dependency.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-txaio is a helper library for writing code that runs unmodified on both
-Twisted and asyncio.
-
-This is like six, but for wrapping over differences between Twisted and
-asyncio so one can write code that runs unmodified on both (aka "source
-code compatibility"). In other words: your users can choose if they want
-asyncio or Twisted as a dependency.
-
-This package contains pickles for %oname.
-
 %prep
 %setup
-
-sed -i 's|sphinx-build|&-3|' docs/Makefile
-sed -i "/'python'/d" docs/conf.py
 
 %build
 %pyproject_build
@@ -87,26 +71,22 @@ sed -i "/'python'/d" docs/conf.py
 
 cp -fR test/ %buildroot%python3_sitelibdir/%oname/
 
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
 %tox_check_pyproject
 
 %files
-%doc *.rst examples/ docs/_build/html
+%doc *.rst examples/
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/%oname/test/
 
 %files tests
 %python3_sitelibdir/%oname/test/
 
-%files pickles
-%python3_sitelibdir/*/pickle
 
 %changelog
+* Mon Jun 30 2025 Anton Vyatkin <toni@altlinux.org> 25.6.1-alt1
+- New version 25.6.1.
+
 * Fri Mar 28 2025 Anton Vyatkin <toni@altlinux.org> 23.1.1-alt2
 - Fixed FTBFS.
 
