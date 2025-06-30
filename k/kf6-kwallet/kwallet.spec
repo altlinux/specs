@@ -1,10 +1,10 @@
 %define rname kwallet
 
-%def_disable ksecretd
+%def_enable ksecretd
 
 Name: kf6-%rname
 Version: 6.14.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -146,6 +146,9 @@ __EOF__
 
 
 %changelog
+* Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.1-alt2
+- using ksecretd as org.freedesktop.secrets alternative
+
 * Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.1-alt1
 - new version
 
