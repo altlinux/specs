@@ -2,10 +2,10 @@
 %define module_version	6.30.223.271
 %define module_release alt19
 
-%define flavour		6.12
+%define flavour		6.15
 %define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.15
 
 %setup_kernel_module %flavour
 

@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt10.g%{git}
+Release: alt11.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Proprietary
@@ -69,6 +69,12 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt11.g6adc981
+- Apply patches from debian for 6.15+ compatibility:
+  + 38-build-don-t-use-deprecated-EXTRA_-FLAGS.patch
+  + 39-wl-use-timer_delete-for-kernel-6.15.patch
+  + 40-wl-add-MODULE_DESCRIPTION.patch
+
 * Fri Apr 18 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt10.g6adc981
 - Added fix for kernels 6.13+.
 
