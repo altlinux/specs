@@ -1,12 +1,11 @@
 %define soversion 1
-%define llvmversion 19.1
 %define oclocversion 25.09.1
 # LTO will be checked during configuration
 %define optflags_lto %nil
 
 Name: intel-compute-runtime
 Version: 25.09.32961.8
-Release: alt1.1
+Release: alt2
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -17,8 +16,7 @@ Source: %name-%version.tar
 Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
-BuildRequires: clang%llvmversion libstdc++-devel
-BuildRequires: libintel-opencl-clang-devel
+BuildRequires: gcc-c++ libstdc++-devel
 BuildRequires: libigdfcl-devel
 BuildRequires: libigc-devel
 BuildRequires: intel-gmmlib-devel
@@ -98,10 +96,7 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %patch1 -p1
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvmversion
 %cmake -G Ninja \
- -DCMAKE_C_COMPILER=/usr/bin/clang \
- -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
  -DSKIP_UNIT_TESTS=1
 
@@ -131,6 +126,9 @@ mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 25.09.32961.8-alt2
+- Get rid of llvm completely and build with gcc.
+
 * Fri Apr 11 2025 L.A. Kostis <lakostis@altlinux.ru> 25.09.32961.8-alt1.1
 - NMU:
   - spec: cleanup.
