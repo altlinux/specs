@@ -1,25 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define engines_dir %(pkg-config --variable=enginesdir --silence-errors libcrypto 2>/dev/null || echo unknown)
+%define modules_dir %(pkg-config --variable=modulesdir --silence-errors libcrypto 2>/dev/null || echo unknown)
 %def_enable check
 
 Name: libp11
-Version: 0.4.13
+Version: 0.4.16
 Release: alt1
 Summary: Library for using PKCS#11 modules
-Group: System/Libraries
 License: LGPL-2.1-or-later
+Group: System/Libraries
 Url: https://github.com/OpenSC/libp11/wiki
 Vcs: https://github.com/OpenSC/libp11.git
-
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
 Provides: openssl-engine_pkcs11 = %version-%release
 Obsoletes: openssl-engine_pkcs11 < %version-%release
 
 BuildRequires: pkgconfig(p11-kit-1)
 BuildRequires: libssl-devel >= 0.9.8
-BuildRequires: doxygen xsltproc
 
 %if_enabled check
 BuildRequires: /proc
@@ -44,35 +42,11 @@ Development files for %name.
 %prep
 %setup
 %patch -p1
-cat > README.ALT <<EOF
-In ALTLinux, the engine file has been placed in the %engines_dir directory.
-Considering this new path, below is the suggested change to openssl.cnf
-in order to use this engine:
-
-openssl_conf = openssl_def
-
-[openssl_def]
-engines = engine_section
-
-[engine_section]
-pkcs11 = pkcs11_section
-
-[pkcs11_section]
-engine_id = pkcs11
-dynamic_path = %engines_dir/pkcs11.so
-MODULE_PATH = %_libdir/opensc-pkcs11.so
-init = 0
-
-EOF
-
-chmod 0644 README.ALT
 
 %build
 %autoreconf
 %configure \
    --disable-static \
-   --enable-api-doc \
-   --with-enginesdir=%engines_dir
 
 %make_build
 
@@ -82,16 +56,19 @@ chmod 0644 README.ALT
 # Cleanup
 rm %buildroot%_libdir/*.la
 rm %buildroot%engines_dir/*.la
+rm %buildroot%modules_dir/*.la
 rm -r %buildroot%_docdir/%name
 
 %check
 %make VERBOSE=1 check
 
 %files
-%doc NEWS README.md README.ALT
+%doc NEWS README.md
 %_libdir/libp11.so.*
 %engines_dir/libpkcs11.so
 %engines_dir/pkcs11.so
+%modules_dir/libpkcs11.so
+%modules_dir/pkcs11prov.so
 
 %files devel
 %_libdir/libp11.so
@@ -99,6 +76,9 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Tue Jun 24 2025 Stanislav Levin <slev@altlinux.org> 0.4.16-alt1
+- 0.4.13 -> 0.4.16.
+
 * Wed Dec 25 2024 Stanislav Levin <slev@altlinux.org> 0.4.13-alt1
 - 0.4.12 -> 0.4.13.
 

@@ -53,7 +53,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.12.4
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -262,6 +262,7 @@ Requires: python3-module-samba
 Requires: python3-module-psutil
 # urllib3.util.ssl_match_hostname
 Requires: python3-module-urllib3 >= 1.26.8
+Requires: python3-module-packaging
 Requires: librpm
 Obsoletes: python3-module-ipaserver-ntp < %EVR
 Provides: python3-module-ipaserver-ntp = %EVR
@@ -469,6 +470,7 @@ Requires: python3-module-urllib3 >= 1.26.8
 Requires: python3-module-sss-murmur
 Requires: python3-module-yubico
 Requires: python3-module-systemd
+Requires: python3-module-packaging
 %py3_provides ipaplatform
 %py3_provides ipaplatform.constants
 %py3_provides ipaplatform.osinfo
@@ -514,6 +516,7 @@ Requires: sshpass
 Requires: iptables
 Requires: drill
 Requires: python3-module-paramiko
+Requires: python3-module-packaging
 # Tests have a huge amount useless Provides
 %filter_from_provides /python3(ipatests\(\..*\)\?)/d
 
@@ -1138,6 +1141,10 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jun 30 2025 Stanislav Levin <slev@altlinux.org> 4.12.4-alt2
+- Added support for libp11 0.4.14.
+- Dropped dependency on deprecated pkg_resources.
+
 * Tue Jun 17 2025 Stanislav Levin <slev@altlinux.org> 4.12.4-alt1
 - 4.12.3 -> 4.12.4 (fixes: CVE-2025-4404).
 
