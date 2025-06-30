@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.21
+Version: 1.16.22
 Release: alt1
 
 Summary: Installer common parts
@@ -144,6 +144,11 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Jun 30 2025 Anton Midyukov <antohami@altlinux.org> 1.16.22-alt1
+- install2: fix exit, when installer closed
+- install2: do not restart xinit, if alterator-wizard was launched
+- initinstall.d: setup network when systemd, but network subsystem is not set
+
 * Mon Jun 16 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.16.21-alt1
 - final-notes.desktop: fix value of Icon field
 
