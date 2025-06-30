@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.34
+%define kernel_sublevel	.35
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -474,6 +474,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jun 30 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.35-alt1
+- Update to v6.12.35 (2025-06-27)
+
 * Thu Jun 26 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.34-alt1
 - Update to v6.12.34 (2025-06-19)
 - config: Enable CONFIG_BLK_CGROUP_IOLATENCY=y
