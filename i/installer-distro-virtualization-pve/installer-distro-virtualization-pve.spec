@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -74,6 +74,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Jun 30 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.4
+- Removed setup-dhcp-ifupdown2 script
+  (now setup-dhcp from general installer does that)
+
 * Thu Apr 17 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.3
 - initinstall script to assemble MD RAIDs
   (required for Volume Managment step)
