@@ -1,20 +1,21 @@
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
 %def_disable qtwebengine
 %endif
+# There is no qt6 subdirectory in https://github.com/aqbanking/gwenhywfar/tree/master/gui
+%def_without kbanking
 
 Name:    kmymoney
-Version: 5.1.3
-Release: alt3.1
+Version: 5.2.0
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE
 Summary(ru_RU.UTF-8): Учёт финансов под KDE
 License: GPL-2.0 or GPL-3.0
 Group:   Office
-URL:     http://kmymoney2.sourceforge.net
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+URL:     http://kmymoney2.org
+# Download from https://download.kde.org/stable/kmymoney/
 
 Source0: %name-%version.tar
 Source1: ru.po
@@ -22,55 +23,54 @@ Source2: %name.watch
 
 AutoReq: yes, noperl
 
-BuildRequires(pre): rpm-build-kf5
+ExclusiveArch: %qt6_qtwebengine_arches
+
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: python3-dev
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-script-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-svg-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
-%else
-BuildRequires: qt5-webkit-devel kf5-kdewebkit-devel
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: libkf5quickaddons
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kcmutils-devel
-BuildRequires: kf5-kitemmodels-devel
-BuildRequires: kf5-kwallet-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kde5-kholidays-devel
-BuildRequires: kde5-kcontacts-devel
-BuildRequires: kde5-akonadi-devel
-BuildRequires: kde5-kidentitymanagement-devel
-BuildRequires: kf5-kactivities-devel
-BuildRequires: kf5-kross-devel
-BuildRequires: kde5-kpimtextedit-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-kdiagram-devel
+BuildRequires: kf6-kauth-devel
+BuildRequires: kf6-kbookmarks-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kdeclarative-devel
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kitemviews-devel
+BuildRequires: kf6-kjobwidgets-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kservice-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: kf6-purpose-devel
+BuildRequires: kf6-solid-devel
+BuildRequires: kf6-karchive-devel
+BuildRequires: kf6-kcmutils-devel
+BuildRequires: kf6-kitemmodels-devel
+BuildRequires: kf6-kwallet-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-kholidays-devel
+BuildRequires: kf6-kcontacts-devel
+BuildRequires: akonadi-devel
+BuildRequires: kidentitymanagement-devel
+BuildRequires: plasma6-activities-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: kpimtextedit-devel
+BuildRequires: kf6-kparts-devel
+BuildRequires: kde6-kdiagram-devel
+BuildRequires: libqtkeychain-qt6-devel
 
 BuildRequires: boost-devel
 BuildRequires: glib2-devel
@@ -238,7 +238,9 @@ Requires: %name-qif
 Requires: %name-csvimport
 Requires: %name-gncimport
 Requires: %name-icalexport 
+%if_with kbanking
 Requires: %name-kbanking 
+%endif
 Requires: %name-ofximport 
 Requires: %name-onlinetasks
 Requires: %name-payeeidentifier
@@ -257,7 +259,6 @@ Summary: Internationalization and documentation for KMyMoney
 Group: System/Internationalization 
 Requires: %name = %version-%release
 Obsoletes: kde4-kmymoney-i18n
-BuildArch: noarch
 
 %description i18n
 Internationalization and documentation for KMyMoney
@@ -267,10 +268,15 @@ Internationalization and documentation for KMyMoney
 cp %SOURCE1 po/ru/kmymoney.po
 
 %build
-%K5init no_altplace
+%K6init no_altplace
 # Need to build in one thread, see https://bugs.kde.org/show_bug.cgi?id=364387 for details
 #export NPROCS=1
-%K5build -DCMAKE_SKIP_RPATH=1 \
+%K6build -DCMAKE_SKIP_RPATH=1 \
+         -DBUILD_WITH_QT6=ON \
+         -DENABLE_ADDRESSBOOK=ON \
+         -DENABLE_IBANBICDATA=OFF \
+         -DENABLE_KBANKING=ON \
+         -DAQBANKING_INCLUDE_DIRS=%_includedir/aqbanking6 \
          -DKDE_INSTALL_METAINFODIR=%_datadir/appdata \
 %if_enabled qtwebengine
          -DENABLE_WEBENGINE=ON \
@@ -281,115 +287,113 @@ cp %SOURCE1 po/ru/kmymoney.po
          -DENABLE_SQLCIPHER=OFF
 
 %install
-%K5install
+%K6install
 %find_lang %name --all
 
 %files
-%_K5bin/%name
-%_K5lib/libkmm_icons.so.*
-%_K5lib/libkmm_menus.so.*
-%_K5lib/libkmm_models.so.*
-%_K5lib/libkmm_mymoney.so.*
-%_K5lib/libkmm_plugin.so.*
-%_K5lib/libkmm_settings.so.*
-%_K5lib/libkmm_widgets.so.*
-%_K5lib/libkmm_printer.so.*
-%_K5xdgapp/*%name.desktop
-%doc %_K5doc/en/*
-%_K5cfg/*.kcfg
-#_K5srvtyp/*.desktop
-%_K5srv/kcm_forecastview.desktop
-%_K5srv/kcm_reportsview.desktop
-%_K5srv/kcm_xmlstorage.desktop
+%_K6bin/%name
+%_K6lib/libkmm_icons.so.*
+%_K6lib/libkmm_menus.so.*
+%_K6lib/libkmm_models.so.*
+%_K6lib/libkmm_mymoney.so.*
+%_K6lib/libkmm_plugin.so.*
+%_K6lib/libkmm_settings.so.*
+%_K6lib/libkmm_widgets.so.*
+%_K6lib/libkmm_printer.so.*
+%_K6lib/libkmm_base_dialogs.so.*
+%_K6lib/libkmm_base_widgets.so.*
+%_K6lib/libkmm_extended_dialogs.so.*
+%_K6lib/libkmm_gpgfile.so.*
+%_K6lib/libkmm_keychain.so.*
+%_K6lib/libkmm_menuactionexchanger.so.*
+%_K6lib/libkmm_selections.so.*
+%_K6lib/libkmm_templates.so.*
+%_K6lib/libkmm_webconnect.so.*
+%_K6lib/libkmm_wizard.so.*
+%_K6lib/libkmm_yesno.so.*
+%_K6lib/libonlinetask_interfaces.so.*
+%_K6xdgapp/*%name.desktop
+%doc %_K6doc/en/*
+%_K6cfg/*.kcfg
 %_datadir/%name/*
-%exclude %_datadir/%name/templates
-#exclude %_datadir/%name/weboob
 %_datadir/mime/packages/*
-%_K5icon/hicolor/*/apps/%name.png
-%_K5icon/hicolor/*/mimetypes/application-x-kmymoney.png
+%_K6icon/hicolor/*/apps/%name.png
+%_K6icon/hicolor/*/mimetypes/application-x-kmymoney.png
 %_datadir/kconf_update/%name.upd
 %_datadir/appdata/org.*.appdata.xml
-%_K5xmlgui/sqlstorage/sqlstorage.rc
-%_qt5_plugindir/kmymoney/budgetview.so
-%_qt5_plugindir/kmymoney/forecastview.so
-%_qt5_plugindir/kmymoney/kcm_forecastview.so
-%_qt5_plugindir/kmymoney/kcm_reportsview.so
-%_qt5_plugindir/kmymoney/kcm_xmlstorage.so
-%_qt5_plugindir/kmymoney/onlinejoboutboxview.so
-%_qt5_plugindir/kmymoney/reportsview.so
-%_qt5_plugindir/kmymoney/sqlstorage.so
-%_qt5_plugindir/kmymoney/xmlstorage.so
+%_qt6_plugindir/kmymoney_plugins/budgetview.so
+%_qt6_plugindir/kmymoney_plugins/forecastview.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_forecastview.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_reportsview.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_xmlstorage.so
+%_qt6_plugindir/kmymoney_plugins/onlinejoboutboxview.so
+%_qt6_plugindir/kmymoney_plugins/reportsview.so
+%_qt6_plugindir/kmymoney_plugins/sqlstorage.so
+%_qt6_plugindir/kmymoney_plugins/xmlstorage.so
 
 %files devel
 %dir %_includedir/%name
 %_includedir/%name/*
-%_K5link/lib*.so
+%_K6link/lib*.so
 
+%if_with kbanking
 %files kbanking
-%_qt5_plugindir/kmymoney/kbanking.so
-%_K5xmlgui/kbanking
+%_qt6_plugindir/kmymoney/kbanking.so
+%_K6xmlgui/kbanking
 %_datadir/kbanking
+%endif
 
 %files ofximport
-%_qt5_plugindir/kmymoney/ofximporter.so
-%_K5xmlgui/ofximporter
+%_qt6_plugindir/kmymoney_plugins/ofximporter.so
 
 %files icalexport
-%_qt5_plugindir/kmymoney/icalendarexporter.so
-%_qt5_plugindir/kmymoney/kcm_icalendarexporter.so
-%_K5xmlgui/icalendarexporter
-%_K5srv/kcm_icalendarexporter.desktop
+%_qt6_plugindir/kmymoney_plugins/icalendarexporter.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_icalendarexporter.so
 
 %files printcheck
-%_qt5_plugindir/kmymoney/checkprinting.so
-%_qt5_plugindir/kmymoney/kcm_checkprinting.so
-%_K5xmlgui/checkprinting
+%_qt6_plugindir/kmymoney_plugins/checkprinting.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_checkprinting.so
 %_datadir/checkprinting
-%_K5srv/kcm_checkprinting.desktop
 
 %files reconciliationreport
-%_qt5_plugindir/kmymoney/reconciliationreport.so
+%_qt6_plugindir/kmymoney_plugins/reconciliationreport.so
 
 %files csv
 %_libdir/libkmm_csvimportercore.so*
-%_qt5_plugindir/kmymoney/csvimporter.so
-%_qt5_plugindir/kmymoney/kcm_csvimporter.so
-%_qt5_plugindir/kmymoney/csvexporter.so
-%_K5xmlgui/csvimporter
-%_K5xmlgui/csvexporter
-%_K5srv/kcm_csvimporter.desktop
+%_qt6_plugindir/kmymoney_plugins/csvimporter.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_csvimporter.so
+%_qt6_plugindir/kmymoney_plugins/csvexporter.so
 
 %files qif
-%_qt5_plugindir/kmymoney/qifimporter.so
-%_qt5_plugindir/kmymoney/qifexporter.so
-%_qt5_plugindir/kmymoney/kcm_qif.so
-%_K5xmlgui/qifimporter
-%_K5xmlgui/qifexporter
-%_K5srv/kcm_qifimporter.desktop
-%_K5srv/kcm_qifexporter.desktop
+%_qt6_plugindir/kmymoney_plugins/qifimporter.so
+%_qt6_plugindir/kmymoney_plugins/qifexporter.so
+%_qt6_plugindir/kmymoney_plugins/kcms/kcm_qif.so
 
 %files gncimport
-%_qt5_plugindir/kmymoney/gncimporter.so
+%_qt6_plugindir/kmymoney_plugins/gncimporter.so
 
 %files payeeidentifier
 %_libdir/libkmm_payeeidentifier.so.*
 
 %files onlinetasks
-%_qt5_plugindir/kmymoney/konlinetasks_sepa.so
+%_qt6_plugindir/kmymoney_plugins/konlinetasks_sepa.so
 
 %files weboob
 #_datadir/%name/weboob
-%_qt5_plugindir/kmymoney/woob.so
-%_K5xmlgui/woob
+%_qt6_plugindir/kmymoney_plugins/woob.so
 
 %files plugins
 
 %files i18n -f %name.lang
-%_datadir/%name/templates
-%_K5doc/*/kmymoney/
-%exclude %_K5doc/en
+%_K6doc/*/kmymoney/
+%exclude %_K6doc/en
 
 %changelog
+* Fri Jun 27 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
+- New version.
+- Rebuilt with KF6 (ALT #54993).
+- Removed kmymoney-kbanking because gwenhywfar has no version for Qt6.
+
 * Tue Nov 28 2023 Ivan A. Melnikov <iv@altlinux.org> 5.1.3-alt3.1
 - NMU: Used rpm-macros-qt5-webengine (fixes build on loongarch64).
 

@@ -1,14 +1,15 @@
-%define lib_name libalkimia5
+%define lib_name libalkimia6
+%define _unpackaged_files_terminate_build 1
 
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
 %def_disable qtwebengine
 %endif
 
 Name:    alkimia
-Version: 8.1.2
-Release: alt5
+Version: 8.2.0
+Release: alt1
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -18,25 +19,27 @@ URL:     http://community.kde.org/Alkimia/libalkimia
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-build-kf6
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel
-BuildRequires: extra-cmake-modules qt5-tools-devel-static
+BuildRequires: qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel-static
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: libgmp_cxx-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdelibs4support-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-plasma-framework-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kxmlgui-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-knewstuff-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: plasma6-lib-devel
 BuildRequires: doxygen
 
 Requires: lib%name = %version-%release
@@ -67,8 +70,9 @@ Headers and other files for develop with %name.
 %setup -q
 
 %build
-%K5init no_altplace
-%K5build -DCMAKE_SKIP_RPATH=1 \
+%K6init no_altplace
+%K6build -DCMAKE_SKIP_RPATH=1 \
+         -DBUILD_WITH_QT6=1 \
          -DBUILD_WITH_WEBKIT=OFF \
 %if_enabled qtwebengine
          -DBUILD_WITH_WEBENGINE=ON \
@@ -78,20 +82,19 @@ Headers and other files for develop with %name.
          -DAPPDATA_INSTALL_DIR=%_datadir
 
 %install
-%K5install
-%K5install_move data knsrcfiles
+%K6install
+%K6install_move data knsrcfiles
 %find_lang alkimia --all
 
 %files -f alkimia.lang
 %doc README.md
-%_K5bin/onlinequoteseditor*
-%_K5qml/org/kde/alkimia
-%_K5xdgapp/*.desktop
-%_K5icon/hicolor/*/apps/onlinequoteseditor*
+%_K6bin/onlinequoteseditor*
+%_K6qml/org/kde/alkimia6
+%_K6xdgapp/*.desktop
+%_K6icon/hicolor/*/apps/onlinequoteseditor*
 %_datadir/metainfo/*.appdata.xml
-%_datadir/kf5/plasma/plasmoids/org.wincak.foreigncurrencies2
-%_K5data/knsrcfiles/*.knsrc
-%_K5srv/*.desktop
+%_datadir/plasma/plasmoids/org.wincak.foreigncurrencies26
+%_K6data/knsrcfiles/*.knsrc
 
 %files -n lib%name
 %_libdir/%lib_name.so.*
@@ -99,11 +102,16 @@ Headers and other files for develop with %name.
 %files -n lib%name-devel
 %dir %_includedir/alkimia
 %_includedir/alkimia/*
-%_K5link/%lib_name.so
+%_K6link/%lib_name.so
 %_pkgconfigdir/%lib_name.pc
 %_libdir/cmake/LibAlkimia*
+%_datadir/gdb/auto-load/%_libdir/%lib_name.so.*-gdb.py
 
 %changelog
+* Wed Jun 25 2025 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
+- New version.
+- Build for KF6.
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 8.1.2-alt5
 - NMU: devel: do not dependency on mpir-devel
 
