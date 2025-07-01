@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 Summary: A Python implementation of tree structure
 License: %asl
@@ -32,7 +32,7 @@ Tree implementation in python.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-t.txt
+%pyproject_deps_resync_check_poetry dev
 %endif
 
 %build
@@ -51,6 +51,9 @@ Tree implementation in python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 01 2025 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
+- 1.7.0 -> 1.8.0.
+
 * Fri Oct 18 2024 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.1 -> 1.7.0.
 
