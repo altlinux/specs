@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 4.57.6
+Version: 4.57.7
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -86,23 +86,18 @@ BuildArch: noarch
 %description cli
 MooseFS CLI utilities.
 
-%package cgi
+%package gui
 Summary: MooseFS CGI Monitor
 Group: System/Servers
-BuildArch: noarch
-
-%description cgi
-MooseFS CGI monitor.
-
-%package cgiserv
-Summary: Simple CGI-capable HTTP server to run MooseFS CGI Monitor
-Group: System/Servers
-BuildArch: noarch
-Requires: %name-cgi = %EVR
+Obsoletes: %name-cgiserv < %EVR
+Obsoletes: %name-cgi < %EVR
+Provides: %name-cgiserv = %EVR
+Provides: %name-cgi = %EVR
 Requires: %name-common = %EVR
+Requires: %name-cli = %EVR
 
-%description cgiserv
-Simple CGI-capable HTTP server to run MooseFS CGI monitor.
+%description gui
+MooseFS web-based GUI.
 
 %package netdump
 Summary: MooseFS network packet dump utility
@@ -143,7 +138,7 @@ install -p -m644 moosefs-chunkserver.udev %buildroot%_udevrulesdir/80-moosefs-ch
 
 # sysv init scripts
 mkdir -p %buildroot%_sysconfdir/sysconfig
-install -p -m644 moosefs-cgiserv.sysconfig %buildroot%_sysconfdir/sysconfig/moosefs-cgiserv
+install -p -m644 moosefs-gui.sysconfig %buildroot%_sysconfdir/sysconfig/moosefs-gui
 mkdir -p %buildroot%_initdir
 
 for f in *.init ; do
@@ -170,10 +165,10 @@ popd
 %preun chunkserver
 %preun_service %name-chunkserver
 
-%post cgiserv
-%post_service %name-cgiserv
-%preun cgiserv
-%preun_service %name-cgiserv
+%post gui
+%post_service %name-gui
+%preun gui
+%preun_service %name-gui
 
 %files -n libmfsio
 %_libdir/libmfsio.so.*
@@ -244,63 +239,64 @@ popd
 %_unitdir/moosefs-chunkserver@.service
 
 %files client
-%_bindir/mfsdiagtools
-%_bindir/mfscheckfile
-%_bindir/mfsdirinfo
-%_bindir/mfsfileinfo
-%_bindir/mfsfilerepair
-%_bindir/mfsfilepaths
-%_bindir/mfssnapshots
-%_bindir/mfsmakesnapshot
-%_bindir/mfsrmsnapshot
 %_bindir/mfsappendchunks
-%_bindir/mfsfacl
-%_bindir/mfsgetfacl
-%_bindir/mfssetfacl
-%_bindir/mfssclass
-%_bindir/mfsgetsclass
-%_bindir/mfssetsclass
-%_bindir/mfscopysclass
-%_bindir/mfsxchgsclass
-%_bindir/mfstrashtime
-%_bindir/mfsgettrashtime
-%_bindir/mfssettrashtime
-%_bindir/mfscopytrashtime
-%_bindir/mfstrashretention
-%_bindir/mfsgettrashretention
-%_bindir/mfssettrashretention
-%_bindir/mfscopytrashretention
-%_bindir/mfseattr
-%_bindir/mfsgeteattr
-%_bindir/mfsseteattr
-%_bindir/mfsdeleattr
-%_bindir/mfscopyeattr
-%_bindir/mfsquota
-%_bindir/mfsgetquota
-%_bindir/mfssetquota
-%_bindir/mfsdelquota
-%_bindir/mfscopyquota
 %_bindir/mfsarchive
+%_bindir/mfscheckfile
 %_bindir/mfschkarchive
-%_bindir/mfsclrarchive
-%_bindir/mfssetarchive
-%_bindir/mfsscadmin
-%_bindir/mfsmount
-%_bindir/mfscreatesclass
-%_bindir/mfsmodifysclass
-%_bindir/mfsdeletesclass
 %_bindir/mfsclonesclass
-%_bindir/mfsrenamesclass
-%_bindir/mfslistsclass
-%_bindir/mfsimportsclass
-%_bindir/mfspatadmin
-%_bindir/mfscreatepattern
-%_bindir/mfsdeletepattern
-%_bindir/mfslistpattern
-%_bindir/mfstrashtool
-%_bindir/mfsgetgoal
-%_bindir/mfssetgoal
+%_bindir/mfsclrarchive
+%_bindir/mfscopyeattr
 %_bindir/mfscopygoal
+%_bindir/mfscopyquota
+%_bindir/mfscopysclass
+%_bindir/mfscopytrashretention
+%_bindir/mfscopytrashtime
+%_bindir/mfscreatepattern
+%_bindir/mfscreatesclass
+%_bindir/mfsdeleattr
+%_bindir/mfsdeletepattern
+%_bindir/mfsdeletesclass
+%_bindir/mfsdelquota
+%_bindir/mfsdiagtools
+%_bindir/mfsdirinfo
+%_bindir/mfseattr
+%_bindir/mfsfacl
+%_bindir/mfsfileinfo
+%_bindir/mfsfilepaths
+%_bindir/mfsfilerepair
+%_bindir/mfsgeteattr
+%_bindir/mfsgetfacl
+%_bindir/mfsgetgoal
+%_bindir/mfsgetquota
+%_bindir/mfsgetsclass
+%_bindir/mfsgettrashretention
+%_bindir/mfsgettrashtime
+%_bindir/mfsimportsclass
+%_bindir/mfslistpattern
+%_bindir/mfslistsclass
+%_bindir/mfsmakesnapshot
+%_bindir/mfsmodifysclass
+%_bindir/mfsmount
+%_bindir/mfsmount
+%_bindir/mfspatadmin
+%_bindir/mfsquota
+%_bindir/mfsrenamesclass
+%_bindir/mfsrmsnapshot
+%_bindir/mfsscadmin
+%_bindir/mfssclass
+%_bindir/mfssetarchive
+%_bindir/mfsseteattr
+%_bindir/mfssetfacl
+%_bindir/mfssetgoal
+%_bindir/mfssetquota
+%_bindir/mfssetsclass
+%_bindir/mfssettrashretention
+%_bindir/mfssettrashtime
+%_bindir/mfssnapshots
+%_bindir/mfstrashretention
+%_bindir/mfstrashtime
+%_bindir/mfstrashtool
+%_bindir/mfsxchgsclass
 %_sbindir/mfsbdev
 /sbin/mount.moosefs
 %_man1dir/*
@@ -316,29 +312,32 @@ popd
 %_bindir/mfscli
 %_man1dir/mfscli.1*
 
-%files cgi
+%files gui
+%config(noreplace) %_sysconfdir/sysconfig/moosefs-gui
+%{_sbindir}/mfscgiserv
+%{_sbindir}/mfsgui
+%_man5dir/mfsgui.cfg.5*
+%_man8dir/mfsgui.8*
+%config(noreplace) %mfsconfdir/mfsgui.cfg
+%_initdir/moosefs-gui
+%_unitdir/moosefs-gui.service
+%_unitdir/moosefs-gui@.service
 %dir %_datadir/mfscgi
 %attr(755,root,root) %_datadir/mfscgi/*.cgi
-%_datadir/mfscgi/*.css
-%_datadir/mfscgi/*.gif
-%_datadir/mfscgi/*.html
-%_datadir/mfscgi/*.ico
-%_datadir/mfscgi/*.js
-%_datadir/mfscgi/*.py
-%_datadir/mfscgi/*.svg
-
-%files cgiserv
-%config(noreplace) %_sysconfdir/sysconfig/moosefs-cgiserv
-%_sbindir/mfscgiserv
-%_man8dir/mfscgiserv.8*
-%_initdir/moosefs-cgiserv
-%_unitdir/moosefs-cgiserv.service
+%_datadir/mfscgi/requests.cfg
+%_datadir/mfscgi/assets/
+%_datadir/mfscgi/common/
+%_datadir/mfscgi/views/
 
 %files netdump
 %_sbindir/mfsnetdump
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Wed Jun 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.57.7-alt1
+- 4.57.7
+- new package gui (replaces cgi and deprecates cgiserv), removed cgiserv
+
 * Thu Apr 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.57.6-alt1
 - 4.57.6
 
