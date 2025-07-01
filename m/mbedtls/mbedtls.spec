@@ -2,11 +2,11 @@
 %define so_tls_version 21
 %define so_crypto_version 16
 %define so_x509_version 7
-%define framework_commit 94599c0e3b5036e086446a51a3f79640f70f22f6
+%define framework_commit 2a3e2c5ea053c14b745dbdf41f609b1edc6a72fa
 %def_disable static
 
 Name: mbedtls
-Version: 3.6.3.1
+Version: 3.6.4
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -18,6 +18,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/ARMmbed/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+# https://github.com/Mbed-TLS/%name-framework/archive/%framework_commit/%name-framework-%framework_commit.tar.gz
+Source1: %name-framework-%framework_commit.tar
 
 BuildRequires: cmake
 BuildRequires: libssl-devel
@@ -88,7 +90,8 @@ Group: Development/Tools
 Cryptographic utilities based on mbed TLS
 
 %prep
-%setup
+%setup -b 1
+%__mv -Tf ../%name-framework-%framework_commit framework
 %ifarch aarch64
 %add_optflags -Wno-error=array-bounds
 %endif
@@ -116,12 +119,15 @@ mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
 rm -rf %buildroot%_bindir
 
 %files -n lib%name%so_tls_version
+%_libdir/lib%name.so.%so_tls_version
 %_libdir/lib%name.so.*
 
 %files -n libmbedcrypto%so_crypto_version
+%_libdir/libmbedcrypto.so.%so_crypto_version
 %_libdir/libmbedcrypto.so.*
 
 %files -n libmbedx509-%so_x509_version
+%_libdir/libmbedx509.so.%so_x509_version
 %_libdir/libmbedx509.so.*
 
 %files -n lib%name-devel
@@ -155,6 +161,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.4-alt1
+- New version 3.6.4.
+
 * Tue May 13 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.3.1-alt1
 - New version 3.6.3.1.
 
