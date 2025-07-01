@@ -3,8 +3,8 @@
 %define nameS org.gnome.shell.extensions.mediacontrols
 
 Name: gnome-shell-extension-media-controls
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: A mpris client for the Gnome shell
 
@@ -38,14 +38,13 @@ mkdir -p dist/builds/ok/
 unzip dist/builds/%exID.shell-extension.zip -d dist/builds/ok/
 
 %install
-mkdir -p %buildroot%_datadir/gnome-shell/extensions/%exID/
+install -d %buildroot%_datadir/gnome-shell/extensions/%exID
 cd dist/builds/ok/
-cp -p -r dbus helpers %buildroot%_datadir/gnome-shell/extensions/%exID/
+cp -p -r helpers types utils %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp -p -r locale %buildroot%_datadir/locale
 install -D -p -m 0644 \
     schemas/%nameS.gschema.xml \
     %buildroot%_datadir/glib-2.0/schemas/%nameS.gschema.xml
-cp -p -r types utils %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp -a *.json *.js *.css %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 
@@ -56,6 +55,9 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Tue Jul 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.0-alt1
+- 2.1.0 -> 2.2.0
+
 * Sun Jun 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.1.0-alt2
 - Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
 
