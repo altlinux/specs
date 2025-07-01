@@ -7,7 +7,7 @@
 
 Name: sudo
 Version: 1.9.16p2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -266,6 +266,19 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Tue Jul 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt3
+- Security release (fixes: CVE-2025-32462, CVE-2025-32463) (closes: 55007):
+ + Sudo's -h (--host) option could be specified when running a command or
+   editing a file. This could enable a local privilege escalation attack if the
+   sudoers file allows the user to run commands on a different host.
+   For more information, see Local Privilege Escalation via host option:
+   https://www.sudo.ws/security/advisories/host_any/
+ + An attacker can leverage sudo's -R (--chroot) option to run arbitrary
+   commands as root, even if they are not listed in the sudoers file. The chroot
+   support has been deprecated an will be removed entirely in a future release.
+   For more information, see Local Privilege Escalation via chroot option:
+   https://www.sudo.ws/security/advisories/chroot_bug/
+
 * Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt2
 - Fixed segmentation fault in pty_cleanup() under low memory
   conditions (closes: 53841).
