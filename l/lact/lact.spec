@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.7.4
+Version: 0.8.0
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -77,6 +77,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Mon May 12 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.4-alt1
 - New version 0.7.4.
 
