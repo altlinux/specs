@@ -36,7 +36,7 @@
 
 Name: frr
 Version: 10.2.2
-Release: alt2
+Release: alt3
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
 Group: Networking/Other
@@ -217,7 +217,7 @@ install -d %buildroot%_docdir/%name
 # remove stray buildinfo files
 find %buildroot%_docdir/%name -type f -name .buildinfo -delete
 
-install -d -m 0755 %buildroot%_logdir/%name
+install -d -m 0775 %buildroot%_logdir/%name
 
 rm -rf %buildroot%_infodir/dir
 
@@ -278,7 +278,7 @@ fi
 %ghost %config(noreplace) %attr(640,%frr_user,%frr_group) %_sysconfdir/%name/%name.conf
 %config(noreplace) %attr(640,%frr_user,%frrvty_group) %_sysconfdir/%name/vtysh.conf
 %config(noreplace) %_sysconfdir/pam.d/frr
-%dir %attr(755,root,%frr_group) %_logdir/%name
+%dir %attr(775,root,%frr_group) %_logdir/%name
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
@@ -333,6 +333,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Tue Jul 01 2025 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt3
+- Fixed logdir permitions (ALT#54532)
+
 * Sun Jun 29 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.2.2-alt2
 - e2k build fix
 
