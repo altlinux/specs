@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt24
+Release: alt25
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Mon Jun 30 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.6-alt25
+- fix formatting (closes: 54181)
+
 * Fri Dec 27 2024 Sergey V Turchin <zerg@altlinux.org> 0.6-alt24
 - update package description (closes: 52559)
 
