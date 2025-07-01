@@ -1,22 +1,24 @@
 Name: wipefreespace
-Version: 1.6.1
-Release: alt4.1
+Version: 3.0
+Release: alt1
 
 Summary: Program for secure cleaning of free space on file systems
-License: GPLv2
+License: GPL-2.0-or-later
 Group: File tools
 
-Url: http://wipefreespace.sf.net
-Source: %name-%version.tar.gz
-Patch: wipefreespace-1.6.1-infodir.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+URL: https://wipefreespace.sourceforge.io
+VCS: https://github.com/bogdro/wipefreespace.git
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Requires: xfsprogs
+#Requires: xfsprogs
 BuildRequires: glibc-kernheaders
 BuildRequires: libe2fs-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
-#BuildRequires: libxfs-devel
+BuildRequires: libxfs-devel xfsprogs
+BuildRequires: libntfs-3g-devel
+BuildRequires: libuuid-devel
+BuildRequires: libcap-devel
+BuildRequires: makeinfo
 
 %description
 The wipefreespace is a program which securely cleans free space on given
@@ -27,19 +29,16 @@ It also removes deleted files' names so that no trace is left.
 WARNING: it is REQUIRED to specify a --method, otherwise you might think
 the data is purged but it's still there actually.
 
-%if 1
-Supported file systems are: ext2/3/4 (for this exact package)
-%else
-Supported file systems are: ext2/3/4, NTFS, XFS, ReiserFSv3/4,
-FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
-%endif
+Supported file systems are: ext2/3/4, NTFS, XFS.
+#, ReiserFSv3/4,
+#FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
-%configure --disable-XFS --bindir=/bin
+%configure
 %make_build
 
 %install
@@ -47,12 +46,16 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 %find_lang %name
 
 %files -f %name.lang
-/bin/%name
+%_bindir/%name
 %_infodir/%name.*
 %_man1dir/%name.1*
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README README.md
 
 %changelog
+* Tue Jul 01 2025 Anton Midyukov <antohami@altlinux.org> 3.0-alt1
+- new version 3.0
+- update URL, add VCS, clean Packager, update build dependencies.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt4.1
 - NMU: added BR: texinfo
 
