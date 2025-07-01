@@ -4,24 +4,26 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 4.2.3
-Release: alt1.1
+Version: 4.3.0
+Release: alt1
 Summary: Python API to access openQA server
 License: GPL-2.0
 Group: Development/Python3
-Url: https://github.com/os-autoinst/openQA-python-client
+Url: https://pypi.org/project/openqa-client
+VCS: https://github.com/os-autoinst/openQA-python-client
+
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(yaml)
-BuildRequires: python3(requests)
-BuildRequires: python3(freezegun)
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-pytest
 %endif
 
@@ -48,6 +50,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.3.0-alt1
+- Updated to version 4.3.0.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 4.2.3-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
@@ -59,4 +64,3 @@ BuildRequires: python3-module-pytest
 
 * Fri Mar 10 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.1-alt1
 - Initial build for ALT
-
