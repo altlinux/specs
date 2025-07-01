@@ -1,11 +1,11 @@
 Name: re2c
-Version: 2.2
+Version: 4.2
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
 
 Group: Development/Other
-License: Public Domain
+License: ALT-Public-Domain
 Url: http://sourceforge.net/projects/re2c/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -14,7 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ cmake python3
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has
@@ -34,15 +34,16 @@ flexible.
 %makeinstall_std
 
 %files
-%_bindir/re2c
-%_bindir/re2go
-%_man1dir/re2c.1*
-%_man1dir/re2go.1*
+%_bindir/re2*
+%_man1dir/re2*
 %_datadir/%name/
 %doc README.md
 # re2c/examples
 
 %changelog
+* Thu Jun 26 2025 Korney Gedert <kiper@altlinux.org> 4.2-alt1
+- new version 4.2 (with rpmrb script)
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
 - new version 2.2 (with rpmrb script)
 
