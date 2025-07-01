@@ -22,8 +22,8 @@
 %def_enable materialx
 
 Name: OpenUSD
-Version: 25.05
-Release: alt0.1.rc1
+Version: 25.05.01
+Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -411,6 +411,9 @@ done
 %python3_sitelibdir/pxr
 
 %changelog
+* Tue Jul 01 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05.01-alt0.1
+- 25.05.01.
+
 * Thu Apr 24 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05-alt0.1.rc1
 - 25.05-rc1.
 - embree4: rebase patch.
