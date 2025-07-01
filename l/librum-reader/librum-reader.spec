@@ -1,6 +1,6 @@
 Name: librum-reader
 Version: 0.12.2
-Release: alt3
+Release: alt4
 Summary: Librum is an application designed to make reading enjoyable and straightforward for everyone.
 
 Source:  %name-%version.tar
@@ -101,6 +101,9 @@ done
 %_datadir/pixmaps/librum.svg
 
 %changelog
+* Tue Jul 01 2025 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt4
+- Fix QML for Qt 6.9.1 (Closes #54983)
+
 * Thu Jan 09 2025 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt3
 - Fix requires (Closes: #52643)
 
