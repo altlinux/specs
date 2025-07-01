@@ -8,7 +8,7 @@
 %endif
 %global max_jobs 48
 
-%global llvm_version 19.1
+%global llvm_version 20.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        138.0.7204.49
+Version:        138.0.7204.96
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -356,17 +356,19 @@ export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS=
-FLAGS+=' -Wno-unknown-warning-option -Wno-deprecated-declarations -Wno-unknown-pragmas'
-FLAGS+=' -Wno-unused-command-line-argument -Wno-unused-but-set-variable'
-FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable -Wno-unused-private-field'
-FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
-FLAGS+=' -Wno-unknown-attributes'
-FLAGS+=' -Wno-conversion'
+#FLAGS+=' -Wno-unknown-warning-option -Wno-unknown-pragmas'
+#FLAGS+=' -Wno-unused-but-set-variable'
+#FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable -Wno-unused-private-field'
+#FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
+#FLAGS+=' -Wno-unknown-attributes'
+#FLAGS+=' -Wno-conversion'
 FLAGS+=' -fno-delete-null-pointer-checks'
 FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 FLAGS+=' -stdlib=libc++'
 # FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
 FLAGS+=' -I/usr/include/c++/v1'
+FLAGS+=' -Wno-deprecated-declarations -Wno-unused-command-line-argument'
+FLAGS+=' -Wno-implicit-fallthrough -Wno-nontrivial-memcall -Wno-shadow'
 FLAGS+=' -Wno-error -Wno-undef'
 
 export CFLAGS="$FLAGS"
@@ -652,6 +654,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Jul 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.96-alt1
+- New version (138.0.7204.96).
+- Build with llvm20.1.
+- Security fixes:
+  + CVE-2025-6554: Type Confusion in V8
+
 * Wed Jun 25 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.49-alt1
 - New version (138.0.7204.49).
 - Security fixes:
