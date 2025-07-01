@@ -6,7 +6,7 @@
 %endif
 
 Name: AFLplusplus
-Version: 4.32c
+Version: 4.33c
 Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
@@ -114,6 +114,9 @@ cp -a include %buildroot%_datadir/afl/include
 %_includedir/afl
 
 %changelog
+* Mon Jun 30 2025 Egor Ignatov <egori@altlinux.org> 4.33c-alt1
+- 4.33c
+
 * Tue May 27 2025 Egor Ignatov <egori@altlinux.org> 4.32c-alt1
 - 4.32c
 - Drop precompiled utils and custom_mutators.
