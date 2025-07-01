@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.14.1
-Release: alt1
+Release: alt2
 
 Summary: Standardize your DRF API error responses.
 License: MIT
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -29,7 +30,6 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-djangorestframework
 BuildRequires: python3-module-drf-spectacular
 BuildRequires: python3-module-django-filter
-BuildRequires: python3-module-flit
 %endif
 
 %description
@@ -59,6 +59,9 @@ rm -rf %buildroot%python3_sitelibdir/%mod_name-%version/docs
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 01 2025 Alexander Burmatov <thatman@altlinux.org> 0.14.1-alt2
+- Fix build without check.
+
 * Fri Jan 31 2025 Alexander Burmatov <thatman@altlinux.org> 0.14.1-alt1
 - Update version to 0.14.1.
 
