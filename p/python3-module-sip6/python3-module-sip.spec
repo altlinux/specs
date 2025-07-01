@@ -1,8 +1,8 @@
 %define oname sip
 
 Name: python3-module-sip6
-Version: 6.8.3
-Release: alt1
+Version: 6.12.0
+Release: alt0.1
 
 Summary: Python3 bindings generator for C/C++ libraries
 
@@ -12,8 +12,7 @@ URL: http://www.riverbankcomputing.com/software/sip/
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-
-Patch: remove-distutils-for-python-3.12.patch
+Patch1: remove-distutils-for-python-3.12.patch
 
 BuildArch: noarch
 
@@ -73,7 +72,7 @@ Development files for SIP 6 (Python 3).
 
 %prep
 %setup
-%patch -p2
+%patch1 -p1
 # hack to drop .abi3 from binaries (TODO: add support to python3.req/prov)
 # see https://www.python.org/dev/peps/pep-3149/
 %__subst "s|suffixes = importlib.machinery.EXTENSION_SUFFIXES|suffixes = ['.so']|" sipbuild/buildable.py
@@ -81,20 +80,30 @@ Development files for SIP 6 (Python 3).
 #find -type f | xargs subst "s|sipbuild|sipbuild6|g"
 #mv -v sipbuild sipbuild6
 rm -rv sip.egg-info/
+# remove deps on distutils
+rm -f sipbuild/distutils_builder.py
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+[ -d %buildroot/%python3_sitelibdir/sipbuild/module/source ] \
+    || cp -ar sipbuild/module/source %buildroot/%python3_sitelibdir/sipbuild/module/
 
 %files
-%doc README NEWS LICENSE*
+%doc README* LICENSE*
 %_bindir/sip-*
 %python3_sitelibdir/sip-*.dist-info
 %python3_sitelibdir/sipbuild/
 
 %changelog
+* Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt0.1
+- NMU: new version
+
+* Fri Aug 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.6-alt1
+- new version 6.8.6
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.8.3-alt1
 - new version 6.8.3, build as noarch
 - add Conflicts: python3-module-sip

@@ -12,7 +12,7 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt6-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 6.8.1
+Version: 6.9.1
 Release: alt1
 
 Summary: Python 3 bindings for Qt 6
@@ -24,6 +24,7 @@ Url: https://www.riverbankcomputing.co.uk/software/pyqt
 Source: %name-%version.tar
 Patch1: alt-decrease-abi-req.patch
 Patch2: alt-touint128.patch
+Patch3: alt-toml.patch
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
@@ -97,6 +98,7 @@ This package contains PyQt6 docs.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 sip-build \
@@ -125,7 +127,7 @@ sip-build \
 %files
 %doc NEWS README*
 %python3_sitelibdir/PyQt6/
-%python3_sitelibdir/PyQt6-%version.dist-info/
+%python3_sitelibdir/*6-%version.dist-info/
 %exclude %python3_sitelibdir/PyQt6/bindings/
 %exclude %python3_sitelibdir/PyQt6/lupdate/
 %_libdir/qt6/plugins/PyQt6/
@@ -147,6 +149,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- NMU: new version
+
 * Sun Feb 23 2025 Anton Midyukov <antohami@altlinux.org> 6.8.1-alt1
 - new version (6.8.1)
 
