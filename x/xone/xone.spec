@@ -1,22 +1,19 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: xone
-Version: 0.3
-Release: alt4
+Version: 0.3.4
+Release: alt1
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
 
 License: GPL-2.0
 Group: System/Configuration/Hardware
-Url: https://github.com/medusalix/xone
+Url: https://github.com/dlundqvist/xone.git
 
 Source0: %name-%version.tar
 Source1: %name.sh
 
-Patch0: xone-0.3-alt-firmware-install.patch
-Patch1: xone-03-fix-build-on-kernel-6.3.patch
-Patch2: xone-03-fix-build-on-kernel-6.8.patch
-Patch3: xone-03-fix-build-on-kernel-6.11-6.12.patch
+Patch0: xone-0.3.4-alt-firmware-install.patch
 
 Requires: dkms-%name = %EVR
 # needed for firmware.sh (download and unpack firmware for the wireless dongle):
@@ -47,10 +44,7 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch0 -p0
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch0 -p1
 
 find . -type f \( -name dkms.conf -o -name '*.c' \) -exec sed -i "s/#VERSION#/%version/" {} +
 %__subst "s/version=/version=%version/" %SOURCE1
@@ -62,7 +56,7 @@ install -Dm 644 install/modprobe.conf %buildroot/etc/modprobe.d/%name-blacklist.
 install -Dm 755 install/firmware.sh %buildroot%_sbindir/%name-get-firmware
 install -Dm 755 %SOURCE1 %buildroot%_sbindir/%name
 
-rm -v install.sh uninstall.sh
+rm -v install.sh uninstall.sh modules_load.sh
 rm -rv install/ .github/
 
 mkdir -p %buildroot%src_dir
@@ -78,6 +72,11 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Tue Jul 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.4-alt1
+- 0.3.4
+- changed upstream to dlundqvist/xone.git (ALT bug: 54715)
+- fixed build on kernel 6.15 (ALT bug: 54979)
+
 * Mon Dec 02 2024 Mikhail Tergoev <fidel@altlinux.org> 0.3-alt4
 - fixed build on kernel 6.11+
 
