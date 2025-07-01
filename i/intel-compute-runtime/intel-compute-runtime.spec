@@ -1,11 +1,10 @@
 %define soversion 1
-%define oclocversion 25.09.1
 # LTO will be checked during configuration
 %define optflags_lto %nil
 
 Name: intel-compute-runtime
-Version: 25.09.32961.8
-Release: alt2
+Version: 25.22.33944.9
+Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -98,14 +97,14 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %build
 %cmake -G Ninja \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DNEO_BUILD_UNVERSIONED_OCLOC=TRUE \
+ -DNEO_DISABLE_MITIGATIONS=TRUE \
  -DSKIP_UNIT_TESTS=1
 
 %cmake_build
 
 %install
 %cmake_install
-
-mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 
 %files -n intel-opencl
 %_libdir/intel-opencl
@@ -126,6 +125,11 @@ mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 25.22.33944.9-alt1
+- Updated to upstream version 25.22.33944.9.
+- ocloc: build unversioned.
+- neo: disable mitigations (not really needed and should improve performance).
+
 * Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 25.09.32961.8-alt2
 - Get rid of llvm completely and build with gcc.
 
