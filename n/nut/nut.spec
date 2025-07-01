@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.3
-Release: alt1
+Release: alt2
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -66,7 +66,7 @@ BuildRequires: libssl-devel
 %endif
 
 %if_with cgi
-BuildRequires: fontconfig-devel freetype2-devel libgd2-devel libjpeg-devel libpng-devel
+BuildRequires: fontconfig-devel freetype2-devel libgd-devel libjpeg-devel libpng-devel
 %endif
 
 %if_with snmp
@@ -595,6 +595,9 @@ fi
 %python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Tue Jul 01 2025 Andrey Kovalev <ded@altlinux.org> 2.8.3-alt2
+- Fixed FTBFS: updated GD library dependency.
+
 * Tue Apr 29 2025 Andrey Kovalev <ded@altlinux.org> 2.8.3-alt1
 - Updated to upstream version 2.8.3.
 
