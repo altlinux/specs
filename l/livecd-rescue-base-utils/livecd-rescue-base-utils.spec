@@ -1,6 +1,6 @@
 Name: livecd-rescue-base-utils
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
@@ -71,6 +71,7 @@ Requires: system-backup
 Requires: gostsum
 Requires: flashrom
 Requires: dialog
+Requires: usbutils
 
 %ifarch x86_64
 # UEFI Secure Boot
@@ -84,6 +85,9 @@ Requires: mokutil
 %files
 
 %changelog
+* Tue Jul 01 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt3
+- Add depndency on usbutils.
+
 * Tue Jul 01 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt2
 - Add depndency on dialog.
 
