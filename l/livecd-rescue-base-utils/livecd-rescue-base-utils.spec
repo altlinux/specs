@@ -1,6 +1,6 @@
 Name: livecd-rescue-base-utils
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
@@ -70,6 +70,7 @@ Requires: livecd-rescue-utility
 Requires: system-backup
 Requires: gostsum
 Requires: flashrom
+Requires: dialog
 
 %ifarch x86_64
 # UEFI Secure Boot
@@ -83,6 +84,9 @@ Requires: mokutil
 %files
 
 %changelog
+* Tue Jul 01 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt2
+- Add depndency on dialog.
+
 * Fri Jun 06 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - Remove dependencies on wipefreespace, jfsprogs, reiser4progs,
   reiserfsprogs, xfsprogs, gpm
