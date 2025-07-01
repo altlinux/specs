@@ -1,5 +1,5 @@
 Name: renderdoc
-Version: 1.38
+Version: 1.39
 Release: alt1
 
 Summary: A frame-capture based graphics debugger
@@ -68,6 +68,9 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %_includedir/renderdoc_app.h
 
 %changelog
+* Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.39-alt1
+- New version 1.39.
+
 * Fri May 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.38-alt1
 - New version 1.38.
 
