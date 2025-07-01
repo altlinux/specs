@@ -1,15 +1,16 @@
-%define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 Name: z3
 Version: 4.15.2
-Release: alt1
+Release: alt2
 Summary: High-performance theorem prover (SMT solver)
 License: MIT
 Group: Sciences/Mathematics
 Url: https://github.com/Z3Prover/z3
 
 Source: %name-%version.tar
+
+Patch: python-use-non-devel-so.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake
@@ -69,6 +70,7 @@ This package contains Python bindings of %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -118,6 +120,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Jul 01 2025 Grigory Ustinov <grenka@altlinux.org> 4.15.2-alt2
+- Added patch, fixing libz3 loading (Closes: #54994).
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 4.15.2-alt1
 - Automatically updated to 4.15.2.
 
