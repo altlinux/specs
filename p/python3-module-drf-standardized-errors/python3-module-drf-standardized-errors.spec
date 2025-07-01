@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.1
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Standardize your DRF API error responses.
 License: MIT
@@ -59,6 +59,9 @@ rm -rf %buildroot%python3_sitelibdir/%mod_name-%version/docs
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 01 2025 Alexander Burmatov <thatman@altlinux.org> 0.15.0-alt1
+- Update version to 0.15.0.
+
 * Tue Jul 01 2025 Alexander Burmatov <thatman@altlinux.org> 0.14.1-alt2
 - Fix build without check.
 
