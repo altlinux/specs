@@ -8,7 +8,7 @@
 %def_with check
 
 Name: ipython3
-Version: 9.3.0
+Version: 9.4.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -185,6 +185,9 @@ export IPYTHON_TESTING_TIMEOUT_SCALE=4
 %endif
 
 %changelog
+* Tue Jul 01 2025 Anton Vyatkin <toni@altlinux.org> 9.4.0-alt1
+- New version 9.4.0.
+
 * Sat May 31 2025 Anton Vyatkin <toni@altlinux.org> 9.3.0-alt1
 - New version 9.3.0.
 
