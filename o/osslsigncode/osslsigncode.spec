@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osslsigncode
-Version: 2.9
+Version: 2.10
 Release: alt1
 
 Summary: Tool for Authenticode signing of EXE/CAB files
@@ -12,7 +12,6 @@ Url: https://github.com/mtrojnar/osslsigncode
 Source: %name-%version.tar
 
 Patch0: osslsigncode-2.9-alt-fix-test-server-on-python3.12.patch
-Patch1: osslsigncode-2.7-alt-fix-test-python-cryptography-submodule-import.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: libssl-devel
@@ -30,8 +29,6 @@ Tool for Authenticode signing of EXE/CAB files.
 %setup -q
 
 %patch0 -p1
-%patch1 -p1
-
 
 %build
 %cmake
@@ -49,6 +46,10 @@ Tool for Authenticode signing of EXE/CAB files.
 %_datadir/bash-completion/completions/osslsigncode.bash
 
 %changelog
+* Tue Jul 01 2025 Nikolai Kostrigin <nickel@altlinux.org> 2.10-alt1
+- new version
+  + remove alt-fix-test-python-cryptography-submodule-import patch
+
 * Fri Aug 02 2024 Nikolai Kostrigin <nickel@altlinux.org> 2.9-alt1
 - new version
   + remove upstream-fixed-windows-segmentation-fault patch
