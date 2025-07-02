@@ -1,5 +1,5 @@
 Name:    urdfdom
-Version: 3.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: URDF parser
@@ -11,11 +11,12 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: urdfdom-alt-cmake-dir.patch
+Patch1: urdfdom-support-headers-2.0.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: tinyxml-devel
+BuildRequires: libtinyxml2-devel
 BuildRequires: urdfdom-headers
 BuildRequires: libconsole-bridge-devel
 
@@ -43,7 +44,7 @@ Group: Development/C++
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %cmake -GNinja -Wno-dev
@@ -61,11 +62,14 @@ Group: Development/C++
 %_libdir/lib*.so.*
 
 %files -n lib%{name}-devel
-%_includedir/urdf_parser
+%_includedir/urdfdom
 %_libdir/lib*.so
 %_libdir/cmake/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
+- New version.
+
 * Wed May 17 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus.
