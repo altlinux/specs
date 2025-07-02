@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 3.2.3-alt1
+- backend3/pkg-install: run pkg-preinstall scripts for autoinstall too
+
 * Mon Jun 30 2025 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt1
 - alterator-pkg-functions: fix unbound variable VARIANT_ID
 
