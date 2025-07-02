@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.44
-Release: alt1.g41bcdca7f
+Version: 1.4.1.45
+Release: alt1.g34eb666c0
 Summary: A music player and library organiser
 
 Group: Sound
@@ -14,7 +14,8 @@ Patch1: 01-fix-cmake.patch
 Patch2: 02-fix-version.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-macros-cmake cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: /proc
 BuildRequires: boost-devel-headers gcc-c++
 BuildRequires: libgio-devel libglew-devel libgpod-devel libmtp-devel
@@ -38,6 +39,7 @@ BuildRequires: libgoogle-sparsehash
 BuildRequires: libavcodec-devel libavformat-devel libpcre-devel
 BuildRequires: libprotobuf-devel libcdio-devel
 BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(blkid)
 BuildRequires: pkgconfig(bzip2)
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(mount)
@@ -46,14 +48,38 @@ BuildRequires: pkgconfig(libffi)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libzstd)
 BuildRequires: liborc-devel
+# Check:
+BuildRequires: %_bindir/appstream-util desktop-file-utils
 
 # Clementine crashes without it
 Requires: gst-plugins-base%{gst_api_ver}
 Requires: icon-theme-hicolor
 
 %description
-Clementine is a modern music player and library organizer
+Clementine is a modern music player and library organiser.
+It is inspired by Amarok 1.4, focusing on a fast and easy-to-use interface for
+searching and playing your music.
+
+Features include:
+  * Search and play your local music library
+  * Listen to internet radio from Last.fm, SomaFM, IntergalacticFM, Magnatune,
+    Jamendo and Icecast
+  * Create smart playlists and dynamic playlists
+  * Tabbed playlists, import and export M3U, XSPF, PLS and ASX
+  * Visualisations from projectM
+  * Lyrics and artist biographies and photos
+  * Transcode music into MP3, Ogg Vorbis, Ogg Speex, FLAC or AAC
+  * Edit tags on MP3 and OGG files, organise your music
+  * Download missing album cover art from Last.fm
+  * Cross-platform - works on Windows, Mac OS X and Linux
+  * Native desktop notifications on Linux (libnotify) and Mac OS X (Growl)
+  * Remote control using a Wii Remote, MPRIS or the command-line
+  * Copy music to your iPod, iPhone, MTP or mass-storage USB player
+  * Queue manager
 
 %add_python_req_skip clementine
 
@@ -90,8 +116,12 @@ fi
 %cmakeinstall_std
 %find_lang --with-kde %name
 
+%check
+desktop-file-validate %buildroot%_desktopdir/org.clementine_player.Clementine.desktop
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementine_player.Clementine.appdata.xml
+
 %files -f %name.lang
-%doc Changelog
+%doc COPYING Changelog
 %_bindir/clementine
 %_bindir/clementine-tagreader
 %_desktopdir/org.clementine_player.Clementine.desktop
@@ -103,6 +133,9 @@ fi
 
 
 %changelog
+* Wed Jul 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.45-alt1.g34eb666c0
+- Update upstream source to 1.4.1.45-g34eb666c0
+
 * Mon May 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.44-alt1.g41bcdca7f
 - Update upstream source to 1.4.1-44-g41bcdca7f
 
