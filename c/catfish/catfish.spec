@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: catfish
-Version: 4.20.0
+Version: 4.20.1
 Release: alt1
 Summary: A handy file search tool
 
@@ -86,6 +86,9 @@ rm -vr %buildroot%_iconsdir/hicolor/*x*/
 %python3_sitelibdir_noarch/catfish_lib
 
 %changelog
+* Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 4.20.1-alt1
+- new version (4.20.1) with rpmgs script
+
 * Sat Jan 04 2025 Anton Midyukov <antohami@altlinux.org> 4.20.0-alt1
 - new version (4.20.0) with rpmgs script
 
