@@ -6,8 +6,8 @@
 %def_with audit
 
 Name: sudo
-Version: 1.9.16p2
-Release: alt3
+Version: 1.9.17p1
+Release: alt1
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -266,6 +266,42 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Tue Jul 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.17p1-alt1
+- Update to latest stable bugfix and security release
+  (upstream fix of CVE-2025-32462, CVE-2025-32463 applied in 1.9.16p2-alt3):
+ + Fixed a crash in sudo which could occur if there was a fatal error after the
+   user was validated but before the command was actually run.
+ + Fixed a problem with the pwfeedback option where an initial backspace would
+   reduce the maximum length allowed for the password (GitHub#439).
+ + Fixed a bug where a user could avoid entering a password for sudo -l command
+   if they specified their own user or group name via the -u or -g options.
+ + Avoid potential password guessing based on timing attacks on the strcmp()
+   function on systems without PAM or a crypt() function where plaintext
+   passwords are stored in the shadow password file.
+ + Fixed a potential information leak where sudo -l command could be used to
+   determine whether an executable exists in a directory that they do not have
+   search access to.
+ + Fixed a problem running sudo from a serial console on Linux when the command
+   is run in a pseudo-terminal (the default).
+ + Fixed a bug where the ALL command in a sudoers rule would override a previous
+   NOSETENV tag. Command tags are inherited from previous Cmnds in a
+   Cmnd_Spec_List. There is a special case for the SETENV tag with the ALL
+   command, where SETENV is implied if no explicit SETENV or NOSETENV tag is
+   specified. This special case did not take into account that a NOSETENV tag
+   that was inherited should override this behavior.
+- Fixes in behavior:
+ + The ignore_dot sudoers setting is now on by default.
+ + If sudo is run via ssh without a terminal and a password is required, it now
+   suggest using ssh's -t option.
+ + Sudo uses TCSAFLUSH, not TCSADRAIN, when disabling echo once again. A long
+   time ago sudo changed from using TCSAFLUSH to TCSADRAIN due to some systems
+   having bugs related to TCSAFLUSH. That should no longer be a concern. Using
+   TCSAFLUSH ensures that password input that has been received by the kernel,
+   but not yet read by sudo, will be discarded and not echoed.
+ + Added the SUDO_TTY environment variable if the user has a terminal. This can
+   be used to find the user's original tty device when sudo runs the command in
+   its own pseudo-terminal (GitHub#447).
+
 * Tue Jul 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt3
 - Security release (fixes: CVE-2025-32462, CVE-2025-32463) (closes: 55007):
  + Sudo's -h (--host) option could be specified when running a command or
