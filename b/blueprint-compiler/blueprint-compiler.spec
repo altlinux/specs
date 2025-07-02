@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.16
+%define ver_major 0.18
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_enable docs
@@ -26,6 +26,7 @@ Source: %name-%version%beta.tar
 BuildArch: noarch
 
 Requires: typelib(GIRepository) = 2.0
+Requires: typelib(GIRepository) = 3.0
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -71,6 +72,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
