@@ -2,7 +2,7 @@
 
 Name: python3-module-sip6
 Version: 6.12.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Python3 bindings generator for C/C++ libraries
 
@@ -13,6 +13,7 @@ URL: http://www.riverbankcomputing.com/software/sip/
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 Patch1: remove-distutils-for-python-3.12.patch
+Patch2: alt-toml.patch
 
 BuildArch: noarch
 
@@ -73,6 +74,7 @@ Development files for SIP 6 (Python 3).
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 # hack to drop .abi3 from binaries (TODO: add support to python3.req/prov)
 # see https://www.python.org/dev/peps/pep-3149/
 %__subst "s|suffixes = importlib.machinery.EXTENSION_SUFFIXES|suffixes = ['.so']|" sipbuild/buildable.py
@@ -98,6 +100,9 @@ rm -f sipbuild/distutils_builder.py
 %python3_sitelibdir/sipbuild/
 
 %changelog
+* Wed Jul 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt0.2
+- NMU: fix to build
+
 * Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt0.1
 - NMU: new version
 
