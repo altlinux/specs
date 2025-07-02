@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -304,6 +304,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 0.10.4-alt1
+- New version.
+
 * Sun Mar 30 2025 Andrey Cherepanov <cas@altlinux.org> 0.10.3-alt1
 - New version.
 
