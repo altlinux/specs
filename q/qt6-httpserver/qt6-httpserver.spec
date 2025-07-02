@@ -1,0 +1,104 @@
+%define soversion 6
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+
+Name: qt6-httpserver
+Version: 6.9.1
+Release: alt1
+
+Summary: Qt Extension: Qt HTTP Server
+Group: System/Libraries
+License: GPL-3.0-only
+Url: https://www.qt.io/
+
+Source: %name-%version.tar
+Patch0: gt6-httpserver-6.9.1-alt-skip-some-http2-tests.patch
+
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): qt6-tools
+BuildRequires: cmake gcc-c++ qt6-base-devel ninja-build ctest
+
+%description
+Qt HTTP Server supports building HTTP server functionality into an
+application. Common use cases are exposing the application's
+functionality through REST APIs, or making devices in a trusted
+environment configurable also via HTTP.
+
+%package common
+Summary: Common package for %name
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: qt6-base-common
+%description common
+Common package for %name
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common
+Requires: qt6-base-devel
+%description devel
+%summary.
+
+%package doc
+Summary: Document for developing apps which will use %name
+Group: Development/KDE and QT
+Requires: %name-common
+%description doc
+This package contains documentation for %name
+
+%package -n lib%name
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n lib%name
+%summary
+
+%prep
+%setup
+%patch0 -p1
+
+%build
+%Q6build -DQT_BUILD_TESTS=ON
+%if %qdoc_found
+%Q6make --target docs
+%endif
+
+%install
+%Q6install_qt
+%if %qdoc_found
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
+%endif
+
+%check
+CMAKE_TOOLCHAIN_FILE=%_qt6_libdir/cmake/Qt6/qt.toolchain.cmake \
+    ctest --test-dir BUILD %_smp_mflags
+
+%files common
+%doc LICENSES/*
+
+%files -n lib%name
+%_qt6_libdir/libQt?HttpServer.so.%{soversion}*
+
+%files devel
+%_qt6_headerdir/Qt*/
+%_qt6_libdir/libQt?HttpServer.so
+%_qt6_libdatadir/libQt?HttpServer.so
+%_qt6_libdir/libQt?HttpServer.prl
+%_qt6_libdatadir/libQt?HttpServer.prl
+%_qt6_libdir/cmake/Qt*/
+%_qt6_archdatadir/mkspecs/modules/*.pri
+%_qt6_archdatadir/metatypes/qt6*.json
+%_qt6_archdatadir/modules/*.json
+%_pkgconfigdir/Qt?*.pc
+
+%files doc
+%if %qdoc_found
+%_qt6_docdir/*
+%endif
+%_qt6_examplesdir/*
+
+%changelog
+* Tue Jun 24 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 6.9.1-alt1
+- Initial build for Sisyphus.
