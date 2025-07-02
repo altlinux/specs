@@ -1,11 +1,13 @@
 Name: python3-module-didl-lite
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: DIDL-Lite (Digital Item Declaration Language) tools for Python
 License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.org/project/python-didl-lite/
+
+Provides: python3-module-python-didl-lite = %EVR
 
 Source0: %name-%version-%release.tar
 
@@ -33,6 +35,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/python_didl_lite-%version.dist-info
 
 %changelog
+* Wed Jul 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt2
+- provide pep503 name
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
 - 1.4.1 released
 
