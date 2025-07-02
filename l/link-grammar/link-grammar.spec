@@ -12,7 +12,7 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.12.4
+Version: 5.12.5
 Release: alt1
 
 Summary: The link grammar parsing system for Unix
@@ -20,11 +20,12 @@ License: BSD-3-Clause and LGPL-2.1
 Group: Text tools
 Url: https://github.com/opencog/link-grammar
 
+Vcs: https://github.com/opencog/link-grammar.git
+
 %if_disabled snapshot
 #Source: http://www.abisource.com/downloads/%name/%version/%name-%version.tar.gz
 Source: %url/archive/%name-%version.tar.gz
 %else
-Vcs: https://github.com/opencog/link-grammar.git
 Source: %name-%version.tar
 %endif
 
@@ -108,6 +109,9 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12.5-alt1
+- 5.12.5
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 5.12.4-alt1
 - 5.12.4
 
