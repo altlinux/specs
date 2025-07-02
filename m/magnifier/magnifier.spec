@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-Name:           magnifier
-Version:        3.6
-Release:        alt1
-Summary:        Virtual Magnifying Glass
-Group:          Accessibility
-License:        GPL Version 2
-URL:            http://magnifier.sourceforge.net
-VCS: https://sourceforge.net/projects/magnifier/
+Name: magnifier
+Version: 3.8
+Release: alt1
+Summary: Virtual Magnifying Glass
+Group: Accessibility
+License: GPL-2.0
+Url: http://magnifier.sourceforge.net
+Vcs: https://sourceforge.net/p/magnifier/code/
 
-Source:        %name-%version.tar
+Source: %name-%version.tar
+Patch1: magnifier-3.8-alt-correct-paths-in-install-sh.patch
 
 BuildRequires(pre): rpm-build-fpc
 BuildRequires: lazarus
@@ -23,10 +24,12 @@ BuildRequires: fpc-units-gtk2
 BuildRequires: fpc-units-rtl
 
 %description
-Virtual Magnifying Glass is a free, open source, multiplatform, screen magnification tool. It is simple, customizable, and easy-to-use.
+Virtual Magnifying Glass is a free, open source, multiplatform, screen
+magnification tool. It is simple, customizable, and easy-to-use.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 ARCH_OS=%_arch-linux
@@ -35,7 +38,6 @@ case "%_arch" in
   "i686"|"i586"|"i486") ARCH_OS="i386-linux";;
   "x86_64") ARCH_OS="x86_64-linux";;
 esac
-
 
 DEPENDENCY_PATHS="\
 -Fu%_libdir/fpc/units/$ARCH_OS \
@@ -56,10 +58,14 @@ fpc -S2cgi -O1 -gl -vewnhi -l $DEPENDENCY_PATHS -Fu. -o./magnifier -dLCL -dLCLgt
 %files
 %_datadir/magnifier/
 %_bindir/vmg
+%_desktopdir/vmg.desktop
 
 %changelog
+* Tue Jun 3 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.8-alt1
+- New update for version 3.8.
+
 * Wed May 21 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.6-alt1
-- Initial build for sisyphus (THX: Artem Semenov) (Closes: #52615)
+- Initial build for sisyphus (THX: Artem Semenov) (Closes: #52615).
 
 * Wed Dec 14 2011 Felipe Monteiro de Carvalho <felipemonteiro.carvalho at gmail.com> - 3.6-mdk.i386.rpm
 - New update for version 3.6.
