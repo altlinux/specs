@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.7.0
+Version: 0.8.1
 Release: alt1
 
 Summary: PKCS#11/Cryptoki support for Python
@@ -25,13 +25,11 @@ BuildRequires: python3-module-cached-property
 BuildRequires: python3-module-asn1crypto
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-oscrypto
+BuildRequires: python3-module-parameterized
 BuildRequires: softhsm libsofthsm openssl
 %endif
 
 Source:  %name-%version.tar
-
-# https://github.com/archlinux/svntogit-community/blob/packages/python-python-pkcs11/trunk/python-pkcs11_mark-tests-as-xfail.patch
-Patch: python-pkcs11_mark-tests-as-xfail.patch
 
 %description
 A high level, "more Pythonic" interface to the PKCS#11 (Cryptoki) standard
@@ -53,15 +51,14 @@ features, with continuous integration against multiple HSM platforms including:
 
 %prep
 %setup
-%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
 mkdir -p ~/.config/softhsm2
@@ -89,8 +86,11 @@ py.test-3 -v --import-mode=append
 %files
 %doc *.rst
 %python3_sitelibdir/pkcs11
-%python3_sitelibdir/python_pkcs11-%version-py%_python3_version.egg-info
+%python3_sitelibdir/python_pkcs11-%version.dist-info
 
 %changelog
+* Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Automatically updated to 0.8.1.
+
 * Fri Jul 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
