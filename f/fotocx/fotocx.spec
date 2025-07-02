@@ -1,6 +1,6 @@
 Name: fotocx
-Version: 25.0
-Release: alt1.1
+Version: 25.1
+Release: alt1
 
 %define app_id kornelix.%name
 
@@ -85,6 +85,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 25.1-alt1
+- 25.1
+
 * Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 25.0-alt1.1
 - fixed fix for our openjpeg2 tools names (ALT #54571)
 
