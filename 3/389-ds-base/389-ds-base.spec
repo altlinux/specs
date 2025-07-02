@@ -17,30 +17,24 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 3.1.2
-Release: alt2
+Version: 3.1.3
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
 Group: System/Servers
 Url: https://www.port389.org/
 VCS: https://github.com/389ds/389-ds-base
-
+ExcludeArch: %ix86 armh
 Source0: %name-%version.tar
 %if_with cockpit
 Source1: vendor_nodejs.tar
 %endif
 Source2: vendor_rust.tar
+Source3: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-ExcludeArch: %ix86 armh
-
-# python deps
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: cracklib-devel
 BuildRequires: doxygen
 BuildRequires: gcc-c++
@@ -64,19 +58,10 @@ BuildRequires: openldap-clients
 BuildRequires: zlib-devel
 # audit logs
 BuildRequires: libjson-c-devel
-
-BuildRequires: python3(build_manpages)
-BuildRequires: python3(argcomplete)
-BuildRequires: python3(dateutil)
-BuildRequires: python3(ldap)
-BuildRequires: python3-module-cryptography
-
 BuildRequires: rsync
 
 %if_with cockpit
 BuildRequires: npm
-# https://bugzilla.altlinux.org/47191
-BuildRequires: node
 %endif
 
 %if_with check
@@ -105,8 +90,6 @@ BuildRequires: perl-Archive-Tar
 
 # we don't want python gdb
 %filter_from_requires /python3(gdb\(\..*\)\?)/d
-# requires self
-%add_python3_req_skip __main__
 
 # shell.req wrongly marks restorecon as a dep
 %add_findreq_skiplist %_libexecdir/%pkgname/ds_selinux_restorecon.sh
@@ -147,14 +130,31 @@ Development Libraries and headers for 389 Directory Server.
 
 %package -n python3-module-lib389
 Summary: A library for accessing, testing, and configuring the 389 Directory Server
-BuildArch: noarch
 Group: Development/Python3
+BuildArch: noarch
 Requires: nss-utils
 Requires: %get_dep_ge libnss
+%pyproject_runtimedeps_metadata
 
 %description -n python3-module-lib389
 This module contains tools and libraries for accessing, testing, and
 configuring the 389 Directory Server.
+
+%package -n python3-module-lib389-repl-reports
+Summary: HTML and PNG report generation for 389 Directory Server replication monitoring tools
+Group: Development/Python3
+BuildArch: noarch
+Requires: python3-module-lib389
+# plotly is not packaged
+# Requires: python3-module-plotly
+Requires: python3-module-matplotlib
+
+%description -n python3-module-lib389-repl-reports
+Extended reporting capabilities for 389 Directory Server replication analysis.
+This package provides additional report formats (HTML and PNG) with interactive
+visualizations and graphs for replication lag analysis. These formats require
+additional dependencies and are optional - the base package supports CSV
+reports without this extension.
 
 %if_with cockpit
 %package -n cockpit-389-ds
@@ -180,6 +180,10 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %prep
 %setup %{?_with_cockpit:-a1} -a2
 %patch -p1
+pushd ./src/lib389
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+popd
 
 %build
 %ifarch mipsel
@@ -220,14 +224,10 @@ SKIP_AUDIT_CI=yes NODE_ENV=production %make 389-console
 %endif
 
 # Python3 bindings
-%make src/lib389/setup.py
 pushd ./src/lib389
+%__python3 validate_version.py
 %pyproject_build
 popd
-
-# argparse-manpage dynamic man pages have hardcoded man v1 in header,
-# need to change it to v8
-sed -i  "1s/\"1\"/\"8\"/" ./src/lib389/man/ds{conf,ctl,idm,create}.8
 
 %check
 %make VERBOSE=1 check
@@ -240,16 +240,13 @@ pushd src/lib389
 %pyproject_install
 popd
 
-# doesn't support PEP517
-# upstream ticket: TBD
-chmod +x %buildroot%python3_sitelibdir_noarch/%_sbindir/*
-chmod +x %buildroot%python3_sitelibdir_noarch/%_libexecdir/%pkgname/*
-
-for d in %_sbindir %_man8dir %_libexecdir; do
-    mkdir -p %buildroot/$d
-    cp -a %buildroot%python3_sitelibdir_noarch/$d/* -t %buildroot/$d/
-done
-rm -r %buildroot%python3_sitelibdir_noarch/%_usr
+# executable bit is not preserved for data section in Python wheel
+chmod +x %buildroot%_sbindir/dsconf
+chmod +x %buildroot%_sbindir/dsctl
+chmod +x %buildroot%_sbindir/dsidm
+chmod +x %buildroot%_sbindir/dscreate
+chmod +x %buildroot%_sbindir/openldap_to_ds
+chmod +x %buildroot%_libexecdir/%pkgname/dscontainer
 
 # Register CLI tools for bash completion
 for clitool in dsconf dsctl dsidm dscreate ds-replcheck
@@ -276,6 +273,20 @@ cp man/man3/* %buildroot%_man3dir
 %if_without cockpit
 # ends up unpackaged otherwise thus breaking build
 rm -f %buildroot%_datadir/metainfo/389-console/org.port389.cockpit_console.metainfo.xml
+%endif
+
+%if_with cockpit
+%ifnarch x86_64
+# https://github.com/evanw/esbuild/issues/3670
+# was fixed in esbuild 0.25.0:
+# https://github.com/evanw/esbuild/commit/e5d4303255bf05543be872a00b6f1f79c08fb52f
+test -s %buildroot%_datadir/cockpit/389-console/index.css.LEGAL.txt &&
+    {
+        echo remove workaround
+        exit 1
+    }
+rm %buildroot%_datadir/cockpit/389-console/index.css.LEGAL.txt
+%endif
 %endif
 
 %pre
@@ -385,6 +396,7 @@ fi
 %_libdir/librewriters.so.*
 
 %files -n python3-module-lib389
+%doc src/lib389/README.*
 %_sbindir/dsconf
 %_sbindir/dscreate
 %_sbindir/dsctl
@@ -394,12 +406,16 @@ fi
 %_man8dir/dscreate.8.*
 %_man8dir/dsctl.8.*
 %_man8dir/dsidm.8.*
+%exclude %_man1dir/
 %bash_completions_dir/dsctl
 %bash_completions_dir/dsconf
 %bash_completions_dir/dscreate
 %bash_completions_dir/dsidm
 %python3_sitelibdir_noarch/lib389/
 %python3_sitelibdir_noarch/lib389-%version.dist-info/
+
+# only meta package to pull dependencies
+%files -n python3-module-lib389-repl-reports
 
 %if_with cockpit
 %files -n cockpit-389-ds
@@ -412,6 +428,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 30 2025 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1
+- 3.1.2 -> 3.1.3.
+
 * Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 3.1.2-alt2
 - Backported upstream fix for crash:
   + https://github.com/389ds/389-ds-base/issues/6489
