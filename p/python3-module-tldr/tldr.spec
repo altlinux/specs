@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Python command-line client for tldr pages
@@ -25,19 +25,13 @@ Provides: tldr = %EVR
 Conflicts: tealdeer tlrc
 Obsoletes: tldr <= 3.1.0-alt1
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
+# required for tests and bash completions
 %pyproject_builddeps_metadata
+%if_with check
 BuildRequires: python3-module-pytest
 %endif
-BuildRequires: python3-module-termcolor
-BuildRequires: python3-module-colorama
-BuildRequires: python3-module-shtab
-# man page
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx-argparse
 
 %description
 %summary.
@@ -49,8 +43,6 @@ BuildRequires: python3-module-sphinx-argparse
 %pyproject_deps_resync_metadata
 
 %build
-# First make docs or else error
-make SPHINXBUILD="sphinx-build-3" -C docs
 %pyproject_build
 # generate autocompletions
 %pyproject_run -- tldr --print-completion bash > tldr.bash
@@ -60,9 +52,6 @@ make SPHINXBUILD="sphinx-build-3" -C docs
 %pyproject_install
 install -Dpm644 %mod_name.bash %buildroot%_datadir/bash-completion/completions/%mod_name
 install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
-
-# clean up sphinx build artifacts
-rm -r %buildroot%_man1dir/.doctrees/
 
 %check
 %pyproject_run_pytest -ra -Wignore
@@ -80,6 +69,9 @@ rm -r %buildroot%_man1dir/.doctrees/
 # TODO: package http://github.com/tldr-pages/tldr itself
 
 %changelog
+* Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.4.0 -> 3.4.1.
+
 * Mon Mar 31 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.0 -> 3.4.0.
 
