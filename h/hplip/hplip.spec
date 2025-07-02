@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.2
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -1133,6 +1133,11 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Jul 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.2-alt3
+- NMU:
+  + adjusted hp-systray for Plasma X11 (ALT #54478)
+  + fix launch hp-toolbox on Gnome Wayland (ALT #54987)
+
 * Sat Jun 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.2-alt2
 - NMU: fix launch hp-systray on Plasma X11 (ALT #54478)
 
