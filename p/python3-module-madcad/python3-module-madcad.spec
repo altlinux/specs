@@ -2,8 +2,8 @@
 %define oname madcad
 
 Name: python3-module-%oname
-Version: 0.16.0
-Release: alt1.1
+Version: 0.19.0
+Release: alt1
 
 Summary: Simple yet powerful CAD (Computer Aided Design) library, written with Python
 
@@ -38,6 +38,9 @@ Requires: python3(pywavefront) python3(plyfile) python3(stl)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jun 28 2025 Ivan Mazhukin <vanomj@altlinux.org> 0.19.0-alt1
+- new version 0.19.0 (with rpmrb script)
+
 * Mon May 26 2025 Stanislav Levin <slev@altlinux.org> 0.16.0-alt1.1
 - NMU: fixed FTBFS (PyGLM 2.8.2-alt1).
 
