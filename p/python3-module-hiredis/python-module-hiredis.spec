@@ -1,29 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define oname hiredis
+%define pypi_name hiredis
+%define mod_name %pypi_name
 
-# needs tox-docker
-%def_without check
+%def_with check
 
-Name: python3-module-%oname
-Version: 2.3.2
+Name: python3-module-%pypi_name
+Version: 3.2.1
 Release: alt1
 
 Summary: Python wrapper for hiredis
 
 License: BSD
 Group: Development/Python3
-Url: https://github.com/redis/hiredis-py
-
+Url: https://pypi.org/project/hiredis/
+Vcs: https://github.com/redis/hiredis-py
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libhiredis-devel
-
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(tox)
+# memray is not packaged
+%add_pyproject_deps_check_filter '.*memray'
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +37,11 @@ Python wrapper for hiredis.
 
 # use the system's one
 rm -r ./vendor/hiredis/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev_requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -43,13 +50,16 @@ rm -r ./vendor/hiredis/
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run -- pytest --import-mode append -vra
 
 %files
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
+- 2.3.2 -> 3.2.1.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
 - Automatically updated to 2.3.2.
 
