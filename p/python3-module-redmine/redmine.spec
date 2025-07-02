@@ -2,18 +2,18 @@
 %define modname redmine
 %define pypi_name python-redmine
 %def_with check
+%def_with docs
 
 Name: python3-module-%modname
 Version: 2.5.0
-Release: alt1.1
+Release: alt2
 Summary: Library for communicating with a Redmine project management application.
 License: Apache-2.0
 Group: Development/Python3
 Url: https://python-redmine.com/
-
+Vcs: https://github.com/maxtepkeev/python-redmine.git
 BuildArch: noarch
 
-# https://github.com/maxtepkeev/python-redmine/
 Source: %name-%version.tar
 Patch1: disable-tests-coverage.patch
 
@@ -24,6 +24,10 @@ BuildRequires: python3(wheel)
 %if_with check
 BuildRequires: python3(requests)
 BuildRequires: python3-module-pytest
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
 %endif
 
 %py3_provides %pypi_name
@@ -40,19 +44,34 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %build
 %pyproject_build
 
+%if_with docs
+%make -C docs/ html man
+%endif
+
 %install
 %pyproject_install
+
+%if_with docs
+install -Dm 644 docs/_build/man/python-redmine.1 \
+  -t %buildroot%_man1dir
+%endif
 
 %check
 %tox_create_default_config
 %tox_check_pyproject
 
 %files
-%doc README.* LICENSE docs/
+%doc README.* LICENSE docs/_build/html/
+%if_with docs
+%_man1dir/python-redmine.1.xz
+%endif
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %python3_sitelibdir/redminelib
 
 %changelog
+* Wed Jul 02 2025 Ivan Khanas <xeno@altlinux.org> 2.5.0-alt2
+- Fix documentation packaging.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
