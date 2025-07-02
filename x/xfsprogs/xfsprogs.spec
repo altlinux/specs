@@ -6,14 +6,15 @@
 %endif
 
 Name: xfsprogs
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
 Group: System/Kernel and hardware
 
-Url: http://xfs.org
+Url: https://xfs.wiki.kernel.org/
+VCS: https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git
 Source: %name-%version-%release.tar
 Patch0: %name-%version-alt.patch
 
@@ -150,6 +151,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Wed Jul 02 2025 Anton Farygin <rider@altlinux.com> 6.15.0-alt1
+- 6.14.0 -> 6.15.0
+
 * Tue May 13 2025 Anton Farygin <rider@altlinux.com> 6.14.0-alt1
 - 6.12.0 -> 6.14.0
 
