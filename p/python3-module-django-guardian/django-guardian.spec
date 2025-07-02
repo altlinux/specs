@@ -1,9 +1,8 @@
-%define _unpackaged_files_terminate_build 1
 %define oname django-guardian
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 3.0.3
 Release: alt1
 
 Summary: Implementation of per object permissions for Django 1.2 or later
@@ -16,6 +15,8 @@ Url: https://pypi.python.org/pypi/django-guardian
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-django
 
 %if_with check
@@ -53,10 +54,10 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 install -d %buildroot%python3_sitelibdir/%oname
 
@@ -64,9 +65,9 @@ install -d %buildroot%python3_sitelibdir/%oname
 py.test-3 -v
 
 %files
-%doc AUTHORS CHANGES *.rst
+%doc LICENSE *.md
 %python3_sitelibdir/guardian
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/django_guardian-%version.dist-info
 %exclude %python3_sitelibdir/guardian/test*
 %exclude %python3_sitelibdir/guardian/*/test*
 
@@ -75,6 +76,9 @@ py.test-3 -v
 %python3_sitelibdir/guardian/*/test*
 
 %changelog
+* Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
+- Automatically updated to 3.0.3.
+
 * Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 - Build with check.
