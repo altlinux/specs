@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.1.6
+Version: 1.1.11
 Release: alt1
 
 Summary: Google App Engine services SDK for Python 3
@@ -17,7 +17,7 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-abseil-py
+BuildRequires: python3-module-absl-py
 BuildRequires: python3-module-six
 BuildRequires: python3-module-protobuf
 BuildRequires: python3-module-ruamel-yaml
@@ -73,6 +73,9 @@ find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
 %python3_sitelibdir/appengine_python_standard-*/
 
 %changelog
+* Wed Jul 02 2025 Alexander Burmatov <thatman@altlinux.org> 1.1.11-alt1
+- New 1.1.11 version.
+
 * Thu Feb 01 2024 Alexander Burmatov <thatman@altlinux.org> 1.1.6-alt1
 - New 1.1.6 version.
 

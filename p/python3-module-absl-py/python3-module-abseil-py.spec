@@ -1,9 +1,9 @@
-%define pypi_name abseil-py
+%define pypi_name absl-py
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Abseil Common Libraries
@@ -13,6 +13,9 @@ URL:     https://github.com/abseil/abseil-py
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-hatchling
+
+Provides: python3-module-abseil-py = %EVR
 
 BuildArch: noarch
 
@@ -38,8 +41,11 @@ python3 smoke_tests/sample_test.py 2>&1 | grep 'msg_for_test'
 %files
 %doc *.md
 %python3_sitelibdir/absl/
-%python3_sitelibdir/%{pyproject_distinfo absl_py}
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 02 2025 Alexander Burmatov <thatman@altlinux.org> 2.3.0-alt1
+- New 2.3.0 version (ALT #54351).
+
 * Tue Oct 03 2023 Alexander Burmatov <thatman@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.
