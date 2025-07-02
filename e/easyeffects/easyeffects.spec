@@ -5,7 +5,7 @@
 
 Name: easyeffects
 Version: 7.2.3
-Release: alt1
+Release: alt2
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -31,10 +31,13 @@ Source: %name-%version.tar
 %define lsp_ver 1.2.10
 
 Requires: pipewire >= %pw_ver dconf
-Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
 Requires: lv2-lsp-plugins >= %lsp_ver
 Requires: lv2-mda-plugins
+Requires: lv2-zam-plugins
+%ifnarch %ix86
+Requires: ladspa-deepfilternet-plugins
+%endif
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
@@ -91,6 +94,11 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.3-alt2
+- updated runtime dependencies:
+  ladspa-zam-plugins -> lv2-zam-plugins (ALT #55023)
+  + ladspa-deepfilternet-plugins (ALT #55024)
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.3-alt1
 - 7.2.3
 
