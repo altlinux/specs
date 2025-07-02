@@ -5,14 +5,16 @@
 %def_with docs
 
 Name: tailspin
-Version: 3.0.2
-Release: alt2
+Version: 5.4.5
+Release: alt1
 Summary: A log file highlighter
 License: MIT
 Group: Shells
 Url: https://github.com/bensadeh/tailspin
 
 Source0: %name-%version.tar
+Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -25,8 +27,8 @@ The regexes recognize patterns you expect to find in a logfile, like dates,
 numbers, severity keywords and more.
 
 %prep
-%setup
-
+%setup -a 1
+%patch -p1
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
@@ -58,6 +60,9 @@ export CARGO_HOME=${PWD}/cargo
 %_datadir/zsh_completion.d/%short_name
 
 %changelog
+* Wed Jul 02 2025 Pavel Shilov <zerospirit@altlinux.org> 5.4.5-alt1
+- Update based on upstream
+
 * Wed Nov 14 2024 Pavel Shilov <zerospirit@altlinux.org> 3.0.2-alt2
 - Update packaging for package
 - Remove requires
