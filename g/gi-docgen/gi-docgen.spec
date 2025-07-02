@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 %define modname gidocgen
 %define ver_major 2025
 %def_disable flake8_test
@@ -7,8 +7,8 @@
 %def_enable check
 
 Name: gi-docgen
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
@@ -87,6 +87,9 @@ ln -sf ../../../../share/%modname/templates %buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.4-alt1
+- 2025.4
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3-alt2
 - updated to 2025.3-3-g9bec04e
 - disabled flake8 test
