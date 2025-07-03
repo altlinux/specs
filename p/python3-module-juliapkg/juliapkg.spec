@@ -1,0 +1,53 @@
+%define pypi_name juliapkg
+
+%def_with check
+
+Name:    python3-module-%pypi_name
+Version: 0.1.17
+Release: alt1
+
+Summary: Manage your Julia dependencies from Python
+License: MIT
+Group:   Development/Python3
+URL:     https://pypi.org/project/juliapkg
+VCS:     https://github.com/JuliaPy/pyjuliapkg
+
+Packager: Grigory Ustinov <grenka@altlinux.org>
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+
+%if_with check
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-semver
+%endif
+
+BuildArch: noarch
+
+Source: %name-%version.tar
+
+%description
+%summary
+
+%prep
+%setup
+
+%build
+%pyproject_build
+
+%install
+%pyproject_install
+
+%check
+# test_resolve test_executable test_project
+# need internet connection
+%pyproject_run_pytest -k'not test_resolve and not test_executable and not test_project'
+
+%files
+%doc LICENSE *.md
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+
+%changelog
+* Thu Jul 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.17-alt1
+- Initial build for Sisyphus
