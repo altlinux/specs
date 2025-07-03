@@ -2,7 +2,7 @@
 %define sover 0
 
 Name: plutosvg
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 
 Summary: Compact and efficient SVG rendering library
@@ -73,8 +73,12 @@ sed -i 's/0.0.4/1.0.0/' CMakeLists.txt
 %_includedir/%name
 %_libdir/lib%name.so
 %_cmakedir/%name
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jul 03 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.7-alt1
+- New version 0.0.7.
+
 * Sat Apr 05 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.6-alt1
 - Initial build for ALT Linux
 
