@@ -1,7 +1,7 @@
 
 Name: qstardict
-Version: 2.0.2
-Release: alt10
+Version: 4.0.0
+Release: alt1
 
 Group: System/Internationalization
 Summary: QStarDict Qt clone of StarDict
@@ -18,8 +18,7 @@ Source: %name-%version.tar
 Source10: qstardict-ru_RU.ts
 Patch1: alt-l10n.patch
 Patch2: alt-ftbfs.patch
-Patch3: alt-qt6.patch
-Patch4: alt-help-not-avail.patch
+Patch3: alt-help-not-avail.patch
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: glib2-devel qt6-base-devel qt6-5compat-devel qt6-tools zlib-devel libzim-devel
@@ -42,7 +41,6 @@ The main features:
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 #cat %SOURCE10 > translations/qstardict-ru_RU.ts
 
 %build
@@ -78,6 +76,9 @@ LC_ALL=en_US.UTF-8 desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/%name/plugins/*.so
 
 %changelog
+* Thu Jul 03 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt1
+- new version
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt10
 - port to Qt6
 
