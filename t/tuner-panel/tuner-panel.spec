@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerPanel
 
 Name: tuner-panel
-Version: 0.1.4
+Version: 0.4.0
 Release: alt1
 
 Summary: Panel mode switcher
@@ -14,7 +14,6 @@ Url: https://altlinux.space/alt-gnome/TunerPanel
 Vcs: https://altlinux.space/alt-gnome/TunerPanel
 Source: %name-%version.tar
 
-Requires: tuner-tweaks
 Requires: alt-panelmoded
 
 BuildRequires(pre): rpm-macros-meson
@@ -45,6 +44,11 @@ Plugin for Tuner that adds panel mode switcher to Tweaks appearance page.
 %doc README.md
 
 %changelog
+* Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.0-alt1
+- fixed warning if panel mode is selected (Closes: 55000)
+- added more info to plugin file
+- no longer requires tuner-tweaks to function
+
 * Mon Jun 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.4-alt1
 - set pointer cursor to style button
 

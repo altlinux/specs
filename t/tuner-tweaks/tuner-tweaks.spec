@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -45,6 +45,11 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.0-alt1
+- fixed translations
+- removed emacs input option (Closes: 55005)
+- added more info to plugin file
+
 * Fri Jun 27 2025 Alexander Davydzik <paladindev@altlinux.org> 0.3.2-alt1
 - fixed translations
 
