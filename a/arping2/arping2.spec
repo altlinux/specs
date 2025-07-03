@@ -2,11 +2,11 @@
 %define libnet_ver 2
 
 Name: arping2
-Version: 2.25
+Version: 2.26
 Release: alt1
 
 Summary: Layer2 Ethernet pinger
-License: GPL
+License: GPLv2+
 Group: Networking/Other
 
 # git://github.com/ThomasHabets/arping.git
@@ -49,6 +49,12 @@ mv %buildroot%_man8dir/{%origname,%name}.8
 %_man8dir/*
 
 %changelog
+* Wed Jul 02 2025 Michael Shigorin <mike@altlinux.org> 2.26-alt1
+- new version (watch file uupdate)
+
+* Mon Jul 01 2024 Michael Shigorin <mike@altlinux.org> 2.25-alt2
+- clarified License:
+
 * Sun Jun 30 2024 Michael Shigorin <mike@altlinux.org> 2.25-alt1
 - new version (watch file uupdate)
 
