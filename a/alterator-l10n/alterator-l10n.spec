@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.160
+Version: 2.9.161
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Thu Jul 03 2025 Mikhail Efremov <sem@altlinux.org> 2.9.161-alt1
+- installer-alterator-livecd: Update translation.
+
 * Thu Jun 05 2025 Sergey Konev <darisishe@altlinux.org> 2.9.160-alt1
 - alterator-blivet: minor translations fix
 
