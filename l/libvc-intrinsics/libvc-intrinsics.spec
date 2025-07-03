@@ -2,8 +2,8 @@
 %define llvmversion 15
 
 Name: libvc-intrinsics
-Version: 0.22.1
-Release: alt2
+Version: 0.23.1
+Release: alt1
 
 Summary: Set of new intrinsics on top of core LLVM IR instructions that represent SIMD semantics of a program targeting GPU
 License: MIT
@@ -64,6 +64,9 @@ Group: Development/C++
 %_libdir/libLLVMGenXIntrinsics.a
 
 %changelog
+* Thu Jul 03 2025 Andrey Kovalev <ded@altlinux.org> 0.23.1-alt1
+- Updated to upstream version 0.23.1.
+
 * Tue May 13 2025 Andrey Kovalev <ded@altlinux.org> 0.22.1-alt2
 - Built the package using llvm15.
 
