@@ -7,7 +7,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 0.15.5
+Version: 0.17.0
 Release: alt1
 
 Summary: Sparse multi-dimensional arrays for the PyData ecosystem
@@ -56,15 +56,22 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 %pyproject_install
 
+# https://github.com/finch-tensor/Finch-mlir
+# has no LICENSE, Idk is it possible to package it
+rm -rv %buildroot%python3_sitelibdir/%pypi_name/mlir_backend
+
 %check
 %pyproject_run_pytest
 
 %files
-%doc LICENSE *.rst
+%doc LICENSE *.md
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1
+- Automatically updated to 0.17.0.
+
 * Wed Jan 15 2025 Grigory Ustinov <grenka@altlinux.org> 0.15.5-alt1
 - Automatically updated to 0.15.5.
 
