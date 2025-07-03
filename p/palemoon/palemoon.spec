@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 33.7.2
 
-Release: alt1
+Release: alt1.1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -16,13 +16,11 @@ Vcs: https://github.com/MoonchildProductions/Pale-Moon
 
 Epoch: 2
 
-ExclusiveArch: x86_64 aarch64
+#ExclusiveArch: x86_64 aarch64
 # ppc64le
 
 %define sname palemoon
 %define bname newmoon
-
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
@@ -53,7 +51,6 @@ Patch10: palemoon-33.0.1-compatversion.patch
 
 #Patch15: palemoon-32.0.1-ppc64le-alt1.patch
 
-
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
 
@@ -83,6 +80,9 @@ Patch116: palemoon-32.4.0-hunspell.patch
 #Patch117: palemoon-32.5.1-locale.patch
 
 # Patch200: %bname-33.6.0-branding.patch
+
+# Url patch : https://bgstack15.ddns.net/cgit/stackrpms/tree/newmoon/debian/patches/UXP-Enable-LTO-to-work.patch
+Patch201: palemoon-33.7.2-UXP-Enable-LTO-to-work.patch
 
 %set_autoconf_version 2.13
 
@@ -226,8 +226,9 @@ tar -xf %SOURCE1
 %patch116 -p1
 #patch117 -p1
 
-
-##patch200 -p1
+%ifarch %ix86
+%patch201 -p1
+%endif
 
 cd %sname
 # icons
@@ -281,7 +282,6 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
 echo "ac_add_options  --with-system-jpeg" >> .mozconfig
 echo "ac_add_options  --with-system-zlib" >> .mozconfig
 
-
 # echo "ac_add_options  --enable-perf" >> .mozconfig
 # echo "ac_add_options  --with-system-ffi" >> .mozconfig
 
@@ -290,6 +290,10 @@ echo "ac_add_options  --with-system-zlib" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
+%ifarch %ix86
+ echo "ac_add_options --with-arch=i586" >> .mozconfig
+ echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+%endif
 
 
 cat << EOF >> palemoon/app/profile/%sname.js
@@ -310,7 +314,6 @@ user_pref("extensions.getAddons.cache.enabled", false);
 user_pref("intl.locale.matchOS",  true);
 user_pref("general.useragent.locale", "C");
 EOF
-
 
 %build
 %add_optflags %optflags_shared
@@ -386,7 +389,6 @@ gcc %optflags \
 cd obj-%_arch
 %makeinstall MOZ_APP_VERSION=%version SHELL=/bin/sh
 
-
 #makeinstall_std MOZ_APP_VERSION=%version COMSPEC=rpm SHELL=/bin/sh
 # MOZILLABUILD SHELL=/bin/sh COMSPEC=rpm
 
@@ -433,9 +435,6 @@ rm -rf -- \
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
 
-
-
-
 install -m 644 %_builddir/palemoon-%version/defaults-%bname/default48.png %buildroot%newmoon_bindir/browser/chrome/icons/default/PMaboutDialog48.png
 
 set -x
@@ -467,9 +466,6 @@ printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
  	done
      )
 
-
-
-
 #install -d   %buildroot/%_docdir/%bname-%version/
 # Add Doc
 install -D -m 644 %SOURCE9  %_builddir/%sname-%version
@@ -483,9 +479,6 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 # pref("extensions.getAddons.cache.enabled", false);
 # pref("general.useragent.locale", "en-GB");
 # EOF
-
-
-
 
 %files -n %bname
 %dir %newmoon_bindir
@@ -508,6 +501,10 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Wed Jul 02 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.2-alt1.1
+- Add palemoon-33.7.2-UXP-Enable-LTO-to-work.patch from Debian
+- Added support for ix86 (32 bit) architecture
+
 * Tue Jun 17 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.2-alt1
 - Version 37.7.2
 
