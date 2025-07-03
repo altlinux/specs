@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.6
-Release: alt0.1
+Release: alt0.2
 
 Summary: A Low Complexity Speech Enhancement Framework for Full-Band Audio using on Deep Filtering
 License: MIT OR Apache-2.0
@@ -22,6 +22,9 @@ Source: https://github.com/Rikorose/DeepFilterNet/archive/v%version/%__name-%ver
 Source: %__name-%version.tar
 %endif
 Source1: %__name-%version-cargo.tar
+
+Patch: deepfilternet-0.5.6-alt-loongarch64-nix-0.22.3.patch
+Patch1: deepfilternet-0.5.6-alt-loongarch64-nix-0.24.3.patch
 
 ExcludeArch: %ix86
 
@@ -62,6 +65,12 @@ cargo update -p time &&
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%__name-%version-cargo.tar Cargo.lock .cargo/ vendor/}
 
+%patch -p2
+%patch1 -p2
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+	 ./vendor/nix-0.22.3/.cargo-checksum.json \
+     ./vendor/nix-0.24.3/.cargo-checksum.json
+
 %build
 # for --features
 
@@ -95,6 +104,10 @@ install -Dm 755 target/release/df-demo-c -t %buildroot%_bindir
 %doc README*
 
 %changelog
+* Thu Jul 03 2025 Ilya Sorochan <k0tran@altlinux.org> 0.5.6-alt0.2
+- add two patches for two old nix crate versions (0.22.3 and 0.24.3) to enable
+  build on loongarch64
+
 * Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt0.1
 - first build for Sisyphus
 
