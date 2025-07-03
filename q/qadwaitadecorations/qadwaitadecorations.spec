@@ -3,7 +3,7 @@
 
 Name: qadwaitadecorations
 Version: 0.1.6
-Release: alt2
+Release: alt3
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
@@ -23,11 +23,13 @@ BuildRequires:  wayland-devel
 %package qt5
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel >= 5.15.2
 BuildRequires: qt5-base-devel-static >= 5.15.2
 BuildRequires: qt5-wayland-devel >= 5.15.2
 BuildRequires: qt5-svg-devel >= 5.15.2
 Requires: qt5-wayland
+Requires: libqt5-core = %_qt5_version
 
 %description qt5
 %summary.
@@ -37,11 +39,13 @@ Requires: qt5-wayland
 %package qt6
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
+BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel >= 6.5.0
 BuildRequires: qt6-base-devel-static >= 6.5.0
 BuildRequires: qt6-wayland-devel >= 6.5.0
 BuildRequires: qt6-svg-devel >= 6.5.0
 Requires: qt6-wayland
+Requires: libqt6-core = %_qt6_version
 
 %description qt6
 %summary.
@@ -88,6 +92,9 @@ Requires: qt6-wayland
 %endif
 
 %changelog
+* Thu Jul 03 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt3
+- require rebuild with new qt5/qt6 (Closes: 55028)
+
 * Tue Feb 11 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt2
 - add dependencies on qt5-wayland and qt6-wayland (Closes: 53022)
 
