@@ -2,14 +2,11 @@
 %filter_from_requires /^\/usr\/bin\/mysql$/d
 %filter_from_requires /^\/usr\/bin\/psql$/d
 
-%def_without radius
-%def_with mysql
-%def_with pgsql
-
 %define _localstatedir /var
+%define _runstatedir /run
 
 Name: kea
-Version: 2.7.9
+Version: 3.0.0
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -22,11 +19,16 @@ Source1: kea-dhcp4.service
 Source2: kea-dhcp6.service
 Source3: kea-dhcp-ddns.service
 Source4: kea-ctrl-agent.service
-Patch: %name-%version.patch
+#Patch: %%name-%%version.patch
 
-Requires: lib%name = %EVR
+Requires: %name-admin
+Requires: %name-dhcp-ddns
+Requires: %name-dhcp4
+Requires: %name-dhcp6
+Requires: %name-hooks
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3 rpm-macros-meson
+BuildRequires: meson >= 1.1.0 rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel boost-asio-devel
 BuildRequires: gcc-c++ bison flex
 BuildRequires: libssl-devel
@@ -34,9 +36,8 @@ BuildRequires: libkrb5-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: liblog4cplus-devel
-BuildRequires: procps
+BuildRequires: procps libgtest-devel
 BuildRequires: /usr/bin/xmllint
-%{?_with_radius: BuildRequires: freeradius-devel}
 BuildRequires: python3-devel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
@@ -47,6 +48,86 @@ functional DHCPv4, DHCPv6 and Dynamic DNS servers.
 Both DHCP servers fully support server discovery, address assignment, renewal,
 rebinding and release. The DHCPv6 server supports prefix delegation. Both
 servers support DNS Update mechanism, using stand-alone DDNS daemon.
+
+%package common
+Summary: Kea shared libraries, LFC, and runstate files used by Kea DHCP server
+Group: System/Servers
+Requires: lib%name = %EVR
+Conflicts: %name < 3.0.0
+
+%description common
+Contains the Lease File Cleanup script, and various
+things that are neededby the services.
+
+%package admin
+Summary: Database administration tools for Kea DHCP server
+Group: System/Servers
+Requires: %name-common = %EVR
+Requires: python3-module-%name
+Provides: %name-shell = %EVR
+Obsoletes: %name-shell < %EVR
+
+%description admin
+To manage the databases, Kea provides the kea-admin tool. It can initialize a
+new backend, check its version number, perform a backend upgrade, and dump
+lease data to a text file.
+This package also contains the Kea shell, which provides a way to communicate
+with the Kea Control Agent from the CLI. It is a simple command-line,
+scripting-friendly, text client that is able to connect to the CA, send it
+commands with parameters, retrieve theresponses, and display them.
+
+%package dhcp-ddns
+Summary: Kea DHCP Dynamic DNS Server
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description dhcp-ddns
+The Kea DHCP-DDNS Server (kea-dhcp-ddns, known informally as D2) conducts the
+client side of the Dynamic DNS protocol (DDNS, defined in RFC 2136) on behalf
+of the DHCPv4 and DHCPv6 servers (kea-dhcp4 and kea-dhcp6 respectively). The
+DHCP servers construct DDNS update requests, known as NameChangeRequests
+(NCRs), based on DHCP lease change events and then post them to D2. D2 attempts
+to match each request to the appropriate DNS server(s) and carries out the
+necessary conversation with those servers to update the DNS data.
+
+%package dhcp4
+Summary: Kea IPv4 DHCP Server
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description dhcp4
+The Kea DHCPv4 Server.
+
+%package dhcp6
+Summary: Kea IPv6 DHCP Server
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description dhcp6
+The Kea DHCPv6 Server.
+
+%package ctrl-agent
+Summary: Kea Control Agent - REST service for controlling Kea DHCP server
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description ctrl-agent
+The Kea Control Agent (CA) is a daemon which exposes a RESTful control
+interface for managing Kea servers. The daemon can receive control commands
+over HTTP and either forward these commands to the respective Kea servers or
+handle these commands on its own. Control Agent is deprecated and will
+be removed from future releases.
+
+%package perfdhcp
+Summary: Kea Optional Utils - perfdhcp
+Group: System/Servers
+
+%description perfdhcp
+perfdhcp is a DHCP benchmarking tool. It provides a way to measure the
+performance of DHCP servers by generating large amounts of traffic from
+multiple simulated clients. It is able to test both IPv4 and IPv6 servers, and
+provides statistics concerning response times and the number of requests that
+are dropped.
 
 %package -n lib%name-devel
 Summary: Development headers and libraries for Kea DHCP server
@@ -60,25 +141,45 @@ Header files and API documentation.
 %package hooks
 Summary: Hooks libraries for kea
 Group: System/Servers
-Requires: lib%name = %EVR
+Requires: %name-common = %EVR
 
 %description hooks
 Hooking mechanism allow Kea to load one or more dynamically-linked libraries
 (known as "hooks libraries") and, at various points in its processing
 ("hook points"), call functions in them.  Those functions perform whatever
-custom processing is required.
+custom processing is required. This package contains the following hooks:
+ha (high availability), bootp, stat-cmds, run-script,
+lease-cmds, flex-option, perfmon, class-cmds, ddns-tuning, flex-id,
+forensic-log, host-cache, host-cmds, lease-query, limits, ping-check,
+radius, subnet-cmds.
 
-%package shell
-Summary: Text client for Control Agent process
+%package gss-tsig
+Summary: Kea GSS-TSIG hook library
 Group: System/Servers
-BuildArch: noarch
+Requires: %name-common = %EVR
 
-%description shell
-The kea-shell provides a REST client for the Kea Control Agent (CA).
-It takes command as a command-line parameter that is being sent to CA
-with proper JSON encapsulation. Optional arguments may be specified on
-the standard input. The request it sent of HTTP and a response is
-retrieved. That response is displayed out on the standard output.
+%description gss-tsig
+Kea is an IPv4 and IPv6 DHCP server developed by Internet Systems Consortium.
+This package provides GSS-TSIG hook library, intended to be loaded by
+DHCP-DDNS server.
+It provides GSS-API with Kerberos support and can be used to integrate
+with Windows Active Directory.
+
+%package mysql
+Summary: MySQL hook library for Kea
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description mysql
+This package contains the MySQL hook library for Kea.
+
+%package pgsql
+Summary: PostgreSQL hook library for Kea
+Group: System/Servers
+Requires: %name-common = %EVR
+
+%description pgsql
+This package contains the PostgreSQL hook library for Kea.
 
 %package doc
 Summary: Documents for Kea dhcp
@@ -111,54 +212,34 @@ This package provides Python3 connector.
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
-# to be able to build on ppc64(le)
-# https://sourceforge.net/p/flex/bugs/197
-# https://lists.isc.org/pipermail/kea-dev/2016-January/000599.html
-sed -i -e 's|ECHO|YYECHO|g' src/lib/eval/lexer.cc
-
-sed -i -e "s|%version-git|%version|" configure.ac
+sed -i -e "s|%version-git|%version|" meson.build
 
 %build
-%autoreconf
-
-%configure \
-    --disable-dependency-tracking \
-    --disable-rpath \
-    --disable-silent-rules \
-    --disable-static \
-    --enable-debug \
-    --enable-generate-parser \
-    --enable-shell \
-    --enable-generate-docs \
-    --enable-generate-messages \
-    --enable-perfdhcp \
-%if_with radius
-    --with-freeradius=%_prefix \
-    --with-freeradius-dictionary=%_sysconfdir/radiusclient/dictionary \
-%endif
-    %{subst_with mysql} \
-    %{subst_with pgsql} \
-    --with-gnu-ld \
-    --with-log4cplus \
-    --with-openssl \
-    --with-gssapi \
-    --with-site-packages=%python3_sitelibdir_noarch \
-    runstatedir=/run
-
-%make_build
+export KEA_PKG_VERSION_IN_CONFIGURE=%release
+export KEA_PKG_TYPE_IN_CONFIGURE="rpm"
+%meson \
+    -D runstatedir=%_runstatedir \
+    -D crypto=openssl \
+    -D krb5=enabled \
+    -D mysql=enabled \
+    -D postgresql=enabled \
+    -D netconf=disabled \
+    -D tests=enabled
+%meson_build
+%__meson_build doc
 
 %install
-%makeinstall_std
-
-# Get rid of .la files
-find %buildroot -type f -name "*.la" -delete -print
+%meson_install
 
 # remove keactrl
-rm %buildroot%_sysconfdir/kea/keactrl.conf
-rm %buildroot%_sbindir/keactrl
-rm %buildroot%_mandir/man8/keactrl.8
+rm -v %buildroot%_sysconfdir/kea/keactrl.conf
+rm -v %buildroot%_sbindir/keactrl
+rm -v %buildroot%_mandir/man8/keactrl.8
+
+# remove netconf files
+rm -v %buildroot%_mandir/man8/kea-netconf.8
 
 # Install systemd units
 install -Dpm 0644 %SOURCE1 %buildroot%_unitdir/kea-dhcp4.service
@@ -167,71 +248,149 @@ install -Dpm 0644 %SOURCE3 %buildroot%_unitdir/kea-dhcp-ddns.service
 install -Dpm 0644 %SOURCE4 %buildroot%_unitdir/kea-ctrl-agent.service
 
 # Start empty lease databases
-mkdir -p %buildroot%_sharedstatedir/kea/
+mkdir -p %buildroot%_sharedstatedir/kea
 touch %buildroot%_sharedstatedir/kea/kea-leases4.csv
 touch %buildroot%_sharedstatedir/kea/kea-leases6.csv
 
+rm -rf %buildroot%_datadir/kea/meson-info
+
+# install /usr/lib/tmpfiles.d/kea.conf
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/%name.conf <<EOF
+# kea needs existing /run/kea/ to create logger_lockfile and pidfile there
+# See tmpfiles.d(5) for details
+d /run/kea 0750 _kea _kea -
+EOF
+
 # change log destination from /var/log/... to STDOUT and enable shortened log format
-sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"pattern@ \
-    -e s@\"socket-name\":\ \"\/tmp\/kea-@\"socket-name\":\ \"\/run\/kea\/@ \
-    %buildroot%_sysconfdir/kea/kea-ctrl-agent.conf \
-    %buildroot%_sysconfdir/kea/kea-dhcp6.conf \
-    %buildroot%_sysconfdir/kea/kea-dhcp4.conf \
-    %buildroot%_sysconfdir/kea/kea-dhcp-ddns.conf
-#    %%buildroot%%_sysconfdir/kea/kea-netconf.conf  # TODO: no support for netconf/sysconf yet
+sed -i'' 's/"output":.*/"output": "stdout",/;s@// "pattern":\([^,]*\),*@"pattern":\1@' \
+    %buildroot%_sysconfdir/%name/kea-ctrl-agent.conf \
+    %buildroot%_sysconfdir/%name/kea-dhcp6.conf \
+    %buildroot%_sysconfdir/%name/kea-dhcp4.conf \
+    %buildroot%_sysconfdir/%name/kea-dhcp-ddns.conf
 
-%pre
+%check
+# TODO: disable mysql and pgsql tests
+%meson_test ||:
+
+%pre common
 groupadd -r -f _kea
-useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP User" -g _kea _kea >/dev/null 2>&1 ||:
+useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user" -g _kea _kea >/dev/null 2>&1 ||:
 
+%post ctrl-agent
+%post_systemd kea-ctrl-agent.service
+%preun ctrl-agent
+%preun_systemd kea-ctrl-agent.service
 
-%post
-%post_service kea-dhcp4.service
-%post_service kea-dhcp6.service
-%post_service kea-dhcp-ddns.service
-%post_service kea-ctrl-agent.service
+%post dhcp-ddns
+%post_systemd kea-dhcp-ddns.service
+%preun dhcp-ddns
+%preun_systemd kea-dhcp-ddns.service
 
-%preun
-%preun_service kea-dhcp4.service
-%preun_service kea-dhcp6.service
-%preun_service kea-dhcp-ddns.service
-%preun_service kea-ctrl-agent.service
+%post dhcp4
+%post_systemd kea-dhcp4.service
+%preun dhcp4
+%preun_systemd kea-dhcp4.service
+
+%post dhcp6
+%post_systemd kea-dhcp6.service
+%preun dhcp6
+%preun_systemd kea-dhcp6.service
 
 %files
-%_bindir/*
-%_sbindir/*
-%exclude %_sbindir/kea-shell
-%_unitdir/*.service
+%doc COPYING
+
+%files common
+%doc COPYING
+%_sbindir/kea-lfc
+%_man8dir/kea-lfc.*
+%_tmpfilesdir/%name.conf
 %dir %attr(0750, root, _kea) %_sysconfdir/%name
-%config(noreplace) %attr(0640, root, _kea) %_sysconfdir/%name/*.conf
-%dir %attr(0750, root, _kea) %_sysconfdir/%name/radius
-%config(noreplace) %attr(0640, root, _kea) %_sysconfdir/%name/radius/*
-%_datadir/%name
 %dir %attr(0755, _kea, _kea) %_sharedstatedir/%name
-%config(noreplace) %attr(0644, _kea, _kea) %_sharedstatedir/%name/*.csv
-%_man8dir/*
+%dir %attr(0750, _kea, _kea) %_logdir/%name
+
+%files perfdhcp
+%_sbindir/perfdhcp
+%_man8dir/perfdhcp.*
+
+%files admin
+%_sbindir/kea-admin
+%_man8dir/kea-admin.*
+%dir %_datadir/kea
+%_datadir/kea/api
+%_datadir/kea/scripts
+%_sbindir/kea-shell
+%_man8dir/kea-shell.*
+
+%files ctrl-agent
+%_sbindir/kea-ctrl-agent
+%_unitdir/kea-ctrl-agent.service
+%_man8dir/kea-ctrl-agent.*
+%attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-ctrl-agent.conf
+
+%files dhcp-ddns
+%_sbindir/kea-dhcp-ddns
+%_unitdir/kea-dhcp-ddns.service
+%_man8dir/kea-dhcp-ddns.*
+%attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-dhcp-ddns.conf
+
+%files dhcp4
+%_sbindir/kea-dhcp4
+%_unitdir/kea-dhcp4.service
+%_man8dir/kea-dhcp4.*
+%attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-dhcp4.conf
+%attr(0640,root,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases4.csv
+
+%files dhcp6
+%_sbindir/kea-dhcp6
+%_unitdir/kea-dhcp6.service
+%_man8dir/kea-dhcp6.*
+%attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-dhcp6.conf
+%attr(0640,root,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases6.csv
 
 %files -n lib%name-devel
+%_bindir/kea-msg-compiler
 %_includedir/%name
 %_libdir/lib%name-*.so
+%_pkgconfigdir/%name.pc
 
 %files hooks
+%dir %_sysconfdir/%name/radius
+%_sysconfdir/%name/radius/dictionary
 %dir %_libdir/%name
 %_libdir/%name/hooks
+%exclude %_libdir/%name/hooks/libddns_gss_tsig.so
+%exclude %_libdir/%name/hooks/libdhcp_mysql.so
+%exclude %_libdir/%name/hooks/libdhcp_pgsql.so
 
-%files shell
-%_sbindir/kea-shell
+%files gss-tsig
+%_libdir/%name/hooks/libddns_gss_tsig.so
+
+%files mysql
+%_libdir/lib%name-mysql.so.*
+%_libdir/%name/hooks/libdhcp_mysql.so
+
+%files pgsql
+%_libdir/lib%name-pgsql.so.*
+%_libdir/%name/hooks/libdhcp_pgsql.so
 
 %files doc
 %doc %_datadir/doc/%name
 
 %files -n lib%name
 %_libdir/lib%name-*.so.*
+%exclude %_libdir/lib%name-mysql.so.*
+%exclude %_libdir/lib%name-pgsql.so.*
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%name
 
 %changelog
+* Fri Jun 27 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- 3.0.0
+- split package to common, admin, dhcp-ddns, dhcp4, dhcp6, ctrl-agent
+- add perfdhcp, gss-tsig, mysql, pgsql packages
+
 * Wed Jun 11 2025 Andrey Limachko <liannnix@altlinux.org> 2.7.9-alt1
 - 2.7.9
 
