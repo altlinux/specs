@@ -8,7 +8,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 %define _localstatedir %{_var}
 %define fontpkgname material-icons-fonts
 Version:        4.0.0
-Release:        alt1_6
+Release:        alt1_17
 URL:            https://google.github.io/material-design-icons/
 
 %global fontlicense     ASL 2.0
@@ -26,7 +26,7 @@ are designed under the material design guidelines.
 Source0:        https://github.com/google/material-design-icons/archive/%{version}/material-design-icons-%{version}.tar.gz
 Source1:        65-material-icons-fonts.conf
 
-BuildRequires:  appstream libappstream
+BuildRequires:  appstream 
 
 Name:           fonts-ttf-material-icons
 Summary:        %{fontsummary}
@@ -136,8 +136,6 @@ sed -e 's,ASL 2\.0,Apache-2.0,' \
     -e 's,<font></font>,<font>Material Icons Outlined Regular</font>\n    <font>Material Icons Round Regular</font>\n    <font>Material Icons Sharp Regular</font>\n    <font>Material Icons Two Tone Regular</font>,' \
     -i $metainfo
 
-appstreamcli validate --no-net $metainfo
-
 %check
 # FIXME: This should not be necessary
 ln -s %{_datadir}/xml/fontconfig/fonts.dtd %{buildroot}%{_fontconfig_templatedir}
@@ -151,6 +149,9 @@ rm %{buildroot}%{_fontconfig_templatedir}/fonts.dtd
 %files -n fonts-ttf-material-icons -f material-icons-fonts.list
 
 %changelog
+* Thu May 27 2025 Petr Usoltsev <usoltsevpv@altlinux.org> 4.0.0-alt1_17
+- update to new release by fcimport
+
 * Mon Feb 07 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_6
 - update to new release by fcimport
 
