@@ -5,7 +5,7 @@
 
 Name: CodeChecker-alt-suite
 Version: 6.25.1
-Release: alt1.git36a6cf62
+Release: alt2.git36a6cf62
 
 Summary: CodeChecker static analysis tooling (without web server)
 License: Apache-2.0
@@ -101,5 +101,8 @@ cp -ra homework*.txt %buildroot/%_sysconfdir/%name-%version
 %_sysconfdir/%name-%version/homework_gcc_args.txt
 
 %changelog
+* Wed Jun 25 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt2.git36a6cf62
+- Improved analysis methodology.
+
 * Tue Jun 24 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt1.git36a6cf62
 - Initial build(without webserver) for ALT Sisyphus.
