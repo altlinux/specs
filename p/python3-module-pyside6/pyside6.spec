@@ -17,8 +17,8 @@
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
-Version: 6.8.2.1
-Release: alt0.2
+Version: 6.9.1
+Release: alt0.1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -26,7 +26,7 @@ License: BSD-3-Clause and GPL-2.0 and GPL-3.0 and LGPL-3.0 GFDL-1.3-no-invariant
 URL: https://wiki.qt.io/Qt_for_Python
 
 # Download from https://www.nic.funet.fi/pub/mirrors/download.qt-project.org/official_releases/QtForPython/pyside6/PySide6-6.6.2-src/pyside-setup-everywhere-src-6.6.2.tar.xz
-Source: pyside-setup-opensource-%version.tar
+Source: pyside-setup-everywhere-src-%version.tar
 Patch0: always-link-to-python-libraries.patch
 Patch1: pyside6-6.6.0-no-qtexampleicons.patch
 
@@ -135,7 +135,7 @@ to the binding generation that could be used to integrate C++ programs
 to Python, or even to get useful information to debug an application.
 
 %prep
-%setup -n pyside-setup-opensource-%version
+%setup -n pyside-setup-everywhere-src-%version
 %patch0 -p2
 %patch1 -p2
 
@@ -264,6 +264,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt0.1
+- NMU: new version
+
 * Sun May 04 2025 Andrey Cherepanov <cas@altlinux.org> 6.8.2.1-alt0.2
 - Package pyside6-uic as wrapper for uic -g python (ALT #54027).
 
