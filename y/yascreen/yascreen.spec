@@ -2,7 +2,7 @@
 %define abiversion 0
 
 Name:    yascreen
-Version: 1.99
+Version: 2.06
 Release: alt1
 Summary: Yet Another Screen Library (lib(n)curses alternative)
 License: LGPL-3.0
@@ -10,6 +10,7 @@ Group: Terminals
 Url: https://github.com/bbonev/yascreen
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: go-md2man 
 
@@ -51,6 +52,7 @@ Files for development with %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make_build CFLAGS="%optflags"
@@ -71,5 +73,8 @@ Files for development with %name.
 
 
 %changelog
+* Thu Jul 03 2025 Pavel Shilov <zerospirit@altlinux.org> 2.06-alt1
+- Update version to 2.06
+
 * Thu Feb 22 2024 Pavel Shilov <zerospirit@altlinux.org> 1.99-alt1
 - initial build for Sisyphus
