@@ -4,7 +4,7 @@
 
 Name: calligra
 Version: 4.0.1
-Release: alt2.1
+Release: alt3
 #Epoch: 0
 %K6init no_altplace
 %define libname lib%name
@@ -31,6 +31,9 @@ Patch31: calligra-gcc11.patch
 # ALT
 Patch102: alt-find-ooo-sdk.patch
 Patch103: alt-disable-products.patch
+
+#https://invent.kde.org/office/calligra/-/commit/659c88eec87160d908faf9b78b7b1006eb7e5bf3
+Patch104: FTBFS_Qt69-alt-build.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: kf6-attica-devel boost-devel eigen3 glib2-devel rpm-build-python3
@@ -166,6 +169,9 @@ Requires: %name-common >= %EVR
 #
 %patch102 -p1
 %patch103 -p1
+
+#
+%patch104 -p1
 
 # fix docs names
 for subd in po/*/docs/{sheets,stage} ; do
@@ -401,6 +407,9 @@ done
 %exclude %_K6lib/libkookularGenerator_odt.so*
 
 %changelog
+* Thu Jul 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt3
+- NMU: Fix build with Qt 6.9
+
 * Thu Apr 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt2.1
 - NMU:
   + fixed FTBFS
