@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Extensible control center
@@ -131,6 +131,9 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.1-alt1
+- fixed warning in terminal output if no plugins loaded
+
 * Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.0-alt1
 - new plugin api features
 
