@@ -2,7 +2,7 @@
 
 Name: python3-module-PyQt6-sip
 Version: 13.10.2
-Release: alt0.1
+Release: alt0.2
 
 Summary: The sip module support for PyQt6
 
@@ -34,9 +34,12 @@ The sip extension module provides support for the PyQt6 package.
 %files
 %dir %python3_sitelibdir/PyQt6/
 %python3_sitelibdir/PyQt6/sip*.so
-%python3_sitelibdir/%{pyproject_distinfo PyQt6-sip}/
+%python3_sitelibdir/*_sip-*.dist-info
 
 %changelog
+* Thu Jul 03 2025 Sergey V Turchin <zerg@altlinux.org> 13.10.2-alt0.2
+- NMU: fix package with old python
+
 * Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 13.10.2-alt0.1
 - NMU: new version
 
