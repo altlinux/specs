@@ -4,6 +4,12 @@
 # {{{ macros define
 %define _unpackaged_files_terminate_build 1
 
+%ifarch riscv64
+%def_disable lto
+%else
+%def_enable lto
+%endif
+
 %def_disable edk2_cross
 
 %def_enable user_static
@@ -58,12 +64,12 @@
 %def_enable tpm
 %def_enable libssh
 %def_enable replication
-%ifnarch %arm %ix86 %mips32
+%ifnarch %arm %ix86 %mips32 riscv64
 %def_enable numa
 %else
 %def_disable numa
 %endif
-%ifnarch %arm %ix86 %mips32 loongarch64
+%ifnarch %arm %ix86 %mips32 loongarch64 riscv64
 %def_enable libpmem
 %else
 %def_disable libpmem
@@ -151,7 +157,7 @@
 
 Name: qemu
 Version: 9.2.3
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -780,6 +786,10 @@ cp -a subprojects/packagefiles/berkeley-softfloat-3/* subprojects/berkeley-softf
 %patch -p1
 
 %build
+%if_disabled lto
+%define optflags_lto %nil
+%endif
+
 run_configure() {
 # non-GNU configure
 ../configure \
@@ -796,7 +806,7 @@ run_configure() {
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
-	%{?_enable_lto:--enable-lto} \
+	%{subst_enable lto} \
 	--firmwarepath="%firmwaredirs" \
 	 "$@"
 }
@@ -1249,7 +1259,7 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 
 %check
 
-%define archs_skip_tests ppc64le %ix86
+%define archs_skip_tests ppc64le %ix86 riscv64
 #%%define archs_skip_tests ""
 
 %ifarch %archs_skip_tests
@@ -1395,6 +1405,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Jun 17 2025 Ivan A. Melnikov <iv@altlinux.org> 9.2.3-alt2
+- Disable pmem, numa, LTO and tests on riscv64.
+
 * Tue Apr 01 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.3-alt1
 - 9.2.3.
 
