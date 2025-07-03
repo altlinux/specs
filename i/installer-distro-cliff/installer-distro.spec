@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt1
+Release: alt6
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -46,21 +46,29 @@ Summary: Cliff installer stage3 files
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Provides: installer-%distro-stage3 = %name-%version
-Requires: installer-stage3
 #modules
 Requires: alterator-users
 #Requires: alterator-officer
 Requires: alterator-root
-Requires: alterator-net-eth dhcpcd
-Requires: alterator-net-general
-Requires: alterator-net-bond alterator-net-bridge
-Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
 Requires: installer-feature-integalert-stage3
 Requires: alterator-luks
 
 %description stage3
 Cliff installer stage3 files.
+
+%package net-eth-stage3
+Summary: Cliff installer stage3 files
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+
+%description net-eth-stage3
+Requires: installer-common-stage3
+Requires: alterator-net-eth dhcpcd
+Requires: alterator-net-general
+Requires: alterator-net-bond alterator-net-bridge
+Requires: alterator-net-vlan
+Requires: installer-feature-nfs-server-stage3
 
 %prep
 %setup
@@ -70,7 +78,9 @@ Cliff installer stage3 files.
 mkdir -p %buildroot%install2dir
 mkdir -p %buildroot%install2dir/steps
 cp -a * %buildroot%install2dir/
-cp -a steps.d/* %buildroot%install2dir/steps 
+cp -a steps.d/* %buildroot%install2dir/steps
+mkdir -p %buildroot%_prefix/lib/alterator/hooks
+mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hooks
 
 %files common
 #%%install2dir/steps/users-officer.desktop
@@ -80,11 +90,32 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %install2dir/alterator-menu
 %install2dir/installer-steps
 %ghost %install2dir/services-*
-%ghost %install2dir/systemd-*
+%install2dir/systemd-*
+%_prefix/lib/alterator/hooks/pkg-preinstall.d/00-not-pve.sh
 
 %files stage3
 
+%files net-eth-stage3
+
 %changelog
+* Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
+- add pkg-preinstall hook for install etcnet, when not install pve
+
+* Sun Jun 29 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- new subpackage installer-distro-cliff-net-eth-stage3 with
+  dependencies on alterator-net-eth
+- net-eth-stage3: add dependency on alterator-net-vlan
+
+* Fri Jun 27 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
+- systemd-enabled: add networking.service for PVE
+
+* Fri Jun 27 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt3
+- stage2: split installer step pkg -> pkg-groups/pkg-install
+- stage3: remove dependencies on alterator-net-eth
+
+* Wed Jun 11 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt2
+- installer-steps: change order of steps, luks after preinstall
+
 * Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1
 - Do not set noexec option on mountpoint /home
 
