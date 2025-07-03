@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.22
+Version: 1.16.23
 Release: alt1
 
 Summary: Installer common parts
@@ -130,6 +130,7 @@ touch %buildroot%_datadir/installer-livecd-steps
 %_unitdir/install2.target
 %dir %_unitdir/install2.target.wants
 %_unitdir/install2.target.wants/install2.service
+%exclude %_datadir/install2/livecd-fininstall.d/
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 %exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
@@ -141,9 +142,14 @@ touch %buildroot%_datadir/installer-livecd-steps
 %_sysconfdir/profile.d/zdg-user-dirs-install.sh
 %_bindir/install2-desktop
 %_desktopdir/install2.desktop
+%dir %_datadir/install2/livecd-fininstall.d/
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Thu Jul 03 2025 Mikhail Efremov <sem@altlinux.org> 1.16.23-alt1
+- common-desktop: Add livecd-fininstall.d hooks support.
+- preinstall hooks: Use alterator-hw-functions.
+
 * Mon Jun 30 2025 Anton Midyukov <antohami@altlinux.org> 1.16.22-alt1
 - install2: fix exit, when installer closed
 - install2: do not restart xinit, if alterator-wizard was launched
