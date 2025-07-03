@@ -35,8 +35,8 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 10.2.2
-Release: alt3
+Version: 10.3.1
+Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
 Group: Networking/Other
@@ -333,6 +333,9 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 %endif
 
 %changelog
+* Thu Jul 03 2025 Alexey Shabalin <shaba@altlinux.org> 10.3.1-alt1
+- 10.3.1
+
 * Tue Jul 01 2025 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt3
 - Fixed logdir permitions (ALT#54532)
 
@@ -340,7 +343,7 @@ sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
 - e2k build fix
 
 * Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
-- 10.2.2
+- 10.2.2 (Fixes: CVE-2024-55553, affected for rpki-rtrlib only)
 - Add patches from PVE project
 - Build with ospfapi and ospfclient
 - Add subpackages: pythontools, rpki-rtrlib, snmp, grpc
