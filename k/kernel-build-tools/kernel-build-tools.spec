@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.128
+Version: 0.129
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -38,6 +38,7 @@ Conflicts: rpm-build < 4.0.4-alt1
 %ifnarch x86_64 aarch64
 Provides: kernel-headers-modules-centos
 Provides: kernel-headers-modules-rt
+Provides: kernel-headers-modules-talos
 %endif
 %ifnarch x86_64
 Provides: kernel-headers-modules-ovz-el7
@@ -97,6 +98,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Thu Jul 03 2025 Vitaly Chikunov <vt@altlinux.org> 0.129-alt1
+- Add fake P:kernel-headers-modules-talos (ALT#55019).
+
 * Fri May 23 2025 Michael Shigorin <mike@altlinux.org> 0.128-alt1
 - km-create-tag: Add -u|--key-id option.
 
