@@ -1,6 +1,6 @@
 Name: micro
 Version: 2.0.14
-Release: alt2
+Release: alt3
 Summary: A modern and intuitive terminal-based text editor
 License: MIT/BSD/Apache-2.0/MPL-2.0
 Group: Editors
@@ -23,6 +23,15 @@ being easy to install and use in a pinch, but micro also aims to be enjoyable
 to use full time, whether you work in the terminal because you prefer it (like
 me), or because you need to (over ssh).
 
+%package desktop
+Summary: Desktop file for %name
+Group: Editors
+BuildArch: noarch
+Requires: %name >= %version
+
+%description desktop
+%summary.
+
 %prep
 %setup -a1
 subst "s|0.0.0-unknown|%version-%release|" internal/util/util.go
@@ -41,10 +50,15 @@ desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.deskt
 %doc LICENSE README.md LICENSE-THIRD-PARTY
 %_bindir/micro
 %_man1dir/micro.1*
+
+%files desktop
 %_iconsdir/hicolor/scalable/apps/micro.svg
 %_desktopdir/micro.desktop
 
 %changelog
+* Thu Jul 03 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.0.14-alt3
+- move micro.desktop to the desktop subpackage
+
 * Wed Mar 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.0.14-alt2
 - generate runtime files
 
