@@ -4,7 +4,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
 Version: 20250221
-Release: alt1
+Release: alt2
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -29,7 +29,7 @@ Source13: 53-edk2-aarch64-verbose-raw.json
 
 Patch1: %name-%version.patch
 
-ExclusiveArch: aarch64 loongarch64 x86_64
+ExclusiveArch: aarch64 loongarch64 riscv64 x86_64
 BuildArch: noarch
 
 Provides: edk2-ovmf-aarch64 = %EVR
@@ -210,6 +210,9 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250221-alt2
+- NMU: build on riscv64
+
 * Thu May 29 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
 - edk2-stable202502
 - add symlinks AAVMF_CODE and AAVMF_VARS (ALT#54332)
