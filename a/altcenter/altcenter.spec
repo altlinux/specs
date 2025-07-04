@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.14
+Release: alt0.15
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -58,6 +58,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jul 03 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.15
+- Components: optimizing packages for plasma-discover
+- Components: handling if the component has no comment
+- Components: added close console button
+- Components: added localization of buttons
+- Use xcb in Wayland
+
 * Sun Jun 22 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.14
 - altcenter.desktop: used consistent Russian translation of application name (ALT #54822).
 
