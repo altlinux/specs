@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_without check
 
 Name:    ocrdesktop
 Version: 4.0
-Release: alt3
+Release: alt4
 
 Summary: Accessibility tool for use the current window with OCR technique
 License: GPL
@@ -36,35 +35,21 @@ clipboard. It also can emulate clicks on the text.
 
 %install
 mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_datadir/doc/%name
-mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_man1dir/
 
-
-install -m 755 ./%name %buildroot%_datadir/%name/%name
-install -m 644 ./TODO %buildroot%_datadir/doc/%name
-install -m 644 ./ChangeLog %buildroot%_datadir/doc/%name
-install -m 644 ./docu/* %buildroot%_datadir/doc/%name
-install -m 644 ./README.md %buildroot%_datadir/doc/%name
-install -m 644 ./%name.1.gz %buildroot%_man1dir/
-
-# In order to work with Wayland, clear the WAYLAND_DISPLAY environment variable value (alt bug: 54263)
-cat << EOF > %buildroot%_bindir/%name
-#/usr/bin/env bash
-WAYLAND_DISPLAY= %_datadir/%name/%name "\$@"
-
-EOF
-
-chmod 755 %buildroot%_bindir/%name
+install -m 755 ./%name %buildroot%_bindir/%name
+install -m 644 ./%name.1.gz %buildroot%_man1dir/%name.1.gz
 
 %files
+%doc README.md docu/user.txt ChangeLog TODO
 %_bindir/%name
-%_datadir/%name/%name
-%_man1dir/*
-%dir %_datadir/doc/%name
- %_datadir/doc/%name/*
+%_man1dir/%name.1.xz
 
 %changelog
+* Fri Jul 04 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt4
+- Reverted fix for working through xwailand
+- Cleaned-up the spec
+
 * Tue Jun 24 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt3
 - Fixed work in wayland (Closes: 54263)
 
