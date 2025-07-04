@@ -1,6 +1,6 @@
 Name: alterator-root
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -38,6 +38,10 @@ alterator module for edit system administrator properties
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/root.d
 
 %changelog
+* Thu Jul 1 2025 Alexey Romanyuta <r9odt@altlinux.org> 1.2-alt1
+- backend3/root: add iscrypted parameter to allow pass crypted
+  password to module
+
 * Tue Oct 06 2015 Aleksey Avdeev <solo@altlinux.org> 1.1-alt3
 - fix test (closes: #31317)
 
