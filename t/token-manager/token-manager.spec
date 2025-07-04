@@ -1,62 +1,83 @@
+%define _unpackaged_files_terminate_build 1
 %ifarch x86_64
 %define cpro_arch amd64
+%define miss_arch ia32
 %else
 %define cpro_arch ia32
+%define miss_arch amd64
 %endif
 
-%define rev c6ec8f5
-
 Name:    token-manager
-Version: 0.12
-Release: alt12
+Version: 5.2.3
+Release: alt1
 
 Summary: Certificate manager for CryptoPro CSP
 License: MIT
 Group:   Security/Networking
-URL:     https://github.com/bmakarenko/token-manager
+URL:     https://github.com/wolandius/token-manager
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-BuildArch: noarch
+ExclusiveArch: x86_64 %ix86
 
-Source: %name.tar
+Source: %name-%version.tar
 Source1: cpconfig-pam.alt
-Source2: token-manager
-
-Patch0: token-manager-port-to-python3-and-PyQt5.patch
+Patch0: token-manager-alt-links.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libpam-devel
-BuildRequires: python3-module-PyQt5
 
-Requires: consolehelper opensc
+Requires: polkit opensc
 
 %description
-A PyQt front-end for Crypto Pro CSP for CentOS 6 and GosLinux by The
-Federal Bailiffs' Service of Russia.
+A GTK front-end for Crypto Pro CSP.
+
+The application requires following packages to be installed before you use
+it (for x86_64 architecture):
+
+* opensc
+* cprocsp-rdr-pcsc-64
+* lsb-cprocsp-capilite-64
+* opensc, cprocsp-rdr-gui
+* cprocsp-rdr-gui-gtk
+
+Parent project by Boris Makarenko https://github.com/bmakarenko/token-manager
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
-subst 's|python|python3|' %name.desktop
+
+%build
+%python3_build
 
 %install
-mkdir -p %buildroot/%_bindir
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/cpconfig-%cpro_arch
-install -Dm 0644 %name.py %buildroot%_bindir/%name.py
-install -Dm 0644 %name.png %buildroot%_pixmapsdir/%name.png
-install -Dm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
+%python3_install
+%ifarch x86_64
+mv %buildroot/usr/{lib,%_lib}
+%endif
 install -Dm 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/cpconfig-%cpro_arch
-install -Dm 0755 %SOURCE2 %buildroot%_bindir/%name
-install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.apps/cpconfig-%cpro_arch
+%ifarch %ix86
+rm %buildroot%_desktopdir/token-manager.desktop
+%else
+rm %buildroot%_desktopdir/token-manager-%miss_arch.desktop
+%endif
+rm %buildroot%_sysconfdir/pam.d/cpconfig-%miss_arch \
+   %buildroot%_sysconfdir/security/console.apps/cpconfig-%miss_arch
+%find_lang token_manager
 
-%files
-%_bindir/*
-%_pixmapsdir/%name.png
-%_desktopdir/%name.desktop
+%files -f token_manager.lang
+%_bindir/%name
+%_desktopdir/*.desktop
 %config(noreplace) %_sysconfdir/pam.d/cpconfig-%cpro_arch
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
+%python3_sitelibdir/token_manager*
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_datadir/token_manager
+%_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Fri Jun 27 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
+- New version.
+- Change upstream to https://github.com/wolandius/token-manager.
+
 * Fri Jun 20 2025 Anton Midyukov <antohami@altlinux.org> 0.12-alt12
 - NMU: Revert "Switch to use pkexec instead consolehelper"
 
