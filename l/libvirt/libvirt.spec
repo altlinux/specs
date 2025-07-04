@@ -76,7 +76,6 @@
 
 # Then the secondary host drivers
 %def_with network
-%def_with storage_fs
 %def_with storage_lvm
 %def_with storage_scsi
 %def_with storage_iscsi
@@ -171,7 +170,7 @@
 %endif
 
 Name: libvirt
-Version: 11.0.0
+Version: 11.5.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -208,13 +207,9 @@ BuildRequires(pre): meson >= 0.56.0
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
 %{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.8.1}
 %{?_with_libssh2:BuildRequires: pkgconfig(libssh2) >= 1.3}
-%{?_with_polkit:BuildRequires: polkit}
-%{?_with_storage_fs:BuildRequires: util-linux}
 %{?_with_qemu:BuildRequires: qemu-img}
-%{?_with_storage_lvm:BuildRequires: lvm2}
 %{?_with_storage_disk:BuildRequires: libparted-devel parted libuuid-devel dmsetup libdevmapper-devel}
 %{?_with_storage_rbd:BuildRequires: ceph-devel}
-%{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_iscsi_direct:BuildRequires: libiscsi-devel >= 1.18.0}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: libglusterfs-devel}
@@ -247,7 +242,6 @@ BuildRequires: dmidecode
 #BuildRequires: augeas
 BuildRequires: libtirpc-devel
 BuildRequires: glibc-utils
-BuildRequires: kmod
 BuildRequires: mdevctl
 
 %description
@@ -282,6 +276,8 @@ for specific drivers.
 Summary: Files and utilities used by daemons
 Group: System/Servers
 Requires: %name-libs = %EVR
+# For modprobe and rmmod
+Requires: kmod
 Requires: iproute2
 %{?_with_pm_utils:Requires: pm-utils}
 %ifarch %ix86 x86_64 aarch64 riscv64
@@ -303,29 +299,30 @@ Miscellaneous files and utilities used by other libvirt daemons
 Summary: Server side daemon for managing locks
 Group: System/Servers
 Requires: %name-libs = %EVR
- 
+
 %description daemon-lock
 Server side daemon used to manage locks held against virtual machine
 resources
- 
+
 %package daemon-plugin-lockd
 Summary: lockd client plugin for virtlockd
 Group: System/Servers
 Requires: %name-libs = %EVR
 Requires: %name-daemon-lock = %EVR
- 
+Requires: %name-daemon-common = %EVR
+
 %description daemon-plugin-lockd
 A client-side plugin that implements disk locking using POSIX fcntl advisory
 locks via communication with the virtlockd daemon
- 
+
 %package daemon-log
 Summary: Server side daemon for managing logs
 Group: System/Servers
 Requires: %name-libs = %EVR
- 
+
 %description daemon-log
 Server side daemon used to manage logs from virtual machine consoles
- 
+
 %package daemon-proxy
 Summary: Server side daemon providing libvirtd proxy
 Group: System/Servers
@@ -419,9 +416,6 @@ an implementation of the secret key APIs.
 Summary: Storage driver plugin including all backends for the libvirtd daemon
 Group: System/Libraries
 Requires: libvirt-daemon-driver-storage-core = %EVR
-%if_with storage_fs
-Requires: %name-daemon-driver-storage-fs = %EVR
-%endif
 %if_with storage_disk
 Requires: %name-daemon-driver-storage-disk = %EVR
 %endif
@@ -456,8 +450,10 @@ iSCSI, and multipath storage.
 Summary: Storage driver plugin including base backends for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon-common = %EVR
+Provides: %name-daemon-driver-storage-fs = %EVR
+Obsoletes: %name-daemon-driver-storage-fs < %EVR
 Requires: nfs-utils
-# For mkfs
+# For mkfs and mount/umount
 Requires: util-linux
 Requires: scrub
 %{?_with qemu:Requires: %_bindir/qemu-img}
@@ -465,15 +461,6 @@ Requires: scrub
 %description daemon-driver-storage-core
 The storage driver plugin for the libvirtd daemon, providing
 an implementation of the storage APIs.
-
-%package daemon-driver-storage-fs
-Summary: Storage driver plugin for fs
-Group: System/Libraries
-Requires: libvirt-daemon-driver-storage-core = %EVR
-
-%description daemon-driver-storage-fs
-The storage driver backend adding implementation of the storage APIs for block
-volumes using fs.
 
 %package daemon-driver-storage-logical
 Summary: Storage driver plugin for lvm volumes
@@ -794,6 +781,7 @@ Requires: sanlock >= 2.4
 #for virt-sanlock-cleanup require augeas
 Requires: augeas
 Requires: %name-libs = %EVR
+Requires: %name-daemon-common = %EVR
 Obsoletes: %name-lock-sanlock < 10.5.0
 Provides: %name-lock-sanlock = %EVR
 
@@ -812,10 +800,10 @@ Libvirt plugin for NSS for translating domain names into IP addresses.
 Summary: Libvirt SSH proxy
 Group: System/Libraries
 Requires: %name-libs = %EVR
- 
+
 %description ssh-proxy
 Allows SSH into domains via VSOCK without need for network.
- 
+
 %prep
 %setup
 mkdir -p src/keycodemapdb
@@ -1177,11 +1165,13 @@ fi
 %dir %_libdir/%name/connection-driver
 %dir %_libdir/%name/storage-backend
 %dir %_libdir/%name/storage-file
+%dir %_libdir/%name/lock-driver
 %if_with polkit
 %_datadir/polkit-1/actions/org.libvirt.unix.policy
 %_datadir/polkit-1/actions/org.libvirt.api.policy
 %_datadir/polkit-1/rules.d/50-libvirt.rules
 %endif
+%_sysusersdir/libvirt.conf
 %dir %attr(0700, root, root) %_logdir/libvirt
 %_libexecdir/libvirt_iohelper
 %_bindir/virt-ssh-helper
@@ -1207,7 +1197,6 @@ fi
 %_datadir/augeas/lenses/libvirt_lockd.aug
 %_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
 %_libdir/%name/lock-driver/lockd.so
-%dir %_libdir/libvirt/lock-driver
 
 %files daemon-log
 %_unitdir/virtlogd*
@@ -1321,13 +1310,8 @@ fi
 %_libexecdir/libvirt_parthelper
 %endif
 %_libdir/%name/connection-driver/libvirt_driver_storage.so
-%_libdir/%name/storage-file/libvirt_storage_file_fs.so
-%_man8dir/virtstoraged.*
-
-%if_with storage_fs
-%files daemon-driver-storage-fs
 %_libdir/%name/storage-backend/libvirt_storage_backend_fs.so
-%endif
+%_man8dir/virtstoraged.*
 
 
 %if_with storage_disk
@@ -1522,6 +1506,7 @@ fi
 %if_with login_shell
 %files login-shell
 %config(noreplace) %_sysconfdir/libvirt/virt-login-shell.conf
+%_sysusersdir/libvirt-login-shell.conf
 %attr(4710, root, virtlogin) %_bindir/virt-login-shell
 %_libexecdir/virt-login-shell-helper
 %_man1dir/virt-login-shell.*
@@ -1541,6 +1526,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jul 04 2025 Alexey Shabalin <shaba@altlinux.org> 11.5.0-alt1
+- 11.5.0
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
 - 11.0.0
 
