@@ -1,5 +1,5 @@
 Name:     webapp-manager
-Version:  1.3.4
+Version:  1.4.0
 Release:  alt1
 
 Summary:  Run websites as if they were apps
@@ -58,5 +58,8 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Thu Jul 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.0-alt1
+- 1.3.4 -> 1.4.0 (ALT #54981)
+
 * Fri Feb 16 2024 Roman Alifanov <ximper@altlinux.org> 1.3.4-alt1
 - Initial build for Sisyphus.
