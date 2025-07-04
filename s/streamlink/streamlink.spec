@@ -1,7 +1,7 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 7.1.3
+Version: 7.4.0
 Release: alt1
 
 Summary: Python library for extracting streams from various websites
@@ -54,7 +54,7 @@ BuildRequires: python3-module-exceptiongroup
 %py3_use certifi
 %py3_use exceptiongroup
 %py3_use isodate
-%py3_use lxml < 6
+%py3_use lxml < 7
 %py3_use lxml >= 4.6.4
 %py3_use pycountry
 %py3_use pycryptodome < 4
@@ -144,6 +144,10 @@ install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/
 #%license LICENSE
 
 %changelog
+* Fri Jul 04 2025 Vitaly Lipatov <lav@altlinux.ru> 7.4.0-alt1
+- new version 7.4.0 (with rpmrb script)
+- bump lxml to >=4.6.4,<7 (ALT bug 55049)
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 7.1.3-alt1
 - new version 7.1.3 (with rpmrb script)
 
