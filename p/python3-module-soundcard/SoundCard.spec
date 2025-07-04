@@ -2,7 +2,7 @@
 
 Name: python3-module-%nameD
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: A Pure-Python Real-Time Audio Library
 License: BSD-3-Clause
@@ -18,6 +18,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+Patch: pulseaudio-0.4.4-alt-fixes.patch
+
 %description
 SoundCard is a library for playing and recording audio without resorting to a 
 CPython extension. Instead, it is implemented using the wonderful CFFI and 
@@ -25,6 +27,8 @@ the native audio libraries of Linux, Windows and macOS.
 
 %prep
 %setup
+
+%patch -p0
 
 %build
 %pyproject_build
@@ -39,6 +43,9 @@ the native audio libraries of Linux, Windows and macOS.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Thu Jul 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4-alt2
+- fixed import error (ALT #55035)
+
 * Wed Jun 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4-alt1
 - 0.4.3 -> 0.4.4
 
