@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-workstation
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: ALT Workstation icon theme
@@ -38,6 +38,9 @@ find %buildroot/%_iconsdir/AltWorkstation/ -name meson.build -exec rm -v {} \;
 %_iconsdir/AltWorkstation/
 
 %changelog
+* Thu Jul 03 2025 Semen Fomchenkov <armatik@altlinux.org> 0.4-alt1
+- Removed image for alterator since they are already include in morewaita.
+
 * Sat Mar 01 2025 Semen Fomchenkov <armatik@altlinux.org> 0.3-alt1
 - Removed images for basealt and altlinux icon (Closes: 53154)
 
