@@ -7,7 +7,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt5.g%{git}
+Release: alt6.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Anbox kernel modules sources
 License: GPLv3/GPLv2
@@ -51,6 +51,17 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_udevrulesdir/99-anbox.rules
 
 %changelog
+* Fri Jul 04 2025 L.A. Kostis <lakostis@altlinux.ru> 14-alt6.gae26ba2
+- Added MODULE_DESCRIPTION: required in 6.15+
+- Apply upstream cleanups:
+  + binder: remove unneeded <linux/export.h> inclusion from binder_internal.h
+- Apply upstream fixes:
+  + binder: fix race between mmput() and do_exit()
+- Apply fixes from kernel 6.13:
+  + binder_alloc: (mm/list_lru: simplify the list_lru walk callback function)
+- Apply fixes from kernel 6.14:
+  + binder: lsm: (ensure the correct LSM context releaser)
+
 * Wed Jun 05 2024 L.A. Kostis <lakostis@altlinux.ru> 14-alt5.gae26ba2
 - Apply fixes from kernel 6.9:
   + binder_alloc: list_lru_{add,del}->list_lru_{add,del}_obj
