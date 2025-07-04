@@ -13,7 +13,7 @@
 
 Name: nagios
 Version: 4.5.9
-Release: alt1
+Release: alt2
 
 Summary: Services and network monitoring system
 License: GPL-2.0
@@ -386,6 +386,10 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 4.5.9-alt2
+- NMU: fix FTBFS on loongarch64 and riscv64 (and potentially
+  all other architectures except the primary three)
+
 * Fri Jun 20 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.9-alt1
 - new version
 
