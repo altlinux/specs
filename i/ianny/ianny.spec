@@ -2,7 +2,7 @@
 
 Name: ianny
 Version: 2.1.1
-Release: alt1
+Release: alt2
 License: GPL-3.0
 
 Summary: Break reminder app to prevent strain injuries
@@ -15,6 +15,8 @@ Vcs: https://github.com/zefr0x/ianny.git
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: config.toml
+
+Patch: ianny-2.1.1-alt-loongarch64-nix-0.23.2.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -32,6 +34,10 @@ track of usage patterns and periodically informing the user to take breaks.
 %setup -a1
 install -vD %SOURCE2 .cargo/config.toml
 
+%patch -p3
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/nix/.cargo-checksum.json
+
 %build
 %meson -Dbuildtype=release
 %meson_build
@@ -46,5 +52,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_sysconfdir/xdg/autostart/%xdg_name.desktop
 
 %changelog
+* Fri Jul 04 2025 Ilya Sorochan <k0tran@altlinux.org> 2.1.1-alt2
+- add patch for old nix crate version (0.23.2) to enable build on loongarch64
+
+
 * Wed Jun 18 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.1.1-alt1
 - Initial build
