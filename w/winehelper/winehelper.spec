@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.4.7
+Version: 0.4.9
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -42,16 +42,20 @@ install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
 install -m644 image/* %buildroot%_datadir/%name/image/
 
-mkdir -p %buildroot%_sysconfdir/bash_completion.d
-install -m644 auto_completion/bash_completion/%name %buildroot%_sysconfdir/bash_completion.d/
+install -Dm644 auto_completion/bash_completion/%name %buildroot%_sysconfdir/bash_completion.d/%name
+install -Dm644 auto_completion/zsh_completion/_%name %buildroot%_datadir/zsh/Completion/Linux/_%name
 
 %files
 %doc LICENSE CHANGELOG COPYING THIRD-PARTY
 %_bindir/%name
-%_datadir/%name
+%_datadir/%name/
 %_sysconfdir/bash_completion.d/%name
+%_datadir/zsh/Completion/Linux/_%name
 
 %changelog
+* Fri Jul 04 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.9-alt1
+- 0.4.9
+
 * Tue Jul 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.7-alt1
 - 0.4.7
 - updated scripts and prefix for ved-* and ctm-* (ALT bug: 54921 54922)
