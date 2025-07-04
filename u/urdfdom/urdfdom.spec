@@ -1,5 +1,5 @@
 Name:    urdfdom
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: URDF parser
@@ -11,7 +11,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: urdfdom-alt-cmake-dir.patch
-Patch1: urdfdom-support-headers-2.0.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -68,6 +67,9 @@ Group: Development/C++
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Jul 04 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
+- New version.
+
 * Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
 - New version.
 
