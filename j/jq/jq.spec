@@ -5,7 +5,7 @@
 Name: jq
 %define lname lib%name
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -15,8 +15,12 @@ VCS: https://github.com/stedolan/jq
 License: BSD
 Requires: %lname = %EVR
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: flex  liboniguruma-devel
-%{?!_disable_check:BuildRequires: /proc valgrind}
+%ifarch %valgrind_arches
+%{?!_disable_check:BuildRequires: valgrind}
+%endif
+%{?!_disable_check:BuildRequires: /proc}
 
 %description
 %name is a command-line JSON processor.
@@ -91,6 +95,10 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 1.8.0-alt2
+- NMU: don't require valgrind on architectures it does not support
+  (fixes FTBFS on loongarch64 and riscv64)
+
 * Tue Jun 03 2025 Anton Farygin <rider@altlinux.com> 1.8.0-alt1
 - 1.7.1 -> 1.8.0 (Fixes: CVE-2024-23337, CVE-2024-53427, CVE-2025-48060)
 
