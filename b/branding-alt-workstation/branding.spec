@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt5.1
+Release: alt6
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -370,6 +370,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Jul 04 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
+- NMU: os-release.in: fix space of end line
+
 * Mon May 12 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt5.1
 - NMU: remove icon-theme-ePapirus requirements.
 
