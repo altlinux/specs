@@ -1,8 +1,9 @@
+%define pypi_name z3-solver
 %set_verify_elf_method strict
 
 Name: z3
 Version: 4.15.2
-Release: alt2
+Release: alt3
 Summary: High-performance theorem prover (SMT solver)
 License: MIT
 Group: Sciences/Mathematics
@@ -61,6 +62,8 @@ Group: Development/Python3
 BuildArch: noarch
 Requires: lib%name = %EVR
 %py3_provides %name
+# mapping from PyPI name
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 %description -n python3-module-%name
 Z3 is a high-performance theorem prover being developed at Microsoft
@@ -120,6 +123,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Jul 01 2025 Anton Zhukharev <ancieg@altlinux.org> 4.15.2-alt3
+- Mapped PyPI name to distro's one.
+
 * Tue Jul 01 2025 Grigory Ustinov <grenka@altlinux.org> 4.15.2-alt2
 - Added patch, fixing libz3 loading (Closes: #54994).
 
