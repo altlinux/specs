@@ -1,6 +1,6 @@
 Name: alterator-users
-Version: 10.24
-Release: alt5
+Version: 10.25
+Release: alt1
 
 Summary: alterator module for system users administration
 License: GPL
@@ -52,6 +52,10 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Thu Jun 29 2025 Alexey Romanyuta <r9odt@altlinux.org> 10.25-alt1
+- backend3/users: add iscrypted parameter to allow pass crypted user
+  password to module.
+
 * Mon Jan 20 2025 Michael Shigorin <mike@altlinux.org> 10.24-alt5
 - Remove localadmin as the default login (see also #52476)
 
