@@ -2,8 +2,8 @@
 %define modulename apycula
 
 Name:    python3-module-%modulename
-Version: 0.15
-Release: alt1.1
+Version: 0.20
+Release: alt1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
 License: MIT
@@ -43,6 +43,9 @@ BuildRequires: python3(wheel)
 %doc *.md doc/*
 
 %changelog
+* Fri Jul 04 2025 Anton Midyukov <antohami@altlinux.org> 0.20-alt1
+- new version (0.20) with rpmgs script
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.15-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
