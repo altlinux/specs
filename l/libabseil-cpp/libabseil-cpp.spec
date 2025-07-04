@@ -8,11 +8,15 @@
 
 # Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
 # And these tests are very long
+%ifarch %e2k
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: libabseil-cpp
 Version: 20250127.1
-Release: alt1
+Release: alt2
 
 Summary: C++ Common Libraries
 
@@ -27,8 +31,10 @@ BuildRequires: cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: /proc
 
-%if_enabled check
+# needed for test helpers
 BuildRequires: libgtest-devel >= 1.13.0
+
+%if_enabled check
 BuildRequires: libgmock-devel ctest
 %endif
 
@@ -91,10 +97,11 @@ Development headers for %name
 %prep
 %setup
 %ifarch %e2k
-# unsupported option
-sed -i "/-Wvarargs/d" absl/copts/{copts.py,GENERATED_{copts.bzl,AbseilCopts.cmake}}
-# EDG frontend fails at this
-sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constant.h
+# C++20 specific problem
+sed -E -i "s/(ABSL_CONST_INIT (|extern )thread_local)( int64_t)/\2__thread\3/" \
+	absl/strings/internal/cordz_functions.{h,cc}
+# missing builtins
+sed -i 's/ABSL_HAVE_BUILTIN(__builtin_c[tl]zs)/0/' absl/numeric/internal/bits.h
 %endif
 
 %build
@@ -107,10 +114,10 @@ sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constan
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
 %if_enabled check
     -DABSL_BUILD_TESTING:BOOL=ON \
+%endif
     -DABSL_BUILD_TEST_HELPERS:BOOL=ON \
     -DABSL_USE_EXTERNAL_GOOGLETEST:BOOL=ON \
     -DABSL_FIND_GOOGLETEST:BOOL=ON \
-%endif
     -GNinja
 %cmake_build
 
@@ -223,8 +230,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_utf8_for_code_point.so.%soversion
 %_libdir/libabsl_vlog_config_internal.so.%soversion
 
-%if_enabled check
 %files testing
+%_libdir/libabsl_scoped_mock_log.so.%soversion
+%if_enabled check
 # TESTONLY libraries (that are actually installed):
 # absl/base/CMakeLists.txt
 %_libdir/libabsl_exception_safety_testing.so.%soversion
@@ -239,7 +247,6 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_log_internal_test_actions.so.%soversion
 %_libdir/libabsl_log_internal_test_helpers.so.%soversion
 %_libdir/libabsl_log_internal_test_matchers.so.%soversion
-%_libdir/libabsl_scoped_mock_log.so.%soversion
 # absl/strings/CMakeLists.txt
 %_libdir/libabsl_pow10_helper.so.%soversion
 # absl/synchronization/CMakeLists.txt
@@ -258,6 +265,10 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 04 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20250127.1-alt2
+- e2k build fix
+- always build test helpers (needed for protobuf)
+
 * Fri Mar 28 2025 Anton Farygin <rider@altlinux.com> 20250127.1-alt1
 - 20250127.0 -> 20250127.1 (Fixes: CVE-2025-0838)
 
