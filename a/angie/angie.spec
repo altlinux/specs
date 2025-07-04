@@ -7,7 +7,7 @@
 %define modpath %_libdir/angie/modules
 
 Name: angie
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
@@ -146,6 +146,11 @@ mv %buildroot/html/{50x.html,index.html} \
 %dir %attr(1770,root,%angie_group) %angie_spool/tmp/proxy
 %dir %attr(1770,root,%angie_group) %angie_spool/tmp/scgi
 %dir %attr(1770,root,%angie_group) %angie_spool/tmp/uwsgi
+%dir %angie_etc
+%dir %angie_etc/http.d
+%dir %angie_etc/stream.d
+%dir %_datadir/angie
+%dir %_libdir/angie
 %dir %modpath
 %angie_etc/angie.conf.default
 %angie_etc/fastcgi.conf.default
@@ -164,6 +169,9 @@ mv %buildroot/html/{50x.html,index.html} \
 %_unitdir/angie.service
 
 %changelog
+* Fri Jul 04 2025 Constantin Sunzow <protvin@altlinux.org> 1.10.0-alt1
+- New version.
+
 * Tue Jun 17 2025 Constantin Sunzow <protvin@altlinux.org> 1.9.1-alt1
 - New version.
 
