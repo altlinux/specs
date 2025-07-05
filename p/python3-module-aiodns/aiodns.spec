@@ -1,15 +1,18 @@
 Name: python3-module-aiodns
-Version: 3.2.0
+Version: 3.5.0
 Release: alt1
 
 Summary: Simple DNS resolver for asyncio
-License: MIT
-Group: Development/Python
-Url: https://github.com/saghul/aiodns
 
-Source0: %name-%version-%release.tar
+License: MIT
+Group: Development/Python3
+URL: https://pypi.org/project/aiodns
+VCS: https://github.com/saghul/aiodns
+
+Source: %name-%version.tar
 
 BuildArch: noarch
+
 BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -27,15 +30,17 @@ BuildRequires: python3(pycares)
 %install
 %pyproject_install
 
+%check
+# Tests require network
+
 %files
 %python3_sitelibdir/aiodns
 %python3_sitelibdir/aiodns-%version.dist-info
 
-%check
-#online tests
-%pyproject_run -- python3 tests.py ||:
-
 %changelog
+* Sat Jul 05 2025 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Fri May 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.0-alt1
 - 3.2.0 released
 
