@@ -5,16 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.135.16
+Version: 6.135.26
 Release: alt1
 
 Summary: A library for property based testing
-
 License: MPL-2.0-no-copyleft-exception
 Group: Development/Python3
 Url: https://pypi.org/project/hypothesis/
 VCS: https://github.com/HypothesisWorks/hypothesis
-
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -22,14 +20,12 @@ Source1: pytest.ini
 Source2: %pyproject_deps_config_name
 Source3: test.in
 Patch0: %name-%version-alt.patch
+
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter dpcontracts
-# there're no tests with crosshair and it isn't presented in Sisyphus
-%add_pyproject_deps_check_filter hypothesis-crosshair
-%add_pyproject_deps_check_filter crosshair-tool
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
 # needed by pexpect
@@ -71,13 +67,7 @@ cp %SOURCE1 ./
 # Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
 # flaw of python3-module-dateutil packaging and we don't create and package
 # dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
-#
-# tests/crosshair: skipping this directory because there's no crosshair backend
-# in Sisyphus yet
-%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo \
-	-Wignore::DeprecationWarning \
-    --ignore="tests/crosshair" \
-    tests
+%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests
 
 %files
 %doc README.md
@@ -92,6 +82,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Sat Jul 05 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.135.26-alt1
+- Updated to 6.135.26.
+
 * Fri Jun 27 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.135.16-alt1
 - Updated to 6.135.16.
 
