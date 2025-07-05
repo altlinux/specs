@@ -9,7 +9,7 @@
 
 Name: ipython3
 Version: 9.4.0
-Release: alt1
+Release: alt1.1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -63,18 +63,18 @@ BuildRequires: /proc
 #BuildRequires: graphviz
 %endif
 
+# skip traitlets.eventful
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
+# skip jupyter_client.jsonutil
+%add_findreq_skiplist %python3_sitelibdir/IPython/utils/jsonutil.py
+# skip OpenGL.*
+%add_findreq_skiplist %python3_sitelibdir/IPython/terminal/pt_inputhooks/glut.py
 
-%add_python3_req_skip __main__
-%add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
-%add_python3_req_skip msvcrt wx gtk gobject compiler OpenGL oct2py rpy2
-%add_python3_req_skip System clr
-%add_python3_req_skip ipyparallel.apps.daemonize
-%add_python3_req_skip jupyter_client.localinterfaces
-%add_python3_req_skip jupyter_client.jsonutil
-%add_python3_req_skip jupyter_client.consoleapp
-%add_python3_req_skip sphinx
-%add_python3_req_skip sphinx.util
+%add_python3_req_skip System clr gobject gtk msvcrt
+%add_python3_req_skip wx
+%add_python3_req_skip setuptools
+# nessesary for IPython/sphinxext dir
+%add_python3_req_skip sphinx sphinx.util
 
 Requires: python3-module-%oname = %EVR
 
@@ -185,6 +185,9 @@ export IPYTHON_TESTING_TIMEOUT_SCALE=4
 %endif
 
 %changelog
+* Sat Jul 05 2025 Grigory Ustinov <grenka@altlinux.org> 9.4.0-alt1.1
+- NMU: Slightly cleaned up python3 req skips.
+
 * Tue Jul 01 2025 Anton Vyatkin <toni@altlinux.org> 9.4.0-alt1
 - New version 9.4.0.
 
