@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: dynisland
-Version: %ver_major.3
-Release: alt0.1
+Version: %ver_major.4
+Release: alt0.5
 
 Summary: A dynamic and extensible GTK4 bar
 License: MIT
@@ -23,12 +23,16 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-Requires: dbus
+# rustc-LLVM ERROR: out of memory
+ExcludeArch: %ix86
+
+Requires: dbus upower
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: pkgconfig(gtk4-layer-shell-0)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(mimalloc)
 
 %description
 A dynamic and extensible GTK4 bar for compositors implementing
@@ -57,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat Jul 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt0.5
+- 0.1.4
+
 * Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt0.1
 - 0.1.3
 

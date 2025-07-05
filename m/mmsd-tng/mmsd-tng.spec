@@ -2,7 +2,7 @@
 %define _name mmsd
 
 Name: %_name-tng
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: Multimedia Messaging Service Daemon
@@ -62,6 +62,9 @@ install -pDm644 %SOURCE1 %buildroot%_userunitdir
 %doc README
 
 %changelog
+* Sat Jul 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.4-alt1
+- 2.6.4
+
 * Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
 - first build for Sisyphus (2.6.3-1-g4b3582d)
 - adapted fc spec with stuffed mmsd-tng.service
