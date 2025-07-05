@@ -9,16 +9,18 @@
 %endif
 
 Name: genimage
-Version: 18
-Release: alt2
+Version: 19
+Release: alt1
 
 Summary: Tool to generate multiple filesystem and flash images
 
 License: GPL-2.0
 Group: Development/Other
-Url: https://github.com/pengutronix/genimage
+URL: https://github.com/pengutronix/genimage
+VCS: https://github.com/pengutronix/genimage
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libconfuse-devel
 
@@ -46,6 +48,7 @@ config file or from commandline switches.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -63,6 +66,9 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Sat Jul 05 2025 Anton Midyukov <antohami@altlinux.org> 19-alt1
+- new version (19) with rpmgs script
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 18-alt2
 - remove "BuildRequires: genext2fs"
 
