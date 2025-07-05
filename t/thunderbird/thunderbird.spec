@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 139.0.2
+Version: 140.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -34,12 +34,11 @@ Source6: l10n.tar
 ### Start Patches
 Patch001: 0001-thunderbird-115-add-loongarch-support.patch
 Patch002: 0002-Fix-the-botan-build-for-loongarch64.patch
-Patch003: 0003-Use-maximize-icon-for-CSD-restore-button-missing-in-.patch
-Patch004: 0004-Disable-browser-option.patch
-Patch005: 0005-Fix-types-defination.patch
-Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
-Patch007: 0007-Correction-of-the-Russian-translation.patch
-Patch008: 0008-ALT-stop-putting-commonDialogs.properties-into-share.patch
+Patch003: 0003-Disable-browser-option.patch
+Patch004: 0004-Fix-types-defination.patch
+Patch005: 0005-Fix-wrong-redefinition-of-double_t-on-i586.patch
+Patch006: 0006-Correction-of-the-Russian-translation.patch
+Patch007: 0007-ALT-stop-putting-commonDialogs.properties-into-share.patch
 ### End Patches
 
 Provides: mailclient
@@ -177,9 +176,8 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
-%patch6 -p2
-%patch7 -p1
-%patch8 -p2
+%patch6 -p1
+%patch7 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -380,6 +378,21 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Sat Jul 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 140.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2025-6424: Use-after-free in FontFaceSet
+  + CVE-2025-6425: The WebCompat WebExtension shipped exposed a persistent UUID
+  + CVE-2025-6426: No warning when opening executable terminal files on macOS
+  + CVE-2025-6427: connect-src Content Security Policy restriction could be bypassed
+  + CVE-2025-6429: Incorrect parsing of URLs could have allowed embedding of youtube.com
+  + CVE-2025-6430: Content-Disposition header ignored when a file is included in an embed or object tag
+  + CVE-2025-6432: DNS Requests leaked outside of a configured SOCKS proxy
+  + CVE-2025-6433: WebAuthn would allow a user to sign a challenge on a webpage with an invalid TLS certificate
+  + CVE-2025-6434: HTTPS-Only exception screen lacked anti-clickjacking delay
+  + CVE-2025-6435: Save as in Devtools could download files without sanitizing the extension
+  + CVE-2025-6436: Memory safety bugs fixed in Firefox 140 and Thunderbird 140
+
 * Wed Jun 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.2-alt1
 - New version.
 - Security fixes:
