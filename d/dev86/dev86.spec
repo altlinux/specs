@@ -1,6 +1,6 @@
 Name: dev86
 Version: 0.16.21
-Release: alt1
+Release: alt2
 
 Summary: A real mode 80x86 assembler and linker
 License: GPL+ and GPLv2+ and LGPLv2+
@@ -60,9 +60,9 @@ Note that you don't need this package in order to build a kernel.
 %patch7 -p1
 #patch8 -p1
 #patch10 -p1
-%patch11 -p1
+#patch11 -p1
 #patch12 -p1
-%patch14 -p1
+#patch14 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl /usr/lib/liberror.txt -- |
@@ -98,7 +98,7 @@ find %buildroot%_prefix/lib/bcc \! -type d |
 	grep -Fv 86/lib | fgrep -v \.a >>files.list
 
 %check
-#BCC_PREFIX=%buildroot%_prefix make -C tests BCC=%buildroot%_bindir/bcc
+BCC_PREFIX=%buildroot%_prefix make -C tests BCC=%buildroot%_bindir/bcc
 
 %files -f files.list
 %_bindir/*
@@ -113,6 +113,9 @@ find %buildroot%_prefix/lib/bcc \! -type d |
 %_prefix/lib/bcc/include
 
 %changelog
+* Sat Jul 05 2025 Ilya Mashkin <oddity@altlinux.ru> 0.16.21-alt2
+- check
+
 * Sat Jul 05 2025 Ilya Mashkin <oddity@altlinux.ru> 0.16.21-alt1
 - 0.16.21
 - skip check
