@@ -1,5 +1,5 @@
 Name: edbrowse
-Version: 3.7.7
+Version: 3.8.12
 Release: alt1
 
 Summary: ed-alike webbrowser written in C
@@ -8,16 +8,19 @@ Group: Networking/WWW
 
 Url: http://edbrowse.org/
 Source0: https://github.com/CMB/edbrowse/archive/v%version.tar.gz#/%name-%version.tar.gz
-Patch0: %name-%version-alt-pcre-and-tidy-warnings.patch
+Patch0: %name-3.8.12-alt-build-with-quickjs.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+ExcludeArch: i586
+
+BuildRequires: make
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
+BuildRequires: libssl-devel
 BuildRequires: libreadline-devel
-BuildRequires: libpcre-devel
-BuildRequires: libtidy-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libunixODBC-devel
 BuildRequires: libduktape-devel
+BuildRequires: quickjs-devel quickjs-devel-static
 
 %description
 edbrowse is a reimplementation of /bin/ed, with some basic
@@ -62,14 +65,15 @@ edbrowse.
 %prep
 %setup
 %patch0 -p1
-sed -i "s|%_docdir/%name|%_docdir/%name-%version|" CMakeLists.txt
 
 %build
-%cmake
-%cmake_build
+%make
+%make_build
 
 %install
-%cmakeinstall_std
+install -Dm755 src/%name %buildroot%_bindir/%name
+mkdir -p %buildroot/%_man1dir
+mv doc/man-edbrowse-debian.1 %buildroot/%_man1dir/%name.1
 
 %files
 %doc README CHANGES
@@ -83,6 +87,9 @@ sed -i "s|%_docdir/%name|%_docdir/%name-%version|" CMakeLists.txt
 %doc doc/*.ebrc
 
 %changelog
+* Tue Jul 01 2025 Nikolay Burykin <bne@altlinux.org> 3.8.12-alt1
+- 3.8.12
+
 * Fri Feb 05 2021 Nikolay Burykin <bne@altlinux.org> 3.7.7-alt1
 - Initial build for ALT
 
