@@ -1,7 +1,7 @@
 %define _hardened_build 1
 Name:           bochs
-Version:        2.8
-Release:        alt3
+Version:        3.0
+Release:        alt1
 Summary:        Portable x86 PC emulator
 License:        LGPLv2+
 Group: Emulators
@@ -19,12 +19,12 @@ Patch12: smp-debug.patch
 Patch13: iasl-filename.patch
 Patch14: bochs-bios-cross-compile.patch
 
-BuildRequires:  gcc-c++
-BuildRequires:  libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libncurses-devel 
-BuildRequires:  docbook-utils
-BuildRequires:  gtk2-devel
+BuildRequires: gcc-c++
+BuildRequires: libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libncurses-devel 
+BuildRequires: docbook-utils
+BuildRequires: gtk2-devel
 BuildRequires: make
-BuildRequires:  dev86 iasl
+BuildRequires: iasl dev86 
 %ifnarch %ix86 x86_64
 BuildRequires: gcc-x86_64-linux-gnu
 %endif
@@ -191,7 +191,9 @@ mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/
 %{_datadir}/bochs/VGABIOS*
 %{_datadir}/bochs/bios.bin-1.13.0
 %{_datadir}/bochs/SeaBIOS-README
-
+%{_datadir}/bochs/README-i440fx
+%{_datadir}/bochs/SeaVGABIOS-README
+%{_datadir}/bochs/i440fx.bin
 
 %files debugger
 %{_bindir}/bochs-debugger
@@ -203,6 +205,9 @@ mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/
 %{_prefix}/include/bochs/
 
 %changelog
+* Sat Jul 05 2025 Ilya Mashkin <oddity@altlinux.ru> 3.0-alt1
+- 3.0
+
 * Thu Mar 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.8-alt3
 - Build for all architectures again (bochs is a **portable** x86 emulator)
 
