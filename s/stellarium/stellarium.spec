@@ -3,7 +3,7 @@
 %def_without telescopecontrol
 
 Name: stellarium
-Version: 24.4
+Version: 25.2
 Release: alt1
 
 Summary: Astronomical Sky Simulator
@@ -14,7 +14,9 @@ Url: http://www.stellarium.org/
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6-webengine
+BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6-webengine rpm-build-python3
+
+%add_python3_req_skip astropy astropy.coordinates astroquery.vizier percache
 
 BuildRequires: cmake ctest gcc-c++
 BuildRequires: qt6-base-devel
@@ -24,6 +26,7 @@ BuildRequires: pkgconfig(Qt6SerialPort)
 BuildRequires: pkgconfig(Qt6Multimedia)
 BuildRequires: pkgconfig(Qt6Positioning)
 BuildRequires: libQXlsx-devel
+BuildRequires: libmd4c-devel
 BuildRequires: doxygen
 %if_with telescopecontrol
 BuildRequires: pkgconfig(libindi)
@@ -37,6 +40,9 @@ BuildRequires: perl-podlators
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: pkgconfig(Qt6WebEngineWidgets)
 %endif
+
+# Disabled beacause of problems with translation encoding
+ExcludeArch: %ix86
 
 %ifnarch %e2k
 %define _optlevel s
@@ -94,6 +100,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 25.2-alt1
+- Build new version (Closes: #53705, #54997).
+
 * Mon Jan 06 2025 Grigory Ustinov <grenka@altlinux.org> 24.4-alt1
 - Automatically updated to 24.4 (Closes: #52591).
 
