@@ -2,7 +2,7 @@
 
 Name:    apache-ignite
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Distributed database for high-performance computing
 License: Apache-2.0
@@ -16,7 +16,7 @@ Source1: gradle-8.7-rc-4-bin.zip
 Source2: gradle-cache.tar
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-11-compat
 BuildRequires: maven-local
 BuildRequires: unzip
 
@@ -132,5 +132,8 @@ getent passwd ignite >/dev/null || /usr/sbin/useradd -r \
 %_libexecdir/ignite3-java-client
 
 %changelog
+* Sun Jul 06 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
+- Strictly build with Java 11.
+
 * Sat Jul 05 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus.
