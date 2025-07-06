@@ -8,7 +8,7 @@
 
 Name: gnome-kiosk
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Kiosk
 License: GPL-2.0-or-later
@@ -73,7 +73,7 @@ This package provides a full screen firefox window pointed to Yandex.
 # switch from google to yandex
 sed -i 's|google\.com|ya.ru|' search-app/%xdg_name.SearchApp.desktop.in.in
 # fix shebang
-sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
+sed -i 's|/usr/\(bin/sh\)|/\1|' kiosk-script/%name-script
 
 %build
 %meson
@@ -114,6 +114,9 @@ sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
 
 
 %changelog
+* Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
+- gnome-kiosk-script: fix shebang again (ALT #55086)
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

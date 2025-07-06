@@ -17,7 +17,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -32,6 +32,7 @@ Source: %name-%version%beta.tar
 %{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
 
 Patch3: %name-48.1-alt-invalid_user_shell.patch
+Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
 # https://bugzilla.altlinux.org/54831
 # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3252
 #Patch10: XXX
@@ -217,6 +218,8 @@ mkdir subprojects/gvc
 cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
 
 %patch3 -b .shells
+%patch4 -b .default_folders
+
 # set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
 
@@ -313,6 +316,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1.1
+- js/ui/appDisplay.js: removed yast/pardus default folders (ALT #55084)
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
 - 48.3
 
