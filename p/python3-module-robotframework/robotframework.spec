@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.3.1
+Version: 7.3.2
 Release: alt1
 
 Summary: A generic test automation framework
@@ -68,6 +68,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jul 07 2025 Grigory Ustinov <grenka@altlinux.org> 7.3.2-alt1
+- Automatically updated to 7.3.2.
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 7.3.1-alt1
 - Automatically updated to 7.3.1.
 
