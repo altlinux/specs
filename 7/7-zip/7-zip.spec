@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: 7-zip
-Version: 24.09
-Release: alt2
+Version: 25.00
+Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -128,6 +128,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Sun Jul 06 2025 Fr. Br. George <george@altlinux.org> 25.00-alt1
+- Autobuild version bump to 25.00
+
 * Fri May 23 2025 Alexander Danilov <admsasha@altlinux.org> 24.09-alt2
 - Fix build for old branch.
 
