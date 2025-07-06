@@ -1,9 +1,8 @@
-
-%define sover 6
+%define sover 8
 %define libwcs libwcs%sover
 
 Name: wcslib
-Version: 6.4
+Version: 8.4
 Release: alt1
 
 Group: System/Libraries
@@ -13,10 +12,7 @@ License: LGPLv3+ / GPLv3+
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Nov 11 2013 (-bi)
-# optimized out: elfutils gnu-config pkg-config python-base python3 python3-base ruby ruby-stdlibs
-#BuildRequires: flex libcfitsio-devel rpm-build-python3 rpm-build-ruby
-BuildRequires: flex libcfitsio-devel zlib-devel
+BuildRequires: libcfitsio-devel zlib-devel
 
 %description
 WCSLIB is a library that implements the "World Coordinate System" (WCS)
@@ -47,22 +43,15 @@ Utils provided with %name
 %prep
 %setup
 
-%autoreconf
-
 %build
-%add_optflags %optflags_shared
-%configure \
-    --disable-fortran \
-    --disable-static \
-    #
-%make -C C
-%make_build
+%configure  --disable-fortran --disable-static
+make
 
 %install
-%make install DESTDIR=%buildroot
+make install DESTDIR=%buildroot
 # cleanup
-rm -rf %buildroot/%_libdir/*.a
-rm -rf %buildroot/%_docdir/wcslib-*
+rm -rv %buildroot/%_libdir/*.a
+rm -rv %buildroot/%_docdir/wcslib-*
 
 %files -n %libwcs
 %doc README
@@ -81,6 +70,9 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 8.4-alt1
+- NMU: new version
+
 * Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 6.4-alt1
 - new version
 
