@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
@@ -56,6 +56,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jul 07 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.4-alt1
+- Automatically updated to 2.1.4.
+
 * Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt1
 - Automatically updated to 2.1.3.
 
