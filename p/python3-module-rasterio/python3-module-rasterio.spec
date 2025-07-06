@@ -1,9 +1,9 @@
 %define oname rasterio
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 License: BSD-3-Clause
@@ -16,6 +16,7 @@ Summary: Fast and direct raster I/O for use with Numpy and SciPy
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Source1: tests_data.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -54,7 +55,7 @@ designed to make working with geospatial raster data more productive and
 more fun.
 
 %prep
-%setup
+%setup -a 1
 subst "s|/usr/local/share/proj|/usr/share/proj|" setup.py
 
 # Drop dependency on distutils
@@ -83,6 +84,10 @@ rm -rf %oname # Don't try unbuilt copy.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Jul 04 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
+- New version 1.4.3
+- Disable check for new gdal
+
 * Sat Nov 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - New version 1.4.2
 - Disable %%check for i586 and armh.

@@ -6,10 +6,10 @@
 %def_without libtiff
 %def_without geotiff
 
-%define sover 36
+%define sover 37
 
 Name: gdal
-Version: 3.10.3
+Version: 3.11.1
 Release: alt1
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
@@ -17,8 +17,7 @@ License: MIT
 Group: Sciences/Geosciences
 
 URL: http://www.gdal.org
-Packager: ALT QA Team <qa@packages.altlinux.org>
-# ftp://ftp.remotesensing.org/%name/%version/%name-%version.tar.xz
+# https://gdal.org/en/stable/download.html#source-code
 Source: %name-%version.tar
 Patch: %name-2.2.3-alt-mysql8-transition.patch
 
@@ -248,6 +247,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.1-alt1
+- New version.
+
 * Fri Apr 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.10.3-alt1
 - New version.
 

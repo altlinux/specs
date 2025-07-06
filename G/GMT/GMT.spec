@@ -40,7 +40,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        6.4.0
-Release:        alt1_10
+Release:        alt1_11
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -184,6 +184,7 @@ sed -i 's/gregs\[REG_EIP\]/cr0_hi/' src/gmt_common_sighandler.c
 
 %build
 %{fedora_v2_cmake} \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DCMAKE_INSTALL_LIBDIR=%{_lib} \
   -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
@@ -266,6 +267,9 @@ mv %buildroot%_bindir/{,GMT-}batch
 
 
 %changelog
+* Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1_11
+- NMU: FTBFS: fix build with new cmake
+
 * Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.4.0-alt1_10
 - NMU: fixed FTBFS on LoongArch
 
