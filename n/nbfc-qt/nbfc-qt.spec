@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nbfc-qt
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: GUI for NBFC-Linux (Qt-based)
@@ -35,6 +35,9 @@ ExclusiveArch: x86_64
 %_bindir/nbfc-qt-tray
 
 %changelog
+* Sun Jul 06 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.3-alt1
+- new version 0.4.3
+
 * Thu Jun 19 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.2-alt1
 - new version 0.4.2
 
