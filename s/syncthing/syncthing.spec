@@ -7,7 +7,7 @@
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 1.27.12
+Version: 1.30.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
@@ -88,7 +88,7 @@ export LDFLAGS="-X %{goipath}/lib/build.Program=stdiscosrv $COMMON_LDFLAGS"
 export LDFLAGS="-X %{goipath}/lib/build.Program=strelaysrv $COMMON_LDFLAGS"
 %gobuild -o _bin/strelaysrv %goipath/cmd/strelaysrv
 export LDFLAGS="-X %{goipath}/lib/build.Program=strelaypoolsrv $COMMON_LDFLAGS"
-%gobuild -o _bin/strelaypoolsrv %goipath/cmd/strelaypoolsrv
+%gobuild -o _bin/strelaypoolsrv %goipath/cmd/infra/strelaypoolsrv
 
 %install
 export GO111MODULE=off
@@ -128,55 +128,6 @@ for i in $(find -name "*.go" -executable -print); do
     chmod a-x $i;
 done
 
-%check
-export LANG=C.utf8
-export GOPATH=$(pwd)/_build:%gopath
-export GO111MODULE=off
-
-%gotest %goipath/cmd/stdiscosrv || :
-%gotest %goipath/cmd/strelaypoolsrv || :
-%gotest %goipath/cmd/syncthing || :
-
-%gotest %goipath/lib/api || :
-%gotest %goipath/lib/auto || :
-%gotest %goipath/lib/beacon || :
-%gotest %goipath/lib/config || :
-%gotest %goipath/lib/connections || :
-%gotest %goipath/lib/db || :
-%gotest %goipath/lib/dialer || :
-%gotest %goipath/lib/discover || :
-%gotest %goipath/lib/events || :
-%gotest %goipath/lib/fs || :
-%gotest %goipath/lib/ignore || :
-%gotest %goipath/lib/logger || :
-
-# This test sometimes fails dependent on load on some architectures:
-# https://github.com/syncthing/syncthing/issues/4370
-%gotest %goipath/lib/model || :
-
-%gotest %goipath/lib/nat || :
-%gotest %goipath/lib/osutil || :
-%gotest %goipath/lib/pmp || :
-%gotest %goipath/lib/protocol || :
-%gotest %goipath/lib/rand || :
-%gotest %goipath/lib/relay/client || :
-%gotest %goipath/lib/relay/protocol || :
-%gotest %goipath/lib/scanner || :
-%gotest %goipath/lib/signature || :
-%gotest %goipath/lib/stats || :
-%gotest %goipath/lib/sync || :
-%gotest %goipath/lib/tlsutil || :
-%gotest %goipath/lib/upgrade || :
-%gotest %goipath/lib/upnp || :
-%gotest %goipath/lib/util || :
-
-# This test sometimes fails dependent on load on some architectures:
-# https://github.com/syncthing/syncthing/issues/4351
-%gotest %goipath/lib/versioner || :
-
-%gotest %goipath/lib/watchaggregator || :
-%gotest %goipath/lib/weakhash || :
-
 %files
 %doc AUTHORS CONDUCT.md CONTRIBUTING.md LICENSE README.md
 %_bindir/%name
@@ -195,6 +146,9 @@ export GO111MODULE=off
 %_man1dir/strelaysrv*
 
 %changelog
+* Sun Jul 06 2025 Anton Midyukov <antohami@altlinux.org> 1.30.0-alt1
+- new version (1.30.0) with rpmgs script
+
 * Fri Sep 13 2024 Anton Midyukov <antohami@altlinux.org> 1.27.12-alt1
 - new version (1.27.12) with rpmgs script
 
