@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: Python scripts to manipulate HID data
@@ -64,6 +64,12 @@ vm-run --sbin --udevd --modules="uhid" '%pyproject_run_pytest -vra tests'
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Jul 06 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.10-alt1
+- New version.
+
+* Fri Jan 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9-alt2
+- Fix flaky test_pass_hidraw on x86_64.
+
 * Sun Dec 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9-alt1
 - New version.
 
