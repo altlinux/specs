@@ -9,13 +9,15 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
 Group: System/Libraries
 License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/gexiv2
+
+Vcs: https://gitlab.gnome.org/GNOME/gexiv2.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -124,6 +126,9 @@ This package provides Python3 bindings for the gexiv2 library.
 %endif
 
 %changelog
+* Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.6-alt1
+- 0.14.6
+
 * Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.5-alt1
 - 0.14.5
 
