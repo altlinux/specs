@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.29.0
+Version: 2.29.1
 Release: alt1
 
 Summary: Nix software deployment system
@@ -155,6 +155,9 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Sun Jul 06 2025 Boris Yumankulov <boria138@altlinux.org> 2.29.1-alt1
+- new version 2.29.1
+
 * Sun May 25 2025 Boris Yumankulov <boria138@altlinux.org> 2.29.0-alt1
 - new version 2.29.0
 - create users and group using %%sysusers_create_package macro
