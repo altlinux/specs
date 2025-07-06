@@ -2,7 +2,7 @@
 %def_enable doc
 %def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.23.1
+%define main_ver 1.24.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -15,10 +15,11 @@ Group: System/X11
 License: MIT
 Url: http://%name.freedesktop.org/
 
+Vcs: https://gitlab.freedesktop.org/wayland/wayland.git
+
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%name/%name/-/releases/%version/downloads/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.freedesktop.org/wayland/wayland.git
 Source: %name-%version.tar
 %endif
 
@@ -194,6 +195,9 @@ Wayland-EGL development package
 
 
 %changelog
+* Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1.1
+- 1.24.0
+
 * Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.23.1-alt1.1
 - 1.23.1
 
