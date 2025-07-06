@@ -2,7 +2,7 @@ Name: kernel-image-6.15
 Release: alt1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.15
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.5-alt1
+- v6.15.5 (2025-07-06).
+
 * Fri Jun 27 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.4-alt1
 - v6.15.4 (2025-06-27).
 - config: Disable CONFIG_NL80211_TESTMODE.
