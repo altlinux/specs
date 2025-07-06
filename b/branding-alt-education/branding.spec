@@ -30,7 +30,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt4
+Release: alt5
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -338,7 +338,6 @@ make
 # Move os-release to /usr/lib
 mkdir -p %buildroot%_libexecdir
 mv %buildroot%_sysconfdir/os-release %buildroot%_libexecdir/os-release
-touch %buildroot%_sysconfdir/os-release
 
 find %buildroot -name \*.in -delete
 
@@ -412,7 +411,6 @@ fi
 %_sysconfdir/fedora-release
 %_sysconfdir/redhat-release
 %_sysconfdir/system-release
-%ghost %_sysconfdir/os-release
 %_libexecdir/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
@@ -475,6 +473,9 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Sun Jul 06 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- NMU: release: do not package /etc/os-release (ALT #55061).
+
 * Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt4
 - browser-qt: strictly used theme Fusion for installer.
 
