@@ -1,5 +1,5 @@
 Name: kernel-image-6.16
-Release: alt0.rc4
+Release: alt0.rc5
 %define kernel_src_version	6.15
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
@@ -612,6 +612,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 06 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc5
+- Update to v6.16-rc5 (2025-07-06).
+- config: Enable more VFIO drivers.
+- config: Enable CONFIG_VIRTIO_RTC=m.
+- config: Enable CONFIG_SND_HDA_ACPI=m.
+- config: Enable CONFIG_SND_HDA_SCODEC_TAS2781=m.
+- config: Enable CONFIG_SENSORS_LT3074=m.
+- config: Enable more PHY hardware.
+- config: Enable CONFIG_OVPN=m.
+- config: Enable CONFIG_PCI_PWRCTRL_SLOT=m.
+
 * Sun Jun 29 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc4
 - Update to v6.16-rc4 (2025-06-29).
 - config: Disable CONFIG_NL80211_TESTMODE.
