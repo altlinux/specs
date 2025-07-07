@@ -21,7 +21,7 @@
 
 Name: dogtag-pki
 Version: 11.4.3
-Release: alt5
+Release: alt6
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -29,6 +29,7 @@ Group: System/Servers
 Url: http://www.dogtagpki.org
 Vcs: https://github.com/dogtagpki/pki
 Source: %name-%version.tar
+Source1: dogtag-pki-base.filetrigger
 Patch: %name-%version-alt.patch
 
 # - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
@@ -451,7 +452,7 @@ app_server=tomcat-9.0
 # This file should be sourced only
 chmod -x %buildroot%_datadir/pki/scripts/operations
 touch %buildroot%_sysconfdir/pki/pki.version
-touch %buildroot%_logdir/pki/pki-upgrade-%version.log
+touch %buildroot%_logdir/pki/pki-upgrade.log
 touch %buildroot%_logdir/pki/pki-server-upgrade-%version.log
 mkdir %buildroot%_logdir/pki/server
 mkdir %buildroot%_logdir/pki/server/upgrade
@@ -466,6 +467,10 @@ rm -r %buildroot%_datadir/pki/tests/
 mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
+
+# install filetrigger
+mkdir -p %buildroot%_rpmlibdir
+install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/dogtag-pki-base.filetrigger
 
 %check
 export TOXENV=pep8py3,py%{python_version_nodots python3}
@@ -487,15 +492,6 @@ if [ $1 -eq 1 ]
 then
     # On RPM installation create system upgrade tracker
     echo "Configuration-Version: %version" > %_sysconfdir/pki/pki.version
-
-else
-    # On RPM upgrade run system upgrade
-    echo "pki-base: Upgrading PKI system configuration"
-    echo "Upgrading PKI system configuration at `/bin/date`." >> %_logdir/pki/pki-upgrade-%version.log 2>&1
-    %_sbindir/pki-upgrade -v >> %_logdir/pki/pki-upgrade-%version.log 2>&1
-    echo >> %_logdir/pki/pki-upgrade-%version.log 2>&1
-    echo "pki-base: PKI system upgrade status:"
-    %_sbindir/pki-upgrade --status 2>&1 | sed 's/^/pki-base: /'
 fi
 
 %postun -n dogtag-pki-base
@@ -540,11 +536,12 @@ fi
 %_datadir/pki/key/
 %config(noreplace) %_sysconfdir/pki/pki.conf
 %ghost %_sysconfdir/pki/pki.version
-%ghost %_logdir/pki/pki-upgrade-%version.log
+%ghost %_logdir/pki/pki-upgrade.log
 %_sbindir/pki-upgrade
 %_man1dir/pki-python-client.1.*
 %_man5dir/pki-logging.5.*
 %_man8dir/pki-upgrade.8.*
+%_rpmlibdir/dogtag-pki-base.filetrigger
 
 %files -n dogtag-pki-java
 %_datadir/pki/examples/java/
@@ -755,6 +752,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Mon Jul 07 2025 Stanislav Levin <slev@altlinux.org> 11.4.3-alt6
+- Fixed pki-upgrade with python-cryptography 43+.
+
 * Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 11.4.3-alt5
 - Fixed FTBFS (tox 4).
 
