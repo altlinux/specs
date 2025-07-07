@@ -5,7 +5,7 @@
 
 Name: python3-module-PyQt6-WebEngine
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for Qt6 WebEngine
 
@@ -65,10 +65,13 @@ sip-build --no-make --debug \
 %python3_sitelibdir/PyQt6/QtWebEngineCore.*
 %python3_sitelibdir/PyQt6/QtWebEngineQuick.*
 %python3_sitelibdir/PyQt6/QtWebEngineWidgets.*
-%python3_sitelibdir/PyQt6_WebEngine-*.dist-info
+%python3_sitelibdir/*.dist-info
 
 %_qt6_datadir/qsci/PyQt6-WebEngine.api
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt2
+- NMU: fix package with Qt-6.9
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.6.0-alt1
 - initial build for ALT Sisyphus
