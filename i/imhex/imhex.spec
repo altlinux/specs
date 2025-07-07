@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %add_findreq_skiplist %_libdir/imhex/plugins/*
+%add_verify_elf_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
 Version: 1.37.4
-Release: alt1
+Release: alt2
 
 Summary: A hex editor for reverse engineers and programmers
 
@@ -14,6 +15,8 @@ Url: https://imhex.werwolv.net/
 
 # Source-url: https://github.com/WerWolv/ImHex/releases/download/v%version/Full.Sources.tar.gz
 Source: %name-%version.tar
+
+Patch0: 0001-build-Updated-libfmt-2234.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -42,6 +45,8 @@ same time ImHex is completely free and open source under the GPLv2 language.
 
 %prep
 %setup
+%patch0 -p1
+
 rm -rv lib/third_party/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
 sed -i '/generateSDKDirectory()/d' CMakeLists.txt
 
@@ -96,6 +101,9 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/mime/packages/imhex.xml
 
 %changelog
+* Mon Jul 07 2025 Mikhail Tergoev <fidel@altlinux.org> 1.37.4-alt2
+- fixed FTBFS
+
 * Mon Apr 07 2025 Mikhail Tergoev <fidel@altlinux.org> 1.37.4-alt1
 - updated tp upstream 1.37.4
 - fixed FTBFS
