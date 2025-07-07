@@ -4,8 +4,8 @@
 %global luaver 5.3
 
 Name: lua%luaver-module-zlib
-Version: 1.2
-Release: alt2.git15d4bc8
+Version: 1.3
+Release: alt1
 
 Summary: Simple streaming interface to zlib for Lua
 License: MIT
@@ -48,9 +48,12 @@ returns a buffer of output).
 
 %files
 %doc README
-%lua_modulesdir/*
+%lua_modulesdir/zlib.so
 
 %changelog
+* Mon Jul 07 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.3-alt1
+- Updated to 1.3.
+
 * Fri Aug 04 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.2-alt2.git15d4bc8
 - fixed adding lua-zlib files to dependent packages' buildroot
 
