@@ -16,10 +16,10 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-io
 Epoch:          1
-Version:        2.11.0
-Release:        alt1_2jpp11
+Version:        2.19.0
+Release:        alt1
 Summary:        Utilities to assist with developing IO functionality
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://commons.apache.org/io
 BuildArch:      noarch
 
@@ -35,7 +35,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
 BuildRequires:  mvn(org.mockito:mockito-core)
 %endif
-Source44: import.info
 
 %description
 Commons-IO contains utility classes, stream implementations,
@@ -45,7 +44,7 @@ to assist with developing IO functionality.
 %{?javadoc_package}
 
 %prep
-%setup -q -n commons-io-%{version}-src
+%setup -n commons-io-%{version}-src
 sed -i 's/\r//' *.txt
 
 # Run tests in multiple reusable forks to improve test performance
@@ -56,15 +55,8 @@ sed -i '/<argLine>/d' pom.xml
 %mvn_alias : org.apache.commons:
 
 %pom_remove_dep org.junit-pioneer:junit-pioneer
-%pom_remove_dep :junit-bom
+%java_remove_annotations src -s -n DefaultLocale
 %pom_remove_dep com.google.jimfs:jimfs
-
-# Test depends on com.google.jimfs:jimfs
-rm src/test/java/org/apache/commons/io/input/ReversedLinesFileReaderTestParamFile.java
-
-# This annotation is part of junitpioneer
-sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/output/XmlStreamWriterTest.java
-sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/input/XmlStreamReaderTest.java
 
 %build
 # See "-DcommonsIoVersion" in maven-surefire for the tested version
@@ -76,7 +68,7 @@ sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/input/XmlStreamRea
 #  * PathUtilsDeleteTest.testDeleteDirectory1FileSize0OverrideReadonly:97->testDeleteDirectory1FileSize0:69 » FileSystem
 #  * PathUtilsDeleteTest.testDeleteDirectory1FileSize1OverrideReadOnly:145->testDeleteDirectory1FileSize1:117 » FileSystem
 
-%mvn_build -f -- -Dmaven.test.skip.exec=true  -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.io
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.io
 
 %install
 %mvn_install
@@ -86,6 +78,9 @@ sed -i '/DefaultLocale/d' src/test/java/org/apache/commons/io/input/XmlStreamRea
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.19.0-alt1
+- new version
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1:2.11.0-alt1_2jpp11
 - update
 

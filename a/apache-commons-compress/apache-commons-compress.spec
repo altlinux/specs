@@ -1,4 +1,3 @@
-Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
@@ -13,10 +12,10 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           apache-commons-compress
-Version:        1.21
-Release:        alt1_1jpp11
+Version:        1.27.1
+Release:        alt1
 Summary:        Java API for working with compressed files and archivers
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://commons.apache.org/proper/commons-compress/
 BuildArch:      noarch
 
@@ -30,16 +29,16 @@ BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest)
-BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.tukaani:xz)
 %endif
-Source44: import.info
 
 %description
 The Apache Commons Compress library defines an API for working with
@@ -57,35 +56,28 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n commons-compress-%{version}-src
+%autopatch -p1
 
 # Unavailable Google Brotli library (org.brotli.dec)
-%patch0 -p1
 %pom_remove_dep org.brotli:dec
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 
 # Unavailable ZSTD JNI library
-%patch1 -p1
 %pom_remove_dep :zstd-jni
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
-rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCase.java
 
 # Remove support for pack200 which depends on ancient asm:asm:3.2
-%patch2 -p1
-%pom_remove_dep asm:asm
 rm -r src/{main,test}/java/org/apache/commons/compress/harmony
 rm -r src/main/java/org/apache/commons/compress/compressors/pack200
 rm src/main/java/org/apache/commons/compress/java/util/jar/Pack200.java
-rm src/test/java/org/apache/commons/compress/compressors/Pack200TestCase.java
 rm -r src/test/java/org/apache/commons/compress/compressors/pack200
 rm src/test/java/org/apache/commons/compress/java/util/jar/Pack200Test.java
-
+ 
 # remove osgi tests, we don't have deps for them
 %pom_remove_dep org.ops4j.pax.exam:::test
 %pom_remove_dep :org.apache.felix.framework::test
 %pom_remove_dep :javax.inject::test
-%pom_remove_dep :slf4j-api::test
-rm src/test/java/org/apache/commons/compress/OsgiITest.java
-
+ 
 # Not packaged
 %pom_remove_dep com.github.marschall:memoryfilesystem
 rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTest.java
@@ -93,7 +85,7 @@ rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTe
 %build
 %mvn_file  : commons-compress %{name}
 %mvn_alias : commons:
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.compress
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
 %install
 %mvn_install
@@ -105,6 +97,9 @@ rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTe
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 1.27.1-alt1
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.21-alt1_1jpp11
 - new version
 
