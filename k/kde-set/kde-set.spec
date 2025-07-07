@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.06.0
+Version: 25.07.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -193,7 +193,7 @@ Requires: kanagram khangman
 Requires: kwordquiz kturtle marble
 Requires: step
 %ifnarch armh
-Requires: kde5-kstars
+Requires: kstars
 %endif
 Requires: kig kmplot kalgebra cantor rocs
 Requires: kbruch kgeography ktouch
@@ -281,6 +281,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 25.07.0-alt1
+- fix kstars deps
+
 * Wed Jun 04 2025 Sergey V Turchin <zerg@altlinux.org> 25.06.0-alt1
 - require kleopatra
 
