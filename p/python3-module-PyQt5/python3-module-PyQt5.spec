@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.10
-Release: alt2
+Release: alt3
 
 Summary: Python 3 bindings for Qt 5
 
@@ -154,7 +154,7 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/__init__.*
 %python3_sitelibdir/PyQt5/Qt*.so
 %python3_sitelibdir/PyQt5/_QOpenGLFunctions*.so
-%python3_sitelibdir/PyQt5-%version.*
+%python3_sitelibdir/*-%version.*dist*
 %_libdir/qt5/plugins/PyQt5/
 %if_with dbus
 %python3_sitelibdir/dbus/mainloop/pyqt5*.so
@@ -182,6 +182,9 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt3
+- NMU: fix package with Qt-6.9
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 5.15.10-alt2
 - fix QtWebKit packing (new name QtWebKit.abi3.so since new sip6)
 
