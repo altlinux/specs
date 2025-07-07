@@ -6,7 +6,7 @@
 
 Name: qscintilla2-qt6
 Version: 2.14.1
-Release: alt1
+Release: alt2
 
 Summary: QScintilla is a port to Qt6 of Neil Hodgson's Scintilla C++ editor class
 
@@ -205,7 +205,7 @@ cp ChangeLog NEWS LICENSE %buildroot%_docdir/%libname-%version
 
 %files -n python3-module-%oname-qt6
 %python3_sitelibdir/PyQt6/Qsci.*so
-%python3_sitelibdir/PyQt6_QScintilla-%version.dist-info/
+%python3_sitelibdir/*cintilla*-%version.dist-info/
 #python3_sitelibdir/PyQt6/Qsci.pyi
 %_datadir/qt6/qsci3/api/python/*.api
 
@@ -220,5 +220,8 @@ cp ChangeLog NEWS LICENSE %buildroot%_docdir/%libname-%version
 %endif
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 2.14.1-alt2
+- NMU: fix package with Qt-6.9
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 2.14.1-alt1
 - initial build for ALT Sisyphus
