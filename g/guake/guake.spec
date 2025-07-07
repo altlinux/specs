@@ -2,7 +2,7 @@
 
 Name:    guake
 Version: 3.10
-Release: alt1
+Release: alt2
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -32,7 +32,6 @@ Requires: dbus
 Requires: dconf
 Requires: libutempter
 Requires: notification-daemon
-%py3_requires pbr
 
 %description
 Guake is a drop-down terminal for Gnome Desktop Environment, so you
@@ -70,6 +69,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.10-alt2
+- Remove python3(pbr) requirement.
+
 * Mon May 15 2023 Andrey Cherepanov <cas@altlinux.org> 3.10-alt1
 - New version.
 
