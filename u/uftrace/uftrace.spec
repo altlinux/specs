@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict unresolved=relaxed
+%set_verify_elf_method strict
 
 Name: uftrace
-Version: 0.17
+Version: 0.18.1
 Release: alt1
 Summary: Function graph tracer for C/C++/Rust/Python
 License: GPL-2.0-only
@@ -35,7 +35,7 @@ BuildRequires: python3
 }}
 
 %description
-uftrace is a function call graph tracer for C, C++, Rust and Python
+uftrace is a function call graph tracer for C, C++, Rust, and Python
 programs.
 
 It hooks into the entry and exit of each function, recording timestamps as
@@ -48,7 +48,6 @@ system events providing an integrated execution flow in a single timeline.
 sed -i '1i\#! %__python3' python/uftrace.py
 
 %build
-%define optflags_lto %nil
 # (Default) -Werror=unused-variable will cause libelf detection to fail.
 %add_optflags -Wno-error=unused-variable %(getconf LFS_CFLAGS)
 # Custom configure script.
@@ -93,6 +92,9 @@ timeout 120 %make_build pytest V=1
 %_datadir/bash-completion/completions/uftrace
 
 %changelog
+* Mon Jul 07 2025 Vitaly Chikunov <vt@altlinux.org> 0.18.1-alt1
+- Update to v0.18.1 (2025-07-06).
+
 * Thu Dec 19 2024 Vitaly Chikunov <vt@altlinux.org> 0.17-alt1
 - Update to v0.17 (2024-12-16).
 
