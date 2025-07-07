@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.16
+Version: 1.3.17
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,18 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon Jul 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.17-alt1
+- Add static license of 11.1 products (thx trefas@yandex.ru):
+  + ALT_Server_License
+  + ALT_Domain_License
+- Update product licenses templates for 11.1 releases (thx trefas@yandex.ru):
+  + ALT_Simply_License
+  + ALT_Regular_License
+  + ALT_Product_License
+  + ALT_Container_OS_License
+- Add loongarch64 to list of target architectures
+- Remove templates of ALT_Server_License
+
 * Thu May 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.16-alt1
 - Add license ALT_Orchestra_License
 
