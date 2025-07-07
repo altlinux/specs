@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.6
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for Qt WebEngine 5
 
@@ -74,13 +74,16 @@ sip-build --no-make --debug \
 %python3_sitelibdir/PyQt5/QtWebEngine.*
 %python3_sitelibdir/PyQt5/QtWebEngineCore.*
 %python3_sitelibdir/PyQt5/QtWebEngineWidgets.*
-%python3_sitelibdir/PyQtWebEngine-*
+%python3_sitelibdir/*ngine*.dist-info
 
 #files devel
 #%_datadir/sip3/PyQt5/QtWebEngine*
 %_qt5_datadir/qsci/PyQtWebEngine.api
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt3
+- NMU: fix package with Qt-6.9
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 5.15.6-alt2
 - (NMU) Provided PEP503-normalized project name.
 
