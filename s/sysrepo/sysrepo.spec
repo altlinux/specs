@@ -2,7 +2,7 @@
 %define abiversion 7
 
 Name: sysrepo
-Version: 2.2.60
+Version: 3.3.10
 Release: alt1
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
@@ -11,6 +11,7 @@ Url: https://github.com/sysrepo/sysrepo
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -76,5 +77,8 @@ export CFLAGS="%optflags"
 %_man8dir/*.8.*
 
 %changelog
+* Mon Apr 07 2025 Pavel Shilov <zerospirit@altlinux.org> 3.3.10-alt1
+- Build based on upstream version
+
 * Sat Mar 02 2024 Pavel Shilov <zerospirit@altlinux.org> 2.2.60-alt1
 - initial build for Sisyphus

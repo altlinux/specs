@@ -2,7 +2,7 @@
 %define abiversion 4
 
 Name: libnetconf2
-Version: 3.0.8
+Version: 3.7.1
 Release: alt1
 Summary: C NETCONF library 
 License: BSD-3-Clause  
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: https://github.com/CESNET/libnetconf2
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: cmake
 BuildRequires: libssh-devel
@@ -40,6 +41,7 @@ Files for development with %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export CFLAGS="%optflags"
@@ -62,5 +64,8 @@ export CFLAGS="%optflags"
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Fri Jul 04 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.1-alt1
+- Update version based on upstream.
+
 * Sat Mar 02 2024 Pavel Shilov <zerospirit@altlinux.org> 3.0.8-alt1
 - initial build for Sisyphus
