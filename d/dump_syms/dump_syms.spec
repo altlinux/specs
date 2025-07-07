@@ -2,7 +2,7 @@
 %def_with check
 
 Name: dump_syms
-Version: 2.3.4
+Version: 2.3.5
 Release: alt1
 
 Summary: Is a command-line utility for parsing the debugging information the compiler provides
@@ -11,7 +11,7 @@ Group: Development/Other
 Vcs: https://github.com/mozilla/dump_syms.git
 
 Source0: %name-%version.tar
-Source1:%name-%version-vendor.tar
+Source1: %name-%version-vendor.tar
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
@@ -70,5 +70,8 @@ EOF
 %_bindir/dump_syms
 
 %changelog
+* Mon Jul 07 2025 Ivan Khanas <xeno@altlinux.org> 2.3.5-alt1
+- New version.
+
 * Fri Apr 18 2025 Ivan Khanas <xeno@altlinux.org> 2.3.4-alt1
 - First build for ALT.
