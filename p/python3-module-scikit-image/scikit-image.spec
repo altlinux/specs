@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 0.25.2
-Release: alt2
+Release: alt3
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
@@ -137,6 +137,8 @@ export XDG_CONFIG_HOME=$(pwd)
 export XDG_CACHE_HOME=$PWD
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
+export SKIMAGE_TEST_STRICT_WARNINGS=0
+
 pushd %buildroot%python3_sitelibdir
 # We deselect tests that require network data
  xvfb-run py.test-3 -v \
@@ -182,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.25.2-alt3
+- NMU: run test with SKIMAGE_TEST_STRICT_WARNINGS=0 (fixes FTBFS).
+
 * Sun Jun 01 2025 Anton Vyatkin <toni@altlinux.org> 0.25.2-alt2
 - Fixed FTBFS.
 

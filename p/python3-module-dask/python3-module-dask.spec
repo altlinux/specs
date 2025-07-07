@@ -3,7 +3,7 @@
 
 Name: python3-module-dask
 Version: 2021.7.2
-Release: alt2
+Release: alt3
 
 License: BSD
 Group: Development/Python
@@ -15,6 +15,7 @@ Summary: Parallel PyData with Task Scheduling
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch:  dask-upstream-fresh-numpy.patch
 
 BuildArch: noarch
 
@@ -31,6 +32,7 @@ Dask is a flexible parallel computing library for analytics.
 
 %prep
 %setup
+%patch -p1
 
 # hotfix for python3.12
 sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
@@ -52,6 +54,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 2021.7.2-alt3
+- NMU: Apply upstream fix for working with fresh numpy.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2021.7.2-alt2
 - Fixed FTBFS.
 
