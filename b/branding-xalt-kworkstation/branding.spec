@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -288,7 +288,8 @@ for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
 # os-release
-cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
+mkdir -p %buildroot/%prefix/lib/
+cat >>%buildroot/%prefix/lib/os-release <<__EOF__
 NAME="%Brand"
 VERSION="%altversion%status"
 ID=altlinux
@@ -309,9 +310,7 @@ __EOF__
 # save release
 mkdir -p %buildroot/%branding_data_dir/release/
 cp -ar %buildroot/%_sysconfdir/altlinux-release %buildroot/%branding_data_dir/release/altlinux-release
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%branding_data_dir/release/os-release
-mkdir -p %buildroot/%prefix/lib/
-cp -ar %buildroot/%_sysconfdir/os-release %buildroot/%prefix/lib/os-release
+cp -ar %buildroot/%prefix/lib/os-release %buildroot/%branding_data_dir/release/os-release
 
 #notes
 pushd notes
@@ -418,12 +417,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/%theme/gr
 %post bootsplash
 sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 
-%post release
-# alt-os-release filetrigger do it now
-#if ! [ -e %_sysconfdir/os-release ]; then
-#       cp -a %branding_data_dir/release/os-release %_sysconfdir/os-release ||:
-#fi
-
 %post gnome-settings
 %gconf2_set string /desktop/gnome/interface/font_name Sans 11
 %gconf2_set string /desktop/gnome/interface/monospace_font_name Monospace 10
@@ -460,7 +453,6 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/plymouth/themes/%theme/*
 
 %files release
-%ghost %config(noreplace) %_sysconfdir/os-release
 %_sysconfdir/altlinux-release
 %config(noreplace) %_sysconfdir/fedora-release
 %config(noreplace) %_sysconfdir/redhat-release
@@ -500,6 +492,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt2
+- don't package /etc/os-release (closes: 55060)
+
 * Wed May 28 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt1
 - bump version
 
