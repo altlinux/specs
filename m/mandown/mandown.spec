@@ -1,5 +1,5 @@
 Name:    mandown
-Version: 0.1.5
+Version: 1.1.0
 Release: alt1
 
 Summary: Create man pages from markdown markup
@@ -38,5 +38,8 @@ install -vpD %SOURCE2 .cargo/config.toml
 %_bindir/mandown
 
 %changelog
+* Mon Jul 07 2025 Ilya Sorochan <k0tran@altlinux.org> 1.1.0-alt1
+- 0.1.5 -> 1.1.0
+
 * Mon Nov 11 2024 Ilya Sorochan <k0tran@altlinux.org> 0.1.5-alt1
 - Initial build for Sisyphus.
