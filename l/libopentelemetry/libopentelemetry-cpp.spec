@@ -9,8 +9,8 @@
 %endif
 
 Name:          lib%oname
-Version:       1.17.0.25
-Release:       alt0.2
+Version:       1.21.0
+Release:       alt1
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -50,24 +50,21 @@ The OpenTelemetry C++ Client.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
-%ifarch %e2k
-export ARCH=e2k
-%endif
-%cmake_insource \
+%cmake \
+   -DARCH=%_arch \
    -DBUILD_TESTING=%{?_enable_check:ON}%{?!_enable_check:OFF} \
-   -DCMAKE_MODULE_PATH=%_libdir/cmake \
    -DBUILD_SHARED_LIBS=ON \
    -DOTELCPP_VERSIONED_LIBS=ON \
    -DWITH_STL=ON
+%cmake_build
 
 %install
 %cmakeinstall_std
 
 %check
-%make test
+%ctest
 
 
 %files
@@ -83,6 +80,9 @@ export ARCH=e2k
 
 
 %changelog
+* Mon Jul 07 2025 Pavel Skrylev <majioa@altlinux.org> 1.21.0-alt1
+- ^ 1.17.0p25 -> 1.21.0
+
 * Mon Jul 07 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.0.25-alt0.2
 - e2k build fix
 
