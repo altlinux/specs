@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -310,6 +310,8 @@ Group: Development/C
 # clang uses various parts of GNU crt bundled with gcc.
 # Should they be packaged separately?
 Requires: gcc
+# https://bugzilla.altlinux.org/55062
+Requires: gcc-c++
 Requires: clang >= %_llvm_version
 Requires: %clang_name-support = %EVR
 
@@ -1488,6 +1490,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Mon Jul 07 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.7-alt0.2
+- clang: added requirement of gcc-c++ (closes #55062).
+
 * Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.7-alt0.1
 - Update to 20.1.7.
 
