@@ -1,9 +1,16 @@
 %define        _unpackaged_files_terminate_build 1
 %define        oname opentelemetry
 
+%ifarch %e2k
+# ecf_opt64 segfault
+%def_disable check
+%else
+%def_enable check
+%endif
+
 Name:          lib%oname
 Version:       1.17.0.25
-Release:       alt0.1
+Release:       alt0.2
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -46,7 +53,11 @@ The OpenTelemetry C++ Client.
 %autopatch -p1
 
 %build
+%ifarch %e2k
+export ARCH=e2k
+%endif
 %cmake_insource \
+   -DBUILD_TESTING=%{?_enable_check:ON}%{?!_enable_check:OFF} \
    -DCMAKE_MODULE_PATH=%_libdir/cmake \
    -DBUILD_SHARED_LIBS=ON \
    -DOTELCPP_VERSIONED_LIBS=ON \
@@ -72,6 +83,9 @@ The OpenTelemetry C++ Client.
 
 
 %changelog
+* Mon Jul 07 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.0.25-alt0.2
+- e2k build fix
+
 * Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.17.0.25-alt0.1
 - ^ 1.13.0 > 1.17.0p25
 
