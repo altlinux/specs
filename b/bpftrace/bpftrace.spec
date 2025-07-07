@@ -7,7 +7,7 @@
 
 Name: bpftrace
 Version: 0.23.3
-Release: alt1
+Release: alt2
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -20,7 +20,7 @@ Url: https://github.com/bpftrace/bpftrace
 # PR: http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
 
 Source: %name-%version.tar
-ExclusiveArch:	x86_64 aarch64 loongarch64
+ExclusiveArch:	x86_64 aarch64 loongarch64 riscv64
 
 %define llvm_ver 19
 %define llvm_pkgver %llvm_ver.1
@@ -137,6 +137,9 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.23.3-alt2
+- NMU: build on riscv64
+
 * Fri May 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.23.3-alt1
 - Update to v0.23.3 (2025-05-22).
 - spec: Switch build to Clang/LLVM 19.

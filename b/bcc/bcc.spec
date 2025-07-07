@@ -3,16 +3,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%ifarch loongarch64
-%def_without check
-%else
 %def_with check
-%endif
 
 # Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
 # Lua jit is not available for some architectures
-%ifarch i586 x86_64 aarch64 loongarch64
+%ifarch i586 x86_64 aarch64 loongarch64 riscv64
 %def_with luajit
 %else
 %def_without luajit
@@ -20,7 +16,7 @@
 
 Name:		bcc
 Version: 0.35.0
-Release: alt1
+Release: alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -35,7 +31,7 @@ Source4: blazesym-0.tar
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
 # ppc64le: https://github.com/iovisor/bcc/issues/5172
-ExclusiveArch: x86_64 aarch64 loongarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
@@ -308,6 +304,11 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.35.0-alt2
+- NMU:
+  + build on riscv64
+  + enable checks on loongarch64
+
 * Fri May 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.35.0-alt1
 - Update to v0.35.0 (2025-05-29).
 
