@@ -1,11 +1,11 @@
-%define sover 8
+%define sover 9
 %def_enable check
 
 %define stdxx 17
 
 Name: libphonenumber
-Version: 8.13.55
-Release: alt2
+Version: 9.0.9
+Release: alt1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Mon Jul 07 2025 Yuri N. Sedunov <aris@altlinux.org> 9.0.9-alt1
+- 9.0.9
+
 * Wed Feb 26 2025 Michael Shigorin <mike@altlinux.org> 8.13.55-alt2
 - fix c++ standard version specification (ilyakurdyukov@)
 
