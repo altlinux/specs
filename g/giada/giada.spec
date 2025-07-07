@@ -1,5 +1,5 @@
 Name: giada
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Giada - Your Hardcore Loop Machine
@@ -61,6 +61,9 @@ rm -vf %buildroot{%_bindir/fltk*,%_libdir/libfltk*,%_mandir/man?/fltk*}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jul 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.1-alt1
+- 1.2.1 released
+
 * Tue Apr 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
 - 1.2.0 released
 
