@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+
 Name: diffoscope
-Version: 297
+Version: 300
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
 Group: Development/Python3
 License: GPLv3+
-Url: https://diffoscope.org/
+Url: https://diffoscope.org
 Vcs: https://salsa.debian.org/reproducible-builds/diffoscope.git
 BuildArch: noarch
 
@@ -29,10 +30,11 @@ Requires: python3(libarchive)
 Requires: python3(curses)
 
 %description
-Diffoscope will try to get to the bottom of what makes files or directories different.
-It will recursively unpack archives of many kinds and transform various binary formats
-into more human readable form to compare them. It can compare two tarballs, ISO images,
-or PDF just as easily. The differences can be shown in a text or HTML report.
+Diffoscope will try to get to the bottom of what makes files or directories
+different.  It will recursively unpack archives of many kinds and transform
+various binary formats into more human readable form to compare them. It can
+compare two tarballs, ISO images, or PDF just as easily. The differences can be
+shown in a text or HTML report.
 
 %prep
 %setup
@@ -44,7 +46,8 @@ or PDF just as easily. The differences can be shown in a text or HTML report.
 
 %install
 %pyproject_install
-install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
+install -Dm 644 doc/diffoscope.1 -t \
+  %buildroot%_man1dir
 
 %check
 %pyproject_run_pytest
@@ -56,6 +59,9 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Fri Jul 04 2025 Ivan Khanas <xeno@altlinux.org> 300-alt1
+- New version.
+
 * Tue Jun 10 2025 Ivan Khanas <xeno@altlinux.org> 297-alt1
 - New version.
 
