@@ -1,5 +1,5 @@
 Name:    kakoune
-Version: 2024.05.18
+Version: 2025.06.03
 Release: alt1
 
 Summary: Modal editor - Faster as in fewer keystrokes - Multiple selections - Orthogonal design
@@ -36,5 +36,8 @@ similar to the Vim editor (after which Kakoune was originally inspired).
 %_man1dir/kak.1.xz
 
 %changelog
+* Mon Jul 07 2025 Ilya Sorochan <k0tran@altlinux.org> 2025.06.03-alt1
+- 2024.05.18 -> 2025.06.03
+
 * Wed Jan 29 2025 Ilya Sorochan <k0tran@altlinux.org> 2024.05.18-alt1
 - Initial build.

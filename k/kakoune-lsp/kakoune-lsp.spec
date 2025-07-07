@@ -1,5 +1,5 @@
 Name:    kakoune-lsp
-Version: 18.1.2
+Version: 18.2.0
 Release: alt1
 
 Summary: Kakoune Language Server Protocol Client
@@ -53,5 +53,8 @@ EOF
 %_bindir/kak-lsp
 
 %changelog
+* Mon Jul 07 2025 Ilya Sorochan <k0tran@altlinux.org> 18.2.0-alt1
+- 18.1.2 -> 18.2.0
+
 * Wed Jan 29 2025 Ilya Sorochan <k0tran@altlinux.org> 18.1.2-alt1
 - Initial build.
