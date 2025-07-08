@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2025.04
+Version: 2025.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -42,6 +42,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
