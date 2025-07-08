@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 
 Summary: http client library for gevent
@@ -64,6 +64,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jul 08 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt1
+- Build new version.
+
 * Tue Mar 04 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.3-alt1
 - Build new version.
 - Build with check.
