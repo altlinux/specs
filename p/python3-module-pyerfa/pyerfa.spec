@@ -1,7 +1,7 @@
 %define pypi_name pyerfa
 
 Name:    python3-module-%pypi_name
-Version: 2.0.1.5
+Version: 2.0.1.6
 Release: alt1
 
 Summary: Python bindings for ERFA routines
@@ -54,5 +54,8 @@ export PYERFA_USE_SYSTEM_LIBERFA=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 08 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.1.6-alt1
+- Build new version.
+
 * Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.1.5-alt1
 - Initial build for Sisyphus.
