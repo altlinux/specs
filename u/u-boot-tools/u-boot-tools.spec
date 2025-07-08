@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2025.04
+Version: 2025.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -24,12 +24,36 @@ This package contains U-Boot tools.
 %setup
 
 %build
-%make_build DTC=%_bindir/dtc tools-only_defconfig tools-all
+%make_build DTC=%_bindir/dtc STRIP=: tools-only_defconfig tools-all
 
 %install
+HOSTPROGS="\
+asn1_compiler
+dumpimage
+env/fw_printenv
+fdt_add_pubkey
+fdtgrep
+fit_check_sign
+fit_info
+gen_eth_addr
+ifwitool
+img2srec
+kwboot
+mkeficapsule
+mkenvimage
+mkimage
+mksunxiboot
+preload_check_sign
+printinitialenv
+proftool
+sunxi-spl-image-builder"
+
 mkdir -p %buildroot%_bindir
+for f in $HOSTPROGS; do
+install -pm0755 tools/$f %buildroot%_bindir
+done
+
 install -pm0644 -D tools/env/fw_env.config %buildroot%_sysconfdir/fw_env.config
-install -pm0755 tools/{dumpimage,fdtgrep,gen_eth_addr,kwboot,mksunxiboot,mkimage,mkenvimage,env/fw_printenv} %buildroot%_bindir/
 ln -s fw_printenv %buildroot%_bindir/fw_setenv
 
 %files
@@ -37,6 +61,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
