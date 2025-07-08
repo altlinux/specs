@@ -1,13 +1,14 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 100
+%define ver_major 101
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
 %define gettext_domain dashtodock
 
-%def_enable check
+# eslint 9.x required
+%def_disable check
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
@@ -59,6 +60,10 @@ available.
 %doc README.md
 
 %changelog
+* Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 101-alt1
+- 101
+- disabled %%check due to old eslint
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 100-alt1
 - 100 (GNOME 48 supported)
 
