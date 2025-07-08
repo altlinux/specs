@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.5.43
+Version: 0.5.45
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -41,6 +41,8 @@ BuildRequires: python3-module-confluent-kafka
 BuildRequires: python3-module-aiokafka
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-nats-py
+
+BuildRequires: /proc
 %endif
 
 %description
@@ -68,6 +70,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Jul 08 2025 Egor Ignatov <egori@altlinux.org> 0.5.45-alt1
+- New version 0.5.45.
+
 * Wed Jun 25 2025 Egor Ignatov <egori@altlinux.org> 0.5.43-alt1
 - New version 0.5.43.
 
