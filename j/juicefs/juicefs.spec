@@ -1,7 +1,7 @@
 %global import_path github.com/juicedata/juicefs
 
 Name: juicefs
-Version: 1.2.3
+Version: 1.3.0
 Release: alt1
 
 Summary: Distributed POSIX file system built on top of Redis and S3
@@ -45,6 +45,9 @@ ln -s juicefs %buildroot%_bindir/mount.juicefs
 %_bindir/*
 
 %changelog
+* Tue Jul 08 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
+- v1.3.0
+
 * Mon Mar 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2.3-alt1
 - Initial build for ALT.
 
