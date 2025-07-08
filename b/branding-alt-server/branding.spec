@@ -31,13 +31,11 @@
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
 
-%define data_cur_dir %_datadir/branding-data-current
-
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt26
+Release: alt27
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -45,7 +43,7 @@ BuildRequires: libalternatives-devel
 BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
-BuildRequires: distro-licenses >= 1.3.1
+BuildRequires: distro-licenses >= 1.3.17
 
 %if "%status" != "%nil" || "%status_en" != "%nil"
 BuildRequires: fonts-ttf-dejavu
@@ -183,6 +181,7 @@ Requires: alt-editions-server
 BuildArch: noarch
 Provides:  alt-license-theme = %version alt-notes-%theme
 Obsoletes: alt-license-%theme alt-notes-%theme
+Requires:  distro-licenses >= 1.3.17
 Summary:   Distribution license and release notes
 Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
 License:   Distributable
@@ -272,7 +271,9 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
-cp /usr/share/distro-licenses/ALT_Server_License/license.{all,ru}.html.in notes/
+# Check for license exists for current version in distro-licenses
+test -f /usr/share/distro-licenses/ALT_Server_License/%version/license.all.html
+test -f /usr/share/distro-licenses/ALT_Server_License/%version/license.ru.html
 %ifarch %e2k
 # cf. rm#115880
 sed -i 's,#alt-server,&-e2k,' indexhtml/index-*.html.in
@@ -338,12 +339,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.
 [ "$1" -eq 1 ] || exit 0
 sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 
-#notes
-%post notes
-if ! [ -e %_datadir/alt-notes/license.all.html ]; then
-	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
-fi
-
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -366,12 +361,9 @@ fi
 %_sysconfdir/dconf/db/default.d/*
 
 %files notes
-%dir %data_cur_dir
-%data_cur_dir/alt-notes
 %_datadir/alt-notes/livecd-*
 %_datadir/alt-notes/release-notes.*
 %_datadir/alt-notes/final-notes.*
-%ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %files mate-settings
 %_datadir/install3/lightdm-gtk-greeter.conf
@@ -395,6 +387,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jul 08 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt27
+- Add support for building with licenses from distro-licenses only
+
 * Mon Jun 16 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt26
 - Update release-notes
 
