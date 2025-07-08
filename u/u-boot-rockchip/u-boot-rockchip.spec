@@ -1,16 +1,19 @@
 Name: u-boot-rockchip
-Version: 2025.04
-Release: alt2
+Version: 2025.07
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
 Url: https://docs.u-boot.org/en/latest/
 
+%ifndef crossbuild
 ExclusiveArch: aarch64
+%endif
 
 Source: %name-%version-%release.tar
 
+BuildRequires: aarch64-none-elf-gcc
 BuildRequires: atf-rockchip >= 2.12 rk35-firmware >= 20241023
 BuildRequires: bc ccache dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 BuildRequires: python3(libfdt)
@@ -25,17 +28,20 @@ This package supports various Rockchip based boards.
 
 %prep
 %setup
+rm configs/generic-rk33*_defconfig
+sed -i '/^CONFIG_FS_EXFAT/d' configs/*
 
 %build
 export PYTHON=python3
 export DTC=%_bindir/dtc
 export RKBIN=%_datadir/rkbin/bin/rk35
+export CROSS_COMPILE=aarch64-none-elf-
 
 buildit()
 {
   O=build/${board}
   BL31=%_datadir/atf/$1/bl31.elf \
-  %make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+  %make_build HOSTCC='ccache gcc' O=${O} ${board}_defconfig all
   mkdir -p out/${board}
   zstd ${O}/u-boot-rockchip.bin -o out/${board}/u-boot-rockchip.bin.zst
   rm -rf ${O}
@@ -68,6 +74,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Fri Jun 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt2
 - added support for two more Powkiddy RGB20 variants (closes: 54694)
 
