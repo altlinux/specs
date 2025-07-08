@@ -6,14 +6,12 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: opentoonz
-Version: 1.7.1
+Version: 1.7.1.1
 Release: alt1
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
 URL: https://opentoonz.github.io/e/
-
-#ExcludeArch: armh
 
 # https://github.com/opentoonz/opentoonz.git
 Source: %name-%version.tar
@@ -177,6 +175,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Tue Jul 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.1-alt1
+- 1.7.1 -> 1.7.1.1
+
 * Thu Jun 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1-alt1
 - 1.6.0 -> 1.7.1
 - fixed FTBFS
