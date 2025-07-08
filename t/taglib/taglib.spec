@@ -6,8 +6,8 @@
 %define libtag_c libtag_c%sover
 
 Name: taglib
-Version: 2.0.2
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Group: System/Libraries
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -122,6 +122,9 @@ __EOF__
 %_libdir/cmake/taglib/
 
 %changelog
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
+- new version
+
 * Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt2
 - switch pc-files via alternatives
 
