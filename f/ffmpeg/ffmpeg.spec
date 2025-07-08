@@ -66,7 +66,11 @@
 %def_enable libplacebo
 %def_enable libpulse
 %def_enable librabbitmq
+%ifarch %e2k
+%def_disable librav1e
+%else
 %def_enable librav1e
+%endif
 %def_enable librsvg
 %def_disable librtmp
 %def_enable librubberband
@@ -160,7 +164,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	7.1.1
-Release:	alt3
+Release:	alt4
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -859,6 +863,10 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Tue Jul 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:7.1.1-alt4
+- e2k patch update
+- e2k: built without librav1e
+
 * Thu Jun 26 2025 Anton Farygin <rider@altlinux.com> 2:7.1.1-alt3
 - built with amf support (closes: #54937)
 - built with opencl support
