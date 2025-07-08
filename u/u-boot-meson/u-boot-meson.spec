@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2025.04
+Version: 2025.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -7,10 +7,13 @@ License: GPLv2+
 Group: System/Kernel and hardware
 Url: https://docs.u-boot.org/en/latest/
 
+%ifndef crossbuild
 ExclusiveArch: aarch64
+%endif
 
 Source: %name-%version-%release.tar
 
+BuildRequires: aarch64-none-elf-gcc
 BuildRequires: bc ccache dtc >= 1.7 flex libgnutls-devel libssl-devel libuuid-devel
 
 %description
@@ -24,10 +27,11 @@ This package supports various AMLogic Meson family boards.
 
 %build
 export DTC=%_bindir/dtc
+export CROSS_COMPILE=aarch64-none-elf-
 boards=$(grep -lr ARCH_MESON configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do
 	O=build/${board}
-	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+	%make_build HOSTCC='ccache gcc' O=${O} ${board}_defconfig all
 	install -pm0644 -D ${O}/u-boot.bin out/${board}/u-boot.bin
 done
 
@@ -41,6 +45,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
