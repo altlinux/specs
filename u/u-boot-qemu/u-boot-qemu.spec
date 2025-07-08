@@ -1,12 +1,12 @@
 Name: u-boot-qemu
-Version: 2025.04
+Version: 2025.07
 Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
 
-ExclusiveArch: armh aarch64 %ix86 x86_64 riscv32 riscv64 ppc64
+ExclusiveArch: aarch64 %ix86 x86_64 riscv32 riscv64
 
 Source: %name-%version-%release.tar
 
@@ -20,9 +20,6 @@ other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
 This package contains U-Boot image for QEMU virt machine.
 
-%ifarch armh
-%define qemu qemu_arm
-%endif
 %ifarch aarch64
 %define qemu qemu_arm64
 %endif
@@ -31,9 +28,6 @@ This package contains U-Boot image for QEMU virt machine.
 %endif
 %ifarch x86_64
 %define qemu qemu-x86_64
-%endif
-%ifarch ppc64
-%define qemu qemu-ppce500
 %endif
 %ifarch riscv32
 %define qemu qemu-riscv32
@@ -61,6 +55,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
