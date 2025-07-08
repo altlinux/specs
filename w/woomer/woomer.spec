@@ -1,13 +1,13 @@
 %def_enable snapshot
 
 %define _name woomer
-%define ver_major 0.1
+%define ver_major 0.2
 
 %def_disable bootstrap
 
 Name: %_name
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Zoomer application for wayland
 License: MIT
@@ -67,6 +67,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt3
 - updated to 0.1.0-15-g70c39b4
 

@@ -4,8 +4,8 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.2.3
-Release: alt2
+Version: 7.2.4
+Release: alt1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -94,6 +94,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.4-alt1
+- 7.2.4
+
 * Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.3-alt2
 - updated runtime dependencies:
   ladspa-zam-plugins -> lv2-zam-plugins (ALT #55023)
