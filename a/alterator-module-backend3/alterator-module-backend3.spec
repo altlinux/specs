@@ -1,11 +1,11 @@
 Name: alterator-module-backend3
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-module-backend3
+URL: https://altlinux.space/alterator/alterator-module-backend3
 
 BuildRequires: cmake gcc rpm-build-licenses libtomlc99-devel
 BuildRequires: libgio-devel libpolkit-devel
@@ -33,5 +33,8 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Jul 08 2025 Ivan Savin <svn17@altlinux.org> 0.1.1-alt2
+- Change the URL in the spec.
+
 * Mon Jun 09 2025 Ivan Savin <svn17@altlinux.org> 0.1.1-alt1
 - First working version.
