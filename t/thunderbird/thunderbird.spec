@@ -16,13 +16,15 @@
 
 Name: thunderbird
 Version: 140.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
 Group: Networking/Mail
 URL: https://www.thunderbird.net
 ExclusiveArch: %thunderbird_arches
+
+Packager: Ajrat Makhmutov <rauty@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: thunderbird.cpp
@@ -208,9 +210,15 @@ cat >> .mozconfig <<EOF
 ac_add_options --disable-strip
 ac_add_options --disable-install-strip
 ac_add_options --enable-debug-symbols
+%ifarch loongarch64 riscv64
+# Even without crashreporter, useful debuginfo is produced
+# on these platforms
+ac_add_options --disable-crashreporter
+%else
 # Debug symbols are not built without crashreporter:
 # "Skipping symbols generation because MOZ_CRASHREPORTER is not set".
 ac_add_options --enable-crashreporter
+%endif
 EOF
 %else
 cat >> .mozconfig <<EOF
@@ -378,6 +386,10 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 140.0-alt2
+- NMU: Disable crashreporter on loongarch64 and riscv64
+  as it does not support these architectures yet (fixes FTBFS)
+
 * Sat Jul 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 140.0-alt1
 - New version.
 - Security fixes:
