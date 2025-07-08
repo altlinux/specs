@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2025.04
+Version: 2025.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -7,13 +7,16 @@ License: GPLv2+
 Group: System/Kernel and hardware
 Url: https://docs.u-boot.org/en/latest/
 
+%ifndef crossbuild
 ExclusiveArch: aarch64
+%endif
 
 Source: %name-%version-%release.tar
 
 Provides: u-boot-sunxi64 = %version-%release
 Obsoletes: u-boot-sunxi64
 
+BuildRequires: aarch64-none-elf-gcc
 BuildRequires: atf-sunxi >= 2.12 bc ccache dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(libfdt)
@@ -32,6 +35,7 @@ See http://linux-sunxi.org/Bootable_SD_card#Bootloader for details.
 %build
 export SCP=/dev/null
 export DTC=%_bindir/dtc
+export CROSS_COMPILE=aarch64-none-elf-
 
 boards=$(grep -lr MACH_SUN50I configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do
@@ -41,7 +45,7 @@ for board in $boards; do
 		export BL31=%_datadir/atf/sun50i_h6/bl31.bin
 	grep -qF SUN50I_H616= configs/${board}_defconfig && \
 		export BL31=%_datadir/atf/sun50i_h616/bl31.bin
-	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+	%make_build HOSTCC='ccache gcc' O=${O} ${board}_defconfig all
 	install -pm0644 -D ${O}/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
 done
 
@@ -55,6 +59,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
+- 2025.07 released
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
