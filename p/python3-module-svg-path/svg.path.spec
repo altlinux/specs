@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 6.3
-Release: alt1.1
+Version: 7.0
+Release: alt1
 Summary: SVG path objects and parser
 License: MIT
 Group: Development/Python3
@@ -47,17 +47,17 @@ commands in SVG, and a parser for SVG path definitions.
 %pyproject_install
 
 %check
-# failures with pillow 10.1.0+: https://github.com/regebro/svg.path/issues/103
-%pyproject_run_pytest -vra \
---deselect=tests/test_boundingbox_image.py::BoundingBoxImageTest::test_image \
---deselect=tests/test_image.py::ImageTest::test_image \
+%pyproject_run_pytest -vra
 
 %files
-%doc README.rst CHANGES.txt CONTRIBUTORS.txt
+%doc README.*
 %python3_sitelibdir/%ns_root/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 08 2025 Stanislav Levin <slev@altlinux.org> 7.0-alt1
+- 6.3 -> 7.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.3-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
