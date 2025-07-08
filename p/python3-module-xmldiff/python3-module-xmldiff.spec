@@ -5,7 +5,7 @@
 
 Name: python3-module-xmldiff
 Version: 2.6.3
-Release: alt1
+Release: alt2
 Summary: A library and command line utility for diffing xml
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+
+Patch: %name-%version-%release.patch
 
 Provides: python3-module-%pypi_name = %EVR
 
@@ -39,6 +41,8 @@ provides tools to make human readable diffs in those situations.
 
 %prep
 %setup
+%patch -p1
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -57,5 +61,8 @@ provides tools to make human readable diffs in those situations.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 08 2025 Andrey Kovalev <ded@altlinux.org> 2.6.3-alt2
+- Fixed FTBFS: Fixed exception type in test_api_diff_texts.
+
 * Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 2.6.3-alt1
 - Initial build for Sisyphus.
