@@ -1,7 +1,7 @@
-%define libnvme_ver 1.11
+%define libnvme_ver 1.14
 
 Name: nvme
-Version: 2.12
+Version: 2.14
 Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
@@ -76,6 +76,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Tue Jul 08 2025 L.A. Kostis <lakostis@altlinux.ru> 2.14-alt1
+- 2.14.
+
 * Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 2.12-alt1
 - 2.12.
 
