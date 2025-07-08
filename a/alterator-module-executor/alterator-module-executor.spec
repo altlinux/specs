@@ -1,11 +1,11 @@
 Name: alterator-module-executor
-Version: 0.1.24
+Version: 0.1.25
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-module-executor
+URL: https://altlinux.space/alterator/alterator-module-executor
 
 BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
@@ -35,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Jul 08 2025 Ivan Savin <svn17@altlinux.org> 0.1.25-alt1
+- Add the ability to use string arrays as method parameters.
+
 * Thu Apr 17 2025 Ivan Savin <svn17@altlinux.org> 0.1.24-alt1
 - Add the ability to return an array of byte arrays as string array.
 
