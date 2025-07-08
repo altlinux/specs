@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           xmvn
 Version:        4.0.0
-Release:        alt1_8jpp11
+Release:        alt2
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -195,6 +195,7 @@ rm -f %{name}-${version}*/bin/*
 
 
 %install
+export CLASSPATH=/usr/share/java/commons-io.jar
 %mvn_install
 
 version=4.0.0
@@ -245,6 +246,9 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
+# Temporary fix for commons-io
+subst 's/commons-compress/& commons-io/' %{buildroot}%{_bindir}/%{name}-install
+
 %pre minimal
 oldpath=/usr/share/xmvn/conf/logging
 if [ -d "$oldpath" ]; then
@@ -292,6 +296,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt2
+- fix build with apache-common-io 2.19.0
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_8jpp11
 - update
 
