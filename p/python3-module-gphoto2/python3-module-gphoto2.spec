@@ -1,7 +1,7 @@
 %define pypi_name gphoto2
 
 Name: python3-module-%pypi_name
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -40,6 +40,9 @@ functions, but sometimes in a rather un-Pythonic manner.
 
 
 %changelog
+* Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Wed Jun 04 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
