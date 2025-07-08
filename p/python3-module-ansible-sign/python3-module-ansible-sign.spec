@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: The `ansible-sign` utility for signing and verifying Ansible project directory contents.
@@ -25,7 +25,8 @@ Source: %pypi_name-%version.tar
 
 %prep
 %setup -n %pypi_name-%version
-subst '/^name/a version = %version' setup.cfg
+subst 's/"version", //' pyproject.toml
+subst '/^name/a version = "%version"' pyproject.toml
 
 %build
 %pyproject_build
@@ -44,5 +45,8 @@ subst '/^name/a version = %version' setup.cfg
 %python3_sitelibdir/%{pyproject_distinfo ansible_sign}
 
 %changelog
+* Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
+- New version.
+
 * Mon Jul 22 2024 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus.
