@@ -1,7 +1,7 @@
 
 Name: maliit-keyboard
 Version: 2.3.1
-Release: alt5
+Release: alt6
 %K5init no_altplace
 
 Group: System/Libraries
@@ -68,6 +68,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/metainfo/*maliit*.xml
 
 %changelog
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt6
+- update russian translation
+
 * Mon Mar 10 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt5
 - add fix to make sure PressArea gets reset when the keyboard hides
 
