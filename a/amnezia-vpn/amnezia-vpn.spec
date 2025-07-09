@@ -4,7 +4,7 @@
 
 Name: amnezia-vpn
 Version: 4.8.7.2
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -27,6 +27,7 @@ Patch1: %name-openvpn-exec-path.patch
 Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
 Patch4: %name-tun2socks-exec-path.patch
+Patch5: %name-tun2-sudo.patch
 
 BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
@@ -73,6 +74,7 @@ This package contains systemd service files.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -107,10 +109,10 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %__install -Dp -m0755 deploy/data/linux/client/bin/update-resolv-conf.sh %buildroot%_libexecdir/%name/
 
 %post service
-%post_systemd AmneziaVPN.service
+%post_systemd_postponed AmneziaVPN.service
 
 %preun service
-%preun_systemd AmneziaVPN.service
+%systemd_preun AmneziaVPN.service
 
 %files client
 %doc README.md
@@ -124,6 +126,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Wed Jul 09 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.7.2-alt2
+- Fix interface tun2 with XRay (ALT #53992)
+
 * Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.7.2-alt1
 - Version 4.8.7.2 (ALT #54992)
 
