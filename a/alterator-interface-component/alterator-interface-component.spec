@@ -2,12 +2,12 @@
 
 Name: alterator-interface-component
 Version: 0.1.9
-Release: alt1
+Release: alt2
 
 Summary: Components interface for alterator browser
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-interface-component
+URL: https://altlinux.space/alterator/alterator-interface-component
 
 BuildArch: noarch
 
@@ -68,6 +68,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.9-alt2
+- Actualize URL of repository.
+
 * Mon Mar 31 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.9-alt1
 - Filter using DEs, language and kflavour from system.
 

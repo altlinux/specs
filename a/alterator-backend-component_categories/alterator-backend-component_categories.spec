@@ -2,12 +2,12 @@
 
 Name: alterator-backend-component_categories
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: Backend for components categories
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-backend-component_categories
+URL: https://altlinux.space/alterator/alterator-backend-component_categories
 
 BuildArch: noarch
 
@@ -63,6 +63,9 @@ install -v -p -m 755 -D component-category-description %buildroot%_libexecdir/%n
 %_datadir/polkit-1/actions/org.altlinux.alterator.component-categories1.policy
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt2
+- Actualize URL of repository.
+
 * Thu May 22 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
 - Add Description method
 - Support categories directories

@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-categories
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Backend for Alterator categories
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-backend-categories
+URL: https://altlinux.space/alterator/alterator-backend-categories
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ Requires: alterator-interface-categories
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-entry >= 0.2.0
-Requires: bash
+Requires: python3
 
 %package -n alterator-interface-categories
 Summary: Interface for Alterator categories
@@ -62,6 +62,9 @@ install -v -p -m 644 -D org.altlinux.alterator.categories.policy %buildroot%_dat
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.categories.xml
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.4-alt1
+- Fix order of categories (thx Andrey Alekseev).
+
 * Sat Jan 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Rewrite scripts in python.
 

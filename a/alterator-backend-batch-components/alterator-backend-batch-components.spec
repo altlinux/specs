@@ -2,12 +2,12 @@
 
 Name: alterator-backend-batch-components
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Alterator backends for getting information about all components
 License: GPLv3
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-backend-batch_components
+URL: https://altlinux.space/alterator/alterator-backend-batch_components.git
 
 BuildArch: noarch
 Source0: %name-%version.tar
@@ -40,6 +40,9 @@ Requires: alterator-backend-systeminfo
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Mon Jul 07 2025 Pavel Khromov <hromovpi@altlinux.org> 0.3-alt2
+- Change URL
+
 * Thu May 15 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
 - Remove unused imports and clean up batch_status.py
 - Remove %_alterator_datadir macro and hardcode path

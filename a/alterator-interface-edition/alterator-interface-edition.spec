@@ -2,12 +2,12 @@
 
 Name: alterator-interface-edition
 Version: 0.1.5
-Release: alt3
+Release: alt4
 
 Summary: Alterator interface for edition
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-interface-edition
+URL: https://altlinux.space/alterator/alterator-interface-edition
 
 BuildArch: noarch
 Source: %name-%version.tar
@@ -86,6 +86,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt4
+- Actualize URL of repository.
+
 * Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.5-alt3
 - Avoid to try-restart alterator-manager.service due new release supported
   dynamic restart based on inotify.

@@ -1,12 +1,12 @@
 Name: alterator-interface-diag
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: XML files for org.altlinux.alterator.diag interface
 License: GPLv2+
 Group: Other
 Obsoletes: alterator-interface-diag1
-URL: https://gitlab.basealt.space/alt/altrerator-interface-diag
+URL: https://altlinux.space/alterator/alterator-interface-diag
 
 BuildArch: noarch
 
@@ -27,6 +27,9 @@ install -p -m 644 -D org.altlinux.alterator.diag1.policy %buildroot%_datadir/pol
 %_datadir/polkit-1/actions/org.altlinux.alterator.diag1.policy
 
 %changelog
+* Mon Jul 07 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt2
+- change URL in .spec file
+
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
 - change prefix from ru.basealt to org.altlinux
 

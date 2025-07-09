@@ -2,12 +2,12 @@
 
 Name: alterator-interface-application
 Version: 0.1.1
-Release: alt3
+Release: alt4
 
 Summary: Local applications interface for alterator browser.
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-interface-application
+URL: https://altlinux.space/alterator/alterator-interface-application
 
 BuildArch: noarch
 
@@ -31,6 +31,9 @@ install -v -p -m 644 -D org.altlinux.alterator.application.policy %buildroot%_da
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.application.xml
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.1-alt4
+- actualize URL of repository
+
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt3
 - change prefix from ru.basealt to org.altlinux
 

@@ -2,12 +2,12 @@
 
 Name: adt
 Version: 0.1.11
-Release: alt1
+Release: alt2
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
 Group: Other
-Url: https://gitlab.basealt.space/alt/adt
+Url: https://altlinux.space/alterator/adt
 
 Provides: alterator-application-diagnostic-tool
 
@@ -63,6 +63,9 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Jul 07 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.11-alt2
+- fix URL in .spec file
+
 * Wed May 21 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.11-alt1
 - implemented parameters for the tool
 

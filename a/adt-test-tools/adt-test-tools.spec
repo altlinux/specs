@@ -2,12 +2,12 @@
 
 Name: adt-test-tools
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Test tools for ADT.
 License: GPLv2+
 Group: Other
-URL: https://github.com/AlexSP0/adt-test-tools
+URL: https://altlinux.space/alterator/adt-test-tools
 
 BuildArch: noarch
 
@@ -87,6 +87,9 @@ install -v -p -m 644 -D diagnostic_tool4_user.diag %buildroot%_datadir/alterator
 %_datadir/alterator/diagnostic_tool4_user/diagnostic_tool4_user.diag
 
 %changelog
+* Mon Jul 07 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.8-alt2
+- fix URL in .spec file
+
 * Wed May 21 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.8-alt1
 - implemented parameters for the tool
 

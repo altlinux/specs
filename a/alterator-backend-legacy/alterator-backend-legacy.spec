@@ -2,12 +2,12 @@
 
 Name: alterator-backend-legacy
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: Alterator manager backends generator for old alterator modules
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-backend-legacy
+URL: https://altlinux.space/alterator/alterator-backend-legacy
 
 Source0: %name-%version.tar
 
@@ -101,6 +101,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.6-alt2
+- Actualize URL of repository.
+
 * Fri Mar 28 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.6-alt1
 - chore: removed filetrigger and updated required manager version
 - fix: load translation correctly (thx Andrey Alekseev)
