@@ -1,5 +1,5 @@
 Name: git
-Version: 2.42.4
+Version: 2.50.1
 Release: alt1
 
 Summary: Git core and tools
@@ -539,6 +539,31 @@ popd
 %endif #doc
 
 %changelog
+* Mon Jun 16 2025 Dmitry V. Levin <ldv@altlinux.org> 2.50.1-alt1
+- 2.49.1 -> 2.50.1.
+
+* Fri Jun 13 2025 Dmitry V. Levin <ldv@altlinux.org> 2.49.1-alt1
+- 2.48.2 -> 2.49.1.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.48.2-alt1
+- 2.47.3 -> 2.48.2.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.47.3-alt1
+- 2.46.4 -> 2.47.3.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.46.4-alt1
+- 2.45.4 -> 2.46.4.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.45.4-alt1
+- 2.44.4 -> 2.45.4.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.44.4-alt1
+- 2.43.7 -> 2.44.4.
+
+* Wed May 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.43.7-alt1
+- 2.42.4 -> 2.43.7 (fixes: CVE-2025-27613, CVE-2025-27614,
+  CVE-2025-46835, CVE-2025-48384, CVE-2025-48385, CVE-2025-48386).
+
 * Tue Nov 26 2024 Dmitry V. Levin <ldv@altlinux.org> 2.42.4-alt1
 - 2.42.2 -> 2.42.4 (fixes: CVE-2024-50349, CVE-2024-52006).
 
