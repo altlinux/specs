@@ -4,7 +4,7 @@
 
 Name: gearlever
 Version: 3.3.3
-Release: alt1
+Release: alt2
 
 Summary: Manage AppImages
 License: GPL-3.0-or-later
@@ -13,8 +13,7 @@ Group: Graphical desktop/GNOME
 Url: https://mijorus.it/projects/gearlever/
 Vcs: https://github.com/mijorus/gearlever
 Source: %name-%version.tar
-
-Patch0: gearlever-3.3.3-alt-fix_get_appimage_offset_path.patch
+Patch: %name-%version-%release.patch
 
 %add_python3_path %_datadir/%name
 
@@ -23,6 +22,7 @@ Patch0: gearlever-3.3.3-alt-fix_get_appimage_offset_path.patch
 AutoProv: nopython3
 
 Requires: p7zip
+Requires: 7-zip
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-python3
@@ -45,7 +45,7 @@ app metadata, update apps in-place or keep multiple versions side-by-side.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %meson
@@ -71,6 +71,10 @@ install -Dm755 "build-aux/get_appimage_offset.sh" "%buildroot%_libexecdir/%name/
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Wed Jul 09 2025 Semen Fomchenkov <armatik@altlinux.org> 3.3.3-alt2
+- Remove user manual (ALT #55037).
+- Added 7-zip dependency (ALT #55043).
+
 * Wed Jun 25 2025 Semen Fomchenkov <armatik@altlinux.org> 3.3.3-alt1
 - New version 3.3.3
 
