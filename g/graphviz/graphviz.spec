@@ -24,7 +24,7 @@
 
 Name: graphviz
 Version: 12.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -56,7 +56,7 @@ Requires: lib%name = %version-%release
 Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
 
-BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel libgd2-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript
+BuildRequires: flex gcc-c++ groff-base imake libXaw-devel libXpm-devel libann-devel libexpat-devel swig tk-devel xorg-cf-files libltdl-devel qpdf libgs-devel ghostscript
 BuildRequires: groff-ps
 
 %{?!_with_bootstrap:BuildRequires: ghostscript-utils libfreeglut-devel libglade-devel libgs-devel libgtkglext-devel libgts-devel liblasi-devel librsvg-devel}
@@ -372,6 +372,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Thu Jul 10 2025 Grigory Ustinov <grenka@altlinux.org> 12.2.1-alt1.1
+- NMU: Fixed FTBFS
+
 * Fri May 23 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 12.2.1-alt1
 - Update to upstream 12.2.1
 
