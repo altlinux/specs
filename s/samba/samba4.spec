@@ -128,7 +128,7 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.21.6
+Version: 4.21.7
 Release: alt1
 
 Group:   System/Servers
@@ -2375,6 +2375,14 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Wed Jul 09 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt1
+- Update to maintenance release of Samba 4.21
+- Major fixes from upstream (Samba#15876, Samba#15680):
+   + Windows security hardening locks out schannel'ed netlogon dc
+     calls like netr_DsRGetDCName.
+   + Trust domains are not created.
+- winbind: Fix running in interactive mode (thx Samuel Cabrero)
+
 * Tue Jun 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.6-alt1
 - Update to maintenance release of Samba 4.21
 - Security fixes (Samba#15707):
