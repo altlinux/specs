@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20250627
+Version: 20250708
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -29,8 +29,8 @@ required for some devices to operate.
 %package netronome
 Group: System/Kernel and hardware
 Summary: firmware for Agilio SmartNICs
-AutoReqProv: no
-AutoReq: symlinks
+AutoProv: no
+AutoReq: no symlinks
 
 %description netronome
 firmware for Agilio SmartNICs
@@ -38,8 +38,8 @@ firmware for Agilio SmartNICs
 %package liquidio
 Group: System/Kernel and hardware
 Summary: firmware for LiquidIO Smart NICs
-AutoReqProv: no
-AutoReq: symlinks
+AutoProv: no
+AutoReq: no symlinks
 
 %description liquidio
 firmware for LiquidIO II Smart NICs
@@ -47,8 +47,8 @@ firmware for LiquidIO II Smart NICs
 %package qcom
 Group: System/Kernel and hardware
 Summary: firmware for Qualcomm platforms
-AutoReqProv: no
-AutoReq: symlinks
+AutoProv: no
+AutoReq: no symlinks
 
 %description qcom
 firmware for Qualcomm platforms (most of it)
@@ -56,8 +56,8 @@ firmware for Qualcomm platforms (most of it)
 %package mrvl
 Group: System/Kernel and hardware
 Summary: firmware for Marvell Prestera
-AutoReqProv: no
-AutoReq: symlinks
+AutoProv: no
+AutoReq: no symlinks
 
 %description mrvl
 firmware for Marvell Prestera switchdev
@@ -65,8 +65,8 @@ firmware for Marvell Prestera switchdev
 %package mellanox
 Group: System/Kernel and hardware
 Summary: firmware for Mellanox Spectrum
-AutoReqProv: no
-AutoReq: symlinks
+AutoProv: no
+AutoReq: no symlinks
 
 %description mellanox
 firmware for Mellanox Spectrum switchdev
@@ -78,7 +78,7 @@ awk /mellanox/ RS=^-{74} WHENCE > LICENSE.Mellanox
 %install
 DESTDIR=%buildroot FIRMWAREDIR=lib/firmware %make_build install-xz
 du -shc %buildroot/lib/firmware
-hardlink -y memcmp -cv %buildroot/lib/firmware
+hardlink -y memcmp -c %buildroot/lib/firmware
 
 ## *TODO* check these too
 rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
@@ -140,6 +140,9 @@ end
 /lib/firmware/mellanox
 
 %changelog
+* Wed Jul 09 2025 Vitaly Chikunov <vt@altlinux.org> 20250708-alt1
+- Update to 20250708 (2025-07-08).
+
 * Sat Jun 28 2025 Vitaly Chikunov <vt@altlinux.org> 20250627-alt1
 - Update to 20250627 (2025-06-27).
 
