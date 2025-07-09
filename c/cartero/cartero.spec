@@ -1,7 +1,7 @@
 %define xdg_name es.danirod.Cartero
 
 Name: cartero
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 License: GPL-3.0
 
@@ -58,13 +58,16 @@ export LDFLAGS="-L%_libdir -lcurl"
 %_bindir/%name
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/mime/packages/%xdg_name.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/hicolor/*/mimetypes/*.svg
 
 %changelog
+* Wed Jul 09 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.3-alt1
+- new version 0.2.3 (with rpmrb script)
+
 * Thu May 01 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.2-alt1
 - new version 0.2.2 (with rpmrb script)
 
