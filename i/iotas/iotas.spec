@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 0.11
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -23,7 +23,7 @@ Source: https://gitlab.gnome.org/World/iotas/-/archive/%version/%name-%version.t
 Source: %name-%version.tar
 %endif
 
-%define adw_ver 1.6
+%define adw_ver 1.7
 %define gtksource_ver 5.6
 
 Requires: python3-module-pygobject3
@@ -31,6 +31,7 @@ Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(WebKit) = 6.0
 Requires: dconf gnome-keyring
+Requires: pandoc
 
 BuildArch: noarch
 
@@ -41,7 +42,10 @@ BuildRequires: meson
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gtksourceview-5) >= %gtksource_ver
-%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
+%{?_enable_check:BuildRequires: python3-module-pygobject3 python3(pytest)
+BuildRequires: python3(markdown_it) python3(mdit_py_plugins) python3(pypandoc)
+BuildRequires: typelib(Adw) = 1 typelib(GtkSource) = 5 typelib(WebKit) = 6.0
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Iotas is a simple note taking app with mobile-first design and a focus
@@ -59,6 +63,7 @@ on sync with Nextcloud Notes.
 %find_lang --with-gnome --output=%name.lang %name
 
 %check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %__meson_test
 
 %files -f %name.lang
@@ -72,13 +77,17 @@ on sync with Nextcloud Notes.
 %_datadir/gtksourceview-5/styles/%name-*.xml
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
+%doc README* CHANGELOG*
 
 %changelog
+* Wed Jul 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1-30-gd357226
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
