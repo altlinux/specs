@@ -3,9 +3,14 @@
 # Some algorithms needed by tools disabled for now
 %def_disable tools
 %def_enable static
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%def_enable tests
+%else
+%def_disable tests
+%endif
 
 Name: leancrypto
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Cryptographic library with stack-only support and PQC-safe algorithms
@@ -123,6 +128,7 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 	-Daes_block=disabled -Daes_cbc=disabled -Daes_ctr=disabled \
 	-Daes_kw=disabled \
 	%{subst_enable_meson_feature tools apps} \
+	%{subst_enable_meson_feature tests tests} \
 	-Dstrip=false
 
 %meson_build -v
@@ -164,6 +170,9 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 %endif
 
 %changelog
+* Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Wed Apr 02 2025 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - Don't package fips variant.
 - Updated to 1.3.0.

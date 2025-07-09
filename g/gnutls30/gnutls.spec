@@ -3,14 +3,13 @@
 %define libgnutls_openssl_soname 27
 
 # For dlopen()-ed libraries soname check
-%define liboqs_soname 7
 %define libz_soname 1
 %define libbrotlienc_soname 1
 %define libbrotlidec_soname 1
 %define libzstd_soname 1
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.9
+Version: 3.8.10
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -28,7 +27,6 @@ Patch11: tests-Fix-work-with-ALT-faketime.patch
 Patch12: Use-python3.patch
 Patch13: Pass-path-to-static-leancrypto-library-as-argument.patch
 
-%def_without liboqs
 %def_with leancrypto
 %def_enable certcompress
 
@@ -40,7 +38,6 @@ Patch13: Pass-path-to-static-leancrypto-library-as-argument.patch
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
 BuildRequires: libidn2-devel libunistring-devel
 BuildRequires: libnettle-devel >= 3.6-alt1
-%{?_with_liboqs:BuildRequires: liboqs-devel}
 %{?_with_leancrypto:BuildRequires: libleancrypto-devel-static}
 %{?_enable_certcompress:BuildRequires: zlib-devel libbrotli-devel libzstd-devel}
 
@@ -236,11 +233,6 @@ check_lib_soname() {
 	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
-%if_with liboqs
-	--with-liboqs=dlopen \
-%else
-	--without-liboqs \
-%endif
 %if_with leancrypto
 	--with-leancrypto=%_libdir/libleancrypto.a \
 %else
@@ -256,10 +248,6 @@ check_lib_soname() {
 	--without-zstd \
 %endif
 	--docdir=%_docdir/gnutls-%version/
-
-%if_with liboqs
-check_lib_soname oqs %liboqs_soname
-%endif
 
 %if_enabled certcompress
 check_lib_soname z %libz_soname
@@ -343,6 +331,12 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 3.8.10-alt1
+- Updated leancrypto static patch.
+- Dropped liboqs support.
+- Updated to 3.8.10 (fixes: CVE-2025-32990, CVE-2025-32988,
+  CVE-2025-32989, CVE-2025-6395).
+
 * Fri Feb 21 2025 Mikhail Efremov <sem@altlinux.org> 3.8.9-alt1
 - Enabled leancrypto support.
 - Disabled liboqs support.
