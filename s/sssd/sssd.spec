@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.7
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -26,7 +26,8 @@ Source8: sssd-default.conf
 Patch: %name-%version-alt.patch
 
 # Determine the location of the LDB modules directory
-%define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
+%define ldb_modulesdir_alternative %(pkg-config --variable=modulesdir ldb)
+%define ldb_modulesdir %(readlink -f %ldb_modulesdir_alternative)
 %define ldb_modversion %(pkg-config --modversion ldb)
 
 %define nfsidmapdir %_libdir/libnfsidmap
@@ -50,6 +51,7 @@ Patch: %name-%version-alt.patch
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
 Requires: libldb-abi = %ldb_modversion
+Requires: libldb-modules-ldap
 
 Requires: libkrb5 >= 1.14.4-alt2
 
@@ -555,6 +557,9 @@ cp %buildroot%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir %buildroot%_sysco
 mkdir -p %buildroot/%_altdir
 printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\t20\n' > %buildroot%_altdir/cifs-idmap-plugin-sss
 
+[ "%ldb_modulesdir_alternative" == "%ldb_modulesdir" ] ||
+    mv %buildroot/%ldb_modulesdir_alternative %buildroot/%ldb_modulesdir
+
 %if_disabled systemtap
 # Clean manpages l10n
 rm -f %buildroot/%_mandir/*/man5/sssd-systemtap.5*
@@ -917,6 +922,11 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Jul 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt2
+- Fix target directory of module /usr/lib64/samba/ldb/memberof.so installed into
+  symlinked alternative directory /usr/lib64/samba/ldb.mit from
+  libldb-modules-ldap (closes: 54914).
+
 * Mon Jun 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt1
 - Compatibility prepare for libldb-abi provide from newest samba 4.21 releases.
 - Update to latest 2.9 LTM release:
