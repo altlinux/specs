@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Installer configuration (Virtualization ONE)
 License: GPLv2
@@ -51,6 +51,7 @@ Requires: alterator-net-general
 Requires: alterator-notes
 Requires: installer-feature-online-repo
 Requires: installer-feature-powerbutton-stage3
+Requires: installer-feature-systemd-resolved-link-stage3
 
 %description stage3
 This package contains installer configuration hopefully suitable
@@ -76,5 +77,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jul 09 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.2
+- Add requires to systemd-resolved symlink installer feature,
+  so now /etc/resolv.conf will be managed by systemd-resolved
+  in installed system
+
 * Tue Jun 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0.0-alt0.1
 - Initial build, based on installer-distro-alt-server-v.
