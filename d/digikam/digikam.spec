@@ -19,8 +19,8 @@ Name: %rname
 %define ver_major 8
 %define ver_minor 5
 %define ver_bugfix 0
-Version: 8.6.0
-Release: alt3
+Version: 8.7.0
+Release: alt1
 %K6init no_altplace
 
 %define sover %version
@@ -56,14 +56,11 @@ Source3: doc-translated.tar
 Source6: CMakeLists.txt
 #
 Source10: mysql_install_db
-# upstream
-Patch1: kdebug-504902.patch
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
 Patch102: fix-segfault-on-action-search.patch
 Patch103: alt-kf-deps.patch
-Patch104: digikam-fix-qt6.9-build.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-ifver rpm-macros-qt6-webengine libopencv-devel
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
@@ -181,13 +178,10 @@ Development files for %label.
 %setup -n %rname-%version -c -a1 -a2 -a3
 mv %rname-%version core
 pushd core
-%patch1 -p2
-#
 %patch100 -p1
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
-%patch104 -p2
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -227,6 +221,7 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
     -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
     -DENABLE_APPSTYLES=ON \
+    -DENABLE_GEOLOCATION=OFF \
     -DBUILD_TESTING=OFF \
     -DENABLE_OPENCV3=%{?_enable_opencv3:ON}%{!?_enable_opencv3:OFF} \
     #
@@ -292,6 +287,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt1
+- new version
+
 * Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 8.6.0-alt3
 - fix to build with Qt-6.9
 
