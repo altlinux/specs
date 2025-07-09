@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt96
+Release: alt97
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -608,6 +608,9 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Wed Jul 02 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.5.15lorg2-alt97
+- Increased the pkgpriorities buffer size from 32*1024 to 128*1024 (Closes: #55057).
+
 * Wed May 21 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt96
 - Added support for HTTPS connections through an HTTP proxy (ALT#38543).
   (Backported from Debian 1.5_alpha4~9.) (To come next: through HTTPS proxy.)
