@@ -3,7 +3,7 @@
 
 Name: grpc
 Version: 1.70.1
-Release: alt1
+Release: alt1.1
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -318,6 +318,11 @@ export CFLAGS="%optflags"
 %py3_build
 %endif
 
+%ifarch %e2k
+# error: cpio archive too big - 5000M
+strip --strip-debug %_cmake__builddir/libgrpc{,_*}.so.*
+%endif
+
 %install
 %cmake_install
 %ruby_install
@@ -417,6 +422,9 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 %_bindir/grpc_tools_ruby_protoc
 
 %changelog
+* Mon Jul 07 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.70.1-alt1.1
+- e2k build fix
+
 * Fri Feb 21 2025 Paul Wolneykien <manowar@altlinux.org> 1.70.1-alt1
 - NMU: Update to v1.70.1.
 - NMU: Install third-party libraries to %_libdir/grpc.
