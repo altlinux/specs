@@ -7,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 0.5.11
+Version: 0.5.12
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -91,6 +91,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.12-alt1
+- Updated to 0.5.12.
+
 * Wed Dec 18 2024 Mikhail Efremov <sem@altlinux.org> 0.5.11-alt1
 - Enabled tests again.
 - Dropped intltool from BR.
