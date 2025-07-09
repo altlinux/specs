@@ -2,11 +2,12 @@
 
 Name: alterator-manager
 Version: 0.1.29
-Release: alt2
+Release: alt3
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
 Group: System/Configuration/Other
+URL: https://altlinux.space/alterator/alterator-manager
 
 BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
@@ -86,6 +87,10 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Wed Jul 09 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt3
+- Update docs/README-ru.md.
+- Add URL to the spec.
+
 * Tue Jun 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt2
 - Update docs/README-ru.md.
 
