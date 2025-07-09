@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.15.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,9 @@ done
 find . -type f -name '*.svg' | xargs sed -i 's/ColorScheme-Accent/ColorScheme-Highlight/'
 
 %build
+%if "%_lib" == "lib"
+export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-overheads"
+%endif
 %K6build \
     -DBINARY_ICONS_RESOURCE:BOOL=ON \
     #
@@ -158,6 +161,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt2
+- reduce memory usage when build on ix86
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
 - new version
 
