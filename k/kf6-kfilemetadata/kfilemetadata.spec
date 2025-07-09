@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init no_altplace
 
@@ -15,7 +15,7 @@ License: LGPL-2.1-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-multimedia-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel qt6-multimedia-devel
 BuildRequires: ebook-tools-devel libpoppler-qt6-devel taglib-devel
 %if_enabled exiv2
 BuildRequires: libexiv2-devel
@@ -80,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

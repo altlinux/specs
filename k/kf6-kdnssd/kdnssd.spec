@@ -1,7 +1,7 @@
 %define rname kdnssd
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -15,8 +15,8 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Feb 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt6-core libqt6-dbus libqt6-network libqt6-xml libstdc++-devel python-base qt6-base-devel qt6-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ libavahi-devel python-module-google qt6-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ libavahi-devel qt6-tools-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules libavahi-devel qt6-tools-devel
 
 %description
 KDNSSD is a library for handling the DNS-based Service Discovery Protocol
@@ -72,6 +72,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

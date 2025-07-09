@@ -1,7 +1,7 @@
 %define rname kservice
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -13,8 +13,8 @@ License: LGPL-2.0-or-later
 Source: %rname-%version.tar
 Patch1: alt-skip-antikde-mimeapps-list.patch
 
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: docbook-style-xsl flex bison
 BuildRequires: kf6-karchive-devel kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kcrash-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-kdoctools kf6-kdoctools-devel
@@ -80,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

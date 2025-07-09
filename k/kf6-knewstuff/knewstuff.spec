@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init no_altplace
 
@@ -17,7 +17,7 @@ Patch1: alt-check-ghns-auth.patch
 Patch2: alt-warning.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel qt6-tools-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 BuildRequires: kf6-attica-devel kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel
 BuildRequires: kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kglobalaccel-devel kf6-kguiaddons-devel
@@ -105,6 +105,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

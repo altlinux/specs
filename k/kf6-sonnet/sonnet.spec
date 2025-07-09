@@ -1,7 +1,7 @@
 %define rname sonnet
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -15,8 +15,8 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt6-core libqt6-gui libqt6-test libqt6-widgets libqt6-xml libstdc++-devel python-base qt6-base-devel qt6-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ libhunspell-devel python-module-google qt6-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt6-tools-devel qt6-declarative-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: libhunspell-devel
 
 %description
@@ -86,6 +86,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

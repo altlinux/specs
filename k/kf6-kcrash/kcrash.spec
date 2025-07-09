@@ -1,7 +1,7 @@
 %define rname kcrash
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -14,7 +14,8 @@ Source: %rname-%version.tar
 Patch: alt-catch-sigterm.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel kf6-kcoreaddons-devel kf6-kwindowsystem-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kwindowsystem-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel
 BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
@@ -73,6 +74,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

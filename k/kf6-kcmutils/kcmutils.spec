@@ -1,7 +1,7 @@
 %define rname kcmutils
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -12,8 +12,8 @@ License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -95,6 +95,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

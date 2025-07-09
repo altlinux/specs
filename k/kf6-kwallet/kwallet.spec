@@ -3,8 +3,8 @@
 %def_enable ksecretd
 
 Name: kf6-%rname
-Version: 6.14.1
-Release: alt3
+Version: 6.15.0
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -23,10 +23,9 @@ Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
 Patch4: alt-fdo-secrets-ksecretd.patch
 Patch5: alt-fdo-secrets-kwallet.patch
-Patch6: alt-fix-start-kwalletmanager.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules glibc-devel qt6-base-devel qt6-declarative-devel
+BuildRequires: extra-cmake-modules glibc-devel qt6-tools-devel qt6-declarative-devel
 BuildRequires: libgcrypt-devel libgpgme-devel libassuan-devel libsecret-devel
 BuildRequires: boost-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
@@ -82,7 +81,6 @@ KF6 library
 %else
 %patch5 -p1
 %endif
-%patch6 -p1
 
 msgcat --use-first po/ru/kwalletd6.po %SOURCE1 > po/ru/kwalletd6.po.tmp
 cat po/ru/kwalletd6.po.tmp >po/ru/kwalletd6.po
@@ -148,6 +146,9 @@ __EOF__
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.1-alt3
 - fix launch kwalletmanager
 

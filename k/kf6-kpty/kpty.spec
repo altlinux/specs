@@ -4,7 +4,7 @@
 %define helperpath %_libexecdir/utempter/utempter
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -18,11 +18,12 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt6-core libqt6-test libstdc++-devel python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf6-kcoreaddons-devel kf6-ki18n-devel libutempter-devel python-module-google qt6-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf6
 %if_enabled utempter
 BuildRequires: libutempter-devel
 %endif
-BuildRequires: extra-cmake-modules gcc-c++ kf6-kcoreaddons-devel kf6-ki18n-devel qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel
 
 %description
 This library provides primitives to interface with pseudo terminal devices
@@ -88,6 +89,9 @@ sed -i '/find_file.*UTEMPTER_EXECUTABLE/s/UTEMPTER_EXECUTABLE/UTEMPTER_EXECUTABL
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

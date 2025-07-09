@@ -1,7 +1,7 @@
 %define rname knotifications
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -14,7 +14,7 @@ License: LGPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: extra-cmake-modules
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel
 BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
@@ -60,7 +60,9 @@ KF6 library
 %setup -n %rname-%version
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -83,6 +85,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

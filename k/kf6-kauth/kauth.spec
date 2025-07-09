@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): python3-module-sip-devel python3-module-PyQt6-devel
 BuildRequires: python3-module-kcoreaddons-devel
 %endif
-BuildRequires: extra-cmake-modules gcc-c++ kf6-kcoreaddons-devel kf6-kwindowsystem-devel libpolkitqt6-qt6-devel qt6-tools-devel
+BuildRequires: extra-cmake-modules kf6-kcoreaddons-devel kf6-kwindowsystem-devel libpolkitqt6-qt6-devel qt6-tools-devel
 
 %description
 KAuth provides a convenient, system-integrated way to offload actions that need
@@ -103,6 +103,7 @@ sed -i 's|PythonModuleGeneration|PythonModuleGeneration_DISABLED|' src/CMakeList
 
 %build
 %K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
     -DKAUTH_BACKEND_NAME=PolkitQt6-1 \
     #
 
@@ -142,6 +143,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

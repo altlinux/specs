@@ -5,8 +5,8 @@
 %define libkuriikwsfiltereng_private libkuriikwsfiltereng_private%sover
 
 Name: kf6-%rname
-Version: 6.14.0
-Release: alt2
+Version: 6.15.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -113,8 +113,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-
+#%patch5 -p1
 %if_enabled streebog
 %patch10 -p2 -b .streebog
 %endif
@@ -176,6 +175,12 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
+* Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt3
+- fix crash (closes: 54392)
+
 * Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt2
 - fix crash (closes: 54392)
 

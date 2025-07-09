@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init no_altplace
 
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt6-devel
 %endif
-BuildRequires: extra-cmake-modules gcc-c++ qt6-wayland-devel
+BuildRequires: extra-cmake-modules qt6-wayland-devel qt6-tools-devel
 # 
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel
@@ -105,7 +105,9 @@ Sip files for python3-module-%rname
 #%patch1 -p1
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -145,6 +147,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define kdesu_user_dir %_localstatedir/%kdesu_user
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -17,7 +17,7 @@ Patch1: alt-fix-su-to-different-non-root-user.patch
 Patch2: alt-export-vars.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kpty-devel kf6-kservice-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
@@ -90,6 +90,9 @@ mkdir -p %buildroot/%kdesu_user_dir
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname solid
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -19,7 +19,7 @@ Patch1: alt-hack-repeat-unmount.patch
 # Automatically added by buildreq on Mon Jan 19 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-qml libqt6-test libqt6-widgets libqt6-xml libstdc++-devel python-base qt6-base-devel qt6-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel media-player-info python-module-google qt6-declarative-devel qt6-tools-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: libplist-devel libimobiledevice-devel libusbmuxd-devel libmount-devel
 BuildRequires: extra-cmake-modules flex bison libudev-devel qt6-declarative-devel qt6-tools-devel
 
@@ -87,6 +87,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

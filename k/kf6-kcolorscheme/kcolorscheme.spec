@@ -1,7 +1,7 @@
 %define rname kcolorscheme
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init no_altplace
 
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: qt6-base-devel qt6-declarative-devel
+BuildRequires: qt6-tools-devel qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kguiaddons-devel kf6-ki18n-devel
 
 %description
@@ -71,6 +71,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K6lib/libKF6ColorScheme.so.*
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

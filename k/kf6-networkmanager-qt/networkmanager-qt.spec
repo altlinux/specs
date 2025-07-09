@@ -1,7 +1,7 @@
 %define rname networkmanager-qt
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -13,7 +13,7 @@ License: LGPL-2.1-only OR LGPL-3.0-only
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: libnm-devel
 
 %description
@@ -71,6 +71,9 @@ KF6 library
 %_K6qml/org/kde/networkmanager/
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

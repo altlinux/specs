@@ -1,7 +1,7 @@
 %define rname syndication
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -16,7 +16,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-widgets libqt6-x11extras libqt6-xml libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel libdb4-devel python-module-google qt6-base-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
@@ -71,6 +71,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

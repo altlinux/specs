@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -10,11 +10,12 @@ Summary: KDE Frameworks 6 plugins to allow QImage to support extra file formats
 Url: http://www.kde.org
 License: LGPL-2.1-or-later
 
+Requires: %name-common >= %EVR
 
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-tools-devel
 BuildRequires: zlib-devel
 BuildRequires: openexr-devel
 BuildRequires: libavif-devel
@@ -43,6 +44,13 @@ Requires: kde-common
 %description common
 %name common package
 
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common >= %EVR
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
@@ -57,12 +65,20 @@ Requires: kde-common
 %find_lang %name --all-name
 %K6find_qtlang %name --all-name
 
-%files
+%files common
 %doc LICENSES/* README.md
+
+%files
 %_K6plug/imageformats/kimg_*.so
 #%_K6srv/qimageioplugins/
 
+%files devel
+%_libdir/cmake/KF6ImageFormats/
+
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

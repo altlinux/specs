@@ -1,7 +1,7 @@
 %define rname kunitconversion
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init altplace
 
@@ -15,8 +15,8 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt6-core libqt6-network libqt6-test libqt6-xml libstdc++-devel python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf6-ki18n-devel python-module-google qt6-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-tools-devel
 BuildRequires: kf6-ki18n-devel
 
 %description
@@ -51,7 +51,9 @@ KF6 library
 %setup -n %rname-%version
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -73,6 +75,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 

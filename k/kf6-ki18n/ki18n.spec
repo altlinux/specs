@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf6-%rname
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 %K6init no_altplace
 
@@ -21,7 +21,7 @@ Patch1: alt-fallback.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
-BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 %if_enabled python
 BuildRequires(pre): python3-module-sip-devel
 BuildRequires: python3-module-PyQt6-devel
@@ -115,7 +115,9 @@ sed -i 's|PythonModuleGeneration|PythonModuleGeneration_DISABLED|' src/CMakeList
 %endif
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -161,6 +163,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 
