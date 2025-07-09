@@ -2,7 +2,7 @@
 %def_enable gui
 
 Name: calf
-Version: 0.90.7
+Version: 0.90.8
 Release: alt1
 
 Summary: Audio plugins pack
@@ -112,6 +112,9 @@ sed -i 's@\/lib\/@/%_lib/@' src/CMakeLists.txt
 %_libdir/lv2/%name.lv2/
 
 %changelog
+* Mon Jul 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.90.8-alt1
+- 0.90.8
+
 * Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.90.7-alt1
 - 0.90.7 (ported to CMake build system)
 
