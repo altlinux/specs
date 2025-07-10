@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.0.1
+Version: 7.1.0
 Release: alt1
 
 Summary: Astronomy and astrophysics core library
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 Patch: astropy-alt-remove-tests-dependency.patch
 
 %description
-%summary
+%summary.
 
 %package tests
 Summary: Tests for %pypi_name
@@ -68,6 +68,7 @@ export ASTROPY_USE_SYSTEM_ALL=1
 %_bindir/fitsinfo
 %_bindir/samp_hub
 %_bindir/showtable
+%_bindir/showtable-astropy
 %_bindir/volint
 %_bindir/wcslint
 %python3_sitelibdir/%pypi_name/
@@ -87,5 +88,8 @@ export ASTROPY_USE_SYSTEM_ALL=1
 %python3_sitelibdir/%pypi_name/*/*/*/*/tests
 
 %changelog
+* Thu Jul 10 2025 Grigory Ustinov <grenka@altlinux.org> 7.1.0-alt1
+- Automatically updated to 7.1.0.
+
 * Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
 - Initial build for Sisyphus.
