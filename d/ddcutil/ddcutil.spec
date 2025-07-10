@@ -18,7 +18,7 @@
 %define soname 5
 
 Name: ddcutil
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -98,7 +98,8 @@ installed_modulesdir=%_modulesloaddir
 #%_udevrulesdir/60-%name-usb.rules
 %dir %_datadir/%name
 %dir %_datadir/%name/data
-%_datadir/%name/data/*rules
+%_datadir/%name/data/60-%name-i2c.rules
+%_datadir/%name/data/60-%name-usb.rules
 %_datadir/%name/data/90-nvidia-i2c.conf
 %_datadir/%name/data/nvidia-i2c.conf
 %_man1dir/%name.1*
@@ -120,6 +121,9 @@ installed_modulesdir=%_modulesloaddir
 # TODO: python subpackage?
 
 %changelog
+* Thu Jul 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
