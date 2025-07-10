@@ -11,7 +11,7 @@
 
 Name: %_name
 Version: %ver_major.4
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: Ghostty terminal emulator
 License: MIT
@@ -26,6 +26,8 @@ Source: https://release.files.ghostty.org/%version/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-vendor.tar
+
+Patch: ghostty-1.1.3-github-xkb-caps-fix.patch
 
 ExclusiveArch: %zig_arches
 
@@ -67,6 +69,8 @@ manager.
 export ZIG_GLOBAL_CACHE_DIR=zig-cache
 ./nix/build-support/fetch-zig-cache.sh
 tar -cf %_sourcedir/%name-%version%beta-vendor.tar zig-cache}
+
+%patch -p2
 
 cp -r ./vendor %_zig_cache_dir
 
@@ -121,6 +125,9 @@ EOF
 %exclude %_datadir/kio/servicemenus/%xdg_name.desktop
 
 %changelog
+* Thu Jul 10 2025 Ilya Sorochan <k0tran@altlinux.org> 1.1.4-alt0.2
+- fix xkb "caps:" option with regression patch (closes: #55017)
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt0.1
 - v1.1.2-1185-gd0f116da
 
