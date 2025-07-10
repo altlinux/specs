@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-Git-Contributors
 
 Name: perl-Dist-Zilla-Plugin-Git-Contributors
-Version: 0.037
+Version: 0.038
 Release: alt1
 
 Summary: Dist::Zilla plugin to add contributor names from git
@@ -44,10 +44,13 @@ extract it from the distribution metadata.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes CONTRIBUTING
 %perl_vendor_privlib/Dist/Zilla/Plugin/Git/Contributors*
 
 %changelog
+* Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 0.038-alt1
+- automated CPAN update
+
 * Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.037-alt1
 - New version
 
