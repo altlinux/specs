@@ -15,8 +15,8 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 140.0
-Release: alt2
+Version: 140.0.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -386,6 +386,9 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Jul 10 2025 Ajrat Makhmutov <rauty@altlinux.org> 140.0.1-alt1
+- New version.
+
 * Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 140.0-alt2
 - NMU: Disable crashreporter on loongarch64 and riscv64
   as it does not support these architectures yet (fixes FTBFS)
