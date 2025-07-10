@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: libzip
-Version: 1.10.1
+Version: 1.11.4
 Release: alt1
 
 Group: System/Libraries
@@ -97,6 +97,9 @@ make -C BUILD install DESTDIR=%buildroot
 %_man3dir/*ZIP*
 
 %changelog
+* Thu Jul 10 2025 Sergey V Turchin <zerg@altlinux.org> 1.11.4-alt1
+- new version
+
 * Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 1.10.1-alt1
 - new version
 
