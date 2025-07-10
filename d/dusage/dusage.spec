@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dusage
-Version: 0.3.6
+Version: 0.4.0
 Release: alt1
 Summary: A command line disk usage information tool
 License: MIT
@@ -48,5 +48,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Jul 10 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.0-alt1
+- Update version to 0.4.0.
+
 * Wed Nov 20 2024 Pavel Shilov <zerospirit@altlinux.org> 0.3.6-alt1
 - initial build for Sisyphus
