@@ -19,11 +19,11 @@
 # AVX=1 is AVX
 # AVX=2 is FMA
 # AVX=3/MIC=1 is AXV512
-%global makeflags STATIC=0 SYM=1 AVX=1 BLAS=1 %fortran PYTHON=%__python3 PREFIX=%_prefix POUTDIR=%_lib PPKGDIR=%_lib/pkgconfig VERSION_API=%somajor OMPLIB=-lgomp
+%global makeflags STATIC=0 SYM=1 AVX=0 BLAS=1 %fortran PYTHON=%__python3 PREFIX=%_prefix POUTDIR=%_lib PPKGDIR=%_lib/pkgconfig VERSION_API=%somajor OMPLIB=-lgomp
 
 Name: libxsmm
 Version: 1.17
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 Summary: Library for specialized dense and sparse matrix operations, and deep learning primitives
 Group: System/Libraries
 License: BSD-3-Clause
@@ -119,6 +119,9 @@ rm -r samples/cp2k/{.make,.state,cp2k-dbcsr,cp2k-collocate,cp2k-test.txt}
 %doc README.md documentation/*.md documentation/*.pdf samples CONTRIBUTING.md
 
 %changelog
+* Thu Jul 10 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17-alt2.gf60be0f1c
+- Disable AVX (should help on systems without AVX like Celerons Nxxx).
+
 * Mon May 26 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17-alt1.gf60be0f1c
 - GIT f60be0f1c.
 - Built without fortran (not needed for now).
