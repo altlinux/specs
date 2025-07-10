@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -46,6 +46,8 @@ BuildRequires: cpio gfxboot /usr/bin/fribidi
 BuildRequires: libalternatives-devel
 BuildRequires: qt6-base-devel
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
+# for licenses
+BuildRequires: distro-licenses
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
@@ -240,6 +242,9 @@ cp -ar /usr/src/design-bootloader-source ./design-bootloader-source-copy/
 sed -i 's|/usr/share/fonts/ttf/droid/|/usr/share/fonts/ttf/google-droid/|' design-bootloader-source-copy/design-bootloader-source/fonts/Makefile
 sed -i 's|/usr/src/design-bootloader-source|design-bootloader-source-copy/design-bootloader-source|' components.mk
 %endif
+
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.ru.html.in notes/
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/
 
 %build
 autoconf
@@ -492,6 +497,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jul 10 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt3
+- using license from distro-licenses package
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt2
 - don't package /etc/os-release (closes: 55060)
 
