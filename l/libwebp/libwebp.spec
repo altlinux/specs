@@ -11,7 +11,7 @@
 %define sover 7
 
 Name: libwebp
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -146,6 +146,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Jul 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
