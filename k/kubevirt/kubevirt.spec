@@ -1,9 +1,9 @@
 %define import_path github.com/kubevirt/kubevirt
 %define _unpackaged_files_terminate_build 1
-%global commit ed1e7ae8548d319fa7aacf315ad198f7241287c5
+%global commit 522b44c0ce8d1909618324cb083d69e5c7a0a234
 
 Name:          	kubevirt
-Version:       	1.3.1
+Version:       	1.5.0
 Release:       	alt1
 Summary:       	KubeVirt is a virtual machine management add-on for Kubernetes
 
@@ -137,7 +137,7 @@ The package provides Kubevirt end-to-end tests.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
+export GOFLAGS="-mod=vendor -buildmode=pie"
 export GOBIN="$BUILDDIR/bin"
 reg_path="registry.altlinux.org/sisyphus"
 
@@ -176,7 +176,6 @@ popd
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export IGNORE_SOURCES=1
-export GOFLAGS="-mod=vendor"
 
 export BUILDDIR="$PWD/.build/src/%import_path"
 mkdir -p %buildroot%_bindir
@@ -206,9 +205,6 @@ install -p -m 0644 $BUILDDIR/cmd/virt-handler/nsswitch.conf %buildroot%_datadir/
 mkdir -p %buildroot%_datadir/kube-virt/virt-launcher
 install -p -m 0644 $BUILDDIR/cmd/virt-launcher/virtqemud.conf %buildroot%_datadir/kube-virt/virt-launcher/
 install -p -m 0644 $BUILDDIR/cmd/virt-launcher/qemu.conf %buildroot%_datadir/kube-virt/virt-launcher/
-
-# virt-launcher SELinux policy needs to land in virt-handler container
-install -p -m 0644 $BUILDDIR/cmd/virt-handler/virt_launcher.cil %buildroot%_datadir/kube-virt/virt-handler/
 
 # Persistent reservation helper configuration files
 mkdir -p %buildroot%_datadir/kube-virt/pr-helper
@@ -299,5 +295,8 @@ install -m 0644 $BUILDDIR/tests/default-config.json %buildroot%_datadir/kube-vir
 %_datadir/kube-virt/manifests/testing
 
 %changelog
+* Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.5.0-alt1
+- 1.3.1 -> 1.5.0
+
 * Tue Oct 22 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.3.1-alt1
 - Initial version (thanks opensuse for the spec).
