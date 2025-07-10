@@ -1,9 +1,9 @@
 Name: nethogs
-Version: 0.8.5
+Version: 0.8.8
 Release: alt1
 
 Summary: net top
-License: GPL
+License: GPLv2
 Group: Monitoring
 
 Url: https://github.com/raboof/nethogs
@@ -36,10 +36,10 @@ ewentualnie go zabić.
 
 %prep
 %setup -n %name-%version
-#%patch2 -p1
 
 %build
-%make PREFIX=%_usr GCC="g++" CFLAGS="%optflags -I%_includedir/ncurses"
+%make PREFIX=%_usr GCC="g++" CFLAGS="%optflags -I%_includedir/ncurses" nethogs
+# TODO pyproject_build et al
 
 %install
 install -pDm755 src/%name %buildroot%_sbindir/%name
@@ -54,12 +54,19 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/%name
 %post_control -s netadmin %name
 
 %files
-%doc Changelog README.md
+%doc [^M][A-Z]*
 %_sbindir/*
 %_man8dir/*
 %config %_controldir/%name
 
+%check
+%make PREFIX=%_usr GCC="g++" CFLAGS="%optflags -I%_includedir/ncurses"
+
 %changelog
+* Thu Jul 10 2025 Fr. Br. George <george@altlinux.org> 0.8.8-alt1
+- Update to 0.8.8
+- Add control help
+
 * Fri Jun 02 2017 Michael Shigorin <mike@altlinux.org> 0.8.5-alt1
 - built for sisyphus (closes: #33524), thanks Oleg!
 - BR: /proc for tests
