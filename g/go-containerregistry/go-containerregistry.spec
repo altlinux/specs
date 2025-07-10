@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    go-containerregistry
-Version: 0.20.3
+Version: 0.20.6
 Release: alt1
 
 Summary: This is a golang library for working with container registries
@@ -47,6 +47,8 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor -buildmode=pie -trimpath"
+export LDFLAGS="-X %import_path/cmd/crane/cmd.Version=%version \
+		-X %import_path/cmd/gcrane/cmd.Version=%version"
 
 %golang_prepare
 
@@ -90,6 +92,10 @@ install -Dm 644 gcrane.fish %buildroot%_datadir/fish/vendor_completions.d/gcrane
 %_datadir/fish/vendor_completions.d/gcrane.fish
 
 %changelog
+* Mon Jun 23 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.20.6-alt1
+- 0.20.3 -> 0.20.6
+- Add version info to building stage (closes #54380).
+
 * Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.20.3-alt1
 - 0.20.2 -> 0.20.3
 
