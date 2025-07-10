@@ -2,8 +2,8 @@
 %define soname 0
 
 Name: libcowsql
-Version: 1.15.6
-Release: alt2
+Version: 1.15.8
+Release: alt1
 Summary: Library for distributed SQLite database
 
 License: LGPLv3
@@ -12,6 +12,7 @@ Conflicts: libdqlite
 
 URL: https://github.com/cowsql/cowsql
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libuv-devel >= 1.8.0
 BuildRequires: libraft-devel >= 0.18.0
@@ -53,6 +54,7 @@ with no dependency on external databases.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -74,6 +76,10 @@ with no dependency on external databases.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jun 23 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.15.8-alt1
+- 1.15.6 -> 1.15.8
+- Fix build-in float_t conflict with recent libuv.
+
 * Wed Jul 10 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.15.6-alt2
 - Fix libpackaging without provides. 
 
