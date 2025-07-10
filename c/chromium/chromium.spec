@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        138.0.7204.96
+Version:        138.0.7204.100
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -86,7 +86,6 @@ Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
 Patch021: 0021-FEDORA-System-brotli.patch
-# Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
@@ -356,19 +355,14 @@ export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS=
-#FLAGS+=' -Wno-unknown-warning-option -Wno-unknown-pragmas'
-#FLAGS+=' -Wno-unused-but-set-variable'
-#FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable -Wno-unused-private-field'
-#FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
-#FLAGS+=' -Wno-unknown-attributes'
-#FLAGS+=' -Wno-conversion'
 FLAGS+=' -fno-delete-null-pointer-checks'
 FLAGS+=' -DUSE_SYSTEM_MINIZIP'
-FLAGS+=' -stdlib=libc++'
+#FLAGS+=' -stdlib=libc++'
 # FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
 FLAGS+=' -I/usr/include/c++/v1'
-FLAGS+=' -Wno-deprecated-declarations -Wno-unused-command-line-argument'
+FLAGS+=' -Wno-deprecated-declarations'
 FLAGS+=' -Wno-implicit-fallthrough -Wno-nontrivial-memcall -Wno-shadow'
+FLAGS+=' -Wno-macro-redefined'
 FLAGS+=' -Wno-error -Wno-undef'
 
 export CFLAGS="$FLAGS"
@@ -654,6 +648,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jul 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.100-alt1
+- New version (138.0.7204.100).
+
 * Tue Jul 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.96-alt1
 - New version (138.0.7204.96).
 - Build with llvm20.1.
