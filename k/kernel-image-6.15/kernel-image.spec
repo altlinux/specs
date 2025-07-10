@@ -2,7 +2,7 @@ Name: kernel-image-6.15
 Release: alt1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.15
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,16 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.6-alt1
+- v6.15.6 (2025-07-10).
+- config: Enable CONFIG_BUG_ON_DATA_CORRUPTION=y.
+- config: Enable CONFIG_DEBUG_WX=y.
+- config: Enable more Intel peripherals (IPU6, IVSC, PCM3168A, THC).
+- config: Enable more AMD peripherals (ISP, HSMP, WBRF).
+- config: Enable CONFIG_DRM_ACCEL_AMDXDNA=m.
+- config: Enable CONFIG_SND_SOC_SOF_AMD_ACP70=m.
+- config: Enable CONFIG_IWLMLD=m.
+
 * Sun Jul 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.5-alt1
 - v6.15.5 (2025-07-06).
 
