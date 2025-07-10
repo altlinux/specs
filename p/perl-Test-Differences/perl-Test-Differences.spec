@@ -2,7 +2,7 @@
 %define module Test-Differences
 
 Name: perl-%module
-Version: 0.71
+Version: 0.72
 Release: alt1
 Epoch: 1
 
@@ -37,6 +37,9 @@ Test strings and data structures and show differences if not ok.
 %perl_vendor_privlib/Test
 
 %changelog
+* Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 1:0.72-alt1
+- automated CPAN update
+
 * Mon Oct 16 2023 Igor Vlasenko <viy@altlinux.org> 1:0.71-alt1
 - automated CPAN update
 
