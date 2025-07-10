@@ -2,7 +2,7 @@
 %define module_name Module-Signature
 
 Name: perl-%module_name
-Version: 0.90
+Version: 0.93
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -50,12 +50,15 @@ mv ../.perl.req .
 %perl_vendor_install
 
 %files
-%doc README Changes AUTHORS
+%doc Changes AUTHORS SECURITY.md
 %_bindir/*
 %perl_vendor_privlib/Module*
 %_man1dir/*
 
 %changelog
+* Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 0.93-alt1
+- automated CPAN update
+
 * Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.90-alt1
 - automated CPAN update
 
