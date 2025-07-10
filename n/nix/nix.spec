@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.29.1
+Version: 2.30.0
 Release: alt1
 
 Summary: Nix software deployment system
@@ -35,7 +35,6 @@ BuildRequires: gcc-c++
 BuildRequires: jq
 BuildRequires: libjson11-devel
 BuildRequires: libarchive-devel
-BuildRequires: libcpuid-devel
 BuildRequires: libcurl-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libsodium-devel
@@ -57,9 +56,11 @@ BuildRequires: lowdown
 BuildRequires: mdbook-linkcheck
 BuildRequires: doxygen
 
-Requires: %name-doc = %EVR
+%ifarch x86_64
+BuildRequires: libcpuid-devel
+%endif
 
-ExclusiveArch: x86_64
+Requires: %name-doc = %EVR
 
 %description
 Nix is a purely functional package manager. It allows multiple
@@ -155,6 +156,10 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Thu Jul 10 2025 Boris Yumankulov <boria138@altlinux.org> 2.30.0-alt1
+- new version 2.30.0
+- drop ExclusiveArch
+
 * Sun Jul 06 2025 Boris Yumankulov <boria138@altlinux.org> 2.29.1-alt1
 - new version 2.29.1
 
