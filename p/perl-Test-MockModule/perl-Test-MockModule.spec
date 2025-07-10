@@ -20,7 +20,7 @@ BuildRequires: perl-podlators
 %endif
 
 Name:           perl-Test-MockModule
-Version:        0.179.0
+Version:        0.180.0
 Release:        alt1
 Summary:        Override subroutines in a module for unit testing
 License:        GPL+ or Artistic
@@ -80,6 +80,9 @@ perl Build.PL --installdirs=vendor
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 0.180.0-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.179.0-alt1
 - automated CPAN update
 
