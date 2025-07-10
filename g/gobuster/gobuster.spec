@@ -2,7 +2,7 @@
 %global import_path github.com/OJ/gobuster/v3
 
 Name: gobuster
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 Summary: Directory/File, DNS and VHost busting tool written in Go.
 License: Apache-2.0
@@ -10,6 +10,8 @@ Group: Networking/Remote access
 Url: https://github.com/OJ/gobuster
 
 Source0: %name-%version.tar
+Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -18,7 +20,8 @@ BuildRequires: golang
 Gobuster is a tool used to brute-force.
 
 %prep
-%setup -q
+%setup -a 1
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -46,5 +49,8 @@ rm -rf -- %buildroot%go_root
 %_bindir/*
 
 %changelog
+* Thu Jul 10 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.0-alt1
+- Update based on upstream.
+
 * Wed Sep 04 2024 Pavel Shilov <zerospirit@altlinux.org> 3.6.0-alt1
 - Initial build for Sisyphus
