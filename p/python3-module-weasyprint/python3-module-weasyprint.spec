@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 65.1
-Release: alt1
+Release: alt2
 
 Summary: WeasyPrint converts web documents to PDF
 License: BSD-3-Clause
@@ -32,12 +32,14 @@ BuildRequires: python3-module-pytest-xdist
 BuildArch: noarch
 
 Source:  %name-%version.tar
+Patch: weasyprint-65.1-test-pango-fix.patch
 
 %description
 %summary.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -55,6 +57,9 @@ Source:  %name-%version.tar
 %doc README.rst LICENSE
 
 %changelog
+* Thu Jul 10 2025 Anton Vyatkin <toni@altlinux.org> 65.1-alt2
+- Fixed FTBFS.
+
 * Sun Apr 13 2025 Anton Vyatkin <toni@altlinux.org> 65.1-alt1
 - New version 65.1.
 
