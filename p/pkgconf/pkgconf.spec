@@ -1,4 +1,4 @@
-%define sover 5
+%define sover 7
 
 %def_disable snapshot
 # have no kyua for armh
@@ -9,7 +9,7 @@
 %endif
 
 Name: pkgconf
-Version: 2.3.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
@@ -17,10 +17,11 @@ Group: Development/Other
 License: MIT
 Url: https://pkgconf.org/
 
+Vcs: https://github.com/pkgconf/pkgconf.git
+
 %if_disabled snapshot
 Source: https://distfiles.dereferenced.org/%name/%name-%version.tar.xz
 %else
-Vcs: https://github.com/pkgconf/pkgconf.git
 Source: %name-%version.tar
 %endif
 
@@ -72,9 +73,11 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 %dir %_pkgconfigdir/personality.d
 %dir %_datadir/pkgconfig/personality.d
 %_bindir/%name
+%_bindir/bomtool
 %_man1dir/%name.1*
 %_man5dir/pc.5*
 %_man5dir/%name-personality.5*
+%_man1dir/bomtool.1*
 %doc README.md AUTHORS NEWS
 
 %files -n lib%name
@@ -90,6 +93,12 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
+* Sat Mar 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Wed Aug 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
