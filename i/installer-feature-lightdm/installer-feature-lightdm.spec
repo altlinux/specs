@@ -1,9 +1,9 @@
 Name: installer-feature-lightdm
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Installer hook for lightdm configuration
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
@@ -14,7 +14,7 @@ Installer hook for lightdm configuration.
 
 %package stage3
 Summary: Installer stage 3 hook for lightdm configuration
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Requires: lightdm
@@ -34,6 +34,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jul 11 2025 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Fix license tag.
+- Add variables to lightdm-gtk-greeter.conf if needed.
+
 * Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Create firsttime script to setup ldm-gtk-greeter first user.
 
