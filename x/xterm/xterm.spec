@@ -30,7 +30,7 @@
 
 Name: xterm
 Version: 401
-Release: alt1
+Release: alt2
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -52,7 +52,7 @@ Patch0008: 0008-xterm-alt-colors.patch
 Patch0009: 0009-xterm-alt-appdef.patch
 Patch0010: 0010-xterm-alt-translate-update-desktop.patch
 
-Provides: xvt, %_bindir/xvt
+Provides: xvt, %_bindir/xvt, x-terminal-emulator %_bindir/x-terminal-emulator
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
 BuildRequires(pre): alternatives groff-base imake libXaw-devel libXft-devel libncurses-devel libutempter-devel libxkbfile-devel xorg-cf-files
 # Automatically added by buildreq on Wed Nov 14 2012
@@ -142,6 +142,7 @@ done
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/xvt	%_bindir/xterm	40
+%_bindir/x-terminal-emulator	%_bindir/xterm	40
 EOF
 
 %files
@@ -166,6 +167,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 401-alt2
+- Add x-terminal-emulator alternative (Closes: #45560)
+
 * Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 401-alt1
 - Autobuild version bump to 401
 
