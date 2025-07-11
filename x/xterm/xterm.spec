@@ -29,7 +29,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 389
+Version: 401
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -43,16 +43,14 @@ Source1: uxterm
 
 Patch0001: 0001-xterm-alt-render.patch
 Patch0002: 0002-xterm-alt-utempter.patch
-Patch0003: 0003-xterm-alt-tinfo.patch
-Patch0004: 0004-xterm-alt-perms.patch
-Patch0005: 0005-xterm-alt-deffont.patch
-Patch0006: 0006-xterm-alt-makefile-install.patch
-Patch0007: 0007-xterm-alt-disable-report_win_label.patch
-Patch0008: 0008-xterm-alt-i18n.patch
-Patch0009: 0009-xterm-alt-colors.patch
-Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
-Patch0011: 0011-xterm-alt-appdef.patch
-Patch0012: 0012-xterm-alt-translate-update-desktop.patch
+Patch0003: 0003-xterm-alt-perms.patch
+Patch0004: 0004-xterm-alt-deffont.patch
+Patch0005: 0005-xterm-alt-makefile-install.patch
+Patch0006: 0006-xterm-alt-disable-report_win_label.patch
+Patch0007: 0007-xterm-alt-i18n.patch
+Patch0008: 0008-xterm-alt-colors.patch
+Patch0009: 0009-xterm-alt-appdef.patch
+Patch0010: 0010-xterm-alt-translate-update-desktop.patch
 
 Provides: xvt, %_bindir/xvt
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -97,7 +95,7 @@ install -pm755 %_sourcedir/uxterm .
 
 %patch0001 -p2
 %patch0002 -p2
-#patch0003 -p2
+%patch0003 -p2
 %patch0004 -p2
 %patch0005 -p2
 %patch0006 -p2
@@ -105,8 +103,6 @@ install -pm755 %_sourcedir/uxterm .
 %patch0008 -p2
 %patch0009 -p2
 %patch0010 -p2
-%patch0011 -p2
-%patch0012 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -170,6 +166,12 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 401-alt1
+- Autobuild version bump to 401
+
+* Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 389-alt2
+- Update patches
+
 * Tue Jan 16 2024 Fr. Br. George <george@altlinux.org> 389-alt1
 - Autobuild version bump to 389
 
