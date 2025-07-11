@@ -27,7 +27,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -55,6 +55,8 @@ Patch2: %name-0.43.0-alt-service.patch
 Patch3: %name-0.29.0-alt-service-dm.patch
 # https://bugzilla.altlinux.org/54947
 Patch4: %name-0.48-alt-tcb_egid_fix.patch
+# https://bugzilla.altlinux.org/55117
+Patch5: %name-0.48.0-alt-app-grig-keyboard-fix.patch
 
 %define gmobile_ver 0.1.0
 %define feedback_ver 0.7.0
@@ -182,6 +184,7 @@ mv libcall-ui-%callui_ver subprojects/libcall-ui
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
 %patch4 -p1 -b .tcb_egid_fix
+%patch5 -p1 -b .osk
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 # full path to capsh
 sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
@@ -307,6 +310,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1.1
+- applied experimental patch proposed in (ALT #55117)
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
 - 0.48.0
 
