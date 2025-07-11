@@ -1,26 +1,36 @@
+%define _libexecdir %_prefix/libexec
+
 %define _name wayback
+%define binary_name X%_name
 %define ver_major 0.1
 %define rdn_name io.github.fizzyizzy05.%_name
 
+%def_enable man
 %def_enable check
 
 Name: %_name
 Version: %ver_major
-Release: alt0.1
+Release: alt0.2
 
 Summary: A way to run X DE using Wayland components
 License: MIT
 Group: System/Servers
-Url: https://github.com/kaniini/wayback.git
+Url: https://gitlab.freedesktop.org/wayback/wayback
 
-Vcs: https://github.com/kaniini/wayback.git
+Vcs: https://gitlab.freedesktop.org/wayback/wayback.git
 
 Source: %name-%version.tar
 
 %define wl_proto_ver 1.14
 %define wlr_api_ver 0.19
+%define xw_ver 24.1
 
-Requires: xorg-xwayland
+Provides: %binary_name = %EVR
+
+Requires: xorg-xwayland >= %xw_ver
+# for wayback-session
+Requires: /etc/X11/xinit/xinitrc
+Requires: seatd
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -31,6 +41,8 @@ BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols) >= %wl_proto_ver
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(wlroots-%wlr_api_ver)
+BuildRequires: pkgconfig(xwayland) >= %xw_ver
+%{?_enable_man:BuildRequires: scdoc}
 
 #%{?_enable_check:BuildRequires:}
 
@@ -44,7 +56,9 @@ capabilities to host a rootful Xwayland server.
 %setup
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_feature man generate_manpages}
+%nil
 %meson_build
 
 %install
@@ -54,9 +68,15 @@ capabilities to host a rootful Xwayland server.
 %__meson_test
 
 %files
-%_bindir/%name
+%_bindir/%binary_name
+%_bindir/%name-session
+%_libexecdir/%name-compositor
+%{?_enable_man:%_man1dir/%name-session.1*}
 %doc README.*
 
 %changelog
+* Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt0.2
+- updated to 5e821f9
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt0.1
 - first build for Sisyphus (3507471)
