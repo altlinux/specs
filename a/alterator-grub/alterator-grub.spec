@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -55,6 +55,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 0.29-alt1
+- chroot to /mnt/destination if found
+
 * Thu May 29 2025 Alexey Romanyuta <r9odt@altlinux.org> 0.28-alt1
 - backend3/grub: add iscrypted parameter to allow pass crypted grub
   password to module.
