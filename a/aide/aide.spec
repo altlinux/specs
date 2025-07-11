@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: aide
-Version: 0.19
+Version: 0.19.1
 Release: alt1
 Summary: Intrusion Detection Environment
 License: GPL-2.0-or-later
@@ -89,6 +89,9 @@ make check
 %_man5dir/*.5*
 
 %changelog
+* Tue Jul 08 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.1-alt1
+- Update to v0.19.1 (2025-07-06).
+
 * Sun Apr 06 2025 Vitaly Chikunov <vt@altlinux.org> 0.19-alt1
 - Update to v0.19 (2025-04-05).
 
