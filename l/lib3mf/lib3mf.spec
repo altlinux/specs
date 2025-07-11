@@ -3,7 +3,7 @@
 
 Name: lib3mf
 Version: 2.2.0
-Release: alt3
+Release: alt4
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
@@ -13,6 +13,7 @@ Vcs: https://github.com/3MFConsortium/lib3mf.git
 
 # Source-url: https://github.com/3MFConsortium/lib3mf/archive/v%version/lib3mf-%version.tar.gz
 Source: %name-%version.tar
+Patch: lib3mf-2.2.0-unbundled_zip.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -40,6 +41,7 @@ This is a 3D printing standard for representing geometry as meshes.
 
 %prep
 %setup
+%patch -p2
 
 # Set version
 %__subst 's|@PROJECT_VERSION@|%version|' lib3mf.pc.in 
@@ -55,6 +57,12 @@ ln -s %_bindir/act AutomaticComponentToolkit/bin/act.linux
 
 # c++11 does not work with gtest 1.13+
 sed -i 's/ -std=c++11//' CMakeLists.txt
+
+# remove unused bundled libraries
+rm {Include,Source}/Libraries/{libzip,zlib} -r
+sed -i -e 's|Libraries/libzip/zip.h|zip.h|' \
+       -e 's|Libraries/zlib/zlib.h|zlib.h|' \
+  {Include,Source}/Common/*/*
 
 %build
 %cmake \
@@ -103,6 +111,9 @@ ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt4
+- use system libzip
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt3
 - disable tests for build with cmake >= 4.0
 - spec: add Vcs tag
