@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: argc
-Version: 1.21.1
+Version: 1.23.0
 Release: alt1
 Summary: A Bash CLI framework, also a Bash command runner
 License: Apache-2.0 or MIT
@@ -67,5 +67,8 @@ LANG=C.UTF-8 cargo test --release
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Jul 10 2025 Vitaly Chikunov <vt@altlinux.org> 1.23.0-alt1
+- Update to v1.23.0 (2025-07-09).
+
 * Mon Nov 18 2024 Vitaly Chikunov <vt@altlinux.org> 1.21.1-alt1
 - First import v1.21.1-2-g13dbe7d (2024-11-16).
