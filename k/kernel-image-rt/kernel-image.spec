@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.36
+%define kernel_sublevel	.37
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.37-alt1
+- v6.12.37 (2025-07-10).
+- config: Enable CONFIG_BUG_ON_DATA_CORRUPTION=y.
+- config: Enable CONFIG_DEBUG_WX=y.
+- config: Enable more Intel peripherals (IPU6, VSC).
+- config: Enable more AMD peripherals (ISP, HSMP, WBRF).
+- config: Enable CONFIG_SND_SOC_SOF_AMD_ACP70=m.
+
 * Sun Jul 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.36-alt1
 - v6.12.36 (2025-07-06).
 - drm: baikal-vdu: remove unsupported framebuffer formats.
