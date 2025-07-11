@@ -1,21 +1,25 @@
 %def_disable snapshot
-%def_enable installed_tests
-%{?_enable_snapshot:%def_enable gtk_doc}
-%def_enable check
 
 %define _name gspell
 %define namespace Gspell
-%define ver_major 1.12
+%define ver_major 1.14
 %define api_ver 1
+%define sover 3
+
+%def_enable installed_tests
+%def_enable gtk_doc
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A spell-checking library for GTK+3 applications
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/gspell
+
+Vcs: https://gitlab.gnome.org/GNOME/gspell.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -26,10 +30,11 @@ Source: %_name-%version.tar
 %define gtk_ver 3.20.0
 %define enchant_ver 2.2.12
 
-BuildRequires(pre): rpm-build-gir rpm-build-vala %{?_enable_check:rpm-macros-valgrind}
-BuildRequires: autoconf-archive
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-vala %{?_enable_check:rpm-macros-valgrind}
+BuildRequires: meson
 BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver libicu-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %if_enabled check
 BuildRequires: xvfb-run hunspell-en
 %ifarch %valgrind_arches
@@ -91,22 +96,23 @@ the functionality of the installed Gspell library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{?_enable_installed_tests:--enable-installed-tests}
+%meson \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool installed_tests install_tests}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --output=%name.lang %_name-%api_ver
 
 %check
-xvfb-run %make -k check VERBOSE=1
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%_name-app1
-%_libdir/%name-%api_ver.so.*
-%doc AUTHORS NEWS README
+%_libdir/%name-%api_ver.so.%{sover}*
+%doc AUTHORS NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -131,6 +137,9 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0 (ported to Meson build system, soname bumped)
+
 * Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1.1
 - iv@: use rpm-macros-valgrind to detect valgrind presence
 
