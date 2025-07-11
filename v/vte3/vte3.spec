@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 %def_disable static
 %def_enable gtk3
@@ -145,6 +145,8 @@ GObject introspection devel data for the %name library
 %ifarch %e2k
 # fixes "multiple definition of" error at linking
 sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
+# unsupported as of lcc 1.29.12 (mcst#9592)
+sed -i '/-fdirectives-only/d' src/meson.build
 %endif
 
 %build
@@ -225,6 +227,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.3-alt1.1
+- fixed buils for E2K (ilyakurdyukov@)
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.3-alt1
 - 0.80.3
 
