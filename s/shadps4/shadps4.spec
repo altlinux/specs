@@ -1,4 +1,3 @@
-%define magic_enum_commit a413fcc9c46a020a746907136a384c227f3cd095
 %define sirit_commit 6b450704f6fedb9413d0c89a9eb59d028eb1e6c0
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
@@ -9,7 +8,7 @@
 
 Name: shadps4
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -22,23 +21,22 @@ ExclusiveArch: x86_64
 
 # https://github.com/%name-emu/shadPS4/archive/%version/shadPS4-v.%version.tar.gz
 Source0: shadPS4-v.%version.tar
-# https://github.com/Neargye/magic_enum/archive/%magic_enum_commit/magic_enum-%magic_enum_commit.tar.gz
-Source1: magic_enum-%magic_enum_commit.tar
 # https://github.com/shadps4-emu/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
-Source2: sirit-%sirit_commit.tar
+Source1: sirit-%sirit_commit.tar
 # https://github.com/shadps4-emu/tracy/archive/%tracy_commit/tracy-%tracy_commit.tar.gz
-Source3: tracy-%tracy_commit.tar
+Source2: tracy-%tracy_commit.tar
 # https://github.com/zyantific/zydis/archive/%zydis_commit/zydis-%zydis_commit.tar.gz
-Source4: zydis-%zydis_commit.tar
+Source3: zydis-%zydis_commit.tar
 # https://github.com/shadps4-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
-Source5: ext-imgui-%dear_imgui_commit.tar
+Source4: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
-Source6: ext-discord-rpc-%discord_rpc_commit.tar
+Source5: ext-discord-rpc-%discord_rpc_commit.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source7: Vulkan-Headers-%vulkan_headers_version.tar
+Source6: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
-Source8: ext-LibAtrac9-%libatrac9_commit.tar
+Source7: ext-LibAtrac9-%libatrac9_commit.tar
 
+BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
 BuildRequires: clang
 BuildRequires: glslang-devel
@@ -47,6 +45,7 @@ BuildRequires: libSDL3-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libfmt-devel
 BuildRequires: libhalf-devel
+BuildRequires: libmagic_enum-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: librobin-map-devel
@@ -74,9 +73,8 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
 
-%__mv -Tf ../magic_enum-%magic_enum_commit externals/magic_enum
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
@@ -121,6 +119,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libexecdir/%name
 
 %changelog
+* Fri Jul 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt2
+- Build with system magic_enum
+
 * Mon Jul 07 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
 - Version 0.10.0
 
