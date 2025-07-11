@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: A product aggregation function to a postgres database and makes it available with django
 License: MIT
@@ -45,6 +45,7 @@ provided by django (bulk_create, bulk_update and QuerySet.update).
 
 %install
 %pyproject_install
+rm -r %buildroot/%python3_sitelibdir/%mod_name/tests
 
 %check
 %pyproject_run_pytest
@@ -55,5 +56,8 @@ provided by django (bulk_create, bulk_update and QuerySet.update).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 11 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.4.2-alt2
+- Removed tests from package installation (closes: #55176).
+
 * Thu Jul 03 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.4.2-alt1
 - Initial build for ALT.
