@@ -3,7 +3,7 @@
 %define rdn_name fr.free.mdoyen.HomeBank
 
 Name: homebank
-Version: 5.9.3
+Version: 5.9.4
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -97,6 +97,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.4-alt1
+- 5.9.4
+
 * Mon Jul 07 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.3-alt1
 - 5.9.3
 
