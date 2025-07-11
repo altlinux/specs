@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rgbds
-Version: 0.8.0
+Version: 0.9.3
 Release: alt1
 Summary: Rednex Game Boy Development System - An assembly toolchain for the Nintendo Game Boy and Game Boy Color 
 License:  MIT
@@ -9,6 +9,7 @@ Group: Games/Other
 Url: https://github.com/gbdev/rgbds
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires:  gcc-c++
@@ -22,6 +23,7 @@ package for the Game Boy and Game Boy Color.
 
 %prep
 %setup
+%patch -p1
 sed -i 's|/usr/local|%prefix|g' Makefile
 
 %build
@@ -38,5 +40,8 @@ export CFLAGS="%optflags"
 %_man7dir/*
 
 %changelog
+* Fri Jul 11 2025 Pavel Shilov <zerospirit@altlinux.org> 0.9.3-alt1
+- Update based on upstream version.
+
 * Thu Jul 25 2024 Pavel Shilov <zerospirit@altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus
