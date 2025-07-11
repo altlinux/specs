@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.3.0
+Version: 11.4.0
 Release: alt1
 
 Summary: Installer common files
@@ -32,6 +32,9 @@ Requires: alterator-sysconfig
 Requires: alterator-license
 #Requires: alterator-auth
 Requires: alterator-datetime >= 4.0
+Requires: alterator-net-eth
+Requires: alterator-net-wifi
+Requires: installer-feature-network-settings-copy
 Requires: chrony
 Requires: alterator-vm
 Requires: installer-alterator-pkg >= 3.1.5-alt1
@@ -68,7 +71,6 @@ Requires: alterator-grub
 %endif
 Requires: alterator-users
 Requires: alterator-root
-Requires: alterator-net-eth
 Requires: alterator-luks
 #Requires: alterator-x11
 #features
@@ -115,13 +117,22 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/installer-steps
 %_datadir/install2/*.d/*
 %_datadir/install2/alterator-menu
+%exclude %_datadir/install2/livecd-fininstall.d/
 
 %files stage3
 
 %files live
 %_libexecdir/alterator/hooks/livecd-initinstall.d/*
+%_datadir/install2/livecd-fininstall.d/*
 
 %changelog
+* Fri Jul 11 2025 Mikhail Efremov <sem@altlinux.org> 11.4.0-alt1
+- livecd: Add livecd-fininstall.d/99-reboot.sh.
+- postinstall: Drop 05-virtualbox hook.
+- Add alterator-net-wifi.
+- Move network setup step to stage2.
+- Move luks step after grub.
+
 * Thu May 15 2025 Mikhail Efremov <sem@altlinux.org> 11.3.0-alt1
 - Add live subpackage.
 
