@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: aichat
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 Summary: All-in-one LLM CLI tool
 License: Apache-2.0 or MIT
@@ -46,11 +46,15 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 
 [profile.release]
 strip = false
+%if 0%{!?_is_lp64:1}
+lto = false
+codegen-units = 16
+%endif
 EOF
 
 %patch -p1
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-	./vendor/nix-0.26.4/.cargo-checksum.json
+	./vendor/nix/.cargo-checksum.json
 
 %build
 cargo build %_smp_mflags --offline --release --all-features
@@ -74,6 +78,9 @@ cargo test --release --workspace
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jul 08 2025 Vitaly Chikunov <vt@altlinux.org> 0.30.0-alt1
+- Update to v0.30.0 (2025-07-07).
+
 * Sun Apr 06 2025 Vitaly Chikunov <vt@altlinux.org> 0.29.0-alt1
 - Update to v0.29.0 (2025-03-28).
 
