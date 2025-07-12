@@ -1,35 +1,27 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: unzip
-# END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 %define oldname polyclipping
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# The Clipper C++ crystallographic library already uses the name "clipper".
-# The developer is fine with the choosen name.
 
-Name:           libpolyclipping
-Version:        6.4.2
-Release:        alt1_17
+Name: libpolyclipping
+Version: 6.4.2
+Release: alt2
 %global so_version 22
-Summary:        Polygon clipping library
+Summary: Polygon clipping library
+Group: System/Libraries
 
 # The entire source is BSL-1.0, except:
 # - The contents of Documentation/Scripts/SyntaxHighlighter/ are a.'Dual licensed
 #   under the MIT and GPL licensesa.'. These sources do not contribute to the
 #   binary RPMs and are removed in %%prep.
-License:        BSL-1.0
-URL:            https://sourceforge.net/projects/polyclipping
-Source0:        https://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
+License: BSL-1.0
+URL: https://sourceforge.net/projects/polyclipping
+# Source-url: https://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
+Source: %name-%version.tar
 
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  ctest cmake
-BuildRequires:  dos2unix
-Source44: import.info
-Provides: polyclipping = %{version}-%{release}
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: dos2unix
+Provides: polyclipping = %EVR
 
 %description
 This library primarily performs the boolean clipping operations -
@@ -40,19 +32,19 @@ Input polygons for clipping can use EvenOdd, NonZero, Positive and Negative
 filling modes. The clipping code is based on the Vatti clipping algorithm,
 and outperforms other clipping libraries.
 
-%package        devel
+%package devel
 Group: Development/Other
-Summary:        Development files for %{oldname}
-Requires:       %{name} = %{version}-%{release}
-Provides: polyclipping-devel = %{version}-%{release}
+Summary: Development files for %oldname
+Requires: %name = %EVR
+Provides: polyclipping-devel = %EVR
 
 %description    devel
-The %{oldname}-devel package contains libraries and header files for
-developing applications that use %{oldname}.
+The %oldname-devel package contains libraries and header files for
+developing applications that use %oldname.
 
 
 %prep
-%setup -n %{oldname}-%{version} -qc
+%setup
 
 # Delete binaries
 find . \( -name "*.exe" -o -name "*.dll" \) -delete
@@ -72,36 +64,42 @@ done
 
 
 %build
+%add_optflags %optflags_shared
 pushd cpp
-  %{fedora_v2_cmake}
-  %fedora_v2_cmake_build
+%cmake
+%cmake_build
 popd
 
 
 %install
 pushd cpp
-  %fedora_v2_cmake_install
+%cmake_install
 
 # Install agg header with corrected include statement
-  sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %{buildroot}/%{_includedir}/%{oldname}/agg_conv_clipper.h
+  sed -e 's/\.\.\/clipper\.hpp/clipper.hpp/' < cpp_agg/agg_conv_clipper.h > %buildroot%_includedir/%oldname/agg_conv_clipper.h
 popd
+
 # viy hack
-sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{oldname}.pc
+sed -i -e 's/^Version: $/Version: %version/' %buildroot%_datadir/pkgconfig/%oldname.pc
 
 
 %files
 %doc --no-dereference License.txt
 %doc README
-%{_libdir}/lib%{oldname}.so.%{so_version}
-%{_libdir}/lib%{oldname}.so.%{so_version}.*
+%_libdir/lib%oldname.so.%so_version
+%_libdir/lib%oldname.so.%so_version.*
 
 %files devel
 %doc Third\ Party
-%{_datadir}/pkgconfig/%{oldname}.pc
-%{_includedir}/%{oldname}/
-%{_libdir}/lib%{oldname}.so
+%_datadir/pkgconfig/%oldname.pc
+%_includedir/%oldname/
+%_libdir/lib%oldname.so
 
 %changelog
+* Sat Jul 12 2025 Anton Midyukov <antohami@altlinux.org> 6.4.2-alt2
+- fix ftbfs
+- cleanup spec
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 6.4.2-alt1_17
 - update to new release by fcimport
 
