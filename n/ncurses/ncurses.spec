@@ -1,6 +1,7 @@
+# TODO user merge
 Name: ncurses
-Version: 6.3.20220618
-Release: alt4
+Version: 6.5.20250705
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -57,7 +58,7 @@ initialization sequences.
 # define OLDABI to OLDSO when ABI increases, it's nil for now
 #define OLDABI %%OLDSO
 %define libpackage(od:s)\
-%global libpkgname lib%{!-d:%{1}%{!?-o:%ABI}%{?-o:%{?OLDABI}}}%{-d:%{1}-devel%{-s:-static}}\
+%global libpkgname lib%{!-d:%1%{!?-o:%ABI}%{?-o:%{?OLDABI}}}%{-d:%1-devel%{-s:-static}}\
 %global libsummary %{?-o: legacy}%{-d:%{-s: static} development environment}\
 %%package -n %libpkgname\
 Group: %{!?-o:%{?-d:Development/%{-d*}}}%{!?-o:%{!?-d:System/Libraries}}%{?-o:System/Legacy libraries}\
@@ -83,32 +84,31 @@ This package contains %* library%libsummary\
 %define libpackage_extra Provides: %name = %EVR
 %libpackage %name base
 %libpackage -o %name base
-%define libpackage_extra Provides: %{name}-devel = %EVR
+%define libpackage_extra Provides: %name-devel = %EVR
 %libpackage -dC %name base
 %libpackage -sdC %name base
 
-%libpackage %{name}++ C++ bindings
-%libpackage -o %{name}++ C++ bindings
-%libpackage -dC++ %{name}++ C++ bindings
-%libpackage -sdC++ %{name}++ C++ bindings
+%libpackage %name++ C++ bindings
+%libpackage -o %name++ C++ bindings
+%libpackage -dC++ %name++ C++ bindings
+%libpackage -sdC++ %name++ C++ bindings
 
 %if_with utf8
 %define libpackage_extra Provides: %{name}w = %EVR
 %libpackage %{name}w base library (widechar support)
 %libpackage -o %{name}w base (widechar support)
-%define libpackage_extra Requires: lib%{name}-devel = %EVR\
+%define libpackage_extra Requires: lib%name-devel = %EVR\
 Provides: %{name}w-devel = %EVR
 %libpackage -dC %{name}w base (widechar support)
 %libpackage -sdC %{name}w base (widechar support)
 
-%libpackage %{name}++w C++ bindings (widechar support)
-%libpackage -o %{name}++w C++ bindings (widechar support)
+%libpackage %name++w C++ bindings (widechar support)
+%libpackage -o %name++w C++ bindings (widechar support)
 %define libpackage_extra Requires: lib%{name}w-devel = %EVR\
-Requires: lib%{name}++-devel = %EVR
-%libpackage -dC++ %{name}++w C++ bindings (widechar support)
-%libpackage -sdC++ %{name}++w C++ bindings (widechar support)
+Requires: lib%name++-devel = %EVR
+%libpackage -dC++ %name++w C++ bindings (widechar support)
+%libpackage -sdC++ %name++w C++ bindings (widechar support)
 %endif
-
 
 %package -n terminfo
 Summary: Descriptions of common terminal types
@@ -227,9 +227,9 @@ export \
 %define configure_flavour(d:) mkdir -p build-%{-d*} && cd build-%{-d*} && %configure %configopts %* && cd ..
 
 # configure classic version
-%configure_flavour -d classic5 -- %abi5opts
+%configure_flavour -d classic5 -- --disable-widec %abi5opts
 %make_build -C build-classic5
-%configure_flavour -d classic -- %abi6opts
+%configure_flavour -d classic -- --disable-widec %abi6opts
 %make_build -C build-classic
 %if_with utf8
 %configure_flavour -d utf85 -- --enable-widec %abi5opts
@@ -239,8 +239,9 @@ export \
 %endif # with_utf8
 
 %install
-#install classic ncurses library version
+# Install classic ncurses library version
 %makeinstall_std -C build-classic5 includedir=%_includedir/%name
+find build-classic | xargs touch
 %makeinstall_std -C build-classic includedir=%_includedir/%name
 
 %if_with utf8
@@ -379,7 +380,6 @@ done
 %_libdir/libtic.so
 %_pkgconfigdir/tic.pc
 %_includedir/%name/term_entry.h
-%_includedir/%name/nc_tparm.h
 
 # TERMUTILS
 %files -n termutils
@@ -416,13 +416,13 @@ done
 %dir %_docdir/%name-%version/
 %_docdir/%name-%version/[A-Z]*
 
-%files -n lib%{name}%{?OLDABI}
+%files -n lib%name%{?OLDABI}
 %exclude %_libdir/lib*[musl].so.%{ABI}*
 %_libdir/lib*[musl].so.*
 
 %files -n lib%name-devel
 %_bindir/%{name}*%ABI-config
-%exclude %_bindir/%{name}%OLDSO-config
+%exclude %_bindir/%name%OLDSO-config
 %_libdir/lib*[musl].so
 %_pkgconfigdir/*[musl].pc
 %_includedir/*
@@ -430,7 +430,6 @@ done
 %exclude %_includedir/term*.h
 %exclude %_includedir/%name/term*.h
 %exclude %_includedir/%name/ncurses_dll.h
-%exclude %_includedir/%name/nc_tparm.h
 %if_with cxx
 %exclude %_includedir/%name/cursesapp.h
 %exclude %_includedir/%name/curses?.h
@@ -487,13 +486,13 @@ done
 %_pkgconfigdir/*[musl]w.pc
 
 %if_with cxx
-%files -n lib%{name}++w%ABI
+%files -n lib%name++w%ABI
 %_libdir/libncurses++w*.so.%{ABI}*
 
-%files -n lib%{name}++w%{?OLDABI}
+%files -n lib%name++w%{?OLDABI}
 %_libdir/libncurses++w*.so.%{OLDSO}*
 
-%files -n lib%{name}++w-devel
+%files -n lib%name++w-devel
 %_libdir/libncurses++w.so
 %dir %_includedir/%name/
 %_pkgconfigdir/ncurses++w*.pc
@@ -504,6 +503,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 6.5.20250705-alt1
+- Autobuild version bump to 6.5.20250705
+
 * Sun Aug 27 2023 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt4
 - Fix provides loss after spec redesign
 
