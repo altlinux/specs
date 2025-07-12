@@ -1,27 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%define major	2
-%define	libname	libsoundio%{major}
+%define sover	2
+%define	libname	libsoundio%sover
 %define	devel	libsoundio-devel
 
 Name:		libsoundio
 Version:	2.0.0
-Release:	alt1_2
+Release:	alt2
 Summary:	C library for cross-platform real-time audio input and output
 Group:		Sound
 License:	MIT
 URL:		http://libsound.io/
-Source0:	https://github.com/andrewrk/libsoundio/archive/%{version}/%{name}-%{version}.tar.gz
+VCS:		https://github.com/andrewrk/libsoundio
+Source:		%name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires:  gcc-c++
 BuildRequires:	ccmake cmake ctest
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(libpulse)
-Source44: import.info
 
 %description
 C library providing cross-platform audio input and output. The API is suitable
@@ -33,56 +29,53 @@ performance and power, and API convenience, the scale is tipped closer to the
 former. Features that only exist in some sound backends are exposed.
 
 
-%package -n	%{libname}
-Summary:	Library files for %{name}
+%package -n	%libname
+Summary:	Library files for %name
 Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
 Obsoletes:	libsoundio-%{_lib}soundio1 < 1.1.0-2
 
-%description -n	%{libname}
-This package contains the library files for %{name}
+%description -n	%libname
+This package contains the library files for %name.
 
-%package -n	%{devel}
-Summary:	Development files for %{name}
+%package	devel
+Summary:	Development files for %name
 Group:		Development/C++
-Requires:	%{libname} = %{version}-%{release}
-Provides:	soundio-devel = %{version}-%{release}
+Requires:	%libname = %EVR
+Provides:	soundio-devel = %EVR
 Obsoletes:	libsoundio-%{_lib}soundio-devel < 1.1.0-2
 Obsoletes:	libsoundio-%{_lib}soundio-static-devel < 1.1.0-2
 
-%description -n	%{devel}
-The %{devel} package contains libraries and header files for
-developing applications that use %{name}.
-
+%description	devel
+The %devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -q
-
-
+%setup
 
 %build
-%{mageia_cmake}
-%mageia_cmake_build
-
+%cmake  -DBUILD_STATIC_LIBS=FALSE
+%cmake_build
 
 %install
-%mageia_cmake_install
-
+%cmake_install
 
 %files
 %doc LICENSE README.md
-%{_bindir}/*
+%_bindir/*
 
-%files -n %{libname}
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%files -n %libname
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
-%files -n %{devel}
-%{_includedir}/*
-%{_libdir}/*.so
-
+%files devel
+%_includedir/*
+%_libdir/*.so
 
 %changelog
+* Sat Jul 12 2025 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
+- fix FTBFS, cleanup spec
+- add VCS
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2
 - fixed build
 
