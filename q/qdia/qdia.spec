@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qdia
-Version: 0.53
-Release: alt2
+Version: 0.54
+Release: alt1
 
 Summary: Simple schematic/diagram editor
 License: AGPL-3.0
@@ -44,6 +44,9 @@ sed -i 's|^Categories=.*|Categories=Graphics;Publishing;|' resources/qdia.deskto
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.54-alt1
+- New version 0.54.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.53-alt2
 - Applied repocop fix for freedesktop-categories
 

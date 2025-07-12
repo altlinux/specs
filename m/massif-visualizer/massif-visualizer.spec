@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: massif-visualizer
-Version: 25.04.2
+Version: 25.07.80
 Release: alt1
 
 Summary: Tool for visualizing memory usage recorded by Valgrind Massif
@@ -61,5 +61,8 @@ rst2man README > %buildroot/%_man1dir/massif-visualizer.1
 %_datadir/mime/packages/massif.xml
 
 %changelog
+* Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 25.07.80-alt1
+- New version 25.07.80.
+
 * Wed Jul 02 2025 Nikolay Strelkov <snk@altlinux.org> 25.04.2-alt1
 - Initial build for Sisyphus

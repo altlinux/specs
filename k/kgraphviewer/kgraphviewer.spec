@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kgraphviewer
-Version: 25.04.2
+Version: 25.07.80
 Release: alt1
 
 Summary: GraphViz dot graph viewer
@@ -93,5 +93,8 @@ This package contains the development files for KGraphViewer.
 %_K6link/lib*.so
 
 %changelog
+* Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 25.07.80-alt1
+- New version 25.07.80.
+
 * Wed Jul 02 2025 Nikolay Strelkov <snk@altlinux.org> 25.04.2-alt1
 - Initial build for Sisyphus

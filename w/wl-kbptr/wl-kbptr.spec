@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wl-kbptr
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Control the mouse pointer with the keyboard on Wayland.
@@ -42,7 +42,11 @@ install -Dm755 helpers/wl-kbptr-sway-active-win -t %buildroot%_bindir
 %files
 %doc LICENSE README.md config.example
 %_bindir/*
+%_desktopdir/*
 
 %changelog
+* Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Sat Jun 28 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
