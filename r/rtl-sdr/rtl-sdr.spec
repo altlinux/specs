@@ -1,10 +1,11 @@
 Name: rtl-sdr
 Summary: SDR utilities for Realtek RTL2832 based DVB-T dongles
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 License: GPL-2.0-or-later
 Group: Communications
-Url: https://sdr.osmocom.org/trac/wiki/rtl-sdr
+URL: https://osmocom.org/projects/rtl-sdr/wiki/Rtl-sdr
+VCS: https://gitea.osmocom.org/sdr/rtl-sdr
 
 Source: %name-%version.tar
 
@@ -54,6 +55,11 @@ install -Dpm 644 rtl-sdr.rules %buildroot%_udevrulesdir/10-rtl-sdr.rules
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt1
+- new version 2.0.2
+- update URL
+- add VCS
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - new version 2.0.1
 
