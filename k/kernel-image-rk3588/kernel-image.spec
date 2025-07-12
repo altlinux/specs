@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.35
+%define kernel_sublevel	.37
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -510,6 +510,12 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Jul 12 2025 Alexei Takaseev <taf@altlinux.org> 6.12.37-alt1
+- v6.12.37 (2025-07-10).
+- config: Enable CONFIG_BUG_ON_DATA_CORRUPTION=y.
+- config: Enable CONFIG_DEBUG_WX=y.
+- config: Enable CONFIG_SND_SOC_SOF_AMD_ACP70=m.
+
 * Sat Jun 28 2025 Alexei Takaseev <taf@altlinux.org> 6.12.35-alt1
 - v6.12.35 (2025-06-27).
 - config: Disable CONFIG_NL80211_TESTMODE.
