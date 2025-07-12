@@ -1,31 +1,36 @@
-%define origver 2020.3.17
+%define _unpackaged_files_terminate_build 1
+%define soname %version
 %def_enable openmp
 
 Name: SimGear
-Version: %origver
-Release: alt3
+Version: 2024.1.1
+Release: alt1
 
 Summary: Simulator Construction Tools
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
+Url: https://www.flightgear.org
+Vcs: https://gitlab.com/flightgear/SimGear.git
 
-Url: http://www.flightgear.org
-# Source-url: https://sourceforge.net/projects/flightgear/files/release-%origver/simgear-%version.tar.bz2
 Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
-Patch2: SimGear-g++8.patch
-Patch3: simgear-2020.3.17-fix-build.patch
-Patch4: simgear-2020.3.17-alt-gcc14.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Sat Mar 03 2012
-# optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel libcurl-devel libstdc++-devel
-
+BuildRequires: boost-devel-headers
+BuildRequires: cmake
 BuildRequires: cmake libapr1-devel
+BuildRequires: gcc-c++
+BuildRequires: libGLU-devel
+BuildRequires: libOpenSceneGraph-devel
+BuildRequires: libXi-devel
+BuildRequires: libXt-devel
+BuildRequires: libalut-devel
+BuildRequires: libapr1-devel
+BuildRequires: libcurl-devel
 BuildRequires: libexpat-devel
 BuildRequires: liblzma-devel
+BuildRequires: libstdc++-devel
+BuildRequires: zlib-devel
 %if_enabled openmp
 BuildRequires: libgomp-devel
 %endif
@@ -40,14 +45,27 @@ SimGear is a set of open-source libraries designed to be used
 as building blocks for quickly assembling 3d simulations, games,
 and visualization applications.
 
-%package -n libsimgear
-Summary: Simulation library
+%package -n libSimGearCore%soname
+Summary: Core library for SimGear simulation framework
 Group: System/Libraries
 
-%description -n libsimgear
-SimGear is a set of open-source libraries designed to be used
-as building blocks for quickly assembling 3d simulations, games,
-and visualization applications.
+%description -n libSimGearCore%soname
+Provides the core functionality of the SimGear simulation
+framework. It includes essential components such as math utilities,
+data structures, and low-level simulation logic. This library serves
+as the foundation for building complex 3D simulations, games, and
+visualization applications.
+
+%package -n libSimGearScene%soname
+Summary: Scene management library for SimGear simulations
+Group: System/Libraries
+
+%description -n libSimGearScene%soname
+Provides advanced scene management capabilities for the SimGear
+simulation framework. It includes features for handling 3D models,
+terrain, lighting, and other visual elements required in complex
+simulations. This library helps developers create immersive and
+visually appealing 3D environments for their applications.
 
 %package -n libsimgear-devel
 Summary: Simulation library (development part)
@@ -56,10 +74,6 @@ Provides: SimGear = %version
 Provides: SimGear-devel = %version
 Obsoletes: SimGear-devel < 1.0.0
 Conflicts: SimGear-devel < 1.0.0
-
-# from SimGearTargets.cmake
-Requires: libOpenSceneGraph-devel libOpenThreads-devel
-Requires: zlib-devel libcurl-devel libopenal-devel libGL-devel libGLU-devel
 
 %description -n libsimgear-devel
 SimGear is a set of open-source libraries designed to be used as
@@ -70,26 +84,14 @@ This package contains header files for SimGear.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch4 -p2
-%ifarch %e2k
-sed -i "/__x86_64__/{N;/<x86intrin.h>/s/__x86_64__/__e2k__/}" simgear/math/simd.hxx
-%else
-%patch2 -p2
-%endif
-%patch3 -p1
-#sed -i "s|\${CMAKE_INSTALL_LIBDIR}/cmake/SimGear|%_libdir/cmake/SimGear|" CMakeLists.txt
+%autopatch -p1
 
-# rename version file to simgear_version because it's incorrectly detected as header file
-# by boost-1.73.0, and compilation fails when it's being incorrectly used as header file
-mv version simgear_version
+rm -rf \
+  3rdparty/expat \
+  #
 
 %build
 %add_optflags %optflags_shared
-# /usr/src/RPM/BUILD/SimGear-2020.1/simgear/io/HTTPRepository.cxx:267:16: error: return-statement with a value, in function returning 'void' [-fpermissive]
-#         return "";
-%add_optflags -fpermissive
 %cmake \
 %ifarch x86_64 aarch64 %e2k
 	-DENABLE_SIMD_CODE=ON \
@@ -108,9 +110,11 @@ mv version simgear_version
 %install
 %cmake_install
 
-%files -n libsimgear
-%doc AUTHORS README* Thanks
-%_libdir/*.so.*
+%files -n libSimGearCore%soname
+%_libdir/libSimGearCore.so.%{soname}*
+
+%files -n libSimGearScene%soname
+%_libdir/libSimGearScene.so.%{soname}*
 
 %files -n libsimgear-devel
 %_libdir/*.so
@@ -118,6 +122,11 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Jul 12 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
+- Fixes:
+  + CVE-2025-0781 Bypass the sandboxing of Nasal scripts.
+- New version.
+
 * Tue Feb 04 2025 Anton Meleshnikov <alton@altlinux.org> 2020.3.17-alt3
 - Fix FTBFS
 

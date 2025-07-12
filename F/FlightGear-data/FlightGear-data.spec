@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: FlightGear-data
-Version: 2020.3.17
+Version: 2024.1.1
 Release: alt1
 
-Summary: Data pack for FlightGear open-source flight simulator
-License: GPL
+Summary: Data pack for FlightGear flight simulator
+License: GPL-2.0-or-later
 Group: Games/Arcade
 
 Url: http://www.flightgear.org
 # Source-url: https://sourceforge.net/projects/flightgear/files/release-2020.3/FlightGear-%version-data.txz/download
 Source: %name-%version.tar
 # NB: ignore *-update-data.txz, it's just a diff (better rely on a full version)
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 AutoReqProv: no
@@ -29,26 +30,20 @@ Requires: FlightGear = %version
 %set_verify_elf_method skip
 
 %description
-FlightGear is a free, open-source, multi-platform, and sophisticated
-flight simulator framework for the development and pursuit of
-interesting flight simulator ideas.
+FlightGear is a sophisticated flight simulator framework for the
+development and pursuit of interesting flight simulator ideas.
 
-This package contains base FlightGear data files; feel free to
-visit %url for more scenery and aircraft.
+This package contains base FlightGear data files.
 
 %package -n FlightGear-doc
-Summary: Documentation for FlightGear open-source flight simulator
+Summary: Documentation for FlightGear flight simulator
 Group: Books/Computer books
 
 %description -n FlightGear-doc
-FlightGear is a free, open-source, multi-platform, and sophisticated
-flight simulator framework for the development and pursuit of
-interesting flight simulator ideas.
+FlightGear is a sophisticated flight simulator framework for the
+development and pursuit of interesting flight simulator ideas.
 
 This package contains FlightGear documentation.
-
-See also this nice and eagerly read tutorial:
-http://ericbrasseur.org/flight_simulator_tutorial.html
 
 %prep
 %setup
@@ -72,6 +67,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Wed May 21 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
+- New version.
+
 * Sun Dec 18 2022 Artyom Bystrov <arbars@altlinux.org> 2020.3.17-alt1
 - 2020.3.17
 

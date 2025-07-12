@@ -1,31 +1,19 @@
 %def_without dbus
-%define origver 2020.3.17
 
 Name: FlightGear
-Version: %origver
+Version: 2024.1.1
 Release: alt1
 
-Summary: open-source flight simulator
-License: GPLv2+
+Summary: Libre flight simulator
+License: GPL-2.0-or-later
 Group: Games/Arcade
+Url: https://www.flightgear.org
+Vcs: https://gitlab.com/flightgear/flightgear.git
 
-Url: http://www.flightgear.org
-# Source0-url: https://sourceforge.net/projects/flightgear/files/release-%origver/flightgear-%version.tar.bz2
 Source0: %name-%version.tar
-Source2: FlightGear.menu
-Source3: FlightGear-22x22.xpm
-Source4: FlightGear-32x32.xpm
-Source5: FlightGear-48x48.xpm
-Source10: fg-16.png
-Source11: fg-32.png
-Source12: fg-48.png
-Source13: fg-64.png
-Source14: fg-128.png
-Source15: FlightGear.desktop
 Patch1: 0001-check-to-be-sure-that-n-is-not-being-set-as-format-t.patch
-Patch2: 0002-make-ShivaVG-and-FGAdminUI-static-libraries.patch
-Patch5: 0005-explicitely-link-with-libX11.patch
 Patch6: 0006-make-fglauncher-a-static-library.patch
+Patch7: 0006-fgviewer-fix-crash-on-exit.patch
 
 Requires: FlightGear-data = %version
 #Requires: fgrun >= 1.6.1
@@ -34,6 +22,9 @@ BuildRequires: libsimgear-devel = %version
 BuildRequires: libOpenSceneGraph-devel >= 3.4.0
 BuildRequires: boost-devel >= 1.44
 BuildRequires: plib-devel >= 1.8.5
+BuildRequires: cppunit-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libcurl-devel
 
 # TODO: fltk??
 BuildRequires: rpm-macros-cmake cmake gcc-c++ imake libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel
@@ -72,10 +63,7 @@ http://ericbrasseur.org/flight_simulator_tutorial.html
 
 %prep
 %setup
-%patch1 -p1
-#patch2 -p1
-#patch5 -p1
-%patch6 -p1
+%autopatch -p1
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
@@ -87,18 +75,10 @@ for f in docs-mini/README.xmlparticles Thanks; do
 	mv -f ${f}.utf8 ${f}
 done
 
-# argh
-sed -i 's,/lib/FlightGear,/share/flightgear,' CMakeLists.txt
-
-# TODO: link with external sqlite3?
-%ifarch %e2k
-# unsupported as of lcc-1.23.21
-sed -i 's,-fno-fast-math,,' 3rdparty/sqlite3/CMakeLists.txt
-%endif
-
-# rename version file to flightgear_version because it's incorrectly detected as header file
-# by boost-1.73.0, and compilation fails when it's being incorrectly used as header file
-mv version flightgear_version
+rm -rf \
+  3rdparty/cppunit \
+  3rdparty/sqlite3 \
+  #
 
 %build
 # FIXME: tests got linking problems with lcc 1.23.20, cf. mcst#3675?
@@ -106,7 +86,11 @@ mv version flightgear_version
 %ifarch %e2k
 	-DENABLE_TESTS:BOOL=OFF \
 %endif
-	%nil
+  -DCMAKE_BUILD_TYPE=Release \
+  -DFG_DATA_DIR=%_datadir/flightgear \
+  -DSYSTEM_CPPUNIT=ON \
+  -DSYSTEM_SQLITE=ON \
+  #
 %cmake_build
 
 %install
@@ -123,6 +107,11 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Jul 12 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
+- Fixes:
+  + CVE-2025-0781 Bypass the sandboxing of Nasal scripts.
+- New version (closes: 43674).
+
 * Sun Dec 18 2022 Artyom Bystrov <arbars@altlinux.org> 2020.3.17-alt1
 - 2020.3.17
 
