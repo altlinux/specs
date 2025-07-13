@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.15
+Release: alt0.16
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -58,6 +58,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sun Jul 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.16
+- App Install plugin has been removed
+- Documentation: added a button to go to OS manual
+- Settings: moved install applications buttons from components
+- Componnets: the console show button has been moved to another container
+- Components: indicate continues process by mouse cursor
+
 * Thu Jul 03 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.15
 - Components: optimizing packages for plasma-discover
 - Components: handling if the component has no comment
