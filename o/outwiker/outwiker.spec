@@ -1,6 +1,6 @@
 Name: outwiker
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: OutWiker is designed to store notes in a tree
 
@@ -16,6 +16,12 @@ BuildRequires: rpm-build-python3
 BuildArch: noarch
 
 %add_python3_path %_datadir/%name/
+
+# Skip deprecated and removed in python3.13 libs in files:
+# outwiker/plugins/webpage/webpage/libs/email/mime/image.py
+# outwiker/plugins/webpage/webpage/libs/email/mime/audio.py
+# outwiker/plugins/webpage/webpage/libs/email/message.py
+%add_python3_req_skip imghdr sndhdr uu
 
 AutoProv: nopython3
 
@@ -57,6 +63,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pixmapsdir/*
 
 %changelog
+* Sun Jul 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
+- NMU: adapt package for python3.13
+
 * Sat Aug 17 2024 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
 - new version (3.3.0) with rpmgs script
 - do not provides python3 modules
