@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: livecd-rescue
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: The systemd target and services for Live Rescue
@@ -31,16 +31,23 @@ install -m644 live-rescue-issue.service %buildroot%systemd_unitdir/live-rescue-i
 ln -s ../live-rescue-issue.service %buildroot%systemd_unitdir/live-rescue.target.wants/live-rescue-issue.service
 install -m644 live-rescue-launcher.service %buildroot%systemd_unitdir/live-rescue-launcher.service
 ln -s ../live-rescue-launcher.service %buildroot%systemd_unitdir/live-rescue.target.wants/live-rescue-launcher.service
+install -m644 live-rescue-main-repo.service %buildroot%systemd_unitdir/live-rescue-main-repo.service
+ln -s ../live-rescue-main-repo.service %buildroot%systemd_unitdir/live-rescue.target.wants/live-rescue-main-repo.service
 
 %files
 %systemd_unitdir/live-rescue.target
 %systemd_unitdir/live-rescue-issue.service
 %systemd_unitdir/live-rescue-launcher.service
+%systemd_unitdir/live-rescue-main-repo.service
 %dir %systemd_unitdir/live-rescue.target.wants
 %systemd_unitdir/live-rescue.target.wants/live-rescue-issue.service
 %systemd_unitdir/live-rescue.target.wants/live-rescue-launcher.service
+%systemd_unitdir/live-rescue.target.wants/live-rescue-main-repo.service
 
 %changelog
+* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 0.3.5-alt1
+- add live-rescue-main-repo.service
+
 * Mon Apr 14 2025 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
 - live-rescue-issue.service: bold the word 'root' in issue (thanks mike@)
 
