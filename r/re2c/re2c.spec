@@ -1,12 +1,13 @@
 Name: re2c
-Version: 4.2
+Version: 4.3
 Release: alt1
 
 Summary: re2c - A tool for generating C-based recognizers from regular expressions
 
 Group: Development/Other
 License: ALT-Public-Domain
-Url: http://sourceforge.net/projects/re2c/
+Url: https://re2c.org
+Vcs: https://github.com/skvadrik/re2c
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -34,13 +35,40 @@ flexible.
 %makeinstall_std
 
 %files
-%_bindir/re2*
-%_man1dir/re2*
+%_bindir/re2c
+%_bindir/re2d
+%_bindir/re2go
+%_bindir/re2hs
+%_bindir/re2java
+%_bindir/re2js
+%_bindir/re2ocaml
+%_bindir/re2py
+%_bindir/re2rust
+%_bindir/re2swift
+%_bindir/re2v
+%_bindir/re2zig
+%_man1dir/re2c.1*
+%_man1dir/re2d.1*
+%_man1dir/re2go.1*
+%_man1dir/re2hs.1*
+%_man1dir/re2java.1*
+%_man1dir/re2js.1*
+%_man1dir/re2ocaml.1*
+%_man1dir/re2py.1*
+%_man1dir/re2rust.1*
+%_man1dir/re2swift.1*
+%_man1dir/re2v.1*
+%_man1dir/re2zig.1*
 %_datadir/%name/
 %doc README.md
 # re2c/examples
 
 %changelog
+* Thu Jul 3 2025 Korney Gedert <kiper@altlinux.org> 4.3-alt1
+- new version 4.3 (with rpmrb script)
+- Since version 4.2-alt1, support for the following languages has 
+- been added: d, hs, java, js, ocaml, py, rust, swift, v, zig.
+
 * Thu Jun 26 2025 Korney Gedert <kiper@altlinux.org> 4.2-alt1
 - new version 4.2 (with rpmrb script)
 
