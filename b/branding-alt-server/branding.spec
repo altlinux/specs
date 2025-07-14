@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt28
+Release: alt29
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -362,9 +362,12 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 
 %files notes
 %_datadir/alt-notes/livecd-*
+%_datadir/alt-notes/release-notes.*
 %_datadir/alt-notes/final-notes.*
 %_datadir/alt-notes-domain/release-notes.*
+%_datadir/alt-notes-domain/final-notes.*
 %_datadir/alt-notes-server/release-notes.*
+%_datadir/alt-notes-server/final-notes.*
 
 %files mate-settings
 %_datadir/install3/lightdm-gtk-greeter.conf
@@ -388,6 +391,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Jul 14 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt29
+- Separate final-notes for domain and server
+
 * Thu Jul 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt28
 - Fix release-notes (Closes: 54876, 54877)
 - Separate release-notes for domain and server
