@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: %pypi_name
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: RamaLama is a command line tool for working with AI LLM models
 Group: Development/Python3
@@ -15,6 +15,9 @@ BuildArch: noarch
 
 BuildRequires: python3-devel golang go-md2man
 BuildRequires: python3-module-setuptools python3-module-wheel python3-module-argcomplete
+
+Requires: python3-module-%pypi_name = %EVR
+Obsoletes: python3-module-%pypi_name < 0.10.1
 
 %package -n python3-module-%pypi_name
 Summary: %summary
@@ -53,7 +56,10 @@ will run the AI Models within a container based on the OCI image.
 make DESTDIR=%buildroot PREFIX=%prefix install-docs install-shortnames
 make DESTDIR=%buildroot PREFIX=%prefix install-completions
 
-%files -n python3-module-%pypi_name
+#%%check
+#%%pyproject_run_pytest -v test/unit
+
+%files
 %doc docs/README.md
 %_bindir/%pypi_name
 %_datadir/bash-completion/completions/%pypi_name
@@ -65,10 +71,16 @@ make DESTDIR=%buildroot PREFIX=%prefix install-completions
 %_man1dir/ramalama*.1*
 %_man5dir/ramalama*.5*
 %_man7dir/ramalama*.7*
+
+%files -n python3-module-%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Jul 14 2025 L.A. Kostis <lakostis@altlinux.ru> 0.11.0-alt1
+- 0.11.0.
+- split python3 module and ramalama itself.
+
 * Tue Jul 01 2025 L.A. Kostis <lakostis@altlinux.ru> 0.10.0-alt1
 - 0.10.0.
 
