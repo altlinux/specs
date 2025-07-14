@@ -22,7 +22,7 @@
 %define tname soundkonverter
 Name: kde5-soundkonverter
 Version: 3.0.1
-Release: alt7
+Release: alt8
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Summary: A frontend to various audio converters
@@ -49,8 +49,7 @@ Requires: /usr/bin/ffmpeg
 %else
 Requires: /usr/bin/avconv
 %endif
-Requires: vorbis-tools vorbisgain flac lame cdparanoia speex wavpack faad mppenc sox opus-tools
-#Requires: mppenc
+Requires: vorbis-tools vorbisgain flac lame cdparanoia speex wavpack faad sox opus-tools
 %if_enabled mp3gain
 Requires: mp3gain
 %endif
@@ -138,6 +137,9 @@ popd
 %_K5lib/libsoundkonvertercore.so.*
 
 %changelog
+* Mon Jul 14 2025 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt8
+- drop requires to mppenc
+
 * Tue Apr 08 2025 Sergey V Turchin <zerg@altlinux.org> 3.0.1-alt7
 - drop requires to mppenc
 
