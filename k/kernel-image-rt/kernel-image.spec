@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.37
+%define kernel_sublevel	.38
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jul 14 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.38-alt1
+- v6.12.38 (2025-07-14).
+
 * Thu Jul 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.37-alt1
 - v6.12.37 (2025-07-10).
 - config: Enable CONFIG_BUG_ON_DATA_CORRUPTION=y.
