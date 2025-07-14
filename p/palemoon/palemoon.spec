@@ -1,4 +1,4 @@
-# git commit 36029e7e69cf76c264e2120b23a31f08881b49ae
+# git commit 294d297ee962af25997ecd5ba76fa602e9b92f60
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
@@ -6,13 +6,13 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 33.8.0
 
-Release: alt1
+Release: alt1.1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
 
-Url: https://github.com/MoonchildProductions/Pale-Moon
-Vcs: https://github.com/MoonchildProductions/Pale-Moon
+Url: https://repo.palemoon.org/MoonchildProductions/Pale-Moon.git
+Vcs: https://repo.palemoon.org/MoonchildProductions/Pale-Moon.git
 
 Epoch: 2
 
@@ -502,6 +502,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Mon Jul 14 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.8.0-alt1.1
+- Fix Url and Vcs in spec
+
 * Sun Jul 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.8.0-alt1
 - Version 33.8.0 (CVE-2025-6429, CVE-2025-6424 (DiD) and CVE-2025-6426)
 
