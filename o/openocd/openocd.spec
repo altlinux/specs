@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.12.0
-Release: alt6
+Release: alt7
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
@@ -36,6 +36,7 @@ hardware debugging.
   --enable-amtjtagaccel \
   --enable-at91rm9200 \
   --enable-bcm2835gpio \
+  --enable-ch347 \
   --enable-cmsis-dap \
   --enable-dummy \
   --enable-ep93xx \
@@ -82,6 +83,10 @@ install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.r
 %_mandir/man1/*
 
 %changelog
+* Mon Jul 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt7
+- added support for ch347-based JTAG adapters
+- added support for k1921vk028, k1921vk035 and k1912vg015 MCUs
+
 * Thu May 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt6
 - v0.12.0-982-gafbd01b0a
 
