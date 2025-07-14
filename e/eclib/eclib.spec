@@ -3,7 +3,7 @@
 %define soname 14
 
 Name: eclib
-Version: 20250616
+Version: 20250627
 Release: alt1
 
 Summary: Tools for create the elliptic curve database
@@ -110,6 +110,9 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Mon Jul 14 2025 Leontiy Volodin <lvol@altlinux.org> 20250627-alt1
+- New version 20250627.
+
 * Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 20250616-alt1
 - New version 20250616.
 
