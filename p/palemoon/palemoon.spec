@@ -4,9 +4,9 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.7.2
+Version: 33.8.0
 
-Release: alt1.1
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -18,6 +18,7 @@ Epoch: 2
 
 #ExclusiveArch: x86_64 aarch64
 # ppc64le
+ExcludeArch: armh
 
 %define sname palemoon
 %define bname newmoon
@@ -501,18 +502,21 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sun Jul 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.8.0-alt1
+- Version 33.8.0 (CVE-2025-6429, CVE-2025-6424 (DiD) and CVE-2025-6426)
+
 * Wed Jul 02 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.2-alt1.1
 - Add palemoon-33.7.2-UXP-Enable-LTO-to-work.patch from Debian
 - Added support for ix86 (32 bit) architecture
 
 * Tue Jun 17 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.2-alt1
-- Version 37.7.2
+- Version 33.7.2
 
 * Tue May 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.1-alt1
-- Version 37.7.1
+- Version 33.7.1
 
 * Thu Apr 10 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.7.0-alt1
-- Version 37.7.0
+- Version 33.7.0
 
 * Tue Mar 11 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.6.1-alt1
 - Version 33.6.1 (CVE-2025-1934)
