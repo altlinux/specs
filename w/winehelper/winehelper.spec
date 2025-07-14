@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.4.9
+Version: 0.5.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -12,7 +12,6 @@ Source: %name-%version.tar
 
 Requires: wine
 Requires: ca-certificates
-Requires: cups-pdf
 Requires: p7zip
 
 %add_findreq_skiplist %_datadir/%name/winetricks_*
@@ -53,6 +52,11 @@ install -Dm644 auto_completion/zsh_completion/_%name %buildroot%_datadir/zsh/Com
 %_datadir/zsh/Completion/Linux/_%name
 
 %changelog
+* Mon Jul 14 2025 Mikhail Tergoev <fidel@altlinux.org> 0.5.0-alt1
+- 0.5.0
+- removed requires: cups-pdf (ALT bug: 55212
+- removed check requires libOSMesa from scripts (ALT bug: 55211)
+
 * Fri Jul 04 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.9-alt1
 - 0.4.9
 
