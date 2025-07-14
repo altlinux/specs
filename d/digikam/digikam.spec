@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.7.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -287,6 +287,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Mon Jul 14 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt2
+- update russian translation
+
 * Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt1
 - new version
 
