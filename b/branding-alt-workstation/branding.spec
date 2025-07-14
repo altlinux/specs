@@ -24,8 +24,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.0
-Release: alt6
+Version: 11.1
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -370,6 +370,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Jul 14 2025 Semen Fomchenkov <armatik@altlinux.org> 11.1-alt1
+- spec: bump version to 11.1
+
 * Fri Jul 04 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
 - NMU: os-release.in: fix space of end line
 
