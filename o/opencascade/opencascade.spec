@@ -3,7 +3,7 @@
 
 Name: opencascade
 Version: 7.9.0
-Release: alt1
+Release: alt2
 
 Summary: SDK for development applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
@@ -128,6 +128,11 @@ mv %buildroot%_bindir/DRAWEXE-* %buildroot%_bindir/DRAWEXE
 # Remove installed files with licenses
 rm -f /usr/share/doc/opencascade/*
 
+%ifarch %e2k
+# error: cpio archive too big - 4252M
+strip %buildroot/usr/lib64/libTK{DESTEP,DEIGES,V3d,GeomAlgo}.so
+%endif
+
 %files
 %_bindir/DRAWEXE
 %_bindir/ExpToCasExe
@@ -154,6 +159,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/opencascade
 
 %changelog
+* Mon Jul 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.9.0-alt2
+- e2k build fix
+
 * Wed Mar 12 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.0-alt1
 - Update summary.
 - New version.
