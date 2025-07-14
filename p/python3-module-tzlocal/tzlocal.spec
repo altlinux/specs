@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.3.1
-Release: alt1
+Release: alt2
 
 Summary: A Python module that tries to figure out what your local timezone is
 
@@ -20,26 +20,22 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytz-deprecation-shim
 
 %description
-This Python module returns a tzinfo object (with a pytz_deprecation_shim,
-for pytz compatibility) with the local timezone information, under
-Unix and Windows.
-
-It requires Python 3.6 or later, and will use the backports.tzinfo
-package, for Python 3.6 to 3.8.
+This Python module returns the IANA time zone name for your local
+time zone or a tzinfo object with the local timezone information,
+under Unix and Windows.
 
 This module attempts to fix a glaring hole in the pytz and zoneinfo
 modules, that there is no way to get the local timezone information,
 unless you know the zoneinfo name, and under several Linux distros
 that's hard or impossible to figure out.
 
-With tzlocal you only need to call get_localzone() and you will get a
-tzinfo object with the local time zone info. On some Unices you will
-still not get to know what the timezone name is, but you don't need
-that when you have the tzinfo file. However, if the timezone name is
-readily available it will be used.
+With tzlocal you only need to call get_localzone() and you will get
+a tzinfo object with the local time zone info. On some Unices you
+will still not get to know what the timezone name is, but you don't
+need that when you have the tzinfo file. However, if the timezone
+name is readily available it will be used.
 
 %prep
 %setup
@@ -64,6 +60,9 @@ ln -sfv ../usr/share/zoneinfo/Africa/Harare \
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Jul 08 2025 Vasiliy Kovalev <kovalev@altlinux.org> 5.3.1-alt2
+- spec: remove python3-module-pytz-deprecation-shim build dependency.
+
 * Fri May 23 2025 Denis Sergeev <zeff@altlinux.org> 5.3.1-alt1
 - New version 5.3.1.
 
