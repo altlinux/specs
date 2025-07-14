@@ -1,21 +1,29 @@
-%define modname tap.py
+%define modname tappy
+%define pypi_name tap_py
 
-Name: python3-module-tappy
-Version: 3.1
+%def_enable check
+
+Name: python3-module-%modname
+Version: 3.2.1
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) tools
 Group: Development/Python3
 License: BSD-2-Clause
-Url: http://pypi.python.org/pypi/%modname
+Url: https://pypi.python.org/pypi/%pypi_name
 
-# VCS: https://github.com/python-tap/tappy
-Source: http://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
+Vcs: https://github.com/python-tap/tappy.git
+
+Source: http://pypi.io/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python3-devel rpm-build-python3 python3-module-babel
-BuildRequires: python3-module-distribute
+Provides: python3-module-%pypi_name = %EVR
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3(wheel) python3(hatchling)
+BuildRequires: python3(babel)
+%{?_enable_check:BuildRequires: python3(tox)}
 
 %description
 tappy python module provides a set of tools for working with the Test
@@ -23,22 +31,29 @@ Anything Protocol (TAP), a line based test protocol for recording test
 data in a standard way.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check
 
 %files
 %_bindir/tap
 %_bindir/tappy
 %python3_sitelibdir_noarch/tap
-%python3_sitelibdir_noarch/*.egg-info
-%doc README.md LICENSE
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+#%doc README.md
+%doc LICENSE
 
 %changelog
+* Sun Jul 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Wed Dec 29 2021 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1
 

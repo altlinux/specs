@@ -1,5 +1,5 @@
 Name: fotocx
-Version: 25.1
+Version: 25.2
 Release: alt1
 
 %define app_id kornelix.%name
@@ -11,7 +11,7 @@ Url: https://www.kornelix.net/fotocx/fotocx.html
 
 #Vcs: https://gitlab.com/fotoxx/fotoxx.git
 
-Source: http://www.kornelix.net/downloads/downloads/%name-%version-source.tar.gz
+Source: https://www.kornelix.net/downloads/downloads/%name-%version-source.tar.gz
 Source1: %name.desktop
 Source2: %{name}16.png
 Source3: %{name}32.png
@@ -85,6 +85,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sat Jul 12 2025 Yuri N. Sedunov <aris@altlinux.org> 25.2-alt1
+- 25.2
+
 * Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 25.1-alt1
 - 25.1
 
