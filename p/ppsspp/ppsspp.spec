@@ -15,7 +15,7 @@
 %endif
 
 Name: ppsspp
-Version: 1.19.2
+Version: 1.19.3
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -56,13 +56,14 @@ Patch0: %name-alt-git.patch
 
 Requires: %name-common = %EVR
 
+BuildRequires(pre): fontconfig-devel
+BuildRequires(pre): libpng-devel
+
 BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2_ttf-devel
-BuildRequires: libe2fs
 BuildRequires: libminiupnpc-devel
-BuildRequires: libpng-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
@@ -151,6 +152,14 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %endif
 	-Wno-dev
 
+echo "// This is a generated file.
+
+const char *PPSSPP_GIT_VERSION = \"%{version}\";
+
+// If you don't want this file to update/recompile, change to 1.
+#define PPSSPP_GIT_VERSION_NO_UPDATE 1
+" > %_cmake__builddir/git-version.cpp
+
 %cmake_build
 
 # Build libretro versions
@@ -172,6 +181,14 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %endif
 	-Wno-dev
 
+echo "// This is a generated file.
+
+const char *PPSSPP_GIT_VERSION = \"%{version}\";
+
+// If you don't want this file to update/recompile, change to 1.
+#define PPSSPP_GIT_VERSION_NO_UPDATE 1
+" > %_cmake__builddir/git-version.cpp
+
 %cmake_build
 
 # Build Qt version
@@ -192,6 +209,14 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
 %endif
 	-Wno-dev
+
+echo "// This is a generated file.
+
+const char *PPSSPP_GIT_VERSION = \"%{version}\";
+
+// If you don't want this file to update/recompile, change to 1.
+#define PPSSPP_GIT_VERSION_NO_UPDATE 1
+" > %_cmake__builddir/git-version.cpp
 
 %cmake_build
 
@@ -227,6 +252,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Mon Jul 14 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.3-alt1
+- Version 1.19.3
+
 * Sun Jun 15 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.2-alt1
 - Version 1.19.2
 
