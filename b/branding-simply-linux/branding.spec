@@ -1,13 +1,13 @@
 %define theme slinux
 %define Name Simply Linux
 %define codename Giuseppe
-%define status alpha
+%define status %nil
 
 %define brand simply
 
-%define gtk_theme ClassicLooks
-%define icon_theme SimpleSL
-%define xfwm4_theme "ClassicLooks XFWM4"
+%define gtk_theme Orchis-Light-Compact
+%define icon_theme Papirus
+%define xfwm4_theme Orchis-Light-Compact
 
 # Enable compositing on x86_64 only
 %ifarch x86_64
@@ -16,7 +16,7 @@
 %define xfwm4_compositing false
 %endif
 
-%define def_desktop_wallpaper slinux_commander_islands_16x9_2560x1440.png
+%define def_desktop_wallpaper slinux_alt_june_16x10_2560x1600.png
 
 # NOTE: Helper's name must be one of xfce4-settings helpers.
 
@@ -67,7 +67,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.920
+Version: 10.950
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -173,6 +173,7 @@ Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme
 Provides: design-graphics = 12.0.0
 
 Requires(post,preun): alternatives >= 0.2
+Requires: icon-theme-hicolor
 %branding_add_conflicts simply-linux graphics
 
 %description graphics
@@ -231,9 +232,9 @@ License: GPLv2+
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
 Requires: etcskel
-Requires: gtk-theme-classiclooks
-Requires: gnome-themes-standard
-Requires: gnome-icon-theme icon-theme-simple-sl >= 2.7-alt3
+Requires: gtk2-theme-orchis gtk3-theme-orchis gtk4-theme-orchis xfwm4-theme-orchis
+Requires: icon-theme-Papirus
+Requires: gnome-icon-theme
 Requires: branding-simply-linux-graphics
 Requires: branding-simply-linux-backgrounds10
 # plugins added on panel by default
@@ -255,15 +256,10 @@ Group: Graphics
 Summary: Backgrounds for SL-10
 License: CC-BY-NC-SA-3.0+
 BuildArch: noarch
-# There is no SL-11 backgrounds yet, require old SL-10 backgrounds for now.
-Requires: branding-simply-linux-backgrounds10
-Requires: branding-simply-linux-backgrounds10-vladstudio
 %branding_add_conflicts simply-linux backgrounds11
 
 %description backgrounds11
 This package contains backgrounds for Simply Linux 11.
-
-There is no SL-11 backgrounds yet, it is empty package for now.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
@@ -344,17 +340,16 @@ make
 
 #graphics
 mkdir -p %buildroot/%_datadir/design/{%theme,backgrounds}
-mkdir -p %buildroot/%_niconsdir
-install -m644 graphics/icons/slinux.png %buildroot/%_niconsdir/slinux.png
-install -m644 graphics/icons/mini/slinux.png %buildroot/%_iconsdir/altlinux.png
 cp -ar graphics/* %buildroot/%_datadir/design/%theme
+# install icons
+for s in 16x16 22x22 32x32 48x48 64x64 128x128; do
+	mkdir -p %buildroot/%_iconsdir/hicolor/"$s"/apps/
+	ln -sr %buildroot/%_datadir/design/%theme/icons/"$s"/slinux.png %buildroot/%_iconsdir/hicolor/"$s"/apps/slinux.png
+done
+mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps/
+ln -sr %buildroot/%_datadir/design/%theme/icons/scalable/slinux.svg %buildroot/%_iconsdir/hicolor/scalable/apps/slinux.svg
 
-pushd %buildroot/%_datadir/design/%theme
-    pushd backgrounds
-	ln -sf ../../../wallpapers more
-    popd
-popd
-
+ln -sr %buildroot/%_datadir/wallpapers %buildroot/%_datadir/design/%theme/backgrounds/more
 
 install -d %buildroot//etc/alternatives/packages.d
 cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
@@ -416,9 +411,9 @@ fi
 #graphics
 %post graphics
 [ -e %_datadir/design/slinux/backgrounds/default.png ] || \
-	ln -s default-16x9.png %_datadir/design/slinux/backgrounds/default.png
+	ln -s default-16x10.png %_datadir/design/slinux/backgrounds/default.png
 [ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
-	ln -s xdm-16x9.png %_datadir/design/slinux/backgrounds/xdm.png
+	ln -s xdm-16x10.png %_datadir/design/slinux/backgrounds/xdm.png
 
 %post xfce-settings
 # Set default SL background
@@ -442,8 +437,7 @@ fi
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
-%_niconsdir/slinux.png
-%_iconsdir/altlinux.png
+%_iconsdir/hicolor/*/apps/slinux.*
 %ghost %_datadir/design/slinux/backgrounds/default.png
 %ghost %_datadir/design/slinux/backgrounds/xdm.png
 
@@ -472,6 +466,7 @@ fi
 /etc/skel/.gtkrc-2.0
 
 %files backgrounds11
+%_datadir/backgrounds/xfce/slinux_*.png
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -494,6 +489,26 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Jul 14 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt1
+- graphics: Update lightdm wallpaper.
+- system-settings: Use slinux.svg as default user image.
+- graphics: Update slinux logo icons.
+- xfce-settings: Enable SyncThemes.
+- alterator: Change font color.
+- alterator: Update installer background color.
+- bootloader: Update grub background.
+- alterator: Change progressbar and selection color.
+- xfce-settings,system-settings: Set gtk theme Orchis-Light-Compact.
+- Drop status alpha.
+- xfce-settings: Change icon theme SimpleSL -> Papirus.
+- system-settings: Set default user image to slinux.png.
+- graphics: Install slinux.png as hicolor icons.
+- xfce-settings: Set desktop label text color.
+- components.mk: Install backgrounds again.
+- backgrounds11: Add SL-11 background.
+- xfce-settings: Don't pull gnome-themes-standard.
+- xfce-settings: Don't pull gtk2-theme-classiclooks.
+
 * Thu May 29 2025 Mikhail Efremov <sem@altlinux.org> 10.920-alt1
 - menu: Replace livecd-install.desktop -> install2.desktop.
 - menu: Drop apt-indicator.
