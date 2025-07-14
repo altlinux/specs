@@ -1,5 +1,5 @@
 Name: libsigsegv
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: Library for handling page faults in user mode
@@ -83,6 +83,9 @@ GNULIB_SRCDIR=%_datadir/gnulib sh -x ./autogen.sh
 %_includedir/*
 
 %changelog
+* Mon Apr 28 2025 Dmitry V. Levin <ldv@altlinux.org> 2.15-alt1
+- v2.14 -> v2.15.
+
 * Fri Jan 07 2022 Dmitry V. Levin <ldv@altlinux.org> 2.14-alt1
 - libsigsegv: v2.13-5-g8107f54 -> v2.14.
 
