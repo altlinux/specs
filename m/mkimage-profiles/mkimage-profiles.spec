@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1.8.3-alt1
+- plymouth: use/plymouth/base do not depend on use/plymouth/stage2
+- image.in: set adjtime to UTC by default
+- docs: use/docs/manual depend on use/docs/indexhtml
+- firmware: replace firmware-alsa-sof to use/firmware
+- services: do not enable/disable serivices with prefix "livecd-" in installer
+- live: add livecd-backlight-max to use/live/x11
+- browser: remove chromium-gost
+- x11: use kde-display-manager-lightdm for all BRANCH except p10
+
 * Mon Jun 16 2025 Anton Midyukov <antohami@altlinux.org> 1.8.2-alt1
 - live: add livecd-auto-hostname to live/base (except BRANCH=p10)
 - live-install: do not add use/l10n
