@@ -10,12 +10,12 @@
 %endif
 %define altbranch %_priority_distbranch
 %define status %nil
-%define status_en %nil
+%define status_en ALPHA
 %define flavour %brand-%theme
 
 %define gtk_theme BlueMenta
 %define kde_theme Breeze
-%define icon_theme Papirus-Light
+%define icon_theme ALT_SP_Workstation
 %define window_theme BlueMenta
 
 %define design_graphics_abi_epoch 0
@@ -28,8 +28,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2.1
-Release: alt2
+Version: 11.0
+Release: alt0.08
 Epoch: 1
 Url: https://altsp.su
 
@@ -131,6 +131,7 @@ Provides: design-graphics-%theme  branding-alt-%theme-graphics
 Obsoletes:  design-graphics-%theme
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
+Requires: icon-theme-alt-sp-workstation
 Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour graphics
 
@@ -179,6 +180,22 @@ Distribution license and release notes
 В данном пакете находится лицензия и дополнительные сведения
 для дистрибутива %distro_name_ru.
 
+%package gnome-settings
+BuildArch: noarch
+Summary: GNOME settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: dconf
+#
+%branding_add_conflicts %flavour gnome-settings
+%branding_add_conflicts %flavour graphics
+Requires(post): libgio
+# To avoid install check conflicts
+Requires: %name-graphics = %EVR
+
+%description gnome-settings
+GNOME settings for %distro_name.
+
 %package mate-settings
 BuildArch: noarch
 Summary: MATE settings for %distro_name
@@ -186,8 +203,6 @@ License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
 Requires: gtk3-theme-clearlooks-phenix
-Requires: icon-theme-Papirus-Light
-Requires: icon-theme-Papirus-Dark
 Requires: x-cursor-theme-jimmac
 %branding_add_conflicts %flavour mate-settings 
 PreReq(post): lightdm-gtk-greeter
@@ -315,8 +330,17 @@ fi
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %files mate-settings
-%_datadir/glib-2.0/schemas/*.gschema.override
+%_datadir/glib-2.0/schemas/50_mate-background.gschema.override
+%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override
+
 %_datadir/install3/*
+
+%files gnome-settings
+%_datadir/glib-2.0/schemas/50_gnome-dash-app-list-favorites.gschema.override
+%_datadir/glib-2.0/schemas/50_alt-gnome-appearance.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-software-installation-priority.gschema.override
+%_datadir/glib-2.0/schemas/50_mutter-custom-settings.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
 
 #%%files slideshow
 #/etc/alterator/slideshow.conf
@@ -333,8 +357,34 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
-* Tue May 13 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt2
+* Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.08
+- Update images.
+
+* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.07
+- browser-qt: update images
+
+* Sun Jul 13 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.06
+- use images/product-logo as system-logo too
+- browser-qt: add width distr logo
+
+* Tue Jul 08 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.05
+- use a monotone background for installer
+- browser-qt: stretch installer background
+
+* Tue Jul 08 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.04
+- add gnome-settings subpackage
+
+* Mon Jul 07 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.03
+- Update images
+
+* Thu Jun 26 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.02
 - os-release: change NAME="ALT Linux"
+- os-release: add LOGO
+- indexhtml.desktop: use xdg-open instead xbrowser
+
+* Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.01
+- 11.0ALPHA
+- indexhtml: replace absolute links of license with relative links
 
 * Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt1
 - 10.2.1

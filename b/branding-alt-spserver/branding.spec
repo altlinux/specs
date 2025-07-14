@@ -10,7 +10,7 @@
 %endif
 %define altbranch %_priority_distbranch
 %define status %nil
-%define status_en %nil
+%define status_en ALPHA
 %define flavour %brand-%theme
 
 %define design_graphics_abi_epoch 0
@@ -23,8 +23,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2.1
-Release: alt2
+Version: 11.0
+Release: alt0.08
 Epoch: 1
 Url: https://altsp.su
 
@@ -291,8 +291,21 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
-* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt2
+* Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.08
+- browser-qt: update images, add width distr logo
+- browser-qt: stretch installer background
+- use images/product-logo as system-logo too
+- use images without logo for wallpapers
+- update images
+
+* Thu Jun 26 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.02
 - os-release: change NAME="ALT Linux"
+- os-release: add LOGO
+- indexhtml.desktop: use xdg-open instead xbrowser
+
+* Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.01
+- 11.0ALPHA
+- indexhtml: replace absolute links of license with relative links
 
 * Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt1
 - 10.2.1
