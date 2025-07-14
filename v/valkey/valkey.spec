@@ -9,7 +9,7 @@
 
 
 Name: valkey
-Version: 8.1.2
+Version: 8.1.3
 Release: alt1
 
 Summary: A persistent key-value database
@@ -19,10 +19,10 @@ Group: Databases
 Url: https://valkey.io
 Vcs: https://github.com/valkey-io/valkey
 Source0: %name-%version.tar
-
 Source2: valkey.service
 Source3: valkey-sentinel.service
 Source4: valkey.logrotate
+Patch: %name-%version.patch
 
 BuildRequires: gcc-c++ libssl-devel libsystemd-devel
 # for check section
@@ -89,6 +89,7 @@ Redis API.
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' deps/hiredis/Makefile
 %endif
@@ -197,6 +198,9 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Mon Jul 14 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.3-alt1
+- New version 8.1.3 (Fixes: CVE-2025-32023, CVE-2025-48367).
+
 * Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.2-alt1
 - New version 8.1.2 (Fixes: CVE-2025-27151).
 - Enable %%check for x86_64 only.
