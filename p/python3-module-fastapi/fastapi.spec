@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.116.1
-Release: alt1
+Release: alt2
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -89,6 +89,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 14 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.1-alt2
+- Built with httpx 0.28.0 compatibility.
+
 * Mon Jul 14 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.1-alt1
 - Updated to 0.116.1.
 
