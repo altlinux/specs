@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: Let your Python tests travel through time
 License: Apache-2.0
@@ -52,6 +52,9 @@ time by mocking the datetime module.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
+- 1.5.2 -> 1.5.3.
+
 * Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2.
 
