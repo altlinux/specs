@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.5.0
+Version: 25.7.0
 Release: alt1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
@@ -50,6 +50,9 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jul 11 2025 Stanislav Levin <slev@altlinux.org> 25.7.0-alt1
+- 25.5.0 -> 25.7.0.
+
 * Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 25.5.0-alt1
 - 25.1.0 -> 25.5.0.
 
