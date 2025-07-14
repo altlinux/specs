@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.10
-Release: alt2
+Version: 3.3.11
+Release: alt1
 Summary: An abstract syntax tree for Python with inference support
 License: LGPLv2.1+
 Group: Development/Python3
@@ -67,6 +67,9 @@ rm %buildroot%python3_sitelibdir/%mod_name/test_utils.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 3.3.11-alt1
+- 3.3.10 -> 3.3.11.
+
 * Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 3.3.10-alt2
 - Fixed FTBFS (setuptools 80.9.0).
 
