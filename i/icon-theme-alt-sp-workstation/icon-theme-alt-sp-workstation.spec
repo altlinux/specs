@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-sp-workstation
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: ALT SP Workstation icon theme
@@ -29,5 +29,8 @@ cp -r index.theme scalable %buildroot/%_iconsdir/ALT_SP_Workstation/
 %_iconsdir/ALT_SP_Workstation/
 
 %changelog
+* Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
+- Update alt-distro-logo.
+
 * Tue Jul 08 2025 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build.
