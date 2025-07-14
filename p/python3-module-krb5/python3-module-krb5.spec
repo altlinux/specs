@@ -5,8 +5,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.5.1
-Release: alt1.1
+Version: 0.7.1
+Release: alt1
 
 Summary: Python krb5 API interface
 License: MIT
@@ -45,7 +45,7 @@ details through GSSAPI.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.md
@@ -53,6 +53,10 @@ details through GSSAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 14 2025 Andrey Limachko <liannnix@altlinux.org> 0.7.1-alt1
+- New version 0.7.1.
+- Remove unneeded header file python_krb5.h. (Closes: #55209)
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
