@@ -1,6 +1,6 @@
 Name: xfce4-screensaver
-Version: 4.18.4
-Release: alt2
+Version: 4.20.0
+Release: alt1
 
 Summary: Screen saver and locker for Xfce
 License: GPLv2+ and LGPLv2+
@@ -12,14 +12,21 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildRequires(pre): rpm-build-xdg
+# Wayland support disabled for now: this requires libwlembed
+# (https://gitlab.xfce.org/kelnos/libwlembed) which is not released yet.
+%def_disable wayland
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools >= 4.17.1
-BuildPreReq: libxfconf-devel libgarcon-gtk3-devel libxfce4ui-gtk3-devel >= 4.18.4 libxfce4util-devel
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools >= 4.17.1
+BuildRequires(pre): rpm-build-xdg
+BuildRequires: libxfconf-devel libgarcon-gtk3-devel libxfce4ui-gtk3-devel >= 4.18.4 libxfce4util-devel
 BuildRequires: glib2-devel libgtk+3-devel libgio-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
-BuildRequires: libXScrnSaver-devel libxklavier-devel libXrandr-devel libGL-devel
+BuildRequires: libX11-devel libXext-devel
+BuildRequires: libXScrnSaver-devel libxklavier-devel
+BuildRequires: libwnck3-devel
 BuildRequires: libsystemd-devel libpam0-devel libwnck3-devel
+%{?_enable_wayland:Buildrequires: wayland-devel libwlembed-gtk3-devel libwayland-client-devel wayland-protocols libxfce4windowing-devel}
 BuildRequires: xmlto
 # For xfce4-screensaver-configure
 BuildRequires: rpm-build-python3
@@ -41,21 +48,19 @@ and the Xfconf configuration backend.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--disable-silent-rules \
-	--enable-maintainer-mode \
-	--enable-pam \
-	--with-pam-auth-type=system \
-	--with-systemd \
-	--enable-locking \
-	--enable-docbook-docs \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	%{subst_enable_meson_feature wayland wayland} \
+	-Dauthentication-scheme=pam \
+	-Dpam-auth-type=system \
+	-Dsession-manager=systemd \
+	-Dlocking=true \
+	-Ddocs=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -75,6 +80,10 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Mon Jul 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Switched to meson build.
+- 4.18.4 -> 4.20.0.
+
 * Fri Mar 07 2025 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt2
 - Use ALT default background.
 
