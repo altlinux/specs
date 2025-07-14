@@ -10,9 +10,12 @@
 %define libkf6textautocorrectioncore libkf6textautocorrectioncore%sover
 %define libkf6textutils libkf6textutils%sover
 %define libkf6textcustomeditor libkf6textcustomeditor%sover
+%define libtextautogenerateollama libtextautogenerateollama%sover
+%define libkf6textspeechtotext libkf6textspeechtotext%sover
+%define libkf6textautogeneratetext libkf6textautogeneratetext%sover
 
 Name: kf6-%rname
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 %K6init no_altplace
 
@@ -27,7 +30,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-speech-devel qt6-tools-devel qt6-declarative-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-karchive-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kxmlgui-devel kf6-kio-devel
-BuildRequires: kf6-sonnet-devel kf6-syntax-highlighting-devel
+BuildRequires: kf6-sonnet-devel kf6-syntax-highlighting-devel kf6-ktextwidgets-devel
 BuildRequires: libqtkeychain-qt6-devel
 
 %description
@@ -110,6 +113,27 @@ Requires: %name-common
 %description -n %libkf6textcustomeditor
 %name library
 
+%package -n %libkf6textautogeneratetext
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libkf6textautogeneratetext
+%name library
+
+%package -n %libkf6textspeechtotext
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libkf6textspeechtotext
+%name library
+
+%package -n %libtextautogenerateollama
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libtextautogenerateollama
+%name library
+
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
@@ -145,6 +169,8 @@ done
 %files
 %dir %_K6plug/kf6/translator/
 %_K6plug/kf6/translator/translator_*.so
+%_K6plug/kf6/speechtotext/speechtotext_*.so
+%_K6plug/kf6/textautogeneratetext/autogeneratetext_*.so
 
 %files -n %libkf6textaddonswidgets
 %_K6lib/libKF6TextAddonsWidgets.so.*
@@ -176,7 +202,15 @@ done
 %files -n %libkf6textcustomeditor
 %_K6lib/libKF6TextCustomEditor.so.*
 %_K6lib/libKF6TextCustomEditor.so.%sover
-
+%files -n %libtextautogenerateollama
+%_K6lib/libtextautogenerateollama.so.*
+%_K6lib/libtextautogenerateollama.so.%sover
+%files -n %libkf6textspeechtotext
+%_K6lib/libKF6TextSpeechToText.so.*
+%_K6lib/libKF6TextSpeechToText.so.%sover
+%files -n %libkf6textautogeneratetext
+%_K6lib/libKF6TextAutoGenerateText.so.*
+%_K6lib/libKF6TextAutoGenerateText.so.%sover
 
 %files devel
 %_K6plug/designer/*text*.so
@@ -186,5 +220,8 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Mon Jul 14 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
+- new version
+
 * Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.4-alt1
 - initial build
