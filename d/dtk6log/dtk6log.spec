@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtk6log
-Version: 0.0.2.0.1.5179
+Version: 0.0.5
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -66,11 +66,12 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
   #
 
 %install
-%DQ6install_qt
+%DQ6install
 
 %files -n lib%{name}0
 %doc README.md LICENSE*
-%_libdir/lib%name.so.0*
+%_libdir/lib%name.so.0
+%_libdir/lib%name.so.%version
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -83,6 +84,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Mon Jul 14 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
+- New version 0.0.5.
+
 * Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2.0.1.5179-alt1
 - New version 0.0.2-1-g5179874.
 - Fixed compilation on Qt 6.9.
