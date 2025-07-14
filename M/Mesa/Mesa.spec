@@ -93,7 +93,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.1
-%define ver_minor 4
+%define ver_minor 5
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -117,7 +117,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
-BuildRequires: llvm-devel clang-devel
+BuildRequires: llvm20.1-devel clang20.1-devel
 %ifarch %gallium_opencl_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %endif
@@ -558,6 +558,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 03 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.5-alt1
+- 25.1.5
+
 * Fri Jun 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.4-alt1
 - 25.1.4
 
