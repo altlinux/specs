@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 9.0.11
+Version: 9.0.14
 Release: alt1
 
 Summary: Seafile client GUI (Qt-based)
@@ -14,6 +14,7 @@ Source1: com.seafile.seafile-applet.desktop
 
 Patch0: seafile-client-no-return-error.patch
 Patch1: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
+Patch2: alt-qt69.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -32,9 +33,8 @@ BuildRequires: pkgconfig(Qt6Network)
 BuildRequires: pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(Qt6WebEngineCore)
 BuildRequires: pkgconfig(Qt6WebEngineWidgets)
-BuildRequires: qt6-imageformats
 %else
-BuildRequires: qt5-imageformats qt5-tools-devel
+BuildRequires: qt5-tools-devel
 BuildRequires: qt5-base-devel
 %endif
 
@@ -59,6 +59,7 @@ This package contains desktop GUI client.
 %setup
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
 # https://github.com/haiwen/seafile-client/pull/1346
 subst -p '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' \
 	CMakeLists.txt
@@ -89,6 +90,10 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 9.0.14-alt1
+- NMU: new version
+- NMU: fix compile with Qt-6.9 (closes: 55206)
+
 * Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.11-alt1
 - new version 9.0.11 (with rpmrb script)
 - rename seafile.desktop to com.seafile.seafile-applet.desktop
