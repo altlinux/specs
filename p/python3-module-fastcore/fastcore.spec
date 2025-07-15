@@ -3,7 +3,7 @@
 %define mod_name fastcore
 
 Name: python3-module-%pypi_name
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: Library that uses customization flexibility to add features to Python
@@ -46,6 +46,9 @@ collection utilities, types, and metaprogramming.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 08 2025 Anastasia Doronina <swaggyglice@altlinux.org> 1.8.5-alt1
+- Update to 1.8.5.
+
 * Tue Jun 24 2025 Anastasia Doronina <swaggyglice@altlinux.org> 1.8.4-alt1
 - Update to 1.8.4.
 
