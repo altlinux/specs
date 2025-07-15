@@ -2,7 +2,7 @@
 
 Name: qview
 Version: 7.0
-Release: alt1
+Release: alt2
 Summary: Practical and minimal image viewer
 License: GPL-3.0
 Group: Graphics
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools
+
+Requires: qt6-imageformats
 
 %description
 qView is an image viewer designed with minimalism and usability in mind.
@@ -45,6 +47,9 @@ rm -rf %buildroot%_datadir/licenses/%name
 %doc LICENSE
 
 %changelog
+* Tue Jul 15 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.0-alt2
+- Added qt6-imageformats to requires.
+
 * Mon Jun 30 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.0-alt1
 - Updated to version 7.0.
 - Built with Qt6.
