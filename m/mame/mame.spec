@@ -1,5 +1,5 @@
 Name: mame
-Version: 0.274
+Version: 0.278
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -310,6 +310,9 @@ install -D -m 0644 docs/source/images/MAMElogo.svg %buildroot%_iconsdir/hicolor/
 %_datadir/%name/hash/*
 
 %changelog
+* Tue Jul 15 2025 Artyom Bystrov <arbars@altlinux.org> 0.278-alt1
+- Update to new version
+
 * Fri Feb 14 2025 Artyom Bystrov <arbars@altlinux.org> 0.274-alt1
 - Update to new version
 
