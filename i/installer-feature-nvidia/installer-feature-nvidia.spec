@@ -1,5 +1,5 @@
 Name: installer-feature-nvidia
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Installer hook for NVIDIA proprietary driver
@@ -27,5 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jul 15 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.1-alt1
+- Fix: use destdir in CONF path and correct file name.
+- Refactor: unnecessary condition check removed.
+
 * Mon Jul 14 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.0-alt1
 - Initial build.
