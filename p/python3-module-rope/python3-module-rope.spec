@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rope
+%define import_name rope
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -51,11 +52,14 @@ BuildRequires: python3-module-pip
 %pyproject_run_pytest -vra -k 'not test_search_submodule'
 
 %files
-%doc COPYING README.rst CHANGELOG.md
-%python3_sitelibdir/%pypi_name/
+%doc README.rst CHANGELOG.md
+%python3_sitelibdir/%import_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
+- Updated to 1.14.0.
+
 * Thu Mar 28 2024 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
 - Updated to 1.13.0.
 
