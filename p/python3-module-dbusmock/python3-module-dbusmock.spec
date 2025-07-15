@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-dbusmock
-Version: 0.35.0
+Version: 0.36.0
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -26,7 +26,7 @@ BuildArch: noarch
 Requires: dbus
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-dbus
 %if_enabled check
@@ -66,6 +66,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Tue Jul 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Tue May 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
 - 0.35.0
 
