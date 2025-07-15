@@ -1,8 +1,8 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 3.0.0
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -14,7 +14,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 ExclusiveArch: x86_64
 
 Source: %name-%version.tar
-Source1: gradle-8.11-rc-3-bin.zip
 Source2: gradle-cache.tar
 Source3: m2.tar
 Patch0: opensearch-disable-test-reporting.patch
@@ -24,11 +23,12 @@ Patch2: opensearch-system-java.patch
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
+BuildRequires: gradle
 BuildRequires: unzip
 BuildRequires: jansi
 
 AutoReqProv: yes, noosgi-fc
-Requires: java >= 21
+Requires: java-21-openjdk
 
 %description
 %summary
@@ -36,7 +36,6 @@ Requires: java >= 21
 %prep
 %setup
 %autopatch -p1
-unzip %SOURCE1
 test -d ~/.gradle && rm -rf ~/.gradle
 test -d ~/.m2 && rm -rf ~/.m2
 %if_without bootstrap
@@ -52,11 +51,10 @@ rm -rf ~/.gradle/native
 subst '/core plugins/,$d' scripts/build.sh
 
 %build
-export PATH=$PATH:$PWD/gradle-8.11-rc-3/bin
 ./scripts/build.sh -v %version -s false -a x64 -d rpm
 
 %install
-RPM="$PWD/distribution/packages/rpm/build/distributions/opensearch-min-%version.x86_64.rpm"
+RPM="$PWD/artifacts/dist/opensearch-min-%version-no-jdk.x86_64.rpm"
 mkdir -p %buildroot
 cd %buildroot
 rpm2cpio "$RPM" | cpio -idmv
@@ -92,7 +90,7 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %attr(0660,opensearch,opensearch) %_sysconfdir/%name/log4j2.properties
 %config(noreplace) %attr(0660,opensearch,opensearch) %_sysconfdir/%name/opensearch.yml
 %config(noreplace) %attr(0660,opensearch,opensearch) %_sysconfdir/%name/jvm.options
-%config(noreplace) %attr(0660,opensearch,opensearch) %_sysconfdir/%name/java.security
+%config(noreplace) %attr(0660,opensearch,opensearch) %_sysconfdir/%name/fips_java.security
 %dir %_sysconfdir/%name/jvm.options.d/
 %_unitdir/%name.service
 %_datadir/opensearch
@@ -101,6 +99,11 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Jun 30 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version (fixes: CVE-2025-27820).
+- Built using system gradle.
+- Requires java-21-openjdk.
+
 * Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
 - Requires Java >= 21 for running.
 
