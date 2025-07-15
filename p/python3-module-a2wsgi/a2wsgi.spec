@@ -1,30 +1,44 @@
-Name: python3-module-a2wsgi
-Version: 1.10.7
-Release: alt1
+%define _unpackaged_files_terminate_build 1
+%define pypi_name a2wsgi
+%define mod_name %pypi_name
 
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 1.10.10
+Release: alt1
 Summary: Convert WSGI app from/to ASGI app
 License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.org/project/a2wsgi/
-
-Source0: %name-%version-%release.tar
-Source1: pyproject_deps.json
-
+Vcs: https://github.com/abersheeran/a2wsgi
 BuildArch: noarch
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(starlette)
-BuildRequires: python3(httpx)
-
 %pyproject_builddeps_build
+%if_with check
+# not packaged
+%add_pyproject_deps_check_filter baize
+%pyproject_builddeps_metadata
+%pyproject_builddeps -- pdm_test --exclude %pyproject_deps_check_filter
+%pyproject_builddeps -- pdm_dev --exclude %pyproject_deps_check_filter
+%endif
 
 %description
 %summary
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync pdm_test pdm test
+%pyproject_deps_resync pdm_dev pdm dev
+%endif
 
 %build
 %pyproject_build
@@ -36,10 +50,13 @@ BuildRequires: python3(httpx)
 %pyproject_run_pytest tests
 
 %files
-%python3_sitelibdir/a2wsgi
-%python3_sitelibdir/a2wsgi-%version.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 04 2025 Stanislav Levin <slev@altlinux.org> 1.10.10-alt1
+- 1.10.7 -> 1.10.10.
+
 * Tue Oct 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.7-alt1
 - 1.10.7 released
 

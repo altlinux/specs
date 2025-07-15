@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.6.1
-Release: alt1.1
+Release: alt2
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -24,7 +24,6 @@ Buildrequires: python3-module-requests
 Buildrequires: python3-module-deprecated
 Buildrequires: python3-module-pynacl
 Buildrequires: python3-module-jwt
-Buildrequires: python3-module-httpretty
 Buildrequires: python3-module-pytest-cov
 Buildrequires: python3-module-dateutil
 Buildrequires: python3-module-typing-extensions
@@ -65,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
+- Dropped no longer needed tests dependency on httpretty.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

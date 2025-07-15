@@ -1,37 +1,36 @@
+%define _unpackaged_files_terminate_build 1
+
 %define pypi_name httpx-sse
 %define mod_name httpx_sse
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
-
 Summary: Consume Server-Sent Event (SSE) messages with HTTPX
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/florimondmanca/httpx-sse
+URL:     https://pypi.org/project/httpx-sse/
+Vcs:     https://github.com/florimondmanca/httpx-sse
+BuildArch: noarch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-httpx
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-sse-starlette
 %endif
 
-BuildArch: noarch
-
-Source: %pypi_name-%version.tar
-
 %description
 %summary.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
 %pyproject_build
@@ -40,7 +39,7 @@ Source: %pypi_name-%version.tar
 %pyproject_install
 
 %check
-%pyproject_run_pytest --cov-fail-under=0
+%pyproject_run_pytest -vra -o=addopts=''
 
 %files
 %doc *.md
@@ -48,5 +47,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 11 2025 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
 * Tue Aug 06 2024 Alexander Burmatov <thatman@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus.

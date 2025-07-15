@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.35.0
-Release: alt1
+Release: alt2
 
 Summary: pytest fixture to mock HTTPX
 License: MIT
@@ -55,6 +55,9 @@ hosts are explicitly skipped).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 0.35.0-alt2
+- Fixed FTBFS (httpx 0.28.0).
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.35.0-alt1
 - Built for ALT Sisyphus.
 

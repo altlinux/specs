@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Python API which allows you to retrieve the transcript/subtitles for a given YouTube video
 License: MIT
@@ -21,7 +21,6 @@ BuildRequires: python3-module-poetry
 %if_enabled check
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-httpretty
 BuildRequires: python3-module-pytest
 %endif
 
@@ -41,9 +40,15 @@ like other selenium based solutions do!
 
 %install
 %pyproject_install
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%internal_name/test/
 
 %check
-%pyproject_run_unittest -v
+# see .github/workflows/ci.yml
+# youtube_transcript_api/test/test_api.py depends on removed httpretty
+# https://github.com/jdepoix/youtube-transcript-api/issues/477
+%pyproject_run_pytest -vra \
+    --ignore=youtube_transcript_api/test/test_api.py
 
 %files
 %doc *.md
@@ -52,6 +57,9 @@ like other selenium based solutions do!
 %python3_sitelibdir/%{pyproject_distinfo %internal_name}
 
 %changelog
+* Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 1.0.3-alt2
+- Skipped tests requiring httpretty.
+
 * Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.0.3-alt1
 - 1.0.3
 

@@ -1,10 +1,10 @@
 %define pypi_name pygerduty
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 0.38.3
-Release: alt1
+Release: alt2
 
 Summary: Python Client Library for PagerDuty's REST API
 License: MIT
@@ -49,5 +49,8 @@ with v2 of the API. See "Migrating from v1 to v2" for more details.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 0.38.3-alt2
+- Disabled testing (httpretty was removed from sisyphus).
+
 * Tue Jul 23 2024 Anton Vyatkin <toni@altlinux.org> 0.38.3-alt1
 - Initial build for Sisyphus.

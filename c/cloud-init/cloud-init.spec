@@ -3,7 +3,7 @@
 
 Name:    cloud-init
 Version: 24.4.1
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -51,7 +51,7 @@ BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-yaml python3-module-oauthlib
 BuildRequires: libsystemd-devel libudev-devel
-BuildRequires: python3-module-httpretty python3-module-serial iproute2
+BuildRequires: python3-module-serial iproute2
 BuildRequires: util-linux net-tools python3-module-jinja2
 BuildRequires: python3-module-contextlib2 python3-module-prettytable
 BuildRequires: python3-module-requests
@@ -247,6 +247,9 @@ fi
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 24.4.1-alt2
+- Dropped no longer needed tests dependency on httpretty.
+
 * Wed Mar 05 2025 Nadezhda Fedorova <fedor@altlinux.org> 24.4.1-alt1
 - 24.4.1
 - Added fix of ovfEnv reading error from upstream/main.

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.47.1
-Release: alt1
+Release: alt2
 
 Summary: The little ASGI framework that shines
 License: BSD-3-Clause
@@ -73,6 +73,9 @@ cat alt-test-requirements.txt | tee -a test-requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 0.47.1-alt2
+- Fixed FTBFS (httpx 0.28.0).
+
 * Sat Jun 21 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.47.1-alt1
 - Updated to 0.47.1.
 

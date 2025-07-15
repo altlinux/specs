@@ -2,16 +2,16 @@
 
 %def_with check
 
-Name:    python3-module-%pypi_name
-Version: 0.21.1
+Name: python3-module-%pypi_name
+Version: 0.22.0
 Release: alt1
 
 Summary: Mock HTTPX with awesome request patterns and response side effects
 
 License: BSD-3-Clause
-Group:   Development/Python3
-URL:     https://pypi.org/project/respx
-VCS:     https://github.com/lundberg/respx
+Group: Development/Python3
+Url: https://pypi.org/project/respx
+VCS: https://github.com/lundberg/respx
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -54,5 +54,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 09 2025 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
+- 0.21.1 -> 0.22.0.
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.21.1-alt1
 - Initial build for Sisyphus.
