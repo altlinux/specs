@@ -1,6 +1,6 @@
 Name: djvu
-Version: 3.5.28
-Release: alt3
+Version: 3.5.29
+Release: alt1
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
@@ -12,10 +12,8 @@ Source: djvulibre-%version.tar
 Patch0: djvulibre-3.5.22-rh-cdefs.patch
 # https://bugzilla.altlinux.org/16141
 Patch1: any2djvu-exit-code-fix.patch
-# CVE-2021-46310 CVE-2021-32491 CVE-2021-32492 CVE-2021-3500 CVE-2021-32493 CVE-2021-3630
-Patch2: djvulibre-git-fixes.patch
 # CVE-2021-46312
-Patch3: RH-0001-Check-for-zero-width-and-height.patch
+Patch2: RH-0001-Check-for-zero-width-and-height.patch
 
 
 # Automatically added by buildreq on Sat Apr 13 2013
@@ -110,7 +108,6 @@ technology.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p1
-%patch3 -p1
 
 %build
 %autoreconf
@@ -138,7 +135,10 @@ mkdir -p %buildroot%docdir
 cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 
 %find_lang %name
+# lfs function check fails on ix86
+%ifnarch %ix86
 %set_verify_elf_method strict
+%endif
 
 %files common
 %_datadir/djvu/
@@ -176,6 +176,10 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %endif #static
 
 %changelog
+* Mon Jul 14 2025 L.A. Kostis <lakostis@altlinux.ru> 3.5.29-alt1
+- 3.5.29.
+- Fix FTBFS on ix86.
+
 * Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt3
 - Mention CVEs for git fixes.
 - Sync with fedora (3.5.28-9):
