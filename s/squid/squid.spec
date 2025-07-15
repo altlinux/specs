@@ -18,7 +18,7 @@
 %define langpack_ver 20230225
 
 Name: squid
-Version: 7.0.2
+Version: 7.1
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -191,8 +191,8 @@ sed -i -e "s|squid_curtime|$RELEASE_TIME|" include/version.h
 	--enable-cache-digests \
 	--enable-x-accelerator-vary \
 	--enable-auth \
-	--enable-auth-basic="DB LDAP NCSA PAM RADIUS SASL SMB SMB_LM fake getpwnam" \
-	--enable-auth-ntlm="fake SMB_LM" \
+	--enable-auth-basic="DB LDAP NCSA PAM RADIUS SASL SMB fake getpwnam" \
+	--enable-auth-ntlm="fake" \
 	--enable-auth-digest="LDAP eDirectory file" \
 	--enable-auth-negotiate="kerberos wrapper" \
 	--enable-external-acl-helpers="LDAP_group delayer eDirectory_userip file_userip kerberos_ldap_group session unix_group wbinfo_group time_quota" \
@@ -245,9 +245,7 @@ install -p -m 0644 COPYING README ChangeLog QUICKSTART SPONSORS doc/debug-sectio
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
 
 %check
-# 7.0.1: workaround test build errors
-%make_build check \
-            CXXCOMPILE="g++ -I$PWD -I$PWD/lib -I$PWD/include -I$PWD/src"
+%make_build check
 
 %post
 %post_service %name
@@ -326,6 +324,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Tue Jul 15 2025 Egor Ignatov <egori@altlinux.org> 7.1-alt1
+- 7.1
+
 * Wed Jun 25 2025 Egor Ignatov <egori@altlinux.org> 7.0.2-alt1
 - 7.0.2
 
