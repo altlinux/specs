@@ -4,8 +4,8 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.31
-Release: alt2
+Version: 2.5.32
+Release: alt1
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -24,7 +24,6 @@ BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
 Patch0: %name-2.5.30-alt-translation.patch
-Patch1: %name-2.5.31-upstream-gcc14-fix-build.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -125,7 +124,6 @@ against %name library.
 %prep
 %setup -n %name-%version
 %patch0 -p1
-%patch1 -p1
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
@@ -230,6 +228,9 @@ ldconfig
 %endif
 
 %changelog
+* Tue Jul 15 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.32-alt1
+- 2.5.32
+
 * Mon Nov 04 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.31-alt2
 - applied the upstream fix to build with gcc-14
 - buildreq
