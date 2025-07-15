@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jq
+%define import_name jq
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Python bindings for jq
@@ -53,10 +54,13 @@ export JQPY_USE_SYSTEM_LIBS=1
 
 %files
 %doc *.rst LICENSE
-%python3_sitelibdir/%pypi_name.*.so
+%python3_sitelibdir/%import_name.*.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
 * Mon Jun 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.9.1-alt1
 - Updated to 1.9.1.
 
