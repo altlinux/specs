@@ -1,13 +1,7 @@
-%define _unpackaged_files_terminate_build 1
 %define goipath github.com/linuxdeepin/dde-api
-%define forgeurl https://github.com/linuxdeepin/dde-api
-
-# Run tests in check section
-# disable for bootstrapping
-%def_without check
 
 Name: deepin-api
-Version: 6.0.16
+Version: 6.0.19
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -15,9 +9,11 @@ Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-api
-Vcs: git://github.com/linuxdeepin/dde-api.git
+Vcs: https://github.com/linuxdeepin/dde-api.git
 
-Source: %url/archive/%version/dde-api-%version.tar.gz
+Source0: %url/archive/%version/dde-api-%version.tar.gz
+# go mod vendor
+Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 #Requires: deepin-desktop-base rfkill
@@ -44,33 +40,21 @@ building other packages which use import path with
 %goipath prefix.
 
 %prep
-%setup -n dde-api-%version
-%patch -p1
+%setup -n dde-api-%version -a1
+%autopatch -p1
 sed -i 's|/usr/sbin/locale-gen|locale-gen|' \
-  locale-helper/main.go \
-  misc/systemd/system/deepin-locale-helper.service
+  locale-helper/main.go
 sed -i 's|/usr/bin/true|/bin/true|' \
   misc/systemd/system/deepin-shutdown-sound.service
 
 %build
-export GOPATH="$(pwd)/vendor"
 export GOFLAGS="-mod=vendor"
-export GO111MODULE=off
 %make
 
 %install
 export GOPATH="%go_path"
 %makeinstall_std SYSTEMD_SERVICE_DIR="%_unitdir" -i
 install -Dm644 archlinux/deepin-api.sysusers %buildroot%_sysusersdir/deepin-api.conf
-mkdir -p %buildroot%_localstatedir/deepin-sound-player/.config/pulse
-echo 'autospawn = no' > %buildroot%_localstatedir/deepin-sound-player/.config/pulse/client.conf
-
-%pre
-getent group deepin-sound-player >/dev/null || groupadd -r deepin-sound-player
-getent passwd deepin-sound-player >/dev/null || \
-    useradd -r -g deepin-sound-player,audio -d %_localstatedir/deepin-sound-player -s /bin/sh \
-    -c "deepin-sound-player user" deepin-sound-player
-exit 0
 
 %files
 %doc README.md LICENSE
@@ -88,12 +72,14 @@ exit 0
 %dir %_datadir/dde-api/data/
 %_datadir/dde-api/data/*
 %_sysusersdir/deepin-api.conf
-%_localstatedir/deepin-sound-player/
 
 %files -n golang-%name-devel
 %go_path/src/%goipath
 
 %changelog
+* Tue Jul 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
+- New version 6.0.19.
+
 * Thu Feb 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
 - New version 6.0.16.
 - Added vcs tag.
