@@ -1,6 +1,6 @@
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 License: GPLv2+
 Group: Emulators
@@ -137,6 +137,9 @@ ctest -V
 #exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Tue Jul 15 2025 Ilya Mashkin <oddity@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Sat Apr 20 2024 Ilya Mashkin <oddity@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
