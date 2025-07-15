@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -15,6 +15,7 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: %name-%version.tar
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
 Patch2: scribus-1.7.0-poppler-25.02-compat.patch
+Patch3: scribus-1.7.0-fix-compiling-with-qt-6.9.0.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -22,7 +23,6 @@ BuildRequires: cmake >= 3.16
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel
-BuildRequires: qt6-imageformats
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
@@ -135,6 +135,7 @@ BuildArch: noarch
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 # hack to ignore new broken checking
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
@@ -205,6 +206,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 1:1.7.0-alt3
+- NMU: fix compile with Qt-6.9 (closes: 55208)
+
 * Thu Mar 20 2025 Constantin Sunzow <protvin@altlinux.org> 1:1.7.0-alt2
 - Fix FTBFS: rebuild with poppler-25.02.
 
