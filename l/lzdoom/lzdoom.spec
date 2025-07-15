@@ -1,9 +1,8 @@
 %define optflags_lto %nil
-%set_gcc_version 12
 
 Name: lzdoom
-Version: 3.88b
-Release: alt1.gite703ff4
+Version: 4.11.4
+Release: alt1
 
 Summary: Enhanced Doom engine - version for old systems
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom - версия для слабых систем
@@ -20,20 +19,20 @@ Source1: ico_%name.png
 
 Patch1: 0001-Fix-soundfont-search-path.patch
 
-BuildRequires: cmake gcc12-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 zmusic-devel
+BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2 zmusic-devel
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libtimidity-devel xz libvpx-devel 
 BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
 Requires: fluidsynth fluid-soundfont-gs
 
 %description
-LZDoom is a fork of GZDoom 3.3 compiling with MinGW and running
+LZDoom is a fork of GZDoom 4.12pre (previous - 3.3) compiling with MinGW and running
 on older non SSE2 cpus while keeping the DDRAW and D3D backends
 for compatibility.
 
-Warning! Make sure to place WAD files to %_datadir/doom/
+Warning! Make sure to place WAD files to %_datadir/doom/ or $HOME/.config/lzdoom
 
 %description -l ru_RU.UTF-8
-LZDoom - ответвление от  GZDoom 3.3, собранное с MinGW для запуска
+LZDoom - ответвление от  GZDoom 4.12pre (до этого - 3.3), собранное с MinGW для запуска
 на старых процессорах без поддержки инструкций SSE2 с поддержкой DDRAW
 и бэкендами D3D в целях сохранения совместимости.
 
@@ -90,8 +89,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
-* Mon Oct  7 2024 Artyom Bystrov <arbars@altlinux.org> 3.88b-alt1.gite703ff4
-- update to new version
+* Mon Oct  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.11.4-alt1
+- update to new version (to @guschin: write me on e-mail in the next time)
 
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.88b-alt1
 - update to new version
