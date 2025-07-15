@@ -2,7 +2,7 @@
 
 Name: lzdoom
 Version: 4.11.4
-Release: alt1
+Release: alt2
 
 Summary: Enhanced Doom engine - version for old systems
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom - версия для слабых систем
@@ -10,9 +10,6 @@ License: GPLv3
 Group: Games/Arcade
 
 Url: http://zdoom.org
-
-# build is broken by target specific option mismatch
-ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source1: ico_%name.png
@@ -89,6 +86,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Oct  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.11.4-alt2
+- Fix build on i586
+
 * Mon Oct  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.11.4-alt1
 - update to new version (to @guschin: write me on e-mail in the next time)
 
