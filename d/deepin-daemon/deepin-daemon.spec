@@ -1,9 +1,12 @@
+# TODO: ld: /usr/src/tmp/go-link-1985615197/go.o:
+# warning: relocation in read-only section `.gopclntab'
 %set_verify_elf_method textrel=relaxed
 
 %define repo dde-daemon
+%define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.19
+Version: 6.1.44
 Release: alt1
 Epoch: 2
 
@@ -12,13 +15,13 @@ Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-daemon
-Vcs: git://github.com/linuxdeepin/dde-daemon.git
+Vcs: https://github.com/linuxdeepin/dde-daemon.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+Source0: %url/archive/%version/%repo-%version.tar.gz
 Source1: vendor.tar
-Source3: deepin-auth
+Patch: %name-%version-%release.patch
 
 ExcludeArch: ppc64le
 
@@ -48,10 +51,8 @@ BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel 
 Daemon handling the DDE session settings
 
 %prep
-%setup -n %repo-%version
-
-# Unpacked vendor/ into the source (used .gear/tags).
-tar -xf %SOURCE1
+%setup -n %repo-%version -a1
+%autopatch -p1
 
 sed -i '/GOPATH_DIR/s|gopath|.build|' Makefile
 
@@ -65,19 +66,23 @@ sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
 # Replace reference of google-chrome to chromium-browser
 sed -i 's/google-chrome/chromium-browser/g' \
     bin/user-config/config_datas.go \
-    misc/data/deepin_icons.ini
+    launcher/manager_uninstall.go \
+    misc/data/deepin_icons.ini \
+    misc/data/window_patterns.json
 
 # -- 5.12 ---
 
 # /etc
 sed -i 's|/etc/gdm/custom.conf|/etc/X11/gdm/custom.conf|' \
     accounts1/handle_event.go \
-    accounts1/users/display_manager.go
+    accounts1/users/display_manager.go \
+    misc/systemd/services/system/dde-system-daemon.service
 sed -i 's|/etc/gdm3/custom.conf|/etc/X11/gdm/custom.conf|' \
     accounts1/users/display_manager.org
 sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
-    accounts1/users/display_manager.{go,org}
-sed -i 's|/etc/systemd/system/display-manager.service|%_unitdir/display-manager.service|' \
+    accounts1/users/display_manager.{go,org} \
+    misc/systemd/services/system/dde-system-daemon.service
+sed -i 's|/etc/systemd/system/display-manager.service|%_unitdir/display-manager.service|g' \
     accounts1/users/display_manager.go
 sed -i 's|${DESTDIR}/etc/default/grub.d|${DESTDIR}%_sysconfdir/grub.d|g' Makefile
 
@@ -97,8 +102,7 @@ sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
 # /lib
 sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
     bin/dde-authority/fprint_transaction.go
-sed -i 's|/lib/systemd|%_systemddir|g' Makefile
-sed -i 's|/usr/lib/systemd/user|/lib/systemd/user|g' Makefile
+sed -i 's|${DESTDIR}/lib/systemd/|${DESTDIR}%_systemddir|g' Makefile
 sed -i 's|/lib/udev/rules.d|%_udev_rulesdir|g' Makefile
 
 # /usr/share
@@ -140,11 +144,12 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %config %_sysconfdir/acpi/actions/deepin_lid.sh
 %config %_sysconfdir/acpi/events/deepin_lid
 %config %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
-%_libexecdir/%name/
-%dir %_prefix/libexec/dde-daemon/
-%dir %_prefix/libexec/dde-daemon/keybinding/
-%_prefix/libexec/dde-daemon/keybinding/shortcut-dde-grand-search.sh
-%_prefix/libexec/dde-daemon/keybinding/shortcut-dde-script.sh
+%prefix/lib/%name/
+%dir %_libexecdir/%repo/
+%dir %_libexecdir/%repo/keybinding/
+%_libexecdir/%repo/keybinding/shortcut-dde-grand-search.sh
+%_libexecdir/%repo/keybinding/shortcut-dde-script.sh
+%_libexecdir/%repo/keybinding/shortcut-dde-switch-monitors.sh
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -156,29 +161,38 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %dir %_datadir/deepin/scheduler/
 %_datadir/deepin/scheduler/config.json
 %_datadir/polkit-1/actions/*.policy
+%_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
+%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.accounts.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.fprintd.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
 %_udev_rulesdir/80-deepin-fprintd.rules
 #%%_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/org.dde.session.Daemon1.service
 # %%_unitdir/dbus-com.deepin.dde.lockservice.service
+%_userunitdir/dde-display-task-refresh-brightness.service
+%dir %_userunitdir/dde-session-initialized.target.wants/
+%_userunitdir/dde-session-initialized.target.wants/dde-display-task-refresh-brightness.service
+%dir %_userunitdir/dde-session-pre.target.wants/
+%_userunitdir/dde-session-pre.target.wants/org.dde.session.Daemon1.service
 %_unitdir/dde-authority.service
 %_unitdir/dde-backlight-helper.service
 %_unitdir/dde-greeter-setter.service
 %_unitdir/dde-lock-service.service
 %_unitdir/dde-system-daemon.service
 %_unitdir/deepin-grub2.service
-%_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
+%dir %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/
+%_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/org.deepin.dde.daemon.accounts.json
 %_datadir/locale/ky@Arab/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Jul 15 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.44-alt1
+- New version 6.1.44.
+
 * Thu Feb 06 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.19-alt1
 - New version 6.1.19.
 - Added vcs tag.
