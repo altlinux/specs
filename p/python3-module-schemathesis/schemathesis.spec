@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.3
+Version: 4.0.9
 Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
@@ -54,6 +54,9 @@ finds crashes and validates spec compliance.
 %_bindir/st
 
 %changelog
+* Mon Jul 14 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.0.9-alt1
+- New version (4.0.9).
+
 * Mon Jun 30 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.0.3-alt1
 - New version (4.0.3).
 
