@@ -3,7 +3,7 @@
 %define tag v%version
 
 Name: bldr
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 Summary: Tool to build and package software distributions
 
@@ -65,6 +65,9 @@ mkdir -p \
 %doc *.md
 
 %changelog
+* Mon Jul 14 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Fri Apr 18 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.4.1-alt1
 - New version 0.4.1.
 
