@@ -4,7 +4,7 @@
 
 Name: prometheus
 Version: 3.4.1
-Release: alt1
+Release: alt2
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
@@ -147,6 +147,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Sat Jun 28 2025 Artyom Sinyugin <writers@altlinux.org> 3.4.1-alt2
+- fix prebuilt web UI (ALT#54920)
+
 * Thu Jun 19 2025 Artyom Sinyugin <writers@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
