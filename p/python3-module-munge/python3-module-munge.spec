@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name munge
+%define import_name munge
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Data manipulation library and client
@@ -23,8 +24,10 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter ctl
 %add_pyproject_deps_check_filter pytest-filedata
 %add_pyproject_deps_check_filter tox-gh-actions
+%add_pyproject_deps_check_filter tmpl
 %pyproject_builddeps_metadata_extra yaml
 %pyproject_builddeps_metadata_extra toml
 %pyproject_builddeps_metadata_extra tomlkit
@@ -37,10 +40,14 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
+
+# Fix version up (upstream forgets that frequently)
+sed -i 's/^version = ".*"/version = "%version"/' pyproject.toml
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -54,11 +61,14 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc README.md CHANGELOG.md
-%_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%_bindir/munge
+%python3_sitelibdir/%import_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
+- Updated to 1.4.1.
+
 * Thu Feb 22 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Built for ALT Sisyphus.
 
