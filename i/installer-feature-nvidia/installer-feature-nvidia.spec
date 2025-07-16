@@ -1,5 +1,5 @@
 Name: installer-feature-nvidia
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Installer hook for NVIDIA proprietary driver
@@ -19,7 +19,7 @@ after installation, such as:
 %setup
 
 %install
-%define hookdir %_datadir/install2/postinstall.d
+%define hookdir %_datadir/install2/preinstall.d
 mkdir -p %buildroot%hookdir
 install -pm755 *.sh %buildroot%hookdir/
 
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jul 15 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.2-alt1
+- Fix: remove an unnecessary space after the parameter.
+- Spec: change postinstall.d to preinstall.d.
+
 * Tue Jul 15 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.1-alt1
 - Fix: use destdir in CONF path and correct file name.
 - Refactor: unnecessary condition check removed.
