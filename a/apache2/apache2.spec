@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.63
+Version: 2.4.64
 Release: alt1
 Epoch: 1
 
@@ -1541,6 +1541,12 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Jul 16 2025 Anton Farygin <rider@altlinux.com> 1:2.4.64-alt1
+- 2.4.63 -> 2.4.64 (Fixes: CVE-2024-42516, CVE-2024-43204, CVE-2024-47252, CVE-2025-23048,
+  CVE-2025-49630, CVE-2025-49812)
+- added hardening options to systemd unit
+- added OOMPolicy=continue to a unit file to prevent the httpd process stop
+
 * Wed Feb 05 2025 Anton Farygin <rider@altlinux.ru> 1:2.4.63-alt1
 - 2.4.62 -> 2.4.63
 - sync default root directories between http and https default configurations
