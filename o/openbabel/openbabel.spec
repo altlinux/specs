@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt4.1
+Release: alt4.2
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -20,7 +20,8 @@ Source: %name-%version.tar
 Source1: %name.watch
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-macros-cmake rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake eigen3 gcc-c++ rapidjson
 BuildRequires: boost-devel boost-filesystem-devel
 BuildRequires: libcairo-devel libwxGTK3.2-devel
@@ -136,6 +137,9 @@ sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
 %endif
 
 %changelog
+* Wed Jul 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.1.1-alt4.2
+- NMU: fix FTBFS with cmake 4
+
 * Mon Jan 29 2024 Michael Shigorin <mike@altlinux.org> 3.1.1-alt4.1
 - E2K: update mcst#3675 workaround for lcc 1.27
 
