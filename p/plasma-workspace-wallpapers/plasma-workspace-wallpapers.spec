@@ -1,9 +1,9 @@
 %define rname plasma-workspace-wallpapers
 
 Name: %rname
-Version: 6.3.3
+Version: 6.4.3
 Release: alt1
-%K5init
+%K6init
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace Wallpapers
@@ -17,8 +17,8 @@ Obsoletes: plasma5-workspace-wallpapers < %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-base-devel
 
 %description
 %summary.
@@ -27,16 +27,21 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 %setup -n %rname-%version
 
 %build
-%K5build
+%K6build \
+     -DBUILD_WITH_QT6=ON \
+     #
 
 %install
-%K5install
+%K6install
 
 %files
 %doc COPYING*
 %_datadir/wallpapers/*
 
 %changelog
+* Wed Jul 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 
