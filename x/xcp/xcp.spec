@@ -1,7 +1,7 @@
 %def_with check
 
 Name: xcp
-Version: 0.23.0
+Version: 0.24.1
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
@@ -38,6 +38,10 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[profile.release]
+debug = true
+strip = false
 EOF
 %ifarch i586 armh
 %patch1 -p1
@@ -59,6 +63,9 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %_bindir/%name
 
 %changelog
+* Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.1-alt1
+- Updated to version 0.24.1.
+
 * Sun Jan 05 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt1
 - Updated to version 0.23.0.
 
