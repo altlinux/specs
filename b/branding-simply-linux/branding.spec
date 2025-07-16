@@ -68,7 +68,7 @@
 
 Name: branding-simply-linux
 Version: 10.950
-Release: alt1
+Release: alt2
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -236,7 +236,7 @@ Requires: gtk2-theme-orchis gtk3-theme-orchis gtk4-theme-orchis xfwm4-theme-orch
 Requires: icon-theme-Papirus
 Requires: gnome-icon-theme
 Requires: branding-simply-linux-graphics
-Requires: branding-simply-linux-backgrounds10
+Requires: branding-simply-linux-backgrounds11
 # plugins added on panel by default
 Requires: xfce4-datetime-plugin
 Requires: xfce4-places-plugin
@@ -489,6 +489,9 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt2
+- xfce-settings: Require branding-simply-linux-backgrounds11.
+
 * Mon Jul 14 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt1
 - graphics: Update lightdm wallpaper.
 - system-settings: Use slinux.svg as default user image.
