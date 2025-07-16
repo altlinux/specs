@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: A small binding library that exposes C++ types in Python and vice versa
@@ -55,6 +55,9 @@ py.test-3
 %doc README*
 
 %changelog
+* Wed Jul 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
