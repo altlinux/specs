@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.8.2
 Release: alt1
 
 Summary: Retrieve information from typeshed and other typing stubs
@@ -52,6 +52,9 @@ and from PEP 561 stub packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 2.8.2-alt1
+- Updated to 2.8.2.
+
 * Tue Jul 01 2025 Anton Zhukharev <ancieg@altlinux.org> 2.7.0-alt1
 - Packaged for ALT Sisyphus.
 

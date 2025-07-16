@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.93
+Version: 0.0.94
 Release: alt1
 
 Summary: An analysis tool for Python that blurs the line between testing and type systems
@@ -58,6 +58,9 @@ export PYTHONHASHSEED=0
 %python3_sitelibdir/_crosshair_tracers.*.so
 
 %changelog
+* Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.94-alt1
+- Updated to 0.0.94.
+
 * Wed Jul 02 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.93-alt1
 - Packaged for ALT Sisyphus.
 
