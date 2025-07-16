@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.17.1
+Version: 1.18.0
 Release: alt1
 
 Summary: A fast and reliable distributed task processing library for Python 3
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
+- Updated to 1.18.0.
+
 * Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 1.17.1-alt1
 - Updated to 1.17.1.
 
