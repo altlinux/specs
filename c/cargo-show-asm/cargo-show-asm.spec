@@ -2,7 +2,7 @@
 
 Name: cargo-show-asm
 Version: 0.2.51
-Release: alt1
+Release: alt2
 
 Summary: Cargo subcommand showing the assembly, LLVM-IR and MIR generated for Rust code
 License: Apache-2.0 or MIT
@@ -41,7 +41,7 @@ strip = false
 EOF
 
 %build
-%rust_build
+%rust_build --all-features
 
 %install
 %rust_install cargo-asm
@@ -53,5 +53,8 @@ EOF
 %_bindir/cargo-asm
 
 %changelog
+* Sat Jul 05 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.51-alt2
+- Enable all features.
+
 * Tue Jul 01 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.51-alt1
 - Initial build for alt.
