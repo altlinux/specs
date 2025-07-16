@@ -68,7 +68,7 @@
 
 Name: branding-simply-linux
 Version: 10.950
-Release: alt3
+Release: alt4
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -415,6 +415,13 @@ fi
 [ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
 	ln -sf xdm-16x10.png %_datadir/design/slinux/backgrounds/xdm.png
 
+%triggerpostun graphics -- %name-graphics < 10.950-alt3
+# Ensure that there is no dangling symlinks
+[ -e %_datadir/design/slinux/backgrounds/default.png ] || \
+	ln -sf default-16x10.png %_datadir/design/slinux/backgrounds/default.png
+[ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
+	ln -sf xdm-16x10.png %_datadir/design/slinux/backgrounds/xdm.png
+
 %post xfce-settings
 # Set default SL background
 if [ "$(readlink %_datadir/backgrounds/xfce/default-background)" != "%def_desktop_wallpaper" ]; then
@@ -489,6 +496,9 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt4
+- graphics: Really fix dangling symlinks when updated from 10.x.
+
 * Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt3
 - graphics: Fix dangling symlinks when updated from 10.x.
 
