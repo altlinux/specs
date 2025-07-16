@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: Confluent's Kafka Python Client
 
@@ -54,8 +54,10 @@ and the Confluent Platform.
 %check
 # test_alter_consumer_group_offsets_api causes segault
 # https://github.com/confluentinc/confluent-kafka-python/issues/1797
-%pyproject_run_pytest --ignore=tests/integration \
-    -k 'not test_alter_consumer_group_offsets_api'
+# test_kafkaError_unknonw_error needs pluggy < 1.6.0
+# https://github.com/confluentinc/confluent-kafka-python/commit/e6cec6b7362761c8792e435c8ae3877f8967ba74
+%pyproject_run_pytest --ignore=tests/integration --disable-warnings \
+    -k 'not test_alter_consumer_group_offsets_api and not test_kafkaError_unknonw_error'
 
 %files
 %doc *.md LICENSE
@@ -63,6 +65,9 @@ and the Confluent Platform.
 %python3_sitelibdir/%{pyproject_distinfo confluent_kafka}
 
 %changelog
+* Wed Jul 16 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1.1
+- Fixed FTBFS.
+
 * Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
 - Automatically updated to 2.6.1.
 - Built with check.
