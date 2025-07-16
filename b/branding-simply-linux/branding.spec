@@ -68,7 +68,7 @@
 
 Name: branding-simply-linux
 Version: 10.950
-Release: alt2
+Release: alt3
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -411,9 +411,9 @@ fi
 #graphics
 %post graphics
 [ -e %_datadir/design/slinux/backgrounds/default.png ] || \
-	ln -s default-16x10.png %_datadir/design/slinux/backgrounds/default.png
+	ln -sf default-16x10.png %_datadir/design/slinux/backgrounds/default.png
 [ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
-	ln -s xdm-16x10.png %_datadir/design/slinux/backgrounds/xdm.png
+	ln -sf xdm-16x10.png %_datadir/design/slinux/backgrounds/xdm.png
 
 %post xfce-settings
 # Set default SL background
@@ -489,6 +489,9 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt3
+- graphics: Fix dangling symlinks when updated from 10.x.
+
 * Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt2
 - xfce-settings: Require branding-simply-linux-backgrounds11.
 
