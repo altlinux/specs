@@ -1,5 +1,5 @@
 Name: slirp4netns
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary:  User-mode networking for unprivileged network namespaces
 
@@ -41,6 +41,9 @@ namespace to the usermode TCP/IP stack ("slirp").
 
 
 %changelog
+* Thu Jul 17 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.3-alt1
+- new version 1.3.3
+
 * Wed Feb 12 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
