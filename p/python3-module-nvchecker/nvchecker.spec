@@ -2,7 +2,7 @@
 %define pypi_name nvchecker
 
 Name:    python3-module-%pypi_name
-Version: 2.17
+Version: 2.18
 Release: alt1
 
 Summary: New version checker for software releases
@@ -49,6 +49,9 @@ nvchecker (short for new version checker) is for checking if a new version of so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 14 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.18-alt1
+- New version 2.18.
+
 * Sun Mar 16 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.17-alt1
 - 2.17
 
