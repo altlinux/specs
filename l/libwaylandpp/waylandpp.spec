@@ -1,6 +1,6 @@
 Name: libwaylandpp
-Version: 1.0.0
-Release: alt3
+Version: 1.0.1
+Release: alt1
 
 Summary: C++ bindings for Wayland
 License: BSD-2-Clause
@@ -53,6 +53,9 @@ rm -vf %buildroot%_libdir/*extra* %buildroot%_libdir/*unstable* \
 %_datadir/waylandpp
 
 %changelog
+* Wed Jul 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.1-alt1
+- 1.0.1 released
+
 * Wed Jun 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt3
 - rebuilt with scripting fixed, possibly (closes: 46683)
 
