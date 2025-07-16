@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 
 Summary: Python Language Server for the Language Server Protocol
@@ -30,10 +30,11 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-flake8
 BuildRequires: python3-module-pylint
 BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-black
 %endif
 
 %description
-A Python 3.7+ implementation of the Language Server Protocol.
+A Python 3.8+ implementation of the Language Server Protocol.
 
 %prep
 %setup
@@ -53,11 +54,14 @@ A Python 3.7+ implementation of the Language Server Protocol.
 
 %files
 %doc LICENSE CHANGELOG.md
-%_bindir/%mod_name
+%_bindir/pylsp
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
+- Updated to 1.13.0.
+
 * Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1.12.2-alt1
 - Updated to 1.12.2.
 
