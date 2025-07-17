@@ -3,15 +3,15 @@
 %set_verify_elf_method strict
 
 Name: xraylib
-Version: 4.1.1
-Release: alt2
+Version: 4.1.5
+Release: alt1
 
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD-3-Clause
 Group: Sciences/Physics
 
 Url: https://github.com/tschoonj/xraylib
-# https://github.com/tschoonj/xraylib.git
+VCS: https://github.com/tschoonj/xraylib.git
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
 
@@ -110,6 +110,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Jul 17 2025 Anton Farygin <rider@altlinux.com> 4.1.5-alt1
+- 4.1.1 -> 4.1.5
+
 * Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 4.1.1-alt2
 - Minor spec cleanup.
 
