@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.52
+Version: 2.0.61
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later
@@ -14,12 +14,11 @@ Url: https://github.com/linuxdeepin/dde-network-core
 Vcs: git://github.com/linuxdeepin/dde-network-core.git
 
 Source: %url/archive/%version/dde-network-core-%version.tar.gz
-Patch1: deepin-network-core-2.0.20-alt-GNUInstallDirs.patch
 
 # deepin-control-center
 ExcludeArch: i586
 
-BuildPreReq: rpm-build-ninja rpm-build-kf6 rpm-macros-dqt6 patchelf
+BuildPreReq: rpm-build-kf6 rpm-macros-dqt6 patchelf
 %if_with clang
 BuildPreReq: clang-devel
 %else
@@ -27,7 +26,7 @@ BuildPreReq: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel
+BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -50,7 +49,8 @@ This package provides development files for %name.
 
 %prep
 %setup -n dde-network-core-%version
-%autopatch -p1
+sed -i '/DESTINATION/s|lib/dde|${LIB_DESTINATION}/dde|' \
+       $(find ./ -name 'CMakeLists.txt')
 
 %build
 %if_with clang
@@ -80,7 +80,7 @@ mv -f %buildroot%_prefix/%_libdir/dde-control-center/plugins_v1.0/network/* \
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --add-needed libQt6Qml.so.6
 # package translations
-%find_lang --with-qt --output=%name.lang dde-control-center dss-network-plugin dde-network-core deepin-service-manager
+%find_lang --with-qt --output=%name.lang dde-control-center dss-network-plugin dde-network-core deepin-service-manager dock-network-plugin
 
 %files -f %name.lang
 %dir %_libdir/dde-control-center/
@@ -91,6 +91,14 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/dde-session-shell/modules/libdss-network-plugin.so
 %dir %_libdir/deepin-service-manager/
 %_libdir/deepin-service-manager/libnetwork-service.so
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
+%dir %_libdir/dde-dock/plugins/system-trays/
+%_libdir/dde-dock/plugins/system-trays/libdock-network-plugin.so
+%dir %_datadir/dde-dock/
+%dir %_datadir/dde-dock/icons/
+%dir %_datadir/dde-dock/icons/dcc-setting/
+%_datadir/dde-dock/icons/dcc-setting/dcc-network.dci
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/system/
 %dir %_datadir/deepin-service-manager/user/
@@ -110,11 +118,13 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %dir %_datadir/dde-network-core/
 %dir %_datadir/dde-network-core/translations/
 %_datadir/dde-network-core/translations/dde-network-core.qm
-%_datadir/dde-network-core/translations/dde-network-core_es_419.qm
 %_datadir/dde-network-core/translations/dde-network-core_ky@Arab.qm
 %dir %_datadir/dss-network-plugin/
 %dir %_datadir/dss-network-plugin/translations/
 %_datadir/dss-network-plugin/translations/dss-network-plugin.qm
+%dir %_datadir/dock-network-plugin/
+%dir %_datadir/dock-network-plugin/translations/
+%_datadir/dock-network-plugin/translations/dock-network-plugin.qm
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/network-service/
 %dir %_datadir/deepin-service-manager/network-service/translations/
@@ -131,6 +141,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.61-alt1
+- New version 2.0.61.
+
 * Fri Apr 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.52-alt1
 - New version 2.0.52.
 - Added vcs tag.
