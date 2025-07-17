@@ -1,5 +1,5 @@
 Name: hyprland-per-window-layout
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: Hyprland per window layout
 License: MIT
@@ -24,6 +24,10 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[profile.release]
+debug = true
+strip = false
 EOF
 
 %build
@@ -37,5 +41,8 @@ EOF
 %doc LICENSE
 
 %changelog
+* Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.14-alt1
+- Updated to version 2.14.
+
 * Mon Jul 07 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.13-alt1
 - Initial build for ALT.
