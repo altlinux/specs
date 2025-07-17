@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -29,6 +29,8 @@ BuildRequires: jansi
 
 AutoReqProv: yes, noosgi-fc
 Requires: java-21-openjdk
+Requires(preun): java-21-openjdk-headless
+Requires(post): java-21-openjdk-headless
 
 %description
 %summary
@@ -99,6 +101,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Jul 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt2
+- Strictly use java-21-openjdk-headless on upgrade and service run.
+
 * Mon Jun 30 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version (fixes: CVE-2025-27820).
 - Built using system gradle.
