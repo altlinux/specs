@@ -4,14 +4,14 @@
 
 Name: canto-curses
 Version: 0.9.9
-Release: alt1.1
+Release: alt2
 Summary: Curses frontend for Canto daemon
 License: GPLv2
 Group: Networking/News
 Url: https://codezen.org/canto-ng/
-
-# https://github.com/themoken/canto-curses.git
+VCS: https://github.com/themoken/canto-curses.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-modules-curses
@@ -29,9 +29,7 @@ and extensibility using the excellent Python programming language.
 
 %prep
 %setup
-
-# Quick hotfix for python3.13
-sed -i '/pipes/d' canto_curses/command.py
+%patch0 -p1
 
 %build
 %python3_build_debug
@@ -47,6 +45,10 @@ sed -i '/pipes/d' canto_curses/command.py
 %_man1dir/*
 
 %changelog
+* Thu Jul 17 2025 Anton Farygin <rider@altlinux.com> 0.9.9-alt2
+- fixed build with gcc 14
+- applied upstream changes against dependency on pipes
+
 * Tue Dec 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.9-alt1.1
 - NMU: dropped dependency on pipes.
 
