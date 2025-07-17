@@ -43,8 +43,8 @@
 %define optflags_debug -g1
 
 Name: LibreOffice-still
-%define hversion 24.8
-%define urelease 7.2
+%define hversion 25.2
+%define urelease 4.3
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -109,6 +109,7 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+Patch501: alt-012-fix-skia-build-on-loongarch64.patch
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -128,7 +129,7 @@ Patch700: alt-700-external-project-concurrency.patch
 
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
 %if_with openssl
 BuildRequires: libssl-devel
@@ -447,6 +448,7 @@ tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 #patch412 -p1
 
 %patch500 -p0
+%patch501 -p2
 
 %patch700 -p1
 
@@ -470,9 +472,6 @@ for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin
 
 # Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
 fgrep -q "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
-
-# hack hardcoded libodbc version
-sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
 
 rm -fr %name-tnslations/git-hooks
 
@@ -556,7 +555,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-system-libcmis \
         --disable-firebird-sdbc \
         --disable-coinmp \
-        --disable-dbus \
+        --enable-dbus \
 %if_with openssl
         --enable-openssl \
         --enable-cipher-openssl-backend \
@@ -564,7 +563,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --disable-openssl \
 %endif
         --disable-pdfium \
-        --disable-skia \
+        --enable-skia \
         --enable-evolution2 \
         --enable-introspection \
         --enable-odk \
@@ -590,6 +589,8 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="en-US %with_lang" \
         --with-external-tar=`pwd`/ext_sources \
+        --without-system-java-websocket \
+        --with-rhino-jar=%_datadir/java/rhino.jar \
         \
         --enable-ext-nlpsolver \
         --enable-ext-numbertext \
@@ -856,6 +857,11 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jul 17 2025 Andrey Cherepanov <cas@altlinux.org> 25.2.4.3-alt1
+- New version.
+- Enabled dbus support.
+- Enabled skia support.
+
 * Sat Jun 07 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.7.2-alt1
 - New version (fixes: CVE-2025-2866 PDF signature forgery with adbe.pkcs7.sha1 SubFilter)
 - Complete Russian translation.
