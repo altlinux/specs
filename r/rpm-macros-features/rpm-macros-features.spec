@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20250603
+Version: 20250718
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -62,6 +62,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Fri Jul 18 2025 Vitaly Lipatov <lav@altlinux.ru> 20250718-alt1
+- update versions for qt6 and python3
+- add feature_openssl3
+
 * Tue Jun 03 2025 Vitaly Lipatov <lav@altlinux.ru> 20250603-alt1
 - update features' versions
 
