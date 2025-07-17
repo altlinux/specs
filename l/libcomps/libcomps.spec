@@ -18,8 +18,8 @@ BuildRequires: /usr/bin/dot gcc-c++ pkgconfig(liblzma) python3(setuptools)
 %bcond_without docs
 
 Name:           libcomps
-Version:        0.1.18
-Release:        alt1_4
+Version:        0.1.21
+Release:        alt1
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
@@ -31,11 +31,13 @@ BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(check)
 BuildRequires:  pkgconfig(expat)
 BuildRequires:  ccmake cmake ctest
-
-
 # prevent provides from nonstandard paths:
 %define __provides_exclude_from ^(%{python3_sitelibdir}/.*\\.so)$
 Source44: import.info
+
+Patch0: pycopy-0.1.21-alt-build.patch
+Patch1: CMakeLists_test-0.1.21-alt-build.patch
+Patch2: CMakeLists_py-0.1.21-alt-build.patch
 
 %description
 Libcomps is library for structure-like manipulation with content of
@@ -44,9 +46,12 @@ comps XML files. Supports read/write XML file, structure(s) modification.
 %package -n %{libname}
 Summary:        Libraries for %{name}
 Group:          System/Libraries
-Provides:       %{name} = %{version}-%{release}
-Provides:       %{name} = %{version}-%{release}
-Conflicts: libcomp < %EVR
+#https://bugzilla.altlinux.org/show_bug.cgi?id=51577#c2
+Provides: libcomps = %EVR
+Obsoletes: libcomps < %EVR
+#Provides:       %{name} = %{version}-%{release}
+#Provides:       %{name} = %{version}-%{release}
+#Conflicts: libcomp < %EVR
 
 %description -n %{libname}
 Libraries for %{name}.
@@ -102,6 +107,11 @@ Python3 bindings for libcomps library.
 # Fix build with sphinx 1.8.3
 sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/doc-sources/conf.py.in
 
+# fixed FTBFS
+subst "s|VERSION 2.8.10|VERSION 3.5|" libcomps/CMakeLists.txt
+
+%autopatch -p1
+
 %build
 %{mageia_cmake} %{?with_docs:-DSPHINX_EXECUTABLE="%{_bindir}/sphinx-build-3"} ./libcomps/
 %mageia_cmake_build
@@ -140,6 +150,12 @@ make test -C %{_vpath_builddir}
 
 
 %changelog
+* Thu Jul 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.21-alt1
+- NMU:
+  + 0.1.18 -> 0.1.21
+  + fixed FTBFS
+  + added obsoletes and changed provides
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.1.18-alt1_4
 - update by mgaimport
 
