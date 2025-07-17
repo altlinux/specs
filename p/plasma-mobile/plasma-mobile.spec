@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -35,7 +35,7 @@ Patch2: alt-def-shell.patch
 Patch3: alt-no-dialer.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libdrm-devel
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-wayland-devel qt6-svg-devel qt6-sensors-devel
 BuildRequires: qcoro6-devel libudev-devel
 BuildRequires: kf6-modemmanager-qt-devel ModemManager-devel kf6-networkmanager-qt-devel kf6-kcmutils-devel
@@ -43,7 +43,7 @@ BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-
 BuildRequires: kf6-kpackage-devel kf6-kpeople-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel kwin-devel plasma-workspace-devel plasma6-libkscreen-devel plasma6-kwayland-devel
-BuildRequires: plasma6-activities-devel plasma6-layer-shell-qt-devel
+BuildRequires: plasma6-activities-devel plasma6-layer-shell-qt-devel plasma6-kpipewire-devel
 %if_enabled dialer
 BuildRequires: libphonenumber-devel
 %endif
@@ -123,14 +123,14 @@ done
 %_K6plug/plasma/kcms/systemsettings/*mobile*.so
 %_K6plug/kf6/kded/*mobile*.so
 %exclude %_K6plug/plasma/kcms/systemsettings/*keyboard*.so
-%_K6plug/plasma/kcms/systemsettings/*cellular*.so
+#%_K6plug/plasma/kcms/systemsettings/*cellular*.so
 %_K6qml/org/kde/plasma/mm/
 %_K6qml/org/kde/plasma/quicksetting/
 %_K6qml/org/kde/plasma/mobileinitialstart
 %_K6qml/org/kde/private/mobile/homescreen/halcyon/
 %_K6xdgapp/*mobile*.desktop
 %exclude %_K6xdgapp/*keyboard*.desktop
-%_K6xdgapp/*cellular*.desktop
+#%_K6xdgapp/*cellular*.desktop
 %_K6data/plasma/look-and-feel/org.kde.breeze.mobile/
 %_K6data/plasma/plasmoids/*/
 %_K6data/plasma/quicksettings/*/
@@ -152,6 +152,12 @@ done
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

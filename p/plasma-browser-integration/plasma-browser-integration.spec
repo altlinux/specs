@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -53,6 +53,7 @@ done
 %config %_sysconfdir/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/chrome/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %config %_sysconfdir/opt/edge/native-messaging-hosts/org.kde.plasma.browser_integration.json
+/usr/lib/librewolf/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_libdir/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_K6bin/plasma-browser-integration-host
 %_K6plug/kf6/kded/browserintegration*.so
@@ -60,6 +61,12 @@ done
 %_K6xdgapp/*browser_integration*.desktop
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

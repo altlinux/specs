@@ -5,8 +5,8 @@
 %define rname kwallet-pam
 
 Name: %rname
-Version: 6.3.5
-Release: alt2
+Version: 6.4.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -54,6 +54,12 @@ KDE6 PAM KWallet integration.
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
 - fix find ksecretd (closes: 54619)
 

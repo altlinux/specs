@@ -5,7 +5,7 @@
 %define libplasmasystemmonitortable libplasmasystemmonitortable%sover
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -74,6 +74,8 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+sed -i "s|@PROJECT_VERSION@|%version|" src/page/CMakeLists.txt src/table/CMakeLists.txt
+sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" src/page/CMakeLists.txt src/table/CMakeLists.txt
 
 %build
 %K6build
@@ -92,7 +94,7 @@ Requires: %name-common >= %EVR
 %_K6data/ksysguard/
 %_K6data/plasma-systemmonitor/
 %_K6xdgapp/*systemmonitor*.desktop
-%_K6cfg/*systemmonitor*
+#%_K6cfg/*systemmonitor*
 %_K6data/knsrcfiles/*systemmonitor*
 %_K6data/plasma/kinfocenter/externalmodules/*systemmonitor*.desktop
 %_K6data/kglobalaccel/*systemmonitor*.desktop
@@ -107,6 +109,12 @@ Requires: %name-common >= %EVR
 %_K6lib/libPlasmaSystemMonitorTable.so.*
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

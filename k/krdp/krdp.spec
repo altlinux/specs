@@ -8,7 +8,7 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
-BuildRequires: libfreerdp-devel libwinpr-devel /usr/bin/winpr-makecert
+BuildRequires: libfreerdp3-devel libwinpr3-devel xfreerdp3
 BuildRequires: libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
 BuildRequires: libxkbcommon-devel
@@ -96,6 +96,12 @@ ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
 %_K6link/lib*.so
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

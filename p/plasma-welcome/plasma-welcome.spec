@@ -1,7 +1,9 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -56,12 +58,19 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %doc LICENSES/*
 %dir %_datadir/plasma-welcome-extra-pages-pre/
 %_K6bin/plasma-welcome
+%_K6qml/org/kde/plasma/welcome/
 %_K6plug/kf6/kded/*welcome*.so
 %_K6data/plasma/plasma-welcome/
 %_K6xdgapp/*plasma-welcome*.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -108,11 +108,11 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 %_K6libexecdir/*power*
 %_K6plug/powerdevil/
 %_K6plug/kf6/krunner/*powerdevil*.so
-%_K6plug/plasma/kcms/systemsettings/*powerdevil*.so
+%_K6plug/plasma/kcms/systemsettings/*power*.so
 %_K6qml/org/kde/plasma/private/batterymonitor/
 %_K6qml/org/kde/plasma/private/brightnesscontrolplugin/
 %_K6start/powerdevil.desktop
-%_K6xdgapp/*powerdevil*.desktop
+%_K6xdgapp/*power*.desktop
 %_K6data/plasma/plasmoids/org.kde.plasma.*/
 %_K6notif/*.notifyrc
 #%_K6dbus_srv/*.service
@@ -131,6 +131,12 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

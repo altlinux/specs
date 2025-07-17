@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -91,7 +91,7 @@ Obsoletes: plasma5-nm-maxi < 1:%version-%release
 %package connect-mobile
 Group: Graphical desktop/KDE
 Summary: Mobile support for %name
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %name
 Requires: ModemManager NetworkManager-bluetooth NetworkManager-wwan mobile-broadband-provider-info
 Provides: plasma5-nm-connect-mobile = 1:%version-%release
@@ -247,6 +247,10 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 %files maxi
 %files connect-mobile
+%_K6plug/plasma/kcms/systemsettings/*cellular*.so
+%_K6plug/plasma/kcms/systemsettings/*mobile*.so
+%_K6xdgapp/*cellular*.desktop
+%_K6xdgapp/*mobile*.desktop
 
 %files connect-iodine
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_iodineui.so
@@ -273,9 +277,13 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %files connect-ssh
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
-
-
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

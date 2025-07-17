@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.3.5
-Release: alt2
+Version: 6.4.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -31,7 +31,7 @@ Patch6: alt-dmidecode-path.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
-BuildRequires: libpci-devel libraw1394-devel libusb-devel
+BuildRequires: libpci-devel libraw1394-devel libusb-devel libudev-devel
 BuildRequires: libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel
 BuildRequires: libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel
@@ -171,6 +171,12 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
 - don't show distro variant because using pretty name
 

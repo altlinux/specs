@@ -5,7 +5,7 @@
 
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -89,17 +89,22 @@ Compatibility package.
 %files
 %_K6plug/plasma/kcms/systemsettings/*pulse*.so
 %_K6plug/kf6/kded/*audio*.so
+%_K6plug/plasma/applets/*volume*.so
 %_K6qml/org/kde/plasma/private/volume/
 %_K6xdgapp/*pulse*.desktop
-%_K6data/plasma/plasmoids/org.kde.plasma.volume/
 %_datadir/qlogging-categories6/*.*categories
-%_datadir/metainfo/*.xml
 
 %files -n %libplasma_volume
 %_K6lib/libplasma-volume.so.%sover
 %_K6lib/libplasma-volume.so.*
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

@@ -1,9 +1,8 @@
 %define rname oxygen-sounds
 
 Name: oxygen-sounds
-Version: 6.3.5
-Release: alt1
-#Epoch: 1
+Version: 6.4.3
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -13,37 +12,51 @@ License: LGPL-3.0-or-later
 
 BuildArch: noarch
 
-Provides: plasma5-oxygen-sounds = 1:%version-%release
-Obsoletes: plasma5-oxygen-sounds < 1:%version-%release
-
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-
 BuildRequires: extra-cmake-modules qt6-base-devel
-BuildRequires: qt5-base-devel
 
 %description
-%name provides encrypted vaults.
+%{summary}.
+
+%package -n sound-theme-oxygen
+Group: Graphical desktop/Other
+Summary: %{summary}
+Provides: plasma5-oxygen-sounds = 1:%version-%release
+Obsoletes: plasma5-oxygen-sounds < 1:%version-%release
+Provides: oxygen-sounds = %EVR
+Obsoletes: oxygen-sounds < %EVR
+%description -n sound-theme-oxygen
+%{summary}.
 
 %prep
 %setup -n %rname-%version
 
 %build
 %K6build \
-    -DKF5_SUPPORT:BOOL=ON \
+    -DBUILD_WITH_QT6:BOOL=ON \
     #
 
 %install
 %K6install
 %K6install_move data sounds
 
-%files
+%files -n sound-theme-oxygen
 %doc LICENSES/*
 %_K6snd/*
 
 
 %changelog
+* Wed Jul 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
+- rename binary package
+
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

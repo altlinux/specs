@@ -6,7 +6,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -28,8 +28,7 @@ Source: %rname-%version.tar
 Source10: add-ppdtranslations-ru.po
 Patch1: alt-lib-sover.patch
 Patch2: alt-queue-window.patch
-Patch3: alt-remove-help-button.patch
-Patch4: alt-print-opts-i18n.patch
+Patch3: alt-print-opts-i18n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -79,7 +78,6 @@ KF6 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 tmp_file=`mktemp`
 msgcat --use-first po/ru/print-manager.po %SOURCE10 >"$tmp_file"
@@ -111,7 +109,6 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-co
 
 %files
 %_K6bin/configure-printer
-%_K6bin/kde-add-printer
 %_K6bin/kde-print-queue
 %_K6plug/plasma/kcms/systemsettings/*printer*.so
 %_K6plug/kf6/kded/*print*.so
@@ -128,6 +125,12 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-co
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

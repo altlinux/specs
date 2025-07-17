@@ -2,7 +2,7 @@
 %filter_from_requires /inkscape/d
 
 Name: plasma-sdk
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -51,7 +51,7 @@ Applications useful for Plasma Development.
 %doc LICENSES/*
 %_K6bin/*
 %_K6xdgapp/*.desktop
-%_K6plug/ktexteditor/
+%_K6plug/kf6/ktexteditor/
 %_K6icon/hicolor/*/*/*.*
 %_K6data/plasma/shells/*/
 %_K6data/kpackage/
@@ -61,6 +61,12 @@ Applications useful for Plasma Development.
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

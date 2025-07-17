@@ -5,7 +5,7 @@
 %define rname polkit-kde-agent-1
 
 Name: polkit-kde-agent
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -51,10 +51,16 @@ Provides Policy Kit Authentication Agent that nicely fits to KDE.
 %_K6libexecdir/polkit-kde-authentication-agent-1
 %_K6start/*polkit-kde-authentication-agent*.desktop
 %_K6xdgapp/*polkit-kde-authentication-agent*.desktop
-%_K6notif/policykit1-kde.notifyrc
+%_K6notif/pol*kit*-kde*.notifyrc
 %_userunitdir/*.service
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

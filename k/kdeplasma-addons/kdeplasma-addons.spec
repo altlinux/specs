@@ -14,7 +14,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -32,7 +32,7 @@ Requires: kf6-purpose
 # plasma.diskquota
 Requires: quota
 #
-Requires: libkf6itemmodels kf6-purpose kf6-kirigami-addons 
+Requires: libkf6itemmodels kf6-purpose kf6-kirigami-addons
 #
 Provides: plasma5-addons = 1:%version-%release
 Obsoletes: plasma5-addons < 1:%version-%release
@@ -107,6 +107,9 @@ KF6 library
 %patch1 -p1
 %patch2 -p1
 
+sed -i "s|@PROJECT_VERSION@|%version|" wallpapers/potd/plugins/CMakeLists.txt
+sed -i "s|@PROJECT_VERSION_MAJOR@|%plasmapotdprovidercore_sover|" wallpapers/potd/plugins/CMakeLists.txt
+
 # exclude applet
 sed -i '/^add_subdirectory(comic)/d' applets/CMakeLists.txt
 
@@ -174,6 +177,12 @@ touch touch-%_arch
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

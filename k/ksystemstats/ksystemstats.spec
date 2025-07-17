@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 %K6init
 
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libnl-devel libsensors3-devel libudev-devel
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libdrm-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-networkmanager-qt-devel
 BuildRequires: plasma6-libksysguard-devel
@@ -43,12 +43,19 @@ KSystemStats is a daemon that collects statistics about the running system.
 %doc LICENSES/*
 %_datadir/qlogging-categories6/*.*categories
 %_K6bin/*stat*
+%_K6libexecdir/*stat*
 %_K6plug/ksystemstats/
 %_K6dbus_srv/*.service
 %_userunitdir/*.service
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 

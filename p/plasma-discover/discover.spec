@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.3.5
-Release: alt4
+Version: 6.4.3
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -332,6 +332,7 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_datadir/metainfo/org.kde.discover.snap.appdata.xml
 #%_K6data/libdiscover/categories/snap-backend-categories.xml
 %_datadir/polkit-1/actions/org.kde.discover.libsnapclient.policy
+%_K6icon/*/*/apps/*snapdiscover*.*
 %endif
 
 %if_enabled fwupd
@@ -347,6 +348,12 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Mon May 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt4
 - disable packagekit online updates
 

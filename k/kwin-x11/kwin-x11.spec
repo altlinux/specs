@@ -2,12 +2,12 @@
 %define _userunitdir %prefix/lib/systemd/user
 %endif
 
-%define rname kwin
+%define rname kwin-x11
 
 %define kwin_sover 6
-%define libkwin libkwin%kwin_sover
+%define libkwin libkwin-x11_%kwin_sover
 %define kcmkwincommon_sover 6
-%define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
+%define libkcmkwincommon libkcmkwincommon-x11_%kcmkwincommon_sover
 %define kwineffects_sover 14
 %define libkwineffects libkwineffects%kwineffects_sover
 %define kwinglutils_sover 14
@@ -25,8 +25,7 @@ Summary: KDE Frameworks 6 Window Manager
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Provides: plasma5-kwin = %EVR
-Obsoletes: plasma5-kwin < %EVR
+Conflicts: kwin < 6.4
 
 Requires: hwdata
 Requires: /usr/bin/Xwayland
@@ -42,7 +41,6 @@ Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
-Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -81,16 +79,14 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
-Provides: plasma5-kwin-common = %EVR
-Obsoletes: plasma5-kwin-common < %EVR
 %description common
 %name common package
 
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Conflicts: plasma5-kwin-devel
 Requires: libdrm-devel
+Conflicts: plasma5-kwin-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -137,7 +133,10 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+
+for f in src/kcms/compositing/kwincompositing.json ; do
+    sed -i '/X-DocPath/d' $f
+done
 
 %build
 %K6build \
@@ -161,44 +160,33 @@ KF6 library
 %_K6bin/kwin*
 %_K6libexecdir/*kwin*
 %_K6plug/kf6/packagestructure/kwin_*.so
-%_K6plug/plasma/kcms/systemsettings/*keyboard*.so
-%_K6plug/kwin/
+%_K6plug/kwin-x11/
 %_K6plug/plasma/kcms/systemsettings/*kwin*.so
 %_K6plug/plasma/kcms/systemsettings/*animations*.so
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*kwin*.so
 %_K6xdgapp/*kwin*.desktop
-%_K6xdgapp/*keyboard*.desktop
 %_K6xdgapp/*animations*.desktop
 %_K6cf_bin/kwin*
 %_K6conf_up/kwin*
 %_K6qml/org/kde/kwin*/
-%_K6cfg/*.kcfg
-%_K6data/kwin-wayland/
+%_K6data/kwin-x11/
 %_K6data/knsrcfiles/*.knsrc
 %_K6data/krunner/dbusplugins/*.desktop
 %_K6notif/*.notifyrc
 %_userunitdir/*.service
-#%_K6plug/org.kde.kdecoration?.kcm/
-#%_K6plug/org.kde.kdecoration?/
 
 %files devel
-%_K6inc/kwin/
+%_K6inc/kwin-x11/
 %_K6link/lib*.so
 %_K6lib/cmake/KWin*/
 %_K6dbus_iface/*.xml
 
-#%files -n %libkwineffects
-#%_K6lib/libkwineffects.so.%kwineffects_sover
-#%_K6lib/libkwineffects.so.*
-#%files -n %libkwinglutils
-#%_K6lib/libkwingl*utils.so.%kwinglutils_sover
-#%_K6lib/libkwingl*utils.so.*
 %files -n %libkwin
-%_K6lib/libkwin.so.%kwin_sover
-%_K6lib/libkwin.so.*
+%_K6lib/libkwin-x11.so.%kwin_sover
+%_K6lib/libkwin-x11.so.*
 %files -n %libkcmkwincommon
-%_K6lib/libkcmkwincommon.so.%kcmkwincommon_sover
-%_K6lib/libkcmkwincommon.so.*
+%_K6lib/libkcmkwincommon-x11.so.%kcmkwincommon_sover
+%_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
 * Thu Jul 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
@@ -208,62 +196,4 @@ KF6 library
 - new version
 
 * Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
-- new version
-
-* Wed Jun 25 2025 Anton Golubev <golubevan@altlinux.org> 6.3.5-alt2
-- drop DRM-Master when opening a gpu file (fixes: 54221)
-
-* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
-- new version
-
-* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
-- new version
-
-* Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt2
-- add patch against kdebug#501357
-
-* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
-- new version
-
-* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
-- new version
-
-* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
-- new version
-
-* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
-- new version
-
-* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
-- new version
-
-* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
-- turn on NumLock by default
-
-* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
-- new version
-
-* Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
-- new version
-
-* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
-- new version
-
-* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
-- new version
-
-* Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
-- change default tiling layout
-
-* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
-- new version
-
-* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
-- new version
-
-* Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
-- new version
-
-* Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
 - initial build
-

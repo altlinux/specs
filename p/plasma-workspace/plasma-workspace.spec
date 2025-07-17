@@ -32,8 +32,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.3.5
-Release: alt2
+Version: 6.4.3
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -51,7 +51,7 @@ Obsoletes: kf5-plasma-workspace < %EVR
 
 Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
-Requires: iso-codes
+Requires: iso-codes icc-profiles
 Requires: xmessage
 Requires: qt6-dbus qt6-declarative qt6-virtualkeyboard dbus-tools-gui
 #Requires: qt6-tools
@@ -60,7 +60,8 @@ Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
 #Requires: kde6-kio-extras
 Requires: kf6-kquickcharts kf6-kirigami
 Requires: plasma6-kpipewire plasma6-kglobalacceld
-Requires: polkit-kde-agent kwin kactivitymanagerd plasma6-plasma5support
+Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
+Requires: kwin kwin-x11
 Requires: kf6-kirigami-addons
 #Requires: kde6-kio-fuse
 #Requires: appmenu-gtk-module
@@ -128,7 +129,7 @@ Patch150: alt-kcmusers-avatars.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: qt6-base-devel qt6-phonon-devel qt6-declarative-devel qt6-svg-devel
+BuildRequires: qt6-location-devel qt6-phonon-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: qt6-wayland-devel qt6-5compat-devel qt6-shadertools-devel qt6-positioning-devel
 BuildRequires: qcoro6-devel
 BuildRequires: libudev-devel libpam0-devel zlib-devel libpolkitqt6-qt6-devel
@@ -144,7 +145,7 @@ BuildRequires: kde6-libkexiv2-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: wayland-protocols plasma-wayland-protocols
-BuildRequires: libdrm-devel
+BuildRequires: libdrm-devel libcups-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libxapian-devel libnm-devel libsysfs-devel fontconfig-devel libcanberra-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel libxcbutil-cursor-devel
@@ -350,7 +351,7 @@ Requires: %name-common >= %EVR
 %patch150 -p1
 
 pwd
-install -m0644 %SOURCE51 applets/kicker/plugin/
+install -m0644 %SOURCE51 applets/kicker/
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -516,6 +517,8 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6data/desktop-directories/*
 %_K6data/kxmlgui?/kfontview/
 %_K6data/solid/actions/*.desktop
+%dir %_K6data/timezonefiles/
+%_K6data/timezonefiles/timezones.json
 %_K6data/plasma5support/
 %_K6xdgapp/*.desktop
 %_K6start/*.desktop
@@ -594,6 +597,12 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.2-alt1
+- new version
+
 * Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.5-alt2
 - disable clipboard applet by default
 

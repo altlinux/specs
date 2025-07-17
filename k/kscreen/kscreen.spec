@@ -5,7 +5,7 @@
 %endif
 
 Name: %rname
-Version: 6.3.5
+Version: 6.4.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -27,7 +27,8 @@ Patch1: alt-enable-per-screen-scaling.patch
 Patch2: alt-improve-output-names.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-sensors-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-sensors-devel qt6-wayland-devel
+BuildRequires: plasma-wayland-protocols
 BuildRequires: libxcbutil-devel libXi-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
@@ -65,19 +66,27 @@ rm -f po/ru/kscreen_common.po.tmp
 %files -f %name.lang
 %_datadir/qlogging-categories6/*.*categories
 %_K6bin/*kscreen*
+%_K6bin/*calibrator*
 %_K6plug/plasma/kcms/systemsettings/*kscreen*.so
 %_K6plug/kf6/kded/*kscreen*.so
 %_K6plug/plasma/applets/*kscreen*.so
 %_K6xdgapp/*kscreen*.desktop
-%_K6data/plasma/plasmoids/org.kde.kscreen/
+#%_K6data/plasma/plasmoids/org.kde.kscreen/
 %_K6data/kglobalaccel/*kscreen*.desktop
+%_K6data/kscreen/
 %_userunitdir/*kscreen*.service
 %_K6libexecdir/kscreen_osd_service
 %_K6dbus_srv/*kscreen*.service
-%_datadir/metainfo/*.xml
+#%_datadir/metainfo/*.xml
 
 
 %changelog
+* Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
+- new version
+
+* Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
+- new version
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
