@@ -10,15 +10,14 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.18.0
+Version:        2.5.19.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
 License:        BSD-3-Clause and Apache-2.0
 URL:            https://sites.google.com/site/openimageio/home
-
-# https://github.com/OpenImageIO/oiio.git
+VCS: https://github.com/AcademySoftwareFoundation/OpenImageIO
 Source0:        %name-%version.tar
 
 # Images for test suite
@@ -216,6 +215,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Jul 17 2025 Anton Farygin <rider@altlinux.com> 2.5.19.0-alt1
+- 2.5.18.0 -> 2.5.19.0
+
 * Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 2.5.18.0-alt1
 - 2.5.17.0 -> 2.5.18.0
 
