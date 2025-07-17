@@ -8,8 +8,8 @@
 %def_enable epoxy
 
 Name: hugin
-Version: 2023.0.0
-Release: alt1.1
+Version: 2024.0.1
+Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -19,8 +19,6 @@ Url: https://hugin.sourceforge.net/
 #tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
-Patch2: Fix-build-without-distutils.patch
-Patch3: Fix-deprecated-boost-filesystem-usage.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -39,7 +37,7 @@ BuildRequires: boost-datetime-devel boost-regex-devel boost-filesystem-devel boo
 BuildRequires: boost-system-devel boost-signals-devel
 BuildRequires: libXi-devel libXmu-devel libglew-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libexiv2-devel
-BuildRequires: liblensfun-devel liblcms2-devel libvigra-devel
+BuildRequires: liblensfun1-devel liblcms2-devel libvigra-devel
 BuildRequires: zlib-devel libpango-devel openexr-devel libtclap-devel
 BuildRequires: libfftw3-devel libsqlite3-devel
 BuildRequires: libflann-devel
@@ -59,8 +57,6 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup
 %patch1 -p2
-%patch2 -p1
-%patch3 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -105,6 +101,9 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Jul 17 2025 Leonid Znamenok <respublica@altlinux.org> 2024.0.1-alt1
+- 2024.0.1
+
 * Wed Jun 12 2024 Ivan A. Melnikov <iv@altlinux.org> 2023.0.0-alt1.1
 - NMU fix FTBFS
   + add change from upstream to fix build with Boost 1.85.0
