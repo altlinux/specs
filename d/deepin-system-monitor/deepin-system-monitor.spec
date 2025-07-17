@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.10
+Version: 6.5.24
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -12,7 +12,7 @@ Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
 Url: https://github.com/linuxdeepin/deepin-system-monitor
-Vcs: git://github.com/linuxdeepin/deepin-system-monitor.git
+Vcs: https://github.com/linuxdeepin/deepin-system-monitor.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -92,6 +92,7 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/translations/%name.qm
 %dir %_datadir/%name-plugin/
 %dir %_datadir/%name-plugin/translations/
+%_datadir/%name-plugin/translations/%name-plugin.qm
 %dir %_datadir/%name-plugin-popup/
 %dir %_datadir/%name-plugin-popup/translations/
 # ---
@@ -123,6 +124,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.24-alt1
+- New version 6.5.24.
+
 * Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.10-alt1
 - New version 6.5.10.
 
