@@ -10,11 +10,12 @@ BuildRequires: /usr/bin/valgrind
 %define _localstatedir %{_var}
 Name:			ppl
 Version:		1.2
-Release:		alt2_22
+Release:		alt2.23
 Summary:		The Parma Polyhedra Library: a library of numerical abstractions
 License:		GPLv3+
-URL:			http://www.bugseng.com/ppl
-Source0:		http://www.bugseng.com/products/ppl/download/ftp/releases/%{version}/%{name}-%{version}.tar.bz2
+Url:			https://www.bugseng.com/ppl
+Vcs:			https://github.com/BUGSENG/PPL.git
+Source0:		https://www.bugseng.com/products/ppl/download/ftp/releases/%{version}/%{name}-%{version}.tar.bz2
 Source1:		ppl.hh
 Source2:		ppl_c.h
 # Fix configure test compromised by LTO
@@ -105,12 +106,14 @@ of the Parma Polyhedra Library.
 %package swiprolog
 Group: Development/C
 Summary:	The SWI-Prolog interface of the Parma Polyhedra Library
-BuildRequires:	swi-prolog-nox >= 5.10.2, swi-prolog-nox >= 5.10.2
-Requires:	%{name} = %{version}-%{release}, swi-prolog-nox >= 5.10.2
+BuildRequires:	swipl >= 5.10.2
+BuildRequires:	libswipl-devel >= 5.10.2
+Requires:	%{name} = %EVR
+Requires:       swipl >= 5.10.2
 
 # This can be removed when F35 reaches EOL
-Obsoletes:      swiprolog-static < 1.2-13
-Provides:       swiprolog-static = %{version}-%{release}
+Obsoletes:      swiprolog-static < %EVR
+Provides:       swiprolog-static = %EVR
 
 %description swiprolog
 This package adds SWI-Prolog support to the Parma Polyhedra Library.
@@ -306,6 +309,9 @@ mv \
 %doc %{_datadir}/doc/%{name}/ppl-user-prolog-interface-%{version}.ps.gz
 
 %changelog
+* Fri Jul 18 2025 Pavel Skrylev <majioa@altlinux.org> 1.2-alt2.23
+- !NMU: fixed deps to swipl
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2-alt2_22
 - NMU: fixed ppl.hh/ppl_c.h headers on LoongArch
 

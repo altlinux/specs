@@ -1,187 +1,158 @@
-# library libjvm.so not found
-%set_findreq_skiplist %_libdir/swipl-*/lib/*/libjpl.so
-%def_with test
+%define        _unpackaged_files_terminate_build 1
+%def_disable   check
+%define        nomen swipl
 
-Name: swi-prolog
-Version: 9.0.4
-Release: alt4
+Name:          swi-prolog
+Version:       9.3.25.39
+Release:       alt0.1
+Summary:       Prolog interpreter and compiler
+License:       BSD-2-Clause
+Group:         Development/Other
+Url:           http://www.swi-prolog.org
+Vcs:           https://github.com/SWI-Prolog/swipl-devel.git
 
-Summary: Prolog interpreter and compiler
-License: LGPLv2+
-Group: Development/Other
+Source:        %name-%version.tar
 
-Url: http://www.swi-prolog.org
-Source: http://www.swi-prolog.org/download/stable/src/swipl-%version.tar.gz
-
-Requires: %name-nox
-Requires: %name-xpce
-# pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
-
-# Automatically added by buildreq on Sun Oct 04 2020
-# optimized out: ca-trust cmake-modules fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 java java-headless javazi libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libcrypt-devel libfreetype-devel libsasl2-3 libstdc++-devel libtinfo-devel libunixODBC-devel-compat libxcb-devel pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: cmake flex gcc-c++ libstdc++-devel git-core libXext-devel libXft-devel libXinerama-devel libXpm-devel libXt-devel libarchive-devel libdb6-devel libedit-devel libgmp-devel libjpeg-devel libncurses-devel libreadline-devel libssl-devel libunixODBC-devel libuuid-devel zlib-devel bzip2-devel libpng-devel libpcre-devel libbrotli-devel libexpat-devel rpm-build-python3 python3-devel rpm-build-python
-
-%ifarch %e2k
-BuildRequires: java-devel
-%else
-BuildRequires: java-11-openjdk-devel
-%endif
-
-%if_with test
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libgmp-devel
+BuildRequires: libncurses-devel
+BuildRequires: libreadline-devel
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
+%if_enabled    check
 BuildRequires: ctest
 %endif
+
+%add_findreq_skiplist %_libexecdir/swipl/**/*
+%add_findprov_skiplist %_libexecdir/swipl/**/*
 
 %description
 Edinburgh-style Prolog compiler including modules, autoload, libraries,
 Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
 interface, very fast compiler.
 
-%package nox
-Group: Development/Other
-Summary: SWI-Prolog without GUI components
-# pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
 
-%description nox
-This package provide SWI-Prolog and several libraries, but without
-GUI components.
+%package       -n lib%nomen
+Group:         Development/Other
+Summary:       SWI-Prolog libraries
 
-%package x
-Group: Development/Other
-Summary: %name native GUI library
-Requires: %name-nox = %version-%release
-Provides: %name-xpce
-# pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
+%description   -n lib%nomen
+SWI-Prolog libraries.
 
-%description x
-XPCE is a toolkit for developing graphical applications in Prolog and
-other interactive and dynamically typed languages.
+Edinburgh-style Prolog compiler including modules, autoload, libraries,
+Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
+interface, very fast compiler.
 
-%package java
-Group: Development/Java
-Summary: Java interface for %name
-Requires: %name-nox = %version-%release
-Provides: %name-jpl
-# pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
 
-%description java
-JPL is a dynamic, bi-directional interface between %name and Java
-runtimes. It offers two APIs: Java API (Java-calls-Prolog) and Prolog
-API (Prolog-calls-Java).
+%package       -n lib%nomen-devel
+Group:         Development/Other
+Summary:       SWI-Prolog libraries development module
 
-%package odbc
-Group: Development/Databases
-Summary: ODBC interface for %name
-Requires: %name-nox = %version-%release
-# pl is not perl
-AutoReq: yes,noperl
-AutoProv: yes,noperl
+Requires:      cmake
+Requires:      gcc-c++
+Requires:      libgmp-devel
+Requires:      libncurses-devel
+Requires:      libreadline-devel
+Requires:      libssl-devel
+Requires:      zlib-devel
+Requires:      ctest
 
-%description odbc
-ODBC interface for SWI-Prolog to interact with database systems.
+%description   -n lib%nomen-devel
+SWI-Prolog libraries development module.
 
-%package doc
-Group: Documentation
-Summary: Documentation for %name
-Requires: %name-nox = %version-%release
-AutoReqProv: no
+Edinburgh-style Prolog compiler including modules, autoload, libraries,
+Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
+interface, very fast compiler.
 
-%description doc
-Documentation for SWI-Prolog.
 
-%package cmake
-Group: Development/Other
-Summary: CMake files for SWI Prolog
+%package       -n %nomen
+Group:         Development/Other
+Summary:       SWI-Prolog interpreter and compiler
+Provides:      swi-prolog = %EVR
+Obsoletes:     swi-prolog < %EVR
 
-%description cmake
-CMake files for SWI Prolog
+%description   -n %nomen
+SWI-Prolog interpreter and compiler.
+
+Edinburgh-style Prolog compiler including modules, autoload, libraries,
+Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
+interface, very fast compiler.
+
+
+%package       -n %nomen-stdlib
+Group:         Development/Other
+Summary:       SWI-Prolog standard scripts
+
+%description   -n %nomen-stdlib
+SWI-Prolog standard scripts.
+
+Edinburgh-style Prolog compiler including modules, autoload, libraries,
+Garbage-collector, stack-expandor, C-interface, GNU-readline and GNU-Emacs
+interface, very fast compiler.
+
 
 %prep
-%setup -n swipl-%version
-sed -i '/set(SWIPL_INSTALL_PREFIX[ 	]*lib/s/ lib/ %_lib/' CMakeLists.txt
+%setup
 
 %build
-%cmake -DSWIPL_VERSIONED_DIR=yes -DSWIPL_INSTALL_IN_SHARE=yes \
-    -G'Unix Makefiles'
-%cmake_build -t libswipl
-export LD_LIBRARY_PATH=`pwd`/%_cmake__builddir/src
+%cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DCMAKE_EXECUTABLE_FORMAT=ELF \
+   -DCMAKE_SKIP_BUILD_RPATH=ON \
+   -DCMAKE_INSTALL_LIBDIR=lib%_libsuff \
+   -DWARN_NO_DOCUMENTATION=ON \
+   -DINSTALL_DOCUMENTATION=ON \
+   -DSWIPL_ARCH=%_arch \
+   -DSWIPL_SHARED_LIB=ON \
+   -DSWIPL_VERSIONED_DIR=OFF \
+   -DSWIPL_INSTALL_IN_SHARE=OFF \
+   -DSWIPL_PACKAGES=OFF \
+   -DSWIPL_INSTALL_PREFIX=lib/%nomen \
+   -DSWIPL_INSTALL_ARCH_EXE=lib%_libsuff/%nomen/bin \
+   -DSWIPL_INSTALL_ARCH_LIB=lib%_libsuff/%nomen \
+   -DSWIPL_INSTALL_CMAKE_CONFIG_DIR=lib%_libsuff/cmake/swipl \
+   -DSWIPL_INSTALL_PKGCONFIG=lib%_libsuff/pkgconfig \
+   -DSWIPL_INSTALL_IN_LIB=ON \
+   -DMULTI_THREADED=ON \
+   -DBUILD_TESTING=ON \
+   %nil
 %cmake_build
 
-# XXX this gone while switching to cmake
-#cc -g -pthread packages/xpce/src/unx/client.c -o %_cmake__builddir/xpce-client
-
 %install
-# TODO verify against swipl.so
-%add_verify_elf_skiplist %_libdir/swipl-%version/*
-%cmakeinstall_std
-# XXX
-#install -D %_cmake__builddir/xpce-client %buildroot%_bindir/xpce-client
-#install -D packages/xpce/man/xpce-client.1 %buildroot%_man1dir/xpce-client.1
-test %_lib != lib && mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
-ln -rs %buildroot%_libdir/swipl-%version/lib/*/lib* %buildroot%_libdir/
+%cmake_install
 
-%if_with test
 %check
-cd %_cmake__builddir
-LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
-%endif
+%ctest
 
-%files
-
-%files cmake
-%_libdir/cmake/swipl
-
-%files nox
+%files         -n %nomen
 %doc README.md LICENSE VERSION
-%_bindir/swipl*
-%_libdir/swipl-%version
-%_libdir/lib*.so*
-%_datadir/pkgconfig/swipl.pc
-%exclude %_datadir/swipl-%version/doc
-#%exclude %_libdir/swipl-%version/lib/*/libjpl.so
-#%exclude %_libdir/swipl-%version/lib/jpl.jar
-#%exclude %_libdir/swipl-%version/library/jpl.pl
-%exclude %_libdir/swipl-%version/xpce/*
-%exclude %_libdir/swipl-%version/lib/*/odbc4pl.so
-%exclude %_libdir/swipl-%version/library/odbc.pl
+%_bindir/%{nomen}*
+%_man1dir/%{nomen}*
 
-%files x
-#%_mandir/*/xpce*
-%doc %_datadir/swipl-%version/doc/Manual/*xpce.html
-#  %_bindir/xpce*
-%_libdir/swipl-%version/xpce/*
+%files         -n %nomen-stdlib
+%doc README.md LICENSE VERSION
+%_libexecdir/swipl
+%_libdir/swipl
 
-%files java
-%doc packages/jpl/*.md packages/jpl/*.doc packages/jpl/docs
-%doc %_datadir/swipl-%version/doc/packages/examples/jpl
-%doc %_datadir/swipl-%version/doc/packages/jpl.html
-%_libdir/swipl-%version/lib/*/libjpl.so
-%_libdir/swipl-%version/lib/jpl.jar
-%_libdir/swipl-%version/library/jpl.pl
+%files         -n lib%nomen
+%_libdir/lib%{nomen}.so.*
 
-%files odbc
-%doc %_datadir/swipl-%version/doc/packages/odbc.html
-%_libdir/swipl-%version/lib/*/odbc4pl.so
-%_libdir/swipl-%version/library/odbc.pl
+%files         -n lib%nomen-devel
+%doc README.md LICENSE VERSION
+%_libdir/lib%{nomen}.so
+%_libdir/cmake/swipl
+%_pkgconfigdir/swipl.pc
 
-%files doc
-%_mandir/*/swipl*
-%dir %_datadir/swipl-%version/doc
-%doc %_datadir/swipl-%version/doc/Manual
-%exclude %_datadir/swipl-%version/doc/Manual/*xpce.html
-%doc %_datadir/swipl-%version/doc/packages
-%exclude %_datadir/swipl-%version/doc/packages/examples/jpl
-%exclude %_datadir/swipl-%version/doc/packages/jpl.html
-%exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Wed Jul 16 2025 Pavel Skrylev <majioa@altlinux.org> 9.3.25.39-alt0.1
+- ^ 9.0.4 -> 9.3.25p39
+- * rebased to plain gitflow, and repackaged
+- * relicensed
+- - packages disabled
+
 * Thu May 30 2024 Michael Shigorin <mike@altlinux.org> 9.0.4-alt4
 - E2K: use whatever java is there
 - minor spec cleanup
@@ -287,5 +258,5 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 - adjusted so will build on all architectures
 - previous packagers:
 - David Kuestler <kuestler@zeta.org.au>
-- Kjetil Wiekhorst Jørgensen <jorgens@zarhan.pvv.org>
+- Kjetil Wiekhorst JÃ¸rgensen <jorgens@zarhan.pvv.org>
 - Adam P. Jenkins <ajenkins@cs.umass.
