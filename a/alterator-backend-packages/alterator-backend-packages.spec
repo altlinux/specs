@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.5
+Version: 0.2.7
 Release: alt1
 
 Summary: Alterator backends for managing system packages
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-backend-packages
+URL: https://altlinux.space/alterator/alterator-backend-packages
 
 BuildArch: noarch
 
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-macros-alterator
 Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.21
+Requires: apt >= 0.5.15lorg2-alt97
+Requires: logrotate
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
@@ -35,42 +37,14 @@ through apt and rpm.
 %setup
 
 %install
-mkdir -p %buildroot%_datadir/dbus-1/interfaces
-mkdir -p %buildroot%_datadir/polkit-1/actions
-mkdir -p %buildroot%_alterator_datadir/backends
-mkdir -p %buildroot%_alterator_datadir/objects
-
-install -v -p -m 644 -D apt/org.altlinux.alterator.apt1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D apt/org.altlinux.alterator.apt1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 755 -D apt/apt-wrapper %buildroot%_libexecdir/%name/apt-wrapper
-install -v -p -m 644 -D apt/apt.backend %buildroot%_alterator_datadir/backends
-install -v -p -m 644 -D apt/apt.object %buildroot%_alterator_datadir/objects
-
-install -v -p -m 644 -D apt/logger/alterator-logger.lua %buildroot%_datadir/apt/scripts/alterator-logger.lua
-install -v -p -m 644 -D apt/logger/alterator-logger.conf %buildroot%_sysconfdir/apt/apt.conf.d/alterator-logger.conf
-
-install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 644 -D rpm/rpm.backend %buildroot%_alterator_datadir/backends
-install -v -p -m 644 -D rpm/rpm.object %buildroot%_alterator_datadir/objects
-install -v -p -m 755 -D rpm/rpm-wrapper %buildroot%_libexecdir/%name/rpm-wrapper
-
-install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 644 -D repo/repo.backend %buildroot%_alterator_datadir/backends
-install -v -p -m 644 -D repo/repo.object %buildroot%_alterator_datadir/objects
-
-mkdir -p %buildroot%_logdir/alterator/apt
-touch %buildroot%_logdir/alterator/apt/dist-upgrades.log
-chmod 644 %buildroot%_logdir/alterator/apt/dist-upgrades.log
-touch %buildroot%_logdir/alterator/apt/updates.log
-chmod 644 %buildroot%_logdir/alterator/apt/updates.log
+%makeinstall_std
 
 %files
 %dir %_logdir/alterator/
 %dir %_logdir/alterator/apt
 %ghost %_logdir/alterator/apt/*.log
 %_datadir/apt/scripts/*.lua
+%config(noreplace) %_logrotatedir/alterator-logger.logrotate
 %config %_sysconfdir/apt/apt.conf.d/*.conf
 %_libexecdir/%name/*
 %dir %_alterator_datadir/backends
@@ -88,6 +62,16 @@ chmod 644 %buildroot%_logdir/alterator/apt/updates.log
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Fri Jul 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.7-alt1
+- Add new ApplyAsync and CheckApply methods to work with pkgpriorities.
+- Move the package installation to the Makefile (thx Kirill Sharov).
+- Cleaning the apt1 interface (thx Kirill Sharov).
+- Add logrotate for apt logger (thx Kirill Sharov).
+- Change the URL to altlinux.space.
+
+* Tue Jun 17 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.6-alt1
+- Fix localization for output of methods on org.altlinux.alterator.apt1.
+
 * Fri Apr 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.5-alt1
 - Set same polkit action_id org.altlinux.alterator.apt1.InstallOrRemove
   for Update, Install, Reinstall, Remove and DistUpgrade (already same) methods.

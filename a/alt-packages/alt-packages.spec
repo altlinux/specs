@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: alterator-application-packages
-Version: 0.3.2
+Name: alt-packages
+Version: 0.3.3
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -17,14 +17,17 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
-BuildRequires: desktop-file-utils ImageMagick-tools
+BuildRequires: nlohmann-json-devel
 
-Requires: alterator-backend-packages >= 0.2.5
+Requires: alterator-backend-packages >= 0.2.7
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
+Provides: alterator-application-packages = %version-%release
+Obsoletes: alterator-application-packages < 0.3.3
+
 %description
-ALT - Packages - Alterator application for managing system packages
+ALT Packages - Alterator application for managing system packages
 and package repositories through apt and rpm.
 
 %prep
@@ -47,6 +50,21 @@ and package repositories through apt and rpm.
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Jul 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.3-alt1
+- Added:
+  + Safe mode from newest backend (APT).
+  + Hiding empty package views in applying dialog (closes: #53759).
+- Changed:
+  + APT Transaction applying dialog replaced to dialog with scrollable
+    package list (closes: #54034).
+- Fixed:
+  + Suggestion when upgrading if package list on transaction is empty.
+    In this case, user gets a notification.
+- Spec:
+  + Fix description.
+  + Remove unused build requirements.
+  + Rename package to alt-packages with providing.
+
 * Fri Apr 25 2025 Aleksey Saprunov <sav@altlinux.org> 0.3.2-alt1
 - Fix deletion of update sources
 - Fix dialog closing after package list update

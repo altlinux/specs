@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: alterator-application-components
-Version: 0.3.0
+Name: alt-components
+Version: 0.4.0
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -22,16 +22,20 @@ BuildRequires: qt6-tools-devel
 BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
+BuildRequires: nlohmann-json-devel
 BuildRequires: alterator-entry >= 0.3.1
 
-Requires: alterator-backend-packages
+Requires: alterator-backend-packages >= 0.2.7-alt1
 Requires: alterator-backend-component
 Requires: alterator-backend-component_categories
-Requires: alterator-backend-batch-component_categories
+Requires: alterator-backend-batch-component_categories >= 0.3
 Requires: alterator-backend-batch-components
 Requires: alterator-backend-systeminfo
 Requires: libqbase
 Requires: alt-components-base
+
+Provides: alterator-application-components = %version-%release
+Obsoletes: alterator-application-components < 0.4.0
 
 %description
 Alterator application for managing system components.
@@ -70,6 +74,28 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Tue Jul 01 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.4.0-alt1
+- Implement integrity preservation (Closes: #52837)
+  By default, the ban on deleting packages installed manually is enabled.
+  If the edition is installed on the system, you can optionally prohibit
+  the removal of packages related to the basic components.
+  Even if the ban on manually deleting installed packages is lifted, manually
+  deleted packages will be highlighted in the transaction application window
+- Add display progressbar during transaction (thx Andrey Alekseev).
+- Rename package: alterator-application-components to alt-components.
+
+* Tue Jun 17 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.1-alt1
+- Fix incomplete package list in transaction.
+- Add preprocessing of transactions with error indication.
+- Add package and component count display after applying.
+- Add hiding of empty views of packages and components.
+- Merge views in one page separated by tabs after applying.
+- Change brush of selection for categories to green/red diag pattern.
+- Fix margin between views.
+- Add clear button to search line.
+- Disable package list in component content.
+- Add hide/display content panel (thx Maria Alexeeva).
+
 * Thu Jun 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.3.0-alt1
 - Add support for tags in components and editions.
 - New view mode menu in view menu.

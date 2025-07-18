@@ -22,9 +22,9 @@
 %_alterator_datadir/backends/%{1}-app.backend \
 %_alterator_datadir/applications/%{1}.application
 
-Name: alterator-application-systeminfo
+Name: alt-systeminfo
 Version: 0.4.5
-Release: alt2
+Release: alt3
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
@@ -35,6 +35,7 @@ Source: %name-%version.tar
 
 Requires: alterator-interface-application >= 0.1.1
 Requires: alterator-backend-systeminfo >= 0.3.2
+Requires: alterator-module-executor >= 0.1.19
 # Recommends: alterator-backend-edition >= 0.1.5
 # Recommends: alterator-backend-packages >= 0.1.4
 
@@ -52,6 +53,7 @@ Provides: alterator-application-release_notes = %version-%release
 Provides: alterator-interface-license = %version-%release
 Provides: alterator-backend-license = %version-%release
 Provides: alterator-application-license = %version-%release
+Provides: alterator-application-systeminfo = %version-%release
 
 Obsoletes: alterator-interface-release_notes < 0.4.4-alt2
 Obsoletes: alterator-backend-release_notes < 0.4.4-alt2
@@ -59,8 +61,7 @@ Obsoletes: alterator-application-release_notes < 0.4.4-alt2
 Obsoletes: alterator-interface-license < 0.4.4-alt2
 Obsoletes: alterator-backend-license < 0.4.4-alt2
 Obsoletes: alterator-application-license < 0.4.4-alt2
-
-Requires: alterator-module-executor >= 0.1.19
+Obsoletes: alterator-application-systeminfo < 0.4.5-alt3
 
 %description
 ALT Systeminfo - Alterator application that shows information about system.
@@ -89,6 +90,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Fri Jul 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.5-alt3
+- Rename package to alt-systeminfo with providing.
+
 * Wed May 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.5-alt2
 - Actualize upstream URL.
 

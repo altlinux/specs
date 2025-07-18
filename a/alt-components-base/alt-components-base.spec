@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.12
+Version: 0.7.13
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -151,6 +151,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Jul 08 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.7.13-alt1
+- components: update descriptions
+- categories: fix display name (windows-env, infra)
+
 * Mon May 26 2025 Michael Chernigin <chernigin@altlinux.org> 0.7.12-alt1
 - components: add directory for each category to support descriptions
 - components: remove component descriptions headings

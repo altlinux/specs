@@ -7,7 +7,7 @@
 
 Name: lib%upname
 Version: 2.6.1
-Release: alt4
+Release: alt5
 Url: http://doc.qt.digia.com/solutions/4/qtsingleapplication/qtsingleapplication.html
 Group: System/Libraries
 License: LGPLv2.1 GPLv3
@@ -28,6 +28,7 @@ BuildRequires: gcc-c++
 BuildRequires: libqt4-devel
 %endif
 BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 %description
 For some applications it is useful or even critical that they are started
@@ -75,6 +76,33 @@ Requires: %name-qt5
 This package contains libraries and header files for developing applications
 that use QtSingleApplication with Qt5.
 
+%package qt6
+Group: Development/C++
+Summary: The QtSingleApplication component provides support for applications that can be only started once per user
+
+%description qt6
+For some applications it is useful or even critical that they are started
+only once by any user. Future attempts to start the application should
+activate any already running instance, and possibly perform requested
+actions, e.g. loading a file, in that instance.
+
+The QtSingleApplication class provides an interface to detect a running
+instance, and to send command strings to that instance.
+For console (non-GUI) applications, the QtSingleCoreApplication variant
+is provided, which avoids dependency on QtGui.
+
+This is a special build against Qt6.
+
+%package qt6-devel
+Group: Development/C++
+Summary: The QtSingleApplication component provides support for applications that can be only started once per user
+Requires: %name-qt6
+
+%description qt6-devel
+This package contains libraries and header files for developing applications
+that use QtSingleApplication with Qt6.
+
+
 %prep
 %setup -n %upname-%version/%upname
 %patch2 -p0
@@ -83,10 +111,14 @@ that use QtSingleApplication with Qt5.
 # use versioned soname
 sed -i "s,head,%(echo '%version' |sed -r 's,(.*)\..*,\1,'),g" common.pri
 
-mkdir qt5
+mkdir qt5 qt6
 cp -p %SOURCE1 %SOURCE2 qt5
+cp -p %SOURCE1 %SOURCE2 qt6
 sed -i -r 's,-lQt,\05,' qt5/qtsingleapplication.prf
 sed -i -r 's,-lQt,\05,' qt5/qtsinglecoreapplication.prf
+
+sed -i -r 's,-lQt,\06,' qt6/qtsingleapplication.prf
+sed -i -r 's,-lQt,\06,' qt6/qtsinglecoreapplication.prf
 
 # additional header needed for Qt5.5
 sed -i -r 's,.include,\0 <QtCore/QDataStream>\n\0,' src/qtlocalpeer.h
@@ -100,6 +132,15 @@ qmake-qt4
 
 pushd qt5
 %qmake_qt5 ..
+%make_build
+popd
+
+
+pushd qt6
+# additional header needed for Qt6
+sed -i -r 's,.include,\0 <QRegularExpression>\n\0,' ../src/qtlocalpeer.cpp
+sed -i 's,QRegExp,QRegularExpression,g' ../src/qtlocalpeer.cpp
+%{qmake_qt6} ..
 %make_build
 popd
 
@@ -118,6 +159,16 @@ cp -a \
 mkdir -p %buildroot%_qt5_headerdir
 # symlink is not possible due to split into individual subpackages
 cp -ap %buildroot%_includedir/QtSolutions %buildroot%_qt5_headerdir
+
+
+mkdir -p %buildroot%_qt6_headerdir/QtSolutions %buildroot%_qt6_archdatadir/mkspecs/features
+cp -ap \
+    src/qtsingleapplication.h \
+    src/QtSingleApplication \
+    src/qtsinglecoreapplication.h \
+    src/QtSingleCoreApplication \
+    %buildroot%_qt6_headerdir/QtSolutions
+install -p -m644 qt6/*.prf %buildroot%_qt6_archdatadir/mkspecs/features
 
 # features
 %if_enabled qt4
@@ -146,7 +197,19 @@ install -p -m644 qt5/*.prf %buildroot%_qt5_archdatadir/mkspecs/features
 %_qt5_headerdir/QtSolutions/
 %_qt5_archdatadir/mkspecs/features/*.prf
 
+%files qt6
+%_qt6_libdir/libQt6*.so.*
+
+%files qt6-devel
+%doc doc/html README.TXT
+%_qt6_libdir/libQt6*.so
+%_qt6_headerdir/QtSolutions/
+%_qt6_archdatadir/mkspecs/features/*.prf
+
 %changelog
+* Thu Jul 10 2025 Aleksey Saprunov <sav	@altlinux.org> 2.6.1-alt5
+- build with qt6
+
 * Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 2.6.1-alt4
 - build without qt4
 
