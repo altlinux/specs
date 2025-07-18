@@ -2,7 +2,7 @@
 
 Name: startdde
 Version: 6.1.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Starter of deepin desktop environment
@@ -12,8 +12,9 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/startdde
 Vcs: https://github.com/linuxdeepin/startdde.git
 
-Source: %url/archive/%version/%name-%version.tar.gz
+Source0: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -38,6 +39,7 @@ for enabling the deepin theme for lightdm.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -51,19 +53,19 @@ export GOPATH="$(pwd)/vendor:%go_path"
 %install
 export GOPATH="%go_path"
 %makeinstall DESTDIR=%buildroot
+# fix conflicts with deepin-daemon 6.1.44
+rm -rf %buildroot%_libexecdir/deepin-daemon/
+rm -rf %buildroot%_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
+rm -rf %buildroot%_userunitdir/dde-display-task-refresh-brightness.service
+rm -rf %buildroot%_userunitdir/dde-session-initialized.target.wants/
+# package localization files
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_sbindir/deepin-fix-xauthority-perm
-%dir %_libexecdir/deepin-daemon/
-%_libexecdir/deepin-daemon/greeter-display-daemon
 %dir %_datadir/%name/
 %_datadir/%name/filter.conf
-%_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
-%_userunitdir/dde-display-task-refresh-brightness.service
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/dde-display-task-refresh-brightness.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.startdde/
@@ -74,6 +76,9 @@ export GOPATH="%go_path"
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Fri Jul 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt2
+- Fixed conflicts with deepin-daemon 6.1.44.
+
 * Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt1
 - New version 6.1.6.
 
