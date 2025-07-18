@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.9
-Release: alt2
+Release: alt2.1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -58,8 +58,8 @@ NB: a project using tuples from this library will fail to build
 %ifarch %e2k
 sed -i '/"fenv.h" HAVE_FENV_H/d' CMake/GenerateDCMTKConfigure.cmake
 # unportable magic with va_args
-sed -i 's/ttuple.cc//' ofstd/tests/CMakeLists.txt
-sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
+sed -i -E 's/t(stl|tuple).cc//' ofstd/tests/CMakeLists.txt
+sed -i -E '/ofstd_(std_|tuple)/d' ofstd/tests/tests.cc
 %endif
 
 %build
@@ -102,6 +102,9 @@ sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Thu Jul 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.9-alt2.1
+- e2k build fix
+
 * Sat Jun 28 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.9-alt2
 - Fixes:
   + CVE-2024-47796 Crafted DICOM file can lead to out-of-bounds write
