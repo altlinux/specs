@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labwc
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -25,13 +25,14 @@ BuildRequires: pkgconfig(scdoc)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server) >= 0.19.0
 BuildRequires: pkgconfig(wayland-client)
-BuildRequires: pkgconfig(wlroots-0.18)
+BuildRequires: pkgconfig(wlroots-0.19)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libsfdo-basedir)
+BuildRequires: pkgconfig(xwayland)
 
 Requires: labwc-base = %EVR
 
@@ -61,6 +62,7 @@ Conflicts: labwc < 0.8.1
 %files base -f %name.lang
 %doc NEWS.md
 %_bindir/%name
+%_bindir/lab-sensible-terminal
 %_datadir/xdg-desktop-portal/labwc-portals.conf
 %_docdir/%name/
 %_mandir/man1/*.1*
@@ -71,6 +73,9 @@ Conflicts: labwc < 0.8.1
 %_datadir/wayland-sessions/%name.desktop
 
 %changelog
+* Fri Jul 18 2025 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- new version (0.9.0) with rpmgs script
+
 * Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 0.8.4-alt1
 - new version (0.8.4) with rpmgs script
 
