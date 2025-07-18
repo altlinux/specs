@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.2.4
-Release: alt2
+Version: 1.2.5
+Release: alt1
 
 Summary: Hydrogen Drum Machine
 License: GPLv2
@@ -60,7 +60,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/org.hydrogenmusic.Hydrogen.desktop
 
 %files
-%doc -P AUTHORS ChangeLog README.md
+%doc -P AUTHORS CHANGELOG.md README.md
 %_bindir/*
 %_datadir/%name/
 %_libdir/*.so
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Fri Jul 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.5-alt1
+- 1.2.5 released
+
 * Thu Apr 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.4-alt2
 - fixed FTBFS with cmake4
 
