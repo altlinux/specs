@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %global import_path gitea.com/gitea/act_runner
 
 Name: forgejo-runner
-Version: 6.3.1
-Release: alt2
+Version: 7.0.0
+Release: alt1
 
 Summary: Forgejo Runner
 License: MIT
@@ -50,7 +51,7 @@ mkdir -p %buildroot{%_bindir,%_userunitdir,%_sysconfdir/%name,%_sharedstatedir/%
 
 %golang_install
 
-mv %buildroot%_bindir/act_runner %buildroot%_bindir/%name
+ln -r -s %buildroot%_bindir/runner.forgejo.org %buildroot%_bindir/%name
 
 %buildroot%_bindir/%name generate-config > %buildroot%_sysconfdir/%name/config.yaml
 
@@ -95,9 +96,13 @@ exit 0
 %attr(0640,root,_%name) %config(noreplace) %_sysconfdir/%name/config.yaml
 %attr(0770,root,_%name) %dir %_sharedstatedir/%name
 %_bindir/%name
+%_bindir/runner.forgejo.org
 %_userunitdir/%name.service
 
 %changelog
+* Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
+- New version 7.0.0.
+
 * Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 6.3.1-alt2
 - not define User and Group for user unit (ALT#54407).
 
