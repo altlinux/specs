@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: TPM 2.0 TSS Bindings for Python
 Group: Development/Python3
 License: BSD-2-Clause
@@ -66,6 +66,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt2
+- Fix FTBFS: backport commits from upstream master.
+
 * Tue Mar 25 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
 - 2.3.0.
 
