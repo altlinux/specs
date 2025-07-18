@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 11.0.2
+Version: 11.0.3
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 Source2: %name.service
 Source3: %name.service.d.conf
+# https://codeberg.org/forgejo/forgejo/pulls/8475
+Patch100: 8475.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: golang >= 1.24.3 rpm-build-golang
@@ -35,6 +37,7 @@ and privacy.
 
 %prep
 %setup
+%patch100 -p1
 
 sed -i \
     -e "s|^APP_NAME = ; Gitea: Git with a cup of tea|APP_NAME = Forgejo: Beyond coding. We Forge.|" \
@@ -110,6 +113,10 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.3-alt1
+- 11.0.3.
+- Backport: several fixes of ALT Package registry.
+
 * Mon Jun 23 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.2-alt1
 - 11.0.2.
 
