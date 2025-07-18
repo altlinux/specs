@@ -2,8 +2,8 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.18.6
-Release: alt2
+Version: 2.18.7
+Release: alt1
 
 License: GPL-3.0
 Group: System/Configuration/Other
@@ -88,6 +88,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Jul 18 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.7-alt1
+- New version.
+
 * Mon Jun 23 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.6-alt2
 - Required python3-module-passlib (ALT #54892).
 
