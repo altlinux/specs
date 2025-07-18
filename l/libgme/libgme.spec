@@ -3,8 +3,8 @@
 
 Summary:	Game Music Emulators library
 Name:		libgme
-Version:	0.6.3
-Release:	alt2
+Version:	0.6.4
+Release:	alt1
 Source0:	http://game-music-emu.googlecode.com/files/%{srcname}-%{version}.tbz2
 License:	LGPLv2+
 Group:		System/Libraries
@@ -14,6 +14,7 @@ Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 # Automatically added by buildreq on Sun Sep 26 2010 (-bi)
 BuildRequires: cmake gcc-c++ libSDL2-devel
+BuildRequires: /proc zlib-devel
 
 %description
 This is a collection of video game music file emulators that supports a
@@ -64,6 +65,7 @@ cmake \
 %ifarch %mips riscv64
 	-DENABLE_UBSAN=OFF \
 %endif
+	-DGME_BUILD_STATIC=OFF \
 	-DCMAKE_C_FLAGS:STRING="%optflags"
 %make_build
 %if_with player
@@ -74,6 +76,7 @@ cmake \
 %install
 %makeinstall_std
 %if %_lib != lib
+[ -d %buildroot%_prefix/lib ] &&
 mv %buildroot%_prefix/lib/ %buildroot%_libdir
 %endif
 %if_with player
@@ -100,6 +103,9 @@ cd ..
 
 
 %changelog
+* Thu Jul 17 2025 Alexander Kovalev <alexvk@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Thu Jan 06 2022 Ivan A. Melnikov <iv@altlinux.org> 0.6.3-alt2
 - Disable ubsan on %%mips and riscv64
 
