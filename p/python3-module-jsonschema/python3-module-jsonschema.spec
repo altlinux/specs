@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.24.0
+Version: 4.24.1
 Release: alt1
 
 Summary: An implementation of JSON Schema validation for Python
@@ -26,6 +26,7 @@ BuildRequires: python3-module-referencing
 BuildRequires: python3-module-rpds-py
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-jsonpath-ng
 %endif
 
 # https://bugzilla.altlinux.org/38673
@@ -64,6 +65,9 @@ export JSON_SCHEMA_TEST_SUITE=$PWD/json
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jul 18 2025 Anton Vyatkin <toni@altlinux.org> 4.24.1-alt1
+- New version 4.24.1.
+
 * Sun Jun 08 2025 Anton Vyatkin <toni@altlinux.org> 4.24.0-alt1
 - New version 4.24.0.
 
