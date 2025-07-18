@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define short_name actl
 
 Name: alteratorctl
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -12,20 +13,20 @@ URL: https://altlinux.space/alterator/alteratorctl
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel
 BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
-BuildRequires: libpolkit-devel
+BuildRequires: libpolkit-devel libjson-glib-devel
 
-Requires: alterator-manager >= 0.1.28
-Requires: alterator-module-executor >= 0.1.21
-Requires: alterator-backend-packages >= 0.1.4
+Requires: alterator-manager >= 0.1.29
+Requires: alterator-module-executor >= 0.1.25
+Requires: alterator-backend-packages >= 0.2.7
 Requires: alterator-interface-component >= 0.1.9
 Requires: alterator-backend-component >= 0.1.9
-Requires: alterator-backend-component_categories
-Requires: alterator-backend-batch-components >= 0.2.2
-Requires: alterator-backend-batch-component_categories
-Requires: alterator-interface-edition >= 0.1.5
-Requires: alterator-interface-diag
-Requires: alterator-backend-systeminfo >= 0.3.1
-Requires: libtomlc99 polkit
+Requires: alterator-backend-component_categories >= 0.1.5-alt2
+Requires: alterator-backend-batch-components >= 0.3
+Requires: alterator-backend-batch-component_categories >= 0.3
+Requires: alterator-interface-edition >= 0.1.5-alt4
+Requires: alterator-interface-diag >= 0.1.4
+Requires: alterator-backend-systeminfo >= 0.3.2
+Requires: libtomlc99 polkit libjson-glib
 
 Source0: %name-%version.tar
 
@@ -41,22 +42,29 @@ A command line tool for using alterator DBus objects.
 
 %install
 %cmakeinstall_std
-ln -s %_bindir/%name %buildroot%_bindir/actl
+ln -s %_bindir/%name %buildroot%_bindir/%short_name
 mkdir -p %buildroot%_datadir/bash-completion/completions/
 mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
 cp completions/completion \
         %buildroot%_datadir/bash-completion/completions/%name
 cp completions/completion.fish \
         %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+ln -s %_datadir/bash-completion/completions/%name %buildroot%_datadir/bash-completion/completions/%short_name
+ln -s %_datadir/fish/vendor_completions.d/%name.fish %buildroot%_datadir/fish/vendor_completions.d/%short_name.fish
 
 %files
 %_bindir/%name
-%_bindir/actl
+%_bindir/%short_name
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
+%_datadir/bash-completion/completions/%short_name
+%_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Mon Jul 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.11-alt1
+- Fix working bash-completions with actl symlink to alteratorctl.
+
 * Tue Jul 01 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.10-alt1
 - Fixed typos (thx Elena Mishina).
 - Added Bash and Fish completion (thx Kozyrev Yuri).
