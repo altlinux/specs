@@ -1,6 +1,6 @@
 
 %define optflags_lto %nil
-%def_disable python_bindings
+%def_enable python_bindings
 
 %define sover 19
 %define libkritacommand libkritacommand%sover
@@ -38,7 +38,7 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 5.2.9
+Version: 5.2.11
 Release: alt1
 %K5init no_altplace
 
@@ -62,6 +62,7 @@ Source: krita-%version.tar
 Patch1: alt-find-pyqt.patch
 Patch2: alt-py3-syntax-error.patch
 Patch3: alt-soname.patch
+Patch4: krita-5.2.11-libheif-1.20.patch
 
 # Automatically added by buildreq on Thu Nov 16 2017 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils fontconfig gcc-c++ glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache ilmbase-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgpg-error liblcms2-devel libpoppler-devel libpoppler1-qt5 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -87,6 +88,9 @@ BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2) /usr/bin/opj2_decompress
 #BuildRequires: libjxl-devel # absent on i586
 BuildRequires: libheif-devel
 #BuildRequires: openexr-devel
+%ifnarch %arm
+BuildRequires: libjxl-devel
+%endif
 BuildRequires: libexiv2-devel liblcms2-devel
 BuildRequires: mlt7xx-devel libSDL2-devel
 BuildRequires: libmypaint-devel
@@ -380,6 +384,7 @@ Requires: %name-common >= %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 #sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
 #sed -i 's|sipbuild|sipbuild5|' cmake/modules/sip-generate.py
@@ -526,6 +531,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Thu Jul 17 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.11-alt1
+- new version
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.9-alt1
 - new version
 
