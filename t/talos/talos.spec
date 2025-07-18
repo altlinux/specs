@@ -13,7 +13,7 @@
 
 Name: talos
 Version: 1.10.5
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -102,7 +102,7 @@ sed -i \
 #DefaultNTPServer
 
 # Define ALT kernel
-sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.35-talos"|' \
+sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.38-talos"|' \
   pkg/machinery/constants/constants.go
 
 
@@ -183,6 +183,9 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Fri Jul 18 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.5-alt2
+- Update DefaultKernelVersion.
+
 * Mon Jul 14 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.5-alt1
 - New version 1.10.5.
 
