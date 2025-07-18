@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.7
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -254,6 +254,7 @@ Requires: %name-krb5-common = %version-%release
 Requires: %name-pac = %version-%release
 Requires: %name-winbind-idmap = %version-%release
 Requires: adcli
+Requires: libldb-modules-dc
 
 %description ad
 Provides the Active Directory back end that the SSSD can utilize to fetch
@@ -922,6 +923,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Jul 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt3
+- Add dependency to libldb-modules-dc for sssd-ad (closes: 54957).
+
 * Tue Jul 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt2
 - Fix target directory of module /usr/lib64/samba/ldb/memberof.so installed into
   symlinked alternative directory /usr/lib64/samba/ldb.mit from
