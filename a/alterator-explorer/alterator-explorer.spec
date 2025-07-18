@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -23,6 +23,7 @@ BuildRequires: qt6-tools-devel
 BuildRequires: qt6-base-common
 BuildRequires: boost-devel-headers
 BuildRequires: libtomlplusplus-devel
+BuildRequires: libqtsingleapplication-qt6-devel
 
 # TODO(chernigin): validate interface on build
 BuildRequires: alterator-interface-application
@@ -106,6 +107,11 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Thu Jul 10 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.15-alt1
+- restricted to single instance
+- unknown objects not being displaying
+- added branding style
+
 * Tue May 13 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.14-alt1
 - add objects interfaces from available applications
 
