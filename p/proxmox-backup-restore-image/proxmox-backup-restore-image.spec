@@ -4,13 +4,13 @@
 
 Name: proxmox-backup-restore-image
 Version: 3.3.3.1
-Release: alt1
+Release: alt2
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
 License: GPL-2.0-or-later
 Group: Development/Other
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Obsoletes: pve-backup-restore-image
 
@@ -29,6 +29,9 @@ install -p -D -m 0644 %imagedir/initramfs.img %buildroot%cachedir/file-restore-i
 %cachedir/file-restore-initramfs.img
 
 %changelog
+* Thu Jun 12 2025 Ivan A. Melnikov <iv@altlinux.org> 3.3.3.1-alt2
+- NMU: build on loongarch64
+
 * Wed Mar 19 2025 Sergey Konev <darisishe@altlinux.org> 3.3.3.1-alt1
 - Initial build
 

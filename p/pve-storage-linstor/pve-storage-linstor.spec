@@ -1,7 +1,7 @@
 
 Name: pve-storage-linstor
 Version: 8.1.1
-Release: alt1
+Release: alt2
 
 Summary: LINSTOR Proxmox Plugin
 Group: System/Servers
@@ -12,7 +12,7 @@ Vcs: https://github.com/LINBIT/linstor-proxmox.git
 
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires: pve-storage
@@ -57,6 +57,9 @@ fi
 %_cachedir/linstor-proxmox/
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.1.1-alt2
+- NMU: build on loongarch64
+
 * Thu Apr 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt1
 - 8.1.1
 

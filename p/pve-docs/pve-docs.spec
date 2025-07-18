@@ -1,14 +1,14 @@
 Name: pve-docs
 Summary: PVE Documentation
 Version: 8.4.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
 
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 BuildArch: noarch
 BuildRequires: asciidoc-a2x asciidoc-latex source-highlight xmlto librsvg-utils mailcap pve-common pve-doc-generator
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.4.0-alt2
+- NMU: build on loongarch64
+
 * Mon Apr 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.4.0-alt1
 - 8.4.0 
 

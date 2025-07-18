@@ -6,14 +6,14 @@
 Name: pve-access-control
 Summary: PVE access control library
 Version: 8.2.0
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/pve-apiclient.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: perl-%name = %EVR
 # from debian/control
@@ -71,6 +71,9 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.2.0-alt3
+- NMU: build on loongarch64
+
 * Tue Mar 18 2025 Sergey Konev <darisishe@altlinux.org> 8.2.0-alt2
 - fix UTF8 username in user.cfg (thx kustovdv@)
 

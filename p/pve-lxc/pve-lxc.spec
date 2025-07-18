@@ -5,13 +5,13 @@
 
 Name: pve-%rname
 Version: 6.0.0
-Release: alt2
+Release: alt3
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
 URL: https://linuxcontainers.org/
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: %name-%version.tar
 Source2: config.tar
@@ -105,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 6.0.0-alt3
+- build on loongarch64
+
 * Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
 - restore patch "confile: convert AppArmor and SELinux confile
   parsing from errors to warnings"

@@ -1,12 +1,12 @@
 Name: pve-acme
 Summary: PVE ACME integration perl library
 Version: 1.5.1
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires: pve-common python3 perl(Date/Parse.pm) perl(JSON.pm) perl(HTTP/Daemon.pm)
 
 Source: pve-acme.tar.xz
@@ -39,6 +39,9 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt2
+- NMU: build on loongarch64
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
 - 1.5.1
 

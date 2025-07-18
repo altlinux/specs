@@ -3,14 +3,14 @@
 Name: pve-http-server
 Summary: Proxmox Asynchrounous HTTP Server Implementation
 Version: 5.2.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/pve-http-server.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: perl-%name = %EVR
 # from debian/control
@@ -47,6 +47,9 @@ This package is used as base to implement the REST API in all perl based
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt2
+- NMU: build on loongarch64
+
 * Tue Feb 11 2025 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
 - 5.2.0
 - Revert "fix UTF-8 presentation"

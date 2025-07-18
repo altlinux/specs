@@ -3,14 +3,14 @@
 Name: pve-common
 Summary: PVE base library
 Version: 8.3.1
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires: perl-Encode
 BuildRequires: perl-ph
@@ -51,8 +51,8 @@ This package contains the base library used by other PVE components.
 %prep
 %setup -q -n %name-%version
 sed -i 's|Proxmox VE|PVE|' src/PVE/Tools.pm
-# No mknod syscall in perl for aarch64:
-%ifarch aarch64
+# No mknod syscall in perl for aarch64 and loongarch64:
+%ifarch aarch64 loongarch64
 sed -i 's/SYS_mknod,/SYS_mknodat,/' src/PVE/Syscall.pm
 sed -i 's/SYS_mknod,/SYS_mknodat, -100,/' src/PVE/Tools.pm
 %endif
@@ -71,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.3.1-alt3
+- NMU: build on loongarch64
+
 * Tue Apr 29 2025 Sergey Konev <darisishe@altlinux.org> 8.3.1-alt2
 - Suppress harmless warnings during user.cfg access (Closes: 54052)
 

@@ -4,14 +4,14 @@
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
 Version: 4.0.6
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/pve-ha-manager.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 # from debian/control
 Conflicts: watchdog
@@ -74,6 +74,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 4.0.6-alt2
+- NMU: build on loongarch64
+
 * Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 4.0.6-alt1
 - 4.0.6
 

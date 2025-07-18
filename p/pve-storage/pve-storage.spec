@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 8.3.6
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 Patch1: %name-%version-alt-group-fix.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: libpve-storage-perl = %EVR
 Requires: bzip2 lzop zstd
@@ -36,6 +36,7 @@ BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-c
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
+BuildRequires: perl(XML/LibXML.pm)
 
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MPVE::Storage'; export TZ=UTC
 %set_perl_req_method relaxed
@@ -69,6 +70,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.3.6-alt2
+- NMU: build on loongarch64
+
 * Tue Apr 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.6-alt1
 - 8.3.6 
 

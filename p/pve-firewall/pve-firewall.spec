@@ -3,14 +3,14 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 5.1.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/pve-firewall.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 # from debian/control
 #Conflicts: ulogd
@@ -73,6 +73,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 5.1.1-alt2
+- NMU: bootstrap on loongarch64
+
 * Mon Apr 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 5.1.1-alt1
 - 5.1.1 
 

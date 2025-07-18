@@ -5,14 +5,16 @@
 Name: pve-esxi-import-tools
 Summary: Tools to allow importing VMs from ESXi hosts
 Version: 0.7.3
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/?p=pve-esxi-import-tools.git
 Vcs: git://git.proxmox.com/git/pve-esxi-import-tools.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64 riscv64
+Patch1: vendored-nix-loongarch64-support.patch
+
+ExclusiveArch: x86_64 aarch64 riscv64 loongarch64
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -25,6 +27,7 @@ BuildRequires: /proc
 BuildRequires: clang%{llvm_version}
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: cargo-vendor-checksum
+BuildRequires: diffstat
 
 %description
 Tools to allow importing VMs from ESXi hosts.
@@ -38,6 +41,10 @@ to query the list of VMs and datastores.
 # find vendor -name *.a -delete
 # git add -f vendor Cargo.lock ...
 %setup
+
+%patch1 -p1
+diffstat -p1 -l < %PATCH1 | sed -re 's@vendor/@@' | xargs cargo-vendor-checksum -f
+
 sed -i 's!include /usr/share/dpkg/default.mk!#include /usr/share/dpkg/default.mk!' Makefile
 sed -i 's!CARGO_BUILD_ARGS += --release!CARGO_BUILD_ARGS += --release --offline!' Makefile
 sed -i 's!install: $(BINARY) $(SCRIPT) .lint-incremental!install: $(BINARY) $(SCRIPT)!' Makefile
@@ -60,6 +67,9 @@ export BUILD_MODE=release
 %_libexecdir/%name
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.7.3-alt2
+- NMU: build on loongarch64
+
 * Mon Apr 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 0.7.3-alt1
 - 0.7.3 
 

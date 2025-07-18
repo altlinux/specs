@@ -4,14 +4,14 @@
 Name: pve-guest-common
 Summary: PVE common guest-related modules
 Version: 5.2.2
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/pve-guest-common.git
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: perl-%name = %EVR
 # from debian/control
@@ -48,6 +48,9 @@ This package contains a common code base used by pve-container and qemu-server
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 5.2.2-alt2
+- NMU: build on loongarch64
+
 * Thu Apr 17 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 5.2.2-alt1
 - 5.2.2 
 

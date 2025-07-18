@@ -4,12 +4,12 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 8.1.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 Requires: chrony ntpdate corosync fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libcpg) pkgconfig(libcpg) pkgconfig(libcmap) pkgconfig(
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
 BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm) perl(UUID.pm)
+BuildRequires: perl(XML/LibXML.pm)
 
 %description
 This package contains the Cluster Infrastructure for the PVE,
@@ -160,6 +161,9 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.1.0-alt2
+- NMU: build on loongarch64
+
 * Mon Apr 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.1.0-alt1
 - 8.1.0
 
