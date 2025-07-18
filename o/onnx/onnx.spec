@@ -1,0 +1,121 @@
+%define _unpackaged_files_terminate_build 1
+%define pypi_name onnx
+%define mod_name %pypi_name
+
+%def_with check
+
+%define soversion 1
+Name: onnx
+Version: 1.18.0
+Release: alt1
+
+Summary: Open standard for machine learning interoperability
+License: Apache-2.0
+Group: Development/Other
+Url: https://pypi.org/project/onnx/
+Vcs: https://github.com/onnx/onnx
+
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-cmake
+%add_pyproject_deps_build_filter cmake
+%add_pyproject_deps_build_filter protobuf
+%pyproject_builddeps_build
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: protobuf-compiler
+BuildRequires: libprotobuf-devel
+BuildRequires: pybind11-devel
+%if_with check
+%add_pyproject_deps_check_filter jupyter
+%add_pyproject_deps_check_filter lintrunner
+%add_pyproject_deps_check_filter nbval
+%pyproject_builddeps_metadata_extra reference
+%pyproject_builddeps_check
+BuildRequires: python3-module-numpy-testing
+%endif
+
+%description
+%summary.
+
+%package -n lib%name%soversion
+Summary: %{summary onnx} (shared libraries)
+Group: System/Libraries
+
+%description -n lib%name%soversion
+%{description %name}.
+
+%package -n lib%name-devel
+Summary: Headers files and library symbolic links for %name
+Group: Development/C
+Requires: lib%name%soversion = %EVR
+
+%description -n lib%name-devel
+%{description %name}.
+
+%package -n python3-module-%pypi_name
+Summary: %{summary onnx} (python package)
+Group: Development/Python3
+# Python3 dependencies generator can't find the following providements
+# and we need to set them explicitly:
+Provides: python3(onnx.onnx_cpp2py_export.checker)
+Provides: python3(onnx.onnx_cpp2py_export.defs)
+Provides: python3(onnx.onnx_cpp2py_export.inliner)
+Provides: python3(onnx.onnx_cpp2py_export.parser)
+Provides: python3(onnx.onnx_cpp2py_export.printer)
+Provides: python3(onnx.onnx_cpp2py_export.shape_inference)
+Provides: python3(onnx.onnx_cpp2py_export.version_converter)
+
+%description -n python3-module-%pypi_name
+%summary.
+
+%prep
+%setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
+
+%build
+%cmake \
+    -DBUILD_SHARED_LIBS=1 \
+    -DONNX_USE_PROTOBUF_SHARED_LIBS=1
+%cmake_build
+
+%pyproject_build
+
+%install
+%cmake_install
+%pyproject_install
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+cd %buildroot%python3_sitelibdir
+python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
+
+%files -n lib%name%soversion
+%doc LICENSE README.md
+%_libdir/libonnx.so.%{soversion}*
+%_libdir/libonnx_proto.so.%{soversion}*
+
+%files -n lib%name-devel
+%_libdir/libonnx.so
+%_libdir/libonnx_proto.so
+%_cmakedir/ONNX/
+%_includedir/onnx/
+
+%files -n python3-module-%pypi_name
+%_bindir/backend-test-tools
+%_bindir/check-*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
+%changelog
+* Fri Jul 18 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
+- Packaged for ALT Sisyphus.
