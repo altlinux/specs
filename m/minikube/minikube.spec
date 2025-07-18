@@ -7,7 +7,7 @@
 %global import_path k8s.io/minikube
 
 Name: minikube
-Version: 1.33.1
+Version: 1.36.0
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -65,6 +65,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_%name
 
 %changelog
+* Fri Jul 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.36.0-alt1
+- 1.31.1 -> 1.36.0
+
 * Wed May 29 2024 Alexander Stepchenko <geochip@altlinux.org> 1.33.1-alt1
 - 1.32.0 -> 1.31.1
 
