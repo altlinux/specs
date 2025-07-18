@@ -4,8 +4,8 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.3.3
-Release: alt2
+Version: 1.4.0
+Release: alt1
 %K6init
 
 Group: Video
@@ -116,6 +116,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Fri Jul 18 2025 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
+- new version
+
 * Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt2
 - add smb:/ support
 
