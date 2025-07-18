@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -395,10 +395,13 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Fri Jul 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.6-alt2
+- Properly merge ALT fixes for 1.32.6
+- Fixes:
+  + CVE-2025-4563: Nodes can bypass dynamic resource allocation authorization checks
+
 * Mon Jun 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.6-alt1
 - 1.32.5 -> 1.32.6
-- Security fixes:
-  + CVE-2025-4563: Nodes can bypass dynamic resource allocation authorization checks
 
 * Mon Jun 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.5-alt1
 - 1.32.4 -> 1.32.5
@@ -521,11 +524,13 @@ fi
 
 * Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.4-alt1
 - 1.22.4
-- Fixes: CVE-2021-25741
+- Fixes:
+  + CVE-2021-25741
 
 * Wed Jun 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.8-alt1
 - 1.20.8
-- Fixes: CVE-2021-25737
+- Fixes:
+  + CVE-2021-25737
 
 * Thu Jan 21 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.2-alt1
 - 1.20.2
@@ -536,11 +541,13 @@ fi
 
 * Fri Jul 24 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.6-alt1
 - 1.18.6
-- Fixes: CVE-2020-8559
+- Fixes:
+  + CVE-2020-8559
 
 * Thu Jul 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.5-alt1
 - 1.18.5
-- Fixes: CVE-2020-8558
+- Fixes:
+  + CVE-2020-8558
 
 * Thu Apr 02 2020 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.0-alt1
 - 1.18.0
