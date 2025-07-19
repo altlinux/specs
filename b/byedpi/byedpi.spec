@@ -5,7 +5,7 @@
 %define _home %_localstatedir/%_user
 
 Name: byedpi
-Version: 0.17
+Version: 0.17.2
 Release: alt1
 
 Summary: A local proxy for DPI environments
@@ -55,6 +55,9 @@ useradd -g %_user -c 'The byedpi daemon' \
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jul 19 2025 Andrew Savchenko <bircoph@altlinux.org> 0.17.2-alt1
+- Version bump
+
 * Mon Jun 16 2025 Andrew Savchenko <bircoph@altlinux.org> 0.17-alt1
 - Version bump
 
