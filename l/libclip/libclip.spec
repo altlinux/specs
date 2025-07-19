@@ -8,7 +8,7 @@
 
 Name: libclip
 Version: 1.2.0cvs
-Release: alt7
+Release: alt8
 
 Summary: XBASE/Clipper compatible program compiler - runtime library
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- дополнительные библиотеки
@@ -36,7 +36,7 @@ Patch3: %name-openssl1.1.patch
 
 # manually removed: linux-libc-headers 
 # Automatically added by buildreq on Mon Sep 11 2006
-BuildRequires: bzlib-devel clip libexpat-devel libfcgi-devel libglade-devel libgpm-devel libjpeg-devel libMySQL-devel libunixODBC-devel libXpm-devel postgresql-devel libpth-devel libezV24-devel zlib-devel libssl-devel libpng-devel libtiff-devel libgd2-devel
+BuildRequires: bzlib-devel clip libexpat-devel libfcgi-devel libglade-devel libgpm-devel libjpeg-devel libMySQL-devel libunixODBC-devel libXpm-devel postgresql-devel libpth-devel libezV24-devel zlib-devel libssl-devel libpng-devel libtiff-devel libgd-devel
 # do not use gtk1: libgtk+extra-devel 
 
 BuildPreReq: clip = %version
@@ -357,6 +357,9 @@ mv %buildroot%FCLIPDIR/locale.po %buildroot%VCLIPDIR
 %exclude %FCLIPDIR/lib/*.a
 
 %changelog
+* Sun Jul 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt8
+- FTBFS: BR libgd-devel instead of libgd2-devel
+
 * Fri Nov 18 2022 Michael Shigorin <mike@altlinux.org> 1.2.0cvs-alt7
 - upgrade ExclusiveArch: to ExcludeArch:, see clip.spec
 
