@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt8
+Release: alt9
 Epoch: 1
 
 %define sover 4
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Source1: manpages.tar
 
 Patch100: CVE-2021-4048.patch
+Patch1: cmake.patch
 
 BuildRequires: cmake gcc-fortran libxblas-devel
 %{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
@@ -114,6 +115,7 @@ real and complex matrices in both single and double precision.
 %prep
 %setup -a1
 %patch100 -p1
+%patch1
 
 export LC_COLLATE=C
 ls manpages/blas/man/manl >blas.manpages
@@ -138,7 +140,7 @@ rm -fR BLAS
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 for f in manpages/blas/man/manl/*.l; do
 	m=$(basename "$f" .l).3f
@@ -173,6 +175,9 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Sat Jul 19 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.8.0-alt9
+- ! fixed FTBFS: raise cmake minimum requirement
+
 * Thu Mar 27 2025 Alexander Danilov <admsasha@altlinux.org> 1:3.8.0-alt8
 - Applied security fixes from upstream (Fixes: CVE-2021-4048).
 
