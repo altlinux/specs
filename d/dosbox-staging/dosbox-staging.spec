@@ -1,10 +1,10 @@
 Name: dosbox-staging
-Version: 0.81.0
+Version: 0.82.2
 Release: alt1
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
-URL: https://dosbox-staging.github.io/
+Url: https://dosbox-staging.github.io/
 Source: %name-%version.tar.gz
 Patch: dosbox-staging-0.77.0-ne2000.patch
 
@@ -42,8 +42,8 @@ hardware.
 %ifarch %e2k
 sed -i 's/constexpr auto &channel_/static auto \&channel_/' src/hardware/timer.cpp
 %endif
-sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/dosbox-staging.desktop
-sed -i 's/>dosbox</>dosbox-staging</' contrib/linux/dosbox-staging.metainfo.xml
+sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/org.dosbox-staging.dosbox-staging.desktop
+sed -i 's/>dosbox</>dosbox-staging</' contrib/linux/org.dosbox-staging.dosbox-staging.metainfo.xml
 
 %build
 %meson
@@ -51,8 +51,8 @@ sed -i 's/>dosbox</>dosbox-staging</' contrib/linux/dosbox-staging.metainfo.xml
 
 %install
 %meson_install
-install -D contrib/icons/dosbox-staging.svg %buildroot%_iconsdir/hicolor/scalable/apps/dosbox-staging.svg
-install -D contrib/linux/dosbox-staging.desktop %buildroot/%_desktopdir/dosbox-staging.desktop
+install -D contrib/icons/svg/dosbox-staging-no-border.svg %buildroot%_iconsdir/hicolor/scalable/apps/dosbox-staging.svg
+install -D contrib/linux/org.dosbox-staging.dosbox-staging.desktop %buildroot/%_desktopdir/dosbox-staging.desktop
 mv %buildroot/%_bindir/dosbox %buildroot/%_bindir/%name
 mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 
@@ -70,6 +70,9 @@ mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 %exclude %_datadir/licenses
 
 %changelog
+* Sat Jul 19 2025 Fr. Br. George <george@altlinux.org> 0.82.2-alt1
+- Autobuild version bump to 0.82.2
+
 * Thu Feb 15 2024 Artyom Bystrov <arbars@altlinux.org> 0.81.0-alt1
 - Update to new version
 
