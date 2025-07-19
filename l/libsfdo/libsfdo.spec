@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: libsfdo
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 Summary: A collection of libraries implementing freedesktop.org specifications
 Group: System/Libraries
@@ -55,5 +55,8 @@ Requires: %name%sover = %EVR
 %_pkgconfigdir/libsfdo-*.pc
 
 %changelog
+* Sun Jun 01 2025 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt1
+- new version (0.1.4) with rpmgs script
+
 * Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 0.1.3-alt1
 - initial build
