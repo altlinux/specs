@@ -1,16 +1,16 @@
-Name: awesome
+%define  nomen awesome
+Name: %nomen
 Version: 4.3
-Release: alt5
+Release: alt6
 Group: Graphical desktop/Other
 License: %gpl2plus
 
 Url: https://awesomewm.org/
-Packager: Evgenii Terechkov <evg@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.wmsession
 Source2: %name.menu-method
 Patch0:%name-%version-alt.patch
-
+Patch1:cmakefile.patch
 Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoctor cmake gcc-c++ gperf
@@ -21,15 +21,21 @@ BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
 BuildRequires: lua5.3 libpango-gir libgdk-pixbuf-gir libcairo-gobject
 BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
 
-BuildRequires(pre): libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
-BuildRequires(pre): libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
+BuildRequires: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
+BuildRequires: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-build-lua
+BuildRequires: libsystemd-devel
+BuildRequires: libpcre2-devel
 
 Requires: libstartup-notification >= 0.10-alt1
 Requires: lgi >= 0.9.1
 Requires: libpango-gir
 Requires: libcairo-gobject
 Requires: libgdk-pixbuf-gir
+
+%filter_from_requires /lua.*\(awful.*\|beautiful\|gears\|menubar\|naughty\|wibox\|menu\|lgi\)/d
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
@@ -38,44 +44,20 @@ extremely fast, small, dynamic and awesome.
 %prep
 %setup -n %name-%version
 %patch0 -p1
+%patch1
 
 %build
-echo -n "v%version" >| .version_stamp
-mkdir -p build
-pushd build
-CFLAGS="%optflags" \
-CXXFLAGS="%optflags" \
-cmake \
-  -Wno-dev \
-  -DPREFIX=%prefix \
-  -DAWESOME_DOC_PATH=%_docdir/%name-%version \
-  -DCMAKE_INSTALL_PREFIX=%prefix \
-  -DSYSCONF_INSTALL_DIR=%_sysconfdir \
-  -DSYSCONFDIR=%_sysconfdir \
-  -DCOMPRESS_MANPAGES=OFF \
-%if %_lib == lib64
-  -DLIB_SUFFIX=64 \
-%endif
-  ..
-
-%make_build
-popd
+%cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DCOMPRESS_MANPAGES=OFF \
+   -DXDG_CONFIG_DIR=%_xdgconfigdir \
+   %nil
+%cmake_build
 
 %install
+%cmake_install
 
-%add_findreq_skiplist %_datadir/%name/*
-# ugly workaround :(
-%filter_from_requires /lua.*\(awful.*\|beautiful\|gears\|menubar\|naughty\|wibox\)/d
-
-pushd build
-# Fix manpages:
-for i in `find manpages -type f -iname '*.[0-9]'`; do
-    sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-' $i
-# "
-done
-
-%makeinstall DESTDIR=%buildroot install
-popd
+mkdir -p %buildroot%_sysconfdir/xdg/%name/
 install -D -m 644 %name.desktop %buildroot/%_desktopdir/%name.desktop
 touch %buildroot%_sysconfdir/xdg/%name/menu.lua
 install -D -m 644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/05%name
@@ -87,7 +69,8 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %_bindir/*
 %_sysconfdir/menu-methods/%name
 %_sysconfdir/xdg/%name
-%ghost %_sysconfdir/xdg/%name/menu.lua
+%config(noreplace) %_xdgconfigdir/%nomen/rc.lua
+%config(noreplace) %_xdgconfigdir/%nomen/menu.lua
 %_sysconfdir/X11/wmsession.d/*
 %_man1dir/aw*
 %_man5dir/aw*
@@ -96,9 +79,15 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/xsessions/%name.desktop
-%doc LICENSE build/docs/*.md
+%_defaultdocdir/%nomen
+%doc LICENSE README.md
 
 %changelog
+* Sat Jul 19 2025 Pavel Skrylev <majioa@altlinux.org> 4.3-alt6
+- ! fixed FTBFS
+- * cleanup spec
+- * rewritten cmake build proc
+
 * Wed Mar 08 2023 L.A. Kostis <lakostis@altlinux.ru> 4.3-alt5
 - NMU update:
   + cmake: use full lua binary path (and fix FTBFS).
