@@ -1,11 +1,11 @@
-%define sover 43
+%define sover 44
 
 Name: wolfssl
-Version: 5.8.0
+Version: 5.8.2
 Release: alt1
 
 Summary: Embedded SSL/TLS Library
-License: GPL-2.0
+License: GPL-3.0
 Group: System/Libraries
 
 Url: https://www.%name.com/
@@ -47,6 +47,7 @@ This package contains the header files and development libraries for %name.
 %__rm -f %buildroot%_libdir/lib%name.a
 
 %files -n lib%name%sover
+%_libdir/lib%name.so.%sover
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -59,6 +60,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 19 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.2-alt1
+- New version 5.8.2.
+
 * Sat Apr 26 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.0-alt1
 - New version 5.8.0.
 
