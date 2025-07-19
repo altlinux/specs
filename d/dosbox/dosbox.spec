@@ -3,7 +3,7 @@
 Name: dosbox
 Epoch: 1
 Version: 0.74.3
-Release: alt3
+Release: alt4
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -148,8 +148,9 @@ EOF
 %build
 
 %ifarch %ix86
-%add_optflags -no-pie
+%add_optflags -no-pie -DNCURSES_INTERNALS
 %endif
+%add_optflags -DNCURSES_INTERNALS
 
 %configure \
 	--enable-debug=heavy \
@@ -208,6 +209,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Sat Jul 19 2025 Fr. Br. George <george@altlinux.org> 1:0.74.3-alt4
+- build with new ncurses internals API
+
 * Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 1:0.74.3-alt3
 - use add_optflags instead of export CFLAGS
 
