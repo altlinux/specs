@@ -2,7 +2,7 @@
 
 Name:    apache-ignite
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: Distributed database for high-performance computing
 License: Apache-2.0
@@ -21,7 +21,6 @@ BuildRequires: maven-local
 BuildRequires: unzip
 
 AutoReqProv: yes, noosgi-fc
-Requires: java >= 11
 
 %description
 Apache Ignite 3 is a distributed database for high-performance computing.
@@ -52,6 +51,7 @@ REST API allowing simple access and configuration of Ignite cluster.
 %package -n ignite3-cli
 Summary: Command-line interface for Apache Ignite
 Group: Databases
+Requires: java >= 11
 
 %description -n ignite3-cli
 %summary
@@ -66,6 +66,7 @@ Group: Development/Java
 %package -n ignite3-db
 Summary: Apache Ignite
 Group: Databases
+Requires: java >= 11
 
 %description -n ignite3-db
 %summary
@@ -102,10 +103,10 @@ mkdir -p %buildroot%_logdir/ignite3db
 # Install service file
 install -Dpm 0644 %buildroot%_libexecdir/ignite3db/ignite3db.service %buildroot%_unitdir/ignite3db.service
 
-%pre
+%pre -n ignite3-db
 getent group ignite >/dev/null || /usr/sbin/groupadd -r ignite
 getent passwd ignite >/dev/null || /usr/sbin/useradd -r \
-  -g ignite -d %_sharedstatedir/ignite -s /bin/bash -c "Apache Ignite user" ignite
+  -g ignite -d %_sharedstatedir/ignite3db -s /bin/bash -c "Apache Ignite user" ignite
 
 %preun -n ignite3-db
 %preun_service ignite3db.service
@@ -132,6 +133,10 @@ getent passwd ignite >/dev/null || /usr/sbin/useradd -r \
 %_libexecdir/ignite3-java-client
 
 %changelog
+* Sat Jul 19 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt3
+- Fixed homedir for user ignite (ALT #55250).
+- Requires java >= 11 for ignite3-db (ALT #55251).
+
 * Sun Jul 06 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
 - Strictly build with Java 11.
 
