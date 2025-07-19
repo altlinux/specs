@@ -1,6 +1,6 @@
 Name: rogue
 Version: 5.4.4
-Release: alt3
+Release: alt4
 Packager: Fr. Br. George <george@altlinux.ru>
 Group: Games/Adventure
 License: BSD
@@ -34,7 +34,7 @@ here.
 %patch -p1
 
 %build
-CFLAGS="-DNCURSES_OPAQUE=0" %configure --enable-setgid=games --enable-scorefile=%_gamesvar/roguelike/rogue54.scr --enable-lockfile=%_gamesvar/roguelike/rogue54.lck --bindir=%_gamesbindir
+CFLAGS="-DNCURSES_INTERNALS" %configure --enable-setgid=games --enable-scorefile=%_gamesvar/roguelike/rogue54.scr --enable-lockfile=%_gamesvar/roguelike/rogue54.lck --bindir=%_gamesbindir
 %make_build
 
 %install
@@ -54,6 +54,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 %doc LICENSE.TXT %name.doc %name.html %name.me
 
 %changelog
+* Sat Jul 19 2025 Fr. Br. George <george@altlinux.org> 5.4.4-alt4
+- Build with new internals API
+
 * Thu Feb 07 2019 Fr. Br. George <george@altlinux.ru> 5.4.4-alt3
 - Fix build
 
