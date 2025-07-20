@@ -5,14 +5,13 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel qt5-base-devel lib
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		android-file-transfer
-Version:	4.2
-Release:	alt2
+Version:	4.5
+Release:	alt1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
 URL:		https://github.com/whoozle/android-file-transfer-linux
 Source0:	%{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch:		android-file-transfer-4.2-gcc13.patch
 
 BuildRequires:	libappstream-glib
 BuildRequires:	ccmake cmake ctest
@@ -45,9 +44,6 @@ Features:
 
 %prep
 %setup -q -n %{name}-linux-%{version}
-%patch -p2
-
-subst "s|VERSION 2.8.12|VERSION 3.5|" CMakeLists.txt
 
 %build
 %{mageia_cmake} -GNinja
@@ -78,6 +74,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.5-alt1
+- 4.2 -> 4.5
+- removed android-file-transfer-4.2-gcc13.patch
+
 * Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.2-alt2
 - NMU: fixed FTBFS
 
