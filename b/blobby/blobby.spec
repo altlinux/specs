@@ -1,99 +1,51 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install boost-devel libGLU-devel libglvnd-devel unzip
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global svn_rev 1681
-Name:           blobby
-Version:        1.0
-Release:        alt4_19.svn%{svn_rev}
-Summary:        Volley-ball game
-Group:          Games/Other
-License:        GPLv2+
-URL:            http://blobby.sourceforge.net
-# Version 1 is broken. Upstream suggested I use the svn checkout.
-# svn export -r 1541  svn://svn.code.sf.net/p/blobby/code/trunk blobby-1.0svn1541
-# tar -cvzf blobby-1.0svn1541.tar.gz blobby-1.0svn1541/
-# Source0:        http://downloads.sourceforge.net/%%{name}/%%{name}2-linux-%%{version}.tar.gz
-Source0:        %{name}-%{version}svn%{svn_rev}.tar.gz
-Source1:        blobby.desktop
-Source2:        blobby.appdata.xml
-Patch0:         blobby-vector.patch
-Patch1:         blobby-vector2.patch
-Patch2:         blobby-vector3.patch
-Patch3:         blobby-compile-flags.patch
-Patch4:         blobby-vector4.patch
-Patch5:         blobby-install-api-lua-files.patch
+Name: blobby
+Version: 1.1.1
+Release: alt1
 
-BuildRequires:  gcc-c++
-BuildRequires:  libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake, boost-complete, zip
-BuildRequires:  ImageMagick-tools, desktop-file-utils, icon-theme-hicolor
-BuildRequires:  tinyxml-devel lua-devel
-BuildRequires:  libGL-devel
-Source44: import.info
+Summary: Volley-ball game
+Group: Games/Other
+License: GPLv2+
+
+Url: http://blobbyvolley.de
+VCS: https://github.com/danielknobe/blobbyvolley2
+
+Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: boost-devel libGLU-devel libglvnd-devel unzip
+BuildRequires: gcc-c++
+BuildRequires: libSDL2-devel, libphysfs-devel, zlib-devel ctest cmake, boost-complete, zip
+BuildRequires: ImageMagick-tools, desktop-file-utils, icon-theme-hicolor
+BuildRequires: libGL-devel
 
 %description
 Blobby Volley is one of the most popular freeware games.
 Blobby Volley 2 is the continuation of this lovely game.
 
 %prep
-%setup -q -n %{name}-%{version}svn%{svn_rev}
-%patch0 -p0 -b .orig
-%patch1 -p0 -b .orig2
-%patch2 -p0 -b .orig3
-%patch3 -p0 -b .orig4
-%patch4 -p0 -b .orig5
-%patch5 -p1 -b .orig6
-
-# Remove lua and tinyxml
-rm -rvf src/lua
-rm -rvf src/tinyxml
-sed -ibackup -e "/add_subdirectory(lua)/d" -e "/add_subdirectory(tinyxml)/d" src/CMakeLists.txt
-sed -ibackup 's|tinyxml/||' src/UserConfig.cpp
-sed -ibackup 's|tinyxml/||' src/TextManager.cpp
-sed -ibackup 's|tinyxml/||' src/state/NetworkSearchState.cpp
-sed -ibackup 's|tinyxml/||' src/replays/ReplayRecorder.cpp
-sed -ibackup 's|tinyxml/||' src/replays/ReplayLoader.cpp
-sed -ibackup 's|tinyxml/||' src/FileRead.cpp
-sed -ibackup 's|lua/||' src/FileRead.cpp
-sed -ibackup 's|lua/||' src/GameLogic.cpp
-sed -ibackup 's|lua/||' src/IScriptableComponent.cpp
-sed -ibackup 's|lua/||' src/ScriptedInputSource.cpp
-
-# Updated to SDL2 but still looks for SDL also? Why!
-sed -ibackup '/find_package(SDL REQUIRED)/d' src/CMakeLists.txt
-
-subst "s|VERSION 2.6|VERSION 3.5|" CMakeLists.txt
+%setup
 
 %build
-%{fedora_cmake} -DOpenGL_GL_PREFERENCE=GLVND .
-%make_build
+%cmake -DOpenGL_GL_PREFERENCE=GLVND .
+%cmake_build
 
 %install
-%makeinstall_std
-
-# Icon
-# unzip -o -j data/gfx.zip gfx/ball01.bmp
-convert -size 48x48 -transparent black data/Icon.bmp blobby.png
-install -p -m 644 -D blobby.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/blobby.png
-
-# Desktop file
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
-
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata/
-install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdata.xml
+%cmake_install
 
 %files
-%doc AUTHORS README ChangeLog COPYING TODO
-%{_bindir}/*
-%{_datadir}/blobby
-%{_datadir}/icons/hicolor/48x48/apps/*.png
-%{_datadir}/applications/*.desktop
-%{_datadir}/appdata/%{name}.appdata.xml
+%doc AUTHORS README* ChangeLog COPYING
+%_bindir/*
+%_datadir/applications/%name.desktop
+%_datadir/blobby
+%_datadir/icons/hicolor/*/apps/%name.png
+%_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt1
+- 1.0 -> 1.1.1
+- removed patchs
+- added VCS
+
 * Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt4_19.svn1681
 - NMU: fixed FTBFS
 
