@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.1.0
-Release: alt2
+Release: alt3
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -72,6 +72,10 @@ if [ "%_sysctldir" = "/lib/sysctl.d" ]; then
 	mv %buildroot{%prefix,}%_tmpfilesdir/%name.conf
 fi
 
+# List all using jars by it names to CLASSPATH
+cp="$(find %buildroot%_datadir/%name/lib/ -name \*.jar -maxdepth 1 | sed 's|%buildroot||' | tr '\n' ':' | sed 's/:$//')"
+subst "s|^OPENSEARCH_CLASSPATH=.*$|OPENSEARCH_CLASSPATH='${cp}'|" %buildroot%_datadir/%name/bin/opensearch-env
+
 %pre
 getent group opensearch >/dev/null || /usr/sbin/groupadd -r opensearch
 getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
@@ -81,7 +85,41 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %preun_service %name.service
 
 %post
+# Fix config file for 3.1.0 during upgrade from previous releases
+if grep -q '^18-:-Djava.security.manager=' /etc/opensearch/jvm.options ; then
+	subst '/^18-:-Djava.security.manager=/d' /etc/opensearch/jvm.options
+	subst '/^-Djava.util.concurrent.ForkJoinPool.common.threadFactory=/d' /etc/opensearch/jvm.options ||:
+	echo '21-:-javaagent:agent/opensearch-agent.jar' >> /etc/opensearch/jvm.options
+	echo '#21-:--add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED' >> /etc/opensearch/jvm.options
+fi
+if [ ! -e /usr/share/opensearch/modules/cache-common/plugin-security.policy ]; then
+	mkdir -p /usr/share/opensearch/modules/cache-common/
+	cat > /usr/share/opensearch/modules/cache-common/plugin-security.policy <<EOF.
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * The OpenSearch Contributors require contributions made to
+ * this file be licensed under the Apache-2.0 license or a
+ * compatible open source license.
+ */
+
+grant {
+  permission java.lang.RuntimePermission "accessClassInPackage.sun.misc";
+  permission java.lang.RuntimePermission "createClassLoader";
+};
+EOF.
+fi
+# Prevent use old version of jars
+for i in aggs-matrix-stats-client-2 analysis-common-2 cache-common-2 geo-2 ingest-common-2 ingest-geoip-2 ingest-user-agent-2 lang-expression-2 lang-mustache-client-2 lang-painless-2 mapper-extras-client-2 opensearch-dashboards-2 opensearch-dissect-2 opensearch-grok-2 opensearch-rest-client-2 opensearch-scripting-painless-spi-2 opensearch-ssl-config-2 parent-join-client-2 percolator-client-2 rank-eval-client-2 reindex-client-2 repository-url-2 search-pipeline-common-2 systemd-2 transport-netty4-client-2 geoip2-4.2 jackson-annotations-2.17 jackson-databind-2.17 maxmind-db-3.1 lucene-expressions-9 compiler-0.9.13 netty-buffer-4.1.11 netty-codec-4.1.11 netty-codec-http-4.1.11 netty-common-4.1.11 netty-handler-4.1.11 netty-resolver-4.1.11 netty-transport-4.1.11 netty-transport-native-unix-common-4.1.11 joni-2.2.1 httpclient-4 httpcore-4 jcodings-1.0.58
+do
+	find /usr/share/opensearch/modules -name ${i}\*.jar -exec mv '{}' '{}.old' ';'
+done
+
+# Restart service
 %post_service %name.service
+
+# Restore backup copy of old jars
+find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i//.old}";done
 
 %files
 %doc README.md
@@ -101,6 +139,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jul 19 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt3
+- Fixed upgrade from previous releases.
+
 * Tue Jul 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt2
 - Strictly use java-21-openjdk-headless on upgrade and service run.
 
