@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 2025.5
+%define ver_major 2025.7
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.14
+Version: %ver_major.19
 Release: alt1
 
 Summary: Quick and efficient download manager
@@ -65,13 +65,18 @@ stream downloads.
 %_bindir/%name-py.py
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_iconsdir/hicolor/*/*/%{rdn_name}*.svg
-%_xdgmimedir/packages/io.github.giantpinkrobots.varia.mime.xml
+%_iconsdir/hicolor/*/*/*.svg
+%_iconsdir/io.github.giantpinkrobots.bootqt.png
+%_xdgmimedir/packages/%rdn_name.mime.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sat Jul 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.7.19-alt1
+- 2025.7.19
+
 * Thu May 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.5.14-alt1
 - 2025.5.14
 
