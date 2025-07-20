@@ -1,5 +1,5 @@
 Name: glaze-devel
-Version: 5.4.1
+Version: 5.5.4
 Release: alt1
 License: MIT
 
@@ -38,6 +38,9 @@ interfaces and offering incredible performance.
 %_datadir/glaze/*.cmake
 
 %changelog
+* Thu Jul 17 2025 Kirill Unitsaev <fiersik@altlinux.org> 5.5.4-alt1
+- new version 5.5.4 (with rpmrb script)
+
 * Sat Jun 14 2025 Kirill Unitsaev <fiersik@altlinux.org> 5.4.1-alt1
 - new version 5.4.1 (with rpmrb script)
 
