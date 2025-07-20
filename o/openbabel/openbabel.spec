@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt4.2
+Release: alt4.3
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -137,6 +137,9 @@ sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
 %endif
 
 %changelog
+* Sun Jul 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.1.1-alt4.3
+- NMU: fix watch URL
+
 * Wed Jul 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.1.1-alt4.2
 - NMU: fix FTBFS with cmake 4
 
