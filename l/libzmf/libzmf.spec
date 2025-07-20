@@ -1,7 +1,7 @@
 %global apiversion 0.0
 
 Name: libzmf
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 Summary: A library for import of Zoner document formats
 
@@ -102,5 +102,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}
 %_mandir/man1/zmf2svg.1*
 
 %changelog
+* Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt1
+- 0.0.1 -> 0.0.2
+- fixed FTBFS
+
 * Thu Feb 09 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.0.1-alt1
 - Initial build.
