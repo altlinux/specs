@@ -2,7 +2,7 @@
 %define themename Future-Cyan-Hyprcursor_Theme
 
 Name: hyprcursor-theme-%theme
-Version: 20240718
+Version: 20250317
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -32,5 +32,8 @@ cp %themename/manifest.hl %buildroot%_iconsdir/%themename
 %_iconsdir/%themename/
 
 %changelog
+* Sun Jul 20 2025 Kirill Unitsaev <fiersik@altlinux.org> 20250317-alt1
+- new version 20250317 (with rpmrb script) (ALT bug 55282)
+
 * Mon Aug 05 2024 Kirill Unitsaev <fiersik@altlinux.org> 20240718-alt1
 - Initial build
