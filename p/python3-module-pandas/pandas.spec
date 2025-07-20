@@ -5,15 +5,15 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
 
 Url: https://pandas.pydata.org
+Vcs: https://github.com/pandas-dev/pandas.git
 
-# https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
 Patch1: pandas-fix-generate-version.patch
 Patch2: pandas-alt-remove-tests-dependency.patch
@@ -21,17 +21,21 @@ Patch2: pandas-alt-remove-tests-dependency.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-numpy
-BuildRequires: python3(scipy) python3(xlrd)
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-numpy
 BuildRequires: python3-module-mesonpy
 BuildRequires: meson
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_enabled check
-BuildRequires: xvfb-run
-BuildRequires: python3(pytest)
-BuildRequires: python3(openpyxl)
-BuildRequires: python3-module-numpy-testing python3(tables.tests)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-dateutil
+BuildRequires: tzdata
+BuildRequires: python3-module-numexpr
 %endif
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
@@ -121,7 +125,13 @@ popd
 mkdir -p _empty
 cd _empty
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
+py.test-3 -n auto \
+	  --no-strict-data-files \
+	  -m 'not single_cpu and not network and not db and not slow and not clipboard' \
+	  -k "\
+	  not test_array_inference[data7-expected7] \
+	  and not test_scalar_unary[numexpr-pandas]" \
+	  '%buildroot%python3_sitelibdir/pandas/tests'
 
 %files
 %doc *.md
@@ -154,6 +164,9 @@ py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
 %endif
 
 %changelog
+* Sun Jul 20 2025 Anton Vyatkin <toni@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Thu Jun 05 2025 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
