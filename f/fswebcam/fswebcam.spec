@@ -5,17 +5,17 @@
 Summary: Tiny and flexible webcam program
 Name: fswebcam
 Version: 20170115
-Release: alt1
-License: GPL
+Release: alt1.1
+License: GPL-2
 Group: Video
 
-Source: http://www.firestorm.cx/fswebcam/files/fswebcam-%version.tar.gz
-Patch: fswebcam-20070108-as_need.patch
+Source: fswebcam-%version.tar
 
-Url: http://www.firestorm.cx/fswebcam/
+Url: https://www.sanslogic.co.uk/fswebcam/
+Vcs: https://github.com/fsphil/fswebcam
+
 # Automatically added by buildreq on Mon Oct 29 2007
-BuildRequires: libgd2-devel
-
+BuildRequires: libgd-devel
 
 
 %description
@@ -41,6 +41,10 @@ device, and overlaying a caption or image.
 %_mandir/man1/fswebcam.1.*
 
 %changelog
+* Sun Jul 20 2025 Hihin Ruslan <ruslandh@altlinux.ru> 20170115-alt1.1
+- Fix Buildreq
+- Fix License, Fix Url and Vcs
+
 * Tue Apr 18 2017 Hihin Ruslan <ruslandh@altlinux.ru> 20170115-alt1
 - New version
 
