@@ -2,10 +2,12 @@
 # Written 22-09-2004 <phil@firestorm.cx>
 #
 
+# git  commit 3c0d4ba89ccd371a0f83683216fb179292e328c8
 Summary: Tiny and flexible webcam program
 Name: fswebcam
-Version: 20170115
-Release: alt1.1
+Version: 20200725
+Release: alt1.git_1_3c0d4b
+
 License: GPL-2
 Group: Video
 
@@ -14,8 +16,13 @@ Source: fswebcam-%version.tar
 Url: https://www.sanslogic.co.uk/fswebcam/
 Vcs: https://github.com/fsphil/fswebcam
 
-# Automatically added by buildreq on Mon Oct 29 2007
-BuildRequires: libgd-devel
+
+%def_enable 32bit
+
+
+# Automatically added by buildreq on Sun Jul 20 2025
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl sh5
+BuildRequires: libgd-devel perl-parent
 
 
 %description
@@ -23,17 +30,21 @@ A tiny and flexible webcam program for capturing images from a V4L1/V4L2
 device, and overlaying a caption or image.
 
 %prep
-%setup -q
-#patch0 -p1
+%setup
 
 %build
 %autoreconf
-%configure
+autoupdate
+
+%configure  \
+%if_enabled 32bit
+    --enable-32bit-buffer
+%endif
+
 %make_build
 
 %install
 %makeinstall
-
 
 %files
 %doc README CHANGELOG LICENSE example.conf
@@ -41,6 +52,9 @@ device, and overlaying a caption or image.
 %_mandir/man1/fswebcam.1.*
 
 %changelog
+* Sun Jul 20 2025 Hihin Ruslan <ruslandh@altlinux.ru> 20200725-alt1.git_1_3c0d4b
+- New version
+
 * Sun Jul 20 2025 Hihin Ruslan <ruslandh@altlinux.ru> 20170115-alt1.1
 - Fix Buildreq
 - Fix License, Fix Url and Vcs
@@ -56,7 +70,7 @@ device, and overlaying a caption or image.
 
 * Mon Oct 29 2007 Hihin Ruslan <ruslandh@altlinux.ru> 20070108-alt1
 -- First build for ALT Linux.
- 
+
 * Tue Jan 09 2007 Philip Heron <phil@sanslogic.co.uk> - 20070108-1
 - Updated for latest release.
 
