@@ -22,11 +22,13 @@
 
 %ifarch x86_64
 %def_with cuda
+%def_with optix
 %def_with hiprt
 # oneapi needs dpcpp/sycl compiler
 %def_with oneapi
 %else
 %def_without cuda
+%def_without optix
 %def_without hiprt
 %def_without oneapi
 %endif
@@ -46,6 +48,7 @@
 %def_without openpgl
 %def_without usd
 %def_without oidn
+%def_without materialx
 %endif
 
 %ifarch %e2k
@@ -58,7 +61,7 @@
 
 Name: %{project}4.5
 Version: 4.5.0
-Release: alt0.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -67,7 +70,7 @@ Vcs: https://projects.blender.org/blender/blender.git
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86
 
 # https://projects.blender.org/blender/blender
 Source: %name-%version.tar
@@ -85,7 +88,6 @@ Patch31: blender-alt-osl-shader-dir.patch
 # needed for dynamic clang libs
 Patch32: blender-4.5.0-alt-use-libclang.patch
 Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
-# need to send this to upstream:
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-4.5.0-cycles-fix-hip-kernels.patch
@@ -95,13 +97,10 @@ Patch35: blender-4.5.0-alt-cycles-restore-vega.patch
 Patch36: blender-4.4-system-draco.patch
 Patch37: blender-4.4-alt-hiprt-2.5.patch
 Patch38: blender-4.4-alt-hiprt-optflags.patch
-# revert upstream 2bab4ae370e524c3bc0373d90cd3f6eaa57c46eb commit
-# as ARL doesn't support bindless textures
-#Patch39: blender-4.4-oneapi-no-bindless-textures.patch
 Patch41: blender-4.5.0-oneapi-add-arl.patch
-#Patch42: blender-4.4-oneapi-sycl-cmath.patch
 Patch43: blender-4.5.0-alt-numpy-inc.patch
 Patch44: blender-4.5.0-fix-system-manifold.patch
+Patch45: blender-alt-optix-inc.patch
 
 # e2k and loongarch64 are broken now
 #Patch2000: blender-e2k-support.patch
@@ -183,6 +182,10 @@ BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %set_verify_elf_skiplist %_datadir/%project/*/%kern_dir/*.cubin
+%endif
+
+%if_with optix
+BuildRequires: optix-devel
 %endif
 
 %if_with oidn
@@ -327,7 +330,7 @@ Conflicts: %project-cycles-cuda-kernels
 Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
-This package contains binaries for Nvidia GPUs to use with CUDA.
+This package contains binaries for Nvidia GPUs to use with CUDA/OptiX.
 %endif
 
 %prep
@@ -337,7 +340,6 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
-#%%patch25 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
@@ -358,11 +360,10 @@ EOF
 %patch37 -p1
 %patch38 -p1
 %endif
-#%%patch39 -p1
 %patch41 -p1
-#%%patch42 -p1
 %patch43 -p1
 %patch44 -p1
+%patch45 -p1 -b .optix-inc
 
 %ifarch %e2k
 #%%patch2000 -p1
@@ -402,6 +403,9 @@ export ALTWRAP_LLVM_VERSION=rocm
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
 %endif #cuda
+%if_with optix
+	-DWITH_CYCLES_DEVICE_OPTIX:BOOL=ON \
+%endif #optix
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
 	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
@@ -415,6 +419,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DWITH_CYCLES_DEVICE_ONEAPI:BOOL=ON \
 	-DWITH_CYCLES_ONEAPI_BINARIES:BOOL=ON \
 	-DOCLOC_INSTALL_DIR=%prefix \
+	-DSYCL_OFFLINE_COMPILER_PARALLEL_JOB=2 \
 %endif #oneapi
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
@@ -507,6 +512,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %exclude %_datadir/%project/*/%kern_dir/kernel_compute*.ptx*
 %exclude %_datadir/%project/*/%kern_dir/kernel_sm_*.cubin*
 %endif
+%if_with optix
+%exclude %_datadir/%project/*/%kern_dir/kernel_optix*.ptx*
+%endif
 %if_with oneapi
 %_libdir/libcycles_kernel_oneapi_aot.so*
 %endif
@@ -528,6 +536,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %files cycles-nvidia-kernels
 %_datadir/%project/*/%kern_dir/kernel_compute*.ptx*
 %_datadir/%project/*/%kern_dir/kernel_sm_*.cubin*
+%if_with optix
+%_datadir/%project/*/%kern_dir/kernel_optix*.ptx*
+%endif
 %endif
 
 %if_with docs
@@ -536,6 +547,10 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.0-alt1
+- x86_64: enable OptiX support.
+- build: increase oneapi parallel compile jobs (8Gb per job = 16Gb).
+
 * Fri Jul 18 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.0-alt0.1
 - 4.5.0.
 - oneapi: disable ARL quirks.
