@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.29.5
-Release: alt2
+Version: 6.30.0
+Release: alt1
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -15,8 +15,6 @@ Url: https://pypi.org/project/ipykernel/
 VCS: https://github.com/ipython/ipykernel.git
 
 Source: %name-%version.tar
-Patch: ipykernel-6.29.4-pytest8-fix.patch
-Patch1: ipykernel-6.29.5-ipython3v9.0.1-fix.patch
 
 BuildArch: noarch
 
@@ -60,8 +58,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 
 sed -i 's/--color=yes//' pyproject.toml
 
@@ -93,6 +89,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Jul 21 2025 Anton Vyatkin <toni@altlinux.org> 6.30.0-alt1
+- New version 6.30.0.
+
 * Sat Mar 08 2025 Anton Vyatkin <toni@altlinux.org> 6.29.5-alt2
 - Fixed FTBFS.
 
