@@ -1,8 +1,8 @@
-%set_automake_version 1.11
+%set_automake_version 1.16
 
 Name: libtiger
 Version: 0.3.4
-Release: alt1.qa2
+Release: alt2
 Summary: rendering library for Kate streams
 Group: System/Libraries
 License: LGPLv2+
@@ -10,7 +10,8 @@ URL: http://www.xiph.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: libtiger-0.3.4-fix-autoreconf.patch
 
 BuildRequires: libkate-devel libpango-devel
 
@@ -28,7 +29,8 @@ needed to develop applications with Tiger
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -49,6 +51,10 @@ needed to develop applications with Tiger
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.4-alt2
+- fixed FTBFS
+- added Gentoo patch for fix autoreconf
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.qa2
 - Fixed build
 
