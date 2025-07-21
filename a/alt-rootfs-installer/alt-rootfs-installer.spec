@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -40,6 +40,11 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Mon Jul 21 2025 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1
+- Add install grub-efi
+- socs.d/SiFive-riscv64.sh: fix override variable
+- Update supported boards for u-boot-rockhip 2025.07
+
 * Thu Jun 19 2025 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
 - New version 0.7.0
 - Add --extra-options
