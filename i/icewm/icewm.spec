@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.7.5
+Version: 3.8.1
 Release: alt1
 Epoch:3
 
@@ -181,6 +181,12 @@ fi
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sun Jul 20 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.8.1-alt1
+- 3.8.1
+
+* Wed Jun 25 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.8.0-alt1
+- 3.8.0
+
 * Mon Jun 02 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.5-alt1
 - 3.7.5
 
