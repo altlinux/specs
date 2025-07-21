@@ -2,13 +2,13 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
 License: GPLv3+
 Group: Other
-URL: https://gitlab.basealt.space/alt/alterator-entry
+URL: https://altlinux.space/alterator/alterator-entry
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -69,6 +69,9 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Jul 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.2-alt1
+- Add support for reading key names for tables in get_field()
+
 * Tue Jun 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.4.1-alt1
 - Add tags for components and editions
 
