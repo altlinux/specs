@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt6platform-plugins
-Version: 6.0.37
+Version: 6.0.39
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -64,6 +64,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.39-alt1
+- New version 6.0.39.
+
 * Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
 - New version 6.0.37.
 
