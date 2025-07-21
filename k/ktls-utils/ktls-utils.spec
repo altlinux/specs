@@ -1,5 +1,5 @@
 Name: ktls-utils
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: TLS handshake utilities for in-kernel TLS consumers
@@ -44,6 +44,9 @@ parameters are passed back to the kernel via standard kTLS socket options.
 %_man8dir/tlshd.8*
 
 %changelog
+* Mon Jul 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.1-alt1
+- 1.2.1 released
+
 * Mon Jul 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
 - 1.2.0 released
 
