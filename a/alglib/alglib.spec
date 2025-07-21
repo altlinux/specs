@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 
 Name:           alglib
 Version:        4.01.0
-Release:        alt1_1
+Release:        alt2
 Summary:        A numerical analysis and data processing library
 Group:          System/Libraries
 License:        GPLv2+
@@ -101,7 +101,7 @@ sed -i 's|\r||g' manual.cpp.html
 export CXXFLAGS="%{optflags} -ffp-contract=off"
 export CFLAGS="%{optflags} -ffp-contract=off"
 %endif
-%{mageia_cmake}
+%{mageia_cmake} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %mageia_cmake_build
 
 
@@ -138,6 +138,9 @@ popd
 
 
 %changelog
+* Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.01.0-alt2
+- fixed FTBFS
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 4.01.0-alt1_1
 - update by mgaimport
 
