@@ -1,6 +1,6 @@
 Name: libsocket
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: The ultimate socket library, supporting TCP, UDP and Unix sockets (DGRAM and STREAM)
 License: BSD-2-Clause
@@ -8,7 +8,8 @@ Group: System/Libraries
 
 Url: https://github.com/dermesser/libsocket
 Vcs: https://github.com/dermesser/libsocket
-Source: libsocket-2.5.0.tar
+
+Source: %name-%version.tar
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -22,7 +23,7 @@ features: IPv4/IPv6 multicast support (C/C++) +++ Linux epoll wrapper
 %package devel
 Summary: Development files of libsocket
 Group: Development/C++
-Requires: libsocket = 2.5.0-alt1
+Requires: libsocket = %EVR
 BuildArch: noarch
 
 %description devel
@@ -53,6 +54,9 @@ subst 's|"lib"|"%_libdir"|' CMakeLists.txt
 %_includedir/*
 
 %changelog
+* Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt2
+- spec a little corrected
+
 * Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt1
 - returned package
 - change license
