@@ -1,5 +1,5 @@
 Name: radicle
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
@@ -43,10 +43,10 @@ tar xf %SOURCE1
 %endif
 
 %install
-export GIT_HEAD=6f25d73d
+export GIT_HEAD=29043134
 export CARGO_HOME=${PWD}/cargo
 for p in cli node remote-helper; do
-cargo install %_smp_mflags --offline --no-track --path radicle-$p --root=%buildroot%_prefix
+cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
 
 mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
@@ -76,6 +76,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Mon Jul 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.1-alt1
+- 1.2.1 released
+
 * Tue Jun 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2-alt1
 - 1.2 released
 
