@@ -12,7 +12,7 @@
 
 Name: mono
 Version: 6.12.0.206
-Release: alt1
+Release: alt2
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -1407,6 +1407,9 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Jul 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.12.0.206-alt2
+- NMU: fix FTBFS with cmake 4.
+
 * Fri Nov 22 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.206-alt1
 - Updated to upstream version 6.12.0.206.
 
