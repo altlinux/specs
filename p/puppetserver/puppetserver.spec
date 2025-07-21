@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    8.4.0
-Release:    alt2
+Release:    alt3
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -123,6 +123,7 @@ install -m 0755 ext/cli/cli-defaults.sh %buildroot%_datadir/%name/cli/
 install -d -m 0755 %buildroot%_var/run/%name
 install -d -m 0700 %buildroot%_var/log/%name
 install -d -m 0700 %buildroot%_localstatedir/%name/jars
+install -d -m 0700 %buildroot%_localstatedir/%name/tmp
 
 install -Dpm 0644 ext/default %buildroot%_sysconfdir/sysconfig/%name
 
@@ -168,6 +169,8 @@ chown puppet:puppet /var/run/puppetserver
 chmod 0755 /var/run/puppetserver
 chown puppet:puppet /var/lib/puppetserver/jars
 chmod 0700 /var/lib/puppetserver/jars
+chown puppet:puppet /var/lib/puppetserver/tmp
+chmod 0700 /var/lib/puppetserver/tmp
 
 if [ -d /var/log/puppetlabs/puppetserver ]; then
    find /var/log/puppetlabs/puppetserver/ -name \*.log | while read -r f; do sed "s|/var/log/puppetlabs|/var/log|" -i "$f"; done
@@ -189,6 +192,9 @@ fi
 %_sysconfdir/init.d/%name
 
 %changelog
+* Mon Jul 21 2025 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt3
+- ! fixed default values to run of puppetserver in lack of memory in tmp folder
+
 * Wed Dec 04 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt2
 - ! fixed start for the puppetserver service (closes #51594)
 - ![PATCH] fixed paths to puppet counter file
