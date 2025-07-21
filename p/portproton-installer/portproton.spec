@@ -9,8 +9,8 @@ AutoProv: no
 %define i586_req_l3 libvulkan.so.1 libvulkan_intel.so libvulkan_radeon.so libvulkan_lvp.so
 
 Name: portproton-installer
-Version: 1.7.1
-Release: alt4
+Version: 1.7.3
+Release: alt1
 
 Summary: Installer for PortProton
 
@@ -25,7 +25,7 @@ Requires: curl xdg-utils desktop-file-utils yad jq
 Requires: libvulkan1 vulkan-tools libGL fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
 Requires: xorg-dri-intel xorg-dri-radeon xorg-dri-swrast libvdpau
-Requires: /usr/bin/exiftool /usr/bin/icoextract
+Requires: /usr/bin/exiftool
 
 ExclusiveArch: i586
 
@@ -59,6 +59,10 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Jul 21 2025 Mikhail Tergoev <fidel@altlinux.org> 1.7.3-alt1
+- updated to 1.7.3
+- dropped requires: /usr/bin/icoextract
+
 * Tue May 27 2025 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt4
 - dropped requires: gamemode and libd3d (ALT bug: 52427)
 
