@@ -6,8 +6,8 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.32
-Release: alt2
+Version: 6.1.38
+Release: alt1
 
 Summary: New control center for Linux Deepin
 
@@ -26,7 +26,7 @@ Patch2: deepin-control-center-6.1.32-alt-fixes-underlinked-libs.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-qt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel libgsettings-qt-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-qt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -59,16 +59,9 @@ This package provides development files for %name.
 sed -e '/add_subdirectory(src\/plugin-privacy)/d;' \
     -e '/add_subdirectory(src\/plugin-deepinid)/d;' \
     -i CMakeLists.txt
-# fix bad_elf_symbols
-sed -e '/add_subdirectory(src\/plugin-bluetooth)/d;' \
-    -i CMakeLists.txt
-sed -e '/QDebug &operator<<(QDebug dbg, const MetaData &md)/d;' \
-    -i src/plugin-datetime/operation/keyboard/metadata.h
-sed -e '/Q_INVOKABLE QString getListName(int index) const;/d;' \
-    -i src/plugin-sound/operation/soundmodel.h
 
 %build
-export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtXkbCommonSupport/%{_dqt6_version}:%_includedir/qt6:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtXkbCommonSupport/%{_dqt6_version}:$CPLUS_INCLUDE_PATH
 export SYSTYPE=Desktop
 %if_enabled clang
 export CC="clang"
@@ -89,7 +82,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/dock/dock.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/display/display.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/notification/notification.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-#patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/blueTooth/blueTooth.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/blueTooth/blueTooth.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/wacom/wacom.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/datetime/datetime.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/touchscreen/touchscreen.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
@@ -101,7 +94,6 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/mouse/mouse.so --shr
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/power/power.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/defaultapp/defaultapp.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/sound/sound.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/authentication/authentication.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-center-plugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 
@@ -150,6 +142,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.38-alt1
+- New version 6.1.38.
+
 * Thu Jun 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.32-alt2
 - Fixed underlinked accounts plugin.
 
