@@ -1,13 +1,13 @@
 
 Name: pve-enable
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Enable and start all PVE services
 License: GPL-2.0
 Group: Development/Other
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Requires: pve-manager
 
@@ -31,6 +31,9 @@ systemctl start $service_list_start ||:
 %files
 
 %changelog
+* Mon Jul 21 2025 Ivan A. Melnikov <iv@altlinux.org> 0.1-alt2
+- NMU: build on loongarch64
+
 * Sat Jun 17 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.1-alt1
 - initial release for ALT
 
