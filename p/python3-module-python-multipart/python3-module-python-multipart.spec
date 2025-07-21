@@ -6,13 +6,13 @@
 
 Name: python3-module-%pypi_name
 Version: 0.0.20
-Release: alt1
+Release: alt2
 
 Summary: A streaming multipart parser for Python
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/python-multipart/
-Vcs: https://github.com/andrew-d/python-multipart
+Vcs: https://github.com/Kludex/python-multipart
 
 BuildArch: noarch
 
@@ -21,8 +21,7 @@ Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
 # see https://bugzilla.altlinux.org/43483 for more information
-%filter_from_provides /python.*/d
-Conflicts: python3-module-multipart
+AutoProv: nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,18 +45,22 @@ python-multipart is an Apache2 licensed streaming multipart parser for Python.
 %install
 %pyproject_install
 
+# To avoid conflict with python3-module-multipart
+rm -r %buildroot%python3_sitelibdir/multipart/
+
 %check
 %pyproject_run_pytest -vra
 
 %files
 %doc README.md LICENSE.txt
 %python3_sitelibdir/%mod_name/
-# Packs mod directory for alternate scheme for importing multipart,
-# which is a wrap for python_multipart
-%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.20-alt2
+- Removed 'multipart' import name to avoid conflict with 'multipart' package.
+- Actualized upstream VCS location.
+
 * Mon Dec 23 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.20-alt1
 - Updated to 0.0.20.
 

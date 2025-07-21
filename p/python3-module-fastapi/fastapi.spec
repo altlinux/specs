@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.116.1
-Release: alt2
+Release: alt3
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -39,7 +39,7 @@ BuildRequires: python3-module-pytest-timeout
 
 %description
 FastAPI is a modern, fast (high-performance), web framework for
-building APIs with Python 3.8+ based on standard Python type hints.
+building APIs with Python based on standard Python type hints.
 
 The key features are:
 - Fast: Very high performance, on par with NodeJS and Go (thanks to
@@ -78,7 +78,14 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %check
 # Clean of the using coverage module, because we don't needs to it.
 %SOURCE2 tests/
-%pyproject_run_pytest -vvv -Wignore --timeout=300 tests
+%pyproject_run -- bash -s <<-'ENDTESTS'
+# Create symbolic link to python_multipart in order to make 'multipart' import
+# name for passing tests since it was deleted in the python3-module-multipart
+# 0.0.20-alt2.
+ln -s %python3_sitelibdir/python_multipart \
+	.run_venv/lib/python3/site-packages/multipart
+python3 -m pytest -vvv -Wignore --timeout=300 tests
+ENDTESTS
 
 %files
 %doc README.*
@@ -89,6 +96,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 21 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.1-alt3
+- Built with python3-module-python-multipart 0.0.20-alt2.
+
 * Mon Jul 14 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.1-alt2
 - Built with httpx 0.28.0 compatibility.
 
