@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.11
+%define major 10.12
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -924,8 +924,11 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.12.1-alt1
+- new version 10.12
+
 * Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.11.1-alt1
-- new version 10.11 (with rpmrb script)
+- new version 10.11
 
 * Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.10.1-alt1
 - new version (10.10) with rpmgs script
