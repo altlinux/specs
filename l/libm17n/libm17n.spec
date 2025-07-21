@@ -1,12 +1,12 @@
 %define oname m17n-lib
 Name: libm17n
-Version: 1.8.0
+Version: 1.8.6
 Release: alt1
 
 Summary: Multilingual text processing library
 
 Group: Text tools
-License: LGPL
+License: LGPL-2.0-or-later
 Url: http://www.nongnu.org/m17n/
 
 # repacked http://download.savannah.gnu.org/releases/m17n/m17n-lib-%version.tar.gz
@@ -83,6 +83,11 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.8.6-alt1
+- 1.8.0 -> 1.8.6
+- fixed FTBFS
+- change license
+
 * Mon Jul 30 2018 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
 - 1.8.0
 - libm17n-devel: didn't package m17n-config because we have pkg-config
