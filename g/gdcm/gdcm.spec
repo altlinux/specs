@@ -19,7 +19,7 @@
 %define libgdcm_vtk libgdcmvtk%{vtk_version}_%vtk_soname
 
 Name: gdcm
-Version: 3.0.25
+Version: 3.0.26
 Release: alt1
 
 Summary: Cross-platform DICOM implementation
@@ -37,6 +37,7 @@ BuildRequires(pre): rpm-build-java
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-vtk
+BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: docbook5-style-xsl
@@ -224,6 +225,7 @@ compile applications based on gdcm.
 %package examples
 Summary: CSharp, C++, Java, PHP and Python example programs for GDCM
 Group: Development/Other
+BuildArch: noarch
 
 %description examples
 GDCM examples
@@ -264,14 +266,13 @@ rm -rf \
   -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
   -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-  -DDOCUMENTATION_DOWNLOAD_VTK_TAGFILE:BOOL=OFF \
   -DEXPAT_LIBRARY:FILEPATH=%_libdir/libexpat.so \
   -DGDCM_BUILD_APPLICATIONS:BOOL=ON \
   -DGDCM_BUILD_DOCBOOK_MANPAGES:BOOL=ON \
   -DGDCM_BUILD_EXAMPLES:BOOL=OFF \
   -DGDCM_BUILD_SHARED_LIBS:BOOL=ON \
   -DGDCM_BUILD_TESTING:BOOL=ON \
-  -DGDCM_DATA_ROOT:PATH=../gdcmData \
+  -DGDCM_DATA_ROOT:PATH=$PWD/gdcmData \
   -DGDCM_DOCUMENTATION:BOOL=ON \
   -DGDCM_DOXYGEN_NO_FOOTER:BOOL=ON \
   -DGDCM_INSTALL_DOC_DIR:PATH=%_docdir/gdcm \
@@ -281,7 +282,6 @@ rm -rf \
   -DGDCM_INSTALL_PACKAGE_DIR:PATH=%_lib/cmake/gdcm \
   -DGDCM_INSTALL_PYTHONMODULE_DIR:STRING=%_lib/python3/site-packages \
   -DGDCM_NO_PYTHON_LIBS_LINKING:BOOL=ON \
-  -DGDCM_NO_VTKJAVA_LIBS_LINKING:BOOL=ON \
   -DGDCM_PDF_DOCUMENTATION:BOOL=OFF \
   -DGDCM_USE_JPEGLS:BOOL=ON \
   -DGDCM_USE_PARAVIEW:BOOL=OFF \
@@ -301,7 +301,6 @@ rm -rf \
   -DGDCM_WRAP_JAVA:BOOL=OFF \
   -DGDCM_WRAP_PHP:BOOL=OFF \
   -DGDCM_WRAP_PYTHON:BOOL=ON \
-  -DJAVA_HOME:PATH=%_jvmdir/java \
   -DPYTHON_EXECUTABLE:PATH=%_bindir/python3 \
   -DPYTHON_VERSION_MAJOR=3 \
   -DVTKGDCM_WRAP_JAVA:BOOL=OFF \
@@ -323,11 +322,12 @@ install -Dm 644 Utilities/gdcm_zlib.h \
 cp -rv Examples/* %buildroot%_datadir/%name/Examples
 
 %check
-export LD_LIBRARY_PATH="%buildroot%_libdir"
+export LD_LIBRARY_PATH="%buildroot%_libdir:$PWD/%_arch-alt-linux/bin"
 export PYTHONPATH="%buildroot%python3_sitelibdir"
 %ctest ||:
 
 %files
+%nil
 
 %files -n %libgdcm_common
 %doc AUTHORS README.md
@@ -393,6 +393,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Mon Jul 21 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.26-alt1
+- New version.
+
 * Fri Mar 07 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.25-alt1
 - Rebuild with vtk macros.
 - New version.
