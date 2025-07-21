@@ -1,7 +1,7 @@
 %define goipath github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 6.0.19
+Version: 6.0.21
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -20,8 +20,8 @@ Patch: %name-%version-%release.patch
 #Requires(pre): shadow-utils dbus-tools
 
 BuildRequires(pre): rpm-build-golang rpm-build-python3
+BuildRequires: libgtk+3-devel glib2-devel libgio-devel libgdk-pixbuf-xlib-devel libXcursor-devel libpoppler-glib-devel librsvg-devel libXfixes-devel libalsa-devel libpulseaudio-devel libgudev-devel libXi-devel deepin-gettext-tools
 BuildRequires: /proc
-BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools libgdk-pixbuf-xlib-devel
 
 %description
 %summary.
@@ -77,6 +77,9 @@ install -Dm644 archlinux/deepin-api.sysusers %buildroot%_sysusersdir/deepin-api.
 %go_path/src/%goipath
 
 %changelog
+* Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.21-alt1
+- New version 6.0.21.
+
 * Tue Jul 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 
