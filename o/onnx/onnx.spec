@@ -4,10 +4,10 @@
 
 %def_with check
 
-%define soversion 1
+%define abiversion 1
 Name: onnx
 Version: 1.18.0
-Release: alt1
+Release: alt2
 
 Summary: Open standard for machine learning interoperability
 License: Apache-2.0
@@ -42,23 +42,23 @@ BuildRequires: python3-module-numpy-testing
 %description
 %summary.
 
-%package -n lib%name%soversion
-Summary: %{summary onnx} (shared libraries)
+%package -n lib%name%abiversion
+Summary: Shared libraries for %name
 Group: System/Libraries
 
-%description -n lib%name%soversion
-%{description %name}.
+%description -n lib%name%abiversion
+%summary.
 
 %package -n lib%name-devel
-Summary: Headers files and library symbolic links for %name
-Group: Development/C
-Requires: lib%name%soversion = %EVR
+Summary: Development files for %name
+Group: Development/C++
+Requires: lib%name%abiversion = %EVR
 
 %description -n lib%name-devel
-%{description %name}.
+%summary.
 
 %package -n python3-module-%pypi_name
-Summary: %{summary onnx} (python package)
+Summary: Python module for %name
 Group: Development/Python3
 # Python3 dependencies generator can't find the following providements
 # and we need to set them explicitly:
@@ -87,7 +87,6 @@ Provides: python3(onnx.onnx_cpp2py_export.version_converter)
     -DBUILD_SHARED_LIBS=1 \
     -DONNX_USE_PROTOBUF_SHARED_LIBS=1
 %cmake_build
-
 %pyproject_build
 
 %install
@@ -99,10 +98,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 cd %buildroot%python3_sitelibdir
 python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 
-%files -n lib%name%soversion
+%files -n lib%name%abiversion
 %doc LICENSE README.md
-%_libdir/libonnx.so.%{soversion}*
-%_libdir/libonnx_proto.so.%{soversion}*
+%_libdir/libonnx.so.%abiversion
+%_libdir/libonnx.so.%abiversion.*
+%_libdir/libonnx_proto.so.%abiversion
+%_libdir/libonnx_proto.so.%abiversion.*
 
 %files -n lib%name-devel
 %_libdir/libonnx.so
@@ -117,5 +118,8 @@ python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 21 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt2
+- Fixed RPM-packages summaries and descriptions.
+
 * Fri Jul 18 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
 - Packaged for ALT Sisyphus.
