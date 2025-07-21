@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.4.3
-Release: alt1
+Release: alt2
 #Epoch: 2
 %K6init
 
@@ -29,6 +29,9 @@ Source2: kcheckpass.tar
 Source10: pam-kde6-screenlocker
 Source11: pam-kde6-fingerprint
 Source12: pam-kde6-smartcard
+#
+Source20: po-ru-add-kscreenlocker_greet.po
+
 Patch1: alt-def-screenlocker.patch
 %if_enabled kcheckpass
 Patch2: alt-pam-support.patch
@@ -105,6 +108,10 @@ mv kcheckpass/config-unix.h.cmake ./
 mkdir bin_fake
 ln -s /bin/true bin_fake/loginctl
 
+msgcat --use-first %SOURCE20 po/ru/kscreenlocker_greet.po > po/ru/kscreenlocker_greet.po.tmp
+cat po/ru/kscreenlocker_greet.po.tmp > po/ru/kscreenlocker_greet.po
+rm -f po/ru/kscreenlocker_greet.po.tmp
+
 %build
 export PATH=$PWD/bin_fake:$PATH
 %K6build \
@@ -159,6 +166,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
+- fix russian translation
+
 * Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
 - new version
 
