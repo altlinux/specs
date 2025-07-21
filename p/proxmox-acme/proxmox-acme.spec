@@ -1,33 +1,36 @@
-Name: pve-acme
-Summary: PVE ACME integration perl library
-Version: 1.5.1
-Release: alt2
-License: GPLv3
+Name: proxmox-acme
+Summary: Proxmox ACME integration perl library
+Version: 1.7.0
+Release: alt1
+License: AGPL-3.0-or-later and GPL-3.0
 Group: Development/Perl
 Url: https://git.proxmox.com/
+Vcs: git://git.proxmox.com/git/proxmox-acme.git
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires: pve-common python3 perl(Date/Parse.pm) perl(JSON.pm) perl(HTTP/Daemon.pm)
 
-Source: pve-acme.tar.xz
-# Patch1: pve-acme-rm-openstack.patch
-Patch2: pve-acme-nogroup.patch
+Source: %name-%version.tar
+Source2: acme.sh.tar
+#Patch: %%name-%%version.patch
 
 Requires: curl
-
 Conflicts: pve-manager < 7.0.11-alt1
+Provides: pve-acme = %EVR
+Obsoletes: pve-acme < 1.7.0
 
 %description
-Used in perl-based PVE project as common interface for DNS and HTTP ACME challenges
+Used in perl-based Proxmox project as common interface for DNS and HTTP ACME
+challenges.
 
 #%%add_findreq_skiplist %%perl_vendor_privlib/PVE/ACME.pm
 #%%add_findreq_skiplist %%perl_vendor_privlib/PVE/ACME/DNSChallenge.pm
 %add_findreq_skiplist %_datadir/proxmox-acme/**/*
 
 %prep
-%setup -q -n %name
-# %%patch1 -p1 -b .rm-openstack
-%patch2 -p1
+%setup
+tar -xf %SOURCE2 -C src/acme.sh --strip-components 1
+#%%patch -p1
 
 %install
 %make DESTDIR=%buildroot -C src install
@@ -39,6 +42,10 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Mon Jul 21 2025 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- Rename package pve-acme -> proxmox-acme
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt2
 - NMU: build on loongarch64
 
