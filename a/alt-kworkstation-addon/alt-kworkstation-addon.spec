@@ -1,6 +1,6 @@
 
 Name: alt-kworkstation-addon
-Version: 11.0.1
+Version: 11.1.0
 Release: alt1
 
 Group: System/Configuration/Other
@@ -8,20 +8,20 @@ Summary: Additional requires for ALT Workstation K
 Url: http://www.altlinux.org/
 License: GPL-2.0-or-later
 
-Requires: theme-kworkstation
-
 BuildArch: noarch
 
-#BuildRequires(pre): rpm-build-ubt
+Requires: theme-kworkstation
+Requires: polkit-rule-packagekit-allow-install
 
 %description
 %{summary}.
 
-%prep
-
 %files
 
 %changelog
+* Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 11.1.0-alt1
+- require polkit-rule-packagekit-allow-install
+
 * Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 11.0.1-alt1
 - update requires
 
