@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.4.2
+Version: 4.5
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -83,6 +83,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5-alt1
+- new version 4.5 (with rpmrb script)
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
 - new version 4.4.2 (with rpmrb script)
 - set license LicenseRef-Callaway-BSD

@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 4.4.2
+Version: 4.5
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -115,6 +115,9 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5-alt1
+- new version 4.5 (with rpmrb script)
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
 - new version 4.4.2 (with rpmrb script)
 - switch to gtk3, qt6
