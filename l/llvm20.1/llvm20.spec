@@ -8,7 +8,7 @@
 
 %global v_major 20
 %global v_majmin %v_major.1
-%global v_full %v_majmin.7
+%global v_full %v_majmin.8
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.3
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1490,6 +1490,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.8-alt0.1
+- Update to 20.1.8.
+
 * Thu Jul 10 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.7-alt0.3
 - clang: remove gcc-c++ from requires (as it breaks libcxx
   aware apps like chromium).
