@@ -5,7 +5,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.30
+Version: 1.0.33
 Release: alt1
 Summary: Fast Stringprep implementation for Erlang / Elixir
 Group: Development/Erlang
@@ -52,6 +52,9 @@ The library includes support for several Stringprep profiles used in XMPP protoc
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Jul 21 2025 Egor Ignatov <egori@altlinux.org> 1.0.33-alt1
+- New version 1.0.33.
+
 * Mon Sep 23 2024 Egor Ignatov <egori@altlinux.org> 1.0.30-alt1
 - Updated to upstream version 1.0.30.
 
