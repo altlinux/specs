@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt4
+Release:   alt5
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -107,6 +107,14 @@ Requires: %name = %EVR
 
 %description -n python3-module-%name
 Python3 backend for PackageKit.
+
+%package -n polkit-rule-packagekit-allow-install
+Summary: Polkit rule to allow users from wheel to install any packages by packagekit
+Group: Other
+BuildArch: noarch
+
+%description -n polkit-rule-packagekit-allow-install
+%summary
 
 %prep
 %setup
@@ -242,7 +250,6 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_man1dir/pkcon.1*
 %_man1dir/pkmon.1*
 %_datadir/polkit-1/actions/*.policy
-%_datadir/polkit-1/rules.d/*
 %_datadir/bash-completion/completions/pkcon
 %_libexecdir/packagekitd
 %_libexecdir/packagekit-direct
@@ -298,6 +305,8 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/*
 
+%files -n polkit-rule-packagekit-allow-install
+%_datadir/polkit-1/rules.d/org.freedesktop.packagekit.rules
 
 %package checkinstall
 Summary: Immediately test PK when installing this package
@@ -312,6 +321,10 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Jul 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt5
+- Move the polkit rule to a separate package that allows users in the wheel
+  group to install any packages.
+
 * Thu May 29 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt4
 - Fixed compilation with older glib (for p10).
 
