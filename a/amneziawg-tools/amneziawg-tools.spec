@@ -1,5 +1,5 @@
 Name: amneziawg-tools
-Version: 1.0.20241018
+Version: 1.0.20250706
 Release: alt1
 Summary: Fast, modern, secure VPN tunnel
 License: GPLv2
@@ -43,6 +43,7 @@ and interacting with AmneziaWG
 %doc README.md contrib
 %_bindir/awg
 %_bindir/awg-quick
+%dir %_sysconfdir/amnezia
 %_sysconfdir/amnezia/amneziawg/
 %_datadir/bash-completion/completions/awg
 %_datadir/bash-completion/completions/awg-quick
@@ -52,5 +53,8 @@ and interacting with AmneziaWG
 %_mandir/man8/awg-quick.8*
 
 %changelog
+* Mon Jul 21 2025 Anton Farygin <rider@altlinux.com> 1.0.20250706-alt1
+- 1.0.20241018 -> 1.0.20250706
+
 * Fri Mar 21 2025 Anton Farygin <rider@altlinux.com> 1.0.20241018-alt1
 - initial build for ALT, based on the specfile from upstream git
