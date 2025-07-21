@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.4
+Version: 6.5.12
 Release: alt1
 Epoch: 1
 
@@ -91,6 +91,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.12-alt1
+- New version 6.5.12.
+
 * Thu Apr 24 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.4-alt1
 - New version 6.5.4.
 - Switched to dqt6.
