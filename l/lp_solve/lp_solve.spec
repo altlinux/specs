@@ -8,10 +8,10 @@
 
 Name: lp_solve
 Version: %lp_branch.%lp_subver
-Release: alt1
+Release: alt2
 
 Summary: Tool that solves linear programming problem
-License: LGPL
+License: LGPLv2+
 Group: Sciences/Mathematics
 
 Url: http://sourceforge.net/projects/lpsolve
@@ -91,6 +91,9 @@ ln -s %name %buildroot%_includedir/%origname
 %endif
 
 %changelog
+* Mon Jul 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.5.2.5-alt2
+- NMU: fix FTBFS with gcc14.
+
 * Tue Jan 17 2017 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.5.2.5-alt1
 - Updated to 5.5.2.5.
 
