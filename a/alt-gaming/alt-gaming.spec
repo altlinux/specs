@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -20,6 +20,7 @@ BuildArch: noarch
 
 Requires: %name-check
 Requires: %name-esync
+Requires: %name-ntsync
 Requires: %name-mm-count
 Requires: %name-clearcpuid514
 Requires: %name-tcp-mtu-probing
@@ -34,6 +35,13 @@ Group: System/Configuration/Other
 Summary: Enable esync support.
 %description esync
 Enable esync support. Improves productivity many games that use wine,
+especially those that are heavily depend on multithreading.
+
+%package ntsync
+Group: System/Configuration/Other
+Summary: Enable ntsync support.
+%description ntsync
+Enable ntsync support for kernel 6.14+. Improves productivity many games that use wine,
 especially those that are heavily depend on multithreading.
 
 %package mm-count
@@ -86,6 +94,7 @@ which is faster. Lower values lessen swap usage which usually speeds things up.
 %install
 pushd settings
 install -D -m 644 95-esync.conf %buildroot%limitsdir/95-esync.conf
+install -D -m 644 ntsync.conf %buildroot%_sysconfdir/modules-load.d/ntsync.conf
 install -D -m 644 95-vm.max_map_count.conf %buildroot%sysctldir/95-vm.max_map_count.conf
 install -D -m 644 95-tcp_mtu_probing.conf %buildroot%sysctldir/95-tcp_mtu_probing.conf
 install -D -m 644 95_mutter-check-alive-timeout.gschema.override %buildroot%schemasdir/95_mutter-check-alive-timeout.gschema.override
@@ -115,6 +124,9 @@ fi
 %files esync
 %limitsdir/95-esync.conf
 
+%files ntsync
+%_sysconfdir/modules-load.d/ntsync.conf
+
 %files mm-count
 %sysctldir/95-vm.max_map_count.conf
 
@@ -133,6 +145,10 @@ fi
 %sysctldir/95-swappiness.conf
 
 %changelog
+* Mon Jul 21 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.9-alt1
+- added alt-gaming-ntsync
+- updated alt-gaming-check
+
 * Thu May 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.8-alt1
 - fixed config for check-alive-timeout (ALT bug 53908)
 - updated alt-gaming-check
