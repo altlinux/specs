@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.04.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -16,6 +16,7 @@ Obsoletes: kde5-kgeography < %EVR
 Source: %rname-%version.tar
 Source2: data.tar
 Patch: alt-fix-borders.patch
+Patch2: alt-remove-flags.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -32,6 +33,7 @@ BuildRequires: kf6-kcolorscheme-devel
 %setup -n %rname-%version
 tar -xvf %SOURCE2 data/
 %patch -p2
+%patch2 -p2
 
 mv data/flags/{ukraine/Crimea,russia/crimea}.png
 mv data/flags/{ukraine/Donetsk,russia/donetsk}.png
@@ -59,6 +61,9 @@ mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jul 21 2025 Oleg Solovyov <mcpain@altlinux.org> 25.04.1-alt2
+- remove flags
+
 * Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
