@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 Summary:	A generic SVG library
 Name:		libsvg
 Version:	0.1.4
-Release:	alt2_24
+Release:	alt3
 License:	LGPL
 Group:		System/Libraries
 URL:		https://www.cairographics.org/snapshots/
@@ -50,6 +50,9 @@ files to allow you to develop with libsvg.
 
 
 %build
+CFLAGS+=" -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
+CXXFLAGS+="${_CFLAGS}"
+export CFLAGS CXXFLAGS
 %configure --disable-static
 %make_build
 
@@ -71,6 +74,9 @@ rm -f %{buildroot}%{_libdir}/libsvg.la
 
 
 %changelog
+* Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt3
+- fixed FTBFS
+
 * Tue Sep 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.1.4-alt2_24
 - update by mgaimport
 
