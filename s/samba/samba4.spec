@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.7
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,9 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sat Jul 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt2
+- Fix broken option "use-kerberos=desired" (Samba#15789) (closes: 55238).
+
 * Wed Jul 09 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt1
 - Update to maintenance release of Samba 4.21
 - Major fixes from upstream (Samba#15876, Samba#15680):
