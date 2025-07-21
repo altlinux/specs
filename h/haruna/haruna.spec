@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Video
@@ -14,6 +14,7 @@ Url: https://invent.kde.org/multimedia/haruna
 License: GPL-3.0-or-later
 
 Requires: %name-youtube-player
+Requires: %name-common >= %EVR
 Provides: kde5-haruna = %EVR
 Obsoletes: kde5-haruna < %EVR
 
@@ -116,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
+- update russian translation
+
 * Fri Jul 18 2025 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
 
