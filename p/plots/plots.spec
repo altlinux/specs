@@ -9,7 +9,7 @@
 
 Name: plots
 Version: %ver_major.5
-Release: alt2.1
+Release: alt2.2
 
 Summary: A graph plotter for GNOME
 License: GPL-3.0-or-later
@@ -50,12 +50,14 @@ and explicit Cartesian equations.
 %prep
 %setup %{?_disable_snapshot:-n %_name-%version}
 
+subst "s|plots.locale|plots.locale2|" plots/i18n.py
+
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-mkdir -p %buildroot/%_datadir/{applications,help,metainfo,locale}
+mkdir -p %buildroot/%_datadir/{applications,help,metainfo}
 cp res/%rdn_name.desktop %buildroot/%_datadir/applications/
 cp res/%rdn_name.metainfo.xml %buildroot/%_datadir/metainfo
 
@@ -73,13 +75,16 @@ popd
 ln -sf ../../../../../share/fonts/ttf/dejavu/DejaVuSans.ttf \
     %buildroot%python3_sitelibdir_noarch/%pypi_name/res/DejaVuSans.ttf
 
-%find_lang --with-gnome %name
+mv %buildroot%python3_sitelibdir_noarch/%pypi_name/locale %buildroot%python3_sitelibdir_noarch/%pypi_name/locale2
+
+#%find_lang --with-gnome %name
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 py.test3
 
-%files -f %name.lang
+%files
+#-f %name.lang
 %_bindir/%name
 %python3_sitelibdir_noarch/%pypi_name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
@@ -87,9 +92,13 @@ py.test3
 #%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 #%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/help
 %doc README*
 
 %changelog
+* Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt2.2
+- fixed update error (ALT #55262)
+
 * Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt2.1
 - fixed build with setuptools 75.8.1
 
