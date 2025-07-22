@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.07.0
+Version: 25.07.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -93,7 +93,7 @@ Requires: gtk3-theme-breeze
 Requires: gtk2-theme-breeze
 Requires: kf6-kguiaddons kf6-qqc2-desktop-style
 Requires: plasma-applet-places-widget
-Requires: oxygen-sounds
+Requires: sound-theme-oxygen sound-theme-ocean
 Requires: kde-gtk-config bluedevil kscreen ksshaskpass
 Requires: kinfocenter kdeplasma-addons plasma-browser-integration
 Requires: plasma-disks
@@ -281,6 +281,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.07.1-alt1
+- require sound-theme-ocean
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 25.07.0-alt1
 - fix kstars deps
 
