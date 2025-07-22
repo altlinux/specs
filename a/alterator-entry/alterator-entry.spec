@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.2
+Version: 0.4.4
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -69,6 +69,13 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Jul 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt1
+- Add short_display_name for components and categories (thx Michael Chernigin)
+
+* Tue Jul 22 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.4.3-alt1
+- Improve service entry (thx Andrey Alekseev)
+- Update documentation for service entry (thx Andrey Alekseev)
+
 * Mon Jul 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.2-alt1
 - Add support for reading key names for tables in get_field()
 
