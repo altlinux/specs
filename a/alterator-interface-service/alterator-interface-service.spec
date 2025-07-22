@@ -1,12 +1,12 @@
 Name: alterator-interface-service
-Version: 0.2
-Release: alt1
+Version: 0.2.1
+Release: alt2
 
 Summary: XML files for org.altlinux.alterator.service interface
 License: GPLv2+
 Group: Other
 Obsoletes: alterator-interface-service1
-URL: https://gitlab.basealt.space/alt/altrerator-interface-service
+URL: https://altlinux.space/alterator/alterator-interface-service
 
 BuildArch: noarch
 
@@ -28,6 +28,13 @@ install -p -m 644 -D org.altlinux.alterator.service1.policy %buildroot%_datadir/
 %_datadir/polkit-1/actions/org.altlinux.alterator.service1.policy
 
 %changelog
+* Mon Jul 07 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.1-alt2
+- Change URL
+
+* Wed Jun 04 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.1-alt1
+- Removed stdout_strings from deploy and undeploy methods
+- Edit docs
+
 * Fri Apr 11 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2-alt1
 - Supplemented the description of methods
 - Add Configure method
