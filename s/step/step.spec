@@ -1,7 +1,7 @@
 %define rname step
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -74,6 +74,9 @@ rm -f po/ru/step.po.old
 
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

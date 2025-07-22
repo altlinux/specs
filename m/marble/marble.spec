@@ -11,8 +11,8 @@
 %endif
 
 Name: %rname
-Version: 25.04.1
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init
 
 Group: Education
@@ -185,6 +185,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt2
 - put unappropriave maps to separate package
 

@@ -1,7 +1,7 @@
 %define rname kanagram
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ vocabularies, and distribute them through Kanagram's KNewStuff download service.
 
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

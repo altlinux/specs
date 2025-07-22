@@ -1,8 +1,8 @@
 %define rname kgeography
 
 Name: %rname
-Version: 25.04.1
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init
 
 Group: Education
@@ -28,6 +28,7 @@ BuildRequires: kf6-kcolorscheme-devel
 
 %description
 %summary.
+rm -rf data/flags/ukraine
 
 %prep
 %setup -n %rname-%version
@@ -61,6 +62,9 @@ mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Mon Jul 21 2025 Oleg Solovyov <mcpain@altlinux.org> 25.04.1-alt2
 - remove flags
 
