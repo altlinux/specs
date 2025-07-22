@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2025.07
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -30,6 +30,10 @@ This package supports various Rockchip based boards.
 %setup
 rm configs/generic-rk33*_defconfig
 sed -i '/^CONFIG_FS_EXFAT/d' configs/*
+# ALT#55304
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,powkiddy-x55,powkiddy-x35s,' \
+	< configs/powkiddy-x55-rk3566_defconfig \
+	> configs/powkiddy-x35s-rk3566_defconfig
 
 %build
 export PYTHON=python3
@@ -74,6 +78,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt2
+- added rk3566-powkiddy-x35s board (closes: 55304)
+
 * Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
 - 2025.07 released
 
