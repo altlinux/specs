@@ -1,0 +1,78 @@
+%define _unpackaged_files_terminate_build 1
+%define service service-samba-ad
+Name: alterator-service-samba-ad
+Version: 0.3
+Release: alt1
+
+Summary: Service for Samba AD management
+License: GPLv3
+Group: System/Configuration/Other
+URL: https://altlinux.space/alterator/alterator-service-samba-ad
+
+BuildArch: noarch
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-alterator
+
+Requires: alterator-module-executor
+Requires: alterator-interface-service
+Requires: alterator-entry
+Requires: diag-domain-controller
+
+%description
+Service for Samba AD management.
+
+%prep
+%setup
+
+%install
+mkdir -p %buildroot%_alterator_datadir/service
+mkdir -p %buildroot%_datadir/%name/samba-ad
+mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad
+
+install -p -D -m755 %service %buildroot%_bindir/%service
+install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
+install -p -D -m644 %service.service %buildroot%_alterator_datadir/service/%service.service
+install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/samba-ad/provision-parameters.schema.json
+install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/samba-ad/join-parameters.schema.json
+install -pDm 644 %service.bash-completion \
+     %buildroot%_datadir/bash-completion/completions/%service
+
+%files
+%_bindir/%service
+%_alterator_datadir/backends/%service.backend
+%_alterator_datadir/service/%service.service
+%_datadir/bash-completion/completions/%service
+%_datadir/%name/samba-ad/provision-parameters.schema.json
+%_datadir/%name/samba-ad/join-parameters.schema.json
+%_localstatedir/alterator/service/samba-ad/
+
+%changelog
+* Tue Jul 22 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
+- Move Samba AD service data to /var/lib/alterator/service.
+- Rename service-samba-dc to service-samba-ad.
+- Rename project to alterator-service-samba-ad.
+- Fix URL in spec file.
+- Add bind dns backend configuration. (thx Evgenii Sozonov)
+
+* Mon Jul 14 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.3-alt1
+- Add diag-domain-controller.
+- Add return empty json if service is not deployed.
+
+* Mon Jul 07 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.2-alt1
+- Remove Stdout_string from backend file.
+- Change default value of dns backend.
+- Add hiding password when entering.
+- Remove comments to some resources.
+
+* Tue Jun 17 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2.1-alt1
+- Edit demote dc function. Add new steps.
+- Edit service file. Add new var's for undeploy and configure methods.
+
+* Mon Jun 16 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2-alt1
+- Fix parsing arguments. Add function for demote dc. Add force deploy.
+- Add new var into service entry file.
+- Edit doc.
+
+* Tue Jan 28 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.1-alt1
+- Initial commit.
