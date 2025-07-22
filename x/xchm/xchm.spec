@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xchm
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: xCHM - the CHM viewer for UNIX
@@ -11,7 +11,7 @@ Group: Office
 
 URL: http://xchm.sourceforge.net
 Source: %name-%version.tar
-Source1: xchm.desktop
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libchm-devel
@@ -23,18 +23,15 @@ xCHM - the CHM files viewer for UNIX.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
-%configure \
-	--enable-debug \
-	--enable-optimize
+%configure
 %make_build
 
 %install
 %makeinstall_std
-install -pD -m644 %SOURCE1 %buildroot%_desktopdir/xchm.desktop
-
 %find_lang %name
 
 %files -f %name.lang
@@ -46,6 +43,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/xchm.desktop
 %_man1dir/*
 
 %changelog
+* Mon Jul 21 2025 Anton Midyukov <antohami@altlinux.org> 1.37-alt1
+- New version 1.37.
+
 * Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 1.36-alt1
 - New version 1.36.
 
