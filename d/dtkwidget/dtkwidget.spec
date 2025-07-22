@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.7.9
+Version: 5.7.19
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -144,6 +144,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_docdir/dtkwidget.qch
 
 %changelog
+* Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
+- New version 5.7.19.
+
 * Thu Feb 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
 - New version 5.7.9.
 

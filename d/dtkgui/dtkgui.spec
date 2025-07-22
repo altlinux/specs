@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.7.9
+Version: 5.7.19
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -20,9 +20,9 @@ Patch: dtkgui-alt-git.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static -> libQt5XkbCommonSupport.a
-# Automatically added by buildreq on Wed Oct 18 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt liblcms2-devel libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-svg libdqt5-widgets libdqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-svg-devel sh5 xorg-proto-devel
-BuildRequires: cmake extra-cmake-modules dtk6-common-devel dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel treeland-protocols
+# Automatically added by buildreq on Tue Jul 22 2025
+# optimized out: cmake cmake-modules dqt5-base-devel gcc-c++ glib2-devel glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-svg libdqt5-waylandclient libdqt5-widgets libdqt5-xml libdtklog-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt1 liblcms2-devel libp11-kit libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libxkbcommon-devel pkg-config python3 python3-base sh5 wayland-devel xorg-proto-devel
+BuildRequires: dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel dtk6-common-devel extra-cmake-modules libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel treeland-protocols
 # BuildRequires: libpcre2-devel libffi-devel libmount-devel libblkid-devel libselinux-devel libjpeg-devel libtiff-devel bzlib-devel libbrotli-devel libexpat-devel libpixman-devel
 # BuildRequires: libXdmcp-devel
 %if_enabled clang
@@ -113,6 +113,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
+- New version 5.7.19.
+
 * Thu Feb 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
 - New version 5.7.9.
 

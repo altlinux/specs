@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.7.9
+Version: 5.7.19
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -23,7 +23,7 @@ Provides: dtk5-core = %EVR
 Obsoletes: dtk5-core < %EVR
 
 BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-dqt5
-BuildRequires: cmake rpm-build-python3 dtk6-common-devel libdtklog-devel gsettings-qt-devel libsystemd-devel dqt5-base-devel libuchardet-devel libspdlog-devel libicu-devel
+BuildRequires: cmake rpm-build-python3 dtk6-common-devel libdtklog-devel gsettings-qt-devel libsystemd-devel dqt5-base-devel libuchardet-devel libspdlog-devel libicu-devel libdbus-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -128,6 +128,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
+- New version 5.7.19.
+
 * Thu Feb 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
 - New version 5.7.9.
 

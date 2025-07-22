@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtklog
-Version: 0.0.2
+Version: 0.0.5
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -86,6 +86,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtklog.pri
 
 %changelog
+* Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
+- New version 0.0.5.
+
 * Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt1
 - New version 0.0.2.
 - Added vcs tag.
