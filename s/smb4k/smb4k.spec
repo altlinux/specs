@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: %rname
-Version: 3.2.90
+Version: 4.0.3
 Release: alt1
 %K6init
 
@@ -84,5 +84,8 @@ Group: System/Libraries
 %_K6lib/libsmb4kdialogs.so.*
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.3-alt1
+- new version
+
 * Tue Nov 05 2024 Sergey V Turchin <zerg@altlinux.org> 3.2.90-alt1
 - inittial build
