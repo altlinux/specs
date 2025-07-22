@@ -6,7 +6,7 @@
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 23.6.0
+Version: 25.6.0
 Release: alt1
 
 %define qt_bin_dir %_qt5_bindir
@@ -32,7 +32,7 @@ Patch3: alt-ui-defaults.patch
 Patch4: alt-paths.patch
 Patch5: alt-youtube-browser.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-declarative-devel
 BuildRequires: libXext-devel zlib-devel
 
 %package common
@@ -170,6 +170,12 @@ done
 
 
 %changelog
+* Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.6.0-alt1
+- new version
+
+* Wed Apr 16 2025 Sergey V Turchin <zerg@altlinux.org> 24.5.0-alt1
+- new version
+
 * Mon Oct 23 2023 Sergey V Turchin <zerg@altlinux.org> 23.6.0-alt1
 - new version
 
