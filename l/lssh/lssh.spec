@@ -3,7 +3,7 @@
 
 Name: lssh
 Version: 0.6.13
-Release: alt1
+Release: alt2
 Summary: TUI list select ssh/scp/sftp client tools.
 License: MIT
 Group: Networking/Remote access
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+Conflicts: nilfs-utils
 
 %description
 A list-based SSH/SCP/SFTP client supporting single and parallel connections,
@@ -80,5 +81,8 @@ mv lssh.conf %buildroot%_datadir/%name/example/libssh-example.conf
 %_datadir/%name/example/libssh-example.conf
 
 %changelog
+* Tue Jul 22 2025 Pavel Shilov <zerospirit@altlinux.org> 0.6.13-alt2
+- Add Conflicts: nilfs-utils due to file overlap on /usr/bin/lscp.
+
 * Thu Sep 12 2024 Pavel Shilov <zerospirit@altlinux.org> 0.6.13-alt1
 - initial build for Sisyphus
