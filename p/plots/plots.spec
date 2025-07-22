@@ -9,7 +9,7 @@
 
 Name: plots
 Version: %ver_major.5
-Release: alt2.2
+Release: alt2.3
 
 Summary: A graph plotter for GNOME
 License: GPL-3.0-or-later
@@ -23,6 +23,8 @@ Source: https://github.com/alexhuntley/Plots/archive/v%version/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+
+Source1: com.github.alexhuntley.Plots.desktop
 
 Requires: typelib(Adw) = 1
 Requires: font(dejavusans)
@@ -58,7 +60,9 @@ subst "s|plots.locale|plots.locale2|" plots/i18n.py
 %install
 %pyproject_install
 mkdir -p %buildroot/%_datadir/{applications,help,metainfo}
-cp res/%rdn_name.desktop %buildroot/%_datadir/applications/
+mkdir -p %buildroot/%_iconsdir/hicolor/128x128/apps
+cp res/%rdn_name.svg %buildroot/%_iconsdir/hicolor/128x128/apps
+cp %SOURCE1 %buildroot/%_datadir/applications/
 cp res/%rdn_name.metainfo.xml %buildroot/%_datadir/metainfo
 
 pushd help
@@ -90,12 +94,16 @@ py.test3
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %_desktopdir/%rdn_name.desktop
 #%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-#%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/help
 %doc README*
 
 %changelog
+* Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt2.3
+- fixed launch via application shortcut (ALT #55045)
+- fixed the display of the icon application shortcut
+
 * Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.5-alt2.2
 - fixed update error (ALT #55262)
 
