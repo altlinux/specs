@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.45
-Release: alt1.g34eb666c0
+Version: 1.4.1.47
+Release: alt1.g488b6416e
 Summary: A music player and library organiser
 
 Group: Sound
@@ -21,7 +21,10 @@ BuildRequires: boost-devel-headers gcc-c++
 BuildRequires: libgio-devel libglew-devel libgpod-devel libmtp-devel
 BuildRequires: libqt5-opengl libqt5-sql libqt5-webkit libqt5-xmlpatterns qt5-x11extras-devel
 BuildRequires: libtag-devel
-BuildRequires: gstreamer%{gst_api_ver}-devel gst-plugins%gst_api_ver-devel gstreamer%gst_api_ver-utils
+BuildRequires: gstreamer%gst_api_ver-devel
+BuildRequires: gst-plugins%gst_api_ver-devel
+BuildRequires: gstreamer%gst_api_ver-utils
+BuildRequires: pkgconfig(gstreamer-tag-%gst_api_ver)
 BuildRequires: libchromaprint-devel
 BuildRequires: libcryptopp-devel >= 6
 # SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER is available since 3.12
@@ -38,6 +41,7 @@ BuildRequires: protobuf-compiler
 BuildRequires: libgoogle-sparsehash
 BuildRequires: libavcodec-devel libavformat-devel libpcre-devel
 BuildRequires: libprotobuf-devel libcdio-devel
+BuildRequires: pkgconfig(libdeflate)
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(blkid)
 BuildRequires: pkgconfig(bzip2)
@@ -50,13 +54,15 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: liborc-devel
 # Check:
 BuildRequires: %_bindir/appstream-util desktop-file-utils
 
 # Clementine crashes without it
-Requires: gst-plugins-base%{gst_api_ver}
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
 Requires: icon-theme-hicolor
 
 %description
@@ -91,6 +97,8 @@ Features include:
 sed -i "s|== Separator|== QChar(Separator)|" \
 	ext/libclementine-tagreader/fmpsparser.cpp
 %endif
+sed -i 's|local_server_name_ = qApp->applicationName().toLower();|local_server_name_ = QString(qApp->applicationName()).toLower();|' \
+	ext/libclementine-common/core/workerpool.h
 
 if [ ! -d .git ]; then
     git init
@@ -133,6 +141,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Tue Jul 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.47-alt1.g488b6416e
+- Update upstream source to 1.4.1-47-g488b6416e
+
 * Wed Jul 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.45-alt1.g34eb666c0
 - Update upstream source to 1.4.1.45-g34eb666c0
 
