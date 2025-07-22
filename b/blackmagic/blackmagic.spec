@@ -1,15 +1,19 @@
 Name: blackmagic
-Version: 1.10.2
+Version: 2.0.0
 Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
 License: GPLv3
 Group: Development/Other
 Url: https://black-magic.org/
+VCS: https://github.com/blacksphere/blackmagic
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: pkgconfig(hidapi-libusb) pkgconfig(libftdi1) pkgconfig(libusb-1.0)
+BuildRequires: meson
+BuildRequires: pkgconfig(hidapi-libusb)
+BuildRequires: pkgconfig(libftdi1)
+BuildRequires: pkgconfig(libusb-1.0)
 
 %description
 The Black Magic Probe is a modern, in-application debugging tool for embedded
@@ -26,23 +30,23 @@ software, GDB.
 echo '#define FIRMWARE_VERSION "%version-%release"' > src/include/version.h
 
 %build
-CFLAGS='%optflags' \
-make PROBE_HOST=hosted ENABLE_RTT=1
-gcc %optflags -I/usr/include/libusb-1.0 scripts/swolisten.c -o swolisten -lusb-1.0
+%meson
+%meson_build
 cp -pv src/platforms/hosted/README.md README.hosted.md
 
 %install
-install -pm0755 -D src/blackmagic %buildroot%_bindir/blackmagic
-install -pm0755    swolisten %buildroot%_bindir/swolisten
+install -pm0755 -D %_target_platform/blackmagic %buildroot%_bindir/blackmagic
 install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackmagic.rules
 
 %files
-%doc COPYING README* UsingSWO* UsingRTT*
+%doc COPYING* README* UsingSWO* UsingRTT*
 %_udevrulesdir/60-blackmagic.rules
 %_bindir/blackmagic
-%_bindir/swolisten
 
 %changelog
+* Tue Jul 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
+- 2.0.0 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.2-alt1
 - 1.10.2 released
 
