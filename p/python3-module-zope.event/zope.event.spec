@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 5.1.1
 Release: alt1
 
 Summary: Very basic event publishing system
@@ -81,6 +81,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests*
 
 %changelog
+* Tue Jul 22 2025 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
+- 5.1 -> 5.1.1.
+
 * Tue Jul 01 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1.
 
