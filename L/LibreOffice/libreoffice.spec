@@ -29,7 +29,7 @@
 
 Name: LibreOffice
 %define hversion 25.2
-%define urelease 3.2
+%define urelease 5.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -657,6 +657,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Jul 02 2025 kotopesutility <kotopesutility@altlinux.org> 25.2.5.1-alt1
+- Update to upstream 25.2.5.1
+
 * Fri May 23 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 25.2.3.2-alt1
 - Update to upstream 25.2.3.2 (Close CVE-2025-2866).
 
