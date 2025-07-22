@@ -1,53 +1,58 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
+
 %define major   1
-%define libname libsvg%{major}
+%define libname libsvg%major
 %define develname libsvg-devel
 
-Summary:	A generic SVG library
-Name:		libsvg
-Version:	0.1.4
-Release:	alt3
-License:	LGPL
-Group:		System/Libraries
-URL:		https://www.cairographics.org/snapshots/
-Source:		https://www.cairographics.org/snapshots/%{name}-%{version}.tar.bz2
-Patch0:		libsvg-0.1.4-link.patch
-Patch1:		libsvg-0.1.4-libpng14.patch
-BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(libpng)
-BuildRequires:	pkgconfig(libjpeg)
+Name: libsvg
+Version: 0.1.4
+Release: alt4
+
+Summary: A generic SVG library
+
+License: LGPL
+Group: System/Libraries
+Url: https://www.cairographics.org/snapshots/
+
+#https://www.cairographics.org/snapshots/%name-%version.tar.bz2
+Source: %name-%version.tar
+
+Patch0: libsvg-0.1.4-link.patch
+Patch1: libsvg-0.1.4-libpng14.patch
+
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libjpeg)
+
 Source44: import.info
 
 %description
 A generic SVG library.
 
-%package -n	%{libname}
-Summary:	A generic SVG library
-Group:		System/Libraries
+%package -n	%libname
+Summary: A generic SVG library
+Group: System/Libraries
 
-%description -n	%{libname}
+%description -n	%libname
 A generic SVG library.
 
-%package -n	%{develname}
-Summary:	Libraries and include files for developing with libsvg
-Group:		Development/C
-Requires:	%{libname} = %{version}
-Provides:	%{name}-devel = %{version}
-Provides:	lib%{name}-devel = %{version}
+%package -n	%develname
+Summary: Libraries and include files for developing with libsvg
+Group: Development/C
+Requires: %libname = %version
+Provides: %name-devel = %version
+Provides: lib%name-devel = %version
 
-%description -n	%{develname}
+%description -n	%develname
 This package provides the necessary development libraries and include
 files to allow you to develop with libsvg.
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p0
+%setup
 
+%autopatch -p0
 
 %build
 CFLAGS+=" -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
@@ -60,20 +65,22 @@ export CFLAGS CXXFLAGS
 %makeinstall_std
 
 # remove .la file
-rm -f %{buildroot}%{_libdir}/libsvg.la
+rm -f %buildroot%_libdir/libsvg.la
 
-%files -n %{libname}
+%files -n %libname
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%_libdir/*.so.%major
+%_libdir/*.so.%major.*
 
-%files -n %{develname}
-%{_libdir}/*.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/libsvg.pc
-
+%files -n %develname
+%_libdir/*.so
+%_includedir/*
+%_libdir/pkgconfig/libsvg.pc
 
 %changelog
+* Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt4
+- spec cleanup
+
 * Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt3
 - fixed FTBFS
 

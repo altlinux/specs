@@ -1,34 +1,40 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
+
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name alglib
 %define major     4
-%define libname   lib%{name}%{major}
-%define develname lib%{name}-devel
+%define libname   lib%name%major
+%define develname lib%name-devel
 
-Name:           alglib
-Version:        4.01.0
-Release:        alt2
-Summary:        A numerical analysis and data processing library
-Group:          System/Libraries
-License:        GPLv2+
-URL:            https://www.alglib.net/
-Source0:        https://www.alglib.net/translator/re/%{name}-%{version}.cpp.gpl.tgz
-Source1:        ALGLIBConfig.cmake
+%def_disable checks
+
+Name: alglib
+Version: 4.01.0
+Release: alt3
+
+Summary: A numerical analysis and data processing library
+
+Group: System/Libraries
+License: GPLv2+
+Url: https://www.alglib.net/
+
+#https://www.alglib.net/translator/re/%name-%version.cpp.gpl.tgz
+Source0: %name-%version.tar
+Source1: ALGLIBConfig.cmake
 # Extracted from manual.cpp.html
-Source2:        bsd.txt
+Source2: bsd.txt
+
+Source44: import.info
 
 # Make test output more verbose
 # Patch0:         alglib_verbose-tests.patch
 # From Debian:
-Patch1:         01_add_cmake.patch
+Patch1: 01_add_cmake.patch
 
-BuildRequires:  ccmake cmake ctest
-BuildRequires:  gcc-c++
-Source44: import.info
+BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
+BuildRequires: ccmake cmake ctest
+BuildRequires: gcc-c++
 
 %description
 ALGLIB is a cross-platform numerical analysis and data processing library.
@@ -40,12 +46,11 @@ ALGLIB features include:
    solvers, Fast Fourier Transform and many other algorithms (numerical
    integration, ODEs, statistics, special functions)
 
+%package -n     %libname
+Summary: Shared %name library
+Group: System/Libraries
 
-%package -n     %{libname}
-Summary:        Shared %{name} library
-Group:          System/Libraries
-
-%description -n %{libname}
+%description -n %libname
 ALGLIB is a cross-platform numerical analysis and data processing library.
 ALGLIB features include:
  - Data analysis (classification/regression, including neural networks)
@@ -55,65 +60,62 @@ ALGLIB features include:
    solvers, Fast Fourier Transform and many other algorithms (numerical
    integration, ODEs, statistics, special functions)
 
-This package provides the shared %{name} library.
+This package provides the shared %name library.
 
-%package -n     %{develname}
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{libname} >= %{version}-%{release}
-Provides:       %{name}-devel = %{version}-%{release}
+%package -n     %develname
+Summary: Development files for %name
+Group: Development/C
+Requires: %libname >= %version-%release
+Provides: %name-devel = %version-%release
 
-%description -n %{develname}
-The %{develname} package contains libraries and header files for
-developing applications that use %{name}.
+%description -n %develname
+The %develname package contains libraries and header files for
+developing applications that use %name.
 
-%package        doc
+%package doc
 Group: System/Libraries
-Summary:        API documentation for %{name}
-License:        BSD
-BuildArch:      noarch
+Summary: API documentation for %name
+License: BSD
+BuildArch: noarch
 
-%description    doc
-The %{name}-doc package contains the %{name} API documentation.
-
+%description doc
+The %name-doc package contains the %name API documentation.
 
 %prep
-%setup -q -n %{name}-cpp
+%setup -n %name-cpp
 %patch1 -p1
 
-cp %{SOURCE1} .
-cp %{SOURCE2} .
+cp %SOURCE1 .
+cp %SOURCE2 .
 
 # Set version and soversion in cmake file
-%define soversion %(echo %{version}|cut -d. -f1,4)
-sed -i 's|\${VERSION}|%{version}|' CMakeLists.txt
-sed -i 's|\${SOVERSION}|%{soversion}|' CMakeLists.txt
+%define soversion %(echo %version|cut -d. -f1,4)
+sed -i 's|\${VERSION}|%version|' CMakeLists.txt
+sed -i 's|\${SOVERSION}|%soversion|' CMakeLists.txt
 
 # Fix permissions and line endings
 chmod 644 gpl2.txt
 chmod 644 manual.cpp.html
 sed -i 's|\r||g' manual.cpp.html
 
-
 %build
 # disable FMA support to get it pass all tests
-%ifarch aarch64 %{power64} s390 s390x
-export CXXFLAGS="%{optflags} -ffp-contract=off"
-export CFLAGS="%{optflags} -ffp-contract=off"
+%ifarch aarch64 %power64 s390 s390x
+export CXXFLAGS="%optflags -ffp-contract=off"
+export CFLAGS="%optflags -ffp-contract=off"
 %endif
-%{mageia_cmake} -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+%mageia_cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %mageia_cmake_build
-
 
 %install
 %mageia_cmake_install
 
-%if 0
+%if_enabled checks
 %check
 pushd build
 # FIXME Temporarily ignore test failures on test_c due to GCC7 test failure on i686, see
 # http://bugs.alglib.net/view.php?id=689
-%ifarch %{ix86}
+%ifarch %ix86
 LD_LIBRARY_PATH=$PWD ./test_c || true
 %else
 LD_LIBRARY_PATH=$PWD ./test_c || false
@@ -122,22 +124,24 @@ LD_LIBRARY_PATH=$PWD ./test_i || false
 popd
 %endif
 
-%files -n %{libname}
+%files -n %libname
 %doc --no-dereference gpl2.txt
-%{_libdir}/libalglib.so.%{major}
-%{_libdir}/libalglib.so.%{major}.*
+%_libdir/libalglib.so.%major
+%_libdir/libalglib.so.%major.*
 
-%files -n %{develname}
-%{_includedir}/%{name}/
-%{_libdir}/libalglib.so
-%{_libdir}/cmake/ALGLIB/
+%files -n %develname
+%_includedir/%name/
+%_libdir/libalglib.so
+%_libdir/cmake/ALGLIB/
 
 %files doc
 %doc --no-dereference bsd.txt
 %doc manual.cpp.html
 
-
 %changelog
+* Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.01.0-alt3
+- spec cleanup
+
 * Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.01.0-alt2
 - fixed FTBFS
 
