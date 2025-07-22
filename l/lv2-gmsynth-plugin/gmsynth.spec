@@ -1,11 +1,12 @@
 Name: lv2-gmsynth-plugin
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: General MIDI Sample Player Plugin
 License: GPLv2
 Group: Sound
-Url: https://github.com/x42/gmsynth.lv2
+Url: https://x42-plugins.com/x42/x42-gmsynth
+VCS: https://github.com/x42/gmsynth.lv2
 
 Source: %name-%version-%release.tar
 
@@ -34,6 +35,9 @@ cp -pv sf2/README README.sf2
 %_libdir/lv2/*
 
 %changelog
+* Tue Jul 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.2-alt2
+- updated GeneralUser GS to v2.0.2
+
 * Thu Feb 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.2-alt1
 - 0.6.2 released
 
