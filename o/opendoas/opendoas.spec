@@ -6,7 +6,7 @@
 
 Name: opendoas
 Version: 6.8.2
-Release: alt2
+Release: alt3
 Summary: Portable fork of the OpenBSDs doas command
 
 # ISC: main program
@@ -89,11 +89,11 @@ CONFIG=/etc/doas.conf
 
 # Comment or uncomment the permit :wheel rule in the doas configuration
 new_subst disabled \
-    '^\s*permit\s*:wheel\b.*$' \
-    's,^[ \t]*\(permit\s*:wheel\b.*\)$,# \1,'
+    '^[[:space:]]*#[[:space:]]*permit[[:space:]]*:wheel\>.*$' \
+    's,^[[:space:]]*\(permit[[:space:]]*:wheel\>.*\)$,# \1,'
 new_subst enabled \
-    '^\s*#\s*permit\s*:wheel\b.*$' \
-    's,^[ \t]*#\s*\(permit\s*:wheel\b.*\)$,\1,'
+    '^[[:space:]]*permit[[:space:]]*:wheel\>.*$' \
+    's,^[[:space:]]*#[[:space:]]*\(permit[[:space:]]*:wheel\>.*\)$,\1,'
 
 new_help enabled  'Enable doas for wheel group members'
 new_help disabled 'Disable doas for wheel group members'
@@ -122,7 +122,10 @@ fi
 %_man5dir/doas.conf.5*
 
 %changelog
-* Fri Jul 22 2025 Alexey Volkov <qualimock@altlinux.org> 6.8.2-alt2
+* Tue Jul 22 2025 Alexey Volkov <qualimock@altlinux.org> 6.8.2-alt3
+- fix doaswheel control facility patterns
+
+* Tue Jul 22 2025 Alexey Volkov <qualimock@altlinux.org> 6.8.2-alt2
 - add configuration files for control
 - remove poor russian translation
 - remove lookup in /bin and /sbin
