@@ -1,5 +1,5 @@
 Name:		apache2-mod_http2
-Version:	2.0.29
+Version:	2.0.33
 Release:	alt1
 Summary:	module implementing HTTP/2 for Apache 2
 Group:		System/Servers
@@ -11,6 +11,7 @@ Source1:	%name.watch
 Patch0:		%name-%version-alt.patch
 BuildRequires(pre): apache2-devel > 2.4.27-alt1
 BuildRequires:	pkgconfig, libnghttp2-devel >= 1.7.0, libssl-devel >= 1.0.2, libaprutil1-devel, libcurl-devel
+BuildRequires: apache2-devel
 Provides: mod_h2 = %EVR
 Provides: mod_http2 = %EVR
 Provides: apache2-mod_h2 = %EVR
@@ -44,6 +45,9 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %buildroot%apa
 %apache2_moduledir/mod_proxy_http2.so
 
 %changelog
+* Mon Jul 21 2025 Anton Farygin <rider@altlinux.com> 2.0.33-alt1
+- 2.0.29 -> 2.0.33 (Fixes: CVE-2025-53020, CVE-2025-49630)
+
 * Fri Jul 12 2024 Anton Farygin <rider@altlinux.ru> 2.0.29-alt1
 - 2.0.27 -> 2.0.29 (Fixes: CVE-2024-36387)
 
