@@ -6,7 +6,7 @@
 %define _pseudouser_home %_localstatedir/%name
 
 Name:       pages-server
-Version:    6.2
+Version:    6.3
 Release:    alt1
 
 Summary:    The Codeberg Pages Server with custom domain support
@@ -24,7 +24,7 @@ Patch:      %name-%version-%release.patch
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires:      rpm-build-golang golang >= 1.23
+BuildRequires:      rpm-build-golang golang >= 1.24
 
 %description
 Codeberg Pages allows you to easily publish static websites with a
@@ -60,6 +60,23 @@ mkdir -p %buildroot%_bindir/
 cd .build/src/%import_path
 install -p -m755 %name %buildroot%_bindir/%name
 
+%check
+%ifarch x86_64 aarch64
+%gotest -race -cover -tags 'sqlite sqlite_unlock_notify netgo' \
+    codeberg.org/codeberg/pages/config/ \
+    codeberg.org/codeberg/pages/html/ \
+    codeberg.org/codeberg/pages/server/certificates \
+    codeberg.org/codeberg/pages/server/database \
+    codeberg.org/codeberg/pages/server/utils
+%else
+%gotest -cover -tags 'sqlite sqlite_unlock_notify netgo' \
+    codeberg.org/codeberg/pages/config/ \
+    codeberg.org/codeberg/pages/html/ \
+    codeberg.org/codeberg/pages/server/certificates \
+    codeberg.org/codeberg/pages/server/database \
+    codeberg.org/codeberg/pages/server/utils
+%endif
+
 %post
 %post_systemd_postponed %name.service
 
@@ -80,6 +97,10 @@ useradd -r -g %_pseudouser_group -M -d %_pseudouser_home -s /dev/null \
 %doc *.md LICENSE
 
 %changelog
+* Tue Jul 22 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 6.3-alt1
+- 6.3 
+- unit tests added
+
 * Thu Jan 30 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 6.2-alt1
 - 6.2 
 
