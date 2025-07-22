@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-cyclonedx
-Version: 10.1.0
+Version: 11.0.0
 Release: alt1
 Summary: Python implementation of OWASP CycloneDX
 License: Apache-2.0
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %add_pyproject_deps_check_filter pep8-naming
+%add_pyproject_deps_check_filter deptry
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -57,6 +58,9 @@ create/render/read CycloneDX documents.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 22 2025 Andrey Kovalev <ded@altlinux.org> 11.0.0-alt1
+- Updated to upstream version 11.0.0.
+
 * Tue Jun 10 2025 Andrey Kovalev <ded@altlinux.org> 10.1.0-alt1
 - Updated to upstream version 10.1.0.
 

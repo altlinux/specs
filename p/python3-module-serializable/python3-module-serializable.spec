@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-serializable
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: Pythonic library to aid with serialisation and deserialisation to/from JSON and XML.
 License: Apache-2.0
@@ -50,6 +50,9 @@ classes to and from JSON and XML.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 22 2025 Andrey Kovalev <ded@altlinux.org> 2.1.0-alt1
+- Updated to upstream version 2.1.0.
+
 * Mon Feb 24 2025 Andrey Kovalev <ded@altlinux.org> 2.0.0-alt1
 - Updated to upstream version 2.0.0.
 - Added VCS tag.
