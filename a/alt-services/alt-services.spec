@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -9,20 +9,22 @@ Obsoletes: alterator-application-services
 Summary: Alterator application for managing services
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-application-services
+URL: https://altlinux.space/alterator/alt-services
 
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-alterator
-BuildRequires: cmake
+BuildRequires: cmake extra-cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-base-common
-BuildRequires: libtomlplusplus-devel
+BuildRequires: libtoml11-devel
+BuildRequires: boost-devel-headers
+BuildRequires: kf6-kwidgetsaddons-devel
 
-Requires: alterator-interface-service >= 0.2
+Requires: alterator-interface-service >= 0.2.1
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
@@ -54,6 +56,9 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %doc *.md
 
 %changelog
+* Tue Jul 22 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.4-alt1
+- new version (thx Andrey Alekseev)
+
 * Wed May 14 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
 - add tooltip in service table header
 - service will not be displayed if any errors were encountered during parsing
