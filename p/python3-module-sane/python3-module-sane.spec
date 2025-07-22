@@ -1,11 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
+
+%define _name Sane
 %define modname sane
 %define pypi_name python_%{modname}
 %define oname py%modname
 
 Name: python3-module-%modname
-Version: 2.9.1
-Release: alt2
+Version: 2.9.2
+Release: alt1
 
 Summary: Pyhon3 interface for Sane
 Group: Development/Python3
@@ -14,10 +16,10 @@ Url: https://github.com/python-pillow/Sane
 
 Vcs: https://github.com/python-pillow/Sane.git
 
-%if_disabled sanpshot
-Source: %url/archive/v%version/Sane-%version.tar.gz
+%if_disabled snapshot
+Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
-Source: %oname-%version.tar
+Source: %_name-%version.tar
 %endif
 
 Requires: python3-module-Pillow python3-module-numpy
@@ -31,7 +33,7 @@ BuildRequires: python3-module-numpy
 Python3 interface for Sane.
 
 %prep
-%setup -n %oname-%version
+%setup -n %_name-%version
 
 %build
 %pyproject_build
@@ -46,6 +48,9 @@ Python3 interface for Sane.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Wed Jun 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt2
 - updated to v2.9.1-39-g89df3d5
 
