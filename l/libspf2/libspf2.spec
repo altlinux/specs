@@ -4,7 +4,7 @@
 
 Name: libspf2
 Version: 1.2.11
-Release: alt1.git.4915c30
+Release: alt2
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
 Group: System/Libraries
@@ -49,6 +49,7 @@ Development files for libspf2 library.
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -Wno-error=implicit-function-declaration -Wno-error=int-conversion
 
 %autoreconf
 %configure \
@@ -75,6 +76,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool || exit 1
 %_libdir/*.so
 
 %changelog
+* Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.11-alt2
+- fixed FTBFS
+
 * Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.11-alt1.git.4915c30
 - Updated to latest upstream snapshot
 
