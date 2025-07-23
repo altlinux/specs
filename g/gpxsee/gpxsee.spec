@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: gpxsee
-Version: 13.44
-Release: alt2
+Version: 13.45
+Release: alt1
 
 Summary: GPS log file viewer and analyzer
 License: GPL-3.0
@@ -79,6 +79,9 @@ qmake-qt6 \
 %_datadir/mime/packages/%{name}.xml
 
 %changelog
+* Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 13.45-alt1
+- New version 13.45.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 13.44-alt2
 - Applied repocop fix for freedesktop-desktop
 

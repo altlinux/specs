@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: havoc
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: minimal terminal emulator for wayland
@@ -37,5 +37,8 @@ sed -i "s|/usr/share/fonts/TTF/DejaVuSansMono.ttf|/usr/share/fonts/ttf/dejavu/De
 %_bindir/*
 
 %changelog
+* Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Fri May 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus

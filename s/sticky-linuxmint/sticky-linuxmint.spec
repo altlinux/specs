@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sticky-linuxmint
-Version: 1.24
-Release: alt2
+Version: 1.25
+Release: alt1
 
 Summary: A sticky notes app for the linux desktop
 License: GPL-2.0
@@ -57,6 +57,9 @@ sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' data/sticky.desktop.in
 %_datadir/sticky/*
 
 %changelog
+* Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.25-alt1
+- New version 1.25.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt2
 - Applied repocop fix for freedesktop-categories
 
