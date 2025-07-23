@@ -2,14 +2,15 @@
 %global import_path github.com/blacknon/lssh
 
 Name: lssh
-Version: 0.6.13
-Release: alt2
+Version: 0.7.0
+Release: alt1
 Summary: TUI list select ssh/scp/sftp client tools.
 License: MIT
 Group: Networking/Remote access
 Url: https://github.com/blacknon/lssh
 
 Source0: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -21,6 +22,7 @@ local bashrc usage on remote machines, and advanced proxying.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 cat >> lssh.conf <<EOF
@@ -81,6 +83,9 @@ mv lssh.conf %buildroot%_datadir/%name/example/libssh-example.conf
 %_datadir/%name/example/libssh-example.conf
 
 %changelog
+* Wed Jul 23 2025 Pavel Shilov <zerospirit@altlinux.org> 0.7.0-alt1
+- 0.6.13 -> 0.7.0
+
 * Tue Jul 22 2025 Pavel Shilov <zerospirit@altlinux.org> 0.6.13-alt2
 - Add Conflicts: nilfs-utils due to file overlap on /usr/bin/lscp.
 
