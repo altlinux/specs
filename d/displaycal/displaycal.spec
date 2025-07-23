@@ -1,17 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 %define up_name DisplayCAL
 
 Name: displaycal
-Version: 3.9.14
-Release: alt1.1
+Version: 3.9.16
+Release: alt1
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
 Group: Graphics
 License: GPL-3.0
-Url: https://github.com/eoyilmaz/displaycal-py3
-
+Url: https://pypi.org/project/displaycal/
+Vcs: https://github.com/eoyilmaz/displaycal-py3
 Packager: Vitaly Lipatov <lav@altlinux.ru>
-
+BuildArch: noarch
 # Source-url: https://github.com/eoyilmaz/displaycal-py3/releases/download/%version/DisplayCAL-%version.tar.gz
 Source: %name-%version.tar
 
@@ -22,12 +23,6 @@ Patch3: displaycal-3.9.8-fix-autostart-location.patch
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
-
-BuildRequires: pkgconfig(xxf86vm)
-BuildRequires: pkgconfig(xext)
-BuildRequires: pkgconfig(xinerama)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(python3)
 BuildRequires: xdg-user-dirs
 
 Requires: argyllcms
@@ -37,7 +32,7 @@ AutoProv: no
 Provides: %up_name = %version-%release
 Provides: dispcalGUI = %version-%release
 
-%add_python3_req_skip pywintypes win32api win32com.shell win32con win32gui win32process winerror winreg comtypes comtypes.client comtypes.gen.TaskbarLib
+%add_python3_req_skip pywintypes win32comext.shell win32api win32com.shell win32con win32gui win32process winerror winreg comtypes comtypes.client comtypes.gen.TaskbarLib
 %add_python3_req_skip distutils.filelist distutils.util py2exe
 
 # internal
@@ -63,15 +58,6 @@ A graphical user interface for the Argyll CMS display calibration utilities.
 # hack to force creating dist/net.displaycal... (missed due pyproject)
 subst "s|create_appdata = |create_appdata = True or |" setup.py
 
-# drop prebuilt modules
-find . -name '*.so' -print -delete
-
-# fix paths
-%if "%_lib" == "lib"
-ln -s ./lib64 DisplayCAL/lib32
-%__subst 's/DisplayCAL\.lib64/DisplayCAL\.lib32/g' DisplayCAL/RealDisplaySizeMM.py
-%endif
-
 %build
 %pyproject_build
 
@@ -82,9 +68,14 @@ mkdir -p %buildroot%_sysconfdir/xdg/autostart/
 # /usr/lib64/python3/site-packages/etc/xdg/autostart/z-displaycal-apply-profiles.desktop
 mv -v %buildroot%python3_sitelibdir/etc/xdg/autostart/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
 rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
+# only used by py2exe to build standalone Windows executable programs but
+# requires setuptools which is not supposed to be installed for runtime
+# see for details: misc/build_windows_installer.cmd
+rm -v %buildroot%python3_sitelibdir/%up_name/freeze.py
+# it's not used for Linux anyway
+rm -v %buildroot%python3_sitelibdir/%up_name/cacert.pem
 
 %files
-%_docdir/%up_name-%version/
 %_sysconfdir/xdg/autostart/z-displaycal-apply-profiles.desktop
 %_bindir/%name
 %_bindir/%name-*
@@ -95,9 +86,18 @@ rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 %python3_sitelibdir/%up_name/
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 %_man1dir/*
-
+%exclude %_docdir/%up_name-%version/
+# https://github.com/eoyilmaz/displaycal-py3/issues/500
+%exclude %python3_sitelibdir/%up_name/dev/
+%exclude %python3_sitelibdir/misc/
+%exclude %python3_sitelibdir/util/
+%exclude %python3_sitelibdir/tests/
+%exclude %_datadir/doc-base/
 
 %changelog
+* Wed Jul 23 2025 Stanislav Levin <slev@altlinux.org> 3.9.16-alt1
+- NMU: 3.9.14 -> 3.9.16 (closes: #55039).
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 3.9.14-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
