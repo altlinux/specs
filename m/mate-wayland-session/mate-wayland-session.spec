@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mate-wayland-session
-Version: 1.28.3
+Version: 1.28.4
 Release: alt1
 
 Summary: MATE wayland session manager
@@ -48,15 +48,17 @@ NOCONFIGURE=1 mate-autogen
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING LICENSE NEWS README TODO
+%doc AUTHORS ChangeLog COPYING LICENSE NEWS README.md TODO
 %_bindir/mate-wayland.sh
 %_bindir/mate-wayland-components.sh
-%_datadir/doc/firedecor/firedecor.config
 %dir %_datadir/firedecor/button-styles/mate
 %_datadir/firedecor/button-styles/mate/*
 %_datadir/glib-2.0/schemas/*.gschema.override
 %_datadir/wayland-sessions/MATE.desktop
 
 %changelog
+* Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt1
+- New version 1.28.4.
+
 * Sat Feb 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.28.3-alt1
 - Initial build for Sisyphus
