@@ -11,7 +11,7 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 1.9.10
+Version: 2.0.0
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -26,7 +26,7 @@ ExcludeArch: i586
 
 # Automatically added by buildreq on Fri Nov 08 2024
 # optimized out: boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libabseil-cpp-devel libabseil-cpp2407.0.0 libgpg-error libstdc++-devel node perl pkg-config sh5 systemd
-BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent
+BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent python3-module-yaml
 BuildRequires: systemd libbpf-devel
 %if_enabled xsk
 BuildRequires: libxdp-devel
@@ -111,6 +111,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Wed Jul 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.0-alt1
+- New version (2.0.0) with rpmgs script.
+
 * Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.10-alt1
 - New version (1.9.10) with rpmgs script.
 - Excluded build on i586.
