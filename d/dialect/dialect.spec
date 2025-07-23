@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name dialect
-%define ver_major 2.5
+%define ver_major 2.6
 %define rdn_name app.drey.Dialect
 
 %def_enable check
@@ -29,10 +29,12 @@ BuildArch: noarch
 %define gi_ver 1.35
 %define gst_ver 1.18
 %define gtk4_ver 4.6
-%define adw_ver 1.5
+%define adw_ver 1.6
 %define pygobject_ver 3.40
 
-Requires: typelib(Gtk) = 4.0 typelib(Soup) = 3.0
+Requires: python3-module-pygobject3
+Requires: typelib(Adw) = 1 typelib(Soup) = 3.0
+Requires: typelib(GtkSource) = 5
 Requires: libgtk4-gir >= %gtk4_ver
 Requires: libgst-plugins1.0-gir >= %gst_ver
 Requires: python3(gtts)
@@ -90,6 +92,9 @@ Features:
 
 
 %changelog
+* Wed Jul 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
