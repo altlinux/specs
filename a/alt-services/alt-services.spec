@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -23,6 +23,7 @@ BuildRequires: qt6-base-common
 BuildRequires: libtoml11-devel
 BuildRequires: boost-devel-headers
 BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: libqtsingleapplication-qt6-devel
 
 Requires: alterator-interface-service >= 0.2.1
 Requires: alterator-manager >= 0.1.25
@@ -56,6 +57,9 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %doc *.md
 
 %changelog
+* Wed Jul 23 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.5-alt1
+- new version (thx Andrey Alekseev)
+
 * Tue Jul 22 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.4-alt1
 - new version (thx Andrey Alekseev)
 
