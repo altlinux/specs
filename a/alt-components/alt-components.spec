@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -49,31 +49,41 @@ Alterator application for managing system components.
 
 %install
 %cmakeinstall_std
-mkdir -p %buildroot%_datadir/alterator/applications
-mkdir -p %buildroot%_datadir/alterator/objects
-mkdir -p %buildroot%_datadir/alterator/backends
-mkdir -p %buildroot%_datadir/polkit-1/actions
-mkdir -p %buildroot%_datadir/dbus-1/interfaces
-
-install -v -p -m 644 -D alterator/components.object %buildroot%_datadir/alterator/objects
-install -v -p -m 644 -D alterator/components-app.application %buildroot%_datadir/alterator/applications
-install -v -p -m 644 -D alterator/components.backend %buildroot%_datadir/alterator/backends
-install -v -p -m 644 -D alterator/components-app.backend %buildroot%_datadir/alterator/backends
-install -v -p -m 644 -D setup/org.altlinux.alterator.components1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%_datadir/dbus-1/interfaces
 
 %check
-find ./alterator/ -type f -exec alterator-entry validate {} \+
+find ./alterator/*.{object,application,backend} -type f -exec alterator-entry validate {} \+
 
 %files
 %_datadir/alterator/applications/*.application
 %_datadir/alterator/backends/*.backend
 %_datadir/alterator/objects/*.object
-%_datadir/polkit-1/actions/org.altlinux.alterator.components1.policy
-%_datadir/dbus-1/interfaces/org.altlinux.alterator.components1.xml
+%_datadir/polkit-1/actions/*.policy
+%_datadir/dbus-1/interfaces/*.xml
 %_bindir/alt-components
 
 %changelog
+* Wed Jul 23 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.0-alt1
+- Change design for dialog of transaction like wizard.
+- Add display of requested and resolved components and packages during
+  application.
+- Add display of specifical error if transaction contains manually installed
+  packages or base components in safe mode.
+- Add ability to retry a transaction in case of failure.
+- Add name and ID combined view mode (Menu Bar -> View).
+- Set safe mode for base section by default.
+- Change display component display-names in wizard instead their
+  identifiers.
+- Fix updating the model if auth is failure.
+- Fix incorrect checking date of last update.
+- Fix expanding of top level after filtering.
+- Fix opening transaction log before auth checking.
+- Fix display of wrong number of installed components for categories
+  during preparation of transaction.
+- Fix reset of view mode after transaction.
+- Fix graphical margins in windows.
+- Fix background color for items in component tree (KDE).
+- Fix l10n of log levels when language is changed (thx Oleg Chagaev).
+
 * Tue Jul 01 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.4.0-alt1
 - Implement integrity preservation (Closes: #52837)
   By default, the ban on deleting packages installed manually is enabled.
@@ -228,3 +238,4 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 
 * Thu Mar 21 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.
+
