@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.135.29
+Version: 6.136.2
 Release: alt1
 
 Summary: A library for property based testing
@@ -82,6 +82,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.136.2-alt1
+- Updated to 6.136.2.
+
 * Mon Jul 14 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.135.29-alt1
 - Updated to 6.135.29.
 
