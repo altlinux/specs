@@ -2,24 +2,20 @@
 %define soname 8
 
 Name: libffi
-Version: 3.4.8
+Version: 3.5.1
 Release: alt1
 Epoch: 1
 
 Summary: Foreign Function Interface library
 License: MIT
 Group: System/Libraries
-URL: http://sourceware.org/libffi
-
-# http://sourceware.org/libffi/%name-%version.tar.gz
+URL: https://sourceware.org/libffi/
+VCS: https://github.com/libffi/libffi
 Source: %name-%version.tar
-# git://git.altlinux.org/gears/l/libffi.git
 Patch: %name-%version-%release.patch
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, /proc, /dev/pts}}
 
-# Automatically added by buildreq on Mon Jan 25 2016
-# optimized out: perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore
 BuildRequires: makeinfo
 
 %description
@@ -103,6 +99,9 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Wed Jul 23 2025 Anton Farygin <rider@altlinux.com> 1:3.5.1-alt1
+- 3.4.0 -> 3.5.1
+
 * Tue May 13 2025 Anton Farygin <rider@altlinux.com> 1:3.4.8-alt1
 - 3.4.7 -> 3.4.8
 
