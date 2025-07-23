@@ -1,71 +1,75 @@
 # vim: set ft=spec : -*- rpm-spec -*-
+%define        _unpackaged_files_terminate_build 1
+%define        nomen yajl
 
-Name: yajl
-Version: 2.1.0
-Release: alt3
+Name:          lib%nomen
+Version:       2.1.0.6
+Release:       alt0.1
 
-Summary: Yet Another JSON Library
-Group: Development/C
-License: BSD
-Url: http://github.com/lloyd/yajl
+Summary:       Yet Another JSON Library
+Group:         Development/C
+License:       BSD
+Url:           https://github.com/lloyd/yajl
+Vcs:           https://github.com/lloyd/yajl.git
 
-Requires: lib%name = %version-%release
-
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-
+Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
+BuildRequires: ctest
 
 %description
 Yet Another JSON Library (YAJL).
 
-%package -n lib%name
-Summary: Yet Another JSON Library
-Group: Development/C
+%package       -n %nomen
+Summary:       Yet Another JSON Library
+Group:         Development/C
 
-%description -n lib%name
+%description   -n %nomen
 Yet Another JSON Library (YAJL).
 
-%package -n lib%name-devel
-Summary: Yet Another JSON Library (development headers)
-Group: Development/C
-Requires: lib%name = %version-%release
+%package       devel
+Summary:       Yet Another JSON Library (development headers)
+Group:         Development/C
 
-%description -n lib%name-devel
+%description   devel
 Development headers for Yet Another JSON Library (YAJL).
 
 %prep
 %setup
-%patch -p1
 
 %build
-%cmake
+%cmake \
+   -DBUILD_SHARED_LIBS=ON \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   %nil
 %cmake_build
 
 %install
 %cmake_install
 
-# Delete static libraries
-rm -f %buildroot%_libdir/*.a
-
 %check
-%cmake_build --target test
+%ctest
 
 %files
+%doc README TODO
+%_libdir/libyajl.so.*
+
+%files         -n %nomen
 %doc README TODO
 %_bindir/json_reformat
 %_bindir/json_verify
 
-%files -n lib%name
-%_libdir/libyajl.so.*
-
-%files -n lib%name-devel
+%files         devel
+%doc README
 %_includedir/yajl
 %_libdir/libyajl.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 23 2025 Pavel Skrylev <majioa@altlinux.org> 2.1.0.6-alt0.1
+- ^ 2.1.0 -> 2.1.0p6
+- ! fixed FTBFS
+
 * Wed Jun 14 2023 Alexander Danilov <admsasha@altlinux.org> 2.1.0-alt3
 - fixes CVE-2023-33460.
 
