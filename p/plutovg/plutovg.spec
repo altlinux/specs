@@ -2,7 +2,7 @@
 %define sover 1
 
 Name: plutovg
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Standalone 2D vector graphics library
@@ -85,6 +85,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_cmakedir/%name
 
 %changelog
+* Wed Jul 23 2025 Nazarov Denis <nenderus@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Mon Jul 14 2025 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 
