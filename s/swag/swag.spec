@@ -3,7 +3,7 @@
 %global import_path github.com/swaggo/swag
 
 Name: swag
-Version: 1.16.4
+Version: 1.16.5
 Release: alt1
 Epoch: 1
 
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1:1.16.5-alt1
+- Updated to 1.16.5.
+
 * Tue Jan 28 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1:1.16.4-alt1
 - Updated to 1.16.4.
 
