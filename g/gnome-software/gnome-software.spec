@@ -40,7 +40,7 @@
 
 Name: gnome-software
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -54,6 +54,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+# https://bugzilla.altlinux.org/55271
+Patch10: %name-48.3-alt-white-list.patch
 
 %define glib_ver 2.76
 %define gtk4_ver 4.13.4
@@ -127,6 +129,7 @@ GNOME Software.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
 
 %build
 %meson \
@@ -202,6 +205,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Jul 19 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1.1
+- applied patch proposed in (ALT #55271)
+
 * Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
 - 48.3
 
