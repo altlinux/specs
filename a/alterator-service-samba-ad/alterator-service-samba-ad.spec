@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -48,6 +48,14 @@ install -pDm 644 %service.bash-completion \
 %_localstatedir/alterator/service/samba-ad/
 
 %changelog
+* Wed Jul 23 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3.1-alt1
+- Edit mode_value in dc provision function
+- Change enum values. Edit service name
+- Remove no_default_diag from service file
+- Disable force deploy
+- Change backend store selection logic
+- Change read_stdin function
+
 * Tue Jul 22 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
 - Move Samba AD service data to /var/lib/alterator/service.
 - Rename service-samba-dc to service-samba-ad.
