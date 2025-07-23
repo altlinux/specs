@@ -22,7 +22,7 @@
 
 
 Name: libsuitesparse
-Version: 7.10.1
+Version: 7.10.3
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
@@ -378,6 +378,9 @@ sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
 %_bindir/suitesparse_mongoose
 
 %changelog
+* Wed Jul 23 2025 Anton Farygin <rider@altlinux.com> 7.10.3-alt1
+- 7.10.1 -> 7.10.3
+
 * Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 7.10.1-alt1
 - 7.9.0 -> 7.10.1
 
