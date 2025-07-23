@@ -13,8 +13,8 @@
 
 # vim:set ft=spec:
 Name: swig
-Version: 4.1.1
-Release: alt8
+Version: 4.3.1
+Release: alt1
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -25,18 +25,11 @@ Url: https://github.com/swig/swig
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-# Upstream patch
-# https://github.com/swig/swig/commit/784dfc917e99429bdbb70fb9dd80c16dfeb73659
-Patch: 0001-CCache-Do-not-rely-on-C89-only-features-in-configure.patch
-
 # Revert https://github.com/swig/swig/commit/5755f399a2e6bd5203eb925a8d525501fec628ab
 Patch1: revert-Eliminate-some-temporary-buffers.patch
 
 # ALT commit 310d524062b544c538977c5e33548889fbb85926
-Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch 
-
-# from Fedora
-Patch3: swig-python-3.12.patch
+Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch
 
 %ifnarch %ix86
 %def_enable testsuite
@@ -249,6 +242,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Jul 22 2025 Anton Midyukov <antohami@altlinux.org> 1:4.3.1-alt1
+- new version 4.3.1
+
 * Sun Jan 28 2024 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt8
 - fix build with python 3.12
 
