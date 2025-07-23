@@ -3,13 +3,15 @@
 
 Name: bitcrook
 Version: 2.3.2
-Release: alt1
+Release: alt2
 Summary: Open-Source Intelligence Apparatus
 License: Apache-2.0
 Group: Networking/Remote access
 Url: https://github.com/ax-i-om/bitcrook
 
 Source0: %name-%version.tar
+Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -19,7 +21,8 @@ Bitcrook is an open-source intelligence apparatus that aims to centralize
 all of the tools necessary to carry out an investigation.
 
 %prep
-%setup -q
+%setup -a 1
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -43,5 +46,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Jul 23 2025 Pavel Shilov <zerospirit@altlinux.org> 2.3.2-alt2
+- Update based on upstream.
+
 * Tue Aug 20 2024 Pavel Shilov <zerospirit@altlinux.org> 2.3.2-alt1
 - initial build for Sisyphus
