@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.2.2
+Version: 0.3
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -10,7 +10,7 @@ Source:  %name-%version.tar
 Group: Office
 
 BuildRequires: gcc-c++ cmake ninja-build
-BuildRequires: libaltcsp-devel libcsppdf-devel
+BuildRequires: libaltcsp-devel libcsppdf-devel >= 0.3-alt1
 BuildRequires: libmupdf-devel
 BuildRequires:  qt6-base-devel qt6-declarative-devel rpm-macros-qt6 qt6-declarative qt6-svg-devel qt6-svg qt6-tools
 
@@ -37,6 +37,14 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Fri Jun 27 2025 Oleg Proskurin <proskur@altlinux.org> 0.3-alt1
+- New features (Closes:#53303):
+  + Dark themes support
+  + Text search
+  + Custom signature stamps
+  + Custom annotation stamps
+  + Transparent stamps support
+
 * Wed Feb 12 2025 Oleg Proskurin <proskur@altlinux.org> 0.2.2-alt1
 - Fix zoom behavior (Closes: #52860, #52859)
 

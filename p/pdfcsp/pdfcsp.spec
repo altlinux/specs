@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pdfcsp
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 Summary: Library for CryptoPro pdf electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
@@ -41,8 +41,8 @@ Summary: Developer headers to use within the Poppler library
 %package -n libcsppdf
 Summary: The shared library for pdf electronic signatures support.
 Group: System/Libraries
-Provides: libcsppdf
-Requires: libaltcsp libsignimage_c_wrapper-devel libqpdf-devel
+Requires: libaltcsp libqpdf-devel
+Requires: libsignimage_c_wrapper-devel >= 0.5-alt1
 %description -n libcsppdf
 The shared library for pdf electronic signatures support.
 
@@ -109,6 +109,7 @@ Command line tools for pdf signatures
 %_includedir/%name/ipc_typedefs.hpp
 %_includedir/%name/cert_common_info.hpp
 %_includedir/%name/logger_utils.hpp
+%_includedir/%name/pdf_annots_object_kit.hpp
 
 %files -n libcspforpoppl-devel
 %_includedir/%name/csp_for_poppl.hpp
@@ -128,7 +129,7 @@ Command line tools for pdf signatures
 %_includedir/%name/acro_form.hpp
 %_includedir/%name/form_x_object.hpp
 %_includedir/%name/image_obj.hpp
-%_includedir/%name/sig_field.hpp
+%_includedir/%name/annotation.hpp
 %_includedir/%name/sig_val.hpp
 %_includedir/%name/pdf_csp_c.hpp
 
@@ -137,6 +138,11 @@ Command line tools for pdf signatures
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Fri Jun 27 2025 Oleg Proskurin <proskur@altlinux.org> 0.3-alt1
+- New features:
+  + Transparent signature stamps embedding
+  + Rubber stamp with underlying URL embedding
+
 * Mon Jan 20 2025 Oleg Proskurin <proskur@altlinux.org> 0.2-alt2
 - Bugfixing:
   + Prohibit the signing of corrupted files (CLI)
