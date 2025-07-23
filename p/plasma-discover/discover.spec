@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.4.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -59,6 +59,7 @@ Patch15: alt-highlight-removed.patch
 Patch16: alt-fix-size-markdown-text.patch
 Patch17: alt-beautify-changelog.patch
 Patch18: alt-notify-small-amount-free-space.patch
+Patch19: alt-3dparty-warning.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -222,6 +223,7 @@ KF6 library
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -348,6 +350,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Jul 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
+- add warning for third party content
+
 * Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
 - new version
 
