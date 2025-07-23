@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.4.3
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -350,6 +350,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Jul 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt3
+- make warning smaller
+
 * Wed Jul 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - add warning for third party content
 
