@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/garethgeorge/backrest
 # git rev-parse --short v%version
-%global commit_hash b885f1ec
+%global commit_hash 7a5030bb
 
 Name: backrest
-Version: 1.7.2
-Release: alt2
+Version: 1.8.1
+Release: alt1
 Summary: Web UI and orchestrator for restic backup
 License: GPL-3.0
 Group: Archiving/Backup
@@ -77,6 +77,9 @@ touch %buildroot%_sysconfdir/backrest/config.json
 %doc LICENSE
 
 %changelog
+* Wed Jul 23 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.8.1-alt1
+- Updated to version 1.8.1.
+
 * Sat Mar 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.2-alt2
 - Fixed cache directory path.
 
