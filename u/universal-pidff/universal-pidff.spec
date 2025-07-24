@@ -1,7 +1,7 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: universal-pidff
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: Universal Force Feedback driver for Linux
@@ -61,5 +61,8 @@ cp -v Kbuild %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Thu Jul 24 2025 Mikhail Tergoev <fidel@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Tue Feb 18 2025 Mikhail Tergoev <fidel@altlinux.org> 0.1.0-alt1
 - Initial build for ALT Sisyphus
