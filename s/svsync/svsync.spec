@@ -4,7 +4,7 @@
 %add_python3_req_skip libsvsync.samdb
 
 Name: svsync
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Sysvol rSync python script
@@ -17,6 +17,7 @@ Provides: /usr/bin/%name
 Provides: /usr/bin/%{name}d
 
 BuildRequires: rpm-build-python3
+Requires: python3-module-paramiko+gssapi
 Requires: python3-module-%name
 
 Source0: %name-%version.tar
@@ -58,6 +59,12 @@ install -Dm0644 dist/%{name}d.timer %buildroot%_unitdir/%{name}d.timer
 install -Dm0644 dist/environment %buildroot%_sysconfdir/sysconfig/%{name}d
 install -Dm0644 completion/%name.sh %buildroot/%_datadir/bash-completion/completions/%name
 
+%post
+%post_systemd %{name}d.service %{name}d.timer
+
+%preun
+%preun_systemd %{name}d.service %{name}d.timer
+
 %files
 %_sbindir/%name
 %_sbindir/%{name}d
@@ -66,13 +73,23 @@ install -Dm0644 completion/%name.sh %buildroot/%_datadir/bash-completion/complet
 %_unitdir/%{name}d.timer
 %python3_sitelibdir/%name/%{name}d
 %python3_sitelibdir/%name/%name
-%config(noreplace) %_sysconfdir/sysconfig/%{name}d
-%dir %attr(0700, root, root) %_cachedir/%name
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name
 %exclude %python3_sitelibdir/%name/%{name}*
+%config(noreplace) %_sysconfdir/sysconfig/%{name}d
+%dir %attr(0700, root, root) %_cachedir/%name/creds
+%dir %attr(0700, root, root) %_cachedir/%name/
 
 %changelog
+* Wed Jul 23 2025 Korney Gedert <kiper@altlinux.org> 1.1-alt1
+- fix: disable some checks due to Samba 4.21
+- fix: samba uses global object for LoadParm
+- fix: add paramiko with gssapi into requires
+- fix: add creds folder to files
+- fix: move cache and config to python3-module-svsync
+- fix: add %post and %preun for service and timer
+- fix: sbin path of svsyncd for service
+
 * Mon Jun 30 2025 Korney Gedert <kiper@altlinux.org> 1.0-alt1
 - Initial release.
