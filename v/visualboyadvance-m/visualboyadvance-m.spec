@@ -1,8 +1,8 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.1.11
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -81,7 +81,7 @@ chmod -x src/wx/rpi.h
     -DENABLE_SDL=ON \
     -DENABLE_WX=ON \
     -DENABLE_FFMPEG=OFF \
-    -DENABLE_LINK=OFF
+    -DENABLE_LINK=ON
 
 export NPROCS=1
 %cmake_build
@@ -120,7 +120,7 @@ cp %buildroot/usr/etc/%{shortname}.cfg %buildroot%_sysconfdir
 %_datadir/locale/pt_BR/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/ru_RU/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/tr/LC_MESSAGES/wxvbam.mo
-%_datadir/locale/zh-Hans/LC_MESSAGES/wxvbam.mo
+#_datadir/locale/zh-Hans/LC_MESSAGES/wxvbam.mo
 %_mandir/man6/visualboyadvance-m.6
 %_mandir/man6/vbam.6
 %_datadir/vbam/vba-over.ini
@@ -131,6 +131,9 @@ cp %buildroot/usr/etc/%{shortname}.cfg %buildroot%_sysconfdir
 
 
 %changelog
+* Thu Jul 24 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Thu May 15 2025 Ilya Mashkin <oddity@altlinux.ru> 2.1.11-alt2
 - Fix FTBFS
 - Temporary ENABLE_LINK=OFF due to a bug in SFML
