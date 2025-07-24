@@ -2,24 +2,22 @@
 %define soname 7.9
 
 Name: opencascade
-Version: 7.9.0
-Release: alt2
+Version: 7.9.1
+Release: alt1
 
 Summary: SDK for development applications dealing with 3D CAD data
-License: LGPL-2.1-only-with-OCCT-exception-1.0
+License: LGPL-2.1-only with OCCT-exception-1.0
 Group: Development/Tools
 Url: http://www.opencascade.org
 VCS: https://git.dev.opencascade.org/repos/occt.git
 
-# Upstream requires a login to download sources. 
+# Upstream requires a login to download sources.
 # https://dev.opencascade.org/release
 # VCS: https://git.dev.opencascade.org/repos/occt.git
 Source: %name-%version.tar
-Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
-Requires: libopencascade%soname = %EVR
 Requires: opencascade-data = %EVR
 
 BuildRequires(pre): cmake
@@ -50,27 +48,640 @@ BuildRequires: zlib-devel
 
 %description
 Open CASCADE Technology (OCCT) is a suite for 3D surface and solid
-modeling, visualization, data exchange and rapid application development. It
-is an excellent platform for development of numerical simulation software
-including CAD/CAM/CAE, AEC and GIS, as well as PDM applications.
+modeling, visualization, data exchange and rapid application
+development. It is an excellent platform for development of numerical
+simulation software including CAD/CAM/CAE, AEC and GIS, as well as PDM
+applications.
 
-%package -n libopencascade%soname
-Summary: Shared libraries of Open CASCADE
+%package -n libTKBin%soname
+Summary: Shared library of Open CASCADE: libTKBin
 Group: System/Libraries
+Obsoletes: libopencascade7.9
 
-%description -n libopencascade%soname
-Shared libraries of Open CASCADE, development platform for 3D modeling and
-numerical simulation applications.
+%description -n libTKBin%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBinL%soname
+Summary: Shared library of Open CASCADE: libTKBinL
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBinL%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBinTObj%soname
+Summary: Shared library of Open CASCADE: libTKBinTObj
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBinTObj%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBinXCAF%soname
+Summary: Shared library of Open CASCADE: libTKBinXCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBinXCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBO%soname
+Summary: Shared library of Open CASCADE: libTKBO
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBO%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBool%soname
+Summary: Shared library of Open CASCADE: libTKBool
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBool%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKBRep%soname
+Summary: Shared library of Open CASCADE: libTKBRep
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKBRep%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKCAF%soname
+Summary: Shared library of Open CASCADE: libTKCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKCDF%soname
+Summary: Shared library of Open CASCADE: libTKCDF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKCDF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDCAF%soname
+Summary: Shared library of Open CASCADE: libTKDCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDE%soname
+Summary: Shared library of Open CASCADE: libTKDE
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDE%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDECascade%soname
+Summary: Shared library of Open CASCADE: libTKDECascade
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDECascade%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDEGLTF%soname
+Summary: Shared library of Open CASCADE: libTKDEGLTF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDEGLTF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDEIGES%soname
+Summary: Shared library of Open CASCADE: libTKDEIGES
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDEIGES%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDEOBJ%soname
+Summary: Shared library of Open CASCADE: libTKDEOBJ
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDEOBJ%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDEPLY%soname
+Summary: Shared library of Open CASCADE: libTKDEPLY
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDEPLY%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDESTEP%soname
+Summary: Shared library of Open CASCADE: libTKDESTEP
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDESTEP%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDESTL%soname
+Summary: Shared library of Open CASCADE: libTKDESTL
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDESTL%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDEVRML%soname
+Summary: Shared library of Open CASCADE: libTKDEVRML
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDEVRML%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKDraw%soname
+Summary: Shared library of Open CASCADE: libTKDraw
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKDraw%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKernel%soname
+Summary: Shared library of Open CASCADE: libTKernel
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKernel%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKExpress%soname
+Summary: Shared library of Open CASCADE: libTKExpress
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKExpress%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKFeat%soname
+Summary: Shared library of Open CASCADE: libTKFeat
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKFeat%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKFillet%soname
+Summary: Shared library of Open CASCADE: libTKFillet
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKFillet%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKG2d%soname
+Summary: Shared library of Open CASCADE: libTKG2d
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKG2d%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKG3d%soname
+Summary: Shared library of Open CASCADE: libTKG3d
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKG3d%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKGeomAlgo%soname
+Summary: Shared library of Open CASCADE: libTKGeomAlgo
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKGeomAlgo%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKGeomBase%soname
+Summary: Shared library of Open CASCADE: libTKGeomBase
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKGeomBase%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKHLR%soname
+Summary: Shared library of Open CASCADE: libTKHLR
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKHLR%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKIVtk%soname
+Summary: Shared library of Open CASCADE: libTKIVtk
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKIVtk%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKIVtkDraw%soname
+Summary: Shared library of Open CASCADE: libTKIVtkDraw
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKIVtkDraw%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKLCAF%soname
+Summary: Shared library of Open CASCADE: libTKLCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKLCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKMath%soname
+Summary: Shared library of Open CASCADE: libTKMath
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKMath%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKMesh%soname
+Summary: Shared library of Open CASCADE: libTKMesh
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKMesh%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKMeshVS%soname
+Summary: Shared library of Open CASCADE: libTKMeshVS
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKMeshVS%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKOffset%soname
+Summary: Shared library of Open CASCADE: libTKOffset
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKOffset%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKOpenGl%soname
+Summary: Shared library of Open CASCADE: libTKOpenGl
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKOpenGl%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKOpenGlTest%soname
+Summary: Shared library of Open CASCADE: libTKOpenGlTest
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKOpenGlTest%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKPrim%soname
+Summary: Shared library of Open CASCADE: libTKPrim
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKPrim%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKQADraw%soname
+Summary: Shared library of Open CASCADE: libTKQADraw
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKQADraw%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKRWMesh%soname
+Summary: Shared library of Open CASCADE: libTKRWMesh
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKRWMesh%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKService%soname
+Summary: Shared library of Open CASCADE: libTKService
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKService%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKShHealing%soname
+Summary: Shared library of Open CASCADE: libTKShHealing
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKShHealing%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKStd%soname
+Summary: Shared library of Open CASCADE: libTKStd
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKStd%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKStdL%soname
+Summary: Shared library of Open CASCADE: libTKStdL
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKStdL%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKTObj%soname
+Summary: Shared library of Open CASCADE: libTKTObj
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKTObj%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKTObjDRAW%soname
+Summary: Shared library of Open CASCADE: libTKTObjDRAW
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKTObjDRAW%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKTopAlgo%soname
+Summary: Shared library of Open CASCADE: libTKTopAlgo
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKTopAlgo%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKTopTest%soname
+Summary: Shared library of Open CASCADE: libTKTopTest
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKTopTest%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKV3d%soname
+Summary: Shared library of Open CASCADE: libTKV3d
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKV3d%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKVCAF%soname
+Summary: Shared library of Open CASCADE: libTKVCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKVCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKViewerTest%soname
+Summary: Shared library of Open CASCADE: libTKViewerTest
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKViewerTest%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXCAF%soname
+Summary: Shared library of Open CASCADE: libTKXCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXDEDRAW%soname
+Summary: Shared library of Open CASCADE: libTKXDEDRAW
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXDEDRAW%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXMesh%soname
+Summary: Shared library of Open CASCADE: libTKXMesh
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXMesh%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXml%soname
+Summary: Shared library of Open CASCADE: libTKXml
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXml%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXmlL%soname
+Summary: Shared library of Open CASCADE: libTKXmlL
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXmlL%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXmlTObj%soname
+Summary: Shared library of Open CASCADE: libTKXmlTObj
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXmlTObj%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXmlXCAF%soname
+Summary: Shared library of Open CASCADE: libTKXmlXCAF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXmlXCAF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSBase%soname
+Summary: Shared library of Open CASCADE: libTKXSBase
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSBase%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAW%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAW
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAW%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWDE%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWDE
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWDE%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWGLTF%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWGLTF
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWGLTF%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWIGES%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWIGES
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWIGES%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWOBJ%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWOBJ
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWOBJ%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWPLY%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWPLY
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWPLY%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWSTEP%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWSTEP
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWSTEP%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWSTL%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWSTL
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWSTL%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
+
+%package -n libTKXSDRAWVRML%soname
+Summary: Shared library of Open CASCADE: libTKXSDRAWVRML
+Group: System/Libraries
+Obsoletes: libopencascade7.9
+
+%description -n libTKXSDRAWVRML%soname
+Shared libraries of Open CASCADE, development platform for 3D modeling
+and numerical simulation applications.
 
 %package devel
 Summary: Development files for Open CASCADE Technology
 Group: Development/C++
-Requires: libopencascade%soname = %EVR
 Provides: OCE-devel = %EVR
 Obsoletes: OCE-devel < %EVR
 
 %description devel
-Development files for Open CASCADE Technology, development platform for 3D
+Development files for Open CASCADE, development platform for 3D
 modeling and numerical simulation applications.
 
 %package data
@@ -99,7 +710,6 @@ This package contains documentation for Open CASCADE.
 
 %prep
 %setup
-%patch1 -p1
 %ifarch %arm
 %patch2 -p2
 %endif
@@ -108,8 +718,9 @@ This package contains documentation for Open CASCADE.
 %endif
 
 %build
-# opencascade does some manual install trickery that does not respect DESTDIR.
-# Make DESTDIR and environment variable that can be passed into the CMake config.
+# opencascade does some manual install trickery that does not respect
+# DESTDIR.  Make DESTDIR and environment variable that can be passed
+# into the CMake config.
 export DESTDIR="%buildroot"
 %cmake_insource -GNinja \
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -128,19 +739,286 @@ mv %buildroot%_bindir/DRAWEXE-* %buildroot%_bindir/DRAWEXE
 # Remove installed files with licenses
 rm -f /usr/share/doc/opencascade/*
 
-%ifarch %e2k
-# error: cpio archive too big - 4252M
-strip %buildroot/usr/lib64/libTK{DESTEP,DEIGES,V3d,GeomAlgo}.so
-%endif
-
 %files
 %_bindir/DRAWEXE
 %_bindir/ExpToCasExe
 %_bindir/ExpToCasExe-%version
 
-%files -n libopencascade%soname
-%_libdir/*.so.%soname
-%_libdir/*.so.%version
+%files -n libTKBin%soname
+%_libdir/libTKBin.so.%soname
+%_libdir/libTKBin.so.%version
+
+%files -n libTKBinL%soname
+%_libdir/libTKBinL.so.%soname
+%_libdir/libTKBinL.so.%version
+
+%files -n libTKBinTObj%soname
+%_libdir/libTKBinTObj.so.%soname
+%_libdir/libTKBinTObj.so.%version
+
+%files -n libTKBinXCAF%soname
+%_libdir/libTKBinXCAF.so.%soname
+%_libdir/libTKBinXCAF.so.%version
+
+%files -n libTKBO%soname
+%_libdir/libTKBO.so.%soname
+%_libdir/libTKBO.so.%version
+
+%files -n libTKBool%soname
+%_libdir/libTKBool.so.%soname
+%_libdir/libTKBool.so.%version
+
+%files -n libTKBRep%soname
+%_libdir/libTKBRep.so.%soname
+%_libdir/libTKBRep.so.%version
+
+%files -n libTKCAF%soname
+%_libdir/libTKCAF.so.%soname
+%_libdir/libTKCAF.so.%version
+
+%files -n libTKCDF%soname
+%_libdir/libTKCDF.so.%soname
+%_libdir/libTKCDF.so.%version
+
+%files -n libTKDCAF%soname
+%_libdir/libTKDCAF.so.%soname
+%_libdir/libTKDCAF.so.%version
+
+%files -n libTKDE%soname
+%_libdir/libTKDE.so.%soname
+%_libdir/libTKDE.so.%version
+
+%files -n libTKDECascade%soname
+%_libdir/libTKDECascade.so.%soname
+%_libdir/libTKDECascade.so.%version
+
+%files -n libTKDEGLTF%soname
+%_libdir/libTKDEGLTF.so.%soname
+%_libdir/libTKDEGLTF.so.%version
+
+%files -n libTKDEIGES%soname
+%_libdir/libTKDEIGES.so.%soname
+%_libdir/libTKDEIGES.so.%version
+
+%files -n libTKDEOBJ%soname
+%_libdir/libTKDEOBJ.so.%soname
+%_libdir/libTKDEOBJ.so.%version
+
+%files -n libTKDEPLY%soname
+%_libdir/libTKDEPLY.so.%soname
+%_libdir/libTKDEPLY.so.%version
+
+%files -n libTKDESTEP%soname
+%_libdir/libTKDESTEP.so.%soname
+%_libdir/libTKDESTEP.so.%version
+
+%files -n libTKDESTL%soname
+%_libdir/libTKDESTL.so.%soname
+%_libdir/libTKDESTL.so.%version
+
+%files -n libTKDEVRML%soname
+%_libdir/libTKDEVRML.so.%soname
+%_libdir/libTKDEVRML.so.%version
+
+%files -n libTKDraw%soname
+%_libdir/libTKDraw.so.%soname
+%_libdir/libTKDraw.so.%version
+
+%files -n libTKernel%soname
+%_libdir/libTKernel.so.%soname
+%_libdir/libTKernel.so.%version
+
+%files -n libTKExpress%soname
+%_libdir/libTKExpress.so.%soname
+%_libdir/libTKExpress.so.%version
+
+%files -n libTKFeat%soname
+%_libdir/libTKFeat.so.%soname
+%_libdir/libTKFeat.so.%version
+
+%files -n libTKFillet%soname
+%_libdir/libTKFillet.so.%soname
+%_libdir/libTKFillet.so.%version
+
+%files -n libTKG2d%soname
+%_libdir/libTKG2d.so.%soname
+%_libdir/libTKG2d.so.%version
+
+%files -n libTKG3d%soname
+%_libdir/libTKG3d.so.%soname
+%_libdir/libTKG3d.so.%version
+
+%files -n libTKGeomAlgo%soname
+%_libdir/libTKGeomAlgo.so.%soname
+%_libdir/libTKGeomAlgo.so.%version
+
+%files -n libTKGeomBase%soname
+%_libdir/libTKGeomBase.so.%soname
+%_libdir/libTKGeomBase.so.%version
+
+%files -n libTKHLR%soname
+%_libdir/libTKHLR.so.%soname
+%_libdir/libTKHLR.so.%version
+
+%files -n libTKIVtk%soname
+%_libdir/libTKIVtk.so.%soname
+%_libdir/libTKIVtk.so.%version
+
+%files -n libTKIVtkDraw%soname
+%_libdir/libTKIVtkDraw.so.%soname
+%_libdir/libTKIVtkDraw.so.%version
+
+%files -n libTKLCAF%soname
+%_libdir/libTKLCAF.so.%soname
+%_libdir/libTKLCAF.so.%version
+
+%files -n libTKMath%soname
+%_libdir/libTKMath.so.%soname
+%_libdir/libTKMath.so.%version
+
+%files -n libTKMesh%soname
+%_libdir/libTKMesh.so.%soname
+%_libdir/libTKMesh.so.%version
+
+%files -n libTKMeshVS%soname
+%_libdir/libTKMeshVS.so.%soname
+%_libdir/libTKMeshVS.so.%version
+
+%files -n libTKOffset%soname
+%_libdir/libTKOffset.so.%soname
+%_libdir/libTKOffset.so.%version
+
+%files -n libTKOpenGl%soname
+%_libdir/libTKOpenGl.so.%soname
+%_libdir/libTKOpenGl.so.%version
+
+%files -n libTKOpenGlTest%soname
+%_libdir/libTKOpenGlTest.so.%soname
+%_libdir/libTKOpenGlTest.so.%version
+
+%files -n libTKPrim%soname
+%_libdir/libTKPrim.so.%soname
+%_libdir/libTKPrim.so.%version
+
+%files -n libTKQADraw%soname
+%_libdir/libTKQADraw.so.%soname
+%_libdir/libTKQADraw.so.%version
+
+%files -n libTKRWMesh%soname
+%_libdir/libTKRWMesh.so.%soname
+%_libdir/libTKRWMesh.so.%version
+
+%files -n libTKService%soname
+%_libdir/libTKService.so.%soname
+%_libdir/libTKService.so.%version
+
+%files -n libTKShHealing%soname
+%_libdir/libTKShHealing.so.%soname
+%_libdir/libTKShHealing.so.%version
+
+%files -n libTKStd%soname
+%_libdir/libTKStd.so.%soname
+%_libdir/libTKStd.so.%version
+
+%files -n libTKStdL%soname
+%_libdir/libTKStdL.so.%soname
+%_libdir/libTKStdL.so.%version
+
+%files -n libTKTObj%soname
+%_libdir/libTKTObj.so.%soname
+%_libdir/libTKTObj.so.%version
+
+%files -n libTKTObjDRAW%soname
+%_libdir/libTKTObjDRAW.so.%soname
+%_libdir/libTKTObjDRAW.so.%version
+
+%files -n libTKTopAlgo%soname
+%_libdir/libTKTopAlgo.so.%soname
+%_libdir/libTKTopAlgo.so.%version
+
+%files -n libTKTopTest%soname
+%_libdir/libTKTopTest.so.%soname
+%_libdir/libTKTopTest.so.%version
+
+%files -n libTKV3d%soname
+%_libdir/libTKV3d.so.%soname
+%_libdir/libTKV3d.so.%version
+
+%files -n libTKVCAF%soname
+%_libdir/libTKVCAF.so.%soname
+%_libdir/libTKVCAF.so.%version
+
+%files -n libTKViewerTest%soname
+%_libdir/libTKViewerTest.so.%soname
+%_libdir/libTKViewerTest.so.%version
+
+%files -n libTKXCAF%soname
+%_libdir/libTKXCAF.so.%soname
+%_libdir/libTKXCAF.so.%version
+
+%files -n libTKXDEDRAW%soname
+%_libdir/libTKXDEDRAW.so.%soname
+%_libdir/libTKXDEDRAW.so.%version
+
+%files -n libTKXMesh%soname
+%_libdir/libTKXMesh.so.%soname
+%_libdir/libTKXMesh.so.%version
+
+%files -n libTKXml%soname
+%_libdir/libTKXml.so.%soname
+%_libdir/libTKXml.so.%version
+
+%files -n libTKXmlL%soname
+%_libdir/libTKXmlL.so.%soname
+%_libdir/libTKXmlL.so.%version
+
+%files -n libTKXmlTObj%soname
+%_libdir/libTKXmlTObj.so.%soname
+%_libdir/libTKXmlTObj.so.%version
+
+%files -n libTKXmlXCAF%soname
+%_libdir/libTKXmlXCAF.so.%soname
+%_libdir/libTKXmlXCAF.so.%version
+
+%files -n libTKXSBase%soname
+%_libdir/libTKXSBase.so.%soname
+%_libdir/libTKXSBase.so.%version
+
+%files -n libTKXSDRAW%soname
+%_libdir/libTKXSDRAW.so.%soname
+%_libdir/libTKXSDRAW.so.%version
+
+%files -n libTKXSDRAWDE%soname
+%_libdir/libTKXSDRAWDE.so.%soname
+%_libdir/libTKXSDRAWDE.so.%version
+
+%files -n libTKXSDRAWGLTF%soname
+%_libdir/libTKXSDRAWGLTF.so.%soname
+%_libdir/libTKXSDRAWGLTF.so.%version
+
+%files -n libTKXSDRAWIGES%soname
+%_libdir/libTKXSDRAWIGES.so.%soname
+%_libdir/libTKXSDRAWIGES.so.%version
+
+%files -n libTKXSDRAWOBJ%soname
+%_libdir/libTKXSDRAWOBJ.so.%soname
+%_libdir/libTKXSDRAWOBJ.so.%version
+
+%files -n libTKXSDRAWPLY%soname
+%_libdir/libTKXSDRAWPLY.so.%soname
+%_libdir/libTKXSDRAWPLY.so.%version
+
+%files -n libTKXSDRAWSTEP%soname
+%_libdir/libTKXSDRAWSTEP.so.%soname
+%_libdir/libTKXSDRAWSTEP.so.%version
+
+%files -n libTKXSDRAWSTL%soname
+%_libdir/libTKXSDRAWSTL.so.%soname
+%_libdir/libTKXSDRAWSTL.so.%version
+
+%files -n libTKXSDRAWVRML%soname
+%_libdir/libTKXSDRAWVRML.so.%soname
+%_libdir/libTKXSDRAWVRML.so.%version
 
 %files devel
 %_bindir/*.sh
@@ -159,6 +1037,12 @@ strip %buildroot/usr/lib64/libTK{DESTEP,DEIGES,V3d,GeomAlgo}.so
 %_datadir/doc/opencascade
 
 %changelog
+* Thu Jul 24 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.1-alt1
+- Update license tag for correct parsing exception.
+- Split libraries on related subpackages.
+- Update e2k patch (by ilyakurdyukov@).
+- New version.
+
 * Mon Jul 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.9.0-alt2
 - e2k build fix
 
