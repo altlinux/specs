@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.31.3
+Version: 2.32.0
 Release: alt1
 
 Summary: Agent for portainer
@@ -40,6 +40,10 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Thu Jul 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.32.0-alt1
+- New version 2.32.0 (Fixes: CVE-2025-53547, CVE-2025-22874,
+  CVE-2025-22781).
+
 * Mon Jul 14 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.3-alt1
 - New version 2.31.3.
 
