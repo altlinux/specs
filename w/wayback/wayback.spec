@@ -10,7 +10,7 @@
 
 Name: %_name
 Version: %ver_major
-Release: alt0.3
+Release: alt1
 
 Summary: A way to run X DE using Wayland components
 License: MIT
@@ -77,6 +77,9 @@ capabilities to host a rootful Xwayland server.
 %doc README.*
 
 %changelog
+* Thu Jul 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt1
+- updated to 0.1-2-gd1642f0
+
 * Wed Jul 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt0.3
 - updated to aa3b607
 
