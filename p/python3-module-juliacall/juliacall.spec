@@ -1,7 +1,7 @@
 %define modulename juliacall
 
 Name:    python3-module-%modulename
-Version: 0.9.25
+Version: 0.9.26
 Release: alt1
 
 Summary: Python and Julia in harmony
@@ -37,5 +37,8 @@ BuildArch: noarch
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.26-alt1
+- Automatically updated to 0.9.26.
+
 * Thu Jul 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.25-alt1
 - Initial build for Sisyphus
