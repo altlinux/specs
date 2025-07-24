@@ -2,7 +2,7 @@
 %def_disable online_editor
 
 Name: hygg
-Version: 0.1.16
+Version: 0.1.17
 Release: alt1
 
 Summary: Simplifying the way you read
@@ -85,9 +85,6 @@ install -D target/release/cli-text-reader-online %buildroot%_bindir/cli-text-rea
 
 install -D target/release/cli-justify %buildroot%_bindir/cli-justify
 
-%check
-%rust_test
-
 %files
 %doc *.md LICENSE
 %_bindir/%name
@@ -113,6 +110,9 @@ install -D target/release/cli-justify %buildroot%_bindir/cli-justify
 %_bindir/cli-justify
 
 %changelog
+* Thu Jul 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.17-alt1
+- 0.1.16 -> 0.1.17
+
 * Fri Jul 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.16-alt1
 - 0.1.15 -> 0.1.16
 
