@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 # see _pysndfile_version in _pysndfile.pyx
-Version: 1.4.7
+Version: 1.5.0
 Release: alt1
 
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
@@ -62,6 +62,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
 - 1.4.7
 
