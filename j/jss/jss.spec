@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-%define java_home %_jvmdir/jre
 
 %def_with check
+# used by mvn_build
+%def_without javadoc
 
-%define nss_version 3.66
-%define java_version 17
+%define nss_version 3.97
+%define java_version 21
 
 # jss was renamed dogtag-jss
 %define jss_rebranded_version 5.2.0-alt1
 
 Name: jss
-Version: 5.4.2
-Release: alt3
+Version: 5.6.0
+Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -20,33 +21,35 @@ Url: https://github.com/dogtagpki/jss
 Vcs: https://github.com/dogtagpki/jss
 
 Source0: %name-%version.tar
-Source1: jss.watch
 Patch: %name-%version-alt.patch
 
 # - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
 # - ALT's Java 17 is not built for armh
 ExcludeArch: %ix86 armh
 
-BuildRequires(pre): rpm-macros-java
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: jaxb-api
-BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: java-devel >= %java_version
-BuildRequires: jpackage-generic-compat
 BuildRequires: libnss-devel >= %nss_version
 BuildRequires: libnspr-devel
-BuildRequires: apache-commons-lang3
-BuildRequires: slf4j
-BuildRequires: slf4j-jdk14
+
+# java deps
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-devel >= %java_version
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-jdk14)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires: mvn(org.opentest4j:opentest4j)
+# tomcat
+BuildRequires: mvn(org.apache.tomcat:tomcat-catalina) >= 9.0.62
+BuildRequires: mvn(org.apache.tomcat:tomcat-coyote) >= 9.0.62
+BuildRequires: mvn(org.apache.tomcat:tomcat-juli) >= 9.0.62
 
 # deps for tools/reproducible_jar.sh
 BuildRequires: zip
 BuildRequires: unzip
-
-# not an optional though used only in tests
-BuildRequires: junit
 
 %if_with check
 BuildRequires: ctest
@@ -64,10 +67,6 @@ Group: System/Libraries
 
 Provides: jss = %EVR
 Obsoletes: jss < %jss_rebranded_version
-
-Requires: apache-commons-lang3
-Requires: jaxb-api
-Requires: slf4j
 Requires: libnss >= %nss_version
 Requires: java >= %java_version
 
@@ -76,11 +75,70 @@ Java Security Services (JSS) is a java native interface which provides a bridge
 for java-based applications to use native Network Security Services (NSS).
 This only works with gcj. Other JREs require that JCE providers be signed.
 
+%package -n dogtag-jss-tomcat
+Summary: Java Security Services (JSS) Connector for Tomcat
+Group: System/Libraries
+# tomcatjss merged to jss
+Provides: tomcatjss = %EVR
+Obsoletes: tomcatjss <= 8.4.1-alt1
+
+%description -n dogtag-jss-tomcat
+JSS Connector for Tomcat is a Java Secure Socket Extension (JSSE)
+module for Apache Tomcat that uses Java Security Services (JSS),
+a Java interface to Network Security Services (NSS).
+
+%package -n dogtag-jss-tools
+Summary: Java Security Services (JSS) Tools
+Group: System/Libraries
+# previously sslget, p12tool and p7tool have been packaged in dogtag-pki-tools
+Conflicts: dogtag-pki-tools <= 11.4.3-alt5
+
+%description -n dogtag-jss-tools
+This package contains JSS tools.
+
 %prep
 %setup
 %patch -p1
+# disable native modules since they will be built by CMake
+%pom_disable_module native
+%pom_disable_module symkey
+# do not ship examples
+%pom_disable_module examples
+# flatten-maven-plugin is not available in RPM
+%pom_remove_plugin org.codehaus.mojo:flatten-maven-plugin
+
+# specify Maven artifact locations
+%mvn_file org.dogtagpki.jss:jss-tomcat jss/jss-tomcat
+%mvn_file org.dogtagpki.jss:jss-tomcat-9.0 jss/jss-tomcat-9.0
+
+# specify Maven artifact packages
+%mvn_package org.dogtagpki.jss:jss-tomcat jss-tomcat
+%mvn_package org.dogtagpki.jss:jss-tomcat-9.0 jss-tomcat
 
 %build
+# build Java code, run Java tests with Maven
+%mvn_build
+
+# create links to Maven-built classes for CMake
+mkdir -p %_cmake__builddir/classes/jss/
+ln -sf ../../../base/target/classes/org %_cmake__builddir/classes/jss
+
+mkdir -p %_cmake__builddir/classes/tests/
+ln -sf ../../../base/target/test-classes/org %_cmake__builddir/classes/tests
+
+# create links to Maven-built JAR files for CMake
+ln -sf ../base/target/jss.jar %_cmake__builddir
+ln -sf ../base/target/jss-tests.jar %_cmake__builddir
+
+# create links to Maven-built headers for CMake
+mkdir -p %_cmake__builddir/include/jss/
+ln -sf ../../../base/target/include/_jni %_cmake__builddir/include/jss/_jni
+
+# mark Maven-built targets so that CMake will not rebuild them
+mkdir -p %_cmake__builddir/.targets/
+touch %_cmake__builddir/.targets/finished_generate_java
+touch %_cmake__builddir/.targets/finished_tests_generate_java
+
 # Enable compiler optimizations and disable debugging code
 # NOTE: If you ever need to create a debug build with optimizations disabled
 # just comment out this line and change in the %%install section below the
@@ -88,12 +146,10 @@ This only works with gcj. Other JREs require that JCE providers be signed.
 export BUILD_OPT=1
 
 %cmake \
-    -DJAVA_HOME=%java_home \
     -DVERSION=%version \
-    -DJNI_DIR=%_jnidir \
     -DLIB_DIR=%_libdir \
+    -DWITH_JAVA=FALSE \
     -DWITH_JAVADOC=FALSE \
-    ..
 
 %cmake_build --target all
 
@@ -104,30 +160,45 @@ export BUILD_OPT=1
 cat > %_cmake__builddir/CTestCustom.cmake <<EOF
 set(CTEST_CUSTOM_TESTS_IGNORE
    Enable_FipsMODE
-   # NSS 3.81 failures
-   # https://github.com/dogtagpki/jss/issues/882
-   SSLClientAuth
-   SSLEngine_RSA
-   TestBufferPRFDSSL_RSA
-   JSS_Test_BufferPRFD
-   SSLClientAuth_FIPSMODE
-   SSLEngine_RSA_FIPSMODE
 )
 EOF
 CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %endif
 
 %install
+%mvn_install
 %cmake_install
 
-%files -n dogtag-jss
+# install jss.jar
+mkdir -p %buildroot%_javadir/jss/
+install -t %buildroot%_javadir/jss/ base/target/jss.jar
+# create links for backward compatibility (used by dogtag-pki)
+mkdir -p %buildroot%_jnidir/
+ln -sr -t %buildroot{%_jnidir,%_javadir/jss/jss.jar}
+mkdir -p %buildroot%_libdir/jss/
+ln -sr -t %buildroot{%_libdir/jss,%_javadir/jss/jss.jar}
+
+%files -n dogtag-jss -f .mfiles
+%_javadir/jss/jss.jar
 %dir %_libdir/jss
 %_libdir/jss/jss.jar
 %_libdir/jss/libjss.so
 %_libdir/jss/libjss-symkey.so
 %_jnidir/jss.jar
+# don't ship tests
+%exclude %_datadir/jss/tests/
+
+%files -n dogtag-jss-tomcat -f .mfiles-jss-tomcat
+
+%files -n dogtag-jss-tools
+%_bindir/sslget
+%_bindir/p12tool
+%_bindir/p7tool
 
 %changelog
+* Fri Feb 21 2025 Stanislav Levin <slev@altlinux.org> 5.6.0-alt1
+- 5.4.2 -> 5.6.0.
+
 * Tue Jul 30 2024 Stanislav Levin <slev@altlinux.org> 5.4.2-alt3
 - Fixed FTBFS (NSS 3.101).
 

@@ -1,16 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
+# used by mvn_build
+%def_without javadoc
+
 %define _localstatedir  %_var
 
 # ldapjdk was renamed dogtag-ldapjdk
 %define ldapjdk_rebranded_version 5.2.0-alt1
 
-%define jss_version 5.2.0
-%define java_version 17
+%define jss_version 5.6.0
+%define java_version 21
 
 Name: ldapjdk
 Epoch: 1
-Version: 5.4.1
+Version: 5.6.0
 Release: alt1
 
 Summary: LDAP SDK
@@ -26,28 +29,22 @@ Patch: %name-%version-alt.patch
 ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: rpm-build-java
-
-BuildRequires: /proc
-BuildRequires: ant
 BuildRequires: java-devel >= %java_version
-BuildRequires: javapackages-local
-BuildRequires: javapackages-tools
-BuildRequires: dogtag-jss >= %jss_version
+BuildRequires: maven-local
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-jdk14)
+BuildRequires: mvn(org.dogtagpki.jss:jss-base) >= %jss_version
 
 %description
 The Mozilla LDAP SDKs enable you to write applications which access,
 manage, and update the information stored in an LDAP directory.
 
-################################################################################
 %package -n dogtag-ldapjdk
 Summary: LDAP SDK
 Group: System/Libraries
 
 Provides: ldapjdk = %EVR
 Obsoletes: ldapjdk < %ldapjdk_rebranded_version
-Provides: ldapsdk = 1:%version-%release
-Obsoletes: ldapsdk <= 1:4.18-alt1_2jpp6
 
 Requires: dogtag-jss >= %jss_version
 Requires: java >= %java_version
@@ -56,76 +53,31 @@ Requires: java >= %java_version
 The Mozilla LDAP SDKs enable you to write applications which access,
 manage, and update the information stored in an LDAP directory.
 
-################################################################################
-%package -n dogtag-ldapjdk-javadoc
-Group: Development/Documentation
-
-Summary: Javadoc for dogtag-ldapjdk
-BuildArch: noarch
-
-Provides: ldapjdk-javadoc = %EVR
-Obsoletes: ldapjdk-javadoc < %ldapjdk_rebranded_version
-
-%description -n dogtag-ldapjdk-javadoc
-Javadoc for dogtag-ldapjdk
-
-################################################################################
 %prep
-################################################################################
-
 %setup
 %patch -p1
+# flatten-maven-plugin is not available in RPM
+%pom_remove_plugin org.codehaus.mojo:flatten-maven-plugin
 
-################################################################################
+# specify Maven artifact locations
+%mvn_file org.dogtagpki.ldap-sdk:ldapjdk ldapjdk/ldapjdk ldapjdk
+%mvn_file org.dogtagpki.ldap-sdk:ldapbeans ldapjdk/ldapbeans ldapbeans
+%mvn_file org.dogtagpki.ldap-sdk:ldapfilter ldapjdk/ldapfilter ldapfilt
+%mvn_file org.dogtagpki.ldap-sdk:ldapsp ldapjdk/ldapsp ldapsp
+%mvn_file org.dogtagpki.ldap-sdk:ldaptools ldapjdk/ldaptools ldaptools
+
 %build
-################################################################################
+%mvn_build
 
-cd java-sdk
-%ant -v dist
-
-################################################################################
 %install
-################################################################################
+%mvn_install
 
-install -d -m 755 %buildroot%_javadir
-install -m 644 java-sdk/dist/packages/%name.jar %buildroot%_javadir/%name.jar
-install -m 644 java-sdk/dist/packages/ldapsp.jar %buildroot%_javadir/ldapsp.jar
-install -m 644 java-sdk/dist/packages/ldapfilt.jar %buildroot%_javadir/ldapfilt.jar
-install -m 644 java-sdk/dist/packages/ldapbeans.jar %buildroot%_javadir/ldapbeans.jar
-install -m 644 java-sdk/dist/packages/ldaptools.jar %buildroot%_javadir/ldaptools.jar
+%files -n dogtag-ldapjdk -f .mfiles
 
-mkdir -p %buildroot%_mavenpomdir
-install -pm 644 java-sdk/ldapjdk/pom.xml %buildroot%_mavenpomdir/JPP-ldapjdk.pom
-install -pm 644 java-sdk/ldapfilter/pom.xml %buildroot%_mavenpomdir/JPP-ldapfilter.pom
-install -pm 644 java-sdk/ldapbeans/pom.xml %buildroot%_mavenpomdir/JPP-ldapbeans.pom
-install -pm 644 java-sdk/ldapsp/pom.xml %buildroot%_mavenpomdir/JPP-ldapsp.pom
-install -pm 644 java-sdk/ldaptools/pom.xml %buildroot%_mavenpomdir/JPP-ldaptools.pom
-
-install -d -m 755 %buildroot%_javadocdir/%name
-cp -r java-sdk/dist/doc/* %buildroot%_javadocdir/%name
-ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
-
-################################################################################
-%files -n dogtag-ldapjdk
-%_javadir/%name.jar
-%_javadir/ldapsp.jar
-%_javadir/ldapfilt.jar
-%_javadir/ldapbeans.jar
-%_javadir/ldapsdk.jar
-%_javadir/ldaptools.jar
-%_mavenpomdir/JPP-ldapjdk.pom
-%_mavenpomdir/JPP-ldapsp.pom
-%_mavenpomdir/JPP-ldapfilter.pom
-%_mavenpomdir/JPP-ldapbeans.pom
-%_mavenpomdir/JPP-ldaptools.pom
-
-################################################################################
-%files -n dogtag-ldapjdk-javadoc
-%dir %_javadocdir/%name
-%_javadocdir/%name/*
-
-################################################################################
 %changelog
+* Thu Feb 27 2025 Stanislav Levin <slev@altlinux.org> 1:5.6.0-alt1
+- 5.4.1 -> 5.6.0.
+
 * Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 1:5.4.1-alt1
 - 5.2.0 -> 5.4.1.
 

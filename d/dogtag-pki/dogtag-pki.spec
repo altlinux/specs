@@ -2,27 +2,25 @@
 
 %def_with check
 %def_without javadoc
-%def_without pylint
 
 %define pki_username pkiuser
 %define pki_groupname pkiuser
 %define pki_homedir %_localstatedir/pki
 
-%define java_home           %_jvmdir/jre
+%define java_home %_jvmdir/jre
 
-%define tomcatjss_version 8.2.0
-%define ldapjdk_version 5.2.0
+%define jss_version 5.6.0
+%define ldapjdk_version 5.6.0
+%define tomcat_version 9.0.62
 
-# https://bugzilla.altlinux.org/40727
-%define java_version 17
+%define java_version 21
 
 # first dogtag-pki renamed from pki-core
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.4.3
-Release: alt6
-
+Version: 11.6.1
+Release: alt1
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
 Group: System/Servers
@@ -37,58 +35,69 @@ Patch: %name-%version-alt.patch
 ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-java
 
-BuildRequires: java-devel >= %java_version
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: sh4
-BuildRequires: apache-commons-cli
-BuildRequires: apache-commons-httpclient
-BuildRequires: apache-commons-net
-BuildRequires: apache-commons-logging
-
 BuildRequires: libldap-devel
 BuildRequires: libapr1-devel
 
 BuildRequires: libnss-devel
-BuildRequires: zlib-devel
 
-BuildRequires: dogtag-ldapjdk >= %ldapjdk_version
-BuildRequires: pki-resteasy
-BuildRequires: dogtag-tomcatjss >= %tomcatjss_version
-BuildRequires: slf4j-jdk14
-BuildRequires: junit
+# java deps
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-devel >= %java_version
+BuildRequires: maven-local
+# https://bugzilla.altlinux.org/53331
+# BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api) >= %tomcat_version
+BuildRequires: tomcat-servlet-4.0-api >= %tomcat_version
+BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(commons-net:commons-net)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.httpcomponents:httpclient)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(xml-apis:xml-apis)
+BuildRequires: mvn(xml-resolver:xml-resolver)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires: mvn(jakarta.annotation:jakarta.annotation-api)
+BuildRequires: mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires: mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations)
+BuildRequires: mvn(com.fasterxml.jackson.jaxrs:jackson-jaxrs-base)
+BuildRequires: mvn(com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider)
+BuildRequires: mvn(org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec)
+BuildRequires: mvn(org.jboss.logging:jboss-logging)
+BuildRequires: mvn(org.jboss.resteasy:resteasy-jaxrs)
+BuildRequires: mvn(org.jboss.resteasy:resteasy-client)
+BuildRequires: mvn(org.jboss.resteasy:resteasy-jackson2-provider)
+BuildRequires: mvn(org.jboss.resteasy:resteasy-servlet-initializer)
+BuildRequires: mvn(org.apache.tomcat:tomcat-catalina) >= %tomcat_version
+BuildRequires: mvn(org.apache.tomcat:tomcat-jaspic-api) >= %tomcat_version
+BuildRequires: mvn(org.apache.tomcat:tomcat-util-scan) >= %tomcat_version
+BuildRequires: mvn(org.dogtagpki.jss:jss-base) >= %jss_version
+BuildRequires: mvn(org.dogtagpki.jss:jss-tomcat) >= %jss_version
+BuildRequires: mvn(org.dogtagpki.ldap-sdk:ldapjdk) >= %ldapjdk_version
 
+# python deps
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 # build dependency to build man pages
 BuildRequires: go-md2man
-
 BuildRequires: python3-module-sphinx
-
-%if_with check
-BuildRequires: /dev/shm
-BuildRequires: ctest
-BuildRequires: nss-utils
-BuildRequires: openssl
-BuildRequires: python3-module-flake8
-# tests/tox.ini
-BuildRequires: python3-module-ldap
-BuildRequires: python3-module-lxml
+# used by sphinx to generate docs and mans
 BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-six
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-pytest
-#
-BuildRequires: python3-module-pyflakes
-BuildRequires: python3-module-selinux
-%if_with pylint
-BuildRequires: python3-module-pylint
-%endif
-%endif
+BuildRequires: python3-module-ldap
+
+# used by dogtag-pki-server-theme
+BuildRequires: fonts-font-awesome
 
 # mark upgrade code as Python3 code
 %add_python3_path %_datadir/pki/upgrade/
@@ -137,10 +146,6 @@ Dogtag PKI consists of the following components:
 Summary: Dogtag PKI Base Package
 Group: System/Base
 Requires: python3-module-dogtag-pki
-Provides: pki-common = %EVR
-Provides: pki-util = %EVR
-Obsoletes: pki-common < %EVR
-Obsoletes: pki-util < %EVR
 Provides: pki-base = %EVR
 Obsoletes: pki-base < %pki_rebranded_version
 Requires(post): python3-module-dogtag-pki
@@ -181,10 +186,6 @@ Requires: dogtag-pki-java
 Requires: openldap-clients
 Requires: nss-utils
 Requires: p11-kit-trust
-Provides: pki-native-tools = %EVR
-Provides: pki-java-tools = %EVR
-Obsoletes: pki-native-tools < %EVR
-Obsoletes: pki-java-tools < %EVR
 Provides: pki-tools = %EVR
 Obsoletes: pki-tools < %pki_rebranded_version
 
@@ -200,17 +201,8 @@ Summary: Dogtag PKI Server Package
 Group: System/Base
 Requires: dogtag-pki-tools
 Requires: openssl
-# https://bugzilla.altlinux.org/40819
-Requires: tomcat >= 1:9.0.50-alt2_2jpp11
-Requires: dogtag-tomcatjss >= %tomcatjss_version
-
-Provides: pki-deploy = %EVR
-Provides: pki-setup = %EVR
-Provides: pki-silent = %EVR
-
-Obsoletes: pki-deploy < %EVR
-Obsoletes: pki-setup < %EVR
-Obsoletes: pki-silent < %EVR
+Requires: tomcat >= %tomcat_version
+Requires: mvn(org.dogtagpki.jss:jss-tomcat) >= %jss_version
 Provides: pki-server = %EVR
 Obsoletes: pki-server < %pki_rebranded_version
 
@@ -339,11 +331,6 @@ Requires: dogtag-pki-server
 Provides: pki-tps = %EVR
 Obsoletes: pki-tps < %pki_rebranded_version
 
-Provides: pki-tps-tomcat = %EVR
-Provides: pki-tps-client = %EVR
-Obsoletes: pki-tps-tomcat < %EVR
-Obsoletes: pki-tps-client < %EVR
-
 %description -n dogtag-pki-tps
 The Token Processing System (TPS) is an optional Dogtag PKI subsystem that acts
 as a Registration Authority (RA) for authenticating and processing
@@ -368,13 +355,6 @@ Requires: javapackages-tools
 Provides: pki-javadoc = %EVR
 Obsoletes: pki-javadoc < %pki_rebranded_version
 
-Provides: pki-util-javadoc = %EVR
-Provides: pki-java-tools-javadoc = %EVR
-Provides: pki-common-javadoc = %EVR
-Obsoletes: pki-util-javadoc < %EVR
-Obsoletes: pki-java-tools-javadoc < %EVR
-Obsoletes: pki-common-javadoc < %EVR
-
 %description -n dogtag-pki-javadoc
 This package contains Dogtag PKI API documentation.
 %endif
@@ -394,6 +374,7 @@ Summary: Dogtag PKI Server Theme Package
 Group: Networking/Other
 Provides: pki-server-theme = %EVR
 Obsoletes: pki-server-theme < %EVR
+Requires: fonts-font-awesome
 
 %description -n dogtag-pki-server-theme
 This Dogtag PKI Server Theme Package contains textual and graphical user
@@ -405,47 +386,76 @@ interface for Dogtag PKI Server.
 # change port from 8080 to 8090
 # Port 8080 is used by alterator-ahttpd-server
 grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2/g'
+%python3_fix_shebang .
 
-# dogtag-pki 11.4.0 dropped its own server.xml config in favour of tomcat's one,
-# that configures unsecure Connector with 8080 port by default.
-sed -i 's/@ALT_TOMCAT_UNSECURE_PORT@/8080/' \
-    base/server/python/pki/server/deployment/__init__.py
+# remove plugins not needed to build RPM
+%pom_remove_plugin org.codehaus.mojo:flatten-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-deploy-plugin
+%pom_remove_plugin com.github.github:site-maven-plugin
 
-# replace python2 shebangs with python3 to fix unmets
-grep -rlsm1 '^#!/usr/bin/python[[:space:]]*$' | \
-xargs sed -i '1s|^#!/usr/bin/python[[:space:]]*$|#!/usr/bin/python3|'
+# pki-console is disabled
+%pom_disable_module console base
+
+# specify Maven artifact locations
+%mvn_file org.dogtagpki.pki:pki-common pki/pki-common
+%mvn_file org.dogtagpki.pki:pki-tools pki/pki-tools
+%mvn_file org.dogtagpki.pki:pki-server pki/pki-server
+%mvn_file org.dogtagpki.pki:pki-server-webapp pki/pki-server-webapp
+%mvn_file org.dogtagpki.pki:pki-tomcat pki/pki-tomcat
+%mvn_file org.dogtagpki.pki:pki-tomcat-9.0 pki/pki-tomcat-9.0
+%mvn_file org.dogtagpki.pki:pki-ca pki/pki-ca
+%mvn_file org.dogtagpki.pki:pki-kra pki/pki-kra
+%mvn_file org.dogtagpki.pki:pki-ocsp pki/pki-ocsp
+%mvn_file org.dogtagpki.pki:pki-tks pki/pki-tks
+%mvn_file org.dogtagpki.pki:pki-tps pki/pki-tps
+%mvn_file org.dogtagpki.pki:pki-acme pki/pki-acme
+%mvn_file org.dogtagpki.pki:pki-est pki/pki-est
+
+# specify Maven artifact packages
+%mvn_package org.dogtagpki.pki:pki-common pki-java
+%mvn_package org.dogtagpki.pki:pki-tools pki-tools
+%mvn_package org.dogtagpki.pki:pki-server pki-server
+%mvn_package org.dogtagpki.pki:pki-server-webapp pki-server
+%mvn_package org.dogtagpki.pki:pki-tomcat pki-server
+%mvn_package org.dogtagpki.pki:pki-tomcat-9.0 pki-server
+%mvn_package org.dogtagpki.pki:pki-ca pki-ca
+%mvn_package org.dogtagpki.pki:pki-kra pki-kra
+%mvn_package org.dogtagpki.pki:pki-ocsp pki-ocsp
+%mvn_package org.dogtagpki.pki:pki-tks pki-tks
+%mvn_package org.dogtagpki.pki:pki-tps pki-tps
+%mvn_package org.dogtagpki.pki:pki-acme pki-acme
+%mvn_package org.dogtagpki.pki:pki-est pki-est
 
 %build
-app_server=tomcat-9.0
+%mvn_build
 
+# build native binaries with CMake
+app_server=tomcat-9.0
 %add_optflags -I/usr/include/apu-1
 %cmake \
-    --no-warn-unused-cli \
     -DVERSION=%version \
     -DRELEASE=%release \
     -DVAR_INSTALL_DIR:PATH=%_var \
     -DP11_KIT_TRUST=%_libdir/libnssckbi.so \
     -DJAVA_HOME=%java_home \
-    -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
     -DAPP_SERVER=$app_server \
     -DPYTHON_EXECUTABLE=%__python3 \
-%if_with check
-    -DRUN_TESTS:BOOL=ON \
-%else
     -DRUN_TESTS:BOOL=OFF \
-%endif
+    -DWITH_TESTS:BOOL=OFF \
+    -DWITH_JAVA=FALSE \
 %if_with javadoc
     -DWITH_JAVADOC:BOOL=ON \
 %else
     -DWITH_JAVADOC:BOOL=OFF \
 %endif
+    -DWITH_CONSOLE:BOOL=OFF \
     -DTHEME=dogtag \
-     ..
 
 %cmake_build -t all
 
 %install
+%mvn_install
 %cmakeinstall_std
 
 # from sem@:
@@ -457,10 +467,8 @@ touch %buildroot%_logdir/pki/pki-server-upgrade-%version.log
 mkdir %buildroot%_logdir/pki/server
 mkdir %buildroot%_logdir/pki/server/upgrade
 
-ln -sf tps/libtps.so %buildroot%_libdir/libtps.so
-
-# don't package tests
-rm -r %buildroot%_datadir/pki/tests/
+# don't ship html docs
+rm -r %buildroot%_datadir/doc/pki-base/html/
 
 # since we package python modules as arch dependent
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -473,13 +481,6 @@ mkdir -p %buildroot%_rpmlibdir
 install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/dogtag-pki-base.filetrigger
 
 %check
-export TOXENV=pep8py3,py%{python_version_nodots python3}
-%if_with pylint
-export TOXENV=$TOXENV,lint3
-%endif
-ln -sr ./tests/tox.ini ./
-%tox_check
-%cmake_build -t test
 
 %pre -n dogtag-pki-server
 %_sbindir/groupadd -r -f %pki_groupname ||:
@@ -516,11 +517,10 @@ then
     systemctl daemon-reload ||:
 fi
 
-%files
+%files -f .mfiles
 %doc %_docdir/pki/README
 
 %files -n dogtag-pki-base
-%doc %_datadir/doc/pki-base/html
 %doc %_datadir/pki/server/docs
 %dir %_datadir/pki/etc
 %dir %_datadir/pki/lib
@@ -543,25 +543,20 @@ fi
 %_man8dir/pki-upgrade.8.*
 %_rpmlibdir/dogtag-pki-base.filetrigger
 
-%files -n dogtag-pki-java
+%files -n dogtag-pki-java -f .mfiles-pki-java
 %_datadir/pki/examples/java/
 %_datadir/pki/lib/*.jar
-%dir %_javadir/pki
-%_javadir/pki/pki-common.jar
 
 %files -n python3-module-dogtag-pki
 %exclude %python3_sitelibdir/pki/server/
 %python3_sitelibdir/pki/
 
-%files -n dogtag-pki-tools
+%files -n dogtag-pki-tools -f .mfiles-pki-tools
 %doc base/tools/doc/README
-%_bindir/p7tool
-%_bindir/p12tool
 %_bindir/pistool
 %_bindir/pki
 %_bindir/revoker
 %_bindir/setpin
-%_bindir/sslget
 %_bindir/tkstool
 %_bindir/tpsclient
 %_bindir/AtoB
@@ -573,7 +568,6 @@ fi
 %_bindir/CMCRevoke
 %_bindir/CMCSharedToken
 %_bindir/CRMFPopClient
-%_bindir/DRMTool
 %_bindir/ExtJoiner
 %_bindir/GenExtKeyUsage
 %_bindir/GenIssuerAltNameExt
@@ -587,9 +581,6 @@ fi
 %_bindir/PrettyPrintCert
 %_bindir/PrettyPrintCrl
 %_bindir/TokenInfo
-%_javadir/pki/pki-tools.jar
-%_libdir/tps/libtps.so
-%_libdir/libtps.so
 %_datadir/pki/tools/
 %_datadir/pki/lib/p11-kit-trust.so
 %_man1dir/AtoB.1.*
@@ -599,7 +590,6 @@ fi
 %_man1dir/CMCRequest.1.*
 %_man1dir/CMCSharedToken.1.*
 %_man1dir/CMCResponse.1.*
-%_man1dir/DRMTool.1.*
 %_man1dir/KRATool.1.*
 %_man1dir/PrettyPrintCert.1.*
 %_man1dir/PrettyPrintCrl.1.*
@@ -624,7 +614,7 @@ fi
 %_man1dir/PKICertImport.1.*
 %_man1dir/tpsclient.1.*
 
-%files -n dogtag-pki-server
+%files -n dogtag-pki-server -f .mfiles-pki-server
 %doc base/common/THIRD_PARTY_LICENSES
 %doc base/server/LICENSE
 %doc base/server/README
@@ -633,7 +623,6 @@ fi
 %_sbindir/pkispawn
 %_sbindir/pkidestroy
 %_sbindir/pki-server
-%_sbindir/pki-server-upgrade
 %python3_sitelibdir/pki/server/
 %exclude %python3_sitelibdir/pki/server/healthcheck/
 
@@ -651,8 +640,6 @@ fi
 %ghost %_logdir/pki/server/
 %_unitdir/pki-tomcatd-nuxwdog@.service
 %_unitdir/pki-tomcatd-nuxwdog.target
-%_javadir/pki/pki-server.jar
-%_javadir/pki/pki-tomcat.jar
 %dir %_sharedstatedir/pki
 %_man1dir/pkidaemon.1.*
 %_man5dir/pki_default.cfg.5.*
@@ -686,32 +673,25 @@ fi
 %_datadir/pki/server/examples/
 %_datadir/pki/server/database/
 
-%files -n dogtag-pki-acme
-%_javadir/pki/pki-acme.jar
+%files -n dogtag-pki-acme -f .mfiles-pki-acme
 %_datadir/pki/acme/
 
-%files -n dogtag-pki-ca
-%_javadir/pki/pki-ca.jar
+%files -n dogtag-pki-ca -f .mfiles-pki-ca
 %_datadir/pki/ca/
 
-%files -n dogtag-pki-est
-%_javadir/pki/pki-est.jar
+%files -n dogtag-pki-est -f .mfiles-pki-est
 %_datadir/pki/est/
 
-%files -n dogtag-pki-kra
-%_javadir/pki/pki-kra.jar
+%files -n dogtag-pki-kra -f .mfiles-pki-kra
 %_datadir/pki/kra/
 
-%files -n dogtag-pki-ocsp
-%_javadir/pki/pki-ocsp.jar
+%files -n dogtag-pki-ocsp -f .mfiles-pki-ocsp
 %_datadir/pki/ocsp/
 
-%files -n dogtag-pki-tks
-%_javadir/pki/pki-tks.jar
+%files -n dogtag-pki-tks -f .mfiles-pki-tks
 %_datadir/pki/tks/
 
-%files -n dogtag-pki-tps
-%_javadir/pki/pki-tps.jar
+%files -n dogtag-pki-tps -f .mfiles-pki-tps
 %_datadir/pki/tps/
 %_man5dir/pki-tps-connector.5.*
 %_man5dir/pki-tps-profile.5.*
@@ -752,6 +732,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Mon Jul 21 2025 Stanislav Levin <slev@altlinux.org> 11.6.1-alt1
+- 11.4.3 -> 11.6.1.
+
 * Mon Jul 07 2025 Stanislav Levin <slev@altlinux.org> 11.4.3-alt6
 - Fixed pki-upgrade with python-cryptography 43+.
 
