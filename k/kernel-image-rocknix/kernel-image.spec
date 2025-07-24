@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	6.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.15
-%define kernel_sublevel .6
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -79,7 +79,7 @@ BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: openssl openssl-devel
-#BuildRequires: u-boot-tools
+BuildRequires: python3
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
 
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jul 23 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.7-alt1
+- 6.15.7
+
 * Tue Jul 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.6-alt1
 - 6.15.6
 
