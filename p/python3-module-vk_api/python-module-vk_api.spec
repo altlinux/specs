@@ -1,7 +1,7 @@
 %define modulename vk_api
 
 Name: python3-module-vk_api
-Version: 11.9.9
+Version: 11.10.0
 Release: alt1
 
 Summary: Module for writing scripts for vk.com (vkontakte)
@@ -37,6 +37,9 @@ BuildRequires(pre): rpm-build-python3
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 11.10.0-alt1
+- Automatically updated to 11.10.0.
+
 * Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 11.9.9-alt1
 - Automatically updated to 11.9.9.
 
