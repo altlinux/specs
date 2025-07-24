@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.2
+Version: 2.0.5
 Release: alt1
 
 Summary: Safe and fast evaluation of untrusted user-supplied python expressions
@@ -12,7 +12,10 @@ Group:   Development/Python3
 URL:     https://github.com/yaroslaff/evalidate
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
 
@@ -40,5 +43,8 @@ user-supplied (possible malicious) python expressions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 24 2025 Egor Ignatov <egori@altlinux.org> 2.0.5-alt1
+- New version 2.0.5.
+
 * Fri Oct 25 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus
