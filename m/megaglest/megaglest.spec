@@ -4,25 +4,24 @@
 
 Name: megaglest
 Version: 3.13.0
-Release: alt3
+Release: alt4
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
-Url: http://megaglest.sourceforge.net
-
-# https://github.com/MegaGlest/megaglest-source.git
+Url: https://megaglest.org/
+VCS: https://github.com/MegaGlest/megaglest-source.git
 Source: %name-%version.tar
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
-
+Patch0: %name-%version-%release.patch
 Patch1: %name-%version-alt-fixes.patch
 Patch2: %name-%version-alt-fno-common.patch
 Patch3: %name-%version-upstream-wxGTK-compat.patch
 
 BuildRequires: cmake fontconfig-devel gcc-c++ libSDL2-devel libXau-devel libXdmcp-devel libcurl-devel libftgl-devel libglew-devel libjpeg-devel
 BuildRequires: liblua5-devel libopenal-devel libpng-devel libvorbis-devel libxerces-c-devel libxml2-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: openssl-devel libvlc-devel libfribidi-devel glib2-devel libminiupnpc-devel libircclient-devel
 
 Requires: %name-data = %version
@@ -35,6 +34,7 @@ with their corresponding tech trees, units, buildings and some maps.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -82,6 +82,9 @@ rm -f %buildroot%_datadir/%name/start_megaglest_gameserver
 %_datadir/%name/*.ico
 
 %changelog
+* Thu Jul 24 2025 Anton Farygin <rider@altlinux.com> 3.13.0-alt4
+- built with wxGTK 3.2
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.13.0-alt3
 - Rebuilt with new wxGTK.
 
