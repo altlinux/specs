@@ -1,7 +1,7 @@
 %define oname libacl
 
 Name: python3-module-%oname
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: POSIX.1e ACLs for python
@@ -54,6 +54,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/pylibacl-%version.dist-info
 
 %changelog
+* Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.3-alt1
+- Automatically updated to 0.7.3.
+
 * Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
 - Automatically updated to 0.7.2.
 
