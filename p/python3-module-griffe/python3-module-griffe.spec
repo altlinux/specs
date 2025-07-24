@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.7.3
+Version: 1.8.0
 Release: alt1
 
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
@@ -62,6 +62,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
+- Automatically updated to 1.8.0.
+
 * Thu Apr 24 2025 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1
 - Automatically updated to 1.7.3.
 
