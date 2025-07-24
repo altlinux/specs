@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt40
+Release: alt41
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -577,6 +577,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Wed Jul 23 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt41
+- Backported upstream fix for python bindings to fix build with gcc 14+ on ix86.
+
 * Wed Oct 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.13.0.1-alt40
 - Plug a memory leak in python bindings (closes: #47836).
 
