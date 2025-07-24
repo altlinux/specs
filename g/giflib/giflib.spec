@@ -3,13 +3,15 @@
 
 Name: giflib
 Version: 5.2.2
-Release: alt1.1
+Release: alt1.2
 Summary: A Library for Working with GIF Images.
 License: MIT
 Group: System/Libraries
-Url: https://www.scintilla.org/
+Url: https://giflib.sourceforge.net/
 
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: alt-Clean-up-memory-better-at-end-of-run-CVE-2021-40633.patch
 
 BuildRequires: libtool
 BuildRequires: /usr/bin/convert
@@ -37,6 +39,7 @@ Files for development with %name.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '/PREFIX=/s,/usr/local,%prefix,' Makefile
 # error: missing argument for "-Wl," switch
 sed -i 's/$(LIBUTILMAJOR)/$(LIBUTILSOMAJOR)/' Makefile
@@ -73,6 +76,9 @@ rm -f %buildroot%_libdir/libgif.a
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Thu Jul 24 2025 Pavel Shilov <zerospirit@altlinux.org> 5.2.2-alt1.2
+- Update based on upstream (Fixes: CVE-2021-40633)
+
 * Wed Dec 11 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.2.2-alt1.1
 - Fixed build for Elbrus
 
