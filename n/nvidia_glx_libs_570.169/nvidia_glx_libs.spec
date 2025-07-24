@@ -21,7 +21,7 @@
 %define nv_version 570
 %define nv_release 169
 %define nv_minor   %nil
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -147,6 +147,12 @@ Summary: nvidia library
 %description -n libnvidia-opticalflow
 nvidia library
 
+%package -n libnvidia-sandboxutils
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-sandboxutils
+nvidia library
+
 %package -n libnvidia-vksc-core
 Group: System/Libraries
 Summary: nvidia library
@@ -202,6 +208,7 @@ install -m 0644 %subd/libnvidia-glsi.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%_libdir/
 mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
 install -m0644 nvidia_icd_vksc.json %buildroot/%_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
+install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%_libdir/
 %endif
 # all 64-bit
 %if "%_lib" != "lib"
@@ -273,6 +280,9 @@ done
 %_libdir/libnvidia-vksc-core.so.%nvidia_sover
 %_libdir/libnvidia-vksc-core.so.%version
 %_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
+%files -n libnvidia-sandboxutils
+%_libdir/libnvidia-sandboxutils.so.%nvidia_sover
+%_libdir/libnvidia-sandboxutils.so.%version
 %endif
 %if "%_lib" != "lib"
 %files -n nvidia-smi
@@ -299,6 +309,9 @@ done
 %endif
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt2
+- package libnvidia-sandboxutils (closes: 55287)
+
 * Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt1
 - new version
 
