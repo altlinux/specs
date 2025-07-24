@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.5.47
+Version: 0.5.48
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -70,6 +70,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Thu Jul 24 2025 Egor Ignatov <egori@altlinux.org> 0.5.48-alt1
+- New version 0.5.48.
+
 * Tue Jul 15 2025 Egor Ignatov <egori@altlinux.org> 0.5.47-alt1
 - New version 0.5.47.
 
