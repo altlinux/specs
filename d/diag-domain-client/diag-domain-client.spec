@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -40,7 +40,7 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %check
 %ifnarch %e2k
-shellcheck -e SC1090,SC1091,SC2004,SC2015,SC2034,SC2086,SC2154,SC2001,SC2120,SC2119,SC2317 %name
+shellcheck %name
 %endif
 find ./alterator/ -type f -exec alterator-entry validate {} \+
 
@@ -52,6 +52,20 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Jul 24 2025 Andrey Limachko <liannnix@altlinux.org> 0.5-alt1
+- fix: shell script sourcing with shellcheck directives
+- fix: remove unused message helper functions
+- fix: refactor init_vars function for better variable initialization
+- feat: refactor message formatting
+- fix: update shell script includes to use full paths
+- fix: verbose logging in __log function
+- fix: shell quoting in _command return value
+- fix: update __not_root_skip to use simpler message format
+- fix: only run kdestroy as root in _check_domain_controller
+- fix: use ldapsearch -H option (Closes: #51685)
+- fix: resolve shellcheck warnings
+- fix: format script with shfmt
+
 * Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4-alt1
 - fix: diag: add category adtCategory
 
@@ -98,4 +112,3 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 
 * Wed Dec 21 2022 Andrey Limachko <liannnix@altlinux.org> 0.2.1-alt1
 - Initial build
-
