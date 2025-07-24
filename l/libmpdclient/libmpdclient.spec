@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.22
+Version: 2.23
 Release: alt1
 
 Summary: MPD client library
@@ -63,9 +63,12 @@ Development documentation for %name.
 %_docdir/%name
 
 %changelog
+* Thu Jul 24 2025 Mikhail Tergoev <fidel@altlinux.org> 2.23-alt1
+- Updated to upstream version 2.23.
+
 * Mon Feb 12 2024 Mikhail Tergoev <fidel@altlinux.org> 2.22-alt1
 - Updated to upstream version 2.22.
-- Upstream dropped the unmaintained Vala bindings (see NEWS).
+- Upstream dropped the unmaintained Vala bindings (see NEWS).OC
 
 * Wed Nov 01 2023 Mikhail Tergoev <fidel@altlinux.org> 2.20-alt1
 - Updated to upstream version 2.20.
