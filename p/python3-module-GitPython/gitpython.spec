@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.44
-Release: alt1.1
+Version: 3.1.45
+Release: alt1
 Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
 Group: Development/Python3
@@ -28,7 +28,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /proc
 BuildRequires: /usr/bin/git
 BuildRequires: /usr/sbin/git-daemon
-# not packaged and seems unmaintained
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: python3-module-gitdb-tests
@@ -97,6 +96,9 @@ export NO_SUBMODULES=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 24 2025 Stanislav Levin <slev@altlinux.org> 3.1.45-alt1
+- 3.1.44 -> 3.1.45.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1.44-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
