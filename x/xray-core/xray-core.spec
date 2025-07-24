@@ -1,5 +1,7 @@
+%define git_version v1.250608.0
+
 Name: xray-core
-Version: 24.9.30
+Version: 25.6.8
 Release: alt1
 
 Summary: Project X
@@ -27,7 +29,7 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 %setup -n Xray-core-%version -a 1
 
 %build
-%make_build
+go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%git_version -s -w -buildid=" -v ./main
 
 %install
 %__mkdir_p %buildroot{%_bindir,%_unitdir}
@@ -35,8 +37,11 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 %__install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/
 %__install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/
 
+%post
+%post_systemd_postponed xray
+
 %preun
-%preun_systemd xray
+%systemd_preun xray
 
 %files
 %doc CODE_OF_CONDUCT.md README.md
@@ -45,6 +50,9 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 %_unitdir/xray@.service
 
 %changelog
+* Thu Jul 24 2025 Nazarov Denis <nenderus@altlinux.org> 25.6.8-alt1
+- New version 25.6.8.
+
 * Mon Sep 30 2024 Nazarov Denis <nenderus@altlinux.org> 24.9.30-alt1
 - New version 24.9.30.
 
