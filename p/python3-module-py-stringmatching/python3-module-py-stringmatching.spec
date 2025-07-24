@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.6
-Release: alt1
+Release: alt2
 
 Summary: A comprehensive and scalable set of string tokenizers and similarity measures in Python
 License: BSD-3-Clause
@@ -17,6 +17,7 @@ Vcs: https://github.com/anhaidgroup/py_stringmatching
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: setup.py
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -36,6 +37,7 @@ The package is free, open-source, and BSD-licensed.
 
 %prep
 %setup
+%autopatch -p1
 %__install %SOURCE2 .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -57,6 +59,9 @@ The package is free, open-source, and BSD-licensed.
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Jul 24 2025 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt2
+- Fixed compatibility with numpy>=2.0.0 (thx sobue@).
+
 * Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt1
 - Updated to 0.4.6.
 
