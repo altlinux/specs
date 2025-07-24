@@ -1,5 +1,5 @@
 Name: cloak
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: Cloak
@@ -14,12 +14,8 @@ Source0: Cloak-%version.tar
 # go mod vendor
 Source1: vendor.tar
 
-#BuildRequires: golang
-#BuildRequires: python3
-
-# Automatically added by buildreq on Mon Aug 19 2024 (-bi)
-# optimized out: debugedit elfutils golang-src libctf-nobfd0 libgpg-error python3-base rpm-build-file sh5
-BuildRequires: golang python3
+BuildRequires: golang
+BuildRequires: python3
 
 %description
 Cloak is a pluggable transport that enhances traditional proxy tools like OpenVPN to evade sophisticated censorship and data discrimination.
@@ -102,6 +98,9 @@ Cloak also supports tunneling through an intermediary CDN server such as Amazon 
 %config %_sysconfdir/%name/ckserver.json
 
 %changelog
+* Thu Jul 24 2025 Nazarov Denis <nenderus@altlinux.org> 2.12.0-alt1
+- New version 2.12.0.
+
 * Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 2.11.0-alt1
 - New version 2.11.0.
 
