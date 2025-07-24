@@ -1,7 +1,7 @@
 %def_without doc
 
 Name: keepass
-Version: 2.58
+Version: 2.59
 Release: alt1
 
 Summary: Password manager
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 21 2025 Oleg Solovyov <mcpain@altlinux.org> 2.59-alt1
+- new version: 2.59
+
 * Wed Mar 05 2025 Oleg Solovyov <mcpain@altlinux.org> 2.58-alt1
 - new version: 2.58
 
