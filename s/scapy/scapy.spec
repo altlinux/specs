@@ -2,13 +2,13 @@
 
 Name: scapy
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Scapy is a powerful interactive packet manipulation program written in Python
 
 Group: Networking/Other
 License: GPLv2
-Url: http://www.secdev.org/projects/scapy/
+Url: https://scapy.net/
 
 ##Source-url: https://github.com/secdev/scapy/archive/v%version.zip
 # Source-url: %__pypi_url %oname
@@ -24,6 +24,8 @@ BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-wheel python3-module-setuptools
 
 %add_python3_req_skip scapy.libs.six.moves scapy.libs.six.moves.queue
+# far away now
+%add_python3_req_skip pyannotate_runtime
 
 # contrib
 %add_python3_req_skip can
@@ -65,6 +67,10 @@ rm -rv %buildroot%python3_sitelibdir/%name/arch/windows
 %python3_sitelibdir/%name-*dist-info/
 
 %changelog
+* Fri Jul 25 2025 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt2
+- update URL
+- filter out python3(pyannotate_runtime) require
+
 * Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt1
 - new version 2.6.1 (with rpmrb script)
 
