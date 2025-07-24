@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
-BuildRequires: rpm-build-golang golang >= 1.23.0
+BuildRequires: rpm-build-golang golang >= 1.24.0
 %if_without prebuild_webui
 BuildRequires: npm yarn
 BuildRequires: node node-devel node-gyp node-sass
@@ -89,13 +89,13 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
-export CODENAME=chaource
+export CODENAME=chabichou
 export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOFLAGS="-mod=vendor"
 
 %if_without prebuild_webui
 pushd webui
-yarn build:nc
+yarn build:prod
 echo 'For more information see `webui/readme.md`' > static/DONT-EDIT-FILES-IN-THIS-DIRECTORY.md
 popd
 %endif
@@ -104,9 +104,9 @@ mkdir -p dist
 
 go generate
 GOGC=off go build -ldflags " -w  \
-    -X github.com/traefik/traefik/v3/pkg/version.Version=$VERSION \
-    -X github.com/traefik/traefik/v3/pkg/version.Codename=$CODENAME \
-    -X github.com/traefik/traefik/v3/pkg/version.BuildDate=$DATE \
+    -X %import_path/v3/pkg/version.Version=$VERSION \
+    -X %import_path/v3/pkg/version.Codename=$CODENAME \
+    -X %import_path/v3/pkg/version.BuildDate=$DATE \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
@@ -149,6 +149,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Jul 24 2025 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Mon Jun 02 2025 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
