@@ -2,7 +2,7 @@
 %global import_path github.com/ent/ent
 
 Name: ent
-Version: 0.13.1
+Version: 0.14.0
 Release: alt1
 Summary: An entity framework for Go
 License: Apache-2.0
@@ -10,6 +10,8 @@ Group: Networking/Remote access
 Url: https://github.com/ent/ent
 
 Source0: %name-%version.tar
+Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -19,7 +21,8 @@ Simple, yet powerful entity framework for Go, that makes it easy
 to build and maintain applications with large data-models.
 
 %prep
-%setup -q
+%setup -a 1
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -43,5 +46,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Jul 24 2025 Pavel Shilov <zerospirit@altlinux.org> 0.14.0-alt1
+- 0.13.1 -> 0.14.0
+
 * Thu Sep 12 2024 Pavel Shilov <zerospirit@altlinux.org> 0.13.1-alt1
 - initial build for Sisyphus
