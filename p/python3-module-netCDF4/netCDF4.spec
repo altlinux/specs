@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
@@ -95,8 +95,12 @@ This package contains documentation for %pypi_name.
 %pyproject_install
 
 %check
-# Ignore tests that require Internet connection.
-%pyproject_run_pytest --ignore=test/test_dap.py
+pushd test
+export NO_NET=1
+
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 run_all.py
+popd
 
 %files
 %doc LICENSE
@@ -108,6 +112,9 @@ This package contains documentation for %pypi_name.
 %doc docs/netCDF4/index.html
 
 %changelog
+* Thu Jul 24 2025 Anton Vyatkin <toni@altlinux.org> 1.7.1-alt3
+- Fixed FTBFS.
+
 * Wed May 14 2025 Ivan Khanas <xeno@altlinux.org> 1.7.1-alt2
 - Fix FTBFS: change %%files with distinfo macro.
 
