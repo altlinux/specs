@@ -25,7 +25,7 @@
 %define nv_version 570
 %define nv_release 169
 %define nv_minor   %nil
-%define pkg_rel alt280
+%define pkg_rel alt281
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -128,7 +128,7 @@ Sources for %{bin_pkg_name}_%{version} package
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 Requires: nvidia-modprobe
-Requires: libcuda libnvidia-encode
+Requires: libcuda libnvidia-encode libnvidia-ml
 %Nif_ver_gteq %gbm_ver 21.2
 Requires: libnvidia-egl-gbm >= 0
 %endif
@@ -434,6 +434,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt281
+- require libnvidia-ml
+
 * Mon Jun 30 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt280
 - new version
 
