@@ -12,7 +12,7 @@
 %define _tmpfilesdir %(pkg-config --variable=tmpfilesdir systemd 2>/dev/null)
 
 Name: cryptsetup
-Version: 2.7.5
+Version: 2.8.0
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -214,7 +214,7 @@ rm -rf %buildroot%_libdir/%name/*.la
 %files -f %name.lang
 %doc docs/*
 %doc AUTHORS FAQ.md README.md
-%doc --no-dereference COPYING COPYING.LGPL
+%doc --no-dereference COPYING
 %doc README.ALT.utf-8
 %_sbindir/*
 %exclude %_sbindir/cryptsetup-ssh
@@ -231,6 +231,7 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_tmpfilesdir/cryptsetup.conf
 
 %files -n lib%name
+%doc --no-dereference COPYING
 %_libdir/lib%name.so.*
 %dir %_libdir/%name
 
@@ -240,11 +241,15 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %files ssh-token
+%doc --no-dereference COPYING
 %_libdir/%name/libcryptsetup-token-ssh.so
 %_man8dir/cryptsetup-ssh.*
 %_sbindir/cryptsetup-ssh
 
 %changelog
+* Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
+- 2.8.0.
+
 * Sat Sep 14 2024 Alexey Shabalin <shaba@altlinux.org> 2.7.5-alt1
 - 2.7.5.
 
