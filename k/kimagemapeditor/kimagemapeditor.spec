@@ -1,7 +1,7 @@
 %define rname kimagemapeditor
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -49,6 +49,9 @@ An HTML imagemap editor.
 %_datadir/metainfo/*kimagemapeditor*.xml
 
 %changelog
+* Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
