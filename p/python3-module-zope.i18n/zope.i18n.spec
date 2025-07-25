@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
-Release: alt1.1
+Version: 5.3
+Release: alt1
 Summary: Zope Internationalization Support
 License: ZPL-2.1
 Group: Development/Python3
@@ -62,7 +62,7 @@ export zope_i18n_compile_mo_files=True
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
@@ -72,6 +72,9 @@ export zope_i18n_compile_mo_files=True
 %exclude %python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
 %changelog
+* Thu Jul 24 2025 Stanislav Levin <slev@altlinux.org> 5.3-alt1
+- 5.2 -> 5.3.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
