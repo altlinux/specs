@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.5
-Release: alt2
+Version: 3.6.6
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Jul 25 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.6-alt1
+- fix window icon
+
 * Mon May 05 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.5-alt2
 - add fake desktop-file to display window icon on Wayland (closes: 54125)
 
