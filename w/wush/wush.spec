@@ -2,7 +2,7 @@
 %global import_path github.com/coder/wush
 
 Name: wush
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 Summary: simplest & fastest way to transfer files between computers via WireGuard
 License: CC0-1.0
@@ -46,5 +46,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.1-alt1
+- 0.3.0 -> 0.4.1
+
 * Thu Dec 12 2024 Pavel Shilov <zerospirit@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
