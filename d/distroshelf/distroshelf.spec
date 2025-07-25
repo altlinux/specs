@@ -2,7 +2,7 @@
 %define app_id com.ranfdev.DistroShelf
 
 Name: distroshelf
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1
 
 Summary: Selected terminal emulator
@@ -64,5 +64,8 @@ install -vD %SOURCE2 .cargo/config.toml
 %doc README.md
 
 %changelog
+* Thu Jun 26 2025 David Sultaniiazov <x1z53@altlinux.org> 1.0.10-alt1
+- Update to v1.0.10
+
 * Mon Jun 09 2025 David Sultaniiazov <x1z53@altlinux.org> 1.0.8-alt1
 - Initial build
