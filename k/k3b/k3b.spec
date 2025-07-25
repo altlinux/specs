@@ -20,8 +20,8 @@
 
 %define rname k3b
 Name: %rname
-Version: 25.04.2
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init no_altplace
 
 Group: Archiving/Cd burning
@@ -174,6 +174,9 @@ Requires: kde-common
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
 - build with qtwebengine
 

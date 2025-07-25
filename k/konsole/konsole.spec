@@ -8,8 +8,8 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 25.04.2
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init no_altplace
 
 Group: Terminals
@@ -166,6 +166,9 @@ __EOF__
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Thu Jun 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
 - add fix against KDEBUG#491562 (closes: 54796)
 

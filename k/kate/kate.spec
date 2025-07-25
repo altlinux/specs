@@ -4,8 +4,8 @@
 %define libkateprivate libkateprivate%sover
 
 Name: %rname
-Version: 25.04.2
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init
 
 Group: Editors
@@ -167,6 +167,9 @@ kde6_add_text_mimes %buildroot/%_K6xdgapp/org.kde.kwrite.desktop
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
 - fix build requires
 
