@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.5.1
+Version:  5.5.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -18,7 +18,7 @@ Source:   %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
-BuildRequires: rpm-build-golang golang >= 1.22.8
+BuildRequires: rpm-build-golang golang >= 1.23.3
 BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
@@ -187,6 +187,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 5.5.2-alt1
+- New version 5.5.2 (Fixes: CVE-2025-6032).
+
 * Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 5.5.1-alt1
 - New version 5.5.1.
 
