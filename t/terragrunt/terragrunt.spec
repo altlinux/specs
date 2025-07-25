@@ -2,14 +2,14 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: terragrunt
-Version: 0.82.3
+Version: 0.83.0
 Release: alt1
 Summary: Terragrunt is a orchestration tool for OpenTofu/Terraform
 
 Group: Development/Tools
 License: MIT
 
-Url: https://github.com/gruntwork-io/terragrunt
+Url: https://terragrunt.gruntwork.io/
 Vcs: https://github.com/gruntwork-io/terragrunt.git
 
 Source0: %name-%version.tar
@@ -52,5 +52,12 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri Jul 11 2025 Alexey Romanyuta <r9odt@altlinux.org> 0.83.0-alt1
+- New version v0.83.0
+
+* Fri Jul 04 2025 Alexey Romanyuta <r9odt@altlinux.org> 0.82.4-alt1
+- New version v0.82.4
+- Fix project url in spec
+
 * Mon Jun 30 2025 Alexey Romanyuta <r9odt@altlinux.org> 0.82.3-alt1
 - Initial build v0.82.3
