@@ -21,7 +21,7 @@
 
 Name: brasero
 Version: %ver_major.3
-Release: alt5
+Release: alt6
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -36,14 +36,6 @@ Source: %name-%version.tar
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
-# https://gitlab.gnome.org/GNOME/brasero/-/merge_requests/26
-# https://gitlab.gnome.org/GNOME/brasero/-/commit/5a3ffe64600aeef84c239b70679ca0e0c3e97307.patch
-# fix mime type for shared-mime-info >= 2.3 (x-cd-image -> vnd.efi.iso)
-Patch3: %name-3.12.3-up-fix-cd-mime-type-detection.patch
-# https://gitlab.gnome.org/GNOME/brasero/-/merge_requests/31
-# https://gitlab.gnome.org/GNOME/brasero/-/commit/e475dbeedf49c94b8a4f1278b694f690ddfc8ddb.patch
-# libbrasero-burn: fix incorrect plugin version comparison
-Patch4: %name-3.12.3-up-fix-app-version-check.patch
 
 Requires: lib%name = %EVR
 
@@ -157,8 +149,6 @@ GObject introspection devel data for the Brasero.
 %patch -p1 -b .link
 %patch1 -p1 -b .button_underline
 %patch2 -b .schemas_convert
-%patch3 -p1 -b .mime
-%patch4 -p1 -b .version
 
 %build
 %autoreconf
@@ -258,6 +248,10 @@ GObject introspection devel data for the Brasero.
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Fri Jul 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt6
+- updated to 3.12.3-43-g5f615357
+  (upstreamed -*fix-{cd-mime-type-detection,app-version-check}.patch)
+
 * Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt5
 - image-copy: fix mime type detection for CD image (upstream MR#26)
 - burn-plugin: fix app version detection (upstream MR#31)
