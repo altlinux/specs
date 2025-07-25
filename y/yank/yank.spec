@@ -2,13 +2,14 @@
 
 Name: yank
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Summary: Yank terminal output to clipboard
 License: MIT 
 Group: Other
 Url: https://github.com/mptre/yank
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %description
 Read input from stdin and display a selection interface that allows a field
@@ -18,6 +19,7 @@ delimiter sequence using the -d option.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '/INSTALL_PROGRAM=/s,-s,,' Makefile
 sed -i '/PREFIX=/s,/usr/local,%prefix,' Makefile
 
@@ -37,5 +39,8 @@ install -m 0644 %name.1* %buildroot%_man1dir
 %doc README.md LICENSE
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.3.0-alt1.1
+- Update based on upstream. 
+
 * Thu Feb 29 2024 Pavel Shilov <zerospirit@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
