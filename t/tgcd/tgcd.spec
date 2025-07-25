@@ -2,13 +2,14 @@
 
 Name: tgcd
 Version: 1.0.4
-Release: alt1
+Release: alt1.1
 Summary: TGC is the TCP Gender Changer 
 License: GPL-2.0
 Group: Networking/Remote access
 Url: https://github.com/kirgene/tgcd
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: intltool
 BuildRequires: gtk-doc
@@ -21,6 +22,7 @@ testing and analyze the security of their network.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -36,5 +38,8 @@ testing and analyze the security of their network.
 %_man1dir/%name.*
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.4-alt1.1
+- Update based on upstream.
+
 * Tue Nov 19 2024 Pavel Shilov <zerospirit@altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus
