@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Warpinator - send and receive files across a local network
@@ -38,6 +38,7 @@ Requires: typelib(XApp) = 1.0
 Requires: dconf polkit
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir rpm-build-xdg
+BuildRequires: pkgconfig(python3) python3(setuptools)
 BuildRequires: meson /usr/bin/glib-compile-resources
 BuildRequires: gtk-update-icon-cache
 BuildRequires: itstool libpolkit-devel
@@ -81,5 +82,8 @@ Warpinator is a GTK+3 app to send and receive files across a local network.
 %doc README*
 
 %changelog
+* Fri Jul 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.9-alt1
+- 1.8.9
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.8-alt1
 - first build for Sisyphus
