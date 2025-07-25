@@ -2,7 +2,7 @@
 %global import_path github.com/github.com/yusufcanb/tlm
 
 Name: tlm
-Version: 1.1        
+Version: 1.2        
 Release: alt1
 Summary: Local CLI Copilot, powered by CodeLLaMa   
 License: Apache-2.0
@@ -49,5 +49,8 @@ export IGNORE_SOURCES=1
 
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.2-alt1
+- 1.1 -> 1.2
+
 * Thu Dec 26 2024 Pavel Shilov <zerospirit@altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
