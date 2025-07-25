@@ -1,5 +1,6 @@
 
 %def_enable mpv
+%def_disable mplayer
 
 %define rname smplayer
 %define xde kde5
@@ -7,7 +8,7 @@
 %define xapp kf5
 Name: %xde-%rname
 Version: 25.6.0
-Release: alt1
+Release: alt2
 
 %define qt_bin_dir %_qt5_bindir
 %define configure_qmake %qmake_qt5
@@ -156,7 +157,9 @@ done
 %if_enabled mpv
 %files backend-2-mpv
 %endif
+%if_enabled mplayer
 %files backend-4-mplayer
+%endif
 
 %files
 %_bindir/%name
@@ -170,6 +173,9 @@ done
 
 
 %changelog
+* Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.6.0-alt2
+- don't require mplayer
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.6.0-alt1
 - new version
 
