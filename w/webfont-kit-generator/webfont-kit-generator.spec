@@ -3,7 +3,7 @@
 
 %define _name webfont-kit-generator
 %define binary_name webfontkitgenerator
-%define ver_major 1.2
+%define ver_major 1.3
 %define rdn_name com.rafaelmardojai.WebfontKitGenerator
 
 %def_enable check
@@ -17,10 +17,11 @@ License: GPL-3.0-or-later
 Group: Development/Other
 Url: https://apps.gnome.org/WebfontKitGenerator
 
+Vcs: https://github.com/rafaelmardojai/webfont-kit-generator.git
+
 %if_disabled snapshot
 Source: https://github.com/rafaelmardojai/webfont-kit-generator/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/rafaelmardojai/webfont-kit-generator.git
 Source: %_name-%version.tar
 %endif
 
@@ -31,6 +32,7 @@ BuildArch: noarch
 %define bp_ver 0.10
 %define adw_ver 1.5
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(Soup) = 3.0
@@ -73,12 +75,16 @@ Fonts for self-hosting.
 %_desktopdir/%rdn_name.desktop
 %_datadir/%binary_name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.*
 %_datadir/metainfo/%rdn_name.*.xml
 %doc README*
 
 
 %changelog
+* Fri Jul 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
