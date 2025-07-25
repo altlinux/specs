@@ -1,15 +1,15 @@
-
 %define _unpackaged_files_terminate_build 1
 
 Name: mle
 Version: 1.7.2
-Release: alt1
+Release: alt1.1
 Summary: flexible terminal-based text editor (C) 
 License:  Apache-2.0
 Group: Other
 Url: https://github.com/adsr/mle
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: liblua-devel
 BuildRequires: libpcre-devel
@@ -21,6 +21,7 @@ Mle is a small, flexible, terminal-based text editor written in C.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '/prefix?=/s,/usr/local,%prefix,' Makefile
 sed -i 's|-llua5.4|-llua|g' Makefile
 sed -i 's|<lua5.4/lua.h>|<lua.h>|g' mle.h
@@ -41,5 +42,8 @@ install -m 0644 %name.1* %buildroot%_man1dir
 %_man1dir/%name.1*
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.7.2-alt1.1
+- Update based on upstream. 
+
 * Fri Mar 01 2024 Pavel Shilov <zerospirit@altlinux.org> 1.7.2-alt1
 - Initial build for Sisyphus
