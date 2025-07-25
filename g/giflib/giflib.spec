@@ -3,7 +3,7 @@
 
 Name: giflib
 Version: 5.2.2
-Release: alt1.2
+Release: alt2
 Summary: A Library for Working with GIF Images.
 License: MIT
 Group: System/Libraries
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 Patch1: alt-Clean-up-memory-better-at-end-of-run-CVE-2021-40633.patch
 
 BuildRequires: libtool
-BuildRequires: /usr/bin/convert
+BuildRequires: /usr/bin/convert 
 
 %description
 This Library allows manipulating GIF Image files. Since the LZW patents
@@ -32,6 +32,7 @@ have expired, giflib can again be used instead of libungif.
 Summary: Development package for %name
 Group: Development/C
 Requires:   pkgconfig
+Conflicts: libgif-utils libgif-devel
 
 %description -n %name-devel
 Group: Development/C
@@ -76,6 +77,9 @@ rm -f %buildroot%_libdir/libgif.a
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 5.2.2-alt2
+- Add explicit Conflicts with packages to resolve file and symlink overlaps.
+
 * Thu Jul 24 2025 Pavel Shilov <zerospirit@altlinux.org> 5.2.2-alt1.2
 - Update based on upstream (Fixes: CVE-2021-40633)
 
