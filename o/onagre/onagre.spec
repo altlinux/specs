@@ -1,5 +1,5 @@
 Name:     onagre
-Version:  1.1.0
+Version:  1.1.1
 Release:  alt1
 
 Summary:  A general purpose application launcher for X and wayland inspired by rofi/wofi and alfred
@@ -53,6 +53,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Wed May 29 2024 Roman Alifanov <ximper@altlinux.org> 1.1.0-alt1
 - initial build for sisyphus
 
