@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-bluetooth
 Version: 24.5.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for managing Bluetooth devices
 License: GPLv3
@@ -11,6 +12,9 @@ Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-bluetooth
 
 Source: %name-%version.tar
+
+# sync with version 24.5.0-3 from Debian unstable
+Patch: %name-%version-%release.patch
 
 ExcludeArch: ppc64le
 
@@ -45,6 +49,7 @@ Bluetooth devices.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -79,6 +84,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt2
+- Added Lomiri greeter support.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
 - New version 24.5.0.
 

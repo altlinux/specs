@@ -8,7 +8,7 @@
 %define typelib %name-gir
 Name: libayatana-common
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
 Summary: Common files and libraries used by Ayatana System Indicators
 License: GPLv3
@@ -40,6 +40,7 @@ BuildRequires: pkg-config
 BuildRequires: vala
 BuildRequires: vala-tools
 BuildRequires: zlib-devel
+BuildRequires: pkgconfig(lomiri-url-dispatcher)
 
 Requires: gobject-introspection
 
@@ -95,7 +96,8 @@ This package contains the development files.
 
 %build
 %cmake \
-  -Denable_tests=Off
+  -Denable_tests=Off \
+  -DENABLE_LOMIRI_FEATURES=ON
 %cmake_build
 
 %install
@@ -142,6 +144,9 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_vapidir/AyatanaCommon.vapi
 
 %changelog
+* Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt2
+- Added Lomiri support.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt1
 - New version 0.9.11.
 

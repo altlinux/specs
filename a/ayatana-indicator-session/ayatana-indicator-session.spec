@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-session
 Version: 24.5.1
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator showing session management, status and user switching
 License: GPLv3
@@ -11,6 +12,9 @@ Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-session
 
 Source: %name-%version.tar
+
+# sync with version 24.5.1-2 from Debian unstable
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
@@ -41,6 +45,7 @@ the appropriate package is mate-indicator-applet.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -77,6 +82,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt2
+- Adapted for Lomiri.
+
 * Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
 - New version 24.5.1.
 

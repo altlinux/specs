@@ -3,7 +3,7 @@
 
 Name: ayatana-indicator-datetime
 Version: 25.4.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator providing clock and calendar
 License: GPLv3
@@ -45,21 +45,66 @@ BuildRequires: libuuid-devel
 BuildRequires: properties-cpp-devel
 BuildRequires: systemd-devel
 
+# for Lomiri
+BuildRequires: pkgconfig(lomiri-url-dispatcher)
+BuildRequires: pkgconfig(lomiri-sounds)
+BuildRequires: extra-cmake-modules
+BuildRequires: kf5-kcalcore-devel
+BuildRequires: pkgconfig(lomiri-schemas)
+BuildRequires: pkgconfig(libmkcal-qt5)
+
+Requires: ayatana-indicator-datetime-common
+
 %description
 This Ayatana Indicator provides a combined calendar, clock, alarm
 and event management tool.
+
+%package -n ayatana-indicator-datetime-common
+Summary: Common files used by both Ayatana/Lomiri Indicator Datetime variants
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+%description -n ayatana-indicator-datetime-common
+Ayatana / Lomiri Indicator Datetime are two variants of the Ayatana
+Datetime Indicator built for different use cases. They provide a
+combined calendar, clock, alarm and event management tool for common
+desktop environments and for the Lomiri operating environment.
+
+This package contains files used by both variants.
+
+%package -n lomiri-indicator-datetime
+Summary: Lomiri Indicator providing clock and calendar
+Group: Graphical desktop/Other
+Requires: ayatana-indicator-datetime-common
+
+%description -n lomiri-indicator-datetime
+This Lomiri Indicator provides a combined calendar, clock, alarm and
+event management tool.
+
+This variant of the datetime indicator is targeted for being used on
+Lomiri, this indicator supports phone devices.
+
+This variant of the datetime indicator has been built for using
+msyncd (mkcal) as ICS data storage backend.
 
 %prep
 %setup
 
 %build
-%cmake \
-  -Denable_tests=Off \
-  -Denable_lomiri_features=OFF
-%cmake_build
+%cmake -B build_a \
+       -Denable_tests=Off \
+       -Denable_lomiri_features=Off
+cmake --build "build_a" -j%__nprocs
+
+%cmake -B build_l \
+       -Denable_tests=Off \
+       -DENABLE_LOMIRI_FEATURES=ON
+cmake --build "build_l" -j%__nprocs
 
 %install
-%cmake_install
+export DESTDIR="%buildroot"
+cmake --install "build_a" --verbose
+cmake --install "build_l" --verbose
 
 find %buildroot -type f -name "*.la" -delete -print
 
@@ -69,25 +114,41 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
 
-%post
+%post -n ayatana-indicator-datetime
 %systemd_user_post %name.service
+%post -n lomiri-indicator-datetime
+%systemd_user_post lomiri-indicator-datetime.service
 
-%preun
+%preun -n ayatana-indicator-datetime
 %systemd_user_preun %name.service
+%preun -n lomiri-indicator-datetime
+%systemd_user_preun lomiri-indicator-datetime.service
 
-%postun
+%postun -n ayatana-indicator-datetime
 %systemd_user_postun %name.service
+%postun -n lomiri-indicator-datetime
+%systemd_user_postun lomiri-indicator-datetime.service
 
-%files -f %name.lang
-%doc COPYING AUTHORS INSTALL.md NEWS NEWS.Canonical README.md
+%files
 %config %_sysconfdir/xdg/autostart/%name.desktop
+%_userunitdir/%name.service
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
+
+%files -n ayatana-indicator-datetime-common -f %name.lang
+%doc COPYING AUTHORS INSTALL.md NEWS NEWS.Canonical README.md
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.datetime.gschema.xml
 %_datadir/ayatana/indicators/org.ayatana.indicator.datetime
-%_userunitdir/%name.service
+
+%files -n lomiri-indicator-datetime
+%dir %_libexecdir/lomiri-indicator-datetime
+%_libexecdir/lomiri-indicator-datetime/lomiri-indicator-datetime-service
+%_userunitdir/lomiri-indicator-datetime.service
 
 %changelog
+* Sun Jul 20 2025 Nikolay Strelkov <snk@altlinux.org> 25.4.0-alt2
+- Enable Lomiri support.
+
 * Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 25.4.0-alt1
 - New version 25.4.0.
 

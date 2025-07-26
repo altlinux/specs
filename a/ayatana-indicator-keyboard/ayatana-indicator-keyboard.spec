@@ -1,15 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define _libexecdir %_prefix/libexec
 
-%define libbasename       libayatana-keyboard
-# Technically this should be basename-x110, but that would look very weird.
-%define backendx11name    %libbasename-x11-0
-# Unused, but keep for later.
-%define backendlomiriname %libbasename-lomiri0
+%define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-keyboard
 Version: 24.7.2
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
 License: GPLv3
@@ -18,6 +13,7 @@ Url: https://github.com/AyatanaIndicators/ayatana-indicator-keyboard
 
 Source: %name-%version.tar
 
+# sync with version 24.7.2-2 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -69,10 +65,6 @@ user identifying which layouts are currently in use.
 %install
 %cmake_install
 
-# Remove libraries targetting lomiri (Ubuntu Touch) for now. We can always
-# re-enable it.
-rm -rfv "%buildroot%_libdir/"libayatana-keyboard-lomiri.so*
-
 # these translations are ignored by %%find_lang
 rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
@@ -96,6 +88,7 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/polkit-1/actions/org.ayatana.indicator.keyboard.AccountsService.policy
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.keyboard.gschema.xml
 %_libdir/libayatana-keyboard-x11.so*
+%_libdir/libayatana-keyboard-lomiri.so*
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
 %_iconsdir/hicolor/scalable/status/*
@@ -105,6 +98,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Tue Jul 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.2-alt2
+- Packaged library for Lomiri.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.2-alt1
 - New version 24.7.2.
 
