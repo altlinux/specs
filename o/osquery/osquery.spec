@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.18.1
+Version: 5.38.0
 Release: alt1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -17,12 +17,12 @@ Source: %name-%version.tar
 Source1: submodules.tar
 Patch0: osquery-unbundle-libraries.patch
 Patch1: osquery-disable-expiremental.patch
-Patch2: osquery-disable-dpkg.patch
+Patch2: osquery-fix-utils-linux.patch
 Patch3: osquery-use-cstdint.patch
 Patch4: osquery-fix-std-types.patch
 Patch5: osquery-fix-std-functions.patch
 Patch7: osquery-sysctl.h.patch
-Patch8: osquery-no-lvm2app.h.patch
+Patch8: osquery-header-in-block_device.patch
 Patch9: osquery-enable_yara_string.patch
 Patch10: osquery-no-__secure_getenv.patch
 Patch11: osquery-no-sysctl.patch
@@ -100,7 +100,6 @@ subst '
       s/thirdparty_gflags$/gflags/;
       s/thirdparty_sqlite/sqlite3/;
       s/thirdparty_zlib/z/;
-      /osquery_utils_linux$/d;
       s/thirdparty_googletest_headers/gtest/' `grep -l thirdparty_ $(find . -name CMakeLists.txt)`
 # Fix broken linking
 subst 's/-stdlib=libc++//' cmake/flags.cmake
@@ -109,6 +108,7 @@ subst 's/-stdlib=libc++//' cmake/flags.cmake
 %add_optflags -I%_includedir/c++/%gcc_version -I%_includedir/c++/%gcc_version/%_arch-alt-linux
 %add_optflags -I%_includedir/dbus-1.0 -I%_libdir/dbus-1.0/include -I%_includedir/libxml2
 %add_optflags -I%_includedir/linux-default/include
+%add_optflags -I%{_builddir}/%{name}-%{version}/osquery/utils/linux
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -151,6 +151,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Fri Jul 18 2025 Andrey Cherepanov <cas@altlinux.org> 5.38.0-alt1
+- New version (thanks nash@ for patch).
+
 * Wed Jun 25 2025 Andrey Cherepanov <cas@altlinux.org> 5.18.1-alt1
 - New version.
 
