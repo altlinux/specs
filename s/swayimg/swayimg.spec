@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayimg
-Version: 4.4
+Version: 4.5
 Release: alt1
 Summary: Image viewer for Wayland.
 License: MIT
@@ -11,7 +11,7 @@ Url: https://github.com/artemsen/swayimg
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-macros-meson
 BuildRequires: cmake
 BuildRequires: giflib-devel
 BuildRequires: hicolor-icon-theme
@@ -68,6 +68,9 @@ opening the image directly in a terminal window.
 %_man5dir/swayimgrc.5*
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 4.5-alt1
+- 4.4 -> 4.5
+
 * Fri Jul 11 2025 Pavel Shilov <zerospirit@altlinux.org> 4.4-alt1
 - Update based on upstream version 4.4.
 

@@ -2,7 +2,7 @@
 %define abiversion 7
 
 Name: sysrepo
-Version: 3.3.10
+Version: 3.6.11
 Release: alt1
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: https://github.com/sysrepo/sysrepo
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -47,6 +48,7 @@ Executable tools for %name.
 
 %prep
 %setup
+%autopatch -p1 
 
 %build
 export CFLAGS="%optflags"
@@ -77,6 +79,9 @@ export CFLAGS="%optflags"
 %_man8dir/*.8.*
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 3.6.11-alt1
+- 3.3.10 -> 3.6.11 
+
 * Mon Apr 07 2025 Pavel Shilov <zerospirit@altlinux.org> 3.3.10-alt1
 - Build based on upstream version
 

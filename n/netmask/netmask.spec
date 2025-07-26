@@ -3,7 +3,7 @@
 %set_verify_info_method relaxed
 
 Name: netmask
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 Summary: Utility for determining network masks
 License: GPLv2+
@@ -11,8 +11,10 @@ Group: Networking/Other
 Url: https://github.com/tlby/netmask
 
 Source0: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: texinfo
+BuildRequires: libcheck-devel
 
 %description
 This is a handy tool for generating terse netmasks in several common
@@ -24,6 +26,8 @@ your firewall software.
 
 %prep
 %setup
+%autopatch -p1
+sed -i '/include $(top_srcdir)\/aminclude_static.am/s/^/#/' Makefile.am
 %autoreconf
 
 %build
@@ -44,6 +48,9 @@ your firewall software.
 %_infodir/%name.info.*
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.5-alt1
+- 2.4.4 -> 2.4.5
+
 * Mon Nov 18 2024 Pavel Shilov <zerospirit@altlinux.org> 2.4.4-alt1
 - initial build for Sisyphus
 

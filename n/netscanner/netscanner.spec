@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: netscanner
-Version: 0.5.3
+Version: 0.6.2
+
 Release: alt1
 Summary: Terminal Network scanner & diagnostic tool with modern TUI.
 License: MIT 
@@ -43,6 +44,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.6.2-alt1
+- 0.5.3 -> 0.6.2
+
 * Tue Oct 08 2024 Pavel Shilov <zerospirit@altlinux.org> 0.5.3-alt1
 - initial build for Sisyphus
 
