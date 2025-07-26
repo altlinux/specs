@@ -6,8 +6,8 @@
 
 Name: python3-module-%pypi_name
 
-Version: 2.98
-Release: alt1.4
+Version: 2.99
+Release: alt1
 Summary: Offline Text To Speech (TTS) converter for Python 
 License: MPL-2.0
 Group: Development/Python3
@@ -17,9 +17,9 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 #eSpeak voice count varies between versions
-Patch0: eSpeak-speak-test-alt.patch
+Patch1: eSpeak-speak-test-alt.patch
 #skip test_listening_for_events
-Patch1: not-test-listening-for-events-alt.patch
+Patch2: not-test-listening-for-events-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -32,6 +32,8 @@ BuildRequires: alsa-utils
 BuildRequires: python3-module-pytest
 BuildRequires: aplay
 %endif
+#Remove macOS-specific Python dependencies from auto-generated RPM requires.
+%add_python3_req_skip AVFoundation CoreFoundation Foundation objc
 
 %py3_provides %pypi_name
 
@@ -41,6 +43,10 @@ BuildRequires: aplay
 %prep
 %setup
 %autopatch -p1
+current_version=$(sed -n -E 's/^version *= *"(.*)"/\1/p' pyproject.toml)
+if [ "$current_version" != "%version" ]; then
+    sed -i 's/^version *= *".*"/version = "%version"/' pyproject.toml
+fi
 
 %build
 %pyproject_build
@@ -60,6 +66,9 @@ BuildRequires: aplay
 %exclude %python3_sitelibdir/%pypi_name/drivers/sapi5.py
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.99-alt1
+- 2.98 -> 2.99
+
 * Tue May 27 2025 Pavel Shilov <zerospirit@altlinux.org> 2.98-alt1.4
 - Skip test listening for event.
 
