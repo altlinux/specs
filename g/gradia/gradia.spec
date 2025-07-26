@@ -4,7 +4,7 @@
 %set_verify_elf_method fhs=relaxed
 
 Name: gradia
-Version: 1.4.0
+Version: 1.7.1
 Release: alt1
 Epoch: 1
 
@@ -22,6 +22,9 @@ BuildRequires: meson
 BuildRequires: gtk4-update-icon-cache
 BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(pygobject-3.0)
 %if_enabled check
 BuildRequires: appstream
 BuildRequires: desktop-file-utils
@@ -59,7 +62,6 @@ overall appearance.
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%app_id.desktop
-%_datadir/dbus-1/services/%app_id.service
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
@@ -67,6 +69,10 @@ overall appearance.
 %doc README.md
 
 %changelog
+* Thu Jul 24 2025 x1z53 <x1z53@altlinux.org> 1:1.7.1-alt1
+- Update to v1.7.1
+- Remove D-Bus service
+
 * Sat Jun 07 2025 David Sultaniiazov <x1z53@altlinux.org> 1:1.4.0-alt1
 - Update to v1.4.0
 
