@@ -1,10 +1,13 @@
+%define lname liblinbox0
+
 %def_with openblas
 
 Name: linbox
-%define lname   liblinbox0
-Version: 1.7.0.0.106.a253
+Version: 1.7.1
 Release: alt1
+
 Summary: C++ library for computation with matrices over ints and finite fields
+
 License: LGPL-2.1+
 Group: Sciences/Mathematics
 Url: https://linalg.org/
@@ -19,6 +22,7 @@ ExclusiveArch: i586 x86_64
 BuildRequires: autoconf >= 2.61
 BuildRequires: automake >= 1.8
 BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel
 BuildRequires: libiml-devel
 BuildRequires: libm4ri-devel
@@ -33,6 +37,10 @@ BuildRequires: libatlas-devel
 %endif
 BuildRequires: fflas-ffpack-devel
 BuildRequires: libtinyxml2-devel
+BuildRequires: opencl-headers
+# create benchmark graphics
+BuildRequires: gnuplot
+BuildRequires: ghostscript-classic
 
 %description
 LinBox is a C++ template library for exact, high-performance linear
@@ -51,6 +59,8 @@ the integers and over finite fields.
 %package -n lib%name-devel
 Summary: Development files for LinBox, a library for computation over finite fields
 Group: Development/Other
+Requires: opencl-headers
+Requires: glibc-devel
 
 %description -n lib%name-devel
 LinBox is a C++ template library for exact, high-performance linear
@@ -100,6 +110,9 @@ rm -f "%buildroot/%_libdir"/*.la
 %doc COPYING*
 
 %changelog
+* Fri Jul 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Thu Nov 14 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.0.0.106.a253-alt1
 - New version v1.7.0-106-ga253f54da.
 - Fixed build with gcc14.
