@@ -1,5 +1,5 @@
 Name: hyprsunset
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -45,6 +45,9 @@ BuildRequires: pkgconfig(libffi)
 %_userunitdir/%name.service
 
 %changelog
+* Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 - add a systemd service
