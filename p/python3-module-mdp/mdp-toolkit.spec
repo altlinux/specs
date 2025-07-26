@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt4.1
+Release: alt4.2
 
 Summary: Modular toolkit for Data Processing
 
@@ -26,6 +26,7 @@ Source: %name-%version.tar
 Source1: MDP-tutorial.pdf
 
 Patch: no_future.patch
+Patch1: mdp-debian-numpy-2.0.patch
 
 BuildArch: noarch
 
@@ -87,6 +88,7 @@ This package contains documentation for MDP.
 %setup
 
 %patch -p1
+%patch1 -p1
 
 install -p -m644 %SOURCE1 .
 
@@ -121,6 +123,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Sat Jul 26 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.0.15.g64f14eee-alt4.2
+- NMU: fixed FTBFS with new numpy via a patch from Debian
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.6.0.15.g64f14eee-alt4.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
