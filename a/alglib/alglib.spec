@@ -10,8 +10,8 @@
 %def_disable checks
 
 Name: alglib
-Version: 4.01.0
-Release: alt3
+Version: 4.05.0
+Release: alt1
 
 Summary: A numerical analysis and data processing library
 
@@ -24,8 +24,6 @@ Source0: %name-%version.tar
 Source1: ALGLIBConfig.cmake
 # Extracted from manual.cpp.html
 Source2: bsd.txt
-
-Source44: import.info
 
 # Make test output more verbose
 # Patch0:         alglib_verbose-tests.patch
@@ -104,7 +102,7 @@ sed -i 's|\r||g' manual.cpp.html
 export CXXFLAGS="%optflags -ffp-contract=off"
 export CFLAGS="%optflags -ffp-contract=off"
 %endif
-%mageia_cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+%mageia_cmake
 %mageia_cmake_build
 
 %install
@@ -139,6 +137,9 @@ popd
 %doc manual.cpp.html
 
 %changelog
+* Fri Jul 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.05.0-alt1
+- 4.01.0 -> 4.05.0
+
 * Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.01.0-alt3
 - spec cleanup
 
