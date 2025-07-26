@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.1.11
+Version: 0.1.12
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -17,7 +17,7 @@ BuildRequires: libpolkit-devel libjson-glib-devel
 
 Requires: alterator-manager >= 0.1.29
 Requires: alterator-module-executor >= 0.1.25
-Requires: alterator-backend-packages >= 0.2.7
+Requires: alterator-backend-packages >= 0.2.8
 Requires: alterator-interface-component >= 0.1.9
 Requires: alterator-backend-component >= 0.1.9
 Requires: alterator-backend-component_categories >= 0.1.5-alt2
@@ -43,14 +43,6 @@ A command line tool for using alterator DBus objects.
 %install
 %cmakeinstall_std
 ln -s %_bindir/%name %buildroot%_bindir/%short_name
-mkdir -p %buildroot%_datadir/bash-completion/completions/
-mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
-cp completions/completion \
-        %buildroot%_datadir/bash-completion/completions/%name
-cp completions/completion.fish \
-        %buildroot%_datadir/fish/vendor_completions.d/%name.fish
-ln -s %_datadir/bash-completion/completions/%name %buildroot%_datadir/bash-completion/completions/%short_name
-ln -s %_datadir/fish/vendor_completions.d/%name.fish %buildroot%_datadir/fish/vendor_completions.d/%short_name.fish
 
 %files
 %_bindir/%name
@@ -62,6 +54,10 @@ ln -s %_datadir/fish/vendor_completions.d/%name.fish %buildroot%_datadir/fish/ve
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Sat Jul 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.12-alt1
+- Increased the version of a required dependency from alterator-backend-packages
+- Moved completions setup logic to completions/CMakeLists
+
 * Mon Jul 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.11-alt1
 - Fix working bash-completions with actl symlink to alteratorctl.
 
