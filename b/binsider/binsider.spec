@@ -2,10 +2,10 @@
 
 Name: binsider
 Version: 0.2.1
-Release: alt1
+Release: alt2
 Summary: Analyze ELF binaries like a boss.
-License: Apache-2.0 and MIT 
-Group: Development/Ruby
+License: Apache-2.0 or MIT
+Group: File tools
 Url:  https://github.com/orhun/binsider
 ExclusiveArch: x86_64
 
@@ -45,7 +45,10 @@ EOF
 %_bindir/%name
 
 %changelog
-* Thu Jul 02 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.1-alt1
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.1-alt2
+- Updated package metadata
+
+* Wed Jul 02 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.1-alt1
 - Update based on upstream version
 
 * Fri Sep 06 2024 Pavel Shilov <zerospirit@altlinux.org> 0.1.0-alt1
