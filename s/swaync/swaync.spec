@@ -1,5 +1,5 @@
 Name: swaync
-Version: 0.11.0
+Version: 0.12.1
 Release: alt1
 
 Summary: A simple GTK notification daemon
@@ -11,15 +11,16 @@ Url: https://github.com/ErikReider/SwayNotificationCenter
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
-BuildRequires: meson vala sassc scdoc
+BuildRequires: meson vala sassc scdoc blueprint-compiler
 BuildRequires: vapi(granite)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(granite) < 7.0.0
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(gtk-layer-shell-0)
+BuildRequires: pkgconfig(granite-7)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(gtk4-layer-shell-0)
+BuildRequires: vapi(gtk4-layer-shell-0)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(systemd)
 
@@ -60,6 +61,9 @@ A simple notification daemon with a GTK gui for notifications and the control ce
 %_datadir/fish/vendor_completions.d/swaync*
 
 %changelog
+* Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.12.1-alt1
+- new version 0.12.1 (with rpmrb script)
+
 * Wed Apr 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 
