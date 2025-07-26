@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.7.1
-Release: alt1.1.1
+Version: 0.8.1
+Release: alt1
 Summary: wikipedia-api provide simple and easy to use API for retrieving informations from Wikipedia
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,7 @@ Vcs: https://github.com/martin-majlis/Wikipedia-API
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -36,6 +37,7 @@ BuildRequires: python3-module-pytest
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %make_build
@@ -54,6 +56,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.8.1-alt1
+- 0.7.1 -> 0.8.1
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

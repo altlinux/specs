@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.50
-Release: alt1
+Release: alt2
 Summary: Offline speech recognition API for Android, iOS, Raspberry Pi and servers with Python, Java, C# and Node 
 License: Apache-2.0
 Group: Development/Python3
@@ -14,6 +14,7 @@ Url: https://github.com/alphacep/vosk-api
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -34,6 +35,7 @@ BuildRequires: python3(pytest)
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 cd python
@@ -53,5 +55,8 @@ cd python
 %_bindir/%pypi_name-transcriber/
 
 %changelog
+* Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.50-alt2
+- Update based on upstream 
+
 * Tue Nov 12 2024 Pavel Shilov <zerospirit@altlinux.org> 0.3.50-alt1
 - initial build for Sisyphus
