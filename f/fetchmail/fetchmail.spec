@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.4.37
-Release: alt1
+Release: alt1.1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 License: GPL-2.0-or-later
@@ -13,6 +13,7 @@ Patch0001: 0001-Add-missing-space-in-config-option.patch
 Patch0002: 0002-Add-option-to-switch-off-permission-check.patch
 Patch0003: 0003-Do-not-check-libssl-version.patch
 Patch0004: 0004-Fix-LFS-on-32-bit-systems.patch
+Patch0005: fetchmail_alt_no_future.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -199,6 +200,9 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Thu Jul 17 2025 Grigory Ustinov <grenka@altlinux.org> 6.4.37-alt1.1
+- NMU: removed dependency on future.
+
 * Sat Aug 12 2023 Alexey Gladkov <legion@altlinux.ru> 6.4.37-alt1
 - New version (6.4.37).
 
