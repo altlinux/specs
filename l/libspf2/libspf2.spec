@@ -4,7 +4,7 @@
 
 Name: libspf2
 Version: 1.2.11
-Release: alt2
+Release: alt3
 Summary: Implementation of the SPF specification
 License: LGPLv2.1+
 Group: System/Libraries
@@ -76,6 +76,9 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool || exit 1
 %_libdir/*.so
 
 %changelog
+* Sat Jul 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.11-alt3
+- Updated to latest upstream snapshot (git.d14abff4)
+
 * Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.11-alt2
 - fixed FTBFS
 
