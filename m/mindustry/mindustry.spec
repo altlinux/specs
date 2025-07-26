@@ -1,8 +1,8 @@
-%define gradle_version 8.10
+%define gradle_version 8.14.3
 %define xdg_name com.github.Anuken.Mindustry
 
 Name: mindustry
-Version: 149
+Version: 150.1
 Release: alt1
 License: GPL-3.0
 
@@ -93,6 +93,9 @@ done
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 150.1-alt1
+- new version (150.1) with rpmgs script
+
 * Sun May 18 2025 Kirill Unitsaev <fiersik@altlinux.org> 149-alt1
 - new version (149) with rpmgs script
 - use the xdg-id
