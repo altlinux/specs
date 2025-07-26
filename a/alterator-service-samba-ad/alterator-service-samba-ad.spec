@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.3.1
+Version: 0.4
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -18,6 +18,7 @@ Requires: alterator-module-executor
 Requires: alterator-interface-service
 Requires: alterator-entry
 Requires: diag-domain-controller
+Requires: samba-dc
 
 %description
 Service for Samba AD management.
@@ -26,13 +27,14 @@ Service for Samba AD management.
 %setup
 
 %install
-mkdir -p %buildroot%_alterator_datadir/service
+mkdir -p %buildroot%_alterator_datadir/services
 mkdir -p %buildroot%_datadir/%name/samba-ad
 mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad
 
 install -p -D -m755 %service %buildroot%_bindir/%service
+install -p -D -m755 %service-bind %buildroot%_bindir/%service-bind
 install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
-install -p -D -m644 %service.service %buildroot%_alterator_datadir/service/%service.service
+install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
 install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/samba-ad/provision-parameters.schema.json
 install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/samba-ad/join-parameters.schema.json
 install -pDm 644 %service.bash-completion \
@@ -40,14 +42,26 @@ install -pDm 644 %service.bash-completion \
 
 %files
 %_bindir/%service
+%_bindir/%service-bind
 %_alterator_datadir/backends/%service.backend
-%_alterator_datadir/service/%service.service
+%_alterator_datadir/services/%service.service
 %_datadir/bash-completion/completions/%service
 %_datadir/%name/samba-ad/provision-parameters.schema.json
 %_datadir/%name/samba-ad/join-parameters.schema.json
 %_localstatedir/alterator/service/samba-ad/
 
 %changelog
+* Fri Jul 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.4-alt1
+- Add samba dc to requires
+- Fix demote mode
+- Fix join to domain
+- Fix bind9 setup
+- Add retval to prepare bind function
+- Set dns backend selection as a required parameter
+- Add the ability to select bind9 as a dns backend
+- Add Kinit for demote dc controller
+- Fix incorrect dns backend names
+
 * Wed Jul 23 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3.1-alt1
 - Edit mode_value in dc provision function
 - Change enum values. Edit service name
