@@ -6,19 +6,22 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jmock
 Version:        2.12.0
-Release:        alt1_10jpp11
+Release:        alt2_10jpp11
 Summary:        Java library for testing code with mock objects
 License:        BSD
 URL:            http://www.jmock.org/
 BuildArch:      noarch
 
 Source0:        https://github.com/jmock-developers/jmock-library/archive/%{version}/%{name}-%{version}.tar.gz
+
+Patch1: 0001-in-junit-4.13-this-message-changed-slightly.patch
+
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(com.google.auto.service:auto-service)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(jakarta.xml.ws:jakarta.xml.ws-api)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(junit:junit) >= 4.13
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
@@ -97,6 +100,7 @@ Source for JAR files used in jMock Core tests.
 # -p1: strip one level directory in patch
 # -n: base directory name
 %setup -q -n %{name}-library-%{version}
+%patch1 -p2
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -133,6 +137,11 @@ Source for JAR files used in jMock Core tests.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Jul  1 2025 Ivan Zakharyaschev <imz@altlinux.org> 0:2.12.0-alt2_10jpp11
+- Patched its tests (a tiny bit) for junit >= 4.13. (A slightly different
+  message was expected in the test, and it failed; however, without breaking
+  the build in Sisyphus. It doesn't hurt publishing the tiny fix in Sisyphus.)
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_10jpp11
 - update
 
