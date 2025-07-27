@@ -1,6 +1,6 @@
 Name: plasma-addon-krohnkite
 Version: 0.9.9.2
-Release: alt1
+Release: alt2
 
 Summary: A dynamic tiling extension for KWin 6 only
 License: MIT
@@ -36,13 +36,20 @@ git tag -m "%version" %version
 mkdir -p %buildroot%_datadir/kwin/scripts/krohnkite
 %make_install
 cp -a -r pkg/* %buildroot%_datadir/kwin/scripts/krohnkite/
+for locale in ru zh; do
+ install -Dm 0644 translations/locale/${locale}/LC_MESSAGES/krohnkite.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/krohnkite.mo
+done
 
+%find_lang %name --with-kde --all-name
 
-%files
+%files -f %name.lang
 %doc *.md LICENSE
 %_datadir/kwin/scripts/krohnkite
 
 %changelog
+* Sun Jul 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.9.2-alt2
+- build with locale
+
 * Sat Jul 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.9.2-alt1
 - 0.9.9.1 -> 0.9.9.2
 
