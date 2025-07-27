@@ -4,12 +4,12 @@
 %add_python3_path %_libdir/obs-scripting/
 %add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
 
-%define websocket_version 5.5.4
+%define websocket_version 5.5.6
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 31.0.3
+Version: 31.1.2
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
@@ -33,6 +33,7 @@ BuildRequires: python3-devel
 BuildRequires: ninja-build
 BuildRequires: libjansson-devel
 BuildRequires: cmake gcc-c++
+BuildRequires: extra-cmake-modules
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libX11-devel libxcb-devel
 BuildRequires: libalsa-devel
@@ -60,7 +61,7 @@ BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
-BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(gio-2.0) >= 2.76
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(rnnoise)
@@ -213,6 +214,12 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Sun Jul 27 2025 Anton Midyukov <antohami@altlinux.org> 31.1.2-alt1
+- new version (31.1.2) with rpmgs script
+
+* Thu Jul 10 2025 Anton Midyukov <antohami@altlinux.org> 31.1.0-alt1
+- new version (31.1.0) with rpmgs script
+
 * Tue Apr 01 2025 Anton Midyukov <antohami@altlinux.org> 31.0.3-alt1
 - new version (31.0.3) with rpmgs script
 - add dependency on pipewire (Closes: 53023)
