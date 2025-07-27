@@ -4,7 +4,7 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 25.07.16
+Version: 25.07.26
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
@@ -147,6 +147,9 @@ done
 %_man1dir/*
 
 %changelog
+* Sun Jul 27 2025 Andrey Cherepanov <cas@altlinux.org> 25.07.26-alt1
+- New version.
+
 * Thu Jul 24 2025 Andrey Cherepanov <cas@altlinux.org> 25.07.16-alt1
 - New version.
 
