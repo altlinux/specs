@@ -1,11 +1,11 @@
 Name: nss-mdns
 Version: 0.15.1
-Release: alt2
+Release: alt3
 
 Summary: nss-mdns provides host name resolution via Multicast DNS
 License: LGPL-2.1
 Group: System/Libraries
-Url: https://github.com/lathiat/nss-mdns
+Url: https://github.com/avahi/nss-mdns
 
 Source: v%version.tar.gz
 Patch: runstatedir.patch
@@ -64,7 +64,7 @@ if [ -f /etc/nsswitch.conf ] ; then
 	sed -i.bak '
 	/^hosts:/ !b
 	/\<mdns\(4\|6\)\?\(_minimal\)\?\>/ b
-	s/\([[:blank:]]\+\)dns\>/\1mdns4_minimal [NOTFOUND=return] dns/g
+	s/\([[:blank:]]\+\)dns\>/\1mdns_minimal [NOTFOUND=return] dns/g
 	' /etc/nsswitch.conf
 	update_chrooted all
 fi
@@ -83,8 +83,11 @@ fi
 /%_lib/libnss_*.so.*
 
 %changelog
+* Sun Jul 27 2025 Fr. Br. George <george@altlinux.org> 0.15.1-alt3
+- Add IPv6 support bu default
+
 * Tue Aug 23 2022 Fr. Br. George <george@altlinux.org> 0.15.1-alt2
-- Patch in --runsatedir (Closes: #43481)
+- Patch in --runstatedir (Closes: #43481)
 
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.15.1-alt1
 - Autobuild version bump to 0.15.1
