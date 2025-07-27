@@ -6,14 +6,15 @@
 %brp_strip_none %_bindir/%lower_name
 
 Name: SameBoy
-Version: 0.16.6
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 Summary: Game Boy and Game Boy Color emulator written in C  
 License:  MIT
 Group: Games/Other
 Url: https://github.com/LIJI32/SameBoy
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libSDL2-devel
 BuildRequires: pkgconfig(protobuf)
@@ -29,6 +30,7 @@ for testing gb (sm83) lifting.
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' Makefile
 %endif
@@ -55,6 +57,9 @@ rm -f %buildroot%_datadir/%lower_name/LICENSE
 
 
 %changelog
+* Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.1-alt1
+- 0.16.6 -> 1.0.1
+
 * Wed Dec 11 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.16.6-alt1.1
 - Fixed build for Elbrus
 

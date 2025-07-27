@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: drinfo
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 Summary: A Linux CLI tool for physical and network drive information.
 License: MIT
@@ -36,5 +36,8 @@ install -Dm644 %name.1* %buildroot/%_man1dir
 %_man1dir/%name.1*
 
 %changelog
+* Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.4-alt1
+- 1.0.2 -> 1.0.4 
+
 * Wed Jul 2 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus

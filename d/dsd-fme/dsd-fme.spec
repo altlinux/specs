@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dsd-fme
-Version: 2024
-Release: alt2
+Version: 2025
+Release: alt1
 Summary: Digital Speech Decoder - Florida Man Edition
 License: MIT
 Group: Engineering
 Url: https://github.com/lwvmobile/dsd-fme
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -35,6 +36,7 @@ P25 Phase 2, EDACS, YSF, M17, OP25 Capture Bin compatability, etc.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -49,6 +51,9 @@ P25 Phase 2, EDACS, YSF, M17, OP25 Capture Bin compatability, etc.
 %_bindir/%name
 
 %changelog
+* Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 2025-alt1
+- 2024 -> 2025 
+
 * Tue Nov 19 2024 Pavel Shilov <zerospirit@altlinux.org> 2024-alt2
 - change product group
 - removed export of CFLAGS variable in the build block
