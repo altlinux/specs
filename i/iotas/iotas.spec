@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 0.11
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -85,6 +85,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2
+
 * Wed Jul 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1-30-gd357226
 

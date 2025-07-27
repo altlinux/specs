@@ -8,7 +8,7 @@
 
 Name: junction
 Version: %ver_major
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Application chooser for GNOME
 License: GPL-3.0
@@ -22,6 +22,7 @@ Source: https://github.com/sonnyp/%_name/archive/v%version/%name-%version%beta.t
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-1.9-alt-no_flatpak.patch
 
 BuildArch: noarch
 
@@ -44,6 +45,7 @@ Junction lets you choose the application to open files and links.
 
 %prep
 %setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version%beta
+%patch -p1 -b .no-flatpak
 
 %build
 %meson
@@ -66,6 +68,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1.1
+- fixed start if XDG_DATA_DIRS is not set (ALT #55368)
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
 - 1.9
 

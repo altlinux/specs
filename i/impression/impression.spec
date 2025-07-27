@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.4
+%define ver_major 3.5
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
@@ -73,12 +73,16 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc PRESS* README*
 
 
 %changelog
+* Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
