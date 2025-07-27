@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.13.2
+Version: 0.13.3
 Release: alt1
 
 Summary: GPT applier
@@ -199,6 +199,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Sat Jul 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.13.3-alt1
+- Fixed machine account credentials initialization (closes: 55324)
+
 * Thu Apr 03 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.2-alt1
 - Fixed: Check directory existence before cleanup to avoid errors(closes:53703)
 
