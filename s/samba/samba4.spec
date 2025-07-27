@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.7
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,12 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sun Jul 27 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt3
+- Fix keytab sync regression for domain controllers (closes: 55111)
+- Backport fixes from upstream (Samba#15863, Samba#15840):
+ + rpc registry: add ProductType for AD DC
+ + s3-net: fix "net ads kerberos" krb5ccname handling
+
 * Sat Jul 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt2
 - Fix broken option "use-kerberos=desired" (Samba#15789) (closes: 55238).
 
