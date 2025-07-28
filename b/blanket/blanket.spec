@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name blanket
-%define ver_major 0.7
+%define ver_major 0.8
 %define rdn_name com.rafaelmardojai.Blanket
 
 %def_enable check
@@ -25,6 +25,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Adw) = 1
 
@@ -61,6 +62,9 @@ ambient sounds. Or allows you to fall asleep in a noisy environment.
 
 
 %changelog
+* Mon Jul 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Apr 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
