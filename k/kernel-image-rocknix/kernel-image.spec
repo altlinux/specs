@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-rocknix
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.15
-%define kernel_sublevel .7
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -424,6 +424,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.8-alt2
+- update config for SM8250
+
+* Thu Jul 24 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.8-alt1
+- 6.15.8
+
 * Wed Jul 23 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.7-alt1
 - 6.15.7
 
