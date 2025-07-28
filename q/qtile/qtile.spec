@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: qtile
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
@@ -142,6 +142,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Fri Jul 25 2025 Egor Ignatov <egori@altlinux.org> 0.33.0-alt1
+- New version 0.33.0.
+
 * Mon Jun 23 2025 Egor Ignatov <egori@altlinux.org> 0.32.0-alt1
 - New version 0.32.0.
 
