@@ -23,7 +23,7 @@
 %def_without levelzero
 %endif
 
-%ifarch x86_64 ppc64le aarch64 loongarch64
+%ifarch x86_64 aarch64 loongarch64
 %def_with mold
 %else
 %def_without mold
@@ -47,7 +47,7 @@
 # https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 aarch64
 # HIP should work on other 64-bit arches but clr needs to get built first
 %def_with hip
 %else
@@ -55,8 +55,8 @@
 %endif
 
 Name: blender
-Version: 4.3.0
-Release: alt8
+Version: 4.3.2
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -66,8 +66,11 @@ URL: https://www.blender.org
 # https://developer.blender.org/T67184
 ExcludeArch: %ix86 %arm
 
-# git://git.blender.org/blender.git
+# https://projects.blender.org/blender/blender.git
 Source: %name-%version.tar
+# assets from blender-v4.3-release
+# https://projects.blender.org/blender/blender-assets.git
+Source1: blender-assets-v%version.tar
 
 Patch21: blender-2.77-alt-enable-localization.patch
 Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
@@ -99,6 +102,14 @@ Patch38: blender-4.3.0-alt-unbundle-hiprt.patch
 # partialy implements upstream c997e614144e41351ab348ab7ef56d25ba9a3936
 # and faa17e2cc673421efd48969d4ddbb60d01f649ee
 Patch39: blender-4.3-osl-1.14-compat.patch
+# new OIIO API 3.x changes
+# upstream 4f4c3f73b697436922464e087823f53e8681d7e8
+# upstream c3c05559d6a7e10981ad8e3c13a8ee7862399c78
+Patch40: blender-4.3.0-upstream-update-oiio-apis.patch
+# python3.12 compatibility
+# ALT bug 54359
+# upstream 1865de1c738a1a1ead520fbd38487815e13906e9
+Patch41: blender-4.3-upstream-129926-fix-python3.12.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -114,7 +125,7 @@ BuildRequires: liblzo2-devel
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
-BuildRequires: libopencolorio2.2-devel
+BuildRequires: libopencolorio-devel
 BuildRequires: openexr-devel
 BuildRequires: imath-devel
 BuildRequires: libpugixml-devel
@@ -309,7 +320,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %endif
 
 %prep
-%setup
+%setup -a1
 
 %patch21 -p1
 %patch22 -p1
@@ -340,6 +351,8 @@ EOF
 %patch37 -p1
 %patch38 -p1 -b .unbundle-hiprt
 %patch39 -p1 -b .osl-1.14
+%patch40 -p1 -b .oiio-3.x
+%patch41 -p1 -b .python3.12
 
 %ifarch %e2k
 %patch2000 -p1
@@ -493,6 +506,17 @@ popd
 %endif
 
 %changelog
+* Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.2-alt1
+- Update to 4.3.2.
+- cycles: more updates for OIIO API 3.x changes (upstream
+  c3c05559d6a7e10981ad8e3c13a8ee7862399c78).
+- extern/mantaflow: fix crash with python3.12 (closes ALT #54359).
+- Added lost assets (upstream uses lfs now and we have to fetch them
+  manually). Closes ALT #54568 #54567 #54565.
+
+* Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt9
+- cycles: fix build with OIIO >= 3.x.
+
 * Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt8
 - cycles: fix build with OSL >= 1.14.
 - spec: cleanup cuda build.

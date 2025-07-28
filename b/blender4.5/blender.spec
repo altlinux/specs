@@ -61,7 +61,7 @@
 
 Name: %{project}4.5
 Version: 4.5.0
-Release: alt1
+Release: alt1.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -118,7 +118,7 @@ BuildRequires: liblzo2-devel
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
-BuildRequires: libopencolorio2.2-devel
+BuildRequires: libopencolorio-devel
 BuildRequires: openexr-devel
 BuildRequires: imath-devel
 BuildRequires: libpugixml-devel
@@ -547,6 +547,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.0-alt1.1
+- update opencolorio deps.
+
 * Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.0-alt1
 - x86_64: enable OptiX support.
 - build: increase oneapi parallel compile jobs (8Gb per job = 16Gb).

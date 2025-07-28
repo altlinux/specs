@@ -10,13 +10,11 @@
 %def_without cuda
 %endif
 
-%define soname 3.6.0
-# cuda is not ready for gcc14
-%define gcc_ver 13
+%define soname 3.6.1
 
 Name: opensubdiv
 Version: %soname
-Release: alt4.1
+Release: alt1
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -41,8 +39,9 @@ BuildRequires: python3-module-docutils doxygen graphviz
 %endif
 # examples
 BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel libXinerama-devel libXi-devel libPtex-devel
+BuildRequires: gcc-c++ libgomp-devel
 %if_with cuda
-BuildRequires: gcc%{gcc_ver}-c++ nvidia-cuda-devel libgomp%{gcc_ver}-devel
+BuildRequires: nvidia-cuda-devel
 %endif
 
 %description
@@ -129,9 +128,6 @@ An Open-Source subdivision surface library documentation
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%if_with cuda
-export GCC_VERSION=%{gcc_ver}
-%endif
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DPYTHON_EXECUTABLE=%_bindir/python3 \
@@ -166,6 +162,10 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.1-alt1
+- 3.6.1.
+- spec: remove cuda gcc hacks.
+
 * Mon Apr 28 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4.1
 - Fix OMP compilation for CUDA case.
 

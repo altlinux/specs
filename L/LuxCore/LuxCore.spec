@@ -4,7 +4,7 @@
 
 Name: LuxCore
 Version: 2.10.0
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 License: Apache-2.0
 Group: Graphics
 Summary: LuxCoreRender is a physically correct, unbiased rendering engine
@@ -23,6 +23,7 @@ Patch7: luxcorerender-system.patch
 Patch8: luxcorerender-system2.patch
 Patch9: luxcorerender-openexr3.patch
 Patch10: luxcorerender-fmt10.patch
+Patch11: LuxCore-oiio-update.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++ libopenimageio-devel openexr-devel libjpeg-devel
@@ -154,6 +155,10 @@ done
 %_libdir/libslg-kernels.a
 
 %changelog
+* Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 2.10.0-alt2.ga342e1e68
+- LuxCore: update oiio defs.
+- x86_64: employ SSE4.2.
+
 * Sat Apr 12 2025 L.A. Kostis <lakostis@altlinux.ru> 2.10.0-alt1.ga342e1e68
 - Initial build for ALTLinux.
 - Use patches from luxcorerender-2.7-0.30.beta1.fc43.
