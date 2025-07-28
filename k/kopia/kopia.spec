@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: kopia
-Version: 0.20.1
+Version: 0.21.1
 Release: alt1
 Summary: Backup tool with fast, incremental backups, client-side end-to-end encryption, compression and data deduplication (CLI)
 License: Apache-2.0
@@ -88,6 +88,9 @@ diff -qr $OLDPWD x
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jul 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.21.1-alt1
+- Update to v0.21.1 (2025-07-22).
+
 * Mon May 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.20.1-alt1
 - Update to v0.20.1 (2025-05-25).
 
