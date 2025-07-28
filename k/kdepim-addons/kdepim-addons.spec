@@ -19,7 +19,7 @@
 %define libakonadidatasetools libakonadidatasetools%sover
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -53,6 +53,9 @@ BuildRequires: kf6-kdeclarative-devel  kf6-kdoctools-devel kf6-kio-devel kf6-kpa
 BuildRequires: kf6-kwallet-devel kf6-syntax-highlighting-devel kf6-prison-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kcmutils-devel
+#
+BuildRequires: kf6-ktextaddons-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: kde6-libkgapi-devel kaddressbook-devel kidentitymanagement-devel kcalutils-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
@@ -340,6 +343,9 @@ Obsoletes: libakonadidatasetools5 < %EVR
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

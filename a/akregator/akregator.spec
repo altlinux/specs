@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -30,6 +30,7 @@ BuildRequires: kf6-kcmutils-devel kf6-kcrash-devel  kf6-kdoctools-devel kf6-kico
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-knotifications-devel kf6-knotifyconfig-devel kf6-kparts-devel kf6-ktexteditor-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kwindowsystem-devel kf6-kstatusnotifieritem-devel
 BuildRequires: kf6-syndication-devel kf6-syntax-highlighting-devel kf6-ktexttemplate-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel grantleetheme-devel kimap-devel
 BuildRequires: kmime-devel kontactinterface-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel pimcommon-devel
@@ -116,6 +117,9 @@ Obsoletes: libakregatorprivate5 < %EVR
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

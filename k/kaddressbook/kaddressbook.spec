@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -31,6 +31,7 @@ BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kcalendarcore-devel kf6-kcontacts-devel
 BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-prison-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kitemmodels-devel kf6-kparts-devel kf6-ki18n-devel kf6-ktexttemplate-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: kde6-libkleo-devel kidentitymanagement-devel kimap-devel kmime-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel akonadi-search-devel grantleetheme-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kmime-devel kldap-devel
@@ -117,6 +118,9 @@ done
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

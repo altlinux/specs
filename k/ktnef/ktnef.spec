@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -78,6 +78,9 @@ rm -rf %buildroot/%_K6doc/*/ktnef
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

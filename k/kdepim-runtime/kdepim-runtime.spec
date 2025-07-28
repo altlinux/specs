@@ -9,7 +9,7 @@
 %define libnewmailnotifier libnewmailnotifier%pim_sover
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -42,6 +42,7 @@ BuildRequires: kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmodels-devel kf6-ki
 BuildRequires: kf6-knotifyconfig-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwallet-devel
 BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kholidays-devel kf6-ktexttemplate-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: akonadi-calendar-devel kcalutils-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmbox-devel kmime-devel kpimtextedit-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel pimcommon-devel
@@ -177,6 +178,9 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

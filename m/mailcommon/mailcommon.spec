@@ -4,7 +4,7 @@
 %define libkpim6mailcommon libkpim6mailcommon%sover
 
 Name: %rname
-Version: 25.04.2
+Version: 25.04.3
 Release: alt1
 %K6init
 
@@ -31,6 +31,7 @@ BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmod
 BuildRequires: kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-kunitconversion-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-syntax-highlighting-devel kf6-ktexttemplate-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: kmailtransport-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel mailimporter-devel
 BuildRequires: messagelib-devel pimcommon-devel kde6-libkleo-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
@@ -88,6 +89,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
