@@ -1,7 +1,8 @@
 %def_disable static
 
+
 Name: sqlite3
-Version: 3.47.1
+Version: 3.50.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -12,7 +13,6 @@ URL: http://www.sqlite.org/
 Source0: sqlite-%version.tar
 Source1: sqlite3.watch
 
-Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
 Patch5: 0005-ALT-run-func7-pg-181-test-only-on-x86_64.patch
@@ -124,11 +124,13 @@ export CFLAGS="%optflags \
 # FIXME: lcc-1.23 lacks some gcc5 builtins
 cc --version | grep -q '^lcc:1.21' || export CFLAGS+="-D__INTEL_COMPILER=1"
 %endif
-autoreconf -i
+
 %tea_patch
+%undefine _configure_gettext  
 %configure \
 	%{subst_enable static} \
 	--disable-amalgamation \
+	--enable-all \
 	--enable-fts3 \
 	--enable-fts4 \
 	--enable-fts5 \
@@ -136,9 +138,10 @@ autoreconf -i
 	--enable-readline \
 	--enable-rtree \
 	--enable-threadsafe \
+	--soname=legacy
 	#
 
-make all sqlite3_analyzer sqldiff
+env  LDFLAGS.rpath="" make -e all sqlite3_analyzer sqldiff
 
 %check
 sed -Ei 's@-DSQLITE_ENABLE_FTS[345](\s|$)@@g' Makefile
@@ -150,10 +153,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 # move to the place according to ALT TEA policy
 mkdir -p %buildroot%_libdir/tcl/sqlite3
-mv %buildroot/usr/share/tcl/tcl8.6/sqlite%version/pkgIndex.tcl  %buildroot%_tcllibdir/sqlite3 
+mv %buildroot/%_tcllibdir/pkgIndex.tcl  %buildroot%_tcllibdir/sqlite3 
 sed -Ei 's/dir/dir \.\. /' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
-sed -Ei 's/libsqlite/libtclsqlite/' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
-mv %buildroot/usr/share/tcl/tcl8.6/sqlite%version/libsqlite%version.so  %buildroot%_tcllibdir/libtclsqlite%version.so
 
 
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
@@ -196,7 +197,7 @@ cp -ar doc/* %buildroot%pkgdocdir/
 %endif # static
 
 %files -n tcl-sqlite3
-%_tcllibdir/libtclsqlite%version.so*
+%_tcllibdir/libtclsqlite3.so*
 %_tcllibdir/sqlite3
 
 %files doc
@@ -209,6 +210,11 @@ cp -ar doc/* %buildroot%pkgdocdir/
 %_datadir/lemon
 
 %changelog
+* Mon Jun 02 2025 Denis Medvedev <nbr@altlinux.org> 3.50.0-alt1
+- 3.50.0
+Fixes: CVE-2025-29087
+Fixes: CVE-2025-3277
+
 * Fri Dec 06 2024 Denis Medvedev <nbr@altlinux.org> 3.47.1-alt1
 - 3.47.1
 
