@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: Rust within Python
@@ -26,18 +26,15 @@ Build and publish crates with pyo3, cffi and uniffi bindings
 as well as rust binaries as python packages.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %build
 # zstd-sys three levels down doesn't like lto
 %define optflags_lto %nil
-export CARGO_HOME=${PWD}/cargo
 %pyproject_deps_resync_build
 %pyproject_build
 
@@ -51,6 +48,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Mon Jul 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.2-alt1
+- 1.9.2 released
+
 * Wed Jul 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.1-alt1
 - 1.9.1 released
 
