@@ -1,11 +1,13 @@
 Name: python3-module-av
 Version: 14.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for ffmpeg libraries
 License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.org/project/av/
+
+Autoreq: yes, nocpp
 
 Source0: %name-%version.tar
 
@@ -39,6 +41,9 @@ BuildRequires: pkgconfig(libswresample)
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Mon Jul 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
+- suppressed extra reqs on ffmpeg (closes: 55369)
+
 * Thu Jul 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt1
 - 14.2.0 released
 
