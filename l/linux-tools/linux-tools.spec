@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define libexecdir /usr/libexec
 
-%define kernel_base_version 6.15
+%define kernel_base_version 6.16
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -23,7 +24,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -347,9 +348,6 @@ sed -i 's/0x1000 /0x4000 /' testing/selftests/exec/Makefile
 
 # pathfix
 grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
-
-popd
-grep -rlZ '__nonstring;' --include=*.h {drivers,include}/acpi | xargs -0t sed -i 's/__nonstring/__attribute__((&__))/'
 
 %build
 %define optflags_lto %nil
@@ -734,10 +732,13 @@ fi
 
 # files cpupower
 %files -n cpupower -f cpupower.lang
+%config(noreplace) %_sysconfdir/cpupower-service.conf
 %_bindir/cpupower
 %ifarch x86_64
 %_bindir/intel-speed-select
 %endif
+%libexecdir/cpupower
+%_unitdir/cpupower.service
 %_man1dir/cpupower*
 %_datadir/bash-completion/completions/cpupower
 %ifarch %ix86 x86_64
@@ -823,6 +824,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Mon Jul 28 2025 Vitaly Chikunov <vt@altlinux.org> 6.16-alt1
+- Update to v6.16 (2025-07-27).
+
 * Wed May 28 2025 Andrew Guschin <guschin@altlinux.org> 6.15-alt2
 - NMU: fix FTBFS on loongarch64
 
