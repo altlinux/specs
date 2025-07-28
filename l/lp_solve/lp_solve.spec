@@ -4,11 +4,11 @@
 %define libname lib%origname
 
 %define lp_branch 5.5
-%define lp_subver 2.5
+%define lp_subver 2.11
 
 Name: lp_solve
 Version: %lp_branch.%lp_subver
-Release: alt2
+Release: alt1
 
 Summary: Tool that solves linear programming problem
 License: LGPLv2+
@@ -17,8 +17,8 @@ Group: Sciences/Mathematics
 Url: http://sourceforge.net/projects/lpsolve
 Source: %{name}_%{version}_source.tar.gz
 Patch0: lp_solve-5.5.0.15-alt-shared.patch
-Patch1: lpsolve-5.5.0.11-fedora-cflags.patch
-Patch2: lpsolve-5.5.2.5-gcc6.patch
+Patch1: lpsolve-5.5.2.11-fedora-cflags.patch
+Patch2: lpsolve-5.5.2.11-gcc14.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 %description
@@ -72,13 +72,14 @@ install -pm644 lp*.h %buildroot%_includedir/%name
 ln -s %name %buildroot%_includedir/%origname
 
 %files
-%doc README.txt bfp/bfp_LUSOL/LUSOL/LUSOL*.txt
+%doc README.txt
 %_bindir/%name
 
 %files -n %libname
 %_libdir/*.so*
 
 %files -n %libname-devel
+%doc demo/demo.c
 %_includedir/%name/
 %_includedir/%origname
 
@@ -91,6 +92,9 @@ ln -s %name %buildroot%_includedir/%origname
 %endif
 
 %changelog
+* Mon Jul 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.5.2.11-alt1
+- Updated to 5.5.2.11.
+
 * Mon Jul 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.5.2.5-alt2
 - NMU: fix FTBFS with gcc14.
 
