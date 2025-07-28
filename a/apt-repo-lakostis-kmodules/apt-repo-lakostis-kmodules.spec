@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define kflavours 6.12 6.15
+%define kflavours 6.12 6.15 6.16
 %define inst_dir %_sysconfdir/apt/sources.list.d
 %define alt_url https://lakostis.unsafe.ru/RPMS/ALTLinux
 
 Name: apt-repo-lakostis-kmodules
 Version: 0.0.1
-Release: alt8
+Release: alt9
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -38,6 +38,9 @@ done
 %inst_dir/*.list
 
 %changelog
+* Mon Jul 28 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt9
+- add 6.16.
+
 * Sun Jun 22 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt8
 - remove 6.14 (EOL).
 
