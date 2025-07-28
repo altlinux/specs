@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -37,6 +37,9 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Thu Jul 24 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.1-alt1
+- Fix saving file to itself.
+
 * Fri Jun 27 2025 Oleg Proskurin <proskur@altlinux.org> 0.3-alt1
 - New features (Closes:#53303):
   + Dark themes support
