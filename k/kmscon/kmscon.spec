@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 9.0.0
-Release: alt2
+Version: 9.1.0
+Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -11,7 +11,8 @@ Url: http://www.freedesktop.org/wiki/Software/kmscon/
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 1.1
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: xkeyboard-config
 BuildRequires: pkgconfig(libtsm) >= 4.0.0
@@ -23,6 +24,7 @@ BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(pango) pkgconfig(pangoft2)
 BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(check)
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
 %description
@@ -59,6 +61,9 @@ sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
 %_man1dir/%name.1*
 
 %changelog
+* Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 9.1.0-alt1
+- New version 9.1.0.
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.0-alt2
 - backport commit from upstream "Use correct systemd system unit directory".
 
