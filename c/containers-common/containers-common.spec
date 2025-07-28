@@ -4,15 +4,15 @@
 # pick the oldest version on c/image, c/common, c/storage vendored in
 # Buildah/Podman/Skopeo.
 
-%global image_branch v5.32.2
-%global storage_branch v1.55.0
+%global image_branch v5.36.0
+%global storage_branch v1.59.0
 %global shortnames_branch main
 
 %global github_containers https://raw.githubusercontent.com/containers
 
 Epoch: 2
 Name: containers-common
-Version: 0.60.2
+Version: 0.64.0
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -168,6 +168,12 @@ install -d -p -m 755 %buildroot%_datadir/alt/secrets
 %files extra
 
 %changelog
+* Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 2:0.64.0-alt1
+- Update sources
+
+* Mon Jul 28 2025 Nadezhda Fedorova <fedor@altlinux.org> 2:0.60.2-alt2
+- Update shortnames to new ALT image repository structure.
+
 * Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 2:0.60.2-alt1
 - Update sources
 
