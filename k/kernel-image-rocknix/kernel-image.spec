@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rocknix
-Release: alt2
+Release: alt3
 epoch:1
 %define kernel_need_version	6.15
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.8-alt3
+- config-aarch64: CONFIG_JOYSTICK_RETROID=y
+
 * Mon Jul 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.8-alt2
 - update config for SM8250
 
