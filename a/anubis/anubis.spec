@@ -2,7 +2,7 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.19.1
+Version: 1.21.3
 Release: alt1
 
 Group: Networking/WWW
@@ -82,6 +82,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 1.21.3-alt1
+- New version 1.21.3 (Fixes: CVE-2025-54414).
+
 * Mon Jun 16 2025 Alexey Shabalin <shaba@altlinux.org> 1.19.1-alt1
 - New version 1.19.1.
 
