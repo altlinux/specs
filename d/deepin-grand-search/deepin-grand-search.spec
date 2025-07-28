@@ -3,15 +3,15 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.9.1
-Release: alt2
+Version: 6.0.20
+Release: alt1
 
 Summary: Basic search tool for DDE
 
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-grand-search
-Vcs: git://github.com/linuxdeepin/dde-grand-search.git
+Vcs: https://github.com/linuxdeepin/dde-grand-search.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -24,7 +24,7 @@ BuildRequires(pre): gcc-c++
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Thu Apr 03 2025
 # optimized out: bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
-BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libdfm6-search-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel deepin-desktop-base libantlr4-devel libdde-shell-devel deepin-shell
+BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libdfm6-search-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel deepin-desktop-base libantlr4-devel libdde-shell-devel deepin-shell deepin-desktop-base
 # aarch64
 BuildRequires: libpcre-devel
 
@@ -59,6 +59,7 @@ export READELF="llvm-readelf"
 %files -f %repo.lang
 %doc README.md LICENSE.txt
 %_bindir/dde-grand-search*
+%_desktopdir/%repo.desktop
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libddegrandsearch_dockplugin.so
@@ -100,8 +101,17 @@ export READELF="llvm-readelf"
 %_datadir/dbus-1/services/org.deepin.dde.GrandSearchDaemon.service
 %_datadir/dbus-1/services/com.deepin.dde.GrandSearchSetting.service
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
+# manual
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%_datadir/deepin-manual/manual-assets/application/%repo/
+# ---
 
 %changelog
+* Mon Jul 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
+- New version 6.0.20.
+
 * Wed Apr 30 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.9.1-alt2
 - Fixed build with deepin-desktop-base 2025.03.06.
 
