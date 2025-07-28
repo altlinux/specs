@@ -2,13 +2,13 @@
 
 Name: kgeotag
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Photo geotagging program
 License: CC0-1.0 and BSD-2-Clause and BSD-3-Clause and GPL-3.0-only and CC-BY-SA-4.0 and ODbL-1.0
 Group: Graphical desktop/KDE
 
-Url: kgeotag.kde.org
+Url: https://kgeotag.kde.org
 Vcs: https://invent.kde.org/graphics/kgeotag
 
 ExcludeArch: i586
@@ -76,5 +76,8 @@ export CXX=clang++
 %_defaultdocdir/HTML/*/%name
 
 %changelog
+* Mon Jul 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt2
+- Fix Url in spec.
+
 * Fri Jun 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt1
 - Initial build for ALT Linux.
