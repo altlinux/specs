@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name:    cloud-init
-Version: 24.4.1
-Release: alt2
+Version: 25.1.4
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -32,9 +32,6 @@ Source41: 90_datasource-list.cfg
 
 Patch1: %name-%version-%release.patch
 Patch2: use_python3_in_uncloud-init.patch
-# Add commit from upstream/main. Fix ovfTools error. 
-# https://github.com/canonical/cloud-init/commit/266536dabab7dc746ff51017ba5240d6a5a5a971
-Patch3: ofvtool-cloud-init.patch
 
 %add_findreq_skiplist %_systemdgeneratordir/cloud-init-generator
 
@@ -132,11 +129,9 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
-%python3_build
-#%%pyproject_build
+%pyproject_build
 
 %install
 %python3_install  --distro altlinux --init-system systemd
@@ -247,6 +242,9 @@ fi
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Mon Jul 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 25.1.4-alt1
+- 25.1.4
+
 * Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 24.4.1-alt2
 - Dropped no longer needed tests dependency on httpretty.
 
