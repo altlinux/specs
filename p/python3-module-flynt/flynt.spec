@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: CLI tool to convert a python project's %-formatted strings to f-strings
 License: MIT
@@ -40,11 +40,7 @@ from old "%-formatted" and .format(...) strings into Python 3.6+'s "f-strings".
 %pyproject_install
 
 %check
-# https://github.com/ikamensh/flynt/issues/191
-%pyproject_run_pytest -ra -Wignore \
-    --deselect='test/integration/test_files.py::test_fstringify[string_in_string.py]' \
-    --deselect='test/integration/test_files.py::test_fstringify_single_line[string_in_string.py]' \
-    --deselect='test/test_edits.py::test_mixed_quote_types_unsafe'
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.*
@@ -53,6 +49,9 @@ from old "%-formatted" and .format(...) strings into Python 3.6+'s "f-strings".
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 28 2025 Stanislav Levin <slev@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3.
+
 * Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - 1.0.1 -> 1.0.2.
 
