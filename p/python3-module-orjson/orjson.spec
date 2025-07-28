@@ -1,5 +1,5 @@
 Name: python3-module-orjson
-Version: 3.11.0
+Version: 3.11.1
 Release: alt1
 
 Summary: Fast, correct JSON library for Python
@@ -20,16 +20,13 @@ BuildRequires: python3(pytest)
 %summary
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %build
-export CARGO_HOME=${PWD}/cargo
 %pyproject_build
 
 %install
@@ -43,6 +40,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Mon Jul 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.1-alt1
+- 3.11.1 released
+
 * Thu Jul 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.0-alt1
 - 3.11.0 released
 
