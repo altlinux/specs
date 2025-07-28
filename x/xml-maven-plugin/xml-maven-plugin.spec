@@ -8,9 +8,9 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           xml-maven-plugin
 Summary:        Maven XML Plugin
-Version:        1.0.2
-Release:        alt1_5jpp11
-License:        ASL 2.0
+Version:        1.1.0
+Release:        alt1
+License:        Apache-2.0
 
 URL:            https://www.mojohaus.org/xml-maven-plugin/
 Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -33,7 +33,6 @@ Source44: import.info
 %description
 A plugin for various XML related tasks like validation and transformation.
 
-
 %package javadoc
 Group: Development/Java
 Summary:       Javadocs for %{name}
@@ -42,26 +41,17 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
-%setup -q
-
-for d in LICENSE NOTICE ; do
-  iconv -f iso8859-1 -t utf-8 $d.txt > $d.txt.conv && mv -f $d.txt.conv $d.txt
-  sed -i 's/\r//' $d.txt
-done
+%setup
 
 # Add the version
 sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.xsl
 
-
 %build
 %mvn_build -f
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -69,8 +59,10 @@ sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.x
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
-
 %changelog
+* Thu Jul 24 2025 Anton Meleshnikov <alton@altlinux.org> 1.1.0-alt1
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt1_5jpp11
 - update
 
