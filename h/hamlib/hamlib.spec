@@ -2,8 +2,8 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        4.6.3
-Release:        alt2
+Version:        4.6.4
+Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -213,6 +213,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Mon Jul 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.4-alt1
+- New version 4.6.4.
+
 * Fri Jun 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.3-alt2
 - Fix FTBFS with libgd and libz.
 - Enable %%check.
