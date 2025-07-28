@@ -1,6 +1,6 @@
 Name: kernel-image-6.16
-Release: alt0.rc7
-%define kernel_src_version	6.15
+Release: alt1
+%define kernel_src_version	6.16
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jul 27 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt1
+- Update to v6.16 (2025-07-27) release.
+- config: Enable CONFIG_MTK_T7XX=m.
+
 * Sun Jul 20 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc7
 - Update to v6.16-rc7 (2025-07-20).
 
