@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.1
+Version: 2.0.3
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -18,6 +18,7 @@ Conflicts: deepin-launcher
 Obsoletes: deepin-launcher
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 %if_enabled clang
@@ -41,6 +42,7 @@ This package provides liblaunchpadcommon library for %name.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 sed -i 's|AppStreamQt|AppStreamQt6|' \
   CMakeLists.txt \
   desktopintegration.cpp
@@ -80,6 +82,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Mon Jul 28 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1
+- New version 2.0.3.
+
 * Fri Jun 27 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
