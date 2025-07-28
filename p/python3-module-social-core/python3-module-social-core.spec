@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.6.1
+Version: 4.7.0
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -78,6 +78,9 @@ sed -i '/license-files/d' pyproject.toml
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Mon Jul 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
+- Update to version 4.7.0.
+
 * Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.6.1-alt1
 - Update to version 4.6.1.
 

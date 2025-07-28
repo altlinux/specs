@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.3
+Version: %branch.4
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,10 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon Jul 28 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.4-alt1
+- New version 5.2.4.
+- Some bugfixes.
+
 * Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.3-alt1
 - New version 5.2.3.
 - Some bugfixes.
