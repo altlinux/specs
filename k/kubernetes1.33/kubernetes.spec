@@ -7,11 +7,11 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     33
-%define kubernetes_patch     2
+%define kubernetes_patch     3
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt2
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -395,6 +395,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Jul 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.3-alt1
+- 1.33.2 -> 1.33.3
+
 * Fri Jul 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.2-alt2
 - Properly merge ALT fixes for 1.33.2
 - Fixes:
