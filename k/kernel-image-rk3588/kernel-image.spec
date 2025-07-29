@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.37
+%define kernel_sublevel	.40
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -43,95 +43,95 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 Patch0: %name-%version-%release.patch
 # Armbian patches
 Patch0001: 0001-Import-DTS-from-Armbian.patch
-Patch0002: add-board-fine3399-dts.patch
-Patch0003: add-board-helios64.patch
-Patch0004: board-firefly-rk3399-dts.patch
-Patch0005: board-helios64-dts-fix-stability-issues.patch
-Patch0006: board-helios64-remove-pcie-ep-gpios.patch
-Patch0007: board-nanopc-t4-add-typec-dp.patch
-Patch0008: board-nanopi-m4v2-dts-add-sound-card.patch
-Patch0009: board-nanopi-r2c-plus.patch
-Patch0010: board-nanopi-r2s.patch
-Patch0011: board-nanopi-r3s-fix-leds.patch
-Patch0012: board-nanopi-r4s-pwmfan.patch
-Patch0013: board-odroidm1-add-nodes-for-i2c-pwm-uart-spi.patch
-Patch0014: board-orangepi3b-add-uwe5622-wifi-bt-nodes.patch
-Patch0015: board-orangepi-r1-plus.patch
-Patch0016: board-orangepi-rk3399-pcie.patch
-Patch0017: board-pbp-add-dp-alt-mode.patch
-Patch0018: board-radxa-e25-sdmmc0-fix.patch
-Patch0019: board-radxa-e25-usb3-and-emmc-fix.patch
-Patch0020: board-rk3328-roc-cc-dts-enable-dmc.patch
-Patch0021: board-rk3328-roc-cc-dts-ram-profile.patch
-Patch0022: board-rk3328-roc-pc-dts-ram-profile.patch
-Patch0023: board-rk3328-roc-pc.patch
-Patch0024: board-rock3a-0001-emmc-sfc.patch
-Patch0025: board-rock3a-0002-usb3.patch
-Patch0026: board-rock3a-0003-add-gpio-names.patch
-Patch0027: board-rock64-mail-supply.patch
-Patch0028: board-rockpi3-enable-dmc.patch
-Patch0029: board-rockpi4-0003-arm64-dts-pcie.patch
-Patch0030: board-rockpis-dts-fixes.patch
-Patch0031: board-rockpro64-0001-Add-pcie-bus-scan-delay.patch
-Patch0032: board-rockpro64-change-rx_delay-for-gmac.patch
-Patch0033: board-rockpro64-fix-emmc.patch
-Patch0034: board-rockpro64-fix-spi1-flash-speed.patch
-Patch0035: board-rockpro64-work-led-heartbeat.patch
-Patch0036: board-rocks0-0001-deviceTree.patch
-Patch0037: board-rocks0-0002-Revert-arm64-dts-rockchip-Fix-sdmmc-access-on-rk3308.patch
-Patch0038: board-station-m2.patch
-Patch0039: board-station-p2.patch
-Patch0040: drivers-regulator-fan53555-bug-fixed.patch
-Patch0041: drv-spi-spidev-remove-warnings.patch
-Patch0042: general-add-hdmi-mks-ips50-resolutions.patch
-Patch0043: general-add-miniDP-dt-doc.patch
-Patch0044: general-add-miniDP-virtual-extcon.patch
-Patch0045: general-add-overlay-compilation-support.patch
-Patch0046: general-add-overlay-configfs.patch
-Patch0047: general-add-panel-simple-dsi.patch
-Patch0048: general-add-pll-hdmi-timings.patch
-Patch0049: general-add-xtx-spi-nor-chips.patch
-Patch0050: general-clk-rockchip-rk3568-Add-PLL-rate-for-33.3MHz.patch
-Patch0051: general-cryptov1-trng.patch
-Patch0052: general-disable-mtu-validation.patch
-Patch0053: general-driver-tm16xx-led-driver.patch
-Patch0054: general-fix-es8316-kernel-panic.patch
-Patch0055: general-fix-inno-usb2-phy-init.patch
-Patch0056: general-fix-mmc-signal-voltage-before-reboot.patch
-Patch0057: general-hdmi-clock-fixes.patch
-Patch0058: general-increase-spdif-dma-burst.patch
-Patch0059: general-increasing_DMA_block_memory_allocation_to_2048.patch
-Patch0060: general-pl330-01-fix-periodic-transfers.patch
-Patch0061: general-pl330-02-add-support-for-interleaved-transfers.patch
-Patch0062: general-pl330-04-bigger-mcode-buffer.patch
-Patch0063: general-pl330-05-fix-unbalanced-power-down.patch
-Patch0064: general-pl330-06-fix-buffer-underruns.patch
-Patch0065: general-possibility-of-disabling-rk808-rtc.patch
-Patch0066: general-rk3328-dtsi-trb-ent-quirk.patch
-Patch0067: general-rk808-configurable-switch-voltage-steps.patch
-Patch0068: general-rockchip-overlays.patch
-Patch0069: general-rt5651-add-mclk.patch
-Patch0070: general-st7796-driver.patch
-Patch0071: general-v4l2-iep-driver.patch
-Patch0072: general-v4l2-rkvdec-00-fixes.patch
-Patch0073: general-v4l2-rkvdec-01-vp9.patch
-Patch0074: general-v4l2-rkvdec-02-hevc.patch
-Patch0075: general-workaround-broadcom-bt-serdev.patch
-Patch0076: kernel-6.8-tools-cgroup-makefile.patch
-Patch0077: media-0001-Add-rkvdec2-Support-v3.patch
-Patch0078: media-0002-v4l2-core-Initialize-h264-frame_mbs_only_flag-.patch
-Patch0079: media-0003-rk3568-disable-hantro-h264.patch
-Patch0080: net-usb-r8152-add-LED-configuration-from-OF.patch
-Patch0081: regulator-add-fan53200-driver.patch
-Patch0082: rk3308-0001-pinctrl-slew-mux.patch
-Patch0083: rk3308-0003-pinctrl-io-voltage-domains.patch
-Patch0084: rk3308-acodec-vendor-driver.patch
-Patch0085: rk3308-add-gmac-alias.patch
-Patch0086: rk3308-add-missing-i2s-controllers.patch
-Patch0087: rk3308-add-tsadc-driver.patch
-Patch0088: rk3308-dts-legacy-cryptov2.patch
-Patch0089: rk3308-dts-thermal-zones.patch
-Patch0090: rk3308-fix-uart-dma.patch
+Patch0002: add-board-helios64.patch
+Patch0003: board-firefly-rk3399-dts.patch
+Patch0004: board-helios64-dts-fix-stability-issues.patch
+Patch0005: board-helios64-remove-pcie-ep-gpios.patch
+Patch0006: board-nanopc-t4-add-typec-dp.patch
+Patch0007: board-nanopi-m4v2-dts-add-sound-card.patch
+Patch0008: board-nanopi-r2c-plus.patch
+Patch0009: board-nanopi-r2s.patch
+Patch0010: board-nanopi-r3s-fix-leds.patch
+Patch0011: board-nanopi-r4s-pwmfan.patch
+Patch0012: board-odroidm1-add-nodes-for-i2c-pwm-uart-spi.patch
+Patch0013: board-orangepi3b-add-uwe5622-wifi-bt-nodes.patch
+Patch0014: board-orangepi-r1-plus.patch
+Patch0015: board-orangepi-rk3399-pcie.patch
+Patch0016: board-pbp-add-dp-alt-mode.patch
+Patch0017: board-radxa-e25-sdmmc0-fix.patch
+Patch0018: board-radxa-e25-usb3-and-emmc-fix.patch
+Patch0019: board-rk3328-roc-cc-dts-enable-dmc.patch
+Patch0020: board-rk3328-roc-cc-dts-ram-profile.patch
+Patch0021: board-rk3328-roc-pc-dts-ram-profile.patch
+Patch0022: board-rk3328-roc-pc.patch
+Patch0023: board-rock3a-0001-emmc-sfc.patch
+Patch0024: board-rock3a-0002-usb3.patch
+Patch0025: board-rock3a-0003-add-gpio-names.patch
+Patch0026: board-rock64-mail-supply.patch
+Patch0027: board-rockpi3-enable-dmc.patch
+Patch0028: board-rockpi4-0003-arm64-dts-pcie.patch
+Patch0029: board-rockpis-dts-fixes.patch
+Patch0030: board-rockpro64-0001-Add-pcie-bus-scan-delay.patch
+Patch0031: board-rockpro64-change-rx_delay-for-gmac.patch
+Patch0032: board-rockpro64-fix-emmc.patch
+Patch0033: board-rockpro64-fix-spi1-flash-speed.patch
+Patch0034: board-rockpro64-work-led-heartbeat.patch
+Patch0035: board-rocks0-0001-deviceTree.patch
+Patch0036: board-rocks0-0002-Revert-arm64-dts-rockchip-Fix-sdmmc-access-on-rk3308.patch
+Patch0037: board-station-m2.patch
+Patch0038: board-station-p2.patch
+Patch0039: drivers-regulator-fan53555-bug-fixed.patch
+Patch0040: drv-spi-spidev-remove-warnings.patch
+Patch0041: general-add-hdmi-mks-ips50-resolutions.patch
+Patch0042: general-add-miniDP-dt-doc.patch
+Patch0043: general-add-miniDP-virtual-extcon.patch
+Patch0044: general-add-overlay-compilation-support.patch
+Patch0045: general-add-overlay-configfs.patch
+Patch0046: general-add-panel-simple-dsi.patch
+Patch0047: general-add-pll-hdmi-timings.patch
+Patch0048: general-add-xtx-spi-nor-chips.patch
+Patch0049: general-clk-rockchip-rk3568-Add-PLL-rate-for-33.3MHz.patch
+Patch0050: general-cryptov1-trng.patch
+Patch0051: general-disable-mtu-validation.patch
+Patch0052: general-driver-tm16xx-led-driver.patch
+Patch0053: general-fix-es8316-kernel-panic.patch
+Patch0054: general-fix-inno-usb2-phy-init.patch
+Patch0055: general-fix-mmc-signal-voltage-before-reboot.patch
+Patch0056: general-hdmi-clock-fixes.patch
+Patch0057: general-increase-spdif-dma-burst.patch
+Patch0058: general-increasing_DMA_block_memory_allocation_to_2048.patch
+Patch0059: general-pl330-01-fix-periodic-transfers.patch
+Patch0060: general-pl330-02-add-support-for-interleaved-transfers.patch
+Patch0061: general-pl330-04-bigger-mcode-buffer.patch
+Patch0062: general-pl330-05-fix-unbalanced-power-down.patch
+Patch0063: general-pl330-06-fix-buffer-underruns.patch
+Patch0064: general-possibility-of-disabling-rk808-rtc.patch
+Patch0065: general-rk3328-dtsi-trb-ent-quirk.patch
+Patch0066: general-rk808-configurable-switch-voltage-steps.patch
+Patch0067: general-rockchip-overlays.patch
+Patch0068: general-rt5651-add-mclk.patch
+Patch0069: general-st7796-driver.patch
+Patch0070: general-v4l2-iep-driver.patch
+Patch0071: general-v4l2-rkvdec-00-fixes.patch
+Patch0072: general-v4l2-rkvdec-01-vp9.patch
+Patch0073: general-v4l2-rkvdec-02-hevc.patch
+Patch0074: general-workaround-broadcom-bt-serdev.patch
+Patch0075: kernel-6.8-tools-cgroup-makefile.patch
+Patch0076: media-0001-Add-rkvdec2-Support-v3.patch
+Patch0077: media-0002-v4l2-core-Initialize-h264-frame_mbs_only_flag-.patch
+Patch0078: media-0003-rk3568-disable-hantro-h264.patch
+Patch0079: net-usb-r8152-add-LED-configuration-from-OF.patch
+Patch0080: regulator-add-fan53200-driver.patch
+Patch0081: rk3308-0001-pinctrl-slew-mux.patch
+Patch0082: rk3308-0003-pinctrl-io-voltage-domains.patch
+Patch0083: rk3308-acodec-vendor-driver.patch
+Patch0084: rk3308-add-gmac-alias.patch
+Patch0085: rk3308-add-missing-i2s-controllers.patch
+Patch0086: rk3308-add-tsadc-driver.patch
+Patch0087: rk3308-dts-legacy-cryptov2.patch
+Patch0088: rk3308-dts-thermal-zones.patch
+Patch0089: rk3308-fix-uart-dma.patch
+Patch0090: rk3308-i2s-default-rate.patch
 Patch0091: rk3308-internal-rgb-lcdc.patch
 Patch0092: rk3308-vop-output.patch
 Patch0093: rk3328-add-dmc-driver.patch
@@ -510,6 +510,14 @@ fi
 %modules_dir/build
 
 %changelog
+* Tue Jul 29 2025 Alexei Takaseev <taf@altlinux.org> 6.12.40-alt1
+- v6.12.40 (2025-07-24).
+- Update 0001-Import-DTS-from-Armbian.patch
+- Remove patch add-board-fine3399-dts.patch
+- Update patches:
+    * board-rockpis-dts-fixes.patch
+    * rk3588-0132-phy-phy-rockchip-samsung-hdptx-Add-FRL-EARC-support.patch
+
 * Sat Jul 12 2025 Alexei Takaseev <taf@altlinux.org> 6.12.37-alt1
 - v6.12.37 (2025-07-10).
 - config: Enable CONFIG_BUG_ON_DATA_CORRUPTION=y.
