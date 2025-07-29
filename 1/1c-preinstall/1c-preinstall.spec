@@ -1,9 +1,9 @@
-%define tested_version 8.3.24.1624
+%define tested_version 8.3.27.1644
 %define ftrigger 1c.filetrigger
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt23
+Release: alt24
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -22,6 +22,7 @@ Requires: glibc-pthread
 Requires: libatk
 Requires: libat-spi2-core
 Requires: libavahi
+Requires: libavif
 Requires: libblkid
 Requires: libbrotlicommon
 Requires: libbrotlidec
@@ -31,6 +32,8 @@ Requires: libcom_err
 Requires: libcups
 Requires: libdatrie
 Requires: libdbus
+Requires: libdrm
+Requires: libEGL
 Requires: libepoxy
 Requires: libexpat
 Requires: libffi7
@@ -42,6 +45,7 @@ Requires: libgcrypt20
 Requires: libgdk-pixbuf
 Requires: libgio
 Requires: libGL
+Requires: libGLU
 Requires: libglvnd
 Requires: libGLX
 Requires: libgpg-error
@@ -74,7 +78,7 @@ Requires: libuuid
 Requires: libwayland-client
 Requires: libwayland-cursor
 Requires: libwayland-egl
-Requires: libwxGTK3.0-gl
+Requires: libwxGTK3.2-gl
 Requires: libX11
 Requires: libXau
 Requires: libxcb
@@ -121,6 +125,10 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Tue Jul 29 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt24
+- requires libwxGTK3.2-gl instead of libwxGTK3.0-gl
+- plus libavif, libdrm, libEGL,libGLU
+
 * Mon Jun 02 2025 Andrey Cherepanov <cas@altlinux.org> 8.3-alt23
 - requires libwxGTK3.0-gl (ALT #54585)
 
