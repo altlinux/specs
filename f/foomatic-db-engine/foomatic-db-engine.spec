@@ -3,7 +3,7 @@
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Name: foomatic-db-engine
-Version: 4.0.12
+Version: 4.0.13
 Release: alt1
 
 Provides: foomatic-addon = %version
@@ -41,6 +41,8 @@ for printer administration, and for printing.
 %patch2 -p2
 
 %build
+export SH=/bin/bash
+export LIB_CUPS=%_libexecdir/cups
 %configure
 %make
 
@@ -96,10 +98,13 @@ install -d $RPM_BUILD_ROOT/var/cache/foomatic/compiled
 %_man8dir/*
 %_bindir/*
 %_sbindir/*
-%_prefix/lib/cups/driver/foomatic
+%_libexecdir/cups/driver/foomatic
 %perl_vendor_privlib/Foomatic*
 
 %changelog
+* Mon May 19 2025 Petr Usoltsev <usoltsevpv@altlinux.org> 4.0.13-alt1
+- 4.0.13
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.12-alt1
 - 4.0.12
 
