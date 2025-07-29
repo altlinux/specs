@@ -7,7 +7,7 @@
 
 Name: deepin-daemon
 Version: 6.1.44
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Daemon handling the DDE session settings
@@ -85,6 +85,10 @@ sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
 sed -i 's|/etc/systemd/system/display-manager.service|%_unitdir/display-manager.service|g' \
     accounts1/users/display_manager.go
 sed -i 's|${DESTDIR}/etc/default/grub.d|${DESTDIR}%_sysconfdir/grub.d|g' Makefile
+sed -i 's|/etc/os-version|/etc/uos-version|g' \
+    bin/dde-system-daemon/plymouth.go \
+    keybinding1/shortcuts/shortcut_manager.go \
+    systeminfo1/utils.go
 
 # /bin
 sed -i 's|/usr/bin/env python3|%__python3|' \
@@ -190,6 +194,9 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_datadir/locale/ky@Arab/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.44-alt2
+- Fixed uos-version detection.
+
 * Tue Jul 15 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.44-alt1
 - New version 6.1.44.
 
