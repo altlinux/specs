@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-systeminfo
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 
 Summary: Alterator backend for getting system information
@@ -12,7 +12,7 @@ URL: https://gitlab.basealt.space/alt/alterator-backend-systeminfo
 BuildArch: noarch
 Source: %name-%version.tar
 
-Requires: alterator-interface-systeminfo >= 0.3.0
+Requires: alterator-interface-systeminfo >= 0.4.0
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-macros-alterator
 %package -n alterator-interface-systeminfo
 Summary: Alterator interface for getting system information
 Group: System/Configuration/Other
-Version: 0.3.0
+Version: 0.4.0
 
 %description -n alterator-interface-systeminfo
 %summary
@@ -52,6 +52,10 @@ Version: 0.3.0
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Jul 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.0-alt1
+- Add GetFinalNotes method with editions support.
+- Add editions support for GetReleaseNotes method. 
+
 * Wed Apr 09 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.2-alt1
 - New version.
 

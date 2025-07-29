@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.13
+Version: 0.7.14
 Release: alt1
 
 Summary: Base set of ALT Distributions components
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alt-components-base
+URL: https://altlinux.space/alterator/alt-components-base
 
 BuildArch: noarch
 
@@ -117,7 +117,7 @@ for edition_dir in editions/*/; do
 
     install -v -p -m 644 -D "$edition_dir/$edition.edition" "%buildroot%_alterator_datadir/editions/$edition"
 
-    find "$edition_dir" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+    find "$edition_dir" -type f -name "*.html" -print0 | while IFS= read -r -d '' file; do
         install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/editions/$edition"
     done
 done
@@ -151,6 +151,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Mon Jul 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.7.14-alt1
+- editions: put notes for edition_domain & edition_server
+- editions: fix display name of main section in edition_domain
+
 * Tue Jul 08 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.7.13-alt1
 - components: update descriptions
 - categories: fix display name (windows-env, infra)

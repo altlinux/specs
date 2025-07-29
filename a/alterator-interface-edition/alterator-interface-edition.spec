@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-edition
-Version: 0.1.5
-Release: alt4
+Version: 0.2.0
+Release: alt1
 
 Summary: Alterator interface for edition
 License: GPLv2+
@@ -86,6 +86,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Jul 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
+- Add ReleaseNotes & FinalNotes methods for getting notes of edition
+  with fallback to legacy path.
+
 * Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt4
 - Actualize URL of repository.
 
