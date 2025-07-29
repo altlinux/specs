@@ -1,5 +1,5 @@
 Name: dsremote
-Version: 0.40
+Version: 0.46
 Release: alt1
 
 Summary: Rigol DS1000 series oscilloscope tool
@@ -26,11 +26,15 @@ series oscilloscope from your Linux desktop via USB or LAN.
 %install_qt5
 
 %files
-%doc README
+%doc LICENSE README
 %_bindir/dsremote
+%_udevrulesdir/*.rules
 %_desktopdir/dsremote.desktop
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Jul 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.46-alt1
+- 0.46 released
+
 * Mon Apr 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.40-alt1
 - initial
