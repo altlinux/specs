@@ -5,7 +5,7 @@
 
 Name: deepin-shell
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Plugins for DDE
 
@@ -68,6 +68,8 @@ Header files and libraries for libds-notification-shared.
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+sed -i 's|/usr/lib/dde-dock/plugins/|%_libdir/dde-dock/plugins/|g' \
+  panels/dock/loadtrayplugins.h
 
 %build
 %if_with clang
@@ -145,6 +147,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt2
+- Fixed dde-dock plugin detection.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1
 - New version 2.0.3.
 
