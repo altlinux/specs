@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.2
-Release: alt3
+Release: alt4
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -285,6 +285,9 @@ Patch325: 0025-Remove-all-ImageProcessor-functionality-which-is-clo.patch
 Patch328: 0028-hp-check-Fix-core.distro-vs.-core.distro_name-mixups.patch
 Patch329: 0029-Make-base.g.xint-more-generous-in-what-it-can-take.patch
 # end debian patches
+
+#https://bugs.launchpad.net/hplip/+bug/2110079
+Patch330: hp-scan_disable_resize.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -574,6 +577,9 @@ sed -i.duplex-constraints \
 %patch325 -p2
 %patch328 -p1
 %patch329 -p1
+
+#disable resize
+%patch330 -p1
 
 %patch112 -p2 -b .logdir
 
@@ -1133,6 +1139,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Tue Jul 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.2-alt4
+- NMU: disable resize in hp-scan (ALT #55386)
+
 * Wed Jul 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.2-alt3
 - NMU:
   + adjusted hp-systray for Plasma X11 (ALT #54478)
