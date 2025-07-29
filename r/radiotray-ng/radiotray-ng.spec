@@ -1,16 +1,17 @@
 Name: radiotray-ng
-Version: 0.2.8
-Release: alt2
+Version: 0.2.9
+Release: alt1.dd6b7911.1
 Summary: Internet radio player
 
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Sound
-Url: https://github.com/ebruck/radiotray-ng
+URL: https://github.com/ebruck/radiotray-ng
+VCS: https://github.com/ebruck/radiotray-ng.git
 
 Source: %name-%version.tar
 # Source-url: %url/archive/v%version/%name-%version.tar.gz
 
-Patch1: %name-%version.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -19,7 +20,7 @@ BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-log-devel
 BuildRequires: boost-locale-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libpcre-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: gstreamer-devel
@@ -30,7 +31,6 @@ BuildRequires: libnotify-devel
 BuildRequires: libglibmm-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
-
 BuildRequires: libffi-devel
 BuildRequires: libfribidi-devel
 BuildRequires: libthai-devel
@@ -70,19 +70,16 @@ on modern technologies (gstreamer 1.0, python3 and c++).
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
+%autopatch -p1
 
-# fix building on e2k 
-# https://bugzilla.altlinux.org/40634
-%ifarch %e2k
-	# as of lcc 1.25.17 (glib2 induces warnings causing ftbfs)
-	sed -i 's,-Werror,,' CMakeLists.txt
-%endif
+# Correct build flags
+sed -i 's|-Wall -Wextra -Werror -Wpedantic|%{optflags}|' CMakeLists.txt
+sed -i '/execute_process(COMMAND lsb_release/d' package/CMakeLists.txt
 
 %build
-%cmake_insource -DCONFIGURED_ONCE:BOOL=YES \
-    -DLSB_RELEASE_EXECUTABLE="lsb_release" \
-    -DDISTRIBUTOR_ID="alt"
+%cmake \
+	-DLSB_RELEASE_EXECUTABLE="lsb_release" \
+	-DDISTRIBUTOR_ID="alt"
 %cmake_build
 
 %install
@@ -129,6 +126,10 @@ desktop-file-validate %buildroot%_desktopdir/rtng-bookmark-editor.desktop
 %_datadir/%name
 
 %changelog
+* Tue Jul 29 2025 Anton Midyukov <antohami@altlinux.org> 0.2.9-alt1.dd6b7911.1
+- new snapshot
+- build with wxGTK3.2
+
 * Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 0.2.8-alt2
 - Add upstream commit for fix build with gcc13
 
