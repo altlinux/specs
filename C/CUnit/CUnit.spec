@@ -1,6 +1,6 @@
 Name: CUnit
 Version: 2.1.3
-Release: alt1.svn20140424
+Release: alt2.svn20140424
 Summary: A lightweight system for unit tests in C
 
 Group: System/Libraries
@@ -9,6 +9,11 @@ Url: http://cunit.sourceforge.net/
 Packager: Mykola Grechukh <gns@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/cunit/%name-%version.tar
+
+Patch1: 0001-Fix-compiling-with-opaque-ncurses.patch
+Patch2: 0002-Fix-snprintf-format-and-arguments-in-curses_suite_le.patch
+Patch3: 0003-Fix-printf-width-argument-type-across-multiple-modul.patch
+Patch4: 0004-Fix-suppressing-unused-result-warning-for-fgets.patch
 
 BuildRequires: libncurses-devel
 
@@ -34,6 +39,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '/^CURSES_OBJECT_FILES_SHARED/ s,$, -l\$\(CURSES_LIB\),' CUnit/Sources/Makefile.am
 
 %build
@@ -63,6 +69,13 @@ rm -rf docs/headers
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jul 22 2025 Vasiliy Kovalev <kovalev@altlinux.org> 2.1.3-alt2.svn20140424
+- Fix FTBFS and warnings:
+  + fix suppressing unused-result warning for fgets
+  + fix printf width argument type across multiple modules
+  + fix snprintf format and arguments in curses_suite_level_run
+  + fix compiling with opaque ncurses
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt1.svn20140424
 - Version 2.1-3
 
