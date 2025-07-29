@@ -6,7 +6,7 @@
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.22
+Version: 1.23
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -86,6 +86,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.23-alt1
+- 1.23
+
 * Tue Jul 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.22-alt1
 - 1.22
 
