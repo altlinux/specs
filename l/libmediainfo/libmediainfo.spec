@@ -1,4 +1,4 @@
-%define ver_major 25.04
+%define ver_major 25.07
 
 Name: libmediainfo
 Version: %ver_major
@@ -93,6 +93,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Tue Jul 29 2025 Yuri N. Sedunov <aris@altlinux.org> 25.07-alt1
+- 25.07
+
 * Thu May 01 2025 Yuri N. Sedunov <aris@altlinux.org> 25.04-alt1
 - 25.04
 
