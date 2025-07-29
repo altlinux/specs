@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xpenguins
-Version: 2.2
-Release: alt7
+Version: 3.2.3
+Release: alt1
 
 Summary: XPenguins -- little penguins on your desktop
 Summary(ru_RU.KOI8-R): XPenguins -- маленькие пингвины на вашем рабочем столе
@@ -17,9 +17,11 @@ Source2: %name-icons.tar.bz2
 
 Patch01: %name-2.2-alt-warnings-Wall_fix.patch
 Patch02: %name-2.2-debian-gcc-14.patch
-Patch03: %name-2.2-alt-configure.patch
 
 BuildRequires: libXpm-devel libXext-devel libXt-devel
+BuildRequires: pkgconfig(gmodule-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+
 
 %description
 XPenguins is an desktop amusement. It creates little penguins that
@@ -67,12 +69,16 @@ EOF
 %_bindir/%name
 %_man1dir/%name.1.*
 %_datadir/%name/
+%_datadir/pixmaps/%name.xpm
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.2-alt7
 - NMU: fix FTBFS
 
