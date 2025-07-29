@@ -1,5 +1,5 @@
 Name:      rpm-build-rust
-Version:   0.1.2
+Version:   0.1.3
 Release:   alt1
 Summary:   RPM build enviroment to build rust packages
 Group:     Development/Other
@@ -33,6 +33,11 @@ cp %SOURCE0 %buildroot%_rpmmacrosdir/rust
 %_rpmmacrosdir/rust
 
 %changelog
+* Tue Jun 22 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.3-alt1
+- (NMU) New macro %rust_prep was added
+- (NMU) smp_mflags and --no-fail-fast params were added in %rust_test
+- (NMU) RUSTFLAGS env variable was added into %rust_test to match %rust_build
+
 * Fri Aug 20 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.2-alt1
 - Add parameters to macros
 
