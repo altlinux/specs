@@ -4,7 +4,7 @@
 %add_python3_req_skip libsvsync.samdb
 
 Name: svsync
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Sysvol rSync python script
@@ -82,6 +82,11 @@ install -Dm0644 completion/%name.sh %buildroot/%_datadir/bash-completion/complet
 %dir %attr(0700, root, root) %_cachedir/%name/
 
 %changelog
+* Tue Jul 29 2025 Korney Gedert <kiper@altlinux.org> 1.2-alt1
+- docs: update README.MD
+- chore: add upstream name to log
+- fix: sysvol folder different names
+
 * Wed Jul 23 2025 Korney Gedert <kiper@altlinux.org> 1.1-alt1
 - fix: disable some checks due to Samba 4.21
 - fix: samba uses global object for LoadParm
