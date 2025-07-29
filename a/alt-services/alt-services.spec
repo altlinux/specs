@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -57,6 +57,9 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %doc *.md
 
 %changelog
+* Thu Jul 24 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.6-alt1
+- build with qt < 6.9 (thx Andrey Alekseev)
+
 * Wed Jul 23 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.5-alt1
 - new version (thx Andrey Alekseev)
 
