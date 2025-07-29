@@ -6,7 +6,7 @@
 %endif
 
 Name: wasmtime
-Version: 34.0.1
+Version: 35.0.0
 Release: alt1
 Summary: Wasmtime is a standalone runtime for WebAssembly, WASI, and the Component Model by the Bytecode Alliance.
 License: Apache-2.0
@@ -16,6 +16,7 @@ Vcs: https://github.com/bytecodealliance/wasmtime
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
+BuildRequires: elfutils
 BuildRequires(pre): rpm-build-cmake
 
 Source0: %name-%version.tar
@@ -115,8 +116,8 @@ cp -a examples %buildroot%_datadir/%name/
 %doc docs/*
 
 %files examples
-%dir %_datadir/%name/examples
-%_datadir/%name/examples/*
+%dir %_datadir/%name
+%_datadir/%name/examples/
 
 %files -n libwasmtime
 %_libdir/libwasmtime.so
@@ -129,5 +130,9 @@ cp -a examples %buildroot%_datadir/%name/
 %_libdir/libwasmtime.a
 
 %changelog
+* Mon Jul 28 2025 Korney Gedert <kiper@altlinux.org> 35.0.0-alt1
+- New version 35.0.0.
+- fix: wasmtime-examples=34.0.1-alt1 post-install unowned files
+
 * Mon Jun 30 2025 Korney Gedert <kiper@altlinux.org> 34.0.1-alt1
 - Initial release
