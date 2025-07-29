@@ -1,5 +1,5 @@
 Name: libxcvt
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: VESA CVT standard timing modelines generator
 License: MIT
@@ -58,6 +58,9 @@ provided by the Xorg server.
 %_man1dir/cvt.1*
 
 %changelog
+* Tue Jul 29 2025 Fr. Br. George <george@altlinux.org> 0.1.3-alt1
+- 0.1.3
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 
