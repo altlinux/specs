@@ -1,5 +1,5 @@
 Name: python3-module-dbus-fast
-Version: 2.44.1
+Version: 2.44.2
 Release: alt1
 
 Summary: Python library for DBus
@@ -40,6 +40,9 @@ dbus-launch sh -c '
 %pyproject_run_pytest -o addopts=  tests'
 
 %changelog
+* Tue Jul 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.44.2-alt1
+- 2.44.2 released
+
 * Thu Jul 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.44.1-alt1
 - 2.44.1 released
 
