@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 Epoch: 1
 
@@ -102,6 +102,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue Jul 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.12-alt1
+- 2.8.12
+
 * Wed Jul 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.11-alt1
 - 2.8.11
 

@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: dynisland
-Version: %ver_major.4
+Version: %ver_major.4.1
 Release: alt0.5
 
 Summary: A dynamic and extensible GTK4 bar
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Jul 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.4.1-alt0.5
+- 0.1.4.1
+
 * Sat Jul 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt0.5
 - 0.1.4
 

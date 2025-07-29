@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -30,10 +30,10 @@ BuildRequires(pre): rpm-macros-cmake rpm-build-systemd
 BuildRequires: cmake gcc-c++ ctest
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
-BuildRequires: pkgconfig(hyprland-protocols)
+BuildRequires: pkgconfig(hyprland-protocols) >= 0.6.4
 BuildRequires: hyprwayland-scanner >= 0.4.2
 BuildRequires: pkgconfig(hyprlang)
-BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(hyprutils) >= 0.2.6
 BuildRequires: pkgconfig(libpipewire-0.3) >= 1.2
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(libdrm)
@@ -49,6 +49,7 @@ XDG Desktop Portal implementation for Hyprland.
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
+%nil
 %cmake_build
 
 %install
@@ -68,6 +69,9 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Tue Jul 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.10-alt1
+- 1.3.10
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.9-alt1
 - 1.3.9
 
