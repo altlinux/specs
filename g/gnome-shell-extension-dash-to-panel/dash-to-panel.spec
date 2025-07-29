@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-dash-to-panel
 Version: 68
-Release: alt4.ae5bc044.1
+Release: alt5.119a5928.1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -55,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 %doc README.md COPYING
 
 %changelog
+* Tue Jul 29 2025 Anton Midyukov <antohami@altlinux.org> 68-alt5.119a5928.1
+- update russian translation
+
 * Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 68-alt4.ae5bc044.1
 - new snapshot
 
