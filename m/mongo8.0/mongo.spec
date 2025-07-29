@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo8.0
-Version: 8.0.11
+Version: 8.0.12
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -12,7 +12,7 @@ Url: https://www.mongodb.org
 Source: %name-%version.tar
 Patch0: mongo7.0-7.0.2-debuginfo.patch
 Patch1: mongo7.0-7.0.14_fix_return_type.patch
-Patch2: mongo8.0-8.0.0-ALT_Disable_metrics_and_check_-U_FORTIFY_SOURCE.patch
+Patch2: mongo8.0-8.0.12-ALT_Check_-U_FORTIFY_SOURCE.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -122,7 +122,7 @@ MongoDB instance.
        --linker=gold \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-python3 src/third_party/scons-3.1.2/scons.py %build_opts
+python3 src/third_party/scons-4.9.1/scons.py %build_opts
 
 
 %install
@@ -207,6 +207,11 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Jul 28 2025 Alexei Takaseev <taf@altlinux.org> 8.0.12-alt1
+- 8.0.12 (Fixes: CVE-2025-6711, CVE-2025-6712, CVE-2025-6713, CVE-2025-6714)
+- Drop mongo8.0-8.0.0-ALT_Disable_metrics_and_check_-U_FORTIFY_SOURCE.patch
+- Add mongo8.0-8.0.12-ALT_Check_-U_FORTIFY_SOURCE.patch
+
 * Tue Jul 01 2025 Alexei Takaseev <taf@altlinux.org> 8.0.11-alt1
 - 8.0.11
 - Fixes: CVE-2025-6706, CVE-2025-6707, CVE-2025-6709, CVE-2025-6710
