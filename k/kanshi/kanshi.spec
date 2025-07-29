@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kanshi
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Dynamic display configuration
@@ -9,7 +9,7 @@ License: MIT
 Group: Graphical desktop/Other
 
 Url: https://wayland.emersion.fr/kanshi
-VCS: https://git.sr.ht/~emersion/kanshi
+VCS: https://gitlab.freedesktop.org/emersion/kanshi
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -49,6 +49,9 @@ protocol.
 %_man5dir/kanshi.5.xz
 
 %changelog
+* Tue Jul 29 2025 Andrey Kovalev <ded@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Wed Oct 09 2024 Andrey Kovalev <ded@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
