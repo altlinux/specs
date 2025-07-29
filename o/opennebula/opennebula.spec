@@ -1,4 +1,3 @@
-
 %define oneadmin_home /var/lib/one
 %define oneadmin_uid 9869
 %define oneadmin_gid 9869
@@ -6,15 +5,15 @@
 
 # from firecracker.spec
 %ifarch x86_64 aarch64
-%def_with firecracker
+%def_without firecracker
 %endif
 %def_enable prebuilded_sunstone
 %def_enable prebuilded_fireedge
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.8.0.1
-Release: alt5
+Version: 6.10.0.1
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -46,12 +45,14 @@ BuildRequires: node-zeromq
 %endif
 BuildRequires: ronn
 BuildRequires: groff-base
-%if_with check
-BuildRequires: gem(json)
-BuildRequires: gem(xml-simple)
 BuildRequires: gem(treetop)
 BuildRequires: gem(parse-cron)
 BuildRequires: gem(xmlrpc)
+BuildRequires: gem(sequel)
+BuildRequires: gem(rspec) >= 3
+%if_with check
+BuildRequires: gem(json)
+BuildRequires: gem(xml-simple)
 BuildRequires: gem(rexml)
 BuildRequires: gem(ffi-rzmq) >= 2.0.7
 BuildRequires: gem(net-ldap)
@@ -62,7 +63,6 @@ BuildRequires: gem(highline) >= 1.7
 BuildRequires: gem(mysql2)
 BuildRequires: gem(pg)
 BuildRequires: gem(sqlite3)
-BuildRequires: gem(sequel)
 BuildRequires: gem(augeas) >= 0.6
 BuildRequires: gem(json) >= 2.0
 BuildRequires: gem(git) >= 1.5
@@ -97,7 +97,6 @@ BuildRequires: gem(vsphere-automation-cis) >= 0.4.6
 BuildRequires: gem(vsphere-automation-vcenter) >= 0.4.6
 BuildRequires: gem(rbvmomi2) >= 3.7.0
 BuildRequires: gem(rake)
-BuildRequires: gem(rspec) >= 3
 BuildRequires: gem(webmock) >= 1.20
 BuildRequires: gem(rdoc) >= 4
 BuildRequires: gem(bundler) >= 1.0
@@ -238,6 +237,7 @@ Requires: gem(sorted_set) gem(set)
 Requires: gem(vsphere-automation-cis) >= 0.4.6
 Requires: gem(vsphere-automation-vcenter) >= 0.4.6
 Requires: gem(rbvmomi2) >= 3.7.0
+Requires: gem(logging)
 Conflicts: gem(ffi-rzmq) >= 2.1
 Conflicts: gem(highline) >= 4
 Conflicts: gem(augeas) >= 1
@@ -582,7 +582,6 @@ install -p -D -m 644 share/pkgs/ALT/opennebula-showback.service %buildroot%_unit
 install -p -D -m 644 share/pkgs/ALT/opennebula-showback.timer %buildroot%_unitdir/opennebula-showback.timer
 install -p -D -m 644 share/pkgs/ALT/opennebula-flow.service  %buildroot%_unitdir/opennebula-flow.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-gate.service  %buildroot%_unitdir/opennebula-gate.service
-install -p -D -m 644 share/pkgs/ALT/opennebula-gate-proxy.service  %buildroot%_unitdir/opennebula-gate-proxy.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-hem.service  %buildroot%_unitdir/opennebula-hem.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-novnc.service %buildroot%_unitdir/opennebula-novnc.service
 install -p -D -m 644 share/pkgs/ALT/opennebula-scheduler.service %buildroot%_unitdir/opennebula-scheduler.service
@@ -882,9 +881,6 @@ fi
 #%config %_sysconfdir/cron.d/opennebula-node
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-kvm
 %_bindir/qemu-kvm-one-gen
-%_bindir/onegate-proxy
-%_libexecdir/one/onegate-proxy
-%_unitdir/opennebula-gate-proxy.service
 
 %files node-lxc
 %_bindir/svncterm_server
@@ -894,9 +890,6 @@ fi
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-lxc
 #%config %{_sysconfdir}/cron.d/opennebula-node
 %attr(0751, oneadmin, oneadmin) %dir /var/lib/lxc-one
-%_bindir/onegate-proxy
-%_libexecdir/one/onegate-proxy
-%_unitdir/opennebula-gate-proxy.service
 
 %if_with firecracker
 %files node-firecracker
@@ -906,9 +899,6 @@ fi
 %_sbindir/one-prepare-firecracker-domain
 %_bindir/svncterm_server
 %config(noreplace) %_sysconfdir/sudoers.d/opennebula-node-firecracker
-%_bindir/onegate-proxy
-%_libexecdir/one/onegate-proxy
-%_unitdir/opennebula-gate-proxy.service
 %endif
 
 %files java
@@ -986,6 +976,10 @@ fi
 %config %_sysconfdir/one/fireedge/sunstone/admin/*
 %dir %_sysconfdir/one/fireedge/sunstone/user
 %config %_sysconfdir/one/fireedge/sunstone/user/*
+%dir %_sysconfdir/one/fireedge/sunstone/cloud
+%config %_sysconfdir/one/fireedge/sunstone/cloud/*
+%dir %_sysconfdir/one/fireedge/sunstone/groupadmin
+%config %_sysconfdir/one/fireedge/sunstone/groupadmin/*
 
 %files gate
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/onegate-server.conf
@@ -999,6 +993,7 @@ fi
 %_bindir/oneflow-server
 %_unitdir/opennebula-flow.service
 %_datadir/flow
+%ruby_bindir/oneflow-server
 
 %files provision
 %_bindir/oneprovision
@@ -1024,6 +1019,11 @@ fi
 %_unitdir/opennebula-ssh-socks-cleaner.timer
 %_unitdir/opennebula-showback.service
 %_unitdir/opennebula-showback.timer
+%_unitdir/opennebula-alertmanager.service
+%_unitdir/opennebula-exporter.service
+%_unitdir/opennebula-libvirt-exporter.service
+%_unitdir/opennebula-node-exporter.service
+%_unitdir/opennebula-prometheus.service
 
 %_bindir/mm_sched
 %_bindir/one
@@ -1039,8 +1039,9 @@ fi
 %_datadir/one/schemas
 %_datadir/one/context
 %_datadir/one/conf
-%_datadir/one/dockerhub
 %_datadir/one/onecfg
+%_datadir/one/grafana
+%_datadir/one/prometheus
 
 %_datadir/augeas/lenses/oned.aug
 
@@ -1061,6 +1062,8 @@ fi
 %_libexecdir/one/ruby/HostSyncManager.rb
 %_libexecdir/one/sh
 %_libexecdir/one/onecfg
+%_libexecdir/one/libvirt_exporter
+%_libexecdir/one/opennebula_exporter
 #%ruby_gemspecdir/opennebula-server/Gemfile
 
 %_man1dir/onedb.1.*
@@ -1088,6 +1091,9 @@ fi
 %config(noreplace) %_sysconfdir/one/auth/server_x509_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/ldap_auth.conf
 %config(noreplace) %_sysconfdir/one/auth/x509_auth.conf
+%config(noreplace) %_sysconfdir/one/alertmanager/alertmanager.yml
+%config(noreplace) %_sysconfdir/one/prometheus/prometheus.yml
+%config(noreplace) %_sysconfdir/one/prometheus/rules.yml
 
 %files -n gem-%name-cli
 %dir %_sysconfdir/one/cli
@@ -1144,6 +1150,13 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Thu Jul 10 2025 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt1
+- 6.10.0.1
+- implement onegate-proxy in VN drivers
+- some new services
+- dockerhub removed
+- firecracker removed
+
 * Tue May 20 2025 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt5
 - Add thin rackup handler require.
 
