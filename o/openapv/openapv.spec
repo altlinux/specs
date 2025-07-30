@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: OpenAPV (Open Advanced Professional Video Codec)
@@ -64,9 +64,6 @@ This package provides OpenAPV encoder and decoder command line apps.
 %setup -n %_name-%version
 
 %build
-%ifarch %ix86
-%add_optflags -msse2 -mfpmath=sse %(getconf LFS_CFLAGS)
-%endif
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DOAPV_BUILD_STATIC_LIB=OFF \
@@ -96,6 +93,9 @@ This package provides OpenAPV encoder and decoder command line apps.
 %_bindir/%{__name}_app_enc
 
 %changelog
+* Thu Jul 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0.1-alt1
+- 0.2.0.1
+
 * Thu Jul 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0.0-alt1
 - first build for Sisyphus
 
