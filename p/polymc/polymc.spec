@@ -1,6 +1,6 @@
 Name: polymc
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -13,6 +13,9 @@ Source: %name-%version.tar
 
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
+
+# Fix compiling for Qt 6.9.0
+Patch1: 0dc124d636d76692b1e2c01050743dd87dc78a05.patch
 
 ExcludeArch: %arm
 
@@ -47,6 +50,7 @@ a simple interface.
 %prep
 %setup -a1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
+%patch1 -p1
 
 %build
 %cmake \
@@ -74,6 +78,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt2
+- fix compiling with Qt 6.9.0
+
 * Fri May 09 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
 - new version 7.0 (with rpmrb script) (ALT bug 53379)
 
