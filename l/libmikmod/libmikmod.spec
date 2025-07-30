@@ -2,8 +2,8 @@
 %def_with pulse
 
 Name: libmikmod
-Version: 3.3.11.1
-Release: alt2
+Version: 3.3.13
+Release: alt1
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -12,9 +12,7 @@ Group: System/Libraries
 Url: http://mikmod.raphnet.net
 # http://download.sourceforge.net/mikmod/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch0: 0014-playercode-mdreg-Register-the-NULL-driver-before-the.patch
-Patch1: use-gnu-install-directories.patch
-Patch2: libmikmod-3.3.11.1-hg-include.patch
+Patch: 0014-playercode-mdreg-Register-the-NULL-driver-before-the.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 03 2011
@@ -49,9 +47,7 @@ will use the %name library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%patch -p1
 
 %build
 %autoreconf
@@ -78,6 +74,12 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Wed Jul 30 2025 Michael Shigorin <mike@altlinux.org> 3.3.13-alt1
+- 3.3.13
+
+* Tue Feb 25 2025 Michael Shigorin <mike@altlinux.org> 3.3.12-alt1
+- 3.3.12
+
 * Mon Aug 14 2017 Michael Shigorin <mike@altlinux.org> 3.3.11.1-alt2
 - replaced LCC-related patch with upstream commit
   84dcbc4478232d1983df329f5946f71cd96e07d7
