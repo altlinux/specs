@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 140.0.4
+Version: 141.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,28 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jul 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 141.0-alt1
+- New version (141.0).
+- Fixes:
+  + CVE-2025-8027: JavaScript engine only wrote partial return value to stack
+  + CVE-2025-8028: Large branch table could lead to truncated instruction
+  + CVE-2025-8041: Incorrect URL truncation in Firefox for Android
+  + CVE-2025-8042: Sandboxed iframe could start downloads
+  + CVE-2025-8029: javascript: URLs executed on object and embed tags
+  + CVE-2025-8036: DNS rebinding circumvents CORS
+  + CVE-2025-8037: Nameless cookies shadow secure cookies
+  + CVE-2025-8030: Potential user-assisted code execution in "Copy as cURL" command
+  + CVE-2025-8043: Incorrect URL truncation
+  + CVE-2025-8031: Incorrect URL stripping in CSP reports
+  + CVE-2025-8032: XSLT documents could bypass CSP
+  + CVE-2025-8038: CSP frame-src was not correctly enforced for paths
+  + CVE-2025-8039: Search terms persisted in URL bar
+  + CVE-2025-8033: Incorrect JavaScript state machine for generators
+  + CVE-2025-8044: Memory safety bugs fixed in Firefox 141 and Thunderbird 141
+  + CVE-2025-8034: Memory safety bugs fixed in Firefox ESR 115.26, Firefox ESR 128.13, Thunderbird ESR 128.13, Firefox ESR 140.1, Thunderbird ESR 140.1, Firefox 141 and Thunderbird 141
+  + CVE-2025-8040: Memory safety bugs fixed in Firefox ESR 140.1, Thunderbird ESR 140.1, Firefox 141 and Thunderbird 141
+  + CVE-2025-8035: Memory safety bugs fixed in Firefox ESR 128.13, Thunderbird ESR 128.13, Firefox ESR 140.1, Thunderbird ESR 140.1, Firefox 141 and Thunderbird 141
+
 * Thu Jul 10 2025 Ajrat Makhmutov <rauty@altlinux.org> 140.0.4-alt1
 - New version (140.0.4).
 - Terminate buggy unfinished D&D operation as DragDrop (closes: 54713).

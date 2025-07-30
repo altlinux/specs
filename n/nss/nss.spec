@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.113.1
+Version:	3.114
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -271,6 +271,17 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Tue Jul 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.114-alt1
+- New version (3.114).
+- Certificate Authority Changes:
+  + Remove CN=Baltimore CyberTrust Root,OU=CyberTrust
+  + Add CN=SwissSign RSA SMIME Root CA 2022 - 1
+  + Add CN=SwissSign RSA TLS Root CA 2022 - 1
+  + Add CN=TrustAsia SMIME ECC Root CA
+  + Add CN=TrustAsia SMIME RSA Root CA
+  + Add CN=TrustAsia TLS ECC Root CA
+  + Add CN=TrustAsia TLS RSA Root CA
+
 * Sat Jul 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.113.1-alt1
 - New version (3.113.1).
 
