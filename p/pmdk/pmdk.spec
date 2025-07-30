@@ -5,7 +5,7 @@
 
 Name: pmdk
 Version: 2.1.1
-Release: alt1
+Release: alt2
 Summary: Persistent Memory Development Kit (formerly NVML)
 Group: System/Base
 License: BSD-3-Clause
@@ -59,6 +59,21 @@ The libpmem provides low level persistent memory support. In particular,
 support for the persistent memory instructions for flushing changes
 to pmem is provided.  This package provides the v1 API.
 
+%package -n libpmem-debug
+Summary: Debug variant of the low-level persistent memory library
+Group: Development/C
+Requires: libpmem = %EVR
+
+%description -n libpmem-debug
+The libpmem provides low level persistent memory support. In particular,
+support for the persistent memory instructions for flushing changes
+to pmem is provided. This package provides the v1 API.
+
+This sub-package contains debug variant of the library, providing
+run-time assertions and trace points. The typical way to access the
+debug version is to set the environment variable LD_LIBRARY_PATH to
+%_libdir/pmdk_debug.
+
 %package -n libpmem-devel
 Summary: Development files for the low-level persistent memory library
 Group: Development/C
@@ -82,6 +97,21 @@ Group: System/Libraries
 The libpmem provides low level persistent memory support. In particular,
 support for the persistent memory instructions for flushing changes
 to pmem is provided. This package provides the v2 API.
+
+%package -n libpmem2-debug
+Summary: Debug variant of the low-level persistent memory library
+Requires: libpmem2 = %EVR
+Group: Development/C
+
+%description -n libpmem2-debug
+The libpmem provides low level persistent memory support. In particular,
+support for the persistent memory instructions for flushing changes
+to pmem is provided. This package provides the v2 API.
+
+This sub-package contains debug variant of the library, providing
+run-time assertions and trace points. The typical way to access the
+debug version is to set the environment variable LD_LIBRARY_PATH to
+%_libdir/pmdk_debug.
 
 %package -n libpmem2-devel
 Summary: Development files for the low-level persistent memory library
@@ -107,6 +137,22 @@ The libpmemobj library provides a transactional object store,
 providing memory allocation, transactions, and general facilities for
 persistent memory programming.
 
+%package -n libpmemobj-debug
+Summary: Debug variant of the Persistent Memory Transactional Object Store library
+Requires: libpmemobj = %EVR
+Group: Development/C
+
+%description -n libpmemobj-debug
+The libpmemobj library provides a transactional object store,
+providing memory allocation, transactions, and general facilities for
+persistent memory programming. Developers new to persistent memory
+probably want to start with this library.
+
+This sub-package contains debug variant of the library, providing
+run-time assertions and trace points. The typical way to access the
+debug version is to set the environment variable LD_LIBRARY_PATH to
+%_libdir/pmdk_debug.
+
 %package -n libpmemobj-devel
 Summary: Development files for the Persistent Memory Transactional Object Store library
 Group: Development/C
@@ -127,6 +173,21 @@ Group: System/Libraries
 The libpmempool library provides a set of utilities for off-line
 administration, analysis, diagnostics and repair of persistent memory
 pools created by libpmemlog, libpmemblk and libpmemobj libraries.
+
+%package -n libpmempool-debug
+Summary: Debug variant of the Persistent Memory pool management library
+Requires: libpmempool = %EVR
+Group: Development/C
+
+%description -n libpmempool-debug
+The libpmempool library provides a set of utilities for off-line
+administration, analysis, diagnostics and repair of persistent memory
+pools created by libpmemobj libraries.
+
+This sub-package contains debug variant of the library, providing
+run-time assertions and trace points. The typical way to access the
+debug version is to set the environment variable LD_LIBRARY_PATH to
+%_libdir/pmdk_debug.
 
 %package -n libpmempool-devel
 Summary: Development files for Persistent Memory pool management library
@@ -179,6 +240,7 @@ provided in the command line options to check whether files are in a consistent 
 
 %prep
 %setup
+rm -f GIT_VERSION
 echo %version > VERSION
 
 %build
@@ -209,15 +271,12 @@ cp utils/pmdk.magic %buildroot%_datadir/pmdk/
 mkdir -p %buildroot%_datadir/bash-completion/completions
 mv %buildroot%_sysconfdir/bash_completion.d/pmempool %buildroot%_datadir/bash-completion/completions/pmempool
 
-# delete debug build
-rm -rf %buildroot%_libdir/pmdk_debug
-
 %check
 echo "PMEM_FS_DIR=/tmp"                  > src/test/testconfig.sh
 echo "TEST_TYPE=short"                  >> src/test/testconfig.sh
 echo "PMEM_FS_DIR_FORCE_PMEM=1"         >> src/test/testconfig.sh
-echo 'TEST_BUILD="nondebug"'            >> src/test/testconfig.sh
-echo 'TEST_FS="pmem"'                   >> src/test/testconfig.sh
+echo 'TEST_BUILD="debug nondebug"'      >> src/test/testconfig.sh
+echo 'TEST_FS="pmem any none"'          >> src/test/testconfig.sh
 
 make %{?_without_ndctl:NDCTL_ENABLE=n} check
 
@@ -225,6 +284,11 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 %dir %_datadir/pmdk
 %_libdir/libpmem.so.*
 %_datadir/pmdk/pmdk.magic
+
+%files -n libpmem-debug
+%dir %_libdir/pmdk_debug
+%_libdir/pmdk_debug/libpmem.so
+%_libdir/pmdk_debug/libpmem.so.*
 
 %files -n libpmem-devel
 %doc LICENSE.txt ChangeLog CONTRIBUTING.md README.md
@@ -238,6 +302,11 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 %files -n libpmem2
 %_libdir/libpmem2.so.*
 
+%files -n libpmem2-debug
+%dir %_libdir/pmdk_debug
+%_libdir/pmdk_debug/libpmem2.so
+%_libdir/pmdk_debug/libpmem2.so.*
+
 %files -n libpmem2-devel
 %doc LICENSE.txt ChangeLog CONTRIBUTING.md README.md
 %_libdir/libpmem2.so
@@ -249,6 +318,11 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 
 %files -n libpmemobj
 %_libdir/libpmemobj.so.*
+
+%files -n libpmemobj-debug
+%dir %_libdir/pmdk_debug
+%_libdir/pmdk_debug/libpmemobj.so
+%_libdir/pmdk_debug/libpmemobj.so.*
 
 %files -n libpmemobj-devel
 %doc LICENSE.txt ChangeLog CONTRIBUTING.md README.md
@@ -267,6 +341,11 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 
 %files -n libpmempool
 %_libdir/libpmempool.so.*
+
+%files -n libpmempool-debug
+%dir %_libdir/pmdk_debug
+%_libdir/pmdk_debug/libpmempool.so
+%_libdir/pmdk_debug/libpmempool.so.*
 
 %files -n libpmempool-devel
 %doc LICENSE.txt ChangeLog CONTRIBUTING.md README.md
@@ -300,6 +379,9 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 %endif
 
 %changelog
+* Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt2
+- Add packages with debug library.
+
 * Wed Jul 09 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt1
 - New version 2.1.1.
 - Disable %%check.
