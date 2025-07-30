@@ -1,5 +1,5 @@
 Name: pdfarranger
-Version: 1.10.1
+Version: 1.12.1
 Release: alt1
 Url: https://github.com/pdfarranger/pdfarranger
 Group: Publishing
@@ -50,6 +50,9 @@ cp -a data/icons/* %buildroot/%_iconsdir/
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jul 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
+- NMU: new version 1.12.1 (with rpmrb script)
+
 * Fri Dec 01 2023 Fr. Br. George <george@altlinux.org> 1.10.1-alt1
 - Autobuild version bump to 1.10.1
 
