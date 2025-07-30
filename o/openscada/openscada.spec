@@ -83,7 +83,7 @@ Summary(uk_UA.UTF8): Відкрита SCADA система
 Summary(de_DE.UTF8): Open SCADA-System
 Name: openscada
 Version: 0.9.8
-Release: alt1
+Release: alt2
 # Source-url: https://mirror.eterfund.ru/ftp.oscada.org/OpenSCADA/0.9/openscada-%version.tar.xz
 Source: openscada-%version.tar
 # Source1-url: https://mirror.eterfund.ru/ftp.oscada.org/OpenSCADA/0.9/openscada-res-%version.tar.xz
@@ -98,8 +98,10 @@ URL: http://oscada.org
 
 %define srcname openscada-%version
 
-BuildRequires: glibc-devel gcc-c++ libpcre-devel libgd2-devel sqlite3
-BuildRequires: libsqlite3-devel
+BuildRequires: glibc-devel gcc-c++
+BuildRequires: pkgconfig(gdlib)
+BuildRequires: libpcre-devel
+BuildRequires: libsqlite3-devel sqlite3
 BuildRequires: libportaudio2-devel
 BuildRequires: libfftw3-devel
 %{?_enable_MySQL:BuildRequires: libMySQL-devel}
@@ -1705,6 +1707,9 @@ ln -s %_defaultdocdir/%name-docUK-%version %buildroot/%_datadir/openscada/docs/u
 %endif
 
 %changelog
+* Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt2
+- replace BR: libgd2-devel with pkgconfig(gdlib)
+
 * Wed May 21 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
 - new version 0.9.8 (with rpmrb script)
 
