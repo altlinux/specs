@@ -1,10 +1,12 @@
+%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define rname kdenlive
 %define current_ver_mlt %{get_version mlt-utils}
-%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 24.12.3
-Release: alt2
+Version: 25.04.3
+Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -24,6 +26,15 @@ AutoProv: yes, nopython nopython3
 %add_python3_req_skip whisper
 %add_python3_req_skip whisper.utils
 %add_python3_req_skip transformers
+#
+%add_python3_req_skip hydra
+%add_python3_req_skip hydra.utils
+%add_python3_req_skip omegaconf
+%add_python3_req_skip sam2.build_sam
+%add_python3_req_skip sam2.sam2_image_predictor
+%add_python3_req_skip sam2.sam2_video_predictor
+%add_python3_req_skip sam2.utils.misc
+
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: mediainfo
@@ -37,6 +48,10 @@ Requires: /usr/bin/avconv /usr/bin/avplay /usr/bin/avprobe
 
 Source: %name-%version.tar
 Source1: rttr.tar
+Source2: otio.tar
+Source3: pybind11.tar
+Source4: rapidjson.tar
+Source5: Imath.tar
 Patch2: alt-find-lumas.patch
 Patch3: alt-ffmpegaudiothumbnails.patch
 
@@ -45,8 +60,10 @@ BuildRequires(pre): libavformat-devel
 BuildRequires(pre): mlt-utils
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules
+#BuildRequires: git-core
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
+BuildRequires: imath-devel pybind11-devel rapidjson-devel
 BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools kf6-kdoctools-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -66,7 +83,12 @@ DV, HDV and AVCHD(not complete yet) editing.
 Редактор нелінійного монтажу для GNU/Linux
 
 %prep
-%setup -q
+%setup -q -a2
+pushd otio/src/deps
+tar xvf %SOURCE3
+tar xvf %SOURCE4
+tar xvf %SOURCE5
+popd
 #%patch2 -p1
 %if %is_ffmpeg
 %else
@@ -75,9 +97,14 @@ DV, HDV and AVCHD(not complete yet) editing.
 
 install -m 0644 %SOURCE1 .
 sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
+sed -i "/GIT_REPOSITORY.*OpenTimelineIO/s|GIT_REPOSITORY.*|URL file://${PWD}/otio|" deps/CMakeLists.txt
 
 %build
-%K6build
+%K6build \
+    -DOTIO_AUTOMATIC_SUBMODULES:BOOL=OFF \
+    -DOTIO_DEPENDENCIES_INSTALL:BOOL=OFF \
+    -DOTIO_CXX_INSTALL:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -103,6 +130,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version
+
 * Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - update requires
 
