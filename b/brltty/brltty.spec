@@ -23,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt2
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -57,6 +57,7 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-Cython >= 
 %{?_with_ocaml:BuildRequires: ocaml findlib}
 # for XWindow driver
 BuildRequires: libSM-devel libICE-devel libX11-devel libXaw-devel libXext-devel libXt-devel libXtst-devel
+BuildRequires: libtinfo-devel
 
 %description
 BRLTTY is a background process (daemon) which provides
@@ -394,6 +395,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Wed Jul 30 2025 Artem Semenov <savoptik@altlinux.org> 6.8-alt2
+- Added build requires to libtinfo-devel
+
 * Tue Jul 15 2025 Artem Semenov <savoptik@altlinux.org> 6.8-alt1
 - Updated to new version 6.8
 
