@@ -1,18 +1,19 @@
 Name:    cage
 Version: 0.2.0
-Release: alt2
+Release: alt3.2e593fe5.1
 
 Summary: A Wayland kiosk
 License: MIT
 Group:   Graphical desktop/Other
-Url:     https://github.com/cage-kiosk/cage
+URL:     https://github.com/cage-kiosk/cage
+VCS:     https://github.com/cage-kiosk/cage.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: scdoc
-BuildRequires: pkgconfig(wlroots-0.18) >= 0.18.0
+BuildRequires: pkgconfig(wlroots-0.19)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.14
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(xkbcommon)
@@ -41,6 +42,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Jul 30 2025 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt3.2e593fe5.1
+- New snapshot.
+
 * Thu Oct 10 2024 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt2
 - Add dependency on seatd
 
