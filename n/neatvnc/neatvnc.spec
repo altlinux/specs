@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: neatvnc
-Version: 0.9.4
-Release: alt1.1
+Version: 0.9.5
+Release: alt1
 
 Summary: A liberally licensed VNC server library with a clean interface
 License: ISC
@@ -77,6 +77,9 @@ Neat VNC based software.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
 * Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1.1
 - enabled nettle support (ALT #54823)
 
