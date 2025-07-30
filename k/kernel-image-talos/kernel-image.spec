@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.38
+%define kernel_sublevel	.40
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -474,6 +474,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jul 29 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.40-alt1
+- v6.12.40 (2025-07-24)
+
 * Thu Jul 17 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.38-alt1
 - v6.12.38 (2025-07-14)
 - config-aarch64: Move many configs back to built-in
