@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.11.1
+Version: 3.12.1
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -22,7 +22,9 @@ Source5: %name.logrotate
 Patch3500: rspamd-loongarch.patch
 
 BuildRequires: gcc-c++
-BuildRequires: cmake libevent-devel libgmime-devel liblua5-devel
+BuildRequires: cmake
+BuildRequires: glib2-devel
+BuildRequires: libevent-devel liblua5-devel
 BuildRequires: libpcre2-devel libsqlite3-devel libunwind-devel libicu-devel
 BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel
 BuildRequires: libxxhash-devel libzstd-devel doctest-devel libfmt-devel
@@ -127,6 +129,10 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 3.12.1-alt1
+- new version 3.12.1 (with rpmrb script)
+- drop BR: libgmime-devel (removed from the repo)
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 3.11.1-alt1
 - new version 3.11.1 (with rpmrb script)
 
