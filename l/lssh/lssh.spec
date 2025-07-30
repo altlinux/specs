@@ -3,8 +3,8 @@
 
 Name: lssh
 Version: 0.7.0
-Release: alt1
-Summary: TUI list select ssh/scp/sftp client tools.
+Release: alt2
+Summary: TUI list select ssh client tools.
 License: MIT
 Group: Networking/Remote access
 Url: https://github.com/blacknon/lssh
@@ -14,10 +14,9 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
-Conflicts: nilfs-utils
 
 %description
-A list-based SSH/SCP/SFTP client supporting single and parallel connections,
+A list-based SSH client supporting single and parallel connections,
 local bashrc usage on remote machines, and advanced proxying.
 
 %prep
@@ -66,7 +65,7 @@ export GOFLAGS="-mod=vendor"
 
 %golang_prepare
 
-%golang_build cmd/lssh cmd/lscp cmd/lsftp 
+%golang_build cmd/%name
 
 
 %install
@@ -79,10 +78,13 @@ mv lssh.conf %buildroot%_datadir/%name/example/libssh-example.conf
 
 %files
 %doc README.md
-%_bindir/*
+%_bindir/%name
 %_datadir/%name/example/libssh-example.conf
 
 %changelog
+* Wed Jul 30 2025 Pavel Shilov <zerospirit@altlinux.org> 0.7.0-alt2
+- Removed the assembly of obviously conflicting packages.
+
 * Wed Jul 23 2025 Pavel Shilov <zerospirit@altlinux.org> 0.7.0-alt1
 - 0.6.13 -> 0.7.0
 
