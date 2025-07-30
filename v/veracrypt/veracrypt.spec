@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veracrypt
-Version: 1.26.20
+Version: 1.26.24
 Release: alt1
 
 Summary: Disk encryption software
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(fuse)
 BuildRequires: /usr/bin/convert
 BuildRequires: libpcsclite-devel
 #BuildRequires: makeself
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: gcc-c++
 BuildRequires: yasm
 BuildRequires: nasm
@@ -62,6 +62,10 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.24-alt1
+- new version 1.26.24 (with rpmrb script)
+- switch to libwxGTK3.2-devel
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.20-alt1
 - new version 1.26.20 (with rpmrb script)
 
