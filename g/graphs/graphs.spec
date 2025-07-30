@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 
 %define adwaita_ver 1.6
 
+Requires: python3-module-pygobject3
 Requires: dconf yelp
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir rpm-build-vala
@@ -83,6 +84,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Wed Jul 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
+- 1.8.5
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
