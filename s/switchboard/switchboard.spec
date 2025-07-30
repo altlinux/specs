@@ -5,7 +5,7 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.settings
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -65,6 +65,7 @@ This package contains files that are needed to develop Switchboard plugins.
 %files -f %rdn_name.lang
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*x*/*/%rdn_name.*
 %_datadir/metainfo/%rdn_name.appdata.xml
@@ -80,6 +81,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Wed Jul 30 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.3-alt1
+- 8.0.3
+
 * Thu Oct 24 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.2-alt1
 - 8.0.2
 
