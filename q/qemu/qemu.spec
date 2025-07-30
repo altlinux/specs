@@ -4,11 +4,10 @@
 # {{{ macros define
 %define _unpackaged_files_terminate_build 1
 
-%ifarch riscv64
-%def_disable lto
-%else
-%def_enable lto
-%endif
+# LTO still has issues with qemu on riscv64 and aarch64
+#%ifarch riscv64 aarch64
+%global optflags_lto %nil
+#%endif
 
 %def_disable edk2_cross
 
@@ -156,8 +155,8 @@
 # }}}
 
 Name: qemu
-Version: 9.2.3
-Release: alt2
+Version: 9.2.4
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -786,10 +785,6 @@ cp -a subprojects/packagefiles/berkeley-softfloat-3/* subprojects/berkeley-softf
 %patch -p1
 
 %build
-%if_disabled lto
-%define optflags_lto %nil
-%endif
-
 run_configure() {
 # non-GNU configure
 ../configure \
@@ -806,7 +801,6 @@ run_configure() {
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
-	%{subst_enable lto} \
 	--firmwarepath="%firmwaredirs" \
 	 "$@"
 }
@@ -1000,6 +994,9 @@ run_configure \
 	--enable-user \
 	--enable-linux-user \
 	--enable-pie \
+%if "%optflags_lto" != "%nil"
+	--enable-lto \
+%endif
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
@@ -1405,6 +1402,10 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.4-alt1
+- 9.2.4.
+- Disabled LTO for all arches.
+
 * Tue Jun 17 2025 Ivan A. Melnikov <iv@altlinux.org> 9.2.3-alt2
 - Disable pmem, numa, LTO and tests on riscv64.
 
