@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.3.4
+Version: 4.3.5
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -20,9 +20,9 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs
-BuildRequires: python3-module-mkdocs-material >= 9.6.15
+BuildRequires: python3-module-mkdocs-material >= 9.6.16
 BuildRequires: python3-module-mkdocs-material-extensions
-BuildRequires: python3-module-mkdocstrings >= 0.29.1
+BuildRequires: python3-module-mkdocstrings >= 0.30.0
 BuildRequires: python3-module-mkdocstrings-python
 %endif
 Requires: python3-module-django >= 5.2.4
@@ -46,19 +46,19 @@ Requires: python3-module-drf-spectacular >= 0.28.0
 Requires: python3-module-drf-spectacular-sidecar >= 2025.7.1
 Requires: python3-module-feedparser >= 6.0.11
 Requires: python3-module-jinja2 >= 3.1.6
-Requires: python3-module-jsonschema >= 4.24.0
+Requires: python3-module-jsonschema >= 4.25.0
 Requires: python3-module-markdown >= 3.8.2
 Requires: python3-module-netaddr >= 1.3.0
-Requires: python3-module-nh3 >= 0.2.22
+Requires: python3-module-nh3 >= 0.3.0
 Requires: python3-module-Pillow >= 11.3.0
 Requires: python3-module-psycopg >= 3.2.9
 Requires: python3-module-pyaml >= 6.0.2
 Requires: python3-module-requests >= 2.32.4
-Requires: python3-module-rq >= 2.4.0
+Requires: python3-module-rq >= 2.4.1
 Requires: python3-module-social-app-django >= 5.5.1
 Requires: python3-module-social-core >= 4.7.0
-Requires: python3-module-strawberry-graphql >= 0.276.0
-Requires: python3-module-strawberry-django >= 0.60.0
+Requires: python3-module-strawberry-graphql >= 0.278.0
+Requires: python3-module-strawberry-django >= 0.65.1
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.8.0
 Requires: python3-module-tzdata >= 2025.2
@@ -208,6 +208,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Jul 30 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.5-alt1
+- New 4.3.5 version.
+
 * Mon Jul 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.4-alt1
 - New 4.3.4 version.
 
