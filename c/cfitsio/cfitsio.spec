@@ -7,7 +7,7 @@
 
 Name: cfitsio
 Version: 4.6.2
-Release: alt1
+Release: alt2
 %define sversion %(echo %version | tr -d .)
 
 Group: System/Libraries
@@ -78,7 +78,7 @@ the cfits library.
 chrpath -d %buildroot%_bindir/*
 
 %files
-%_bindir/*
+%_bindir/f*
 
 %files -n %libname
 %_libdir/*.so.%sover
@@ -90,6 +90,9 @@ chrpath -d %buildroot%_bindir/*
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Jul 30 2025 Sergey V Turchin <zerg@altlinux.org> 4.6.2-alt2
+- don't package contlicting utilities (closes: 55407)
+
 * Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.2-alt1
 - NMU: new version
 
