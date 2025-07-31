@@ -1,21 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pythonqt
-Version: 0
-Release: alt3.git.dafdb72
+Version: 3.6.1
+Release: alt1
 Summary: CMake-ified version of PythonQt
 License: LGPL-2.1
 Group: Development/C++
 Url: https://github.com/commontk/PythonQt
-
-ExcludeArch: %arm
-
-# https://github.com/commontk/PythonQt.git
+VCS: https://github.com/commontk/PythonQt.git
 Source: %name-%version.tar
 
 Patch1: pythonqt-alt-install.patch
-Patch2: pythonqt-alt-compat.patch
-Patch3: pythonqt-python3.11.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-multimedia-devel qt5-svg-devel qt5-tools-devel-static qt5-xmlpatterns-devel
@@ -49,8 +44,6 @@ This package contains development files for PythonQt.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %cmake \
@@ -72,6 +65,9 @@ This package contains development files for PythonQt.
 %_libdir/*.so
 
 %changelog
+* Wed Jul 30 2025 Anton Farygin <rider@altlinux.com> 3.6.1-alt1
+- updated to 3.6.1 from the CTK git repository
+
 * Fri May 05 2023 Grigory Ustinov <grenka@altlinux.org> 0-alt3.git.dafdb72
 - Fixed build with python3.11.
 
