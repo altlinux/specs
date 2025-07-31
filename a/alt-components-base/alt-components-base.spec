@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.14
+Version: 0.7.15
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -151,6 +151,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Thu Jul 31 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.7.15-alt1
+- components: expand metapackages for education components
+
 * Mon Jul 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.7.14-alt1
 - editions: put notes for edition_domain & edition_server
 - editions: fix display name of main section in edition_domain
