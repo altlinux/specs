@@ -6,8 +6,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.44
-Release: alt2
+Version: 6.1.45
+Release: alt1
 Epoch: 2
 
 Summary: Daemon handling the DDE session settings
@@ -49,6 +49,18 @@ BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel 
 
 %description
 Daemon handling the DDE session settings
+
+%package -n lightdm-deepin-greeter-conf
+Summary: Config for own lightdm theme
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: deepin-session-shell
+Provides: lightdm-deepin-greeter-settings
+Obsoletes: lightdm-deepin-greeter-settings
+
+%description -n lightdm-deepin-greeter-conf
+The package provides the configuration file
+for enabling the deepin theme for lightdm.
 
 %prep
 %setup -n %repo-%version -a1
@@ -166,7 +178,6 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_datadir/deepin/scheduler/config.json
 %_datadir/polkit-1/actions/*.policy
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
-%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.accounts.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.fprintd.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
@@ -193,7 +204,14 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/org.deepin.dde.daemon.accounts.json
 %_datadir/locale/ky@Arab/LC_MESSAGES/dde-daemon.mo
 
+%files -n lightdm-deepin-greeter-conf
+%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
+
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.45-alt1
+- New version 6.1.45.
+- Added subpackage: lightdm-deepin-greeter-conf.
+
 * Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.44-alt2
 - Fixed uos-version detection.
 

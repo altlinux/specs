@@ -2,7 +2,7 @@
 
 Name: startdde
 Version: 6.1.6
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Starter of deepin desktop environment
@@ -27,16 +27,6 @@ BuildRequires: glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixe
 %description
 Startdde is used for launching DDE components and invoking user's custom applications which compliant with xdg autostart specification.
 
-%package -n lightdm-deepin-greeter-settings
-Summary: Config for own lightdm theme
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: deepin-session-shell
-
-%description -n lightdm-deepin-greeter-settings
-The package provides the configuration file
-for enabling the deepin theme for lightdm.
-
 %prep
 %setup -a1
 %autopatch -p1
@@ -58,6 +48,7 @@ rm -rf %buildroot%_libexecdir/deepin-daemon/
 rm -rf %buildroot%_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
 rm -rf %buildroot%_userunitdir/dde-display-task-refresh-brightness.service
 rm -rf %buildroot%_userunitdir/dde-session-initialized.target.wants/
+rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 # package localization files
 %find_lang %name
 
@@ -72,10 +63,10 @@ rm -rf %buildroot%_userunitdir/dde-session-initialized.target.wants/
 %dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.XSettings.json
 %dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
 
-%files -n lightdm-deepin-greeter-settings
-%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
-
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt3
+- Removed subpackage: lightdm-deepin-greeter-settings.
+
 * Fri Jul 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt2
 - Fixed conflicts with deepin-daemon 6.1.44.
 
