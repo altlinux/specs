@@ -6,7 +6,7 @@
 
 Name: kdenlive
 Version: 25.04.3
-Release: alt1
+Release: alt2
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -64,6 +64,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: imath-devel pybind11-devel rapidjson-devel
+BuildRequires: libswresample-devel
 BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools kf6-kdoctools-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -127,9 +128,10 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/qlogging-categories6/*.categories
 %_datadir/knsrcfiles/*.knsrc
 
-
-
 %changelog
+* Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt2
+- fix build requires
+
 * Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
