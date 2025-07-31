@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.7.1
+Version: 3.8.1
 Release: alt1
 
 Summary: The request rate limiter using Leaky-bucket Algorithm
@@ -16,15 +16,19 @@ Vcs: https://github.com/vutran1710/PyrateLimiter.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
 BuildRequires: python3-modules-sqlite3
-BuildRequires: python3-module-pytest-asyncio
+%add_pyproject_deps_check_filter nox-poetry
+# psycopg requires optional psycopg[pool] dependencies
+%add_pyproject_deps_check_filter psycopg
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -33,6 +37,11 @@ BuildRequires: python3-module-pytest-asyncio
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -49,6 +58,9 @@ BuildRequires: python3-module-pytest-asyncio
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 29 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.8.1-alt1
+- New version (3.8.1).
+
 * Mon Jun 02 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.7.1-alt1
 - New version (3.7.1).
 
