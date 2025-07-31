@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: qtpbfimageplugin-qt6
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: Qt image plugin for displaying Mapbox vector tiles
@@ -49,6 +49,9 @@ qmake-qt6 \
 %_qt6_plugindir/imageformats/libpbf.so
 
 %changelog
+* Thu Jul 31 2025 Nikolay Strelkov <snk@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 4.3-alt1
 - New version 4.3.
 

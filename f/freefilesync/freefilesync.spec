@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.3
+Version: 14.4
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -51,13 +51,12 @@ author, as opposed to the "FreeFileSync Donation Edition".
 
 %prep
 %setup
+patch -p1 < %SOURCE1
 # In-place patching from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync
 sed -i 's|-2|-3|' FreeFileSync/Source/{Makefile,RealTimeSync/Makefile}
-sed -i 's|#undef|//#undef|' zen/{socket.h,sys_error.h}
-sed -i 's|#error|//#error|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
-sed -i 's|::g_object_ref|g_object_ref|' FreeFileSync/Source/base/icon_loader.cpp
-sed -i '/animalImg/s/^/\/\//' FreeFileSync/Source/ui/small_dlgs.cpp
-patch -p1 < %SOURCE1
+sed -i '/#undef/s|^|//|' zen/{socket.h,sys_error.h}
+sed -i '/#error/s|^|//|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
+sed -i '/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
 dlg='FreeFileSync/Source/ui/main_dlg.cpp'
 sed -i '1282cwxAuiPaneInfoArray& paneArray = auiMgr_.GetAllPanes();' $dlg
 sed -i '1285cfor (size_t i = 0; i < paneArray.size(); ++i)' $dlg
@@ -67,9 +66,8 @@ sed -i '3153cfor (size_t i = 0; i < paneArray.size(); ++i){ wxAuiPaneInfo& paneI
 sed -i '3171c}' $dlg
 sed -i 's|wxApp::||' wx+/darkmode.h
 sed -i '13i enum class Appearance{System,Light,Dark};' wx+/darkmode.h
-sed -i 's|const wxReadOnly|wx|' wx+/grid.cpp wx+/grid.h \
-FreeFileSync/Source/ui/{cfg_grid.cpp,file_grid.cpp,log_panel.cpp} \
-FreeFileSync/Source/ui/{rename_dlg.cpp,tree_grid.cpp}
+sed -i 's|const wxReadOnly|wx|' wx+/grid.{cpp,h} \
+       FreeFileSync/Source/ui/{cfg_grid.cpp,file_grid.cpp,log_panel.cpp,rename_dlg.cpp,tree_grid.cpp}
 sed -i 's|wxInfoDC|wxClientDC|' FreeFileSync/Source/ui/{log_panel.cpp,rename_dlg.cpp} wx+/grid.cpp
 sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
 
@@ -134,5 +132,8 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Jul 31 2025 Nikolay Strelkov <snk@altlinux.org> 14.4-alt1
+- New version 14.4.
+
 * Sat May 31 2025 Nikolay Strelkov <snk@altlinux.org> 14.3-alt1
 - Initial build for Sisyphus
