@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.24.0
+Version: 1.24.2
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -225,6 +225,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 29 2025 L.A. Kostis <lakostis@altlinux.ru> 1.24.2-alt1
+- Updated to 1.24.2 (to fix assertions in fibocom plugin).
+
 * Fri Apr 11 2025 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
 - Minor spec cleanup.
 - Added libmm-glib soname check.
