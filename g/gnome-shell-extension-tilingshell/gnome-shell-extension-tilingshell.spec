@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 16.2.0
+%define git_ver 16.4
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ego_ver
-Release: alt3%beta
+Release: alt4%beta
 
 %define gettext_domain %_name
 
@@ -22,7 +22,7 @@ Url: https://github.com/domferr/tilingshell
 
 Vcs: https://github.com/domferr/tilingshell.git
 
-ExclusiveArch: %ix86 x86_64 aarch64
+ExclusiveArch: x86_64 aarch64
 BuildArch: noarch
 
 %if_disabled snapshot
@@ -77,6 +77,9 @@ popd
 %doc README.md
 
 %changelog
+* Wed Jul 16 2025 Yuri N. Sedunov <aris@altlinux.org> 99-alt4
+- updated to 16.4
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 99-alt3
 - updated to 16.2.0 (GNOME 48 supported)
 
