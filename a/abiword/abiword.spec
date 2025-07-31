@@ -10,10 +10,10 @@
 %def_with libical
 %def_without eds
 %def_with python
-%def_enable collabnet
+%def_disable collabnet
 
 Name: abiword
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Lean and fast full-featured word processor
@@ -57,7 +57,6 @@ BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
 BuildRequires: libwv-devel libwpd10-devel libwpg-devel libwmf-devel libwps-devel libexpat-devel
-BuildRequires: telepathy-glib-devel libdbus-glib-devel
 #BuildRequires: libaiksaurus-devel
 %{?_enable_spell:BuildRequires: libenchant-devel}
 %{?_with_goffice:BuildRequires: libgnomeoffice0.10-devel}
@@ -66,7 +65,8 @@ BuildRequires: telepathy-glib-devel libdbus-glib-devel
 %{?_with_eds:BuildRequires: evolution-data-server-devel}
 %{?_with_python:BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pygobject3 python3-module-setuptools}
-%{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel}
+%{?_enable_collabnet:BuildRequires: libgnutls-devel libsoup-devel libgcrypt-devel asio-devel
+BuildRequires: libdbus-glib-devel telepathy-glib-devel}
 %{?_enable_ots:BuildRequires: libots-devel}
 
 %description
@@ -154,7 +154,7 @@ sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
 %patch30 -p1 -b .boost
 
 %build
-%add_optflags -std=c++11 %(getconf LFS_CFLAGS)
+%add_optflags -std=c++11 %(getconf LFS_CFLAGS) -DBOOST_BIND_GLOBAL_PLACEHOLDERS
 %{?_disable_snapshot:%autoreconf}%{?_enable_snapshot:./autogen.sh}
 %configure \
     --enable-print \
@@ -170,6 +170,7 @@ sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
     %{?_enable_collabnet:--enable-collab-backend-service} \
     --disable-static \
     PYTHON=%__python3
+%nil
 %make_build
 
 %install
@@ -213,6 +214,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu Jul 31 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
+- 3.0.7
+
 * Sun Nov 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
 - 3.0.6
 
