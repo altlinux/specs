@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -28,7 +28,6 @@ BuildRequires: kf6-kcolorscheme-devel
 
 %description
 %summary.
-rm -rf data/flags/ukraine
 
 %prep
 %setup -n %rname-%version
@@ -62,6 +61,9 @@ mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt2
+- don't overclean flags
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
