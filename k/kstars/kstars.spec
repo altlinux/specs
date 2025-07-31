@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 3.7.7
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init no_altplace appdata
 
@@ -29,6 +29,7 @@ Patch1: alt-ftbfs.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel qt6-svg-devel qt6-websockets-devel
 BuildRequires: qt6-datavis3d-devel
+BuildRequires: /usr/bin/sqlite3
 BuildRequires: libsecret-devel libqtkeychain-qt6-devel
 BuildRequires: eigen3 libGLU-devel zlib-devel libcurl-devel
 BuildRequires: libcfitsio-devel stellarsolver-devel wcslib-devel libraw-devel libgsl-devel
@@ -52,6 +53,7 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %setup -n %rname-%version
 %patch1 -p1
 sed -i 's|type="bool"|type="b"|' kstars/*.xml
+echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine'; COMMIT;" | sqlite3 kstars/data/citydb.sqlite
 
 %build
 %add_optflags -I%_K6inc
@@ -85,6 +87,9 @@ sed -i 's|type="bool"|type="b"|' kstars/*.xml
 
 
 %changelog
+* Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.7.7-alt2
+- cleanup citydb
+
 * Thu Jul 03 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.7.7-alt1
 - new version
 
