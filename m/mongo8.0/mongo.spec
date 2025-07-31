@@ -4,7 +4,7 @@
 
 Name: mongo8.0
 Version: 8.0.12
-Release: alt1
+Release: alt2
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -37,6 +37,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-GitPython
 BuildRequires: python3-module-distro
+BuildRequires: python3-module-zstandard
 # A copy of the imp module that was removed in Python 3.12.
 # It shouldn't be used, should use `importlib.metadata` instead.
 BuildRequires: python3-module-zombie-imp
@@ -207,6 +208,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Jul 31 2025 Alexei Takaseev <taf@altlinux.org> 8.0.12-alt2
+- Add BR python3-module-zstandard
+
 * Mon Jul 28 2025 Alexei Takaseev <taf@altlinux.org> 8.0.12-alt1
 - 8.0.12 (Fixes: CVE-2025-6711, CVE-2025-6712, CVE-2025-6713, CVE-2025-6714)
 - Drop mongo8.0-8.0.0-ALT_Disable_metrics_and_check_-U_FORTIFY_SOURCE.patch
