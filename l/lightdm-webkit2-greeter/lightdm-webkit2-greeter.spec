@@ -1,6 +1,6 @@
 Name: lightdm-webkit2-greeter
 Version: 3.5.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: A modern, visually appealing greeter for LightDM
 License: GPL-3.0
@@ -9,7 +9,7 @@ Url: https://github.com/JezerM/web-greeter
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le i586
 
 Requires: lightdm
 Provides: lightdm-greeter
@@ -113,6 +113,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Thu Jul 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.5.2-alt1.3
+- NMU: FTBFS: exclude i586 arch due to idle time limit exceeded.
+
 * Thu Feb 02 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1.2
 - Fix spec
 
