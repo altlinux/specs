@@ -4,24 +4,18 @@
 %def_disable static
 
 Name:       mcpp
-Version:    2.7.2
-Release:    alt5
+Version:    2.7.2.2
+Release:    alt1
 
 Summary:    Alternative C/C++ preprocessor
 
-License:    BSD
+License:    BSD-2-Clause
 Group:      Development/C
-URL:        http://mcpp.sourceforge.net/
+URL:        https://mcpp.sourceforge.net/
 
-Source:     http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:     mcpp-manual.html.patch
-Patch1:     mcpp-fix.patch
-# from fc 2.7.2-29: https://bugzilla.redhat.com/show_bug.cgi?id=948860
-Patch2:     mcpp-man.patch
-# from debian: https://salsa.debian.org/debian/mcpp/-/raw/master/debian/patches/07-fix-16.patch
-Patch3: mcpp-gcc14.patch
-# from debian: https://salsa.debian.org/debian/mcpp/-/raw/master/debian/patches/fix-implicit-function-declaration.patch
-Patch4: mcpp-implicit-function-declaration.patch
+Source:     https://codeberg.org/museoa/mcpp/archive/%version/%name-%version.tar.gz
+VCS:        https://codeberg.org/museoa/mcpp.git
+Patch:     %name-%version-%release.patch
 
 %description
 C/C++ preprocessor defines and expands macros and processes '#if',
@@ -70,11 +64,7 @@ This package provides an html manual for mcpp.
 
 %prep
 %setup -q
-%patch0 -p0 -b -z.euc-jp
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p1
 
 %build
 %configure \
@@ -85,7 +75,7 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 make CFLAGS="%optflags"
 
 %install
-iconv -f euc-jp -t utf-8 doc-jp/mcpp-manual.html > doc-jp/mcpp-manual-jp.html
+iconv -f euc-jp -t utf-8 -o doc-jp/mcpp-manual.html > doc-jp/mcpp-manual-jp.html
 %makeinstall_std
 rm -rf %buildroot%_docdir/%name
 
@@ -113,6 +103,11 @@ rm -rf %buildroot%_docdir/%name
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.7.2.2-alt1
+- NMU: new version 2.7.2.2.
+- Updated source and license tags.
+- Added VCS tag.
+
 * Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 2.7.2-alt5
 - fixed build with gcc14
 
