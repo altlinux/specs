@@ -11,8 +11,8 @@
 %endif
 
 Name: ravada
-Version: 2.3.4
-Release: alt2
+Version: 2.4.1
+Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -208,6 +208,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Jul 31 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.4.1-alt1
+- 2.4.1 (ALT #51883)
+
 * Wed May 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.4-alt2
 - fix get_fallback.pl to work from anywhere (ALT #54512)
 
