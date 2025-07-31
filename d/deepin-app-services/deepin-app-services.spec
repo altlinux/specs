@@ -4,7 +4,7 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 1.0.29
+Version: 1.0.34
 Release: alt1
 
 Summary: Service collection of DDE applications
@@ -15,6 +15,7 @@ Url: https://github.com/linuxdeepin/dde-app-services
 Vcs: git://github.com/linuxdeepin/dde-app-services.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 %if_with clang
@@ -42,6 +43,7 @@ This package provides %name documantation.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -71,7 +73,6 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/dbus-1/interfaces/org.desktopspec.ConfigManager*.xml
 %_datadir/dbus-1/system.d/org.desktopspec.ConfigManager.conf
 %_datadir/dbus-1/system-services/org.desktopspec.ConfigManager.service
-%_datadir/bash-completion/completions/dde-dconfig
 # package translations outside %%find_lang
 %dir %_datadir/dde-dconfig/
 %dir %_datadir/dde-dconfig/translations/
@@ -81,7 +82,7 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/dde-dconfig-editor/translations/dde-dconfig-editor_zh_CN.qm
 # ---
 %_unitdir/dde-dconfig-daemon.service
-%_prefix/lib/sysusers.d/dde-dconfig-daemon.conf
+%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/zsh/vendor-completions/_dde-dconfig
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
@@ -104,6 +105,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.34-alt1
+- New version 1.0.34.
+
 * Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.29-alt1
 - New version 1.0.29.
 - Added vcs tag.

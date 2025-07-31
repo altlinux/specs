@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.11
+Version: 1.0.14
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -18,7 +18,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libsystemd-devel
+BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libsystemd-devel dtk6-common-devel libdtk6core-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -60,6 +60,7 @@ export READELF="llvm-readelf"
 %DQ6build \
   -DCMAKE_PROJECT_HOMEPAGE_URL=%url \
   -DPROJECT_VERSION=%version \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
 #
 
 %install
@@ -71,14 +72,25 @@ export READELF="llvm-readelf"
 
 %files -f %name.lang
 %_bindir/%name
+%_sysconfdir/xdg/autostart/oom-score-adjust.desktop
+%dir %_libdir/deepin-service-manager/
+%_libdir/deepin-service-manager/libOOMScoreAdjust.so
 %_unitdir/deepin-service*.service
 %_unitdir/multi-user.target.wants/deepin-service-manager.service
 %_userunitdir/deepin-service*.service
 %_userunitdir/default.target.wants/deepin-service-manager.service
 %_datadir/dbus-1/system.d/org.deepin.ServiceManager1.conf
+%_datadir/dbus-1/system.d/org.deepin.service.OOMScoreAdjust.conf
+%_datadir/dbus-1/system-services/org.deepin.OOMScoreAdjust.service
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %_datadir/deepin-service-manager/other/manager.json
+%dir %_datadir/deepin-service-manager/system/
+%_datadir/deepin-service-manager/system/OOM-Score-Adjust.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.service.manager/
+%_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 
 %files -n libdeepin-qdbus-service%sover
 #%%_libdir/libdeepin-qdbus-service.so.%%{sover}*
@@ -93,6 +105,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.14-alt1
+- New version 1.0.14.
+
 * Mon Apr 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
 - New version 1.0.11.
 - Switched to dqt6.
