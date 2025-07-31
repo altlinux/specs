@@ -3,12 +3,17 @@
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
 %def_enable debug_gui
-%def_disable documentation
+%def_enable documentation
+%ifarch %ix86
+%def_disable tests
+%def_disable install_tests
+%else
 %def_enable tests
 %def_enable install_tests
+%endif
 
 Name: libinput
-Version: 1.28.1
+Version: 1.29.0
 Release: alt1
 
 Summary: Input devices library
@@ -44,7 +49,8 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libgtk4-devel
 %endif
 }
-%{?_enable_documentation:BuildRequires: doxygen graphviz}
+%{?_enable_documentation:BuildRequires: doxygen graphviz yq
+BuildRequires: python3(sphinx) python3(sphinx_rtd_theme) python3(recommonmark)}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc gdb  python3-module-pytest python3-module-pytest-xdist
 BuildRequires: python3-module-pyparsing
@@ -144,6 +150,7 @@ the functionality of the installed libinput library.
 %_libexecdir/%name/%name-analyze-touch-down-state
 %_libexecdir/%name/%name-debug-events
 %_libexecdir/%name/%name-debug-tablet
+%_libexecdir/%name/%name-debug-tablet-pad
 %_libexecdir/%name/%name-list-devices
 %_libexecdir/%name/%name-list-kernel-devices
 %_libexecdir/%name/%name-measure
@@ -164,6 +171,7 @@ the functionality of the installed libinput library.
 %_man1dir/%name-analyze-touch-down-state.1*
 %_man1dir/%name-debug-events.1.*
 %_man1dir/%name-debug-tablet.1.*
+%_man1dir/%name-debug-tablet-pad.1*
 %_man1dir/%name-list-devices.1.*
 %_man1dir/%name-list-kernel-devices.1.*
 %_man1dir/%name-measure.1.*
@@ -194,6 +202,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Thu Jul 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.0-alt1
+- 1.29.0
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
 - 1.28.1
 
