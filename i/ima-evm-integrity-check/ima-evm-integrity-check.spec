@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.7.9
+Version: 0.8.0
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,43 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Thu Jul 31 2025 Paul Wolneykien <manowar@altlinux.org> 1:0.8.0-alt1
+- Updated the README file.
+- Write integrity-applier messages to log file in --auto mode.
+- Don't require ima_appraise=fix in order to sign files.
+- Read and write the command-line options from/to state dir in --auto mode.
+- Directly use the main config instead of evm_mode file when applying
+  and checking EVM.
+- Use independent openssl.cnf for certificate generation.
+- Fix: Document the GOST_PARAMSET configuration option.
+- Fix: Don't insert GOST kernel modules whin signing the files.
+- integrity-sign: Improve the check for incompatible options.
+- Added -B | --basename command-line option.
+- Add command-line and configuration options to control overwrite
+  of existing signatures.
+- Fix: Check access to the private key when signing the files.
+- integrity-sign: Don't write messages to log file by default.
+- Don't generate a new certificate without -U | --update option.
+- Update the main manual page (trusted keyring + configuration
+  options).
+- Added integrity-sign(8) manual page.
+- Don't load any keys into userspace when signing the files.
+- Added -U | --update option.
+- Better messaging on verification mode: N/A (reason), BAD, OK.
+- Improved --verify mode: Search for keys loaded into the IMA keyring
+- Make the initrd script not abort on key related errors by default.
+- Introduce SECONDARY_SUFFIX option to load CA certs.
+- Added CERT_BASENAME configuration option.
+- Allow to sign files using only the private key.
+- Optionally, protect the keys and keyrings.
+- Use `keyctl id` to search for a keyring ID.
+- Add IMA_KEYRING configuration option.
+- Add support for --cert and --key options.
+- Initialize kmk-user in EVM mode only.
+- Fix: Specify that v0.7.5-alt1 closes 48556.
+- Fix: Use standalone OpenSSL configuration.
+- Write /tmp/integrity.log at initrd stage for debug purposes.
+
 * Thu May 29 2025 Paul Wolneykien <manowar@altlinux.org> 1:0.7.9-alt1
 - Fixed reconfiguration error for bootloaders other than GRUB.
 
@@ -146,6 +183,7 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 - Run make-initrd with normal log output.
 - Fixed OpenSSL GOST module path when copying to initrd.
 - Fix: Abort on some make-initrd errors.
+- Don't set or reset the immutable flag (closes: 48556).
 
 * Mon May 27 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.4-alt1
 - Fix file signing log output: stderr or file.
