@@ -1,5 +1,5 @@
 Name: nwg-dock-hyprland
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 License: MIT
 
@@ -57,6 +57,9 @@ cp -r images %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Thu Jul 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.8-alt1
+- new version (0.4.8) with rpmgs script
+
 * Thu Jul 03 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.7-alt1
 - new version (0.4.7) with rpmgs script
 
