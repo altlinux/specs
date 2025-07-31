@@ -3,7 +3,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-plv8
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: PLV8 - A Procedural Language in Javascript powered by V8
@@ -46,5 +46,8 @@ tar -xf %SOURCE101 -C deps/v8-cmake
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Jul 30 2025 Alexei Takaseev <taf@altlinux.org> 3.2.4-alt1
+- 3.2.4
+
 * Tue Apr 15 2025 Alexei Takaseev <taf@altlinux.org> 3.2.3-alt1
 - Initial build for ALT Linux
