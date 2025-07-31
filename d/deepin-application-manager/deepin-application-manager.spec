@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.25
+Version: 1.2.33
 Release: alt1
 
 Summary: App manager for Deepin
@@ -15,6 +15,7 @@ Url: https://github.com/linuxdeepin/dde-application-manager
 Vcs: git://github.com/linuxdeepin/dde-application-manager.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dtk6-common-devel libdtk6core-devel
@@ -37,6 +38,7 @@ The package provides development files for %repo.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 
 %build
 %if_with clang
@@ -75,6 +77,7 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dbus-1/system-services/org.desktopspec.ApplicationUpdateNotifier1.service
 %_datadir/dbus-1/system.d/org.desktopspec.ApplicationUpdateNotifier1.conf
 %_datadir/dbus-1/services/org.desktopspec.ApplicationManager1.service
+%_datadir/bash-completion/completions/dde-am
 %dir %_datadir/%repo/
 %_datadir/%repo/org.desktopspec.*.xml
 %dir %_datadir/deepin/
@@ -92,6 +95,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.33-alt1
+- New version 1.2.33.
+
 * Wed Mar 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.25-alt1
 - New version 1.2.25.
 
