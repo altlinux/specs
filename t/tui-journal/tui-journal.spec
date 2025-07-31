@@ -1,5 +1,5 @@
 Name: tui-journal
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 License: MIT
 
@@ -17,8 +17,6 @@ Source2: config.toml
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: /proc
-
-BuildRequires: pkgconfig(openssl)
 
 %description
 TUI-Journal is a terminal-based application written in Rust that allows
@@ -42,6 +40,9 @@ install -Dm 755 target/release/tjournal %buildroot%_bindir/tjournal
 %_bindir/tjournal
 
 %changelog
+* Thu Jul 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.16.1-alt1
+- new version 0.16.1 (with rpmrb script)
+
 * Sat Jul 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.16.0-alt1
 - new version 0.16.0 (with rpmrb script)
 
