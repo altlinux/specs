@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.25
+Version: 10.26
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Jul 28 2025 Alexey Romanyuta <r9odt@altlinux.org> 10.26-alt1
+- backend3/users: add the ability to write SSH keys for users
+
 * Thu Jun 29 2025 Alexey Romanyuta <r9odt@altlinux.org> 10.25-alt1
 - backend3/users: add iscrypted parameter to allow pass crypted user
   password to module.
