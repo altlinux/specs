@@ -1,6 +1,6 @@
 Name: vulkan
 Version: 1.4.313
-Release: alt1
+Release: alt1.1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -13,6 +13,8 @@ Source0: vulkan-loader.tar
 Source1: vulkan-tools.tar
 # https://github.com/KhronosGroup/Vulkan-ValidationLayers
 Source2: vulkan-layers.tar
+
+Patch: 0001-build-Remove-pkg-config-provided-library-names.patch
 
 BuildRequires: bison chrpath
 BuildRequires(pre): cmake gcc-c++
@@ -101,6 +103,9 @@ pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 popd
+pushd ../vulkan-tools
+%patch -p1
+popd
 
 %build
 for dir in loader layers; do
@@ -172,6 +177,10 @@ rm -rf %buildroot%_libdir/*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Thu Jul 31 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.313-alt1.1
+- tools: Remove pkg-config provided library names (fix for FTBFS
+  and #55418).
+
 * Sun May 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.313-alt1
 - BR:
   + Bump version requires
