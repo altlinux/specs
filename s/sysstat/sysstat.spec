@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.7.7
+Version: 12.7.8
 Release: alt1
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -15,7 +15,10 @@ Source: %name-%version.tar
 Source1: sysstat.init
 BuildRequires: libsensors3-devel
 BuildRequires: libsystemd-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc desktop-file-utils}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: desktop-file-utils
+BuildRequires: /proc
+}}
 
 %description
 The sysstat package contains various utilities, common to many commercial
@@ -149,7 +152,7 @@ fi
 
 %preun
 %preun_service sysstat
-if [[ $1 -eq 0 ]]; then
+if [ $1 -eq 0 ]; then
   # Remove sa logs if removing sysstat completely
   rm -f %_logdir/sa/sa*
 fi
@@ -179,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Mon Jul 28 2025 Vitaly Chikunov <vt@altlinux.org> 12.7.8-alt1
+- Update to v12.7.8 (2025-07-28).
+
 * Tue Feb 04 2025 Vitaly Chikunov <vt@altlinux.org> 12.7.7-alt1
 - Update to v12.7.7 (2025-02-02).
 
