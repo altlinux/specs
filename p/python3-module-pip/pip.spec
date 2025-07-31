@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pip
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
+%define bash_completions_dir %_datadir/bash-completion/completions
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 25.1.1
+Version: 25.2
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -75,7 +76,7 @@ rm -f ./src/pip/_vendor/distlib/*.exe
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -99,16 +100,27 @@ built_wheel=$(cat ./dist/.wheeltracker) || \
 mkdir -p "%buildroot%system_wheels_path"
 cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
+# install bash completion
+# https://pip.pypa.io/en/stable/user_guide/#command-completion
+mkdir -p %buildroot%bash_completions_dir
+# use system interpreter because
+# completion generator resolves python as venv's one otherwise
+PYTHONPATH=%buildroot%python3_sitelibdir python3 -m pip \
+    completion --bash > %buildroot%bash_completions_dir/pip3
+ln -sr %buildroot%bash_completions_dir/{pip3,pip}
+
 %check
 export NO_LATEST_WHEELS=YES
 %pyproject_run_pytest -vra -m 'not network and unit'
 
 %files -n pip
 %_bindir/pip
+%bash_completions_dir/pip
 
 %files
 %doc README.*
 %_bindir/pip3
+%bash_completions_dir/pip3
 %python3_sitelibdir/pip/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
@@ -116,6 +128,10 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Jul 31 2025 Stanislav Levin <slev@altlinux.org> 25.2-alt1
+- 25.1.1 -> 25.2.
+- Packaged bash completion (closes: #49430).
+
 * Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 25.1.1-alt1
 - 25.0.1 -> 25.1.1.
 
