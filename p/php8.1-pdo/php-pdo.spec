@@ -1,4 +1,5 @@
 %define		php_extension	pdo
+%define mod_conflicts %(echo "%_supported_php_suffix"|sed 's/\\<%{_php_suffix}\\>//;s/ \\+/ /g;s/^[[:space:]]*//;s/[[:space:]]*$//;s/\\([[:graph:]]*\\)/php\\1-pdo-devel/g')
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%php_version
@@ -34,6 +35,7 @@ core, but still accessed using the same API.
 Group: Development/C
 Summary: Development package for %name
 Requires: php-devel = %php_version
+Conflicts: %mod_conflicts
 
 %description devel
 Headers for developing with %name.
