@@ -3,7 +3,7 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libfc14audiodecoder
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1_2
 
 Summary: C wrapper library for Future Composer audio decoding
@@ -48,7 +48,7 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 %files
 %doc --no-dereference COPYING
-%doc README
+%doc README.md images
 %{_libdir}/%{name}.so.*
 
 %files devel
@@ -58,6 +58,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_2
 - update to new release by fcimport
 
