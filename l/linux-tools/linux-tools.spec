@@ -24,7 +24,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -53,6 +53,7 @@ BuildRequires: libdw-devel
 BuildRequires: libfuse-devel
 BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
+BuildRequires: libncurses-devel
 BuildRequires: libnl-devel
 BuildRequires: libpfm-devel
 BuildRequires: libpopt-devel
@@ -824,6 +825,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Fri Aug 01 2025 Vitaly Chikunov <vt@altlinux.org> 6.16-alt2
+- Fix FTBFS due to absent BR:libncurses-devel related to python-3.13.
+
 * Mon Jul 28 2025 Vitaly Chikunov <vt@altlinux.org> 6.16-alt1
 - Update to v6.16 (2025-07-27).
 
