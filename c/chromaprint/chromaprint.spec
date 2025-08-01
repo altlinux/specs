@@ -3,11 +3,11 @@
 
 Name: chromaprint
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: Library implementing the AcoustID fingerprinting
 
 Group: Sound
-License: LGPLv2+
+License: GPL-2.0-or-later
 Url: http://www.acoustid.org/chromaprint
 Source: %name-%version.tar
 
@@ -93,6 +93,9 @@ rm -rf %buildroot/%_K5link ||:
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Aug 01 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt2
+- fix package license tag (closes: 55462)
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
 - new version
 
