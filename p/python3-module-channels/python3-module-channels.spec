@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.0
+Version: 4.2.2
 Release: alt1
 
 Summary: Developer-friendly asynchrony for Django
@@ -15,6 +15,7 @@ VCS: https://github.com/django/channels
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: channels-4.2.2-test-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -34,6 +35,7 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -50,6 +52,9 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Anton Vyatkin <toni@altlinux.org> 4.2.2-alt1
+- New version 4.2.2.
+
 * Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 4.2.0-alt1
 - New version 4.2.0.
 
