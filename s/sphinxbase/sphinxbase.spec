@@ -17,7 +17,7 @@ BuildRequires: liblapack-devel perl(Pod/Usage.pm) python3-devel
 %define devname		lib%{name}-devel
 
 # rel to bump
-%define rel 10
+%define rel 13
 
 Name:		sphinxbase
 Version:	0.9
@@ -29,6 +29,8 @@ Url:		https://cmusphinx.github.io/
 Source0:	https://downloads.sourceforge.net/cmusphinx/%{name}-%{?prel}%{?!prel:%version}.tar.gz
 # https://github.com/cmusphinx/sphinxbase/pull/72
 Patch0:		sphinxbase-5prealpha-fix-doxy2swig.patch
+Patch1:		sphinxbase-swig4.2.patch
+Patch2:		sphinxbase-0.9-fix-C23-typedef-bool-conflict.patch
 BuildRequires:	bison
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(python3)
@@ -36,7 +38,7 @@ BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	libblas-devel
 BuildRequires:	swig
-BuildRequires:	texlive-dist
+BuildRequires:	texlive-dist texlive-fontsextra
 BuildRequires:	autoconf-archive
 # for check
 BuildRequires:	locales-fr
@@ -88,8 +90,10 @@ This package contains the python 3 extension for The CMU Sphinx Recognition
 System.
 
 %prep
-%setup -qn %{name}-%{?prel}%{?!prel:%version}
+%setup -q -n %{name}-%{?prel}%{?!prel:%version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 
 %build
@@ -99,14 +103,11 @@ autoreconf -vfi
 %configure \
 	--disable-static \
 	--disable-rpath \
-	--with-python=%{__python3}
+	--with-python=/usr/bin/python3
 %make_build
 
 %install
 %makeinstall_std
-
-# we don't want these
-find %{buildroot} -name "*.la" -delete
 
 # man pages
 mkdir -p %{buildroot}%{_mandir}/man1
@@ -142,6 +143,9 @@ make check
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.13
+- update by mgaimport
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.10
 - update by mgaimport
 
