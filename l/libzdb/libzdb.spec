@@ -6,8 +6,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libzdb
-Version:        3.4.0
-Release:        alt1_3
+Version:        3.4.1
+Release:        alt1_2
 Summary:        Small, easy to use Database Connection Pool Library
 # Automatically converted from old format: GPLv3+ and MIT - review is highly recommended.
 License:        GPL-3.0-or-later AND LicenseRef-Callaway-MIT
@@ -17,7 +17,7 @@ BuildRequires:  gcc
 BuildRequires:  flex
 BuildRequires:  libmariadb-devel
 BuildRequires:  libssl-devel
-BuildRequires:  libpq5-devel
+BuildRequires:  libpq-devel
 BuildRequires:  libsqlite3-devel >= 3.6.12
 Source44: import.info
 
@@ -62,6 +62,9 @@ make install DESTDIR=%{buildroot}
 %doc doc/api-docs
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.4.0-alt1_3
 - update to new release by fcimport
 
