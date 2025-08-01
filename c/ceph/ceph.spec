@@ -57,7 +57,7 @@
 %endif
 
 Name: ceph
-Version: 19.2.2
+Version: 19.2.3
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -86,7 +86,7 @@ Source25: spdk.tar
 Source26: xxHash.tar
 Source27: zstd.tar
 Source28: c-ares.tar
-Source29: dmclock.tar
+#Source29: dmclock.tar
 Source30: seastar.tar
 Source31: fmt.tar
 Source32: cpp_redis.tar
@@ -115,9 +115,10 @@ BuildRequires(pre): rpm-macros-cmake
 %if_with system_boost
 BuildRequires: boost-asio-devel boost-beast-devel boost-devel >= 1.79.0 boost-program_options-devel boost-intrusive-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel boost-msm-devel
+BuildRequires: boost-locale-devel
 %endif
 BuildRequires: gcc-c++
-BuildRequires: libaio-devel libblkid-devel libcryptsetup-devel
+BuildRequires: libaio-devel libblkid-devel libcryptsetup-devel libnbd-devel
 %{?_with_liburing:BuildRequires: liburing-devel}
 BuildRequires: libcurl-devel >= 7.32 libexpat-devel libcap-ng-devel libcap-devel
 BuildRequires: libstdc++-devel-static
@@ -193,7 +194,7 @@ BuildRequires: python3-module-html5lib python3-module-pyasn1
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
 BuildRequires: python3-module-natsort python3-module-asyncssh
-%{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-tox}
+%{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-tox python3-module-grpcio python3-module-xmltodict}
 BuildRequires: python3-module-markupsafe
 %endif
 
@@ -837,7 +838,7 @@ tar -xf %SOURCE26 -C src/xxHash
 tar -xf %SOURCE27 -C src/zstd
 %endif
 tar -xf %SOURCE28 -C src/c-ares
-tar -xf %SOURCE29 -C src/dmclock
+#tar -xf %%SOURCE29 -C src/dmclock
 tar -xf %SOURCE30 -C src/seastar
 %if_without system_fmt
 tar -xf %SOURCE31 -C src/fmt
@@ -1487,6 +1488,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_mandir/man8/rbd-replay-many.8*
 %_mandir/man8/rbd-replay-prep.8*
 %_mandir/man8/rgw-orphan-list.8*
+%_mandir/man8/rgw-gap-list.8*
 %_mandir/man8/rgw-restore-bucket-index.8*
 %dir %_datadir/ceph
 %_datadir/ceph/known_hosts_drop.ceph.com
@@ -1878,6 +1880,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Thu Jul 31 2025 Alexey Shabalin <shaba@altlinux.org> 19.2.3-alt1
+- 19.2.3
+
 * Fri Apr 11 2025 Alexey Shabalin <shaba@altlinux.org> 19.2.2-alt1
 - 19.2.2
 - ceph-volume: fix importlib.metadata compat
