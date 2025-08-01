@@ -8,12 +8,13 @@
 %define mod_name_uv_build uv_build
 %define uv_build_version %uv_version
 %define uv_build_backend_dir crates/uv-build
+%define bash_completions_dir %_datadir/bash-completion/completions
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: %uv_version
-Release: alt1
+Release: alt2
 Summary: An extremely fast Python package installer and resolver
 License: MIT
 Group: Development/Python3
@@ -91,6 +92,14 @@ pushd %uv_build_backend_dir
 %pyproject_install
 popd
 
+# install bash completion
+# https://docs.astral.sh/uv/getting-started/installation/#shell-autocompletion
+mkdir -p %buildroot%bash_completions_dir
+%buildroot%_bindir/uv generate-shell-completion \
+    bash > %buildroot%bash_completions_dir/uv
+%buildroot%_bindir/uvx --generate-shell-completion \
+    bash > %buildroot%bash_completions_dir/uvx
+
 %check
 # smoke tests: .github/workflows/build-binaries.yml
 %pyproject_run -- bash -s <<-'ENDTESTS'
@@ -120,11 +129,16 @@ popd
 %doc README.*
 %_bindir/uv
 %_bindir/uvx
+%bash_completions_dir/uv
+%bash_completions_dir/uvx
 
 %files -n %pypi_name_uv_build
 %_bindir/uv-build
 
 %changelog
+* Fri Aug 01 2025 Stanislav Levin <slev@altlinux.org> 0.8.4-alt2
+- Packaged bash completion.
+
 * Thu Jul 31 2025 Stanislav Levin <slev@altlinux.org> 0.8.4-alt1
 - 0.8.3 -> 0.8.4.
 
