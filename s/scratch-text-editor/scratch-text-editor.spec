@@ -2,7 +2,7 @@
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 7.4
+%define ver_major 8.1
 
 Name: scratch-text-editor
 Version: %ver_major.0
@@ -38,10 +38,12 @@ BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: libpeas-devel libgtksourceview%gtksourceview_api_ver-devel libvte3-devel
 BuildRequires: libgee0.8-devel libzeitgeist2.0-devel
 BuildRequires: libdbus-devel libgranite-vala libxml2-devel
-BuildRequires: libgtkspell3-devel libgit2-glib-devel
+BuildRequires: libgtkspell3-devel libgit2-glib-devel libsoup3.0-devel
 BuildRequires: libpolkit-devel
 # since 3.0
 BuildRequires: libeditorconfig-devel
+# since 8.0.0
+BuildRequires: libpeas2-devel
 
 %description
 Scratch is the text editor that works for you. It auto-saves your files,
@@ -126,6 +128,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Fri Aug 01 2025 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 7.4.0-alt1
 - 7.4.0
 

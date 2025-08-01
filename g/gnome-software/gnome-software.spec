@@ -39,8 +39,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -157,7 +157,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 cat << _EOF_ > \
 %buildroot%_datadir/glib-2.0/schemas/00_org.gnome.software.gschema.override
 [org.gnome.software]
-official-repos=['altlinux']
+official-repos=['altlinux,']
 _EOF_
 
 %check
@@ -205,6 +205,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Aug 01 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
+- 48.4
+
 * Sat Jul 19 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1.1
 - applied patch proposed in (ALT #55271)
 
