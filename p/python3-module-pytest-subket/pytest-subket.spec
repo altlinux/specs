@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: Pytest Plugin to disable socket calls during tests
 License: MIT
@@ -57,5 +57,8 @@ ensure network calls are prevented.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Stanislav Levin <slev@altlinux.org> 0.8.2-alt1
+- 0.8.1 -> 0.8.2.
+
 * Thu Jul 31 2025 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
 - Initial build for Sisyphus.
