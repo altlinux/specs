@@ -1,18 +1,40 @@
 Group: Networking/WWW
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 2
+%define autorelease 3
 
-%global gitowner axel-download-accelerator
+%global forgeurl https://github.com/axel-download-accelerator/axel
 
 Name:       axel
-Version:    2.17.11
-Release:    alt1_2
+Version:    2.17.14
+Release:    alt1_3
 Summary:    Light command line download accelerator for Linux and Unix
 
-License:    GPLv2+
-URL:        https://github.com/%{gitowner}/%{name}
-Source0:    https://github.com/%{gitowner}/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+# FedoraForgeMeta2ALT: generated meta
+%global forgeurl https://github.com/axel-download-accelerator/axel
+%global forgesource https://github.com/axel-download-accelerator/axel/archive/2.17.14/axel-2.17.14.tar.gz
+%global archivename axel-2.17.14
+%global archiveext tar.gz
+%global archiveurl https://github.com/axel-download-accelerator/axel/archive/2.17.14/axel-2.17.14.tar.gz
+%global topdir axel-2.17.14
+%global extractdir axel-2.17.14
+%global repo axel
+#global owner %nil
+#global namespace %nil
+%global scm git
+#global tag %nil
+#global commit %nil
+#global shortcommit %nil
+#global branch %nil
+%global version 2.17.14
+#global date %nil
+#global distprefix %nil
+# FedoraForgeMeta2ALT: end generated meta
+
+# spdx
+License:    GPL-2.0-or-later
+URL:        %forgeurl
+Source0:    %forgesource
 BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: pkgconfig(libssl)
 BuildRequires: autoconf
@@ -29,8 +51,7 @@ download. Axel has no dependencies and is lightweight, so it might
 be useful as a wget clone on byte-critical systems.
 
 %prep
-%setup -q -n %{name}-%{version}
-
+%setup -q -n axel-2.17.14
 
 %build
 autoreconf -vfi
@@ -56,6 +77,9 @@ install -m 644 -p -T doc/axelrc.example %{buildroot}%{_sysconfdir}/axelrc
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 2.17.14-alt1_3
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.17.11-alt1_2
 - update to new release by fcimport
 
