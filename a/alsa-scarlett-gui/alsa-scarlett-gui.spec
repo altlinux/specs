@@ -1,6 +1,6 @@
 Name: alsa-scarlett-gui
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: ALSA Scarlett Gen 1/2/3/4/Vocaster/Clarett Control Panel
 License: GPLv3+ LGPLv3+
@@ -21,7 +21,7 @@ A Gtk4 GUI for the ALSA controls presented by the Linux kernel Focusrite Scarlet
 %setup
 
 %build
-%make_build -C src
+%make_build -C src PREFIX=%_prefix
 
 %install
 %make_install -C src
@@ -37,5 +37,8 @@ install -Dm 644 src/img/vu.b4.alsa-scarlett-gui.png %buildroot%_iconsdir/hicolor
 %_iconsdir/hicolor/256x256/apps/vu.b4.alsa-scarlett-gui.png
 
 %changelog
+* Mon Jul 14 2025 Anton Palgunov <toxblh@altlinux.org> 0.5.1-alt2
+- fix: Exec path in desktop file
+
 * Sun Jul 13 2025 Anton Palgunov <toxblh@altlinux.org> 0.5.1-alt1
 - Initial build in Sisyphus.
