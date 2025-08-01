@@ -5,7 +5,7 @@
 %define devname	libshairport-devel
 
 %define snap	20120111
-%define rel	11
+%define rel	13
 
 Summary:	Apple RAOP server library
 Name:		libshairport
@@ -56,6 +56,7 @@ applications that use libshairport.
 %setup -q -n %name-%snap
 
 %build
+export CFLAGS="%{optflags} -std=gnu17"
 autoreconf -fi
 %configure --disable-static
 %make_build
@@ -78,6 +79,9 @@ find %{buildroot} -name '*.la' | xargs rm
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_0.git20120111.13
+- update by mgaimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_0.git20120111.11
 - update by mgaimport
 
