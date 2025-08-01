@@ -10,12 +10,13 @@ BuildRequires: /usr/bin/xsltproc perl(JSON/PP.pm) pkgconfig(gio-unix-2.0)
 
 Name:           libldm
 Version:        0.2.5
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A tool to manage Windows dynamic disks
 Group:		System/Libraries
 License:        LGPLv3+ and GPLv3+
 URL:            https://github.com/mdbooth/libldm
 Source0:        https://github.com/mdbooth/libldm/archive/%{name}-%{version}.tar.gz
+Patch0:         0004-src-Fix-declaration-of-ldm_new.patch
 
 BuildRequires:  glib2-devel >= 2.26.0
 BuildRequires:  pkgconfig(json-glib-1.0) >= 0.14.0
@@ -47,7 +48,7 @@ device-mapper block devices which can be mounted.
 %package        -n %devname
 Summary:        Development files for %{name}
 Group:		Development/C
-Requires:       %{libname}%{?_isa} = %{version}-%{release}
+Requires:       %{libname} = %{version}-%{release}
 Provides:       libldm-devel = %{version}-%{release}
 Provides:       libldm%{api}-devel = %{version}-%{release}
 Obsoletes:      %{_lib}ldm-devel < 0.2.3-6
@@ -58,6 +59,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
 
 sed -i -e 's/-Werror //' src/Makefile.*
 gtkdocize
@@ -83,7 +85,8 @@ find %{buildroot} -name "*.la" -delete
 
 %files -n %libname
 %doc COPYING.lgpl COPYING.gpl
-%{_libdir}/libldm-%{api}.so.%{major}*
+%{_libdir}/libldm-%{api}.so.%{major}
+%{_libdir}/libldm-%{api}.so.%{major}.*
 
 %files -n %devname
 %doc %{_datadir}/gtk-doc/*
@@ -95,6 +98,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.2.5-alt1_2
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.2.5-alt1_1
 - update by mgaimport
 
