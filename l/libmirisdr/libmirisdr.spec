@@ -4,22 +4,25 @@ BuildRequires: gcc-c++ pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define commit faf794b06c73c997e07857f790475de18805342c
+%define commit 78a874b30a4c3161251b8e12ffb6443f29005eb3
 %define gitrel  %(c=%{commit}; echo ${c:0:7})
+
 %define major   4
 %define libname libmirisdr%{major}
 %define devname libmirisdr-devel
-%define rel 1
+
+%define rel 2
 
 Name:           libmirisdr
-Version:        0.0.20230516
-Release:        alt1_1.faf794b
+Version:        0.0.20240620
+Release:        alt1_2.78a874b
 Summary:        Support programs for MRi2500
 License:        GPLv2
 Group:          Communications
-URL:            https://cgit.osmocom.org/libmirisdr/
+URL:            https://github.com/f4exb/libmirisdr-4/
 ##TODO Try a more recent fork e.g. https://github.com/ericek111/libmirisdr-5
 Source0:        https://api.github.com/repos/ericek111/libmirisdr-5/tarball/%{gitrel}#/%{name}-%{version}.tar.gz
+Patch0:         libmirisdr-cmake-4.0.patch
 
 BuildRequires:  ccmake cmake ctest
 BuildRequires:  pkgconfig(libusb)
@@ -58,6 +61,8 @@ Library headers and other development files for mirisdr driver.
 
 %prep
 %setup -q -n ericek111-libmirisdr-5-%{gitrel}
+%patch0 -p1
+
 
 # remove buildtime from documentation
 #sed -i 's|^HTML_TIMESTAMP         = YES|HTML_TIMESTAMP         = NO|' Doxyfile.in
@@ -96,6 +101,9 @@ install -Dpm644 mirisdr.rules %{buildroot}%{_udevrulesdir}/10-mirisdr.rules
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.0.20240620-alt1_2.78a874b
+- update by mgaimport
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.0.20230516-alt1_1.faf794b
 - update by mgaimport
 
