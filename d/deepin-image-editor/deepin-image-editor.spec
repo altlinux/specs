@@ -7,8 +7,8 @@
 %def_without clang
 
 Name: deepin-image-editor
-Version: 6.5.0
-Release: alt2
+Version: 6.5.1
+Release: alt1
 
 Summary: Image editor libraries for Deepin
 
@@ -17,11 +17,15 @@ Group: System/Libraries
 Url: https://github.com/linuxdeepin/image-editor
 Vcs: https://github.com/linuxdeepin/image-editor.git
 
+Packager: Leontiy Volodin <lvol@altlinux.org>
+
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
 Patch1: deepin-image-editor-6.5.0-alt-fix-broken-pkgconfig.patch
 Patch2: deepin-image-editor-6.5.0-alt-fix-dqt6-pkgconfig.patch
 Patch3: deepin-image-editor-6.5.0-alt-cmake-compat.patch
+Patch4: deepin-image-editor-6.5.0-alt-fix-qt6-cmake.patch
+Patch5: deepin-image-editor-6.5.0-alt-fix-underlinked-libraries.patch
 
 %if_with clang
 ExcludeArch: armh
@@ -34,7 +38,6 @@ BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-
 
 %description
 Image editor is a public library for deepin-image-viewer
@@ -89,10 +92,12 @@ Development libraries for deepin-album.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
-sed '/qt5.cmake/d' \
-  -i libimageviewer/CMakeLists.txt \
-  -i libimagevisualresult/CMakeLists.txt
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p2
+%patch5 -p2
 
 %build
 %if_with clang
@@ -138,6 +143,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.1-alt1
+- New version 6.5.1.
+
 * Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 6.5.0-alt2
 - NMU: compat with CMake 4.
 
