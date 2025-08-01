@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt6platform-plugins
-Version: 6.0.39
+Version: 6.0.40
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -20,7 +20,7 @@ Patch1: deepin-qt6platform-plugins-5.6.28-alt-plugin-path.patch
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Wed Apr 30 2025
 # optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXrender-devel libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-opengl libdqt6-widgets libdqt6-xcbqpa libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstdc++-devel libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 ninja-build pkg-config python3 python3-base sh5 vulkan-headers xorg-proto-devel
-BuildRequires: dqt6-base-devel libSM-devel libXi-devel libcairo-devel libdbus-devel libmtdev-devel libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libxcbutil-devel
+BuildRequires: dqt6-base-devel libSM-devel libXi-devel libcairo-devel libdbus-devel libmtdev-devel libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libxcbutil-devel libXevie-devel libxprintutil-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -64,6 +64,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.40-alt1
+- New version 6.0.40.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.39-alt1
 - New version 6.0.39.
 
