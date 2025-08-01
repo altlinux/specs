@@ -1,7 +1,7 @@
 
 Name: maliit-keyboard
 Version: 2.3.1
-Release: alt7
+Release: alt8
 %K5init no_altplace
 
 Group: System/Libraries
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Patch0: make-sure-PressArea-gets-reset-when-the-keyboard-hides.patch
 Patch1: alt-fix-start-settings.patch
 Patch2: alt-localedir.patch
+Patch3: alt-l10n.patch
 
 # Automatically added by buildreq on Fri Jun 04 2021 (-bi)
 # optimized out: cmake-modules debugedit elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libgio-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libsasl2-3 libssl-devel libstdc++-devel libwayland-client pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel rpm-build-gir rpm-build-python3 rpm-build-qml sh4
@@ -38,6 +39,7 @@ Currently it provides a single QML based keyboard plugin.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i '/find_package.*Pinyin/d' CMakeLists.txt
 
 %build
@@ -71,6 +73,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/metainfo/*maliit*.xml
 
 %changelog
+* Fri Aug 01 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt8
+- fix l10n (thanks smasher@alt)
+
 * Mon Jul 28 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt7
 - fix find translations
 
