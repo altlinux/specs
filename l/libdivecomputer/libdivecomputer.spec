@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen pkgconfig(bluez) pkgconfig(libusb-1.0)
+BuildRequires: /usr/bin/doxygen /usr/bin/mandoc pkgconfig(bluez) pkgconfig(libusb-1.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -9,7 +9,7 @@ BuildRequires: chrpath
 %define develname   libdivecomputer-devel
 
 Name:       libdivecomputer
-Version:    0.8.0
+Version:    0.9.0
 Release:    alt1_1
 Summary:    Library for communication with dive computers
 License:    LGPLv2
@@ -47,9 +47,6 @@ Header files and development libraries for %{name}.
 
 %install
 %makeinstall_std
-
-#we don't want these
-find %{buildroot} -name "*.la" -delete
 # kill rpath
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
@@ -70,6 +67,9 @@ done
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt1_1
+- update by mgaimport
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.8.0-alt1_1
 - update by mgaimport
 
