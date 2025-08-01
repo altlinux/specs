@@ -7,7 +7,7 @@
 Name: python3-module-%pypi_name
 
 Version: 2.99
-Release: alt1
+Release: alt2
 Summary: Offline Text To Speech (TTS) converter for Python 
 License: MPL-2.0
 Group: Development/Python3
@@ -24,9 +24,9 @@ Patch2: not-test-listening-for-events-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: espeak
+BuildRequires: espeak-ng
 BuildRequires: ffmpeg
-BuildRequires: libespeak
+BuildRequires: libespeak-ng1
 BuildRequires: alsa-utils
 %if_with check
 BuildRequires: python3-module-pytest
@@ -66,6 +66,9 @@ fi
 %exclude %python3_sitelibdir/%pypi_name/drivers/sapi5.py
 
 %changelog
+* Fri Aug 01 2025 Pavel Shilov <zerospirit@altlinux.org> 2.99-alt2
+- Switch BuildRequires from espeak to espeak-ng.
+
 * Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.99-alt1
 - 2.98 -> 2.99
 
