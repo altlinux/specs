@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.24
+Version: 1.3.25
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -68,6 +68,10 @@ Shell functions and kbd data for %name.
 %_sysconfdir/alterator/sysconfig/gnome-kbd
 
 %changelog
+* Thu Jul 31 2025 Anton Midyukov <antohami@altlinux.org> 1.3.25-alt1
+- alterator-sysconfig-functions: clean xkb opts for GNOME
+- alterator-sysconfig-functions: write_gnome_kbd if gnome session is presence
+
 * Mon Mar 31 2025 Anton Midyukov <antohami@altlinux.org> 1.3.24-alt1
 - add Mari and Tatar keyboard layout support (thanks Kirill Izmestev <felixz@)
 
