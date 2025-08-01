@@ -5,11 +5,11 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
-Version:        1.26
-Release:        alt1_1
+Version:        1.30
+Release:        alt1_2
 Summary:        6502 cross-assembler
 
-License:        GPL-2.0-or-later AND RSA-MD
+License:        GPL-2.0-or-later
 URL:            https://github.com/CycoPH/atasm
 Source0:        https://github.com/CycoPH/atasm/archive/V%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
@@ -55,12 +55,15 @@ popd
 
 %files
 %doc --no-dereference LICENSE
-%doc VERSION.TXT README.md docs/atasm.blurb docs/atasm.txt
+%doc VERSION.TXT README.md docs/atasm.blurb docs/atasm.pdf
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.30-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.26-alt1_1
 - update to new release by fcimport
 
