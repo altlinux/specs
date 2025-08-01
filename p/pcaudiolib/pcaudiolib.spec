@@ -8,8 +8,8 @@ BuildRequires: gcc-c++
 %define libnamedev libpcaudiolib-devel
 
 Name:           pcaudiolib
-Version:        1.2
-Release:        alt1_1
+Version:        1.3
+Release:        alt1_2
 Summary:        Portable C Audio Library
 Group:          System/Libraries
 # pcaudiolib bundles TPCircularBuffer with Cube license, which is only used
@@ -64,11 +64,9 @@ rm -rf src/TPCircularBuffer
 %install
 %makeinstall_std
 
-find %{buildroot} -name '*.la' -delete
-
 %files -n %{libname}
 %doc --no-dereference COPYING
-%doc AUTHORS CHANGELOG.md README.md
+%doc AUTHORS ChangeLog.md README.md
 %{_libdir}/libpcaudio.so.%{major}
 %{_libdir}/libpcaudio.so.%{major}.*
 
@@ -79,6 +77,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.3-alt1_2
+- update by mgaimport
+
 * Thu Mar 28 2024 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_1
 - new version
 
