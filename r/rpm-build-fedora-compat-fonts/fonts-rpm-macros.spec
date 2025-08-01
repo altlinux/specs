@@ -1,6 +1,7 @@
 Group: Development/Other
 BuildRequires: rpm-build-python3
 %define oldname fonts-rpm-macros
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%oldname is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -44,13 +45,17 @@ Version: 2.0.5
 BuildArch: noarch
 
 Name:      rpm-build-fedora-compat-fonts
-Release:   alt2_11
+Release:   alt2_23
 Summary:   Build-stage rpm automation for fonts packages
 
 License:   GPL-3.0-or-later
 URL:       https://docs.fedoraproject.org/en-US/packaging-guidelines/FontsPolicy/
 Source:    %{forgesource}
 Patch0:    %{oldname}-omit-foundry-in-family.patch
+Patch1:    %{oldname}-drop-yaml.patch
+Patch2:    %{oldname}-epoch-in-req.patch
+Patch3:    %{oldname}-fail-on-missing-files.patch
+Patch4:    %{oldname}-spec-template-license-update.patch
 
 
 #Provides:  fontpackages-devel = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -63,7 +68,9 @@ Requires:  libappstream-glib libappstream-glib-gir
 Requires:  libuchardet uchardet
 
 # For the experimental generator
+%if 0%{?fedora} || 0%{?rhel} < 10
 Requires:  python3-module-ruamel-yaml
+%endif
 Requires:  python3-module-lxml
 Source44: import.info
 # for %%fontcheck
@@ -95,6 +102,12 @@ Install this package if you want to create RPM packages that use %name.
 %package -n fonts-srpm-macros
 Group: Development/Other
 Summary:   Source-stage rpm automation for fonts packages
+# macros.forge and forge.lua were split into a separate package.
+# redhat-rpm-config pulls in forge-srpm-macros but better to explicitly Require
+# it.
+%if (0%{?fedora} >= 40 || 0%{?rhel} >= 10)
+Requires:  forge-srpm-macros
+%endif
 
 %description -n fonts-srpm-macros
 This package provides SRPM-stage rpm automation to simplify the creation of
@@ -136,7 +149,13 @@ for template in templates/rpm/*\.spec ; do
   grep -v '^%%dnl' "${template}" > "${target}"
   touch -r "${template}" "${target}"
 done
-%patch0 -p1 -b .1-omit-foundry-in-family
+%patch0  -p1
+%if 0%{?rhel} >= 10
+%patch1  -p1
+%endif
+%patch2  -p1
+%patch3  -p1
+%patch4  -p1
 
 %install
 install -m 0755 -d    %{buildroot}%{_fontbasedir} \
@@ -167,7 +186,8 @@ install -D -m644 %SOURCE45 %buildroot%_rpmmacrosdir/fedora-compat-fonts
 
 %files
 %doc --no-dereference LICENSE.txt
-%{_bindir}/*
+%{_bindir}/fc-weight
+%{_bindir}/gen-fontconf
 
 %doc --no-dereference LICENSE-templates.txt
 %doc     *.md changelog.txt
@@ -177,6 +197,9 @@ install -D -m644 %SOURCE45 %buildroot%_rpmmacrosdir/fedora-compat-fonts
 %doc %{ftcgtemplatedir}/*txt
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt2_23
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt2_11
 - update to new release by fcimport
 
