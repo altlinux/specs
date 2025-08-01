@@ -11,7 +11,7 @@ Group: System/Libraries
 %global _hardened_build 1
 
 Name:           libvoikko
-Version:        4.3.2
+Version:        4.3.3
 Release:        alt1_3
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
@@ -137,6 +137,9 @@ mkdir -p %{buildroot}%{_prefix}/lib/voikko
 %{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.opt-?.pyc
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 4.3.3-alt1_3
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 4.3.2-alt1_3
 - update to new release by fcimport
 
