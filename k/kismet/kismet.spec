@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name kismet
 %global _hardened_build 1
-%global _version        2023-07-R1
+%global _version        2023-07-R2
 
 ## {Local macros...
 %global cfgdir          %_sysconfdir/%name
@@ -21,7 +21,7 @@ BuildRequires: /usr/bin/protoc /usr/bin/protoc-c binutils-devel libbladerf-devel
 Summary:        WLAN detector, sniffer and IDS
 Name:           kismet
 Version:        %_rpmversion
-Release:        alt1_4
+Release:        alt1_1
 License:        GPL-2.0-or-later
 URL:            http://www.kismetwireless.net/
 Source0:        http://www.kismetwireless.net/code/%{name}-%_version.tar.xz
@@ -29,13 +29,14 @@ Source0:        http://www.kismetwireless.net/code/%{name}-%_version.tar.xz
 Patch0:         kismet-include.patch
 Patch1:         kismet-install.patch
 Patch2:         hak5-types.patch
+Patch3:         2340697.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel diffutils
+BuildRequires:  libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel diffutils
 BuildRequires:  libpcap-devel
 BuildRequires:  libssl-devel libcap-devel libnl-devel
-BuildRequires:  libbluez-devel
+BuildRequires:  bluez libbluez-devel
 BuildRequires:  libmicrohttpd-devel libprotobuf-devel libprotobuf-c-devel
 BuildRequires:  libnm-devel libnm-gir-devel libusb-devel
 BuildRequires:  libsqlite3-devel libwebsockets-devel
@@ -56,9 +57,12 @@ traffic.
 %prep
 %setup -qn %{name}-%{_version}
 
-%patch -P 0 -p0
-%patch -P 1 -p0
-%patch -P 2 -p0
+%patch0  -p0
+%patch1  -p0
+%patch2  -p0
+%ifnarch ppc64le
+%patch3  -p1
+%endif
 
 sed -i 's!\$(prefix)/lib/!%{_libdir}/!g' plugin-*/Makefile
 
@@ -71,6 +75,11 @@ sed -i \
     conf/kismet.conf
 
 sed -i s/@VERSION@/%{version}/g packaging/kismet.pc.in
+
+# Create a sysusers.d config file
+cat >kismet.sysusers.conf <<EOF
+g kismet -
+EOF
 
 %build
 
@@ -87,8 +96,8 @@ export LDFLAGS='-Wl,--as-needed'
 %install
 BIN=$RPM_BUILD_ROOT/bin ETC=$RPM_BUILD_ROOT/etc make suidinstall DESTDIR=%{?buildroot} INSTALL="install -p"
 
-%pre
-getent group kismet >/dev/null || groupadd -f -r kismet
+install -m0644 -D kismet.sysusers.conf %{buildroot}%{_sysusersdir}/kismet.conf
+
 
 %files
 %doc README*
@@ -119,8 +128,12 @@ getent group kismet >/dev/null || groupadd -f -r kismet
 %attr(4711,root,root) %{_bindir}/kismet_cap_ti_cc_2540
 %{_datadir}/kismet
 %{_libdir}/pkgconfig/kismet.pc
+%{_sysusersdir}/kismet.conf
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1:0.0.2023.07.R2-alt1_1
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1:0.0.2023.07.R1-alt1_4
 - update to new release by fcimport
 
