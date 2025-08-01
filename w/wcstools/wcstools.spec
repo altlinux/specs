@@ -6,7 +6,7 @@
 
 Name:		wcstools
 Version:	3.9.7
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Software utilities to display and manipulate the WCS of a FITS image
 License:	GPLv2+
 Group:		Sciences/Astronomy
@@ -15,6 +15,9 @@ Source0:	http://tdc-www.harvard.edu/software/wcstools/%{name}-%{version}.tar.gz
 # Patch from Debian to create shared lib and rename it to avoid
 # conflicts with Mark Calabretta's wcslib package.
 Patch0:		wcstools-3.9.7-rename-shlib.patch
+# Since there's no way to reach out upstream other than email
+# and I don't get replies, this patch tries to fix build with GCC15
+Patch2:		fix_gcc15-c++23.patch
 BuildRequires:	gcc
 Source44: import.info
 
@@ -47,6 +50,7 @@ This are the files needed to develop an application using %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch2 -p1
 
 
 # Fix wrong FSF address in source headers
@@ -55,11 +59,8 @@ grep -rl '59 Temple Place, Suite 330, Boston, MA  02111-1307  USA' --include=*.{
 
 
 %build
-export CFLAGS="%{optflags}"
-export CPPFLAGS="%{optflags}"
-
-# Parallel build fails
-make
+export CFLAGS+=" -std=gnu17"
+%make_build
 
 %install
 mkdir -p %{buildroot}%{_libdir}
@@ -95,6 +96,9 @@ install -p -m 0644 man/man1/* %{buildroot}%{_mandir}/man1
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 3.9.7-alt1_2
+- update by mgaimport
+
 * Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 3.9.7-alt1_1
 - update by mgaimport
 
