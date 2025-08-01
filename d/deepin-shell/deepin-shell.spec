@@ -4,8 +4,8 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 
 Summary: Plugins for DDE
 
@@ -147,6 +147,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.4-alt1
+- New version 2.0.4.
+
 * Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt2
 - Fixed dde-dock plugin detection.
 

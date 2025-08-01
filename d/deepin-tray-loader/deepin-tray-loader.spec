@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.1
+Version: 2.0.5
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -14,6 +14,7 @@ Url: https://github.com/linuxdeepin/dde-tray-loader
 Vcs: git://github.com/linuxdeepin/dde-tray-loader.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel kf6-networkmanager-qt-devel
@@ -66,7 +67,7 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch -p1
 sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
   $(find ./plugins -name '*CMakeLists.txt')
 
@@ -111,6 +112,8 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_libdir/libdde-trayplugin-interface.so
 
 %files -n dde-dock -f dde-dock.lang
+%dir %_sysconfdir/dde-dock/
+%dir %_sysconfdir/dde-dock/indicator/
 %config(noreplace) %_sysconfdir/dde-dock/indicator/keybord_layout.json
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
@@ -124,7 +127,6 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 # The translations outside find_lang
 %dir %_datadir/dde-dock/translations/
 %_datadir/dde-dock/translations/dde-dock.qm
-%_datadir/dde-dock/translations/dde-dock_es_419.qm
 %_datadir/dde-dock/translations/dde-dock_ky@Arab.qm
 %dir %_datadir/dock-wirelesscasting-plugin/
 %dir %_datadir/dock-wirelesscasting-plugin/translations/
@@ -144,6 +146,9 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_pkgconfigdir/dde-dock.pc
 
 %changelog
+* Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.5-alt1
+- New version 2.0.5.
+
 * Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
