@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Warpinator - send and receive files across a local network
@@ -33,6 +33,7 @@ Source: %name-%version.tar
 %add_python3_path %_libexecdir/%_name
 %add_python3_req_skip google
 
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(XApp) = 1.0
 Requires: dconf polkit
@@ -77,11 +78,14 @@ Warpinator is a GTK+3 app to send and receive files across a local network.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/polkit-1/actions/org.x.warpinator.policy
 %_datadir/metainfo/%rdn_name.appdata.xml
-#%_datadir/nemo/actions/%_name-send-check
-#%_datadir/nemo/actions/%_name-send.nemo_action
+%_datadir/nemo/actions/%_name-send-check
+%_datadir/nemo/actions/%_name-send.nemo_action
 %doc README*
 
 %changelog
+* Fri Aug 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.10-alt1
+- 1.8.10
+
 * Fri Jul 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.9-alt1
 - 1.8.9
 
