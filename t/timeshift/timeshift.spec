@@ -10,7 +10,7 @@
 %endif
 
 Name: timeshift
-Version: 24.06.6
+Version: 25.07.4
 Summary: System restore tool for Linux
 Release: alt1
 License: GPL-2.0-or-later
@@ -69,7 +69,7 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %_sysconfdir/%name
 %_desktopdir/%name-gtk.desktop
 %_iconsdir/hicolor/*/apps/%name.png
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/com.linuxmint.timeshift.metainfo.xml
 %_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
 %_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
@@ -78,6 +78,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Fri Aug 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 25.07.4-alt1
+- Updated to version 25.07.4.
+
 * Thu Jan 09 2025 Alexander Makeenkov <amakeenk@altlinux.org> 24.06.6-alt1
 - Updated to version 24.06.6.
 
