@@ -4,7 +4,7 @@
 %def_enable pam
 
 Name: oath-toolkit
-Version: 2.6.12
+Version: 2.6.13
 Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
@@ -12,7 +12,6 @@ Group: Security/Networking
 Url: http://www.nongnu.org/oath-toolkit/
 # git-vcs: https://gitlab.com/oath-toolkit/oath-toolkit.git
 Source: %name-%version.tar
-Patch1: %name-%version.patch
 
 BuildRequires: libgcrypt-devel
 BuildRequires: pkgconfig(gtk-doc)
@@ -121,7 +120,6 @@ This subpackage contains the headers for this library.
 
 %prep
 %setup
-%patch1 -p1
 echo %version > .tarball-version
 printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > liboath/man/Makefile.gdoc
 printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > libpskc/man/Makefile.gdoc
@@ -146,6 +144,8 @@ touch ChangeLog
 
 # remove .la files created by libtool
 find %buildroot -name "*.la" -exec rm -f {} \;
+# remove HTML docs
+rm -r %buildroot%_datadir/gtk-doc
 
 %files -n oathtool
 %_bindir/oathtool
@@ -153,18 +153,15 @@ find %buildroot -name "*.la" -exec rm -f {} \;
 
 %files -n pam_oath
 %doc pam_oath/README
-%doc pam_oath/COPYING
 /%_lib/security/pam_oath.so
 
 %files -n liboath
-%doc liboath/COPYING
 %_libdir/liboath.so.*
 
 %files -n liboath-devel
 %_libdir/liboath.so
 %_includedir/liboath
 %_pkgconfigdir/liboath.pc
-#%doc %_datadir/gtk-doc/html/liboath
 %_man3dir/oath_*
 
 %if_enabled pskc
@@ -175,18 +172,20 @@ find %buildroot -name "*.la" -exec rm -f {} \;
 
 %files -n libpskc
 %doc libpskc/README
-%doc liboath/COPYING
 %_libdir/libpskc.so.*
 
 %files -n libpskc-devel
 %_libdir/libpskc.so
 %_includedir/pskc
 %_pkgconfigdir/libpskc.pc
-#%doc %_datadir/gtk-doc/html/libpskc
 %_man3dir/pskc_*
 %endif
 
 %changelog
+* Fri Aug 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.6.13-alt1
+- 2.6.13
+- change building scheme (due to upstream commit e0a496bcf6)
+
 * Sun Apr 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.6.12-alt1
 - 2.6.12
 
