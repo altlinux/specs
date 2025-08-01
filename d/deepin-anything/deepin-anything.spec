@@ -1,7 +1,7 @@
 %define _sysusersdir %_prefix/lib/sysusers.d
 
 Name: deepin-anything
-Version: 7.0.11
+Version: 7.0.23
 Release: alt1
 
 Summary: The lightning-fast filename search for Deepin
@@ -14,10 +14,8 @@ Vcs: git://github.com/linuxdeepin/deepin-anything.git
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-ExcludeArch: i586
-
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-kernel
-BuildRequires: cmake glib2-devel libdtk6core-devel libmount-devel libnl-devel libpcre-devel libudisks2-qt6-devel boost-devel libspdlog-devel liblucene++-devel dqt6-base-devel
+BuildRequires: cmake glib2-devel libgio-devel libdtk6core-devel libmount-devel libnl-devel libpcre-devel libudisks2-qt6-devel boost-devel libspdlog-devel liblucene++-devel dqt6-base-devel
 
 %description
 %summary.
@@ -51,17 +49,26 @@ rm -rf %name-0.0/
 %doc README.md LICENSE CHANGELOG.md
 %_bindir/deepin-anything-daemon
 %_bindir/deepin-anything-server
-%_unitdir/deepin-anything-server.service
+%_bindir/deepin-anything-searcher
 %_userunitdir/deepin-anything-daemon.service
 %_sysusersdir/*.conf
 %_sysconfdir/modules-load.d/anything.conf
 %dir %_datadir/deepin-anything-server/
 %_datadir/deepin-anything-server/pinyin.txt
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.anything/
+%_datadir/dsg/configs/org.deepin.anything/org.deepin.anything.json
 
 %files -n kernel-source-%name
-%_usrsrc/kernel
+%dir %_usrsrc/kernel/
+%_usrsrc/kernel/*
 
 %changelog
+* Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.23-alt1
+- New version 7.0.23.
+- Enabled build on i586.
+
 * Fri Apr 25 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.11-alt1
 - New version 7.0.11.
 - Switched to dqt6.
