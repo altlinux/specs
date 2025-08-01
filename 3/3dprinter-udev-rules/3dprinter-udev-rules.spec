@@ -1,8 +1,10 @@
 Group: Engineering
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 2
+
 Name:           3dprinter-udev-rules
-Version:        0.3
+Version:        0.4
 Release:        alt1_2
 Summary:        Rules for udev to give regular users access to operate 3D printers
 License:        MIT-0
@@ -11,10 +13,10 @@ Source0:        https://github.com/hroncok/%{name}/archive/v%{version}.tar.gz
 BuildArch:      noarch
 
 # For the %%_udevrulesdir macro
-BuildRequires:  libsystemd-devel libudev-devel systemd
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd
 
 # For the directory
-Requires:        udev
+Requires:       udev
 
 %global file_name 66-3dprinter.rules
 Source44: import.info
@@ -48,6 +50,9 @@ install -D -p -m 644 %{file_name} %{buildroot}%_udevrulesdir/%{file_name}
 %_udevrulesdir/%{file_name}
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.4-alt1_2
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.3-alt1_2
 - update to new release by fcimport
 
