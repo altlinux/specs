@@ -1,5 +1,5 @@
 Name:     webapp-manager
-Version:  1.4.1
+Version:  1.4.2
 Release:  alt1
 
 Summary:  Run websites as if they were apps
@@ -58,6 +58,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Fri Aug 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt1
+- 1.4.1 -> 1.4.2
+
 * Sat Jul 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.1
 
