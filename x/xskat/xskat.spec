@@ -1,5 +1,6 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -11,7 +12,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_30
+Release:          alt2_38
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Source0:          http://www.xskat.de/xskat-%{upstream_version}.tar.gz
@@ -20,11 +21,12 @@ Patch0:           xskat-c99.patch
 URL:              http://www.xskat.de/xskat.html
 # xskat requires an 10x20 font
 Requires:         fonts-bitmap-misc
-BuildRequires:  gcc
+BuildRequires:    gcc
 BuildRequires:    xorg-cf-files gccmakedep imake
 BuildRequires:    libX11-devel
 BuildRequires:    desktop-file-utils
 BuildRequires:    ImageMagick-tools
+BuildRequires:    libappstream-glib libappstream-glib-gir
 Source44: import.info
 
 
@@ -62,7 +64,7 @@ mv -f README.IRC-de.conv README.IRC-de
 
 %build
 %configure
-make CDEBUGFLAGS="%{optflags}"
+make CDEBUGFLAGS="-std=c99 %{optflags}"
 
 %install
 make DESTDIR=$RPM_BUILD_ROOT MANDIR=%{_mandir}/man6 MANSUFFIX=6 install install.man
@@ -87,18 +89,20 @@ touch -r icon.xbm $RPM_BUILD_ROOT%{_datadir}/pixmaps/xskat.xpm
 #
 # See http://www.freedesktop.org/software/appstream/docs/ for more details.
 #
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+
+mkdir -p $RPM_BUILD_ROOT%{_metainfodir}
+cat > $RPM_BUILD_ROOT%{_metainfodir}/xskat.appdata.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Ravi Srinivasan <ravishankar.srinivasan@gmail.com> -->
 <!--
 EmailAddress: m@il.xskat.de
 SentUpstream: 2014-09-25
 -->
-<application>
-  <id type="desktop">xskat.desktop</id>
+<component type="desktop">
+  <id>xskat.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <summary>A trick taking card game popular in Germany</summary>
+  <name>XSkat</name>
   <description>
     <p>
       XSkat is a trick taking card game that is popular in Germany.
@@ -106,20 +110,27 @@ SentUpstream: 2014-09-25
     </p>
   </description>
   <url type="homepage">http://www.xskat.de/xskat.html</url>
-</application>
+</component>
 EOF
+
+%check
+# Check the AppData add-on to comply with guidelines.
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/*.xml
 
 %files
 %doc README* CHANGES*
 %{_bindir}/xskat
 %{_mandir}/man6/xskat.6*
 %lang(de) %{_mandir}/de/man6/xskat.6*
-%{_datadir}/appdata/*.appdata.xml
+%{_metainfodir}/%{name}.appdata.xml
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/%{name}.xpm
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt2_38
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt2_30
 - update to new release by fcimport
 
