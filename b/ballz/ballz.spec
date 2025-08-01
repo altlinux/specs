@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           ballz
 Version:        1.0.4
-Release:        alt1_15
+Release:        alt1_17
 Summary:        B.A.L.L.Z. - platform/puzzle game where you control a rolling ball
 # Automatically converted from old format: BSD - review is highly recommended.
 License:        LicenseRef-Callaway-BSD
@@ -60,6 +60,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_17
+- update to new release by fcimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_15
 - update to new release by fcimport
 
