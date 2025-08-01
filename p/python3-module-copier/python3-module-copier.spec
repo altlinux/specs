@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.7.1
+Version: 9.8.0
 Release: alt1
 
 Summary: A library for rendering project templates
@@ -23,6 +23,10 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+%add_pyproject_deps_check_filter commitizen
+%add_pyproject_deps_check_filter codespell
+%add_pyproject_deps_check_filter taplo
+
 %pyproject_builddeps_metadata
 BuildRequires: python3-module-coverage
 %pyproject_builddeps_check
@@ -73,5 +77,8 @@ It's a modern template engine that supports:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Denis Sergeev <zeff@altlinux.org> 9.8.0-alt1
+- 9.7.1 -> 9.8.0.
+
 * Tue Jul 01 2025 Denis Sergeev <zeff@altlinux.org> 9.7.1-alt1
 - Initial build for ALT Sisyphus.
