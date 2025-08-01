@@ -1,4 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define	major 7
@@ -8,7 +11,7 @@
 Summary:	Library to allow credit card processing through MCVE
 Name:		libmonetra
 Version:	7.14.0
-Release:	alt1_4
+Release:	alt1_6
 Group:		System/Libraries
 License:	GPLv2+
 URL:		https://www.monetra.com/
@@ -42,7 +45,7 @@ SSL, TCP/IP, and drop-files.
 This package contains the static %{name} library and its header
 files.
 
-%package -n     %{develname}-static
+%package -n %{develname}-static
 Summary:        Static library for the %{name} library
 Group:          Development/C
 Requires:       %{develname} = %EVR
@@ -81,8 +84,10 @@ libtoolize --copy --force; aclocal; autoconf; automake --add-missing --copy
 
 
 
-
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 7.14.0-alt1_6
+- update by mgaimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 7.14.0-alt1_4
 - update by mgaimport
 
