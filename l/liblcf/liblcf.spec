@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/update-mime-database gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.8
+Version:        0.8.1
 Release:        alt1_2
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
@@ -23,6 +23,7 @@ BuildRequires:  ccmake cmake ctest
 BuildRequires:  doxygen
 BuildRequires:  libicu-devel
 BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(inih)
 Source44: import.info
 
 %description
@@ -84,9 +85,6 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 %patch0 -p1
 
 
-# Fix build with ICU >= 76
-sed -i -e 's/CMAKE_CXX_STANDARD\s\+[0-9]\+/CMAKE_CXX_STANDARD 17/' CMakeLists.txt
-
 %build
 %{mageia_cmake} \
   -DDISABLE_UPDATE_MIMEDB=ON
@@ -97,6 +95,9 @@ sed -i -e 's/CMAKE_CXX_STANDARD\s\+[0-9]\+/CMAKE_CXX_STANDARD 17/' CMakeLists.tx
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt1_2
+- update by mgaimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.8-alt1_2
 - update by mgaimport
 
