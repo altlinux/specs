@@ -5,8 +5,8 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          mg
-Version:       20240709
-Release:       alt1_4
+Version:       20250523
+Release:       alt1_2
 Summary:       Tiny Emacs-like editor
 License:       LicenseRef-Fedora-Public-Domain
 URL:           https://github.com/hboetes/mg
@@ -17,9 +17,9 @@ BuildRequires: libbsd-devel >= 0.7.0
 Source44: import.info
 
 %description
-mg is a tiny, mostly public-domain Emacs-like editor included in the base 
-OpenBSD system. It is compatible with Emacs because there shouldn't be any 
-reason to learn more editor types than Emacs or vi.
+mg is a tiny public-domain Emacs-like editor included in the base OpenBSD
+system. It is compatible with Emacs because there shouldn't be any reason to
+learn more editor types than Emacs or vi.
 
 %prep
 %setup -q
@@ -36,6 +36,9 @@ reason to learn more editor types than Emacs or vi.
 %{_mandir}/man1/mg.1*
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 20250523-alt1_2
+- update to new release by fcimport
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20240709-alt1_4
 - update to new release by fcimport
 
