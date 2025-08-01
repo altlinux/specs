@@ -4,8 +4,8 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -95,6 +95,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Fri Aug 01 2025 Anton Farygin <rider@altlinux.com> 1.8.1-alt1
+- 1.8.1 (Fixes: CVE-2025-49014, GHSA-f946-j5j2-4w5m)
+
 * Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 1.8.0-alt2
 - NMU: don't require valgrind on architectures it does not support
   (fixes FTBFS on loongarch64 and riscv64)
