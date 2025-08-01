@@ -4,7 +4,7 @@ BuildRequires: libaio-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 6
+%define autorelease 9
 
 %global forgeurl https://github.com/stressapptest/stressapptest
 %global commit 6714c57d0d67f5a2a7a9987791af6729289bf64e
@@ -34,7 +34,8 @@ Version:        1.0.9
 Release:        alt1_%autorelease
 Summary:        Stressful Application Test - userspace memory and IO test
 
-License:        ASL 2.0
+# Automatically converted from old format: ASL 2.0 - review is highly recommended.
+License:        Apache-2.0
 URL:            %{forgeurl}
 Source0:        %{forgesource}
 
@@ -65,6 +66,9 @@ at Google for some time and now it is available under the Apache 2.0 license.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 1.0.9-alt1_9
+- update to new release by fcimport
+
 * Thu Oct 24 2024 Igor Vlasenko <viy@altlinux.org> 1.0.9-alt1_6
 - new version
 
