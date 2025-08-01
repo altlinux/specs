@@ -4,13 +4,13 @@ BuildRequires: libcares-devel
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major		12
+%define major		15
 %define libname		libexosip2_%{major}
 %define libname_devel	libexosip2-devel
 
 Summary: 	Extended osip library
 Name: 	 	exosip
-Version:	5.1.0
+Version:	5.3.0
 Release: 	alt1_1
 License:	GPLv2+
 Group:		System/Libraries
@@ -78,6 +78,9 @@ done
 
 
 %changelog
+* Fri Aug 01 2025 Igor Vlasenko <viy@altlinux.org> 5.3.0-alt1_1
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
 - new version
 
