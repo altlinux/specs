@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 %define soname 2.4
 Name: libharu
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 Summary: C library for generating PDF files
 Group: System/Libraries
@@ -61,6 +61,9 @@ developing applications that use %name.
 %_libdir/libhpdf.so
 
 %changelog
+* Sat Aug 02 2025 Anton Farygin <rider@altlinux.com> 2.4.5-alt1
+- 2.4.5
+
 * Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
 - 2.4.4
 
