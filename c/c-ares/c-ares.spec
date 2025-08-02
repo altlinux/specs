@@ -4,7 +4,7 @@
 
 Name: c-ares
 Version: 1.34.5
-Release: alt1
+Release: alt2
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -74,6 +74,10 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Mon Jul 28 2025 Anton Farygin <rider@altlinux.com> 1.34.5-alt2
+- applied upstream commit 2a35a061 to resolve IPv6 address
+  resolution issues (closes: #55370)
+
 * Wed Apr 09 2025 Anton Farygin <rider@altlinux.com> 1.34.5-alt1
 - 1.34.5
 
