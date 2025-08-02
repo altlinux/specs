@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.40
+%define kernel_sublevel	.41
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -510,6 +510,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Aug 02 2025 Alexei Takaseev <taf@altlinux.org> 6.12.41-alt1
+- v6.12.41 (2025-08-01).
+- config: Enable CONFIG_MTK_T7XX=m.
+
 * Tue Jul 29 2025 Alexei Takaseev <taf@altlinux.org> 6.12.40-alt1
 - v6.12.40 (2025-07-24).
 - Update 0001-Import-DTS-from-Armbian.patch
