@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.18
+Version: 10.0.19
 Release: alt1
 
 Summary: IT and asset management software
@@ -179,6 +179,20 @@ fi
 %files php8.3
 
 %changelog
+* Wed Jul 16 2025 Pavel Zilke <zidex@altlinux.org> 10.0.19-alt1
+- New version 10.0.19
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2025-27514 : Stored XSS on projects kanban
+ + CVE-2025-52567 : Blind SSRF in RSS feeds and planning
+ + CVE-2025-52897 : XSS and open redirection in planning
+ + CVE-2025-53008 : Mail receiver credentials exfiltration
+ + CVE-2025-53357 : Reservations modification by unauthorized user
+ + CVE-2025-53113 : Access to unallowed items information through external links
+ + CVE-2025-53111 : Data exposure to non allowed users
+ + CVE-2025-53112 : Data removal from allowed users
+ + CVE-2025-53105 : Unauthorized rules execution order update
+
 * Wed Feb 12 2025 Pavel Zilke <zidex@altlinux.org> 10.0.18-alt1
 - New version 10.0.18
 - This release fixes a security issue that has been recently discovered. Update is recommended!
