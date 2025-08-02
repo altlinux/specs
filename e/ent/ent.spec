@@ -2,7 +2,7 @@
 %global import_path github.com/ent/ent
 
 Name: ent
-Version: 0.14.0
+Version: 0.14.5
 Release: alt1
 Summary: An entity framework for Go
 License: Apache-2.0
@@ -11,7 +11,8 @@ Url: https://github.com/ent/ent
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: alt-i586.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -22,7 +23,7 @@ to build and maintain applications with large data-models.
 
 %prep
 %setup -a 1
-%patch -p1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -46,6 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Sat Aug 02 2025 Pavel Shilov <zerospirit@altlinux.org> 0.14.5-alt1
+- 0.14.0 -> 0.14.5
+
 * Thu Jul 24 2025 Pavel Shilov <zerospirit@altlinux.org> 0.14.0-alt1
 - 0.13.1 -> 0.14.0
 

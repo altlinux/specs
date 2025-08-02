@@ -3,7 +3,7 @@
 %set_verify_info_method relaxed
 
 Name: netmask
-Version: 2.4.5
+Version: 2.5.0
 Release: alt1
 Summary: Utility for determining network masks
 License: GPLv2+
@@ -48,6 +48,9 @@ sed -i '/include $(top_srcdir)\/aminclude_static.am/s/^/#/' Makefile.am
 %_infodir/%name.info.*
 
 %changelog
+* Sat Aug 02 2025 Pavel Shilov <zerospirit@altlinux.org> 2.5.0-alt1
+- 2.4.5 -> 2.5.0
+
 * Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.5-alt1
 - 2.4.4 -> 2.4.5
 
