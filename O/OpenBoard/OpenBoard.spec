@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.7.3
-Release: alt2
+Release: alt4
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -52,7 +52,10 @@ Patch25: 0025-multi-touch.patch
 Patch26: 0026-remove-swipe-pages.patch
 # Build with C++20 for Poppler v24.04 and newer
 # https://github.com/OpenBoard-org/OpenBoard/issues/958
+Patch28: 0028-add-Oblique-Seyes-Ruled-Background.patch
 Patch100: build-with-c++20.patch
+# disable update check and startup hints
+Patch101: 0100-alt-settings.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -214,6 +217,12 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Aug 02 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt4
+- add Oblique Seyes Ruled Background
+
+* Sat Aug 02 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt3
+- Disable check update and startup hints by default.
+
 * Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt2
 - Run with QT_QPA_PLATFORM=xcb on wayland
 
