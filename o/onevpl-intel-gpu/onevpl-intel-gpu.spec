@@ -1,9 +1,9 @@
 %global mfx_ver_major 2
-%global mfx_ver_minor 14
+%global mfx_ver_minor 15
 %def_without devel
 
 Name: onevpl-intel-gpu
-Version: 25.1.4
+Version: 25.3.1
 Release: alt1
 Group: System/Configuration/Hardware
 Summary: Intel oneVPL GPU Runtime
@@ -60,6 +60,9 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Sat Aug 02 2025 Anton Farygin <rider@altlinux.com> 25.3.1-alt1
+- 25.3.1
+
 * Thu Mar 20 2025 Anton Farygin <rider@altlinux.ru> 25.1.4-alt1
 - 25.1.4
 
