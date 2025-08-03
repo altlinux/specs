@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name py-moneyed
 %define mod_name moneyed
 
@@ -6,7 +5,7 @@
 
 Name: python3-module-%mod_name
 Version: 3.0
-Release: alt1
+Release: alt2
 Summary: Provides Currency and Money classes for use in your Python code
 License: BSD
 Group: Development/Python3
@@ -14,15 +13,21 @@ Url: https://pypi.org/project/py-moneyed/
 Vcs: https://github.com/py-moneyed/py-moneyed
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
+
+Patch: add-missing-currencies.patch
+
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
-%pyproject_builddeps_metadata_extra tests
+BuildRequires: python3-module-babel
+BuildRequires: python3-module-typing_extensions
 %endif
 
 %description
@@ -35,8 +40,7 @@ stand-alone and easy to either use directly, or subclass further.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%patch -p1
 
 %build
 %pyproject_build
@@ -53,6 +57,9 @@ stand-alone and easy to either use directly, or subclass further.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 3.0-alt2
+- Fixed FTBFS.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1
 - 0.7 -> 3.0.
 
