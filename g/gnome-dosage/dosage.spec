@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: GNOME Dosage
@@ -72,10 +72,13 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %_datadir/%_name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.*
-%_datadir/appdata/%rdn_name.*.xml
+%_datadir/metainfo/%rdn_name.*.xml
 %doc README*
 
 %changelog
+* Sat Aug 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.10-alt1
+- 1.9.10
+
 * Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.9-alt1
 - 1.9.9
 
