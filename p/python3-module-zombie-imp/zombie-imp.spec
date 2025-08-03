@@ -1,13 +1,10 @@
-# Unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
-
 %def_with check
 
 %define srcname zombie-imp
 %define modulename zombie_imp
 
 Name:    python3-module-%srcname
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: A copy of the `imp` module that was removed in Python 3.12
@@ -18,10 +15,6 @@ URL:     https://pypi.org/project/zombie-imp
 VCS:     https://github.com/encukou/zombie-imp
 
 Source: %name-%version.tar
-
-# Make the tests pass with Python 3.13.0a1+, 3.12.1+, 3.11.6+
-# https://github.com/encukou/zombie-imp/commit/d45295faf4.patch
-Patch: 0001-Make_the_tests_pass_with_Python_3.13.patch
 
 BuildArch: noarch
 
@@ -42,7 +35,6 @@ should use `importlib.metadata` instead.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -61,5 +53,8 @@ should use `importlib.metadata` instead.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.0.3-alt1
+- Build new version.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus (thx to antohami@).
