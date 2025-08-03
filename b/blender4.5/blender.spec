@@ -60,8 +60,8 @@
 %def_with jemalloc
 
 Name: %{project}4.5
-Version: 4.5.0
-Release: alt1.1
+Version: 4.5.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -99,8 +99,7 @@ Patch37: blender-4.4-alt-hiprt-2.5.patch
 Patch38: blender-4.4-alt-hiprt-optflags.patch
 Patch41: blender-4.5.0-oneapi-add-arl.patch
 Patch43: blender-4.5.0-alt-numpy-inc.patch
-Patch44: blender-4.5.0-fix-system-manifold.patch
-Patch45: blender-alt-optix-inc.patch
+Patch44: blender-alt-optix-inc.patch
 
 # e2k and loongarch64 are broken now
 #Patch2000: blender-e2k-support.patch
@@ -362,8 +361,7 @@ EOF
 %endif
 %patch41 -p1
 %patch43 -p1
-%patch44 -p1
-%patch45 -p1 -b .optix-inc
+%patch44 -p1 -b .optix-inc
 
 %ifarch %e2k
 #%%patch2000 -p1
@@ -547,6 +545,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Sun Aug 03 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.1-alt1
+- 4.5.1.
+
 * Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.0-alt1.1
 - update opencolorio deps.
 
