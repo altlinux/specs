@@ -3,7 +3,7 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.8.8.3
+Version: 4.8.9.2
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -28,6 +28,7 @@ Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
 Patch4: %name-tun2socks-exec-path.patch
 Patch5: %name-tun2-sudo.patch
+Patch6: %name-locale.patch
 
 BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
@@ -69,12 +70,7 @@ This package contains systemd service files.
 
 %prep
 %setup -n amnezia-client-%version -b 1 -b 2 -b 3
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%autopatch -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -115,7 +111,7 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %systemd_preun AmneziaVPN.service
 
 %files client
-%doc README.md
+%doc README.md README_RU.md
 %_bindir/AmneziaVPN
 %_desktopdir/AmneziaVPN.desktop
 %_iconsdir/hicolor/512x512/apps/AmneziaVPN.png
@@ -126,6 +122,10 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sun Aug 03 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.9.2-alt1
+- Version 4.8.9.2
+- Fix locale (ALT #55403)
+
 * Thu Jul 10 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.8.3-alt1
 - Version 4.8.8.3
 
