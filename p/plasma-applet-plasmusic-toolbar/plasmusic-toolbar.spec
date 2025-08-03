@@ -1,7 +1,8 @@
 %define nameL plasmusic-toolbar
+%define nameLC plasma_applet_plasmusic.toolbar
 
 Name: plasma-applet-%nameL
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Plasma widget that shows playing song information and provide controls
@@ -15,23 +16,36 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires: gettext-tools
+
 %description
 PlasMusic Toolbar is a widget for KDE Plasma 6 that shows currently playing song
 information and provide playback controls.
 
 %prep
 %setup
+mv src/translate %_builddir/%name-%version/
 
 %build
 %install
 install -d %buildroot%_datadir/plasma/plasmoids/%nameL
 cp -r src/* %buildroot%_datadir/plasma/plasmoids/%nameL/
 
-%files
+for locale in it nl; do
+ msgfmt translate/${locale}.po -o translate/${locale}.mo
+ install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
+done
+
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
 %doc LICENSE *.md
 %_datadir/plasma/plasmoids/%nameL
 
 %changelog
+* Sun Aug 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.3.0-alt1
+- 3.2.0 -> 3.3.0
+
 * Wed Jul 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.2.0-alt1
 - 3.1.0 -> 3.2.0
 
