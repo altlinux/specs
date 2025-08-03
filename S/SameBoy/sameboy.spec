@@ -6,7 +6,7 @@
 %brp_strip_none %_bindir/%lower_name
 
 Name: SameBoy
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Summary: Game Boy and Game Boy Color emulator written in C  
 License:  MIT
@@ -52,11 +52,14 @@ rm -f %buildroot%_datadir/%lower_name/LICENSE
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/icons/hicolor/*/mimetypes/*
 %_datadir/applications/%lower_name.desktop
-%_datadir/mime/%lower_name.xml
+%_datadir/mime/packages/%lower_name.xml
 %_datadir/thumbnailers/%lower_name.thumbnailer
 
 
 %changelog
+* Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2
+
 * Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.1-alt1
 - 0.16.6 -> 1.0.1
 

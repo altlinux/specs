@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: has
-Version: 1.5.0
-Release: alt1.1
+Version: 1.5.2
+Release: alt1
 Summary: checks presence of various command line tools and their versions on the path
 License: MIT 
 Group: Other
 Url: https://github.com/kdabir/has
 BuildArch: noarch
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: alt-test-disable.patch
 
 BuildRequires: bats
 
@@ -34,6 +35,9 @@ sed -i 's|.hastest.bats|%_datadir/bats-core|g' Makefile
 %doc README.md
 
 %changelog
+* Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.5.2-alt1
+- 1.5.0 -> 1.5.2
+
 * Thu Jul 24 2025 Pavel Shilov <zerospirit@altlinux.org> 1.5.0-alt1.1
 - Update based on upstream data.
 
