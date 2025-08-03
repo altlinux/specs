@@ -41,22 +41,19 @@ BuildRequires: jpackage-default
 %global default_jre %{_prefix}/lib/jvm/jre-11-openjdk
 
 Name:           javapackages-tools
-Version:        6.0.0
-Release:        alt3
+Version:        6.4.1
+Release:        alt1
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
 BuildArch:      noarch
 
-Source0:        https://github.com/fedora-java/javapackages/archive/%{version}.tar.gz
+Source0:        %name-%version.tar
 Source3:        javapackages-config.json
 
 Source8:        toolchains-openjdk8.xml
 Source11:       toolchains-openjdk11.xml
 Source17:       toolchains-openjdk17.xml
-
-# Upstream patch for rhbz#2025272
-Patch0:         0001-Update-ivy-local-classpath.patch
 
 BuildRequires:  coreutils
 BuildRequires:  which
@@ -91,6 +88,7 @@ Patch36: javapackages-tools-4.6.0-alt-shade-jar.patch
 Patch37: macros.fjava-to-alt-rpm404.patch
 Patch38: macros.fjava-alt-javadoc-package.patch
 Patch39: macros.jpackage-alt-script.patch
+Patch40: javapackages-tools-6.4.1-remove-gradle-build.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -222,11 +220,11 @@ Requires:       maven-local
 OpenJDK 17 toolchain for XMvn
 
 %prep
-%setup -q -n javapackages-%{version}
-%patch0 -p1
+%setup -q
 
 sed -i '/^manpage /d' build
 sed -i '/${mandir}/d' install
+
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -234,10 +232,10 @@ sed -i '/${mandir}/d' install
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
+%patch40 -p1
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
-
 
 %build
 %configure --pyinterpreter=%{python_interpreter} \
@@ -284,11 +282,10 @@ install -m755 -D %{SOURCE48} %buildroot%_rpmmacrosdir/maven.env
 # altlinux python support
 sed -i -e 's,python?\.?,python*,' files-python
 # in rpm-build-java or useless in alt
-sed -i -e '/usr\/lib\/rpm/d' files-filesystem files-tools files-local
+sed -i -e '/usr\/lib\/rpm/d' files-filesystem files-tools
 rm -rf %buildroot/usr/lib/rpm/fileattrs
 
 # useless on alt and requires python
-sed -i -e '/usr\/bin\/xmvn-builddep/d' files-local
 rm -rf %buildroot/usr/bin/xmvn-builddep
 
 pushd %buildroot%_rpmmacrosdir/
@@ -308,20 +305,22 @@ sed -i '/usr.lib.rpm.fileattrs/d' files-generators
 mv %buildroot%_datadir/xmvn/conf/toolchains.xml{-openjdk8,}
 rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 
-
-
 %files -f files-tools
+%_bindir/abs2rel
 
 %files -n javapackages-filesystem -f files-filesystem
 
-%files -n javapackages-local -f files-local
+%files -n javapackages-local
 # alt python3 cache
 %_datadir/java-utils/__pycache__
+%_datadir/java-utils/*.py
+%_datadir/java-utils/abs2rel.sh
 
 %files -n rpm-macros-java
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-jpackage
 %_rpmmacrosdir/javapackages-filesystem
+%_rpmmacrosdir/macros.javapackages-compat
 #%_rpmmacrosdir/javapackages-scl-java-template
 
 %files -n rpm-build-java -f files-generators
@@ -353,6 +352,9 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Aug 01 2025 Ivan Khanas <xeno@altlinux.org> 1:6.4.1-alt1
+- New version.
+
 * Fri Oct 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:6.0.0-alt3
 - Added rpm-macros-jurand for %%java_remove_annotations
 

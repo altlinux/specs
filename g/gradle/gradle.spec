@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%def_with bootstrap
+%def_without bootstrap
 
 Name: gradle
 Version: 8.14.1
-Release: alt1
+Release: alt2
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
@@ -26,6 +26,7 @@ Patch2: %name-%version-alt-buildtime.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
+BuildRequires: gradle
 BuildRequires: rpm-build-java-osgi
 BuildRequires: java-11-openjdk-devel
 BuildRequires: java-17-openjdk-devel
@@ -33,11 +34,12 @@ BuildRequires: java-21-openjdk-devel
 BuildRequires: git
 
 %description
-Gradle is a highly scalable build automation tool designed to handle everything from
-large, multi-project enterprise builds to quick development tasks across various
-languages. Gradles modular, performance-oriented architecture seamlessly integrates
-with development environments, making it a go-to solution for building, testing, and
-deploying applications on Java, Kotlin, Scala, Android, Groovy, C++, and Swift.
+Gradle is a highly scalable build automation tool designed to handle everything
+from large, multi-project enterprise builds to quick development tasks across
+various languages. Gradles modular, performance-oriented architecture
+seamlessly integrates with development environments, making it a go-to solution
+for building, testing, and deploying applications on Java, Kotlin, Scala,
+Android, Groovy, C++, and Swift.
 
 %prep
 %setup -a1 -a2
@@ -60,7 +62,7 @@ export GRADLE_USER_HOME="$PWD/.gradle"
 COMMITHASH=$(./commit.sh)
 
 # Skip task :docs:javadocAll that requires .git directory.
-./gradlew installAll \
+gradle installAll \
   -x :docs:javadocAll \
   -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk,%_jvmdir/java-21-openjdk" \
   -Porg.gradle.java.installations.auto-detect=false \
@@ -98,6 +100,9 @@ ln -s %_javadir/gradle/bin/gradle \
 %_javadir/gradle/
 
 %changelog
+* Thu Jul 31 2025 Ivan Khanas <xeno@altlinux.org> 8.14.1-alt2
+- Disable bootstrap.
+
 * Thu May 29 2025 Ivan Khanas <xeno@altlinux.org> 8.14.1-alt1
 - New version.
 - Bootstrap build.
