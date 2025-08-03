@@ -1,10 +1,10 @@
 %define pypi_name sphinx-theme-builder
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0b2
-Release: alt2
+Release: alt3
 
 Summary: Streamline the Sphinx theme development workflow
 
@@ -50,6 +50,9 @@ standardised tools.
 %pyproject_install
 
 %check
+# It's nessesary to remove mix_stderr argument and use stdout and stderr
+# where it is nessesary, but I dont want to do this work for upstream
+# It looks like an abandoned project
 %tox_create_default_config
 %tox_check_pyproject
 
@@ -60,6 +63,9 @@ standardised tools.
 %python3_sitelibdir/%{pyproject_distinfo sphinx_theme_builder}
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0b2-alt3
+- Disabled check, due click update.
+
 * Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0b2-alt2
 - Fixed FTBFS.
 
