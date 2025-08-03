@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 21.2.0
-Release: alt1.1
+Version: 25.1.0
+Release: alt1
 
 Summary: Low-level Python CFFI Bindings for Argon2
 
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/argon2_cffi_bindings-%version.dist-info
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
+- Automatically updated to 25.1.0.
+
 * Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 21.2.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
