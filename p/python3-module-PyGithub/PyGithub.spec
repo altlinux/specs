@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.6.1
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -64,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Automatically updated to 2.7.0.
+
 * Thu Jul 10 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
 - Dropped no longer needed tests dependency on httpretty.
 
