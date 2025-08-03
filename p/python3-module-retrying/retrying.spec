@@ -1,38 +1,47 @@
 %define sname retrying
 
 Name: python3-module-%sname
-Version: 1.3.4
+Version: 1.4.2
 Release: alt1
 Summary: Retrying library
 Group: Development/Python3
 License: Apache-2.0
-Url:  https://github.com/rholder/retrying
-Source: %sname-%version.tar
+URL:  https://pypi.org/project/retrying
+VCS:  https://github.com/groodt/retrying
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Simplify the task of adding retry behavior to just about anything.
 
 %prep
-%setup -n %sname-%version
-
-# Remove bundled egg-info
-rm -rf %sname.egg-info
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest test_retrying.py
 
 %files
-%doc README.rst LICENSE AUTHORS.rst
-%python3_sitelibdir/*
+%doc README.md LICENSE.txt HISTORY.rst
+%python3_sitelibdir/%sname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%sname-%version.dist-info
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Build new version.
+- Build with check.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
 - Build new version.
 
