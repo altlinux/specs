@@ -2,24 +2,26 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.1
+Version: 1.1.1.2
 Release: alt1
 
 Summary: Register CLI commands via setuptools entry-points
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/click-plugins
+URL: https://pypi.python.org/pypi/click-plugins
+VCS: https://github.com/click-contrib/click-plugins
 
 BuildArch: noarch
 
-# https://github.com/click-contrib/click-plugins.git
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+Patch: fix-click-8.2-tests.patch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
-%pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-click
 %endif
 
 %description
@@ -39,8 +41,7 @@ This package contains examples for %oname.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%patch -p1
 
 %build
 %pyproject_build
@@ -53,12 +54,16 @@ This package contains examples for %oname.
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/click_plugins
+%python3_sitelibdir/click_plugins-%version.dist-info
 
 %files examples
 %doc example/*
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.1.1.2-alt1
+- Build new version.
+
 * Sat Dec 02 2023 Mikhail Chernonog <snowmix@altlinux.org> 1.1.1-alt1
 - 1.0.2 -> 1.1.1
 - Delete patch.
