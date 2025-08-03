@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: YAQL - Yet Another Query Language
@@ -106,6 +106,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Build new version.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Build new version.
 - Build with docs.
