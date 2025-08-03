@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Multi-vendor library to simplify Paramiko SSH connections to network devices
@@ -48,6 +48,9 @@ sed -i 's|from typing.re import Pattern|from typing import Pattern|' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 
