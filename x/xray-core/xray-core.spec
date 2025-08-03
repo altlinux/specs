@@ -1,7 +1,7 @@
 %define git_version v1.250726.0
 
 Name: xray-core
-Version: 25.7.26
+Version: 25.8.3
 Release: alt1
 
 Summary: Project X
@@ -50,6 +50,9 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%gi
 %_unitdir/xray@.service
 
 %changelog
+* Sun Aug 03 2025 Nazarov Denis <nenderus@altlinux.org> 25.8.3-alt1
+- New version 25.8.3.
+
 * Sat Jul 26 2025 Nazarov Denis <nenderus@altlinux.org> 25.7.26-alt1
 - New version 25.7.26.
 
