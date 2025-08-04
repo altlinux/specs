@@ -1,5 +1,5 @@
 Name:     libiec61850
-Version:  1.6.0
+Version:  1.6.1
 Release:  alt1
 
 Summary:  Open source libraries for IEC 61850 and IEC 60870-5-104
@@ -59,6 +59,12 @@ Development files for %name as static library.
 %_libdir/*.a
 
 %changelog
+* Mon Aug 04 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
+- New version.
+
+* Wed Jan 15 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
+- Packaged missing headers (ALT #52688).
+
 * Wed Aug 14 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 
