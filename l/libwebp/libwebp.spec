@@ -12,7 +12,7 @@
 
 Name: libwebp
 Version: 1.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Library and tools for the WebP graphics format
 License: BSD-3-Clause
@@ -22,7 +22,10 @@ Url: http://webmproject.org/
 Vcs: https://chromium.googlesource.com/webm/libwebp
 
 Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
+Patch1: libwebp-1.6.0-alt-cmake.patch
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: libgif-devel libfreeglut-devel libSDL2-devel
 %{?_enable_sdl:BuildRequires: libSDL-devel}
@@ -73,29 +76,27 @@ images more efficiently.
 
 %prep
 %setup
+%patch1 -b .cmake
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
 %ifarch %e2k
 # this trick forces WEBP to actually use the SIMD code
 # without it the SIMD code is compiled but never used
 export CFLAGS="%optflags -DEMSCRIPTEN"
 %endif
-%configure --disable-static \
-    %{subst_enable libwebpmux} \
-    %{subst_enable libwebpdemux} \
-    %{subst_enable libwebpdecoder} \
-    %{subst_enable libwebpextras} \
-    %{subst_enable sdl}
+%cmake \
+    -DBUILD_SHARED_LIBS=ON \
+    -DWEBP_LINK_STATIC=OFF \
+    %{?_disable_sdl:-DWEBP_BUILD_ANIM_UTILS=OFF}
 %nil
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-%make check
+%cmake_build -t test
 
 %files -n %name%sover
 %_libdir/%name.so.%{sover}*
@@ -125,6 +126,10 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpmux:%_pkgconfigdir/%{name}mux.pc}
 %{?_enable_libwebpdemux:%_pkgconfigdir/%{name}demux.pc}
 %{?_enable_libwebpdecoder:%_pkgconfigdir/%{name}decoder.pc}
+%_libdir/cmake/WebP/WebPConfig.cmake
+%_libdir/cmake/WebP/WebPConfigVersion.cmake
+%_libdir/cmake/WebP/WebPTargets-release.cmake
+%_libdir/cmake/WebP/WebPTargets.cmake
 
 %files tools
 %_bindir/cwebp
@@ -146,6 +151,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1.1
+- switched build to CMake (ALT #55478)
+
 * Thu Jul 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
