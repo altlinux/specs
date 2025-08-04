@@ -3,8 +3,8 @@
 %define soname 0
 
 Name: memtailor
-Version: 0
-Release: alt1.git123afe0
+Version: 0.0.67.07c8
+Release: alt1
 Summary: C++ library of special purpose memory allocators
 
 License: GPL-2.0+ and BSD-3-Clause
@@ -12,8 +12,7 @@ Group: System/Libraries
 Url: https://github.com/Macaulay2/memtailor
 
 Source: %name-%version.tar.gz
-# fedora patches
-Patch: memtailor-gtest.patch
+Patch: %name-%version-%release.patch
 
 %if_with cmake
 BuildPreReq: rpm-build-ninja
@@ -69,8 +68,8 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch -p0
-#sed -i 's|STATIC|SHARED|' src/CMakeLists.txt
+%patch -p1
+sed -i 's|STATIC|SHARED|' src/CMakeLists.txt
 sed -i 's|LIBRARY DESTINATION lib|LIBRARY DESTINATION %_lib|' \
   CMakeLists.txt
 
@@ -114,6 +113,9 @@ rm -rf %buildroot%_prefix/licenses
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Aug 04 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.67.07c8-alt1
+- New version 0-67-g07c84a6.
+
 * Wed Oct 06 2021 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git123afe0
 - Initial build for ALT Sisyphus.
 - Built as require for Singular.
