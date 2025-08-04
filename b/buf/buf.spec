@@ -2,7 +2,7 @@
 
 %define _name buf
 %define binary_name %_name
-%define ver_major 1.54
+%define ver_major 1.56
 %define import_path github.com/bufbuild/buf
 
 %def_disable bootstrap
@@ -95,6 +95,9 @@ install -vDm644 $BUILDDIR/manpages/* -t %buildroot/%_man1dir
 %doc *.md
 
 %changelog
+* Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
+- 1.56.0
+
 * Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.54.0-alt1
 - first build for Sisyphus
 
