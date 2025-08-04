@@ -1,8 +1,8 @@
-%define sover 6.6
+%define sover 6.7
 
 Name: dynarmic
-Version: 6.6.3
-Release: alt1
+Version: 6.7.0
+Release: alt2
 
 Summary: A dynamic recompiler for ARM.
 License: 0BSD
@@ -16,11 +16,14 @@ ExclusiveArch: x86_64 aarch64
 # https://github.com/merryhime/%name/archive/refs/tags/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
+Patch0: %name-mcl-alt.patch
+
+BuildRequires: /proc
 BuildRequires: boost-devel
 BuildRequires: catch-devel
-BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libmcl-devel
+BuildRequires: liboaknut-devel
 BuildRequires: librobin-map-devel
 BuildRequires: libxbyak-devel
 BuildRequires: libzydis-devel
@@ -44,10 +47,12 @@ Header files for lib%name
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
+	-DDYNARMIC_IGNORE_ASSERTS=TRUE \
 	-DDYNARMIC_USE_PRECOMPILED_HEADERS:BOOL=FALSE
 %cmake_build
 
@@ -64,6 +69,12 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt2
+- Add ignore asserts option (thx zerg@)
+
+* Mon Mar 25 2024 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt1
+- New version 6.7.0.
+
 * Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 6.6.3-alt1
 - New version 6.6.3.
 

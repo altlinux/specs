@@ -1,6 +1,6 @@
 Name: xbyak
 Version: 7.28
-Release: alt1
+Release: alt2
 
 Summary: A C++ JIT assembler for x86 (IA32), x64 (AMD64, x86-64)
 License: BSD-3-Clause
@@ -11,6 +11,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/herumi/%name/archive/refs/tags/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch0: alt-no-strict-register-size-check.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -27,6 +29,7 @@ Xbyak is a C++ header library that enables dynamically to assemble x86(IA32), x6
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake
@@ -40,6 +43,9 @@ Xbyak is a C++ header library that enables dynamically to assemble x86(IA32), x6
 %_libdir/cmake/%name
 
 %changelog
+* Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 7.28-alt2
+- Add no strict register size check patch (ALT #55476), thx zerg@
+
 * Tue Jul 22 2025 Nazarov Denis <nenderus@altlinux.org> 7.28-alt1
 - New version 7.28.
 

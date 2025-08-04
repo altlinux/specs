@@ -12,7 +12,7 @@
 
 Name: yuzu
 Version: 1734
-Release: alt2.1
+Release: alt3
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -42,6 +42,7 @@ Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
 Patch2: %name-fmt11-alt.patch
 Patch3: %name-memory-alt.patch
+Patch4: %name-dynarmic-6.7-debian.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
@@ -92,6 +93,7 @@ BuildRequires: zlib-devel
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
@@ -154,6 +156,9 @@ unzip %SOURCE5 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt3
+- Build with dynarmic 6.7
+
 * Fri Dec 13 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt2.1
 - Fix FTBFS
 
