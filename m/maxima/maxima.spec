@@ -34,9 +34,9 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.47.0
-%define maxima_version 5.47.0
-Release: alt4.1
+Version: 5.48.0
+%define maxima_version 5.48.0
+Release: alt1
 
 Summary: Maxima Computer Algebra System
 License: GPLv2
@@ -257,7 +257,7 @@ Maxima book
 tar jxf %SOURCE7 -C doc/maximabook
 %endif
 
-%patch1 -p2
+#patch1 -p2
 #patch4 -p1
 %patch5 -p1
 %patch50 -p1 -b .clisp-noreadline
@@ -476,7 +476,7 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %_datadir/maxima/%maxima_version/src
 %_datadir/maxima/%maxima_version/tests
 %_datadir/bash-completion/completions/*maxima
-%_datadir/pixmaps/*maxima*
+%_datadir/icons/*maxima*
 %if %BUILD_LANG_ES
 %exclude %_datadir/maxima/%maxima_version/doc/html/es
 %endif
@@ -599,6 +599,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Mon Aug 04 2025 Ilya Mashkin <oddity@altlinux.ru> 5.48.0-alt1
+- 5.48.0
+
 * Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 5.47.0-alt4.1
 - NMU: drop ExclusiveArch (fixes FTBFS on loongarch64).
 
