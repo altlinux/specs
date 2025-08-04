@@ -1,7 +1,7 @@
 Name: shellcheck
 
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 License: GPL-3.0-or-later
 Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
@@ -48,6 +48,9 @@ cp shellcheck.1 %buildroot%_man1dir
 %_man1dir/shellcheck.1*
 
 %changelog
+* Mon Aug 04 2025 Leonid Znamenok <respublica@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Mon May 05 2025 Leonid Znamenok <respublica@altlinux.org> 0.10.0-alt2
 - Rebuilt with rpm-build-haskell-vendored.
 
