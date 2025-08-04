@@ -1,59 +1,54 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+
+Name: jdependency
+Version: 2.13
+Release: alt1
+
+Summary: This project provides an API to analyse class dependencies
 Group: Development/Java
+License: Apache-2.0
+Url: https://github.com/tcurdt/jdependency
+Vcs: https://github.com/tcurdt/jdependency.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jdependency
-Version:        2.8.0
-Release:        alt1_1jpp11
-Summary:        This project provides an API to analyse class dependencies
-License:        ASL 2.0
-URL:            http://github.com/tcurdt/%{name}
-BuildArch:      noarch
-
-Source0:        http://github.com/tcurdt/%{name}/archive/%{name}-%{version}.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-analysis)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
-BuildRequires:  mvn(org.ow2.asm:asm-tree)
-BuildRequires:  mvn(org.ow2.asm:asm-util)
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires: mvn(org.jacoco:jacoco-maven-plugin)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-analysis)
+BuildRequires: mvn(org.ow2.asm:asm-commons)
+BuildRequires: mvn(org.ow2.asm:asm-tree)
+BuildRequires: mvn(org.ow2.asm:asm-util)
 
 %description
-%{name} is small library that helps you analyze class level
-dependencies, clashes and missing classes.
+jdependency is small library that helps you analyze class level dependencies,
+clashes and missing classes.
 
 %package javadoc
 Group: Development/Java
-Summary:        API documentation for %{name}
+Summary: API documentation for jdependency
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+Comprehensive API documentation for analyzing Java bytecode dependencies.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%mvn_file : %{name}
-# work-around for: https://bugzilla.redhat.com/show_bug.cgi?id=1981486
-#%%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
-
-# remove maven-compiler-plugin configuration that is broken with Java 11
-#%%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
-
-# remove a test case that is harmlessly broken on Java 11
-#rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 \
+  -Dmaven.compiler.target=1.8 \
+  -Dmaven.javadoc.source=1.8 \
+  -Dmaven.compiler.release=8 \
+  #
 
 %install
 %mvn_install
@@ -66,6 +61,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Aug 04 2025 Ivan Khanas <xeno@altlinux.org> 2.13-alt1
+- New version.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.8.0-alt1_1jpp11
 - new version
 
