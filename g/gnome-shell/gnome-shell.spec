@@ -16,8 +16,8 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -316,6 +316,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
+- 48.4
+
 * Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1.1
 - js/ui/appDisplay.js: removed yast/pardus default folders (ALT #55084)
 
