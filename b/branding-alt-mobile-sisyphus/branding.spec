@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2025.04
-Release: alt2
+Release: alt3
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -86,7 +86,7 @@ BuildArch: noarch
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-script
 Requires: plymouth
-Requires: plymouth-theme-bgrt-alt
+Requires: plymouth-theme-spinner-alt
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
@@ -203,7 +203,8 @@ install -Dm644 phosh-settings/50-interface.gschema.override %buildroot/%_datadir
 
 #bootsplash
 %post bootsplash
-subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+[ "$1" -eq 1 ] || exit 0
+subst "s/Theme=.*/Theme=spinner-alt/" /etc/plymouth/plymouthd.conf
 
 %post indexhtml
 %_sbindir/indexhtml-update
@@ -234,6 +235,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Mon Jul 28 2025 David Sultaniiazov <x1z53@altlinux.org> 2025.04-alt3
+- release: change logo to altlinux
+- plymouth:
+  + change theme to spinner-alt
+  + set theme only once
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2025.04-alt2
 - phosh-settings: replace gtk.css with gsettings override
 
