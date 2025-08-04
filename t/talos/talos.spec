@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      d45259f89dce282eaf6bc3ed4c2106aa8a054eba
+%global commit      cfa6c98cec12a4bc513d44ecffc47e70515481d1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %define _libexecdir %_prefix/libexec
 %define alt_registry registry.altlinux.org
@@ -12,8 +12,8 @@
 %endif
 
 Name: talos
-Version: 1.10.5
-Release: alt2
+Version: 1.10.6
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -32,6 +32,9 @@ BuildRequires: rpm-build-golang golang >= 1.24.0
 BuildRequires: etcd kubernetes-common coredns containerd flannel
 #BuildRequires: /usr/bin/protoc libprotobuf-devel
 #BuildRequires: /usr/bin/protoc-gen-go /usr/bin/protoc-gen-go-vtproto /usr/bin/protoc-gen-go-grpc
+
+%add_findreq_skiplist %go_path/src/%import_path/**/*
+%add_findprov_skiplist %go_path/src/%import_path/**/*
 
 %description
 Talos is a container optimized Linux distro;
@@ -57,6 +60,13 @@ Group: System/Configuration/Boot and Init
 Summary: Package talosctl provides the talosctl utility implementation
 Group: System/Configuration/Boot and Init
 %description -n talosctl
+%summary.
+
+%package devel
+Summary: Source of talos 
+Group: Development/Other
+BuildArch: noarch
+%description devel
 %summary.
 
 %prep
@@ -102,7 +112,7 @@ sed -i \
 #DefaultNTPServer
 
 # Define ALT kernel
-sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.38-talos"|' \
+sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.40-talos"|' \
   pkg/machinery/constants/constants.go
 
 
@@ -164,7 +174,7 @@ TAGS=$TAGS_TALOS %golang_build internal/app/machined
 %install
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export IGNORE_SOURCES=1
+export GOPATH="%go_path"
 %golang_install
 
 ln %buildroot%_bindir/installer %buildroot%_bindir/imager
@@ -182,7 +192,14 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/init
 %_libexecdir/%name/machined
 
+%files devel
+%go_path/src/%import_path
+
 %changelog
+* Mon Aug 04 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.6-alt1
+- New version 1.10.6.
+- package talos-devel
+
 * Fri Jul 18 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.5-alt2
 - Update DefaultKernelVersion.
 
