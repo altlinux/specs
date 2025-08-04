@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.32.0
+Version: 20.33.0
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -80,6 +80,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 04 2025 Stanislav Levin <slev@altlinux.org> 20.33.0-alt1
+- 20.32.0 -> 20.33.0.
+
 * Mon Jul 21 2025 Stanislav Levin <slev@altlinux.org> 20.32.0-alt1
 - 20.31.2 -> 20.32.0.
 
