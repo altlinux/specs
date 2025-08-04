@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -277,6 +277,9 @@ fi
 %endif
 
 %changelog
+* Mon Aug 04 2025 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt1
+- 2.2.3.
+
 * Fri Jun 20 2025 Alexey Shabalin <shaba@altlinux.org> 2.2.2-alt1
 - 2.2.2.
 
