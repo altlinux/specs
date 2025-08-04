@@ -1,5 +1,5 @@
 Name:           vncshare
-Version:        0.02
+Version:        0.03
 Release:        alt1
 Summary:        VNC shared screens infrastructure
 Group:          Networking/Remote access
@@ -8,16 +8,16 @@ BuildArch:      noarch
 License:        MIT
 
 Requires:       /usr/bin/vncserver
-BuildRequires:  /usr/bin/magick
-
-%package        GIO-install
-Summary:        VNC shared screens infrastructure GIO install tool
-Group:          Graphical desktop/XFce
-%description GIO-install
-Desktop icons installer and GIO enabler for vncshare
+BuildRequires:  /usr/bin/magick rpm-build-python3
 
 %description
 A set of tools for sharing speaker's PC screen / window among listeners PCs via VNC
+
+%package        installers
+Summary:        VNC shared screens infrastructure install tools
+Group:          Graphical desktop/XFce
+%description installers
+Desktop and panel icons installer and GIO enabler for vncshare
 
 %prep
 %setup
@@ -36,7 +36,8 @@ for F in VNC*.svg; do install -D $F %buildroot%_iconsdir/hicolor/scalable/apps/$
 for F in */*/*.png; do
   install -D $F %buildroot%_iconsdir/hicolor/$F
 done
-install -D xfce-desktop-install.sh %buildroot%_libexecdir/xfce-desktop-install.sh
+install -D xfce-desktop-install.sh %buildroot%_libexecdir/%name-xfce-desktop-install.sh
+install -D xfce4-config.py %buildroot%_libexecdir/%name-xfce4-config.py
 
 %files
 %doc *.md
@@ -44,10 +45,13 @@ install -D xfce-desktop-install.sh %buildroot%_libexecdir/xfce-desktop-install.s
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 
-%files GIO-install
+%files installers
 %_libexecdir/*
 
 %changelog
+* Sun Aug 03 2025 Fr. Br. George <george@altlinux.org> 0.03-alt1
+- Provide XFCE panel files installer
+
 * Thu Jul 31 2025 Fr. Br. George <george@altlinux.org> 0.02-alt1
 - Provide desktop files
 - Provide desktop files installer / enabler via GIO
