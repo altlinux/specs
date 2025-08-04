@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.38
+Version: 6.1.40
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -19,7 +19,7 @@ Vcs: https://github.com/linuxdeepin/dde-control-center.git
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
 Patch1: deepin-control-center-6.1.4-alt-qch.patch
-Patch2: deepin-control-center-6.1.32-alt-fixes-underlinked-libs.patch
+Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
 
 #FAILED: src/plugin-mouse/CMakeFiles/mouse.dir/mouse_autogen/OYYSJO5W5K/qrc_mouse.cpp.o
 #virtual memory exhausted: Cannot allocate memory
@@ -70,6 +70,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %DQ6build \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DDCC_PLUGINS_INSTALL_DIR=%_lib/dde-control-center/plugins_v1.0 \
   -DDISABLE_AUTHENTICATION=ON \
   -DDISABLE_UPDATE=ON \
   -DDISABLE_SOUND_ADVANCED=ON \
@@ -127,9 +128,6 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 # package outside find_lang
 %dir %_datadir/%repo/translations/
 %dir %_datadir/%repo/translations/v1.0/
-%_datadir/%repo/translations/v1.0/datetime_country_ky@Arab.qm
-%_datadir/%repo/translations/v1.0/datetime_language_ky@Arab.qm
-%_datadir/%repo/translations/v1.0/keyboard_language_ky@Arab.qm
 %_datadir/%repo/translations/v1.0/dde-control-center_ky@Arab.qm
 
 %files -n lib%repo%sover
@@ -142,6 +140,10 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Mon Aug 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.40-alt1
+- New version 6.1.40.
+- Fixed plugin detection.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.38-alt1
 - New version 6.1.38.
 
