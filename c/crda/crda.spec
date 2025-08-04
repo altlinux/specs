@@ -1,7 +1,7 @@
 %define crda_lib %_libexecdir/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2025.02.20
+%define _db_date 2025.07.10
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
@@ -33,7 +33,7 @@ Patch6: crda-4.15-update-pubkeys.patch
 
 BuildRequires: libgcrypt-devel openssl chrpath
 BuildRequires: rpm-build-python3
-BuildRequires: python3-module-future python3-module-attrs python3-module-m2crypto
+BuildRequires: python3-module-attrs python3-module-m2crypto
 
 BuildRequires: kernel-headers >= 2.6.27
 BuildRequires: libnl-devel >= 1.1
@@ -134,6 +134,10 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Mon Aug 04 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2025.07.10
+- wireless-regdb: update to 2025-07-10.
+- BR: remove python3-module-future.
+
 * Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2025.02.20
 - wireless-regdb: update to 2025-02-20.
 
