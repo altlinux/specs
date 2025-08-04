@@ -1,18 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-
+%def_with fftw
 %define slicerver 5.8
+
 Name: slicer
-Version: %slicerver.0
-Release: alt2
+Version: %slicerver.1
+Release: alt1
 Summary: Medical Visualization and Processing Environment for Research
+%if_with fftw
+License: GPL-2.0-or-later
+%else
 License: 3D-Slicer-1.0
+%endif
 Group: Sciences/Medicine
 Url: https://www.slicer.org/
 VCS: https://github.com/Slicer/Slicer.git
 
 # Exclusion source: pythonqt, CTK
-ExcludeArch: %arm
 ExcludeArch: i586
 
 # https://github.com/Slicer/Slicer.git
@@ -30,11 +34,13 @@ Patch4: slicer-5.8.0-alt-python3-compat.patch
 Patch5: slicer-5.8.0-alt-vtk-compat-findpoint.patch
 Patch6: slicer-5.8.0-alt-vtk-compat-unused-headers.patch
 Patch7: slicer-5.8.0-alt-vtk-compat-version-check.patch
+Patch8: slicer-5.8.1-alt-BUG-Cast-u8-prefix-literals-to-const-char.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5-webengine
+%{?_with_fftw:BuildRequires: libfftw3-devel}
 BuildRequires: python3-devel
 BuildRequires: gcc-c++ cmake
 BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-script-devel qt5-svg-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-x11extras-devel
@@ -43,6 +49,7 @@ BuildRequires: libpcre2-devel libbrotli-devel
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: libitk-devel
+BuildRequires: libminc-devel
 BuildRequires: libvtk-devel
 BuildRequires: CTK-devel
 BuildRequires: teem-devel
@@ -196,6 +203,7 @@ install -m644 Resources/3DSlicer-DesktopIcon.png %buildroot%_datadir/%name/
 
 # remove unpackaged files
 find %buildroot%_libdir -name '*.a' -delete
+find %buildroot%_libdir/Slicer-%slicerver/share/Slicer-%slicerver/Wizard/Templates -name '*.h' -delete
 
 # generated cmake files require a lot of fixing before they'd become useable
 rm -rf %buildroot%_libdir/cmake
@@ -228,6 +236,11 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Wed Jul 30 2025 Vasiliy Kovalev <kovalev@altlinux.org> 5.8.1-alt1
+- NMU: 5.8.0 -> 5.8.1.
+- spec: Add condition FFTW3 support and license change (enabled by default).
+- Added patch (BUG: Cast u8-prefix) to fix build errors with ITK 5.4.4.
+
 * Sat Mar 29 2025 Michael Shigorin <mike@altlinux.org> 5.8.0-alt2
 - E2K: ftbfs workaround for lcc 1.29.06 (ilyakurdyukov@).
 

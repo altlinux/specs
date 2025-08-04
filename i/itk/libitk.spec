@@ -1,14 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-
+%def_without fftw
 %define itkver 5.4
+%define sover 1
 
 Name: itk
-Version: %itkver.3
-Release: alt2
+Version: %itkver.4
+Release: alt1
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
+%if_with fftw
+License: GPL-2.0-or-later
+%else
 License: Apache-2.0
+%endif
 Url: https://itk.org
 VCS: https://github.com/InsightSoftwareConsortium/ITK.git
 
@@ -70,12 +75,10 @@ Source150: %name-%version-TwoProjectionRegistration.tar
 Source151: %name-%version-Ultrasound.tar
 Source152: %name-%version-VariationalRegistration.tar
 Source153: %name-%version-VkFFTBackend.tar
-Source154: %name-%version-WebAssemblyInterface.tar
 
 Patch1: itk-5.4.2-alt-RTK.patch
-Patch2: %name-5.1.2-VariationalRegistration.patch
+Patch2: itk-5.1.2-VariationalRegistration.patch
 Patch3: itk-5.4.2-alt-PerformanceBenchmarking.patch
-Patch4: itk-5.4.2-alt-WebAssemblyInterface.patch
 Patch5: itk-5.4.2-alt-Cleaver.patch
 Patch6: itk-5.4.2-alt-VkFFTBackend.patch
 Patch7: itk-5.4.2-alt-BioCell.patch
@@ -83,8 +86,8 @@ Patch8: itk-5.4.2-upstream-LesionSizingToolkit.patch
 Patch9: itk-5.4.2-alt-netlib.patch
 
 BuildRequires(pre): rpm-build-cmake
+%{?_with_fftw:BuildRequires: libfftw3-devel}
 BuildRequires: castxml
-BuildRequires: cleaver-devel
 BuildRequires: cli11-devel
 BuildRequires: cmake
 BuildRequires: dcmtk
@@ -98,7 +101,6 @@ BuildRequires: libcbor-devel
 BuildRequires: libcpp-base64-devel
 BuildRequires: libdouble-conversion-devel
 BuildRequires: libexpat-devel
-BuildRequires: libfftw3-devel
 BuildRequires: libgmock-devel
 BuildRequires: libgtest-devel
 BuildRequires: libhdf5-devel
@@ -120,12 +122,7 @@ BuildRequires: opencl-headers
 BuildRequires: rang-devel
 BuildRequires: rapidjson-devel
 BuildRequires: zlib-devel
-%ifnarch ppc64le
-# VkFFT currently fails compilation on ppc64le
-# with options other than gcc++11
-# https://github.com/DTolm/VkFFT/issues/51
 BuildRequires: VkFFT-devel
-%endif
 
 %define _description \
 The Insight Toolkit (ITK) is an open-source, cross-platform toolkit for \
@@ -140,29 +137,866 @@ a MRI scan in order to combine the information contained in both.
 %description
 %_description
 
-%package -n lib%name%itkver
-Summary: Shared libraries for ITK
+%package -n libITKBiasCorrection%itkver
+Summary: Shared library of ITK: BiasCorrection
 Group: System/Libraries
+Obsoletes: libitk5.4
 
-%description -n lib%name%itkver
-This package contains ITK shared libraries.
-%_description
+%description -n libITKBiasCorrection%itkver
+This package contains ITK shared library: BiasCorrection
 
-%package -n lib%name-devel
+%package -n libITKColormap%itkver
+Summary: Shared library of ITK: Colormap
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKColormap%itkver
+This package contains ITK shared library: Colormap
+
+%package -n libITKCommon%itkver
+Summary: Shared library of ITK: Common
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKCommon%itkver
+This package contains ITK shared library: Common
+
+%package -n libITKConvolution%itkver
+Summary: Shared library of ITK: Convolution
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKConvolution%itkver
+This package contains ITK shared library: Convolution
+
+%package -n libITKDICOMParser%itkver
+Summary: Shared library of ITK: DICOMParser
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKDICOMParser%itkver
+This package contains ITK shared library: DICOMParser
+
+%package -n libITKDeformableMesh%itkver
+Summary: Shared library of ITK: DeformableMesh
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKDeformableMesh%itkver
+This package contains ITK shared library: DeformableMesh
+
+%package -n libITKDenoising%itkver
+Summary: Shared library of ITK: Denoising
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKDenoising%itkver
+This package contains ITK shared library: Denoising
+
+%package -n libITKDeprecated%itkver
+Summary: Shared library of ITK: Deprecated
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKDeprecated%itkver
+This package contains ITK shared library: Deprecated
+
+%package -n libITKDiffusionTensorImage%itkver
+Summary: Shared library of ITK: DiffusionTensorImage
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKDiffusionTensorImage%itkver
+This package contains ITK shared library: DiffusionTensorImage
+
+%package -n libITKFFT%itkver
+Summary: Shared library of ITK: FFT
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKFFT%itkver
+This package contains ITK shared library: FFT
+
+%package -n libITKFastMarching%itkver
+Summary: Shared library of ITK: FastMarching
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKFastMarching%itkver
+This package contains ITK shared library: FastMarching
+
+%package -n libITKIOBMP%itkver
+Summary: Shared library of ITK: IOBMP
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOBMP%itkver
+This package contains ITK shared library: IOBMP
+
+%package -n libITKIOBioRad%itkver
+Summary: Shared library of ITK: IOBioRad
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOBioRad%itkver
+This package contains ITK shared library: IOBioRad
+
+%package -n libITKIOBruker%itkver
+Summary: Shared library of ITK: IOBruker
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOBruker%itkver
+This package contains ITK shared library: IOBruker
+
+%package -n libITKIOCSV%itkver
+Summary: Shared library of ITK: IOCSV
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOCSV%itkver
+This package contains ITK shared library: IOCSV
+
+%package -n libITKIODCMTK%itkver
+Summary: Shared library of ITK: IODCMTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIODCMTK%itkver
+This package contains ITK shared library: IODCMTK
+
+%package -n libITKIOGDCM%itkver
+Summary: Shared library of ITK: IOGDCM
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOGDCM%itkver
+This package contains ITK shared library: IOGDCM
+
+%package -n libITKIOGE%itkver
+Summary: Shared library of ITK: IOGE
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOGE%itkver
+This package contains ITK shared library: IOGE
+
+%package -n libITKIOGIPL%itkver
+Summary: Shared library of ITK: IOGIPL
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOGIPL%itkver
+This package contains ITK shared library: IOGIPL
+
+%package -n libITKIOHDF5_%itkver
+Summary: Shared library of ITK: libIT
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOHDF5_%itkver
+This package contains ITK shared library: IOHDF5
+
+%package -n libITKIOIPL%itkver
+Summary: Shared library of ITK: IOIPL
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOIPL%itkver
+This package contains ITK shared library: IOIPL
+
+%package -n libITKIOImageBase%itkver
+Summary: Shared library of ITK: IOImageBase
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOImageBase%itkver
+This package contains ITK shared library: IOImageBase
+
+%package -n libITKIOJPEG%itkver
+Summary: Shared library of ITK: IOJPEG
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOJPEG%itkver
+This package contains ITK shared library: IOJPEG
+
+%package -n libITKIOJPEG2000_%itkver
+Summary: Shared library of ITK: IOJ
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOJPEG2000_%itkver
+This package contains ITK shared library: IOJPEG2000
+
+%package -n libITKIOLSM%itkver
+Summary: Shared library of ITK: IOLSM
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOLSM%itkver
+This package contains ITK shared library: IOLSM
+
+%package -n libITKIOMINC%itkver
+Summary: Shared library of ITK: IOMINC
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMINC%itkver
+This package contains ITK shared library: IOMINC
+
+%package -n libITKIOMRC%itkver
+Summary: Shared library of ITK: IOMRC
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMRC%itkver
+This package contains ITK shared library: IOMRC
+
+%package -n libITKIOMeshBYU%itkver
+Summary: Shared library of ITK: IOMeshBYU
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshBYU%itkver
+This package contains ITK shared library: IOMeshBYU
+
+%package -n libITKIOMeshBase%itkver
+Summary: Shared library of ITK: IOMeshBase
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshBase%itkver
+This package contains ITK shared library: IOMeshBase
+
+%package -n libITKIOMeshFreeSurfer%itkver
+Summary: Shared library of ITK: IOMeshFreeSurfer
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshFreeSurfer%itkver
+This package contains ITK shared library: IOMeshFreeSurfer
+
+%package -n libITKIOMeshGifti%itkver
+Summary: Shared library of ITK: IOMeshGifti
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshGifti%itkver
+This package contains ITK shared library: IOMeshGifti
+
+%package -n libITKIOMeshOBJ%itkver
+Summary: Shared library of ITK: IOMeshOBJ
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshOBJ%itkver
+This package contains ITK shared library: IOMeshOBJ
+
+%package -n libITKIOMeshOFF%itkver
+Summary: Shared library of ITK: IOMeshOFF
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshOFF%itkver
+This package contains ITK shared library: IOMeshOFF
+
+%package -n libITKIOMeshVTK%itkver
+Summary: Shared library of ITK: IOMeshVTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeshVTK%itkver
+This package contains ITK shared library: IOMeshVTK
+
+%package -n libITKIOMeta%itkver
+Summary: Shared library of ITK: IOMeta
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOMeta%itkver
+This package contains ITK shared library: IOMeta
+
+%package -n libITKIONIFTI%itkver
+Summary: Shared library of ITK: IONIFTI
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIONIFTI%itkver
+This package contains ITK shared library: IONIFTI
+
+%package -n libITKIONRRD%itkver
+Summary: Shared library of ITK: IONRRD
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIONRRD%itkver
+This package contains ITK shared library: IONRRD
+
+%package -n libITKIOPNG%itkver
+Summary: Shared library of ITK: IOPNG
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOPNG%itkver
+This package contains ITK shared library: IOPNG
+
+%package -n libITKIOSiemens%itkver
+Summary: Shared library of ITK: IOSiemens
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOSiemens%itkver
+This package contains ITK shared library: IOSiemens
+
+%package -n libITKIOSpatialObjects%itkver
+Summary: Shared library of ITK: IOSpatialObjects
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOSpatialObjects%itkver
+This package contains ITK shared library: IOSpatialObjects
+
+%package -n libITKIOStimulate%itkver
+Summary: Shared library of ITK: IOStimulate
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOStimulate%itkver
+This package contains ITK shared library: IOStimulate
+
+%package -n libITKIOTIFF%itkver
+Summary: Shared library of ITK: IOTIFF
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOTIFF%itkver
+This package contains ITK shared library: IOTIFF
+
+%package -n libITKIOTransformBase%itkver
+Summary: Shared library of ITK: IOTransformBase
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOTransformBase%itkver
+This package contains ITK shared library: IOTransformBase
+
+%package -n libITKIOTransformHDF5_%itkver
+Summary: Shared library of ITK: IOTransf
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOTransformHDF5_%itkver
+This package contains ITK shared library: IOTransformHDF5
+
+%package -n libITKIOTransformInsightLegacy%itkver
+Summary: Shared library of ITK: IOTransformInsightLegacy
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOTransformInsightLegacy%itkver
+This package contains ITK shared library: IOTransformInsightLegacy
+
+%package -n libITKIOTransformMatlab%itkver
+Summary: Shared library of ITK: IOTransformMatlab
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOTransformMatlab%itkver
+This package contains ITK shared library: IOTransformMatlab
+
+%package -n libITKIOVTK%itkver
+Summary: Shared library of ITK: IOVTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOVTK%itkver
+This package contains ITK shared library: IOVTK
+
+%package -n libITKIOXML%itkver
+Summary: Shared library of ITK: IOXML
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKIOXML%itkver
+This package contains ITK shared library: IOXML
+
+%package -n libITKImageFeature%itkver
+Summary: Shared library of ITK: ImageFeature
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKImageFeature%itkver
+This package contains ITK shared library: ImageFeature
+
+%package -n libITKImageIntensity%itkver
+Summary: Shared library of ITK: ImageIntensity
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKImageIntensity%itkver
+This package contains ITK shared library: ImageIntensity
+
+%package -n libITKKLMRegionGrowing%itkver
+Summary: Shared library of ITK: KLMRegionGrowing
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKKLMRegionGrowing%itkver
+This package contains ITK shared library: KLMRegionGrowing
+
+%package -n libITKLabelMap%itkver
+Summary: Shared library of ITK: LabelMap
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKLabelMap%itkver
+This package contains ITK shared library: LabelMap
+
+%package -n libITKMarkovRandomFieldsClassifiers%itkver
+Summary: Shared library of ITK: MarkovRandomFieldsClassifiers
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKMarkovRandomFieldsClassifiers%itkver
+This package contains ITK shared library: MarkovRandomFieldsClassifiers
+
+%package -n libITKMathematicalMorphology%itkver
+Summary: Shared library of ITK: MathematicalMorphology
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKMathematicalMorphology%itkver
+This package contains ITK shared library: MathematicalMorphology
+
+%package -n libITKMesh%itkver
+Summary: Shared library of ITK: Mesh
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKMesh%itkver
+This package contains ITK shared library: Mesh
+
+%package -n libITKMetaIO%itkver
+Summary: Shared library of ITK: MetaIO
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKMetaIO%itkver
+This package contains ITK shared library: MetaIO
+
+%package -n libITKNrrdIO%itkver
+Summary: Shared library of ITK: NrrdIO
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKNrrdIO%itkver
+This package contains ITK shared library: NrrdIO
+
+%package -n libITKOptimizers%itkver
+Summary: Shared library of ITK: Optimizers
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKOptimizers%itkver
+This package contains ITK shared library: Optimizers
+
+%package -n libITKOptimizersv4_%itkver
+Summary: Shared library of ITK: Optim
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKOptimizersv4_%itkver
+This package contains ITK shared library: Optimizersv4
+
+%package -n libITKPDEDeformableRegistration%itkver
+Summary: Shared library of ITK: PDEDeformableRegistration
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKPDEDeformableRegistration%itkver
+This package contains ITK shared library: PDEDeformableRegistration
+
+%package -n libITKPath%itkver
+Summary: Shared library of ITK: Path
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKPath%itkver
+This package contains ITK shared library: Path
+
+%package -n libITKPolynomials%itkver
+Summary: Shared library of ITK: Polynomials
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKPolynomials%itkver
+This package contains ITK shared library: Polynomials
+
+%package -n libITKQuadEdgeMesh%itkver
+Summary: Shared library of ITK: QuadEdgeMesh
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKQuadEdgeMesh%itkver
+This package contains ITK shared library: QuadEdgeMesh
+
+%package -n libITKQuadEdgeMeshFiltering%itkver
+Summary: Shared library of ITK: QuadEdgeMeshFiltering
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKQuadEdgeMeshFiltering%itkver
+This package contains ITK shared library: QuadEdgeMeshFiltering
+
+%package -n libITKRegionGrowing%itkver
+Summary: Shared library of ITK: RegionGrowing
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKRegionGrowing%itkver
+This package contains ITK shared library: RegionGrowing
+
+%package -n libITKRegistrationMethodsv4_%itkver
+Summary: Shared library of ITK: RegistrationMe
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKRegistrationMethodsv4_%itkver
+This package contains ITK shared library: RegistrationMethodsv4
+
+%package -n libITKReview%itkver
+Summary: Shared library of ITK: Review
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKReview%itkver
+This package contains ITK shared library: Review
+
+%package -n libITKSmoothing%itkver
+Summary: Shared library of ITK: Smoothing
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKSmoothing%itkver
+This package contains ITK shared library: Smoothing
+
+%package -n libITKSpatialObjects%itkver
+Summary: Shared library of ITK: SpatialObjects
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKSpatialObjects%itkver
+This package contains ITK shared library: SpatialObjects
+
+%package -n libITKStatistics%itkver
+Summary: Shared library of ITK: Statistics
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKStatistics%itkver
+This package contains ITK shared library: Statistics
+
+%package -n libITKTestKernel%itkver
+Summary: Shared library of ITK: TestKernel
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKTestKernel%itkver
+This package contains ITK shared library: TestKernel
+
+%package -n libITKTransform%itkver
+Summary: Shared library of ITK: Transform
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKTransform%itkver
+This package contains ITK shared library: Transform
+
+%package -n libITKTransformFactory%itkver
+Summary: Shared library of ITK: TransformFactory
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKTransformFactory%itkver
+This package contains ITK shared library: TransformFactory
+
+%package -n libITKVNLInstantiation%itkver
+Summary: Shared library of ITK: VNLInstantiation
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKVNLInstantiation%itkver
+This package contains ITK shared library: VNLInstantiation
+
+%package -n libITKVTK%itkver
+Summary: Shared library of ITK: VTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKVTK%itkver
+This package contains ITK shared library: VTK
+
+%package -n libITKVideoCore%itkver
+Summary: Shared library of ITK: VideoCore
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKVideoCore%itkver
+This package contains ITK shared library: VideoCore
+
+%package -n libITKVideoIO%itkver
+Summary: Shared library of ITK: VideoIO
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKVideoIO%itkver
+This package contains ITK shared library: VideoIO
+
+%package -n libITKVtkGlue%itkver
+Summary: Shared library of ITK: VtkGlue
+Group: System/Libraries
+Obsoletes: libitk5.4-glue
+
+%description -n libITKVtkGlue%itkver
+This package contains shared libraries for VTK bindings to ITK.
+
+%package -n libITKWatersheds%itkver
+Summary: Shared library of ITK: Watersheds
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKWatersheds%itkver
+This package contains ITK shared library: Watersheds
+
+%package -n libITKgiftiio%itkver
+Summary: Shared library of ITK: giftiio
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKgiftiio%itkver
+This package contains ITK shared library: giftiio
+
+%package -n libITKniftiio%itkver
+Summary: Shared library of ITK: niftiio
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKniftiio%itkver
+This package contains ITK shared library: niftiio
+
+%package -n libITKznz%itkver
+Summary: Shared library of ITK: znz
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libITKznz%itkver
+This package contains ITK shared library: znz
+
+%package -n libitkAdaptiveDenoising%itkver
+Summary: Shared library of ITK: AdaptiveDenoising
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkAdaptiveDenoising%itkver
+This package contains ITK shared library: AdaptiveDenoising
+
+%package -n libitkAnalyzeObjectLabelMap%itkver
+Summary: Shared library of ITK: AnalyzeObjectLabelMap
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkAnalyzeObjectLabelMap%itkver
+This package contains ITK shared library: AnalyzeObjectLabelMap
+
+%package -n libitkBioCell%itkver
+Summary: Shared library of ITK: BioCell
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkBioCell%itkver
+This package contains ITK shared library: BioCell
+
+%package -n libitkGrowCut%itkver
+Summary: Shared library of ITK: GrowCut
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkGrowCut%itkver
+This package contains ITK shared library: GrowCut
+
+%package -n libitkIOFDF%itkver
+Summary: Shared library of ITK: IOFDF
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOFDF%itkver
+This package contains ITK shared library: IOFDF
+
+%package -n libitkIOMeshSTL%itkver
+Summary: Shared library of ITK: IOMeshSTL
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOMeshSTL%itkver
+This package contains ITK shared library: IOMeshSTL
+
+%package -n libitkIOMeshSWC%itkver
+Summary: Shared library of ITK: IOMeshSWC
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOMeshSWC%itkver
+This package contains ITK shared library: IOMeshSWC
+
+%package -n libitkIOOpenSlide%itkver
+Summary: Shared library of ITK: IOOpenSlide
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOOpenSlide%itkver
+This package contains ITK shared library: IOOpenSlide
+
+%package -n libitkIOScanco%itkver
+Summary: Shared library of ITK: IOScanco
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOScanco%itkver
+This package contains ITK shared library: IOScanco
+
+%package -n libitkIOTransformDCMTK%itkver
+Summary: Shared library of ITK: IOTransformDCMTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIOTransformDCMTK%itkver
+This package contains ITK shared library: IOTransformDCMTK
+
+%package -n libitkIsotropicWavelets%itkver
+Summary: Shared library of ITK: IsotropicWavelets
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkIsotropicWavelets%itkver
+This package contains ITK shared library: IsotropicWavelets
+
+%package -n libitkMGHIO%itkver
+Summary: Shared library of ITK: MGHIO
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkMGHIO%itkver
+This package contains ITK shared library: MGHIO
+
+%package -n libitkMinimalPathExtraction%itkver
+Summary: Shared library of ITK: MinimalPathExtraction
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkMinimalPathExtraction%itkver
+This package contains ITK shared library: MinimalPathExtraction
+
+%package -n libitkMontage%itkver
+Summary: Shared library of ITK: Montage
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkMontage%itkver
+This package contains ITK shared library: Montage
+
+%package -n libitkNetlibSlatec%itkver
+Summary: Shared library of ITK: NetlibSlatec
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkNetlibSlatec%itkver
+This package contains ITK shared library: NetlibSlatec
+
+%package -n libitkPerformanceBenchmarking%itkver
+Summary: Shared library of ITK: PerformanceBenchmarking
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkPerformanceBenchmarking%itkver
+This package contains ITK shared library: PerformanceBenchmarking
+
+%package -n libitkRTK%itkver
+Summary: Shared library of ITK: RTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkRTK%itkver
+This package contains ITK shared library: RTK
+
+%package -n libitkSimpleITKFilters%itkver
+Summary: Shared library of ITK: SimpleITKFilters
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkSimpleITKFilters%itkver
+This package contains ITK shared library: SimpleITKFilters
+
+%package -n libitkTubeTK%itkver
+Summary: Shared library of ITK: TubeTK
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkTubeTK%itkver
+This package contains ITK shared library: TubeTK
+
+%package -n libitkUltrasound%itkver
+Summary: Shared library of ITK: Ultrasound
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkUltrasound%itkver
+This package contains ITK shared library: Ultrasound
+
+%package -n libitkVkFFTBackend%itkver
+Summary: Shared library of ITK: VkFFTBackend
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkVkFFTBackend%itkver
+This package contains ITK shared library: VkFFTBackend
+
+%package -n libitklbfgs%itkver
+Summary: Shared library of ITK: lbfgs
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitklbfgs%itkver
+This package contains ITK shared library: lbfgs
+
+%package -n libitkopenjpeg%itkver
+Summary: Shared library of ITK: openjpeg
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitkopenjpeg%itkver
+This package contains ITK shared library: openjpeg
+
+%package -n libitksys%itkver
+Summary: Shared library of ITK: sys
+Group: System/Libraries
+Obsoletes: libitk5.4
+
+%description -n libitksys%itkver
+This package contains ITK shared library: sys
+
+%package -n libitk-devel
 Summary: Development files for ITK
 Group: Development/C++
-Provides: lib%name-glue-devel = %EVR
-Conflicts: lib%name-glue-devel < %EVR
-Obsoletes: lib%name-glue-devel < %EVR
-Requires: lib%name%itkver = %EVR
-Requires: lib%name%itkver-glue = %EVR
-Requires: %name-testdriver = %EVR
+Provides: libitk-glue-devel = %EVR
+Conflicts: libitk-glue-devel < %EVR
+Obsoletes: libitk-glue-devel < %EVR
+Requires: itk-testdriver = %EVR
 # Following dependencies are duplicates from build dependencies
 Requires: libgtest-devel
 Requires: libgmock-devel
 Requires: eigen3-devel
 Requires: gdcm-devel
-Requires: libfftw3-devel
 Requires: libXext-devel
 Requires: libxml2-devel
 Requires: libnetcdf-devel
@@ -171,14 +1005,13 @@ Requires: libvxl-devel
 Requires: ocl-icd-devel
 Requires: libcbor-devel
 
-%description -n lib%name-devel
+%description -n libitk-devel
 This package contains development files for ITK.
 %_description
 
 %package testdriver
 Summary: Test driver for ITK
 Group: Development/Tools
-Requires: lib%name%itkver = %EVR
 
 %description testdriver
 This package contains test driver for ITK.
@@ -187,7 +1020,6 @@ This package contains test driver for ITK.
 %package examples
 Summary: Examples for ITK
 Group: Development/Tools
-Requires: lib%name%itkver = %EVR
 
 %description examples
 This package contains source code of ITK examples.
@@ -202,16 +1034,8 @@ BuildArch: noarch
 This package contains documentation for ITK.
 %_description
 
-%package -n lib%name%itkver-glue
-Summary: Shared libraries for ITK-VTK bindings
-Group: System/Libraries
-
-%description -n lib%name%itkver-glue
-This package contains shared libraries for VTK bindings to ITK.
-%_description
-
 %prep
-%setup -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127 -a128 -a129 -a130 -a131 -a132 -a133 -a134 -a135 -a136 -a137 -a138 -a139 -a140 -a141 -a142 -a143 -a144 -a145 -a146 -a147 -a148 -a149 -a150 -a151 -a152 -a153 -a154
+%setup -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127 -a128 -a129 -a130 -a131 -a132 -a133 -a134 -a135 -a136 -a137 -a138 -a139 -a140 -a141 -a142 -a143 -a144 -a145 -a146 -a147 -a148 -a149 -a150 -a151 -a152 -a153
 
 rm -rf \
   Modules/ThirdParty/GDCM/src/gdcm \
@@ -228,10 +1052,6 @@ popd
 
 pushd Modules/Remote/PerformanceBenchmarking
 %patch3 -p1
-popd
-
-pushd Modules/Remote/WebAssemblyInterface
-%patch4 -p1
 popd
 
 pushd Modules/Remote/Cleaver
@@ -291,8 +1111,8 @@ rm -rf Modules/ThirdParty/DoubleConversion/src
 rm -rf Modules/ThirdParty/GoogleTest/src
 
 %build
-%ifarch aarch64 ppc64le
-# limit build jobs on aarch64 and ppc64le to prevent resources exhaustion
+%ifarch aarch64
+# limit build jobs on aarch64 to prevent resources exhaustion
 if [ %__nprocs -gt 8 ] ; then
 	export NPROCS=8
 fi
@@ -314,19 +1134,23 @@ fi
        -DITK_BUILD_DEFAULT_MODULES:BOOL=ON \
        -DITK_WRAP_PYTHON:BOOL=OFF \
        -DITK_INSTALL_LIBRARY_DIR=%_lib/ \
-       -DITK_INSTALL_INCLUDE_DIR=include/%name \
-       -DITK_INSTALL_PACKAGE_DIR=%_lib/cmake/%name/ \
+       -DITK_INSTALL_INCLUDE_DIR=include/itk \
+       -DITK_INSTALL_PACKAGE_DIR=%_lib/cmake/itk/ \
        -DITK_INSTALL_RUNTIME_DIR:PATH=%_bindir \
-       -DITK_INSTALL_DOC_DIR=share/doc/%name/ \
+       -DITK_INSTALL_DOC_DIR=share/doc/itk/ \
        -DITK_USE_KWSTYLE:BOOL=OFF \
        -DITK_FORBID_DOWNLOADS=ON \
        -DModule_ITKReview:BOOL=ON \
        -DITK_USE_SYSTEM_LIBRARIES:BOOL=ON \
+  %if_with fftw
        -DITK_USE_FFTWD=ON \
        -DITK_USE_FFTWF=ON \
+  %endif
        -DITK_USE_SYSTEM_DCMTK=ON \
        -DITK_USE_SYSTEM_EXPAT=ON \
+  %if_with fftw
        -DITK_USE_SYSTEM_FFTW=ON \
+  %endif
        -DITK_USE_SYSTEM_GDCM=ON \
        -DITK_USE_SYSTEM_MINC=ON \
        -DITK_USE_SYSTEM_HDF5=ON \
@@ -352,9 +1176,9 @@ fi
        -DModule_BSplineGradient:BOOL=ON \
        -DModule_Cleaver:BOOL=ON \
        -DModule_Cuberille:BOOL=ON \
-       -DModule_NeuralNetworks:BOOL=ON \
        -DModule_FixedPointInverseDisplacementField:BOOL=ON \
        -DModule_FPFH:BOOL=ON \
+       -DModule_FastBilateral:BOOL=ON \
        -DModule_GenericLabelInterpolator:BOOL=ON \
        -DModule_GrowCut:BOOL=ON \
        -DModule_HASI:BOOL=ON \
@@ -396,12 +1220,7 @@ fi
        -DModule_TwoProjectionRegistration:BOOL=ON \
        -DModule_Ultrasound:BOOL=ON \
        -DModule_VariationalRegistration:BOOL=ON \
-       %ifnarch ppc64le
        -DModule_VkFFTBackend:BOOL=ON \
-       %else
-       -DModule_VkFFTBackend:BOOL=OFF \
-       %endif
-     -DModule_WebAssemblyInterface:BOOL=ON \
      #
 
 %cmake_build
@@ -414,13 +1233,327 @@ rm -f %_cmake__builddir/bin/itkTestDriver
 
 install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 
-%files -n lib%name%itkver
-%_libdir/lib*-%itkver.so.*
-%exclude %_libdir/libITKVtkGlue-%itkver.so.*
+%files -n libITKBiasCorrection%itkver
+%_libdir/libITKBiasCorrection-%itkver.so.%sover
 
-%files -n lib%name-devel
+%files -n libITKColormap%itkver
+%_libdir/libITKColormap-%itkver.so.%sover
+
+%files -n libITKCommon%itkver
+%_libdir/libITKCommon-%itkver.so.%sover
+
+%files -n libITKConvolution%itkver
+%_libdir/libITKConvolution-%itkver.so.%sover
+
+%files -n libITKDICOMParser%itkver
+%_libdir/libITKDICOMParser-%itkver.so.%sover
+
+%files -n libITKDeformableMesh%itkver
+%_libdir/libITKDeformableMesh-%itkver.so.%sover
+
+%files -n libITKDenoising%itkver
+%_libdir/libITKDenoising-%itkver.so.%sover
+
+%files -n libITKDeprecated%itkver
+%_libdir/libITKDeprecated-%itkver.so.%sover
+
+%files -n libITKDiffusionTensorImage%itkver
+%_libdir/libITKDiffusionTensorImage-%itkver.so.%sover
+
+%files -n libITKFFT%itkver
+%_libdir/libITKFFT-%itkver.so.%sover
+
+%files -n libITKFastMarching%itkver
+%_libdir/libITKFastMarching-%itkver.so.%sover
+
+%files -n libITKIOBMP%itkver
+%_libdir/libITKIOBMP-%itkver.so.%sover
+
+%files -n libITKIOBioRad%itkver
+%_libdir/libITKIOBioRad-%itkver.so.%sover
+
+%files -n libITKIOBruker%itkver
+%_libdir/libITKIOBruker-%itkver.so.%sover
+
+%files -n libITKIOCSV%itkver
+%_libdir/libITKIOCSV-%itkver.so.%sover
+
+%files -n libITKIODCMTK%itkver
+%_libdir/libITKIODCMTK-%itkver.so.%sover
+
+%files -n libITKIOGDCM%itkver
+%_libdir/libITKIOGDCM-%itkver.so.%sover
+
+%files -n libITKIOGE%itkver
+%_libdir/libITKIOGE-%itkver.so.%sover
+
+%files -n libITKIOGIPL%itkver
+%_libdir/libITKIOGIPL-%itkver.so.%sover
+
+%files -n libITKIOHDF5_%itkver
+%_libdir/libITKIOHDF5-%itkver.so.%sover
+
+%files -n libITKIOIPL%itkver
+%_libdir/libITKIOIPL-%itkver.so.%sover
+
+%files -n libITKIOImageBase%itkver
+%_libdir/libITKIOImageBase-%itkver.so.%sover
+
+%files -n libITKIOJPEG%itkver
+%_libdir/libITKIOJPEG-%itkver.so.%sover
+
+%files -n libITKIOJPEG2000_%itkver
+%_libdir/libITKIOJPEG2000-%itkver.so.%sover
+
+%files -n libITKIOLSM%itkver
+%_libdir/libITKIOLSM-%itkver.so.%sover
+
+%files -n libITKIOMINC%itkver
+%_libdir/libITKIOMINC-%itkver.so.%sover
+
+%files -n libITKIOMRC%itkver
+%_libdir/libITKIOMRC-%itkver.so.%sover
+
+%files -n libITKIOMeshBYU%itkver
+%_libdir/libITKIOMeshBYU-%itkver.so.%sover
+
+%files -n libITKIOMeshBase%itkver
+%_libdir/libITKIOMeshBase-%itkver.so.%sover
+
+%files -n libITKIOMeshFreeSurfer%itkver
+%_libdir/libITKIOMeshFreeSurfer-%itkver.so.%sover
+
+%files -n libITKIOMeshGifti%itkver
+%_libdir/libITKIOMeshGifti-%itkver.so.%sover
+
+%files -n libITKIOMeshOBJ%itkver
+%_libdir/libITKIOMeshOBJ-%itkver.so.%sover
+
+%files -n libITKIOMeshOFF%itkver
+%_libdir/libITKIOMeshOFF-%itkver.so.%sover
+
+%files -n libITKIOMeshVTK%itkver
+%_libdir/libITKIOMeshVTK-%itkver.so.%sover
+
+%files -n libITKIOMeta%itkver
+%_libdir/libITKIOMeta-%itkver.so.%sover
+
+%files -n libITKIONIFTI%itkver
+%_libdir/libITKIONIFTI-%itkver.so.%sover
+
+%files -n libITKIONRRD%itkver
+%_libdir/libITKIONRRD-%itkver.so.%sover
+
+%files -n libITKIOPNG%itkver
+%_libdir/libITKIOPNG-%itkver.so.%sover
+
+%files -n libITKIOSiemens%itkver
+%_libdir/libITKIOSiemens-%itkver.so.%sover
+
+%files -n libITKIOSpatialObjects%itkver
+%_libdir/libITKIOSpatialObjects-%itkver.so.%sover
+
+%files -n libITKIOStimulate%itkver
+%_libdir/libITKIOStimulate-%itkver.so.%sover
+
+%files -n libITKIOTIFF%itkver
+%_libdir/libITKIOTIFF-%itkver.so.%sover
+
+%files -n libITKIOTransformBase%itkver
+%_libdir/libITKIOTransformBase-%itkver.so.%sover
+
+%files -n libITKIOTransformHDF5_%itkver
+%_libdir/libITKIOTransformHDF5-%itkver.so.%sover
+
+%files -n libITKIOTransformInsightLegacy%itkver
+%_libdir/libITKIOTransformInsightLegacy-%itkver.so.%sover
+
+%files -n libITKIOTransformMatlab%itkver
+%_libdir/libITKIOTransformMatlab-%itkver.so.%sover
+
+%files -n libITKIOVTK%itkver
+%_libdir/libITKIOVTK-%itkver.so.%sover
+
+%files -n libITKIOXML%itkver
+%_libdir/libITKIOXML-%itkver.so.%sover
+
+%files -n libITKImageFeature%itkver
+%_libdir/libITKImageFeature-%itkver.so.%sover
+
+%files -n libITKImageIntensity%itkver
+%_libdir/libITKImageIntensity-%itkver.so.%sover
+
+%files -n libITKKLMRegionGrowing%itkver
+%_libdir/libITKKLMRegionGrowing-%itkver.so.%sover
+
+%files -n libITKLabelMap%itkver
+%_libdir/libITKLabelMap-%itkver.so.%sover
+
+%files -n libITKMarkovRandomFieldsClassifiers%itkver
+%_libdir/libITKMarkovRandomFieldsClassifiers-%itkver.so.%sover
+
+%files -n libITKMathematicalMorphology%itkver
+%_libdir/libITKMathematicalMorphology-%itkver.so.%sover
+
+%files -n libITKMesh%itkver
+%_libdir/libITKMesh-%itkver.so.%sover
+
+%files -n libITKMetaIO%itkver
+%_libdir/libITKMetaIO-%itkver.so.%sover
+
+%files -n libITKNrrdIO%itkver
+%_libdir/libITKNrrdIO-%itkver.so.%sover
+
+%files -n libITKOptimizers%itkver
+%_libdir/libITKOptimizers-%itkver.so.%sover
+
+%files -n libITKOptimizersv4_%itkver
+%_libdir/libITKOptimizersv4-%itkver.so.%sover
+
+%files -n libITKPDEDeformableRegistration%itkver
+%_libdir/libITKPDEDeformableRegistration-%itkver.so.%sover
+
+%files -n libITKPath%itkver
+%_libdir/libITKPath-%itkver.so.%sover
+
+%files -n libITKPolynomials%itkver
+%_libdir/libITKPolynomials-%itkver.so.%sover
+
+%files -n libITKQuadEdgeMesh%itkver
+%_libdir/libITKQuadEdgeMesh-%itkver.so.%sover
+
+%files -n libITKQuadEdgeMeshFiltering%itkver
+%_libdir/libITKQuadEdgeMeshFiltering-%itkver.so.%sover
+
+%files -n libITKRegionGrowing%itkver
+%_libdir/libITKRegionGrowing-%itkver.so.%sover
+
+%files -n libITKRegistrationMethodsv4_%itkver
+%_libdir/libITKRegistrationMethodsv4-%itkver.so.%sover
+
+%files -n libITKReview%itkver
+%_libdir/libITKReview-%itkver.so.%sover
+
+%files -n libITKSmoothing%itkver
+%_libdir/libITKSmoothing-%itkver.so.%sover
+
+%files -n libITKSpatialObjects%itkver
+%_libdir/libITKSpatialObjects-%itkver.so.%sover
+
+%files -n libITKStatistics%itkver
+%_libdir/libITKStatistics-%itkver.so.%sover
+
+%files -n libITKTestKernel%itkver
+%_libdir/libITKTestKernel-%itkver.so.%sover
+
+%files -n libITKTransform%itkver
+%_libdir/libITKTransform-%itkver.so.%sover
+
+%files -n libITKTransformFactory%itkver
+%_libdir/libITKTransformFactory-%itkver.so.%sover
+
+%files -n libITKVNLInstantiation%itkver
+%_libdir/libITKVNLInstantiation-%itkver.so.%sover
+
+%files -n libITKVTK%itkver
+%_libdir/libITKVTK-%itkver.so.%sover
+
+%files -n libITKVideoCore%itkver
+%_libdir/libITKVideoCore-%itkver.so.%sover
+
+%files -n libITKVideoIO%itkver
+%_libdir/libITKVideoIO-%itkver.so.%sover
+
+%files -n libITKVtkGlue%itkver
+%_libdir/libITKVtkGlue-%itkver.so.%sover
+
+%files -n libITKWatersheds%itkver
+%_libdir/libITKWatersheds-%itkver.so.%sover
+
+%files -n libITKgiftiio%itkver
+%_libdir/libITKgiftiio-%itkver.so.%sover
+
+%files -n libITKniftiio%itkver
+%_libdir/libITKniftiio-%itkver.so.%sover
+
+%files -n libITKznz%itkver
+%_libdir/libITKznz-%itkver.so.%sover
+
+%files -n libitkAdaptiveDenoising%itkver
+%_libdir/libitkAdaptiveDenoising-%itkver.so.%sover
+
+%files -n libitkAnalyzeObjectLabelMap%itkver
+%_libdir/libitkAnalyzeObjectLabelMap-%itkver.so.%sover
+
+%files -n libitkBioCell%itkver
+%_libdir/libitkBioCell-%itkver.so.%sover
+
+%files -n libitkGrowCut%itkver
+%_libdir/libitkGrowCut-%itkver.so.%sover
+
+%files -n libitkIOFDF%itkver
+%_libdir/libitkIOFDF-%itkver.so.%sover
+
+%files -n libitkIOMeshSTL%itkver
+%_libdir/libitkIOMeshSTL-%itkver.so.%sover
+
+%files -n libitkIOMeshSWC%itkver
+%_libdir/libitkIOMeshSWC-%itkver.so.%sover
+
+%files -n libitkIOOpenSlide%itkver
+%_libdir/libitkIOOpenSlide-%itkver.so.%sover
+
+%files -n libitkIOScanco%itkver
+%_libdir/libitkIOScanco-%itkver.so.%sover
+
+%files -n libitkIOTransformDCMTK%itkver
+%_libdir/libitkIOTransformDCMTK-%itkver.so.%sover
+
+%files -n libitkIsotropicWavelets%itkver
+%_libdir/libitkIsotropicWavelets-%itkver.so.%sover
+
+%files -n libitkMGHIO%itkver
+%_libdir/libitkMGHIO-%itkver.so.%sover
+
+%files -n libitkMinimalPathExtraction%itkver
+%_libdir/libitkMinimalPathExtraction-%itkver.so.%sover
+
+%files -n libitkMontage%itkver
+%_libdir/libitkMontage-%itkver.so.%sover
+
+%files -n libitkNetlibSlatec%itkver
+%_libdir/libitkNetlibSlatec-%itkver.so.%sover
+
+%files -n libitkPerformanceBenchmarking%itkver
+%_libdir/libitkPerformanceBenchmarking-%itkver.so.%sover
+
+%files -n libitkRTK%itkver
+%_libdir/libitkRTK-%itkver.so.%sover
+
+%files -n libitkSimpleITKFilters%itkver
+%_libdir/libitkSimpleITKFilters-%itkver.so.%sover
+
+%files -n libitkTubeTK%itkver
+%_libdir/libitkTubeTK-%itkver.so.%sover
+
+%files -n libitkUltrasound%itkver
+%_libdir/libitkUltrasound-%itkver.so.%sover
+
+%files -n libitkVkFFTBackend%itkver
+%_libdir/libitkVkFFTBackend-%itkver.so.%sover
+
+%files -n libitklbfgs%itkver
+%_libdir/libitklbfgs-%itkver.so.%sover
+
+%files -n libitkopenjpeg%itkver
+%_libdir/libitkopenjpeg-%itkver.so.%sover
+
+%files -n libitksys%itkver
+%_libdir/libitksys-%itkver.so.%sover
+
+%files -n libitk-devel
 %_libdir/lib*-%itkver.so
-%_includedir/%name/
+%_includedir/itk/
 %_libdir/cmake/*
 
 %files testdriver
@@ -428,15 +1561,17 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 
 %files examples
 %doc itk-examples/Examples/
-%_libdir/%name-examples/
+%_libdir/itk-examples/
 
 %files doc
-%doc %_docdir/%name/
-
-%files -n lib%name%itkver-glue
-%_libdir/libITKVtkGlue-%itkver.so.*
+%doc %_docdir/itk/
 
 %changelog
+* Mon Aug 04 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.4-alt1
+- Split libraries on related subpackages.
+- Build without FFTW (ALT 55452).
+- New version.
+
 * Mon May 26 2025 Michael Shigorin <mike@altlinux.org> 5.4.3-alt2
 - E2K: lcc 1.29.06 ftbfs workaround (ilyakurdyukov@; mcst#9134, mcst#9152).
 
