@@ -3,7 +3,7 @@
 
 Name: sysrepo
 Version: 3.6.11
-Release: alt1
+Release: alt2
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
 Group: System/Libraries
@@ -18,6 +18,7 @@ BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires: pkgconfig(libyang) >= 2.0.7
 
+Requires: %name-tools
 %description
 YANG-based configuration and operational data store - runtime Applications can
 use sysrepo to store their configuration modeled by provided YANG model
@@ -56,7 +57,8 @@ export CFLAGS="%optflags"
     -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
     -DSYSREPO_UMASK=007 \
     -DSYSREPO_GROUP=sysrepo \
-    -DNACM_SRMON_DATA_PERM=660
+    -DNACM_SRMON_DATA_PERM=660 \
+    -DSYSTEMD_UNIT_DIR=%prefix
 %cmake_build 
 
 %install
@@ -79,8 +81,11 @@ export CFLAGS="%optflags"
 %_man8dir/*.8.*
 
 %changelog
+* Mon Aug 04 2025 Pavel Shilov <zerospirit@altlinux.org> 3.6.11-alt2
+- Added sysrepoctl tool to the sysrepo-tools package.
+
 * Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 3.6.11-alt1
-- 3.3.10 -> 3.6.11 
+- 3.3.10 -> 3.6.11
 
 * Mon Apr 07 2025 Pavel Shilov <zerospirit@altlinux.org> 3.3.10-alt1
 - Build based on upstream version
