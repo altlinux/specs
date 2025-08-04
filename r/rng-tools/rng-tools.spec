@@ -3,7 +3,7 @@
 
 Name: rng-tools
 Version: 6.17
-Release: alt1
+Release: alt1.1
 
 Summary: Random number generator related utilities
 License: GPLv2+
@@ -41,12 +41,6 @@ to the system kernel's /dev/random machinery.
 %prep
 %setup
 %patch0 -p1
-%ifnarch x86_64
-%if_with check
-# rngtestjitter.sh works only on x86_64
-subst 's,\ rngtestjitter.sh,,' tests/Makefile.am
-%endif
-%endif # x86_64
 
 %build
 %autoreconf
@@ -61,6 +55,11 @@ install -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/rngd
 install -m644 rngd.service %buildroot%_unitdir/rngd.service
 
 %check
+%ifnarch x86_64
+# https://github.com/nhorman/rng-tools/issues/174#issuecomment-1843818696
+subst 's/sleep 30/sleep 120/g' tests/rngtestjitter.sh
+export RNGD_JITTER_TIMEOUT=90
+%endif # x86_64
 make check
 
 %post
@@ -80,6 +79,9 @@ make check
 %_man8dir/rngd.8*
 
 %changelog
+* Mon Aug 04 2025 L.A. Kostis <lakostis@altlinux.ru> 6.17-alt1.1
+- tests: fix rngtestjitter failures on non-x86_64 platforms.
+
 * Mon Aug 04 2025 L.A. Kostis <lakostis@altlinux.ru> 6.17-alt1
 - Version 6.17.
 - BR: added libcap.
