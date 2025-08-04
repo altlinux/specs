@@ -44,7 +44,7 @@
 %def_without legacy_python_install
 
 Name: nfs-ganesha
-Version: 6.5
+Version: 7.0
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
@@ -72,7 +72,7 @@ BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
 BuildRequires: libnsl2-devel
 BuildRequires: libattr-devel libacl-devel
-%{?_with_system_ntirpc:BuildRequires: libntirpc-devel >= 3.3}
+%{?_with_system_ntirpc:BuildRequires: libntirpc-devel >= 7.0}
 BuildRequires: libuserspace-rcu-devel
 BuildRequires: /usr/bin/sphinx-build-3
 %{?_with_mspac_support:BuildRequires: libwbclient-devel}
@@ -286,7 +286,7 @@ to support LizardFS.
 %prep
 %setup
 tar xf %SOURCE1 -C src
-tar xf %SOURCE2 -C src/monitoring
+tar xf %SOURCE2 -C src/libntirpc/src/monitoring
 %patch -p1
 
 %build
@@ -404,6 +404,11 @@ install -m 644 config_samples/gpfs.ganesha.exports.conf	%buildroot%_sysconfdir/g
 %endif
 
 %cmake_install
+
+%if_without monitoring_support
+# https://github.com/nfs-ganesha/nfs-ganesha/issues/1302
+rm %buildroot%_libdir/libganesha_monitoring.so
+%endif
 popd
 
 %pre
@@ -592,6 +597,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Sat Jul 26 2025 Vitaly Chikunov <vt@altlinux.org> 7.0-alt1
+- Update to V7.0 (2025-07-25).
+
 * Sun Jan 12 2025 Vitaly Chikunov <vt@altlinux.org> 6.5-alt1
 - Update to V6.5 (2025-01-08).
 

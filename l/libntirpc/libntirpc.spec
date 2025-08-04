@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libntirpc
-Version: 6.3
+Version: 7.0
 Release: alt1
 Summary: New Transport Independent RPC Library
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: https://github.com/nfs-ganesha/ntirpc
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: libkrb5-devel
 BuildRequires: libnsl2-devel
 BuildRequires: libuserspace-rcu-devel
@@ -39,6 +40,7 @@ the following features not found in libtirpc:
 Summary: Development headers for %name
 Requires: %name = %EVR
 Group: Development/C
+AutoReq: nocpp
 
 %description devel
 Development headers and auxiliary files for developing with %name.
@@ -53,6 +55,7 @@ Development headers and auxiliary files for developing with %name.
 %cmake \
     -DTIRPC_EPOLL=1 \
     -DUSE_GSS=ON \
+    -DUSE_MONITORING=OFF \
     -GNinja
 
 %cmake_build
@@ -63,10 +66,13 @@ Development headers and auxiliary files for developing with %name.
 # tests/ contain sole rpcping binary which is not installed and isn't a test
 # (also having incorrect rpath).
 
+# Delete incorrectly built monitoring libraries (empty stubs).
+rm %buildroot%_libdir/libntirpcmonitoring.so*
+
 %files
 # NEWS and ChangeLog are very old and suggest to view git log.
 %doc AUTHORS COPYING THANKS README
-%_libdir/libntirpc.so.*
+%_libdir/libntirpc.so.%version
 
 %files devel
 %_libdir/libntirpc.so
@@ -74,6 +80,9 @@ Development headers and auxiliary files for developing with %name.
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Thu Jul 31 2025 Vitaly Chikunov <vt@altlinux.org> 7.0-alt1
+- Update to v7.0 (2025-07-28).
+
 * Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.3-alt1
 - Update to v6.3 (2024-11-22).
 
