@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.19.02
+Version: 0.19.03
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -30,6 +30,7 @@ BuildRequires: libjudy-devel
 BuildRequires: libkeyutils-devel
 BuildRequires: libkmod-devel
 BuildRequires: liblksctp-devel
+BuildRequires: liblzma-devel
 BuildRequires: libmpfr-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libxxhash-devel
@@ -118,6 +119,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sat Aug 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.03-alt1
+- Update to V0.19.03 (2025-08-01).
+
 * Tue Jul 01 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.02-alt1
 - Update to V0.19.02 (2025-07-01).
 
