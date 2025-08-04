@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: thunar
-Version: 4.20.3
+Version: 4.20.4
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -153,6 +153,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Aug 04 2025 Mikhail Efremov <sem@altlinux.org> 4.20.4-alt1
+- Updated to 4.20.4.
+
 * Fri May 16 2025 Mikhail Efremov <sem@altlinux.org> 4.20.3-alt1
 - Updated to 4.20.3.
 
