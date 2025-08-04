@@ -1,7 +1,7 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Game Boy Advance Emulator
@@ -131,6 +131,9 @@ cp %buildroot/usr/etc/%{shortname}.cfg %buildroot%_sysconfdir
 
 
 %changelog
+* Mon Aug 04 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+
 * Thu Jul 24 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.1-alt1
 - 2.2.1
 
