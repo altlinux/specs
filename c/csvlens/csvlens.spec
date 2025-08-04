@@ -1,6 +1,6 @@
 Name:    csvlens
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Command line csv viewer
 License: MIT
@@ -54,7 +54,7 @@ install -d %buildroot%_man1dir
 install -pv %SOURCE1 %buildroot%_man1dir
 
 %check
-%rust_test --workspace --no-fail-fast
+%rust_test --workspace
 
 %files
 %doc *.md LICENSE
@@ -62,6 +62,9 @@ install -pv %SOURCE1 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Aug 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.0-alt2
+- Fixed FTBFS: removed --no-fail-fast cause macro already contains.
+
 * Mon Jun 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.0-alt1
 - New version.
 

@@ -1,5 +1,5 @@
 Name: websocat
-Version: 1.11.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Netcat, curl and socat for WebSockets
@@ -13,8 +13,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Source99: websocat.watch
 
-BuildRequires(pre): /proc
-BuildRequires(pre): rust-cargo
+BuildRequires(pre): rpm-build-rust /proc
 BuildRequires: libssl-devel
 BuildRequires: perl-Pod-Usage
 
@@ -31,26 +30,28 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+unlink ./Cargo.lock
+subst 's+PATH=target/debug:$PATH+PATH=target/release:$PATH+g' ./test.sh
 
 %build
-cargo build \
-	--release \
-	--features=seqpacket,signal_handler,ssl,unix_stdio \
-	--no-default-features \
-	#
+%rust_build \
+	--features=seqpacket,signal_handler,ssl,unix_stdio
 
 %install
-install -pm755 -D target/release/websocat %buildroot%_bindir/websocat
+%rust_install
 
 %check
-cargo test
+%rust_test --workspace
 ./test.sh
 
 %files
-%_bindir/websocat
-%doc doc.md moreexamples.md
+%_bindir/%name
+%doc *.md
 
 %changelog
+* Mon Aug 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.14.0-alt1
+- Updated to v1.14.0.
+
 * Sun Sep 25 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.11.0-alt1
 - Updated to v1.11.0.
 
