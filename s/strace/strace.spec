@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.15
+Version: 6.16
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -21,7 +21,7 @@ BuildRequires: libdw-devel binutils-devel
 BuildRequires: libselinux-devel
 
 # for test suite
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc /dev/pts /dev/kvm}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc /dev/pts /dev/kvm %{?_enable_vmrun:rpm-build-vm-run iproute2}}}
 
 # The default is --enable-mpers=yes, but
 # some architectures may need --enable-mpers=check instead.
@@ -72,15 +72,32 @@ CFLAGS_FOR_BUILD="$RPM_OPT_FLAGS"; export CFLAGS_FOR_BUILD
 %define _stripped_files_terminate_build 1
 
 %check
-%buildroot%_bindir/strace -V
+%make_build -C build check-prerequisites
+
+cat > make-check <<'__EOF__'
+#!/bin/sh -eux
 export SLEEP_A_BIT='sleep 0.5' VERBOSE=1
+echo "RUNNING $* TEST SUITE"
 %make_build -k check -C build VERBOSE=1
 
-echo 'BEGIN OF TEST SUITE INFORMATION'
+echo "BEGIN OF $* TEST SUITE INFORMATION"
 tail -n 99999 -- build/tests*/test-suite*.log build/tests*/ksysent.gen.log
 find build/tests* -type f -name '*.log' -print0 |
 	xargs -r0 grep -H '^KERNEL BUG:' -- ||:
-echo 'END OF TEST SUITE INFORMATION'
+echo "END OF $* TEST SUITE INFORMATION"
+__EOF__
+chmod +x make-check
+
+%buildroot%_bindir/strace -V
+
+%if_enabled vmrun
+img="$TMPDIR/make-check.img"
+timeout 999 vm-run --kvm=cond --sbin --ext4 --create-rootfs="$img" \
+	--append='oops=panic panic_on_warn=1' \
+	"sysctl kernel.userns_restrict=0 && ./make-check KVM"
+rm "$img"
+%endif
+./make-check LOCAL
 
 %files
 %_bindir/strace
@@ -89,6 +106,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Tue Aug 05 2025 Dmitry V. Levin <ldv@altlinux.org> 6.16-alt1
+- v6.15 -> v6.16.
+
 * Mon May 26 2025 Dmitry V. Levin <ldv@altlinux.org> 6.15-alt1
 - v6.14 -> v6.15.
 
