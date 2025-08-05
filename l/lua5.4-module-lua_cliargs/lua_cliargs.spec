@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-# Busted not in sysiphus yet.
-%def_without check
 %define luarocks_revision 1
+# Disable on bootstrap.
+%def_with check
 
 Name: lua5.4-module-lua_cliargs
 Version: 3.0.2
-Release: alt1_lr%luarocks_revision
+Release: alt2_lr%luarocks_revision
 
 Summary: Cliargs is a command-line argument parser for Lua
 License: MIT
 Group: Development/Other
 Url: https://github.com/lunarmodules/lua_cliargs
-Vcs: https://github.com/lunarmodules/lua_cliargs
+Vcs: https://github.com/lunarmodules/lua_cliargs.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -26,6 +26,9 @@ Provides: luarocks5.4(lua_cliargs) = %EVR
 
 BuildRequires(pre): rpm-macros-lua
 BuildRequires: lua5.4-luarocks
+%if_with check
+BuildRequires: lua5.4-module-busted
+%endif
 
 %description
 Cliargs is a command-line argument parser for Lua. It supports several
@@ -69,5 +72,8 @@ luarocks-5.4 test --test-type busted \
 %lua_modulesdir_noarch/cliargs.lua
 
 %changelog
+* Tue Jul 29 2025 Sergey Zhidkih <rx1513@altlinux.org> 3.0.2-alt2_lr1
+- Enable tests.
+
 * Mon Apr 22 2025 Sergey Zhidkih <rx1513@altlinux.org> 3.0.2-alt1_lr1
 - First build for alt.
