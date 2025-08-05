@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.5.21.0.13.a613
+Version: 0.6.2
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -34,29 +34,27 @@ BuildRequires: gcc-c++
 Treeland is a wayland compositor based on wlroots and QtQuick, designed
 to provide efficient and flexible graphical interface support.
 
-%package -n libtreeland
+%package -n libtreeland%sover
 Summary: Library for %name
 Group: System/Libraries
 Requires: libdqt6-core = %_dqt6_version
 Requires: libdqt6-gui = %_dqt6_version
 Requires: libdqt6-quick = %_dqt6_version
 
-%description -n libtreeland
+%description -n libtreeland%sover
 This package provides main library for %name.
 
-%package -n libtreeland-protocol-capture-v1
+%package -n libtreeland-protocol-capture-v1_%sover
 Summary: treeland-protocol-capture-v1 library for %name
 Group: System/Libraries
 Requires: libdqt6-quick = %_dqt6_version
 
-%description -n libtreeland-protocol-capture-v1
+%description -n libtreeland-protocol-capture-v1_%sover
 This package provides treeland-protocol-capture-v1 library for %name.
 
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: libtreeland = %EVR
-Requires: libtreeland-protocol-capture-v1 = %EVR
 
 %description -n lib%name-devel
 This package provides development files for %name.
@@ -135,12 +133,7 @@ mv -f %buildroot%_prefix/etc/xdg-desktop-portal/dde-portals.conf %buildroot%_dat
 # prevent conflict with xdg-desktop-portal-dde
 rm -rf %buildroot%_datadir/xdg-desktop-portal/dde-portals.conf
 # cleanup illegal rpaths
-patchelf %buildroot%_dqt6_qmldir/Treeland/Plugins/MultitaskView/libmultitaskviewplugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_dqt6_qmldir/Treeland/Plugins/MultitaskView/libmultitaskviewplugin.so --add-rpath %_libdir/treeland/plugins
-patchelf %buildroot%_dqt6_qmldir/Treeland/Plugins/LockScreen/liblockscreenplugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_dqt6_qmldir/Treeland/Plugins/LockScreen/liblockscreenplugin.so --add-rpath %_libdir/treeland/plugins
-patchelf %buildroot%_dqt6_qmldir/Treeland/liblibtreelandplugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so --add-needed libtreeland.so
+patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-needed libtreeland.so.%sover
 
 # package translations
 %find_lang --with-qt treeland
@@ -159,7 +152,6 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so --add-needed libt
 %_userunitdir/treeland*
 %dir %_libdir/treeland/
 %_libdir/treeland/plugins/
-%_dqt6_qmldir/Treeland/
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %_datadir/dsg/configs/org.deepin.treeland/
@@ -168,13 +160,15 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so --add-needed libt
 %_datadir/treeland/shortcuts/
 %_datadir/wayland-sessions/treeland*.desktop
 
-%files -n libtreeland
-%_libdir/libtreeland.so
+%files -n libtreeland%sover
+%_libdir/libtreeland.so.%{sover}*
 
-%files -n libtreeland-protocol-capture-v1
-%_libdir/libtreeland-protocol-capture-v1.so
+%files -n libtreeland-protocol-capture-v1_%sover
+%_libdir/libtreeland-protocol-capture-v1.so.%{sover}*
 
 %files -n lib%name-devel
+%_libdir/libtreeland.so
+%_libdir/libtreeland-protocol-capture-v1.so
 %dir %_includedir/treeland/
 %dir %_includedir/treeland/modules/
 %_includedir/treeland/modules/personalization/
@@ -202,6 +196,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so --add-needed libt
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
+- New version 0.6.2.
+
 * Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.21.0.13.a613-alt1
 - New version 0.5.21-13-ga6134c2.
 
