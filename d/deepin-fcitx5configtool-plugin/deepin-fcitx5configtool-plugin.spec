@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-fcitx5configtool-plugin
-Version: 6.0.7
+Version: 6.0.14
 Release: alt1
 
 Summary: The input method management plug-in of DDE control center
@@ -52,15 +52,15 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %install
 %DQ6install
-mkdir -p %buildroot%_libdir/dde-control-center
-mv -f %buildroot%_prefix%_libdir/dde-control-center/* %buildroot%_libdir/dde-control-center
 %find_lang --with-qt --output=%name.lang dde-control-center
 
 %files -f %name.lang
 %doc README*.md
 %_bindir/kbd-layout-viewer6
+%_bindir/fcitx5-helper
 %_libexecdir/dcc-fcitx5configtool-exec
 %_desktopdir/kbd-layout-viewer6.desktop
+%_sysconfdir/xdg/autostart/fcitx5-helper.desktop
 %dir %_libdir/dde-control-center/
 %dir %_libdir/dde-control-center/plugins_v1.0/
 %_libdir/dde-control-center/plugins_v1.0/fcitx5configtool/
@@ -70,6 +70,10 @@ mv -f %buildroot%_prefix%_libdir/dde-control-center/* %buildroot%_libdir/dde-con
 %dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
+- New version 6.0.14.
+- Updated position for dde-control-center plugins.
+
 * Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Added vcs tag.
