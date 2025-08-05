@@ -6,16 +6,18 @@
 %endif
 
 Name: SDL_net
-Version: 1.2.8
-Release: alt3.git9a629d6
+Version: 1.2.8.0.51.e2e0
+Release: alt1
 
 Summary: Simple DirectMedia Layer - network
 License: Zlib
 Group: System/Libraries
 Url: http://www.libsdl.org/projects/SDL_net/
+VCS: https://github.com/libsdl-org/SDL_net.git
 # https://github.com/libsdl-org/SDL_net/tree/SDL-1.2
 
 Source0: %name-%version.tar.gz
+Patch0: %name-%version-%release.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -58,6 +60,7 @@ applications which will use %name.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 touch NEWS AUTHORS ChangeLog
@@ -74,7 +77,7 @@ rm -f %buildroot%_libdir/*.a
 
 %files -n %lib_name
 %doc CHANGES COPYING README
-%_libdir/*.so.*
+%_libdir/*.so.0*
 
 %files -n %lib_name-devel
 %_includedir/SDL/*
@@ -87,6 +90,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.8.0.51.e2e0-alt1
+- New version 1.2.8-51-ge2e041b (git snapshot).
+- Added VCS tag.
+
 * Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.8-alt3.git9a629d6
 - Disabled static libraries.
 
