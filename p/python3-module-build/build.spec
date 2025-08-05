@@ -16,10 +16,9 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.2.2.post1
+Version: 1.3.0
 Release: alt1
-
-Summary: Simple, correct PEP 517 build frontend
+Summary: A simple, correct Python build frontend
 License: MIT
 Group: Development/Python3
 
@@ -36,20 +35,23 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_metadata_extra uv
-%pyproject_builddeps_metadata_extra virtualenv
+%if_without uv
+%add_pyproject_deps_check_filter uv
 %endif
-
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
+%add_python_extra virtualenv
 %if_with uv
 %add_python_extra uv
 %endif
 
 %description
-A simple, correct PEP 517 build frontend.
+A simple, correct Python packaging build frontend.
 
-build will invoke the PEP 517 hooks to build a distribution package.
-It is a simple build tool and does not perform any dependency management.
+build manages pyproject.toml-based builds, invoking build-backend hooks as
+appropriate to build a distribution package. It is a simple build tool and does
+not perform any dependency management.
 
 %package -n pyproject-build
 Summary: Executable for python-build
@@ -65,6 +67,9 @@ Requires: python3-module-%pypi_name
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -84,6 +89,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Mon Aug 04 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.2.post1 -> 1.3.0.
+
 * Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 1.2.2.post1-alt1
 - 1.2.2 -> 1.2.2.post1.
 
