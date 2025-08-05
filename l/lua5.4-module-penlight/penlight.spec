@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-# Busted not in sisyphus yet.
-%def_without check
 %define luarocks_revision 1
+# Disable on bootstrap.
+%def_with check
 
 Name: lua5.4-module-penlight
 Version: 1.14.0
-Release: alt1_lr%luarocks_revision
+Release: alt2_lr%luarocks_revision
 
 Summary: Penlight is a set of pure Lua libraries for making it easier to work with common tasks
 License: MIT and X11
 Group: Development/Other
 Url: https://lunarmodules.github.io/Penlight/
-Vcs: https://github.com/lunarmodules/Penlight
+Vcs: https://github.com/lunarmodules/Penlight.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -33,6 +33,9 @@ Provides: luarocks5.4(luasystem) = %EVR
 BuildRequires(pre): rpm-macros-lua
 BuildRequires: lua5.4-luarocks
 BuildRequires: lua5.4-module-luafilesystem
+%if_with check
+BuildRequires: lua5.4-module-busted
+%endif
 
 %description
 Penlight brings together a set of generally useful pure Lua modules,
@@ -59,7 +62,7 @@ luarocks-5.4 install --verbose --local --deps-mode none \
 
 %check
 luarocks-5.4 test --test-type busted \
-	rockspecs/luautf8-%version-%luarocks_revision
+	rockspecs/penlight-%version-%luarocks_revision.rockspec
 
 %files
 %doc LICENSE.md
@@ -67,5 +70,8 @@ luarocks-5.4 test --test-type busted \
 %lua_modulesdir_noarch/pl/
 
 %changelog
+* Tue Jul 29 2025 Sergey Zhidkih <rx1513@altlinux.org> 1.14.0-alt2_lr1
+- Enable tests.
+
 * Wed Apr 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 1.14.0-alt1_lr1
 - First build for alt.
