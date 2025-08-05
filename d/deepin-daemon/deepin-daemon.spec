@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.45
+Version: 6.1.47
 Release: alt1
 Epoch: 2
 
@@ -152,7 +152,7 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %find_lang %repo
 
 %files -f %repo.lang
-%doc README.md LICENSE CHANGELOG.md
+%doc README.md LICENSE debian/changelog
 %config(noreplace) %_sysconfdir/grub.d/10_deepin.cfg
 %dir %_sysconfdir/deepin/
 %config(noreplace) %_sysconfdir/deepin/grub2_edit_auth.conf
@@ -208,6 +208,9 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.47-alt1
+- New version 6.1.47.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.45-alt1
 - New version 6.1.45.
 - Added subpackage: lightdm-deepin-greeter-conf.
