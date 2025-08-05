@@ -1,66 +1,49 @@
-Group: Development/Java
+#%%global mbi 1
+
+Name:    xmvn
+Version: 4.2.0
+Release: alt1
+Summary: Local Extensions for Apache Maven
+License: Apache-2.0
+Group:   Development/Java
+URL:     https://fedora-java.github.io/xmvn/
+BuildArch: noarch
+
+Source0: https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
+Source1: google-guice.jar
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-%if %{with bootstrap}
-%global mbi 1
-%endif
-
-Name:           xmvn
-Version:        4.0.0
-Release:        alt2
-Summary:        Local Extensions for Apache Maven
-License:        ASL 2.0
-URL:            https://fedora-java.github.io/xmvn/
-BuildArch:      noarch
-
-Source0:        https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(com.beust:jcommander)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
-BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-model-builder)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
-BuildRequires:  mvn(org.xmlunit:xmlunit-assertj3)
+BuildRequires: maven-local
+BuildRequires: mvn(aopalliance:aopalliance)
+BuildRequires: mvn(com.beust:jcommander)
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(org.apache.commons:commons-compress)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-model-builder)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires: mvn(org.easymock:easymock)
+BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
+BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
+BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-simple)
+BuildRequires: mvn(org.xmlunit:xmlunit-assertj3)
 # Maven home is used as template for XMvn home
-BuildRequires:  maven
-%endif
+BuildRequires: maven
 
-Requires:       %{name}-minimal = %{version}-%{release}
-Requires:       maven >= 3.6.1
-Source44: import.info
+Requires: %{name}-minimal = %{version}-%{release}
+Requires: maven >= 3.6.1
 
 %description
 This package provides extensions for Apache Maven that can be used to
@@ -68,70 +51,70 @@ manage system artifact repository and use it to resolve Maven
 artifacts in offline mode, as well as Maven plugins to help with
 creating RPM packages containing Maven artifacts.
 
-%package        minimal
+%package minimal
 Group: Development/Java
-Summary:        Dependency-reduced version of XMvn
-Requires:       %{name}-core = %{version}-%{release}
-Requires:       apache-commons-cli
-Requires:       apache-commons-lang3
-Requires:       atinject
-Requires:       google-guice
-Requires:       guava
-Requires:       maven-resolver
-Requires:       maven-wagon
-Requires:       plexus-cipher
-Requires:       plexus-classworlds
-Requires:       plexus-containers-component-annotations
-Requires:       plexus-interpolation
-Requires:       plexus-sec-dispatcher
-Requires:       plexus-utils
-Requires:       sisu
-Requires:       slf4j
+Summary: Dependency-reduced version of XMvn
+Requires: %{name}-core = %{version}-%{release}
+Requires: apache-commons-cli
+Requires: apache-commons-lang3
+Requires: atinject
+Requires: google-guice
+Requires: guava
+Requires: maven-resolver
+Requires: maven-wagon
+Requires: plexus-cipher
+Requires: plexus-classworlds
+Requires: plexus-containers-component-annotations
+Requires: plexus-interpolation
+Requires: plexus-sec-dispatcher
+Requires: plexus-utils
+Requires: sisu
+Requires: slf4j
 
-Requires:       maven-lib >= 3.4.0
-#Requires:       maven-jdk-binding
-#Requires:       maven-openjdk17
+Requires: maven-lib >= 3.4.0
+#Requires: maven-jdk-binding
+#Requires: maven-openjdk17
 
-Obsoletes:      xmvn-connector-aether < 4.0.0
+Obsoletes: xmvn-connector-aether < 4.0.0
 
-%description    minimal
+%description minimal
 This package provides minimal version of XMvn, incapable of using
 remote repositories.
 
-%package        core
+%package core
 Group: Development/Java
-Summary:        XMvn library
-Obsoletes:      xmvn-parent-pom < 4.0.0
-Obsoletes:      xmvn-api < 4.0.0
+Summary: XMvn library
+Obsoletes: xmvn-parent-pom < 4.0.0
+Obsoletes: xmvn-api < 4.0.0
 
-%description    core
+%description core
 This package provides XMvn API and XMvn Core modules, which implement
 the essential functionality of XMvn such as resolution of artifacts
 from system repository.
 
-%package        mojo
+%package mojo
 Group: Development/Java
-Summary:        XMvn MOJO
+Summary: XMvn MOJO
 
-%description    mojo
+%description mojo
 This package provides XMvn MOJO, which is a Maven plugin that consists
 of several MOJOs.  Some goals of these MOJOs are intended to be
 attached to default Maven lifecycle when building packages, others can
 be called directly from Maven command line.
 
-%package        tools
+%package tools
 Group: Development/Java
-Summary:        XMvn tools
+Summary: XMvn tools
 # Explicit javapackages-tools requires since scripts use
 # /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
-Obsoletes:      xmvn-tools-pom < 4.0.0
-Obsoletes:      xmvn-bisect < 4.0.0
-Obsoletes:      xmvn-install < 4.0.0
-Obsoletes:      xmvn-resolve < 4.0.0
-Obsoletes:      xmvn-subst < 4.0.0
+Requires:  javapackages-tools
+Obsoletes: xmvn-tools-pom < 4.0.0
+Obsoletes: xmvn-bisect < 4.0.0
+Obsoletes: xmvn-install < 4.0.0
+Obsoletes: xmvn-resolve < 4.0.0
+Obsoletes: xmvn-subst < 4.0.0
 
-%description    tools
+%description tools
 This package provides various XMvn tools:
 * XMvn Install, which is a command-line interface to XMvn installer.
   The installer reads reactor metadata and performs artifact
@@ -144,16 +127,10 @@ This package provides various XMvn tools:
 * XMvn Subst, which is a tool that can substitute Maven artifact files
   with symbolic links to corresponding files in artifact repository.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package provides %{summary}.
+%{?javadoc_package}
 
 %prep
-%setup -q
+%setup
 
 %mvn_package ::tar.gz: __noinstall
 %mvn_package ":{xmvn,xmvn-connector}" xmvn
@@ -181,9 +158,9 @@ cp -a "${maven_home}" target/dependency/apache-maven-$mver
     <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine></configuration>"
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P\\!quality
+%mvn_build -f -- -P\\!quality
 
-version=4.0.0
+version=4.2.0
 tar --delay-directory-restore -xvf target/xmvn-*-bin.tar.gz
 chmod -R +rwX %{name}-${version}*
 # These are installed as doc
@@ -193,12 +170,10 @@ rm -Rf %{name}-${version}*/lib/{installer,resolver,subst}/
 # Irrelevant Maven launcher scripts
 rm -f %{name}-${version}*/bin/*
 
-
 %install
-export CLASSPATH=/usr/share/java/commons-io.jar
 %mvn_install
 
-version=4.0.0
+version=4.2.0
 maven_home=$(realpath $(dirname $(realpath $(%{?jpb_env} which mvn)))/..)
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
@@ -249,6 +224,12 @@ done
 # Temporary fix for commons-io
 subst 's/commons-compress/& commons-io/' %{buildroot}%{_bindir}/%{name}-install
 
+# Bootstrap guice-5.1.0
+rm %buildroot/usr/share/%{name}/lib/guice*.jar
+install -m 644 %SOURCE1 %buildroot/usr/share/%{name}/lib/guice-5.1.0.jar
+ln -s /usr/share/java/aopalliance.jar %buildroot/usr/share/%{name}/lib/aopalliance-1.0.jar
+ln -s /usr/share/java/objectweb-asm/asm.jar %buildroot/usr/share/%{name}/lib/asm-9.2.jar
+
 %pre minimal
 oldpath=/usr/share/xmvn/conf/logging
 if [ -d "$oldpath" ]; then
@@ -258,8 +239,6 @@ if [ -d "$oldpath" ]; then
     mv "$oldpath" "$oldpath".rpmmoved
   fi
 fi
-
-
 
 # Workaround for rpm bug 447156 - rpm fails to change directory to symlink
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/Directory_Replacement/
@@ -292,10 +271,11 @@ fi
 %{_bindir}/%{name}-resolve
 %{_bindir}/%{name}-subst
 
-%files javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Mon Jul 28 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- New version.
+- Bootstrap guice-5.1.0.
+
 * Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt2
 - fix build with apache-common-io 2.19.0
 

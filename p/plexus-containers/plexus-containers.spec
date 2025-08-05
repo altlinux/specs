@@ -19,7 +19,7 @@ BuildRequires: jpackage-default
 
 Name:           plexus-containers
 Version:        2.1.1
-Release:        alt1_2jpp11
+Release:        alt2
 Summary:        Containers for Plexus
 # Most of the files are either under ASL 2.0 or MIT
 # The following files are under xpp:
@@ -128,6 +128,7 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultC
 
 %install
 %mvn_install
+subst '/jar<\/path>$/a <extension>jar</extension>' %buildroot%_datadir/maven-metadata/plexus-containers-plexus-container-default.xml
 
 # plexus-containers pom goes into main package
 %files -f .mfiles-plexus-containers
@@ -143,6 +144,9 @@ rm plexus-component-metadata/src/test/java/org/codehaus/plexus/metadata/DefaultC
 %doc --no-dereference LICENSE-2.0.txt LICENSE.MIT
 
 %changelog
+* Tue Jul 29 2025 Andrey Cherepanov <cas@altlinux.org> 0:2.1.1-alt2
+- Added extension jar for plexus-container-default.
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0:2.1.1-alt1_2jpp11
 - update
 

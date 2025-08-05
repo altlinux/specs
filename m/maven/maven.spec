@@ -23,7 +23,7 @@ BuildRequires: jpackage-default
 Name:           maven
 Epoch:          1
 Version:        3.8.8
-Release:        alt1
+Release:        alt2
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
 # bundled slf4j is MIT
@@ -96,11 +96,11 @@ BuildRequires:  mvn(org.slf4j:slf4j-simple::sources:)
 %endif
 
 Requires: %{name}-lib = %{epoch}:%{version}-%{release}
-Source44: import.info
 # maven-filesystem
 Obsoletes: maven-filesystem < 0.02
 
-
+# Remove old guice requirement
+%filter_from_requires /^mvn(com.google.inject:guice::no_aop:)/d
 
 %description
 Maven is a software project management and comprehension tool. Based on the
@@ -177,13 +177,15 @@ sed -i "
 </plugin>' maven-model-builder/pom.xml
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f
 
 mkdir m2home
 (cd m2home
     tar --delay-directory-restore -xvf ../apache-maven/target/*tar.gz
 )
-
+# Bootstrap guice-5.1.0
+rm -f ./m2home/apache-maven-%{version}%{?ver_add}/lib/guice-4.2.2-no_aop.jar
+cp /usr/share/xmvn/lib/guice-5.1.0.jar ./m2home/apache-maven-%{version}%{?ver_add}/lib/
 
 %install
 %mvn_install
@@ -265,6 +267,10 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Tue Jul 29 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8.8-alt2
+- Boostrapped google-guice-5.1.0.
+- Built without tests.
+
 * Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.8-alt1
 - New version 3.8.8 (thanks CentOS for the patch).
 
