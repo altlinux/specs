@@ -2,7 +2,7 @@
 
 Name:    xmvn
 Version: 4.2.0
-Release: alt1
+Release: alt2
 Summary: Local Extensions for Apache Maven
 License: Apache-2.0
 Group:   Development/Java
@@ -10,7 +10,6 @@ URL:     https://fedora-java.github.io/xmvn/
 BuildArch: noarch
 
 Source0: https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
-Source1: google-guice.jar
 
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
@@ -18,6 +17,7 @@ BuildRequires: maven-local
 BuildRequires: mvn(aopalliance:aopalliance)
 BuildRequires: mvn(com.beust:jcommander)
 BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(com.google.inject:guice)
 BuildRequires: mvn(org.apache.commons:commons-compress)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
@@ -224,11 +224,11 @@ done
 # Temporary fix for commons-io
 subst 's/commons-compress/& commons-io/' %{buildroot}%{_bindir}/%{name}-install
 
-# Bootstrap guice-5.1.0
+# End of bootstrap guice-5.1.0
 rm %buildroot/usr/share/%{name}/lib/guice*.jar
-install -m 644 %SOURCE1 %buildroot/usr/share/%{name}/lib/guice-5.1.0.jar
-ln -s /usr/share/java/aopalliance.jar %buildroot/usr/share/%{name}/lib/aopalliance-1.0.jar
-ln -s /usr/share/java/objectweb-asm/asm.jar %buildroot/usr/share/%{name}/lib/asm-9.2.jar
+ln -s %_javadir/google-guice.jar %buildroot/usr/share/%{name}/lib/guice-5.1.0.jar
+ln -s %_javadir/aopalliance.jar %buildroot/usr/share/%{name}/lib/aopalliance-1.0.jar
+ln -s %_javadir/objectweb-asm/asm.jar %buildroot/usr/share/%{name}/lib/asm-9.2.jar
 
 %pre minimal
 oldpath=/usr/share/xmvn/conf/logging
@@ -272,6 +272,9 @@ fi
 %{_bindir}/%{name}-subst
 
 %changelog
+* Fri Aug 01 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt2
+- End of bootstrap guice-5.1.0.
+
 * Mon Jul 28 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
 - New version.
 - Bootstrap guice-5.1.0.
