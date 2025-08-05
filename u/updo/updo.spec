@@ -1,7 +1,7 @@
 %global import_path github.com/Owloops/updo
 
 Name: updo
-Version: 0.2.7
+Version: 0.3.1
 Release: alt1
 
 Summary: Uptime monitoring CLI tool
@@ -15,15 +15,18 @@ Packager: Aleksandr Shamaraev <shad@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+Source2: vendor2.tar
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang
+BuildRequires: rpm-build-golang zip
 
 %description
 Uptime monitoring CLI tool with alerting and advanced settings.
 
 %prep
 %setup -a1
+
+tar -xf %SOURCE2 -C lambda/
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -32,7 +35,12 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-cd .build/src/%import_path
+cd .build/src/%import_path/lambda
+GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags lambda.norpc -ldflags="-s -w" -o ../aws/bootstrap $(notdir lambda/lambda.go)
+cd ..
+cd aws && zip -q bootstrap.zip bootstrap
+
+cd %_builddir/%name-%version/.build/src/%import_path
 %golang_build .
 
 %install
@@ -46,6 +54,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Aug 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.1-alt1
+- 0.2.7 -> 0.3.1
+
 * Wed Jul 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.7-alt1
 - 0.2.3 -> 0.2.7
 
