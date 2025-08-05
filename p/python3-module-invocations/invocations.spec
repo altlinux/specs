@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
-Release: alt2
+Version: 4.0.2
+Release: alt1
 Summary: Common/best-practice Invoke tasks and collections
 License: BSD
 Group: Development/Python3
@@ -42,7 +42,7 @@ common best practices.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -60,6 +60,9 @@ common best practices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
+- 3.3.0 -> 4.0.2.
+
 * Thu Jun 08 2023 Stanislav Levin <slev@altlinux.org> 3.3.0-alt2
 - Fixed FTBFS (missing dependencies).
 
