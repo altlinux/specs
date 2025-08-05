@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.5.7
+Version: 1.5.9
 Release: alt1
 
 Summary: Basic platform-agnostic utilities for paths, clipboard, and stdout management
@@ -47,6 +47,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 05 2025 Artem Semenov <savoptik@altlinux.org> 1.5.9-alt1
+- Updated to new version 1.5.9
+
 * Tue Jul 29 2025 Artem Semenov <savoptik@altlinux.org> 1.5.7-alt1
 - Updated to new version 1.5.7
 
