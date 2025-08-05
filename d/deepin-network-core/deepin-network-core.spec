@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.61
+Version: 2.0.64
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later
@@ -14,6 +14,7 @@ Url: https://github.com/linuxdeepin/dde-network-core
 Vcs: git://github.com/linuxdeepin/dde-network-core.git
 
 Source: %url/archive/%version/dde-network-core-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 # deepin-control-center
 ExcludeArch: i586
@@ -49,6 +50,7 @@ This package provides development files for %name.
 
 %prep
 %setup -n dde-network-core-%version
+%patch -p1
 sed -i '/DESTINATION/s|lib/dde|${LIB_DESTINATION}/dde|' \
        $(find ./ -name 'CMakeLists.txt')
 
@@ -73,9 +75,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %DQ6install
-mkdir -p %buildroot%_libdir/dde-control-center/plugins_v1.0/network/
-mv -f %buildroot%_prefix/%_libdir/dde-control-center/plugins_v1.0/network/* \
-      %buildroot%_libdir/dde-control-center/plugins_v1.0/network/
 # cleanup broken rpaths in elfs
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --add-needed libQt6Qml.so.6
@@ -141,6 +140,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.64-alt1
+- New version 2.0.64.
+- Updated position for dde-control-center plugins.
+
 * Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.61-alt1
 - New version 2.0.61.
 
