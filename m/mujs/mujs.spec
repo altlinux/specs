@@ -4,7 +4,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: mujs
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: Lightweight Javascript interpreter library
@@ -14,6 +14,8 @@ License: ISC
 
 # https://github.com/ArtifexSoftware/mujs
 Source: %name-%version.tar
+Source1: https://www.unicode.org/Public/16.0.0/ucd/SpecialCasing.txt
+Source2: https://www.unicode.org/Public/16.0.0/ucd/UnicodeData.txt
 Patch: %name-alt-makefile.patch
 
 BuildRequires: gcc libreadline-devel
@@ -60,6 +62,7 @@ Requires: lib%name = %EVR
 %build
 export LIB="%_lib"
 export OPTFLAGS="%optflags"
+cp -a %SOURCE1 %SOURCE2 .
 %make_build release
 
 %install
@@ -82,6 +85,9 @@ ln -srv %buildroot%_libdir/lib%name.so.%soname %buildroot%_libdir/lib%name.so
 %_libdir/*.a
 
 %changelog
+* Tue Aug 05 2025 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt1
+- 1.3.7.
+
 * Tue Mar 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.3.6-alt1
 - 1.3.6.
 
