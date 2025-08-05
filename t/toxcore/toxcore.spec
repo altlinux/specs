@@ -3,7 +3,7 @@
 %define abiversion 2
 
 Name: toxcore
-Version: 0.2.20
+Version: 0.2.21
 Release: alt1
 
 Summary: Peer to peer (serverless) instant messenger
@@ -129,6 +129,9 @@ sed -i "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
 %_pkgconfigdir/libtoxcore.pc
 
 %changelog
+* Tue Aug 05 2025 Constantin Sunzow <protvin@altlinux.org> 0.2.21-alt1
+- New version.
+
 * Tue Feb 25 2025 Constantin Sunzow <protvin@altlinux.org> 0.2.20-alt1
 - Disable build static package.
 - New version.
