@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.30.0
+Version: 6.30.1
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -89,6 +89,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Aug 05 2025 Anton Vyatkin <toni@altlinux.org> 6.30.1-alt1
+- New version 6.30.1.
+
 * Mon Jul 21 2025 Anton Vyatkin <toni@altlinux.org> 6.30.0-alt1
 - New version 6.30.0.
 
