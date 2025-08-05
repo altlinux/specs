@@ -15,12 +15,12 @@ Extra "%1" for %%pypi_name. \
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.1
+Version: 4.0.0
 Release: alt1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
 Group: Development/Python3
-Url: http://www.paramiko.org/
+Url: https://pypi.org/project/paramiko/
 VCS: https://github.com/paramiko/paramiko.git
 BuildArch: noarch
 Source: %name-%version.tar
@@ -34,7 +34,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /dev/pts
 # not packaged
 %add_pyproject_deps_check_filter codespell
-%pyproject_builddeps_metadata_extra invoke
 %pyproject_builddeps_metadata_extra gssapi
 %pyproject_builddeps_check
 # manually installed (.circleci/config.yml)
@@ -54,7 +53,7 @@ entirely in python (no C or platform-dependent code).
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -72,6 +71,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 3.5.1 -> 4.0.0.
+
 * Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
 - 3.5.0 -> 3.5.1.
 
