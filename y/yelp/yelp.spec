@@ -1,20 +1,19 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Yelp
 
-%define ver_major 42
-%define beta %nil
+%define ver_major 49
+%define beta .beta
 %def_disable debug
 %def_enable lzma
 %def_disable gtk_doc
-%define webkit_api_ver 4.1
-%def_without webkit2gtk_40
-%{?_with_webkit2gtk_40:%define webkit_api_ver 4.0}
+%define webkit_api_ver 6.0
+
 %def_enable check
 
 Name: yelp
-Version: %ver_major.3
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Lightweight help browser for GNOME
 License: GPL-2.0-or-later
@@ -29,16 +28,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define gio_ver 2.38
-%define gtk_ver 3.14
+%define gio_ver 2.68
+%define gtk_ver 4.16
+%define adw_ver 1.6
 %define xslt_ver 1.1.4
-%define webkit_ver 2.19.2
-%define yelpxsl_ver %ver_major.4
-%define handy_ver 1.5.0
+%define webkit_ver 2.40
+%define yelpxsl_ver %ver_major
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
-Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
+Requires: dconf
 %ifarch %e2k
 Obsoletes: yelp.sh
 %endif
@@ -46,13 +45,14 @@ Obsoletes: yelp.sh
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson itstool gtk-doc
 BuildRequires: libgio-devel >= %gio_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libxslt-devel >= %xslt_ver
-BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
+BuildRequires: pkgconfig(webkitgtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: yelp-xsl >= %yelpxsl_ver
 BuildRequires: zlib-devel bzlib-devel libsqlite3-devel
 %{?_enable_lzma:BuildRequires: liblzma-devel}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Yelp is a help browser for the GNOME desktop. Yelp provides
@@ -69,12 +69,12 @@ Yelp is a help browser for the GNOME desktop. Yelp provides
 a simple graphical interface for viewing DocBook, HTML, man, and info
 formatted documentation.
 
-This package provides shared library required for dconf to work
+This package provides shared library required for Yelp to work
 
 %package -n lib%name-devel
 Summary: Development files for Yelp library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Yelp is a help browser for the GNOME desktop. Yelp provides
@@ -104,8 +104,7 @@ Yelp.
 
 %build
 %meson \
-    %{subst_enable_meson_feature lzma lzma} \
-    %{?_with_webkit2gtk_40:-Dwebkit2gtk-4-0}
+    %{subst_enable_meson_feature lzma lzma}
 %nil
 %meson_build
 
@@ -119,12 +118,12 @@ Yelp.
 %files -f %name.lang
 %_bindir/gnome-help
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
 %_datadir/yelp-xsl/xslt/common/domains/yelp.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.yelp.gschema.xml
 %_iconsdir/hicolor/*/*/%{xdg_name}*.svg
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS README* NEWS TODO
 
 %files -n lib%name
@@ -141,6 +140,9 @@ Yelp.
 %endif
 
 %changelog
+* Tue Aug 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt0.5.beta
+- 49.beta (ported to Libadwaita/WebkitGtk-6.0)
+
 * Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3 (fixed CVE-2025-3155)
 

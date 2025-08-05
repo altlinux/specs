@@ -1,10 +1,10 @@
-%define ver_major 42
-%define beta %nil
+%define ver_major 49
+%define beta .beta
 %def_enable check
 
 Name: yelp-xsl
-Version: %ver_major.4
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: XSLT stylesheets for the Yelp, GNOME help browser
 License: GPL-2.0 and LGPL-2.1 and MIT
@@ -49,6 +49,9 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %doc AUTHORS README* NEWS COPYING
 
 %changelog
+* Tue Aug 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt0.5.beta
+- 49.beta
+
 * Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
 - 42.4 (fixed CVE-2025-3155)
 
