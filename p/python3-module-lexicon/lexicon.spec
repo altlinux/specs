@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 3.0.0
 Release: alt1
 Summary: Powerful dict subclass(es) with aliasing & attribute access
 License: BSD-2-Clause
@@ -20,6 +20,8 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not packaged
+%add_pyproject_deps_check_filter standard-imghdr
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: /dev/pts
@@ -34,7 +36,7 @@ Lexicon is a simple collection of Python dict subclasses providing extra power.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -52,6 +54,9 @@ Lexicon is a simple collection of Python dict subclasses providing extra power.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 05 2025 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.0.1 -> 3.0.0.
+
 * Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 1.0.0 -> 2.0.1.
 
