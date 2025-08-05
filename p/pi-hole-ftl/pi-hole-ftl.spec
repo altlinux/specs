@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    pi-hole-ftl
-Version: 6.2.2
+Version: 6.2.3
 Release: alt1
 
 Summary: The Pi-hole FTL engine
@@ -43,7 +43,7 @@ FTLDNS (pihole-FTL) provides an interactive API and also generates statistics fo
 
 %build
 export GIT_BRANCH="master"
-export GIT_HASH="044ef46d84fd2b209ddab84d21851bfe1e93fcc2"
+export GIT_HASH="88737f6248cd3df3202eed72aeec89b9fb572631"
 export GIT_VERSION="%version"
 export GIT_DATE=""
 export GIT_TAG="v%version"
@@ -84,6 +84,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Tue Aug 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.3-alt1
+- v6.2.3
+
 * Tue Jun 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.2-alt1
 - v6.2.2
 
