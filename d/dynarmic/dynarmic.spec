@@ -2,7 +2,7 @@
 
 Name: dynarmic
 Version: 6.7.0
-Release: alt2
+Release: alt3
 
 Summary: A dynamic recompiler for ARM.
 License: 0BSD
@@ -17,6 +17,7 @@ ExclusiveArch: x86_64 aarch64
 Source: %name-%version.tar
 
 Patch0: %name-mcl-alt.patch
+Patch1: %name-inc-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-devel
@@ -47,7 +48,7 @@ Header files for lib%name
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %cmake \
@@ -69,6 +70,9 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt3
+- Add inc files
+
 * Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt2
 - Add ignore asserts option (thx zerg@)
 

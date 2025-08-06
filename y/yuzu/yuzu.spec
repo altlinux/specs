@@ -1,18 +1,12 @@
-%define optflags_lto -flto=thin
-%define llvm_version 17.0
-
 # git describe mainline-0-%version
 %define git_descr mainline-636-14434-g537296095ab
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
-%define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
-%define simpleini_version 4.20
-%define cpp_httplib_version 0.14.1
 %define tzdb_to_nx_date 221202
 
 Name: yuzu
 Version: 1734
-Release: alt3
+Release: alt4
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -29,26 +23,27 @@ BuildRequires(pre): libavfilter-devel
 Source0: %name-mainline-mainline-0-%version.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source1: sirit-%sirit_commit.tar
-# https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
-Source2: mbedtls-%mbedtls_commit.tar
-# https://github.com/brofield/simpleini/archive/v%simpleini_version/simpleini-%simpleini_version.tar.gz
-Source3: simpleini-%simpleini_version.tar
-# https://github.com/yhirose/cpp-httplib/archive/v%cpp_httplib_version/cpp-httplib-%cpp_httplib_version.tar.gz
-Source4: cpp-httplib-%cpp_httplib_version.tar
 
-Source5: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
+Source2: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
 Patch2: %name-fmt11-alt.patch
 Patch3: %name-memory-alt.patch
 Patch4: %name-dynarmic-6.7-debian.patch
+Patch5: %name-llvm-version-debian.patch
+Patch6: %name-httplib-version-alt.patch
+Patch7: %name-disable-mcl-library-debian.patch
+Patch8: %name-simpleini-system-alt.patch
+Patch9: %name-mbedtls-system-debian.patch
 
 BuildRequires: /proc
+BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
-BuildRequires: clang%llvm_version-tools
+BuildRequires: clang
+BuildRequires: clang-tools
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
 BuildRequires: libVulkanUtilityLibraries-devel
@@ -64,21 +59,23 @@ BuildRequires: libenet-devel
 BuildRequires: libffi-devel
 BuildRequires: libgamemode-devel
 BuildRequires: liblz4-devel
+BuildRequires: libmbedtls-devel
 BuildRequires: libopus-devel
+BuildRequires: libsimpleini-devel
 BuildRequires: libstb-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
-BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version-devel
-BuildRequires: llvm%llvm_version-gold
-BuildRequires: ninja-build
+BuildRequires: lld
+BuildRequires: llvm
+BuildRequires: llvm-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: qt6-tools-devel
+BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 BuildRequires: unzip
 BuildRequires: zlib-devel
@@ -87,18 +84,11 @@ BuildRequires: zlib-devel
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4
+%setup -n %name-mainline-mainline-0-%version -b 1
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
-%__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
-%__mv -Tf ../simpleini-%simpleini_version externals/simpleini
-%__mv -Tf ../cpp-httplib-%cpp_httplib_version externals/cpp-httplib
 
 # Enforce package versioning in GUI
 sed -i \
@@ -111,23 +101,22 @@ src/common/scm_rev.cpp.in
 %__rm .gitmodules
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvm_version
-
 sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
 sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
 
 %__mkdir_p %_target_platform/externals/nx_tzdb/nx_tzdb
-unzip %SOURCE5 -d %_target_platform/externals/nx_tzdb/nx_tzdb
+unzip %SOURCE2 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 
-%add_optflags -Wno-error=conversion
+%add_optflags -Wno-error=conversion -I%_includedir/SimpleIni
+
+export CC="clang"
+export CXX="clang++"
+export RANLIB="llvm-ranlib"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
-	-DCMAKE_C_COMPILER:STRING=clang \
-	-DCMAKE_CXX_COMPILER:STRING=clang++ \
-	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
-	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
-	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
-	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DENABLE_QT6:BOOL=TRUE \
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
@@ -156,6 +145,13 @@ unzip %SOURCE5 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Wed Aug 06 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt4
+- Build with latest LLVM
+- Build with system httplib
+- Build without mcl
+- Build with system SimpleIni
+- Build with system Mbed TLS
+
 * Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt3
 - Build with dynarmic 6.7
 
