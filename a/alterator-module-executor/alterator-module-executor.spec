@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.25
+Version: 0.1.26
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -7,12 +7,13 @@ License: GPL-2
 Group: System/Configuration/Other
 URL: https://altlinux.space/alterator/alterator-module-executor
 
-BuildRequires: cmake gcc libtomlc99-devel
+BuildRequires: cmake gcc libtomlc99-devel libjson-c-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 BuildRequires: alterator-manager-devel >= 0.1.28
 
 Requires: alterator-manager >= 0.1.28-alt1
 Requires: libtomlc99 >= 1.0
+Requires: libjson-c5 >= 0.17
 
 Source: %name-%version.tar
 
@@ -35,6 +36,14 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Aug 06 2025 Ivan Savin <svn17@altlinux.org> 0.1.26-alt1
+- Add the ability to create methods with multiple return values (strings). The
+  names of these output arguments are specified by an array in the stdout_json
+  field in the backend file. The method expects a string containing a json
+  object from the running process. Having received such an object, it parses
+  it and extracts strings from it whose keys correspond to the names specified
+  in the stdout_json field.
+
 * Tue Jul 08 2025 Ivan Savin <svn17@altlinux.org> 0.1.25-alt1
 - Add the ability to use string arrays as method parameters.
 

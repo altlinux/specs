@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.29
-Release: alt3
+Version: 0.1.30
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -87,6 +87,10 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Wed Aug 06 2025 Ivan Savin <svn17@altlinux.org> 0.1.30-alt1
+- Add the ability to use arrays to describe methods in backend files.
+- Update docs/README-ru.md.
+
 * Wed Jul 09 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt3
 - Update docs/README-ru.md.
 - Add URL to the spec.
