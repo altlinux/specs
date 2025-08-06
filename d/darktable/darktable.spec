@@ -21,7 +21,7 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -42,6 +42,7 @@ Patch2000: darktable-e2k.patch
 Patch3500: darktable-4.6.1-loongarch64.patch
 
 ExcludeArch: %ix86 armh
+# how to use Lua scripts see https://github.com/wpferguson/script-manager
 AutoReq: nolua
 
 %define cmake_ver 3.10
@@ -175,6 +176,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Wed Aug 06 2025 Yuri N. Sedunov <aris@altlinux.org> 5.2.1-alt1
+- 5.2.1
+
 * Sat Jun 21 2025 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
