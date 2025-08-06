@@ -1,5 +1,5 @@
 Name:    coin3d
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 Summary: OpenGL-based, 3D graphics library
 License: BSD-3-Clause
@@ -158,6 +158,9 @@ This package contains architecture independent files of Coin3D.
 %_datadir/Coin4
 
 %changelog
+* Wed Aug 06 2025 Andrey Cherepanov <cas@altlinux.org> 4.0.5-alt1
+- New version.
+
 * Wed Jun 25 2025 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt1
 - New version.
 
