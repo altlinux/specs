@@ -1,5 +1,5 @@
 Name: deepin-wayland-protocols
-Version: 1.10.0.30
+Version: 1.10.0.31
 Release: alt1
 
 Summary: Wayland protocols for DDE
@@ -36,7 +36,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %cmake_install
 
 %files
-%doc COPYING.LIB README.md
+%doc COPYING.LIB README.md debian/changelog
 %dir %_datadir/%name/
 %_datadir/%name/*
 
@@ -45,6 +45,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DeepinWaylandProtocols/*.cmake
 
 %changelog
+* Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.10.0.31-alt1
+- New version 1.10.0.31.
+
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.10.0.30-alt1
 - New version 1.10.0.30.
 
