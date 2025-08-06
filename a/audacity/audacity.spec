@@ -16,7 +16,7 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.4
+Version: 3.7.5
 Release: alt1
 
 Summary: Cross-platform audio editor
@@ -259,6 +259,9 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Wed Aug 06 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.5-alt1
+- 3.7.5
+
 * Sun Jun 15 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.4-alt1
 - 3.7.4
 
