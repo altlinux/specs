@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        138.0.7204.183
+Version:        139.0.7258.66
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -117,7 +117,6 @@ Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
-Patch073: 0073-FEDORA-chromium-136-rust-skrifa-build-error.patch
 Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -441,7 +440,7 @@ gn_arg+=( v8_symbol_level=0 )
 gn_arg+=( v8_enable_backtrace=true )
 gn_arg+=( disable_fieldtrial_testing_config=true )
 
-gn_arg+=( enable_nacl=false )
+gn_arg+=( enable_enterprise_companion=false )
 gn_arg+=( is_component_ffmpeg=false )
 gn_arg+=( is_component_build=false )
 gn_arg+=( enable_widevine=true )
@@ -648,6 +647,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Aug 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.66-alt1
+- New version (139.0.7258.66).
+- Some vaapi flags were renamed to accelerated video in chromium 131.
+- Fixes:
+  + CVE-2025-8576: Use after free in Extensions.
+  + CVE-2025-8577: Inappropriate implementation in Picture In Picture.
+  + CVE-2025-8578: Use after free in Cast.
+  + CVE-2025-8579: Inappropriate implementation in Gemini Live in Chrome.
+  + CVE-2025-8580: Inappropriate implementation in Filesystems.
+  + CVE-2025-8581: Inappropriate implementation in Extensions.
+  + CVE-2025-8582: Insufficient validation of untrusted input in DOM.
+  + CVE-2025-8583: Inappropriate implementation in Permissions.
+
 * Thu Jul 31 2025 Andrew A. Vasilyev <andy@altlinux.org> 138.0.7204.183-alt1
 - New version (138.0.7204.183).
 - Fixes:
