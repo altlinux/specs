@@ -1,6 +1,6 @@
 Name: doxygen
-Version: 1.13.2
-Release: alt1
+Version: 1.14.0
+Release: alt2
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -86,9 +86,14 @@ find * -name "*._*" -delete
 ## ALT apply patches
 
 %build
+%ifnarch %ix86
+# node and/or uglifyjs are broken on i586, see
+# - https://bugzilla.altlinux.org/55012
+# - https://bugzilla.altlinux.org/54577
 %make_build -C deps/jquery \
 	UGLIFYJS=uglifyjs \
 	install
+%endif
 
 %define _cmake__builddir BUILD
 %cmake -G "Unix Makefiles" \
@@ -122,6 +127,12 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Wed Aug 06 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.14.0-alt2
+- Add workaround for broken nodejs on i586
+
+* Mon May 26 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.14.0-alt1
+- 1.14.0
+
 * Fri Jan 10 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.13.2-alt1
 - 1.13.2
 
