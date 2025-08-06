@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -15,7 +15,8 @@ Url: https://github.com/linuxdeepin/ddm
 Vcs: git://github.com/linuxdeepin/ddm.git
 
 Source: %url/archive/%version/%name-%version.tar.xz
-Patch: ddm-0.1.9-alt-pam.patch
+Patch0: %name-%version-%release.patch
+Patch1: ddm-0.1.9-alt-pam.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
 BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel
@@ -93,7 +94,7 @@ getent passwd ddm >/dev/null || \
 exit 0
 
 %files
-%doc LICENSES/ README*.md
+%doc LICENSES/ README*.md debian/changelog
 %config(noreplace) %_sysconfdir/pam.d/ddm-autologin
 %config(noreplace) %_sysconfdir/pam.d/ddm
 %config(noreplace) %_sysconfdir/pam.d/ddm-greeter
@@ -105,7 +106,7 @@ exit 0
 %_libexecdir/ddm-helper-start-single-wayland
 %_libexecdir/ddm-helper-start-x11user
 %_unitdir/ddm.service
-%_unitdir/seatd.service.d/override.conf
+%_unitdir/seatd-dde.service
 %_sysusersdir/dde.conf
 %_tmpfilesdir/ddm.conf
 
@@ -146,6 +147,9 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 0.1.11-alt1
+- New version 0.1.11.
+
 * Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 0.1.10-alt1
 - New version 0.1.10.
 - Fixed preinstall command.
