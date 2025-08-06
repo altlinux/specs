@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Simple module to parse ISO 8601 dates
 
@@ -22,6 +22,7 @@ BuildRequires: python3-module-poetry
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-pytz
 %endif
 
 BuildArch: noarch
@@ -50,6 +51,9 @@ This module parses the most common forms of ISO 8601 date strings (e.g.
 %exclude %python3_sitelibdir/%pypi_name/__pycache__/test_iso8601.cpython*
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.1.0-alt2
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 

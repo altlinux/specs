@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.1.2
-Release: alt2
+Release: alt3
 
 Summary: Django Channels HTTP/WebSocket server
 License: BSD-3-Clause
@@ -24,6 +24,8 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-twisted
 BuildRequires: python3-module-autobahn
+BuildRequires: python3-module-asgiref
+BuildRequires: python3-module-django
 %endif
 
 %description
@@ -54,6 +56,9 @@ prefixing to determine WebSocket endpoints versus HTTP endpoints.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 4.1.2-alt3
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Mon Oct 28 2024 Anton Vyatkin <toni@altlinux.org> 4.1.2-alt2
 - Fixed FTBFS.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.24.0
-Release: alt1
+Release: alt2
 
 Summary: Create and update inline snapshots in your python tests
 License: MIT
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-mypy
+BuildRequires: python3-module-black
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -56,6 +57,9 @@ BuildRequires: python3-module-mypy
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt2
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt1
 - Updated to 0.24.0.
 

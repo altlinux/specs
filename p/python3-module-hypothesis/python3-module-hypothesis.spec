@@ -2,11 +2,11 @@
 %define pypi_name hypothesis
 %define module_name %pypi_name
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 6.136.2
-Release: alt1
+Release: alt2
 
 Summary: A library for property based testing
 License: MPL-2.0-no-copyleft-exception
@@ -40,6 +40,9 @@ BuildRequires: python3-module-fakeredis
 BuildRequires: python3-module-pandas-tests
 %endif
 %add_python3_req_skip dpcontracts pandas
+
+# Manually manage extras dependencies with metadata.
+AutoReq: yes, nopython3
 
 %description
 Hypothesis is an advanced testing library for Python. It lets you write tests
@@ -82,6 +85,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Jul 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.136.2-alt2
+- Adapted Hypothesis for the Python 3.13 update.
+
 * Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.136.2-alt1
 - Updated to 6.136.2.
 

@@ -2,7 +2,7 @@
 
 Name: python3-module-h2
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: HTTP/2 State-Machine based protocol implementation
 
@@ -32,6 +32,7 @@ BuildRequires: python3-module-setuptools
 
 # for test
 BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-pytest
 
 %description
 This repository contains a pure-Python implementation of a HTTP/2 protocol
@@ -58,6 +59,9 @@ PYTHONPATH=$(pwd)/build/lib py.test3
 %python3_sitelibdir/h2*.egg-info/
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 4.1.0-alt2
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - new version 4.1.0 (with rpmrb script)
 - add patch against python 3.11 changes in Enum's str

@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.31.2
-Release: alt1
+Release: alt2
 
 Summary: Python Serverless Microframework for AWS
 License: Apache-2.0
@@ -22,6 +22,7 @@ BuildRequires: python3-module-click
 BuildRequires: python3-module-websockets
 BuildRequires: python3-module-inquirer
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-yaml
 %endif
 
 %add_python3_req_skip app
@@ -66,5 +67,8 @@ quickly create and deploy applications that use AWS Lambda.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.31.2-alt2
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Fri Aug 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.31.2-alt1
 - Initial build for Sisyphus.

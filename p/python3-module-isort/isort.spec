@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0.1
-Release: alt1
+Release: alt2
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /usr/bin/git
+BuildRequires: python3-module-black
 %add_pyproject_deps_check_filter cruft
 %add_pyproject_deps_check_filter example-isort-sorting-plugin
 %add_pyproject_deps_check_filter example-shared-isort-profile
@@ -77,6 +78,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.0.1-alt2
+- Built with Hypothesis supplied without numerous redundant dependencies.
+
 * Thu Feb 27 2025 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 6.0.0 -> 6.0.1.
 
