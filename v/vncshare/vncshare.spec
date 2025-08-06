@@ -1,5 +1,5 @@
 Name:           vncshare
-Version:        0.03
+Version:        0.05
 Release:        alt1
 Summary:        VNC shared screens infrastructure
 Group:          Networking/Remote access
@@ -36,8 +36,9 @@ for F in VNC*.svg; do install -D $F %buildroot%_iconsdir/hicolor/scalable/apps/$
 for F in */*/*.png; do
   install -D $F %buildroot%_iconsdir/hicolor/$F
 done
-install -D xfce-desktop-install.sh %buildroot%_libexecdir/%name-xfce-desktop-install.sh
-install -D xfce4-config.py %buildroot%_libexecdir/%name-xfce4-config.py
+for prog in *.py *.sh; do
+ install -D $prog %buildroot%_libexecdir/%name-$prog
+done
 
 %files
 %doc *.md
@@ -49,6 +50,12 @@ install -D xfce4-config.py %buildroot%_libexecdir/%name-xfce4-config.py
 %_libexecdir/*
 
 %changelog
+* Wed Aug 06 2025 Fr. Br. George <george@altlinux.org> 0.05-alt1
+- Provide VNCSERVER tray icon
+
+* Wed Aug 06 2025 Fr. Br. George <george@altlinux.org> 0.04-alt1
+- Provide XFCE panel deafult file patcher
+
 * Sun Aug 03 2025 Fr. Br. George <george@altlinux.org> 0.03-alt1
 - Provide XFCE panel files installer
 
