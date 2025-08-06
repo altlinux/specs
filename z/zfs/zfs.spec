@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
@@ -199,6 +199,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Wed Aug 06 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt1
+- 2.3.2 -> 2.3.3
+
 * Mon May 12 2025 Anton Farygin <rider@altlinux.com> 2.3.2-alt1
 - 2.3.1 -> 2.3.2
 
