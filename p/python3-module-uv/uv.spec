@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.8.4
+%define uv_version 0.8.5
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -14,7 +14,7 @@
 
 Name: python3-module-%pypi_name
 Version: %uv_version
-Release: alt2
+Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
 Group: Development/Python3
@@ -136,6 +136,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Wed Aug 06 2025 Stanislav Levin <slev@altlinux.org> 0.8.5-alt1
+- 0.8.4 -> 0.8.5.
+
 * Fri Aug 01 2025 Stanislav Levin <slev@altlinux.org> 0.8.4-alt2
 - Packaged bash completion.
 
