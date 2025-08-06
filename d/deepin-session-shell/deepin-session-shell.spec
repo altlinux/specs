@@ -3,7 +3,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.6.4.0.420.59e7
+Version: 5.6.4.0.433.86a0
 Release: alt1
 Epoch: 1
 
@@ -68,7 +68,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %install
 %DQ6install
-chmod +x %buildroot%_bindir/deepin-greeter
 
 %files
 %dir %_sysconfdir/deepin/
@@ -114,6 +113,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.433.86a0-alt1
+- New version 5.6.4-433-g86a050b4.
+
 * Wed Jun 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.420.59e7-alt1
 - New version 5.6.4-420-g59e74747 (all new tags are gone).
 - Added VCS tag.
