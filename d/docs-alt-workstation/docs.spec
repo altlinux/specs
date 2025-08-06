@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-pve docs-alt-virtualization-one
 
 Name: docs-%variant
 Version: 11.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Aug 06 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
+- update to ALT Workstation 11.1RC1
+- add gearlever, alien, gnome-boxes
+- fix some typos (ALT #55253, #53717)
+
 * Mon Jul 07 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt1
 - update to ALT Workstation 11.1BETA
 - add tuner, hardinfo2, hashsum, userpasswd
