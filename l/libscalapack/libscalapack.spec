@@ -3,32 +3,27 @@
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
-%define origname scalapack
 
 %def_enable bootstrap
 
-%define sover 2
-Name: lib%origname
-Version: 2.1.0
-Release: alt3
+%define soname 2.2
+Name: libscalapack
+Version: 2.2.2
+Release: alt1
 Summary: Scalable LAPACK library
-License: BSD-style
+License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: http://www.netlib.org/scalapack/
 
-Source: %origname-%version.tar
+Source: %name-%version.tar
 Source1: manpages.tar
 
-# Patches from Fedora
-Patch1: scalapack-2.1-fix-version.patch
+Patch0: scalapack-2.2.2-alt-lib-version.patch
+Patch1: scalapack-2.2.2-alt-fix-pkgconfig.patch
+Patch2: scalapack-2.2.2-alt-cmake-compat.patch
+Patch3: scalapack-2.2.2-alt-cmake-install-path.patch
 
-# Patches from Gentoo
-Patch2: scalapack-upstream-gcc10-compat.patch
-
-# Patches from ALT
-Patch3: scalapack-2.1.0-alt-pkgconfig.patch
-
-BuildRequires(pre): %mpiimpl-devel
+BuildRequires: %mpiimpl-devel
 BuildRequires: cmake
 BuildRequires: gcc-fortran
 BuildRequires: libopenblas-devel
@@ -45,7 +40,7 @@ written in a Single-Program-Multiple-Data style using explicit message passing
 for interprocessor communication. It assumes matrices are laid out in a
 two-dimensional block cyclic decomposition.
 
-ScaLAPACK is designed for heterogeneous computing and is portable on any 
+ScaLAPACK is designed for heterogeneous computing and is portable on any
 computer that supports MPI or PVM.
 
 Like LAPACK, the ScaLAPACK routines are based on block-partitioned algorithms in
@@ -63,18 +58,18 @@ as much as possible.
 
 If You need man pages, install libscalapack-manpages.
 
-%package common
+%package -n libscalapack%soname
 Summary: Common files for scalapack
 Group: Sciences/Mathematics
 
-%description common
+%description -n libscalapack%soname
 The ScaLAPACK (or Scalable LAPACK) library includes a subset of LAPACK routines
 redesigned for distributed memory MIMD parallel computers. It is currently
 written in a Single-Program-Multiple-Data style using explicit message passing
 for interprocessor communication. It assumes matrices are laid out in a
 two-dimensional block cyclic decomposition.
 
-ScaLAPACK is designed for heterogeneous computing and is portable on any 
+ScaLAPACK is designed for heterogeneous computing and is portable on any
 computer that supports MPI or PVM.
 
 Like LAPACK, the ScaLAPACK routines are based on block-partitioned algorithms in
@@ -90,9 +85,6 @@ communication occurs within the PBLAS and the BLACS. One of the design goals of
 ScaLAPACK was to have the ScaLAPACK routines resemble their LAPACK equivalents
 as much as possible.
 
-This package contains common files which are not specific
-to any MPI implementation.
-
 %package devel
 Summary: Development files of ScaLAPACK
 Group: Development/Other
@@ -100,7 +92,6 @@ Requires: %mpiimpl-devel
 %if_disabled bootstrap
 Requires: libarpack-devel
 %endif
-Requires: %name = %EVR
 
 %description devel
 Development files of ScaLAPACK.
@@ -115,13 +106,9 @@ Man pages of ScaLAPACK.
 
 %prep
 %setup -a1
-%patch1 -p2
-%patch2 -p1
-%patch3 -p2
+%autopatch -p1
 
 %build
-%define build_fflags %(echo %build_fflags -fallow-argument-mismatch| sed 's|-Werror=format-security||g')
-
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -131,7 +118,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	-DBUILD_STATIC_LIBS:BOOL=OFF \
 	-DLAPACK_LIBRARIES="$(pkg-config --libs lapack)" \
 	-DBLAS_LIBRARIES="$(pkg-config --libs openblas)" \
-	%nil
+	-DCMAKE_C_STANDARD="90" \
+	#
 
 %cmake_build
 
@@ -142,31 +130,32 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %cmakeinstall_std
 
-install -d %buildroot%_includedir/blacs
-install -m644 BLACS/SRC/*.h %buildroot%_includedir/blacs/
+install -Dm 644 BLACS/SRC/*.h -t %buildroot%_includedir/blacs/
 
-install -d %buildroot%_includedir/scalapack
-install -m644 PBLAS/SRC/*.h %buildroot%_includedir/scalapack/
+install -Dm 644 PBLAS/SRC/*.h -t %buildroot%_includedir/scalapack/
 
-install -d %buildroot%_mandir/manl
-install -m644 MANPAGES/man/manl/* %buildroot%_mandir/manl/
+install -Dm 644 MANPAGES/man/manl/* -t %buildroot%_man1dir/
 
-%files
+%files -n libscalapack%soname
 %doc LICENSE
 %doc README
-%_libdir/*.so.%sover
-%_libdir/*.so.%sover.*
+%_libdir/libscalapack.so.%soname
+%_libdir/libscalapack.so.%version
 
 %files devel
-%_libdir/*.so
+%_libdir/libscalapack.so
 %_includedir/*
 %_libdir/cmake/*
 %_pkgconfigdir/*
 
 %files manpages
-%_mandir/manl/*
+%_man1dir/*
 
 %changelog
+* Tue Jul 22 2025 Ilya Muhamadeev <nicourced@altlinux.org> 2.2.2-alt1
+- New version.
+- Correct license.
+
 * Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt3
 - Disabled static libraries.
 
