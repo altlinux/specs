@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-cpp-headers
-Version: 2024.10.24
+Version: 2025.07.22
 Release: alt1
 
 Summary: OpenCL API C++ bindings
@@ -46,6 +46,9 @@ BuildArch: noarch
 %_datadir/pkgconfig/%orig_name.pc
 
 %changelog
+* Tue Jul 29 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.07.22-alt1
+- v2025.07.22.
+
 * Wed Nov 13 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt1
 - v2024.10.24 (OpenCL 3.0.17).
 
