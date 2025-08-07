@@ -1,6 +1,6 @@
 Name: task-common
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Common dependencies
 License: GPL-3.0-or-later
@@ -137,7 +137,9 @@ Requires: xdm
 Requires: xorg-drv-intel
 %endif
 Requires: xorg-drv-radeon
+%ifnarch loongarch64 riscv64
 Requires: xorg-drv-nouveau
+%endif
 %ifnarch %arm
 Requires: xorg-drv-amdgpu
 %endif
@@ -174,5 +176,9 @@ fi
 %files desktop-x11
 
 %changelog
+* Thu Aug 07 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt2
+- NMU: Drop xorg-drv-nouveau on loongarch64 (not supported)
+  and riscv64 (not needed).
+
 * Wed Aug 06 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt1
 - Initial build.
