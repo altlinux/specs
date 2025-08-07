@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
@@ -35,7 +35,7 @@
 
 Name: totem
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -59,7 +59,6 @@ Obsoletes: mozilla-plugin-%name
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %EVR
-Requires: libpeas-python3-loader
 Requires: %name-video-thumbnailer = %EVR
 Requires: dconf gnome-icon-theme
 Requires: gstreamer%gst_api_ver >= %gst_ver
@@ -334,6 +333,10 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt2
+- updated to 43.2-3-g65cffb553
+- removed libpeas-python3-loader redundant dependency
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 - disabled python plugins, see
