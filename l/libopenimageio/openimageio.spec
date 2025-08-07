@@ -7,10 +7,10 @@
 # TODO: build and run tests
 
 %define oname openimageio
-%define soname 2.5
+%define soname 3.0
 
 Name:           lib%oname
-Version:        2.5.19.0
+Version:        3.0.9.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -36,8 +36,11 @@ BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asi
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel imath-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libturbojpeg-devel libopenjpeg2.0-devel
+%ifnarch %ix86
+BuildRequires:  openshadinglanguage-devel
+%endif
 BuildRequires:  libgif-devel
-BuildRequires:  libwebp-devel
+BuildRequires:  libwebp-devel >= 1.6.0-alt1.1
 BuildRequires:  libhdf5-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libjasper-devel
@@ -46,10 +49,12 @@ BuildRequires:  libraw-devel
 BuildRequires:  librobin-map-devel
 BuildRequires:  pybind11-devel
 BuildRequires:  libsquish-devel
+BuildRequires:  libultrahdr-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  freetype2-devel
 BuildRequires:  libfmt-devel
 BuildRequires:  openvdb-devel
+BuildRequires:  libjxl-devel
 %ifnarch %e2k
 BuildRequires:  libdcmtk-devel
 %endif
@@ -215,6 +220,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Sun Aug 03 2025 Anton Farygin <rider@altlinux.com> 3.0.9.0-alt1
+- 2.5.19.0 -> 3.0.9.0
+
 * Thu Jul 17 2025 Anton Farygin <rider@altlinux.com> 2.5.19.0-alt1
 - 2.5.18.0 -> 2.5.19.0
 
