@@ -10,11 +10,13 @@
 %def_enable gudev
 %endif
 
+%def_disable gladeui2
+
 %def_disable docs
 
 Name: libxfce4ui
 Version: 4.20.1
-Release: alt1
+Release: alt2
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
@@ -32,7 +34,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel
 BuildRequires: libX11-devel libICE-devel libSM-devel libstartup-notification-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: libgladeui2.0-devel
+%{?_enable_gladeui2:BuildRequires: libgladeui2.0-devel}
 %{?_enable_glibtop:BuildRequires: libgtop-devel}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
@@ -142,7 +144,7 @@ This package contains the 'About Xfce' dialog.
 	--enable-x11 \
 	--enable-wayland \
 	--enable-startup-notification \
-	--enable-gladeui2 \
+	%{subst_enable gladeui2} \
 	%{subst_enable glibtop} \
 	%{subst_enable gudev} \
 	%{subst_enable epoxy} \
@@ -185,11 +187,13 @@ make check
 %_pkgconfigdir/%libxfce4ui_name_gtk3.pc
 %_libdir/%libxfce4kbd_name_gtk3.so
 %_libdir/%libxfce4ui_name_gtk3.so
+
+%if_enabled gladeui2
 %_datadir/glade/catalogs/*.xml
 %_datadir/glade/pixmaps/*/*/*/*
 %_libdir/glade/modules/*.so
-
 %exclude %_libdir/glade/modules/*.la
+%endif
 
 %if_enabled introspection
 %files gtk3-gir
@@ -209,6 +213,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Thu Aug 07 2025 Anton Midyukov <antohami@altlinux.org> 4.20.1-alt2
+- NMU: Disable gladeui2 (closes: #55535).
+
 * Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
 - Updated to 4.20.1.
 
