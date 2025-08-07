@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.12.2
-Release: alt1
+Release: alt2
 
 Summary: Mock/Stub/Spy library for Python
 License: BSD-2-Clause
@@ -40,8 +40,7 @@ mocks, stubs and fakes.
 %pyproject_install
 
 %check
-sed -i '/python tests\/test_teamcity.py/d' tox.ini
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc *.md LICENSE
@@ -49,6 +48,9 @@ sed -i '/python tests\/test_teamcity.py/d' tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Aug 07 2025 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt2
+- Fixed FTBFS.
+
 * Fri Jan 03 2025 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt1
 - New version 0.12.2.
 
