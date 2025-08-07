@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -23,9 +23,9 @@ Requires: alterator-backend-component >= 0.1.9
 Requires: alterator-backend-component_categories >= 0.1.5-alt2
 Requires: alterator-backend-batch-components >= 0.3
 Requires: alterator-backend-batch-component_categories >= 0.3
-Requires: alterator-interface-edition >= 0.1.5-alt4
+Requires: alterator-interface-edition >= 0.2.0
 Requires: alterator-interface-diag >= 0.1.4
-Requires: alterator-backend-systeminfo >= 0.3.2
+Requires: alterator-backend-systeminfo >= 0.4.0
 Requires: libtomlc99 polkit libjson-glib
 
 Source0: %name-%version.tar
@@ -54,6 +54,10 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Tue Aug 05 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.13-alt1
+- Increased the version of a required dependency from alterator-interface-edition and
+- alterator-backend-systeminfo
+
 * Sat Jul 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.12-alt1
 - Increased the version of a required dependency from alterator-backend-packages
 - Moved completions setup logic to completions/CMakeLists
