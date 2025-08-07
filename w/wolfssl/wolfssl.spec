@@ -2,7 +2,7 @@
 
 Name: wolfssl
 Version: 5.8.2
-Release: alt1
+Release: alt2
 
 Summary: Embedded SSL/TLS Library
 License: GPL-3.0
@@ -38,12 +38,14 @@ This package contains the header files and development libraries for %name.
 %autoreconf
 %configure \
 	--enable-distro \
+	--enable-jni \
 	--enable-writedup \
 	--disable-option-checking
 %make_build
 
 %install
 %makeinstall_std
+%__install -m0644 %name/options.h %buildroot%_includedir/%name
 %__rm -f %buildroot%_libdir/lib%name.a
 
 %files -n lib%name%sover
@@ -60,6 +62,10 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Aug 07 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.2-alt2
+- Include options.h into devel subpackage (ALT #55533)
+- Enable JNI support (ALT #55534)
+
 * Sat Jul 19 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.2-alt1
 - New version 5.8.2.
 
