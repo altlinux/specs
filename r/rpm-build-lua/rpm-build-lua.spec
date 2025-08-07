@@ -2,13 +2,12 @@
 
 Name: rpm-build-lua
 Version: 0.5
-Release: alt2
-
+Release: alt3
 Summary: RPM helpers to build lua packages
-
 License: GPL-3.0-or-later
 Group: Development/Other
-Url: git://git.altlinux.org/gears/r/rpm-build-lua.git
+Url: https://www.altlinux.org/Lua_Policy
+Vcs: https://git.altlinux.org/gears/r/rpm-build-lua.git
 
 Source: %name-%version-%release.tar
 
@@ -17,6 +16,7 @@ Requires: rpm-macros-lua >= 1.5.2
 
 %description
 %summary.
+See %url for details.
 
 %prep
 %setup -n %name-%version-%release
@@ -33,6 +33,9 @@ install -p -m0755 -D lua.req.files %buildroot%_rpmlibdir/lua.req.files
 %_rpmlibdir/lua.*
 
 %changelog
+* Thu Apr 17 2025 Ildar Mulyukov <ildar@altlinux.ru> 0.5-alt3
+- add luarocks5.x(pkg) autoprovides (see https://www.altlinux.org/Lua_Policy)
+
 * Tue Feb 04 2025 Ildar Mulyukov <ildar@altlinux.ru> 0.5-alt2
 - lua.prov: add versioning to provided entries
 - lua.req: handle `$APPDIR/lua/*.lua` files properly
