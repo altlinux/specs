@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -13,13 +13,14 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-alterator
-
 Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.21
 Requires: apt >= 0.5.15lorg2-alt97
 Requires: logrotate
+
+BuildRequires(pre): rpm-macros-alterator
+BuildRequires: make
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
@@ -62,6 +63,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Tue Jul 29 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.9-alt1
+- Add line for more early signal of start of transaction.
+
 * Tue Jul 22 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.2.8-alt1
 - Remove remaining unsafe methods from apt1
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -23,9 +23,10 @@ BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
 BuildRequires: nlohmann-json-devel
+BuildRequires: libexpected-devel
 BuildRequires: alterator-entry >= 0.3.1
 
-Requires: alterator-backend-packages >= 0.2.7-alt1
+Requires: alterator-backend-packages >= 0.2.9-alt1
 Requires: alterator-backend-component
 Requires: alterator-backend-component_categories
 Requires: alterator-backend-batch-component_categories >= 0.3
@@ -62,6 +63,13 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_bindir/alt-components
 
 %changelog
+* Tue Jul 29 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.1-alt1
+- Add caching of content of unapplied resolved transaction if content is
+  not changed.
+- Fix incorrect display of states of kernel module packages.
+- Fix incorrect display of check boxes in tree after switching safe mode
+  for base components.
+
 * Wed Jul 23 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.0-alt1
 - Change design for dialog of transaction like wizard.
 - Add display of requested and resolved components and packages during
