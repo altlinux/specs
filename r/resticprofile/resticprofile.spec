@@ -5,7 +5,7 @@
 
 Name: resticprofile
 Version: 0.31.0
-Release: alt1
+Release: alt2
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
 Group: Archiving/Backup
@@ -27,7 +27,7 @@ tar xf %SOURCE1 -C docs/themes
 %autopatch -p1
 
 %build
-%ifnarch armh %ix86 loongarch64
+%ifnarch armh %ix86 loongarch64 riscv64
 # -buildmode=pie requires external (cgo) linking, but cgo is not enabled
 export CGO_ENABLED=0
 %endif
@@ -66,6 +66,9 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Jul 30 2025 Andrew Guschin <guschin@altlinux.org> 0.31.0-alt2
+- NMU: fix FTBFS on riscv64 (-buildmode=pie requires CGO here).
+
 * Thu May 29 2025 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt1
 - Update to v0.31.0 (2025-05-19).
 
