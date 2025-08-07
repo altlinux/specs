@@ -2,7 +2,7 @@
 
 Name:    codium
 Version: 1.101.14098
-Release: alt1
+Release: alt2
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
 
@@ -31,7 +31,6 @@ Source5: codium-url-handler.desktop
 %filter_from_requires /gnustep-Backbone/d
 %filter_from_requires /pcmanfm/d
 %filter_from_requires /github-cli/d
-%filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
 BuildRequires: electron29
 BuildRequires: libgio
@@ -60,6 +59,7 @@ BuildRequires: libalsa
 BuildRequires: libat-spi2-core
 BuildRequires: libsecret
 BuildRequires: libxkbfile
+BuildRequires: patchelf
 
 Provides: vscodium = %EVR
 
@@ -93,6 +93,13 @@ chmod 4711 %buildroot%_libdir/%name/chrome-sandbox
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/codium
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/vscodium
 
+%ifarch aarch64
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %buildroot%_libdir/%name/chrome-sandbox
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %buildroot%_libdir/%name/codium
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %buildroot%_libdir/%name/bin/codium-tunnel
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %buildroot%_libdir/%name/chrome_crashpad_handler
+%endif
+
 install -m644 -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 install -m644 -D %SOURCE5 %buildroot%_desktopdir/%name-url-handler.desktop
 install -m644 -D %SOURCE3 %buildroot%_iconsdir/hicolor/scalable/apps/codium.svg
@@ -109,6 +116,9 @@ install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
 %_datadir/appdata/%app_id.metainfo.xml
 
 %changelog
+* Tue Aug 05 2025 Semen Fomchenkov <armatik@altlinux.org> 1.101.14098-alt2
+- Use patchelf for change interpreter.
+
 * Wed Jun 25 2025 Semen Fomchenkov <armatik@altlinux.org> 1.101.14098-alt1
 - 1.101.14098
 
