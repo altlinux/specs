@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-kworkstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain alt-virtualization-pve
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-pve docs-alt-virtualization-one
 
 Name: docs-%variant
 Version: 11.0
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Aug 07 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt7
+- bug fixes (closes #54502, #54503, #55543, #55541)
+- add libvirt, gnome-boxes
+
 * Thu May 22 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt6
 - update to latest public distr of ALT Server 11.0
 - small improvements (PBS)
