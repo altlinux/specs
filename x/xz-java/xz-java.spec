@@ -1,36 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: xz-java
+Version: 1.10
+Release: alt1
+
+Summary: Java implementation of XZ data compression
+License: 0BSD
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
+Url: http://tukaani.org/xz/java.html
+VCS: https://github.com/tukaani-project/xz-java.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+
+BuildRequires: javapackages-local
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           xz-java
-Version:        1.9
-Release:        alt1_3jpp11
-Summary:        Java implementation of XZ data compression
-License:        Public Domain
-URL:            http://tukaani.org/xz/java.html
-BuildArch:      noarch
-
-Source0:        http://tukaani.org/xz/xz-java-%{version}.zip
-
-BuildRequires:  javapackages-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  ant
-%endif
-Source44: import.info
+BuildRequires: ant
 
 %description
 A complete implementation of XZ data compression in Java.
@@ -42,16 +28,16 @@ for advanced users, including LZMA2 with preset dictionary.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadocs for %{name}
+Summary: Javadocs for xz-java
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for xz-java.
 
 %prep
-%setup -q -c %{name}-%{version}
+%setup
 
-%mvn_file : %{name} xz
+%mvn_file :xz xz-java/xz
 
 %build
 # During documentation generation the upstream build.xml tries to download
@@ -61,18 +47,21 @@ mkdir -p extdoc && touch extdoc/package-list
 %ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven
 
 %install
-%mvn_artifact build/maven/xz-%{version}.pom build/jar/xz.jar
+%mvn_artifact build/maven/xz-%version.pom build/jar/xz.jar
 
 %mvn_install -J build/doc
 
 %files -f .mfiles
-%doc README THANKS
+%doc README.md THANKS.md
 %doc --no-dereference COPYING
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference COPYING
 
 %changelog
+* Thu Aug 07 2025 Ivan Khanas <xeno@altlinux.org> 1.10-alt1
+- New version.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.9-alt1_3jpp11
 - new version
 
