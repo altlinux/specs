@@ -1,8 +1,8 @@
 %define pname netbox_napalm_plugin
 
 Name:    netbox-napalm-plugin
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Summary: NetBox Napalm plugin
 License: Apache-2.0
@@ -46,6 +46,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %python3_sitelibdir/%{pyproject_distinfo %pname}
 
 %changelog
+* Thu Aug 07 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.2-alt1
+- New 0.3.2 version.
+
 * Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.1-alt2
 - Change max NetBox version to 4.3.99.
 
