@@ -3,7 +3,7 @@
 
 Name: netopeer2
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Summary: NETCONF server implementation in C.
 License: BSD-3-Clause
 Group: Networking/Other
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-make
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: cmake gcc make
 BuildRequires: pkg-config 
 BuildRequires: libyang-devel
@@ -38,7 +39,9 @@ BuildRequires: libnghttp2-devel
 BuildRequires: libngtcp2-devel
 BuildRequires: libnghttp3-devel
 BuildRequires: libcmocka-devel
+%ifarch %valgrind_arches
 BuildRequires: valgrind-devel
+%endif
 BuildRequires: sysrepo-tools
 
 Requires: libyang
@@ -98,6 +101,10 @@ export CFLAGS="%optflags"
 %_man1dir/%name-cli.1.*
 
 %changelog
+* Thu Aug 07 2025 Ivan A. Melnikov <iv@altlinux.org> 2.4.1-alt2
+- NMU: don't require valgrind on architectures that it
+  does not support (fixes FTBFS on loongarch64).
+
 * Mon Aug 04 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.1-alt1
 - Initial build for Sisyphus.
 
