@@ -1,18 +1,17 @@
 Name: x11vnc
-Version: 0.9.16
-Release: alt4.1
+Version: 0.9.17
+Release: alt1
 
 %def_with avahi
 
 Summary: VNC server for real X displays
-License: GPL
+License: GPLv2
 Group: Networking/Remote access
 Url: https://github.com/LibVNC/x11vnc
 
 Source: %version.tar.gz
 
-Patch1: x11vnc-upstream-fno-common.patch
-Patch2: x11vnc-upstream-CVE-2020-29074.patch
+Patch1: x11vnc-bg-rmfile.patch
 
 # Automatically added by buildreq on Wed Apr 27 2016
 # optimized out: fontconfig libX11-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libcom_err-devel libgpg-error libkrb5-devel libp11-kit libwayland-client libwayland-server perl pkg-config python-base python-modules xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -29,7 +28,6 @@ with any VNC viewer. In this way it plays the role for Unix/X11 that
 WinVNC plays for Windows.
 
 %package gui
-License: GPL
 Group: Networking/Remote access
 BuildArch: noarch
 Summary: GUI to run x11vnc
@@ -42,7 +40,6 @@ Requires: tk
 %summary.
 
 %package scripts
-License: GPL
 Group: Networking/Remote access
 BuildArch: noarch
 Summary: Various x11vnc wrappers
@@ -58,7 +55,6 @@ Some are on the rough side and will need some customization for your use.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -72,7 +68,7 @@ install tkx11vnc %buildroot%_bindir/
 %files
 %_bindir/%name
 %_man1dir/%name.*
-%doc README NEWS
+%doc README NEWS *.md doc
 
 %files gui
 %_desktopdir/%name.desktop
@@ -83,6 +79,10 @@ install tkx11vnc %buildroot%_bindir/
 %exclude  %_bindir/Xdummy
 
 %changelog
+* Thu Aug 07 2025 Fr. Br. George <george@altlinux.ru> 0.9.17-alt1
+- Autobuild version bump to 0.9.17
+- Fix wrong PID bug when using -bg with -rmflag
+
 * Mon Jan 09 2023 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt4.1
 - Revert "x11vnc.desktop: fix run command"
 
