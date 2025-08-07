@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.2
-Release: alt2
+Version: 11.8.3
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -96,10 +96,10 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 # git submodules
-Source101: libmariadb_v3.4.6.tar
+Source101: libmariadb_v3.4.7.tar
 Source102: rocksdb_v6.29.5.tar
 Source103: wsrep-lib_20250610.tar
-Source104: columnstore_23.10.3-1.tar
+Source104: columnstore_23.10.5-1.tar
 Source105: libmarias3_3.1.3.tar
 Source106: fmt_11.1.4.tar
 
@@ -120,7 +120,6 @@ Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-11.4.7-disable-download-fmt.patch
-Patch105: mariadb-10.11.13-MDEV-36871.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -432,7 +431,6 @@ tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
-%patch105 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1119,6 +1117,12 @@ fi
 %endif
 
 %changelog
+* Thu Aug 07 2025 Alexei Takaseev <taf@altlinux.org> 11.8.3-alt1
+- 11.8.3
+- Update libmariadb to 3.4.7
+- Update columnstore to 23.10.5-1
+- Drop mariadb-10.11.13-MDEV-36871.patch (fixed in upstream)
+
 * Mon Jun 23 2025 Alexei Takaseev <taf@altlinux.org> 11.8.2-alt2
 - MDEV-36871: mariadb-backup incremental segfault querying mariadb_backup_history
 - client.cnf, my.cnf, mysql-clients.cnf, server.cnf: Remove deprecated config charset options
