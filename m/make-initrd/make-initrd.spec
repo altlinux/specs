@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.54.0
-Release: alt1.1
+Version: 2.55.0
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,7 +68,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch: 0001-Allow-to-use-losetup-not-from-busybox.patch
+Patch: 0001-feature-fsck-Split-fsck-arguments.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -401,6 +401,13 @@ fi
 %endif
 
 %changelog
+* Thu Aug 07 2025 Anton Midyukov <antohami@altlinux.org> 2.55.0-alt2
+- add upstream patch:
+  + feature/fsck: Split fsck arguments
+
+* Thu Jul 24 2025 Anton Midyukov <antohami@altlinux.org> 2.55.0-alt1
+- new version (2.55.0) with rpmgs script
+
 * Wed Jun 25 2025 Anton Midyukov <antohami@altlinux.org> 2.54.0-alt1.1
 - Allow to use losetup not from busybox
 
