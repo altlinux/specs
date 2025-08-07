@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
@@ -7,7 +8,7 @@
 %def_without kbanking
 
 Name:    kmymoney
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: A Personal Finance Manager for KDE
@@ -19,7 +20,6 @@ URL:     http://kmymoney2.org
 
 Source0: %name-%version.tar
 Source1: ru.po
-Source2: %name.watch
 
 AutoReq: yes, noperl
 
@@ -265,7 +265,7 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
-cp %SOURCE1 po/ru/kmymoney.po
+#cp %SOURCE1 po/ru/kmymoney.po
 
 %build
 %K6init no_altplace
@@ -292,23 +292,24 @@ cp %SOURCE1 po/ru/kmymoney.po
 
 %files
 %_K6bin/%name
+%_K6lib/libkmm_base_dialogs.so.*
+%_K6lib/libkmm_base_widgets.so.*
+%_K6lib/libkmm_codec.so.*
+%_K6lib/libkmm_extended_dialogs.so.*
+%_K6lib/libkmm_gpgfile.so.*
 %_K6lib/libkmm_icons.so.*
+%_K6lib/libkmm_keychain.so.*
+%_K6lib/libkmm_menuactionexchanger.so.*
 %_K6lib/libkmm_menus.so.*
 %_K6lib/libkmm_models.so.*
 %_K6lib/libkmm_mymoney.so.*
 %_K6lib/libkmm_plugin.so.*
-%_K6lib/libkmm_settings.so.*
-%_K6lib/libkmm_widgets.so.*
 %_K6lib/libkmm_printer.so.*
-%_K6lib/libkmm_base_dialogs.so.*
-%_K6lib/libkmm_base_widgets.so.*
-%_K6lib/libkmm_extended_dialogs.so.*
-%_K6lib/libkmm_gpgfile.so.*
-%_K6lib/libkmm_keychain.so.*
-%_K6lib/libkmm_menuactionexchanger.so.*
 %_K6lib/libkmm_selections.so.*
+%_K6lib/libkmm_settings.so.*
 %_K6lib/libkmm_templates.so.*
 %_K6lib/libkmm_webconnect.so.*
+%_K6lib/libkmm_widgets.so.*
 %_K6lib/libkmm_wizard.so.*
 %_K6lib/libkmm_yesno.so.*
 %_K6lib/libonlinetask_interfaces.so.*
@@ -389,6 +390,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K6doc/en
 
 %changelog
+* Thu Aug 07 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1
+- New version.
+
 * Fri Jun 27 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.0-alt1
 - New version.
 - Rebuilt with KF6 (ALT #54993).

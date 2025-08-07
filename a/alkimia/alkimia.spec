@@ -8,11 +8,11 @@
 %endif
 
 Name:    alkimia
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
-License: LGPLv2+
+License: LGPL-2.1
 Group:	 Office
 URL:     http://community.kde.org/Alkimia/libalkimia
 # Download from https://download.kde.org/stable/alkimia/
@@ -108,6 +108,9 @@ Headers and other files for develop with %name.
 %_datadir/gdb/auto-load/%_libdir/%lib_name.so.*-gdb.py
 
 %changelog
+* Thu Aug 07 2025 Andrey Cherepanov <cas@altlinux.org> 8.2.1-alt1
+- New version.
+
 * Wed Jun 25 2025 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
 - New version.
 - Build for KF6.
