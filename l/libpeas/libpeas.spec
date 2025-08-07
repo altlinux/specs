@@ -13,12 +13,12 @@
 %def_enable introspection
 %def_disable vala
 %def_enable gtk_doc
-%def_enable glade_catalog
+%def_disable glade_catalog
 %def_disable check
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -152,7 +152,7 @@ This package contains %name demonstration programs
 	%{?_enable_python2:-Dpython2=true} \
 	%{?_enable_vala:-Dvapi=true} \
 	%{?_disable_introspection:-Dintrospection=false} \
-	%{?_disable_glade_catalog:-Dglade_catalog=flase}
+	%{?_disable_glade_catalog:-Dglade_catalog=false}
 %nil
 %meson_build
 
@@ -221,6 +221,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1.1
+- disabled glade support
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1
 - 1.36.0
 
