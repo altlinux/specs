@@ -2,7 +2,7 @@
 
 Name: shadow-gradle-plugin
 Version: 8.3.8
-Release: alt1
+Release: alt2
 
 Summary: Gradle plugin for creating fat/uber JARs
 License: Apache-2.0
@@ -14,6 +14,7 @@ ExcludeArch: i586
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Patch0: 0001-Disable-signing-with-key.patch
+Patch1: 0002-Build-plugin-jar-in-fat-jar.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -34,32 +35,36 @@ executable command-line tools.
 
 %build
 gradle publishToMavenLocal \
+  -x :compileTestGroovy \
   -x :javadoc \
   -g "$PWD/.gradle" \
   --offline
   #
 
 %install
-install -Dm 644 build/libs/shadow-%version.jar \
-  %buildroot%_javadir/gradleUp-shadow/shadow-gradle-plugin.jar
+
+find ~/.m2 -name shadow-gradle-plugin-%version.jar -exec \
+  install -Dm 644 {} \
+  %buildroot%_javadir/shadow-gradle-plugin/shadow-gradle-plugin.jar \;
 
 find ~/.m2 -name shadow-gradle-plugin-%version.pom -exec \
-  install -Dm 644 \
-  -t %buildroot%_datadir/maven-poms/gradleUp-shadow/shadow-gradle-plugin.pom \
-  {} + \
-  #
+  install -Dm 644 {} \
+  %buildroot%_datadir/maven-poms/shadow-gradle-plugin/shadow-gradle-plugin.pom \;
 
 %check
-# Skip tests that require network(maven central) access.
-gradle check \
+gradle spotlessApply \
+  check \
   -x :compileTestGroovy \
   -g "$PWD/.gradle" \
   #
 
 %files
-%_javadir/gradleUp-shadow/shadow-gradle-plugin.jar
-%_datadir/maven-poms/gradleUp-shadow/shadow-gradle-plugin.pom
+%_javadir/shadow-gradle-plugin/shadow-gradle-plugin.jar
+%_datadir/maven-poms/shadow-gradle-plugin/shadow-gradle-plugin.pom
 
 %changelog
+* Thu Aug 07 2025 Ivan Khanas <xeno@altlinux.org> 8.3.8-alt2
+- Start packing in fat jar.
+
 * Sat Aug 02 2025 Ivan Khanas <xeno@altlinux.org> 8.3.8-alt1
 - First build for ALT.
