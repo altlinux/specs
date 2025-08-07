@@ -1,6 +1,6 @@
 Name:     webapp-manager
 Version:  1.4.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Run websites as if they were apps
 License:  GPLv3
@@ -11,6 +11,8 @@ BuildArch: noarch
 
 # Source-url: https://github.com/linuxmint/webapp-manager/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+Patch: common-1.4.2-alt-fixes.patch
 
 AutoProv: no
 
@@ -23,6 +25,8 @@ BuildRequires: altlinux-menus
 %prep
 %setup
 subst 's|/usr/lib|%python3_sitelibdir|' usr/bin/%name
+
+%patch -p1
 
 %build
 %make
@@ -58,6 +62,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Thu Aug 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt2
+- Fix refresh update *.desktop file in application menu on KDE (ALT #55393)
+
 * Fri Aug 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt1
 - 1.4.1 -> 1.4.2
 
