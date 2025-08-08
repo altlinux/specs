@@ -34,8 +34,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.0
-Release: alt30
+Version: 11.1
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -391,6 +391,10 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Aug 08 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt1
+- Change background images
+- Add product-logo to installer
+
 * Fri Aug 08 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt30
 - Release-notes: fixed Proxmox VE Backup Server version
 
