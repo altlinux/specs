@@ -5,7 +5,7 @@ BuildRequires: perl-podlators
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.50
+Version: 1.51
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -51,7 +51,7 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot -mhack'
 
 %files
-%doc Changes docs README.md
+%doc Changes docs README.md CLAUDE.md
 %perl_vendor_archlib/Devel
 %perl_vendor_autolib/Devel
 %exclude /hack.pm
@@ -63,6 +63,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %_man1dir/*
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 1.51-alt1
+- automated CPAN update
+
 * Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 1.50-alt1
 - automated CPAN update
 
