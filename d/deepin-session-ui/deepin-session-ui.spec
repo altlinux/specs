@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.29
+Version: 6.0.32
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 Conflicts: notify-osd
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd
-BuildRequires: cmake dtk6-common-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel dqt6-svg-devel dqt6-tools-devel libdeepin-pw-check-devel libXext-devel
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -73,6 +73,7 @@ export READELF="llvm-readelf"
 %files -f %repo.lang
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/dde-license-dialog
 %_bindir/dde-pixmix
 %_bindir/dde-switchtogreeter
@@ -95,10 +96,12 @@ export READELF="llvm-readelf"
 # outside %%find_lang
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
-%_datadir/%repo/translations/dde-session-ui_es_419.qm
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.32-alt1
+- New version 6.0.32.
+
 * Wed Jun 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.29-alt1
 - New version 6.0.29.
 
