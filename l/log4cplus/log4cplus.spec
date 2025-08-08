@@ -2,10 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 %define soname 9
+%def_without python
 
 Name: log4cplus
 Version: 2.1.2
-Release: alt1
+Release: alt2
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
@@ -19,9 +20,12 @@ Source2: %name-%version-threadpool.tar
 
 Patch1: %name-%version-alt.patch
 
+%if_with python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ doxygen graphviz swig
+BuildRequires: swit
 BuildRequires: python3-devel
+%endif
+BuildRequires: gcc-c++ doxygen graphviz
 
 %description
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -51,6 +55,8 @@ configuration.  It is modeled after the Java log4j API.
 
 This package contains development files of log4cplus.
 
+%if_with python
+
 %package -n python3-module-%name
 Summary: Python bindings of logging library to C++
 Group: Development/Python3
@@ -63,6 +69,7 @@ flexible, and arbitrarily granular control over log management and
 configuration.  It is modeled after the Java log4j API.
 
 This package contains Python bindings of log4cplus.
+%endif
 
 %prep
 %setup -a1 -a2
@@ -83,7 +90,9 @@ export CPPFLAGS="-D_FILE_OFFSET_BITS=64"
 	--enable-static=no \
 	--enable-threads=yes \
 	--with-working-c-locale \
+	%if_with python
 	--with-python \
+	%endif
 	%nil
 
 sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
@@ -92,11 +101,6 @@ sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
 
 %install
 %makeinstall_std
-
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-mkdir -p %buildroot%python3_sitelibdir/%name
-mv %buildroot%python3_sitelibdir_noarch/%name/* %buildroot%python3_sitelibdir/%name/
-%endif
 
 %check
 %make check
@@ -112,10 +116,15 @@ mv %buildroot%python3_sitelibdir_noarch/%name/* %buildroot%python3_sitelibdir/%n
 %_libdir/*.so
 %_pkgconfigdir/*
 
+%if_with python
 %files -n python3-module-%name
 %python3_sitelibdir/%name
+%endif
 
 %changelog
+* Thu Aug 07 2025 Anton Farygin <rider@altlinux.com> 2.1.2-alt2
+- fix FTBFS: built without python
+
 * Tue May 13 2025 Anton Farygin <rider@altlinux.com> 2.1.2-alt1
 - 2.0.7 -> 2.1.2
 
