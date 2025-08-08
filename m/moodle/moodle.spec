@@ -2,7 +2,7 @@
 %def_without pam
 
 Name: moodle
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -33,7 +33,7 @@ Source22: %moodle_name.start.mods.conf
 Source23: %moodle_name.httpd2.inc.conf
 
 # Language files
-# Download by elinks https://download.moodle.org/download.php/langpack/3.7/ru.zip for example
+# Download by elinks https://download.moodle.org/download.php/langpack/5.0/ru.zip for example
 Source30: langpack.tar
 
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%moodle_dir/filter/algebra/'
@@ -254,6 +254,11 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Fri Aug 08 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
+- New version.
+- (fixes: CVE-2025-49518, CVE-2025-49517, CVE-2025-49516, CVE-2025-49515,
+  CVE-2025-49514, CVE-2025-46337, CVE-2025-49513, CVE-2025-49512).
+
 * Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
 - New version.
 
