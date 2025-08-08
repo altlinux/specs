@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(JSON/PP.pm)
+BuildRequires: perl(Crypt/URandom.pm) perl(JSON/PP.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Authen-SASL
 Name: perl-%dist
-Version: 2.1800
+Version: 2.1900
 Release: alt1
 
 Summary: SASL authentication framework for Perl
@@ -52,6 +52,9 @@ connection.
 	%perl_vendor_privlib/Authen/SASL/Perl/*.pm
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 2.1900-alt1
+- automated CPAN update
+
 * Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 2.1800-alt1
 - automated CPAN update
 
