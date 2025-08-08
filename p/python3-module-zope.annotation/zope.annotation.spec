@@ -1,45 +1,43 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.annotation
+%define pypi_name zope.annotation
+%define ns_name zope
+%define mod_name annotation
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.1
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 5.2
+Release: alt1
 Summary: Object annotation mechanism
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.annotation
+Url: https://pypi.org/project/zope.annotation/
 VCS: https://github.com/zopefoundation/zope.annotation.git
-
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# setuptools(pkg_resources) is used by namespace root which is not used in ALT
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.location
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
 This package provides a mechanism to store additional information about
 objects without need to modify object class.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing zope.testrunner
-
-%description tests
-This package contains tests for %oname
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -47,26 +45,20 @@ This package contains tests for %oname
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope/annotation
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.1 -> 5.2.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
