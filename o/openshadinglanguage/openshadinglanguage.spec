@@ -7,15 +7,22 @@
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/issues/1810
 %define optflags_lto %nil
 
-# the required range is 11.0...19.1
+# the required range is 11.0...20.1
 %ifarch %e2k
 %define llvm_ver 13.0
 %else
-%define llvm_ver 19.1
+%define llvm_ver 20.1
+%endif
+
+%ifarch x86_64
+%def_with optix
+%filter_from_requires /libcudart\.so\.12/d
+%else
+%def_without optix
 %endif
 
 Name: openshadinglanguage
-Version: 1.14.5.1
+Version: 1.14.7.0
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -27,8 +34,9 @@ ExcludeArch: %ix86
 
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage.git
 Source: %name-%version.tar
-
 Source2: %name.watch
+
+Patch: osl-alt-optix-inc.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libopenimageio-devel
@@ -44,6 +52,9 @@ BuildRequires: qt6-base-devel
 BuildRequires: zlib-devel
 BuildRequires: partio-devel
 BuildRequires: librobin-map-devel
+%if_with optix
+BuildRequires: optix-devel
+%endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
 
@@ -135,8 +146,17 @@ Group: Development/Python3
 %description -n python3-module-%name
 Open Shading Language (OSL) python3 module.
 
+%package optix
+Summary: NVIDIA OptiX kernels
+Group: Graphics
+
+%description optix
+NVIDIA OptiX kernels for OSL. This is currently used to cache ptx generation
+for OptiX/GPU rendering.
+
 %prep
 %setup
+%patch -p1
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_ver
@@ -144,12 +164,15 @@ export ALTWRAP_LLVM_VERSION=%llvm_ver
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_STRIP:STRING="" \
 	-DCMAKE_CXX_STANDARD=17 \
-	-DOSL_BUILD_MATERIALX:BOOL=ON \
 	-DOSL_SHADER_INSTALL_DIR:PATH=%_datadir/%name/shaders/ \
 	-DSTOP_ON_WARNING:BOOL=OFF \
 %ifarch x86_64
 	-DUSE_SIMD="avx,f16c" \
 	-DUSE_BATCHED="b8_AVX" \
+%endif
+%if_with optix
+	-DOSL_USE_OPTIX:BOOL=ON \
+	-DOSL_PTX_INSTALL_DIR:PATH=%_datadir/%name/ptx/ \
 %endif
 	%nil
 
@@ -178,6 +201,11 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %files -n openimageio-plugin-%name
 %_libdir/OpenImageIO-%{oiio_major_minor_ver}/osl.imageio.so
 
+%if_with optix
+%files optix
+%_datadir/%name/ptx
+%endif
+
 %files devel
 %_includedir/*
 %_libdir/lib*.so
@@ -200,6 +228,21 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.7.0-alt0.1
+- 1.14.7.0.
+- x86_64: build with optix (fixed by upstream).
+
+* Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.6.0-alt0.2
+- x86_64: disable cuda/optix (can't compile reliably).
+
+* Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.6.0-alt0.1
+- 1.14.6.0.
+- compile w/ llvm20.1.
+- build/optix: limit nprocs to 16.
+
+* Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.5.1-alt0.2
+- x86_64: build with optix support.
+
 * Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.5.1-alt0.1
 - 1.14.5.1.
 - compile w/ llvm19.1.
