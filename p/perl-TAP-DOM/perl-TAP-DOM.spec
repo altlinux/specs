@@ -11,7 +11,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.000
+Version:    1.001
 Release:    alt1
 
 Summary:    Accessors for TAP::DOM summary part
@@ -73,6 +73,9 @@ change, so your data tools can, well, rely on it.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 1.001-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.000-alt1
 - automated CPAN update
 
