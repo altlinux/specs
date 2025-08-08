@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define luarocks_revision 1
 # Disable on bootstrap.
-%def_without check
+%def_with check
 
 Name: lua5.4-module-luasystem
 Version: 0.6.3
-Release: alt1_lr%luarocks_revision
+Release: alt2_lr%luarocks_revision
 
 Summary: Platform independent system calls for Lua
 License: MIT
@@ -57,6 +57,9 @@ luarocks-5.4 test --test-type busted \
 %lua_modulesdir/system/core.so
 
 %changelog
+* Fri Aug 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.6.3-alt2_lr1
+- Enable tests.
+
 * Fri Aug 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.6.3-alt1_lr1
 - New version (0.6.3).
 
