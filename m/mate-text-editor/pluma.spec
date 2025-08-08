@@ -1,9 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %define rname pluma
 
+%def_disable python_plugins
+
 Name: mate-text-editor
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -19,7 +21,7 @@ Patch: %rname-%version-%release.patch
 
 BuildPreReq: rpm-build-python3
 BuildRequires: mate-common mate-desktop-devel gtk-doc iso-codes-devel libSM-devel libenchant-devel libgtksourceview4-devel
-BuildRequires: libgtksourceview4-gir-devel libpeas-devel libxml2-devel yelp-tools python3-devel
+BuildRequires: libgtksourceview4-gir-devel libxml2-devel yelp-tools python3-devel libpeas-devel
 
 %description
 pluma is a small, but powerful text editor designed specifically for
@@ -69,6 +71,16 @@ find %buildroot%_libdir -name \*.la -delete
 %doc README.md COPYING AUTHORS
 %_bindir/%rname
 %_libdir/%rname
+%if_disabled python_plugins
+%exclude %_libdir/%rname/plugins/externaltools/
+%exclude %_libdir/%rname/plugins/externaltools.plugin
+%exclude %_libdir/%rname/plugins/pythonconsole/
+%exclude %_libdir/%rname/plugins/pythonconsole.plugin
+%exclude %_libdir/%rname/plugins/quickopen/
+%exclude %_libdir/%rname/plugins/quickopen.plugin
+%exclude %_libdir/%rname/plugins/snippets/
+%exclude %_libdir/%rname/plugins/snippets.plugin
+%endif
 %_libexecdir/%rname
 %_libdir/girepository-1.0/Pluma-1.0.typelib
 %_datadir/%rname
@@ -84,6 +96,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Thu Aug 07 2025 Anton Midyukov <antohami@altlinux.org> 1:1.28.0-alt2
+- NMU: exclude python plugins (closes: #53657).
+
 * Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
