@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-# Busted not in sisyphus yet.
-%def_without check
 %define luarocks_revision 1
+# Disable on bootstrap.
+%def_without check
 
 Name: lua5.4-module-luasystem
-Version: 0.4.5
+Version: 0.6.3
 Release: alt1_lr%luarocks_revision
 
 Summary: Platform independent system calls for Lua
@@ -20,6 +20,9 @@ Provides: luarocks5.4(luasystem) = %EVR
 BuildRequires(pre): rpm-macros-lua
 BuildRequires: lua5.4-luarocks
 BuildRequires: liblua5.4-devel
+%if_with check
+BuildRequires: lua5.4-module-busted
+%endif
 
 %description
 Luasystem is a platform independent system call library for Lua.
@@ -43,7 +46,9 @@ luarocks-5.4 install --verbose --local --deps-mode none \
 	--no-manifest --tree %buildroot%prefix *.rock
 
 %check
-luarocks-5.4 test --test-type busted rockspecs/luasystem-%version-%luarocks_revision.rockspec
+luarocks-5.4 test --test-type busted \
+    rockspecs/luasystem-%version-%luarocks_revision.rockspec \
+    -- --exclude-tags=manual
 
 %files
 %doc LICENSE.md
@@ -52,5 +57,8 @@ luarocks-5.4 test --test-type busted rockspecs/luasystem-%version-%luarocks_revi
 %lua_modulesdir/system/core.so
 
 %changelog
+* Fri Aug 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.6.3-alt1_lr1
+- New version (0.6.3).
+
 * Mon Apr 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.4.5-alt1_lr1
 - Initial build.
