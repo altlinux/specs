@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Inline
 Name: perl-%dist
-Version: 0.86
+Version: 0.87
 Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
@@ -45,6 +45,9 @@ rm -f %buildroot%perl_vendor_privlib/Inline/MakeMaker/Changes
 %doc	%perl_vendor_privlib/Inline/*.pod
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 0.87-alt1
+- automated CPAN update
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
 - automated CPAN update
 
