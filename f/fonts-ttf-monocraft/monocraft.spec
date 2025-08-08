@@ -2,13 +2,14 @@
 %define fname monocraft
 
 Name: fonts-ttf-%fname
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: Monocraft font
 License: OFL-1.1
 Group: System/Fonts/True type
 Url: https://github.com/IdreesInc/Monocraft
+Vcs: https://github.com/IdreesInc/Monocraft.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -35,6 +36,9 @@ cd dist
 %doc LICENSE README.md
 
 %changelog
+* Fri Aug 08 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.1-alt1
+- New version.
+
 * Sun Aug 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.0-alt1
 - New version.
 
