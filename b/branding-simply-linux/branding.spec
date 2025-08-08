@@ -38,8 +38,10 @@
 %endif
 
 # Mail Reader
-%ifarch riscv64
+%ifarch riscv64 %e2k
 # riscv64: 2021: no thunderbird port available
+# e2k: 2025: claws-mail performs better
+# NB: use the helper desktop file name here
 %define mail_reader sylpheed-claws
 %else
 %define mail_reader thunderbird
@@ -67,8 +69,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.950
-Release: alt4
+Version: 11.0
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
@@ -496,6 +498,11 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Fri Aug 08 2025 Mikhail Efremov <sem@altlinux.org> 11.0-alt1
+- spec: use claws-mail as mail reader on e2k (by Michael Shigorin).
+- alterator: Change installer background color.
+- menu: Add hardinfo2.desktop.
+
 * Wed Jul 16 2025 Mikhail Efremov <sem@altlinux.org> 10.950-alt4
 - graphics: Really fix dangling symlinks when updated from 10.x.
 
