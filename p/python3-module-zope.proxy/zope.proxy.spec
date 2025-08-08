@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1.1
+Release: alt2
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
 Group: Development/Python3
@@ -26,6 +26,9 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# zope.security is optional circular tests dependency
+# zope.security (runtime) => zope.proxy (check) => zope.security
+%add_pyproject_deps_check_filter '%{pep503_name zope.security}$'
 %pyproject_builddeps_metadata_extra test
 %endif
 
@@ -74,6 +77,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Thu Aug 07 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt2
+- Dropped optional circular tests dependency on zope.security (Python bootstrap).
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

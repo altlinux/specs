@@ -1,54 +1,41 @@
-Summary: The ``zope`` package is a pure namespace package
-Version: 3.3.0
-Release: alt9
-License: ZPL
-Group: Development/Python3
-
+%define _unpackaged_files_terminate_build 1
 %define modulename zope
-%define oname zope
-Name: python3-module-%modulename
 
+# The purpose of this package is the ownership of xxx/site-packages/zope/
+# namespace root directories. Other zope packages will be installed on those
+# paths, but the packages can't own the root paths.
+
+Name: python3-module-%modulename
+Version: 3.3.0
+Release: alt10
+Summary: The ``zope`` package is a pure namespace package
+License: ZPL-2.1
+Group: Development/Python3
+%py3_provides %modulename
 BuildRequires(pre): rpm-build-python3
-Requires: python3-module-zope.interface
-Requires: python3-module-zc
 
 %description
 %summary
 
 %install
-mkdir -p %buildroot/%python3_sitelibdir/%modulename
-cat <<EOF > %buildroot/%python3_sitelibdir/%modulename/__init__.py
-##############################################################################
-#
-# Copyright (c) 2004 Zope Corporation and Contributors.
-# All Rights Reserved.
-#
-# This software is subject to the provisions of the Zope Public License,
-# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
-# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
-# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
-# FOR A PARTICULAR PURPOSE.
-#
-##############################################################################
-#
-# This file is necessary to make this directory a package.
-
-try:
-    # Declare this a namespace package if pkg_resources is available.
-    import pkg_resources
-    pkg_resources.declare_namespace('zope')
-except ImportError:
-    pass
-EOF
+# Note: implicit namespace package can't contain __init__.py in namespace root
+mkdir -p -m0755 %buildroot%python3_sitelibdir/%modulename/
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+mkdir -p -m0755 %buildroot%python3_sitelibdir_noarch/%modulename/
+%endif
 
 %files
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname/__init__.py*
-%dir %python3_sitelibdir/%oname/__pycache__
-%python3_sitelibdir/%oname/__pycache__/__init__.*
+%python3_sitelibdir/%modulename/
+# for fixing: warning: File listed twice
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+%python3_sitelibdir_noarch/%modulename/
+%endif
 
 %changelog
+* Thu Aug 07 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt10
+- Switched to native namespace scheme.
+- Dropped excessive runtime dependencies.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt9
 - Drop python2 support.
 

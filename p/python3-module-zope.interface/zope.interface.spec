@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.2
-Release: alt1.1
+Release: alt2
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -27,7 +27,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
-BuildRequires: python3-module-zope.testrunner
 %endif
 
 %description
@@ -56,15 +55,19 @@ This package contains tests for %pypi_name.
 %pyproject_install
 
 %check
-# per .github/workflows/tests.yml
-# ``python -m unittest discover`` only works with editable
-# installs, so we have to duplicate some work and can't
-# install the built wheel. (zope.testrunner
-# works fine with non-editable installs.)
-%pyproject_run -- zope-testrunner --test-path=src -vc
+# see .github/workflows/tests.yml
+# upstream hacks a lot to make tests pass, so do we to not dependent on
+# zope.testrunner (circular dependency).
+# test discovery for namespace packages:
+# https://docs.python.org/3/library/unittest.html#test-discovery
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+site_packages="$(python -c 'import sysconfig;print(sysconfig.get_path("platlib"))')"
+python -m unittest discover -s %ns_name.%mod_name -t "$site_packages"
+ENDTESTS
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
@@ -77,6 +80,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/common/tests/
 
 %changelog
+* Thu Aug 07 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt2
+- Dropped circular dependency on zope.testrunner.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
