@@ -3,8 +3,8 @@
 %define oname luarocks
 
 Name: lua5.4-luarocks
-Version: 3.9.2
-Release: alt2
+Version: 3.11.1
+Release: alt1
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
@@ -141,6 +141,7 @@ install -m755 %SOURCE1 %buildroot%_rpmlibdir/
 
 %add_findreq_skiplist /usr/share/lua/*/luarocks/fs/lua.lua
 %add_findreq_skiplist /usr/share/lua/*/luarocks/tools/zip.lua
+%add_findreq_skiplist /usr/share/lua/*/luarocks/vendor/dkjson.lua
 %add_findprov_skiplist %lua51_modulesdir/%oname/*
 %add_findprov_skiplist %lua53_modulesdir/%oname/*
 %add_findprov_skiplist %lua54_modulesdir/%oname/*
@@ -186,6 +187,9 @@ install -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %doc COPYING README*
 
 %changelog
+* Sun Apr 27 2025 Ildar Mulyukov <ildar@altlinux.ru> 3.11.1-alt1
+- new version
+
 * Wed Jan 17 2024 Ildar Mulyukov <ildar@altlinux.ru> 3.9.2-alt2
 - get back to the multi-Lua packaging
 
