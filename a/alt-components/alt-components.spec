@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -63,6 +63,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_bindir/alt-components
 
 %changelog
+* Fri Aug 08 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.2-alt1
+- Fix build: add missing includings.
+
 * Tue Jul 29 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.1-alt1
 - Add caching of content of unapplied resolved transaction if content is
   not changed.
