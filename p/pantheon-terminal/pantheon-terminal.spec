@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 7.0
+%define ver_major 7.1
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -82,6 +82,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Fri Aug 08 2025 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
