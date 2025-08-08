@@ -5,7 +5,7 @@
 
 Name: libtiff
 Version: 4.7.0
-Release: alt2
+Release: alt3
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
@@ -15,6 +15,9 @@ VCS: https://gitlab.com/libtiff/libtiff.git
 
 Source: %name-%version.tar
 Patch: libtiff-4.7.0-upstream-race-condition-in-tiffcrop.patch
+Patch1: libtiff-4.7.0-upstream-cve-2025-8176.patch
+Patch2: libtiff-4.7.0-upstream-cve-2025-8177.patch
+Patch3: libtiff-4.7.0-upstream-cve-2025-8534.patch
 
 %def_enable cxx
 
@@ -170,6 +173,12 @@ autoheader
 %endif
 
 %changelog
+* Fri Aug 08 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt3
+- Fixes:
+  + CVE-2025-8176 Use After Free
+  + CVE-2025-8177 Buffer Copy without Checking Size of Input
+  + CVE-2025-8534 NULL Pointer Dereference
+
 * Mon May 19 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt2
 - Fix FTBFS: race condition in tiffcrop.
 - Update license tag to SPDX format.
