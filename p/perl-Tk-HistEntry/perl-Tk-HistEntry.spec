@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Tk-HistEntry
 Name: perl-%dist
-Version: 0.45
+Version: 0.46
 Release: alt1
 
 Summary: Entry widget with history capability
@@ -40,6 +40,9 @@ xvfb-run -a make test
 %perl_vendor_privlib/Tk/HistEntry.pm
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 0.46-alt1
+- automated CPAN update
+
 * Mon Jan 01 2018 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
 - automated CPAN update
 
