@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Crypt/URandom.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Crypt::CBC -
@@ -15,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-CBC
-Version: 3.04
+Version: 3.07
 Release: alt1
 
 Summary: Crypt-CBC - Encrypt Data with Cipher Block Chaining Mode
@@ -27,7 +30,7 @@ Url: http://search.cpan.org/~lds/%module-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/L/LD/LDS/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
 BuildRequires: perl-Crypt-Blowfish perl-Crypt-Blowfish_PP perl-Crypt-CAST5 perl-Crypt-DES perl-Crypt-IDEA perl-Crypt-Rijndael perl-devel perl(Crypt/PBKDF2.pm) perl(Digest/SHA.pm)
@@ -59,10 +62,13 @@ operate on a whole data value at once.
 %perl_vendor_install
 
 %files
-%doc README Changes Crypt-CBC-2.16-vulnerability.txt README.md
+%doc README Changes SECURITY.md vulnerabilities.txt
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 3.07-alt1
+- automated CPAN update
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 3.04-alt1
 - automated CPAN update
 
