@@ -2,8 +2,8 @@
 %define oname dask
 
 Name: python3-module-dask
-Version: 2021.7.2
-Release: alt3
+Version: 2021.12.0
+Release: alt1
 
 License: BSD
 Group: Development/Python
@@ -54,6 +54,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/*
 
 %changelog
+* Fri Aug 08 2025 Alexander Danilov <admsasha@altlinux.org> 2021.12.0-alt1
+- new version 2021.12.0.
+
 * Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 2021.7.2-alt3
 - NMU: Apply upstream fix for working with fresh numpy.
 
