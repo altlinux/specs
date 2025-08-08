@@ -1,16 +1,16 @@
 %def_disable static
 
 Name: lm_sensors3
-Version: 3.6.0
-Release: alt4
+Version: 3.6.2
+Release: alt1
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
 Group: System/Kernel and hardware
 Url: https://hwmon.wiki.kernel.org/
-Packager: Afanasov Dmitry <ender@altlinux.org> 
+Vcs: https://github.com/hramrach/lm-sensors
 
-# https://github.com/lm-sensors/lm-sensors
+# https://github.com/hramrach/lm-sensors/archive/refs/tags/V3-6-2.tar.gz
 Source: %name-%version.tar
 Source1: lm_sensors.init
 Source2: lm_sensors.service
@@ -24,12 +24,12 @@ Source9: fancontrol.init
 Source10: sensord.init
 
 Patch1: lm_sensors3-3.4.0-alt-set_limit.patch
-Patch2: lm_sensors3-3.1.0-makefile-norpath.patch
+Patch2: lm_sensors3-3.6.2-makefile-norpath.patch
 
-Requires: libsensors3 = %version-%release
+Requires: libsensors3 = %EVR
 Provides: lm_sensors
 
-Provides: lm_sensors = %version-%release
+Provides: lm_sensors = %EVR
 
 BuildRequires: flex bison
 BuildRequires: librrd-devel >= 1.2.1
@@ -41,7 +41,7 @@ BuildPreReq: rpm-macros-make
 %package utils
 Summary: Hardware Health Monitoring utils
 Group: Monitoring
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: lm_sensors-utils
 Obsoletes: lm_sensors-utils
 Conflicts: sensorfw
@@ -55,7 +55,7 @@ Obsoletes: libsensors
 %package -n libsensors3-devel
 Summary: Development environment for hardware health monitoring tools
 Group: Development/C
-Requires: libsensors3 = %version-%release
+Requires: libsensors3 = %EVR
 Provides: %name-devel = %version
 Provides: libsensors-devel
 Obsoletes: libsensors-devel
@@ -64,7 +64,7 @@ Conflicts: libsensors-devel
 %package -n libsensors3-devel-static
 Summary: Static library for developing hardware health monitoring tools
 Group: Development/C
-Requires: libsensors-devel = %version-%release
+Requires: libsensors-devel = %EVR
 Provides: libsensors-devel-static
 Obsoletes: libsensors-devel-static
 Conflicts: libsensors-devel-static
@@ -252,6 +252,11 @@ fi
 %endif #static
 
 %changelog
+* Fri Aug 08 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt1
+- 3.6.2.
+- Update Vcs.
+- service: apply systemd hardering settings.
+
 * Sat Dec 21 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt4
 - NMU: fix FTBFS with gcc 14
 
