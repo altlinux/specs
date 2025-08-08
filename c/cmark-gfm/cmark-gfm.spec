@@ -4,13 +4,13 @@
 
 Name: cmark-gfm
 Version: 0.29.0.gfm.13
-Release: alt1
+Release: alt2
 
 %define soversion %version
 
 Summary: GitHub's fork of CommonMark parsing and rendering library and program in C
-License: Apache-2.0
-Group: Development/Other
+License: BSD-2-Clause and MIT
+Group: Text tools
 Url: https://github.com/github/cmark-gfm
 Vcs: https://github.com/github/cmark-gfm.git
 Source: %name-%version.tar
@@ -60,8 +60,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files
 %doc COPYING
-%_bindir/*
-%_man1dir/*
+%_bindir/cmark-gfm
+%_man1dir/cmark-gfm.1.xz
 
 %files -n libcmark-gfm%soversion
 %doc COPYING
@@ -70,14 +70,18 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files -n libcmark-gfm-devel
 %doc COPYING README.md
-%_includedir/*
+%_includedir/cmark-gfm*
 %_libdir/libcmark-gfm.so
 %_libdir/libcmark-gfm-extensions.so
 %_libdir/cmake/*
 %_libdir/cmake-gfm-extensions/*
 %_pkgconfigdir/libcmark-gfm.pc
-%_man3dir/*
+%_man3dir/cmark-gfm.3.xz
 
 %changelog
+* Fri Aug 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.29.0.gfm.13-alt2
+- Fix license tag.
+- Move cmark-gfm to "Text tools" group.
+
 * Tue Jul 01 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.29.0.gfm.13-alt1
 - Initial build.
