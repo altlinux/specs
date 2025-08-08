@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt29
+Release: alt30
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -391,6 +391,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Aug 08 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt30
+- Release-notes: fixed Proxmox VE Backup Server version
+
 * Mon Jul 14 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt29
 - Separate final-notes for domain and server
 
