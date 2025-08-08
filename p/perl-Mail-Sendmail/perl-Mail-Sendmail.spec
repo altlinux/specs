@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Sys/Hostname/Long.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module Mail-Sendmail
 
@@ -5,7 +8,7 @@
 %def_disable test
 
 Name: perl-%module
-Version: 0.80
+Version: 0.82
 Release: alt1
 
 Summary: Simple platform independent mailer
@@ -37,6 +40,9 @@ Perl 5 and a network connection.
 %perl_vendor_privlib/Mail
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 0.82-alt1
+- automated CPAN update
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
 - automated CPAN update
 
