@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.1
+Version: 6.5.18
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -13,12 +13,14 @@ Url: https://github.com/linuxdeepin/dde-calendar
 Vcs: git://github.com/linuxdeepin/dde-calendar.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
 
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dtk6-common-devel libdtk6widget-devel libical-devel dqt6-svg-devel dqt6-tools-devel
+BuildRequires: cmake dtk6-common-devel libdtk6widget-devel libical-devel dqt6-svg-devel dqt6-tools-devel libcups-devel
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql
 
 %description
 Calendar for Deepin Desktop Environment.
@@ -41,10 +43,12 @@ export LC_ALL=C.UTF-8
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
-%doc README.md LICENSE
+%doc README.md LICENSE debian/changelog
 %_bindir/%repo
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/dde-calendar-service.qm
+%_datadir/%repo/translations/dde-calendar.qm
 %dir %_datadir/%repo/data/
 %_datadir/%repo/data/huangli.db
 %_datadir/dbus-1/services/com.deepin.Calendar.service
@@ -70,6 +74,9 @@ export LC_ALL=C.UTF-8
 %_userunitdir/%repo.service
 
 %changelog
+* Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.18-alt1
+- New version 6.5.18.
+
 * Thu Feb 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.1-alt1
 - New version 6.5.1.
 
