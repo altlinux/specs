@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -44,6 +44,7 @@ BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 BuildRequires: distro-licenses >= 1.3.17
+BuildRequires: alt-editions-server >= 0.7.16
 
 %if "%status" != "%nil" || "%status_en" != "%nil"
 BuildRequires: fonts-ttf-dejavu
@@ -182,6 +183,7 @@ BuildArch: noarch
 Provides:  alt-license-theme = %version alt-notes-%theme
 Obsoletes: alt-license-%theme alt-notes-%theme
 Requires:  distro-licenses >= 1.3.17
+Requires:  alt-editions-server >= 0.7.16
 Summary:   Distribution license and release notes
 Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
 License:   Distributable
@@ -300,6 +302,13 @@ install gnome-settings/*.gschema.override %buildroot/%_datadir/glib-2.0/schemas/
 mkdir -p  %buildroot/%_sysconfdir/dconf/db/default.d/
 install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
 
+#notes
+cp -a %_datadir/alterator/editions/edition_server/{release,final}-notes.*.html %buildroot%_datadir/alt-notes/
+for relnotes in %_datadir/alterator/editions/edition_server/final-notes.*.html; do \
+   suffix="${relnotes#*final-notes.}"; \
+   ln -s $relnotes %buildroot%_datadir/alt-notes/livecd-finish.$suffix; \
+done; \
+
 #graphics
 mkdir -p %buildroot/%_datadir/design/%theme
 cp -a images/product-logo.png %buildroot/%_datadir/design/%theme/icons/system-logo.png
@@ -364,10 +373,6 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 %_datadir/alt-notes/livecd-*
 %_datadir/alt-notes/release-notes.*
 %_datadir/alt-notes/final-notes.*
-%_datadir/alt-notes-domain/release-notes.*
-%_datadir/alt-notes-domain/final-notes.*
-%_datadir/alt-notes-server/release-notes.*
-%_datadir/alt-notes-server/final-notes.*
 
 %files mate-settings
 %_datadir/install3/lightdm-gtk-greeter.conf
@@ -391,6 +396,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Aug 08 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.1-alt2
+- Move notes of editions to alt-editions-server
+
 * Fri Aug 08 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt1
 - Change background images
 - Add product-logo to installer

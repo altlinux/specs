@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.15
+Version: 0.7.16
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -14,6 +14,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires: cmark
+BuildRequires: autoconf-common
 BuildRequires: alterator-entry >= 0.4.0
 BuildRequires(pre): rpm-macros-alterator
 
@@ -50,6 +51,10 @@ for d in components/*/ categories/* ; do
         cmark "$file" > "${file/%%md/html}"
     done
 done
+
+cd editions
+autoconf
+./configure
 
 %install
 # install Components
@@ -104,13 +109,13 @@ done
 # install Editions
 mkdir -p "%buildroot%_alterator_datadir/editions"
 
-for d in editions/*/ ; do
+for d in editions/edition_*/ ; do
     find "$d" -type f -name "description*.md" -print0 | while IFS= read -r -d '' file; do
         cmark "$file" > "${file/%%md/html}"
     done
 done
 
-for edition_dir in editions/*/; do
+for edition_dir in editions/edition_*/; do
     edition="$(basename "$edition_dir")"
 
     mkdir -p "%buildroot%_alterator_datadir/editions/$edition"
@@ -151,6 +156,11 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Fri Aug 08 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.7.16-alt1
+- editions(release-notes): fix Proxmox VE Backup Server version
+  (thx Maria Fokanova)
+- build: add year configuring for edition notes
+
 * Thu Jul 31 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.7.15-alt1
 - components: expand metapackages for education components
 
