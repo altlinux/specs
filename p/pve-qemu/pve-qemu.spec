@@ -13,8 +13,8 @@
 %endif
 
 Name: pve-%rname
-Version: 9.2.0
-Release: alt5
+Version: 10.0.2
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -48,7 +48,7 @@ BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel lib
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
-BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
+BuildRequires: makeinfo perl-Pod-Usage pkgconfig(virglrenderer) liburing-devel libuuid-devel
 BuildRequires: libslirp-devel >= 4.7.0
 BuildRequires: libsystemd-devel libudev-devel libtasn1-devel libpmem-devel libzstd-devel zlib-devel spice-protocol
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
@@ -85,6 +85,7 @@ Requires: seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
 Requires: %name-img = %EVR
 Conflicts: %rname-common
+Conflicts: %rname-system-x86-core %rname-system-aarch64-core
 Obsoletes: %name-aux < %EVR
 
 %description common
@@ -96,7 +97,8 @@ This package contains common files for qemu.
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
 Requires: %name-common = %EVR pve-backup-client pve-backup-file-restore numactl
-Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core %rname-pr-helper
+Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core %rname-pr-helper %rname-img
+Conflicts: %rname-system-x86-core %rname-system-aarch64-core
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -159,7 +161,6 @@ export CFLAGS="%optflags"
         --disable-strip \
         --disable-xen \
         --enable-curl \
-        --enable-glusterfs \
         --enable-gnutls \
         --enable-libiscsi \
         --enable-libusb \
@@ -328,6 +329,10 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Fri Aug 08 2025 Alexey Shabalin <shaba@altlinux.org> 1:10.0.2-alt1
+- 10.0.2-4
+- Drop support for accessing Gluster based storage
+
 * Wed Apr 23 2025 Alexey Shabalin <shaba@altlinux.org> 1:9.2.0-alt5
 - 9.2.0-5
 
