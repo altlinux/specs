@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.5.8
+Version: 6.5.23
 Release: alt1
 
 Summary: An easy to use calculator for ordinary users
@@ -14,14 +14,15 @@ Url: https://github.com/linuxdeepin/deepin-calculator
 Vcs: git://github.com/linuxdeepin/deepin-calculator.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake dqt6-base-devel dqt6-tools dqt6-svg-devel libdtk6widget-devel dtk6-common-devel libgtest-devel libgmock-devel
+BuildRequires(pre): desktop-file-utils
+BuildRequires: dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdtk6widget-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -29,6 +30,7 @@ Requires: icon-theme-hicolor
 
 %prep
 %setup
+%patch -p1
 
 %build
 %if_enabled clang
@@ -67,6 +69,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.23-alt1
+- New version 6.5.23.
+
 * Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.8-alt1
 - New version 6.5.8.
 - Switched to dqt6.
