@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.45
+Version: 0.46
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -45,7 +45,7 @@ Requires: alterator-datetime
 Requires: samba-winbind-dnsupdate
 Requires: system-report
 Requires: diag-domain-client
-Requires: samba
+Requires: samba >= 4.21
 Requires: samba-common-tools
 
 %description -n task-auth-ad-winbind
@@ -68,7 +68,7 @@ Requires: sssd-tools
 Requires: adcli
 Requires: system-report
 Requires: diag-domain-client
-Requires: samba
+Requires: samba >= 4.21
 Requires: samba-common-tools
 
 Provides:  task-auth-ad = %EVR
@@ -175,6 +175,11 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Thu Aug 07 2025 Andrey Limachko <liannnix@altlinux.org> 0.46-alt1
+- system-auth: ad: backup secrets.tdb before joining AD domain
+- system-auth: ad: replace SPN registrations with keytab regeneration
+  for Samba 4.21+ compatibility (Closes: #55376)
+
 * Tue Jan 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.45-alt1
 - spec: remove pam_propperpwnam from task-auth-ad-sss and
   task-auth-ad-winbind requirements
