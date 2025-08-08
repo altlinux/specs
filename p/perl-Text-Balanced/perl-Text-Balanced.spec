@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Balanced
 Name: perl-%dist
-Version: 2.06
+Version: 2.07
 Release: alt1
 
 Summary: Extract delimited text sequences from strings
@@ -34,6 +34,9 @@ possibly after skipping a specified prefix string.
 %perl_vendor_privlib/Text*
 
 %changelog
+* Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 2.07-alt1
+- automated CPAN update
+
 * Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 2.06-alt1
 - automated CPAN update
 
