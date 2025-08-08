@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.9.2
+Version: 0.11.4
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -46,8 +46,8 @@ BuildRequires: curl
 
 %description
 %summary.
-Run DeepSeek-R1, Gemma 3, Llama 4, Mistral, Phi-4, Qwen 3, and other
-models, locally.
+Run OpenAI gpt-oss, DeepSeek-R1, Gemma 3, Llama 4, Mistral, Phi-4,
+Qwen 3, and other models, locally.
 
 This is a meta-package.
 
@@ -87,7 +87,7 @@ find -type f -perm -1 -ls
 %cmake_install
 %if_with cuda
 # Remove bundled shared libs.
-rm %buildroot%_libexecdir/ollama/cuda_v12/libcu{blas{,Lt},dart}.so*
+rm %buildroot%_libexecdir/ollama/libcu{blas{,Lt},dart}.so*
 %endif
 install -Dp ollama %buildroot%_bindir/ollama
 install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
@@ -101,9 +101,8 @@ find %buildroot%_libexecdir/ollama -name libggml-c*.so |
 	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
 
 %check
-{ cuobjdump --list-elf %buildroot%_libexecdir/ollama/cuda_v12/libggml-cuda.so
-  cuobjdump --list-ptx %buildroot%_libexecdir/ollama/cuda_v12/libggml-cuda.so
-} |& head
+( ! cuobjdump --list-elf %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .cubin )
+( ! cuobjdump --list-ptx %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
 cat /proc/loadavg
 go test -v ./...
 %buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
@@ -141,10 +140,13 @@ kill %%?ollama
 
 %if_with cuda
 %files cuda
-%_libexecdir/ollama/cuda_v12
+%_libexecdir/ollama/libggml-cuda.so
 %endif
 
 %changelog
+* Fri Aug 08 2025 Vitaly Chikunov <vt@altlinux.org> 0.11.4-alt1
+- Update to v0.11.4 (2025-08-07).
+
 * Thu Jun 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.9.2-alt1
 - Update to v0.9.2 (2025-06-18).
 
