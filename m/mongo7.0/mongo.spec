@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.22
+Version: 7.0.23
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -203,6 +203,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Aug 08 2025 Alexei Takaseev <taf@altlinux.org> 7.0.23-alt1
+- 7.0.23
+
 * Mon Jul 28 2025 Alexei Takaseev <taf@altlinux.org> 7.0.22-alt1
 - 7.0.22 (Fixes: CVE-2025-6706, CVE-2025-6707, CVE-2025-6709, CVE-2025-6710,
   CVE-2025-6711, CVE-2025-6713, CVE-2025-6714)
