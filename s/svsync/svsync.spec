@@ -5,12 +5,12 @@
 
 Name: svsync
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Sysvol rSync python script
 License: GPLv3+
 Group: Other
-Url: https://gitlab.basealt.space/gedertkj/sysvolsync
+Url: https://altlinux.space/alt-domain/svsync
 BuildArch: noarch
 
 Provides: /usr/bin/%name
@@ -82,6 +82,10 @@ install -Dm0644 completion/%name.sh %buildroot/%_datadir/bash-completion/complet
 %dir %attr(0700, root, root) %_cachedir/%name/
 
 %changelog
+* Fri Aug 08 2025 Korney Gedert <kiper@altlinux.org> 1.2-alt2
+- chore: update url in .spec
+- docs: fix inaccuracy in README.MD
+
 * Tue Jul 29 2025 Korney Gedert <kiper@altlinux.org> 1.2-alt1
 - docs: update README.MD
 - chore: add upstream name to log
