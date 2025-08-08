@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.24
+Version: 6.5.27
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -67,6 +67,7 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %files -f %name.lang
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/%name
 %_bindir/%name-server
 %_bindir/%name-plugin-popup
@@ -124,6 +125,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.27-alt1
+- New version 6.5.27.
+
 * Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.24-alt1
 - New version 6.5.24.
 
