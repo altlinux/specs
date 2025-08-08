@@ -4,7 +4,7 @@
 %def_without cracklib
 
 Name: deepin-pw-check
-Version: 6.0.4.0.1.9d86
+Version: 6.0.6
 Release: alt1
 
 Summary: Verify the validity of the password for DDE
@@ -15,8 +15,9 @@ Url: https://github.com/linuxdeepin/deepin-pw-check
 
 Source0: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
-Patch0: deepin-pw-check-6.0.2-alt-libdir.patch
-Patch1: deepin-pw-check-6.0.2-alt-exclude-cracklib.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-pw-check-6.0.2-alt-libdir.patch
+Patch2: deepin-pw-check-6.0.6-alt-exclude-cracklib.patch
 
 %if_enabled clang
 BuildRequires: clang-devel
@@ -34,7 +35,6 @@ BuildRequires: libiniparser-devel
 BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgio-devel
-BuildRequires: golang-deepin-api-devel
 
 %description
 %summary.
@@ -69,8 +69,11 @@ This package provides static libraries for %name.
 %prep
 %setup -a1
 %patch0 -p1
-%if_without cracklib
 %patch1 -p1
+%if_without cracklib
+%patch2 -p2
+%else
+patch -p1 < rpm/0001-Mangle-Suit-Cracklib2.9.6.patch
 %endif
 sed -i 's|@LIBDIR@|%_lib|' \
   misc/pkgconfig/libdeepin_pw_check.pc
@@ -127,6 +130,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
+- New version 6.0.6.
+
 * Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4.0.1.9d86-alt1
 - New version 6.0.4-1-g9d86d88.
 
