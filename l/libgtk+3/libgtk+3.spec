@@ -24,7 +24,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.49
+Version: %ver_major.50
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -70,7 +70,7 @@ Requires: gtk-update-icon-cache >= %version
 Requires: icon-theme-adwaita
 Requires: at-spi2-core
 # ALT #32028
-Requires: gtk+3-themes-incompatible
+#Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
@@ -445,6 +445,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Fri Aug 08 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.50-alt1
+- 3.24.50
+
 * Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.49-alt1
 - 3.24.49
 
