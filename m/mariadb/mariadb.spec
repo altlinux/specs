@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.8.3
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -540,7 +540,9 @@ touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
 
-%makeinstall_std
+# make install does re-linking, so using multiple CPUs
+# speeds it up significantly in presence of LTO
+%makeinstall_std %_smp_mflags
 
 # RPM install style leftovers
 rm -f %buildroot%_sysconfdir/init.d/mysql
@@ -1117,6 +1119,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 08 2025 Ivan A. Melnikov <iv@altlinux.org> 11.8.3-alt2
+- NMU: Run make install in parallel
+
 * Thu Aug 07 2025 Alexei Takaseev <taf@altlinux.org> 11.8.3-alt1
 - 11.8.3
 - Update libmariadb to 3.4.7
