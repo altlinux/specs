@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 5753
+Version: 6121
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -31,7 +31,6 @@ Requires: %name-vulkan = %EVR
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Source1: kompute-0.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -139,7 +138,6 @@ Requires: %name-cpu = %EVR
 %prep
 %setup
 %autopatch -p1
-tar xf %SOURCE1 -C ggml/src/ggml-kompute
 commit=$(awk '$2=="b%version"{print$1}' .gear/tags/list)
 cat <<-EOF >> cmake/build-info.cmake
 	set(BUILD_NUMBER %version)
@@ -162,6 +160,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DLLAMA_BUILD_TESTS=ON \
 	-DLLAMA_CURL=ON \
 	-DGGML_BACKEND_DL=ON \
+	-DGGML_BACKEND_DIR=%_libexecdir/llama \
 	-DGGML_CPU=ON \
 	-DGGML_RPC=ON \
 %ifarch x86_64
@@ -200,6 +199,8 @@ printf '%%s\n' llama-server llama-simple llama-run llama-mtmd-cli |
 install -Dp %_cmake__builddir/bin/rpc-server %buildroot%_bindir/llama-rpc-server
 
 %check
+( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
+( ! cuobjdump --list-ptx %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
 # Local path are more useful for debugging becasue they are not stripped by default.
 %dnl export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libexecdir/llama PATH+=:%buildroot%_bindir
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
@@ -256,6 +257,9 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %endif
 
 %changelog
+* Sat Aug 09 2025 Vitaly Chikunov <vt@altlinux.org> 1:6121-alt1
+- Update to b6121 (2025-08-08).
+
 * Wed Jun 25 2025 Vitaly Chikunov <vt@altlinux.org> 1:5753-alt1
 - Update to b5753 (2025-06-24).
 - Install an experimental rpc backend and server. The rpc code is a
