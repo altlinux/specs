@@ -10,14 +10,14 @@
 
 Name: %{_name}3
 Version: %ver_major.3
-Release: alt1.1
+Release: alt1.2
 
 %def_disable static
 %def_enable gtk3
 %def_enable gtk4
 %def_enable introspection
 %def_enable docs
-%def_enable glade
+%def_disable glade
 %ifarch %ix86 armh
 %def_disable check
 %else
@@ -227,6 +227,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.3-alt1.2
+- disabled glade support
+
 * Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.3-alt1.1
 - fixed buils for E2K (ilyakurdyukov@)
 
