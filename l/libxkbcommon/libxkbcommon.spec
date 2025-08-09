@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name xkbcommon
@@ -7,9 +7,11 @@
 %def_enable xkbregistry
 %def_enable docs
 %def_enable check
+# broken in hasher
+%def_disable python_tests
 
 Name: lib%_name
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -26,15 +28,20 @@ Source: https://github.com/xkbcommon/libxkbcommon/archive/%_name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson %{?_enable_check:rpm-macros-valgrind}
 BuildRequires: meson >= 0.51 bison >= 3.6 flex
 BuildRequires: xkeyboard-config-devel >= 2.29
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
+BuildRequires: pkgconfig(icu-uc)
+BuildRequires: bash-completion
 %{?_enable_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb) >= 1.10}
 %{?_enable_xkbregistry:BuildRequires: libxml2-devel}
-%{?_enable_docs:BuildRequires: doxygen}
-%{?_enable_check:BuildRequires: python3-module-pytest %{?_enable_x11:xvfb-run}}
+%{?_enable_docs:BuildRequires: doxygen graphviz}
+%{?_enable_check:BuildRequires: python3(pytest) python3(jinja2) %{?_enable_x11:xvfb-run}
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif}
 
 %description
 %name is the X.Org library for compiling XKB maps into formats usable by
@@ -85,7 +92,7 @@ Requires: %name-x11 = %EVR
 This package provides xkbcli -- tool to interact with XKB keymaps.
 
 %prep
-%setup
+%setup -n %name%{?_disable_snapshot:-%_name}-%version
 
 %ifarch %e2k
 sed -i 's/--undefined-version,//' meson.build
@@ -104,7 +111,7 @@ sed -i 's/--undefined-version,//' meson.build
 %meson_install
 
 %check
-%{?_enable_x11:xvfb-run} %__meson_test
+%{?_enable_x11:xvfb-run} %__meson_test %{?_disable_python_tests:--no-suite python-tests}
 
 %files
 %_libdir/%name.so.*
@@ -146,6 +153,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - updated to xkbcommon-1.10.0-1-gbffbef88
 
