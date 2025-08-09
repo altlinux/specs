@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.37.1
+Version: 2.38.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -671,6 +671,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Aug 09 2025 Pavel Vainerman <pv@altlinux.ru> 2.38.1-alt1
+- (http): supported freeze/unfreeze API
+- (http): supported "Content-Type" (charset)
+
 * Sun Jun 22 2025 Pavel Vainerman <pv@altlinux.ru> 2.37.1-alt1
 - (unet): minot optimization
 
