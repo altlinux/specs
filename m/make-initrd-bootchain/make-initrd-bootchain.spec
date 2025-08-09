@@ -1,14 +1,14 @@
 %define parent make-initrd
 %define child  bootchain
 
-%ifarch %e2k %mips riscv64
-# shellcheck is not available on these architectures
+%ifarch %ix86 %e2k %mips riscv64
+# shellcheck is not available on these architectures or it is slow
 %def_disable check
 %endif
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt30
+Release: alt31
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sun Aug 10 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt31
+- rebuilt with shellcheck 0.11.0
+
 * Sun May 18 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt30
 - added the ability to boot from an ISO-image unpacked
   into a subdirectory
