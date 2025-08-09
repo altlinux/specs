@@ -3,7 +3,7 @@
 
 Name: cpp-httplib
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: A C++11 single-file header-only cross platform HTTP/HTTPS library.
 License: MIT
@@ -12,8 +12,6 @@ Group: System/Libraries
 Url: https://github.com/yhirose/%name
 Vcs: https://github.com/yhirose/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
-ExcludeArch: %ix86
 
 # https://github.com/yhirose/%name/archive/refs/tags/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -67,6 +65,9 @@ Header files for lib%name
 %_includedir/httplib.h
 
 %changelog
+* Sat Aug 09 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.25.0-alt2
+- Include i586 arch.
+
 * Fri Aug 08 2025 Nazarov Denis <nenderus@altlinux.org> 0.25.0-alt1
 - New version 0.25.0.
 
