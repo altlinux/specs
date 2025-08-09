@@ -1,8 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name rest
-%define ver_major 0.9
+%define ver_major 0.10
 %define api_ver 1.0
+%define namespace Rest
 
 %def_disable soup2
 %def_enable introspection
@@ -11,8 +12,8 @@
 %def_enable demo
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library for access to RESTful web services
 Group: System/Libraries
@@ -22,7 +23,7 @@ Url: https://www.gnome.org
 Vcs: https://gitlab.gnome.org/GNOME/librest
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/lib%_name/%ver_major/lib%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -100,13 +101,13 @@ Requires: %name = %EVR
 This package provides demonstration program for the %_name library.
 
 %prep
-%setup -n %_name-%version
+%setup -n lib%_name-%version
 
 %build
 %meson \
-    %{?_enable_soup2:-Dsoup2=true} \
-    %{?_disable_gtk_doc:-Dgtk-doc=false} \
-    %{?_disable_tests:-Dtests=false} \
+    %{subst_enable_meson_bool soup2 soup2} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool tests tests} \
     -Dca_certificates_path="%_datadir/ca-certificates/ca-bundle.crt"
 %nil
 %meson_build
@@ -131,12 +132,12 @@ This package provides demonstration program for the %_name library.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Rest-%api_ver.typelib
-%_typelibdir/RestExtras-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
+%_typelibdir/%{namespace}Extras-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Rest-%api_ver.gir
-%_girdir/RestExtras-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
+%_girdir/%{namespace}Extras-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -151,6 +152,9 @@ This package provides demonstration program for the %_name library.
 %endif
 
 %changelog
+* Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
+- 0.10.2
+
 * Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt2
 - updated to 0.9.1-24-g23f2d27
 
