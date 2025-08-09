@@ -1,8 +1,10 @@
 %global apiversion 0.0
 
+%set_automake_version 1.16
+
 Name: libzmf
 Version: 0.0.2
-Release: alt1
+Release: alt2
 Summary: A library for import of Zoner document formats
 
 Group: System/Libraries
@@ -54,7 +56,10 @@ Currently supported: SVG, raw.
 %prep
 %setup
 
+subst 's|.png|.svg|' docs/doxygen/Makefile.am
+
 %build
+%autoreconf
 %configure \
 	--disable-silent-rules \
 	--disable-static \
@@ -62,6 +67,8 @@ Currently supported: SVG, raw.
 	%{?_without_check:--disable-tests} \
 	%{?_disable_check:--disable-tests} \
 	#
+
+doxygen -u docs/doxygen/doxygen.cfg
 
 %make_build
 
@@ -102,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}
 %_mandir/man1/zmf2svg.1*
 
 %changelog
+* Sat Aug 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt2
+- fixed FTBFS
+
 * Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt1
 - 0.0.1 -> 0.0.2
 - fixed FTBFS
