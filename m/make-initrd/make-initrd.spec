@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.55.0
-Release: alt3
+Release: alt4
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -70,6 +70,7 @@ AutoReq: noshell, noshebang
 Source0: %name-%version.tar
 Patch: 0001-feature-fsck-Split-fsck-arguments.patch
 Patch1: 0002-feature-plymouth-Fix-syntax-error.patch
+Patch2: 0003-Improve-quoting-performance.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -402,6 +403,10 @@ fi
 %endif
 
 %changelog
+* Sat Aug 09 2025 Anton Midyukov <antohami@altlinux.org> 2.55.0-alt4
+- add upstream patch:
+  + Improve quoting performance
+
 * Fri Aug 08 2025 Anton Midyukov <antohami@altlinux.org> 2.55.0-alt3
 - add upstream patch:
   + feature/plymouth: Fix syntax error
