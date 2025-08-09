@@ -1,5 +1,5 @@
 Name: vault-tasks
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 License: MPL-2.0
 
@@ -36,5 +36,8 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Sat Aug 09 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.13.0-alt1
+- new version 0.13.0 (with rpmrb script)
+
 * Sun Jun 15 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.12.0-alt1
 - Initial build
