@@ -2,29 +2,28 @@
 %define git_descr mainline-636-14434-g537296095ab
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
-%define tzdb_to_nx_date 221202
+%define tzdb_to_nx_commit 97929690234f2b4add36b33657fe3fe09bd57dfd
 
 Name: yuzu
 Version: 1734
-Release: alt4
+Release: alt5
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
 Group: Emulators
 
 Url: https://%name-emu.org/
+Vcs: https://github.com/%name-emu/%name-mainline
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
-
-BuildRequires(pre): libavfilter-devel
 
 # https://github.com/%name-emu/%name-mainline/archive/mainline-0-%version/%name-mainline-mainline-0-%version.tar.gz
 Source0: %name-mainline-mainline-0-%version.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source1: sirit-%sirit_commit.tar
-
-Source2: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
+# https://github.com/lat9nq/tzdb_to_nx/archive/%tzdb_to_nx_commit/tzdb_to_nx-%tzdb_to_nx_commit.tar.gz
+Source2: tzdb_to_nx-%tzdb_to_nx_commit.tar
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
@@ -44,6 +43,8 @@ BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
 BuildRequires: clang
 BuildRequires: clang-tools
+BuildRequires: ctest
+BuildRequires: git-core
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
 BuildRequires: libVulkanUtilityLibraries-devel
@@ -77,18 +78,18 @@ BuildRequires: python3-dev
 BuildRequires: qt6-tools-devel
 BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
-BuildRequires: unzip
 BuildRequires: zlib-devel
 
 %description
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1
+%setup -n %name-mainline-mainline-0-%version -b 1 -b 2
 
 %autopatch -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
+%__mv -Tf ../tzdb_to_nx-%tzdb_to_nx_commit externals/nx_tzdb/tzdb_to_nx
 
 # Enforce package versioning in GUI
 sed -i \
@@ -104,9 +105,6 @@ src/common/scm_rev.cpp.in
 sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
 sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
 
-%__mkdir_p %_target_platform/externals/nx_tzdb/nx_tzdb
-unzip %SOURCE2 -d %_target_platform/externals/nx_tzdb/nx_tzdb
-
 %add_optflags -Wno-error=conversion -I%_includedir/SimpleIni
 
 export CC="clang"
@@ -117,6 +115,7 @@ export NM="llvm-nm"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DENABLE_QT6:BOOL=TRUE \
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
@@ -124,15 +123,20 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES:BOOL=FALSE \
 	-DYUZU_USE_PRECOMPILED_HEADERS:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
-	-DYUZU_DOWNLOAD_TIME_ZONE_DATA:BOOL=TRUE \
+	-DYUZU_TESTS:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
+	-DTZDB2NX_ZONEINFO_DIR:PATH=%_datadir/zoneinfo \
+	-DTZDB2NX_VERSION:STRING=$(stat -c '%y' /usr/share/zoneinfo/tzdata.zi | sed 's/\(....-..-..\).*/\1/' | tr -dc '[:digit:]') \
 	-GNinja \
 	-Wno-dev
 %cmake_build
 
 %install
 %cmake_install
+
+%check
+%ctest
 
 %files
 %doc CONTRIBUTING.md README.md
@@ -145,6 +149,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Sat Aug 09 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt5
+- Build tests
+- Build tzdb_to_nx
+
 * Wed Aug 06 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt4
 - Build with latest LLVM
 - Build with system httplib
