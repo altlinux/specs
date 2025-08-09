@@ -30,7 +30,7 @@
 %def_enable experimental
 %def_enable ui
 %def_with gtksourceview
-%def_enable glade
+%def_disable glade
 %def_disable tools
 
 %add_python3_path %_datadir/%_name-%abi_ver
@@ -39,7 +39,7 @@
 
 Name: %{_name}%abi_ver_major
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -630,6 +630,9 @@ ln -s ../../../bin/trml2pdf.py %buildroot%_datadir/%_name-%abi_ver/gda_trml2pdf/
 %_datadir/%_name-%abi_ver/gda_trml2pdf/
 
 %changelog
+* Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt2.1
+- disabled glade support
+
 * Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt2
 - fixed build with gcc-14
 
