@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -21,11 +21,12 @@ License: GPL-3.0
 Url: https://github.com/hadess/%name
 
 Vcs: https://gitlab.freedesktop.org/hadess/iio-sensor-proxy.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %define meson_ver 0.54
-%define glib_ver 2.56
+%define glib_ver 2.76
 %define gudev_ver 237
 
 BuildRequires(pre): rpm-macros-meson
@@ -99,6 +100,9 @@ dbus-run-session %__meson_test -t 4
 
 
 %changelog
+* Sun Aug 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8-alt1
+- 3.8
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.7-alt1
 - 3.7
 
