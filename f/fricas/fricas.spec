@@ -1,6 +1,6 @@
 Name: fricas
-Version: 1.3.11
-Release: alt2
+Version: 1.3.12
+Release: alt1
 
 Summary: FriCAS Computer Algebra System
 License: Modified BSD License
@@ -82,6 +82,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sun Aug 10 2025 Ilya Mashkin <oddity@altlinux.ru> 1.3.12-alt1
+- 1.3.12
+
 * Thu Aug 08 2024 Ivan A. Melnikov <iv@altlinux.org> 1.3.11-alt2
 - NMU: use rpm-macros-sbcl to detect the presence of sbcl
   (fixes build on loongarch64).
