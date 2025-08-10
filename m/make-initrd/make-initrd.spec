@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.55.0
-Release: alt4
+Version: 2.55.1
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,9 +68,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch: 0001-feature-fsck-Split-fsck-arguments.patch
-Patch1: 0002-feature-plymouth-Fix-syntax-error.patch
-Patch2: 0003-Improve-quoting-performance.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -403,6 +400,17 @@ fi
 %endif
 
 %changelog
+* Sun Aug 10 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt1
+- Feature fsck:
+  + Split fsck arguments. fsck.f2fs enters an infinite loop with the
+    combination of arguments -py, but if separated into -p and -y, it
+    works normally.
+- Feature plymouth:
+  + Fix syntax error in rules.mk.
+- Misc:
+  + Improved performance of string quoting for splitting it into
+    separate arguments without executing any possible shell code in it.
+
 * Sat Aug 09 2025 Anton Midyukov <antohami@altlinux.org> 2.55.0-alt4
 - add upstream patch:
   + Improve quoting performance
