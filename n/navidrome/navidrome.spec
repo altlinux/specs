@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/navidrome/navidrome
 # git rev-parse --short v%version
-%global commit_hash fa2cf3624
+%global commit_hash 9dbe0c183
 
 Name: navidrome
-Version: 0.56.1
+Version: 0.58.0
 Release: alt1
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
@@ -105,6 +105,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Sun Aug 10 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.58.0-alt1
+- Updated to version 0.58.0.
+
 * Sun Jun 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.56.1-alt1
 - Updated to version 0.56.1 (fix CVE-2025-48948, CVE-2025-48949).
 - Excluded i586 arch (CPU time limit exceeded).
