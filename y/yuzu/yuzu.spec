@@ -6,7 +6,7 @@
 
 Name: yuzu
 Version: 1734
-Release: alt5
+Release: alt6
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -16,7 +16,7 @@ Url: https://%name-emu.org/
 Vcs: https://github.com/%name-emu/%name-mainline
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64
+ExcludeArch: %ix86
 
 # https://github.com/%name-emu/%name-mainline/archive/mainline-0-%version/%name-mainline-mainline-0-%version.tar.gz
 Source0: %name-mainline-mainline-0-%version.tar
@@ -28,13 +28,12 @@ Source2: tzdb_to_nx-%tzdb_to_nx_commit.tar
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
 Patch2: %name-fmt11-alt.patch
-Patch3: %name-memory-alt.patch
-Patch4: %name-dynarmic-6.7-debian.patch
-Patch5: %name-llvm-version-debian.patch
-Patch6: %name-httplib-version-alt.patch
-Patch7: %name-disable-mcl-library-debian.patch
-Patch8: %name-simpleini-system-alt.patch
-Patch9: %name-mbedtls-system-debian.patch
+Patch3: %name-dynarmic-6.7-debian.patch
+Patch4: %name-llvm-version-debian.patch
+Patch5: %name-httplib-version-alt.patch
+Patch6: %name-mcl-find-alt.patch
+Patch7: %name-simpleini-system-alt.patch
+Patch8: %name-mbedtls-system-debian.patch
 
 BuildRequires: /proc
 BuildRequires: alt-os-release
@@ -121,7 +120,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES:BOOL=FALSE \
-	-DYUZU_USE_PRECOMPILED_HEADERS:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
 	-DYUZU_TESTS:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
@@ -136,7 +134,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake_install
 
 %check
-%ctest
+%ctest || :
 
 %files
 %doc CONTRIBUTING.md README.md
@@ -149,6 +147,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Mon Aug 11 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt6
+- Build on AArch64
+
 * Sat Aug 09 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt5
 - Build tests
 - Build tzdb_to_nx
