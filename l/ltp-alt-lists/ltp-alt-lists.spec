@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 19
+Version: 20
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Sun Aug 10 2025 Vitaly Chikunov <vt@altlinux.org> 20-alt1
+- Skip epoll_ctl04 for (v6.17-rc1).
+
 * Mon Jul 29 2024 Vitaly Chikunov <vt@altlinux.org> 19-alt1
 - Skip creat07, execve04 (for v6.11).
 
