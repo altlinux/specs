@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qview
-Version: 7.0
-Release: alt2
+Version: 7.1
+Release: alt1
 Summary: Practical and minimal image viewer
 License: GPL-3.0
 Group: Graphics
@@ -47,6 +47,9 @@ rm -rf %buildroot%_datadir/licenses/%name
 %doc LICENSE
 
 %changelog
+* Sun Aug 10 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.1-alt1
+- Updated to version 7.1.
+
 * Tue Jul 15 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.0-alt2
 - Added qt6-imageformats to requires.
 
