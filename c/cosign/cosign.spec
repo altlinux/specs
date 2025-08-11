@@ -1,12 +1,12 @@
 %global import_path github.com/sigstore/cosign/v2
 %global _unpackaged_files_terminate_build 1
 
-%define revision b5e7dc123a272080f4af4554054797296271e902
+%define revision 488ef8ceed5ab5d77379e9077a124a0d0df41d06
 
 %def_with check
 
 Name:    cosign
-Version: 2.4.0
+Version: 2.5.3
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -19,10 +19,9 @@ ExclusiveArch: %go_arches
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.24.3
 BuildRequires: libpcsclite-devel
-
 BuildRequires: /proc
 
 %description
@@ -44,35 +43,36 @@ Cosign supports:
 RU_PKG=sigs.k8s.io/release-utils/version
 
 DATE_FMT="+%%Y-%%m-%%dT%%H:%%M:%%SZ"
-SOURCE_DATE_EPOCH=$(date +%s)
+SOURCE_DATE_EPOCH=$(date +%%s)
 BUILD_DATE=$(date -u -d "@${SOURCE_DATE_EPOCH}" "${DATE_FMT}" 2>/dev/null || date -u -r "${SOURCE_DATE_EPOCH}" "${DATE_FMT}" 2>/dev/null || date -u "${DATE_FMT}")
 
 export LDFLAGS="-X ${RU_PKG}.gitVersion=%{version} -X ${RU_PKG}.gitCommit=%{revision} -X ${RU_PKG}.gitTreeState=release -X ${RU_PKG}.buildDate=${BUILD_DATE}"
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-tags=pivkey,pkcs11key"
+export TAGS="pivkey,pkcs11key"
 
 %golang_prepare
-
 %golang_build cmd/%name
 
 %install
+export IGNORE_SOURCES=1
 export BUILDDIR="$PWD/.gopath"
-mkdir -p %buildroot%_bindir
 
 %golang_install
 
-rm -rf -- "%buildroot%go_root"
-
 %check
-%make test
+#%%make test
 
 %files
 %doc README.md LICENSE
 %_bindir/%name
 
 %changelog
+* Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.3-alt1
+- New version 2.5.3.
+- Disable tests, because need Internet access.
+
 * Tue Aug 20 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2.4.0-alt1
 - 2.3.0 -> 2.4.0
 
