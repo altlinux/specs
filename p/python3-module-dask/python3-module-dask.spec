@@ -3,7 +3,7 @@
 
 Name: python3-module-dask
 Version: 2021.12.0
-Release: alt1
+Release: alt2
 
 License: BSD
 Group: Development/Python
@@ -16,14 +16,15 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 Patch:  dask-upstream-fresh-numpy.patch
+Patch1: dask-remove-deprecated-numpy-compat.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 # TODO
-%add_python3_req_skip distributed.client distributed.utils_test
+%add_python3_req_skip distributed distributed.client distributed.utils_test
 %add_python3_req_skip fsspec fsspec.compression fsspec.core fsspec.implementations.local fsspec.utils
 %add_python3_req_skip partd pyarrow pyarrow.parquet s3fs tlz.curried tlz.functoolz
 
@@ -32,28 +33,31 @@ Dask is a flexible parallel computing library for analytics.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # hotfix for python3.12
 sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
 sed -i 's/readfp/read_file/' versioneer.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %if_with test
 %check
-%python3_test
+%pyproject_run_pytest
 %endif
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Aug 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 2021.12.0-alt2
+- NMU: Apply upstream fix for removing deprecated numpy.compat
+
 * Fri Aug 08 2025 Alexander Danilov <admsasha@altlinux.org> 2021.12.0-alt1
 - new version 2021.12.0.
 

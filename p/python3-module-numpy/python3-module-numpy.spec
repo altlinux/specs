@@ -22,7 +22,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.2.6
+Version: 2.3.2
 Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
@@ -31,15 +31,12 @@ Url: https://www.numpy.org/
 VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Source2: scipy-mathjax.tar
-Source3: svml.tar
-Source4: x86-simd-sort.tar
-Source5: meson.tar
-Source6: highway.tar
-Source7: pocketfft.tar
-Source8: pythoncapi-compat.tar
+Source2: modules.tar
 Source9: mesonpy.py
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
+# NOTE: The issue addressed by this patch is fixed in NumPy upstream (PR #29435).
+#       Remove this patch when building future NumPy releases containing the fix.
+Patch1: numpy-2.3.2-fix-test-configtool-pkgconfigdir-path.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
 
 # E2K patchset with MCST numbering scheme
@@ -106,15 +103,8 @@ Requires: python3-devel
 This package contains development files of NumPy.
 
 %prep
-%setup -a2 -a3 -a4 -a5 -a6 -a7 -a8
+%setup -a2
 %autopatch -p1
-mv scipy-mathjax doc/source/_static
-mv svml numpy/_core/src/umath
-mv x86-simd-sort numpy/_core/src/npysort
-mv meson vendored-meson
-mv highway numpy/_core/src
-mv pocketfft numpy/fft
-mv pythoncapi-compat numpy/_core/src/common
 %ifarch %e2k
 patch -p1 -i %SOURCE2000
 patch -p1 -i %SOURCE2001
@@ -174,8 +164,6 @@ ln -s %_includedir/python%_python3_version/%oname \
 %exclude %python3_sitelibdir/%oname/_pytesttester.pyi
 %exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
 %exclude %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
-%exclude %python3_sitelibdir/%oname/ma/timer_comparison.py
-%exclude %python3_sitelibdir/%oname/ma/__pycache__/timer_comparison.*
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests/
@@ -209,7 +197,6 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/fft/tests/
 %python3_sitelibdir/%oname/f2py/tests/
 %python3_sitelibdir/%oname/_core/tests/
-%python3_sitelibdir/%oname/compat/tests/
 %python3_sitelibdir/%oname/ma/testutils.py
 %python3_sitelibdir/%oname/ma/__pycache__/testutils.*
 %python3_sitelibdir/%oname/_pyinstaller/tests
@@ -224,6 +211,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri Jul 25 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.2-alt1
+- 2.2.6 -> 2.3.2
+
 * Fri May 30 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.2.6-alt1
 - Update to 2.2.6 (closes: #53974).
 
