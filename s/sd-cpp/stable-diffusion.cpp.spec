@@ -10,7 +10,7 @@
 %endif
 
 Name: sd-cpp
-Version: 20250309
+Version: 20250803
 Release: alt1
 Summary: Stable Diffusion and Flux in pure C/C++
 License: MIT
@@ -28,7 +28,6 @@ Requires: libnvidia-ptxjitcompiler
 
 Source: %name-%version.tar
 Source1: ggml-0.tar
-Source2: kompute-0.tar
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -48,7 +47,6 @@ Inference of Stable Diffusion and Flux in pure C/C++.
 %prep
 %setup
 tar xf %SOURCE1 -C .
-tar xf %SOURCE2 -C ggml/src/ggml-kompute
 # We have sd in sd (another rust tool rewrite) and sdcpp in sdcc (C compiler).
 # To avoid making a conflict with these tools just rename the sd binary.
 sed -i '/set(TARGET/s/sd/sd-cpp/' examples/cli/CMakeLists.txt
@@ -85,5 +83,8 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp
 
 %changelog
+* Mon Aug 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250803-alt1
+- Update to master-5b8996f-1-g5900ef66 (2025-08-03).
+
 * Tue Mar 18 2025 Vitaly Chikunov <vt@altlinux.org> 20250309-alt1
 - First import master-10c6501 (2025-03-09). Experimental.
