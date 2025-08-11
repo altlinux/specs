@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-fasteners
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: A python package that provides useful locks
@@ -52,6 +52,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Aug 11 2025 Anton Vyatkin <toni@altlinux.org> 0.20-alt1
+- New version 0.20.
+
 * Thu Sep 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.19-alt1
 - Automatically updated to 0.19.
 
