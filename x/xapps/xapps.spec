@@ -6,7 +6,7 @@
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.8.9
+Version: 2.8.12
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -215,6 +215,9 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 2.8.12-alt1
+- New version 2.8.12.
+
 * Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 2.8.9-alt1
 - New version 2.8.9.
 
