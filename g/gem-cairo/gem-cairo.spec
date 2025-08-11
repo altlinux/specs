@@ -1,18 +1,19 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
+%def_enable    headers
 %define        gemname cairo
 
 Name:          gem-cairo
-Version:       1.17.13
-Release:       alt1
+Version:       1.18.4.7
+Release:       alt0.1
 Summary:       ruby bindings for cairo
 License:       Ruby or GPL-2.0-or-later
 Group:         Development/Ruby
 Url:           https://rcairo.github.io/
 Vcs:           https://github.com/rcairo/rcairo.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
@@ -37,25 +38,25 @@ BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(xshmfence)
 BuildRequires: pkgconfig(libpcre2-8)
-BuildRequires: gem(native-package-installer) >= 1.0.3
 BuildRequires: gem(pkg-config) >= 1.2.2
 %if_enabled check
 BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(packnga) >= 0
 BuildRequires: gem(poppler) >= 3.1.1
 BuildRequires: gem(red-colors) >= 0
+BuildRequires: gem(test-unit) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(native-package-installer) >= 1.0.3
+Requires:      ruby >= 2.2.1
 Requires:      gem(pkg-config) >= 1.2.2
 Requires:      gem(red-colors) >= 0
-Obsoletes:     ruby-rcairo < 1.7.0
-Provides:      ruby-rcairo = 1.17.8
-Provides:      gem(cairo) = 1.17.13
+Obsoletes:     ruby-rcairo < %EVR
+Provides:      ruby-rcairo = %EVR
+Provides:      gem(cairo) = 1.18.4.7
 
+%ruby_use_gem_version cairo:1.18.4.7
 
 %description
 Ruby bindings for cairo // cairo extension for Ruby.
@@ -63,14 +64,14 @@ Ruby bindings for cairo // cairo extension for Ruby.
 
 %if_enabled    doc
 %package       -n gem-cairo-doc
-Version:       1.17.13
-Release:       alt1
+Version:       1.18.4.7
+Release:       alt0.1
 Summary:       ruby bindings for cairo documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cairo
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(cairo) = 1.17.13
+Requires:      gem(cairo) = 1.18.4.7
 
 %description   -n gem-cairo-doc
 ruby bindings for cairo documentation files.
@@ -82,20 +83,36 @@ Ruby bindings for cairo // cairo extension for Ruby.
 %endif
 
 
-%if_enabled    devel
-%package       -n gem-cairo-devel
-Version:       1.17.13
-Release:       alt1
+%if_enabled    headers
+%package       -n gem-cairo-headers-devel
+Version:       1.18.4.7
+Release:       alt0.1
 Summary:       ruby bindings for cairo development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cairo
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(cairo) = 1.17.13
-Requires:      gem(bundler) >= 0
-Requires:      gem(test-unit) >= 0
-Requires:      gem(packnga) >= 0
-Requires:      gem(poppler) >= 3.1.1
+Requires:      gem(cairo) = 1.18.4.7
+
+%description   -n gem-cairo-headers-devel
+ruby bindings for cairo development package.
+
+Ruby bindings for cairo // cairo extension for Ruby.
+
+%description   -n gem-cairo-headers-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета cairo.
+%endif
+
+
+%if_enabled    devel
+%package       -n gem-cairo-devel
+Version:       1.18.4.7
+Release:       alt0.1
+Summary:       ruby bindings for cairo development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cairo
+Group:         Development/Ruby
+BuildArch:     noarch
+
 Requires:      libcairo-devel
 Requires:      glib2-devel
 Requires:      libpixman-devel
@@ -116,8 +133,10 @@ Requires:      pkgconfig(expat)
 Requires:      pkgconfig(harfbuzz)
 Requires:      pkgconfig(xshmfence)
 Requires:      pkgconfig(libpcre2-8)
-Obsoletes:     rcairo-devel < 1.7.0
-Provides:      rcairo-devel = 1.17.8
+Requires:      gem(cairo) = 1.18.4.7
+Requires:      gem-cairo-headers-devel = 1.18.4.7
+Obsoletes:     rcairo-devel < %EVR
+Provides:      rcairo-devel = %EVR
 
 %description   -n gem-cairo-devel
 ruby bindings for cairo development package.
@@ -142,25 +161,34 @@ Ruby bindings for cairo // cairo extension for Ruby.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc COPYING README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-cairo-doc
-%doc README.rdoc
+%doc COPYING README.rdoc
 %ruby_gemdocdir
+%endif
+
+%if_enabled    headers
+%files         -n gem-cairo-headers-devel
+%doc COPYING README.rdoc
+%ruby_includedir/*
 %endif
 
 %if_enabled    devel
 %files         -n gem-cairo-devel
-%doc README.rdoc
-%ruby_includedir/*
+%doc COPYING README.rdoc
 %endif
 
 
 %changelog
+* Mon Aug 11 2025 Pavel Skrylev <majioa@altlinux.org> 1.18.4.7-alt0.1
+- * added headers package to support split require from other packages
+- ^ 1.17.13 -> 1.18.4p7
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.17.13-alt1
 - ^ 1.17.8 -> 1.17.13
 
