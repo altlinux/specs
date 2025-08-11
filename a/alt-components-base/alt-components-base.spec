@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.16
+Version: 0.8.0
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.0
+BuildRequires: alterator-entry >= 0.4.4
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -128,21 +128,8 @@ for edition_dir in editions/edition_*/; do
 done
 
 %check
-# check Components
+# check Components and Editions
 ./scripts/validate_categories.py
-
-# check Editions
-for e in `find ./editions -name '*.edition' -type f`; do
-    alterator-entry validate "$e"
-    (alterator-entry get "$e" sections.base.components &&
-           alterator-entry get "$e" sections.main.components) 2>/dev/null |
-    while read c; do
-        if ! test -f "components/$c/$c.component"; then
-            echo "failed to locate component $c in edition $e"
-            exit 1
-        fi
-    done
-done
 
 %files -f install.base_components.list
 %dir %_alterator_datadir/components
@@ -156,6 +143,17 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Mon Aug 11 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.8.0-alt1
+- feat: add support editions to validation script
+- add conntrack-tools, haproxy and keepalived to main section in
+  edition_server (closes: 55510)
+- Fix components:
+  + add x2goserver component
+  + add conntrack-tools component
+  + add keepalived component
+  + add haproxy component
+  + revert glibc meta package in glibc component (closes: 55498)
+
 * Fri Aug 08 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.7.16-alt1
 - editions(release-notes): fix Proxmox VE Backup Server version
   (thx Maria Fokanova)
