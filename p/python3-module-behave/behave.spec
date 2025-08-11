@@ -1,42 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-%define oname behave
+%define pypi_name behave
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.2.6
-Release: alt7
+Name: python3-module-%pypi_name
+Version: 1.3.0
+Release: alt1
 Summary: behave is behaviour-driven development, Python style
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/behave/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/behave/behave.git
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-Patch1: drop-distutils.patch
+Vcs: https://github.com/behave/behave
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+Provides: %pypi_name-common = %EVR
+Obsoletes: %pypi_name-common <= 1.2.6-alt7
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(hamcrest)
-BuildRequires: python3(mock)
-BuildRequires: python3(parse)
-BuildRequires: python3(parse_type)
-BuildRequires: python3(path)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-Requires: %oname-common = %EVR
-%add_python3_req_skip gherkin
-%add_python3_req_skip gherkin.formatter
-%add_python3_req_skip gherkin.tag_expression
-# this provide does not exist
-%add_python3_req_skip behave.contrib.steps
 
 %description
 Behavior-driven development (or BDD) is an agile software development
@@ -46,24 +36,14 @@ non-technical or business participants in a software project.
 behave uses tests written in a natural language style, backed up by
 Python code.
 
-%package -n %oname-common
-Summary: Common files for Python modules
-Group: Development/Python3
-
-%description -n %oname-common
-Behavior-driven development (or BDD) is an agile software development
-technique that encourages collaboration between developers, QA and
-non-technical or business participants in a software project.
-
-behave uses tests written in a natural language style, backed up by
-Python code.
-
-This package contains common files for Python 2 & 3 modules.
-
 %prep
 %setup
-%patch -p1
-%patch1 -p2
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile py.requirements/testing.txt
+%endif
 
 %build
 %pyproject_build
@@ -77,28 +57,23 @@ for i in $(ls); do
 done
 popd
 
-install -d %buildroot%_sysconfdir
-cp -fR etc/* %buildroot%_sysconfdir/
-
 %check
-%pyproject_run_pytest -v tests/
+# .github/workflows/test.yml
+%pyproject_run -- pytest
+%pyproject_run -- behave --format=progress3 features
+%pyproject_run -- behave --format=progress3 issue.features
+%pyproject_run -- behave --format=progress3 tools/test-features
 
 %files
-%doc *.rst *features
+%doc README.*
 %_bindir/behave.py3
-%python3_sitelibdir/behave/
-%python3_sitelibdir/setuptools_behave.py
-%python3_sitelibdir/__pycache__/setuptools_behave.cpython-*.py*
-%python3_sitelibdir/behave-%version.dist-info/
-
-%files -n %oname-common
-%dir %_sysconfdir/json
-%_sysconfdir/json/behave.json-schema
-%dir %_sysconfdir/junit.xml
-%_sysconfdir/junit.xml/behave_junit.xsd
-%_sysconfdir/junit.xml/junit-4.xsd
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.6 -> 1.3.0.
+
 * Tue Oct 24 2023 Anton Vyatkin <toni@altlinux.org> 1.2.6-alt7
 - NMU: Dropped dependency on distuils.
 
