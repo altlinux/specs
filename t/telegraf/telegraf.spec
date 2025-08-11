@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.35.0
+Version:	1.35.3
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -43,7 +43,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-export GOMAXPROCS=10
+export GOMAXPROCS=4
 
 %golang_prepare
 
@@ -52,8 +52,13 @@ export INTERNAL_PKG=%import_path/internal
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
+%ifarch %ix86
+export CGO_ENABLED=1
+%else
+export CGO_ENABLED=0
+%endif
 
-CGO_ENABLED=0 go install -ldflags " \
+go install -ldflags " \
     -X $INTERNAL_PKG.Version=$VERSION \
     -X $INTERNAL_PKG.Commit=$COMMIT \
     -X $INTERNAL_PKG.Branch=$BRANCH \
@@ -114,6 +119,9 @@ usermod -a -G proc telegraf ||:
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 1.35.3-alt1
+- 1.35.3.
+
 * Wed Jun 18 2025 Alexey Shabalin <shaba@altlinux.org> 1.35.0-alt1
 - 1.35.0.
 
