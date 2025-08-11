@@ -1,8 +1,9 @@
+%def_disable bootstrap
 %def_disable static
 
 Name: lm_sensors3
 Version: 3.6.2
-Release: alt2
+Release: alt3
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -32,7 +33,11 @@ Provides: lm_sensors
 Provides: lm_sensors = %EVR
 
 BuildRequires: flex bison
+%if_disabled bootstrap
+# XXX: circular build dependencies:
+# rrd -> pango -> cairo -> Mesa(libGL-devel) -> libsensors3-devel -> rrd
 BuildRequires: librrd-devel >= 1.2.1
+%endif
 
 BuildPreReq: rpm-macros-make
 
@@ -133,7 +138,7 @@ sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" sensord.service
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64 -Wno-incompatible-pointer-types
-%make_build_ext PROG_EXTRA=sensord
+%make_build_ext %{?!_enable_bootstrap:PROG_EXTRA=sensord}
 
 %install
 %set_verify_elf_method strict
@@ -145,7 +150,9 @@ sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" sensord.service
       LIBDIR=%_libdir \
       INCLUDEDIR=%_includedir \
       LIBINCLUDEDIR=%_includedir/sensors \
+%if_disabled bootstrap
       PROG_EXTRA=sensord \
+%endif
       EXLDFLAGS= \
       install
 
@@ -225,6 +232,7 @@ fi
 %dir %_libexecdir/%name
 %_libexecdir/%name/lm_sensors-modprobe*wrapper
 
+%if_disabled bootstrap
 %files utils
 %_sbindir/sensord
 %_unitdir/sensord.service
@@ -250,6 +258,7 @@ fi
 %_libexecdir/%name/sensord-service-wrapper
 %config(noreplace) %{_sysconfdir}/sysconfig/sensord
 %ghost %attr(0600,root,root) %config(noreplace,missingok) %_sysconfdir/fancontrol
+%endif
 
 %files -n libsensors3
 %_libdir/*.so.*
@@ -269,6 +278,9 @@ fi
 %_datadir/%name/configs/*
 
 %changelog
+* Mon Aug 11 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt3
+- NMU: Add bootstrap knob (by asheplyakov@).
+
 * Sun Aug 10 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt2
 - Added configs for various boards.
 
