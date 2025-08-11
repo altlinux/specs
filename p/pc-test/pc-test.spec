@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %e2k %mips riscv64
-#shellcheck is not available on these architectures
+%ifarch %ix86 %e2k %mips riscv64
+#shellcheck is not available or it is slow on these architectures
 %def_disable check
 %endif
 
 Name: pc-test
-Version: 2.1.4
-Release: alt2
+Version: 2.1.5
+Release: alt1
 
 Summary: PC Test Suite
 Group: System/Configuration/Hardware
@@ -81,7 +81,8 @@ Packager: Leonid Krivoshein <klark@altlinux.org>
 %description
 Computers and servers test suite special for ALT Linux.
 It supports all products, based on p9, p10, c9f1, c9f2,
-c10f1 stable branches and Sisyphus-based regular builds.
+c10f1 and c10f2 stable branches and Sisyphus-based
+regular builds.
 
 %package doc
 Summary: PC Test Suite documentation
@@ -114,7 +115,7 @@ mkdir -p -m 0755 -- "%buildroot"
 cp -aRf etc usr var "%buildroot/"
 
 %post
-# This is necessary to update the settings of older versions
+# This is necessary to update settings of older versions
 a="^(# Allow \\w+ to execute) %_bindir/%name without a password$"
 b="\\1 %name and dmesg"
 sed -i -E "s|$a|$b|g" /etc/sudoers
@@ -138,6 +139,17 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Mon Aug 11 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.5-alt1
+- Added:
+  + support for ALT SP 10.2.1 distro
+  + support for public archives c9f2 and c10f2
+- Fixed:
+  + improve generic way to detecting distro
+  + add workaround when system-report hangs
+  + express test: make checks more verbosely
+- Removed:
+  + support for UsrMerge in Sisyphus
+
 * Sat Mar 01 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.4-alt2
 - Added:
   + 36 new video samples and switch to VK video
