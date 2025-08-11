@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -34,6 +34,10 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %preun_service %name
 
 %changelog
+* Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
+- livecd-net-eth.sh: do not confugure networkd interface as dhcp if not link
+- livecd-net-eth.service: do not install to multi-user.target
+
 * Fri May 30 2025 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
 - livecd-net-eth.sh: do not override global variables in a cycle
 - livecd-net-eth.sh: more global variable, fix setup_networkd function
