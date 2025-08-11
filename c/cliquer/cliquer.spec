@@ -4,14 +4,15 @@
 %define soname 1
 
 Name: cliquer
-Version: 1.22
-Release: alt2
+Version: 1.23
+Release: alt1
 
 Summary: Find cliques in arbitrary weighted graphs
 
 License: GPL-2.0+
 Group: Engineering
 Url: https://users.aalto.fi/~pat/cliquer.html
+VCS: https://github.com/dimpase/autocliquer.git
 
 Source: https://github.com/dimpase/autocliquer/releases/download/v%version/%name-%version.tar.gz
 Source1: http://users.aalto.fi/~pat/%name/%{name}_fm.pdf
@@ -20,6 +21,7 @@ Source3: http://users.aalto.fi/~pat/%name/%{name}_bm.pdf
 # Man page formatting by Jerry James, text from the sources
 Source4: %name.1
 Source44: import.info
+Patch: %name-%version-%release.patch
 
 Requires: lib%name%soname = %version-%release
 
@@ -30,16 +32,24 @@ The main cliquer package contains a command-line interface to the
 cliquer library.  Note that the upstream binary name is "cl", which is
 too generic for Fedora.  Therefore, the binary is named "cliquer".
 
+%package common
+Group: Engineering
+Summary: Common files for %name
+BuildArch: noarch
+
+%description common
+Cliquer is a set of C routines for finding cliques in an arbitrary
+weighted graph.  It uses an exact branch-and-bound algorithm developed
+by Patric A.stergA.rd.  It is designed with the aim of being efficient
+while still being flexible and easy to use.
+
 %package -n lib%name%soname
 Group: System/Libraries
 Summary: Library to find cliques in arbitrary weighted graphs
 Provides: %name-libs = %version-%release
 
 %description -n lib%name%soname
-Cliquer is a set of C routines for finding cliques in an arbitrary
-weighted graph.  It uses an exact branch-and-bound algorithm developed
-by Patric A.stergA.rd.  It is designed with the aim of being efficient
-while still being flexible and easy to use.
+This package provides main library for %name.
 
 %package -n lib%name-devel
 Group: Development/Other
@@ -47,18 +57,20 @@ Summary: Development files for cliquer
 Provides: %name-devel = %version-%release
 
 %description -n lib%name-devel
-Development files for cliquer.
+This package provides development files for cliquer.
 
 %prep
 %setup
+%patch -p1
 
 cp -p %SOURCE1 %SOURCE2 %SOURCE3 .
 
 sed -i \
     's/59 Temple Place, Suite 330, Boston, MA  02111-1307/51 Franklin Street, Suite 500, Boston, MA  02110-1335/' \
-    COPYING
+    LICENSE
 
 %build
+%autoreconf
 %configure --disable-static --disable-silent-rules
 
 # Get rid of undesirable hardcoded rpaths.
@@ -91,20 +103,28 @@ cp -p %SOURCE4 %buildroot%_man1dir
 LD_LIBRARY_PATH=. make test
 
 %files
-%doc cliquer*.pdf
 %_bindir/%name
 %_man1dir/*
 
-%files -n lib%name%soname
+%files common
+%doc cliquer*.pdf
 %doc ChangeLog README
-%doc --no-dereference COPYING
+%doc --no-dereference LICENSE
+
+%files -n lib%name%soname
 %_libdir/libcliquer.so.%{soname}*
 
 %files -n lib%name-devel
 %_includedir/%name/
 %_libdir/libcliquer.so
+%_pkgconfigdir/lib%name.pc
 
 %changelog
+* Mon Aug 11 2025 Leontiy Volodin <lvol@altlinux.org> 1.23-alt1
+- New version 1.23.
+- Added VCS tag.
+- Packaged docs separately.
+
 * Wed Nov 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.22-alt2
 - Initial build for ALT Sisyphus (from autoimports).
 - Applied SharedLibsPolicy.
