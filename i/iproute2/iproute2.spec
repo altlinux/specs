@@ -2,13 +2,13 @@
 %def_with selinux
 
 Name: iproute2
-Version: 6.12.0
+Version: 6.13.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
 License: GPLv2+
 Group: Networking/Other
-Url: http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+Url: https://wiki.linuxfoundation.org/networking/iproute2
 # git://git.altlinux.org/gears/i/%name.git
 Source: %name-%version-%release.tar
 
@@ -98,6 +98,9 @@ done
 %attr(700,root,root) %dir %_localstatedir/arpd
 
 %changelog
+* Wed Jan 22 2025 Arseny Maslennikov <arseny@altlinux.org> 6.13.0-alt1
+- 6.12.0 -> 6.13.0.
+
 * Tue Nov 26 2024 Arseny Maslennikov <arseny@altlinux.org> 6.12.0-alt1
 - 6.11.0 -> 6.12.0.
 
