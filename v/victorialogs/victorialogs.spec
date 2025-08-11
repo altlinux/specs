@@ -1,9 +1,9 @@
-%global import_path github.com/VictoriaMetrics/VictoriaMetrics
+%global import_path github.com/VictoriaMetrics/VictoriaLogs
 
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 1.23.3
+Version: 1.27.0
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -14,12 +14,16 @@ Source0: %name-%version.tar
 
 Source2: %name.service
 Source3: %name.sysconfig
+Source4: vlagent.service
+Source5: vlagent.sysconfig
 Patch: %name-%version.patch
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.3
+BuildRequires: rpm-build-golang golang >= 1.24.6
+Requires(pre): %name-common = %EVR
+Provides: victoria-logs = %EVR
 
 %description
 VictoriaLogs is open source user-friendly database for logs from VictoriaMetrics.
@@ -44,6 +48,32 @@ VictoriaLogs provides the following key features:
  * VictoriaLogs supports out-of-order logs' ingestion aka backfilling.
  * VictoriaLogs provides a simple web UI for querying logs.
 
+
+%package common
+Summary: Common files and dirs for %name
+Group: Development/Other
+
+%description common
+%summary.
+
+%package vlagent
+Summary: vlagent collects logs and routes it to VictoriaLogs
+Group: Development/Other
+Requires(pre): %name-common = %EVR
+Provides: vlagent = %EVR
+
+%description vlagent
+vlagent is a tiny agent which helps you collect logs from various sources
+and store them in VictoriaLogs.
+
+- It can accept logs from popular log collectors.
+- Can replicate collected logs simultaneously to multiple VictoriaLogs instances.
+- Works smoothly in environments with unstable connections to remote storage.
+  If the remote storage is unavailable, the collected logs are buffered
+  at -remoteWrite.tmpDataPath. The buffered logs are sent to remote storage
+  as soon as the connection to the remote storage is repaired.
+  The maximum disk usage for the buffer can be limited with -remoteWrite.maxDiskUsagePerURL.
+
 %prep
 %setup -q
 %patch -p1
@@ -52,48 +82,68 @@ VictoriaLogs provides the following key features:
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-
-cd .gopath/src/%import_path
-
 export VERSION=%version
 export BRANCH=altlinux
 export BUILDINFO_TAG=v%version
+export PKG_TAG=v%version
 
+%golang_prepare
+pushd .gopath/src/%import_path
 %make victoria-logs
+%make vlagent
 %make vlogscli
+popd
 
 %install
-install -m 0755 -d %buildroot%_bindir
-cd .gopath/src/%import_path
+mkdir -p %buildroot%_sharedstatedir/victoria-logs/{data,vlagent-remotewrite-data}
+mkdir -p %buildroot{%_bindir,%_sysconfdir/sysconfig,%_unitdir}
+pushd .gopath/src/%import_path
 install -m 0755 bin/victoria-logs %buildroot%_bindir/victoria-logs
 install -m 0755 bin/vlogscli %buildroot%_bindir/vlogscli
-mkdir -p %buildroot%_sharedstatedir/victoria-logs/data
-mkdir -p %buildroot%_sysconfdir/sysconfig
-mkdir -p %buildroot%_unitdir
+install -m 0755 bin/vlagent %buildroot%_bindir/vlagent
 install -m644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+install -m644 %SOURCE4 %buildroot%_unitdir/vlagent.service
+install -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name-vlagent
+popd
 
-%pre
+%pre common
 groupadd -r -f _%name 2>/dev/null ||:
 useradd -r -g _%name -c 'Victoria Logs Daemon' \
         -s /sbin/nologin -M -d %_sharedstatedir/victoria-logs _%name 2>/dev/null ||:
+
 %post
 %post_service %name
 %preun
 %preun_service %name
+
+%post vlagent
+%post_service vlagent
+%preun vlagent
+%preun_service vlagent
 
 %files
 %_bindir/victoria-logs
 %_bindir/vlogscli
 %_unitdir/%name.service
 %dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs/data
-%config(noreplace) %_sysconfdir/sysconfig/%name
+
+%files common
+%dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs
+%config(noreplace) %attr(0640, root, _%name) %_sysconfdir/sysconfig/%name
 %doc docs/victorialogs/CHANGELOG.md docs/victorialogs/FAQ.md docs/victorialogs/LogsQL.md
 %doc docs/victorialogs/QuickStart.md docs/victorialogs/README.md docs/victorialogs/data-ingestion
 
+%files vlagent
+%_bindir/vlagent
+%config(noreplace) %attr(0640, root, _%name) %_sysconfdir/sysconfig/%name-vlagent
+%_unitdir/vlagent.service
+%dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs/vlagent-remotewrite-data
+
 %changelog
+* Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 1.27.0-alt1
+- 1.27.0.
+
 * Fri Jun 20 2025 Alexey Shabalin <shaba@altlinux.org> 1.23.3-alt1
 - 1.23.3.
 

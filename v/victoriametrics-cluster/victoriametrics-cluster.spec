@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics-cluster
-Version: 1.110.0
+Version: 1.122.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -21,7 +21,8 @@ Source7: vmstorage.sysconfig
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.24.5
 
 %description
 VictoriaMetrics cluster consists of the following services:
@@ -142,6 +143,9 @@ install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/vmstorage
 %dir %attr(0755, _victoriametrics, _victoriametrics) %_sharedstatedir/victoria-metrics/cluster-data
 
 %changelog
+* Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 1.122.0-alt1
+- New version 1.122.0.
+
 * Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.110.0-alt1
 - New version 1.110.0.
 
