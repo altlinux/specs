@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.6.2
-Release: alt1
+Release: alt2
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -69,6 +69,13 @@ Provides: libsensors-devel-static
 Obsoletes: libsensors-devel-static
 Conflicts: libsensors-devel-static
 
+%package configs
+Summary: %name sample configurations of various boards
+Group: Monitoring
+Requires: %name = %EVR
+Provides: lm_sensors-configs
+BuildArch: noarch
+
 %description
 This package contains a collection of user space tools for general SMBus
 access and hardware monitoring.  SMBus, also known as System Management Bus,
@@ -106,6 +113,12 @@ monitoring.
 %description -n libsensors3-devel-static
 This package contains static library for development of statically linked
 user space applications for general SMBus access and hardware monitoring.
+
+%description configs
+sample configurations of various boards, contributed by users of lm-sensors.
+
+Please contribute back a configuration of your board so other users with the
+same hardware won't need to recreate it again and again.
 
 %prep
 %setup -q
@@ -164,6 +177,7 @@ install -pD -m755 prog/init/sysconfig-lm_sensors-convert %buildroot%_datadir/%na
 
 mkdir -p %buildroot%_datadir/%name
 cp -ar prog/tellerstats %buildroot%_datadir/%name
+cp -ar configs %buildroot%_datadir/%name/
 
 # remove static library
 rm %buildroot%_libdir/*.a
@@ -251,7 +265,13 @@ fi
 %_libdir/*.a
 %endif #static
 
+%files configs
+%_datadir/%name/configs/*
+
 %changelog
+* Sun Aug 10 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt2
+- Added configs for various boards.
+
 * Fri Aug 08 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.2-alt1
 - 3.6.2.
 - Update Vcs.
