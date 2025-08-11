@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 Summary: Python code static checker
 License: GPLv2+
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Provides: pylint-py3 = %EVR
 Obsoletes: pylint-py3 < %EVR
@@ -73,6 +75,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 11 2025 Stanislav Levin <slev@altlinux.org> 3.3.8-alt1
+- 3.3.7 -> 3.3.8.
+
 * Wed May 21 2025 Stanislav Levin <slev@altlinux.org> 3.3.7-alt1
 - 3.3.5 -> 3.3.7.
 
