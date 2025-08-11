@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.25.7
+Version: 0.25.8
 Release: alt1
 Summary: A utility library for mocking out the requests Python library
 License: Apache-2.0
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %add_pyproject_deps_runtime_filter types-
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -47,6 +49,9 @@ A utility library for mocking out the `requests` Python library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 11 2025 Stanislav Levin <slev@altlinux.org> 0.25.8-alt1
+- 0.25.7 -> 0.25.8.
+
 * Wed Mar 12 2025 Stanislav Levin <slev@altlinux.org> 0.25.7-alt1
 - 0.25.6 -> 0.25.7.
 
