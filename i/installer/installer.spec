@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.23
+Version: 1.16.24
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 1.16.24-alt1
+- 40-autohostname.sh: skip if HOSTNAME already set
+
 * Thu Jul 03 2025 Mikhail Efremov <sem@altlinux.org> 1.16.23-alt1
 - common-desktop: Add livecd-fininstall.d hooks support.
 - preinstall hooks: Use alterator-hw-functions.
