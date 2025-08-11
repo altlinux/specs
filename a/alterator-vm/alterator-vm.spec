@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.46
+Version: 0.4.47
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Mon Aug 11 2025 Oleg Solovyov <mcpain@altlinux.org> 0.4.47-alt1
+- do not round down required partition sizes (Closes: #51746)
+
 * Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 0.4.46-alt1
 - show usedsize instead of minfssize
 - drop FAT16
