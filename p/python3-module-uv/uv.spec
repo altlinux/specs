@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.8.6
+%define uv_version 0.8.8
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -136,6 +136,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Mon Aug 11 2025 Stanislav Levin <slev@altlinux.org> 0.8.8-alt1
+- 0.8.6 -> 0.8.8.
+
 * Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 0.8.6-alt1
 - 0.8.5 -> 0.8.6 (fixes: CVE-2025-54368).
 
