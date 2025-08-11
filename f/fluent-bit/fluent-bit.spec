@@ -11,7 +11,7 @@
 %def_with jemalloc
 
 Name: fluent-bit
-Version: 4.0.5
+Version: 4.0.7
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -24,6 +24,7 @@ Vcs: git://github.com/fluent/fluent-bit.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 # Fix up some install paths in CMake. Not upstream
 Patch1: 0002-CMake-fix-up-install-paths.patch
 # Add -fPIC to jemalloc build. Not upstream
@@ -65,6 +66,7 @@ data manipulation and analytics using SQL queries.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 sed -i 's|c-ares|cares|' \
@@ -140,6 +142,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Aug 11 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.7-alt1
+- New version 4.0.7.
+
 * Wed Jul 23 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.5-alt1
 - New version 4.0.5.
 - Built with system libzstd and msgpack-c.
