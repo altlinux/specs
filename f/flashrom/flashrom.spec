@@ -1,8 +1,8 @@
 %define soname 1
 
 Name: flashrom
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Universal flash programming utility
 License: GPLv2
@@ -153,6 +153,9 @@ echo "options spidev bufsiz=64" > %buildroot%_sysconfdir/modprobe.d/spidev.conf
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Aug 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
+- 1.6.0.
+
 * Fri Feb 14 2025 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2
 - E2K: add flashboot.sh 0.9.2 by MCST
 
