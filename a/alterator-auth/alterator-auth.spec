@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.46
+Version: 0.47
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -15,7 +15,6 @@ Requires: pam_krb5
 Requires: libnss-myhostname
 Requires: libnss-role >= 0.5.6-alt1
 Requires: avahi-daemon
-Requires: settime-rfc867
 Requires: bind-utils
 Requires: local-policy >= 0.4.8-alt1
 Requires: alterator-default-configs >= 0.0.2-alt1
@@ -175,6 +174,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Mon Aug 11 2025 Andrey Limachko <liannnix@altlinux.org> 0.47-alt1
+- Remove support for deprecated settime-rfc867 service (Closes:
+  #55522)
+
 * Thu Aug 07 2025 Andrey Limachko <liannnix@altlinux.org> 0.46-alt1
 - system-auth: ad: backup secrets.tdb before joining AD domain
 - system-auth: ad: replace SPN registrations with keytab regeneration
