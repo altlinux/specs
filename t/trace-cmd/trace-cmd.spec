@@ -7,8 +7,11 @@
 # Also requires `unresolved=normal`
 %def_without python
 
+%define trace_cmd_version 3.3.3
+%define libtracecmd_version 1.5.4
+
 Name:     trace-cmd
-Version: 3.3.2
+Version: %trace_cmd_version
 Release: alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -23,6 +26,7 @@ Vcs:      https://git.kernel.org/pub/scm/utils/trace-cmd/trace-cmd.git
 # Poorly documented.
 # Presentation: https://lwn.net/Articles/410200/ (2010)
 # Article: http://wrightrocket.blogspot.com/2019/07/linux-performance-tool-trace-cmd.html
+Requires: libtracecmd = %libtracecmd_version-%release%{?disttag::%disttag}
 
 Source:   %name-%version.tar
 %if_with python
@@ -51,6 +55,8 @@ debugfs file system under the tracing directory.
 # Libtracecmd which is compiled from the same source have different upstream
 # version numbering. But we cannot set version for sub-package.
 Summary: trace-cmd libraries
+Version: %libtracecmd_version
+Epoch: 1
 Group: System/Libraries
 Conflicts: trace-cmd-libs < %EVR
 Obsoletes: trace-cmd-libs < %EVR
@@ -60,6 +66,8 @@ Obsoletes: trace-cmd-libs < %EVR
 
 %package -n libtracecmd-devel
 Summary: Development headers of libtracecmd
+Version: %libtracecmd_version
+Epoch: 1
 Group: Development/C
 Requires: libtracecmd = %EVR
 
@@ -76,6 +84,8 @@ Obsoletes: trace-cmd-python3 < %EVR
 
 %description -n python3-module-tracecmd
 %summary.
+
+%define version %trace_cmd_version
 
 %prep
 %setup
@@ -140,7 +150,8 @@ EOF
 
 %files -n libtracecmd
 %doc COPYING.LIB
-%_libdir/libtracecmd.so.*
+%_libdir/libtracecmd.so.%libtracecmd_version
+%_libdir/libtracecmd.so.1
 
 %files -n libtracecmd-devel
 %doc LICENSES/*
@@ -156,6 +167,11 @@ EOF
 %endif
 
 %changelog
+* Mon Aug 11 2025 Vitaly Chikunov <vt@altlinux.org> 3.3.3-alt1
+- Update to trace-cmd-v3.3.3 + libtracecmd-1.5.4 (2025-08-01).
+- libtracecmd packaged with correct version 1.5.4 instead of trace-cmd's
+  version 3.3.3, thus incrementing Epoch.
+
 * Wed May 14 2025 Vitaly Chikunov <vt@altlinux.org> 3.3.2-alt1
 - Update to trace-cmd-v3.3.2 (2025-04-15).
 
