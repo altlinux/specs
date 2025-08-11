@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.4.7
+Version: 3.4.11
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -98,6 +98,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 3.4.11-alt1
+- New version 3.4.11.
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.4.7-alt1
 - New version
 
