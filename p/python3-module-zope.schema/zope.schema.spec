@@ -1,20 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name zope.schema
+%define ns_name zope
+%define mod_name schema
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.1
-Release: alt2.1
-
+Version: 7.1
+Release: alt1
 Summary: zope.interface extension for defining data schemas
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.schema/
 Vcs: https://github.com/zopefoundation/zope.schema
-
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 # setuptools(pkg_resources) is used by namespace root that is packaged
 # separately at python3-module-zope
 %add_pyproject_deps_runtime_filter setuptools
@@ -40,26 +43,6 @@ title and a description. It can also constrain its value and provide a
 validation method. Besides you can optionally specify characteristics
 such as its value being read-only or not required.
 
-%package tests
-Summary: Tests for %pypi_name
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing
-
-%description tests
-This package is intended to be independently reusable in any Python
-project. It is maintained by the Zope Toolkit project.
-
-Schemas extend the notion of interfaces to detailed descriptions of
-Attributes (but not methods). Every schema is an interface and specifies
-the public fields of an object. A field roughly corresponds to an
-attribute of a python object. But a Field provides space for at least a
-title and a description. It can also constrain its value and provide a
-validation method. Besides you can optionally specify characteristics
-such as its value being read-only or not required.
-
-This package contains tests for %pypi_name
-
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -71,26 +54,20 @@ This package contains tests for %pypi_name
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope/schema/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Mon Aug 11 2025 Stanislav Levin <slev@altlinux.org> 7.1-alt1
+- 7.0.1 -> 7.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.0.1-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
