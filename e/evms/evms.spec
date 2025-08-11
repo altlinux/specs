@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt88
+Release: alt89
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Mon Aug 11 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt89
+- fix FTBFS with new ncurses
+
 * Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt88
 - drop FAT16 (Closes: #52790)
 - calculate free/used space on btrfs
