@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.19
+Version: 1.20
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,11 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Aug 12 2025 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
+- update-kernel: Add --no-kernel option (for combining with --headers).
+- update-kernel: Support 'mainline' virtual flavour which is the 'latest'
+  without excluding -rc kernels.
+
 * Mon Oct 28 2024 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
 - update-kernel: Improve messaging about flavour upgrades.
 
