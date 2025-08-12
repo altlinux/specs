@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%global import_path gitea.com/gitea/act_runner
+%global import_path code.forgejo.org/forgejo/runner/v9
 
 Name: forgejo-runner
-Version: 7.0.0
+Version: 9.0.3
 Release: alt1
 
 Summary: Forgejo Runner
@@ -19,7 +19,7 @@ Patch: %name-%version.patch
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.7
+BuildRequires: rpm-build-golang golang >= 1.23.11
 
 #Requires: docker-engine
 Requires: sysctl-conf-userns podman systemd-container
@@ -35,7 +35,7 @@ A runner for Forgejo Actions.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOFLAGS="-mod=vendor"
-export LDFLAGS="-X gitea.com/gitea/act_runner/internal/pkg/ver.version=%version"
+export LDFLAGS="-X %import_path/internal/pkg/ver.version=v%version"
 export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
@@ -51,7 +51,7 @@ mkdir -p %buildroot{%_bindir,%_userunitdir,%_sysconfdir/%name,%_sharedstatedir/%
 
 %golang_install
 
-ln -r -s %buildroot%_bindir/runner.forgejo.org %buildroot%_bindir/%name
+mv %buildroot%_bindir/runner %buildroot%_bindir/%name
 
 %buildroot%_bindir/%name generate-config > %buildroot%_sysconfdir/%name/config.yaml
 
@@ -96,10 +96,12 @@ exit 0
 %attr(0640,root,_%name) %config(noreplace) %_sysconfdir/%name/config.yaml
 %attr(0770,root,_%name) %dir %_sharedstatedir/%name
 %_bindir/%name
-%_bindir/runner.forgejo.org
 %_userunitdir/%name.service
 
 %changelog
+* Tue Aug 12 2025 Alexey Shabalin <shaba@altlinux.org> 9.0.3-alt1
+- New version 9.0.3.
+
 * Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
 - New version 7.0.0.
 
