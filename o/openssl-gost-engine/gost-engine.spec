@@ -1,6 +1,6 @@
 Name: openssl-gost-engine
 Version: 3.0.2
-Release: alt4
+Release: alt5
 
 License: Apache-2.0
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
@@ -53,18 +53,14 @@ GOST file digesting utilites.
 %cmake_build
 
 %install
-enginesdir="$(pkg-config --variable=enginesdir libcrypto)"
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_man1dir
-mkdir -p %buildroot$enginesdir
-
-cp %_cmake__builddir/bin/gost.so %buildroot$enginesdir/
-cp %_cmake__builddir/bin/gost*sum %buildroot%_bindir/
-cp gost*sum.1 %buildroot%_man1dir/
+%cmake_install
 
 # Install the control scripts
 install -D -p -m0755 %_sourcedir/openssl-gost.control \
         %buildroot%_controldir/openssl-gost
+
+# Delete unused *.cmake scripts (TODO: a devel package?):
+rm -rfv %buildroot%_datadir/cmake
 
 %check
 CTEST_OUTPUT_ON_FAILURE=1 \
@@ -74,6 +70,9 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 
 %files
 %_libdir/openssl/engines-3/gost.so
+%_libdir/ossl-modules/gostprov.so
+%_libdir/libgost.so
+%_libdir/libgostprov.so
 %_controldir/openssl-gost
 
 %files -n gostsum
@@ -81,6 +80,11 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Thu Jul 17 2025 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt5
+- Remove old (probably, wrong) openssl.cnf "HOME" fix.
+- Add GOST provider options to the control script.
+- Install all built files (including the provider).
+
 * Thu Apr 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.2-alt4
 - Fixed License: tag (BSD-style -> Apache-2.0).
 - Added a ctrl command to set whole IV for magma and grasshopper ciphers
