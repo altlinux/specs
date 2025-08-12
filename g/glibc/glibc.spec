@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.40.0.135.c8e10f1432
+Version: 2.40.0.142.2eb180
 
 Release: alt1
 Epoch: 6
@@ -77,7 +77,7 @@ BuildPreReq: glibc-kernheaders >= %enablekernel
 BuildPreReq: rpm-build >= 4.0.4-alt112
 
 # This is required for building auxiliary programs.
-%{?!_disable_memusagestat:BuildPreReq: libgd2-devel}
+%{?!_disable_memusagestat:BuildPreReq: libgd-devel}
 
 BuildPreReq: makeinfo python3
 
@@ -369,6 +369,9 @@ pushd %buildtarget
 	--enable-kernel=%enablekernel \
 	--enable-stack-protector=strong \
 	--enable-fortify-source=3 \
+%ifarch x86_64
+	--enable-cet \
+%endif
 	#
 
 make %PARALLELMFLAGS
@@ -746,6 +749,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Aug 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.142.2eb180-alt1
+- Updated to glibc-2.40-142-g2eb180377b.
+- Enabled Control-flow Enforcement Technology (CET) support.
+
 * Wed Jun 11 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.135.c8e10f1432-alt1
 - Updated to glibc-2.40-135-gc8e10f1432 (fixes CVE-2025-0395).
 
