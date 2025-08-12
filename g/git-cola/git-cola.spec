@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -9,13 +9,16 @@ Group: Development/Tools
 Url: https://git-cola.github.io
 Vcs: git://github.com/git-cola/git-cola.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel python3-module-qtpy python3-module-PyQt5 rsync
+BuildRequires(pre): rpm-build-python3 python3-module-sphinx-devel rsync
+# Automatically added by buildreq on Mon Aug 11 2025
+# optimized out: ca-trust libdouble-conversion3 libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-opengl libqt6-openglwidgets libqt6-widgets libsasl2-3 openssl-config python-sphinx-objects.inv python3 python3-base python3-dev python3-module-PyQt6-sip python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jaraco.context python3-module-jaraco.functools python3-module-jaraco.text python3-module-jinja2 python3-module-markupsafe python3-module-more-itertools python3-module-packaging python3-module-pkg_resources python3-module-py3dephell python3-module-requests python3-module-roman_numerals python3-module-snowballstemmer python3-module-sphinx python3-module-urllib3 python3-module-wheel sh5 xz
+BuildRequires: python3-module-PyQt6-devel python3-module-pyproject-installer python3-module-qtpy python3-module-setuptools python3-module-sphinx-sphinx-build-symlink python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
 # hasher tests:
-Requires: python3-module-pyinotify python3-module-PyQt5 git-core
+Requires: python3-module-pyinotify python3-module-PyQt6 git-core
 
 %description
 A sweet, carbonated git gui known for its sugary flavour
@@ -39,6 +42,7 @@ The official zsh completion script for %name.
 
 %prep
 %setup
+%patch -p1
 %prepare_sphinx3 share/doc/%name
 sed -i '/Git Cola version/s/%%(cola_version)s/%{version}/' \
   cola/widgets/about.py
@@ -92,6 +96,10 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Mon Aug 11 2025 Leontiy Volodin <lvol@altlinux.org> 4.14.0-alt1
+- New version 4.14.0.
+- Switched to PyQt6.
+
 * Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 4.13.0-alt1
 - New version 4.13.0.
 
