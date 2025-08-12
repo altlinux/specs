@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.0
-Release: alt1.1.gff5d3d0
+Release: alt2.gff5d3d0
 
 Summary: Programmatic startup/shutdown of ASGI apps
 License: MIT
@@ -43,6 +43,7 @@ Features:
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -66,6 +67,9 @@ rm setup.cfg
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 2.1.0-alt2.gff5d3d0
+- Fixed FTBFS (setuptools-scm 9.1.1).
+
 * Wed Jul 24 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1.1.gff5d3d0
 - Built for ALT Sisyphus.
 

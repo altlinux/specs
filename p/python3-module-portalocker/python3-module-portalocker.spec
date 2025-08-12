@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Summary: An easy library for Python file locking
 License: BSD-3-Clause
 Group: Development/Python3
@@ -40,6 +40,7 @@ recommended however.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -58,6 +59,9 @@ recommended however.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt2
+- Fixed FTBFS (setuptools-scm 9.1.1).
+
 * Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
 - 3.1.1 -> 3.2.0.
 

@@ -4,8 +4,20 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+Provides: python3-module-%%{pep503_name %%pypi_name}+%1 = %%EVR \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%mod_name
-Version: 8.3.1
+Version: 9.1.1
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -16,6 +28,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Requires: git-core mercurial
 %py3_provides %pypi_name
@@ -24,20 +38,22 @@ Provides: python3-module-%pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra toml
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra rich
+%pyproject_builddeps_check
 BuildRequires: git-core mercurial
 %endif
 
 %description
-setuptools_scm is a simple utility for the setup_requires feature of
-setuptools for use in Mercurial and Git based projects.
+%pypi_name extracts Python package versions from git or hg metadata instead
+of declaring them as the version argument or in a Source Code Managed (SCM)
+managed file.
 
-It uses metadata from the SCM to generate the version of a project and
-is able to list the files belonging to that project (which makes the
-MANIFEST.in file unnecessary in many cases).
+Additionally %pypi_name provides setuptools with a list of files that are
+managed by the SCM (i.e. it automatically adds all the SCM-managed files to the
+sdist). Unwanted files must be excluded via MANIFEST.in or configuring Git
+archive.
 
-It falls back to PKG-INFO/.hg_archival.txt when necessary.
+%add_python_extra rich
 
 %prep
 %setup
@@ -45,6 +61,9 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -57,10 +76,14 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 
 %files
 %doc README.*
+%_bindir/setuptools-scm
 %python3_sitelibdir/setuptools_scm/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 9.1.1-alt1
+- 8.3.1 -> 9.1.1.
+
 * Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 8.3.1-alt1
 - 8.2.1 -> 8.3.1.
 
