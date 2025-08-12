@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20250512
+%define orig_timestamp 20250812
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 31
+Version: 32
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -60,6 +60,71 @@ fi
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 2:32-alt1.20250812
+- New upstream microcode datafile 20250812:
+  + Mitigations for (INTEL-SA-01249):
+    CVE-2025-20109: Improper Isolation or Compartmentalization in the stream
+    cache mechanism for some Intel Processors may allow an authenticated user
+    to potentially enable escalation of privilege via local access.
+  + Mitigations for (INTEL-SA-01308):
+    CVE-2025-22840: Sequence of processor instructions leads to unexpected
+    behavior for some Intel Xeon 6 Scalable processors may allow an
+    authenticated user to potentially enable escalation of privilege via local
+    access
+  + Mitigations for (INTEL-SA-01310):
+    CVE-2025-22839: Insufficient granularity of access control in the OOB-MSM
+    for some Intel Xeon 6 Scalable processors may allow a privileged user to
+    potentially enable escalation of privilege via adjacent access.
+  + Mitigations for (INTEL-SA-01311):
+    CVE-2025-22889: Improper handling of overlap between protected memory
+    ranges for some Intel Xeon 6 processor with Intel TDX may allow a
+    privileged user to potentially enable escalation of privilege via local
+    access.
+  + Mitigations for (INTEL-SA-01313):
+    CVE-2025-20053: Improper buffer restrictions for some Intel Xeon
+    Processor firmware with SGX enabled may allow a privileged user to
+    potentially enable escalation of privilege via local access.
+    CVE-2025-24305: Insufficient control flow management in the Alias Checking
+    Trusted Module (ACTM) firmware for some Intel Xeon processors may allow a
+    privileged user to potentially enable escalation of privilege via local
+    access.
+    CVE-2025-21090: Missing reference to active allocated resource for some
+    Intel Xeon processors may allow an authenticated user to potentially
+    enable denial of service via local access.
+  + Mitigations for (INTEL-SA-01367):
+    CVE-2025-26403: Out-of-bounds write in the memory subsystem for some Intel
+    Xeon 6 processors when using Intel SGX or Intel TDX may allow a
+    privileged user to potentially enable escalation of privilege via local
+    access.
+    CVE-2025-32086: Improperly implemented security check for standard in the DDRIO
+    configuration for some Intel Xeon 6 Processors when using Intel SGX or
+    Intel TDX may allow a privileged user to potentially enable escalation of
+    privilege via local access.
+  + Fixes for functional issues on several processor models.
+  + Updated microcodes:
+    sig 0x000606a6, pf_mask 0x87, 2025-03-11, rev 0xd000410, size 309248
+    sig 0x000606c1, pf_mask 0x10, 2025-03-06, rev 0x10002e0, size 301056
+    sig 0x000806f4, pf_mask 0x10, 2025-04-08, rev 0x2c000401, size 625664
+    sig 0x000806f4, pf_mask 0x87, 2025-04-04, rev 0x2b000643, size 592896
+    sig 0x000806f5, pf_mask 0x10, 2025-04-08, rev 0x2c000401, size 625664
+    sig 0x000806f5, pf_mask 0x87, 2025-04-04, rev 0x2b000643, size 592896
+    sig 0x000806f6, pf_mask 0x10, 2025-04-08, rev 0x2c000401, size 625664
+    sig 0x000806f6, pf_mask 0x87, 2025-04-04, rev 0x2b000643, size 592896
+    sig 0x000806f7, pf_mask 0x87, 2025-04-04, rev 0x2b000643, size 592896
+    sig 0x000806f8, pf_mask 0x10, 2025-04-08, rev 0x2c000401, size 625664
+    sig 0x000806f8, pf_mask 0x87, 2025-04-04, rev 0x2b000643, size 592896
+    sig 0x000a06d1, pf_mask 0x20, 2025-05-15, rev 0xa000100, size 1638400
+    sig 0x000a06d1, pf_mask 0x95, 2025-05-15, rev 0x10003d0, size 1667072
+    sig 0x000a06f3, pf_mask 0x01, 2025-05-03, rev 0x3000362, size 1530880
+    sig 0x000b06a2, pf_mask 0xe0, 2025-02-24, rev 0x4129, size 224256
+    sig 0x000b06a3, pf_mask 0xe0, 2025-02-24, rev 0x4129, size 224256
+    sig 0x000b06a8, pf_mask 0xe0, 2025-02-24, rev 0x4129, size 224256
+    sig 0x000b06d1, pf_mask 0x80, 2025-05-21, rev 0x0123, size 80896
+    sig 0x000c0652, pf_mask 0x82, 2025-05-14, rev 0x0119, size 90112
+    sig 0x000c0662, pf_mask 0x82, 2025-05-14, rev 0x0119, size 90112
+    sig 0x000c0664, pf_mask 0x82, 2025-05-14, rev 0x0119, size 90112
+    sig 0x000c06a2, pf_mask 0x82, 2025-05-14, rev 0x0119, size 90112
+
 * Sat May 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2:31-alt1.20250512
 - Implement rudimental ucode blacklisting from debian
 - Synced with debian/3.20250512.1:
