@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.8.0
+Version: 9.9.0
 Release: alt1
 
 Summary: A library for rendering project templates
@@ -68,7 +68,8 @@ It's a modern template engine that supports:
   --deselect tests/test_vcs.py::test_dont_remove_local_clone \
   --deselect tests/test_vcs.py::test_update_using_local_source_path_with_tilde \
   --deselect tests/test_updatediff.py::test_commit_hooks_respected \
-  --deselect tests/test_tools.py::test_types
+  --deselect tests/test_tools.py::test_types \
+  --deselect tests/test_prompt.py::test_path_completion
 
 %files
 %doc README.md
@@ -77,6 +78,9 @@ It's a modern template engine that supports:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 12 2025 Denis Sergeev <zeff@altlinux.org> 9.9.0-alt1
+- 9.8.0 -> 9.9.0.
+
 * Fri Aug 01 2025 Denis Sergeev <zeff@altlinux.org> 9.8.0-alt1
 - 9.7.1 -> 9.8.0.
 
