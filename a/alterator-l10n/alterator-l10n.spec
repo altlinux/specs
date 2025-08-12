@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.162
+Version: 2.9.163
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Sun Aug 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 2.9.163-alt1
+- alterator-editions: add Russian translation
+
 * Wed Aug 06 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.162-alt1
 - Updated Kazakh localization.
 

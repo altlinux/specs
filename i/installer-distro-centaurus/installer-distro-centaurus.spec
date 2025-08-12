@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 11.0
-Release: alt4
+Version: 11.1
+Release: alt1
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -23,6 +23,7 @@ Requires: alterator-datetime
 Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes >= 1.4
+Requires: alterator-editions
 Requires: x-cursor-theme-jimmac
 
 %description stage2
@@ -54,7 +55,7 @@ Centaurus Installer stage3.
 
 %install
 %define install2dir %_datadir/install2
-mkdir -p %buildroot%install2dir
+mkdir -p %buildroot%install2dir/
 cp -a * %buildroot%install2dir/
 
 # Don't expand groups lists
@@ -66,9 +67,14 @@ echo "use_edition=yes" >>%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_sysconfdir/alterator/pkg-groups.conf
 %install2dir/alterator-menu
 %install2dir/installer-steps
+%install2dir/steps
 %install2dir/*.d/*
 %files stage3
+
 %changelog
+* Sun Aug 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.1-alt1
+- Add edition selection to installer
+
 * Thu Jul 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt4
 - 95-virt-env.sh: Enable all groups for VM support
 

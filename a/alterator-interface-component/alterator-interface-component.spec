@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.9
-Release: alt2
+Version: 0.1.10
+Release: alt1
 
 Summary: Components interface for alterator browser
 License: GPLv2+
@@ -25,7 +25,7 @@ BuildRequires: python3-devel
 Requires: %name = %EVR
 Requires: alterator-module-executor >= 0.1.19
 Requires: alterator-entry >= 0.2.0
-Requires: alterator-backend-systeminfo >= 0.3
+Requires: alterator-backend-systeminfo >= 0.4.1
 
 %description -n alterator-backend-component
 %summary.
@@ -68,6 +68,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Aug 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.10-alt1
+- Fix path of systeminfo according new version.
+
 * Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.9-alt2
 - Actualize URL of repository.
 

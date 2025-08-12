@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define shortname systeminfo
 
-Name: alterator-backend-systeminfo
-Version: 0.4.0
+Name: alterator-backend-%{shortname}
+Version: 0.4.1
 Release: alt1
 
 Summary: Alterator backend for getting system information
@@ -12,22 +13,37 @@ URL: https://gitlab.basealt.space/alt/alterator-backend-systeminfo
 BuildArch: noarch
 Source: %name-%version.tar
 
-Requires: alterator-interface-systeminfo >= 0.4.0
+Requires: alterator-interface-%{shortname} >= 0.4.0
+Requires: alterator-backend-%{shortname}-utils
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
 BuildRequires(pre): rpm-macros-alterator
 
 %description
-%summary
+%summary.
 
-%package -n alterator-interface-systeminfo
+%package -n alterator-interface-%{shortname}
 Summary: Alterator interface for getting system information
 Group: System/Configuration/Other
-Version: 0.4.0
 
-%description -n alterator-interface-systeminfo
-%summary
+%description -n alterator-interface-%{shortname}
+%summary.
+
+%package -n alterator-backend-%{shortname}-utils
+Summary: Scripts for alterator-backend-%{shortname}
+Group: System/Configuration/Other
+Requires: alterator-notes-utils
+
+%description -n alterator-backend-%{shortname}-utils
+%summary.
+
+%package -n alterator-notes-utils
+Summary: Alterator notes file finder
+Group: System/Configuration/Other
+
+%description -n alterator-notes-utils
+%summary.
 
 %prep
 %setup
@@ -36,22 +52,24 @@ Version: 0.4.0
 %makeinstall_std
 
 %files
-%dir %_libexecdir/%name
-%dir %_alterator_datadir/backends
-%dir %_alterator_datadir/objects
-%_libexecdir/*
-%_alterator_datadir/backends/*
-%_alterator_datadir/objects/*
+%_alterator_datadir/backends
+%_alterator_datadir/objects
 
 %files -n alterator-interface-systeminfo
-%dir %_datadir/dbus-1
-%dir %_datadir/dbus-1/interfaces
-%dir %_datadir/polkit-1
-%dir %_datadir/polkit-1/actions
-%_datadir/dbus-1/interfaces/*
-%_datadir/polkit-1/actions/*
+%_datadir/dbus-1/interfaces
+%_datadir/polkit-1/actions
+
+%files -n alterator-backend-systeminfo-utils
+%_alterator_libdir/backends/%{shortname}
+
+%files -n alterator-notes-utils
+%_alterator_libdir/backends/%{shortname}.d/notes
 
 %changelog
+* Mon Aug 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
+- Move search of notes to child shell lib.
+- Move exec files to /usr/lib/alterator/backends filesystem.
+
 * Fri Jul 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.0-alt1
 - Add GetFinalNotes method with editions support.
 - Add editions support for GetReleaseNotes method. 

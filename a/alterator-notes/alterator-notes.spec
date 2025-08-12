@@ -2,8 +2,8 @@
 %def_with noarch
 
 Name: alterator-notes
-Version: 1.5.1
-Release: alt7
+Version: 1.6.0
+Release: alt1
 
 Summary: alterator module for view license and release notes
 License: GPL-2.0+
@@ -32,6 +32,7 @@ Group: System/Configuration/Other
 Summary: alterator module for view license and release notes
 Requires: alterator >= 3.1-alt4, alterator-sh-functions
 Requires: distro-licenses
+Requires: alterator-notes-utils
 Conflicts: alterator-browser-qt < 2.9.70
 Conflicts: alterator-lookout    < 0.3
 Conflicts: alterator-notes < 1.5.1-alt7
@@ -85,6 +86,10 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Sun Aug 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.6.0-alt1
+- Add support for notes of edition
+- Move search of notes to other common package
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt7
 - move desktops to separate package
 

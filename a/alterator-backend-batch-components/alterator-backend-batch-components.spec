@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-batch-components
-Version: 0.3
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Alterator backends for getting information about all components
 License: GPLv3
@@ -20,7 +20,7 @@ Requires: alt-components-base
 Requires: alterator-entry >= 0.3.1
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
-Requires: alterator-backend-systeminfo
+Requires: alterator-backend-systeminfo >= 0.4.1
 
 %description
 %summary.
@@ -40,6 +40,9 @@ Requires: alterator-backend-systeminfo
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Mon Aug 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.1-alt1
+- Fix path of systeminfo according new version.
+
 * Mon Jul 07 2025 Pavel Khromov <hromovpi@altlinux.org> 0.3-alt2
 - Change URL
 
