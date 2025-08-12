@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.13
+%define ver_major 0.14
 
 %def_disable bootstrap
 %def_disable check
@@ -51,6 +51,9 @@ cargo cinstall %opts --destdir=%buildroot
 #%doc README*
 
 %changelog
+* Tue Aug 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Thu Jun 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
