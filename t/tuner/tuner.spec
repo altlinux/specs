@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id org.altlinux.Tuner
+%define namespace Tuner
 %define api_ver 1
 
 %def_enable docs
 
 Name: tuner
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Extensible control center
 License: GPL-3.0-or-later
@@ -25,9 +26,9 @@ BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(libpeas-2)
-BuildRequires: gir(Peas)
-BuildRequires: gir(Gee)
-BuildRequires: gir(Adw)
+BuildRequires: gir(Peas) = 2
+BuildRequires: gir(Gee) = 0.8
+BuildRequires: gir(Adw) = 1
 BuildRequires: gobject-introspection-devel
 %{?_enable_docs:BuildRequires: valadoc}
 
@@ -120,10 +121,10 @@ GObject introspection devel data for the lib%name.
 %_vapidir/%name-%api_ver.vapi
 
 %files -n lib%name-gir
-%_typelibdir/Tuner-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Tuner-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled docs
 %files -n lib%name-devel-doc
@@ -131,6 +132,9 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Tue Aug 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1.1
+- specified versions of gir() build dependencies
+
 * Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.1-alt1
 - fixed warning in terminal output if no plugins loaded
 
