@@ -1,5 +1,5 @@
 Name:           vncshare
-Version:        0.05
+Version:        0.06
 Release:        alt1
 Summary:        VNC shared screens infrastructure
 Group:          Networking/Remote access
@@ -50,6 +50,9 @@ done
 %_libexecdir/*
 
 %changelog
+* Tue Aug 12 2025 Fr. Br. George <george@altlinux.org> 0.06-alt1
+- Improve VNCSHARE with yad
+
 * Wed Aug 06 2025 Fr. Br. George <george@altlinux.org> 0.05-alt1
 - Provide VNCSERVER tray icon
 
