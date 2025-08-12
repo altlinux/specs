@@ -1,6 +1,6 @@
 Name: vulkan
-Version: 1.4.313
-Release: alt1.1
+Version: 1.4.321
+Release: alt1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -24,9 +24,9 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 # strict requires due internal dependency
 BuildRequires: vulkan-headers = %version
 BuildRequires: vulkan-registry = %version
-BuildRequires: glslang-devel = 15.3.0
-BuildRequires: libspirv-tools-devel >= 2025.2-alt0.1.rc2
-BuildRequires: spirv-headers >= 1.5.5-alt16
+BuildRequires: glslang-devel = 15.4.0
+BuildRequires: libspirv-tools-devel >= 2025.3-alt0.1.rc1
+BuildRequires: spirv-headers >= 1.5.5-alt19
 # -layers need it
 BuildRequires: vulkan-utility-libraries-devel = %version librobin-hood-hashing-devel
 # -tools need it
@@ -177,6 +177,14 @@ rm -rf %buildroot%_libdir/*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.321-alt1
+- BR:
+  + Bump version requires
+- Updated to sdk-1.4.321:
+  + vulkan-layers: Updated to fee7b2b4a9
+  + vulkan-tools: Updated to 06ae73a3dc
+  + vulkan-loader: Updated to da8d2caad9
+
 * Thu Jul 31 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.313-alt1.1
 - tools: Remove pkg-config provided library names (fix for FTBFS
   and #55418).
@@ -186,9 +194,9 @@ rm -rf %buildroot%_libdir/*.a ||:
   + Bump version requires
   + tools: drop -volk dependency
 - Updated to sdk-1.4.313:
-  + tools: Updated to ad2f0170f9
-  + loader: Updated to fb78607414
-  + layers: Updated to 50b87dd4be
+  + vulkan-tools: Updated to ad2f0170f9
+  + vulkan-loader: Updated to fb78607414
+  + vulkan-layers: Updated to 50b87dd4be
 
 * Fri Feb 07 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.304-alt1
 - BR:

@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: glslang
-Version: 15.3.0
+Version: 15.4.0
 Release: alt1
 Epoch: 1
 
@@ -21,7 +21,7 @@ Patch0: glslang-alt-no-external-inc.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2025.2-alt0.1.rc2
+BuildRequires: python3-devel libspirv-tools-devel >= 2025.3-alt0.1.rc1
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -86,6 +86,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1:15.4.0-alt1
+- 15.4.0 (for sdk-1.4.321.0).
+
 * Sun May 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1:15.3.0-alt1
 - 15.3.0 (for sdk-1.4.313.0).
 
