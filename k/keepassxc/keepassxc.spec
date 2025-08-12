@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.7.10
-Release:  alt2
+Release:  alt3
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 # to update the translation (may require creating an account on transifex and joining the project):
 # - either go to https://www.transifex.com/keepassxc/keepassxc/language/ru/ and "download for use", category "master"
 # - or use transifex client `tx pull` accordingly
-Source1: keepassx_ru.ts
+Source1: keepassxc_ru.ts
 
 Patch1: alt-add-chromium-gost-support-for-browser-integrations.patch
 
@@ -62,7 +62,7 @@ open-source password manager.
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 # install fresh translation
-cp -v %SOURCE1 share/translations/keepassx_ru.ts
+cp -v %SOURCE1 share/translations/keepassxc_ru.ts
 
 %build
 # LTO is not supported yet, see https://github.com/keepassxreboot/keepassxc/issues/5801
@@ -113,6 +113,9 @@ export LANG=en_US.UTF-8; \
 %endif
 
 %changelog
+* Tue Aug 12 2025 Alexander Danilov <admsasha@altlinux.org> 2.7.10-alt3
+- fix russian translation.
+
 * Mon Jun 16 2025 Nikolai Kostrigin <nickel@altlinux.org> 2.7.10-alt2
 - NMU: fix optional build with yubikey support and switch it on (closes: #54817)
 - change ykpers-devel to libykpers-1-devel build dependency
