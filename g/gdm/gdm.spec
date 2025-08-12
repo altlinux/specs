@@ -1,5 +1,14 @@
 %def_enable snapshot
 
+%ifndef _priority_distbranch
+%define altbranch `rpm --eval %_priority_distbranch`
+%else
+%define altbranch %_priority_distbranch
+%endif
+%ifndef altbranch
+%define altbranch sisyphus
+%endif
+
 %define ver_major 48
 %define beta %nil
 %define api_ver 1.0
@@ -27,7 +36,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt4%beta
+Release: alt5%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0-or-later
@@ -57,6 +66,8 @@ Patch2: gdm-40.beta-alt-Xsession.patch
 Patch7: gdm-40.beta-alt-Init.patch
 # replace xterm by x-terminal-emulator (ALT #40031)
 Patch8: gdm-44.1-alt-Xsession-Xterm.patch
+# for p11
+Patch9: gdm-48-Revert-Disable-Xorg-session-by-default.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %EVR
@@ -190,6 +201,9 @@ sed -i 's|/usr\(/bin/touch\)|\1|
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 %patch8 -p1 -b .XSession-Xterm
+if [ "%altbranch" != sisyphus ]; then
+%patch9 -p1 -b .Revert-Disable
+fi
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -319,6 +333,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Aug 12 2025 Anton Midyukov <antohami@altlinux.org> 48.0-alt5
+- Revert "Disable Xorg session by default" for p11
+
 * Tue Jun 03 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt4
 - updated to 48.0-31-gf7d3c31b7
 - packaged orca-autostart.desktop again (ALT #53729)
