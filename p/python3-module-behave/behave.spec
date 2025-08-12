@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: behave is behaviour-driven development, Python style
 License: BSD-2-Clause
@@ -71,6 +71,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1.
+
 * Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.6 -> 1.3.0.
 
