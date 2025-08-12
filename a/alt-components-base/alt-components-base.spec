@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -143,6 +143,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Aug 12 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.8.1-alt1
+- editions: up license version 11.0 -> 11.1
+
 * Mon Aug 11 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.8.0-alt1
 - feat: add support editions to validation script
 - add conntrack-tools, haproxy and keepalived to main section in
