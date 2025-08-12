@@ -1,15 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
+
+%define _common_libdir %prefix/lib
+%define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 0.1.3
+Version: 1.0.0
 Release: alt1
 
-Summary: Creating a bootable iso that copies the file system
+Summary: Creating a bootable image that copies the file system
 License: GPL-3.0-or-later
 Group: System/Configuration/Other
-Url: https://www.altlinux.org/Alterator
-# grub-pc architectures:
-ExclusiveArch: x86_64 %ix86
+Url: https://www.altlinux.org/Alterator-kopidel
+Vcs: https://altlinux.space/rauty/alterator-kopidel
+BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -18,20 +22,17 @@ Requires: alterator-setup
 Requires: alterator-sh-functions
 Requires: alterator-l10n
 Requires: rsync
-Requires: grub-pc
 Requires: grub-common
 Requires: mtools
 Requires: squashfs-tools
-Requires: xorriso
 Requires: make-initrd-bootchain
 Requires: alt-uefi-certs
 
 # Dependencies of the altinst squashfs image:
 Requires: alterator-vm
-Requires: alterator-preinstall
 Requires: alterator-grub
 Requires: libevms
-Requires: installer-alterator-fs
+Requires: installer-alterator-fs >= 1.0.0
 Requires: installer-common-stage2
 Requires: installer-scripts-remount-stage2
 Requires: console-scripts
@@ -44,6 +45,11 @@ BuildRequires: guile20-devel libguile20-devel
 BuildRequires: guile22-devel
 %endif
 BuildRequires: alterator-fbi
+%if_with check
+BuildRequires: bats
+BuildRequires: /proc
+BuildRequires: /dev
+%endif
 
 %description
 If you want to make a complete copy of the file system and install
@@ -56,7 +62,13 @@ it on other machines, then you have found what you were looking for!
 %make_build
 
 %install
-%makeinstall
+%makeinstall \
+	common_libdir=%buildroot%_common_libdir \
+	common_libexecdir=%buildroot%_common_libexecdir \
+#
+
+%check
+%make test
 
 %files
 %_alterator_backend3dir/kopidel
@@ -65,10 +77,38 @@ it on other machines, then you have found what you were looking for!
 %_datadir/alterator/ui/kopidel/
 %_sbindir/kopidel
 %_sysconfdir/bash_completion.d/alterator-kopidel
-%_libexecdir/alterator-kopidel/
+%_common_libdir/alterator-kopidel/
+%_common_libexecdir/alterator-kopidel/
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Wed Jul 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.0-alt1
+- Create the razlivochniy.img instead of iso.
+- Add the ability to create razlivochniy external storage
+  devices (such as flash drives) instead of images.
+- Create the hybrid bootable image if it is possible.
+- For UEFI bootable image install only grub efi or efi removable.
+- Add support for creating an image on file systems without
+  the support of access rights and symbolic links (closes: 54050).
+- Update the UI:
+  + Change comboboxes to listboxes.
+  + Add a button that updates ignored files.
+  + Add the terminate building buitton.
+  + Add asynchronous updating of the list of
+    work directorsand external devices.
+  + Add a warning for exdrive target about formatting.
+  + Add a button to update the list of targets.
+  + Add an update targets list when you toggle the target checkboxes.
+  + Add 3 check states for the list of ignored files:
+    Orange: not verified, green: verified, red: verification failed.
+- CLI: don't require workdir or exdrive when only listing possible options.
+- Remove the runtime dependency of alterator-preinstall.
+- Stop displaying unnecessary information in the CLI.
+- Add Vcs tag to the spec file.
+- Update Url tag in the spec file.
+- Move the executable .sh scripts from lib to the libexec.
+- Add tests for the step of creating information about system partitions.
+
 * Wed May 14 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.3-alt1
 - Add a working directory check to the CLI.
 - Fix create_disk_partition_info for BTRFS only subvolume setup.
