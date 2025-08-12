@@ -9,7 +9,7 @@
 
 Name: authenticator
 Version: %ver_major.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Generate Two-Factor Codes
 License: GPL-3.0-or-later
@@ -33,6 +33,7 @@ Patch10: %name-4.6.2-alt-fix_for_appstream_data.patch
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
+Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -94,6 +95,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Aug 12 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1.2
+- added gst-plugin-gtk4 runtime dependency (ALT #55578)
+
 * Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1.1
 - armatik@: fixed metainfo check with appstream >= 1.0.5
 
