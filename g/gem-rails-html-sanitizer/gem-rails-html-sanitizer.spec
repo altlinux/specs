@@ -6,7 +6,7 @@
 
 Name:          gem-rails-html-sanitizer
 Version:       1.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       This gem is responsible to sanitize HTML fragments in Rails applications
 License:       MIT
 Group:         Development/Ruby
@@ -22,7 +22,6 @@ BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(nokogiri) >= 1.15.7
 BuildConflicts: gem(loofah) >= 3
-BuildConflicts: gem(nokogiri) >= 1.17.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -32,7 +31,6 @@ Requires:      gem(minitest) >= 0
 Requires:      gem(nokogiri) >= 1.15.7
 Requires:      gem(rake) >= 0
 Conflicts:     gem(loofah) >= 3
-Conflicts:     gem(nokogiri) >= 1.17.0
 Obsoletes:     ruby-rails-html-sanitizer < %EVR
 Provides:      ruby-rails-html-sanitizer = %EVR
 Provides:      rails-html-sanitizer = %EVR
@@ -51,7 +49,7 @@ need similar functionality in non Rails apps consider using Loofah directly
 %if_enabled    doc
 %package       -n gem-rails-html-sanitizer-doc
 Version:       1.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       This gem is responsible to sanitize HTML fragments in Rails applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rails-html-sanitizer
 Group:         Development/Documentation
@@ -79,7 +77,7 @@ need similar functionality in non Rails apps consider using Loofah directly
 %if_enabled    devel
 %package       -n gem-rails-html-sanitizer-devel
 Version:       1.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       This gem is responsible to sanitize HTML fragments in Rails applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rails-html-sanitizer
 Group:         Development/Ruby
@@ -134,6 +132,9 @@ need similar functionality in non Rails apps consider using Loofah directly
 
 
 %changelog
+* Wed Aug 13 2025 Pavel Skrylev <majioa@altlinux.org> 1.6.2-alt1.1
+- - removed autoconflict to nokogiti gem
+
 * Fri Jan 10 2025 Pavel Skrylev <majioa@altlinux.org> 1.6.2-alt1
 - ^ 1.5.0 -> 1.6.2
 
