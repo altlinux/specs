@@ -1,4 +1,4 @@
-%define githash 694d0e8b38f79e196ea13cf5f75485aec209afdc
+%define githash 74187fc01c6993b5ff40b797976c782d87c504d6
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -6,7 +6,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.31.0
+Version: 9.32.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -37,6 +37,9 @@ Requires: linux-ha-common
 Conflicts: drbd-tools drbd83-tools
 Provides: %name-bash-completion = %EVR
 Obsoletes: %name-bash-completion < %EVR
+Obsoletes: drbd-xen <= 9.30.0
+Obsoletes: drbd-rgmanager <= 9.31.0
+Obsoletes: drbd-heartbeat <= 9.31.0
 
 %description
 DRBD refers to block devices designed as a building block to form high
@@ -57,16 +60,6 @@ BuildArch: noarch
 This package contains the master/slave DRBD resource agent for the
 Pacemaker High Availability cluster manager.
 
-%package rgmanager
-Summary: Red Hat Cluster Suite agent for DRBD
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description rgmanager
-This package contains the DRBD resource agent for the Red Hat Cluster Suite
-resource manager.
-
 %prep
 %setup -a1
 tar -xf %SOURCE1 -C drbd-headers
@@ -81,10 +74,9 @@ sed -i 's,-Wshadow,,' user/drbdmon/Makefile*
 %build
 %autoreconf
 %configure \
+    --with-initscripttype=both \
     --with-udev \
     --with-pacemaker \
-    --with-rgmanager \
-    --with-heartbeat \
     --with-distro=generic
 
 # Bug in configure.ac, enabling WITH_DRBDMON anyway:
@@ -104,12 +96,10 @@ sed -i 's|)/lib/drbd/|)/usr/lib/drbd/|g' scripts/Makefile.in user/v84/Makefile.i
 rm -rf %buildroot%_mandir/ja
 rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
 pushd scripts
-install -pDm644 -t %buildroot%_unitdir *.service
-install -pDm644 -t %buildroot%_unitdir *.target
-mkdir -p %buildroot%_presetdir
-install -m 644 drbd.preset %buildroot%_presetdir/50-drbd.preset
-install -pDm755 -t %buildroot/usr/lib/drbd/scripts drbd drbd-service-shim.sh drbd-wait-promotable.sh ocf.ra.wrapper.sh
+%makeinstall_std
 install -pDm755 drbd %buildroot%_initdir/drbd
+rm -v %buildroot%_sysconfdir/init.d/drbd
+rmdir -v %buildroot%_sysconfdir/init.d
 popd
 
 %post
@@ -127,7 +117,6 @@ make test
 %dir %_sysconfdir/drbd.d
 %config(noreplace) %_sysconfdir/drbd.d/global_common.conf
 %config(noreplace) %_sysconfdir/multipath/conf.d/drbd.conf
-%_sysconfdir/ha.d/resource.d/*
 %_initdir/drbd
 %_presetdir/50-drbd.preset
 %_unitdir/drbd.service
@@ -141,7 +130,7 @@ make test
 %_unitdir/drbd@.service
 %_unitdir/drbd@.target
 %_unitdir/drbd-configured.target
-%_unitdir/ocf.ra@.service
+%_tmpfilesdir/drbd.conf
 %_sbindir/drbdsetup
 %_sbindir/drbdadm
 %_sbindir/drbdmeta
@@ -154,19 +143,17 @@ make test
 /usr/lib/drbd/scripts/drbd
 /usr/lib/drbd/scripts/drbd-service-shim.sh
 /usr/lib/drbd/scripts/drbd-wait-promotable.sh
-/usr/lib/drbd/scripts/ocf.ra.wrapper.sh
 /usr/lib/udev/rules.d/65-drbd.rules
 %exclude /usr/lib/drbd/crm-*fence-peer.sh
 %exclude /usr/lib/drbd/stonith_admin-fence-peer.sh
 /usr/lib/drbd/*.sh
-/usr/lib/drbd/rhcs_fence
 %dir %_var/lib/drbd
 %_man8dir/drbd*
 %_man7dir/*
 %exclude %_man7dir/ocf_linbit_drbd.*
 %exclude %_man7dir/ocf_linbit_drbd-attr.*
 %_man5dir/drbd*
-%_sysconfdir/bash_completion.d/*
+%_datadir/bash-completion/completions/drbdadm
 
 %files pacemaker
 %dir /usr/lib/ocf/resource.d/linbit
@@ -178,11 +165,11 @@ make test
 %_man7dir/ocf_linbit_drbd.*
 %_man7dir/ocf_linbit_drbd-attr.*
 
-%files rgmanager
-%_datadir/cluster/drbd.sh
-%_datadir/cluster/drbd.metadata
-
 %changelog
+* Wed Aug 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.32.0-alt1
+- 9.32.0
+- drop rgmanager and heartbeat support
+
 * Thu Apr 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.31.0-alt1
 - 9.31.0
 - drop xen support
