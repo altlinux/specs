@@ -5,33 +5,32 @@
 %define        gemname puma
 
 Name:          gem-puma
-Version:       6.6.0
+Version:       6.6.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for parallelism
 License:       BSD-3-Clause
 Group:         Networking/WWW
 Url:           https://puma.io
 Vcs:           https://github.com/puma/puma.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(concurrent-ruby) >= 1.3
+BuildRequires: gem(json) >= 2.3
 BuildRequires: gem(localhost) >= 0
 BuildRequires: gem(m) >= 0
 BuildRequires: gem(minitest) >= 5.11
 BuildRequires: gem(minitest-proveit) >= 0
 BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
-BuildRequires: gem(puma_worker_killer) >= 0
+BuildRequires: gem(nio4r) >= 2.0
 BuildRequires: gem(rack) >= 2.2
 BuildRequires: gem(rackup) >= 2.0
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-performance) >= 0
-BuildRequires: gem(sinatra) >= 0
-BuildRequires: gem(nio4r) >= 2
 BuildConflicts: gem(concurrent-ruby) >= 2
 BuildConflicts: gem(json) >= 3
 BuildConflicts: gem(minitest) >= 6
@@ -41,9 +40,11 @@ BuildConflicts: gem(nio4r) >= 3
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.4
+Requires:      gem(json) >= 2.3
 Requires:      gem(nio4r) >= 2.0
+Conflicts:     gem(json) >= 3
 Conflicts:     gem(nio4r) >= 3
-Provides:      gem(puma) = 6.6.0
+Provides:      gem(puma) = 7.0.0
 
 %description
 Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
@@ -54,14 +55,18 @@ support CRuby well.
 
 
 %package       -n puma
-Version:       6.6.0
+Version:       6.6.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for parallelism executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
-Group:         Networking/WWW
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.6.0
+Requires:      gem(puma) = 7.0.0
+Requires:      gem(json) >= 2.3
+Requires:      gem(nio4r) >= 2.0
+Conflicts:     gem(json) >= 3
+Conflicts:     gem(nio4r) >= 3
 
 %description   -n puma
 A Ruby/Rack web server built for parallelism executable(s).
@@ -78,14 +83,14 @@ support CRuby well.
 
 %if_enabled    doc
 %package       -n gem-puma-doc
-Version:       6.6.0
+Version:       6.6.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for parallelism documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.6.0
+Requires:      gem(puma) = 7.0.0
 
 %description   -n gem-puma-doc
 A Ruby/Rack web server built for parallelism documentation files.
@@ -103,30 +108,14 @@ support CRuby well.
 
 %if_enabled    devel
 %package       -n gem-puma-devel
-Version:       6.6.0
+Version:       6.6.1
 Release:       alt1
 Summary:       A Ruby/Rack web server built for parallelism development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.6.0
-Requires:      gem(concurrent-ruby) >= 1.3
-Requires:      gem(json) >= 2.3
-Requires:      gem(localhost) >= 0
-Requires:      gem(m) >= 0
-Requires:      gem(minitest) >= 5.11
-Requires:      gem(minitest-proveit) >= 0
-Requires:      gem(minitest-retry) >= 0
-Requires:      gem(minitest-stub-const) >= 0
-Requires:      gem(rack) >= 2.2
-Requires:      gem(rackup) >= 2.0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(rubocop) >= 0
-Requires:      gem(rubocop-performance) >= 0
-Conflicts:     gem(concurrent-ruby) >= 2
-Conflicts:     gem(json) >= 3
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(puma) = 7.0.0
 
 %description   -n gem-puma-devel
 A Ruby/Rack web server built for parallelism development package.
@@ -167,18 +156,21 @@ support CRuby well.
 
 %if_enabled    doc
 %files         -n gem-puma-doc
-%doc README.md
+%doc History.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-puma-devel
-%doc README.md
+%doc History.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Wed Aug 13 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.1-alt1
+- ^ 6.6.0 -> 6.6.1
+
 * Thu Mar 06 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.0-alt1
 - ^ 6.4.3 -> 6.6.0
 - * define explicit dependencies
