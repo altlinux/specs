@@ -3,12 +3,11 @@
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
 %define dear_imgui_commit f4d9359095eff3eb03f685921edc1cf0e37b1687
 %define discord_rpc_commit 19f66e6dcabb2268965f453db9e5774ede43238f
-%define vulkan_headers_version 1.4.314
 %define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
 
 Name: shadps4
 Version: 0.10.0
-Release: alt2
+Release: alt3
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -31,10 +30,8 @@ Source3: zydis-%zydis_commit.tar
 Source4: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source5: ext-discord-rpc-%discord_rpc_commit.tar
-# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source6: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
-Source7: ext-LibAtrac9-%libatrac9_commit.tar
+Source6: ext-LibAtrac9-%libatrac9_commit.tar
 
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
@@ -73,14 +70,13 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
 %__mv -Tf ../ext-imgui-%dear_imgui_commit externals/dear_imgui
 %__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
-%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/vulkan-headers
 %__mv -Tf ../ext-LibAtrac9-%libatrac9_commit externals/LibAtrac9
 
 %build
@@ -119,6 +115,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libexecdir/%name
 
 %changelog
+* Wed Aug 13 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt3
+- Build with system Vulkan headers
+
 * Fri Jul 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt2
 - Build with system magic_enum
 
