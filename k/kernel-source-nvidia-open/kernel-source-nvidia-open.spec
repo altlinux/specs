@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	nvidia-open
-%define module_version  575.64.05
+%define module_version  580.76.05
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -16,8 +16,6 @@ Vcs: https://github.com/NVIDIA/open-gpu-kernel-modules.git
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source0: %name-%version.tar
-# https://github.com/NVIDIA/open-gpu-kernel-modules/commit/c7e72135da83ff027755b4a61a3ff09a32fe00c3
-Patch: suspend-resume-fixes.patch
 
 BuildPreReq: kernel-build-tools
 BuildArch: noarch
@@ -27,9 +25,6 @@ NVIDIA Linux open GPU kernel module source.
 
 %prep
 %setup -c -q
-pushd %name-%version
-%patch -p1
-popd
 
 %install
 mkdir -p %kernel_srcdir
@@ -39,6 +34,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Aug 13 2025 L.A. Kostis <lakostis@altlinux.ru> 580.76.05-alt1
+- 580.76.05.
+
 * Sun Jul 27 2025 L.A. Kostis <lakostis@altlinux.ru> 575.64.05-alt1
 - 575.64.05.
 
