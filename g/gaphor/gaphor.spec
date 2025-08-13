@@ -3,7 +3,7 @@
 %def_with check
 
 Name: gaphor
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: A powerful UML and SysML modeling tool in Python
 License: Apache-2.0
@@ -15,8 +15,6 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
-# Port to Gaphas 5 from Gaphas 4 used upstream
-Patch0: gaphas5.patch
 # Drop better-exceptions: replaced with traceback.TracebackException
 Patch1: drop-better-exceptions.patch
 # Upstream fixes
@@ -115,5 +113,8 @@ install -Dm644 data/logos/org.gaphor.Gaphor-symbolic.svg %buildroot%_iconsdir/hi
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Aug 13 2025 Aleksandr A. Voyt <sobue@altlinux.org> 3.1.0-alt1
+- 3.0.0 -> 3.1.0
+
 * Wed Apr 16 2024 Aleksandr A. Voyt <sobue@altlinux.org> 3.0.0-alt1
 - Initial build
