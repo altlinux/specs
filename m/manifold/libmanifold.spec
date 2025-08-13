@@ -9,7 +9,7 @@
 %define soname 3
 
 Name: manifold
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: Geometry library for topological robustness
 License: Apache-2.0
@@ -96,5 +96,8 @@ Group: Development/C++
 %_libdir/cmake/%name
 
 %changelog
+* Wed Aug 13 2025 L.A. Kostis <lakostis@altlinux.ru> 3.2.1-alt1
+- 3.2.1.
+
 * Fri Jul 18 2025 L.A. Kostis <lakostis@altlinux.ru> 3.2.0-alt1
 - Initial build for ALTLinux.
