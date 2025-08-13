@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.1
-Release: alt3
+Version: 1.7.2
+Release: alt1
 
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
@@ -112,6 +112,9 @@ popd
 %doc docs/netCDF4/index.html
 
 %changelog
+* Wed Aug 13 2025 Anton Vyatkin <toni@altlinux.org> 1.7.2-alt1
+- New version 1.7.2.
+
 * Thu Jul 24 2025 Anton Vyatkin <toni@altlinux.org> 1.7.1-alt3
 - Fixed FTBFS.
 
