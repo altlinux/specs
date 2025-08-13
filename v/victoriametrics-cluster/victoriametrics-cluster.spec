@@ -2,14 +2,19 @@
 
 %global _unpackaged_files_terminate_build 1
 
+%def_with system_libzstd
+
 Name: victoriametrics-cluster
 Version: 1.122.0
-Release: alt1
+Release: alt2
 Summary: The best long-term remote storage for Prometheus
 
 Group: Development/Other
 License: Apache-2.0
 Url: https://victoriametrics.com/
+
+Packager: Alexey Shabalin <shaba@altlinux.org>
+
 Source0: %name-%version.tar
 
 Source2: vminsert.service
@@ -20,9 +25,12 @@ Source6: vmstorage.service
 Source7: vmstorage.sysconfig
 
 #ExclusiveArch:  %go_arches
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 riscv64 loongarch64
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.24.5
+%if_with system_libzstd
+BuildRequires: libzstd-devel-static
+%endif
 
 %description
 VictoriaMetrics cluster consists of the following services:
@@ -73,6 +81,21 @@ vmselect performs the following tasks:
 
 %prep
 %setup -q
+
+%if_with system_libzstd
+# unvendor libzstd
+pushd vendor/github.com/valyala/gozstd/
+rm -vf libzstd_* *.h
+cat <<EOF > libzstd.go
+package gozstd
+
+/*
+#cgo LDFLAGS: /usr/lib64/libzstd.a
+*/
+import "C"
+EOF
+popd
+%endif
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -143,6 +166,11 @@ install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/vmstorage
 %dir %attr(0755, _victoriametrics, _victoriametrics) %_sharedstatedir/victoria-metrics/cluster-data
 
 %changelog
+* Wed Aug 13 2025 Ivan A. Melnikov <iv@altlinux.org> 1.122.0-alt2
+- Use libzstd from the repository instead of the vendored one
+  (fixes FTBFS on loongarch64).
+- Build on riscv64 and loongarch64.
+
 * Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 1.122.0-alt1
 - New version 1.122.0.
 
