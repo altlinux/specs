@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.11.3
-Release: alt1
+Release: alt2
 
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: BSD-3-Clause
@@ -93,6 +93,9 @@ sed -i "s|.*blosc.test.*||" blosc/__init__.py
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
 
+# fix for new numpy
+sed -i "s|fromstring|frombuffer|" blosc/toplevel.py
+
 %build
 export USE_SYSTEM_BLOSC=1
 %pyproject_build
@@ -134,6 +137,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Wed Aug 13 2025 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt2
+- Fixed FTBFS.
+
 * Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt1
 - New version 1.11.3.
 
