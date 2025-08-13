@@ -1,6 +1,6 @@
 Name: droidcam
 Summary: DroidCam turns your mobile device into a webcam for your PC
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 License: GPLv2
 Group: Video
@@ -55,6 +55,9 @@ EOF
 %_bindir/%name-cli
 
 %changelog
+* Wed Aug 13 2025 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt1
+- 2.1.4.
+
 * Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.3-alt1
 - 2.1.3.
 
