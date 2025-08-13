@@ -1,5 +1,5 @@
 Name: libbctoolbox
-Version: 5.4.20
+Version: 5.4.36
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
@@ -28,10 +28,14 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 
 %prep
 %setup
+# /usr/src/RPM/BUILD/libbctoolbox-5.4.0/src/crypto/mbedtls.cc:61:24:
+# error: 'MBEDTLS_ERR_THREADING_BAD_INPUT_DATA' was not declared in this scope;
+# did you mean 'MBEDTLS_ERR_SHA1_BAD_INPUT_DATA'?
+# Revert "Update to mbedtls3.6"
+# 672bdf495fb834ac4df2e196385656b1a42e1956
 %patch0 -p1
 
 %build
-# /usr/src/RPM/BUILD/libbctoolbox-5.4.0/src/crypto/mbedtls.cc:61:24: error: 'MBEDTLS_ERR_THREADING_BAD_INPUT_DATA' was not declared in this scope; did you mean 'MBEDTLS_ERR_SHA1_BAD_INPUT_DATA'?
 %cmake -DBUILD_SHARED_LIBS=TRUE
 %cmake_build
 
@@ -52,6 +56,9 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCToolbox
 
 %changelog
+* Wed Aug 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.36-alt1
+- 5.4.36
+
 * Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.20-alt1
 - 5.4.20
 
