@@ -6,7 +6,7 @@
 
 Name: grafana
 Version: 12.1.0
-Release: alt1
+Release: alt2
 Summary: Metrics dashboard and graph editor
 
 Group: Development/Other
@@ -207,8 +207,17 @@ fi
 %_datadir/%name
 
 %changelog
+* Wed Aug 13 2025 Alexey Shabalin <shaba@altlinux.org> 12.1.0-alt2
+- Fixed execute grafana-cli.
+
 * Thu Jul 24 2025 Alexey Shabalin <shaba@altlinux.org> 12.1.0-alt1
-- 12.1.0
+- 12.1.0.
+- Fixed:
+  + CVE-2025-3415
+  + CVE-2025-4123
+  + CVE-2025-3580
+  + CVE-2025-6197
+  + CVE-2025-6023
 - Build for 64-bit only.
 
 * Mon Mar 10 2025 Artyom Sinyugin <writers@altlinux.org> 11.5.2-alt1
