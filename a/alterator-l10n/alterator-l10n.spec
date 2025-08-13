@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.164
+Version: 2.9.165
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 2.9.165-alt1
+- alterator-editions: add Help
+
 * Tue Aug 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.9.164-alt1
 - alterator-kopidel: new translations from 1.0.0
 
