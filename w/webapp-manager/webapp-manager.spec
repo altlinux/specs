@@ -1,6 +1,6 @@
 Name:     webapp-manager
 Version:  1.4.2
-Release:  alt2
+Release:  alt3
 
 Summary:  Run websites as if they were apps
 License:  GPLv3
@@ -25,6 +25,7 @@ BuildRequires: altlinux-menus
 %prep
 %setup
 subst 's|/usr/lib|%python3_sitelibdir|' usr/bin/%name
+subst 's|__DEB_VERSION__|%version|' usr/lib/webapp-manager/webapp-manager.py
 
 %patch -p1
 
@@ -62,6 +63,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Wed Aug 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt3
+- Fix version in webapp-manager
+
 * Thu Aug 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt2
 - Fix refresh update *.desktop file in application menu on KDE (ALT #55393)
 
