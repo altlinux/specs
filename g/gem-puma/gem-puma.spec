@@ -6,7 +6,7 @@
 
 Name:          gem-puma
 Version:       6.6.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby/Rack web server built for parallelism
 License:       BSD-3-Clause
 Group:         Networking/WWW
@@ -44,7 +44,7 @@ Requires:      gem(json) >= 2.3
 Requires:      gem(nio4r) >= 2.0
 Conflicts:     gem(json) >= 3
 Conflicts:     gem(nio4r) >= 3
-Provides:      gem(puma) = 7.0.0
+Provides:      gem(puma) = 6.6.1
 
 %description
 Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
@@ -56,13 +56,13 @@ support CRuby well.
 
 %package       -n puma
 Version:       6.6.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby/Rack web server built for parallelism executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(puma) = 7.0.0
+Requires:      gem(puma) = 6.6.1
 Requires:      gem(json) >= 2.3
 Requires:      gem(nio4r) >= 2.0
 Conflicts:     gem(json) >= 3
@@ -84,13 +84,13 @@ support CRuby well.
 %if_enabled    doc
 %package       -n gem-puma-doc
 Version:       6.6.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby/Rack web server built for parallelism documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) = 7.0.0
+Requires:      gem(puma) = 6.6.1
 
 %description   -n gem-puma-doc
 A Ruby/Rack web server built for parallelism documentation files.
@@ -109,13 +109,13 @@ support CRuby well.
 %if_enabled    devel
 %package       -n gem-puma-devel
 Version:       6.6.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby/Rack web server built for parallelism development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 7.0.0
+Requires:      gem(puma) = 6.6.1
 
 %description   -n gem-puma-devel
 A Ruby/Rack web server built for parallelism development package.
@@ -168,6 +168,9 @@ support CRuby well.
 
 
 %changelog
+* Thu Aug 14 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.1-alt1.1
+- ! fixed provides/requires
+
 * Wed Aug 13 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.1-alt1
 - ^ 6.6.0 -> 6.6.1
 
