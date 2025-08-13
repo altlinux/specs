@@ -3,9 +3,9 @@
 
 Name:          gem-less
 Version:       2.6.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Leaner CSS, in your browser or Ruby (via less.js)
-License:       Apache 2.0
+License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://lesscss.org
 Vcs:           https://github.com/cowboyd/less.rb.git
@@ -15,11 +15,9 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(therubyracer) >= 0.12.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 2.0
 BuildRequires: gem(commonjs) >= 0.2.7
-BuildConflicts: gem(therubyracer) >= 0.13
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(commonjs) >= 0.3
 %endif
@@ -43,7 +41,7 @@ JavaScript.
 
 %package       -n lessc
 Version:       2.6.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Leaner CSS, in your browser or Ruby (via less.js) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета less
 Group:         Development/Ruby
@@ -66,7 +64,7 @@ JavaScript.
 
 %package       -n gem-less-doc
 Version:       2.6.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Leaner CSS, in your browser or Ruby (via less.js) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета less
 Group:         Development/Documentation
@@ -88,18 +86,15 @@ JavaScript.
 
 %package       -n gem-less-devel
 Version:       2.6.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Leaner CSS, in your browser or Ruby (via less.js) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета less
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(less) = 2.6.0.2
-Requires:      gem(therubyracer) >= 0.12.0
-Requires:      gem(therubyrhino) >= 2.0.2
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 2.0
-Conflicts:     gem(therubyracer) >= 0.13
 Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-less-devel
@@ -144,6 +139,9 @@ JavaScript.
 
 
 %changelog
+* Wed Aug 13 2025 Pavel Skrylev <majioa@altlinux.org> 2.6.0.2-alt0.2
+- ! drop devel dep to therubyracer gem
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 2.6.0.2-alt0.1
 - ^ 2.6.0 -> 2.6.0p2
 

@@ -6,7 +6,7 @@
 
 Name:          gem-autoprefixer-rails
 Version:       10.4.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Autoprefixer for Ruby and Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -25,7 +25,6 @@ BuildRequires: gem(sprockets) >= 4.0.0
 BuildRequires: gem(standard) >= 0
 BuildConflicts: gem(execjs) >= 3
 %if_enabled check
-BuildRequires: gem(mini_racer) >= 0
 BuildRequires: gem(rspec-rails) >= 0
 BuildRequires: gem(rubocop) >= 0.85.1
 BuildRequires: gem(rubocop-packaging) >= 0.1.1
@@ -52,7 +51,7 @@ integration with this JavaScript tool.
 %if_enabled    doc
 %package       -n gem-autoprefixer-rails-doc
 Version:       10.4.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Autoprefixer for Ruby and Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета autoprefixer-rails
 Group:         Development/Documentation
@@ -75,14 +74,13 @@ integration with this JavaScript tool.
 %if_enabled    devel
 %package       -n gem-autoprefixer-rails-devel
 Version:       10.4.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Autoprefixer for Ruby and Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета autoprefixer-rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(autoprefixer-rails) = 10.4.19.0
-Requires:      gem(mini_racer) >= 0
 Requires:      gem(rails) >= 5.0.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec-rails) >= 0
@@ -136,6 +134,9 @@ integration with this JavaScript tool.
 
 
 %changelog
+* Wed Aug 13 2025 Pavel Skrylev <majioa@altlinux.org> 10.4.19.0-alt1.1
+- ! drop devel dep to miniracer
+
 * Mon Jan 20 2025 Pavel Skrylev <majioa@altlinux.org> 10.4.19.0-alt1
 - ^ 10.4.7.0 -> 10.4.19.0
 
