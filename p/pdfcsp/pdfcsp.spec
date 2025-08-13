@@ -2,7 +2,7 @@
 
 Name: pdfcsp
 Version: 0.3.1
-Release: alt2
+Release: alt3
 Summary: Library for CryptoPro pdf electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
@@ -21,14 +21,12 @@ Library for CryptoPro pdf electronic signatures support.
 %package -n libaltcsp
 Summary: The shared library for CryptoPro 5 support.
 Group: System/Libraries 
-Requires: glibc-core glibc-pthread
 %description -n libaltcsp
 The shared library for CryptoPro 5 support.
 
 %package -n libaltcsp-devel
 Summary: Developer headers for libaltcsp library
 Group: Development/C
-Requires: libaltcsp
 %description -n libaltcsp-devel
 Developer headers for libaltcsp 
 
@@ -36,28 +34,25 @@ Developer headers for libaltcsp
 Summary: Developer headers to use within the Poppler library
 Group: Development/C
 BuildArch: noarch
+Requires: libaltcsp-devel
 %description -n libcspforpoppl-devel
 Summary: Developer headers to use within the Poppler library
 
 %package -n libcsppdf
 Summary: The shared library for pdf electronic signatures support.
 Group: System/Libraries
-Requires: libaltcsp libqpdf-devel
-Requires: libsignimage_c_wrapper-devel >= 0.5-alt1
 %description -n libcsppdf
 The shared library for pdf electronic signatures support.
 
 %package -n libcsppdf-devel
 Summary: Developer headers for libcsppdf library
 Group: Development/C
-Requires: libcsppdf
 %description -n libcsppdf-devel 
 Developer headers for libcsppdf 
 
 %package -n pdfcspcli
 Summary: Command line tools for pdf signatures
 Group: Office
-Requires: libcsppdf glibc-locales
 %description -n pdfcspcli
 Command line tools for pdf signatures
 
@@ -140,6 +135,9 @@ Command line tools for pdf signatures
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Wed Aug 13 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.1-alt3
+- Remove the redundant "Requires:" in the .spec file (closes: #55453).
+
 * Wed Aug 13 2025 Ilya Sorochan <k0tran@altlinux.org> 0.3.1-alt2
 - Add patch that enables loongarch64 support (closes: #52914).
 
