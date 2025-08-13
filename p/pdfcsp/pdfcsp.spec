@@ -2,13 +2,14 @@
 
 Name: pdfcsp
 Version: 0.3.1
-Release: alt1
+Release: alt2
 Summary: Library for CryptoPro pdf electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://gitlab.basealt.space/proskurinov/csp_pdf
 
 Source: %name-%version.tar
+Patch: pdfcsp-0.3.1-alt-loongarch64-support.patch
 
 BuildPreReq: gcc-c++ cmake ninja-build rpm-macros-cmake rpm-build-licenses
 BuildRequires: libqpdf-devel boost-devel-headers boost-interprocess-devel glibc-devel libsignimage_c_wrapper-devel libspdlog-devel libfmt-devel
@@ -62,6 +63,7 @@ Command line tools for pdf signatures
 
 %prep
 %setup
+%patch -p1
 
 %ifarch %ix86
 %define _pvoid_size 4
@@ -138,6 +140,9 @@ Command line tools for pdf signatures
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Wed Aug 13 2025 Ilya Sorochan <k0tran@altlinux.org> 0.3.1-alt2
+- Add patch that enables loongarch64 support (closes: #52914).
+
 * Thu Jul 24 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.1-alt1
 - Use random UIDs for temporary files names.
 
