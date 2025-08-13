@@ -7,32 +7,20 @@
 
 %define soname 3
 
-
 Name:    lasso
-Version: 2.8.2
-Release: alt5
+Version: 2.9.0
+Release: alt1
 
 Summary: Liberty Alliance Single Sign On
 
 License: GPLv2+
 Group:   System/Libraries
 Url:     https://lasso.entrouvert.org/
+VCS:   https://git.entrouvert.org/entrouvert/lasso
 
 Source:  https://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
 Source1: %name.watch
-# upstream patches
-Patch1:  lasso-web-switch-generation-script-to-python-3.patch
-Patch2:  lasso-web-fix-282-entry-as-not-much-happened-really.patch
-Patch3:  lasso-web-update-download-page-with-latest-version-number.patch
-Patch4:  lasso-web-update-debian-repository-infos-for-bullseye.patch
-Patch5:  lasso-web-update-git-instructions-for-new-gitea-URLs.patch
-Patch6:  lasso-web-update-visit-tracking-to-matomo.patch
-Patch7:  lasso-web-update-URLs-to-https.patch
-Patch8:  lasso-web-remove-mention-of-subversion-commits.patch
-Patch9:  lasso-web-update-mod_auth_mellon-to-new-namehome.patch
-Patch10: lasso-fedora-fix-openssl-implicit-declarations.patch
-Patch11: lasso-fedora-fix-removed-xmlsec-deprecations.patch
-Patch12: lasso-fedora-lasso-libxml2.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel swig
@@ -141,17 +129,11 @@ library.
 
 %prep
 %setup -q -n %{name}-%{version}
-%autopatch -p1
+%patch -p1
 sed -i 's|echo $VERSION |echo %version |' configure.ac
 sed -i 's|@VERSION@|%version|' lasso.pc.in
-# without distutils
-sed -i 's|from distutils ||g' configure.ac
-sed -i 's|PYTHON_INC=.*|PYTHON_INC=%_includedir/python%_python3_version|' configure.ac
-sed -i 's|PYTHON_LIB=.*|PYTHON_LIB=%python3_sitelibdir|' configure.ac
 
 %build
-# gcc14
-%add_optflags -fPIC -Wno-error=implicit-function-declaration -Wno-error=int-conversion -Wno-error=incompatible-pointer-types
 %autoreconf
 %configure \
 %if_with java
@@ -259,6 +241,10 @@ make check
 %endif
 
 %changelog
+* Wed Aug 13 2025 Leontiy Volodin <lvol@altlinux.org> 2.9.0-alt1
+- New version 2.9.0.
+- Added VCS tag.
+
 * Mon Apr 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.8.2-alt5
 - Fix build with libxmlsec1 and gcc14.
 
