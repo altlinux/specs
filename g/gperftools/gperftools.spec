@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lfs=relaxed,lint=relaxed
 
 Name: gperftools
-Version: 2.16
+Version: 2.17
 Release: alt1
 
 Provides: google-perftools
@@ -64,20 +64,23 @@ files for developing applications that use the %name package.
 %make_build recheck VERBOSE=1 ||
 %make_build recheck VERBOSE=1
 
-%files
-%doc %_defaultdocdir/%name
-%_bindir/pprof*
-%_man1dir/pprof.*
-
 %files -n lib%name
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
+%doc %_defaultdocdir/%name
 %_includedir/%name
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 12 2025 Vitaly Chikunov <vt@altlinux.org> 2.17-alt1
+- Update to 2.17 (2025-08-12).
+
+* Sun Mar 09 2025 Vitaly Chikunov <vt@altlinux.org> 2.16.90-alt1
+- Update to 2.16.90 (2025-03-09).
+- Removal of heap leak checker and removal of legacy Perl pprof implementation.
+
 * Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 2.16-alt1
 - Update to 2.16 (2024-09-29).
 - spec: Run unit tests in %%check.
