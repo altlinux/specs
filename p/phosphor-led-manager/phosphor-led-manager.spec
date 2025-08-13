@@ -1,6 +1,8 @@
+%define _libexecdir %_usr/libexec
+
 Name: phosphor-led-manager
 Version: 1.0.0
-Release: alt0.1.g275ad18
+Release: alt0.2.gccca8eb3
 
 Summary: This project manages LED groups on dbus
 License: Apache-2.0
@@ -38,11 +40,24 @@ export CXXFLAGS="%{optflags} -std=c++23"
 %install
 %meson_install
 
+%preun
+%preun_service obmc-fru-fault-monitor
+%preun_service xyz.openbmc_project.LED.GroupManager
+
+%post
+%post_service obmc-fru-fault-monitor
+%post_service xyz.openbmc_project.LED.GroupManager
+
 %files
 %doc *.md
 %_bindir/*
 %_datadir/%name/
+%_libexecdir/%name/
+%_unitdir/*
 
 %changelog
+* Wed Aug 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt0.2.gccca8eb3
+- update from upstream/master
+
 * Wed Apr 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt0.1.g275ad18
 - Initial build for ALT.
