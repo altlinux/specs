@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        139.0.7258.66
+Version:        139.0.7258.127
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -647,6 +647,15 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Aug 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.127-alt1
+- New version (139.0.7258.127).
+- Fixes:
+  + CVE-2025-8879: Heap buffer overflow in libaom
+  + CVE-2025-8880: Race in V8
+  + CVE-2025-8901: Out of bounds write in ANGLE
+  + CVE-2025-8881: Inappropriate implementation in File Picker
+  + CVE-2025-8882: Use after free in Aura
+
 * Wed Aug 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.66-alt1
 - New version (139.0.7258.66).
 - Some vaapi flags were renamed to accelerated video in chromium 131.
