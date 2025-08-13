@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.2.2
+Version:  0.3.1
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
-License:  MIT
+License:  GPLv2
 Group:    Monitoring
 Vcs:      http://git.altinux.org:packages/checksumgen.git
 
@@ -28,7 +28,7 @@ Generates checksum file for an RPM repo slice.
 %make_build
 
 %install
-%makeinstall_std sysconfdir=%_sysconfdir unitdir=%_unitdir logrotatedir=%_logrotatedir bindir=%_bindir libexecdir=%_prefix/libexec
+%makeinstall_std sysconfdir=%_sysconfdir unitdir=%_unitdir logrotatedir=%_logrotatedir bindir=%_bindir libexecdir=%_prefix/libexec mandir=%_mandir
 
 %check
 %make_build check
@@ -38,8 +38,19 @@ Generates checksum file for an RPM repo slice.
 %dir %_prefix/libexec/%name
 %_prefix/libexec/%name/*.sh
 %_bindir/%name
+%_man1dir/%name.1.*
 
 %changelog
+* Tue Aug 12 2025 Paul Wolneykien <manowar@altlinux.org> 0.3.1-alt1
+- Updated the README file.
+- Switch license to GNU GPL v2.
+- Removed list_rpms.sh.
+- Added the manual page.
+
+* Tue Aug 12 2025 Paul Wolneykien <manowar@altlinux.org> 0.3.0-alt1
+- Include all files under /lib/firmware by default.
+- Added -I | --include options, include *.ko.zst by default.
+
 * Mon May 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
 - Added tests.
 - Fixed RPM signature key listing.
