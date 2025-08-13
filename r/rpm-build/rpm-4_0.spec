@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.206
+Version: 4.0.4.207
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -85,6 +85,7 @@ Source: rpm-%version-%release.tar
 BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel >= 4.2.1
 BuildPreReq: rpm >= 3.0.6-ipl24mdk, %_bindir/subst
 
+BuildRequires: libcap-devel
 BuildRequires: debugedit
 %if 0%{?!_without_check:%{?!_disable_check:1}} || 0%{?_with_asan:1}
 BuildRequires: /proc
@@ -202,7 +203,7 @@ Requires: rpminstall-tests-checkinstall
 %build
 %if_with asan
 %define optflags_lto %nil
-%add_optflags -fsanitize=address
+%add_optflags -fsanitize=address,undefined
 export ASAN_OPTIONS=detect_leaks=0
 %endif
 gettextize --force --quiet --no-changelog --symlink
@@ -233,6 +234,7 @@ export LDFLAGS="-L$PWD/stub"
 %configure \
 	%{?_with_apidocs} %{?_without_apidocs} \
 	%{?_with_db} %{?_without_db} \
+	--with-cap \
 	%{subst_with selinux} \
 	--disable-static \
 	--program-transform-name=
@@ -343,20 +345,19 @@ if [ ! -e "$ROOT" ]; then
 	mkdir -p "$ROOT/RPM"
 	ln -s /usr/src/RPM/{SOURCES,SPECS} "$ROOT/RPM"
 	export ASAN_OPTIONS=detect_leaks=0
-	# Run the lt- binary to allow to change argv0 to 'rpmb' for popt to
+	# Change the binary name from 'lt-rpmb' to 'rpmbuild' for popt to
 	# understand '--with' alias.
-	ldd ./.libs/lt-rpmb
-	if ! (exec -a rpmb ./.libs/lt-rpmb \
+	ln -s lt-rpmb .libs/rpmbuild
+	if ! .libs/rpmbuild \
 		-ba "$ROOT/RPM/SPECS/rpm-4_0.spec" \
 		--define "_topdir $ROOT/RPM" \
 		--buildroot="$ROOT/buildroot" \
-		$WITH_ASAN &> "$ROOT.log"); then
+		$WITH_ASAN &> "$ROOT.log"; then
 		sed "s/^/%%check$ASAN: /" "$ROOT.log" | tail -100
 		exit 1
 	fi
 	tail /tmp/check_*.log
 	chmod -R u+w "$ROOT"
-	rm -rf -- "$ROOT"
 fi
 %endif
 
@@ -450,6 +451,10 @@ fi
 %files checkinstall
 
 %changelog
+* Sun Jul 06 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.207-alt1
+- Backport %%caps files attribute.
+- Backport RemovePathPostfixes.
+
 * Fri Jun 27 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.206-alt1
 - Improve handling of macro conditionals and blank lines in %%description.
 - spec: Add %%check section with ASan build tests.
