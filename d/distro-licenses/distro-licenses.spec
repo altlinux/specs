@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.17
+Version: 1.3.18
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.3.18-alt1
+- fix ALT_Domain_License/11.1 version 11.0 -> 11.1
+
 * Mon Jul 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.17-alt1
 - Add static license of 11.1 products (thx trefas@yandex.ru):
   + ALT_Server_License
