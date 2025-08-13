@@ -6,7 +6,7 @@
 
 Name: python3-module-%modulename
 Version: 2.1.18
-Release: alt1
+Release: alt2
 Summary: An API for virtualenv/pip 
 License: BSD-2-Clause 
 Group: Development/Python3
@@ -24,6 +24,9 @@ BuildRequires: python3(six)
 BuildRequires: python3-dev
 BuildRequires: python3(virtualenv)
 
+Requires:  /usr/bin/virtualenv3
+Requires:  /usr/bin/pip
+
 %if_with check
 BuildRequires: python3(pytest)
 %endif
@@ -37,9 +40,6 @@ This package aims to provide an API in the form of a wrapper
 around virtualenv. It can be used to create and delete
 environments and perform package management inside the environment.
 Full support is provided for all supported versions of Python.
-
-Requires:  /usr/bin/virtualenv3
-Requires:  /usr/bin/pip
 
 %prep
 %setup
@@ -61,5 +61,8 @@ Requires:  /usr/bin/pip
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sat Aug 09 2025 Pavel Shilov <zerospirit@altlinux.org> 2.1.18-alt2
+- fix description to pass altlinux-policy-description-has-tags
+
 * Tue Aug 05 2025 Pavel Shilov <zerospirit@altlinux.ru> 2.1.18-alt1
 - initial build for Sisyphus
