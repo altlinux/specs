@@ -2,7 +2,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
@@ -78,6 +78,9 @@ tox.py3 --sitepackages -vvr --develop
 %python3_sitelibdir/*
 
 %changelog
+* Wed Aug 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.9-alt1
+- New version.
+
 * Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.8-alt1
 - New version.
 
