@@ -6,7 +6,7 @@
 %define git_hash_short e38298bbdb
 
 Name: influxdb3
-Version: 3.0.3
+Version: 3.3.0
 Release: alt1
 Url: https://www.influxdata.com
 Vcs: https://github.com/influxdata/influxdb.git
@@ -19,7 +19,6 @@ Group: Databases
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: config.patch
-Patch2: influxdb_process_git_hash_env.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: /proc
@@ -47,14 +46,14 @@ as dashboards and interactive user interfaces.
 
 %prep
 %setup
-%patch -P 0 -P 1 -P 2 -p1
+%patch -P 0 -P 1 -p1
 %rust_prep
 
 %build
 export GIT_HASH=%git_hash
 export GIT_HASH_SHORT=%git_hash_short
 export CARGO_ENCODED_RUSTFLAGS=-Cdebuginfo=1
-%rust_build
+%rust_build --config profile.release.lto=\"thin\"
 
 %install
 %rust_install
@@ -69,5 +68,10 @@ export GIT_HASH_SHORT=%git_hash_short
 %_bindir/%name
 
 %changelog
+* Thu Aug 08 2025 Artyom Sinyugin <writers@altlinux.org> 3.3.0-alt1
+- New release v3.3.0.
+- Add lto=thin to %%rust_build to prevent 'idle time limit (3600 seconds) exceeded' error in hsh.
+- Delete influxdb_process_git_hash_env.patch.
+
 * Thu Jun 26 2025 Artyom Sinyugin <writers@altlinux.org> 3.0.3-alt1
 - Initial build.
