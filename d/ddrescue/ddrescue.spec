@@ -2,10 +2,10 @@
 
 Name: ddrescue
 Version: 1.29.1
-Release: alt1
+Release: alt2
 
 Summary: Data copying in presence of I/O errors
-License: GPLv3+
+License: GPLv2+
 Group: Archiving/Backup
 
 URL: http://www.gnu.org/software/ddrescue/ddrescue.html
@@ -64,6 +64,9 @@ make check
 %endif
 
 %changelog
+* Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.29.1-alt2
+- fix License: (thx upstream)
+
 * Mon Mar 24 2025 Michael Shigorin <mike@altlinux.org> 1.29.1-alt1
 - new version (watch file uupdate)
 

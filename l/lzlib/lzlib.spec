@@ -1,9 +1,9 @@
 Name: lzlib
 Version: 1.15
-Release: alt1
+Release: alt2
 
 Summary: Provides in-memory LZMA (de)compression functions
-License: GPLv3+
+License: BSD-2-Clause
 Group: System/Libraries
 
 URL: http://savannah.nongnu.org/projects/lzip
@@ -48,6 +48,9 @@ rm -fv %buildroot%_libdir/*.a
 %_infodir/*.info*
 
 %changelog
+* Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt2
+- fix License: (thx upstream)
+
 * Mon Jan 13 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt1
 - new version (watch file uupdate)
 - minor spec cleanup

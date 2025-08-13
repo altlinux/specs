@@ -4,12 +4,13 @@
 
 Name: plzip
 Version: 1.12
-Release: alt1
-Summary: Plzip is a parallel version of the lzip data compressor
-License: GPLv3+
-Group: Archiving/Compression
-Url: https://www.nongnu.org/lzip/plzip.html
+Release: alt2
 
+Summary: Plzip is a parallel version of the lzip data compressor
+License: GPLv2+
+Group: Archiving/Compression
+
+Url: https://www.nongnu.org/lzip/plzip.html
 # https://download.savannah.gnu.org/releases/lzip/plzip/plzip-%version.tar.gz
 Source: %name-%version.tar
 
@@ -19,9 +20,9 @@ BuildRequires: texinfo
 
 %description
 Plzip is a parallel version of the lzip data compressor based on the LZMA
-algorithm. The files produced by plzip are fully compatible with lzip-1.4 or
-newer. Plzip is intended for faster compression/decompression of big files on
-multiprocessor machines.
+algorithm. The files produced by plzip are fully compatible with lzip-1.4
+or newer. Plzip is intended for faster compression/decompression of big files
+on multiprocessor machines.
 
 %prep
 %setup
@@ -42,6 +43,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.12-alt2
+- License: is actually GPLv2+ (thx upstream)
+
 * Fri Jan 31 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.12-alt1
 - Updated to upstream version 1.12.
 

@@ -1,9 +1,9 @@
 Name: lzip
 Version: 1.25
-Release: alt1
+Release: alt2
 
 Summary: LZMA file compressor
-License: GPLv3+
+License: GPLv2+
 Group: Archiving/Compression
 
 Url: http://savannah.nongnu.org/projects/lzip/
@@ -57,6 +57,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt2
+- fix License: (thx upstream)
+
 * Sat Jan 18 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt1
 - new version (watch file uupdate)
 
