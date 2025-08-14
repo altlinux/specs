@@ -1,5 +1,5 @@
 Name: icon-theme-deepin
-Version: 2023.11.16
+Version: 2025.8.14
 Release: alt1
 
 Summary: Icons for the Deepin Desktop Environment
@@ -7,8 +7,10 @@ Summary: Icons for the Deepin Desktop Environment
 License: GPL-3.0-only
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-icon-theme
+VCS: https://github.com/linuxdeepin/deepin-icon-theme.git
 
 Source: %url/archive/%version/deepin-icon-theme-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -19,6 +21,7 @@ BuildRequires: python3-devel gtk-update-icon-cache xcursorgen
 
 %prep
 %setup -n icon-theme-deepin-%version
+%patch -p1
 
 sed -i 's|python|python3|' Makefile
 sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
@@ -30,9 +33,11 @@ sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 %install
 %makeinstall DESTDIR=%buildroot
 cp -a ./Sea ./bloom-fantacy ./usr/share/icons/hicolor %buildroot%_iconsdir/
+# fix unmets
+cp -a bloom/status/16/arrow-*.svg %buildroot%_iconsdir/bloom/status/20/
 
 %files
-%doc LICENSE
+%doc LICENSE debian/changelog
 %_iconsdir/hicolor/*/status/*.svg
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/bloom-classic-dark/
@@ -44,6 +49,10 @@ cp -a ./Sea ./bloom-fantacy ./usr/share/icons/hicolor %buildroot%_iconsdir/
 %_iconsdir/vintage/
 
 %changelog
+* Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 2025.8.14-alt1
+- New version 2025.8.14.
+- Added VCS tag.
+
 * Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 2023.11.16-alt1
 - New version 2023.11.16.
 
