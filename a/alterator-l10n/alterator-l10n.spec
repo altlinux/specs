@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.165
+Version: 2.9.166
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Thu Aug 14 2025 Dmitry Terekhin <jqt4@altlinux.org> 2.9.166-alt1
+- alterator-users: Restore Russian translation (Closes: 55502)
+
 * Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 2.9.165-alt1
 - alterator-editions: add Help
 
