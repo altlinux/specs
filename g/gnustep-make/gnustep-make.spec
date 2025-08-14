@@ -9,7 +9,7 @@
 
 Name: gnustep-make
 Version: 2.8.0
-Release: alt2.1
+Release: alt3
 # https://github.com/gnustep/tools-make
 License: GPL-3.0+
 Group: Development/Objective-C
@@ -67,6 +67,7 @@ OBJCFLAGS="%optflags"
 export OBJCFLAGS="$OBJCFLAGS -DGNUSTEP -DGNU_RUNTIME"
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
+export SHELLPROG="/bin/bash"
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -155,6 +156,9 @@ rm -f %buildroot%_infodir/*
 %endif
 
 %changelog
+* Thu Aug 14 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt3
+- Fixed bash path (ALT #55481) (thanks Korytov Ivan).
+
 * Thu Aug 10 2023 Ivan A. Melnikov <iv@altlinux.org> 2.8.0-alt2.1
 - NMU: get libdir suffix from rpm instead of hardcoding
   a list of platforms (fixes build in riscv64).
