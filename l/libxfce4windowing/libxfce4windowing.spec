@@ -3,7 +3,7 @@
 %define soname 0
 
 Name: libxfce4windowing
-Version: 4.20.3
+Version: 4.20.4
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -113,6 +113,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Thu Aug 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.4-alt1
+- Updated to 4.20.4.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 4.20.3-alt1
 - Updated to 4.20.3.
 
