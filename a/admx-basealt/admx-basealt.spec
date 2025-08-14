@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,13 @@ done
 %_destdir
 
 %changelog
+* Thu Aug 14 2025 Valentin Sokolov <sova@altlinux.org> 0.6.0-alt1
+- Added disable cifsacl policy for user
+- Improved name Gnome -> GNOME in all policies
+- Improved LAPS policy description
+- Removed dbus.service policy
+- Fix bugs (closes: 54884, 54929, 54944, 54945, 55365, 54400, 55550, 54402, 53920)
+
 * Mon Jun 02 2025 Valentin Sokolov <sova@altlinux.org> 0.5.0-alt1
 - Added a group of settings for Gnome
 - Added a group of settings for Apperance Gnome
