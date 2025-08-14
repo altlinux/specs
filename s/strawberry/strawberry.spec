@@ -1,17 +1,14 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1
 
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
-# src/widgets/{qocoa_mac.h,searchfield*}, src/engine/AsyncOperations.h: MIT
-# ext/libstrawberry-common/core/{logging*,messagehandler*}, src/utilities/timeconstants.h: Apache-2.0
-# 3rdparty/gstfastspectrum/: LGPL-2.0-or-later
-# 3rdparty/SPMediaKeyTap/, src/core/scoped*, src/core/arraysize.h: BSD-style
-License: GPL-3.0-or-later and Apache-2.0 and LGPL-2.0-or-later and BSD
+# 3rdparty/discord-rpc: MIT
+License: GPL-3.0-or-later and MIT
 Group: Sound
 Url: https://www.strawberrymusicplayer.org
 VCS: https://github.com/strawberrymusicplayer/strawberry.git
@@ -62,7 +59,7 @@ Features:
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 %ifarch %e2k
 sed -i "s/u'\\\\0'/(QChar)&/" src/tagreader/tagreadergme.cpp
 %endif
@@ -100,6 +97,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt1
+- New version 1.2.12.
+- Updated license tag.
+
 * Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.11-alt1
 - New version 1.2.11.
 - Built with libtag2.
