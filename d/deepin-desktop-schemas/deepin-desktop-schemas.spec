@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.10
+Version: 6.0.12
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -27,7 +27,7 @@ BuildRequires: python3 glib2 libgio
 
 %prep
 %setup -a1
-%autopatch -p1
+%patch -p1
 
 sed -i 's|adwaita-lock.jpg|adwaita-l.webp|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
@@ -67,6 +67,9 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
+- New version 6.0.12.
+
 * Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
 - New version 6.0.10.
 
