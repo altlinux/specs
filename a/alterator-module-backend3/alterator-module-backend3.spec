@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
-Version: 0.1.1
-Release: alt2
+Version: 0.1.2
+Release: alt1
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,9 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Aug 14 2025 Ivan Savin <svn17@altlinux.org> 0.1.2-alt1
+- Add passing of D-Bus methods parameters to the backend3 scripts.
+
 * Tue Jul 08 2025 Ivan Savin <svn17@altlinux.org> 0.1.1-alt2
 - Change the URL in the spec.
 
