@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: walker
-Version: 0.13.25
+Version: 0.13.26
 Release: alt1
 Summary: Multi-Purpose Launcher with a lot of features
 License: MIT
@@ -44,5 +44,8 @@ install -m 0644 internal/config/config.default.toml \
 %doc LICENSE
 
 %changelog
+* Wed Aug 13 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.13.26-alt1
+- Updated to version 0.13.26.
+
 * Tue Aug 12 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.13.25-alt1
 - Initial build for ALT.
