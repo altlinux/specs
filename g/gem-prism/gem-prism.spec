@@ -5,30 +5,30 @@
 %define        gemname prism
 
 Name:          gem-prism
-Version:       1.2.0
+Version:       1.4.0
 Release:       alt1
 Summary:       Prism Ruby parser
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/ruby/prism
 Vcs:           https://github.com/ruby/prism.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(benchmark-ips) >= 0
+BuildRequires: gem(onigmo) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
-%if_enabled check
-BuildRequires: gem(minitest) >= 0
-BuildRequires: gem(onigmo) >= 0
 BuildRequires: gem(test-unit) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.7.0
-Provides:      gem(prism) = 1.2.0
+Provides:      prism = %EVR
+Provides:      gem(prism) = 1.4.0
 
 %ruby_on_build_rake_tasks templates
 
@@ -45,14 +45,14 @@ against ruby.h, and so is suitable in the context of CRuby.
 
 %if_enabled    doc
 %package       -n gem-prism-doc
-Version:       1.2.0
+Version:       1.4.0
 Release:       alt1
 Summary:       Prism Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета prism
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(prism) = 1.2.0
+Requires:      gem(prism) = 1.4.0
 
 %description   -n gem-prism-doc
 Prism Ruby parser documentation files.
@@ -73,16 +73,15 @@ against ruby.h, and so is suitable in the context of CRuby.
 
 %if_enabled    devel
 %package       -n gem-prism-devel
-Version:       1.2.0
+Version:       1.4.0
 Release:       alt1
 Summary:       Prism Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета prism
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(prism) = 1.2.0
+Requires:      gem(prism) = 1.4.0
 Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(minitest) >= 0
 Requires:      gem(onigmo) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
@@ -137,6 +136,9 @@ against ruby.h, and so is suitable in the context of CRuby.
 
 
 %changelog
+* Thu Aug 14 2025 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
+- ^ 1.2.0 -> 1.4.0
+
 * Wed Dec 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
 - ^ 0.25.0 -> 1.2.0
 
