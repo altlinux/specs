@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define llvm_ver 20.1
 %def_with lld
 %if_with lld
 %set_verify_elf_method skip
@@ -9,7 +10,7 @@
 %endif
 
 Name: ispc
-Version: 1.26.0
+Version: 1.27.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -19,6 +20,8 @@ Group: Development/C
 
 Source: %name-%version.tar
 
+Patch: ispc-alt-i586-arch.patch
+
 # Story: https://pharr.org/matt/blog/2018/04/30/ispc-all.html
 Vcs: https://github.com/ispc/ispc.git
 Url: https://ispc.github.io/
@@ -26,9 +29,9 @@ Url: https://ispc.github.io/
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
 BuildRequires: cmake
-BuildRequires: clang-devel
-BuildRequires: llvm-devel
-BuildRequires: libstdc++-devel
+BuildRequires: clang%{llvm_ver}-devel
+BuildRequires: llvm%{llvm_ver}-devel
+BuildRequires: gcc-c++ libstdc++-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: flex
 BuildRequires: python3-devel
@@ -38,10 +41,8 @@ BuildRequires: zlib-devel
 BuildRequires: /proc
 BuildRequires: tbb-devel
 %if_with lld
-BuildRequires: lld
+BuildRequires: lld%{llvm_ver}
 %endif
-
-ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 ispc is a compiler for a variant of the C programming language, with
@@ -69,7 +70,7 @@ Static libraries for %name.
 %package checkinstall
 Summary: checkinstall for %name
 Group: Development/C
-Requires(pre): gcc-c++
+Requires(pre): gcc-c++ python3-devel python3-module-nanobind
 Requires(pre): %name = %EVR
 
 %description checkinstall
@@ -78,6 +79,10 @@ This package will try to build all %name examples.
 %prep
 %setup
 sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
+# special case for hsh which exposes x86-64 via cpu flags
+%ifarch %ix86
+%patch -p1
+%endif
 
 %build
 %if_with lld
@@ -92,6 +97,7 @@ sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
 # -DWASM_ENABLED=ON requires emcc.
 # -DGENX_ENABLED=ON requires level_zero.
 
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
@@ -147,6 +153,7 @@ cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
 %check
 banner check
 PATH=%_cmake__builddir/bin:$PATH
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 # Increase timeout from 10 to 100 or beekeeper will sometimes fail.
 sed -i /run_command/s/10/100/ scripts/run_tests.py
 # Tests are from .travis.yml
@@ -164,6 +171,12 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1.27.0-alt1
+- 1.27.0.
+- Build w/ llvm20.1.
+- checkinstall: update BR.
+- checkinstall: fix install on %%ix86.
+
 * Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.26.0-alt1
 - 1.26.0.
 
