@@ -1,6 +1,4 @@
 %define nm_version 1.46.2
-%define git_hash %nil
-#define git_hash .ge1c5978
 
 %def_with gtk4
 
@@ -13,8 +11,8 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.12.0
-Release: alt1%git_hash
+Version: 1.12.2
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for OpenVPN
@@ -117,6 +115,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Tue Aug 12 2025 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
+- Build auth-dialog with GTK3 for now.
+- Updated to 1.12.2.
+
 * Wed Jun 26 2024 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
 - Treat warnings as errors again.
 - Updated to 1.12.0.
