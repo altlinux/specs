@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -396,6 +396,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Aug 11 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt3
+- Crop transparent parts logo_width.png right and left
+
 * Fri Aug 08 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.1-alt2
 - Move notes of editions to alt-editions-server
 
