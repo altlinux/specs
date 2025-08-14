@@ -1,4 +1,7 @@
 %def_disable snapshot
+
+%define sover 1
+
 %ifarch armh
 %def_disable check
 %else
@@ -6,7 +9,7 @@
 %endif
 
 Name: highway
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -14,10 +17,11 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/google/highway
 
+Vcs: https://github.com/google/highway.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/google/highway.git
 Source: %name-%version.tar
 %endif
 
@@ -78,11 +82,11 @@ Documentation for Highway libraries.
 %cmake_build -t test
 
 %files libs
-%_libdir/libhwy.so.1
+%_libdir/libhwy.so.%sover
 %_libdir/libhwy.so.%version
-%_libdir/libhwy_contrib.so.1
+%_libdir/libhwy_contrib.so.%sover
 %_libdir/libhwy_contrib.so.%version
-%_libdir/libhwy_test.so.1
+%_libdir/libhwy_test.so.%sover
 %_libdir/libhwy_test.so.%version
 
 %files devel
@@ -99,6 +103,9 @@ Documentation for Highway libraries.
 %doc g3doc hwy/examples
 
 %changelog
+* Thu Aug 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sat Jun 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
