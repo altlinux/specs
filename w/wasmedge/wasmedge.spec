@@ -14,7 +14,7 @@
 
 %define sover 0
 Name: wasmedge
-Version: 0.14.1
+Version: 0.15.0
 Release: alt1
 Summary: A lightweight, high-performance, and extensible WebAssembly runtime
 License: Apache-2.0
@@ -36,6 +36,7 @@ BuildRequires: lld-devel
 BuildRequires: llvm-devel
 %endif
 %{?!_without_check:%{?!_disable_check:
+BuildRequires: clang
 BuildRequires: wabt
 }}
 
@@ -88,7 +89,9 @@ wasmedgec factorial.wasm fac.wasm
 wasmedge fac.wasm fac 10 | grep 3628800
 wasmedge --enable-all-statistics fac.wasm fac 10 | grep -x '.* Executed wasm instructions count: 0'
 %endif
-ls -la fac*.wasm
+clang --target=wasm32 -nostdlib -o hello.wasm .gear/hello.c
+wasmedge hello.wasm | grep 'hello world'
+ls -la *.wasm
 
 %files
 %doc *.md
@@ -110,5 +113,8 @@ ls -la fac*.wasm
 %_libdir/libwasmedge.so
 
 %changelog
+* Mon Aug 04 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
+- Update to 0.15.0 (2025-08-04).
+
 * Mon May 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.14.1-alt1
 - Experimental import 0.14.1 (2024-09-18).
