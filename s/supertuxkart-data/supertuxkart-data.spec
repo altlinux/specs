@@ -1,6 +1,6 @@
 Name: supertuxkart-data
 Version: 1.5
-Release: alt0.1.beta1
+Release: alt0.2.rc1
 
 License: GPL-3.0-or-later and CC-BY-SA-3.0 and CC-BY-SA-4.0
 Url: http://supertuxkart.sourceforge.net
@@ -46,6 +46,9 @@ rm %buildroot%_datadir/supertuxkart/data/check_licenses.php
 %_datadir/supertuxkart/data
 
 %changelog
+* Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.2.rc1
+- New release-candidate version (1.5-rc1).
+
 * Fri Dec 20 2024 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.1.beta1
 - New beta version (1.5-beta1).
 

@@ -2,18 +2,19 @@
 
 Name: supertuxkart
 Version: 1.5
-Release: alt0.1.beta1
+Release: alt0.2.rc1
 
 Summary: SuperTuxKart is a kart racing game
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Group: Games/Arcade
 Url: https://supertuxkart.sourceforge.net
-Vcs: git://github.com/supertuxkart/stk-code.git
+Vcs: https://github.com/supertuxkart/stk-code
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: %name-%version-src.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 # for aarch64 support
@@ -33,6 +34,7 @@ SuperTuxCart is a kart racing game
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python3|#!%__python3|' \
     $(find ./ -name '*.py')
@@ -47,7 +49,6 @@ sed -i 's|#!/usr/bin/env python|#!%__python3|' \
     -DBUILD_RECORDER=OFF \
     -DCHECK_ASSETS=OFF \
     -DNO_SHADERC=OFF \
-    -DPROJECT_VERSION=%version \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -85,6 +86,9 @@ rm -f %buildroot%_datadir/%name/data/optimize_data.sh
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.2.rc1
+- New release-candidate version 1.5-rc1.
+
 * Fri Dec 20 2024 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.1.beta1
 - New beta version 1.5-beta1.
 - Built with gamerzilla support.
