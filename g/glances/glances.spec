@@ -1,10 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
+%ifarch %e2k
+# uvicorn unavailable on elbrus (due to greenlet)
+%def_without webserver
+%else
 %def_with webserver
+%endif
 
 Name: glances
 Version: 4.3.0.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -129,6 +134,9 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 %endif
 
 %changelog
+* Fri Aug 15 2025 Michael Shigorin <mike@altlinux.org> 4.3.0.8-alt1.2
+- NMU: disable webserver on e2k due to uvicorn being missing
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.3.0.8-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
