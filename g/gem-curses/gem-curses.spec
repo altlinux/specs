@@ -5,14 +5,14 @@
 %define        gemname curses
 
 Name:          gem-curses
-Version:       1.4.6
+Version:       1.5.3
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ruby/curses
 Vcs:           https://github.com/ruby/curses.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
@@ -24,11 +24,11 @@ BuildRequires: gem(rake) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names bench
+Requires:      ruby >= 3.0
 Obsoletes:     ruby-curses < %EVR
 Provides:      ruby-curses = %EVR
-Provides:      gem(curses) = 1.4.6
-
-%ruby_ignore_names bench
+Provides:      gem(curses) = 1.5.3
 
 %description
 A Ruby binding for curses, ncurses, and PDCurses. curses is an extension library
@@ -37,14 +37,14 @@ for text UI applications. Formerly part of the Ruby standard library.
 
 %if_enabled    doc
 %package       -n gem-curses-doc
-Version:       1.4.6
+Version:       1.5.3
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curses
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(curses) = 1.4.6
+Requires:      gem(curses) = 1.5.3
 
 %description   -n gem-curses-doc
 Ruby binding for curses, ncurses, and PDCurses documentation files.
@@ -59,14 +59,14 @@ for text UI applications. Formerly part of the Ruby standard library.
 
 %if_enabled    devel
 %package       -n gem-curses-devel
-Version:       1.4.6
+Version:       1.5.3
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curses
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(curses) = 1.4.6
+Requires:      gem(curses) = 1.5.3
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 
@@ -94,24 +94,27 @@ for text UI applications. Formerly part of the Ruby standard library.
 %ruby_test
 
 %files
-%doc README.md
+%doc COPYING History.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-curses-doc
-%doc README.md
+%doc COPYING History.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-curses-devel
-%doc README.md
+%doc COPYING History.md README.md
 %endif
 
 
 %changelog
+* Fri Aug 15 2025 Pavel Skrylev <majioa@altlinux.org> 1.5.3-alt1
+- ^ 1.4.6 -> 1.5.3
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.4.6-alt1
 - ^ 1.4.4 -> 1.4.6
 
