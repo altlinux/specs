@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.48
+%define ver_major 0.49
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -28,6 +28,7 @@ Source: https://gitlab.gnome.org/guidog/phosh-osk-stub/-/archive/v%version/%name
 %else
 Source: %name-%version%beta.tar
 %endif
+Patch1: stevia-0.49.0-alt-meson.patch
 
 Provides: osk-wayland
 Provides: %binary_name = %EVR
@@ -41,7 +42,7 @@ Provides: phosh-osk-stub = %EVR
 
 Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
-Requires: fzf
+Requires: fzf words
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson
@@ -61,10 +62,11 @@ BuildRequires: pkgconfig(libsystemd) >= %systemd_ver
 # compliters: default -- hunspell
 BuildRequires: pkgconfig(hunspell)
 # https://bugzilla.altlinux.org/54897
-#BuildRequires: fzf pkgconfig(govarnam)
+BuildRequires: fzf
+#BuildRequires: pkgconfig(govarnam)
 %{?_enable_gtk_doc:BuildRequires: gobject-introspection-devel gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
-%{?_enable_check:BuildRequires: at-spi2-core xvfb-run}
+%{?_enable_check:BuildRequires: at-spi2-core xvfb-run words}
 %description
 %{summary}.
 The purpose of Stevia is:
@@ -97,6 +99,7 @@ Features:
 
 %prep
 %setup -n %name-%version%beta
+%patch1
 
 %build
 %meson \
@@ -136,6 +139,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
 - 0.48.0
 

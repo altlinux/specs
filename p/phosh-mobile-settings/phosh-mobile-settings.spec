@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.48
+%define ver_major 0.49
 %define beta %nil
 %define gmobile_ver 0.2.1
 %define rdn_name mobi.phosh.MobileSettings
@@ -57,6 +57,8 @@ BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libportal-gtk4)
+# since 0.49
+BuildRequires: pkgconfig(libcellbroadcast-0.0)
 # for gvc
 BuildRequires: pkgconfig(libpulse)
 %if_enabled embed_gmobile
@@ -104,6 +106,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
 - 0.48.0
 

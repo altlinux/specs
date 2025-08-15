@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.48
+%define ver_major 0.49
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -21,13 +21,15 @@
 %def_enable gtk_doc
 %def_enable vala
 %def_enable man
+# since 0.49, disabled by default
+%def_disable searchd
 # not installed
 %def_disable tools
 %def_disable check
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -200,6 +202,7 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
     %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool searchd searchd} \
     %{subst_enable_meson_bool tools tools} \
     -Dphoc_tests=disabled
 %nil
@@ -262,6 +265,9 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/scaling-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-media-players.so
 %_libdir/%name/plugins/media-players.plugin
+%{?_enable_searchd:
+%_libexecdir/%name-searchd
+%_datadir/dbus-1/services/%rdn_name.Search.service}
 
 %doc NEWS README.md
 
@@ -310,6 +316,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Fri Jul 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1.1
 - applied experimental patch proposed in (ALT #55117)
 

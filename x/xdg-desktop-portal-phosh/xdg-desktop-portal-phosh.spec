@@ -1,12 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.48
+%define ver_major 0.49
 %define beta %nil
+
+%define _name phosh
+# phrosh portal
+%define _name1 phrosh
+%define name1 xdg-desktop-portal-%_name1
 
 %def_enable check
 
-Name: xdg-desktop-portal-phosh
+%def_disable bootstrap
+
+Name: xdg-desktop-portal-%_name
 Version: %ver_major.0
 Release: alt1%beta
 
@@ -22,6 +30,7 @@ Source: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/archive/v%ver
 %else
 Source: %name-%version%beta.tar
 %endif
+Source1: %name-%version%beta-cargo.tar
 
 %define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
@@ -31,7 +40,8 @@ Source: %name-%version%beta.tar
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: meson rust-cargo
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libpfs-0)
 BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
@@ -43,7 +53,11 @@ GTK/GNOME/Phosh to provide interfaces that aren't provided by the GTK
 portal.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version%beta 
+%setup -n %name-%{?_disable_snapshot:v}%version%beta %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+[ -d .cargo ] || mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
 %meson
@@ -59,13 +73,23 @@ portal.
 %files -f %name.lang
 %_libexecdir/%name
 %_desktopdir/%name.desktop
-%_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.phosh.service
-%_datadir/xdg-desktop-portal/portals/phosh.portal
+%_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.%_name.service
+%_datadir/xdg-desktop-portal/portals/%_name.portal
 %_userunitdir/%name.service
+
+%_libexecdir/%name1
+%_desktopdir/%name1.desktop
+%_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.%_name1.service
+%_datadir/xdg-desktop-portal/portals/%_name1.portal
+%_userunitdir/%name1.service
+
 %doc NEWS README*
 
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
 - 0.48.0
 

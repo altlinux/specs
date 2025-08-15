@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.48
+%define ver_major 0.49
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -19,6 +19,8 @@
 
 %def_enable gtk_doc
 %def_enable man
+# disabled by default
+%def_disable sysprof
 %def_disable check
 
 Name: phoc
@@ -78,6 +80,7 @@ BuildRequires: pkgconfig(libliftoff)
 BuildRequires: pkgconfig(lcms2)}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_check:BuildRequires: libgtest-devel xvfb-run mutter-gnome /usr/bin/Xwayland}
 
 %description
@@ -112,7 +115,8 @@ mv gvdb-%gvdb_ver subprojects/gvdb
     %{?_enable_embed_wlroots:--default-library=static} \
     -Ddev-uid=%dev_uid \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
-    %{subst_enable_meson_bool man man}
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_feature sysprof sysprof}
 %nil
 %meson_build
 
@@ -147,6 +151,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.48.0-alt1
 - 0.48.0
 
