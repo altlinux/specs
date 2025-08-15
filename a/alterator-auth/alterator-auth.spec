@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -174,6 +174,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Sat Aug 16 2025 Andrey Limachko <liannnix@altlinux.org> 0.48-alt1
+- system-auth: ad: add fallback for older systemd without
+  hostnamectl -j support
+
 * Mon Aug 11 2025 Andrey Limachko <liannnix@altlinux.org> 0.47-alt1
 - Remove support for deprecated settime-rfc867 service (Closes:
   #55522)
