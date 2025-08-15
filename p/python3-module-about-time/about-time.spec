@@ -4,8 +4,8 @@
 %define mod_name about_time
 
 Name: python3-module-%pypi_name
-Version: 4.2.1
-Release: alt2
+Version: 4.2.2
+Release: alt1
 
 Summary: A cool helper for tracking time and throughput of code blocks
 License: MIT
@@ -51,8 +51,6 @@ I have the solution, behold!
 
 %install
 %pyproject_install
-# Remove wrongly installed LICENSE
-rm %buildroot/%_usr/LICENSE
 
 %check
 %pyproject_run_pytest
@@ -63,6 +61,9 @@ rm %buildroot/%_usr/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Aug 15 2025 Alexander Kuznetov <kuznetsovam@altlinux.org> 4.2.2-alt1
+- Update to version 4.2.2.
+
 * Tue Mar 12 2024 Alexander Kuznetov <kuznetsovam@altlinux.org> 4.2.1-alt2
 - Add setuptools BR.
 
