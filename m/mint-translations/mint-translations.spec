@@ -1,5 +1,5 @@
 Name:    mint-translations
-Version: 2025.01.06
+Version: 2025.07.31
 Release: alt1
 
 License: GPL-2.0+ and MIT
@@ -33,6 +33,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Aug 15 2025 Andrey Cherepanov <cas@altlinux.org> 2025.07.31-alt1
+- new version 2025.07.31 (thanks felixz@).
+
 * Thu Jan 09 2025 Kirill Izmestev <felixz@altlinux.org> 2025.01.06-alt1
 - new version 2025.01.06
 
