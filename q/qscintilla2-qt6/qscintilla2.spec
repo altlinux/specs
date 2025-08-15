@@ -6,7 +6,7 @@
 
 Name: qscintilla2-qt6
 Version: 2.14.1
-Release: alt2
+Release: alt3
 
 Summary: QScintilla is a port to Qt6 of Neil Hodgson's Scintilla C++ editor class
 
@@ -109,8 +109,8 @@ Documentation for %oname
 %build
 
 %ifarch %e2k
-# bits/c++0x_warning.h
-%add_optflags -std=gnu++11
+# error: "Qt requires a C++17 compiler"
+%add_optflags -std=gnu++17
 %endif
 
 pushd src
@@ -220,6 +220,9 @@ cp ChangeLog NEWS LICENSE %buildroot%_docdir/%libname-%version
 %endif
 
 %changelog
+* Fri Aug 15 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.14.1-alt3
+- e2k build fix
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 2.14.1-alt2
 - NMU: fix package with Qt-6.9
 
