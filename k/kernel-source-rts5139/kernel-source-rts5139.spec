@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	rts5139
 %define module_version  1.05
-%define git fde2d2b
+%define git 8093764
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Realtek RTS5139/29 USB card reader driver
 License: GPL-3
@@ -56,6 +56,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_sysconfdir/modprobe.d/blacklist-%{module_name}.conf
 
 %changelog
+* Fri Aug 15 2025 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt2.g8093764
+- GIT 8093764.
+
 * Mon Jun 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt1.gfde2d2b
 - Initial build for ALTLinux.
 
