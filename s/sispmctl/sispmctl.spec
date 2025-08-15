@@ -1,6 +1,6 @@
 Name: sispmctl
-Version: 4.9
-Release: alt2
+Version: 4.12
+Release: alt1
 
 Summary: Gembird Silver Shield PM USB PDU control
 License: GPLv2+
@@ -14,6 +14,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Fri Sep 23 2011
 BuildRequires: libusb-compat-devel
+
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %description
 SIS-PM Control for Linux aka sispmctl is an application
@@ -37,8 +39,6 @@ See also egctl package for Gembird's LAN/WLAN PDU support.
 install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/74-sispmctl.rules
 rm -rf %buildroot%_defaultdocdir/%name
 
-rm -fv %buildroot%_libdir/*.a
-
 %pre
 %_sbindir/groupadd -r -f _sispm >/dev/null 2>&1
 
@@ -57,6 +57,16 @@ rm -fv %buildroot%_libdir/*.a
 # - darktemplar@ for explaining me a silly lapse with the shared library
 
 %changelog
+* Sat May 04 2024 Michael Shigorin <mike@altlinux.org> 4.12-alt1
+- new version (watch file uupdate)
+
+* Fri Jul 07 2023 Michael Shigorin <mike@altlinux.org> 4.11-alt1
+- new version (watch file uupdate)
+
+* Thu Dec 22 2022 Michael Shigorin <mike@altlinux.org> 4.10-alt1
+- new version (watch file uupdate)
+- LTO related ftbfs workaround
+
 * Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 4.9-alt2
 - fixed FTBFS.
 
