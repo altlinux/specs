@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 12.7.1
 %global import_path github.com/pouriyajamshidi/tcping
+%global debug_package %nil
 
 Name: tcping
 Version: 2.7.1
-Release: alt1
+Release: alt2
 Summary: Ping TCP ports using tcping. Inspired by Linux's ping utility. Written in Go
 License: MIT
 Group: Networking/Other
@@ -12,6 +13,7 @@ Url: https://github.com/pouriyajamshidi/tcping
 Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
+Patch1: alt-remove-seconds.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -43,7 +45,7 @@ would be illustrative enough.
 
 %prep
 %setup -a 1
-%patch -p1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -66,10 +68,13 @@ mkdir -p %buildroot%_datadir/%name
 %make test
 
 %files
-%doc README.md SECURITY.md README.cn.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
+%doc *.md
 %_bindir/%name
 
 %changelog
+* Fri Aug 15 2025 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt2
+- Fix flaky TestSaveHostname by stabilizing time-dependent table name generation
+
 * Tue May 06 2025 Pavel Shilov <zerospirit@altlinux.org> 2.7.1-alt1
 - Initial build for Sisyphus.
 
