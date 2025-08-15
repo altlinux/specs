@@ -2,10 +2,10 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -612,6 +612,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Aug 15 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.1-alt1
+- v6.16.1 (2025-08-15).
+- kiosk: add secureexec parameter.
+- config: Enable CONFIG_X86_USER_SHADOW_STACK=y.
+- config-aarch64: CONFIG_SUN50I_H6_PRCM_PPU=m.
+- config-aarch64: enable more configs to improve Sunxi SoCs support.
+
 * Sun Jul 27 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt1
 - Update to v6.16 (2025-07-27) release.
 - config: Enable CONFIG_MTK_T7XX=m.
