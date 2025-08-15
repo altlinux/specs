@@ -2,17 +2,19 @@
 
 Name: deepin-tweak
 Version: 1.2.2.0.17.6a00
-Release: alt2
+Release: alt2.1
 
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
 
 License: LGPL-3.0+
 Group: System/Configuration/Other
-Url: https://github.com/linuxdeepin/dtkdeclarative
+Url: https://github.com/linuxdeepin/deepin-tweak
+VCS: https://github.com/linuxdeepin/deepin-tweak
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-tweak-1.1.0-alt-fix-undefined-elfs.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-tweak-1.1.0-alt-fix-undefined-elfs.patch
 
 # dtkdeclarative doesn't built for armh
 ExcludeArch: armh
@@ -38,7 +40,8 @@ Deepin Tweak - это продвинутый инструмент настрой
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
@@ -79,6 +82,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/%name/lib%{name}*.so
 
 %changelog
+* Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.17.6a00-alt2.1
+- Fixed url tag.
+- Added VCS tag.
+
 * Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.17.6a00-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
