@@ -3,7 +3,7 @@
 %def_with check
 
 Name: tlrc
-Version: 1.9.3
+Version: 1.11.1
 Release: alt1
 
 Summary: A tldr client written in Rust
@@ -13,6 +13,8 @@ Url: https://tldr.sh/tlrc
 Vcs: https://github.com/tldr-pages/tlrc
 
 Source: %name-%version.tar
+# prepare using
+# $ cargo-vendor-alt --exclude-crate-path '*#tests'
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
@@ -25,14 +27,7 @@ Conflicts: python3-module-tldr tealdeer
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -59,6 +54,9 @@ install -Dpm 644 tldr.1 %buildroot%_man1dir/
 %_man1dir/tldr.*
 
 %changelog
+* Thu Aug 14 2025 Alexander Stepchenko <geochip@altlinux.org> 1.11.1-alt1
+- Update to 1.11.1.
+
 * Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.9.3-alt1
 - 1.9.2 -> 1.9.3
 
