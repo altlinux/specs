@@ -9,7 +9,7 @@
 %define abiversion 1
 Name: libfido2
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: Library functionality to communicate with a FIDO device over USB
 License: BSD-2-Clause
@@ -71,6 +71,7 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %endif
 %cmake \
     -DBUILD_STATIC_LIBS=OFF \
+    -DUDEV_RULES_DIR=%_udevrulesdir \
 %if_without check
     -DBUILD_TESTS=OFF \
 %endif
@@ -87,6 +88,7 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %doc LICENSE NEWS
 %_libdir/%name.so.%abiversion
 %_libdir/%name.so.%version
+%_udevrulesdir/70-u2f.rules
 
 %files tools
 %_bindir/*
@@ -99,6 +101,9 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %_man3dir/*
 
 %changelog
+* Fri Aug 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt2
+- Shipped udev-rules for FIDO devices.
+
 * Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt1
 - Updated to 1.16.0.
 - Followed Shared Libs Policy.
