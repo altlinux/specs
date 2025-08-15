@@ -1,5 +1,5 @@
 Name: hyprland-per-window-layout
-Version: 2.14
+Version: 2.15
 Release: alt1
 Summary: Hyprland per window layout
 License: MIT
@@ -9,26 +9,15 @@ Url: https://aur.archlinux.org/packages/hyprland-per-window-layout
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 
 %description
 Per window keyboard layout (language) for Hyprland wayland compositor.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[profile.release]
-debug = true
-strip = false
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -41,6 +30,9 @@ EOF
 %doc LICENSE
 
 %changelog
+* Thu Aug 14 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.15-alt1
+- Updated to version 2.15.
+
 * Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.14-alt1
 - Updated to version 2.14.
 
