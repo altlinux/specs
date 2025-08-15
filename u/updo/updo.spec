@@ -1,7 +1,7 @@
 %global import_path github.com/Owloops/updo
 
 Name: updo
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Uptime monitoring CLI tool
@@ -57,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri Aug 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1
+
 * Tue Aug 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.0-alt1
 - 0.3.8 -> 0.4.0
 
