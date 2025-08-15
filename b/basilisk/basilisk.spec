@@ -1,9 +1,9 @@
-%define git_commit 2d1e692
+%define git_commit 57a539a
 
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version 2025.02.22
+%define vendor_version 2025.07.04
 
 Name: basilisk
 Version:  %vendor_version
@@ -351,6 +351,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Wed Aug 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1:2025.07.04-alt1
+- Update to v2025.07.04
+
 * Sun Apr 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1:2025.02.22-alt1
 - Update to v2025.02.22
 
