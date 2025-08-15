@@ -21,7 +21,7 @@
 %define git_date 18.11.2024
 
 Name:    freecad
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -321,6 +321,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Wed Aug 06 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.2-alt1
+- New version.
+
 * Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.1-alt1
 - New version.
 
