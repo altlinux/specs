@@ -1,7 +1,7 @@
 %define pypi_name tracerite
 
 Name:    python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.1.3
 Release: alt1
 
 Summary: Tracebacks for Humans (in Jupyter notebooks)
@@ -35,5 +35,8 @@ mv ./%pypi_name/style.css %buildroot%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%pypi_name-0.0.0.dist-info/
 
 %changelog
+* Wed Aug 13 2025 Alexander Burmatov <thatman@altlinux.org> 1.1.3-alt1
+- New 1.1.3 version.
+
 * Sat Jul 20 2024 Alexander Burmatov <thatman@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus.

@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.8
+Version: 6.0.1
 Release: alt1
 
 Summary: Wrapper around re or regex that adds additional back references
@@ -50,5 +50,8 @@ for some.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 13 2025 Alexander Burmatov <thatman@altlinux.org> 6.0.1-alt1
+- New 6.0.1 version.
+
 * Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 5.8-alt1
 - Initial build for Sisyphus.
