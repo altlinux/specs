@@ -1,5 +1,5 @@
 Name: xfce4-screensaver
-Version: 4.20.0
+Version: 4.20.1
 Release: alt1
 
 Summary: Screen saver and locker for Xfce
@@ -54,7 +54,6 @@ and the Xfconf configuration backend.
 	-Dauthentication-scheme=pam \
 	-Dpam-auth-type=system \
 	-Dsession-manager=systemd \
-	-Dlocking=true \
 	-Ddocs=enabled
 
 %meson_build -v
@@ -80,6 +79,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Fri Aug 15 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
+- 4.20.0 -> 4.20.1.
+
 * Mon Jul 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Switched to meson build.
 - 4.18.4 -> 4.20.0.
