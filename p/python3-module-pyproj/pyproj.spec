@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 Summary: Python interface to PROJ
 License: MIT
@@ -38,6 +38,8 @@ transformations library)
 %prep
 %setup
 
+sed -i '/"freethreading_compatible": True,/d' setup.py
+
 %build
 %add_optflags -fno-strict-aliasing
 export PROJ_DIR="%_usr/"
@@ -67,6 +69,9 @@ py.test-3 -m "not network"
 
 
 %changelog
+* Fri Aug 15 2025 Anton Vyatkin <toni@altlinux.org> 3.7.2-alt1
+- New version 3.7.2.
+
 * Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 3.7.1-alt1
 - New version 3.7.1.
 
