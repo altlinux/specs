@@ -2,7 +2,7 @@ Name: kernel-image-6.15
 Release: alt1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.15
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Aug 15 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.10-alt1
+- v6.15.10 (2025-08-15).
+- kiosk: add secureexec parameter.
+- config: Enable CONFIG_X86_USER_SHADOW_STACK=y.
+- config-aarch64: enable more configs to improve Sunxi SoCs support.
+
 * Fri Aug 01 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.9-alt1
 - v6.15.9 (2025-08-01).
 - config: Enable CONFIG_MTK_T7XX=m.
