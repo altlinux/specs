@@ -3,7 +3,7 @@
 
 Name: adguardhome
 Version: 0.108.0
-Release: alt1.beta69
+Release: alt1.beta74
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
@@ -15,9 +15,13 @@ Source1: vendor.tar
 Source2: node_modules.tar
 Source3: .twosky.json
 Source4: %name.service
+Patch: alt-drop-unused-import.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+# idle time limit exceeded
+ExcludeArch: i586
+
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: npm
 BuildRequires: node-cross-env
 BuildRequires: node-cross-spawn
@@ -31,6 +35,7 @@ Free and open source, powerful network-wide ads & trackers blocking DNS server.
 # npm --prefix client ci
 # git add client/node_modules -f && git commit -m "Updated node modules."
 %setup -a 1 -a 2
+%patch -p1
 
 %build
 export GO111MODULE=on
@@ -51,7 +56,7 @@ cd .gopath/src/%import_path
 go build --ldflags "\
          -X %import_path/internal/version.version=%version \
          -X %import_path/internal/version.channel=release" \
-         --race=0 --tags= -o=%name -v=0 -x=0
+         -o=%name
 
 %install
 mkdir -p %buildroot%_bindir \
@@ -75,6 +80,10 @@ touch %buildroot%_sysconfdir/%name.yaml
 %ghost %config(noreplace) %_sysconfdir/%name.yaml
 
 %changelog
+* Thu Aug 14 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta74
+- Updated to version 0.108.0-b.74.
+- Excluded i586 arch (idle time limit exceeded).
+
 * Wed May 07 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta69
 - Updated to version 0.108.0-b.69.
 
