@@ -2,7 +2,7 @@
 %define nameL org.kde.kjournaldbrowser
 
 Name: kjournald
-Version: 25.07.70
+Version: 25.08.0
 Release: alt1
 
 Summary: Framework for interacting with systemd-journald
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules qt6-base-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kcrash-devel kf6-ki18n-devel pkgconfig(Qt6Qml) libsystemd-devel
+BuildRequires: kf6-kconfig-devel kf6-kirigami-devel kf6-kirigami-addons-devel
 
 %description
 %summary
@@ -44,5 +45,8 @@ BuildRequires: kf6-kcrash-devel kf6-ki18n-devel pkgconfig(Qt6Qml) libsystemd-dev
 %_datadir/qlogging-categories6/%name.categories
 
 %changelog
+* Fri Aug 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 25.08.0-alt1
+- 25.07.70 -> 25.08.0
+
 * Mon Apr 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 25.07.70-alt1
 - Initial build for ALT Linux (git.60ace7dc).
