@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.7
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,12 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Aug 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt4
+- Convert HOST SPN prefix during syncing of machine password to keytab to
+  lowercase for client compatibility.
+- Major backport fixes from upstream (Samba#15891):
+ + Resolve dc name using CLDAP also for ROLE_IPA_DC.
+
 * Sun Jul 27 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt3
 - Fix keytab sync regression for domain controllers (closes: 55111)
 - Backport fixes from upstream (Samba#15863, Samba#15840):
