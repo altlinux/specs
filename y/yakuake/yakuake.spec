@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    yakuake
-Version: 25.04.3
+Version: 25.08.0
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -84,6 +84,9 @@ This version is built with KF5.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Aug 16 2025 Andrey Cherepanov <cas@altlinux.org> 25.08.0-alt1
+- New version.
+
 * Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 25.04.3-alt1
 - New version.
 
