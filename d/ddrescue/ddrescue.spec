@@ -2,7 +2,7 @@
 
 Name: ddrescue
 Version: 1.29.1
-Release: alt2
+Release: alt3
 
 Summary: Data copying in presence of I/O errors
 License: GPLv2+
@@ -43,13 +43,15 @@ This package contains statically built ddrescue utility.
 %setup
 
 %build
-./configure --prefix=%_prefix --infodir=%_infodir --mandir=%_mandir
+%configure
 %make_build CXXFLAGS="%optflags %optflags_nocpp" all %{?_with_static:sddrescue}
-make check
 
 %install
 %makeinstall_std install-man
 %{?_with_static: install -pDm755 sddrescue %buildroot/bin/sddrescue}
+
+%check
+make check
 
 %files
 %_bindir/ddrescue
@@ -64,6 +66,10 @@ make check
 %endif
 
 %changelog
+* Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.29.1-alt3
+- separate %%check
+- use %%configure macro
+
 * Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.29.1-alt2
 - fix License: (thx upstream)
 

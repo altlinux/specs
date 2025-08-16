@@ -1,6 +1,6 @@
 Name: lzip
 Version: 1.25
-Release: alt2
+Release: alt3
 
 Summary: LZMA file compressor
 License: GPLv2+
@@ -42,13 +42,15 @@ kontekstów w zależności od wykorzystania bitów.
 %setup
 sed -i 's,@dircategory Data Compression,@dircategory File utilities,' doc/lzip.texi
 
-
 %build
 %configure
-make all info
+%make_build all info
 
 %install
 %makeinstall_std install-man
+
+%check
+make check
 
 %files
 %doc AUTHORS ChangeLog NEWS README
@@ -57,6 +59,10 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt3
+- added %%check
+- parallel build
+
 * Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt2
 - fix License: (thx upstream)
 

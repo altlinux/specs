@@ -1,6 +1,6 @@
 Name: lzlib
 Version: 1.15
-Release: alt2
+Release: alt3
 
 Summary: Provides in-memory LZMA (de)compression functions
 License: BSD-2-Clause
@@ -31,13 +31,15 @@ which will use the %name library.
 
 %build
 sed -i 's/ ldconfig/ true/' Makefile.in
-./configure --prefix=%_usr --libdir=%_libdir --enable-shared CFLAGS="%optflags"
+%configure --enable-shared CFLAGS="%optflags"
 %make_build
-make check
 
 %install
 %makeinstall_std
 rm -fv %buildroot%_libdir/*.a
+
+%check
+make check
 
 %files
 %_libdir/lib*.so.*
@@ -48,6 +50,10 @@ rm -fv %buildroot%_libdir/*.a
 %_infodir/*.info*
 
 %changelog
+* Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt3
+- separate %%check
+- use %%configure macro
+
 * Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt2
 - fix License: (thx upstream)
 

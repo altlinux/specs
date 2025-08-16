@@ -1,6 +1,6 @@
 Name: lziprecover
 Version: 1.25
-Release: alt2
+Release: alt3
 
 Summary: LZMA compressed file recovery
 License: GPLv2+
@@ -27,10 +27,13 @@ This package contains the recovery utility for LZMA archives.
 
 %build
 %configure
-make all info
+%make_build all info
 
 %install
 %makeinstall_std install-man
+
+%check
+make check
 
 %files
 %doc AUTHORS ChangeLog NEWS README
@@ -39,6 +42,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt3
+- added %%check
+
 * Wed Aug 13 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt2
 - fix License: (thx upstream)
 
