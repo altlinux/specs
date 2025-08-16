@@ -3,7 +3,7 @@
 
 Name: plasma-applet-kde-mymemory-translator
 Version: 0.6.9
-Release: alt2
+Release: alt3
 
 Summary: Mymemory translator
 License: GPL-3.0-or-later
@@ -15,11 +15,6 @@ Vcs: https://store.kde.org/p/2272210/
 Source0: %name-%version.tar
 Source1: ru.po
 
-Patch0: metadata-0.6.7-alt-fixes.patch
-Patch1: Languages-0.6.7-alt-fixes.patch
-Patch2: GeneralConfig-0.6.7-alt-fixes.patch
-Patch3: FullRepresentation-0.6.7-alt-fixes.patch
-
 BuildArch: noarch
 
 BuildRequires: gettext-tools
@@ -29,8 +24,6 @@ Simple plasmoid that provides translation using the mymemory translated api
 
 %prep
 %setup
-
-%autopatch -p0
 
 rm -r %nameL/metadata.desktop
 rm -r %nameL/contents/locale
@@ -45,16 +38,21 @@ rm -r %nameL/contents/ui/components/GetAPI.qml
 mkdir -p %buildroot%_datadir/plasma/plasmoids/%nameL
 mv %nameL %buildroot%_datadir/plasma/plasmoids/
 
-for locale in es fr hi ru ja ko nl pt zh_CN zh_TW; do
+for locale in es fr hi it ru ja ko nl pt zh_CN zh_TW; do
  msgfmt translate/${locale}.po -o translate/${locale}.mo
  install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
-%files
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
 %_datadir/plasma/plasmoids/%nameL/*
 %_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 
 %changelog
+* Sat Aug 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt3
+- new locale added
+
 * Wed Jul 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt2
 - new locales added
 
