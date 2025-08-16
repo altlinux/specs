@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -195,6 +195,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Sat Aug 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Wed Jul 09 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

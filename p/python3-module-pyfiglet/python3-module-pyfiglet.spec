@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Python port of FIGlet
@@ -11,10 +11,11 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/%pypi_name
 
+Vcs: https://github.com/pwaller/pyfiglet.git
+
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/peterbrittain/asciimatics.git
 Source: %pypi_name-%version.tar
 %endif
 
@@ -48,6 +49,9 @@ py.test3
 %doc README*
 
 %changelog
+* Sat Aug 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
