@@ -1,6 +1,6 @@
 Name: setserial
 Version: 2.17
-Release: alt2.qa1
+Release: alt3
 Epoch: 1
 
 Summary: A utility for configuring serial ports
@@ -9,15 +9,17 @@ Group: System/Configuration/Hardware
 
 Url: http://setserial.sourceforge.net
 Source: %name-%version.tar.bz2
-Patch0: setserial-2.17-error.diff
-Patch1: setserial-2.17-spelling.patch
-Patch2: setserial-2.17-alt-kheaders.patch
+Patch0: %name-2.17-error.diff
+Patch1: %name-2.17-spelling.patch
+Patch2: %name-2.17-alt-kheaders.patch
+# https://sourceforge.net/p/setserial/discussion/7060/thread/95d874c12c/?limit=25#58ba
+Patch3: %name-2.17-alt-headers-fix.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat May 03 2008
 BuildRequires: groff-base
 
-Summary(ru_RU.KOI8-R): Утилита для настройки последовательных портов
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ п╫п╟я│я┌я─п╬п╧п╨п╦ п©п╬я│п╩п╣п╢п╬п╡п╟я┌п╣п╩я▄п╫я▀я┘ п©п╬я─я┌п╬п╡
 
 %description
 Setserial is a basic system utility for displaying or setting
@@ -33,9 +35,11 @@ for detecting and/or altering device information.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 
 %build
 rm -f config.cache
+%autoreconf
 %configure
 
 %ifarch %ix86
@@ -54,6 +58,9 @@ install -pDm644 %name.8 %buildroot%_man8dir/%name.8
 %doc README rc.serial
 
 %changelog
+* Sat Aug 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2.17-alt3
+- NMU: fix FTBFS.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:2.17-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
