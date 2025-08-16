@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.5.6
-Release: alt1
+Release: alt1.1
 BuildArch: noarch
 Source:%name-%version.tar
 Summary: alterator module to control ports access
@@ -52,6 +52,9 @@ Command line part of alterator module to control serial/USB ports access
 %config(noreplace) %_sysconfdir/alterator-ports-access.conf
 
 %changelog
+* Sat Aug 16 2025 L.A. Kostis <lakostis@altlinux.ru> 0.5.6-alt1.1
+- NMU: alterator-ports-access: adjust setserial path after usrmerge.
+
 * Tue Nov 14 2023 Paul Wolneykien <manowar@altlinux.org> 0.5.6-alt1
 - Fix: Apply changes without need to re-plug the device by
   recursively triggering USB "change" events on authorized devices.

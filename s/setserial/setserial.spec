@@ -1,10 +1,10 @@
 Name: setserial
 Version: 2.17
-Release: alt3
+Release: alt3.1
 Epoch: 1
 
 Summary: A utility for configuring serial ports
-License: GPL
+License: GPL-2.0
 Group: System/Configuration/Hardware
 
 Url: http://setserial.sourceforge.net
@@ -49,15 +49,21 @@ rm -f config.cache
 %endif
 
 %install
-install -pDm755 %name %buildroot/bin/%name
+install -pDm755 %name %buildroot/%_bindir/%name
 install -pDm644 %name.8 %buildroot%_man8dir/%name.8
 
 %files
-/bin/*
-%_mandir/man?/*
+%_bindir/%name
+%_man8dir/%name.*
 %doc README rc.serial
 
 %changelog
+* Sat Aug 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2.17-alt3.1
+- Small fixes:
+  + adjust bindir after usrmerge.
+  + use macros for man
+  + define License.
+
 * Sat Aug 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2.17-alt3
 - NMU: fix FTBFS.
 
