@@ -6,8 +6,8 @@
 %def_enable docs
 
 Name: libcomps
-Version: 0.1.21
-Release: alt2
+Version: 0.1.22
+Release: alt1
 
 Summary: Comps XML file manipulation library
 
@@ -25,10 +25,6 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(check)
 BuildRequires: pkgconfig(expat)
 BuildRequires: ccmake cmake ctest
-
-Patch0: pycopy-0.1.21-alt-build.patch
-Patch1: CMakeLists_test-0.1.21-alt-build.patch
-Patch2: CMakeLists_py-0.1.21-alt-build.patch
 
 %description
 Libcomps is library for structure-like manipulation with content of
@@ -91,11 +87,6 @@ Python3 bindings for libcomps library.
 # Fix build with sphinx 1.8.3
 sed -i -e 's,sphinx.ext.pngmath,sphinx.ext.imgmath,' libcomps/src/python/docs/doc-sources/conf.py.in
 
-# fixed FTBFS
-subst "s|VERSION 2.8.10|VERSION 3.5|" libcomps/CMakeLists.txt
-
-%autopatch -p1
-
 %build
 %cmake %{?_enable_%{docs}:-DSPHINX_EXECUTABLE="%_bindir/sphinx-build-3"} ./libcomps/
 %cmake_build
@@ -133,6 +124,9 @@ sphinx-build-3  %name/src/python/docs/doc-sources html
 %python3_sitelibdir/%name/
 
 %changelog
+* Sat Aug 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.22-alt1
+- 0.1.21 -> 0.1.22
+
 * Fri Jul 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.21-alt2
 - spec cleanup
 
