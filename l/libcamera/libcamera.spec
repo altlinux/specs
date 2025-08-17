@@ -1,12 +1,14 @@
 %define _libexecdir %_prefix/libexec
 
-%def_enable qcam
 %def_enable test
+%def_enable cam
+%def_enable lc_compliance
+%def_enable qcam
 %def_disable check
 
 Name: libcamera
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -49,32 +51,43 @@ BuildRequires: pkgconfig(Qt6Widgets)
 %endif
 %{?_enable_test:BuildRequires: pkgconfig(gtest)}
 
+%description
+An open source camera stack and framework for Linux, Android, and ChromeOS.
+
 %package -n gst-plugins-%{name}1.0
 Summary: A complex camera support library for Linux
 Group: System/Libraries
-
-%package -n qcam
-Summary: A complex camera support library for Linux
-Group: Video
-
-%package devel
-Summary: A complex camera support library for Linux
-Group: Development/C
-
-%description
-An open source camera stack and framework for Linux, Android, and ChromeOS.
+Requires: %name = %EVR
 
 %description -n gst-plugins-%{name}1.0
 An open source camera stack and framework for Linux, Android, and ChromeOS.
 This package contains libcamera gstreamer plugin.
 
+%package -n qcam
+Summary: A complex camera support library for Linux
+Group: Video
+Requires: %name = %EVR
+
 %description -n qcam
 An open source camera stack and framework for Linux, Android, and ChromeOS.
 This package contains Qt-based libcamera utility.
 
+%package devel
+Summary: A complex camera support library for Linux
+Group: Development/C
+Requires: %name = %EVR
+
 %description devel
 An open source camera stack and framework for Linux, Android, and ChromeOS.
 This package contains development part of libcamera.
+
+%package test-apps
+Summary: Test applications from libcamera
+Group: Video
+Requires: %name = %EVR
+
+%description test-apps
+This package provides "cam" and "lc_compliance" test apps from libcamera.
 
 %prep
 %setup
@@ -98,7 +111,10 @@ sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcamerapr
     -Dpipelines=%platdefs \
     -Dv4l2=true \
     -Dwerror=false \
-    %{subst_enable_meson_bool test test}
+    %{subst_enable_meson_bool test test} \
+    %{subst_enable_meson_feature cam cam} \
+    %{subst_enable_meson_feature lc_compliance lc-compliance} \
+    %{subst_enable_meson_feature qcam qcam}
 %nil
 %meson_build
 
@@ -110,9 +126,7 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %__meson_test -v
 
 %files
-%_bindir/cam
-%{?_enable_test:%_bindir/lc-compliance
-%_libexecdir/%name/vimc_ipa_proxy}
+%{?_enable_test:%_libexecdir/%name/vimc_ipa_proxy}
 %_bindir/libcamerify
 %ifarch %ix86 x86_64
 %_libexecdir/%name/ipu3_ipa_proxy
@@ -148,7 +162,18 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name-base.pc
 %_pkgconfigdir/%name.pc
 
+%files test-apps
+%{?_enable_cam:%_bindir/cam}
+%{?_enable_lc_compliance:%_bindir/lc-compliance}
+
+
 %changelog
+* Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.2-alt1
+- updated to v0.5.2-9-gaf43c2f9
+
+* Mon Jul 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.1-alt2.1
+- moved /usr/bin/{cam,lc_compliance} to separate -test-apps subpackage (ALT #55286)
+
 * Tue Jul 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.5.1-alt2
 - fix e2k build
 
