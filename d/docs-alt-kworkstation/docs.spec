@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Sun Aug 17 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
+- add etcnet, TPM2.0
+- typo fixes
+
 * Tue Jul 29 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
 - update to ALT Kworkstation 11.1RC2
 - functional: add virtualbox
