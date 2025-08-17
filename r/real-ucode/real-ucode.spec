@@ -1,0 +1,107 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+
+Name: real-ucode
+Version: 20250813
+Release: alt1
+Summary: Actually provides the latest CPU microcode for AMD and Intel
+License: Redistributable, no modification permitted
+Group: System/Kernel and hardware
+Url: https://github.com/divestedcg/real-ucode/
+
+Source: %name-%version.tar
+BuildArch: noarch
+
+%define disclaimer %{expand:
+DISCLAIMER: All the microcodes below come only from official BIOS/UEFI updates,
+Intel/AMD Linux Microcode Updates, Linux Distributions, Windows Updates etc
+which were provided and made public by various manufacturers.
+
+It is generally advised to request and/or wait for your OEM to release newer
+fixes. Latest is not always better or tested! Manufacturers usually have some
+insider/confidential info from microcode vendors on what got changed/fixed at
+newer microcode releases so if they ship older microcodes, it could be that
+newer versions have not been thoroughly tested, have been retracted/downgraded
+by the microcode vendor or not contain anything important enough to warrant an
+update. The microcodes here are gathered and provided with the sole purpose of
+helping people who are out of other viable solutions. Thus, they can be
+extremely helpful to those who have major problems with their systems for which
+their manufacturer refuses to assist due to indifference and/or system age.
+}
+
+%description
+Please see the README for details.
+The actual microcodes are from https://github.com/platomav/CPUMicrocodes
+
+%package -n firmware-amd-real-ucode
+Summary: Latest microcode for AMD
+Group: System/Kernel and hardware
+RemovePathPostfixes: .official
+
+# Kernel filters patch ID in arch/x86/kernel/cpu/microcode/amd_shas.c
+%define amd_sha_check_note \
+NOTE: You will need to add microcode.amd_sha_check=off to the kernel command \
+line for the new microcode to be loadable. This will taint the kernel. \
+Verify the dmesg that the new microcode is loaded correctly.
+
+%description -n firmware-amd-real-ucode
+Microcode updates for AMD CPUs (for new BIOS). If it's not loadable on old
+BIOS you may try to install firmware-amd-real-ucode-resigned.
+
+%amd_sha_check_note
+
+%disclaimer
+
+%package -n firmware-amd-real-ucode-resigned
+Summary: Latest microcode for AMD, resigned
+Group: System/Kernel and hardware
+RemovePathPostfixes: .resigned
+Conflicts: firmware-amd-real-ucode
+
+%description -n firmware-amd-real-ucode-resigned
+After the recent AMD microcode signature verification vulnerability
+(CVE-2024-56161), microcode dated after 2024-11 will fail to load on pre
+2025-01 BIOS! The vulnerability can be utilized to resign new ucodes for the
+old loaders.
+
+This is microcode updates for AMD CPUs, resigned for vulnerable old loaders.
+
+%amd_sha_check_note
+
+%disclaimer
+
+%package -n firmware-intel-real-ucode
+Summary: Latest microcode for Intel
+Group: System/Kernel and hardware
+
+%description -n firmware-intel-real-ucode
+Microcode updates for Intel CPUs.
+
+%disclaimer
+
+%prep
+%setup
+
+%install
+install -Dm644 microcode/amd-ucode/*   -t %buildroot/lib/firmware/updates/amd-ucode
+install -Dm644 microcode/intel-ucode/* -t %buildroot/lib/firmware/updates/intel-ucode
+
+%files -n firmware-amd-real-ucode
+%doc LICENSE LICENSE.amd-ucode README.md index-amd-official.txt index-amd.txt
+%dir /lib/firmware/updates/amd-ucode
+/lib/firmware/updates/amd-ucode/LICENSE.amd-ucode
+/lib/firmware/updates/amd-ucode/*.bin.official
+
+%files -n firmware-amd-real-ucode-resigned
+%doc LICENSE LICENSE.amd-ucode README.md index-amd-official.txt index-amd.txt
+%dir /lib/firmware/updates/amd-ucode
+/lib/firmware/updates/amd-ucode/LICENSE.amd-ucode
+/lib/firmware/updates/amd-ucode/*.bin.resigned
+
+%files -n firmware-intel-real-ucode
+%doc LICENSE LICENSE.intel-ucode README.md index-intel-official.txt index-intel.txt
+/lib/firmware/updates/intel-ucode
+
+%changelog
+* Thu Aug 14 2025 Vitaly Chikunov <vt@altlinux.org> 20250813-alt1
+- First import e53b04e (2025-08-13).
