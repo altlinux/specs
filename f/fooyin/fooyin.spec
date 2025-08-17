@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.8.1
-Release: alt3
+Version: 0.9.0
+Release: alt1
 
 Summary: Music player built around customisation
 License: GPL-3.0
@@ -12,7 +12,6 @@ Vcs: https://github.com/fooyin/fooyin.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-change-libdir.patch
-Patch1: %name-%version-alt-qt69-build-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -53,6 +52,7 @@ deeper level of control.
 %install
 %cmake_install
 %find_lang %name --with-qt
+echo '%%lang(zh) %_datadir/%name/translations/fooyin_zh_Hant.qm' >> %name.lang
 
 # Remove development libraries
 rm -fv %buildroot%_libdir/libfooyin*.so
@@ -72,6 +72,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Sun Aug 17 2025 Anton Kurachenko <srebrov@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Wed Jun 11 2025 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt3
 - Fixed FTBFS with Qt-6.9.
 
