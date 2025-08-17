@@ -4,9 +4,9 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.8.0
+Version: 33.8.1.2
 
-Release: alt2
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -126,7 +126,7 @@ BuildPreReq: autoconf_%_autoconf_version
 
 BuildRequires: libhunspell-devel
 # BuildRequires: wayland-devel libwaylandpp-devel libwayland-egl-devel libEGL-devel
- 
+
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
@@ -146,11 +146,11 @@ Provides: webclient
 
 Conflicts: %bname < 31.0.0
 
-# Requires: gst-plugins-bad1.0 
-# Requires: gst-plugins-good1.0 
-# Requires: gst-plugins-ugly1.0 
+# Requires: gst-plugins-bad1.0
+# Requires: gst-plugins-good1.0
+# Requires: gst-plugins-ugly1.0
 # Requires: gst-plugins1.0-tools
-# Requires: gstreamer1.0-utils 
+# Requires: gstreamer1.0-utils
 
 # Requires: libgstreamer1.0 gst-libav
 # Requires: gst-plugins-base1.0
@@ -269,7 +269,7 @@ echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
 
 echo "ac_add_options --disable-elf-hack" >> .mozconfig
-echo "ac_add_options --enable-alsa" >> .mozconfig 
+echo "ac_add_options --enable-alsa" >> .mozconfig
 echo "ac_add_options --enable-pulseaudio" >> .mozconfig
 echo "ac_add_options --enable-raw" >> .mozconfig
 echo "ac_add_options --enable-ffmpeg" >> .mozconfig
@@ -295,7 +295,6 @@ echo "ac_add_options  --with-system-zlib" >> .mozconfig
  echo "ac_add_options --with-arch=i586" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
-
 
 cat << EOF >> palemoon/app/profile/%sname.js
 // -----------  Build Add   ------------------------
@@ -502,6 +501,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sun Aug 17 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.8.1.2-alt1
+- Version 33.8.1.2 (CVE-2025-8031, CVE-2025-8028 (DiD), CVE-2025-8037 (and related), CVE-2025-8029)
+
 * Tue Jul 15 2025 Ilya Sorochan <k0tran@altlinux.org> 2:33.8.0-alt2
 - Change Url tag (in spec) to project homepage
 
@@ -571,7 +573,7 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 (CVE-2024-0746, CVE-2024-0741, CVE-2024-0743 DiD, CVE-2024-0750 DiD, and CVE-2024-0753)
 
 * Sun Dec 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.2-alt1
-- Update Version 
+- Update Version
 (CVE-2023-6863, CVE-2023-6858)
 
 * Sat Dec 16 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.1-alt2.1
@@ -711,7 +713,7 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 
 * Sat Dec 02 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.2-alt1
 - New Version - Release 27.6.2
-- Fixed CVE-2017-7832, CVE-2017-7835, CVE-2017-7840. See Changelog 
+- Fixed CVE-2017-7832, CVE-2017-7835, CVE-2017-7840. See Changelog
 
 * Mon Nov 20 2017 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.6.1-alt1
 - New Version - Release 27.6.1 width "fix Linux loading throbber to be properly encoded"
@@ -845,7 +847,7 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 - Add palemoon-build-el5-nss.patch
 
 * Fri Dec 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt2
-- Add patch`s 
+- Add patch`s
 
 * Wed Nov 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:27.0.2-alt1
 - Version 27.0.2
