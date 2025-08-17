@@ -1,8 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name lptk
-%define ver_major 0.6
+%define ver_major 0.7
 %define rdn_name me.ogarcia.%_name
+%def_enable check
 
 %def_disable bootstrap
 
@@ -73,6 +74,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- updated to 0.7.0-2-g1c5f677
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
