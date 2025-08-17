@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.7.1.1
-Release: alt1
+Release: alt2
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -99,6 +99,10 @@ This package contains documentation and samples for OpenToonz.
 %patch9 -p0
 %patch10 -p0
 %patch11 -p0
+%ifarch %e2k
+# error: linkage specification is incompatible with previous "__errno_location"
+sed -i 's/extern int errno;//' toonz/sources/image/sgi/filesgi.cpp
+%endif
 
 pushd %name-%version-docs
 %patch5 -p1
@@ -175,6 +179,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Sun Aug 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.1.1-alt2
+- e2k build fix
+
 * Tue Jul 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.1-alt1
 - 1.7.1 -> 1.7.1.1
 
