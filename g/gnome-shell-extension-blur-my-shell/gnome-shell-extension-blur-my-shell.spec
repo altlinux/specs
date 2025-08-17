@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name blur-my-shell
-%define ver_major 68
+%define ver_major 69
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -73,6 +73,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 69-alt1
+- 69
+
 * Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 68-alt1
 - 68 (GNOME48 supported)
 
