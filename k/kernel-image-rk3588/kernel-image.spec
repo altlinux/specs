@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.41
+%define kernel_sublevel	.42
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -510,6 +510,14 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Aug 16 2025 Alexei Takaseev <taf@altlinux.org> 6.12.42-alt1
+- v6.12.42 (2025-08-15).
+- config: Enable CONFIG_LEGACY_VSYSCALL_XONLY=y (ALT#55552).
+- kiosk: add secureexec parameter.
+- pcie-baikal: forced enable dma-coherent for pcie on Baikal-M.
+- config: Enable NVMe TCP TLS and AUTH for host and target.
+- config: Enable CONFIG_MLX5_DPLL=m.
+
 * Sat Aug 02 2025 Alexei Takaseev <taf@altlinux.org> 6.12.41-alt1
 - v6.12.41 (2025-08-01).
 - config: Enable CONFIG_MTK_T7XX=m.
