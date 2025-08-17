@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 46
+%define ver_major 48
 %define beta %nil
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
@@ -9,10 +9,11 @@
 %define xdg_name org.gnome.GHex
 
 %def_enable introspection
+%def_disable gtk_doc
 %def_disable check
 
 Name: ghex
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -34,9 +35,10 @@ Requires: dconf yelp
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson glib2-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: yelp-tools
+BuildRequires: yelp-tools vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
-%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstream-util}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 GHex is a hex editor for the GNOME desktop.
@@ -85,7 +87,9 @@ GObject introspection devel data for the GtkGHex library.
 
 %build
 %meson \
-    %{?_disable_introspection:-Dintrospection=false}
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
+%nil
 %meson_build
 
 %install
@@ -99,8 +103,9 @@ GObject introspection devel data for the GtkGHex library.
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/apps/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README*
 
 %files -n libgtkhex
@@ -113,6 +118,7 @@ GObject introspection devel data for the GtkGHex library.
 %_includedir/%libname/
 %_libdir/lib%libname.so
 %_pkgconfigdir/%libname.pc
+%{?_enable_gtk_doc:%_datadir/doc/gtkhex-%api_ver/}
 
 %if_enabled introspection
 %files -n libgtkhex-gir
@@ -123,6 +129,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Jun 29 2025 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - 46.3
 
