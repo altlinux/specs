@@ -1,5 +1,5 @@
 Name: gphoto2
-Version: 2.5.28
+Version: 2.5.32
 Release: alt1
 
 Group: Graphics
@@ -55,6 +55,9 @@ gPhoto - универсальный комплект программ и биб�
 %_datadir/doc/%name
 
 %changelog
+* Sat Aug 16 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.32-alt1
+- 2.5.32
+
 * Mon Jan 03 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.28-alt1
 - 2.5.28
 - added libexif-devel to BR
