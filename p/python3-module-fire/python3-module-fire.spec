@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: A Python library for automatically generating command line interfaces
@@ -55,6 +55,9 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- v0.7.1-3-g716bbc2
+
 * Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - v0.7.0-7-g6cf45c6
 
