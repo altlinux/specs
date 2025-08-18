@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.15.2
+Version: 1.16.0
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -20,7 +20,7 @@ ExcludeArch: %arm %ix86
 Requires: aardvark-dns >= %major_minor
 Provides: container-network-stack = 2
 %if "%default_fw" == "nftables"
-Requires: nftables
+Requires: nftables >= 1:1.1.4
 %else
 Requires: iptables
 %endif
@@ -100,6 +100,10 @@ NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 %_unitdir/*
 
 %changelog
+* Mon Aug 18 2025 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
+- New version 1.16.0.
+- Fixes a compatibility problem with nftables v1.1.4.
+
 * Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 1.15.2-alt1
 - New version 1.15.2.
 
