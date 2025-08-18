@@ -1,5 +1,5 @@
 Name: mame
-Version: 0.278
+Version: 0.279
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -24,12 +24,14 @@ BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-
 BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel eglexternalplatform-devel egl-wayland-devel libwayland-egl-devel wayland-devel
 BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler
 BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
-BuildRequires: libuv-devel asio-devel gettext-tools
+BuildRequires: libuv-devel gettext-tools
 
 Provides: bundled(lua) = 5.3.4
 Provides: bundled(luafilesystem)
 Provides: bundled(lua-linenoise)
 Provides: bundled(lua-zlib)
+Provides: bundled(asio) = 1.30.2
+
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -109,7 +111,6 @@ HTML documentation for MAME.
 #%%patch1 -p1
 
 rm -rf 3rdparty/compat \
-    3rdparty/asio \
     3rdparty/dxsdk \
     3rdparty/expat \
     3rdparty/glm \
@@ -162,12 +163,14 @@ EOF
 # sorry guys, but race of streams is pain:
 # https://github.com/mamedev/mame/issues/5741
 
+# Use bundled asio, 1.34 is too new
+export CXXFLAGS+=" -I$PWD/3rdparty/asio/include"
+
 make -j8 OPTIMISE="%optflags" \
     $MAME_FLAGS \
     TOOLS=1 \
     NOWERROR=1 \
     ARCHOPTS=-U_FORTIFY_SOURCE \
-    USE_SYSTEM_LIB_ASIO=1 \
     USE_SYSTEM_LIB_EXPAT=1 \
     USE_SYSTEM_LIB_FLAC=1 \
     USE_SYSTEM_LIB_GLM=1 \
@@ -310,6 +313,10 @@ install -D -m 0644 docs/source/images/MAMElogo.svg %buildroot%_iconsdir/hicolor/
 %_datadir/%name/hash/*
 
 %changelog
+* Mon Aug 18 2025 Artyom Bystrov <arbars@altlinux.org> 0.279-alt1
+- Update to new version
+- Switch to bundled asio library
+
 * Tue Jul 15 2025 Artyom Bystrov <arbars@altlinux.org> 0.278-alt1
 - Update to new version
 
