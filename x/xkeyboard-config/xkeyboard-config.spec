@@ -1,7 +1,7 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
 Version: 2.45
-Release: alt1
+Release: alt2
 Epoch: 1
 License: X11/MIT
 Group: System/X11
@@ -55,10 +55,13 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 [ ! -d %_datadir/X11/xkb/symbols/pc ] || rm -fr %_datadir/X11/xkb/symbols/pc
 [ -L %_datadir/X11/xkb ] || rm -fr %_datadir/X11/xkb
 
+%post
+ln -sf %_datadir/%name-2 %_datadir/X11/xkb ||:
+
 %files -f %name.lang
 %doc AUTHORS README.md COPYING
 %doc docs/README.config docs/README.enhancing docs/README.symbols
-%_datadir/X11/xkb
+%ghost %_datadir/X11/xkb
 %_datadir/%name-2
 %_man7dir/*.7*
 
@@ -66,6 +69,9 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Aug 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.45-alt2
+- fixed replacing directory with symbolic link
+
 * Mon Aug 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.45-alt1
 - 2.45 (closes: #55558)
 
