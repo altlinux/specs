@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 6.0.4
+Version: 6.0.10
 Release: alt1
 
 Summary: Color picker tool for deepin
@@ -12,6 +12,7 @@ Vcs: git://github.com/linuxdeepin/deepin-picker.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): desktop-file-utils
 BuildRequires: dqt6-linguist libdtk6widget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel dqt6-base-devel dqt6-svg-devel
@@ -23,6 +24,7 @@ Simplest color picker.
 
 %prep
 %setup
+%patch -p1
 sed -i -e 's|/usr/lib/qt6/bin/lrelease|%_dqt6_bindir/lrelease|; s|/usr/lib/qt6/bin/lupdate|%_dqt6_bindir/lupdate|;' \
 	deepin-picker.pro
 
@@ -44,17 +46,21 @@ export LC_ALL=C.UTF-8
 %files -f %name.lang
 %doc README.md
 %doc LICENSE.txt
+%doc debian/changelog
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/dbus-1/services/com.deepin.Picker.service
 # package translations outside find_lang
-%dir %_datadir/%%name/
-%dir %_datadir/%%name/translations/
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
 %_datadir/%name/translations/deepin-picker.qm
 %_datadir/%name/translations/deepin-picker_es_419.qm
 
 %changelog
+* Mon Aug 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
+- New version 6.0.10.
+
 * Fri Jan 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
 - New version 6.0.4.
 - Added vcs tag.
