@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hardinfo2
-Version: 2.2.10
-Release: alt1.gitda7f31d
+Version: 2.2.13
+Release: alt1
 
 Summary: System Information and Benchmark for Linux Systems
 License: GPL-2.0-or-later
@@ -75,6 +75,9 @@ install -D %_builddir/%{name}-%{version}/tools/hardinfo2 %buildroot/%_initdir/%n
 %_initdir/%name
 
 %changelog
+* Mon Aug 18 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.13-alt1
+- 2.2.10 -> 2.2.13
+
 * Sun May 04 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.10-alt1.gitda7f31d
 - 2.2.7 -> 2.2.10
 - Fixed output of operating system information for ALT (Closes: #54105)
