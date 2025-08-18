@@ -3,7 +3,7 @@
 %define uuid %_name@altlinux.org
 
 Name: gnome-shell-extension-%_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Saving a GNOME user session
@@ -48,5 +48,8 @@ sessions.
 %_datadir/metainfo/%_name.metainfo.xml
 
 %changelog
+* Mon Aug 18 2025 David Sultaniiazov <x1z53@altlinux.org> 1.0.3-alt1
+- Update to 1.0.3.
+
 * Thu Aug 14 2025 David Sultaniiazov <x1z53@altlinux.org> 1.0.2-alt1
 - Initial build. (thx armatik@)
