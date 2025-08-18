@@ -1,7 +1,7 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.9
+Version: 1.16.0
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: dconf gnome-icon-theme
-Requires: typelib(Gtk) = 3.0 libpeas-python3-loader
+Requires: typelib(Gtk) = 3.0 libpeas2-python3-loader
 
 %add_python3_path %_libdir/%name/plugins
 %add_typelib_req_skiplist typelib(AppIndicator3)
@@ -34,9 +34,9 @@ BuildRequires: pkgconfig(pango) >= 1.4.0
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
 BuildRequires: pkgconfig(sqlite3) >= 3.7.0
 BuildRequires: pkgconfig(libsoup-3.0) >= 3.2 pkgconfig(webkit2gtk-4.1) pkgconfig(json-glib-1.0) pkgconfig(webkit2gtk-web-extension-4.1)
-BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0
+BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 3.0 gir(Json) = 1.0
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
-BuildRequires: pkgconfig(libpeas-1.0) >= 1.0.0 pkgconfig(libpeas-gtk-1.0) >= 1.0.0
+BuildRequires: pkgconfig(libpeas-2)
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -59,10 +59,13 @@ Allow Liferea to use GNOME keyring as password store
 %patch -p1
 
 %build
+# for pygobject >= 3.52.3
+sed -i 's/\(USE_GI_REPOSITORY_VERSION, \)1/\12/' configure.ac
+%add_optflags -lgirepository-2.0
 %autoreconf
 %configure \
-	--enable-introspection \
-	--disable-static
+    --enable-introspection \
+    --disable-static
 xvfb-run %make_build
 
 %install
@@ -97,8 +100,6 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/headerbar.*
 %_libdir/%name/plugins/libnotify.*
 %_libdir/%name/plugins/__pycache__/libnotify.*
-%_libdir/%name/plugins/plugin-installer.*
-%_libdir/%name/plugins/__pycache__/plugin-installer.*
 %_libdir/%name/plugins/trayicon.*
 %_libdir/%name/plugins/__pycache__/trayicon.*
 %_libdir/%name/plugins/add-bookmark-site*
@@ -111,6 +112,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Mon Aug 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15.9-alt1
 - updated to v1.15.9-5-g718f71252
 
