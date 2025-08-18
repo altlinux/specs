@@ -2,7 +2,7 @@
 
 Name: pstoedit
 Version: 4.02
-Release: alt1
+Release: alt2
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
 Summary(ru_RU.UTF-8): преобразует файлы Postscript(TM) и PDF в другие векторные форматы
@@ -33,7 +33,7 @@ Requires: lib%name = %version-%release
 
 
 # Automatically added by buildreq on Tue May 30 2006
-BuildRequires: fontconfig gcc-c++ ghostscript-classic libgd2-devel libImageMagick-devel libplotter-devel libpng-devel pkg-config
+BuildRequires: fontconfig gcc-c++ ghostscript-classic libgd-devel libImageMagick-devel libplotter-devel libpng-devel pkg-config
 
 %package -n lib%name
 Summary: Libraries for pstoedit
@@ -167,6 +167,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Mon Aug 18 2025 Ilya Mashkin <oddity@altlinux.ru> 4.02-alt2
+- Fix FTBFS
+
 * Fri Dec 20 2024 Ilya Mashkin <oddity@altlinux.ru> 4.02-alt1
 - 4.02
 
