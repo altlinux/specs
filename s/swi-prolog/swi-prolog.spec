@@ -4,7 +4,7 @@
 
 Name:          swi-prolog
 Version:       9.3.25.39
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Prolog interpreter and compiler
 License:       BSD-2-Clause
 Group:         Development/Other
@@ -96,6 +96,13 @@ interface, very fast compiler.
 %prep
 %setup
 
+%ifarch loongarch64 riscv64
+# try_compile with CMAKE_TRY_COMPILE_TARGET_TYPE set to STATIC_LIBARY
+# does not seem to be compatible with LTO. However, currently this
+# seems to break only loongarch64 and riscv64 builds
+sed -i '/CMAKE_TRY_COMPILE_TARGET_TYPE.*STATIC_LIBRARY/d' cmake/*.cmake
+%endif
+
 %build
 %cmake \
    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -147,6 +154,10 @@ interface, very fast compiler.
 
 
 %changelog
+* Mon Aug 18 2025 Ivan A. Melnikov <iv@altlinux.org> 9.3.25.39-alt0.2
+- NMU: avoid messing with CMAKE_TRY_COMPILE_TARGET_TYPE
+  on loongarch64 and riscv64 to fix FTBFS
+
 * Wed Jul 16 2025 Pavel Skrylev <majioa@altlinux.org> 9.3.25.39-alt0.1
 - ^ 9.0.4 -> 9.3.25p39
 - * rebased to plain gitflow, and repackaged
