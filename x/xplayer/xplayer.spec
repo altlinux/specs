@@ -3,7 +3,7 @@
 
 Name: xplayer
 Version: 2.4.4
-Release: alt2
+Release: alt3
 Summary: Xplayer is a generic media player.
 Group: Video
 License: %gpl2only
@@ -72,7 +72,8 @@ Group: Video
 BuildArch: noarch
 Requires: %name = %version-%release %name-plugin-gromit = %version-%release %name-plugin-ontop = %version-%release %name-plugin-screensaver = %version-%release
 Requires: %name-plugin-skipto = %version-%release %name-plugin-properties = %version-%release %name-plugin-media-player-keys = %version-%release
-Requires: %name-plugin-python-console = %version-%release %name-plugin-opensubtitles = %version-%release %name-plugin-grilo = %version-%release
+#Requires: %name-plugin-python-console = %version-%release %name-plugin-opensubtitles = %version-%release
+Requires: %name-plugin-grilo = %version-%release
 
 %description plugins
 A default plugins for Xplayer:
@@ -288,7 +289,8 @@ export ac_cv_path_PYLINT=%_bindir/pylint.py3
 	--enable-vala \
 	--disable-static \
 	--disable-Werror \
-	--enable-introspection
+	--enable-introspection \
+	--with-plugins='apple-trailers autoload-subtitles brasero-disc-recorder chapters im-status gromit lirc media-player-keys ontop properties recent rotation sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo vimeo'
 
 %make_build
 
@@ -363,21 +365,21 @@ find %buildroot%_libdir -name \*.la -delete
 %files plugin-chapters
 %_libdir/%name/plugins/chapters
 
-%files plugin-opensubtitles
-%_libdir/%name/plugins/opensubtitles
-%_datadir/glib-2.0/schemas/org.x.player.plugins.opensubtitles.gschema.xml
+#files plugin-opensubtitles
+#_libdir/%name/plugins/opensubtitles
+#_datadir/glib-2.0/schemas/org.x.player.plugins.opensubtitles.gschema.xml
 
 %files plugin-ontop
 %_libdir/%name/plugins/ontop
 
-%files plugin-python-console
-%_libdir/%name/plugins/pythonconsole
-%_datadir/glib-2.0/schemas/org.x.player.plugins.pythonconsole.gschema.xml
+#files plugin-python-console
+#_libdir/%name/plugins/pythonconsole
+#_datadir/glib-2.0/schemas/org.x.player.plugins.pythonconsole.gschema.xml
 
-%ifnarch aarch64
-%files plugin-mpris
-%_libdir/%name/plugins/dbus
-%endif
+#ifnarch aarch64
+#files plugin-mpris
+#_libdir/%name/plugins/dbus
+#endif
 
 %files plugin-grilo
 %_libdir/%name/plugins/grilo
@@ -403,6 +405,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/%name-video-thumbnailer.1.*
 
 %changelog
+* Mon Aug 18 2025 shrek@altlinux.ru (Valery Inozemtsev) <shrek@altlinux.org> 2.4.4-alt3
+- disabled python plugins (closes: #55568)
+
 * Wed Mar 26 2025 Valery Inozemtsev <shrek@altlinux.ru> 2.4.4-alt2
 - fixed compiler errors related to invalid/missing type casts
 
