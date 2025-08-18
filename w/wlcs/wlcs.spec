@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: wlcs
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Wayland Conformance Test Suite
@@ -101,5 +101,8 @@ sed -i '/-Werror/d' CMakeLists.txt
 %_libdir/pkgconfig/wlcs.pc
 
 %changelog
+* Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus

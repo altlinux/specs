@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qman
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: A more modern man page viewer for our terminals
@@ -48,13 +48,16 @@ sed -i "s|/screenshots/|screenshots/|g" README.md
 rm -vfr %{buildroot}%_datadir/doc/qman
 
 %files
-%doc README.md PACKAGING.md TESTING.md screenshots config
+%doc README.md screenshots config
 %_bindir/*
 %_man1dir/*
 %dir %_sysconfdir/xdg/%name
 %_sysconfdir/xdg/%name/*
 
 %changelog
+* Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Thu May 01 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.2-alt1
 - New version 1.4.2.
 

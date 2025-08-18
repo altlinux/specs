@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wl-mirror
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Summary: Simple Wayland output mirror client
@@ -50,5 +50,8 @@ or screencopy protocols to work.
 %_man1dir/wl-present.*
 
 %changelog
+* Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.18.3-alt1
+- New version 0.18.3.
+
 * Sat May 10 2025 Nikolay Strelkov <snk@altlinux.org> 0.18.2-alt1
 - Initial build for Sisyphus

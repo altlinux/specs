@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pinit
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Pin portable apps to the launcher
@@ -55,5 +55,8 @@ rm -fv %buildroot%_datadir/locale/zh_Hans/LC_MESSAGES/*.mo
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Wed Jul 02 2025 Nikolay Strelkov <snk@altlinux.org> 2.1.1-alt1
 - Initial build for Sisyphus
