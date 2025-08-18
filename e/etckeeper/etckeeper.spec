@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.18.22
-Release: alt2
-Summary: Etckeeper help to keep your /etc directory in VCS repository
+Version: 1.18.23
+Release: alt1
+Summary: Keep your /etc directory in VCS repository
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url: https://etckeeper.branchable.com/
@@ -63,6 +63,9 @@ pl="/var/cache/etckeeper/packagelist.pre-install"
 %_unitdir/%{name}.*
 
 %changelog
+* Sun Aug 17 2025 Vitaly Chikunov <vt@altlinux.org> 1.18.23-alt1
+- Update to 1.18.23 (2025-08-16).
+
 * Mon Jun 16 2025 Vitaly Chikunov <vt@altlinux.org> 1.18.22-alt2
 - Fix hasher interoperability issue resulting in '/var/cache/etckeeper'
   'Permission denied' errors (under user with default .hasher config).
