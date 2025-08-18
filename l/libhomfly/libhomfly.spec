@@ -1,18 +1,28 @@
 %define lname libhomfly0
 
 Name: libhomfly
-Version: 1.02r6
+Version: 1.03
 Release: alt1
 Summary: Library to compute the homfly polynomial of a link
-License: ALT-Public-Domain
+License: Unlicense
 Group: Sciences/Mathematics
 Url: https://github.com/miguelmarco/libhomfly
+VCS: https://github.com/miguelmarco/libhomfly
 
 Source: https://github.com/miguelmarco/libhomfly/releases/download/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 BuildRequires: libgc-devel
 
 %description
 A library to compute the homfly polynomial of a link.
+
+%package common
+Summary: Common files for the homfly library
+Group: Sciences/Mathematics
+BuildArch: noarch
+
+%description common
+This package provides common files for %name.
 
 %package -n %lname
 Summary: Library to compute the homfly polynomial of a link
@@ -33,8 +43,10 @@ This subpackage provides the development headers for it.
 
 %prep
 %setup
+%patch -p1
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -45,14 +57,24 @@ rm -f %buildroot%_libdir/*.la
 %check
 %make_build check
 
+%files common
+%doc LICENSE README.md
+
 %files -n %lname
 %_libdir/libhomfly.so.0*
 
 %files devel
 %_includedir/*.h
 %_libdir/libhomfly.so
+%_pkgconfigdir/libhomfly.pc
 
 %changelog
+* Mon Aug 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.03-alt1
+- New version 1.03.
+- Added VCS tag.
+- Packaged docs.
+- Fixed license tag.
+
 * Thu Oct 28 2021 Leontiy Volodin <lvol@altlinux.org> 1.02r6-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
