@@ -2,13 +2,14 @@
 %define _localstatedir %_var
 
 Name: open-isns
-Version: 0.102
-Release: alt2
+Version: 0.103
+Release: alt1
 Summary: The iSNS daemon and utility programs
 
 Group: System/Servers
 License: LGPLv2+
 Url: https://github.com/open-iscsi/open-isns
+Vcs: https://github.com/open-iscsi/open-isns.git
 Source: %name-%version.tar
 Source2: isnsd.init
 Patch: %name-%version.patch
@@ -63,7 +64,7 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %preun_service isnsd
 
 %files
-%doc COPYING README
+%doc COPYING README.md
 %_sbindir/*
 %_man5dir/*
 %_man8dir/*
@@ -83,6 +84,9 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 14 2025 Alexey Shabalin <shaba@altlinux.org> 0.103-alt1
+- 0.103
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 0.102-alt2
 - build with libopenslp
 

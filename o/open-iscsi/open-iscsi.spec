@@ -1,24 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
-%define Name iSCSI
 %define bname iscsi
 
 Name: open-%bname
-Version: 2.1.10
+Version: 2.1.11
 License: GPL-2.0-or-later
 Release: alt1
-Summary: Utils to operate with %Name
+Summary: Utils to operate with iSCSI
 Group: System/Kernel and hardware
-URL: http://%name.org
+Url: https://www.open-iscsi.com
+Vcs: https://github.com/open-iscsi/open-iscsi.git
 Source: %name-%version.tar
 Source2: open-iscsi.init
 Patch: %name-%version-%release.patch
 Conflicts: linux-iscsi
 Provides: iscsi-initiator-utils = 6.%version-%release
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-macros-systemd
 BuildRequires: meson >= 0.54.0
-BuildRequires: rpm-macros-systemd
 BuildRequires: libmount-devel
 BuildRequires: libkmod-devel
 BuildRequires: libssl-devel
@@ -67,7 +66,7 @@ developing applications that use libopeniscsiusr.
     -Dhomedir=%_sysconfdir/%bname \
     -Ddbroot=%_sharedstatedir/%bname \
     -Drulesdir=%_udevrulesdir \
-    -Discsi_sbindir=/sbin
+    -Discsi_sbindir=%_sbindir
 
 %meson_build
 
@@ -87,7 +86,7 @@ ln -s iscsid.service %buildroot%_unitdir/open-iscsi.service
 %post
 %tmpfiles_create %_tmpfilesdir/%bname.conf
 if [ ! -f /etc/%bname/initiatorname.iscsi ] ; then
-    /sbin/iscsi-gen-initiatorname
+    iscsi-gen-initiatorname
 fi
 %post_service %name
 
@@ -112,15 +111,15 @@ fi
 %_udevrulesdir/50-iscsi-firmware-login.rules
 %_unitdir/*
 %exclude %_unitdir/iscsiuio.*
-/sbin/*
-%exclude /sbin/iscsiuio
-%exclude /sbin/brcm_iscsiuio
+%_sbindir/*
+%exclude %_sbindir/iscsiuio
+%exclude %_sbindir/brcm_iscsiuio
 %_man8dir/*
 %exclude %_man8dir/iscsiuio.8.*
 
 %files iscsiuio
-/sbin/iscsiuio
-/sbin/brcm_iscsiuio
+%_sbindir/iscsiuio
+%_sbindir/brcm_iscsiuio
 %_unitdir/iscsiuio.*
 %config(noreplace) %_logrotatedir/iscsiuiolog
 %_man8dir/iscsiuio.8.*
@@ -135,6 +134,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Thu Aug 14 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.11-alt1
+- 2.1.11
+
 * Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.1.10-alt1
 - 2.1.10
 
