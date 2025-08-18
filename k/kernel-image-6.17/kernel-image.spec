@@ -1,5 +1,5 @@
 Name: kernel-image-6.17
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	6.16
 %define kernel_base_version	6.17
 %define kernel_sublevel	.0
@@ -612,6 +612,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Aug 18 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt0.rc2
+- Update to v6.17-rc2 (2025-08-17).
+- config: Enable CONFIG_MLX5_DPLL=m.
+- config: Enable NVMe TCP TLS and AUTH for host and target.
+- config: Disable CONFIG_LATENCYTOP.
+- config-aarch64: CONFIG_CLK_RP1=m, CONFIG_PINCTRL_RP1=m,
+  CONFIG_MISC_RP1=m.
+
 * Sun Aug 10 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt0.rc1
 - Rebase to v6.17-rc1 (2025-08-10).
 
