@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: procs
-Version: 0.14.8
-Release: alt2
+Version: 0.14.10
+Release: alt1
 
 Summary: A replacement for ps written in Rust
 License: MIT
@@ -44,6 +44,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Aug 11 2025 Ilya Sorochan <k0tran@altlinux.org> 0.14.10-alt1
+- 0.14.8 -> 0.14.10
+
 * Tue Dec 03 2024 Ilya Sorochan <k0tran@altlinux.org> 0.14.8-alt2
 - Add patch that fixes build for nix crate on loongarch64.
 
