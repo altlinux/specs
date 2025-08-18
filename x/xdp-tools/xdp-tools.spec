@@ -1,5 +1,5 @@
 Name: xdp-tools
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -11,7 +11,7 @@ Source0: xdp-tools-%version.tar
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define llvm_version 19.1
+%define llvm_version 20.1
 
 %add_debuginfo_skiplist  %_libdir/bpf/*.o
 %add_verify_elf_skiplist %_libdir/bpf/*.o
@@ -114,6 +114,10 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Mon Aug 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.6-alt1
+- 1.5.6.
+- Bump llvm 20.1.
+
 * Mon Jun 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt1
 - 1.5.5.
 
