@@ -30,11 +30,11 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt5
+Release: alt6
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 # for licenses
 BuildRequires: distro-licenses >= 1.3-alt1
@@ -473,6 +473,12 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Mon Aug 18 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
+- NMU:
+  + indexhtml: fix COPYRIGHT
+  + notes: replace http with https in links
+  + use qt6 for build
+
 * Sun Jul 06 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
 - NMU: release: do not package /etc/os-release (ALT #55061).
 
