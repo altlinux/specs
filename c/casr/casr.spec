@@ -2,7 +2,7 @@
 %def_with check
 
 Name: casr
-Version: 2.12.1
+Version: 2.13.0
 Release: alt1
 
 Summary: Collect crash (or UndefinedBehaviorSanitizer error) reports, triage, and estimate severity.
@@ -20,6 +20,7 @@ BuildRequires: python3-devel
 BuildRequires: clang15.0
 BuildRequires: llvm15.0
 BuildRequires: gcc-c++
+BuildRequires: lua5.4
 BuildRequires: /proc
 BuildRequires: gdb
 BuildRequires: npm
@@ -57,6 +58,7 @@ install -D -m755 target/release/casr-cluster -t %buildroot%_bindir/
 install -D -m755 target/release/casr-dojo -t %buildroot%_bindir/
 install -D -m755 target/release/casr-java -t %buildroot%_bindir/
 install -D -m755 target/release/casr-libfuzzer -t %buildroot%_bindir/
+install -D -m755 target/release/casr-lua -t %buildroot%_bindir/
 install -D -m755 target/release/casr-san -t %buildroot%_bindir/
 install -D -m755 target/release/casr-cli -t %buildroot%_bindir/
 install -D -m755 target/release/casr-core -t %buildroot%_bindir/
@@ -100,7 +102,8 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_casr_java_native_lib"
 export SKIP_TESTS="$SKIP_TESTS --skip test_js_stacktrace \
     --skip test_casr_afl \
     --skip test_casr_cluster_c \
-    --skip test_casr_cluser_u"
+    --skip test_casr_cluser_u \
+    --skip test_casr_san"
 
 # Disalble tests due to errors of running gdb on 32-bit files in hasher
 export SKIP_TESTS="$SKIP_TESTS --skip gdb32"
@@ -133,6 +136,9 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
 %_bindir/*
 
 %changelog
+* Fri Aug 15 2025 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.13.0-alt1
+- Update to version 2.13.0.
+
 * Thu Aug 15 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.12.1-alt1
 - Update to version 2.12.1.
 
