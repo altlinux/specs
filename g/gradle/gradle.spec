@@ -2,8 +2,8 @@
 %def_without bootstrap
 
 Name: gradle
-Version: 8.14.1
-Release: alt2
+Version: 8.14.3
+Release: alt1
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
@@ -16,13 +16,13 @@ Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: %name-%version-tags.tar
 %if_with bootstrap
-Source3: %name-%version-bin.tar
+Source3: %name-bin.tar
 %endif
 Source4: commit.sh
 
-Patch0: %name-%version-adoptium.patch
-Patch1: %name-%version-alt-git.patch
-Patch2: %name-%version-alt-buildtime.patch
+Patch0: 0001-Gradle-adoptium-alt-patch.patch
+Patch1: 0002-Gradle-set-buildtime-alt-patch.patch
+Patch2: 0003-Gradle-set-git-specifications-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -49,7 +49,7 @@ Android, Groovy, C++, and Swift.
 tar -xf %SOURCE3
 
 # Specify the archive location.
-sed -i "s#distributionUrl=.*#distributionUrl=file\:$PWD/%name-%version-bin.zip#" \
+sed -i "s#distributionUrl=.*#distributionUrl=file\:$PWD/%name-bin.zip#" \
     gradle/wrapper/gradle-wrapper.properties
 %endif
 
@@ -79,27 +79,31 @@ gradle installAll \
 
 %install
 install -Dm 644 dist/lib/*.jar \
-  -t %buildroot%_javadir/gradle/lib/
+  -t %buildroot%_datadir/gradle/lib/
 
 install -Dm 644 dist/lib/plugins/*.jar \
-  -t %buildroot%_javadir/gradle/lib/plugins/
+  -t %buildroot%_datadir/gradle/lib/plugins/
 
 install -Dm 644 dist/lib/agents/gradle-instrumentation-agent-%version.jar \
-  -t %buildroot%_javadir/gradle/lib/agents/
+  -t %buildroot%_datadir/gradle/lib/agents/
 
 install -Dm 755 dist/bin/gradle \
-  -t %buildroot%_javadir/gradle/bin/
+  -t %buildroot%_datadir/gradle/bin/
 
 install -d %buildroot%_bindir
 
-ln -s %_javadir/gradle/bin/gradle \
+ln -s %_datadir/gradle/bin/gradle \
   -t %buildroot%_bindir/
 
 %files
 %_bindir/gradle
-%_javadir/gradle/
+%_datadir/gradle/
 
 %changelog
+* Mon Aug 18 2025 Ivan Khanas <xeno@altlinux.org> 8.14.3-alt1
+- New version.
+- Change installation paths.
+
 * Thu Jul 31 2025 Ivan Khanas <xeno@altlinux.org> 8.14.1-alt2
 - Disable bootstrap.
 
