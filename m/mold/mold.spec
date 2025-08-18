@@ -8,7 +8,7 @@
 %def_with check
 
 Name: mold
-Version: 2.40.3
+Version: 2.40.4
 Release: alt1
 
 Summary: A Modern Linker
@@ -79,6 +79,9 @@ rm %buildroot%_defaultdocdir/%name/LICENSE*
 %_man1dir/*mold.1.*
 
 %changelog
+* Mon Aug 18 2025 Anton Zhukharev <ancieg@altlinux.org> 2.40.4-alt1
+- Updated to 2.40.4.
+
 * Fri Aug 15 2025 Anton Zhukharev <ancieg@altlinux.org> 2.40.3-alt1
 - Updated to 2.40.3.
 
