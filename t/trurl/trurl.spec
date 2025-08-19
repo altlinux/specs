@@ -1,7 +1,8 @@
 %def_with check
 
 Name:    trurl
-Version: 0.16.1
+Version: 0.16.1.0.5.gitf22a2c4
+
 Release: alt1
 
 Summary: trurl is a command line tool for URL parsing and manipulation
@@ -26,17 +27,12 @@ BuildRequires: python3
 sed -i 's/-Werror/-Wno-error/g' Makefile
 %endif
 
-subst \
-'s!$(ZSH_COMPLETIONSDIR)/_trurl;!$(DESTDIR)$(ZSH_COMPLETIONSDIR)/_trurl;!g' \
-Makefile
-
 %build
 %make_build PREFIX=%_prefix
 %make completions
 
 %install
 %makeinstall_std PREFIX=%_prefix \
-COMPLETION_FILES='completions/_trurl.zsh'
 
 %check
 %make test
@@ -48,6 +44,9 @@ COMPLETION_FILES='completions/_trurl.zsh'
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Aug 19 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.16.1.0.5.gitf22a2c4-alt1
+- fixed FTBFS: update to upstream ref f22a2c4
+
 * Tue May 13 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.16.1-alt1
 - 0.16 -> 0.16.1
 
