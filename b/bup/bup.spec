@@ -1,7 +1,7 @@
 %def_enable doc
 
 Name:     bup
-Version:  0.33.7
+Version:  0.33.8
 Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
@@ -136,6 +136,9 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %endif
 
 %changelog
+* Tue Aug 19 2025 Andrey Cherepanov <cas@altlinux.org> 0.33.8-alt1
+- New version.
+
 * Sat Jan 11 2025 Andrey Cherepanov <cas@altlinux.org> 0.33.7-alt1
 - New version.
 
