@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -46,7 +46,7 @@ Requires: alt-components-base = %version-%release
 %setup
 
 %build
-for d in components/*/ categories/* ; do
+for d in components/*/ vendors/*/*/ categories/* ; do
     find "$d" -type f -name "description*.md" -print0 | while IFS= read -r -d '' file; do
         cmark "$file" > "${file/%%md/html}"
     done
@@ -83,19 +83,20 @@ for d in categories/*/ ; do
     fi
 done
 
-for d in components/*/ ; do
+for d in components/*/ vendors/*/*/ ; do
+    dd="$(dirname "$d")"
     d="$(basename "$d")"
-    f="components/$d/$d.component"
+    f="$dd/$d/$d.component"
     c="$(alterator-entry get "$f" category)"
 
     mkdir -p "%buildroot%_alterator_datadir/components/$d"
     install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/$d"
 
-    find "components/$d" -name '*.png' -type f | while read -r file; do
+    find "$dd/$d" -name '*.png' -type f | while read -r file; do
         install -v -p -m 664 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
 
-    find "components/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+    find "$dd/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
         install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
 
@@ -143,6 +144,13 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Aug 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.8.3-alt1
+- feat: update editions validation with vendors components not included
+- components: replace vendors to separate packages
+- components: add pptpd component (thx Andrey Limachko)
+- editions: remove alterator-legacy-kiosk from server
+- editions: add pptpd to main section (thx Andrey Limachko)
+
 * Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.8.2-alt1
 - editions: change behaviour and appearance of links in final-notes
   (thx Maria Fokanova)
