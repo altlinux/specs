@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitu
-Version: 0.29.0
+Version: 0.34.0
 Release: alt1
 
 Summary: A terminal user interface for Git
@@ -37,6 +37,9 @@ install -D %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Tue Aug 19 2025 Vladislav Glinkin <smasher@altlinux.org> 0.34.0-alt1
+- 0.29.0 -> 0.34.0
+
 * Tue Mar 11 2025 Vladislav Glinkin <smasher@altlinux.org> 0.29.0-alt1
 - 0.26.0 -> 0.29.0
 
