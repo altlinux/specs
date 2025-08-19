@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt6platform-plugins
-Version: 6.0.40
+Version: 6.0.41
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -11,7 +11,7 @@ Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt6platform-plugins
-VCS: https://github.com/linuxdeepin/qt6platform-plugins.git
+VCS: https://github.com/linuxdeepin/qt6platform-plugins
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -36,7 +36,8 @@ Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-ope
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 
 %build
@@ -64,6 +65,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.40-alt1
 - New version 6.0.40.
 

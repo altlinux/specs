@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.7.19
+Version: 5.7.21
 Release: alt1
 
 Summary: Deepin desktop schemas
@@ -9,11 +9,12 @@ Summary: Deepin desktop schemas
 License: BSD-3-Clause and CC0-1.0
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkcommon
-Vcs: git://github.com/linuxdeepin/dtkcommon.git
+Vcs: https://github.com/linuxdeepin/dtkcommon
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -47,6 +48,7 @@ The package provides development files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %if_enabled clang
@@ -67,7 +69,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 
 %files -n dtk6-common-configs
-%doc LICENSE README.md
+%doc LICENSE README.md CHANGELOG.md
 %_datadir/dsg/configs/org.deepin.dtk.preference.json
 
 %files -n dtk6-common-devel
@@ -77,6 +79,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DtkBuildHelper/DtkBuildHelperConfigVersion.cmake
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.21-alt1
+- New version 5.7.21.
+
 * Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
 - New version 5.7.19.
 

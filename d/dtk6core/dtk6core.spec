@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.37
+Version: 6.0.41
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -12,7 +12,7 @@ Summary: Deepin tool kit core modules
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6core
-Vcs: git://github.com/linuxdeepin/dtk6core.git
+Vcs: https://github.com/linuxdeepin/dtk6core
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -24,7 +24,7 @@ Provides: dtk6-core = %EVR
 Obsoletes: dtk6-core < %EVR
 
 BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-dqt6
-BuildRequires: cmake dqt6-base-devel libsystemd-devel dtk6-common-devel libuchardet-devel libspdlog-devel libdtk6log-devel libicu-devel
+BuildRequires: cmake dqt6-base-devel libsystemd-devel dtk6-common-devel libuchardet-devel libspdlog-devel libdtk6log-devel libicu-devel libdbus-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -70,7 +70,8 @@ This package provides %name documantation.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %if_enabled clang
@@ -92,7 +93,7 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6install
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE CHANGELOG.md
 %dir %_libexecdir/dtk6
 %dir %_libexecdir/dtk6/DCore/
 %_libexecdir/dtk6/DCore/bin/
@@ -119,6 +120,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
 - New version 6.0.37.
 

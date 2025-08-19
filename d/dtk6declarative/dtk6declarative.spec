@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtk6declarative
-Version: 6.0.37
+Version: 6.0.41
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -12,7 +12,7 @@ Summary(ru): Инструментарий по разработке виджет
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtk6declarative
-Vcs: git://github.com/linuxdeepin/dtk6declarative.git
+Vcs: https://github.com/linuxdeepin/dtk6declarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -25,7 +25,7 @@ ExcludeArch: armh
 Provides: dtk6-declarative = %EVR
 Obsoletes: dtk6-declarative < %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 %if_enabled clang
 BuildRequires: clang-devel
 %else
@@ -101,7 +101,8 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 # FAILED: examples/exhibition/CMakeFiles/dtk-exhibition.dir/dtk-exhibition_autogen/EWIEGA46WW/qrc_assets.cpp.o
 # virtual memory exhausted: Cannot allocate memory
 %ifarch i586 armh
@@ -117,7 +118,6 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export LC_ALL=C.UTF-8
 %DQ6build \
   -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
   -DBUILD_DOCS=OFF \
@@ -129,10 +129,13 @@ export LC_ALL=C.UTF-8
 #
 
 %install
-%DQ6install_qt
+%DQ6install
+patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/private/libdtkdeclarativeprivatesplugin.so --add-rpath %_dqt6_libdir
+patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/settings/libdtkdeclarativesettingsplugin.so --add-rpath %_dqt6_libdir
+patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add-rpath %_dqt6_libdir
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md CHANGELOG.md
 %ifnarch i586 armh
 %dir %_libdir/dtk6/
 %dir %_libdir/dtk6/DDeclarative/
@@ -168,6 +171,9 @@ export LC_ALL=C.UTF-8
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
 - New version 6.0.37.
 

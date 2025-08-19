@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt6integration
-Version: 6.0.39
+Version: 6.0.41
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -11,7 +11,7 @@ Summary: Qt platform theme integration plugins for DDE
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt6integration
-VCS: https://github.com/linuxdeepin/qt6integration.git
+VCS: https://github.com/linuxdeepin/qt6integration
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -33,7 +33,7 @@ Multiple Qt plugins to provide better Qt6 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch -p1
 
 %build
 %if_with clang
@@ -56,6 +56,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %files
 %doc README.md
 %doc LICENSE
+%doc CHANGELOG.md
 %_dqt6_plugindir/iconengines/libdicon.so
 %_dqt6_plugindir/iconengines/libdsvgicon.so
 %_dqt6_plugindir/imageformats/libdci.so
@@ -64,6 +65,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_plugindir/styles/libchameleon.so
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.39-alt1
 - New version 6.0.39.
 

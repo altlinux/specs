@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtk6widget
-Version: 6.0.37
+Version: 6.0.41
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -10,7 +10,7 @@ Summary: Deepin tool kit widget modules
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6widget
-Vcs: git://github.com/linuxdeepin/dtk6widget.git
+Vcs: https://github.com/linuxdeepin/dtk6widget
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -80,7 +80,8 @@ This package provides %name documantation.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %if_enabled clang
@@ -107,7 +108,7 @@ export READELF="llvm-readelf"
 %DQ6install
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE CHANGELOG.md
 %dir %_libdir/dtk6/
 %dir %_libdir/dtk6/DWidget/
 %_libdir/dtk6/DWidget/bin/
@@ -133,6 +134,9 @@ export READELF="llvm-readelf"
 %_dqt6_docdir/dtkwidget.qch
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Fri Jun 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
 - New version 6.0.37.
 
