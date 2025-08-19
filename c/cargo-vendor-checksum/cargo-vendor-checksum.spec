@@ -1,5 +1,5 @@
 Name:     cargo-vendor-checksum
-Version:  0.1.1
+Version:  0.1.2
 Release:  alt1
 
 Summary:  It is a tool for updating checksum files in vendor directories
@@ -42,6 +42,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc *.md
 
 %changelog
+* Tue Aug 19 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.2-alt1
+- Add ignore-missing flag
+
 * Tue Nov 14 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.1-alt1
 - Add threads
 
