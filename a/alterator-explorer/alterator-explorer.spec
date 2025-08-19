@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.15
+Version: 0.1.16
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -64,49 +64,34 @@ Requires: alterator-module-executor >= 0.1.14
 %install
 %cmakeinstall_std
 
-%if_without legacy
-
 install -D -m644 setup/%name.desktop \
     %buildroot%_desktopdir/%name.desktop
-
-for size in 48 64 128 256 512; do
-    mkdir -p %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/
-    convert setup/logo.png -resize ''${size}x''${size} \
-        %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/%name.png
-done
-
-%else
-
+%if_with legacy
 install -d %buildroot/%_altdir
 cat > %buildroot/%_altdir/%name <<EOF
 %_bindir/%alt_name	%_bindir/%name 50
 EOF
-
+echo "NoDisplay=true" >> %buildroot%_desktopdir/%name.desktop
 touch %buildroot/%_bindir/%alt_name
-
 %endif
 
 %files
 %_datadir/alterator/categories/*
 %doc *.md
 %_bindir/%name
+%_desktopdir/%name.desktop
 
 %if_with legacy
 %ghost %_bindir/%alt_name
 %config %_altdir/%name
-
 %_bindir/%alt_name
-%else
-%_desktopdir/%name.desktop
-
-%_datadir/icons/hicolor/48x48/apps/%name.png
-%_datadir/icons/hicolor/64x64/apps/%name.png
-%_datadir/icons/hicolor/128x128/apps/%name.png
-%_datadir/icons/hicolor/256x256/apps/%name.png
-%_datadir/icons/hicolor/512x512/apps/%name.png
 %endif
 
 %changelog
+* Tue Aug 19 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.16-alt1
+- correct icon handling in Wayland (thx Semen Fomchenkov)
+- use standard Alterator icon (thx Semen Fomchenkov)
+
 * Thu Jul 10 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.15-alt1
 - restricted to single instance
 - unknown objects not being displaying
