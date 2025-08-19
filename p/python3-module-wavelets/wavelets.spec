@@ -6,7 +6,7 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Wavelet Transforms in Python
@@ -86,7 +86,7 @@ pytest-3 pywt/tests --verbose -p no:cacheprovider \
 popd &>/dev/null
 
 %files
-%doc LICENSE LICENSES_bundled.txt README.rst
+%doc LICENSE README.rst
 %python3_sitelibdir/pywt
 %python3_sitelibdir/pywavelets-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
@@ -95,6 +95,9 @@ popd &>/dev/null
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- Automatically updated to 1.9.0.
+
 * Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
 - Automatically updated to 1.8.0.
 
