@@ -1,77 +1,68 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+
+Name: plexus-io
+Version: 3.5.1
+Release: alt1
+
+Summary: Plexus IO Components
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: https://github.com/codehaus-plexus/plexus-io
+VCS: https://github.com/codehaus-plexus/plexus-io.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+
+BuildRequires: /proc
+BuildRequires: rpm-build-java-osgi
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           plexus-io
-Version:        3.2.0
-Release:        alt1_9jpp11
-Summary:        Plexus IO Components
-License:        ASL 2.0
-URL:            https://github.com/codehaus-plexus/plexus-io
-BuildArch:      noarch
-
-Source0:        https://github.com/codehaus-plexus/plexus-io/archive/plexus-io-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-%endif
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 
 %description
 Plexus IO is a set of plexus components, which are designed for use
 in I/O operations.
 
-%package        javadoc
+%package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
-%description    javadoc
-API documentation for %{name}.
+%description javadoc
+API documentation for %name.
 
 %prep
-%setup -q -n plexus-io-plexus-io-%{version}
-cp %{SOURCE1} .
-
-%pom_remove_plugin :animal-sniffer-maven-plugin
-
-# Test fails in mock
-sed -i /class/i@org.junit.Ignore src/test/java/org/codehaus/plexus/components/io/attributes/SymlinkUtilsTest.java
+%setup
 
 %build
-%mvn_file  : plexus/io
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_file  : plexus/plexus-io plexus/io
+
+%mvn_build -f -- -Dmaven.compiler.source=1.8 \
+  -Dmaven.compiler.target=1.8 \
+  -Dmaven.javadoc.source=1.8 \
+  -Dmaven.compiler.release=8 \
+  #
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt
 
 %changelog
+* Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 3.5.1-alt1
+- New version.
+- Rename artifact.
+
 * Thu Jul 07 2022 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_9jpp11
 - fixed build
 

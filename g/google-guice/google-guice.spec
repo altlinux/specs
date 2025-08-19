@@ -1,7 +1,8 @@
 Name:    google-guice
 Version: 5.1.0
-Release: alt1
+Release: alt2
 Epoch:   0
+
 Summary: Lightweight dependency injection framework for Java 5 and above
 License: Apache-2.0
 Group:   Development/Java
@@ -176,7 +177,11 @@ and above. This package provides Bill of Materials module for Guice.
 %mvn_install
 install -Dpm0644 %SOURCE2 %buildroot%_datadir/maven-metadata/google-guice-guice.xml
 
+ln -s %_javadir/guice/google-guice.jar \
+  %buildroot%_javadir/guice/guice.jar
+
 %files -n %{?module_prefix}%{name} -f .mfiles-guice
+%_javadir/guice/guice.jar
 %files -n guice-parent -f .mfiles-guice-parent
 %files -n guice-assistedinject -f .mfiles-guice-assistedinject
 %files -n guice-extensions -f .mfiles-extensions-parent
@@ -188,6 +193,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/maven-metadata/google-guice-guice.
 %files -n guice-bom -f .mfiles-guice-bom
 
 %changelog
+* Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 0:5.1.0-alt2
+- Create a symlink with the correct artifact name.
+
 * Mon Aug 04 2025 Andrey Cherepanov <cas@altlinux.org> 0:5.1.0-alt1
 - New version.
 

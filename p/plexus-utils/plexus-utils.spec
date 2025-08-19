@@ -1,47 +1,26 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+
+Name: plexus-utils
+Version: 4.0.2
+Release: alt1
+
+Summary: Plexus Common Utilities
+License: Apache-2.0
 Group: Development/Java
-AutoReq: yes,noosgi
+Url: https://codehaus-plexus.github.io/plexus-utils/
+Vcs: https://github.com/codehaus-plexus/plexus-utils.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
+BuildRequires: /proc
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           plexus-utils
-Version:        3.3.0
-Release:        alt1_7jpp11
-Summary:        Plexus Common Utilities
-# ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
-# xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
-# ASL 2.0 and BSD:
-#      src/main/java/org/codehaus/plexus/util/cli/StreamConsumer
-#      src/main/java/org/codehaus/plexus/util/cli/StreamPumper
-#      src/main/java/org/codehaus/plexus/util/cli/Commandline            
-# Public domain: src/main/java/org/codehaus/plexus/util/TypeFormat.java
-# rest is ASL 2.0
-License:        ASL 1.1 and ASL 2.0 and xpp and BSD and Public Domain
-URL:            https://codehaus-plexus.github.io/plexus-utils/
-BuildArch:      noarch
-
-Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        http://apache.org/licenses/LICENSE-2.0.txt
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
-%endif
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
+BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -54,11 +33,9 @@ is like a J2EE application server, without all the baggage.
 %{?javadoc_package}
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-cp %{SOURCE1} .
-
-%mvn_file : plexus/utils
+%mvn_file : plexus/plexus-utils plexus/utils
 %mvn_alias : plexus:plexus-utils
 
 # Generate OSGI info
@@ -77,15 +54,23 @@ cp %{SOURCE1} .
         </plugin>"
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 \
+  -Dmaven.compiler.target=1.8 \
+  -Dmaven.javadoc.source=1.8 \
+  -Dmaven.compiler.release=8 \
+  #
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference NOTICE.txt LICENSE-2.0.txt
+%doc --no-dereference NOTICE.txt LICENSE.txt
 
 %changelog
+* Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 4.0.2-alt1
+- New version.
+- Rename artifact.
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3.0-alt1_7jpp11
 - update
 
