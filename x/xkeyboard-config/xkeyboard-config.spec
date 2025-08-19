@@ -1,7 +1,7 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
 Version: 2.45
-Release: alt2
+Release: alt3
 Epoch: 1
 License: X11/MIT
 Group: System/X11
@@ -48,20 +48,18 @@ done
 %meson_install
 
 rm -f %buildroot%_datadir/X11/xkb/compiled
+rm -f %buildroot%_datadir/X11/xkb
+cp -a %buildroot%_datadir/%name-2 %buildroot%_datadir/X11/xkb
 
-%find_lang %name-2 %name
+%find_lang --output=%name.lang %name-2 %name
 
 %pre
 [ ! -d %_datadir/X11/xkb/symbols/pc ] || rm -fr %_datadir/X11/xkb/symbols/pc
-[ -L %_datadir/X11/xkb ] || rm -fr %_datadir/X11/xkb
-
-%post
-ln -sf %_datadir/%name-2 %_datadir/X11/xkb ||:
 
 %files -f %name.lang
 %doc AUTHORS README.md COPYING
 %doc docs/README.config docs/README.enhancing docs/README.symbols
-%ghost %_datadir/X11/xkb
+%_datadir/X11/xkb
 %_datadir/%name-2
 %_man7dir/*.7*
 
@@ -69,6 +67,9 @@ ln -sf %_datadir/%name-2 %_datadir/X11/xkb ||:
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 19 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.45-alt3
+- fixed update from previous version (closes: #55646)
+
 * Mon Aug 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.45-alt2
 - fixed replacing directory with symbolic link
 
