@@ -51,7 +51,7 @@
 
 Name:    golang
 Version: 1.25.0
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -61,6 +61,7 @@ Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
 Patch3:  go-never-download-newer-toolchains.patch
+Patch4:  go-env-nodwarf5.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
 
 ExclusiveArch: %go_arches
@@ -167,6 +168,7 @@ AutoReq: noshell, noshebang
 
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch101 -p1
 
 %build
@@ -376,6 +378,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Tue Aug 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt2
+- Disabled dwarf5 debugdata collection (ALT#55626).
+
 * Wed Aug 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt1
 - New version (1.25.0).
 
