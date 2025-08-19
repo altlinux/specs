@@ -1,20 +1,21 @@
 %def_with cmake
 
 Name: angelscript
-Version: 2.37.0
-Release: alt2
+Version: 2.38.0
+Release: alt1
 
 Summary: Flexible cross-platform scripting library
 
 License: Zlib
 Group: System/Libraries
 Url: https://www.angelcode.com/angelscript/
-Vcs: git://github.com/codecat/angelscript-mirror.git
+Vcs: https://github.com/anjo76/angelscript
 
 Source: %name-%version.tar.gz
 # Source-url: %url/sdk/files/%{name}_%version.zip
 
-Patch: angelscript-2.37.0-alt-cmake-riscv64.patch
+Patch0: %name-%version-%release.patch
+Patch1: angelscript-2.37.0-alt-cmake-riscv64.patch
 
 %if_with cmake
 BuildRequires(pre): rpm-build-ninja
@@ -54,33 +55,34 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 sed -i 's|lib/cmake/Angelscript|%_lib/cmake/Angelscript|' \
-  %name/projects/cmake/CMakeLists.txt
+  sdk/%name/projects/cmake/CMakeLists.txt
 sed -i '/DESTINATION/s|lib|%_lib|g' \
-  %name/projects/cmake/CMakeLists.txt
-%patch -p2
+  sdk/%name/projects/cmake/CMakeLists.txt
 
 %build
 %add_optflags -fno-strict-aliasing
 %if_with cmake
-cd %name/projects/cmake/
+cd sdk/%name/projects/cmake/
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DBUILD_SHARED_LIBS:BOOL=ON
 %cmake_build
 %else
-cd %name/projects/meson/
+cd sdk/%name/projects/meson/
 %meson
 %meson_build
 %endif
 
 %install
 %if_with cmake
-cd %name/projects/cmake/
+cd sdk/%name/projects/cmake/
 %cmake_install
 %else
-cd %name/projects/meson/
+cd sdk/%name/projects/meson/
 %meson_install
 %endif
 
@@ -88,7 +90,7 @@ cd %name/projects/meson/
 %_libdir/lib%name.so.%version
 
 %files -n lib%name-devel
-%doc docs/articles/*.html
+%doc sdk/docs/articles/*.html
 %_libdir/lib%name.so
 %_includedir/%name.h
 %if_with cmake
@@ -97,6 +99,10 @@ cd %name/projects/meson/
 %endif
 
 %changelog
+* Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.38.0-alt1
+- New version 2.38.0.
+- Updated vcs tag.
+
 * Mon Sep 23 2024 Ivan A. Melnikov <iv@altlinux.org> 2.37.0-alt2
 - Add cmake build patch for riscv64 (by k0tran@).
 
