@@ -1,10 +1,11 @@
+Epoch: 1
 %define oname cobs
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt1
+Version: 1.2.1
+Release: alt1.1
 
 Summary: Consistent Overhead Byte Stuffing (COBS)
 
@@ -62,6 +63,9 @@ python3 -m cobs.cobsr.test
 %python3_sitelibdir/*/*/*/test.*
 
 %changelog
+* Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 1:1.2.1-alt1.1
+- Automatically updated to 1.2.1.
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
 - Automatically updated to 1.2.2.
 
