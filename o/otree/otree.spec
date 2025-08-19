@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: otree
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Summary: A command line tool to view objects (JSON/YAML/TOML) in TUI tree widget. 
 License: MIT
@@ -28,6 +28,12 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/fioncat/tui-rs-tree-widget?branch=main#407fd9005271d93ae2411ec0231a51e7f5e070f9"]
+git = "https://github.com/fioncat/tui-rs-tree-widget"
+branch = "main"
+rev = "407fd9005271d93ae2411ec0231a51e7f5e070f9"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "vendor"
 EOF
@@ -46,6 +52,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon Aug 18 2025 Pavel Shilov <zerospirit@altlinux.org> 0.5.0-alt1
+- 0.4.0 -> 0.5.0
+
 * Thu Jul 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.0-alt1
 - Update version based on upstream
 

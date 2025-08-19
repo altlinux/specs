@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tukai
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: Terminal based touch typing application.
 License: MIT
@@ -43,5 +43,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Aug 19 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.3-alt1
+- 0.2.2 -> 0.2.3
+
 * Thu Jul 31 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.2-alt1
 - Initial build for Alt.
