@@ -1,7 +1,7 @@
 %global import_path github.com/Owloops/updo
 
 Name: updo
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Uptime monitoring CLI tool
@@ -31,6 +31,8 @@ tar -xf %SOURCE2 -C lambda/
 subst 's|dev|%version|' main.go
 subst 's|unknown||' main.go
 
+rm aws/bootstrap.zip
+
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -57,6 +59,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Aug 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.3-alt1
+- 0.4.2 -> 0.4.3
+
 * Sat Aug 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.2-alt1
 - 0.4.1 -> 0.4.2
 
