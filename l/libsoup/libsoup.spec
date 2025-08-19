@@ -17,7 +17,7 @@
 
 Name: libsoup
 Version: %ver_major.3
-Release: alt2
+Release: alt2.1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
@@ -31,12 +31,21 @@ Source: %name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
-
 Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
 Patch1: %name-2.66.1-alt-compat-map.patch
+
+# this is two debian CVE-2025-32911-{1,2} patches
+# https://sources.debian.org/patches/libsoup2.4/2.74.3-10.1/CVE-2025-32911-1.patch
+# https://sources.debian.org/patches/libsoup2.4/2.74.3-10.1/CVE-2025-32911-2.patch
+# first fixes CVE-2025-32911
+# based on 7b4ef0e004ece3a308ccfaa714c284f4c96ade34
+Patch10: libsoup-3.6-up-CVE-2025-32911.patch
+# second fixes CVE-2025-32913
+# based on f4a761fb66512fff59798765e8ac5b9e57dceef0
+Patch11: libsoup-3.6-up-CVE-2025-32913.patch
 
 Requires: glib-networking >= 2.63.90
 
@@ -172,6 +181,8 @@ part of Soup library.
 %setup
 install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %patch1 -p1 -b .map
+%patch10 -p1
+%patch11 -p1
 
 %build
 %ifarch %e2k
@@ -241,6 +252,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Aug 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt2.1
+- fixed CVE-2025-32911, CVE-2025-32913 (ALT #55653)
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt2
 - updated to 2.74.3-17-g5739a090 (fixed CVE-2024-52530, CVE-2024-52531,
   CVE-2024-52532, CVE-2025-2784, CVE-2025-32050,
