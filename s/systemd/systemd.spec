@@ -70,6 +70,7 @@
 %def_enable kill_user_processes
 
 %def_enable sysusers
+%def_enable tcb
 %def_disable ldconfig
 %def_disable firstboot
 %def_enable standalone_binaries
@@ -99,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -226,6 +227,7 @@ BuildRequires: pkgconfig(bash-completion)
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
 %{?_enable_passwdqc:BuildRequires: pkgconfig(passwdqc)}
 %{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.1.0 /usr/bin/clang /usr/bin/llvm-strip bpftool}
+%{?_enable_tcb:BuildRequires: libtcb-devel}
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
@@ -844,6 +846,7 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_timesyncd:-Dtimesyncd=true} \
         -Dntp-servers="" \
         %{?_enable_sysusers:-Dsysusers=true} \
+        %{?_enable_tcb:-Dtcb=true} \
         %{?_enable_ldconfig:-Dldconfig=true} \
         -Dbootloader=%{?_enable_bootloader:enabled}%{!?_enable_bootloader:disabled} \
         -Dukify=%{?_enable_bootloader:enabled}%{!?_enable_bootloader:disabled} \
@@ -2605,8 +2608,14 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Aug 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.8-alt1
+- 257.8.
+
 * Thu Jun 26 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.7-alt1
 - 257.7.
+
+* Fri Jun 06 2025 Maria Alexeeva <alxvmr@altlinux.org> 1:257.6-alt2
+- Add tcb support in sysusers.
 
 * Fri May 30 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.6-alt1
 - 257.6 (Fixes: CVE-2025-4598).
