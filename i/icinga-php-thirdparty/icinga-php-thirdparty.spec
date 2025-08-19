@@ -14,7 +14,7 @@
 %global basedir %_datadir/icinga-php/vendor
 
 Name:           icinga-php-thirdparty
-Version:        0.12.1
+Version:        0.13.1
 Release:        alt1
 Summary:        Icinga PHP Thirdparty for Icinga Web 2
 License:        MIT
@@ -60,6 +60,9 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt1
+- New version 0.13.1.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.12.1-alt1
 - New version 0.12.1.
 

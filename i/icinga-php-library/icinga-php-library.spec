@@ -14,7 +14,7 @@
 %global basedir %_datadir/icinga-php/ipl
 
 Name:           icinga-php-library
-Version:        0.16.0
+Version:        0.17.0
 Release:        alt1
 Summary:        Icinga PHP Library for Icinga Web 2
 License:        MIT
@@ -55,6 +55,9 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.16.0-alt1
 - New version 0.16.0.
 

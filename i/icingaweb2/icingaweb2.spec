@@ -19,7 +19,7 @@
 %define webdir %_var/www/vhosts/%name
 
 Name:           icingaweb2
-Version:        2.12.4
+Version:        2.12.5
 Release:        alt1
 
 Summary:        Icinga Web
@@ -32,6 +32,8 @@ Vcs:            https://github.com/Icinga/icingaweb2.git
 Source0:        https://github.com/Icinga/icingaweb2/archive/v%version/%name-%version.tar
 Patch0:         icingaweb2-skip-etc-open.patch
 Patch1:         icingaweb2-cli-stderr.patch
+Patch2:         icingaweb2-fix-setup-fpm-flag.patch
+Patch3:         icingaweb2-token-chgrp-alt.patch
 
 Requires:       icinga-l10n >= 1.1.0
 Requires:       icinga2-common
@@ -141,6 +143,8 @@ Classic styles (branding) for Icinga Web 2.
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
+%patch3 -p2
 
 %build
 cat <<EOF >%name-php-fpm.conf
@@ -182,7 +186,7 @@ EOF
 bin/icingacli setup config webserver nginx \
 			  --document-root %_datadir/%name/public \
 			  --config %_sysconfdir/%name \
-			  --fpm-uri 'unix:%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' | \
+			  --fpm-socket-path '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' | \
 	sed -e 's/^.\+$/    &/' \
 	    >>nginx-%name.conf
 cat <<EOF >>nginx-%name.conf
@@ -232,6 +236,9 @@ if [ $1 -eq 1 ]; then
 	ln -sr %_sysconfdir/nginx/sites-available.d/%name.conf \
 	   %_sysconfdir/nginx/sites-enabled.d/
 fi
+
+%check
+grep -F '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' ./nginx-icingaweb2.conf
 
 %files
 %doc CHANGELOG.md
@@ -296,6 +303,11 @@ fi
 %_datadir/%name/public/css
 
 %changelog
+* Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.5-alt1
+- New version 2.12.5.
+- Fixed --fpm-socket-path setup CLI flag (thx Jan Schuppik).
+- Fix: Make /etc/icingaweb2/setup.token be owned by 'icingaweb2' group.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.4-alt1
 - New version 2.12.4 (fixes: CVE-2025-27405, CVE-2025-27404,
   CVE-2025-30164, CVE-2025-27609).
