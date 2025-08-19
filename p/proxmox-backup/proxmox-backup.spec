@@ -12,8 +12,8 @@
 %endif
 
 Name: proxmox-backup
-Version: 3.3.3.1
-Release: alt5
+Version: 4.0.14.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -107,16 +107,6 @@ This package contains the Proxmox Backup Documentation files.
 %setup
 rm -f docs/installation.rst
 
-# PATCH: downgrade 'http' version in 'h2' crate (which requires 'http = "1"')
-# Otherwise it conflicts with proxmox-http (from proxmox.git),
-# which depends on 'http = "0.2"'
-# Basically, their versions of 'http' should match.
-# So, erase/update this patch whenever proxmox.git catches up with latest 'http' version
-# (Upstream packages only 'http' 0.2.12. ArchLinux - patches 'h2' dependency too)
-sed -i -e '/^\[dependencies\.http\]$/{n; s/version *= *"[^"]*"/version = "0.2.12"/}' vendor/h2/Cargo.toml
-CHKSUM=$(sha256sum vendor/h2/Cargo.toml | cut -d' ' -f1)
-sed -i -e "s|Cargo.toml\":\"[^\"]*|Cargo.toml\":\"$CHKSUM|" vendor/h2/.cargo-checksum.json
-
 %build
 export REPOID=alt
 export BUILD_MODE=release
@@ -162,7 +152,7 @@ ln -s system-auth %buildroot%_sysconfdir/pam.d/proxmox-backup-auth
 
 # Cleanup
 rm -f %buildroot%_libexecdir/%name/%name-banner
-rm -f %buildroot%_man1dir/pbs2to3.1*
+rm -f %buildroot%_man1dir/pbs3to4.1*
 
 %pre file-restore
 groupadd -r -g 37 -f %proxy_user > /dev/null 2>&1 ||:
@@ -175,6 +165,15 @@ usermod -a -G tape %proxy_user ||:
 
 %post server
 %post_systemd_postponed %name.service %name-proxy.service
+
+%triggerun server -- %name-server < 4.0.0.0
+if [ $2 -gt 0 ]; then
+    # This is upgrade from PBS 3.
+	proxmox-backup-manager migrate-config default-notification-mode \
+			    || echo "Failed migrate tape-job/datastore notification mode, please check manually"
+    # ensure old locking is used by the daemon until a reboot happened
+    touch "/run/proxmox-backup/old-locking"
+fi
 
 %preun server
 %preun_systemd %name.service %name-proxy.service %name-daily-update.timer
@@ -245,6 +244,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Mon Aug 18 2025 Sergey Konev <darisishe@altlinux.org> 1:4.0.14.1-alt1
+- 4.0.14-1
+
 * Wed Mar 26 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.3.3.1-alt5
 - Put errors from running qemu to log file.
 - Removed pkgconf requirement based on repository name.

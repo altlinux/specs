@@ -2,16 +2,13 @@
 
 Name: proxmox-backup-qemu
 Summary: Proxmox Backup Server client library for QEMU
-Version: 1.5.1
-Release: alt2
+Version: 2.0.1
+Release: alt1
 License: AGPL-3.0+
 Group: Archiving/Backup
 Url: https://git.proxmox.com/?p=proxmox-backup-qemu.git
 Vcs: git://git.proxmox.com/git/proxmox-backup-qemu.git
 Source: %name-%version.tar
-
-Patch1: vendored-nix-loongarch64-support.patch
-Patch2: vendored-nix-0.23-loongarch64-support.patch
 
 ExclusiveArch: x86_64 aarch64 ppc64le riscv64 loongarch64
 
@@ -19,7 +16,7 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(openssl)
-BuildRequires: libfuse3-devel libacl-devel libuuid-devel
+BuildRequires: libfuse3-devel libacl-devel libuuid-devel libsystemd-devel
 BuildRequires: /proc
 
 %description
@@ -59,27 +56,12 @@ within QEMU.
 # git add -f vendor Cargo.lock ...
 %setup
 
-%autopatch -p1
-
 # PATCH: libexecdir for 'file-restore'
 sed -i -e 's|/usr/lib/x86_64-linux-gnu/proxmox-backup/file-restore|/usr/libexec/proxmox-backup/file-restore|' vendor/pbs-buildcfg/src/lib.rs
 
-
-# PATCH: downgrade 'http' version in 'h2' crate (which requires 'http = "1"')
-# Otherwise it conflicts with proxmox-http (from proxmox.git),
-# which depends on 'http = "0.2"'
-# Basically, their versions of 'http' should match.
-# So, erase/update this patch whenever proxmox.git catches up with latest 'http' version
-# (Upstream packages only 'http' 0.2.12. ArchLinux - patches 'h2' dependency too)
-sed -i -e '/^\[dependencies\.http\]$/{n; s/version *= *"[^"]*"/version = "0.2.12"/}' vendor/h2/Cargo.toml
-
-
 # allow patching vendored rust code
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-	vendor/nix/.cargo-checksum.json \
-	vendor/nix-0.23.2/.cargo-checksum.json \
-	vendor/pbs-buildcfg/.cargo-checksum.json \
-	vendor/h2/.cargo-checksum.json
+	vendor/pbs-buildcfg/.cargo-checksum.json
 
 %build
 export REPOID=alt
@@ -99,6 +81,9 @@ ln -s libproxmox_backup_qemu.so.0 %buildroot%_libdir/libproxmox_backup_qemu.so
 %_libdir/*.so
 
 %changelog
+* Mon Aug 18 2025 Sergey Konev <darisishe@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt2
 - NMU: build on loongarch64
 
