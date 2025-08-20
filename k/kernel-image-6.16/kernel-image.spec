@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 21 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.2-alt1
+- v6.16.2 (2025-08-20).
+- config: Enable RTRS and Security Infiniband options.
+- config: Enable CONFIG_MLX5_DPLL=m.
+- config: Enable NVMe TCP TLS and AUTH for host and target.
+
 * Fri Aug 15 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.1-alt1
 - v6.16.1 (2025-08-15).
 - kiosk: add secureexec parameter.
