@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: lnav
-Version: 0.11.0
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: The log file navigator
 License: BSD
 Group: File tools
+Url: https://github.com/tstack/lnav
+Vcs: http://lnav.org
 
-Url: http://lnav.org
 Source0: %{name}-%{version}.tar.bz2
 Source1: %name.watch
 Patch0: lnav-0.4.0-alt-fixes.patch
@@ -58,6 +61,9 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 0.13.0-alt1
+- New version 0.13.0.
+
 * Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.0-alt3
 - NMU: fixed FTBFS on LoongArch
 
