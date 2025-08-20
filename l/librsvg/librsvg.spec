@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.60
+%define ver_major 2.61
 %define namespace Rsvg
 %define api_ver 2.0
 %define gtk_api_ver 2.0
@@ -35,7 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 # since 2.55 no longer contains vendored Rust dependencies
 %{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
-%define rust_ver 1.77.2
+%define rust_ver 1.85.1
 %define cargo_c_ver 0.9.19
 %define glib_ver 2.52.0
 %define pango_ver 1.46
@@ -46,7 +46,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define freetype_ver 2.9
 %define harfbuzz_ver 2.0.0
 
-BuildRequires: rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
+BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson /proc rust >= %rust_ver rust-cargo rust-cargo-c >= %cargo_c_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
@@ -207,6 +207,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.0-alt1
+- 2.61.0
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.60.0-alt1
 - 2.60.0
 
