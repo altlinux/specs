@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name Flask
+%define pypi_nname flask
 %define mod_name flask
 
 %def_with check
 
-Name: python3-module-%mod_name
-Version: 3.1.1
+Name: python3-module-%pypi_nname
+Version: 3.1.2
 Release: alt1
 
 Summary: Flask is a lightweight WSGI web application framework
@@ -56,11 +57,14 @@ frameworks.
 
 %files
 %doc LICENSE.txt CHANGES.rst README.md
-%_bindir/%mod_name
+%_bindir/flask
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 20 2025 Anton Zhukharev <ancieg@altlinux.org> 3.1.2-alt1
+- Updated to 3.1.2.
+
 * Tue May 20 2025 Anton Zhukharev <ancieg@altlinux.org> 3.1.1-alt1
 - Updated to 3.1.1 (fixes CVE-2025-47278).
 
