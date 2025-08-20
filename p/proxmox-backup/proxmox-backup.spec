@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 4.0.14.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -26,7 +26,7 @@ Source6: basealt_logo.png
 Source8: basealt_favicon.ico
 Source9: basealt_logo-128.png
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd rpm-macros-javascript
 BuildRequires: rpm-build-rust clang-devel
@@ -244,6 +244,9 @@ fi
 %_datadir/doc/%name
 
 %changelog
+* Wed Aug 20 2025 Ivan A. Melnikov <iv@altlinux.org> 1:4.0.14.1-alt2
+- NMU: Build on loongarch64.
+
 * Mon Aug 18 2025 Sergey Konev <darisishe@altlinux.org> 1:4.0.14.1-alt1
 - 4.0.14-1
 
