@@ -3,7 +3,7 @@
 
 Name: libtag
 Version: 1.13.1
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -15,6 +15,8 @@ Provides: %rname = %version-%release
 Source0: %rname-%version.tar
 Source2: version-script.libtag
 
+# upstream
+Patch1: 0001-Fix-crash-with-invalid-WAV-files-1163-1164.patch
 # SuSE
 Patch2: taglib-1.8-ds-rusxmms-r2.patch
 # ALT
@@ -55,6 +57,7 @@ library.
 %prep
 %setup -q -n %rname-%version
 install -m0644 %SOURCE2 ./
+%patch1 -p1
 #%patch2 -p1
 %patch10 -p1
 
@@ -103,6 +106,9 @@ __EOF__
 %_includedir/taglib/*.tcc
 
 %changelog
+* Wed Aug 20 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt5
+- add fix against crash with invalid WAV files (fixes: CVE-2023-47466)
+
 * Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt4
 - fix provides
 
