@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.42
+%define kernel_sublevel	.43
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 21 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.43-alt1
+- v6.12.43 (2025-08-20).
+- config: Enable RTRS and Security Infiniband options.
+- config: Enable more VFIO drivers.
+- config: Enable more Mellanox ConnectX options.
+- config: Enable NVMe TCP TLS and AUTH for host and target.
+
 * Fri Aug 15 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.42-alt1
 - v6.12.42 (2025-08-15).
 - pcie-baikal: forced enable dma-coherent for pcie on Baikal-M.
