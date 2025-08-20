@@ -4,18 +4,20 @@
 %def_with python_ext
 
 Name: vapoursynth
-Version: 71
-Release: alt1.1
+Version: 72
+Release: alt1
 
 Summary: Video processing framework with simplicity in mind
 
-License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
+License: WTFPL and LGPL-2.1-or-later and OFL-1.1 and GPL-2.0-or-later
 Group: Video
-Url: http://www.vapoursynth.com
-Vcs: git://github.com/vapoursynth/vapoursynth.git
+Url: https://www.vapoursynth.com
+Vcs: https://github.com/vapoursynth/vapoursynth
 
 Source: https://github.com/%name/%name/archive/R%version/%name-R%version.tar.gz
-Patch: %name-version-info.patch
+Patch0: %name-%version-%release.patch
+Patch1: %name-version-info.patch
+Patch2: %name-72-upstream-cython-31.patch
 
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Mon Oct 30 2023
@@ -76,7 +78,11 @@ This package contains the vspipe tool for interfacing with VapourSynth.
 
 %prep
 %setup -n %name-R%version
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%if "%(rpmquery --qf '%%{VERSION}' python3-module-Cython)" < "3.1.0"
+%patch2 -p1 -R
+%endif
 
 sed -i 's|#!/usr/bin/env python|#!%__python3|' setup.py
 
@@ -138,6 +144,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/vspipe
 
 %changelog
+* Wed Aug 20 2025 Leontiy Volodin <lvol@altlinux.org> 72-alt1
+- New version 72.
+- Prevented build error with cython less 3.1.0.
+- Updated license tag.
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 71-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

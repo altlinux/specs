@@ -2,7 +2,7 @@
 %define gname zimg
 
 Name: zimg
-Version: 3.0.5
+Version: 3.0.6
 Release: alt1
 
 Summary: Scaling, color space conversion, and dithering library
@@ -10,10 +10,12 @@ Summary: Scaling, color space conversion, and dithering library
 License: WTFPL
 Group: System/Libraries
 Url: https://github.com/sekrit-twc/zimg
+VCS: https://github.com/sekrit-twc/zimg
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/release-%version/%gname-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ autoconf automake libtool
 
@@ -51,6 +53,7 @@ developing applications that use %name.
 
 %prep
 %setup -n zimg-release-%version
+%patch -p1
 
 %build
 autoreconf -vif
@@ -79,6 +82,11 @@ rm -fr %buildroot%_docdir/%gname
 %_pkgconfigdir/%gname.pc
 
 %changelog
+* Wed Aug 20 2025 Leontiy Volodin <lvol@altlinux.org> 3.0.6-alt1
+- New version 3.0.6.
+- Added VCS tag.
+- Applied fixes for gcc15 (by upstream).
+
 * Thu Jul 13 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.5-alt1
 - New version 3.0.5.
 
