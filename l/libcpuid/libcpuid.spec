@@ -1,9 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 %define git %nil
+%define pypi_version 0.1.0
 
 Name: libcpuid
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: libcpuid provides CPU identification
 License: BSD-2-Clause
@@ -12,13 +13,15 @@ Url: https://github.com/anrieff/libcpuid
 Vcs: https://github.com/anrieff/libcpuid.git
 Source: libcpuid-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-cffi-alt-build.patch
 
 ExclusiveArch: %ix86 x86_64
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++
 BuildRequires: doxygen graphviz
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel python3-module-cffi
 
 %description
 %summary.
@@ -41,17 +44,34 @@ Group: Development/Kernel
 %description -n kernel-source-cpuid
 cpuid kernel driver for arm64.
 
+%package -n python3-module-%name
+Summary: python3 bindings for %name
+Group: Development/Python3
+Version: %pypi_version
+
+%description -n python3-module-%name
+This package provides Python bindings to the C library of the same name. Its
+main feature is CPU identification for the x86 and ARM architectures.
+
 %prep
 %setup
 %autopatch -p1
 subst 's,lib\/cmake\/,${LIB_DESTINATION}/cmake/,' libcpuid/CMakeLists.txt
+subst 's,@CMAKE_BUILD@,%_cmake__builddir,' python/src/%name/_ffi_build.py
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 %cmake_build
 
+pushd python
+%pyproject_build
+popd
+
 %install
 %cmake_install
+pushd python
+%pyproject_install
+popd
 
 #%%ifarch aarch64
 #mkdir -p %kernel_srcdir
@@ -72,12 +92,20 @@ subst 's,lib\/cmake\/,${LIB_DESTINATION}/cmake/,' libcpuid/CMakeLists.txt
 %_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
 
+%files -n python3-module-%name
+%python3_sitelibdir/%name
+%python3_sitelibdir/%{name}*.dist-info
+
 #%%ifarch aarch64
 #%%files -n kernel-source-cpuid
 #%%attr(0644,root,root) %kernel_src/kernel-source-cpuid-%version.tar.bz2
 #%%endif
 
 %changelog
+* Wed Aug 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.8.1-alt1
+- 0.8.1.
+- Added python bindings.
+
 * Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 0.8.0-alt1
 - New version 0.8.0.
 
