@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 141.0
+Version: 142.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -23,8 +23,6 @@ License: MPL-2.0
 Group: Networking/Mail
 URL: https://www.thunderbird.net
 ExclusiveArch: %thunderbird_arches
-
-Packager: Ajrat Makhmutov <rauty@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: thunderbird.cpp
@@ -386,6 +384,17 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Aug 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 142.0-alt1
+- New version.
+- Fixes:
+  + CVE-2025-9179: Sandbox escape due to invalid pointer in the Audio/Video: GMP component
+  + CVE-2025-9180: Same-origin policy bypass in the Graphics: Canvas2D component
+  + CVE-2025-9181: Uninitialized memory in the JavaScript Engine component
+  + CVE-2025-9182: Denial-of-service due to out-of-memory in the Graphics: WebRender component
+  + CVE-2025-9187: Memory safety bugs fixed in Firefox 142 and Thunderbird 142
+  + CVE-2025-9184: Memory safety bugs fixed in Firefox ESR 140.2, Thunderbird ESR 140.2, Firefox 142 and Thunderbird 142
+  + CVE-2025-9185: Memory safety bugs fixed in Firefox ESR 115.27, Firefox ESR 128.14, Thunderbird ESR 128.14, Firefox ESR 140.2, Thunderbird ESR 140.2, Firefox 142 and Thunderbird 142
+
 * Tue Jul 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 141.0-alt1
 - New version.
 - Fixes:
