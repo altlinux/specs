@@ -2,8 +2,8 @@
 %define abiversion 2
 
 Name: netopeer2
-Version: 2.4.1
-Release: alt2
+Version: 2.4.5
+Release: alt1
 Summary: NETCONF server implementation in C.
 License: BSD-3-Clause
 Group: Networking/Other
@@ -101,6 +101,9 @@ export CFLAGS="%optflags"
 %_man1dir/%name-cli.1.*
 
 %changelog
+* Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 2.4.5-alt1
+- New version 2.4.5.
+
 * Thu Aug 07 2025 Ivan A. Melnikov <iv@altlinux.org> 2.4.1-alt2
 - NMU: don't require valgrind on architectures that it
   does not support (fixes FTBFS on loongarch64).
