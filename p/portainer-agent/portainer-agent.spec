@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.32.0
+Version: 2.33.0
 Release: alt1
 
 Summary: Agent for portainer
@@ -7,7 +7,7 @@ Summary: Agent for portainer
 License: Zlib
 Group: System/Configuration/Other
 Url: https://www.portainer.io
-Vcs: https://github.com/portainer/agent.git
+Vcs: https://github.com/portainer/agent
 
 Source: %url/archive/%version/%name-%version.tar.gz
 # go mod vendor
@@ -21,7 +21,7 @@ BuildRequires: rpm-build-golang /proc
 
 %prep
 %setup -a1
-%autopatch -p1
+%patch -p1
 
 %build
 go build \
@@ -40,6 +40,10 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Wed Aug 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.0-alt1
+- New LTS version 2.33.0 (Fixes: CVE-2025-54388, CVE-2025-8556,
+  GHSA-fv92-fjc5-jj9h).
+
 * Thu Jul 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.32.0-alt1
 - New version 2.32.0 (Fixes: CVE-2025-53547, CVE-2025-22874,
   CVE-2025-22781).
