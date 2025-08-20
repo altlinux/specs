@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-webserver
-Version: 1.5.0
-Release: alt4
+Version: 1.6.0
+Release: alt1
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -77,6 +77,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Wed Aug 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt4
 - Build without libgnustep-objc2-devel.
 
