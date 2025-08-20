@@ -1,5 +1,5 @@
 Name: kiosk
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Source: %name-%version.tar
@@ -28,6 +28,9 @@ Utility for managing kiosk mode
 %_man1dir/kiosk.1.xz
 
 %changelog
+* Mon Aug 18 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt1
+- add ability to run applications without enforcing AT_SECURE
+
 * Mon Jun 29 2020 Oleg Solovyov <mcpain@altlinux.org> 0.4-alt1
 - translate kiosk, add manpages
 
