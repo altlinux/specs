@@ -1,20 +1,20 @@
 %define git %nil
 
 Name: xmoto
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: A challenging 2D motocross platform game.
 License: GPLv2
 Group: Games/Arcade
 
-Url: https://xmoto.tuxfamily.org
+Url: https://xmoto.org
+Vcs: https://github.com/xmoto/xmoto.git
 # https://github.com/%name/%name/archive/%version/%version.tar.gz
 Source: %name-%version-src.tar
-Packager: Denis Pynkin <dans@altlinux.ru>
 
-Patch0: %name-0.6.2-alt-system-ode.patch
-Patch1: %name-0.6.1-alt-asian-font-path.patch
+Patch0: %name-0.6.3-alt-system-ode.patch
+Patch1: %name-0.6.3-alt-asian-font-path.patch
 
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
@@ -78,6 +78,11 @@ ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
 %_datadir/%name
 
 %changelog
+* Wed Aug 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.6.3-alt1
+- 0.6.3.
+- Update Url and add Vcs tag.
+- Update -alt patches.
+
 * Wed Mar 29 2023 L.A. Kostis <lakostis@altlinux.ru> 0.6.2-alt1
 - 0.6.2.
 
