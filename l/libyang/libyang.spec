@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: libyang
-Version: 3.12.2
+Version: 3.13.5
 Release: alt1
 Summary: YANG data modeling language library
 Url: https://github.com/CESNET/libyang
@@ -38,7 +38,7 @@ Headers of libyang library.
 %package modules
 Summary: YANG modules for libyang
 Group: System/Libraries
-Conflicts: %name < 3.12.2
+Conflicts: %name < 3.13.5
 
 %description modules
 YANG modules for libyang.
@@ -78,6 +78,9 @@ mkdir -p %buildroot%_datadir/yang
 %_includedir/%name
 
 %changelog
+* Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 3.13.5-alt1
+- New version 3.13.5.
+
 * Fri Jul 04 2025 Pavel Shilov <zerospirit@altlinux.org> 3.12.2-alt1
 - New version 3.12.2.
 

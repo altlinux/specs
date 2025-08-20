@@ -2,8 +2,8 @@
 %define abiversion 7
 
 Name: sysrepo
-Version: 3.6.11
-Release: alt2
+Version: 3.7.11
+Release: alt1
 Summary: YANG-based configuration and operational data store
 License: BSD-3-Clause  
 Group: System/Libraries
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
-BuildRequires: pkgconfig(libyang) >= 2.0.7
+BuildRequires: pkgconfig(libyang)
 
 Requires: %name-tools
 %description
@@ -81,6 +81,9 @@ export CFLAGS="%optflags"
 %_man8dir/*.8.*
 
 %changelog
+* Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 3.7.11-alt1
+- 3.6.11 -> 3.7.11
+
 * Mon Aug 04 2025 Pavel Shilov <zerospirit@altlinux.org> 3.6.11-alt2
 - Added sysrepoctl tool to the sysrepo-tools package.
 

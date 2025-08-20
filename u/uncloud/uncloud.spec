@@ -2,7 +2,7 @@
 %global import_path github.com/psviderski/uncloud
 
 Name: uncloud
-Version: 0.9.0
+Version: 0.11.1
 Release: alt1
 Summary: A lightweight tool for deploying and managing containerised applications across a network of Docker hosts.
 License: Apache-2.0
@@ -44,5 +44,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Aug 20 2025 Pavel Shilov <zerospirit@altlinux.org> 0.11.1-alt1
+- 0.9.0 -> 0.11.1
+
 * Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.9.0-alt1
 - Initian build for Sisyphus.
