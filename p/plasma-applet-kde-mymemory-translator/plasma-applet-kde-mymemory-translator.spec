@@ -3,7 +3,7 @@
 
 Name: plasma-applet-kde-mymemory-translator
 Version: 0.6.9
-Release: alt3
+Release: alt4
 
 Summary: Mymemory translator
 License: GPL-3.0-or-later
@@ -38,7 +38,7 @@ rm -r %nameL/contents/ui/components/GetAPI.qml
 mkdir -p %buildroot%_datadir/plasma/plasmoids/%nameL
 mv %nameL %buildroot%_datadir/plasma/plasmoids/
 
-for locale in es fr hi it ru ja ko nl pt zh_CN zh_TW; do
+for locale in bn es fr hi it ru ja ko nl pt zh_CN zh_TW; do
  msgfmt translate/${locale}.po -o translate/${locale}.mo
  install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
@@ -50,6 +50,9 @@ done
 %_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 
 %changelog
+* Wed Aug 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt4
+- new locale added
+
 * Sat Aug 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt3
 - new locale added
 
