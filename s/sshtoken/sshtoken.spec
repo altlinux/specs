@@ -1,5 +1,5 @@
 Name:           sshtoken
-Version:        0.1
+Version:        0.3
 Release:        alt1
 License:        MIT
 Source:         %name-%version.tar.gz
@@ -39,7 +39,6 @@ rst2man README.rst > %name.1
 
 %install
 %pyproject_install
-install git-credential-ssh -D %buildroot%_bindir/git-credential-ssh
 install git-credential-ssh.1 -D %buildroot%_man1dir/git-credential-ssh.1
 install %name.1 -D %buildroot%_man1dir/%name.1
 
@@ -57,5 +56,8 @@ install %name.1 -D %buildroot%_man1dir/%name.1
 %_man1dir/git-credential-ssh*
 
 %changelog
+* Thu Aug 21 2025 Fr. Br. George <george@altlinux.org> 0.3-alt1
+- Version update
+
 * Sun Aug 17 2025 Fr. Br. George <george@altlinux.org> 0.1-alt1
 - Initial build for ALT
