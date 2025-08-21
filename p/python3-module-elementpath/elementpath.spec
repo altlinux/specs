@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
@@ -54,6 +54,9 @@ sed -i '/license-files/d' pyproject.toml
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.4-alt1
+- Automatically updated to 5.0.4.
+
 * Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.3-alt1
 - Automatically updated to 5.0.3.
 
