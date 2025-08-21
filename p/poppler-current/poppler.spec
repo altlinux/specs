@@ -45,7 +45,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -407,6 +407,10 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Thu Aug 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.02.0-alt4
+- fixed the client crash when attempting to verify a signature via the
+  CryptoPro backend
+
 * Thu Mar 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.02.0-alt3
 - updated the CryptoPro backend
 - display a text about a failed attempt to verify the signature for the
