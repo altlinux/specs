@@ -12,7 +12,7 @@
 %define libkirigamipolyfill libkirigamipolyfill%sover
 
 Name: kf6-kirigami
-Version: 6.15.0
+Version: 6.16.0
 Release: alt1
 %K6init altplace
 
@@ -186,6 +186,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiPolyfill.so.*
 
 %changelog
+* Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
+- new version
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
 - new version
 

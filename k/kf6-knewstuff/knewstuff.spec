@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf6-%rname
-Version: 6.15.0
+Version: 6.16.0
 Release: alt1
 %K6init no_altplace
 
@@ -105,6 +105,9 @@ KF6 library
 
 
 %changelog
+* Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
+- new version
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
 - new version
 

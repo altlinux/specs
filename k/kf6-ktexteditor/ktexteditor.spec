@@ -1,7 +1,7 @@
 %define rname ktexteditor
 
 Name: kf6-%rname
-Version: 6.15.0
+Version: 6.16.0
 Release: alt1
 %K6init no_altplace
 
@@ -95,6 +95,9 @@ mkdir -p %buildroot/%_datadir/katepart6/syntax/
 
 
 %changelog
+* Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
+- new version
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
 - new version
 

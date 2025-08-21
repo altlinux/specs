@@ -1,8 +1,8 @@
 %define rname breeze-icons
 
 Name: kf6-%rname
-Version: 6.15.0
-Release: alt3
+Version: 6.16.0
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -159,6 +159,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
+- new version
+
 * Thu Jul 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt3
 - disable icon generation at build
 
