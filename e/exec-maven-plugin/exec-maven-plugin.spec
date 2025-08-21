@@ -8,11 +8,11 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           exec-maven-plugin
-Version:        3.1.0
-Release:        alt1_1jpp11
+Version:        3.1.1
+Release:        alt1
 Summary:        Exec Maven Plugin
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://www.mojohaus.org/exec-maven-plugin/
 Source0:        https://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/%{version}/exec-maven-plugin-%{version}-source-release.zip
 
@@ -33,6 +33,7 @@ BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
 
 Obsoletes:      maven-plugin-exec < %{version}-%{release}
 Provides:       maven-plugin-exec = %{version}-%{release}
@@ -54,7 +55,6 @@ find . -name *.jar -delete
 #Drop test part. sonatype-aerther not available
 %pom_remove_dep :mockito-core
 %pom_remove_dep :maven-plugin-testing-harness
-%pom_remove_dep :plexus-interpolation
 %pom_remove_dep :slf4j-simple
 
 %pom_remove_plugin :maven-dependency-plugin
@@ -72,6 +72,9 @@ rm -rf src/test/
 %dir %{_javadir}/%{name}
 
 %changelog
+* Wed Aug 20 2025 Anton Meleshnikov <alton@altlinux.org> 3.1.1-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp11
 - new version
 
