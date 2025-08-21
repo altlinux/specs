@@ -15,7 +15,7 @@
 %endif
 
 Name: courier-imap
-Version: 5.2.10
+Version: 5.2.11
 Release: alt1%rev
 
 Summary: IMAP/POP3 server with Maildir support
@@ -248,6 +248,9 @@ done
 %ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslpop3cache
 
 %changelog
+* Thu Aug 21 2025 L.A. Kostis <lakostis@altlinux.ru> 5.2.11-alt1
+- 5.2.11.
+
 * Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 5.2.10-alt1
 - 5.2.10.
 

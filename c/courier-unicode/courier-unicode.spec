@@ -3,7 +3,7 @@
 
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 2.3.1
+Version: 2.3.2
 Release: alt0.1
 License: GPLv3
 Group: System/Libraries
@@ -78,6 +78,9 @@ linked against %name library.
 %endif # static
 
 %changelog
+* Thu Aug 21 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt0.1
+- 2.3.2.
+
 * Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 2.3.1-alt0.1
 - 2.3.1.
 - Bump soname.
