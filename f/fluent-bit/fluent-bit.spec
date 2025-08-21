@@ -11,7 +11,7 @@
 %def_with jemalloc
 
 Name: fluent-bit
-Version: 4.0.7
+Version: 4.0.8
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -19,7 +19,7 @@ Summary: Fast data collector for Linux
 License: Apache-2.0
 Group: Monitoring
 Url: https://github.com/fluent/fluent-bit
-Vcs: git://github.com/fluent/fluent-bit.git
+Vcs: https://github.com/fluent/fluent-bit
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -142,6 +142,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Thu Aug 21 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.8-alt1
+- New version 4.0.8.
+
 * Mon Aug 11 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.7-alt1
 - New version 4.0.7.
 
