@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 0.8.1
-Release: alt10.1.1
+Release: alt11
 Summary: A Python client to use the TestLink API
 License: Apache-2.0
 Group: Development/Python3
@@ -45,6 +45,9 @@ cp -r example %buildroot%python3_sitelibdir/%module_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 21 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt11
+- Added getRequirement function.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.8.1-alt10.1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
