@@ -3,7 +3,7 @@
 %define libnvidia_egl_x11 libnvidia-egl-x11_%sover
 
 Name: egl-x11
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Group: System/Libraries
@@ -59,6 +59,9 @@ X11 EGL External Platform library development package.
 %_datadir/egl/egl_external_platform.d/*_nvidia_x*.json
 
 %changelog
+* Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
+- new version
+
 * Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
 - new version
 
