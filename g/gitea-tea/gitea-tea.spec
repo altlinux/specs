@@ -3,7 +3,7 @@
 
 Name: gitea-tea
 Version: 0.10.1
-Release: alt1
+Release: alt2
 Summary: command line tool to interact with Gitea
 
 License: MIT
@@ -58,6 +58,10 @@ install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh/site-functions/_tea
 
 %changelog
+* Thu Aug 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.10.1-alt2
+- Fix bash autocomplete script to use --generate-shell-completion
+  flag
+
 * Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.1-alt1
 - New version 0.10.1.
 
