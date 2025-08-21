@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.16.2
-Release: alt1_1_1f61c2e8d
+Version: 2.18.1
+Release: alt1_0_12337740f
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -24,9 +24,9 @@ Patch10: cppcheck-2.16.2-kate.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Sun Dec 08 2024
-# optimized out: cmake-modules docbook-dtds gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp18 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-help libqt6-network libqt6-printsupport libqt6-qml libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libxkbcommon-devel llvm18.1-libs pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 vulkan-headers xml-common xml-utils
-BuildRequires: cmake docbook-style-xsl libpcre-devel qt6-tools-devel xsltproc
+# Automatically added by buildreq on Thu Aug 21 2025
+# optimized out: cmake cmake-modules docbook-dtds gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-help libqt6-network libqt6-printsupport libqt6-qml libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libxkbcommon-devel llvm19.1-libs pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 vulkan-headers xml-common xml-utils
+BuildRequires: docbook-style-xsl libpcre-devel qt6-tools-devel xsltproc
 
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-charts-devel
@@ -128,7 +128,7 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 #cmake_build --target check
 
 %files
-%doc readme.txt man/*.html
+%doc readme.md man/*.html
 %_bindir/%name
 %_bindir/%name-htmlreport
 %_man1dir/%name.1*
@@ -146,6 +146,10 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Aug 21 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2.18.1-alt1_0_12337740f
+- Version 2.16.1
+- Build from commit 12337740f
+
 * Tue Feb 18 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.2-alt1_1_1f61c2e8d
 - Version 2.16.2
 - Build from commit 1f61c2e8d
