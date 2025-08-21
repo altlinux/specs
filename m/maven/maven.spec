@@ -23,7 +23,7 @@ BuildRequires: jpackage-default
 Name:           maven
 Epoch:          1
 Version:        3.8.8
-Release:        alt3
+Release:        alt4
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
 # bundled slf4j is MIT
@@ -47,6 +47,7 @@ BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  mvn(aopalliance:aopalliance)
 BuildRequires:  mvn(com.google.inject:guice)
 BuildRequires:  mvn(commons-cli:commons-cli)
 BuildRequires:  mvn(commons-jxpath:commons-jxpath)
@@ -184,6 +185,8 @@ mkdir m2home
 # Bootstrap guice-5.1.0
 rm -f ./m2home/apache-maven-%{version}%{?ver_add}/lib/guice-4.2.2-no_aop.jar
 cp /usr/share/java/guice/google-guice.jar ./m2home/apache-maven-%{version}%{?ver_add}/lib/guice-5.1.0.jar
+cp /usr/share/java/aopalliance.jar ./m2home/apache-maven-%{version}%{?ver_add}/lib/aopalliance-1.0.jar
+cp /usr/share/java/objectweb-asm/asm.jar ./m2home/apache-maven-%{version}%{?ver_add}/lib/asm-9.2.jar
 
 %install
 %mvn_install
@@ -265,6 +268,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Thu Aug 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8.8-alt4
+- Added aopalliance and asm to libraries.
+
 * Tue Aug 05 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8.8-alt3
 - End of bootstrap google-guice-5.1.0.
 
