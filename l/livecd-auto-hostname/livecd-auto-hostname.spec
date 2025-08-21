@@ -1,5 +1,5 @@
 Name: livecd-auto-hostname
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Try to autoconfigure hostname
@@ -34,6 +34,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Fri Aug 15 2025 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
+- livecd-net-eth: add RemainAfterExit=yes
+
 * Thu May 29 2025 Anton Midyukov <antohami@altlinux.org> 0.1.1-alt1
 - decrease length of generate hostname, when unavailable network
 
