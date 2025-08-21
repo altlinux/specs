@@ -5,12 +5,12 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.74
+Version: 5.75
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
 
-Source0: ftp://stunnel.mirt.net/stunnel/stunnel-%version.tar.gz
+Source0: https://www.stunnel.org/downloads/stunnel-%version.tar.gz
 Source1: stunnel.init
 Source3: stunnel.inetd
 
@@ -167,6 +167,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Aug 21 2025 L.A. Kostis <lakostis@altlinux.ru> 5.75-alt1
+- New version (5.75).
+
 * Tue Mar 18 2025 L.A. Kostis <lakostis@altlinux.ru> 5.74-alt1
 - New version (5.74).
 
