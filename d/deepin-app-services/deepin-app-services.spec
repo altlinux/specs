@@ -4,7 +4,7 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 1.0.34
+Version: 1.0.35
 Release: alt1
 
 Summary: Service collection of DDE applications
@@ -12,7 +12,7 @@ Summary: Service collection of DDE applications
 License: LGPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dde-app-services
-Vcs: git://github.com/linuxdeepin/dde-app-services.git
+Vcs: https://github.com/linuxdeepin/dde-app-services
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -68,7 +68,7 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %find_lang --output=%name.lang dde-dconfig dde-dconfig-editor
 
 %files -f %name.lang
-%doc LICENSE README.md
+%doc LICENSE README.md debian/changelog
 %_bindir/dde-dconfig*
 %_datadir/dbus-1/interfaces/org.desktopspec.ConfigManager*.xml
 %_datadir/dbus-1/system.d/org.desktopspec.ConfigManager.conf
@@ -105,6 +105,10 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Thu Aug 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.35-alt1
+- New version 1.0.35.
+- Excluded linglong.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.34-alt1
 - New version 1.0.34.
 
