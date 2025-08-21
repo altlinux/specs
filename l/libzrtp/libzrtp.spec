@@ -1,14 +1,17 @@
 Name: libzrtp
-Version: 5.4.20
+Version: 5.4.38
 Release: alt1
 
+Summary: BZRTP is an opensource implementation of ZRTP keys exchange protocol
+
+License: GPL-3.0-or-later
 Group: System/Libraries
-Summary: BZRTP is an opensource implementation of ZRTP keys exchange protocol.
 Url: https://gitlab.linphone.org/BC/public/bzrtp
-License: GPL-2.0
+Vcs: https://gitlab.linphone.org/BC/public/bzrtp
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -45,7 +48,7 @@ develop programs using the oRTP library.
 
 %files
 %doc *.md
-%_libdir/*.so.*
+%_libdir/*.so.0
 
 %files devel
 %_libdir/*.so
@@ -53,6 +56,11 @@ develop programs using the oRTP library.
 %_datadir/BZRTP
 
 %changelog
+* Thu Aug 21 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.38-alt1
+- new version.
+- fix license tag.
+- add vcs tag.
+
 * Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.20-alt1
 - new version.
 
