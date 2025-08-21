@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: Useful additions to futures, from the future
@@ -108,6 +108,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 

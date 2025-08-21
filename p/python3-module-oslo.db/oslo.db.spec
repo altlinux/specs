@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 17.2.1
-Release: alt1.1
+Version: 17.4.0
+Release: alt1
 
 Summary: OpenStack Oslo Database library
 
@@ -43,9 +43,9 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-psycopg2 >= 2.8.0
 BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-aiosqlite >= 0.20.0
-BuildRequires: python3-module-greenlet
 %endif
 
 %if_with docs
@@ -122,6 +122,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 17.4.0-alt1
+- Automatically updated to 17.4.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 17.2.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.3.0
+Version: 5.4.1
 Release: alt1
 
 Summary: Generic Key Manager interface for OpenStack
@@ -116,6 +116,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 5.4.1-alt1
+- Automatically updated to 5.4.1.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
 - Automatically updated to 5.3.0.
 

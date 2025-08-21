@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.8.0
+Version: 10.0.0
 Release: alt1
 
 Summary: OpenStack Oslo Configuration API
@@ -24,7 +24,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -127,6 +126,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
+- Automatically updated to 10.0.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 9.8.0-alt1
 - Automatically updated to 9.8.0.
 

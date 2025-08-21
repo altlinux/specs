@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.6.0
-Release: alt1.1
+Version: 4.7.0
+Release: alt1
 
 Summary: OpenStack Oslo VMware library
 
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-suds >= 0.6
@@ -41,7 +40,6 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-lxml >= 4.5.0
-BuildRequires: python3-module-stevedore >= 1.20.0
 %endif
 
 %if_with docs
@@ -122,6 +120,9 @@ install -pDm 644 man/oslovmware.1 %buildroot%_man1dir/oslovmware.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
+- Automatically updated to 4.7.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

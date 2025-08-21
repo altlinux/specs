@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.1.0
-Release: alt1.1
+Version: 7.2.0
+Release: alt1
 
 Summary: OpenStack Oslo Log library
 
@@ -37,7 +37,7 @@ BuildRequires: python3-module-testtools >= 2.3.0
 BuildRequires: python3-module-oslotest >= 3.3.0
 BuildRequires: python3-module-coverage >= 4.5.1
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-eventlet >= 0.30.1
+BuildRequires: python3-module-eventlet >= 0.38.2
 BuildRequires: python3-module-debtcollector >= 3.0.0
 %endif
 
@@ -116,6 +116,9 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
+- Automatically updated to 7.2.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
