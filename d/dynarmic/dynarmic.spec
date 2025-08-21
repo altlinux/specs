@@ -2,7 +2,7 @@
 
 Name: dynarmic
 Version: 6.7.0
-Release: alt3
+Release: alt4
 
 Summary: A dynamic recompiler for ARM.
 License: 0BSD
@@ -51,6 +51,7 @@ Header files for lib%name
 %autopatch -p1
 
 %build
+%add_optflags -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=TRUE \
 	-DDYNARMIC_IGNORE_ASSERTS=TRUE \
@@ -70,6 +71,9 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Thu Aug 21 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt4
+- Add optflag -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0
+
 * Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 6.7.0-alt3
 - Add inc files
 

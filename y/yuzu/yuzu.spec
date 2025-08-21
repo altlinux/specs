@@ -6,7 +6,7 @@
 
 Name: yuzu
 Version: 1734
-Release: alt6
+Release: alt7
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -104,7 +104,7 @@ src/common/scm_rev.cpp.in
 sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
 sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
 
-%add_optflags -Wno-error=conversion -I%_includedir/SimpleIni
+%add_optflags -Wno-error=conversion -I%_includedir/SimpleIni -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0
 
 export CC="clang"
 export CXX="clang++"
@@ -147,6 +147,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Aug 21 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt7
+- Add optflag -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0 (ALT #55675)
+
 * Mon Aug 11 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt6
 - Build on AArch64
 
