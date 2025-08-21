@@ -4,7 +4,7 @@
 %def_without check
 
 Name: babi
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: A simple text editor written in python
@@ -65,6 +65,9 @@ python3 module for babi
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Thu Aug 21 2025 Vladislav Glinkin <smasher@altlinux.org> 1.6.1-alt1
+- 1.6.0 -> 1.6.1
+
 * Thu Oct 31 2024 Vladislav Glinkin <smasher@altlinux.org> 1.6.0-alt1
 - 1.5.5 -> 1.6.0
 
