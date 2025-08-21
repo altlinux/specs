@@ -40,7 +40,7 @@
 
 Name: gnome-software
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -75,7 +75,7 @@ Patch10: %name-48.3-alt-white-list.patch
 %define applist_ver 3.0
 
 Requires: gnome-app-list >= %applist_ver
-%{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
+
 %{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
@@ -115,6 +115,15 @@ Requires: %name = %EVR
 %description devel
 This package contains files necessary to develop plugins for GNOME
 Software.
+
+%package plugin-fwupd
+Summary: Firmware Upgrade Support for GNOME Software
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: fwupd >= %fwupd_ver
+
+%description plugin-fwupd
+This package provides support for firmware upgrades via GNOME Software.
 
 %package devel-doc
 Summary: Development documentation for GNOME Software
@@ -174,9 +183,9 @@ _EOF_
 #symlink
 %_libdir/libgnomesoftware.so.%plugins_ver
 %_libdir/%name/plugins-%plugins_ver/
+%{?_enable_fwupd:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_fwupd.so}
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-local-file-flatpak.desktop
-%{?_enable_fwupd:%_desktopdir/%name-local-file-fwupd.desktop}
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
 %_desktopdir/%name-local-file-packagekit.desktop
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
@@ -192,10 +201,16 @@ _EOF_
 %_datadir/bash-completion/completions/%name
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
-%{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
+
 %{?_enable_snap:%_datadir/metainfo/%xdg_name.Plugin.Snap.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
+
+%{?_enable_fwupd:
+%files plugin-fwupd
+%_libdir/%name/plugins-%plugins_ver/libgs_plugin_fwupd.so
+%_desktopdir/%name-local-file-fwupd.desktop
+%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 
 %files devel
 %_includedir/%name/
@@ -205,6 +220,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Aug 21 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1.1
+- new optional -plugin-fwupd subpackage (ALT #55681)
+
 * Fri Aug 01 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
 - 48.4
 
