@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: real-ucode
-Version: 20250813
+Version: 20250818
 Release: alt1
 Summary: Actually provides the latest CPU microcode for AMD and Intel
 License: Redistributable, no modification permitted
@@ -68,6 +68,9 @@ This is microcode updates for AMD CPUs, resigned for vulnerable old loaders.
 
 %amd_sha_check_note
 
+These may fail to load upon resume from suspend when using s3 sleep, please use
+s2idle instead.
+
 %disclaimer
 
 %package -n firmware-intel-real-ucode
@@ -103,5 +106,8 @@ install -Dm644 microcode/intel-ucode/* -t %buildroot/lib/firmware/updates/intel-
 /lib/firmware/updates/intel-ucode
 
 %changelog
+* Thu Aug 21 2025 Vitaly Chikunov <vt@altlinux.org> 20250818-alt1
+- Update to d2a075f (2025-08-18).
+
 * Thu Aug 14 2025 Vitaly Chikunov <vt@altlinux.org> 20250813-alt1
 - First import e53b04e (2025-08-13).
