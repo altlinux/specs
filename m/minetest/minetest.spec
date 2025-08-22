@@ -4,7 +4,7 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.12.0
+Version: 5.13.0
 Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
@@ -65,7 +65,7 @@ BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xft)
 BuildRequires:  pkgconfig(xxf86vm)
-
+Provides: luanti
 
 
 %description 
@@ -78,7 +78,7 @@ Summary: Minetest multiplayer server
 Group: Games/Other
 
 Requires(pre): shadow-utils
-
+Provides: luanti-server
 %description server
 Minetest multiplayer server. This package does not require X Window
 System.
@@ -208,6 +208,9 @@ fi
 %_man6dir/luanti.*
 %_datadir/metainfo/org*.metainfo.xml
 %{_datadir}/luanti/builtin
+%_datadir/locale/sr_Cyrl/LC_MESSAGES/luanti.mo
+%_datadir/locale/sr_Latn/LC_MESSAGES/luanti.mo
+
 
 %files server
 %doc README.md doc/lgpl-2.1.txt doc/world_format.md doc/protocol.txt README
@@ -221,6 +224,9 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Sat Aug 23 2025 Ilya Mashkin <oddity@altlinux.ru> 5.13.0-alt1
+- 5.13.0
+
 * Sun Jun 15 2025 Ilya Mashkin <oddity@altlinux.ru> 5.12.0-alt1
 - 5.12.0
 
