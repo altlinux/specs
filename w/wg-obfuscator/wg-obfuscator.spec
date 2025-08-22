@@ -1,5 +1,5 @@
 Name: wg-obfuscator
-Version: 1.1
+Version: 1.3
 Release: alt1
 
 Summary: WireGuard Obfuscator is a tool designed to make WireGuard traffic look like random data.
@@ -44,6 +44,9 @@ install -D -m 0644 %name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf
 
 
 %changelog
+* Sat Aug 23 2025 Alexei Mezin <alexvm@altlinux.org> 1.3-alt1
+- New version
+
 * Mon Jul 07 2025 Alexei Mezin <alexvm@altlinux.org> 1.1-alt1
 - Initial build
 
