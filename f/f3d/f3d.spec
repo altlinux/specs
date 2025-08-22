@@ -3,8 +3,8 @@
 %def_with python
 
 Name: f3d
-Version: 3.0.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: Fast and minimalist 3D viewer
 License: BSD-3-Clause
@@ -12,7 +12,7 @@ Group: Graphics
 Url: https://github.com/f3d-app/f3d
 VCS: https://f3d.app/
 Source: %name-%version.tar
-Patch: f3d-3.0.0-alt-vtk-9.4.patch
+Patch: f3d-3.2.0-alt-vtk-9.4.patch
 
 BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: rpm-build-python3
@@ -112,6 +112,7 @@ install -Dm 644 \
 %_datadir/bash-completion/completions/%name
 %_datadir/applications/*
 %_datadir/%name/*
+%dir %_datadir/%name
 %_datadir/thumbnailers/*
 %_datadir/mime/*
 %_datadir/fish/*
@@ -130,6 +131,7 @@ install -Dm 644 \
 %_libdir/cmake/f3d_vtkext
 %_includedir/%name
 %_libdir/cmake/%name/*
+%dir %_libdir/cmake/%name
 %dir %_libdir/vtk/hierarchy/f3d_vtkext
 %_libdir/vtk/hierarchy/f3d_vtkext/vtkext-hierarchy.txt
 
@@ -139,6 +141,9 @@ install -Dm 644 \
 %endif
 
 %changelog
+* Thu Aug 21 2025 Valentin Sokolov <sova@altlinux.org> 3.2.0-alt1
+- Update to version 3.2.0.
+
 * Fri Apr 29 2025 Valentin Sokolov <sova@altlinux.org> 3.0.0-alt3
 - Rebuild with libraries and bindings for python3
 
