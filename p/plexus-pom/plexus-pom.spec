@@ -1,6 +1,3 @@
-Group: Development/Other
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,23 +9,28 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:          plexus-pom
-Version:       7
-Release:       alt1_3jpp11
+Version:       23
+Release:       alt1
+Group:         Development/Other
 Summary:       Root Plexus Projects POM
-License:       ASL 2.0
+License:       Apache-2.0
 URL:           https://github.com/codehaus-plexus/plexus-pom
-Source0:       https://github.com/codehaus-plexus/plexus-pom/archive/plexus-%{version}.tar.gz
-Source1:       https://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:       %name-%version.tar
+Source1:       LICENSE-2.0.txt
+Source44:      import.info
+Patch:         remove-extension-alt.patch
 BuildArch:     noarch
 
 BuildRequires: maven-local
+BuildRequires(pre): rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: /proc
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %endif
 
 # Test dependency that should be propagated down the POM hierarchy
 Requires:      mvn(junit:junit)
-Source44: import.info
 
 %description
 The Plexus project provides a full software stack for creating and
@@ -36,13 +38,15 @@ executing software projects. This package provides parent POM for
 Plexus packages.
 
 %prep
-%setup -q -n plexus-pom-plexus-%{version}
+%setup
+%autopatch -p1
 cp -p %{SOURCE1} LICENSE
 
 %pom_remove_plugin :maven-site-plugin
 %pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :taglist-maven-plugin
+%pom_remove_plugin :njord
+%pom_remove_plugin :spotless-maven-plugin
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -54,6 +58,9 @@ cp -p %{SOURCE1} LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Aug 21 2025 Ilya Muhamadeev <nicourced@altlinux.org> 23-alt1
+- New version.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 7-alt1_3jpp11
 - update
 
