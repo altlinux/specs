@@ -1,5 +1,5 @@
 Name:           x2goclient
-Version:        4.1.2.2
+Version:        4.1.2.3
 Release:        alt1
 Summary:        X2Go Client application (Qt)
 
@@ -105,6 +105,9 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_man1dir/%name.1*
 
 %changelog
+* Thu Aug 21 2025 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.3-alt1
+- New version
+
 * Wed Jun 03 2020 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.2-alt1
 - New version (Closes: #38558)
 
