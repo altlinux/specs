@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.2.5
+Version: 26.3.2
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -19,6 +19,7 @@ Source4: keycloak.service
 Patch0: keycloak-alt-remove-javaPathHelper.patch
 Patch1: keycloak-alt-pathes.patch
 Patch2: keycloak-alt-ssl-certificates.patch
+Patch3: 0001-Exclude-base-theme-from-settings.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: jpackage-17-compat
@@ -76,6 +77,10 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Fri Aug 22 2025 Andrey Cherepanov <cas@altlinux.org> 26.3.2-alt1
+- New version (fixes: CVE-2025-49574, CVE-2025-7365, CVE-2025-5416).
+- Excluded base theme drom settings.
+
 * Sat May 31 2025 Andrey Cherepanov <cas@altlinux.org> 26.2.5-alt1
 - New version.
 
