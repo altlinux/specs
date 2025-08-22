@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.16.0
+Version: 3.17.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -554,6 +554,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Aug 22 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
+- New version.
+
 * Fri Jun 20 2025 Andrey Cherepanov <cas@altlinux.org> 3.16.0-alt1
 - New version.
 
