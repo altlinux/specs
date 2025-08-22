@@ -1,7 +1,9 @@
+%define sover 1
+
 %def_disable clang
 
 Name: deepin-image-viewer
-Version: 6.0.19
+Version: 6.0.31
 Release: alt1
 
 Summary: Image viewer for Deepin
@@ -9,13 +11,14 @@ Summary: Image viewer for Deepin
 License: GPL-3.0-or-later
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-image-viewer
-Vcs: https://github.com/linuxdeepin/deepin-image-viewer.git
+Vcs: https://github.com/linuxdeepin/deepin-image-viewer
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
 
+BuildRequires(pre): rpm-macros-dqt6
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
@@ -23,23 +26,40 @@ BuildRequires(pre): gcc-c++
 %endif
 # Automatically added by buildreq on Wed Mar 26 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdeepin-ocr-plugin-manager1 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 liblcms2-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdeepin-ocr-plugin-manager-devel libdtk6declarative-devel libdtk6widget-devel libraw-devel
+BuildRequires: dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdeepin-ocr-plugin-manager-devel libdtk6declarative-devel libdtk6widget-devel libraw-devel libncnn-devel deepin-libopencv_world-devel libdqt6-qmlcompiler
+
+# provide the plugin for dtk
+%add_findprov_lib_path %_dqt6_plugindir/imageformats
+
+Requires: libxraw%sover = %EVR
+Requires: libdqt6-qml = %_dqt6_version
 
 %description
 %summary.
 
-%package devel
-Summary: Development package for %name
+%package -n libxraw%sover
+Summary: libxraw plugin for %name
 Group: Development/KDE and QT
 
-%description devel
-Development libraries for %name.
+%description -n libxraw%sover
+This package provides libxraw plugin for %name.
+
+%package -n libxraw-devel
+Summary: Development package for libxraw
+Group: Development/KDE and QT
+Provides: %name-devel
+
+%description -n libxraw-devel
+This package provides the development files for libxraw.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 sed -i 's|/qt${QT_VERSION_MAJOR}/plugins|/dqt${QT_VERSION_MAJOR}/plugins|' \
   qimage-plugins/libraw/CMakeLists.txt
+# deepin's opencv_mobile does not have .pc file
+sed -i 's| opencv_mobile||' \
+  src/CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -49,6 +69,8 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
+export CPLUS_INCLUDE_PATH=%_includedir/deepin/opencv4:%_includedir/opencv4:$CPLUS_INCLUDE_PATH
+export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %DQ6build \
   -DVERSION=%version \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -59,7 +81,7 @@ export READELF="llvm-readelf"
 %find_lang --with-qt %name
 
 %files -f %name.lang
-%doc LICENSE.txt README.md
+%doc LICENSE.txt README.md debian/changelog
 %_bindir/%name
 %_desktopdir/%name.desktop
 %dir %_datadir/%name/
@@ -73,12 +95,18 @@ export READELF="llvm-readelf"
 %_datadir/deepin-manual/manual-assets/application/%name/image-viewer/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/dbus-1/services/com.deepin.imageViewer.service
-%_dqt6_plugindir/imageformats/libxraw.so.*
 
-%files devel
+%files -n libxraw%sover
+%_dqt6_plugindir/imageformats/libxraw.so.%{sover}*
+
+%files -n libxraw-devel
 %_dqt6_plugindir/imageformats/libxraw.so
 
 %changelog
+* Fri Aug 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.31-alt1
+- New version 6.0.31.
+- Packaged libxraw separately.
+
 * Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 
