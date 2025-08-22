@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -24,11 +24,12 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define adw_ver 1.6
+%define rust_ver 1.89
 
 Requires: dconf polkit
 
 BuildRequires(pre): rpm-macros-rust
-BuildRequires: rust-cargo
+BuildRequires: rust-cargo >= %rust_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(libsystemd)
@@ -75,6 +76,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc CHANGELOG*  README*
 
 %changelog
+* Thu Aug 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.31.4-alt1
+- 1.31.4
+
 * Tue Aug 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.31.3-alt1
 - 1.31.3
 

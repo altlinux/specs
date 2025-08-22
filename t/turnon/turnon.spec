@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -24,12 +24,13 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
+%define rust_ver 1.89
 %define adw_ver 1.6
 
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-rust
-BuildRequires: rust-cargo just blueprint-compiler
+BuildRequires: rust-cargo >= %rust_ver just blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -68,6 +69,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Wed Aug 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Tue Jun 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
 - 2.7.2
 
