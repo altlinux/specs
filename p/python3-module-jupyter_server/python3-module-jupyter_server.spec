@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
@@ -44,6 +44,7 @@ BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python3-module-jupyter-server-terminals
 BuildRequires: python3-module-requests
+BuildRequires: pandoc
 %endif
 
 %description
@@ -80,6 +81,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 22 2025 Anton Vyatkin <toni@altlinux.org> 2.17.0-alt1
+- New version 2.17.0.
+
 * Mon May 12 2025 Anton Vyatkin <toni@altlinux.org> 2.16.0-alt1
 - New version 2.16.0.
 
