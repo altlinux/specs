@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.11.4
+Version: 0.11.6
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -73,7 +73,8 @@ Requires: ollama-cpu = %EVR
 %build
 %add_optflags -Wno-unused-function
 export NVCC_PREPEND_FLAGS=-ccbin=g++-12
-%cmake -DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual'
+%cmake -DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
+       -DGGML_BACKEND_DIR=%_libexecdir/ollama
 %cmake_build
 go build -v \
 	-buildmode=pie \
@@ -144,6 +145,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Thu Aug 21 2025 Vitaly Chikunov <vt@altlinux.org> 0.11.6-alt1
+- Update to v0.11.6 (2025-08-19) with gpt-oss and flash attention fixes.
+
 * Fri Aug 08 2025 Vitaly Chikunov <vt@altlinux.org> 0.11.4-alt1
 - Update to v0.11.4 (2025-08-07).
 
