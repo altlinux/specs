@@ -2,7 +2,7 @@
 %define import_path github.com/nats-io/nats-server/v2
 
 Name: nats-server
-Version: 2.11.5
+Version: 2.11.8
 Release: alt1
 
 Summary: High-Performance server for NATS, the cloud and edge native messaging system
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_runtimedir/nats
 %dir %attr(0750,nats,nats) %_runtimedir/nats/
 
 %changelog
+* Fri Aug 22 2025 Anton Zhukharev <ancieg@altlinux.org> 2.11.8-alt1
+- Updated to 2.11.8.
+
 * Fri Jun 27 2025 Anton Zhukharev <ancieg@altlinux.org> 2.11.5-alt1
 - Packaged for ALT Sisyphus.
 
