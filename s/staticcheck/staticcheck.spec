@@ -2,7 +2,7 @@
 %define import_path honnef.co/go/tools
 
 Name: staticcheck
-Version: 0.4.7
+Version: 0.6.1
 Release: alt1
 
 Summary: The advanced Go linter
@@ -48,6 +48,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Aug 22 2025 Artem Krasovskiy <aibure@altlinux.org> 0.6.1-alt1
+- New version 0.6.1
+
 * Thu May 23 2024 Artem Krasovskiy <aibure@altlinux.org> 0.4.7-alt1
 - New version
 
