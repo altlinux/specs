@@ -1,33 +1,103 @@
+%define _unpackaged_files_terminate_build 1
+%define _libexecdir %_usr/libexec
+%define dracutmodulesdir  %(pkg-config --variable=dracutmodulesdir --silence-errors dracut 2>/dev/null || echo unknown) 
+
 Name:    clevis
 Version: 21
-Release: alt1
+Release: alt2
 Summary: Automated Encryption Framework
 
 License: GPL-3.0-or-later
-Group:   System/Libraries
+Group:   System/Kernel and hardware
 URL:     https://github.com/latchset/clevis
 Source:  clevis-%{version}.tar.gz
-Patch: clevis-21-alt-fix-requires-detection.patch
 
-Requires: clevis-pin-tpm2 dracut
-BuildRequires: libjose-devel meson cmake bash-completion libpwquality-devel libcryptsetup-devel cryptsetup libjq-devel jq libluksmeta-devel libsystemd-devel systemd asciidoc-a2x libaudit-devel libudisks2-devel libgio-devel keyutils curl tpm2-tools dracut tang socat pcsc-lite opensc
+Requires: tpm2-tools >= 4.0.0
+Requires: jose >= 8
+Requires: curl
+Requires: jq
+Requires: clevis-pin-tpm2
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: asciidoc-a2x
+BuildRequires: bash-completion
+BuildRequires: libjose-devel
+BuildRequires: libaudit-devel
+BuildRequires: libudisks2-devel
+BuildRequires: libssl-devel openssl
+BuildRequires: tpm2-tools tang >= 6 curl libluksmeta-devel
+BuildRequires: dracut
+BuildRequires: cryptsetup
+BuildRequires: jq
+BuildRequires: pcsc-lite opensc
+BuildRequires: libsystemd-devel systemd
+BuildRequires: cryptsetup
 
 %description
 Clevis is a plugable framework for automated decryption.
 It can be used to provide automated decryption of data
 or even automated unlocking of LUKS volumes.
 
+%package  luks
+Summary:  LUKS integration for clevis
+Group:    System/Kernel and hardware
+Requires: %name = %EVR
+Requires: cryptsetup
+Requires: luksmeta >= 8
+%filter_from_requires /.usr.lib.dracut-lib.sh/d
+
+%description luks
+LUKS integration for clevis. This package allows you to bind a LUKS
+volume to a clevis unlocking policy. For automated unlocking, an unlocker
+will also be required. See, for example, clevis-dracut and clevis-udisks2.
+
+%package  systemd
+Summary:  systemd integration for clevis
+Group:    System/Kernel and hardware
+Requires: %name = %EVR
+Requires: systemd >= 236
+
+%description systemd
+Automatically unlocks LUKS _netdev block devices from /etc/crypttab.
+
+%package  dracut
+Summary:  Dracut integration for clevis
+Group:    System/Kernel and hardware
+Requires: %name-systemd = %EVR
+#Requires: dracut-network
+
+%description dracut
+Automatically unlocks LUKS block devices in early boot.
+
+%package  udisks2
+Summary:  UDisks2/Storaged integration for clevis
+Group:    System/Kernel and hardware
+Requires: %name-luks = %EVR
+
+%description udisks2
+Automatically unlocks LUKS block devices in desktop environments that
+use UDisks2 or storaged (like GNOME).
+
+%package  pin-pkcs11
+Summary:  PKCS#11 for clevis
+Group:    System/Kernel and hardware
+Requires: %name-systemd = %EVR
+Requires: %name-luks = %EVR
+Requires: %name-dracut = %EVR
+Requires: pcsc-lite
+Requires: opensc
+Requires: socat
+Requires: openssl
+
+%description pin-pkcs11
+Automatically unlocks LUKS block devices through a PKCS#11 device.
+
 %prep
 %setup
-%patch -p1
-sed -i 's|/usr/libexec|%_libexecdir|g' \
-  src/luks/dracut/clevis-pin-pkcs11/clevis-pkcs11-hook.sh \
-  src/luks/dracut/clevis-pin-pkcs11/module-setup.sh.in \
-  src/luks/systemd/clevis-luks-pkcs11-askpass.in \
-  src/luks/systemd/clevis-luks-pkcs11-askpass.service.in \
-  src/pins/sss/meson.build
 
 %build
+export PATH=/usr/sbin:$PATH
 %meson
 %meson_build
 
@@ -35,72 +105,64 @@ sed -i 's|/usr/libexec|%_libexecdir|g' \
 %meson_install
 
 %files
-%_bindir/clevis
-%_bindir/clevis-decrypt
-%_bindir/clevis-decrypt-null
-%_bindir/clevis-decrypt-sss
-%_bindir/clevis-decrypt-tang
-%_bindir/clevis-decrypt-tpm2
-%_bindir/clevis-decrypt-pkcs11
-%_bindir/clevis-encrypt-null
-%_bindir/clevis-encrypt-sss
-%_bindir/clevis-encrypt-tang
-%_bindir/clevis-encrypt-tpm2
-%_bindir/clevis-encrypt-pkcs11
-%_bindir/clevis-luks-bind
-%_bindir/clevis-luks-common-functions
-%_bindir/clevis-luks-edit
-%_bindir/clevis-luks-list
-%_bindir/clevis-luks-pass
-%_bindir/clevis-luks-regen
-%_bindir/clevis-luks-report
-%_bindir/clevis-luks-unbind
-%_bindir/clevis-luks-unlock
-%_bindir/clevis-pkcs11-afunix-socket-unlock
-%_bindir/clevis-pkcs11-common
-%_sysconfdir/xdg/autostart/clevis-luks-udisks2.desktop
-%_datadir/bash-completion/completions/clevis
-%_libexecdir/clevis-luks-udisks2
-%_libexecdir/clevis-luks-askpass
-%_libexecdir/clevis-luks-unlocker
-%_libexecdir/clevis-luks-pkcs11-askpass
-%_libexecdir/clevis-luks-pkcs11-askpin
-%_unitdir/clevis-luks-askpass.path
-%_unitdir/clevis-luks-askpass.service
-%_unitdir/clevis-luks-pkcs11-askpass.service
-%_unitdir/clevis-luks-pkcs11-askpass.socket
-%dir %_libexecdir/dracut/modules.d/60clevis-pin-null/
-%_libexecdir/dracut/modules.d/60clevis-pin-null/module-setup.sh
-%dir %_libexecdir/dracut/modules.d/60clevis-pin-sss/
-%_libexecdir/dracut/modules.d/60clevis-pin-sss/module-setup.sh
-%dir %_libexecdir/dracut/modules.d/60clevis-pin-tang/
-%_libexecdir/dracut/modules.d/60clevis-pin-tang/module-setup.sh
-%dir %_libexecdir/dracut/modules.d/60clevis-pin-tpm2/
-%_libexecdir/dracut/modules.d/60clevis-pin-tpm2/module-setup.sh
-%dir %_libexecdir/dracut/modules.d/60clevis-pin-pkcs11/
-%_libexecdir/dracut/modules.d/60clevis-pin-pkcs11/clevis-pkcs11-hook.sh
-%_libexecdir/dracut/modules.d/60clevis-pin-pkcs11/clevis-pkcs11-prehook.sh
-%_libexecdir/dracut/modules.d/60clevis-pin-pkcs11/module-setup.sh
-%dir %_libexecdir/dracut/modules.d/60clevis/
-%_libexecdir/dracut/modules.d/60clevis/clevis-hook.sh
-%_libexecdir/dracut/modules.d/60clevis/module-setup.sh
-%_man1dir/clevis-decrypt.1*
-%_man1dir/clevis-encrypt-sss.1*
-%_man1dir/clevis-encrypt-tang.1*
-%_man1dir/clevis-encrypt-tpm2.1*
-%_man1dir/clevis-encrypt-pkcs11.1*
-%_man1dir/clevis-luks-bind.1*
-%_man1dir/clevis-luks-edit.1*
-%_man1dir/clevis-luks-list.1*
-%_man1dir/clevis-luks-pass.1*
-%_man1dir/clevis-luks-report.1*
-%_man1dir/clevis-luks-unbind.1*
-%_man1dir/clevis-luks-unlock.1*
-%_man1dir/clevis-luks-regen.1*
-%_man1dir/clevis.1*
-%_man7dir/clevis-luks-unlockers.7*
+%_bindir/%name
+%_bindir/%name-decrypt
+%_bindir/%name-decrypt-null
+%_bindir/%name-decrypt-sss
+%_bindir/%name-decrypt-tang
+%_bindir/%name-decrypt-tpm2
+%_bindir/%name-encrypt-null
+%_bindir/%name-encrypt-sss
+%_bindir/%name-encrypt-tang
+%_bindir/%name-encrypt-tpm2
+%_man1dir/%name-decrypt.1*
+%_man1dir/%name-encrypt-sss.1*
+%_man1dir/%name-encrypt-tang.1*
+%_man1dir/%name-encrypt-tpm2.1*
+%_man1dir/%name.1*
+%_datadir/bash-completion/completions/%name
+
+%files luks
+%_man1dir/%name-luks-*
+%_bindir/%name-luks-*
+
+%files systemd
+%_libexecdir/%name-luks-askpass
+%_libexecdir/%name-luks-unlocker
+%_unitdir/%name-luks-askpass.path
+%_unitdir/%name-luks-askpass.service
+%_man7dir/%name-luks-unlockers.7*
+
+%files dracut
+%dracutmodulesdir/60clevis
+%dracutmodulesdir/60clevis-pin-null
+%dracutmodulesdir/60clevis-pin-sss
+%dracutmodulesdir/60clevis-pin-tang
+%dracutmodulesdir/60clevis-pin-tpm2
+
+%files udisks2
+%_sysconfdir/xdg/autostart/%name-luks-udisks2.desktop
+#%attr(4755, root, root) %_libexecdir/%name-luks-udisks2
+%_libexecdir/%name-luks-udisks2
+
+%files pin-pkcs11
+%_libexecdir/%name-luks-pkcs11-askpass
+%_libexecdir/%name-luks-pkcs11-askpin
+%_bindir/%name-decrypt-pkcs11
+%_bindir/%name-encrypt-pkcs11
+%_bindir/%name-pkcs11-afunix-socket-unlock
+%_bindir/%name-pkcs11-common
+%_unitdir/%name-luks-pkcs11-askpass.service
+%_unitdir/%name-luks-pkcs11-askpass.socket
+%_man1dir/%name-encrypt-pkcs11.1*
+%dracutmodulesdir/60clevis-pin-pkcs11
 
 %changelog
+* Fri Aug 22 2025 Alexey Shabalin <shaba@altlinux.org> 21-alt2
+- split luks, systemd, dracut, udisks2, pin-pkcs11 packages
+- define _libexecdir as /usr/libexec
+- cherry-pick commits from upstream master
+
 * Fri Sep 27 2024 Leontiy Volodin <lvol@altlinux.org> 21-alt1
 - new version
 - apply usrmerge
