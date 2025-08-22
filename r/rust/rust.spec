@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.88.0
+Version: 1.89.0
 Release: alt1
 Epoch: 1
 
@@ -20,6 +20,11 @@ VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
+# https://github.com/rust-lang/rust/issues/143735
+Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
+# Replace shipped rust-lld with system's lld.
+# https://github.com/rust-lang/rust/issues/140473
+Patch002: rust-1.89.0-fedora-use_system_lld.patch
 
 Requires: /proc
 Requires: gcc
@@ -190,6 +195,23 @@ AutoProv: no
 This package includes source files for the Rust standard library.  It may be
 useful as a reference for code completion tools in various editors.
 
+%package wasm32-unknown-unknown-target
+Summary: Static libraries for wasm32-unknown-unknown target support
+URL: https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html
+Group: Development/Other
+Requires: rust
+Requires: lld
+
+%description wasm32-unknown-unknown-target
+The wasm32-unknown-unknown target is a WebAssembly compilation target
+which does not import any functions from the host for the standard
+library. This is the "minimal" WebAssembly in the sense of making the
+fewest assumptions about the host environment. This target is often
+used when compiling to the web or JavaScript environments as there is
+no standard for what functions can be imported on the web. This target
+can also be useful for creating minimal or bare-bones WebAssembly
+binaries.
+
 %prep
 %setup
 %autopatch -p1
@@ -267,6 +289,7 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 cat > config.toml <<EOF
 change-id = 123711
 [build]
+target = ["%rust_triple", "wasm32-unknown-unknown"]
 cargo = "%cargo"
 rustc = "%rustc"
 python = "python3"
@@ -378,7 +401,9 @@ for i in \
 ; do
 	: "### rust_src_test: running $i"
 	status='done'
-	if ! python3 ./x.py test --no-doc --no-fail-fast "tests/$i"; then
+	# Temporarily run individual tests just for linux target.
+	# Tests for wasm32-unknown-unknown are not supported.
+	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_triple "tests/$i"; then
 		status='failed'
 		failed="$failed $i"
 	fi
@@ -444,7 +469,14 @@ rm -rf %rustdir
 %files src
 %rustlibdir/src
 
+%files wasm32-unknown-unknown-target
+%rustlibdir/wasm32-unknown-unknown/
+
 %changelog
+* Fri Aug 22 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.89.0-alt1
+- New version (1.89.0).
+- Add wasm32-unknown-unknown target support (Closes: 55591).
+
 * Fri Jun 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.88.0-alt1
 - New version (1.88.0).
 
@@ -839,4 +871,3 @@ rm -rf %rustdir
 
 * Fri Jan 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
 - initial build
-
