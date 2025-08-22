@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 3.2.1.1
+Version: 3.2.2
 Release: alt1
 
 Summary: IT Operations Portal
@@ -159,6 +159,12 @@ fi
 %files php8.3
 
 %changelog
+* Fri Aug 22 2025 Pavel Zilke <zidex@altlinux.org> 3.2.2-alt1
+- New version 3.2.2
+- Security fixes:
+ + CVE-2025-47286 : Remote Code Execution in the backup creation functionality
+ + CVE-2025-49145 : Webhooks: check that callbacks signatures meet the documented expectation 
+
 * Fri Jun 29 2025 Pavel Zilke <zidex@altlinux.org> 3.2.1.1-alt1
 - New version 3.2.1.1
 - Security fixes:
