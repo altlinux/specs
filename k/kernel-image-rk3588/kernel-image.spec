@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.42
+%define kernel_sublevel	.43
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -510,6 +510,12 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Aug 22 2025 Alexei Takaseev <taf@altlinux.org> 6.12.43-alt1
+- v6.12.43 (2025-08-20).
+- config: Enable RTRS and Security Infiniband options.
+- config: Enable more VFIO drivers.
+- config: Enable more Mellanox ConnectX options.
+
 * Sat Aug 16 2025 Alexei Takaseev <taf@altlinux.org> 6.12.42-alt1
 - v6.12.42 (2025-08-15).
 - config: Enable CONFIG_LEGACY_VSYSCALL_XONLY=y (ALT#55552).
