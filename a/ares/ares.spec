@@ -1,5 +1,5 @@
 Name:     ares
-Version:  140
+Version:  145
 Release:  alt1
 
 Summary:  ares is a cross-platform, open source, multi-system emulator, focusing on accuracy and preservation.
@@ -11,7 +11,8 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ libgtk+3-devel libSDL-devel libudev-devel libopenal-devel libXv-devel libpulseaudio-devel libGL-devel libXrandr-devel libalsa-devel libvulkan-devel ImageMagick-tools
+BuildRequires(Pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake libgtk+3-devel libSDL-devel libudev-devel libopenal-devel libXv-devel libpulseaudio-devel libGL-devel libXrandr-devel libalsa-devel libvulkan-devel ImageMagick-tools
 
 ExclusiveArch: x86_64 aarch64
 
@@ -24,27 +25,17 @@ and focuses on accuracy and preservation.
 %setup
 
 %build
-
-%make_build -C ./desktop-ui hiro=gtk3 build=release VERBOSE=1
+%cmake -DARES_SKIP_DEPS=ON
+%cmake_build
 
 %install
-mkdir -p %buildroot%_datadir/%name
-mkdir -p %buildroot%_desktopdir
-
-install -Dm0755 desktop-ui/out/%name %buildroot%_bindir/%name
-
-install -Dm 644 ./desktop-ui/resource/ares.desktop %buildroot%_desktopdir/%name.desktop
-# install menu icons
-for N in 16 32 48 64 128;
-do
-convert ./desktop-ui/resource/ares.png -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
-done
+%cmake_install 
 
 cp -dr --no-preserve=ownership ./mia/Database/ %buildroot%_datadir/%name/
 
 %files
 %_bindir/%name
+%_bindir/sourcery
 %dir %_datadir/%name/Database/
 %_datadir/%name/Database/*
 %_desktopdir/%name.desktop
@@ -52,6 +43,9 @@ cp -dr --no-preserve=ownership ./mia/Database/ %buildroot%_datadir/%name/
 %doc LICENSE
 
 %changelog
+* Fri Aug 22 2025 Artyom Bystrov <arbars@altlinux.org> 145-alt1
+- update to new version
+
 * Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 140-alt1
 - update to new version
 
