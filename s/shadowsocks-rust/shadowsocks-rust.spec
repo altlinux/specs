@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: shadowsocks-rust
-Version: 1.23.2
+Version: 1.23.5
 Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
@@ -89,6 +89,9 @@ target/release/ssmanager --version | grep -Fx 'shadowsocks %version'
 %_bindir/ss*
 
 %changelog
+* Fri Aug 22 2025 Vitaly Chikunov <vt@altlinux.org> 1.23.5-alt1
+- Update to v1.23.5 (2025-07-04).
+
 * Mon May 05 2025 Vitaly Chikunov <vt@altlinux.org> 1.23.2-alt1
 - Update to v1.23.2 (2025-04-25).
 
