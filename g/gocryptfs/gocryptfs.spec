@@ -1,8 +1,8 @@
 Name: gocryptfs
-Version: 2.5.3
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
-%define builddate 2025-04-05
+%define builddate 2025-08-23
 
 Summary: An encrypted overlay filesystem written in Go
 Summary(ru_RU.UTF-8): Виртуальная файловая система с шифрованием
@@ -47,9 +47,9 @@ export GO_LDFLAGS="$GO_LDFLAGS \"-extldflags=$LDFLAGS\""
 
 # Fix build on i586. See upstream bug 907
 # Remove this fix in next release!
-pushd internal/syscallcompat
-mv thread_credentials_linux_368_arm.go thread_credentials_linux_32.go
-popd
+# pushd internal/syscallcompat
+# mv thread_credentials_linux_368_arm.go thread_credentials_linux_32.go
+# popd
 
 
 go build -mod=vendor -buildmode=pie "-ldflags=$GO_LDFLAGS"
@@ -75,6 +75,9 @@ install -p -m644 -D Documentation/%name-xray.1 %buildroot/%_man1dir/%name-xray.1
 %doc LICENSE* README.html
 
 %changelog
+* Sat Aug 23 2025 Alexei Mezin <alexvm@altlinux.org> 2.6.1-alt1
+- New version
+
 * Sun Apr 06 2025 Alexei Mezin <alexvm@altlinux.org> 2.5.3-alt2
 - Fix build on i586
 
