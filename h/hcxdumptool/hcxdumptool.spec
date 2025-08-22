@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hcxdumptool
-Version: 6.3.5
+Version: 7.0.0
 Release: alt1
 
 Summary: Small tool to capture packets from wlan devices
 License: MIT
 Group: Security/Networking
-Url: https://github.com/ZerBea/hcxdumptool 
+Url: https://github.com/ZerBea/hcxdumptool
 Vcs: https://github.com/ZerBea/hcxdumptool
 
 Source: %name-%version.tar
@@ -32,9 +32,12 @@ the WPA protocol.
 
 %files
 %_bindir/*
-%doc README.md license.txt changelog 
+%doc README.md license.txt changelog
 
 %changelog
+* Fri Aug 22 2025 Artem Krasovskiy <aibure@altlinux.org> 7.0.0-alt1
+- New version 7.0.0
+
 * Fri Jan 17 2025 Artem Krasovskiy <aibure@altlinux.org> 6.3.5-alt1
 - Initial Build
 
