@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: bzip3
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: A better and stronger spiritual successor to BZip2
 # bzip3 as a whole is licensed under LGPLv3 only. It is not dual-licensed
@@ -96,6 +96,9 @@ head -2333444c /dev/urandom > testfile
 %_pkgconfigdir/bzip3.pc
 
 %changelog
+* Fri Aug 15 2025 Vitaly Chikunov <vt@altlinux.org> 1.5.3-alt1
+- Update to 1.5.3 (2025-08-13).
+
 * Sun May 04 2025 Vitaly Chikunov <vt@altlinux.org> 1.5.2-alt1
 - Update to 1.5.2 (2025-04-27).
 
