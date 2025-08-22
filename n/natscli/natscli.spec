@@ -2,7 +2,7 @@
 %define import_path github.com/nats-io/natscli
 
 Name: natscli
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: The NATS Command Line Interface
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %_bindir/nats
 
 %changelog
+* Fri Aug 22 2025 Artem Krasovskiy <aibure@altlinux.org> 0.2.4-alt1
+- New version 0.2.4
+
 * Fri Jun 27 2025 Artem Krasovskiy <aibure@altlinux.org> 0.2.3-alt1
 - Initial build
 
