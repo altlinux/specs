@@ -1,6 +1,6 @@
 Name:           sshtoken
 Version:        0.3
-Release:        alt1
+Release:        alt2
 License:        MIT
 Source:         %name-%version.tar.gz
 URL:            https://git.sr.ht/~frbrgeorge/sshtoken
@@ -56,6 +56,9 @@ install %name.1 -D %buildroot%_man1dir/%name.1
 %_man1dir/git-credential-ssh*
 
 %changelog
+* Fri Aug 22 2025 Fr. Br. George <george@altlinux.org> 0.3-alt2
+- Bugfixes in git-credential-ssh
+
 * Thu Aug 21 2025 Fr. Br. George <george@altlinux.org> 0.3-alt1
 - Version update
 
