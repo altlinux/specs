@@ -2,13 +2,15 @@
 
 Name: keama
 Version: 4.5.0
-Release: alt1.gitd99ec01f
+Release: alt2.gitd99ec01f
 
 Summary: ISC DHCP Kea Migration Assistant
 
 License: MPL-2.0
 Group: System/Configuration/Other
 Url: https://gitlab.isc.org/isc-projects/keama
+
+Packager: Maria Alexeeva <alxvmr@altlinux.org>
 
 BuildRequires: make gcc autoconf automake
 BuildRequires: libisc-export-dhcp-devel
@@ -38,9 +40,14 @@ using KeaMA (the Kea Migration Assistant).
 %setup
 %autopatch -p1
 sed -i '1s|^#!.*|#!/usr/bin/python3|' leases/%name-leases.py
+sed -i 's|\./configure |%autoreconf \&\& &|' bind/Makefile.in
+# make sure it's there
+grep autoreconf bind/Makefile.in
 
 %build
 %add_optflags -I%_includedir/bind9
+
+%autoreconf
 %configure
 %make_build
 
@@ -71,5 +78,8 @@ ln -s %python3_sitelibdir/leases/%name-leases.py  \
 %python3_sitelibdir/leases/__pycache__/*.pyc
 
 %changelog
+* Fri Aug 22 2025 Ivan A. Melnikov <iv@altlinux.org> 4.5.0-alt2.gitd99ec01f
+- NMU: Use %%autoreconf (fixes FTBFS on loongarch64 and riscv64)
+
 * Sun Jul 13 2025 Maria Alexeeva <alxvmr@altlinux.org> 4.5.0-alt1.gitd99ec01f
 - First build
