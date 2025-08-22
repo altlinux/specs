@@ -1,6 +1,6 @@
 Name: xfdashboard
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: A Gnome shell like dashboard for Xfce
 License: GPL-2.0+
@@ -12,13 +12,12 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xdg
-
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfconf-devel >= 4.14.0 libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel
 BuildRequires: libXinerama-devel
-BuildRequires: intltool
 
 %define _unpackaged_files_terminate_build 1
 
@@ -51,22 +50,17 @@ This package contains development files required to build
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	--disable-silent-rules \
-	--enable-debug=minimum
-%make_build
+%meson
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%{name}*
 %_libdir/%name/
-%exclude %_libdir/%name/plugins/*.la
 %_xdgconfigdir/autostart/*.desktop
 %_datadir/metainfo/*.xml
 %_desktopdir/*.desktop
@@ -83,6 +77,10 @@ This package contains development files required to build
 %_libdir/*.so
 
 %changelog
+* Fri Aug 22 2025 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Switched to meson build.
+- Updated to 1.1.0.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
 - Fixed build: added intltool to BR.
 
