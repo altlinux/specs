@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -321,6 +321,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Fri Aug 22 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.2-alt2
+- Strictly ran with QT_QPA_PLATFORM=xcb.
+
 * Wed Aug 06 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.2-alt1
 - New version.
 
