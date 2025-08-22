@@ -4,7 +4,7 @@
 %def_with check
 
 Name: date
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: A date and time library based on the C++11/14/17 <chrono> header
@@ -98,6 +98,9 @@ information as well.
 %_libdir/libdate-tz.so.*
 
 %changelog
+* Fri Aug 22 2025 Artem Krasovskiy <aibure@altlinux.org> 3.0.4-alt1
+- New version 3.0.4
+
 * Tue Dec 25 2024 Artem Krasovskiy <aibure@altlinux.org> 3.0.3-alt1
 - Initial build for Sisyphus
 
