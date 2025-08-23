@@ -2,7 +2,7 @@
 
 Name: 	 qcad
 Version: 3.32.3.4
-Release: alt1
+Release: alt2
 
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -136,7 +136,7 @@ cp -a   examples \
 install -Dm644 qcad.desktop %buildroot%_desktopdir/%name.desktop
 
 # Icon
-install -Dm644 ./support/doc/api/qcad_icon.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+install -Dm644 ./support/doc/api/qcad_icon.png %buildroot%_iconsdir/hicolor/64x64/apps/org.qcad.QCAD.png
 
 # Add localization fo qcad.lang
 for l in $(find %buildroot%_libdir/%name/qm -name \*.qm); do
@@ -151,9 +151,12 @@ done
 %_libdir/lib*.so*
 %_libdir/%name/*
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/org.qcad.QCAD.png
 
 %changelog
+* Sat Aug 23 2025 Anton Midyukov <antohami@altlinux.org> 3.32.3.4-alt2
+- NMU: rename icon qcad with org.qcad.QCAD to match the desktop file
+
 * Thu Jul 17 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.3.4-alt1
 - New version.
 
