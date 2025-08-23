@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: freelib
-Version: 6.1.0
-Release: alt2
+Version: 6.2.0
+Release: alt1
 
 Summary: Freelib is book library manager
 License: GPL-3.0
@@ -20,6 +20,7 @@ BuildRequires: qt6-base-devel
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(ddjvuapi)
 BuildRequires: quazip-qt6-devel
+BuildRequires: qt6-svg-devel
 
 %description
 %summary
@@ -73,6 +74,9 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' data/freelib.deskt
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Aug 23 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
+- New version 6.2.0.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt2
 - Applied repocop fix for freedesktop-categories
 

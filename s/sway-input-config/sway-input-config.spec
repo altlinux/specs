@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sway-input-config
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Input device configurator for Sway
@@ -32,10 +32,12 @@ configure keyboard, touchpad and pointer devices.
 %patch -p1
 
 %build
-%pyproject_build
+#%%pyproject_build
+%python3_build
 
 %install
-%pyproject_install
+#%%pyproject_install
+%python3_install
 
 %files
 %doc LICENSE *.md screenshot*.png sway_input_config/data/defaults.json
@@ -49,5 +51,8 @@ configure keyboard, touchpad and pointer devices.
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sat Aug 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Fri May 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt1
 - Initial build for Sisyphus
