@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 550.54.14
+Version: 580.76.05
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -33,6 +33,9 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD PREFIX=%buildroot/%prefix bindir=%buil
 
 
 %changelog
+* Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt1
+- new version
+
 * Thu Feb 29 2024 Sergey V Turchin <zerg@altlinux.org> 550.54.14-alt1
 - new version
 

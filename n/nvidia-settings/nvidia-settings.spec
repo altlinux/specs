@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 570.169
+Version: 580.76.05
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -13,8 +13,9 @@ Url: ftp://download1.nvidia.com/XFree86/nvidia-settings/
 License: GPL-2.0-only
 
 Source: %name-%version.tar.gz
-Source4: nvidia-settings.sh
+Source4: nvidia-settings-load.sh
 Source5: nvidia-settings.desktop
+Source6: nvidia-settings-load.desktop
 Source100: gettext.h
 Source101: ru.po
 
@@ -28,12 +29,13 @@ Patch100: nvidia-settings-440.59-alt-integrate-translation.patch
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 #BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-ubt
+BuildRequires: rpm-build-xdg
 BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libvulkan-devel
+BuildRequires: libjansson-devel
 BuildRequires: /usr/bin/convert
 
 %description
@@ -55,7 +57,7 @@ the configuration file.
 %package -n libxnvctrl-devel
 Group: Development/Other
 Summary: Development files for %name
-Provides:  nvidia-settings-devel = %EVR libXNVCtrl-devel = %EVR
+Provides: nvidia-settings-devel = %EVR libXNVCtrl-devel = %EVR
 Obsoletes: nvidia-settings-devel < %EVR libXNVCtrl-devel < %EVR
 %description -n libxnvctrl-devel
 Development files for %name
@@ -70,7 +72,7 @@ This library provides the NV-CONTROL API for communicating with
 the proprietary NVIDIA driver.
 
 %prep
-%setup -q
+%setup
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -83,20 +85,20 @@ install -p -m644 %SOURCE100 src/gtk+-2.x/gettext.h
 install -p -m644 %SOURCE101 po/msg/ru.po
 %endif
 
+rm -rf src/jansson
 sed -i 's|@GUI_LIB_PREFIX@|%_libdir/nvidia-settings|' src/nvidia-settings.c
-
 sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib|' utils.mk
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags %optflags_shared
-%make_build PREFIX=%prefix CFLAGS="%optflags"       NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 -C src/libXNVCtrl
-%make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags" NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1
-%make_build PREFIX=%prefix CFLAGS="%optflags"       NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 -C src/libXNVCtrl libXNVCtrl.so
-
+NV_BUILD_OPTS="PREFIX=%prefix NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 NV_USE_BUNDLED_LIBJANSSON=0"
+%make_build CFLAGS="%optflags"       $NV_BUILD_OPTS -C src/libXNVCtrl
+%make_build LOCAL_CFLAGS="%optflags" $NV_BUILD_OPTS
+%make_build CFLAGS="%optflags"       $NV_BUILD_OPTS -C src/libXNVCtrl libXNVCtrl.so
 
 %install
-make install DESTDIR=%buildroot PREFIX=%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
+make install DESTDIR=%buildroot PREFIX=%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir NV_USE_BUNDLED_LIBJANSSON=0
 # cleanup
 rm -f %buildroot/%_libdir/libnvidia-wayland-client.* ||:
 
@@ -109,8 +111,9 @@ for p in %buildroot/%_libdir/%name/* ; do
 	|| ln -s `basename $p` $new_path
 done
 
-mkdir -p %buildroot/%_sysconfdir/X11/xinit.d/
-install -m 0755 %SOURCE4 %buildroot/%_sysconfdir/X11/xinit.d/%name.sh
+install -m 0755 %SOURCE4 %buildroot/%_bindir/
+mkdir -p %buildroot/%_xdgconfigdir/autostart/
+install -m 0644 %SOURCE6 %buildroot/%_xdgconfigdir/autostart/
 
 for sz in 16x16 32x32 48x48 64x64 128x128 ; do
     mkdir -p %buildroot/%_iconsdir/hicolor/$sz/apps/
@@ -133,9 +136,10 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %doc doc/*.txt
 %_man1dir/%name.*
 %_bindir/%name
+%_bindir/%name-load.sh
 %_libdir/%name/*gtk3*.so*
-%_sysconfdir/X11/xinit.d/%name.sh
 %_desktopdir/%name.desktop
+%_xdgconfigdir/autostart/%name-load.desktop
 %_iconsdir/*/*/apps/%name.png
 
 %files -n %libxnvctrl
@@ -149,6 +153,10 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt1
+- new version
+- apply settings via XDG autostart
+
 * Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt1
 - new version
 
@@ -281,31 +289,31 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 * Tue Oct 30 2018 Sergey V Turchin <zerg@altlinux.org> 410.73-alt1
 - new version
 
-* Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt1%ubt
+* Mon Apr 02 2018 Sergey V Turchin <zerg@altlinux.org> 390.48-alt1
 - new version
 
-* Thu Feb 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt1%ubt
+* Thu Feb 15 2018 Sergey V Turchin <zerg@altlinux.org> 390.25-alt1
 - new version
 
-* Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt1%ubt
+* Mon Jan 22 2018 Sergey V Turchin <zerg@altlinux.org> 384.111-alt1
 - new version
 
-* Mon Dec 04 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt1%ubt
+* Mon Dec 04 2017 Sergey V Turchin <zerg@altlinux.org> 384.98-alt1
 - new version
 
-* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt1%ubt
+* Wed Oct 11 2017 Sergey V Turchin <zerg@altlinux.org> 384.90-alt1
 - new version
 
-* Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt1%ubt
+* Wed May 10 2017 Sergey V Turchin <zerg@altlinux.org> 375.66-alt1
 - new version
 
-* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt1%ubt
+* Mon Mar 06 2017 Sergey V Turchin <zerg@altlinux.org> 375.39-alt1
 - new version
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 375.26-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 375.26-alt1
 - new version
 
-* Thu Dec 01 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt1%ubt
+* Thu Dec 01 2016 Sergey V Turchin <zerg@altlinux.org> 375.20-alt1
 - new version
 
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt1

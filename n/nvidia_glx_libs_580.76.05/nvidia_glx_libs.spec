@@ -18,10 +18,10 @@
 %define subd ./
 %endif
 
-%define nv_version 570
-%define nv_release 169
-%define nv_minor   %nil
-%define pkg_rel alt2
+%define nv_version 580
+%define nv_release 76
+%define nv_minor   05
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -123,6 +123,12 @@ Summary: nvidia library
 %description -n libnvidia-nvvm
 nvidia library
 
+%package -n libnvidia-nvvm70
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-nvvm70
+nvidia library
+
 %package -n libnvidia-ngx
 Group: System/Libraries
 Summary: nvidia library
@@ -216,6 +222,7 @@ install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libcudadebugger.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-api.so.%nvidia_sover %buildroot/%_libdir/libnvidia-api.so.%version
+install -m 0644 %subd/libnvidia-nvvm70.so.4 %buildroot/%_libdir/
 # install data
 mkdir -p %buildroot/%_datadir/nvidia/
 install -m 0644 %subd/nvoptix.bin %buildroot/%_datadir/nvidia/
@@ -306,9 +313,14 @@ done
 %files -n libnvidia-api
 %_libdir/libnvidia-api.so.%nvidia_sover
 %_libdir/libnvidia-api.so.%version
+%files -n libnvidia-nvvm70
+%_libdir/libnvidia-nvvm70.so.4
 %endif
 
 %changelog
+* Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt2
 - package libnvidia-sandboxutils (closes: 55287)
 

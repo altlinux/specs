@@ -13,10 +13,10 @@
 
 # version-release
 
-%define nv_version 570
-%define nv_release 169
-%define nv_minor %nil
-%define pkg_rel alt296
+%define nv_version 580
+%define nv_release 76
+%define nv_minor 05
+%define pkg_rel alt297
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt297
+- new version
+
 * Thu Jul 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.169-alt296
 - enable NVreg_TemporaryFilePath=/var/tmp by default
 
