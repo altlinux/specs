@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1.2.beta1
+Release: alt1.2.beta2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -36,8 +36,8 @@ License: GPL-3.0-or-later
 %define altbranch sisyphus
 %endif
 
-%define status "бета1"
-%define status_en "-beta1"
+%define status "бета2"
+%define status_en "-beta2"
 
 %description
 Distro-specific packages with design and texts
@@ -245,6 +245,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Sat Aug 23 2025 Andrew Savchenko <bircoph@altlinux.org> 11.0-alt1.2.beta2
+- update status to beta2
+
 * Tue Apr 29 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.2.beta1
 - phosh-settings: fix for phosh 0.46
 - phosh-settings: replace gtk.css with gsettings override
