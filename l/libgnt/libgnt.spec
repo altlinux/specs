@@ -1,19 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: libgnt
-Version: 2.14.0
+Version: 2.14.4
 Release: alt1
 Summary: TUI toolkit based on GLib and ncurses
 License: GPL-2.0-or-later
 Group: System/Libraries
-Url: https://pidgin.im/
-# http://downloads.sf.net/pidgin/%name-%version.tar.xz
+Url: https://keep.imfreedom.org/libgnt/libgnt
+# https://keep.imfreedom.org/libgnt/libgnt/archive/v2.14.4.tar.gz
 Source: %name-%version.tar
 
 Conflicts: finch < 2.14.0
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.44.0
 BuildRequires: gtk-doc
 BuildRequires: libncurses-devel libncursesw-devel
-BuildRequires: pkgconfig(glib-2.0) >= 2.16.0 pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0)
+BuildRequires: pkgconfig(glib-2.0) >= 2.16.0
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 
 %description
@@ -38,7 +42,9 @@ applications which will use GNT.
 %setup
 
 %build
-%meson
+%meson \
+  -Dpython2=false \
+  %nil
 %meson_build
 
 %install
@@ -60,6 +66,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/*/%name/
 
 %changelog
+* Sat Aug 23 2025 Arseny Maslennikov <arseny@altlinux.org> 2.14.4-alt1
+- 2.14.0 -> 2.14.4.
+
 * Fri Jun 19 2020 Alexey Shabalin <shaba@altlinux.org> 2.14.0-alt1
 - Initial build
 
