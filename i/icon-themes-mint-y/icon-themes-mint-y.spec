@@ -1,15 +1,14 @@
 %define rname mint-y-icons
 
 Name: icon-themes-mint-y
-Version: 1.8.3
-Release: alt2
+Version: 1.8.5
+Release: alt1
 
 Summary: The Mint-Y icon theme
 License: CC-BY-SA-4.0
 Group: Graphical desktop/MATE
 Url: https://github.com/linuxmint/mint-y-icons
 Vcs: https://github.com/linuxmint/mint-y-icons.git
-Packager: Anton Kurachenko <srebrov@altlinux.org>
 BuildArch: noarch
 
 AutoReqProv: no
@@ -47,6 +46,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-Y.json
 
 %changelog
+* Sat Aug 23 2025 Anton Kurachenko <srebrov@altlinux.org> 1.8.5-alt1
+- New version 1.8.5.
+
 * Sun Jun 01 2025 Alexander Kovalev <alexvk@altlinux.org> 1.8.3-alt2
 - Add package with style for Folder Color Switcher.
 
