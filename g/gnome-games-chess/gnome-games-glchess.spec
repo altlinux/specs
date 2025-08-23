@@ -3,7 +3,7 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -67,9 +67,12 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %config(noreplace) %_sysconfdir/%__name/engines.conf
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Aug 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

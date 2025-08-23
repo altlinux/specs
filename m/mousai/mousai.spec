@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: mousai
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Identify songs in seconds
@@ -75,6 +75,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -82,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Aug 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
+- 0.7.9
+
 * Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
 - 0.7.8
 
