@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.2
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Aug 23 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.3-alt1
+- v6.16.3 (2025-08-23).
+
 * Thu Aug 21 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.2-alt1
 - v6.16.2 (2025-08-20).
 - config: Enable RTRS and Security Infiniband options.
