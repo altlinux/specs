@@ -3,8 +3,8 @@
 %define _peasrc peazip-sources
 
 Name: peazip
-Version: 10.4.0
-Release: alt1.gita1017bc
+Version: 10.6.1
+Release: alt1
 
 Summary: File and archive manager
 License: LGPL-3.0-only
@@ -119,6 +119,9 @@ install %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenus/KDE6-d
 %_datadir/kio/servicemenus/*.desktop
 
 %changelog
+* Sat Aug 23 2025 Anton Kurachenko <srebrov@altlinux.org> 10.6.1-alt1
+- New version 10.6.1.
+
 * Sat Apr 26 2025 Anton Kurachenko <srebrov@altlinux.org> 10.4.0-alt1.gita1017bc
 - New version 10.4.0.
 
