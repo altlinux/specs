@@ -4,7 +4,7 @@
 %def_with doc
 Name: beremiz
 Version: 1.4
-Release: alt0.0.20250506.1
+Release: alt0.1.20250821.1
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -163,7 +163,7 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 %_desktopdir/%name-doc.desktop
 %endif #doc
 %_datadir/%name
-# opc_ua required python3-module-asyncua
+# opc_ua required python3-module-asyncio
 %exclude %_datadir/%name/opc_ua
 # canfestival required canfestival_config ???
 %exclude %_datadir/%name/canfestival
@@ -171,6 +171,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 %exclude %_datadir/%name/etherlab
 
 %changelog
+* Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.1
+- new snapshot
+
 * Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.0.20250506.1
 - new snapshot
 
