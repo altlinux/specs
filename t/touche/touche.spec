@@ -1,20 +1,26 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define sover 0
 
 Name: touche
-Version: 2.0.10
-Release: alt1
+Version: 2.0.15
+Release: alt2
 
 Summary: The desktop application to configure Touchegg
 
-License: GPLv3
+License: GPL-3.0
 Group: System/Configuration/Other
-Url: https://github.com/JoseExposito/touche
+URL: https://github.com/JoseExposito/touche
+VCS: https://github.com/JoseExposito/touche.git
 
 # Source-url: https://github.com/JoseExposito/touche/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
 Source1: %name-development-%version.tar
+
+ExcludeArch: %ix86
 
 Requires: lib%name%sover = %EVR
 Requires: lib%name-gir = %EVR
@@ -36,7 +42,7 @@ BuildRequires: libappstream-glib
 
 %description
 Easily configure your touchpad and touchscreen multi-touch gestures
-using Touchegg with this GTK graphical user interface
+using Touchegg with this GTK graphical user interface.
 
 %package -n lib%name%sover
 Summary: Shared library for Touche
@@ -44,7 +50,7 @@ Group: System/Libraries
 
 %description -n lib%name%sover
 Easily configure your touchpad and touchscreen multi-touch gestures
-using Touchegg with this GTK graphical user interface
+using Touchegg with this GTK graphical user interface.
 
 This package provides shared library required for Touche to work.
 
@@ -55,10 +61,10 @@ Requires: lib%name%sover = %EVR
 
 %description -n lib%name-devel
 Easily configure your touchpad and touchscreen multi-touch gestures
-using Touchegg with this GTK graphical user interface
+using Touchegg with this GTK graphical user interface.
 
 This package provides files and library required to develop applications
-that use lib%name
+that use lib%name.
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the Touche
@@ -66,16 +72,15 @@ Group: System/Libraries
 Requires: lib%name%sover = %EVR
 
 %description -n lib%name-gir
-GObject introspection data for the Touche
+GObject introspection data for the Touche.
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Touche
 Group: System/Libraries
-BuildArch: noarch
 Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the Touche
+GObject introspection devel data for the Touche.
 
 %prep
 %setup -q -n %name-%version
@@ -102,6 +107,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/com.github.jos
 %_desktopdir/com.github.joseexposito.touche.desktop
 %_datadir/glib-2.0/schemas/com.github.joseexposito.touche.gschema.xml
 %_iconsdir/hicolor/*/apps/com.github.joseexposito.touche.svg
+%_iconsdir/hicolor/*/apps/com.github.joseexposito.touche.png
 %_datadir/appdata/com.github.joseexposito.touche.appdata.xml
 
 %files -n lib%name%sover
@@ -118,6 +124,12 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/com.github.jos
 %_girdir/*.gir
 
 %changelog
+* Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 2.0.15-alt2
+- Exclude Arch i586 (the build stops without messages)
+
+* Thu Jun 05 2025 Anton Midyukov <antohami@altlinux.org> 2.0.15-alt1
+- new version (2.0.15)
+
 * Thu Oct 12 2023 Anton Midyukov <antohami@altlinux.org> 2.0.10-alt1
 - new version (2.0.10) with rpmgs script
 
