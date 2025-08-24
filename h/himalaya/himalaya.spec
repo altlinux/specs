@@ -1,38 +1,34 @@
+%global _unpackaged_files_terminate_build 1
+
 Name: himalaya
-Version: 0.8.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: CLI to manage your emails
 License: MIT
 Group: Networking/Mail
-Url: https://pimalaya.org/himalaya/
-Vcs: https://github.com/soywod/himalaya
+Url: https://pimalaya.org
+VCS: https://github.com/pimalaya/himalaya
+
 Source: %name-%version.tar
+Source1: vendor.tar
 Source2: %name.service
 
-ExcludeArch: ppc64le
-
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 
 %description
-CLI to manage your emails, based on the pimalaya-email library.
+CLI to manage emails, based on email-lib.
 
 %prep
-%setup
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%setup -a 1
+%rust_prep
 
 %build
-cargo build --offline --release
+%rust_build
 
 %install
 # install bin
-cargo install --path . --root %buildroot%_usr
+%rust_install
 # install man
 mkdir -p %buildroot%_man1dir
 %buildroot%_bindir/%name man %buildroot%_man1dir
@@ -49,13 +45,17 @@ install -p -m 644 %SOURCE2 %buildroot%_userunitdir/%name.service
 
 %files
 %_bindir/%name
-%_man1dir/%{name}*.1.xz
+%_man1dir/%{name}*.1.*
 %_userunitdir/%name.service
 %_datadir/zsh/site-functions/_%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
+%doc LICENSE
 
 %changelog
+* Sun Aug 24 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.0-alt1
+- Updated to version 1.1.0.
+
 * Sat Jun 17 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt2
 - Added systemd service
 
