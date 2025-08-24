@@ -3,7 +3,7 @@
 
 Name: widelands
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Open source realtime-strategy game
@@ -93,6 +93,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1:1.2.1-alt2
+- Add upstream commit "Update asio interfaces (GH #6665 / CB #5025)"
+  (Fix FTBFS with asio-devel >= 1.34)
+
 * Wed Nov 20 2024 Anton Midyukov <antohami@altlinux.org> 1:1.2.1-alt1
 - New version 1.2.1.
 
