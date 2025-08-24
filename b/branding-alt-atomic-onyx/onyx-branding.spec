@@ -4,14 +4,18 @@
 %define _unpackaged_files_terminate_build 1
 
 %define brand alt
-%define theme atomic-onyx
+%define theme atomic
+%define Variant Onyx
+%define variant onyx
 %define altbranch sisyphus
 %define flavour %brand-%theme
-%define pname ALT Atomic Onyx
+%define flavour_onyx %flavour-onyx
+%define pname ALT Atomic
 %define bugtracker https://altlinux.space/alt-atomic/onyx/issue
+%define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20240822
+Version: 20240825
 Release: alt1
 
 Group: Graphics
@@ -44,7 +48,7 @@ Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %EVR "; done) altlinux-release-%theme
 Obsoletes: %obsolete_list
 Conflicts: altlinux-release-%altbranch
-%branding_add_conflicts %flavour release
+%branding_add_conflicts %flavour_onyx release
 
 %description release
 %summary.
@@ -62,7 +66,7 @@ Requires(post): libgio
 Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
 Conflicts: branding-simply-linux-system-settings
 Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
-%branding_add_conflicts %flavour gnome-settings
+%branding_add_conflicts %flavour_onyx gnome-settings
 
 %description gnome-settings
 %summary.
@@ -79,7 +83,7 @@ Requires: plymouth
 Requires: plymouth-theme-bgrt
 Requires: plymouth-plugin-label
 Requires: fonts-ttf-dejavu
-%branding_add_conflicts %flavour bootsplash
+%branding_add_conflicts %flavour_onyx bootsplash
 
 %description bootsplash
 This package contains graphics for boot process for %pname
@@ -95,7 +99,7 @@ BuildArch: noarch
 Requires: alt-atomic-icons
 
 Requires(post,preun): alternatives >= 0.2
-%branding_add_conflicts %flavour graphics
+%branding_add_conflicts %flavour_onyx graphics
 
 %description graphics
 %summary.
@@ -106,11 +110,17 @@ Requires(post,preun): alternatives >= 0.2
 %build
 %meson \
     -Dname='%pname' \
+    -Dpretty_name='%pname %Variant' \
     -Dtheme=%theme \
     -Dbranch=%altbranch \
     -Dbrand=%brand \
     -Dhomepage=%url \
-    -Dbugtracker=%bugtracker
+    -Dbugtracker=%bugtracker \
+    -Dflavour=%flavour \
+    -Ddocpage=%docpage \
+    -Dvariant=%Varant \
+    -Dvariant_id=%varant \
+    -Dversion=%version
 %meson_build
 
 %install
@@ -132,5 +142,17 @@ plymouth-set-default-theme bgrt
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Mon Aug 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20240825-alt1
+- Added more fields to os-release:
+  + ID_LIKE
+  + RELEASE_TYPE
+  + DOCUMENTATION_URL
+  + BUG_REPORT_URL
+  + VENDOR_NAME
+  + VENDOR_URL
+  + DEFAULT_HOSTNAME
+  + VARIANT
+  + VARIANT_ID
+
 * Fri Aug 22 2025 Vladimir Vaskov <rirusha@altlinux.org> 20240822-alt1
 - Initial build.
