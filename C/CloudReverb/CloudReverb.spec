@@ -1,11 +1,11 @@
 
 %define _unpackaged_files_terminate_build 1
-%define snapshot gitceb5e1df
+#define snapshot %nil
 %define build_type Release
 
 Name:    CloudReverb
-Version: 0.2
-Release: alt1.%snapshot
+Version: 0.3
+Release: alt1
 
 Summary: Algorithmic reverb plugin based on CloudSeed
 License: MIT
@@ -105,5 +105,8 @@ cp -a "VST3/CloudReverb.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3-alt1
+- v0.3
+
 * Fri May 09 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2-alt1.gitceb5e1df
 - initial build
