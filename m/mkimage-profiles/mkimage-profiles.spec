@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,23 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1.8.4-alt1
+- params.txt: document REPO, LIVE_REPO
+- control: fix condition for run live/image-scripts.d/51-control-install
+- repo: fix build without sub/main
+- desktop+live: remove xinit, xinitrc, xdm from list
+- live: separate use/live/desktop-common from use/live-desktop
+- build-vm: add /root/.install-log/diskinfo to rootfs
+- l10n: clean xkb opts for GNOME
+- l10n: write_gnome_kbd if gnome session is presence
+- live: add INSTALL2_PACKAGES when use live-install feature
+- task-common: initial package lists for metapackages task-common-*
+- init: add use/init/sysv/desktop, +sysvinit-desktop
+- x11: remove use/x11/xorg from use/x11/gnome
+- Refactoring regular targets
+- net-eth: add config for eth* too in use/net-eth/networkd/dhcp{,4}
+- Remove slinux targets, feature, package lists
+
 * Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1.8.3-alt1
 - plymouth: use/plymouth/base do not depend on use/plymouth/stage2
 - image.in: set adjtime to UTC by default
