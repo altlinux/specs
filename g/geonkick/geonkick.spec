@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     geonkick
-Version:  3.6.0
+Version:  3.6.2
 Release:  alt1
 
 Summary:  A free software percussion synthesizer
@@ -13,7 +13,6 @@ Url:      https://geonkick.org/
 
 Source:   %name-%version.tar
 Patch1:   geonkick-alt-linking-fixes.patch
-Patch2:   geonkick-alt-dont-install-redkite.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(RapidJSON)
@@ -79,6 +78,12 @@ This package contains Geonkick build as LV2 plugins.
 
 
 %changelog
+* Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
+* Tue Jul 15 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Jul 03 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
