@@ -2,7 +2,7 @@
 %define ext_name WritingTool
 
 Name: LibreOffice-extension-writingtool
-Version: 1.1.1
+Version: 25.7.1
 Release: alt1
 
 Summary: LibreOffice extension for proofreading
@@ -35,6 +35,9 @@ unzip %SOURCE0 -d %buildroot%ext_dir/%ext_name
 %ext_dir/%ext_name
 
 %changelog
+* Sun Aug 24 2025 Fr. Br. George <george@altlinux.org> 25.7.1-alt1
+- Version up (upstream version numbering is changed)
+
 * Wed Feb 12 2025 Fr. Br. George <george@altlinux.org> 1.1.1-alt1
 - Autobuild version bump to 1.1.1
 
