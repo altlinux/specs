@@ -3,7 +3,7 @@
 
 Name:    prometheus-kafka_exporter
 Version: 1.9.0
-Release: alt2
+Release: alt3
 
 Summary: Kafka exporter for Prometheus
 License: Apache-2.0
@@ -14,7 +14,6 @@ Source: %mod-%version.tar
 Source1: vendor.tar
 Source2: %name.sysconfig
 Source3: %name.service
-Source4: %name.socket
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -35,6 +34,10 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
 
 cd .build/src/%import_path
 %golang_build .
@@ -46,7 +49,6 @@ export IGNORE_SOURCES=1
 %golang_install
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_unitdir/%name.service
-install -Dm0644 %SOURCE4 %buildroot%_unitdir/%name.socket
 mkdir -p %buildroot%_sharedstatedir/prometheus/kafka-exporter
 
 %post
@@ -63,6 +65,10 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/kafka-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt3
+- Removed socket file, fixed service file (ALT #54668).
+- Set program version.
+
 * Fri May 30 2025 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt2
 - Added systemd units.
 
