@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.4
+%define ver_major 0.5
 
 %def_disable bootstrap
 %def_enable check
 
 Name: oo7
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Secret Service provider
@@ -60,7 +60,7 @@ for d in portal server; do
 done
 
 %check
-#dbus-run-session %rust_test
+#dbus-run-session %%rust_test
 for d in portal server; do
     pushd $d
     %__meson_test
@@ -76,10 +76,17 @@ done
 %_userunitdir/%name-portal.service
 %_desktopdir/%name-portal.desktop
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.oo7.service
+# gnome-keyring replacement
+%_datadir/dbus-1/services/org.freedesktop.secrets.service
+%_userunitdir/dbus-org.freedesktop.impl.portal.desktop.oo7.service
+%_userunitdir/dbus-org.freedesktop.secrets.service
 %_datadir/xdg-desktop-portal/portals/%name-portal.portal
 %doc README*
 
 %changelog
+* Sun Aug 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
