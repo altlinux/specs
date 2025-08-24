@@ -1,7 +1,7 @@
 %global import_path github.com/prometheus-community/prometheus-postgres_exporter
 Name:    prometheus-postgres_exporter
 Version: 0.17.1
-Release: alt2
+Release: alt3
 
 Summary: A PostgreSQL metric exporter for Prometheus
 License: Apache-2.0
@@ -16,7 +16,6 @@ Source1: vendor.tar
 Source2: postgres_exporter.yml
 Source3: %name.sysconfig
 Source4: %name.service
-Source5: %name.socket
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang
@@ -56,7 +55,7 @@ mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometh
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/prometheus/postgres_exporter.yml
 install -m0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
-install -m0644 %SOURCE5 %buildroot%_unitdir/%name.socket
+mkdir -p %buildroot%_sharedstatedir/prometheus/postgres-exporter
 
 %post
 %post_service %name
@@ -70,8 +69,12 @@ install -m0644 %SOURCE5 %buildroot%_unitdir/%name.socket
 %_unitdir/%name.*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/prometheus/postgres_exporter.yml
+%dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/postgres-exporter
 
 %changelog
+* Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.17.1-alt3
+- Removed socket file, fixed service file.
+
 * Thu Apr 17 2025 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt2
 - Add default configs and systemd units.
 
