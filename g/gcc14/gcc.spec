@@ -3,7 +3,7 @@
 %define gcc_branch 14
 
 Name: gcc%gcc_branch
-Version: 14.2.1
+Version: 14.3.1
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20241028
+%define snapshot 20250812
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -1232,7 +1232,11 @@ CONFIGURE_OPTS="\
 %endif
 %if_enabled bootstrap
 	--enable-bootstrap \
+%ifarch x86_64
+	--with-build-config='bootstrap-lto bootstrap-cet' \
+%else
 	--with-build-config=bootstrap-lto \
+%endif
 	--enable-link-serialization=1 \
 %endif
 	--enable-languages="c,c++%{?_with_fortran:,fortran}%{?_with_objc:,objc,obj-c++}%{?_with_ada:,ada}%{?_with_go:,go}%{?_enable_d:,d}%{?_enable_rust:,rust},lto" \
@@ -2151,6 +2155,14 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Sun Aug 24 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt1
+- Updated to 14.3.1.
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-14-branch
+  commit 38f4a87cc67b52941fa8292ab5a7f99302e679be;
+  + releases/gcc-14 (snapshot 20250812)
+  commit r14-11948-gfdfbc4923ab1e8a7b41fbc904fb5bb0bb3dc6a6b.
+
 * Mon Oct 28 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.2.1-alt1
 - Updated to 14.2.1.
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
