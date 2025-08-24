@@ -29,8 +29,8 @@
 %def_with new_systemd
 
 Name:    hplip
-Version: 3.25.2
-Release: alt4
+Version: 3.25.6
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -285,9 +285,6 @@ Patch325: 0025-Remove-all-ImageProcessor-functionality-which-is-clo.patch
 Patch328: 0028-hp-check-Fix-core.distro-vs.-core.distro_name-mixups.patch
 Patch329: 0029-Make-base.g.xint-more-generous-in-what-it-can-take.patch
 # end debian patches
-
-#https://bugs.launchpad.net/hplip/+bug/2110079
-Patch330: hp-scan_disable_resize.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -577,9 +574,6 @@ sed -i.duplex-constraints \
 %patch325 -p2
 %patch328 -p1
 %patch329 -p1
-
-#disable resize
-%patch330 -p1
 
 %patch112 -p2 -b .logdir
 
@@ -1139,6 +1133,18 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.6-alt1
+- New version.
+- Added support for the following new printers:
+  + HP LaserJet Enterprise Flow MFP 8601z
+  + HP LaserJet Pro MFP M126a plus, M126nw plus, M126snw plus
+  + HP Envy Photo 7200 series
+  + HP Envy Photo 7900 series
+  + HP OfficeJet Pro 9110 Series
+  + HP OfficeJet 9120 Series
+  + HP OfficeJet Pro 9120 Series
+  + HP OfficeJet Pro 9130 Series
+
 * Tue Jul 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.2-alt4
 - NMU: disable resize in hp-scan (ALT #55386)
 
@@ -1152,6 +1158,35 @@ fi
 
 * Fri Mar 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.2-alt1
 - New version.
+- Added support for the following new printers:
+  + HP LaserJet Enterprise Flow MFP 8601, 8601z+, MFP 8601dn
+  + HP Color LaserJet Enterprise MFP 8801dn, Flow MFP 8801z, 8801z+
+  + HP LaserJet Enterprise 8501dn, 8501x, 8501x+
+  + DEX MFP D826
+  + DEX MFP D82640
+  + DEX MFP D82650
+  + DEX MFP D82660
+  + DEX D50145
+  + DEX MFP D42540
+  + DEX MFP D52645
+  + DEX Color D55745
+  + DEX Color MFP D57945
+  + DEX Color MFP D677
+  + DEX Color MFP D67755
+  + DEX Color MFP D67765
+  + DEX Color MFP D877
+  + DEX Color MFP D87740
+  + DEX Color MFP D87750
+  + DEX Color MFP D87760
+  + DEX Color MFP D87770
+  + DEX Color MFP D786
+  + DEX Colour MFP D78625
+  + DEX Color MFP D78630
+  + DEX Color MFP D78635
+  + DEX MFP D731
+  + DEX MFP D73130
+  + DEX MFP D73135
+  + DEX MFP D73140
 
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:3.24.4-alt2
 - NMU: fix FTBFS with gcc14
