@@ -5,7 +5,7 @@
 %define api_ver 2
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Shared library for GNOME games
@@ -62,6 +62,9 @@ developing applications that use %name.
 %_vapidir/%_name-%api_ver.vapi
 
 %changelog
+* Sun Aug 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
