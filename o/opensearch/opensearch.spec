@@ -1,8 +1,8 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 3.1.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -51,6 +51,8 @@ subst 's|\.*/gradlew|gradle --no-daemon|g' scripts/build.sh
 rm -rf ~/.gradle/native
 # Do not build core plugins
 subst '/core plugins/,$d' scripts/build.sh
+# Fix trailing newline for /etc/sysconfig/opensearch
+echo >> distribution/packages/src/common/env/opensearch
 
 %build
 ./scripts/build.sh -v %version -s false -a x64 -d rpm
@@ -139,6 +141,9 @@ find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Sat Jul 19 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt3
 - Fixed upgrade from previous releases.
 
