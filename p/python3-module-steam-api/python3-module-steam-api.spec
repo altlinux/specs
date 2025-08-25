@@ -2,7 +2,7 @@
 %define pypi_name python_steam_api
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: This library providing of steam-api
@@ -38,6 +38,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 25 2025 Mikhail Tergoev <fidel@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Mar 04 2025 Mikhail Tergoev <fidel@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
