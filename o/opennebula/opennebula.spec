@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.10.0.1
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -1150,6 +1150,10 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Aug 25 2025 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt2
+- fix flow requires
+- use nokogiri less than 1.19 (ALT #55713)
+
 * Thu Jul 10 2025 Alexander Burmatov <thatman@altlinux.org> 6.10.0.1-alt1
 - 6.10.0.1
 - implement onegate-proxy in VN drivers
