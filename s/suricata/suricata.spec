@@ -9,7 +9,7 @@
 %endif
 
 Name: suricata
-Version: 7.0.10
+Version: 8.0.0
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -25,6 +25,7 @@ Source2: suricata.sysconfig
 Source3: suricata.logrotate
 Source4: suricata-tmpfiles.conf
 Source5: suricata.init
+Patch0: suricata-alt-rules-path.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++
@@ -55,8 +56,10 @@ Matching, and GeoIP identification.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
+%add_optflags -llua
 %autoreconf
 %configure \
     --enable-gccprotect \
@@ -110,6 +113,7 @@ install -m 755 %SOURCE5 %buildroot%_initdir/%name
 # Cleanup
 rm -r %buildroot%_datadir/doc/%name
 rm -rf %buildroot%_includedir
+rm -rf %buildroot%_datadir/%name/rules
 
 %pre
 groupadd -r -f _suricata 2>/dev/null ||:
@@ -144,6 +148,10 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- 8.0.0
+- Added user permission for logrotate rule (ALT #48246).
+
 * Thu Mar 27 2025 Andrey Cherepanov <cas@altlinux.org> 7.0.10-alt1
 - 7.0.10
 
