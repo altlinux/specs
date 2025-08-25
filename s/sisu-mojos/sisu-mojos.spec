@@ -12,67 +12,60 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           sisu-mojos
-Version:        0.3.5
-Release:        alt1_2jpp11
+Version:        0.9.0.M2
+Release:        alt1
 Summary:        Sisu plugin for Apache Maven
 License:        EPL-1.0
 URL:            https://www.eclipse.org/sisu
 BuildArch:      noarch
 
 Source0:        https://github.com/eclipse/sisu.mojos/archive/refs/tags/releases/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0:         sisu-mojos-remove-enforceBytecodeVersion.patch
 
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+#BuildRequires:  mvn(org.codehaus.mojo:extra-enforcer-rules)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 BuildRequires:  mvn(org.slf4j:slf4j-nop)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 %endif
-Source44: import.info
-
 
 %description
 The Sisu Plugin for Maven provides mojos to generate
 META-INF/sisu/javax.inject.Named index files for the Sisu container.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains %{summary}.
+%javadoc_package
 
 %prep
-%setup -q -n sisu.mojos-releases-%{version}
-
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
-
-# Animal Sniffer is not useful in Fedora
-%pom_remove_plugin :animal-sniffer-maven-plugin
+%setup -n sisu.mojos-releases-%{version}
+%patch0 -p2
 
 %mvn_alias : org.sonatype.plugins:
+%pom_remove_dep :extra-enforcer-rules
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
 
 %changelog
+* Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.0.M2-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.3.5-alt1_2jpp11
 - new version
 

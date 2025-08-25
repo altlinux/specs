@@ -15,33 +15,29 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-shared-utils
-Version:        3.3.4
-Release:        alt1_2jpp11
+Version:        3.4.2
+Release:        alt1
 Summary:        Maven shared utility classes
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org/shared/maven-shared-utils
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-# XXX temporary for maven upgrade
-Patch1:         0001-Restore-compatibility-with-current-maven.patch
-Patch2:         0002-Avoid-setting-POSIX-attributes-for-symbolic-links.patch
+Patch1: 0001-Avoid-setting-POSIX-attributes-for-symbolic-links.patch
 
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  %{?module_prefix}mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
-BuildRequires:  mvn(org.hamcrest:hamcrest-core)
+BuildRequires: maven-local
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.fusesource.jansi:jansi)
+BuildRequires: mvn(org.hamcrest:hamcrest-core)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 %endif
-Source44: import.info
 
 %description
 This project aims to be a functional replacement for plexus-utils in Maven.
@@ -54,19 +50,13 @@ a lot of unused code.
 
 %prep
 %setup -q
-
 find -name '*.java' -exec sed -i 's/\r//' {} +
-
 %patch1 -p1
-%patch2 -p1
-
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-
 %pom_remove_dep org.apache.commons:commons-text
 rm src/test/java/org/apache/maven/shared/utils/CaseTest.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -75,6 +65,9 @@ rm src/test/java/org/apache/maven/shared/utils/CaseTest.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Dec 05 2024 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3.4-alt1_2jpp11
 - new version
 
