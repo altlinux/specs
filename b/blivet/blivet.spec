@@ -6,10 +6,13 @@ Name: blivet
 Group: System/Configuration/Other
 Url: https://storageapis.wordpress.com/projects/blivet
 Version: 3.12.1
-Release: alt1
-License: GPLv2+
+Release: alt2
+License: GPL-2.0-or-later
 
-Source0: http://github.com/storaged-project/blivet/archive/%name-%version.tar.gz
+Source0: %name-%version.tar
+# Contains translations submodule 
+Source1: po.tar
+
 BuildArch: noarch
 
 # Versions of required components (done so we make sure the buildrequires
@@ -23,9 +26,24 @@ BuildArch: noarch
 
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-devel
+BuildRequires: python3-module-setuptools python3-devel pip
 BuildRequires: gettext
 BuildRequires: systemd
+
+# For tests
+BuildRequires: /proc
+BuildRequires: python3-module-pyudev >= %pyudevver
+BuildRequires: parted >= %partedver
+BuildRequires: python3-module-parted >= %pypartedver
+BuildRequires: python3-module-selinux
+BuildRequires: python3-module-libmount
+BuildRequires: python3-module-blockdev
+BuildRequires: python3-module-bytesize >= %libbytesizever
+BuildRequires: util-linux >= %utillinuxver
+BuildRequires: lsof
+BuildRequires: libblockdev-plugins
+BuildRequires: python3-module-dbus
+BuildRequires: python3-module-yaml
 
 %description
 The python-blivet package is a python module for examining and modifying
@@ -68,8 +86,7 @@ The python3-%name is a python3 package for examining and modifying storage
 configuration.
 
 %prep
-%setup
-sed -e "s:/usr/lib/systemd/system:%_unitdir:g" -i setup.py
+%setup -a1
 
 %build
 make PYTHON=%__python3
@@ -78,6 +95,10 @@ make PYTHON=%__python3
 make PYTHON=%__python3 DESTDIR=%buildroot install
 
 %find_lang %name
+
+%check
+# Override PATH, so tests will find 'dmsetup' without running from root 
+PATH=/usr/sbin:/sbin:$PATH make PYTHON=%__python3 unit-test
 
 %files -n %name-data -f %name.lang
 %_sysconfdir/dbus-1/system.d/*
@@ -90,6 +111,10 @@ make PYTHON=%__python3 DESTDIR=%buildroot install
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 25 2025 Sergey Konev <darisishe@altlinux.org> 3.12.1-alt2
+- Proper packaging as gear repo (after switching from srpm)
+- Run unit-tests in %check section
+
 * Wed Apr 09 2025 Sergey Konev <darisishe@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
