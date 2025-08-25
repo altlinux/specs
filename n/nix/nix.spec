@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.30.0
+Version: 2.30.2
 Release: alt1
 
 Summary: Nix software deployment system
@@ -17,6 +17,7 @@ Source1: %name.conf
 Source2: sysusers.conf
 
 Patch: nix-2.29.0-alt-remove-unused-sh-files.patch
+Patch1: nix-2.30.2-alt-drop-broken-ssl-path.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -97,6 +98,7 @@ The %name-doc package contains documentation files for %name.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 # Test disabled because rapidcheck is not builded
@@ -156,6 +158,10 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Mon Aug 25 2025 Boris Yumankulov <boria138@altlinux.org> 2.30.2-alt1
+- new version 2.30.2
+- fix ssl patch (ALT bug: 55674) 
+
 * Thu Jul 10 2025 Boris Yumankulov <boria138@altlinux.org> 2.30.0-alt1
 - new version 2.30.0
 - drop ExclusiveArch
