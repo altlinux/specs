@@ -8,7 +8,7 @@
 %define libname libqalculate%sover
 
 Name: qalculate
-Version: 5.5.2
+Version: 5.7.0
 Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
@@ -71,7 +71,7 @@ This package contains common files used by qalculate frontends.
 	--enable-defs2doc
 
 pushd docs/reference
-doxygen
+top_srcdir=../../ doxygen
 popd
 
 %make_build
@@ -112,6 +112,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Aug 12 2025 Vasiliy Kovalev <kovalev@altlinux.ru> 5.7.0-alt1
+- NMU: 5.5.2 -> 5.7.0
+- Fixed FTBFS caused by Doxygen warnings
+
 * Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 5.5.2-alt1
 - 5.3.0 -> 5.5.2
 
