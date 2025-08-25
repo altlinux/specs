@@ -60,7 +60,7 @@
 %def_with jemalloc
 
 Name: %{project}4.5
-Version: 4.5.1
+Version: 4.5.2
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -401,9 +401,6 @@ export ALTWRAP_LLVM_VERSION=rocm
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
 %endif #cuda
-%if_with optix
-	-DWITH_CYCLES_DEVICE_OPTIX:BOOL=ON \
-%endif #optix
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
 	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
@@ -545,6 +542,10 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Mon Aug 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.2-alt1
+- 4.5.2.
+- Remove redurant optix cmake switch (enabled by default).
+
 * Sun Aug 03 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.1-alt1
 - 4.5.1.
 
