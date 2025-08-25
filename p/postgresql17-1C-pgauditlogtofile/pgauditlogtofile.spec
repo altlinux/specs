@@ -1,7 +1,7 @@
 %define pg_ver 17-1C
 
 Name:    postgresql%pg_ver-pgauditlogtofile
-Version: 1.6.4
+Version: 1.7.2
 Release: alt1
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
@@ -28,7 +28,7 @@ allows to automatically rotate the files based in a number of minutes.
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 
 %build
 %make_build USE_PGXS=1 PG_CONFIG=%_bindir/pg_server_config top_builddir=%_libdir/pgsql/pgxs
@@ -46,6 +46,12 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Aug 25 2025 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
+* Wed Jul 30 2025 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Wed Jan 15 2025 Alexei Takaseev <taf@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
