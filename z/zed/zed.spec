@@ -15,7 +15,7 @@
 %endif
 
 Name: zed
-Version: 0.196.6
+Version: 0.200.5
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -59,7 +59,7 @@ editor from the creators of Atom and Tree-sitter.
 install -vpD %SOURCE2 .cargo/config.toml
 install -vp  %SOURCE3 ./update-metadata-releases.py
 
-unzip %webrtc_source -d %webrtc_basedir
+unzip -o %webrtc_source -d %webrtc_basedir
 
 %build
 export RELEASE_VERSION="%version"
@@ -103,6 +103,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Mon Aug 25 2025 Anton Zhukharev <ancieg@altlinux.org> 0.200.5-alt1
+- Updated to 0.200.5.
+
 * Fri Jul 25 2025 Anton Zhukharev <ancieg@altlinux.org> 0.196.6-alt1
 - Updated to 0.196.6.
 
