@@ -4,8 +4,9 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 1.0.35
-Release: alt1
+Version: 1.0.29
+Release: alt2
+Epoch: 1
 
 Summary: Service collection of DDE applications
 
@@ -70,6 +71,7 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %files -f %name.lang
 %doc LICENSE README.md debian/changelog
 %_bindir/dde-dconfig*
+%_sysusersdir/dde-dconfig-daemon.conf
 %_datadir/dbus-1/interfaces/org.desktopspec.ConfigManager*.xml
 %_datadir/dbus-1/system.d/org.desktopspec.ConfigManager.conf
 %_datadir/dbus-1/system-services/org.desktopspec.ConfigManager.service
@@ -105,6 +107,10 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:1.0.29-alt2
+- Reverted the stable version.
+- Fixed dde-dconfig-daemon startup.
+
 * Thu Aug 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.35-alt1
 - New version 1.0.35.
 - Excluded linglong.
