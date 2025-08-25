@@ -1,5 +1,5 @@
 Name: deepin-wallpapers
-Version: 1.7.18
+Version: 1.7.25
 Release: alt1
 
 Summary: Deepin Wallpapers provides wallpapers of DDE
@@ -7,9 +7,11 @@ Summary: Deepin Wallpapers provides wallpapers of DDE
 License: CC-BY-4.0
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-wallpapers
-Vcs: https://github.com/linuxdeepin/deepin-wallpapers.git
+Vcs: https://github.com/linuxdeepin/deepin-wallpapers
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires: deepin-api
@@ -19,6 +21,7 @@ BuildRequires: deepin-api
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %make_build
@@ -27,42 +30,33 @@ BuildRequires: deepin-api
 install -dm755 %buildroot%_datadir/wallpapers
 cp -r deepin %buildroot%_datadir/wallpapers/
 
-install -dm755 %buildroot%_cachedir
-cp -r image-blur %buildroot%_cachedir/
-
-# Suggested by upstream
-install -dm755 %buildroot%_datadir/backgrounds/deepin
-ln -s ../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin-default.jpg
-
-ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
-      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin-default.jpg | md5sum | cut -d " " -f 1).jpg
-
-install -dm755 %buildroot%_cachedir
-cp -r image-blur %buildroot%_cachedir/
+install -dm755 %buildroot%_datadir/backgrounds/deepin/
+touch %buildroot%_datadir/backgrounds/default_background.jpg
 
 %post
 if [ $1 -ge 1 ]; then
-    mv /usr/share/wallpapers/deepin/desktop.jpg /usr/share/wallpapers/deepin/abc-124.jpg
-    mv /usr/share/wallpapers/deepin/Deepin-Technology-Brand-Logo.jpg /usr/share/wallpapers/deepin/desktop.jpg
-    mkdir -p /usr/share/backgrounds/
-    %_sbindir/update-alternatives --install /usr/share/backgrounds/deepin-default.jpg \
-    deepin-default-background /usr/share/wallpapers/deepin/nirvana-wallpaper-light.jpg 51
+  %_sbindir/update-alternatives --install %_datadir/backgrounds/default_background.jpg \
+  deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg 50
 fi
 
 %postun
 if [ $1 -eq 0 ]; then
-  %_sbindir/update-alternatives --remove deepin-default-background %_datadir/wallpapers/deepin/desktop.*
+  %_sbindir/update-alternatives --remove deepin-default-background %_datadir/wallpapers/deepin/desktop.jpg
 fi
 
 %files
 %doc README.md
 %doc LICENSE
-%_datadir/backgrounds/deepin-default.jpg
+%doc debian/changelog
+%ghost %_datadir/backgrounds/default_background.jpg
 %dir %_datadir/wallpapers/deepin/
 %_datadir/wallpapers/deepin/*
-%_cachedir/image-blur/*.jpg
 
 %changelog
+* Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.25-alt1
+- New version 1.7.25.
+- Cleanup spec.
+
 * Thu Feb 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.18-alt1
 - New version 1.7.18.
 - Added vcs tag.
