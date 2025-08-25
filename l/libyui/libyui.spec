@@ -1,12 +1,12 @@
 Name:     libyui
-Version:  4.6.2
-Release:  alt2
+Version:  4.7.6
+Release:  alt1
 Summary:  GUI abstraction library
 Group:    System/Libraries
 
 License:  LGPL-2.1-only OR LGPL-3.0-only
 URL:      https://github.com/libyui/libyui
-Source:   %{name}-%{version}.tar
+Source:   %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre):  rpm-macros-cmake
@@ -41,7 +41,7 @@ BuildRequires:  pkgconfig(ncursesw)
 BuildRequires:  pkgconfig(ncurses)
 
 %global so_version 16
-%global bin_name %{name}%{so_version}
+%global bin_name %name%so_version
 
 
 %description
@@ -58,11 +58,11 @@ libyui has very few dependencies.
 #--------------------------------------------------------
 # libyui (so-versioned)
 
-%package -n %{bin_name}
+%package -n %bin_name
 Summary:  GUI abstraction library
 Group:    System/Libraries
 
-%description -n %{bin_name}
+%description -n %bin_name
 This is the user interface engine that provides the abstraction
 from graphical user interfaces (Qt, Gtk) and text based user
 interfaces (ncurses).
@@ -79,7 +79,7 @@ libyui has very few dependencies.
 %package devel
 Summary:      libYUI, YaST2 User Interface Engine - header files
 Group:        Development/C++
-Requires:     %{bin_name} = %{version}-%{release}
+Requires:     %bin_name = %EVR
 Requires:     boost-devel
 
 %description devel
@@ -91,13 +91,13 @@ interfaces (ncurses).
 #--------------------------------------------------------
 # libyui-qt
 
-%package qt%{so_version}
+%package qt%so_version
 Summary:        Libyui - Qt (graphical) user interface
 Group:          System/Libraries
 Requires:       libqt5-x11extras
-Provides:       %{name}-qt = %{version}-%{release}
+Provides:       %name-qt = %EVR
 
-%description qt%{so_version}
+%description qt%so_version
 This package contains the Qt (graphical) user interface component for libyui.
 
 
@@ -107,8 +107,8 @@ This package contains the Qt (graphical) user interface component for libyui.
 %package qt-devel
 Summary:        Libyui - Qt (graphical) user interface header files
 Group:          Development/KDE and QT
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-qt = %{version}-%{release}
+Requires:       %name-devel = %EVR
+Requires:       %name-qt = %EVR
 
 %description qt-devel
 This package contains the header files for the Qt based user interface
@@ -121,16 +121,16 @@ develop extensions for libyui-qt.
 #--------------------------------------------------------
 # libyui-qt-graph
 
-%package qt-graph%{so_version}
+%package qt-graph%so_version
 Summary:        Libyui - Qt graph component for libyui.
 Group:          System/Libraries
 BuildRequires:  graphviz-devel
 Requires:       libqt5-x11extras
-Requires:       %{name}-qt = %{version}-%{release}
-Provides:       %{name}-qt-graph = %{version}-%{release}
+Requires:       %name-qt = %EVR
+Provides:       %name-qt-graph = %EVR
 
 
-%description qt-graph%{so_version}
+%description qt-graph%so_version
 This package contains the Qt graph component for libyui.
 
 This is a special widget to visualize graphs such as the
@@ -144,8 +144,8 @@ etc.).  and similar graphviz-generated graphs.
 %package qt-graph-devel
 Summary:        Libyui - Qt (graphical) user interface header files
 Group:          Development/KDE and QT
-Requires:       %{name}-qt-devel = %{version}-%{release}
-Requires:       %{name}-qt-graph = %{version}-%{release}
+Requires:       %name-qt-devel = %EVR
+Requires:       %name-qt-graph = %EVR
 
 %description qt-graph-devel
 This package contains the header files for the Qt based user interface
@@ -158,12 +158,12 @@ develop extensions for libyui-qt.
 #--------------------------------------------------------
 # libyui-ncurses
 
-%package ncurses%{so_version}
+%package ncurses%so_version
 Summary:        Libyui - NCurses (text based) user interface
 Group:          System/Libraries
-Provides:       %{name}-ncurses = %{version}-%{release}
+Provides:       %name-ncurses = %EVR
 
-%description ncurses%{so_version}
+%description ncurses%so_version
 This package contains the NCurses (text based) user interface component for
 libyui.
 
@@ -174,8 +174,8 @@ libyui.
 %package ncurses-devel
 Summary:        Libyui - Header fles for the NCurses (text based) user interface
 Group:          Development/Other
-Requires:       %{name}-devel = %{version}-%{release}
-Requires:       %{name}-ncurses = %{version}-%{release}
+Requires:       %name-devel = %EVR
+Requires:       %name-ncurses = %EVR
 
 %description ncurses-devel
 This package contains the header files for the NCurses (text based) user
@@ -259,13 +259,13 @@ for pkgname in libyui libyui-qt libyui-qt-graph libyui-ncurses libyui-bindings; 
     -DWERROR=FALSE \
     -DBUILD_EXAMPLES=OFF \
     -DWITH_MONO=OFF \
-    -DPYTHON_EXECUTABLE=%{__python3} \
-    -DPYTHON_INCLUDE_DIR=%{__python3_includedir} \
-    -DPYTHON_SITEDIR=%{python3_sitelibdir} \
-    -DPYTHON_LIB_DIR=%{python3_libdir} \
+    -DPYTHON_EXECUTABLE=%__python3 \
+    -DPYTHON_INCLUDE_DIR=%__python3_includedir \
+    -DPYTHON_SITEDIR=%python3_sitelibdir \
+    -DPYTHON_LIB_DIR=%python3_libdir \
     -DBUILD_RUBY_GEM=NO \
-    -DRuby_VENDORLIB_DIR=%{ruby_vendorlibdir} \
-    DRUBY_VENDOR_ARCH_DIR=%{python3_sitelibdir}
+    -DRuby_VENDORLIB_DIR=%ruby_vendorlibdir \
+    DRUBY_VENDOR_ARCH_DIR=%python3_sitelibdir
   
   %cmake_build
 
@@ -274,7 +274,7 @@ done
 
     
 %install
-install -m0755 -d %{buildroot}%{_libdir}/yui
+install -m0755 -d %buildroot%_libdir/yui
 
 for pkgname in libyui libyui-qt libyui-qt-graph libyui-ncurses libyui-bindings; do
   pushd $pkgname
@@ -294,102 +294,108 @@ done
 #--------------------------------------------------------
 # libyui (so-versioned)
 
-%files -n %{bin_name}
+%files -n %bin_name
 %doc COPYING*
-%{_libdir}/%{name}.so.%{so_version}*
+%_libdir/%name.so.%so_version
+%_libdir/%name.so.%so_version.*
 
 #--------------------------------------------------------
 # libyui-devel
 
 %files devel
-%dir %{_datadir}/%{name}
-%dir %{_includedir}/yui
-%{_libdir}/%{name}.so
-%{_includedir}/yui/*.h
-%{_libdir}/pkgconfig/%{name}.pc
-%{_datadir}/%{name}/buildtools
+%dir %_datadir/%name
+%dir %_includedir/yui
+%_libdir/%name.so
+%_includedir/yui/*.h
+%_libdir/pkgconfig/%name.pc
+%_datadir/%name/buildtools
 
 #--------------------------------------------------------
 # libyui-qt
 
-%files qt%{so_version}
+%files qt%so_version
 %doc COPYING*
-%dir %{_libdir}/yui
-%{_libdir}/yui/%{name}-qt.so.%{so_version}*
+%dir %_libdir/yui
+%_libdir/yui/%name-qt.so.%so_version
+%_libdir/yui/%name-qt.so.%so_version.*
 
 #--------------------------------------------------------
 # libyui-qt-devel
 
 %files qt-devel
-%{_libdir}/yui/%{name}-qt.so
-%{_includedir}/yui/qt
-%{_libdir}/pkgconfig/%{name}-qt.pc
+%_libdir/yui/%name-qt.so
+%_includedir/yui/qt
+%_libdir/pkgconfig/%name-qt.pc
 
 #--------------------------------------------------------
 # libyui-qt-graph
 
-%files qt-graph%{so_version}
+%files qt-graph%so_version
 %doc COPYING*
-%dir %{_libdir}/yui
-%{_libdir}/yui/%{name}-qt-graph.so.%{so_version}*
+%dir %_libdir/yui
+%_libdir/yui/%name-qt-graph.so.%so_version
+%_libdir/yui/%name-qt-graph.so.%so_version.*
 
 #--------------------------------------------------------
 # libyui-qt-graph-devel
 
 %files qt-graph-devel
-%{_libdir}/yui/%{name}-qt-graph.so
-%{_includedir}/yui/qt-graph
+%_libdir/yui/%name-qt-graph.so
+%_includedir/yui/qt-graph
 
 #--------------------------------------------------------
 # libyui-ncurses
 
-%files ncurses%{so_version}
+%files ncurses%so_version
 %doc COPYING*
-%dir %{_libdir}/yui
-%{_libdir}/yui/%{name}-ncurses.so.%{so_version}*
+%dir %_libdir/yui
+%_libdir/yui/%name-ncurses.so.%so_version
+%_libdir/yui/%name-ncurses.so.%so_version.*
 
 #--------------------------------------------------------
 # libyui-ncurses-devel
 
 %files ncurses-devel
-%{_libdir}/yui/%{name}-ncurses.so
-%{_includedir}/yui/ncurses
-%{_libdir}/pkgconfig/%{name}-ncurses.pc
+%_libdir/yui/%name-ncurses.so
+%_includedir/yui/ncurses
+%_libdir/pkgconfig/%name-ncurses.pc
 
 #--------------------------------------------------------
 # libyui-ncurses-tools
 
 %files ncurses-tools
-%{_bindir}/%{name}-terminal
+%_bindir/%name-terminal
 
 #--------------------------------------------------------
 # ruby-yui
 
 %files -n ruby-yui
 %doc libyui-bindings/swig/ruby/examples/*.rb
-%{ruby_vendorarchdir}/*
-%{ruby_vendorlibdir}/*
+%ruby_vendorarchdir/*
+%ruby_vendorlibdir/*
 
 #--------------------------------------------------------
 # python3-module-yui
 
 %files -n python3-module-yui
 %doc libyui-bindings/swig/python/examples/*.py
-%{python3_sitelibdir}/*
+%python3_sitelibdir/*
 
 #--------------------------------------------------------
 # perl-yui
 
 %files -n perl-yui
 %doc libyui-bindings/swig/perl/examples/*.pl
-%{perl_vendorarch}/*
-%{perl_vendorlib}/*
+%perl_vendorarch/*
+%perl_vendorlib/*
 
 %changelog
+* Wed Aug 20 2025 Sergey Konev <darisishe@altlinux.org> 4.7.6-alt1
+- 4.7.6
+- Minor improvements in spec file
+
 * Sun Apr 13 2025 Sergey Konev <darisishe@altlinux.org> 4.6.2-alt2
 - Fixed build with CMake 4.0.0
 
 * Mon Mar 03 2025 Sergey Konev <darisishe@altlinux.org> 4.6.2-alt1
 - Initial package (re-packaged after deletion in 2017)
-
-
