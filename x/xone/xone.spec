@@ -1,7 +1,7 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: xone
-Version: 0.3.5
+Version: 0.4.3
 Release: alt1
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
@@ -57,7 +57,7 @@ install -Dm 755 install/firmware.sh %buildroot%_sbindir/%name-get-firmware
 install -Dm 755 %SOURCE1 %buildroot%_sbindir/%name
 
 rm -v install.sh uninstall.sh modules_load.sh
-rm -rv install/ .github/
+rm -rv install/
 
 mkdir -p %buildroot%src_dir
 cp -rv . %buildroot%src_dir
@@ -72,6 +72,9 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Mon Aug 25 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Thu Jul 31 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
