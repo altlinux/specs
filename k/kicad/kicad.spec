@@ -1,10 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define majver 8.0
+%define majver 9.0
 
 Name: kicad
-Version: 8.0.8
+Version: 9.0.4
 Release: alt1
 Epoch: 1
 
@@ -41,6 +41,8 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libcairo-devel
 BuildRequires: libssl-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: protobuf-compiler
 BuildRequires: swig
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: libpcre-devel
@@ -59,6 +61,7 @@ BuildRequires: libwayland-egl-devel
 BuildRequires: libcurl-devel
 BuildRequires: libgit2-devel
 BuildRequires: libunixODBC-devel
+BuildRequires: libzstd-devel
 BuildRequires: doxygen graphviz
 BuildRequires: dos2unix
 BuildRequires: libglm-devel
@@ -146,6 +149,8 @@ sed -i "s/m_currentSymbol.GetSubLibraryName()/((wxString)&)/" eeschema/symbol_vi
     -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir \
     -DKICAD_SCRIPTING_WXPYTHON=ON \
     -DKICAD_USE_EGL=ON \
+    -DKICAD_USE_CMAKE_FINDPROTOBUF=OFF \
+    -DKICAD_IPC_API=OFF \
     -DKICAD_WAYLAND=ON \
     -DKICAD_BUILD_I18N=ON \
     -DKICAD_I18N_UNIX_STRICT_PATH=ON \
@@ -191,6 +196,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Aug 22 2025 Anton Midyukov <antohami@altlinux.org> 1:9.0.4-alt1
+- New version 9.0.4.
+
 * Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.8-alt1
 - New version 8.0.8.
 
