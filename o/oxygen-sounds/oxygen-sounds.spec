@@ -1,8 +1,8 @@
 %define rname oxygen-sounds
 
 Name: oxygen-sounds
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 %package -n sound-theme-oxygen
 Group: Graphical desktop/Other
 Summary: %{summary}
+Requires: kde-common
 Provides: plasma5-oxygen-sounds = 1:%version-%release
 Obsoletes: plasma5-oxygen-sounds < 1:%version-%release
 Provides: oxygen-sounds = %EVR
@@ -48,6 +49,9 @@ Obsoletes: oxygen-sounds < %EVR
 
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Wed Jul 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - rename binary package
 

@@ -7,7 +7,7 @@
 
 %define rname libkscreen
 Name: plasma6-%rname
-Version: 6.4.3
+Version: 6.4.4
 Release: alt1
 %K6init
 
@@ -112,6 +112,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
 - new version
 

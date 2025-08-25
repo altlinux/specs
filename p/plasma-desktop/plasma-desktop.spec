@@ -13,8 +13,8 @@
 %endif
 
 Name: %rname
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - fix using screenlocker theme (thanks mcpain@alt)
 

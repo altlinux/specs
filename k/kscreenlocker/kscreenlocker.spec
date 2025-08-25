@@ -7,8 +7,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 #Epoch: 2
 %K6init
 
@@ -166,6 +166,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - fix russian translation
 

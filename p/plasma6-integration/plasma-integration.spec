@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma6-integration
-Version: 6.4.3
+Version: 6.4.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -101,6 +101,9 @@ Obsoletes: plasma5-integration-common < 1:%version-%release
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme5.so
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Tue Jul 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
 - new version
 

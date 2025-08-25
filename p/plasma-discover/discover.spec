@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.4.3
-Release: alt3
+Version: 6.4.4
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -350,6 +350,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Wed Jul 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt3
 - make warning smaller
 

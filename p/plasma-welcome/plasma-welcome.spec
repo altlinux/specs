@@ -3,8 +3,8 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -24,7 +24,6 @@ Patch2: alt-check-auth.patch
 Patch3: alt-prepend-distro-pages.patch
 Patch4: alt-discover-apps.patch
 Patch5: alt-icons.patch
-Patch6: l10n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -46,7 +45,6 @@ A Friendly onboarding wizard for Plasma.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 msgcat --use-first %SOURCE10 po/ru/plasma-welcome.po > po/ru/plasma-welcome.po.tmp
 cat po/ru/plasma-welcome.po.tmp > po/ru/plasma-welcome.po
@@ -72,6 +70,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - fix l10n
 

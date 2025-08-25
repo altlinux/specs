@@ -32,8 +32,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -54,7 +54,7 @@ Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes icc-profiles
 Requires: xmessage
 Requires: qt6-dbus qt6-declarative qt6-virtualkeyboard dbus-tools-gui
-Requires: libqt6-location
+Requires: qml6(QtLocation)
 Requires: kf6-kconfig kf6-kded kf6-kdeclarative
 Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
 #Requires: kde6-kio-extras
@@ -597,6 +597,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.4-alt1
+- new version
+
 * Mon Jul 28 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.3-alt2
 - fix requires for timezoneselector
 

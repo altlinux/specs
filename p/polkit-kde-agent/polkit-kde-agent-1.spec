@@ -5,8 +5,8 @@
 %define rname polkit-kde-agent-1
 
 Name: polkit-kde-agent
-Version: 6.4.3
-Release: alt2
+Version: 6.4.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -54,6 +54,9 @@ Provides Policy Kit Authentication Agent that nicely fits to KDE.
 %_userunitdir/*.service
 
 %changelog
+* Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
+- new version
+
 * Thu Jul 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt2
 - don't show Switch button if no variants
 
