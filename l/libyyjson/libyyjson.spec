@@ -7,7 +7,7 @@
 %def_with check
 
 Name: libyyjson
-Version: 0.10.0
+Version: 0.12.0
 Release: alt1
 
 Summary: A high performance JSON library written in ANSI C
@@ -101,6 +101,9 @@ and JSON Merge Patch.
 %_pkgconfigdir/yyjson.pc
 
 %changelog
+* Mon Aug 25 2025 Denis Rastyogin <gerben@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0.
+
 * Mon Nov 18 2024 Denis Rastyogin <gerben@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
