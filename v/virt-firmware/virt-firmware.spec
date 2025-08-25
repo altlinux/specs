@@ -1,6 +1,6 @@
 
 Name: virt-firmware
-Version: 25.4.1
+Version: 25.7.3
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
@@ -26,6 +26,9 @@ Group: Development/Python3
 Provides: %name = %EVR
 Provides: python3-module-virt-firmware-peutils = %EVR
 Obsoletes: python3-module-virt-firmware-peutils < %EVR
+%if "%__python3_version" < "3.13"
+%py3_requires pkg_resources
+%endif
 
 %description -n python3-module-virt-firmware
 Tools for ovmf / armvirt firmware volumes This is a small collection of tools
@@ -97,6 +100,9 @@ install -m 755 systemd/99-uki-uefi-setup.install %buildroot%_kernel_installdir
 %_kernel_installdir/99-uki-uefi-setup.install
 
 %changelog
+* Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 25.7.3-alt1
+- New version 25.7.3.
+
 * Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 25.4.1-alt1
 - New version 25.4.1.
 

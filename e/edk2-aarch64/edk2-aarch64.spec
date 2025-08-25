@@ -1,10 +1,10 @@
 %global optflags_lto %nil
-%define tool_chain_tag GCC5
+%define tool_chain_tag GCC
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20250221
-Release: alt2
+Version: 20250808
+Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -210,6 +210,10 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
+- edk2-stable202508
+- build with openssl-3.5.2
+
 * Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250221-alt2
 - NMU: build on riscv64
 

@@ -2,7 +2,7 @@
 %define tool_chain_tag GCC
 %def_disable skip_enroll
 
-%define DBXDATE 20250224
+%define DBXDATE 20250610
 
 %ifndef _priority_distbranch
 # We have it defined in macros but not in buildmacros.
@@ -12,8 +12,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20250221
-Release: alt2
+Version: 20250808
+Release: alt1
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -26,7 +26,9 @@ Source: %name-%version.tar
 Source2: openssl.tar
 #Vcs-Git: https://github.com/ucb-bar/berkeley-softfloat-3.git
 Source3: berkeley-softfloat-3.tar
-Source4: Logo.bmp
+#Vcs-Git: https://github.com/devicetree-org/pylibfdt.git
+Source4: libfdt.tar
+Source10: Logo.bmp
 
 # json description files
 Source30: 30-edk2-ovmf-ia32-sb-enrolled.json
@@ -111,7 +113,7 @@ EFI Development Kit II implementation of UEFI Shell 2.0+
 sed -i 's|-Wl,--no-warn-rwx-segments||' BaseTools/Conf/tools_def.template
 %endif
 
-cp -f %SOURCE4 MdeModulePkg/Logo/
+cp -f %SOURCE10 MdeModulePkg/Logo/
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -141,6 +143,10 @@ tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/o
 # add berkeley-softfloat-3
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+
+#add libfdt
+mkdir -p MdePkg/Library/BaseFdtLib/libfdt
+tar -xf %SOURCE4 --strip-components 1 --directory MdePkg/Library/BaseFdtLib/libfdt
 
 # include paths pointing to unused submodules
 mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
@@ -308,7 +314,7 @@ for raw in OVMF/*_4M*.fd; do
 done
 
 # build microvm
-build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
+build ${OVMF_4M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
 cp -p Build/MicrovmX64/*/FV/MICROVM.fd OVMF
 
 # build ovmf-ia32
@@ -387,6 +393,10 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/share/efi/shellx64.efi
 
 %changelog
+* Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
+- edk2-stable202508
+- build with openssl-3.5.2
+
 * Thu May 15 2025 Ivan A. Melnikov <iv@altlinux.org> 20250221-alt2
 - support cross-compilation (by asheplyakov@)
 - make efi-shell subpackage noarch ((by asheplyakov@)

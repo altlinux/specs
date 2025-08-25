@@ -2,7 +2,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20250221
+Version: 20250808
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 
 Source2: openssl.tar
 Source3: berkeley-softfloat-3.tar
-Source4: Logo.bmp
+Source4: libfdt.tar
+Source10: Logo.bmp
 
 Patch1: %name-%version.patch
 
@@ -54,7 +55,7 @@ build EFI executables and ROMs using the GNU tools.
 %setup -q
 %patch1 -p1
 
-cp -f %SOURCE4 MdeModulePkg/Logo/
+cp -f %SOURCE10 MdeModulePkg/Logo/
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -81,9 +82,13 @@ rm -rf ShellBinPkg
 mkdir -p CryptoPkg/Library/OpensslLib/openssl
 tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/openssl
 
-# add /berkeley-softfloat-3
+# add berkeley-softfloat-3
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+
+#add libfdt
+mkdir -p MdePkg/Library/BaseFdtLib/libfdt
+tar -xf %SOURCE4 --strip-components 1 --directory MdePkg/Library/BaseFdtLib/libfdt
 
 %build
 export PYTHON_COMMAND=%__python3
@@ -177,6 +182,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
+- edk2-stable202508
+
 * Tue May 13 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
 - edk2-stable202502
 
