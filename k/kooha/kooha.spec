@@ -1,5 +1,5 @@
 Name: kooha
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Epoch: 1
 
@@ -8,9 +8,11 @@ Summary: Simple screen recorder with a minimal interface
 License: GPL-3.0+
 Group: Video
 Url: https://github.com/SeaDve/Kooha
+VCS: https://github.com/SeaDve/Kooha
 
 Source0: %url/archive/%version/Kooha-%version.tar.gz
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-macros-meson rpm-build-rust
 BuildRequires: /proc
@@ -21,10 +23,10 @@ BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gst
 
 %prep
 %setup -n Kooha-%version -a1
-%autopatch -p1
+%patch -p1
 
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -68,6 +70,10 @@ EOF
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.3.1-alt1
+- New version 2.3.1.
+- Added VCS tag.
+
 * Fri Mar 22 2024 Leontiy Volodin <lvol@altlinux.org> 1:2.3.0-alt1
 - New version 2.3.0.
 
