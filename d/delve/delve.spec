@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           delve
-Version:        1.24.2
+Version:        1.25.1
 Release:        alt1
 
 Summary:        Delve is a debugger for the Go programming language
@@ -16,7 +16,7 @@ ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: golang >= 1.19
+BuildRequires: golang >= 1.22
 BuildRequires: /proc
 
 %description
@@ -57,6 +57,10 @@ install -Dm 644 dlv.fish %buildroot%_datadir/fish/vendor_completions.d/dlv.fish
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Mon Aug 25 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.25.1-alt1
+- 1.24.2 -> 1.25.1
+- Closes: #55703
+
 * Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.24.2-alt1
 - 1.23.0 -> 1.24.2
 
