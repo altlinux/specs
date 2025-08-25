@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-pve docs-alt-virtualization-one
 
 Name: docs-%variant
-Version: 11.0
-Release: alt7
+Version: 11.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Aug 25 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt1
+- update to ALT Server 11.1beta
+- add kubernetes
+- delete Alterator-squid, Alterator-squidmill (closes #55501)
+
 * Thu Aug 07 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt7
 - bug fixes (closes #54502, #54503, #55543, #55541)
 - add libvirt, gnome-boxes
