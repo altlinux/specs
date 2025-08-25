@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.47
+Version: 6.1.51
 Release: alt1
 Epoch: 2
 
@@ -15,7 +15,7 @@ Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-daemon
-Vcs: https://github.com/linuxdeepin/dde-daemon.git
+Vcs: https://github.com/linuxdeepin/dde-daemon
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -149,6 +149,10 @@ export LIBS+="-L%_libdir -lpam -lsystemd"
 rm -rf %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 
+# create the config for resource_ctl
+mkdir -p %buildroot%_sysconfdir/deepin/daemon/
+touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
+
 %find_lang %repo
 
 %files -f %repo.lang
@@ -156,6 +160,8 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %config(noreplace) %_sysconfdir/grub.d/10_deepin.cfg
 %dir %_sysconfdir/deepin/
 %config(noreplace) %_sysconfdir/deepin/grub2_edit_auth.conf
+%dir %_sysconfdir/deepin/daemon/
+%config(noreplace) %_sysconfdir/deepin/daemon/resource-control.json
 %config %_sysconfdir/pam.d/deepin-auth-keyboard
 %config %_sysconfdir/acpi/actions/deepin_lid.sh
 %config %_sysconfdir/acpi/events/deepin_lid
@@ -208,6 +214,9 @@ rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.51-alt1
+- New version 6.1.51.
+
 * Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.47-alt1
 - New version 6.1.47.
 
