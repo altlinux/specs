@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpg-tui
-Version: 0.11.0
-Release: alt3
+Version: 0.11.1
+Release: alt1
 
 Summary: Terminal User Interface for GnuPG
 License: MIT
@@ -83,6 +83,9 @@ install -Dm 644 completions/_%name \
 %exclude %_bindir/%name-completions
 
 %changelog
+* Mon Aug 11 2025 Ilya Sorochan <k0tran@altlinux.org> 0.11.1-alt1
+- Update version.
+
 * Mon Jan 27 2025 Ilya Sorochan <k0tran@altlinux.org> 0.11.0-alt3
 - Add patch for nix crate for loongarch64 support.
 
