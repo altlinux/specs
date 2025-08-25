@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: fuse-overlayfs
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: An implementation of overlay+shiftfs in FUSE for rootless containers
@@ -44,6 +44,9 @@ echo fuse > %buildroot%_modulesloaddir/fuse-overlayfs.conf
 %_modulesloaddir/fuse-overlayfs.conf
 
 %changelog
+* Mon Aug 25 2025 Denis Rastyogin <gerben@altlinux.org> 1.15-alt1
+- Updated to 1.15.
+
 * Tue Apr 22 2025 Denis Rastyogin <gerben@altlinux.org> 1.14-alt1
 - Updated to 1.14.
 
