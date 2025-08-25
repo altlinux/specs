@@ -13,18 +13,16 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-compiler
-Version:        2.11.1
-Release:        alt1_2jpp11
+Version:        2.15.0
+Release:        alt1
 Summary:        Compiler call initiators for Plexus
 # extras subpackage has a bit different licensing
 # parts of compiler-api are ASL2.0/MIT
-License:        MIT and ASL 2.0
+License:        MIT and Apache-2.0
 URL:            https://github.com/codehaus-plexus/plexus-compiler
 BuildArch:      noarch
 
 Source0:        https://github.com/codehaus-plexus/%{name}/archive/%{name}-%{version}.tar.gz
-Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
-Source2:        LICENSE.MIT
 
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
@@ -34,8 +32,9 @@ BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 %endif
-Source44: import.info
 
 %description
 Plexus Compiler adds support for using various compilers from a
@@ -48,7 +47,7 @@ Summary:        Extra compiler support for %{name}
 # ASL 2.0: src/main/java/org/codehaus/plexus/compiler/util/scan/
 #          ...codehaus/plexus/compiler/csharp/CSharpCompiler.java
 # ASL 1.1/MIT: ...codehaus/plexus/compiler/jikes/JikesCompiler.java
-License:        MIT and ASL 2.0 and ASL 1.1
+License:        MIT and Apache-2.0 and Apache-1.1
 
 %description extras
 Additional support for csharp, eclipse and jikes compilers
@@ -63,7 +62,7 @@ This package provides %{summary}.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
-License:        MIT and ASL 2.0 and ASL 1.1
+License:        MIT and Apache-2.0 and Apache-1.1
 BuildArch: noarch
 
 %description javadoc
@@ -73,9 +72,6 @@ API documentation for %{name}.
 %setup -q -n %{name}-%{name}-%{version}
 
 find -name '.class' -delete
-
-cp %{SOURCE1} LICENSE
-cp %{SOURCE2} LICENSE.MIT
 
 %pom_remove_dep :junit-bom
 
@@ -99,7 +95,6 @@ cp %{SOURCE2} LICENSE.MIT
 %pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
 %pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
 %pom_remove_dep -r org.codehaus.plexus:plexus-compiler-javac-errorprone
@@ -112,14 +107,17 @@ cp %{SOURCE2} LICENSE.MIT
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE LICENSE.MIT
+%doc README.md
+
 %files extras -f .mfiles-extras
 %files pom -f .mfiles-pom
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE.MIT
 
 %changelog
+* Sun Feb 23 2025 Andrey Cherepanov <cas@altlinux.org> 0:2.15.0-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.11.1-alt1_2jpp11
 - new version
 

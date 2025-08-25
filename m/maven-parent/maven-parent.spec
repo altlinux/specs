@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-parent
-Version:        35
+Version:        39
 Release:        alt1
 Summary:        Apache Maven parent POM
 License:        Apache-2.0
@@ -46,6 +46,7 @@ Apache Maven parent POM file used by other Maven projects.
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin -r :maven-scm-publish-plugin
+%pom_remove_plugin :spotless-maven-plugin
 
 %pom_xpath_remove "pom:execution[pom:id='generate-helpmojo']" maven-plugins
 
@@ -59,6 +60,9 @@ Apache Maven parent POM file used by other Maven projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon May 05 2025 Anton Meleshnikov <alton@altlinux.org> 39-alt1
+- New version 39.
+
 * Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 35-alt1
 - New version 35.
 

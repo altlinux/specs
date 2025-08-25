@@ -2,7 +2,7 @@ Epoch: 0
 Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
+BuildRequires(pre): /proc rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           objectweb-asm
-Version:        9.3
-Release:        alt1_2jpp11
+Version:        9.7.1
+Release:        alt1
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            https://asm.ow2.org/
@@ -43,7 +43,6 @@ BuildRequires:  maven-local
 # Explicit javapackages-tools requires since asm-processor script uses
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
-Source44: import.info
 
 %description
 ASM is an all purpose Java bytecode manipulation and analysis
@@ -93,6 +92,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Feb 23 2025 Andrey Cherepanov <cas@altlinux.org> 0:9.7.1-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:9.3-alt1_2jpp11
 - new version
 

@@ -15,9 +15,9 @@ BuildRequires: jpackage-default
 
 Name:           cdi-api
 Version:        2.0.2
-Release:        alt1_3jpp11
+Release:        alt2
 Summary:        CDI API
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/eclipse-ee4j/cdi
 BuildArch:      noarch
 
@@ -31,6 +31,8 @@ BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  %{?module_prefix}mvn(jakarta.inject:jakarta.inject-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(jakarta.interceptor:jakarta.interceptor-api)
+BuildRequires:  jakarta-el
 %endif
 Source44: import.info
 
@@ -40,21 +42,21 @@ APIs for JSR-299: Contexts and Dependency Injection for Java EE
 %{?javadoc_package}
 
 %prep
-%setup -q -n cdi-%{version}
+%setup -n cdi-%{version}
 
 %pom_remove_parent
 %pom_remove_parent api
 %pom_disable_module spec
 %pom_remove_plugin -r :maven-javadoc-plugin
 
-%pom_remove_dep :jakarta.el-api api
-%pom_remove_dep :jakarta.interceptor-api api
-rm -rf api/src/main/java/javax/enterprise/{context/,inject/spi/,inject/se/,inject/Model.java,inject/New.java}
+#pom_remove_dep :jakarta.el-api api
+#pom_remove_dep :jakarta.interceptor-api api
+#rm -rf api/src/main/java/javax/enterprise/{context/,inject/se/,inject/Model.java,inject/New.java}
 
 %mvn_alias :jakarta.enterprise.cdi-api javax.enterprise:cdi-api
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -67,6 +69,10 @@ ln -s jakarta.enterprise.cdi-api.jar %buildroot%_javadir/%name/%{name}.jar
 %_javadir/%name/%{name}.jar
 
 %changelog
+* Tue Feb 18 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt2
+- Return javax.enterprise.inject.spi.
+- Fix license name according to SPDX.
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 2.0.2-alt1_3jpp11
 - new version
 

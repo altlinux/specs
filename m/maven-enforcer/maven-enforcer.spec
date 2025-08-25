@@ -1,68 +1,51 @@
-Epoch: 0
+Name: maven-enforcer
+Version: 3.5.0
+Release: alt1
+
+Summary: Maven Enforcer
+License: Apache-2.0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
+URL: http://maven.apache.org/enforcer
+
+BuildArch: noarch
+
+Source0: enforcer-%version-source-release.zip
+
 BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 3.0.0_M2
-%global upstream_version %(echo '%{version}' | tr '_' '-')
-
-Name:           maven-enforcer
-Version:        3.0.0_M2
-Release:        alt1_3jpp11
-Summary:        Maven Enforcer
-License:        ASL 2.0
-URL:            http://maven.apache.org/enforcer
-BuildArch:      noarch
-
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{upstream_version}/enforcer-%{upstream_version}-source-release.zip
-
-# TODO forward upstream
-# https://issues.apache.org/jira/browse/MENFORCER-267
-Patch0:         0001-Port-to-Maven-3-API.patch
-
-# port to maven-artifact-transfer 0.11.0
-Patch1:         0002-Port-to-artifact-transfer-0.11.0.patch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(commons-lang:commons-lang)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer)
-BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
-BuildRequires:  mvn(org.beanshell:bsh)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-Source44: import.info
+BuildRequires: jpackage-17-compat
+BuildRequires: maven-local
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(javax.annotation:javax.annotation-api)
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-model-builder)
+BuildRequires: mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-settings)
+BuildRequires: mvn(org.codehaus.plexus:plexus-classworlds)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
+BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 
 %description
 Enforcer is a build rule execution framework.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?javadoc}
 
 %package api
 Group: Development/Java
-Summary:        Enforcer API
+Summary: Enforcer API
 Provides: maven-shared-enforcer-rule-api = %{version}-%{release}
 
 %description api
@@ -71,45 +54,27 @@ implement custom rules for the maven-enforcer-plugin.
 
 %package rules
 Group: Development/Java
-Summary:        Enforcer Rules
+Summary: Enforcer Rules
 
 %description rules
 This component contains the standard Enforcer Rules.
 
 %package plugin
 Group: Development/Java
-Summary:        Enforcer Rules
+Summary: Enforcer Rules
 
 %description plugin
 This component contains the standard Enforcer Rules.
 
-
 %prep
-%setup -q -n enforcer-%{upstream_version}
-
-# Use Unix line endings
-find -name '*.java' -exec sed -i 's/\r//' {} \;
-find -name 'pom.xml' -exec sed -i 's/\r//' {} \;
-
-%patch0 -p1
-%patch1 -p1
-
-%pom_remove_plugin :maven-enforcer-plugin
-
-# Avoid dependency cycle
-%pom_xpath_inject pom:build/pom:pluginManagement/pom:plugins "
-    <plugin>
-      <artifactId>maven-enforcer-plugin</artifactId>
-      <version>SYSTEM</version>
-    </plugin>"
-
-# Replace plexus-maven-plugin with plexus-component-metadata
-sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-component-metadata</artifactId>|" \
-    -e "s|<goal>descriptor</goal>|<goal>generate-metadata</goal>|" \
-    -i enforcer-{api,rules}/pom.xml
-
+%setup -n enforcer-%version
+find -name '*.java' -exec sed -i 's/\r//' {} +
+find -name EvaluateBeanshell.java -delete
+%pom_remove_dep :bsh enforcer-rules
+ 
 %build
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# Use system version of maven-enforcer-plugin instead of reactor version
+%mvn_build -j -s -f -- -Dversion.maven-enforcer-plugin=SYSTEM
 
 %install
 %mvn_install
@@ -124,10 +89,10 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 
 %files plugin -f .mfiles-maven-enforcer-plugin
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
-
 %changelog
+* Mon Apr 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M2-alt1_3jpp11
 - java11 build
 

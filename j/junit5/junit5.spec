@@ -1,32 +1,20 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 5.8.2
-%bcond_with bootstrap
+%define version 5.10.2
 
 # Component versions, taken from gradle.properties
 %global platform_version 1.%(v=%{version}; echo ${v:2})
 %global jupiter_version %{version}
 %global vintage_version %{version}
 
-Name:           junit5
-Version:        5.8.2
-Release:        alt1
-Summary:        Java regression testing framework
-License:        EPL-2.0
-URL:            https://junit.org/junit5/
-BuildArch:      noarch
+Name: junit5
+Version: 5.10.2
+Release: alt1
+Summary: Java regression testing framework
+License: EPL-2.0
+Group: Development/Java
+URL: https://junit.org/junit5/
+BuildArch: noarch
 
-Source0:        https://github.com/junit-team/junit5/archive/r%{version}/junit5-%{version}.tar.gz
+Source0: r%{version}.tar.gz
 
 # Aggregator POM (used for packaging only)
 Source100:      aggregator.pom
@@ -38,7 +26,6 @@ Source203:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform
 Source205:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-launcher/%{platform_version}/junit-platform-launcher-%{platform_version}.pom
 Source206:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-runner/%{platform_version}/junit-platform-runner-%{platform_version}.pom
 Source207:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-api/%{platform_version}/junit-platform-suite-api-%{platform_version}.pom
-Source208:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-reporting/%{platform_version}/junit-platform-reporting-%{platform_version}.pom
 Source209:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-testkit/%{platform_version}/junit-platform-testkit-%{platform_version}.pom
 Source210:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-commons/%{platform_version}/junit-platform-suite-commons-%{platform_version}.pom
 # Jupiter POMs
@@ -52,42 +39,32 @@ Source400:      https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-e
 # BOM POM
 Source500:      https://repo1.maven.org/maven2/org/junit/junit-bom/%{version}/junit-bom-%{version}.pom
 
-BuildRequires:  asciidoc asciidoc-a2x
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(com.univocity:univocity-parsers)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apiguardian:apiguardian-api)
-BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.opentest4j:opentest4j)
-%endif
-Source44: import.info
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: asciidoc asciidoc-a2x
+BuildRequires: maven-local
+BuildRequires: mvn(com.univocity:univocity-parsers)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apiguardian:apiguardian-api)
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.opentest4j:opentest4j)
 
 %description
 JUnit is a popular regression testing framework for Java platform.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Junit5 API documentation.
-
 %package guide
 Group: Development/Java
-Summary:        Documentation for %{name}
-Requires:       %{name}-javadoc = %{version}-%{release}
+Summary: Documentation for %{name}
+Requires: %{name}-javadoc = %{version}-%{release}
 
 %description guide
 JUnit 5 User Guide.
 
+%{?javadoc_package}
+
 %prep
-%setup -q -n %{name}-r%{version}
-find -name \*.jar -delete
+%setup -n %{name}-r%{version}
 
 cp -p %{SOURCE100} pom.xml
 cp -p %{SOURCE200} junit-platform-commons/pom.xml
@@ -97,7 +74,6 @@ cp -p %{SOURCE203} junit-platform-engine/pom.xml
 cp -p %{SOURCE205} junit-platform-launcher/pom.xml
 cp -p %{SOURCE206} junit-platform-runner/pom.xml
 cp -p %{SOURCE207} junit-platform-suite-api/pom.xml
-cp -p %{SOURCE208} junit-platform-reporting/pom.xml
 cp -p %{SOURCE209} junit-platform-testkit/pom.xml
 cp -p %{SOURCE210} junit-platform-suite-commons/pom.xml
 cp -p %{SOURCE300} junit-jupiter/pom.xml
@@ -108,22 +84,19 @@ cp -p %{SOURCE304} junit-jupiter-params/pom.xml
 cp -p %{SOURCE400} junit-vintage-engine/pom.xml
 cp -p %{SOURCE500} junit-bom/pom.xml
 
-for pom in $(find -mindepth 2 -name pom.xml | grep -v tests/); do
-
+rm -f ./platform-tests/src/test/resources/listeners/uidtracking/maven/pom.xml
+for pom in $(find -mindepth 2 -name pom.xml); do
     # Set parent to aggregator
-    %pom_xpath_inject pom:project "<parent><groupId>org.fedoraproject.xmvn.junit5</groupId><artifactId>aggregator</artifactId><version>1.0.0</version></parent>" $pom
-
+	%pom_add_parent org.fedoraproject.xmvn.junit5:aggregator:any $pom
+    #pom_xpath_inject pom:project "<parent><groupId>org.fedoraproject.xmvn.junit5</groupId><artifactId>aggregator</artifactId><version>1.0.0</version></parent>" $pom
     # OSGi BSN
-    bsn=$(sed 's|/pom.xml$||;s|.*/|org.|;s|-|.|g' <<<"$pom")
+    #bsn=$(sed 's|/pom.xml$||;s|.*/|org.|;s|-|.|g' <<<"$pom")
+	bsn=org.${pom//-/.}
     %pom_xpath_inject pom:project "<properties><osgi.bsn>${bsn}</osgi.bsn></properties>" $pom
-
     # Incorrect scope - API guardian is just annotation, needed only during compilation
-    %pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
-
-    sed -i s/runtime/compile/ $pom
-
+	%pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
+	%pom_xpath_set -f "pom:dependency[pom:scope='runtime']/pom:scope" compile $pom
 done
-
 
 %pom_remove_parent junit-bom
 
@@ -139,10 +112,6 @@ done
 
 %build
 %mvn_build -f
-
-# Build docs.  Ignore exit asciidoc -- it fails for some reason, but
-# still produces readable docs.
-asciidoc documentation/src/docs/asciidoc/index.adoc || :
 ln -s ../../javadoc/junit5 documentation/src/docs/api
 
 %install
@@ -151,13 +120,13 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %files -f .mfiles
 %doc --no-dereference LICENSE.md LICENSE-notice.md
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.md LICENSE-notice.md
-
 %files guide
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Sat Jul 26 2025 Andrey Cherepanov <cas@altlinux.org> 5.10.2-alt1
+- New version.
+
 * Tue May 06 2025 Anton Meleshnikov <alton@altlinux.org> 5.8.2-alt1
 - New version 5.8.2 (thanks fedora for the spec).
 
