@@ -13,7 +13,7 @@
 
 Name: talos
 Version: 1.10.6
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -196,6 +196,10 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %go_path/src/%import_path
 
 %changelog
+* Wed Aug 06 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.6-alt2
+- Remove whitelist path validation.
+- Fix build with go 1.25
+
 * Mon Aug 04 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.6-alt1
 - New version 1.10.6.
 - package talos-devel
