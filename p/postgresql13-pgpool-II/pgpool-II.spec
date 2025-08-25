@@ -6,7 +6,7 @@
 %endif
 
 Name: postgresql%pg_ver-%prog_name
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
@@ -19,7 +19,7 @@ Source2: pgpool.tmpfiles
 Source3: pgpool.init
 Source4: pgpool.sysconfig
 Patch0: 0001-Update-path-for-socket-and-log.patch
-Patch1: 0002-pgpool-II-4.6.0-fix-build-doc.patch
+Patch1: 0002-pgpool-II-4.6.3-fix-build-doc.patch
 
 BuildRequires: OpenSP
 BuildRequires: docbook-style-dsssl
@@ -133,6 +133,9 @@ fi
 %attr(1775,root,postgres) %dir %_logdir/%sname
 
 %changelog
+* Mon Aug 25 2025 Alexei Takaseev <taf@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Sat May 31 2025 Alexei Takaseev <taf@altlinux.org> 4.6.2-alt1
 - 4.6.2
 - Use default version gcc on E2k
