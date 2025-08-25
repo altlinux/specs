@@ -1,16 +1,18 @@
 Name: libpuzzle
 Version: 0.11
-Release: alt2
+Release: alt3
 
 Summary: A library for finding visually similar bitmap pictures
-License: BSD
+License: ISC
 Group: System/Libraries
 
-URL: http://libpuzzle.pureftpd.org/
+URL: https://github.com/jedisct1/libpuzzle
+VCS: https://github.com/jedisct1/libpuzzle
+
 Source: http://download.pureftpd.org/pub/pure-ftpd/misc/libpuzzle/releases/libpuzzle-%version.tar.bz2
 
 # Automatically added by buildreq on Tue Sep 29 2009
-BuildRequires: gcc-c++ libgd2-devel
+BuildRequires: gcc-c++ libgd-devel
 
 %description
 The Puzzle library is designed to quickly find visually similar images (GIF,
@@ -31,6 +33,7 @@ programs which will use the %name library.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 # fix rpath libtool issues
 subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -52,6 +55,12 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_man3dir/*
 
 %changelog
+* Mon Aug 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.11-alt3
+- fixed FTBFS
+- update to last git.a1023d7d5d
+- change license
+- url changed and vcs added
+
 * Tue Dec 27 2011 Victor Forsiuk <force@altlinux.org> 0.11-alt2
 - Fix RPATH issue.
 
