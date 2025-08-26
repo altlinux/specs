@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.13.3
+Version: 0.13.4
 Release: alt1
 
 Summary: GPT applier
@@ -199,6 +199,27 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Aug 25 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.4-alt1
+- Added:
+  Production-ready modules: CUPS, file management, INI config (default),
+  package management, script modules
+  Fallback SID lookup for trusted domain users
+  Missing log translations (laps: timezone, login)
+  Added ownership handling for files within user home directory
+- Changed:
+  Refactored to use literals ({}, []) instead of constructors
+  Final optimization passes and minor cleanups
+  Updated copyright year
+  Adjusted login time search and messages
+- Fixed:
+  Skipped policy retrieval for trusted users to avoid GPO errors
+  Corrected login time tracking in laps
+  Fixed typos
+  Prevented subprocess errors from printing to console
+  Adjusted call order (save_dconf - start_frontend)
+- Removed:
+  Legacy sid variable propagation and related helpers
+
 * Sat Jul 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.13.3-alt1
 - Fixed machine account credentials initialization (closes: 55324)
 
