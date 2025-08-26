@@ -1,6 +1,6 @@
 Name: guile-ncurses
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Guile-Ncurses is a library for the Guile Scheme interpreter
 License: GPLv3
@@ -8,6 +8,15 @@ Group: System/Libraries
 Url: http://www.gnu.org/software/guile-ncurses/
 
 Source: %name-%version.tar
+
+Patch1: 0001-src-ncurses-Fix-build-for-menu_type.c.patch
+Patch2: 0002-test-Add-extra-GC-calls-to-menu_gc_refcount.scm-for-.patch
+Patch3: 0003-src-ncurses-Fix-pointer-to-int-cast-warning-in-item_.patch
+Patch4: 0004-src-ncurses-Fix-const-qualifier-warnings-in-gc_free_.patch
+Patch5: 0005-src-ncurses-Fix-const-qualifier-warnings-in-gucu_key.patch
+Patch6: 0006-src-ncurses-Fix-pointer-to-int-cast-warning-in-field.patch
+Patch7: 0007-src-ncurses-Fix-unused-variable-warning-in-gucu_winn.patch
+Patch8: 0008-tools-Check-asprintf-return-value-in-open_terminal.patch
 
 BuildRequires: guile-devel libncursesw-devel libunistring-devel texinfo
 
@@ -40,6 +49,7 @@ for easy interactive development with GNU Guile-Ncurses library.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -65,6 +75,9 @@ make check
 %_bindir/guile-ncurses-shell
 
 %changelog
+* Wed Aug 20 2025 Vasiliy Kovalev <kovalev@altlinux.org> 3.1-alt2
+- NMU: added patches to fix FTBFS and build warnings
+
 * Tue Feb 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1-alt1
 - 3.1 released
 
