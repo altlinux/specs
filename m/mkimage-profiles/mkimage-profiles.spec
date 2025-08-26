@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,10 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Aug 26 2025 Anton Midyukov <antohami@altlinux.org> 1.8.5-alt1
+- mixin.mk: remove condition BRANCH from mixin/cloud-init for enable services
+- regular.mk: remove use/live/rescue from jeos
+
 * Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1.8.4-alt1
 - params.txt: document REPO, LIVE_REPO
 - control: fix condition for run live/image-scripts.d/51-control-install
