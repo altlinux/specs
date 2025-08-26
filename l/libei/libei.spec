@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 
 %def_disable documentation
@@ -16,7 +16,7 @@
 %endif
 
 Name: libei
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for Emulated Input
@@ -39,9 +39,7 @@ Source1: munit-%munit_ver.tar
 
 %define evdev_ver 1.10
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
-# for %%valgrind_arches
-BuildRequires(pre): rpm-macros-valgrind
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-valgrind
 BuildRequires: meson gcc-c++ xmllint
 BuildRequires: pkgconfig(libevdev) >= %evdev_ver
 BuildRequires: pkgconfig(xkbcommon)
@@ -129,6 +127,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
