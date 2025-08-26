@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _cmake__builddir BUILD
 
-Name: nekoray
-Version: 4.3.5
+Name: throne
+Version: 1.0.2
 Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
@@ -11,10 +12,12 @@ VCS: https://github.com/Mahdi-zarei/nekoray.git
 
 Source: %name-%version.tar
 Source1: %name-vendors-%version.tar
-Source2: nekobox.sh
-Source3: nekobox.desktop
+Source2: throne.sh
+Source3: Throne.desktop
 
-Patch1: nekoray-4.0.1-alt-build.patch
+Patch: %name-%version-%release.patch
+
+Provides: nekoray
 
 BuildRequires: cmake
 BuildRequires: golang
@@ -30,32 +33,36 @@ BuildRequires: libprotobuf-c-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: libzxing-cpp-devel
 BuildRequires: libcpr-devel
+BuildRequires: protobuf-go
 
 ExclusiveArch: x86_64 aarch64
 
-Requires: sing-geosite sing-geoip
+Requires: throne-sing-geosite throne-sing-geoip
 
 %description
 Qt based cross-platform GUI proxy configuration manager
 
-%package -n sing-geosite
+%package sing-geosite
 Summary: Geosite Database for sing-box
 Group: System/Servers
+Conflicts: sing-geosite
 
-%description -n sing-geosite
+%description sing-geosite
 Geosite Database for sing-box
 
-%package -n sing-geoip
+%package sing-geoip
 Summary: Geoip Database for sing-box
 Group: System/Servers
+Conflicts: sing-geoip
 
-%description -n sing-geoip
+%description sing-geoip
 Geoip Database for sing-box
 
 %prep
 %setup -a 1
-%patch1 -p1
+%patch -p1
 
+mv %name-vendors-%version/protorpc-vendor core/protorpc/vendor
 mv %name-vendors-%version/server-vendor core/server/vendor
 mv %name-vendors-%version/updater-vendor core/updater/vendor
 
@@ -70,12 +77,8 @@ mv %name-vendors-%version/sing-geoip/rule-set/*.srs sing-box/rule-set
 rm -rf %name-vendors-%version
 
 %build
-mkdir build
-
-pushd build
-cmake .. -DCMAKE_INSTALL_PREFIX=%_prefix -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-%make_build
-popd
+%cmake
+%cmake_build
 
 export GOFLAGS=-mod=vendor
 export GOOS=linux
@@ -85,61 +88,52 @@ export GOARCH=amd64
 export GOARCH=arm64
 %endif
 
-./script/build_go.sh
+pushd core/protorpc/protoc-gen-protorpc
+go build .
+go install .
+popd
+
+PATH=$PATH:%homedir/go/bin/ ./script/build_go.sh
 
 %install
 install -dm 755 %buildroot%_bindir
-install -dm 755 %buildroot%_libexecdir/nekobox
+install -dm 755 %buildroot%_libexecdir/throne
 install -dm 755 %buildroot%_datadir/applications
 install -dm 755 %buildroot%_datadir/sing-box/rule-set
 
-pushd build
-install -pm 755 ./nekoray %buildroot%_libexecdir/nekobox/nekobox
-install -pm 755 %SOURCE2 %buildroot/%_bindir/nekobox
-install -pm 644 %SOURCE3 %buildroot%_datadir/applications/nekobox.desktop
+pushd %_cmake__builddir
+install -pm 755 ./Throne %buildroot%_libexecdir/throne/Throne
+install -pm 755 %SOURCE2 %buildroot/%_bindir/throne
+install -pm 644 %SOURCE3 %buildroot%_datadir/applications/Throne.desktop
 popd
 
-install -Dm644 ./res/public/nekobox.png -t %buildroot%_datadir/pixmaps/
+install -Dm644 ./res/public/Throne.png -t %buildroot%_datadir/pixmaps/
 
 %ifarch x86_64
-install -Dm755 ./deployment/linux64/* -t %buildroot%_libexecdir/nekobox/
+install -Dm755 ./deployment/linux-amd64/* -t %buildroot%_libexecdir/throne/
 %else
-install -Dm755 ./deployment/linux-arm64/* -t %buildroot%_libexecdir/nekobox/
+install -Dm755 ./deployment/linux-arm64/* -t %buildroot%_libexecdir/throne/
 %endif
 
 install -Dm755 ./sing-box/*.db %buildroot%_datadir/sing-box
 install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 
 %files
-%_libexecdir/nekobox/nekobox
-%_libexecdir/nekobox/nekobox_core
-%_libexecdir/nekobox/updater
-%_bindir/nekobox
-%_datadir/applications/nekobox.desktop
-%_datadir/pixmaps/nekobox.png
+%_libexecdir/throne/Core
+%_libexecdir/throne/Throne
+%_libexecdir/throne/updater
+%_bindir/throne
+%_datadir/applications/Throne.desktop
+%_datadir/pixmaps/Throne.png
 
-%files -n sing-geosite
+%files sing-geosite
 %_datadir/sing-box/geosite*.db
 %_datadir/sing-box/rule-set/geosite-*.srs
 
-%files -n sing-geoip
+%files sing-geoip
 %_datadir/sing-box/geoip*.db
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
-* Tue May 27 2025 Andrey Kovalev <ded@altlinux.org> 4.3.5-alt1
-- Updated to upstream version 4.3.5.
-
-* Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 4.3.2-alt1
-- Updated to upstream version 4.3.2.
-- Fixed FTBFS with cmake4.
-
-* Fri Feb 14 2025 Andrey Kovalev <ded@altlinux.org> 4.0.1-alt2
-- Added sing-geoip and sing-geosite for VLess and VMess (closes: #53059).
-
-* Tue Feb 11 2025 Andrey Kovalev <ded@altlinux.org> 4.0.1-alt1
-- Updated to upstream version 4.0.1.
-
-* Mon Sep 16 2024 Andrey Kovalev <ded@altlinux.org> 3.26-alt1
-- Initial build for Sisyphus.
-
+* Tue Aug 19 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt1
+- Intial build for Sisyphus (closes: #55551).
