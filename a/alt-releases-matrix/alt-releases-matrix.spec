@@ -14,7 +14,7 @@
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
@@ -126,6 +126,9 @@ cp -r generated/typescript/* %buildroot%nodejs_sitelib/%name-ts
 %nodejs_sitelib/%name-ts/*
 
 %changelog
+* Tue Aug 26 2025 Danil Shein <dshein@altlinux.org> 0.1.1-alt1
+- new version
+
 * Thu Aug 07 2025 Danil Shein <dshein@altlinux.org> 0.1.0-alt1
 - new version
 
