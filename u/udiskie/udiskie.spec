@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name udiskie
 
+%def_with check
+
 Name:    %pypi_name
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 
 Summary: Automounter for removable media
@@ -12,6 +14,11 @@ URL:     https://github.com/coldfix/udiskie
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pygobject
+BuildRequires: python3-module-pyyaml-env-tag
+BuildRequires: python3-module-docopt
+%endif
 
 BuildArch: noarch
 
@@ -37,6 +44,9 @@ Group: Development/Python3
 %install
 %pyproject_install
 
+%check
+%tox_check_pyproject
+
 %files -n python3-module-%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
@@ -59,5 +69,9 @@ Group: Development/Python3
 %_datadir/zsh/site-functions/_udiskie-umount
 
 %changelog
+* Tue Aug 26 2025 Artem Semenov <savoptik@altlinux.org> 2.5.8-alt1
+- Updated to 2.5.8
+- Enabled check
+
 * Tue Jan 28 2025 Artem Semenov <savoptik@altlinux.org> 2.5.7-alt1
 - Initial build for Sisyphus
