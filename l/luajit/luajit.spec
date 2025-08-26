@@ -2,7 +2,7 @@
 
 Name: luajit
 Version: 2.1
-Release: alt22.gitf9140a6
+Release: alt23.git871db2c
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -93,6 +93,9 @@ mv %buildroot%_bindir/luajit-2.1.* %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Aug 26 2025 Vladimir Didenko <cow@altlinux.org> 2.1-alt23.git871db2c
+- sync with the latest version of 2.1 branch
+
 * Thu Jun 5 2025 Vladimir Didenko <cow@altlinux.org> 2.1-alt22.gitf9140a6
 - sync with the latest version of 2.1 branch
 
