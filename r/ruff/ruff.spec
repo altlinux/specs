@@ -1,14 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define pypi_name ruff
+
+%define ruff_pypi_name ruff
+%define ruff_import_name ruff
+%define ruff_version 0.12.10
+
+%define ty_pypi_name ty
+%define ty_import_name ty
+%define ty_version 0.0.1a19
 
 %define bash_completionsdir %_datadir/bash-completion/completions
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
-Name: %pypi_name
-Version: 0.12.10
-Release: alt1
+Name: %ruff_pypi_name
+Version: %ruff_version
+Release: alt2
 
 Summary: An extremely fast Python linter, written in Rust
 License: MIT
@@ -20,6 +27,7 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: config.toml
 Source3: %pyproject_deps_config_name
+Source4: ty.toml
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -33,13 +41,35 @@ BuildRequires: libzstd-devel
 %description
 %summary.
 
-%package -n python3-module-%pypi_name
+%package -n python3-module-%ruff_pypi_name
 Summary: An extremely fast Python linter, written in Rust (Python package)
 Group: Development/Python3
 BuildArch: noarch
-Requires: %pypi_name = %EVR
+Requires: %ruff_pypi_name = %EVR
 
-%description -n python3-module-%pypi_name
+%description -n python3-module-%ruff_pypi_name
+%summary.
+
+%package -n %ty_pypi_name
+Version: %ty_version
+Summary: An extremely fast Python type checker and language server, written in Rust
+Group: Development/Python3
+Url: https://pypi.org/project/ty/
+Vcs: https://github.com/astral-sh/ty
+
+%description -n %ty_pypi_name
+%summary.
+
+%package -n python3-module-%ty_pypi_name
+Version: %ty_version
+Summary: An extremely fast Python type checker and language server, written in Rust (Python package)
+Group: Development/Python3
+Url: https://pypi.org/project/ty/
+Vcs: https://github.com/astral-sh/ty
+BuildArch: noarch
+Requires: %ty_pypi_name = %EVR
+
+%description -n python3-module-%ty_pypi_name
 %summary.
 
 %prep
@@ -47,6 +77,8 @@ Requires: %pypi_name = %EVR
 install -v %SOURCE2 .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+
+touch python/%ruff_import_name/py.typed
 
 # do not ship dependencies lists
 rm -rv docs/requirements*.txt docs/.gitignore docs/.overrides
@@ -63,23 +95,32 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 #    - undefined reference to '__stack_chk_fail_local'
 export CFLAGS="$CFLAGS -fno-stack-protector"
 %endif
-%pyproject_build
+%pyproject_build -o dist-%ruff_pypi_name
+
+# build ty
+install -v %SOURCE4 pyproject.toml
+mv python/%ruff_import_name python/%ty_import_name
+sed -i 's/ruff/ty/g' python/%ty_import_name/__main__.py
+export TY_VERSION="%version"
+%pyproject_build -o dist-%ty_pypi_name
 
 %install
-%pyproject_install
+%pyproject_install dist-%ruff_pypi_name/$(cat dist-%ruff_pypi_name/.wheeltracker)
+%pyproject_install dist-%ty_pypi_name/$(cat dist-%ty_pypi_name/.wheeltracker)
 
-chmod 755 %buildroot%_bindir/%pypi_name
+chmod 755 %buildroot%_bindir/ruff
+chmod 755 %buildroot%_bindir/ty
 
 mkdir -p %buildroot%bash_completionsdir
 mkdir -p %buildroot%fish_completionsdir
 mkdir -p %buildroot%zsh_completionsdir
 
-%buildroot%_bindir/%pypi_name generate-shell-completion bash \
-    > %buildroot%bash_completionsdir/%pypi_name
-%buildroot%_bindir/%pypi_name generate-shell-completion fish \
-    > %buildroot%fish_completionsdir/%pypi_name.fish
-%buildroot%_bindir/%pypi_name generate-shell-completion zsh \
-    > %buildroot%zsh_completionsdir/_%pypi_name
+%buildroot%_bindir/ruff generate-shell-completion bash \
+    > %buildroot%bash_completionsdir/%ruff_pypi_name
+%buildroot%_bindir/ruff generate-shell-completion fish \
+    > %buildroot%fish_completionsdir/%ruff_pypi_name.fish
+%buildroot%_bindir/ruff generate-shell-completion zsh \
+    > %buildroot%zsh_completionsdir/_%ruff_pypi_name
 
 # move python-module to noarch-directory
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -89,16 +130,27 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 
 %files
 %doc LICENSE README.md BREAKING_CHANGES.md docs
-%_bindir/%pypi_name
-%bash_completionsdir/%pypi_name
-%fish_completionsdir/%pypi_name.fish
-%zsh_completionsdir/_%pypi_name
+%_bindir/ruff
+%bash_completionsdir/%ruff_pypi_name
+%fish_completionsdir/%ruff_pypi_name.fish
+%zsh_completionsdir/_%ruff_pypi_name
 
-%files -n python3-module-%pypi_name
-%python3_sitelibdir_noarch/%pypi_name/
-%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
+%files -n python3-module-%ruff_pypi_name
+%python3_sitelibdir_noarch/%ruff_import_name/
+%python3_sitelibdir_noarch/%{pep427_name %ruff_pypi_name}-%ruff_version.dist-info/
+
+%files -n %ty_pypi_name
+%doc LICENSE
+%_bindir/ty
+
+%files -n python3-module-%ty_pypi_name
+%python3_sitelibdir_noarch/%ty_import_name/
+%python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Tue Aug 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.12.10-alt2
+- Packaged ty (ruff and ty are in the same repo).
+
 * Fri Aug 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.12.10-alt1
 - Updated to 0.12.10.
 
