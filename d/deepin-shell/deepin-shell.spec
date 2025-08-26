@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Plugins for DDE
@@ -12,7 +12,7 @@ Summary: Plugins for DDE
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-shell
-Vcs: https://github.com/linuxdeepin/dde-shell.git
+Vcs: https://github.com/linuxdeepin/dde-shell
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -91,7 +91,7 @@ export READELF="llvm-readelf"
 patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificationcenterpanelplugin.so --add-rpath %_libdir/dde-shell
 
 %files -f %repo.lang
-%doc README.md LICENSE
+%doc README.md LICENSE debian/changelog
 %_bindir/%repo
 %_userunitdir/%{repo}*.service
 %dir %_libdir/dde-shell/
@@ -147,6 +147,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Tue Aug 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.7-alt1
+- New version 2.0.7.
+
 * Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.6-alt1
 - New version 2.0.6.
 
