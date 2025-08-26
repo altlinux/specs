@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.10
+Version: 0.2.11
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -39,8 +39,9 @@ through apt and rpm.
 
 %install
 %makeinstall_std
+%find_lang %name
 
-%files
+%files -f %name.lang
 %dir %_logdir/alterator/
 %dir %_logdir/alterator/apt
 %ghost %_logdir/alterator/apt/*.log
@@ -63,6 +64,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Tue Aug 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.11-alt1
+- Add translations
+
 * Mon Aug 18 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.10-alt1
 - Fix failure if LC_ALL is unbound.
 
