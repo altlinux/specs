@@ -1,7 +1,7 @@
 Name: udev-rule-generator
 Epoch: 2
 Version: 1.6
-Release: alt2
+Release: alt3
 Summary: Common package for udev rule generator
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
 Group: System/Configuration/Hardware
@@ -79,6 +79,7 @@ rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 
 %files
 /lib/udev/rule_generator.functions
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/sysconfig/udev-rule-generator
 %_initdir/udev-rule-generator
 %_unitdir/udev-rule-generator.service
 
@@ -90,11 +91,15 @@ rm -f %_sysconfdir/udev/rules.d/80-net-setup-link.rules
 %files net
 #config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
 #_sysconfdir/udev/rules.d/80-net-setup-link.rules
-%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/sysconfig/udev-rule-generator
 /lib/udev/rules.d/75-persistent-net-generator.rules
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Aug 26 2025 Sergey Y. Afonin <asy@altlinux.org> 2:1.6-alt3
+- fixed typo in udev-rule-generator.init
+- moved sysconfig/udev-rule-generator to udev-rule-generator package
+- fixed udev-rule-generator.service (needs enable; ALT #54998)
+
 * Fri Sep 15 2023 Sergey Y. Afonin <asy@altlinux.org> 2:1.6-alt2
 - used UPDATE_NET_RULES=yes by default
   https://bugzilla.altlinux.org/show_bug.cgi?id=29282#c40
