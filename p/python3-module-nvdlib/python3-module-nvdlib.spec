@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name nvdlib
+%define import_name nvdlib
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.7
+Version: 0.8.3
 Release: alt1
 
 Summary: A simple wrapper for the National Vulnerability CVE/CPE API
@@ -17,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -34,6 +36,7 @@ and Common Platform Enumeration (CPEs) into easily accessible objects.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -48,10 +51,13 @@ and Common Platform Enumeration (CPEs) into easily accessible objects.
 
 %files
 %doc README.md HISTORY.md
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%import_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.8.3-alt1
+- Updated to 0.8.3.
+
 * Fri Jun 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.7.7-alt1
 - New version.
 
