@@ -10,7 +10,7 @@
 %def_enable pyverbs
 
 Name: rdma-core
-Version: 57.0
+Version: 59.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -617,6 +617,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %endif
 
 %changelog
+* Tue Aug 26 2025 Alexey Shabalin <shaba@altlinux.org> 59.0-alt1
+- New version 59.0.
+
 * Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 57.0-alt1
 - New version 57.0.
 
