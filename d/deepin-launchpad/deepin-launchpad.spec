@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.3
+Version: 2.0.9
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -60,12 +60,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
-%doc README.md
-# package outside find_lang
-%dir %_datadir/%repo/
-%dir %_datadir/%repo/translations/
-%_datadir/%repo/translations/dde-launchpad.qm
-# ---
+%doc README.md debian/changelog
 %dir %_datadir/dde-shell/
 %_datadir/dde-shell/org.deepin.ds.dock.launcherapplet/
 %_datadir/metainfo/org.deepin.dde.shell.launchpad.appdata.xml
@@ -82,6 +77,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Tue Aug 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
+- New version 2.0.9.
+
 * Mon Jul 28 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.3-alt1
 - New version 2.0.3.
 
