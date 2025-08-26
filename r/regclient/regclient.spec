@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           regclient
-Version:        0.8.2
+Version:        0.9.1
 Release:        alt1
 
 Summary:        Client interface for the registry API
@@ -17,7 +17,7 @@ ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: golang >= 1.19
+BuildRequires: golang >= 1.23
 BuildRequires: /proc
 
 %description
@@ -77,6 +77,9 @@ install -Dm 644 regsync.fish %buildroot%_datadir/fish/vendor_completions.d/regsy
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Mon Aug 25 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.9.1-alt1
+- 0.8.2 -> 0.9.1
+
 * Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.8.2-alt1
 - 0.8.0 -> 0.8.2
 
