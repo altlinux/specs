@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        139.0.7258.138
+Version:        139.0.7258.154
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -117,6 +117,7 @@ Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
+Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -647,6 +648,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Aug 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.154-alt1
+- New version (139.0.7258.154).
+- Fixes:
+  + CVE-2025-9478: Use after free in ANGLE
+
 * Wed Aug 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.138-alt1
 - New version (139.0.7258.138).
 - Fixes:
