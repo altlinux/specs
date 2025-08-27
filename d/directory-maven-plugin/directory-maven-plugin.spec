@@ -4,14 +4,15 @@ BuildRequires: jpackage-11-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       directory-maven-plugin
-Version:    0.3.1
-Release:    alt1_3jpp11
+Version:    1.0
+Release:    alt1
 Summary:    Establish locations for files in multi-module builds
 
-License:    ASL 2.0
+License:    Apache-2.0
 URL:        https://github.com/jdcasey/directory-maven-plugin
 
 Source0:    https://github.com/jdcasey/directory-maven-plugin/archive/directory-maven-plugin-%{version}.tar.gz
+Patch0:     directory-maven-plugin-fix-no-mojo-definition.patch
 
 BuildArch:  noarch
 
@@ -42,10 +43,13 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q -n directory-maven-plugin-directory-maven-plugin-0.3.1
-
+%setup -q -n directory-maven-plugin-directory-maven-plugin-%version
+%patch0 -p1
 
 %pom_remove_parent
+
+# Bump Java source option
+sed -i 's/1.7/1.8/g' pom.xml
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -62,6 +66,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Aug 26 2025 Anton Meleshnikov <alton@altlinux.org> 1.0-alt1
+- new version (thanks fedora for the patch)
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 0.3.1-alt1_3jpp11
 - new version
 
