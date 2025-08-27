@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    kubetui
-Version: 1.7.0
+Version: 1.9.0
 Release: alt1
 
 Summary: An intuitive Terminal User Interface (TUI) tool for real-time monitoring and exploration of Kubernetes resources
@@ -60,5 +60,8 @@ target/release/%name completion fish | install -Dm644 /dev/stdin "%buildroot%_da
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Aug 25 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.9.0-alt1
+- 1.7.0 -> 1.9.0
+
 * Fri Apr 04 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.7.0-alt1
 - Initial build for ALTLinux.
