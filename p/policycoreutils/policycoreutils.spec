@@ -9,8 +9,8 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.8.1
-Release: alt2
+Version: 3.9
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -415,6 +415,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Thu Jul 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.9-alt1
+- NMU: Updated to 3.9.
+
 * Fri May 16 2025 Anton Midyukov <antohami@altlinux.org> 1:3.8.1-alt2
 - (NMU) Remove consolehelper support (Closes: #54276).
 

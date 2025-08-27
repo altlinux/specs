@@ -6,7 +6,7 @@
 
 Name: libselinux
 Epoch: 1
-Version: 3.8.1
+Version: 3.9
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -126,6 +126,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.9-alt1
+- NMU: Updated to 3.9.
+
 * Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8.1-alt1
 - (NMU) Updated to 3.8.1.
 
