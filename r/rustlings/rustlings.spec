@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rustlings
-Version: 6.4.0
-Release: alt2
+Version: 6.5.0
+Release: alt1
 
 Summary: Small exercises to get you used to reading and writing Rust code
 License: MIT
@@ -45,6 +45,9 @@ install -Dvm0755 target/release/rustlings %buildroot%_bindir/rustlings
 %_bindir/rustlings
 
 %changelog
+* Wed Aug 27 2025 Anton Zhukharev <ancieg@altlinux.org> 6.5.0-alt1
+- Updated to 6.5.0.
+
 * Mon Apr 28 2025 Anton Zhukharev <ancieg@altlinux.org> 6.4.0-alt2
 - Added dependency on clippy.
 
