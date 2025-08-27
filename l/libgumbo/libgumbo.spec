@@ -5,7 +5,7 @@
 %define soname 3
 
 Name: libgumbo
-Version: 0.13.0
+Version: 0.13.2
 Release: alt1
 
 Summary: An HTML5 parsing library
@@ -17,6 +17,7 @@ Vcs: https://codeberg.org/gumbo-parser/gumbo-parser.git
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: gcc-c++
 
 %{?_with_python:BuildRequires: python3-devel python3-module-setuptools}
@@ -89,10 +90,9 @@ sed -i "s;'libgumbo\.so';'libgumbo.so.%soname';" python/gumbo/gumboc.py
 # Remove python tests:
 # otherwise they will be installed
 find python/ -name '*_test.py' -delete
-%autoreconf
-%configure \
-    --disable-static
-%make_build
+%meson \
+	-Ddefault_library=shared
+%meson_build -v
 
 %if_with docs
 doxygen Doxyfile
@@ -103,7 +103,7 @@ doxygen Doxyfile
 %endif
 
 %install
-%makeinstall_std
+%meson_install
 
 %if_with docs
 install -m 755 -d %buildroot%_man3dir/
@@ -115,7 +115,7 @@ install -m 644 docs/man/man3/*.3 %buildroot%_man3dir/
 %endif
 
 %check
-make check
+%meson_test
 
 %files -n %name%soname
 %_libdir/%name.so.%soname
@@ -138,6 +138,10 @@ make check
 %endif
 
 %changelog
+* Wed Aug 27 2025 Mikhail Efremov <sem@altlinux.org> 0.13.2-alt1
+- Switched to meson build.
+- Updated to 0.13.2.
+
 * Tue Jan 07 2025 Mikhail Efremov <sem@altlinux.org> 0.13.0-alt1
 - Updated to 0.13.0.
 
