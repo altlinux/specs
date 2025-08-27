@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rainfrog
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary: %name a database tool for the terminal
 License: MIT
@@ -50,6 +50,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.6-alt1
+- 0.3.5 -> 0.3.6
+
 * Mon Aug 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.5-alt1
 - Initial build for Sisyphus.
 
