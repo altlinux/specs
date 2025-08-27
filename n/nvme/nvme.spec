@@ -2,7 +2,7 @@
 
 Name: nvme
 Version: 2.15
-Release: alt1
+Release: alt2
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -46,7 +46,8 @@ sed -i "s/'-ldl'/[&,'-lm']/" meson.build
 %meson \
    -D docs=man \
    -D udevrulesdir=%_udevrulesdir \
-   -D systemddir=%_unitdir
+   -D systemddir=%_unitdir \
+   -D rundir=/run
 %meson_build
 
 %install
@@ -76,6 +77,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Wed Aug 27 2025 Alexey Shabalin <shaba@altlinux.org> 2.15-alt2
+- Fixed runfir path (/usr/run -> /run).
+
 * Mon Aug 11 2025 L.A. Kostis <lakostis@altlinux.ru> 2.15-alt1
 - 2.15.
 
