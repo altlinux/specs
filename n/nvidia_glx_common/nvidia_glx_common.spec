@@ -16,7 +16,7 @@
 %define nv_version 580
 %define nv_release 76
 %define nv_minor 05
-%define pkg_rel alt297
+%define pkg_rel alt298
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Wed Aug 27 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt298
+- add support of PCI class 03 80 display controllers
+
 * Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt297
 - new version
 
