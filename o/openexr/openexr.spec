@@ -7,7 +7,7 @@
 %define rname OpenEXR
 %define libsover 32
 Name: openexr
-Version: 3.3.1
+Version: 3.3.5
 Release: alt1
 
 %define _cmake__builddir BUILD
@@ -161,6 +161,12 @@ cp -ar openexr-test-images/* BUILD/src/test/bin/
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Wed Aug 27 2025 Anton Farygin <rider@altlinux.com> 3.3.5-alt1
+- 3.3.3 -> 3.3.5 (Fixes: CVE-2025-48071)
+
+* Fri May 30 2025 Anton Farygin <rider@altlinux.com> 3.3.3-alt1
+- 3.3.1 -> 3.3.3
+
 * Fri Feb 28 2025 Anton Farygin <rider@altlinux.ru> 3.3.1-alt1
 - 3.1.5 -> 3.3.1
 - enabled tests
