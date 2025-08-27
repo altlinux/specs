@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: nedit-ng
-Version: 2025.1
-Release: alt1.1
+Version: 2025.2
+Release: alt0.1.rc1
 Summary: Qt port of the NEdit using modern C++
 Group: Editors
 License: GPLv2+
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-alt-unbundle-yaml-cpp.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ boost-devel qt5-base-devel qt5-tools-devel libyaml-cpp-devel
+BuildRequires: gcc-c++ boost-devel qt6-base-devel qt6-tools-devel libyaml-cpp-devel
 
 %description
 %name is a Qt port of the Nirvana Editor (NEdit) version 5.6. It is intended
@@ -51,6 +51,10 @@ install -m644 -pD src/res/%name.png %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.2-alt0.1.rc1
+- 2025.2_rc1.
+- Switch to qt6.
+
 * Thu May 29 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.1-alt1.1
 - Unbundle yaml-cpp.
 
