@@ -2,7 +2,7 @@
 %define import_path github.com/derailed/k9s
 
 Name: k9s
-Version: 0.40.10
+Version: 0.50.9
 Release: alt1
 
 Summary: Kubernetes CLI To Manage Your Clusters In Style
@@ -36,7 +36,6 @@ export LDFLAGS="-X github.com/derailed/k9s/cmd.commit=%version-%release
 -X github.com/derailed/k9s/cmd.version=%version"
 
 %golang_prepare
-cd .build/src/%import_path
 %golang_build .
 
 %install
@@ -57,6 +56,9 @@ install -Dm755 $BUILDDIR/bin/k9s "%buildroot%_bindir/k9s"
 %doc COPYING README.md
 
 %changelog
+* Wed Aug 27 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.50.9-alt1
+- 0.40.10 -> 0.50.9
+
 * Wed Mar 26 2025 Maxim Tulskiy <tulskijms@altlinux.org> 0.40.10-alt1
 - Initial build for ALT Sisyphus.
 
