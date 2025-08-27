@@ -2,7 +2,7 @@
 %define config_dir gitlab-runner.d
 
 Name:    gitlab-runner
-Version: 18.2.1
+Version: 18.3.0
 Release: alt1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
@@ -27,8 +27,7 @@ BuildRequires: golang
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -72,6 +71,9 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Wed Aug 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 18.3.0-alt1
+- New version 18.3.0
+
 * Mon Jul 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 18.2.1-alt1
 - New version 18.2.1
 
