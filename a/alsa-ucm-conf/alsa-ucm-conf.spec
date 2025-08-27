@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.14
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -19,6 +19,7 @@ Patch12: 0012-ucm2-sof-essx8336-HiFi_fix_disdevall_and_EN_headset.patch
 Patch13: 0013-ucm2-sof-essx8336-add-inv-headset-detect-near-DMic.patch
 Patch14: 0014-sof-essx8336-update-strategy-and-add-support-for-es8.patch
 Patch20: 0020-amd-acp3x-essx8336-add-support-for-a-new-driver.patch
+Patch21: 0021-Retroid-Pocket-5-configuration.patch
 
 BuildArch: noarch
 
@@ -42,6 +43,7 @@ in a standalone repository.
 #patch13 -p1
 #patch14 -p1
 #patch20 -p1
+%patch21 -p1
 
 %build
 
@@ -56,6 +58,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Wed Aug 27 2025 Artyom Bystrov <arbars@altlinux.org> 1.2.14-alt2
+- Add Retroid Pocket 5 support (try #2) (ALTBUG #55391)
+
 * Wed Jul 30 2025 Michael Shigorin <mike@altlinux.org> 1.2.14-alt1
 - 1.2.14
 - reverted commit from 1.2.13-alt2 due to merge conflict
