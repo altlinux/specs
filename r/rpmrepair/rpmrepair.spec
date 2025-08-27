@@ -1,5 +1,5 @@
 Name: rpmrepair
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Bash script for repair broken RPM's
@@ -34,6 +34,9 @@ chmod -- 0755 "%{buildroot}%_bindir/%name"
 %_bindir/%name
 
 %changelog
+* Wed Aug 27 2025 Leonid Krivoshein <klark@altlinux.org> 1.3-alt1
+- Fixed handling of scriptlets with new RPM.
+
 * Mon Dec 07 2020 Anna Khrustova <khab@altlinux.org> 1.2-alt1
 - Fixed handling of paths with %% symbols.
 
