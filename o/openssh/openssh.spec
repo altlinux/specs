@@ -1,6 +1,6 @@
 Name: openssh
 Version: 9.6p1
-Release: alt3
+Release: alt4
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -18,7 +18,7 @@ Source: %name-%version-%release.tar
 %def_with kerberos5
 %def_with selinux
 %def_with openssl
-%def_without security_key_builtin
+%def_with security_key_builtin
 %def_with zlib
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
@@ -34,6 +34,7 @@ BuildRequires: libssl-devel pam_userpass-devel
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
+%{?_with_security_key_builtin:BuildRequires: libfido2-devel}
 
 %package common
 Summary: OpenSSH common files
@@ -352,6 +353,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Aug 27 2025 Anton Zhukharev <ancieg@altlinux.org> 9.6p1-alt4
+- NMU: Enabled FIDO2 security key support (ALT#55694).
+
 * Tue Feb 18 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt3
 - Backported security fixes from upstream (fixes CVE-2025-26465,
   CVE-2025-26466).
