@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.33.0
+Version: 2.33.1
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -19,6 +19,7 @@ Source3: %name-arm64.tar
 Source4: portainer.desktop
 Source5: portainer.png
 Source6: portainer.service
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -49,6 +50,7 @@ Requires: docker-compose-v2
 %ifarch aarch64
     tar -xf %SOURCE3
 %endif
+%patch -p1
 
 %build
 %if_enabled genbin
@@ -59,7 +61,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=0d8802c6d1365588c75793ba891a92268db852d1' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=83322328400271e634d4a48274c499da1d0e8710' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -97,7 +99,7 @@ exit 0
 %preun_service portainer.service
 
 %files
-%doc LICENSE
+%doc LICENSE README.md
 %_bindir/portainer
 %_unitdir/portainer.service
 %_desktopdir/portainer.desktop
@@ -106,6 +108,12 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Wed Aug 27 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.1-alt1
+- New LTS version 2.33.1 (Fixes: CVE-2025-22871, CVE-2025-22868,
+  CVE-2025-22869, CVE-2025-4673, CVE-2024-45341, CVE-2024-45336,
+  CVE-2025-0913, CVE-2024-45338, CVE-2025-22872, CVE-2024-40635,
+  CVE-2025-22870, CVE-2025-22866, CVE-2025-54410, GHSA-2464-8j7c-4cjm).
+
 * Wed Aug 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.0-alt1
 - New LTS version 2.33.0 (Fixes: CVE-2025-55198, CVE-2025-55199,
   CVE-2025-54388, CVE-2020-8552, CVE-2025-8556,
