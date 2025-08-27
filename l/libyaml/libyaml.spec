@@ -2,7 +2,7 @@
 %def_with doc
 
 Name: libyaml
-Version: 0.2.5
+Version: 6.0.2
 Release: alt1
 
 Summary: A C library for parsing and emitting YAML
@@ -10,8 +10,6 @@ Summary: A C library for parsing and emitting YAML
 License: MIT/X11
 Group: System/Libraries
 Url: http://pyyaml.org/wiki/LibYAML
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: http://pyyaml.org/download/libyaml/yaml-%version.tar.gz
 Source: %name-%version.tar
@@ -67,6 +65,9 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %_pkgconfigdir/*
 
 %changelog
+* Tue Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 6.0.2-alt1
+- 0.2.5 -> 6.0.2
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt1
 - new version 0.2.5 (with rpmrb script)
 
