@@ -3,12 +3,12 @@
 
 Name: throne
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
-URL: https://github.com/Mahdi-zarei/nekoray
-VCS: https://github.com/Mahdi-zarei/nekoray.git
+URL: https://github.com/throneproj/Throne
+VCS: https://github.com/throneproj/Throne.git
 
 Source: %name-%version.tar
 Source1: %name-vendors-%version.tar
@@ -135,5 +135,8 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Wed Aug 27 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt2
+- Fixed VCS and URL.
+
 * Tue Aug 19 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt1
 - Intial build for Sisyphus (closes: #55551).
