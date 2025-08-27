@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     polyphone
-Version:  2.3.1
-Release:  alt1
+Version:  2.5.1
+Release:  alt2
 
 Summary:  A soundfont editor for quickly designing musical instruments
 License:  GPL-3.0
@@ -14,8 +14,7 @@ Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 
 BuildRequires: rpm-build-xdg
-BuildRequires: qt5-base-devel qt5-tools qt5-svg-devel
-BuildRequires: qcustomplot-qt5-devel
+BuildRequires: qt6-base-devel qt6-tools qt6-svg-devel
 BuildRequires: libstk-devel
 
 # git grep PKGCONFIG
@@ -27,6 +26,7 @@ BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(rtmidi)
+BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
@@ -53,7 +53,7 @@ instruments, featuring:
 
 %build
 pushd sources
-%qmake_qt5 PREFIX=%prefix \
+%qmake_qt6 PREFIX=%prefix \
     QMAKE_LFLAGS+="%optflags" \
     QMAKE_STRIP=echo
 
@@ -67,15 +67,19 @@ rm -rf %buildroot%_mandir/fr
 %files
 %_bindir/*
 %_man1dir/*
-%_mandir/ru/man1/*
 %_desktopdir/*.desktop
 %_xdgmimedir/packages/*.xml
 %_datadir/metainfo/*%{name}*.xml
 %_iconsdir/*/*/apps/polyphone.*
-%_iconsdir/*/*/mimetypes/audio-x-soundfont.*
 %doc %_docdir/%name
 
 %changelog
+* Wed Aug 27 2025 Ivan A. Melnikov <iv@altlinux.org> 2.5.1-alt2
+- Switch to Qt6.
+
+* Wed Aug 27 2025 Ivan A. Melnikov <iv@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Wed Aug 09 2023 Ivan A. Melnikov <iv@altlinux.org> 2.3.1-alt1
 - 2.3.1
 
