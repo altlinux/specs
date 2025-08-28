@@ -2,7 +2,7 @@
 
 Name:           sdbusplus
 Version:        1.0.0
-Release:        alt1
+Release:        alt2.gitfe1ebd4
 
 Summary:        C++ bindings for systemd dbus APIs
 
@@ -12,6 +12,7 @@ URL:            https://www.openbmc.org
 Vcs:            https://github.com/openbmc/sdbusplus.git
 
 Source:         %name-%version.tar
+Patch: 0001-boost-version-1.86-support.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ cmake
@@ -58,6 +59,7 @@ built on top of the sd-bus library from systemd.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Dtests=disabled -Dexamples=disabled
@@ -87,5 +89,8 @@ popd
 %python3_sitelibdir_noarch/%name-1.0.dist-info
 
 %changelog
+* Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gitfe1ebd4
+- NMU: Downgraded to commit from revision list.
+
 * Thu Apr 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus(thx alton@).

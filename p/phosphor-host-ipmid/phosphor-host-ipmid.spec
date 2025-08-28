@@ -2,7 +2,7 @@
 
 Name: phosphor-host-ipmid
 Version: 1.0.0
-Release: alt1.gitae30d81
+Release: alt2.gita809fa5
 
 Summary: dbus-based ipmid for host-endpoint IPMI commands
 License: Apache-2.0
@@ -11,6 +11,8 @@ Url: https://github.com/openbmc/phosphor-host-ipmid
 Vcs: https://github.com/openbmc/phosphor-host-ipmid.git
 
 Source: %name-%version.tar
+Patch0: 0001-boost-version-1.86-support.patch
+Patch1: 0002-Fix-bug-in-the-name-of-array-of-whitelisted-commands.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -61,13 +63,6 @@ Requires: libsoftoff-dbus = %EVR
 %description -n phosphor-softpoweroff
 %summary.
 
-%package -n serialbridged
-Summary: Tool from the %name
-Group: Other
-
-%description -n serialbridged
-%summary.
-
 %package -n libipmid
 Summary: Library from the %name
 Group: System/Libraries
@@ -100,6 +95,7 @@ Requires: libsoftoff-dbus = %EVR
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson -Dwerror=false
@@ -113,10 +109,6 @@ Requires: libsoftoff-dbus = %EVR
 
 %files -n phosphor-softpoweroff
 %_bindir/phosphor-softpoweroff
-
-%files -n serialbridged
-%_libexecdir/serialbridged
-%_unitdir/serialbridge@.service
 
 %files -n %name-devel
 %_includedir/user_channel/*.hpp
@@ -163,5 +155,8 @@ Requires: libsoftoff-dbus = %EVR
 %_pkgconfigdir/softoff-dbus.pc
 
 %changelog
+* Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gita809fa5
+- Downgraded to commit from revision list.
+
 * Fri Aug 22 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt1.gitae30d81
 - Initial build for Sisyphus.

@@ -1,6 +1,6 @@
 Name:    stdplus
 Version: 0.1
-Release: alt1
+Release: alt2.gitd8e0af5
 
 Summary: The minimum set of features needed by the OpenBMC project
 License: Apache-2.0
@@ -59,5 +59,8 @@ OpenBMC project and other users.
 %_pkgconfigdir/%name-*.pc
 
 %changelog
+* Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1-alt2.gitd8e0af5
+- NMU: Downgraded to commit from revision list.
+
 * Thu Apr 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.1-alt1
 - Initial build for Sisyphus.

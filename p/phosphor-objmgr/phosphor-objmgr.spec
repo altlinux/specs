@@ -1,6 +1,6 @@
 Name: phosphor-objmgr
 Version: 1.0.0
-Release: alt1.git11c0cc3
+Release: alt2.gitea0e5d2
 
 Summary: Phosphor Object Manager
 License: Apache-2.0
@@ -9,7 +9,6 @@ Url: https://github.com/openbmc/phosphor-objmgr
 Vcs: https://github.com/openbmc/phosphor-objmgr.git
 
 Source: %name-%version.tar
-Patch0: fix-phosphor-objmgr-1.0.0-git11c0cc3-ALT-meson.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -55,7 +54,6 @@ Requires: lib%name = %EVR
 
 %prep
 %setup
-%autopatch
 
 %build
 %meson -Dtests=disabled \
@@ -81,5 +79,8 @@ Requires: lib%name = %EVR
 %_datadir/dbus-1/*/*
 
 %changelog
+* Tue Aug 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt2.gitea0e5d2
+- Downgraded to commit from revision list.
+
 * Thu Aug 14 2025 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt1.git11c0cc3
 - Initial build for Sisyphus.
