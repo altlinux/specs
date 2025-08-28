@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.9.1
+Version: 6.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -419,6 +419,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 

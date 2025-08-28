@@ -5,7 +5,7 @@
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.9.1
+Version: 6.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -175,6 +175,7 @@ done
 %_qt6_libdatadir/lib*.prl
 %_qt6_libdir/cmake/Qt*/
 %_qt6_archdatadir/mkspecs/modules/*.pr*
+%_qt6_archdatadir/mkspecs/features/ios/*.pr*
 %_qt6_archdatadir/metatypes/qt6*.json
 %_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
@@ -186,6 +187,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 

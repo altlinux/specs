@@ -2,8 +2,8 @@
 %global qt_module qt3d
 
 Name: qt6-3d
-Version: 6.9.1
-Release: alt2
+Version: 6.9.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
@@ -267,6 +267,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
 - fix find assimp-6 (thanks lakostis@alt)
 

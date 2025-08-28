@@ -4,8 +4,8 @@
 %define optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3d
-Version: 6.9.1
-Release: alt2
+Version: 6.9.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -253,6 +253,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
 - fix find assimp-6 (thanks lakostis@alt)
 - build with openxr
