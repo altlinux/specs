@@ -7,7 +7,7 @@
 
 Name:    python3-module-%srcname
 Version: 1.5.1
-Release: alt1.1
+Release: alt2
 
 Summary: Read SVG files and convert them to other formats
 License: LGPL-3.0-or-later
@@ -24,7 +24,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-Reportlab
 BuildRequires: python3-module-cssselect2
 BuildRequires: python3-module-lxml
-BuildRequires: python3-module-chardet
+BuildRequires: python3-module-charset-normalizer
 %endif
 
 BuildArch: noarch
@@ -64,6 +64,8 @@ This part %name.
 %autopatch -p1
 
 %build
+# Remove deprecated license classifier
+sed -i '/License :: OSI Approved/d' setup.cfg
 %pyproject_build
 
 %check
@@ -82,6 +84,9 @@ This part %name.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Aug 27 2025 Vasiliy Kovalev <kovalev@altlinux.org> 1.5.1-alt2
+- NMU: Fixed FTBFS (replace chardet with charset-normalizer in BR).
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1.1
 - NMU: Fixed FTBFS.
 
