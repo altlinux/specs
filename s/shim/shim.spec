@@ -3,14 +3,15 @@
 %def_with check
 
 Name: shim
-Version: 16.0
+Version: 16.1
 Release: alt1
 
 Summary: First-stage UEFI bootloader
 License: BSD
 Group: System/Kernel and hardware
-
+VCS: https://github.com/rhboot/shim
 Url: https://github.com/rhboot/shim
+
 Source: %name-%version.tar
 Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
@@ -115,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 28 2025 Egor Ignatov <egori@altlinux.org> 16.1-alt1
+- new version
+
 * Wed Mar 19 2025 Egor Ignatov <egori@altlinux.org> 16.0-alt1
 - new version
 - remove shim-15.8-alt-Bump-grub-SBAT-revocation-to-4 patch
