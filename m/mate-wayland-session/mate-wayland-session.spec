@@ -2,7 +2,7 @@
 
 Name: mate-wayland-session
 Version: 1.28.4
-Release: alt1
+Release: alt2
 
 Summary: MATE wayland session manager
 License: GPL-2.0
@@ -21,7 +21,6 @@ BuildRequires: mate-common
 
 # Wayland specifics (from README.md and by testing)
 Requires: wayfire
-Requires: firedecor
 Requires: xorg-xwayland
 Requires: wayfire-config-manager
 Requires: wdisplays
@@ -51,12 +50,13 @@ NOCONFIGURE=1 mate-autogen
 %doc AUTHORS ChangeLog COPYING LICENSE NEWS README.md TODO
 %_bindir/mate-wayland.sh
 %_bindir/mate-wayland-components.sh
-%dir %_datadir/firedecor/button-styles/mate
-%_datadir/firedecor/button-styles/mate/*
 %_datadir/glib-2.0/schemas/*.gschema.override
 %_datadir/wayland-sessions/MATE.desktop
 
 %changelog
+* Thu Aug 28 2025 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt2
+- Exclude leftovers of firedecor, as it is now stale and do not build.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt1
 - New version 1.28.4.
 
