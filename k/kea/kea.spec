@@ -7,12 +7,12 @@
 
 Name: kea
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
 Group: System/Servers
-Url: http://kea.isc.org
+Url: https://kea.isc.org
 Vcs: https://github.com/isc-projects/kea
 Source0: %name-%version.tar
 Source1: kea-dhcp4.service
@@ -226,7 +226,9 @@ export KEA_PKG_TYPE_IN_CONFIGURE="rpm"
     -D mysql=enabled \
     -D postgresql=enabled \
     -D netconf=disabled \
-    -D tests=enabled
+    -D tests=enabled \
+    -D install_umask=0022 \
+    %nil
 %meson_build
 %__meson_build doc
 
@@ -305,6 +307,8 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %_sbindir/kea-lfc
 %_man8dir/kea-lfc.*
 %_tmpfilesdir/%name.conf
+%dir %_libdir/%name
+%dir %_libdir/%name/hooks
 %dir %attr(0750, root, _kea) %_sysconfdir/%name
 %dir %attr(0755, _kea, _kea) %_sharedstatedir/%name
 %dir %attr(0750, _kea, _kea) %_logdir/%name
@@ -357,7 +361,6 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %files hooks
 %dir %_sysconfdir/%name/radius
 %_sysconfdir/%name/radius/dictionary
-%dir %_libdir/%name
 %_libdir/%name/hooks
 %exclude %_libdir/%name/hooks/libddns_gss_tsig.so
 %exclude %_libdir/%name/hooks/libdhcp_mysql.so
@@ -386,6 +389,13 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Fri Aug 08 2025 Anton Farygin <rider@altlinux.com> 3.0.0-alt2
+- moved hooks directory to common package
+- control sockets moved from /tmp to /run/kea
+- set install_umask to 0022 during build to ensure consistent file permissions
+- added standard runtime, state, log, and control socket directories to Kea
+  systemd units and enabled optional configuration overrides via /etc/sysconfig/kea
+
 * Fri Jun 27 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
 - 3.0.0
 - split package to common, admin, dhcp-ddns, dhcp4, dhcp6, ctrl-agent
