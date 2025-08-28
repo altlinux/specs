@@ -1,10 +1,10 @@
 %define        _unpackaged_files_terminate_build 1
-%define        oname hnswlib
+%define        nomen hnswlib
 %def_enable    check
 
-Name:          %oname-devel
+Name:          %nomen-devel
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Header-only C++/python library for fast approximate nearest neighbors
 License:       Apache-2.0
 Group:         Sciences/Mathematics
@@ -21,6 +21,7 @@ BuildRequires: libgomp-devel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(pybind11)
+BuildRequires: python3(numpy)
 %if_enabled check
 BuildRequires: python3(tox)
 BuildRequires: python3(hypothesis)
@@ -37,11 +38,11 @@ Requires:      libgomp-devel
 Header-only C++ HNSW implementation with python bindings, insertions and
 updates.
 
-%package       -n python3-module-%oname
+%package       -n python3-module-%nomen
 Summary:       HNSW implementation library for Python3
 Group:         Development/Python3
 
-%description   -n python3-module-%oname
+%description   -n python3-module-%nomen
 HNSW implementation library for Python3
 
 Header-only C++ HNSW implementation with python bindings, insertions and
@@ -65,14 +66,17 @@ updates.
 
 %files
 %doc README*
-%_includedir/%{oname}*
-%_cmakedir/%oname
+%_includedir/%{nomen}*
+%_cmakedir/%nomen
 
-%files         -n python3-module-%oname
-%python3_sitelibdir/%{oname}*.so
-%python3_sitelibdir/%{oname}*/METADATA
+%files         -n python3-module-%nomen
+%python3_sitelibdir/%{nomen}*.so
+%python3_sitelibdir/%{nomen}*/METADATA
 
 
 %changelog
+* Thu Aug 28 2025 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1.1
+- ! fixed build for python3 returning req.package numpy
+
 * Fri May 16 2025 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - initial build for Sisyphus
