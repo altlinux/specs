@@ -16,7 +16,7 @@
 %define _pseudouser_home %_localstatedir/%{name}d
 
 Name: opensnitch
-Version: 1.7.0.0
+Version: 1.7.2
 Release: alt1
 
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
@@ -25,7 +25,9 @@ Group: Networking/Other
 Url: https://github.com/evilsocket/opensnitch
 Vcs: https://github.com/evilsocket/opensnitch.git
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: vendor.tar
+Source2: protoc-gen-go-grpc.tar
 
 ExclusiveArch: %go_arches
 
@@ -83,6 +85,8 @@ This package contains opensnitch ui.
 
 %prep
 %setup
+tar xf %SOURCE1
+tar xf %SOURCE2
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -182,6 +186,8 @@ popd
 %dir %_sysconfdir/%{name}d
 %dir %_sysconfdir/%{name}d/rules
 %_bindir/%{name}d
+%dir %_libexecdir/%{name}d
+%dir %_libexecdir/%{name}d/ebpf
 %_libexecdir/%{name}d/ebpf/%{name}*
 %_sysconfdir/%{name}d/*.json
 %_unitdir/%{name}d.service
@@ -193,6 +199,10 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Aug 13 2025 Ulysses Apokin <ulysses@altlinux.org> 1.7.2-alt1
+- new version
+- fixed post-install unowned files
+
 * Fri Jun 27 2025 Ulysses Apokin <ulysses@altlinux.org> 1.7.0.0-alt1
 - new version
 
