@@ -7,7 +7,7 @@
 
 Name:    systray-x
 Version: 0.9.11
-Release: alt4
+Release: alt5
 
 Summary: A system tray extension for Thunderbird
 License: MPL-2.0
@@ -61,6 +61,8 @@ Requires: %name = %EVR
 %autopatch -p1
 max_ver="$((`sed -n 's/^Version=\([0-9]\+\)\..*$/\1/p' %_libdir/thunderbird/application.ini`+1))"
 # Use real current Thunderbird version + 1
+# Set maximum supported version
+max_ver="200"
 subst "s|136|$max_ver|" webext/manifest.json
 
 %build
@@ -88,6 +90,9 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Thu Aug 28 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt5
+- Set maximum supported version to 200 (ALT #55745).
+
 * Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.11-alt4
 - Use %%thunderbird_arch to specify supported architectures.
 
