@@ -2,7 +2,7 @@
 
 Name:    megapixels
 Version: 1.5.2
-Release: alt2.git7741389
+Release: alt3.git7741389
 Epoch:   1
 
 Summary: The GTK camera application
@@ -26,6 +26,8 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: libmegapixels-devel
 BuildRequires: libdng-devel
 BuildRequires: libjpeg-devel
+
+Requires: dcraw
 
 %description
 A GTK4 camera application that knows how to deal with the media request api. It
@@ -51,6 +53,9 @@ uses opengl to debayer the raw sensor data for the preview.
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Thu Aug 28 2025 x1z53 <x1z53@altlinux.org> 1:1.5.2-alt3.git7741389
+- Add runtime dependency on dcraw.
+
 * Thu Dec 12 2024 Egor Shestakov <ved@altlinux.org> 1:1.5.2-alt2.git7741389
 - Downgrade to 1.5.2.
 
