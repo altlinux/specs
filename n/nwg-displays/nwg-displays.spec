@@ -1,5 +1,5 @@
 Name: nwg-displays
-Version: 0.3.25
+Version: 0.3.26
 Release: alt1
 License: MIT
 
@@ -43,5 +43,8 @@ install -Dpm0755 %name.desktop -t %buildroot%_desktopdir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Aug 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.26-alt1
+- new version 0.3.26 (with rpmrb script)
+
 * Sun Mar 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.25-alt1
 - Initial build
