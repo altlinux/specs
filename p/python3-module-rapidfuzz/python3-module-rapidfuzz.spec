@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.13.0
+Version: 3.14.0
 Release: alt1
 
 Summary: Fast string Python 3 matching library for Python and C++
@@ -49,6 +49,9 @@ py.test3
 
 
 %changelog
+* Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
+- 3.14.0
+
 * Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.13.0-alt1
 - 3.13.0
 
