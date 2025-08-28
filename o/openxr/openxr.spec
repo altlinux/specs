@@ -2,7 +2,7 @@
 
 Name: openxr
 Version: 1.1.50
-Release: alt1
+Release: alt2
 
 Summary: An API for writing VR and AR software
 
@@ -57,6 +57,13 @@ want to compile applications using the OpenXR library.
 
 %prep
 %setup
+%ifarch %e2k
+# error: "No architecture string known!"
+sed -i 's/m68k/e2k/' src/common/platform_utils.hpp
+# xr_generated_core_validation.cpp:
+# parameter "gen_instance_info" was never referenced
+sed -i 's/-Werror/-Wno-error/g' src/CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -95,6 +102,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 28 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1.50-alt2
+- e2k build fix
+
 * Mon Aug 25 2025 Mikhail Tergoev <fidel@altlinux.org> 1.1.50-alt1
 - 1.1.50
 
