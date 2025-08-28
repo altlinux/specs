@@ -2,7 +2,7 @@
 %define pg_ver 14
 
 Name: postgresql%pg_ver-multicorn2
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 Summary: Multicorn Python3 Wrapper for Postgresql %pg_ver Foreign Data Wrapper
@@ -52,6 +52,9 @@ rm -rf python/multicorn/gitfdw.py
 %_datadir/pgsql/extension
 
 %changelog
+* Thu Aug 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
+- New version.
+
 * Sun Sep 29 2024 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
 - New version.
 
