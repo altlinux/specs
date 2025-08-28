@@ -1,5 +1,5 @@
 Name:    qalculate-qt
-Version: 5.3.0
+Version: 5.7.0
 Release: alt1
 
 Summary: A very versatile desktop calculator - Qt version
@@ -43,5 +43,8 @@ A Qt graphical interface for Qalculate!
 %_datadir/qalculate-qt/translations/qalculate-qt_*.qm
 
 %changelog
+* Thu Aug 28 2025 Ilya Sorochan <k0tran@altlinux.org> 5.7.0-alt1
+- Update version.
+
 * Mon Jan 13 2025 Ilya Sorochan <k0tran@altlinux.org> 5.3.0-alt1
 - Initial build.
