@@ -2,19 +2,23 @@
 
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          2.3.7
+Version:          2.3.8
 Release:          alt1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
 URL:              https://www.gnu.org/software/libidn/#libidn2
 Source0:          %name-%version.tar
+Source1:          gnulib.tar
 BuildRequires:    libunistring-devel
+# For bootstrap script
+BuildRequires:    gperf gengetopt
 # Needed for autoreconf
 BuildRequires: /usr/bin/gtkdocize
 %{?_enable_doc:BuildRequires: texinfo help2man groff-base}
 
 Requires: libunistring2 >= 0.9.8-alt1
 
+%define soname 0
 %define _unpackaged_files_terminate_build 1
 
 %description
@@ -41,23 +45,19 @@ form, as used in the DNS protocol. The encoding format is the Internationalized
 Domain Name (IDNA2008/TR46) format.
 
 %prep
-%setup
-# Workaround for generating idn2.1
-rm doc/idn2.1
+%setup -b 1 -n gnulib
+%setup -a 0
 
 %build
-%autoreconf
-# Hack from upstream bootstrap script (from git):
-# removing older autopoint/libtool M4 macros.
-for f in `cd m4 && ls *.m4`; do
-    test -f gl/m4/$f && rm -fv m4/$f
-    test -f unistring/m4/$f && rm -fv m4/$f
-done
-
+./bootstrap --gnulib-srcdir=../gnulib --gen --no-git
 %configure \
 	--disable-static \
 	--disable-silent-rules \
-	%{subst_enable doc}
+%if_enabled doc
+	--enable-gtk-doc
+%else
+	--disable-doc
+%endif
 
 %make_build
 
@@ -84,7 +84,8 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %files -f %name.lang
 %doc COPYING COPYING.LESSERv3 COPYING.unicode COPYINGv2
 %doc AUTHORS NEWS README.md
-/%_lib/%name.so.*
+/%_lib/%name.so.%soname
+/%_lib/%name.so.%soname.*
 
 %files devel
 %doc examples
@@ -102,6 +103,13 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Thu Aug 28 2025 Mikhail Efremov <sem@altlinux.org> 2.3.8-alt1
+- Used bootstrap script instead of autoreconf.
+- Added gnulib sources.
+- Dropped workaround for generating idn2.1 man page.
+- Added soname check.
+- 2.3.7 -> 2.3.8.
+
 * Wed Jan 31 2024 Mikhail Efremov <sem@altlinux.org> 2.3.7-alt1
 - 2.3.4 -> 2.3.7.
 
