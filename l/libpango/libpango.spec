@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.56
+%define ver_major 1.57
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -25,7 +25,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -59,7 +59,7 @@ Obsoletes: gscript
 %define cairo_ver 1.18
 %define gi_docgen_ver 2021.3
 %define xft_ver 2.0.0
-%define fontconfig_ver 2.15.0
+%define fontconfig_ver 2.17.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
 %define hb_ver 8.4.0
@@ -229,6 +229,9 @@ rm -f tests/layouts/valid-20.layout
 
 
 %changelog
+* Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.57.0-alt1
+- 1.57.0
+
 * Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.4-alt1
 - 1.56.4
 - disabled broken on sisyphus valid-20.layout test
