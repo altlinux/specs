@@ -1,5 +1,5 @@
 Name: swappy
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 License: MIT
 
@@ -44,6 +44,9 @@ screen copy tools that can output a final image to stdout.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Aug 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Tue Aug 19 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.7.1-alt1
 - new version 1.7.1 (with rpmrb script)
 
