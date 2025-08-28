@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.43
+%define kernel_sublevel	.44
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 28 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.44-alt1
+- v6.12.44 (2025-08-28).
+- config: Build NVME as a module instead of built-in.
+
 * Thu Aug 21 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.43-alt1
 - v6.12.43 (2025-08-20).
 - config: Enable RTRS and Security Infiniband options.
