@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -82,6 +82,21 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Wed Aug 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.1-alt1
+- Don't ignore regular files in user home directories by default.
+- Add POSIX Extended regex type support to the list of ignored files.
+- Remove references in descriptions about iso.
+- Fix the non-use of the specified ignored list when calculating
+  the minimal size of the partitions in the vm-profile.scm.
+- CLI: add check for running as root.
+- CLI: fix the non-use of the specified ignored list when
+  calculating list of the available workdirs and exdrives.
+- CLI: add translated outputs and remove unnecessary
+  entries when updating the list of ignored files.
+- CLI: fix an issue with errors before displaying the progress bar.
+- Tests: add the build.log output if failed.
+- Add the sbin/kopidel wrapper for using CLI from the git repo.
+
 * Wed Jul 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.0-alt1
 - Create the razlivochniy.img instead of iso.
 - Add the ability to create razlivochniy external storage
