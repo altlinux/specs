@@ -10,7 +10,7 @@
 %define soname 3.0
 
 Name:           lib%oname
-Version:        3.0.9.0
+Version:        3.0.9.1
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -220,6 +220,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Aug 28 2025 Anton Farygin <rider@altlinux.com> 3.0.9.1-alt1
+- 3.0.9.0 -> 3.0.9.1
+
 * Sun Aug 03 2025 Anton Farygin <rider@altlinux.com> 3.0.9.0-alt1
 - 2.5.19.0 -> 3.0.9.0
 
