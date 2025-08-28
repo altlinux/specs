@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.18.7
+Version: 2.19.1
 Release: alt1
 
 License: GPL-3.0
@@ -13,7 +13,6 @@ Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
 Source3: ansible.cfg
-Patch0: 0001-update-ansible-galaxy-resolvelib-requirement-to-0.5..patch
 
 BuildArch: noarch
 
@@ -62,7 +61,6 @@ Requires: python3(passlib)
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 grep -Rl '^#!.*python$' * | xargs subst 's|^#!.*python$|#!%__python3|'
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
@@ -88,6 +86,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Wed Aug 27 2025 Andrey Cherepanov <cas@altlinux.org> 2.19.1-alt1
+- New version.
+
 * Fri Jul 18 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.7-alt1
 - New version.
 
