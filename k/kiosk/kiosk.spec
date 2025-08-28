@@ -1,6 +1,6 @@
 Name: kiosk
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -28,6 +28,9 @@ Utility for managing kiosk mode
 %_man1dir/kiosk.1.xz
 
 %changelog
+* Wed Aug 27 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt2
+- don't show extra messages with --get-mode
+
 * Mon Aug 18 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt1
 - add ability to run applications without enforcing AT_SECURE
 
