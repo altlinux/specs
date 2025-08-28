@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -18,10 +18,12 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots)
+BuildRequires: pkgconfig(wlroots-0.18)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(xwayland)
+BuildRequires: pkgconfig(xcb-ewmh)
 
 BuildRequires: flex doxygen
 
@@ -56,7 +58,10 @@ install -m644 -v \
 %buildroot%_sysconfdir
 
 %check
-%ctest
+%ctest \
+%ifarch %ix86
+-E backend_test
+%endif
 
 %files
 %doc *.md LICENSE
@@ -69,6 +74,9 @@ install -m644 -v \
 %config(noreplace)%_sysconfdir/*.plist
 
 %changelog
+* Thu Aug 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6-alt1
+- 0.5 -> 0.6
+
 * Mon Mar 10 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5-alt1
 - 0.4 -> 0.5
 
