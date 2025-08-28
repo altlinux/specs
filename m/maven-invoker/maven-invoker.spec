@@ -7,10 +7,10 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-invoker
-Version:        3.1.0
-Release:        alt1_6jpp11
+Version:        3.3.0
+Release:        alt1
 Summary:        Fires a maven build in a clean environment
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org/shared/maven-invoker/
 BuildArch:      noarch
 
@@ -18,20 +18,15 @@ Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%
 
 # Patch rejected upstream
 Patch1:         %{name}-MSHARED-279.patch
-# Disable two tests that are affected by bug in maven-surefire version 3.0.0-M6
-# https://issues.apache.org/jira/browse/SUREFIRE-2056
-# The bug is fixed in maven-surefire 3.0.0-M7.
-Patch2:         0001-Disable-two-tests-in-DefaultInvokerTest.java.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-surefire-plugin)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
-# Required by tests
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-clean-plugin
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+
 Source44: import.info
 
 %description
@@ -55,15 +50,10 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-# Change line endings so patch can be applied
-sed -i 's/\r$//' src/main/java/org/apache/maven/shared/invoker/MavenCommandLineBuilder.java
-sed -i 's/\r$//' src/test/java/org/apache/maven/shared/invoker/DefaultInvokerTest.java
 %patch1 -p1
-%patch2 -p1
-%pom_change_dep javax.inject:javax.inject:1  org.eclipse.sisu:org.eclipse.sisu.inject
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -74,8 +64,10 @@ sed -i 's/\r$//' src/test/java/org/apache/maven/shared/invoker/DefaultInvokerTes
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
-
 %changelog
+* Thu Aug 28 2025 Anton Meleshnikov <alton@altlinux.org> 3.3.0-alt1
+- new version (thanks fedora for the patch)
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_6jpp11
 - update
 
