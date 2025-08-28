@@ -20,7 +20,7 @@
 
 Name: %{_name}2
 Version: 2.10.90
-Release: alt2
+Release: alt3
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -56,6 +56,8 @@ Requires: dbus >= %dbus_ver dbus-tools-gui
 # required dosfstools with compatibility symlinks
 Requires: dosfstools >= 4.2-alt2
 Requires: mdadm ntfsprogs parted gdisk nvme
+# default NTFS driver
+Requires: ntfs-3g
 #Requires: xfsprogs
 %{?_enable_acl:Requires: acl}
 
@@ -179,7 +181,9 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-#%%patch10 -p1
+
+# set default NTFS driver to ntfs-3g (fc:#2182206)
+sed -i data/builtin_mount_options.conf -e 's/ntfs_drivers=ntfs3,ntfs/ntfs_drivers=ntfs,ntfs3/'
 
 %build
 %autoreconf
@@ -210,6 +214,7 @@ _EOF_
 
 # control support
 install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
+mkdir -p %buildroot%_sysconfdir/%name/modules.conf.d
 
 %find_lang %name
 
@@ -230,6 +235,7 @@ fi
 %_udevrulesdir/80-%name.rules
 %_udevrulesdir/99-alt-%name-media-mount-point.rules
 %config(noreplace) %_sysconfdir/%name/%name.conf
+%dir %_sysconfdir/%name/modules.conf.d
 %_sysconfdir/%name/mount_options.conf.example
 %dir %_libexecdir/%name
 %_libexecdir/%name/udisksd
@@ -245,7 +251,6 @@ fi
 %_man8dir/*
 %attr(0700,root,root) %dir %_localstatedir/lib/%name
 %ghost %_localstatedir/lib/%name/mtab
-#%attr(0700,root,root) %dir %_localstatedir/run/%name
 %config %systemd_unitdir/udisks2.service
 %_tmpfilesdir/%name.conf
 %config %_controldir/%name
@@ -301,6 +306,10 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt3
+- updated to 2.10.90-86-g1281b41f (ALT #55760)
+- data/builtin_mount_options.conf: set default NTFS driver to ntfs-3g
+
 * Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt2
 - updated to 2.10.90-63-gb4398d39
 
