@@ -2,12 +2,12 @@
 %allow_python3_import_path %_libexecdir/UDSClient
 
 Name: openuds-client
-Version: 3.6.0
-Release: alt2
+Version: 4.0.0
+Release: alt1
 Summary: Client for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
-URL: https://github.com/dkmstr/openuds
+URL: https://github.com/VirtualCable/uds-client
 Provides: udsclient = %EVR
 
 Source0: %name-%version.tar
@@ -18,8 +18,10 @@ Requires: /usr/bin/xfreerdp
 Requires: /usr/bin/x2goclient
 Requires: /usr/bin/remote-viewer
 Requires: freerdp-plugins-standard
-%py3_requires paramiko
+%py3_requires psutil
 %py3_requires Crypto
+%py3_requires PyQt6
+%add_python3_req_skip PyQt5
 
 %description
 This package provides the required components
@@ -41,6 +43,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Mon Jun 16 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
+- v4.0 snapshot 5b044bca346ac0e5383ae593cf3d978903652acf
+
 * Thu Jul 27 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt2
 - Adding a requires for XRDP connection.
 

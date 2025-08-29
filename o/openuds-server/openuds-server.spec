@@ -10,8 +10,8 @@
 %filter_from_provides /^python3(server\.wsgi)/d
 
 Name: openuds-server
-Version: 3.6.0
-Release: alt11
+Version: 4.0.0
+Release: alt1
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -19,7 +19,7 @@ URL: https://github.com/dkmstr/openuds
 AutoReqProv: yes, nopython
 Source0: %name-%version.tar
 
-Source2: openuds_tunnel_register.py
+Source2: openuds_tunnel_register
 Source10: openuds-httpd.conf
 Source11: openuds-httpd-ssl.conf
 Source12: openuds.logrotate
@@ -29,11 +29,14 @@ Source16: openuds-web.service
 Source17: openuds-tmpfile.conf
 
 BuildRequires(pre): rpm-macros-systemd
-Requires: python3-module-django >= 2.2
-Requires: python3-module-django-dbbackend-mysql >= 2.2
-Requires: python3-module-django-dbbackend-sqlite3 >= 2.2
+Requires: python3-module-django >= 5.0
+Requires: python3-module-django-dbbackend-mysql >= 5.0
+Requires: python3-module-django-dbbackend-sqlite3 >= 5.0
+Requires: python3-module-pylibmc
 Requires: openssl
 Requires: logrotate
+Requires: libpango-devel
+Requires: libxmlsec1-openssl-devel
 Requires: openuds-installers
 
 Conflicts: openuds-tunnel openuds-guacamole-tunnel
@@ -97,7 +100,8 @@ mv %buildroot%_datadir/openuds/server/settings.py.sample %buildroot%_sysconfdir/
 ln -r -s %buildroot%_logdir/openuds %buildroot%_datadir/openuds/log
 ln -r -s %buildroot%_sysconfdir/openuds/settings.py %buildroot%_datadir/openuds/server/settings.py
 # Script for register openuds tunnel
-install -p -D -m 755 %SOURCE2 %buildroot%_bindir/openuds_tunnel_register.py
+install -p -D -m 755 %SOURCE2 %buildroot%_bindir/openuds_tunnel_register
+sed -i "s|version = '0.0.0'|version = '%version'|" %buildroot%_bindir/openuds_tunnel_register
 # drop httpd-conf snippet
 install -p -D -m 644 %SOURCE10 %buildroot%apache2_sites_available/openuds.conf
 install -p -D -m 644 %SOURCE11 %buildroot%apache2_sites_available/openuds-ssl.conf
@@ -143,7 +147,7 @@ cert-sh generate nginx-openuds ||:
 %dir %attr(0770, root, openuds) %_logdir/openuds
 %config(noreplace) %_logrotatedir/openuds-server
 %_unitdir/openuds-taskmanager.service
-%_bindir/openuds_tunnel_register.py
+%_bindir/openuds_tunnel_register
 
 %files apache2
 %config(noreplace) %apache2_sites_available/*.conf
@@ -156,6 +160,9 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Fri Jun 20 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
+- v4.0 snapshot 87974bf74577ed359db2a42db8e7829cdf758cbf.
+
 * Fri Jan 31 2025 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt11
 - Replaced session PickleSerializer with Json-bases serializer (custom one).
 

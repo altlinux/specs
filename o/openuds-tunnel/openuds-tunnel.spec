@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %add_python3_path %_datadir/openuds/tunnel
 
+%define guacamole_auth_ver 2.5.0
+
 Name: openuds-tunnel
-Version: 3.6.0
+Version: 4.0.0
 Release: alt1
 Summary: Clientless remote desktop gateway
 License: BSD-3-Clause and MIT
 Group: Networking/Remote access
-Url: https://github.com/dkmstr/openuds
+Url: https://github.com/VirtualCable/uds-tunnel-server
 BuildArch: noarch
 
 Source: tunnel-server.tar
-Source2: guacamole-auth-uds-2.5.0.jar
+Source2: guacamole-auth-uds-%guacamole_auth_ver.jar
 Source3: openuds-tunnel.service
 
 BuildRequires(pre): rpm-build-python3
@@ -36,7 +38,7 @@ This portion of UDS (HTML5 tunnel) is based on Apache Guacamole.
 %package -n guacamole-auth-openuds
 Summary: OpenUDS Integration Extension for Apache Guacamole
 License: Apache-2.0
-Version: 2.5.0
+Version: %guacamole_auth_ver
 Release: alt4
 Group: Networking/Remote access
 Provides: guacamole-auth-uds = %EVR
@@ -56,7 +58,7 @@ OpenUDS Integration Extension for Apache Guacamole.
 
 %install
 mkdir -p %buildroot%_datadir/openuds/tunnel
-cp -r uds_tunnel %buildroot%_datadir/openuds/tunnel/
+cp -r udstunnel %buildroot%_datadir/openuds/tunnel/
 cp udstunnel.py %buildroot%_datadir/openuds/tunnel/
 # config
 mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
@@ -66,8 +68,8 @@ install -p -D -m 644 %SOURCE3 %buildroot%_unitdir/openuds-tunnel.service
 
 # guacamole-auth-openuds
 mkdir -p %buildroot{%_datadir,%_sysconfdir}/guacamole/extensions
-install -p -D -m 644 %SOURCE2 %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
-ln -r -s %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar %buildroot%_sysconfdir/guacamole/extensions
+install -p -D -m 644 %SOURCE2 %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-%guacamole_auth_ver.jar
+ln -r -s %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-%guacamole_auth_ver.jar %buildroot%_sysconfdir/guacamole/extensions
 
 %pre
 groupadd -r -f openuds >/dev/null 2>&1 ||:
@@ -103,10 +105,13 @@ fi
 %_datadir/openuds/tunnel
 
 %files -n guacamole-auth-openuds
-%_sysconfdir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
-%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
+%_sysconfdir/guacamole/extensions/guacamole-auth-uds-%guacamole_auth_ver.jar
+%_datadir/guacamole/extensions/guacamole-auth-uds-%guacamole_auth_ver.jar
 
 %changelog
+* Sat Jun 21 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Thu May 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

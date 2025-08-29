@@ -3,12 +3,12 @@
 %define oname udsactor
 
 Name: openuds-actor
-Version: 3.6.0
-Release: alt4
+Version: 4.0.0
+Release: alt1
 Summary: Actor for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
-URL: https://github.com/dkmstr/openuds
+URL: https://github.com/VirtualCable/uds-actor
 
 Source0: %name-%version.tar
 Source1: %oname.init
@@ -67,6 +67,9 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 %_datadir/polkit-1/actions/org.openuds.pkexec.UDSActorConfig.policy
 
 %changelog
+* Mon Jun 16 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
+- v4.0 snapshot a6ae57a9644a5dda30878bc08974c3077c642c1b.
+
 * Mon Jul 01 2024 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt4
 - Adding a script to register an actor on a server without a GUI (using the CLI).
 
@@ -90,4 +93,3 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 
 * Tue Apr 14 2020 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt0.1.git.d7e30d14
 - Initial build for ALT
-
