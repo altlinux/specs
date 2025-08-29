@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    8.4.0
-Release:    alt3
+Release:    alt4
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -192,6 +192,9 @@ fi
 %_sysconfdir/init.d/%name
 
 %changelog
+* Fri Aug 29 2025 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt4
+- ! fixed service file to drop syslog and optimize some others
+
 * Mon Jul 21 2025 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt3
 - ! fixed default values to run of puppetserver in lack of memory in tmp folder
 
