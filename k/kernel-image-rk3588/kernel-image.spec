@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.43
+%define kernel_sublevel	.44
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -173,18 +173,19 @@ Patch0128: rk3588-1031-arm64-dts-rockchip-Add-HDMI-support-to-ArmSoM-Sige7.patch
 Patch0129: rk3588-1032-arm64-dts-rockchip-Add-ap6275p-wireless-support-to-A.patch
 Patch0130: rk3588-1040-board-khadas-edge2-add-nodes.patch
 Patch0131: rk3588-1041-board-khadas-edge2-mcu.patch
-Patch0132: rk3588-1051-board-nanopc-t6-Add-USB3-psu-and-fan-support.patch
+Patch0132: rk3588-1051-board-nanopc-t6-Add-FAN-support.patch
 Patch0133: rk3588-1052-board-nanopc-t6-Add-HDMI-support.patch
-Patch0134: rk3588-1060-arm64-dts-rockchip-Split-pcie30x1m1-pinctrl.patch
-Patch0135: rk3588-1060-board-cm3588-nas-Add-HDMI-support.patch
-Patch0136: rk3588-1061-arm64-dts-rockchip-Add-PCIe-3.0-pinctrl-to-Turing-RK.patch
-Patch0137: rk3588-1062-arm64-dts-rockchip-Enable-GPU-node-on-Turing-RK1.patch
-Patch0138: rk3588-1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
-Patch0139: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
-Patch0140: rk3588-1071-arm64-dts-Add-missing-nodes-to-Orange-Pi-5-Plus.patch
-Patch0141: rk35xx-montjoie-crypto-v2-rk35xx.patch
-Patch0142: wifi-4003-add-bcm43342-chip.patch
-Patch0143: wifi-4003-ssv-6051-driver.patch
+Patch0134: rk3588-1053-board-nanopc-t6-fix-usb3-a.patch
+Patch0135: rk3588-1060-arm64-dts-rockchip-Split-pcie30x1m1-pinctrl.patch
+Patch0136: rk3588-1060-board-cm3588-nas-Add-HDMI-support.patch
+Patch0137: rk3588-1061-arm64-dts-rockchip-Add-PCIe-3.0-pinctrl-to-Turing-RK.patch
+Patch0138: rk3588-1062-arm64-dts-rockchip-Enable-GPU-node-on-Turing-RK1.patch
+Patch0139: rk3588-1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
+Patch0140: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
+Patch0141: rk3588-1071-arm64-dts-Add-missing-nodes-to-Orange-Pi-5-Plus.patch
+Patch0142: rk35xx-montjoie-crypto-v2-rk35xx.patch
+Patch0143: wifi-4003-add-bcm43342-chip.patch
+Patch0144: wifi-4003-ssv-6051-driver.patch
 
 # ALT Patches
 Patch2000: 2000-OrangePI5-Enable-UART0-and-pps_gpio.patch
@@ -510,6 +511,19 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Aug 29 2025 Alexei Takaseev <taf@altlinux.org> 6.12.44-alt1
+- v6.12.44 (2025-08-28).
+- config: Build NVME as a module instead of built-in.
+- config: Disable CONFIG_PSI_DEFAULT_DISABLED (reset to the default value)
+- Add patch:
+    * rk3588-1051-board-nanopc-t6-Add-FAN-support.patch
+    * rk3588-1053-board-nanopc-t6-fix-usb3-a.patch
+- Update patch:
+    * general-v4l2-rkvdec-01-vp9.patch
+    * rk3588-1052-board-nanopc-t6-Add-HDMI-support.patch
+- Remove patch:
+    * rk3588-1051-board-nanopc-t6-Add-USB3-psu-and-fan-support.patch
+
 * Fri Aug 22 2025 Alexei Takaseev <taf@altlinux.org> 6.12.43-alt1
 - v6.12.43 (2025-08-20).
 - config: Enable RTRS and Security Infiniband options.
