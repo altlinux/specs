@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Planify
@@ -25,8 +25,8 @@ Source: %_name-%version.tar
 # to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_bindir/%rdn_name
 
-%define gtk_ver 4.14
-%define adwaita_ver 1.5
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
 %define ecal_ver 3.45.1
 
 Requires: lib%_name = %EVR
@@ -104,6 +104,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Fri Aug 29 2025 Yuri N. Sedunov <aris@altlinux.org> 4.13.4-alt1
+- 4.13.4
+
 * Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 4.13.2-alt1
 - 4.13.2
 

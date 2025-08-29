@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Python3 library to extract Exif metadata
@@ -43,10 +43,12 @@ py.test3
 %_bindir/EXIF.py
 %python3_sitelibdir_noarch/%pypi_name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
-#%python3_sitelibdir_noarch/%modname-%version.dist-info
 %doc README* ChangeLog*
 
 %changelog
+* Fri Aug 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Tue Aug 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
