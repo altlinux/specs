@@ -3,7 +3,7 @@
 
 Name: wf-shell
 Summary: GTK3-based panel for wayfire
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Group: Graphical desktop/Other
 License: MIT
@@ -25,7 +25,7 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(wayfire)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
-BuildRequires: pkgconfig(wf-config) >= 0.8.0
+BuildRequires: pkgconfig(wf-config) >= 0.10.0
 
 Requires: wayland-logout
 Requires: hicolor-icon-theme
@@ -70,5 +70,8 @@ tar -xvf %SOURCE1 -C subprojects/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 29 2025 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- new version 0.10.0
+
 * Sat Oct 12 2024 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - initial build

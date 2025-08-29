@@ -4,7 +4,7 @@
 %def_with test
 
 Name: libwf-config
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary: Library for managing configuration files, written for wayfire
 License: MIT
@@ -69,5 +69,8 @@ Development files for %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 28 2025 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sat Oct 12 2024 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - initial build
