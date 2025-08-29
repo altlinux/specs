@@ -6,7 +6,7 @@
 
 Name: perl
 Version: 5.38.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -76,6 +76,7 @@ Patch314:         perl-5.38.0-Revert-Do-uselocale-earlier-in-init-process.patch
 # If optimizing -O is used, add the definition to .ph files, bug #2152012
 Patch502:       perl-5.36.0-Add-definition-of-OPTIMIZE-to-.ph-files.patch
 # EndPatches(fedora): --------------------------------------
+Patch503:       perl-5.38.4-incompatible-pointer-fix-for-svpv-helper.patch
 
 # there's a problem with strict.pm
 %add_findreq_skiplist */strict.pm
@@ -299,6 +300,7 @@ standard input.
 %patch23 -p1
 %endif
 #patch50 -p1
+%patch503
 
 # ------ inserted with srpm-spec-inject-patches(1) -------
 # BeginPatches(fedora): ------------------------------------
@@ -1002,6 +1004,9 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 %doc	%privlib/pod/perldiag.pod
 
 %changelog
+* Fri Aug 29 2025 Pavel Skrylev <majioa@altlinux.org> 1:5.38.4-alt2
+- ! fixed incompatible pointer assignment for SvPV macros passing gcc14 builds
+
 * Tue May 20 2025 Igor Vlasenko <viy@altlinux.org> 1:5.38.4-alt1
 - 5.38.2 -> 5.38.4
 
