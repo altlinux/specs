@@ -1,15 +1,16 @@
 %define sname mediawriter
 %define oname ALTMediaWriter
+%define appId ru.basealt.altmediawriter
 
 Name:           altmediawriter
-Version:        1.0.9
+Version:        1.0.10
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
 Packager:       Maria Alexeeva <alxvmr@altlinux.org>
 
 License:        GPLv2+
-URL:            https://github.com/altlinux/ALTMediaWriter
+URL:            https://altlinux.space/ALTLinux/ALTMediaWriter
 Source:         %oname-%version.tar
 
 BuildRequires:  liblzma-devel
@@ -40,10 +41,10 @@ if [ "%name" != "%sname" ]; then
     for i in %buildroot%_datadir/icons/hicolor/*/apps/%sname.png; do
         mv "$i" "$(dirname $i)/%name.png"
     done
-    mv %buildroot%_datadir/applications/%sname.desktop %buildroot%_datadir/applications/%name.desktop
+    mv %buildroot%_datadir/applications/%sname.desktop %buildroot%_datadir/applications/%appId.desktop
     mv %buildroot%_datadir/appdata/%sname.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
-    sed -i 's/=%sname$/=%name/g' %buildroot%_datadir/applications/%name.desktop
-    sed -i 's/%sname\.desktop/%name.desktop/' %buildroot%_datadir/appdata/%name.appdata.xml
+    sed -i 's/=%sname$/=%name/g' %buildroot%_datadir/applications/%appId.desktop
+    sed -i 's/%sname\.desktop/%appId.desktop/' %buildroot%_datadir/appdata/%name.appdata.xml
 fi
 
 %check
@@ -53,11 +54,16 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 %_bindir/%name
 %_libexecdir/%name/
 %_datadir/appdata/%name.appdata.xml
-%_datadir/applications/%name.desktop
+%_datadir/applications/%appId.desktop
 %_datadir/icons/hicolor/*/apps/%name.png
 
 
 %changelog
+* Tue Jul 08 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.10-alt1
+- Add ALT Server and ALT Virtualization Server displays
+- Rename desktop file (for correct display of icon in GNOME)
+- Move project to altlinux.space
+
 * Mon May 05 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.9-alt1
 - Fix closing all Popover when clicking on UI elements (Closes: 54127)
 - Fix handling of pressing Back and New buttons when Popover is open
