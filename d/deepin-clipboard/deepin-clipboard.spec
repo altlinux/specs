@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 6.1.10
+Version: 6.1.11
 Release: alt1
 
 Summary: Clipboard for DDE
@@ -10,9 +10,10 @@ Summary: Clipboard for DDE
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-clipboard
-Vcs: https://github.com/linuxdeepin/dde-clipboard.git
+Vcs: https://github.com/linuxdeepin/dde-clipboard
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 # Automatically added by buildreq on Wed Mar 26 2025
@@ -32,6 +33,7 @@ Requires: libdqt6-waylandclient = %_dqt6_version
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 sed '/DESTINATION/s|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
   -i CMakeLists.txt
 
@@ -48,7 +50,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
-%doc LICENSE
+%doc LICENSE README.md debian/changelog
 %_bindir/%{repo}*
 %_datadir/dbus-1/services/org.deepin.dde.Clipboard1.service
 %_datadir/dbus-1/services/org.deepin.dde.ClipboardLoader1.service
@@ -73,6 +75,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Fri Aug 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.11-alt1
+- New version 6.1.11.
+
 * Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.10-alt1
 - New version 6.1.10.
 

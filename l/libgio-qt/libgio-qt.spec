@@ -1,20 +1,21 @@
 %define repo gio-qt6
 %define sover 0
 
-%def_enable doc
+%def_disable doc
 
 Name: libgio-qt
-Version: 0.0.14
+Version: 0.0.16
 Release: alt1
 Summary: Qt wrapper library of Gio
 License: LGPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/gio-qt
-Vcs: https://github.com/linuxdeepin/gio-qt.git
+Vcs: https://github.com/linuxdeepin/gio-qt
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/gio-qt-%version.tar.gz
-Patch: gio-qt-0.0.14-alt-fix-detection-dqt6-pkgconfig.patch
+Patch0: gio-qt-%version-%release.patch
+Patch1: gio-qt-0.0.14-alt-fix-detection-dqt6-pkgconfig.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 BuildRequires: gcc-c++ cmake libglibmm-devel dqt6-base-devel
@@ -53,7 +54,8 @@ This package provides %name documantation for QtCreator.
 
 %prep
 %setup -n gio-qt-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 sed -i '/qt5.cmake/d' \
   gio-qt/CMakeLists.txt \
   qgio-tools/CMakeLists.txt
@@ -72,9 +74,13 @@ sed -i 's|qt5/doc|doc/dqt6|' \
 
 %install
 %DQ6install
+%if_enabled doc
+install -D BUILD/docs/qch/gio-qt-0.0.16.qch %buildroot%_dqt6_docdir/gio-qt.qch
+%endif
 
 %files -n lib%{repo}_%sover
-%_libdir/lib%repo.so.%{sover}*
+%_libdir/lib%repo.so.%sover
+%_libdir/lib%repo.so.%version
 
 %files -n lib%repo-devel
 %_libdir/lib%repo.so
@@ -82,12 +88,16 @@ sed -i 's|qt5/doc|doc/dqt6|' \
 %_pkgconfigdir/%repo.pc
 
 %files -n lib%repo-doc
-%doc README.md LICENSE
+%doc README.md LICENSE debian/changelog
 %if_enabled doc
-%_datadir/doc/dqt6/gio-qt.qch
+%_dqt6_docdir/gio-qt.qch
 %endif
 
 %changelog
+* Fri Aug 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.16-alt1
+- New version 0.0.16.
+- Disabled qch documentation (by upstream).
+
 * Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.14-alt1
 - New version 0.0.14.
 - Added vcs tag.
