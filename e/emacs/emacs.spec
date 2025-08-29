@@ -1,5 +1,5 @@
 Name: emacs
-Version: 30.1
+Version: 30.2
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -373,6 +373,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Fri Aug 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 30.2-alt1
+- 30.2 released
+
 * Mon Feb 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 30.1-alt1
 - 30.1 released (fixed: CVE-2024-53920, CVE-2025-1244)
 - readd non-versioned site-lisp directory (closes: 53035)
