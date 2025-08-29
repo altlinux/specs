@@ -1,10 +1,10 @@
 Name: pam_wrapper
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Summary: A tool to test PAM applications and PAM modules
 License: GPLv3+
-Url: http://cwrap.org/
-# git://git.samba.org/pam_wrapper.git
+Url: https://cwrap.org/
+VCS: https://git.samba.org/pam_wrapper.git
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Group: Development/C
@@ -125,6 +125,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/pypamtest.so
 
 %changelog
+* Fri Aug 29 2025 Anton Farygin <rider@altlinux.com> 1.1.8-alt1
+- 1.1.7 -> 1.1.8
+
 * Mon Jul 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.1.7-alt1
 - new version 1.1.7
 - Fixes from upstream:
