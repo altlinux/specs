@@ -1,5 +1,5 @@
 Name: rust-cargo-c
-Version: 0.10.14
+Version: 0.10.15
 Release: alt1
 
 Summary: Cargo applet to build and install C-ABI compatible dynamic and static libraries
@@ -19,16 +19,13 @@ It produces and installs a correct pkg-config file, a static library and a dynam
 library, and a C header to be used by any C (and C-compatible) software.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %build
-export CARGO_HOME=${PWD}/cargo
 cargo build --release
 
 %install
@@ -43,6 +40,9 @@ install -pm0755 target/release/cargo-ctest %buildroot%_bindir/
 %_bindir/cargo-c*
 
 %changelog
+* Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.15-alt1
+- 0.10.15 released
+
 * Mon Jun 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.14-alt1
 - 0.10.14 released
 
