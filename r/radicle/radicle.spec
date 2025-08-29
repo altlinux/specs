@@ -1,5 +1,5 @@
 Name: radicle
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
@@ -34,17 +34,14 @@ command-line interface (`rad`) and network daemon (`radicle-node`).
 This package contains things needed for radicle seed node.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=29043134
-export CARGO_HOME=${PWD}/cargo
+export GIT_HEAD=0e48723b419be95
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
@@ -76,6 +73,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Mon Jul 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.1-alt1
 - 1.2.1 released
 
