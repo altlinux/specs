@@ -1,5 +1,5 @@
 Name: coil64
-Version: 2.3.36
+Version: 2.3.37
 Release: alt1
 
 Summary: A inductance coil calculator
@@ -38,6 +38,9 @@ install -pm0644 -D coil-0.png %buildroot%_iconsdir/hicolor/48x48/apps/coil64.png
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.37-alt1
+- 2.3.37 released
+
 * Fri Aug 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.36-alt1
 - 2.3.36 released
 
