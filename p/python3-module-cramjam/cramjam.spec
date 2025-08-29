@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: A collection of compression algorithms
@@ -22,9 +22,6 @@ BuildRequires: python3-module-maturin
 # use-system-isal-shared and use-system-blosc2-shared config opts did not
 # produced any result
 BuildRequires: gcc-c++ glibc-devel-static cmake nasm
-BuildRequires: pkgconfig(blosc2)
-BuildRequires: pkgconfig(libisal)
-BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(python3)
 BuildRequires: /proc
@@ -86,6 +83,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Aug 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.11.0-alt1
+- 2.10.0 -> 2.11.0
+
 * Tue Apr 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.10.0-alt1
 - 2.9.0 -> 2.10.0
 
