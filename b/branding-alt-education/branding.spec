@@ -28,9 +28,15 @@
 %define design_graphics_abi_minor 0
 %define design_graphics_abi_bugfix 0
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
+
 Name: branding-%flavour
 Version: 11.0
-Release: alt6
+Release: alt7
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -150,6 +156,7 @@ Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: pam-limits-desktop
 Requires: alt-os-release
+Conflicts: altlinux-release-%altbranch
 
 %description release
 %distro_name release file.
@@ -329,7 +336,7 @@ sed -i 's,#alt-education,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme CTHEME=%Theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' ./configure
+THEME=%theme CTHEME=%Theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -473,6 +480,11 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Thu Aug 28 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.0-alt7
+- Add BUILD_ID, ALT_BRANCH_ID, DOCUMENTATION_UR, SUPPORT_URL,
+  VARIANT and VARIANT_ID to the os-release.
+- Replace hardcoded branch name with a variable in the index.html files.
+
 * Mon Aug 18 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
 - NMU:
   + indexhtml: fix COPYRIGHT
