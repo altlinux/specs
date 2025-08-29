@@ -2,14 +2,14 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.6
+Version:  2.6.1
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
 License:  GPL-2.0
 Group:    Networking/Remote access
 
-Url:      http://myconnector.ru
+Url:      https://myconnector.ru
 Source0:  %name-%version.tar.gz
 Packager: Evgeniy Korneechev <ekorneechev@altlinux.org>
 
@@ -140,6 +140,11 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri Aug 29 2025 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.1-alt1
+- [CLI] Added program removal
+- [FreeRDP] Fixed tiny typo (-sec-nla)
+- Fixed import from RDP-file
+
 * Sat Dec 28 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6-alt1
 - [FreeRDP] Added support for xfreerdp3
 - Checking the OS - once at the first startup
