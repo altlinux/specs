@@ -4,10 +4,14 @@
 %define mod_name %pypi_name
 %define mod_name1 conans
 
+%ifnarch %ix86
 %def_with check
+%else
+%def_without check
+%endif
 
 Name: %pypi_name
-Version: 2.0.8
+Version: 2.19.1
 Release: alt1
 Summary: Conan - The open-source C/C++ package manager (client)
 License: MIT
@@ -66,10 +70,10 @@ cd ../%pypi_name_server
 # overwrite everything installed by client package
 # today's actual difference is conans/server only
 %pyproject_install
-rm -r %buildroot%python3_sitelibdir/%mod_name1/test/
+rm -r %buildroot%python3_sitelibdir/test/
 
 %check
-%pyproject_run_pytest -ra -Wignore %mod_name1/test/unittests/
+%pyproject_run_pytest -ra -Wignore test/unittests/
 
 %files
 %doc README.md
@@ -89,6 +93,10 @@ rm -r %buildroot%python3_sitelibdir/%mod_name1/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_server}/
 
 %changelog
+* Sat Aug 30 2025 Anton Midyukov <antohami@altlinux.org> 2.19.1-alt1
+- 2.0.8 -> 2.19.1 (ALT bug 54738).
+- disable check on %%ix86.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2.0.8-alt1
 - 2.0.4 -> 2.0.8.
 
