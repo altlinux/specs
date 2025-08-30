@@ -4,19 +4,14 @@
 %define optflags_lto %nil
 
 Name: guitarix
-Version: 0.44.1
-Release: alt2
-Summary: Mono amplifier to JACK
+Version: 0.47.0
+Release: alt1
+Summary: Modular, virtual amplifier for Linux
 Group: Sound
 License: GPL-2.0-or-later
-Url: https://sourceforge.net/projects/guitarix
-# Source-url: https://sourceforge.net/projects/guitarix/files/guitarix/guitarix2-%version.tar.xz/download
+Url: https://github.com/brummer10/guitarix
+# Source-url: https://github.com/brummer10/guitarix/releases/download/V%version/guitarix2-%version.tar.xz
 Source: %name-%version.tar
-
-# Upstream patches
-Patch: guitarix-cstdint-include.patch
-Patch1: guitarix-mismatched-delete.patch
-Patch2: guitarix-python-3.11-ftbfs.patch
 
 BuildRequires: gcc-c++
 BuildRequires: faust-devel
@@ -45,7 +40,6 @@ BuildRequires: pkgconfig(gtkmm-3.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 Requires: jack_capture
 Requires: jconvolver
-Requires: ladspa-%name-plugins = %EVR
 Requires: qjackctl
 Requires: vorbis-tools
 #Requires: google-roboto-condensed-fonts
@@ -54,35 +48,24 @@ Obsoletes: libgxw < 0.40
 Obsoletes: libgxwmm < 0.40
 
 %description
-Guitarix is a simple mono amplifier to be used in a 'JACKified' environment,
-i.e. a system using the JACK Audio Connection Kit, a professionally-capable
-audio/MIDI server and master transport control.
+Guitarix is a modular, virtual amplifier for Linux. With Guitarix you can choose
+different preamp and amp models and /or could load *.nam files with the Neural
+Amp Modeler modules, or load *.json or .aidax files with the RTNeural modules,
+to simulate a specific hardware unit. Combine them with various effects and
+speaker cabinet emulations and/or load your own Impulse Response files to come
+up with your very own tones. Guitarix comes as a standalone application or as
+vst3 plugin. Its modules are also available in the LV2 plugin format, which you
+can incorporate into your DAW of choice. Furthermore, it can even be run
+headless, so you can turn a Raspberry Pi, or any other such devices, into a
+dedicated amp modeler. You can even control Guitarix via a MIDI controller or
+foot-board.
 
-Guitarix provides one JACK input port and two JACK output ports. It is designed
-to produce nice trash/metal/rock/blues guitar sounds. Controls for bass, treble,
-gain, compressor, preamp, balance, distortion, freeverb, crybaby (wah) and echo
-are available. A fixed resonator is used when distortion is disabled. To modify
-the sound 'pressure', you can use the feedback and feedforward sliders.
-
-Guitarix includes an experimental tuner and a JACK MIDI output port with 3
-channels. They are fed by a mix from a pitch tracker and a beat detector. You
-can pitch the octave (2 octaves up or down), choose the MIDI channel, the MIDI
-program, the velocity and the sensitivity, which translates into how fast the
-note will read after the beat detector emits a signal. Values for the beat
-detector can be set for all channels.
-
-%package -n ladspa-%name-plugins
-Summary: Collection of Ladspa plug-ins
-Group: Sound
-# ladspa/distortion.cpp and ladspa/guitarix-ladspa.cpp are BSD
-# The rest of ladspa/* is GPLv+
-License: GPL-or-later and BSD
-Requires: ladspa_sdk
-
-%description -n ladspa-%name-plugins
-This package contains the crybaby, distortion, echo, impulseresponse, monoamp,
-and monocompressor ladspa plug-ins that come together with guitarix, but can
-also be used by any other ladspa host.
+Guitarix comes with an extensive list of effects including compression,
+distortion, modulation, reverb, delay, EQ, etc. Some of the effects modules
+that are included in Guitarix are influenced by some popular hardware units,
+for example the Tube Screamer is, not surprisingly, based off of the Ibanez
+Tube Screamer. Guitarix can also load up LAPSPA and LV2 plugins to comply the
+effect chain.
 
 %package -n lv2-%name-plugins
 Summary: Collection of LV2 guitarix plug-ins
@@ -105,11 +88,6 @@ guitarix, but can also be used by any other ladspa host.
 find . -type f -print0 |
   xargs -0 sed -i 's,/usr/bin/env python,%_bindir/python3,'
 
-#fix PATH include to Eigen
-for i in `grep -r '<Eigen' * | cut -d ':' -f1`; do
-    sed -i 's/<Eigen/<eigen3\/Eigen/' -i $i
-done
-
 # The build system does not use these bundled libraries by default. But
 # just to make sure:
 rm -fr src/zita-convolver src/zita-resampler
@@ -130,7 +108,6 @@ rm -fr src/zita-convolver src/zita-resampler
       --disable-sse \
 %endif
       --shared-lib \
-      --ladspa --ladspadir=%_libdir/ladspa \
       --lv2dir=%_libdir/lv2
 
 ./waf -vv build %{?_smp_mflags}
@@ -158,14 +135,14 @@ rm -rf %buildroot%_libdir/libgxw*.so
 %_libdir/libgx*.so.0*
 %_datadir/metainfo/*.metainfo.xml
 
-%files -n ladspa-%name-plugins
-%_libdir/ladspa/*.so
-%_datadir/ladspa
-
 %files -n lv2-%name-plugins
 %_libdir/lv2/*
 
 %changelog
+* Fri Aug 29 2025 Anton Midyukov <antohami@altlinux.org> 0.47.0-alt1
+- new version 0.47.0
+- remove subpackage ladspa-guitarix-plugins
+
 * Fri Jun 09 2023 Anton Midyukov <antohami@altlinux.org> 0.44.1-alt2
 - Add upstream patches for python 3.11 and gcc13 support
 
