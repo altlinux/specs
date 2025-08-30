@@ -1,57 +1,69 @@
-%define _unpackaged_files_terminate_build 1
-%define dist Tk
-Name: perl-%dist
-Version: 804.036
-Release: alt1
+%define        _unpackaged_files_terminate_build 1
+%define        dist tk
+%def_with      xft
 
-Summary: Perl modules providing the Tk graphics library
-License: GPL/Artistic/Tk/Tix
-Group: Development/Perl
+Name:          perl-%dist
+Version:       804.036.28
+Release:       alt0.1
+Summary:       Perl modules providing the Tk graphics library
+License:       Artistic-1.0 or GPL-2.0-or-later
+Group:         Development/Perl
+Url:           %CPAN %dist
+Vcs:           https://github.com/eserte/perl-tk.git
 
-URL: %CPAN %dist
-Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
+Source:        %name-%version.tar
+BuildRequires: perl-devel >= 5.38.4-alt2
+BuildRequires: libXft-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: perl-Devel-Leak
+BuildRequires: perl-Encode
+BuildRequires: imake
+BuildRequires: xprop
+BuildRequires: xvfb-run
+BuildRequires: libXcursor
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: fonts-type1-urw
+
+Provides:      perl-Tk-JPEG
+Obsoletes:     perl-Tk-JPEG
+# provides for demos are useless
+%add_findprov_skiplist %perl_vendor_archlib/Tk/demos/*/*.pl
+%add_findreq_skiplist %perl_vendor_archlib/Tk/demos/widget_lib/*.pl
+%add_findreq_skiplist %perl_vendor_archlib/Tk/demos/widtrib/*.pl
 
 # fix for deparse failure
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MTk'
-
-# provides for demos are useless
-%add_findprov_skiplist %perl_vendor_archlib/Tk/demos/*/*.pl
-
-# demos/widget_lib is a separate library tree
 %define _perl_lib_path %perl_vendor_archlib/Tk/demos/widget_lib
-
-Provides: perl-Tk-JPEG
-Obsoletes: perl-Tk-JPEG
-
-# Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: fonts-ttf-dejavu fonts-type1-urw imake libXcursor libXft-devel libjpeg-devel libpng-devel perl-Devel-Leak perl-Encode perl-devel xprop xvfb-run
 
 %description
 This is a set of Perl modules which provide access to the Tk library,
 a Graphical User Interface ToolKit.
 
-%package devel
-Summary: Perl modules providing the Tk graphics library
-Group: Development/Perl
-Requires: %name = %version-%release
 
-%description devel
+%package       demos
+Summary:       Perl modules providing the Tk graphics library
+Group:         Development/Perl
+Requires:      %name = %EVR
+
+%description   demos
 This is a set of Perl modules which provide access to the Tk library,
 a Graphical User Interface ToolKit.
 
-%package demos
-Summary: Perl modules providing the Tk graphics library
-Group: Development/Perl
-Requires: %name = %version-%release
 
-%description demos
+%package       devel
+Summary:       Perl modules providing the Tk graphics library
+License:       TCL and Artistic-1.0 or GPL-2.0-or-later
+Group:         Development/Perl
+Requires:      %name = %EVR
+
+%description   devel
 This is a set of Perl modules which provide access to the Tk library,
 a Graphical User Interface ToolKit.
+
 
 %prep
-%setup -q -n %dist-%version
-%patch -p1
+%setup -q
 rm -r PNG/zlib/ PNG/libpng/
 
 # font-dependent tests, see README
@@ -70,20 +82,17 @@ mv "$f" "Tk.$f"
 done
 cd -
 
-%build
-%ifndef _build_display
-%def_without test
-%endif
-
-%def_with xft
 %perl_vendor_build %{?_with_xft:XFT=1} X11LIB=%_x11libdir
-xvfb-run -a make test
 
 %install
 %perl_vendor_install
 
+%check
+xvfb-run -a make test
+
+
 %files
-%doc README README.linux Funcs.doc ToDo pTk/*license* Changes README-ActiveState.txt README-Strawberry.txt README.AIX README.HPUX README.IRIX README.OSF README.OpenBSD README.SCO README.SVR4 README.Solaris README.cygwin README.darwin README.os2 README.ultrix examples
+%doc README README.linux Funcs.doc ToDo Changes README-ActiveState.txt README-Strawberry.txt README.AIX README.HPUX README.IRIX README.OSF README.OpenBSD README.SCO README.SVR4 README.Solaris README.cygwin README.darwin README.os2 README.ultrix examples
 	%_bindir/ptked
 	%_bindir/ptksh
 	%_bindir/tkjpeg
@@ -99,6 +108,7 @@ xvfb-run -a make test
 %exclude %perl_vendor_archlib/Tk/MMutil.pm
 
 %files devel
+%doc README README.linux pTk/*license*
 %dir	%perl_vendor_archlib/Tk
 	%perl_vendor_archlib/Tk/pTk*
 	%perl_vendor_archlib/Tk/*.def
@@ -118,7 +128,13 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Tk/demos/widget_lib/
 	%perl_vendor_archlib/Tk/demos/widtrib/
 
+
 %changelog
+* Fri Aug 29 2025 Pavel Skrylev <majioa@altlinux.org> 804.036.28-alt0.1
+- ^ 804.036 -> 804.036p27
+- ! fixed incompatible pointer type compilation error along with others
+    (may be) for gcc14
+
 * Tue Feb 16 2021 Igor Vlasenko <viy@altlinux.ru> 804.036-alt1
 - new version
 

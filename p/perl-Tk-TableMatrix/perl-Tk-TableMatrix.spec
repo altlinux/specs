@@ -2,7 +2,7 @@
 %define dist Tk-TableMatrix
 Name: perl-%dist
 Version: 1.29
-Release: alt1
+Release: alt1.1
 
 Summary: The Tk::TableMatrix Widget
 License: GPL or Artistic
@@ -11,8 +11,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/C/CA/CAC/%{dist}-%{version}.tar.gz
 
-# Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-Tk-devel
+BuildRequires: perl-tk-devel
 
 %description
 Tk::TableMatrix is a table/matrix widget extension to perl/tk
@@ -47,6 +46,9 @@ for displaying data in a table (or spreadsheet) format.
 %perl_vendor_archlib/Tk/pTk
 
 %changelog
+* Sat Aug 30 2025 Pavel Skrylev <majioa@altlinux.org> 1.29-alt1.1
+- !NMU: fixed build dept to devel cpan<tk>
+
 * Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 1.29-alt1
 - automated CPAN update
 
