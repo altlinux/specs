@@ -1,6 +1,6 @@
 Name: gambit-sqlite3
-Version: 1.3.1
-Release: alt2
+Version: 1.3.3
+Release: alt1
 Summary: SQLite3 database library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -19,7 +19,6 @@ SQLite3 database library for Gambit-C Scheme programming system
 Summary: SQLite3 database library link file for Gambit-C Scheme programming system
 Group: Development/Scheme
 Requires: %name = %version-%release
-BuildArch: noarch
 
 %description devel
 SQLite3 database library for Gambit-C Scheme programming system
@@ -41,12 +40,22 @@ This package contains the library link file
 
 %files
 %doc README COPYRIGHT
-%{_libdir}/gambit/*.so
+%{_libdir}/*.so.*
 
 %files devel
 %{_includedir}/gambit/*.c
+%{_libdir}/*.so
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.3.3-alt1
+- Run gsc with -warnings and check for undefined symbols.
+- Fix: Generate an incremental link file.
+- Build so-named library and install it into %_libdir/.
+
+* Thu Aug 28 2025 Paul Wolneykien <manowar@altlinux.org> 1.3.2-alt1
+- Rebuild with a new version of Gambit.
+- Use ___return() instead of ___result.
+
 * Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 1.3.1-alt2
 - Ignore some compilation warnings to fix the build with GCC14.
 - Build with the standard %%optflags.

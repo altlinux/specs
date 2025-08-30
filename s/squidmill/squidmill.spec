@@ -1,6 +1,6 @@
 Name: squidmill
-Version: 2.6.1
-Release: alt3
+Version: 2.7.0
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -11,14 +11,10 @@ License: GPLv3+
 Group: System/Configuration/Other
 
 BuildRequires: gambit-devel
-BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
-BuildRequires: gambit-signal-devel >= 1.1-alt1
-BuildRequires: gambit-dsock-devel >= 1.1-alt1
-BuildRequires: sqlite3 %_bindir/dc gawk
-
-Requires: gambit-sqlite3 >= 1.2-alt7
-Requires: gambit-signal >= 1.1-alt1
-Requires: gambit-dsock >= 1.1-alt1
+BuildRequires: gambit-sqlite3-devel >= 1.3.3-alt1
+BuildRequires: gambit-signal-devel >= 1.2.2-alt1
+BuildRequires: gambit-dsock-devel >= 1.2.2-alt1
+BuildRequires: sqlite3 gawk
 
 %description
 Squidmill daemon acquires and integrates information from the
@@ -35,12 +31,10 @@ save space and reporting time.
 %makeinstall initdir=%buildroot%_initdir unitdir=%buildroot%_unitdir
 
 mkdir -p %buildroot%_var/run/squidmill
-
-install -d  %buildroot/%_tmpfilesdir
-echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.conf
+mkdir -p %buildroot/run/squidmill
 
 %check
-%make check
+PRINT_LOG=1 TEST_COUNT=10 %make check
 
 %preun
 %preun_service squidmill
@@ -48,12 +42,47 @@ echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.c
 %_sbindir/squidmill
 %_initdir/squidmill
 %_unitdir/squidmill.service
-%_tmpfilesdir/squidmill.conf 
 
 %_sysconfdir/sysconfig/squidmill
-%attr(0775, squid, squid) %dir %_var/run/squidmill
+%ghost %dir %_var/run/squidmill
+%ghost %dir /run/squidmill
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 2.7.0-alt2
+- Build without RPATH.
+
+* Thu Aug 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.7.0-alt1
+- Added a special test with no debug messages in daemon log (closes: 30142).
+- Make SysV-init script to remove the socket file on stop (closes: 29894).
+- Also, add support to print the test main log on success (PRINT_LOG_OK).
+- Repeat all tests 10 times when building.
+- Fixed/improved C-interface functions with Gambit 4.9.7.
+- Allow to select tests (RUN_TESTS) and to repeat them (TEST_COUNT).
+- Reworked tests + more tests.
+- Reworked top-level exception handling.
+- Rewrote the file-follow machinery (in the hope it's more stable now).
+
+* Fri Aug 22 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.4-alt1
+- Version 2.6.4.
+- Replace SRFI-1 named getters with list-ref to avoid call
+  to undefined symbols with some versions of Gambit (Fixes:
+  OVE-20250822-0001).
+- Run gsc with -warnings and check for undefined symbols.
+- Fixed the extra log title in test output.
+- Try to improve backtrace on error.
+
+* Thu Aug 21 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.3-alt1
+- Output SQL statements to the log with debug level > 1 only (-D -D).
+- Print test logs on test fail (PRINT_LOG=1).
+- Improved tests.
+
+* Tue Aug 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.2-alt2
+- Make [/var]/run/squidmill a ghost dir.
+
+* Tue Aug 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.2-alt1
+- Use squidmill.service unit to configure some fragile options
+  (closes: 50276, 55654, 29894).
+
 * Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt3
 - Fixed build (drop rpm-macros-fillup).
 

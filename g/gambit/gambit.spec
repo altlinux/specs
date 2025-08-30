@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_with emacs
 
 Name: gambit
-Version: 4.9.4
-Release: alt3
+Version: 4.9.7
+Release: alt4
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -15,16 +14,17 @@ Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Conflicts: ghostscript-minimal < 8.64-alt5
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: listmodules.sh
 
-Patch: gambit-4.9.4-fix-texi-utf-bytes.patch
+Patch0: gambit-4.9.7-fix-executable-path-test.patch
+Patch1: gambit-4.9.5-rm-module-on-error.patch
+Patch2: gambit-4.9.5-moduledir.patch
 
-%if_with emacs
-BuildRequires: emacs-nox
-%endif
 BuildRequires: makeinfo
 BuildPreReq: alternatives
-BuildPreReq: /proc
+
+Requires: %name-modules-C = %version-%release
 
 %description
 Gambit-C includes a Scheme interpreter and a Scheme compiler which can be used
@@ -45,7 +45,7 @@ BuildArch: noarch
 Emacs mode for running Gambit-C
 
 %package docs
-Summary: Gambit-C manuals ang examples
+Summary: Gambit-C manuals and examples
 Group: Development/Documentation
 Requires: gambit = %version-%release
 BuildArch: noarch
@@ -62,10 +62,33 @@ BuildArch: noarch
 %description info
 Gambit-C manual in info format
 
+%package modules
+Summary: Modules for Gambit-C Scheme
+Group: Development/Other
+
+%description modules
+Modules for Gambit-C Scheme (module sources).
+
+%package modules-C
+Summary: Natively precompiled modules for Gambit-C Scheme
+Group: Development/Other
+Requires: %name-modules
+
+%description modules-C
+Natively precompiled modules for Gambit-C Scheme.
+
+%package modules-js
+Summary: Modules for Gambit-C Scheme precompiled to JavaScript
+Group: Development/Other
+Requires: %name-modules
+
+%description modules-js
+Modules for Gambit-C Scheme precompiled to JavaScript.
+
 %package devel
 Summary: Development files for Gambit-C Scheme
 Group: Development/Other
-Requires: gambit = %version-%release
+Requires: %name = %version-%release
 
 %description devel
 Development files for Gambit-C Scheme
@@ -99,7 +122,8 @@ Development files for Gambit Scheme (Python backend)
 %package devel-js
 Summary: Development files for Gambit Scheme (JavaScript backend)
 Group: Development/Other
-Requires: gambit = %version-%release
+Requires: %name = %version-%release
+Requires: %name-modules-js = %version-%release
 Requires: /usr/bin/node
 
 %description devel-js
@@ -138,26 +162,30 @@ Requires: gambit = %version-%release
 %description devel-x86
 Development files for Gambit Scheme (x86 processor family)
 
-# See GAMBCDIR_LIB (doesn't work, TODO)
-#define _libdir %_prefix/%_lib/gambit
+%define moduledir %_libdir/%name
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
 %setup
-%patch -p2
+%patch0 -p1
+%patch1 -p2
+%patch2 -p2
 
 %build
+%autoreconf
+
 %ifarch %e2k
 %add_optflags -D___LITTLE_ENDIAN -D___DONT_USE_builtin_setjmp
 %endif
+
+%add_optflags -O1
 %configure --enable-single-host --enable-shared \
 	   --disable-absolute-shared-libs \
-	   --docdir=%pkgdocdir
+	   --enable-dynamic-clib \
+	   --docdir=%pkgdocdir \
+	   --enable-moduledir=%moduledir \
+	   --enable-trust-c-tco
 %make_build
-
-%if_with emacs
-emacs -q -no-site-file -batch -eval "(byte-compile-file \"misc/gambit.el\")"
-%endif
 
 %install
 %makeinstall_std
@@ -165,13 +193,16 @@ for f in $RPM_BUILD_ROOT%_bindir/scheme-*; do
     mv $f $f-%name
 done
 
-cp -R examples/* %buildroot%pkgdocdir/
-rm -f %buildroot%pkgdocdir/makefile*
-rm -f %buildroot%pkgdocdir/*/makefile*
+mkdir -p %buildroot%pkgdocdir/examples
+cp -R examples/* %buildroot%pkgdocdir/examples/
 
-%if_with emacs
-install -m644 misc/*.el* %buildroot%_emacslispdir/
-%endif
+find %buildroot%moduledir -type d -name 'demo*' | \
+    while read d; do
+	d_path="${d%%/*}"
+	mkdir -p "%buildroot%pkgdocdir/examples/${d_path#%buildroot%moduledir/}"
+	mv -v "$d" \
+	   "%buildroot%pkgdocdir/examples/${d_path#%buildroot%moduledir/}/"
+    done
 
 install -d $RPM_BUILD_ROOT%_altdir
 cat > $RPM_BUILD_ROOT%_altdir/%name <<EOF
@@ -181,23 +212,23 @@ cat > $RPM_BUILD_ROOT%_altdir/%name <<EOF
 %_bindir/scheme-ieee-1178-1990	%_bindir/scheme-ieee-1178-1990-gambit	10
 EOF
 
+%SOURCE1 %buildroot%moduledir module.list
+
 %check
 %make check GAMBOPT=~~lib=../lib
 
 %files
 %_altdir/*
 %_bindir/*-%name
-%_bindir/gsc*
 %_bindir/gsi*
 %_bindir/six*
 %_includedir/*.h
 %_libdir/*.so*
 %_man1dir/*.1.*
+%dir %moduledir
 
-%if_with emacs
 %files -n emacs-gambit
 %_emacslispdir/*
-%endif
 
 %files docs
 %pkgdocdir/
@@ -205,34 +236,15 @@ EOF
 %files info
 %_infodir/*.info*
 
+%files modules -f module.list
+%files modules-C -f c_module.list
+%files modules-js -f js_module.list
+
 %files devel
+%_bindir/gsc*
 %_bindir/gambdoc
 %_bindir/gambuild-C
 %_bindir/gambvcs
-%_libdir/gambit
-%_libdir/scheme
-%_libdir/srfi
-%_libdir/termite
-%exclude %_libdir/_define-library
-%exclude %_libdir/_digest
-%exclude %_libdir/_geiser
-%exclude %_libdir/_git
-%exclude %_libdir/_hamt
-%exclude %_libdir/_http
-%exclude %_libdir/_match
-%exclude %_libdir/_pkg
-%exclude %_libdir/_six
-%exclude %_libdir/_tar
-%exclude %_libdir/_test
-%exclude %_libdir/_uri
-%exclude %_libdir/_zlib
-%_libdir/syntax-case.scm
-%_libdir/_gambit.js
-%_libdir/_gambit.c
-%_libdir/_gambitgsc.c
-%_libdir/_gambitgsi.c
-%exclude %_libdir/*#.scm
-%exclude %_libdir/_*.scm
 
 %files devel-java
 %_bindir/gambuild-java
@@ -261,6 +273,48 @@ EOF
 %_bindir/gambuild-x86-64
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 4.9.7-alt4
+- Extract C-precompiled files into the separate 'modules-C' package.
+- List all module files and directories using a script.
+
+* Fri Aug 29 2025 Paul Wolneykien <manowar@altlinux.org> 4.9.7-alt3
+- Build with --enable-trust-c-tco configure option.
+
+* Fri Aug 29 2025 Paul Wolneykien <manowar@altlinux.org> 4.9.7-alt2
+- Applied 1e6655c upstream fix for executable-path test (thx Marc Feeley).
+
+* Thu Aug 28 2025 Paul Wolneykien <manowar@altlinux.org> 4.9.7-alt1
+- New version 4.9.7.
+- Don't require /proc for building.
+- Disable pre-compilation of the Emacs module.
+- Skip executable-path test as it depends on /proc (patch).
+- Delete unused patches.
+
+* Fri Dec 01 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.5-alt4
+- Move gsc to 'devel' package, extract the 'modules' package and
+  place *.js in 'modules-js' package.
+- Place module demos to examples/ (package 'docs').
+- Add compilation options that seem to workaround compliation
+  of srfi/42.
+- Add `--enable-moduledir=` option and install Gambit modules
+  in %moduledir.
+- Remove AC_LANG(C++) from configure.ac and build with autoreconf.
+- Disable duplicate-var-message patch (needs bootstrap to apply).
+
+* Wed Nov 29 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.5-alt3
+- Make bootstrap in order to compile changes made by
+  gambit-4.9.5-duplicate-var-message.patch.
+- Make the "duplicate pattern variable" message more informative
+  (patch).
+- Switch to build from git.
+- Remove target directory on module compilation error (patch).
+
+* Mon Sep 11 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.5-alt2
+- Remove UTF-8 patch for docs (fixed in upstream).
+
+* Mon Sep 11 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.5-alt1
+- New version 4.9.5.
+
 * Sun Apr 09 2023 Michael Shigorin <mike@altlinux.org> 4.9.4-alt3
 - E2K: update build fix, drop the obsolete patch (ilyakurdyukov@)
 - minor spec cleanup

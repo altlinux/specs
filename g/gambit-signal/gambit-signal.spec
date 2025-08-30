@@ -1,6 +1,6 @@
 Name: gambit-signal
-Version: 1.2
-Release: alt5
+Version: 1.2.2
+Release: alt1
 
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
@@ -17,7 +17,6 @@ UNIX signal handling library for Gambit-C Scheme programming system
 Summary: UNIX signal handling library link file for Gambit-C Scheme programming system
 Group: Development/Scheme
 Requires: %name = %version-%release
-BuildArch: noarch
 
 %description devel
 UNIX signal handling library for Gambit-C Scheme programming system
@@ -45,12 +44,22 @@ make nonblock && ./nonblock
 %make check
 
 %files
-%{_libdir}/gambit/*.so
+%{_libdir}/*.so.*
 
 %files devel
 %{_includedir}/gambit/*.c
+%{_libdir}/*.so
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.2-alt1
+- Build so-named library and install it into %_libdir/.
+- Run gsc with -warnings and check for undefined symbols.
+- Fix: Generate an incremental link file.
+
+* Thu Aug 28 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.1-alt1
+- Rebuild with a new version of Gambit.
+- Use ___return() instead of ___result.
+
 * Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 1.2-alt5
 - Ignore some compilation warnings to fix the build with GCC14.
 - Build with the standard %%optflags.
