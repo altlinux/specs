@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name udisks
 %define api_ver 2.0
@@ -19,8 +19,8 @@
 %def_enable smart
 
 Name: %{_name}2
-Version: 2.10.90
-Release: alt3
+Version: 2.10.91
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -306,6 +306,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Sat Aug 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.91-alt1
+- 2.10.91
+
 * Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt3
 - updated to 2.10.90-86-g1281b41f (ALT #55760)
 - data/builtin_mount_options.conf: set default NTFS driver to ntfs-3g
