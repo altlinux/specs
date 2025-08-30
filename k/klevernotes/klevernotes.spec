@@ -1,8 +1,8 @@
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -50,6 +50,9 @@ tar -xf %SOURCE1 -C po/
 %doc *.md 
 
 %changelog
+* Sat Aug 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.3-alt1
+- 1.2.2 -> 1.2.3 (git.dc88e95b)
+
 * Fri Apr 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt2
 - Created and added russian translate.
 
