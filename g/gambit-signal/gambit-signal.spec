@@ -1,5 +1,5 @@
 Name: gambit-signal
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
@@ -51,6 +51,9 @@ make nonblock && ./nonblock
 %{_libdir}/*.so
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.3-alt1
+- Fixed library symlinks.
+
 * Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.2-alt1
 - Build so-named library and install it into %_libdir/.
 - Run gsc with -warnings and check for undefined symbols.

@@ -1,5 +1,5 @@
 Name: gambit-dsock
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Summary: UNIX domain sockets for Gambit-C Scheme programming system
 License: GPLv3+
@@ -45,6 +45,9 @@ This package contains the library link file
 %{_libdir}/*.so
 
 %changelog
+* Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.3-alt1
+- Fixed library symlinks.
+
 * Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 1.2.2-alt1
 - Run gsc with -warnings and check for undefined symbols.
 - Fix: Generate an incremental link file.
