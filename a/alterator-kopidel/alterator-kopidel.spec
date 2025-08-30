@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -49,6 +49,7 @@ BuildRequires: alterator-fbi
 BuildRequires: bats
 BuildRequires: /proc
 BuildRequires: /dev
+BuildRequires: shellcheck
 %endif
 
 %description
@@ -69,6 +70,7 @@ it on other machines, then you have found what you were looking for!
 
 %check
 %make test
+%make shellcheck
 
 %files
 %_alterator_backend3dir/kopidel
@@ -82,6 +84,12 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Sat Aug 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.2-alt1
+- CLI: Fix /image/Metadata directory creation for external drives.
+- CLI: Implement Ctrl+C interrupt handling.
+- CLI: Fix various typos.
+- Add shellcheck static analysis.
+
 * Wed Aug 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.1-alt1
 - Don't ignore regular files in user home directories by default.
 - Add POSIX Extended regex type support to the list of ignored files.
