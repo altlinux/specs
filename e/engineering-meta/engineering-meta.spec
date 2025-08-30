@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p11
-Release: alt3
+Release: alt4
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -173,7 +173,9 @@ Requires: kicad
 Requires: ktechlab
 #Requires: qucs
 Requires: qucs-s
+%ifarch x86_64
 Requires: simulide
+%endif
 
 %description -n engineering-EDA
 Metapackage for install EDA (Electronic Design Automation)
@@ -210,6 +212,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Sat Aug 30 2025 Anton Midyukov <antohami@altlinux.org> p11-alt4
+- EDA: dependency on simulide for x86_64 only
+
 * Tue Mar 18 2025 Anton Midyukov <antohami@altlinux.org> p11-alt3
 - CAM: remove pycam
 
