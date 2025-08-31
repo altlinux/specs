@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name Adwaita-colors
 %define __name adwaita-colors
-%define ver_major 2.4
+%define ver_major 2.5
 %define beta %nil
 
 %def_disable check
 
 Name: icon-theme-%__name
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1%beta
 
 Summary: Adwaita Colors Icon Theme
@@ -49,6 +49,9 @@ cp -r Adwaita-* %buildroot/%_iconsdir/
 %doc README*
 
 %changelog
+* Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5
+
 * Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
