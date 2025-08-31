@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libiscsi
-Version: 1.20.2
+Version: 1.20.3
 Release: alt1
 
 Summary: iSCSI client library
@@ -65,6 +65,9 @@ The libiscsi-devel package includes the header files for libiscsi.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Aug 30 2025 Vitaly Chikunov <vt@altlinux.org> 1.20.3-alt1
+- Update to 1.20.3 (2025-07-15).
+
 * Fri Jun 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.20.2-alt1
 - NMU: Update to 1.20.2 (2025-05-05).
 
