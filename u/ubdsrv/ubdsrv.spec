@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: ubdsrv
-Version: 1.5
-Release: alt2
+Version: 1.6
+Release: alt1
 Summary: ublk: userspace block device driver
 License: GPL-2.0-only and LGPL-2.1-only and MIT
 Group: System/Kernel and hardware
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # gnutls is unsupported yet: https://github.com/ming1/ubdsrv/issues/59
 BuildRequires: gcc-c++
 BuildRequires: libgnutls-devel
-BuildRequires: libiscsi-devel
+BuildRequires: libiscsi-devel >= 1.20.3
 # BuildRequires: libnfs-devel
 BuildRequires: liburing-devel
 %{?!_without_check:%{?!_disable_check:
@@ -69,7 +69,14 @@ EOF
 
 %files
 %doc COPYING COPYING.LGPL LICENSE README.rst demo_*.c
-%_sbindir/ublk*
+%_sbindir/ublk
+%_sbindir/ublk_chown_docker.sh
+%_sbindir/ublk_chown.sh
+%_sbindir/ublk.iscsi
+%_sbindir/ublk.loop
+%_sbindir/ublk.nbd
+%_sbindir/ublk.null
+%_sbindir/ublk_user_id
 %_libdir/libublksrv.so.0*
 %_man1dir/ublk.1*
 
@@ -79,6 +86,9 @@ EOF
 %_pkgconfigdir/ublksrv.pc
 
 %changelog
+* Sun Aug 31 2025 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
+- Update to v1.6 (2025-08-19).
+
 * Fri Jun 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.5-alt2
 - Enable libiscsi support.
 
