@@ -1,5 +1,5 @@
 Name: kernel-image-6.17
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.16
 %define kernel_base_version	6.17
 %define kernel_sublevel	.0
@@ -612,6 +612,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Aug 31 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt0.rc4
+- Update to v6.17-rc4 (2025-08-31).
+- config: Disable CONFIG_PSI_DEFAULT_DISABLED.
+- config: Build NVME as a module instead of built-in.
+
 * Sun Aug 24 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt0.rc3
 - Update to v6.17-rc3 (2025-08-24).
 - config: Enable CONFIG_SCHED_CLASS_EXT=y.
