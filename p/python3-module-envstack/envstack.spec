@@ -1,7 +1,7 @@
 %define nameD envstack
 
 Name: python3-module-%nameD
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Stacked environment variable management system
@@ -36,6 +36,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Sun Aug 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.2-alt1
+- 0.9.1 -> 0.9.2
+
 * Tue Aug 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.1-alt1
 - 0.9.0 -> 0.9.1
 
