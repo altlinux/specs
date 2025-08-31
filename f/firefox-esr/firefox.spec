@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.10.1
-Release: alt1
+Version: 140.2.0
+Release: alt2
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -27,15 +27,9 @@ ExcludeArch: ppc64le
 Source0: firefox-source.tar
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch003: 0003-bmo-847568-Support-system-harfbuzz.patch
-Patch004: 0004-bmo-847568-Support-system-graphite2.patch
-Patch005: 0005-bmo-1559213-Support-system-av1.patch
-Patch006: 0006-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch007: 0007-ALT-fix-double_t-redefinition.patch
-Patch008: 0008-build-Disable-Werror.patch
-Patch009: 0009-Add-dbus-cflags.patch
-Patch010: 0010-FEDORA-enable-vaapi.patch
+Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch003: 0003-ALT-fix-double_t-redefinition.patch
+Patch004: 0004-build-Disable-Werror.patch
 ### End Patches
 
 Provides: webclient
@@ -63,6 +57,11 @@ BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: lld%llvm_version-devel
+%ifarch armh %{ix86}
+%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
+BuildRequires: gcc
+BuildRequires: gcc-c++
+%endif
 BuildRequires: libstdc++-devel
 BuildRequires: glibc-kernheaders-generic
 BuildRequires: rpm-macros-alternatives
@@ -120,6 +119,7 @@ BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xt)
 BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(zlib)
+
 # Python requires
 BuildRequires: /dev/shm
 BuildRequires: python3-base
@@ -129,6 +129,7 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(configobj)
 # Rust requires
 BuildRequires: /proc
 
@@ -169,14 +170,20 @@ cp -f .rpm/firefox-mozconfig .mozconfig
 tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+%ifnarch armh %{ix86} ppc64le loongarch64
 ac_add_options --enable-linker=lld
-%ifnarch armh
+%endif
+%ifarch %{arm} %{ix86}
+# See linker flags in the build section.
+ac_add_options --enable-linker=bfd
+%endif
+%ifnarch armh %{ix86}
 ac_add_options --enable-lto=thin
 %endif
 %ifarch armh
 ac_add_options --disable-webrtc
 %endif
-%ifarch armh x86_64
+%ifarch armh %{ix86} x86_64
 ac_add_options --disable-elf-hack
 %endif
 %ifarch armh
@@ -228,14 +235,22 @@ MOZ_OPT_FLAGS+=( -DPIC -fPIC -Wl,-z,relro -Wl,-z,now )
 rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
 MOZ_OPT_FLAGS+=( "-Wl,-rpath,$rpath" )
 
+%ifnarch armh %{ix86}
 MOZ_OPT_FLAGS+=( -Wno-unused-command-line-argument )
+%endif
+MOZ_OPT_FLAGS+=( -Wno-error=return-type )
 
 export CFLAGS="${MOZ_OPT_FLAGS[*]}"
 export CXXFLAGS="${MOZ_OPT_FLAGS[*]}"
 
 export MOZ_PARALLEL_BUILD=%build_parallel_jobs
+%ifarch armh %{ix86}
+export CC="gcc"
+export CXX="g++"
+%else
 export CC="clang"
 export CXX="clang++"
+%endif
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
@@ -252,6 +267,16 @@ export MOZ_DEBUG_FLAGS="-g0"
 %endif
 %ifarch armh %ix86
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
+export LLVM_PARALLEL_LINK_JOBS=1
+# See https://lwn.net/Articles/797303/ for linker flags
+# For bfd on i586
+export CXXFLAGS="$CXXFLAGS -Wl,--no-keep-memory -Wl,--reduce-memory-overheads -Wl,--hash-size=1021"
+# Use node optimization
+mkdir -p ~/bin
+echo -e '#!/bin/sh\n/usr/bin/node --max-old-space-size=256 --max-semi-space-size=8 --optimize-for-size --no-opt --single-threaded "$@"' > ~/bin/node
+chmod +x ~/bin/node
+export NODEJS=node
+export BUILD_VERBOSE_LOG=1
 %else
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 %endif
@@ -262,7 +287,27 @@ export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
 export MOZ_APP_REMOTINGNAME="firefox"
 
-python3 ./mach build
+# Do not use desktop notify during build process
+export MOZ_NOSPAM=1
+
+# Don't throw "old profile" dialog box
+export MOZ_ALLOW_DOWNGRADE=1
+
+export NPROCS=%build_parallel_jobs
+# Decrease NPROCS prevents oomkill terror on x86_64
+%ifarch x86_64
+export NPROCS=16
+%endif
+# Build for i586 in less threads
+%ifarch armh %ix86
+export NPROCS=8
+%endif
+
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
+export VERBOSE=1
+export V=1
+python3 ./mach configure
+python3 ./mach build -j $NPROCS -v
 
 while read -r loc; do
 	python3 ./mach build chrome-$loc
@@ -389,6 +434,55 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Aug 30 2025 Andrey Cherepanov <cas@altlinux.org> 140.2.0-alt2
+- Build with gcc and bfd linker on i586.
+
+* Mon Aug 25 2025 Pavel Vasenkov <pav@altlinux.org> 140.2.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-9179 Sandbox escape due to invalid pointer in the Audio/Video: GMP component
+  + CVE-2025-9180 Same-origin policy bypass in the Graphics: Canvas2D component
+  + CVE-2025-9181 Uninitialized memory in the JavaScript Engine component
+  + CVE-2025-9182 Denial-of-service due to out-of-memory in the Graphics: WebRender component
+  + CVE-2025-9183 Spoofing issue in the Address Bar component
+  + CVE-2025-9184 Memory safety bugs fixed in Firefox ESR 140.2, Thunderbird ESR 140.2, Firefox 142 and Thunderbird 142
+  + CVE-2025-9185 Memory safety bugs fixed in Firefox ESR 115.27, Firefox ESR 128.14, Thunderbird ESR 128.14, Firefox ESR 140.2, Thunderbird ESR
+
+* Sat Jul 26 2025 Pavel Vasenkov <pav@altlinux.org> 128.13.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-8027 JavaScript engine only wrote partial return value to stack
+  + CVE-2025-8028 Large branch table could lead to truncated instruction
+  + CVE-2025-8029 javascript: URLs executed on object and embed tags
+  + CVE-2025-8030 Potential user-assisted code execution in "Copy as cURL" command
+  + CVE-2025-8031 Incorrect URL stripping in CSP reports
+  + CVE-2025-8032 XSLT documents could bypass CSP
+  + CVE-2025-8033 Incorrect JavaScript state machine for generators
+  + CVE-2025-8034 Memory safety bugs fixed in Firefox ESR 115.26, Firefox ESR 128.13, Thunderbird ESR 128.13, Firefox ESR 140.1, Thunderbird ESR
+  + CVE-2025-8035 Memory safety bugs fixed in Firefox ESR 128.13, Thunderbird ESR 128.13, Firefox ESR 140.1, Thunderbird ESR 140.1, Firefox 141 and
+
+* Sun Jul 06 2025 Pavel Vasenkov <pav@altlinux.org> 128.12.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-6424 Use-after-free in FontFaceSet
+  + CVE-2025-6425 The WebCompat WebExtension shipped with Firefox exposed a persistent UUID
+  + CVE-2025-6426 No warning when opening executable terminal files on macOS
+  + CVE-2025-6429 Incorrect parsing of URLs could have allowed embedding of youtube.com
+  + CVE-2025-6430 Content-Disposition header ignored when a file is included in an embed or object tag
+
+* Wed Jun 18 2025 Pavel Vasenkov <pav@altlinux.org> 128.11.0-alt1
+- New ESR version.
+- Exclude i586 arch due to idle time limit exceeded
+- Security fixes:
+  + CVE-2025-5283 Double-free in libvpx encoder
+  + CVE-2025-5263 Error handling for script execution was incorrectly isolated from web content
+  + CVE-2025-5264 Potential local code execution in "Copy as cURL command"
+  + CVE-2025-5265 Potential local code execution in "Copy as cURL command"
+  + CVE-2025-5266 Script element events leaked cross-origin resource status
+  + CVE-2025-5267 Clickjacking vulnerability could have led to leaking saved payment card details
+  + CVE-2025-5268 Memory safety bugs fixed in Firefox 139, Thunderbird 139, Firefox ESR 128.11, and Thunderbird 128.11
+  + CVE-2025-5269 Memory safety bug fixed in Firefox ESR 128.11 and Thunderbird 128.11
+
 * Wed May 21 2025 Pavel Vasenkov <pav@altlinux.org> 128.10.1-alt1
 - New ESR version.
 - Security fixes:
