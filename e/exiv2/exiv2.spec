@@ -13,7 +13,7 @@
 %endif
 
 Name: exiv2
-Version: 0.28.6
+Version: 0.28.7
 Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
@@ -21,10 +21,11 @@ License: GPL-2.0-or-later
 Group: Graphics
 Url: http://www.exiv2.org
 
+Vcs: https://github.com/Exiv2/exiv2.git
+
 %if_disabled snapshot
 Source: https://github.com/Exiv2/%name/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/Exiv2/exiv2.git
 Source: %name-%version.tar
 %endif
 Requires: lib%name = %EVR
@@ -101,6 +102,9 @@ exiv2 library.
 
 
 %changelog
+* Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.28.7-alt1
+- 0.28.7
+
 * Sat Aug 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.28.6-alt1
 - 0.28.6 (fixed CVE-2025-54080, CVE-2025-55304)
 
