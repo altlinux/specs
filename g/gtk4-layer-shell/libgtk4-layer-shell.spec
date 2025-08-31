@@ -6,7 +6,7 @@
 %def_enable examples
 
 Name: gtk4-layer-shell
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 License: MIT
 
@@ -163,6 +163,9 @@ Requires: lib%name%soversion = %EVR
 %endif
 
 %changelog
+* Sun Aug 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Sun Mar 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 - renamed source package to gtk4-layer-shell according upstream
