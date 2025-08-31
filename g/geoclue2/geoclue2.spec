@@ -1,11 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name geoclue
 %define xdg_name org.freedesktop.GeoClue2
-%define ver_major 2.7
+%define ver_major 2.8
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
+%def_enable wifi
+# default-wifi-url=https://api.beacondb.net/v1/geolocate
 %def_enable 3g
 %def_enable nmea
 %def_enable gtk_doc
@@ -14,8 +16,8 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
@@ -126,6 +128,7 @@ rm -f demo/*.desktop.in
 %meson \
     -Ddbus-srv-user=%_name \
     %{subst_enable_meson_bool nmea nmea-source} \
+    %{subst_enable_meson_bool wifi wifi-source} \
     %{subst_enable_meson_bool 3g 3g-source} \
     %{subst_enable_meson_bool gtk_doc gtk-doc} \
     %{subst_enable_meson_bool introspection introspection} \
@@ -141,13 +144,6 @@ mkdir -p %buildroot%_sysconfdir/%_name/conf.d
 echo 'd %_localstatedir/%_name 0755 %_name %_name' | \
 install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 
-cat > %buildroot%_sysconfdir/%_name/conf.d/20-beacondb.conf << _EOF_
-# https://beacondb.net & https://beacondb.net/map
-[wifi]
-enable=true
-url=https://api.beacondb.net/v1/geolocate
-_EOF_
-
 %check
 %__meson_test
 
@@ -159,7 +155,7 @@ _EOF_
 %files
 %_libexecdir/%_name
 %dir %_sysconfdir/%_name/conf.d
-%_sysconfdir/%_name/conf.d/20-beacondb.conf
+#%_sysconfdir/%_name/conf.d/20-beacondb.conf
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/dbus-1/system.d/%xdg_name.Agent.conf
 %_datadir/dbus-1/interfaces/%xdg_name.Agent.xml
@@ -173,6 +169,7 @@ _EOF_
 %config %_sysconfdir/%_name/%_name.conf
 %attr(755,%_name,%_name) %dir %_localstatedir/%_name
 %_tmpfilesdir/%_name.conf
+%_sysusersdir/%_name-sysusers.conf
 %_man5dir/%_name.5*
 %doc README* NEWS
 
@@ -211,6 +208,10 @@ _EOF_
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+- removed separate config for beacondb.net
+
 * Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt2
 - 2.7.2-19-gca898d5 (adapted for BeaconDB)
 - added config for beacondb.net

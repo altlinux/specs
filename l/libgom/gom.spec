@@ -9,13 +9,14 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A GObject to SQLite object mapper
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Gom
+
 Vcs: https://gitlab.gnome.org/GNOME/gom.git
 
 %if_disabled snapshot
@@ -116,6 +117,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- 0.5.4
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
