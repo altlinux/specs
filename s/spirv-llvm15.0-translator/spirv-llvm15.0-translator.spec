@@ -1,8 +1,9 @@
 %define llvmversion 15
+%define git bef3fbc4
 
 Name: spirv-llvm%llvmversion.0-translator
-Version: 15.0.12
-Release: alt1
+Version: 15.0.15
+Release: alt1.g%{git}
 
 Summary: LLVM 15 to SPIRV Translator
 License: NCSA
@@ -92,5 +93,8 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.15-alt1.gbef3fbc4
+- 15.0.15 GIT bef3fbc4 (for latest IGC).
+
 * Tue May 13 2025 Andrey Kovalev <ded@altlinux.org> 15.0.12-alt1
 - initial build for ALT Sisyphus

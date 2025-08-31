@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt8
+Release: alt9
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -113,6 +113,27 @@ Patch103: clang-15-alt-rocm-device-libs-path.patch
 Patch104: clang-alt-nvvm-libdevice.patch
 # use DWARF4 by default
 Patch200: clang-produce-DWARF4-by-default.patch
+
+# intel graphics compiler patches
+# https://github.com/intel/intel-graphics-compiler/tree/master/external/llvm/releases/15.0.0/patches_external
+Patch300: intel-IGC-0001-SCEV-Cache-ZExt-SCEV-expressions.patch
+Patch301: intel-IGC-0002-SCEV-Cache-ZExt-SCEV-expressions.patch
+Patch302: intel-IGC-0003-SCEV-Cache-ZExt-SCEV-expressions.patch
+Patch303: intel-IGC-0004-SCEV-Cache-ZExt-SCEV-expressions.patch
+Patch304: intel-IGC-0005-SCEV-Cache-ZExt-SCEV-expressions.patch
+Patch305: intel-IGC-alter-unroll-max-upperbound-command-line-option-value.patch
+Patch306: intel-IGC-Backport-When-creating-a-stack-space-for-inlined-byv.patch
+Patch307: intel-IGC-check-for-NaN-before-folding-select-for-FP.patch
+Patch308: intel-IGC-Don-t-emit-bitreverse-or-bswap-intrinsics-of-illegal.patch
+Patch309: intel-IGC-fix_DebugTypeInfoRemoval-remap_eval-ambiguity.patch
+Patch310: intel-IGC-InstCombine-Only-fold-bitcast-fptrunc-if-destination.patch
+Patch311: intel-IGC-LowerSwitch-RemoveUnreachableBBs.patch
+Patch312: intel-IGC-make-getPreviousDefRecursive-iterative.patch
+Patch313: intel-IGC-no-autoupgrader-igc-struct-typed-intrinsic.patch
+Patch314: intel-IGC-no-extra-BBs-in-JumpThreading-pass.patch
+Patch315: intel-IGC-no-instcombine-code-sinking.patch
+Patch316: intel-IGC-Remove-too-strict-restrictions-in-LICM-pass.patch
+Patch317: intel-IGC-unify-max-alignment-with-generic-max.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -633,6 +654,28 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch103 -p1 -b .clang-rocm-device-libs-path
 %patch104 -p1 -b .clang-libdevice-fix-path
 %patch200 -p1
+
+# IGC patches
+%ifarch x86_64
+%patch300 -p1
+%patch301 -p1
+%patch302 -p1
+%patch303 -p1
+%patch304 -p1
+%patch305 -p1
+%patch306 -p1
+%patch307 -p1
+%patch308 -p1
+%patch309 -p1
+%patch310 -p1
+%patch311 -p1
+%patch312 -p1
+%patch313 -p1
+%patch314 -p1
+%patch315 -p1
+%patch316 -p1
+%patch317 -p1
+%endif
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1203,6 +1246,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt9
+- x86_64: Added IGC patches to match IGC requirements.
+
 * Mon Feb 12 2024 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt8
 - backport fix from llvm17.0:
   clang: fix wrong -print-runtime-dir on %%ix86.

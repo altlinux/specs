@@ -2,8 +2,11 @@
 # LTO will be checked during configuration
 %define optflags_lto %nil
 
+%define igc_version 2.16.0
+%define libze_version 1.23.1
+
 Name: intel-compute-runtime
-Version: 25.22.33944.9
+Version: 25.31.34666.3
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -16,15 +19,15 @@ Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
 BuildRequires: gcc-c++ libstdc++-devel
-BuildRequires: libigdfcl-devel
-BuildRequires: libigc-devel
+BuildRequires: libigdfcl-devel >= %igc_version
+BuildRequires: libigc-devel >= %igc_version
 BuildRequires: intel-gmmlib-devel
 BuildRequires: libva-devel
 BuildRequires: libdrm-devel
 BuildRequires: libglvnd-devel
 BuildRequires: ocl-icd-devel
 BuildRequires: opencl-headers
-BuildRequires: libze-devel
+BuildRequires: libze-devel >= %libze_version
 
 ExclusiveArch: x86_64
 
@@ -125,6 +128,10 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %_includedir/ocloc_api.h
 
 %changelog
+* Thu Aug 28 2025 L.A. Kostis <lakostis@altlinux.ru> 25.31.34666.3-alt1
+- Updated to upstream version 25.31.34666.3.
+- Pin igc/libze version requirements.
+
 * Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 25.22.33944.9-alt1
 - Updated to upstream version 25.22.33944.9.
 - ocloc: build unversioned.

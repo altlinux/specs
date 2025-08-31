@@ -23,7 +23,7 @@
 %global clang_default_name clang%_llvm_version
 %global lld_default_name lld%_llvm_version
 
-%global llvm_prefix %_prefix/lib/llvm-%proj
+%global llvm_prefix %prefix/lib/llvm-%proj
 %global llvm_bindir %llvm_prefix/bin
 %global llvm_libdir %llvm_prefix/%_lib
 %global llvm_includedir %llvm_prefix/include
@@ -46,25 +46,25 @@
 %def_without jit
 %def_disable tests
 
-%define tarversion 2025-WW13
-%define ur_version 0.11.10
-%define mp11_version 1.86.0
-%define vci_version 0.22.1
+%define tarversion v6.2.0
 %define mversion %version
 
 Name: %llvm_name
-Version: 2025.03.25
+Version: 6.2.0
 Release: alt0.1
+Epoch: 1
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 # Source-URL: https://github.com/intel/llvm/archive/refs/tags/%tarversion.tar.gz
 Url: https://github.com/intel/llvm.git
-Source0: llvm-project-%{version}.tar
-Source1: mp11-boost-%mp11_version.tar
-Source2: emhash.tar
-Source3: parallel-hashmap.tar
-Source4: vc-intrinsics-%vci_version.tar
+Source0: llvm-project-%version.tar
+# vc-intrinsics https://github.com/intel/vc-intrinsics
+# 4e51b2467104a257c22788e343dafbdde72e28bb
+# vc-i is highly coupled with llvm so we can't use system one.
+Source1: vc-intrinsics.tar
+# compute-runtime headers (25.05.32567.17)
+Source2: compute-runtime.tar
 
 # ALTLinux patches
 Patch1: clang-alt-triple.patch
@@ -80,15 +80,15 @@ Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.pa
 
 # ALTLinux/DPC++ specific patches
 Patch100: dpc-opencl-alt-use-system-cl-libs.patch
-Patch101: sycl-alt-do-not-hardcode-cl-lib.patch
-Patch102: sycl-alt-remove-cl-headers.patch
-Patch103: clang-sycl-fix-arl-ocloc-name.patch
-Patch104: dpcpp-boost-debloat.patch
-Patch105: sycl-ir-system-vc-intrinsics.patch
-Patch106: sycl-use-system-umf.patch
-# unified-runtime patches
-Patch200: ur-use-system-lz-cr.patch
-
+Patch101: xptifw-alt-use-system-phm.patch
+Patch102: sycl-alt-do-not-hardcode-cl-lib.patch
+Patch103: ur-l0-remove-ext-semaphores-19835.patch
+Patch104: sycl-alt-remove-cl-headers.patch
+# https://github.com/KhronosGroup/SPIRV-LLVM-Translator/issues/3217
+Patch105: llvm-spirv-fix-spirv-present-result.patch
+Patch106: clang-sycl-fix-arl-ocloc-name.patch
+Patch109: sycl-use-system-umf.patch
+Patch110: llvm-fix-dylib-deps.patch
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
 %set_verify_elf_method lint=skip
@@ -107,10 +107,10 @@ BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: zip zlib-devel binutils-devel ninja-build libzstd-devel-static
 
 # DPCPP specific requires
-BuildRequires: gdb libhwloc-devel libbacktrace-devel
+BuildRequires: gdb libhwloc-devel libbacktrace-devel emhash-devel
 BuildRequires: ocl-icd-devel libtbb-devel spirv-tools libspirv-tools-devel
-BuildRequires: libvulkan-devel spirv-headers >= 1.5.5-alt17 glslang glslc
-BuildRequires: libumf-devel libze-intel-gpu-devel libze-devel
+BuildRequires: libvulkan-devel spirv-headers >= 1.5.5-alt17 glslang glslc libze-devel
+BuildRequires: libumf-devel parallel-hashmap-devel
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel
 %else
@@ -470,7 +470,7 @@ Requires: %libclc_name = %EVR
 %libclc_name library and headers
 
 %prep
-%setup -n llvm-project-%{version} -a1 -a2 -a3 -a4
+%setup -n llvm-project-%version -a1 -a2
 %patch1 -p1 -b .alt-triple
 #%%patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
@@ -485,13 +485,16 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch17 -p2
 
 %patch100 -p1
-%patch101 -p1
+%patch101 -p2 -b .xptifw-use-system-phm
 %patch102 -p1
-%patch103 -p1
-%patch104 -p2
-#%%patch105 -p2 -b .system-vc-intrinsics
-%patch106 -p2
-%patch200 -p2
+%patch103 -p2 -b .ur-remove-ext-semaphores
+%patch104 -p1 -b .sycl-alt-remove-cl-headers
+pushd llvm-spirv
+%patch105 -p1 -b .llvm-spirv
+popd
+%patch106 -p1
+%patch109 -p2
+%patch110 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -505,11 +508,6 @@ export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
-# ppc64le build consumes more than 128Gb with
-# 64 workers?
-%ifarch ppc64le
-export NPROCS=48
-%endif
 %define builddir %_cmake__builddir
 
 # try recommended way first
@@ -522,9 +520,6 @@ export CXX=clang++
 export CUDA_LIB_PATH=%_libdir/stubs
 %endif
 export PWD=$(pwd)
-mkdir -p %builddir/_deps
-[ -d emhash ] && mv emhash %builddir/_deps/emhash-headers-src
-[ -d parallel-hashmap ] && mv parallel-hashmap %builddir/_deps/parallel-hashmap-src
 %_bindir/python3 ./buildbot/configure.py \
 	-o "%_cmake__builddir" \
 	--l0-headers %_includedir/level_zero \
@@ -548,8 +543,8 @@ mkdir -p %builddir/_deps
 	--cmake-opt="-DUR_HIP_ROCM_DIR=%prefix" \
 	--cmake-opt="-DUR_HIP_LIB_DIR=%_libdir" \
 %endif
+	--cmake-opt="-DLLVM_LINK_LLVM_DYLIB=ON" \
 	--cmake-opt="-DLLVM_ENABLE_RTTI=ON" \
-	--cmake-opt="-DLLVM_BUILD_LLVM_DYLIB:BOOL=ON" \
 	--cmake-opt="-DCMAKE_C_FLAGS:STRING='%optflags'" \
 	--cmake-opt="-DCMAKE_CXX_FLAGS:STRING='%optflags'" \
 	--cmake-opt="-DCMAKE_INSTALL_PREFIX=%llvm_prefix" \
@@ -561,23 +556,26 @@ mkdir -p %builddir/_deps
 	--cmake-opt="-DPACKAGE_VENDOR=%vendor" \
 	--cmake-opt="-DPYTHON_EXECUTABLE=%_bindir/python3" \
 	--cmake-opt="-DLLVM_BINUTILS_INCDIR=%_includedir/bfd" \
-	--cmake-opt="-DSYCL_UR_USE_FETCH_CONTENT=OFF" \
-	--cmake-opt="-DLLVMGenXIntrinsics_SOURCE_DIR=$PWD/vc-intrinsics-%vci_version" \
 	--cmake-opt="-DFETCHCONTENT_FULLY_DISCONNECTED=ON" \
-	--cmake-opt="-DSYCL_UR_SOURCE_DIR=$PWD/unified-runtime" \
 	--cmake-opt="-DUR_OPENCL_INCLUDE_DIR=%_includedir" \
 	--cmake-opt="-DUR_USE_EXTERNAL_UMF=ON" \
-	--cmake-opt="-DCOMPUTE_RUNTIME_LEVEL_ZERO_INCLUDE=%_includedir/level_zero" \
+	--cmake-opt="-DUR_LEVEL_ZERO_INCLUDE_DIR=%_includedir/level_zero" \
+	--cmake-opt="-DL0_COMPUTE_RUNTIME_HEADERS=$PWD/compute-runtime" \
 	--cmake-opt="-DOpenCL_INCLUDE_DIR=%_includedir" \
-	--cmake-opt="-DBOOST_MP11_SOURCE_DIR=$PWD/mp11-boost-%mp11_version" \
 	--cmake-opt="-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=%_includedir" \
+	--cmake-opt="-DSYCL_EMHASH_DIR=%_includedir" \
+	--cmake-opt="-DXPTIFW_PHM_DIR=%_includedir" \
+	--cmake-opt="-DLLVMGenXIntrinsics_SOURCE_DIR=$PWD/vc-intrinsics" \
+	--cmake-opt="-DLLVMGenXIntrinsics_INCLUDE_DIR=$PWD/vc-intrinsics/GenXIntrinsics/include" \
+	--cmake-opt="-DLLVM_INCLUDE_UTILS=ON" \
+	--cmake-opt="-DLLVM_INSTALL_UTILS=OFF" \
+	--cmake-opt="-DNATIVECPU_USE_OCK=OFF" \
+	--cmake-opt="-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=SPIRV" \
 	%nil
 
-# compile and deploy are the same target :(
-#DESTDIR=%buildroot \
-#%_bindir/python3 ./buildbot/compile.py -j $NPROCS -v -o x86_64-alt-linux
-export LD_LIBRARY_PATH=$(pwd)/%builddir/%_lib
-ninja -vvv -j $NPROCS -C %builddir
+%_bindir/python3 ./buildbot/compile.py -j $NPROCS -v -o x86_64-alt-linux -t sycl-toolchain
+#export LD_LIBRARY_PATH=$(pwd)/%builddir/%_lib
+#ninja -vvv -j $NPROCS -C %builddir
 
 %install
 DESTDIR=%buildroot ninja -C %builddir install
@@ -624,7 +622,7 @@ mv %buildroot%llvm_libdir/*.py %buildroot%_datadir/gdb/python/
 # Symlink sonamed shared libraries in %llvm_prefix/%_libdir to %_libdir.
 mkdir -p %buildroot%_libdir
 find %buildroot%llvm_libdir/*.so* -type f,l \
-	| grep -E '^%buildroot%llvm_libdir/.*(%v_major|libur|libumf|libsycl\.|libsycl\-preview|libxptifw)' | sort | tee %_tmppath/shared-objects \
+	| grep -E '^%buildroot%llvm_libdir/.*(%v_major|libur|libsycl\.|libsycl\-preview|libxptifw)' | sort | tee %_tmppath/shared-objects \
 	| sed 's)%llvm_libdir)%_libdir)' > %_tmppath/shared-object-links
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
@@ -660,7 +658,7 @@ $1 ~ "bin" { print "%llvm_bindir/" $2; print "%_bindir/" $2 "-%proj"; }
 # cleanup
 rm -rf %buildroot%llvm_includedir/{CL,LLVMSPIRVLib,.clang-format}
 rm -rf %buildroot%llvm_libdir/pkgconfig
-rm -rf %buildroot%llvm_docdir/{LLVM/examples,umf}
+rm -rf %buildroot%llvm_docdir/{LLVM/examples}
 
 # Emit executable list for %name.
 emit_filelist >%_tmppath/dyn-files-%name <<EOExecutableList
@@ -885,7 +883,6 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %llvm_libdir/clang
 
 %files -n %clang_name-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
-
 %files -n %clang_name-devel
 %llvm_includedir/clang
 %llvm_includedir/clang-c
@@ -1008,6 +1005,16 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Mon Aug 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1:6.2.0-alt0.1
+- Initial build of 6.2.0:
+  + llvm-project: update to stable 6.2.0
+  + vc-intinsics: update to 4e51b2467104a257c22788e343dafbdde72e28bb
+  + compute-runtime: ship special version for dpcpp
+  + update/rediffed -alt patches
+  + remove unneeded patches/sources
+  + llvm-spirv: Fix LLVM_SPIRV_BACKEND_TARGET_PRESENT detection
+  + build with system umf, emhash and parallel-hashmap.
+
 * Thu May 01 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.03.25-alt0.1
 - New snapshot (2025-WW13):
   + clang: enable RTTI
@@ -1018,8 +1025,15 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
   + libclang/libclang-cpp: rename to avoid clash with future
     llvm versions.
 
-* Fri Apr 25 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.5
-- clang/sycl: fix ARL ocloc name (it's xe_lpgplus family).
+* Mon Apr 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1:6.0.1-alt0.1
+- Downgrade to stable 6.0.1 (previous version had too many problems).
+- Applied patches:
+  + sycl: backport zstd support (patch from blender);
+  + sycl: decrease boost modules usage (patch from blender);
+  + clang/sycl: fix Arc/T130 device name/family.
+  + sycl: use system vc-intrisics.
+  + sycl: downgrade unified-runtime to 0.10.15.
+  + sycl: update unified-memory-framework to 0.11.0.
 
 * Sat Mar 15 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.4
 - Enable zstd support (for --offload-compress).

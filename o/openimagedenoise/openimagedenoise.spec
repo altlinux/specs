@@ -5,7 +5,7 @@
 
 %ifarch x86_64
 %def_with cuda
-%def_with oneapi
+%def_without oneapi
 %filter_from_requires /libcudart\.so\.12/d
 %else
 %def_without cuda
@@ -18,7 +18,7 @@
 
 Name: openimagedenoise
 Version: 2.3.3
-Release: alt3
+Release: alt5
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -32,6 +32,9 @@ Patch: oidn-alt-aarch64-cuda-glibc-fix.patch
 Patch1: blender-sycl-add-more-ids.patch
 # introduced in https://github.com/intel/llvm/pull/15798
 Patch2: sycl-fix-deprecated-warning.patch
+# gfx1031 is identical to gfx1030
+Patch3: oidn-alt-rocm-add-gfx1031.patch
+Patch4: oidn-alt-no-fortify-again.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: python3
@@ -44,7 +47,7 @@ BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-r
 %if_with oneapi
 # FIXME  sycl code doesn't support LTO?
 %define optflags_lto %nil
-BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel
+BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel opencl-headers
 %endif
 %if_with cuda
 BuildRequires: nvidia-cuda-devel >= 12.8 nvidia-cuda-devel-static
@@ -118,6 +121,8 @@ EOF
 %endif
 %patch1 -p1
 %patch2 -p2
+#%%patch3 -p2
+%patch4 -p2
 
 %build
 %if_with hip
@@ -142,13 +147,6 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DCMAKE_BUILD_TYPE=%build_type \
 	-DCMAKE_STRIP:STRING=""
 	%nil
-%if_with oneapi
-# https://bugzilla.altlinux.org/54416
-export NPROCS="%__nprocs"
-if [ "$NPROCS" -gt 4 ]; then
-	export NPROCS=4
-fi
-%endif
 %cmake_build
 
 %install
@@ -202,6 +200,13 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt5
+- Disable sycl (can't reliably compile).
+- Added patch to fix already enabled FORTIFY_SOURCE warning.
+
+* Fri Jul 18 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt4
+- (WIP) hip/device: enabled gfx1031.
+
 * Wed Jun 18 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt3
 - oneapi: limit nprocs to 4 to fix intermittent build failures
   (closes #54416).
