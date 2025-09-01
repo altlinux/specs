@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.0.26
+Version: 0.0.27
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -19,12 +19,8 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
-Requires(pre): %_sbindir/setcap
-Requires: rpm-build
-Requires: bindfs
-
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
-BuildRequires: rpm-build-golang git
+BuildRequires: rpm-build-golang
 
 %description
 Stapler is a universal package build and management system for Linux 
@@ -48,9 +44,6 @@ not in its repositories.
 %_sbindir/groupadd -r -f %builder_user
 %_sbindir/useradd -M -r -d %_cachedir/%name -s /sbin/nologin -c "Stapler Builder" -g %builder_group %builder_user >/dev/null 2>&1 ||:
 
-%post
-%_sbindir/setcap cap_setuid,cap_setgid+ep %_bindir/%name
-
 %files
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
@@ -63,6 +56,9 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Sat Aug 30 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.27-alt1
+- New version 0.0.27.
+
 * Fri Jul 18 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.26-alt1
 - Initial build.
 
