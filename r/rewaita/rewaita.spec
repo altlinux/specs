@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name rewaita
 %define __name Rewaita
@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: GNOME colors customizer
@@ -44,7 +44,7 @@ Rewaita gives your Adwaita apps a fresh look by tinting them with
 popular color schemes.
 
 %prep
-%setup -n %{?_disable_snapshot:%_name}%{?_enable_snapshot:%__name}-%version
+%setup -n %__name-%version
 
 %build
 %meson
@@ -68,5 +68,8 @@ popular color schemes.
 %doc README.*
 
 %changelog
+* Mon Sep 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Sun Aug 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - first build for Sisyphus (v1.0.5-8-gd1f06f3)
