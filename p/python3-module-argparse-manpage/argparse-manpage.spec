@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.6
-Release: alt2
+Version: 4.7
+Release: alt1
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
@@ -15,9 +15,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-# distutils was removed in python 3.12
-%filter_from_requires /python3(distutils\(\..*\)\?)/d
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -72,6 +72,9 @@ mv %buildroot%_bindir/argparse-manpage{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 01 2025 Stanislav Levin <slev@altlinux.org> 4.7-alt1
+- 4.6 -> 4.7.
+
 * Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 4.6-alt2
 - fixed FTBFS (setuptools 78.0.0).
 
