@@ -1,7 +1,7 @@
 %define soversion 0
 
 Name: igsc
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 Summary: Graphics System Controller Firmware Update Library
 License: MIT
@@ -9,7 +9,6 @@ Group: System/Libraries
 URL: https://github.com/intel/igsc
 
 Source: %name-%version.tar
-Patch: %name-alt-cmake-fix.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc gcc-c++ libmetee-devel libudev-devel
@@ -41,7 +40,6 @@ lib%name development libraries and headers.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake
@@ -62,6 +60,9 @@ lib%name development libraries and headers.
 %_includedir/*.h
 
 %changelog
+* Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 0.9.6-alt1
+- 0.9.6.
+
 * Fri Jan 31 2025 L.A. Kostis <lakostis@altlinux.ru> 0.9.5-alt1
 - Initial build for ALTlinux.
 

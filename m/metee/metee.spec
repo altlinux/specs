@@ -1,7 +1,7 @@
-%define soversion 4
+%define soversion 6
 
 Name: metee
-Version: 4.3.1
+Version: 6.0.0
 Release: alt1
 Summary: ME TEE Interface Library
 License: MIT
@@ -56,6 +56,9 @@ lib%name development libraries and headers.
 %_includedir/%name.h
 
 %changelog
+* Fri Jun 20 2025 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt1
+- 6.0.0.
+
 * Fri Jan 31 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.1-alt1
 - Initial build for ALTLinux.
 
