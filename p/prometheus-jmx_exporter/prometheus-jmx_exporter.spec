@@ -1,6 +1,6 @@
 Name:    prometheus-jmx_exporter
 Version: 1.0.1
-Release: alt4
+Release: alt5
 Summary: A process for exposing JMX Beans via HTTP for Prometheus consumption
 
 Group:   Development/Java
@@ -19,6 +19,7 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: maven-plugin-registry
 BuildRequires: maven-profile
 BuildRequires: maven-shade-plugin
+BuildRequires: mvn(org.apache.ant:ant)
 
 ExcludeArch: %ix86 armh
 
@@ -55,6 +56,9 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-jmx_exporter.pom
 %_mavenpomdir/*
 
 %changelog
+* Mon Sep 01 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt5
+- Build with mvn(org.apache.ant:ant).
+
 * Mon Sep 01 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt4
 - FTBFS: build without javadoc.
 
