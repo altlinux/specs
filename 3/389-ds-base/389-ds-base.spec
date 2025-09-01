@@ -18,7 +18,7 @@
 
 Name: 389-ds-base
 Version: 3.1.3
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -428,6 +428,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 01 2025 Stanislav Levin <slev@altlinux.org> 3.1.3-alt2
+- Fixed FTBFS (rust 1.89).
+
 * Mon Jun 30 2025 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1
 - 3.1.2 -> 3.1.3.
 
