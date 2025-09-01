@@ -2,7 +2,7 @@
 %global import_path code.forgejo.org/forgejo/runner/v9
 
 Name: forgejo-runner
-Version: 9.0.3
+Version: 10.0.0
 Release: alt1
 
 Summary: Forgejo Runner
@@ -99,6 +99,9 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Mon Sep 01 2025 Alexey Shabalin <shaba@altlinux.org> 10.0.0-alt1
+- New version 10.0.0.
+
 * Tue Aug 12 2025 Alexey Shabalin <shaba@altlinux.org> 9.0.3-alt1
 - New version 9.0.3.
 

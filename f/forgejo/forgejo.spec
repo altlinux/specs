@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 11.0.3
+Version: 11.0.4
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -19,7 +19,7 @@ Source3: %name.service.d.conf
 Patch100: 8475.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: golang >= 1.24.3 rpm-build-golang
+BuildRequires: golang >= 1.24.6 rpm-build-golang
 BuildRequires: libpam-devel
 #BuildRequires: npm node >= 18.0.0
 BuildRequires: /proc
@@ -113,6 +113,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Sep 01 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.4-alt1
+- 11.0.4.
+
 * Fri Jul 18 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.3-alt1
 - 11.0.3.
 - Backport: several fixes of ALT Package registry.
