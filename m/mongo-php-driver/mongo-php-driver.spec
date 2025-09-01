@@ -2,20 +2,20 @@
 
 Name: mongo-php-driver
 Version: 2.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: MongoDB driver for PHP
 
 License: Apache-2.0
 Group: Development/Other
 Url: https://pecl.php.net/package/mongodb
-VCS: https://github.com/mongodb/mongo-php-driver.git
+VCS: https://github.com/mongodb/mongo-php-driver
 
 # Source-url: https://github.com/mongodb/mongo-php-driver/archive/%version/mongo-php-driver-%version.tar.gz
 Source: php-%php_extension-%version.tar.gz
 Patch: php-%php_extension-%version-alt.patch
 
-BuildRequires(pre): rpm-build-php8.4-version
+BuildRequires(pre): rpm-build-php-version
 BuildRequires: libbson-devel libmongoc-devel libmongocrypt-devel
 BuildRequires: php-devel = %php_version
 
@@ -90,5 +90,8 @@ EOF
 %php_extdir/mongodb.so
 
 %changelog
+* Mon Sep 01 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt1.1
+- Packaged as a more universal php package.
+
 * Tue Aug 12 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt1
 - Initial build for ALT Sisyphus.
