@@ -5,12 +5,12 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.13.4
+Version: 4.13.5
 Release: alt1
 Summary: Screen-scraping library
 License: MIT
 Group: Development/Python3
-Url: http://www.crummy.com/software/BeautifulSoup/
+Url: https://pypi.org/project/beautifulsoup4/
 Vcs: https://git.launchpad.net/beautifulsoup
 BuildArch: noarch
 Source: %name-%version.tar
@@ -53,7 +53,6 @@ screen-scraping. Three features make it powerful:
 
 %install
 %pyproject_install
-rm -rv %buildroot%python3_sitelibdir/%mod_name/tests
 
 %check
 %pyproject_run_pytest -vra
@@ -64,6 +63,9 @@ rm -rv %buildroot%python3_sitelibdir/%mod_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 01 2025 Stanislav Levin <slev@altlinux.org> 4.13.5-alt1
+- 4.13.4 -> 4.13.5.
+
 * Wed Apr 16 2025 Stanislav Levin <slev@altlinux.org> 4.13.4-alt1
 - 4.13.3 -> 4.13.4.
 
