@@ -1,6 +1,9 @@
+#Variable for pyproject_distinfo
+%define nameP zxing_cpp
+
 Name:     zxing-cpp
 Version:  2.3.0
-Release:  alt3
+Release:  alt4
 
 Summary:  C++ port of ZXing
 License:  Apache-2.0
@@ -10,12 +13,18 @@ Url:      https://github.com/zxing-cpp/zxing-cpp
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source1: libzint.tar
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libfmt-devel
 BuildRequires: libstb-devel
+BuildRequires: python3-module-setuptools 
+BuildRequires: python3-module-wheel
+BuildRequires: libopencv-devel
+BuildRequires: pybind11-devel
 
 %description
 ZXing-C++ ("zebra crossing") is an open-source, multi-format 1D/2D barcode
@@ -42,6 +51,13 @@ Group: Development/C++
 %description -n lib%name-devel
 Development files for lib%name.
 
+%package -n python3-module-%name
+Summary: C++ port of ZXing (python3 module)
+Group: Development/Python3
+
+%description -n python3-module-%name
+Python3 module for %name.
+
 %prep
 %setup
 %ifarch %e2k
@@ -53,12 +69,24 @@ sed -E -i '/std::pair\(tl/s/\{(..), \{/std::pair{\1, PointI{/g' core/src/qrcode/
 sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/ZXFilesystem.h
 %endif
 
+# Removing broken links to files and adding a working submodule
+rm -r core/src/libzint
+tar -xf %SOURCE1 -C core/src/
+
 %build
 %cmake -GNinja
 %ninja_build -C "%_cmake__builddir"
 
+pushd wrappers/python
+%pyproject_build
+popd
+
 %install
 %ninja_install -C "%_cmake__builddir"
+
+pushd wrappers/python
+%pyproject_install
+popd
 
 %files
 %_bindir/*
@@ -73,7 +101,14 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/cmake/ZXing/
 %_libdir/pkgconfig/zxing.pc
 
+%files -n python3-module-%name
+%python3_sitelibdir/zxing*.so
+%python3_sitelibdir/%{pyproject_distinfo %nameP}/
+
 %changelog
+* Mon Sep 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt4
+- NMU: python3-module-%name added (ALT #55702)
+
 * Mon Jan 06 2025 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt3
 - Remove qt and opencv requires because they are needed by examples.
 - Set license to Apache-2.0.
