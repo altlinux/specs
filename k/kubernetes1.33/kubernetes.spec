@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     33
-%define kubernetes_patch     3
+%define kubernetes_patch     4
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -395,6 +395,11 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Sat Aug 30 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.4-alt1
+- Update to 1.33.4.
+- Fixes:
+  + CVE-2025-5187: Nodes can delete themselves by adding an OwnerReference
+
 * Wed Jul 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.3-alt1
 - 1.33.2 -> 1.33.3
 
