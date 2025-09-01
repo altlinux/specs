@@ -2,8 +2,8 @@
 %define nameLC plasma_applet_Kde.mymemory.translator
 
 Name: plasma-applet-kde-mymemory-translator
-Version: 0.6.9
-Release: alt5
+Version: 0.7.5.1
+Release: alt1
 
 Summary: Mymemory translator
 License: GPL-3.0-or-later
@@ -50,6 +50,9 @@ done
 %_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 
 %changelog
+* Mon Sep 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.5.1-alt1
+- 0.6.9 -> 0.7.5.1
+
 * Mon Aug 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt5
 - new locale added
 
