@@ -2,7 +2,7 @@
 
 Name: plexus-io
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: Plexus IO Components
 License: Apache-2.0
@@ -19,11 +19,15 @@ BuildRequires: jpackage-default
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.code.findbugs:jsr305)
 BuildRequires: mvn(commons-io:commons-io)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires: mvn(javax.inject:javax.inject)
 BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires: mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.slf4j:slf4j-simple)
+BuildRequires: mvn(com.google.inject:guice)
 
 %description
 Plexus IO is a set of plexus components, which are designed for use
@@ -59,6 +63,9 @@ API documentation for %name.
 %doc --no-dereference NOTICE.txt
 
 %changelog
+* Tue Aug 26 2025 Anton Meleshnikov <alton@altlinux.org> 3.5.1-alt2
+- NMU: Added necessary BuildRequires.
+
 * Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 3.5.1-alt1
 - New version.
 - Rename artifact.
