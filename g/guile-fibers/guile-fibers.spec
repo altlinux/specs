@@ -1,9 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%define guile_sitedir %(guile-config info sitedir)
+%define guile guile30
+%define guile_sitedir %(%guile-config info sitedir)
+%define guile_extensiondir %(%guile-config info extensiondir)
+%define guile_ccachedir %(%guile-config info siteccachedir)
 
 Name: guile-fibers
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Concurrent ML-like concurrency for Guile
@@ -15,7 +18,7 @@ Vcs: https://github.com/wingo/fibers
 Source0: %name-%version.tar
 
 BuildRequires(pre): /proc
-BuildRequires: guile-devel
+BuildRequires: %guile-devel
 BuildRequires: texinfo
 
 %description
@@ -26,6 +29,7 @@ Guile Scheme, in the tradition of Concurrent ML.
 %setup
 
 %build
+export ac_cv_path_GUILE=%_bindir/%guile
 %autoreconf
 %configure
 %make_build
@@ -47,6 +51,10 @@ Guile Scheme, in the tradition of Concurrent ML.
 %exclude %guile_extensiondir/fibers-epoll.la
 
 %changelog
+* Mon Sep 01 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+- Started using guile30.
+
 * Fri Jun 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
 - New version.
 

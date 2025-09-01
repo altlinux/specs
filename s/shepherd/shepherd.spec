@@ -2,11 +2,14 @@
 
 %def_with check
 
-%define guile_sitedir %(guile-config info sitedir)
+%define guile_version 30
+%define guile guile%guile_version
+%define guile_sitedir %(%guile-config info sitedir)
+%define guile_ccachedir %(%guile-config info siteccachedir)
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
-Version: 0.10.5
+Version: 1.0.1
 Release: alt1
 
 Summary: The GNU Shepherd
@@ -23,10 +26,13 @@ Conflicts: sysvinit
 Conflicts: systemd-sysvinit
 
 BuildRequires(pre): /proc
-BuildRequires: guile-devel
+BuildRequires: %guile-devel
 BuildRequires: guile-fibers
 BuildRequires: help2man
 BuildRequires: texinfo
+%if_with check
+BuildRequires: gzip-utils
+%endif
 
 %description
 The GNU Shepherd is a service manager written in Guile that looks after
@@ -72,6 +78,10 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Wed Feb 12 2025 Anton Zhukharev <ancieg@altlinux.org> 1.0.1-alt1
+- Updated to 1.0.1.
+- Switched to use guile30.
+
 * Tue Jul 02 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.5-alt1
 - Updated to 0.10.5.
 
