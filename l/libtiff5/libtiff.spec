@@ -2,7 +2,7 @@
 
 Name: libtiff5
 Version: 4.4.0
-Release: alt6
+Release: alt7
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
@@ -34,6 +34,12 @@ Patch18: libtiff-4.4.0-ubuntu-cve-2023-6277-4.patch
 Patch19: libtiff-4.4.0-debian-cve-2022-48281.patch
 Patch20: libtiff-4.4.0-ubuntu-cve-2023-40745.patch
 Patch21: libtiff-4.4.0-ubuntu-cve-2023-26965.patch
+Patch22: libtiff-4.4.0-upstream-cve-2025-8176.patch
+Patch23: libtiff-4.4.0-upstream-cve-2025-8177.patch
+Patch24: libtiff-4.4.0-upstream-cve-2025-8534.patch
+Patch25: libtiff-4.4.0-upstream-cve-2024-13978.patch
+Patch26: libtiff-4.4.0-upstream-cve-2025-8851.patch
+Patch27: libtiff-4.4.0-upstream-cve-2025-9165.patch
 
 %def_disable static
 %def_enable cxx
@@ -117,6 +123,15 @@ rm -rv %buildroot{%_bindir,%_mandir,%_pkgconfigdir,%_libdir/*.so,%_includedir,%d
 %docdir/[A-Z]*
 
 %changelog
+* Tue Sep 02 2025 Constantin Sunzow <protvin@altlinux.org> 4.4.0-alt7
+- Fixes:
+  + CVE-2024-13978 NULL Pointer Dereference
+  + CVE-2025-8851 Stack-based Buffer Overflow
+  + CVE-2025-9165 Missing Release of Memory after Effective Lifetime
+  + CVE-2025-8176 Use After Free
+  + CVE-2025-8177 Buffer Copy without Checking Size of Input
+  + CVE-2025-8534 NULL Pointer Dereference
+
 * Fri May 30 2025 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt6
 - (Fixes: CVE-2022-40090, CVE-2022-4645, CVE-2022-48281,
   CVE-2023-0795, CVE-2023-0796, CVE-2023-0797, CVE-2023-0798,
