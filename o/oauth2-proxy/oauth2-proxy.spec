@@ -2,21 +2,21 @@
 %global import_path github.com/oauth2-proxy/oauth2-proxy
 
 Name: oauth2-proxy
-Version: 7.8.1
+Version: 7.12.0
 Release: alt1
 
 Group: Security/Networking
 Summary: OAuth2 Proxy for authentication
 License: MIT
 Url: https://oauth2-proxy.github.io/oauth2-proxy
-Vcs: https://github.com:oauth2-proxy/oauth2-proxy.git
+Vcs: https://%import_path.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.24.6
 
 %description
 A reverse proxy and static file server that provides authentication using Providers (Google, 
@@ -47,5 +47,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Thu Aug 28 2025 Artyom Sinyugin <writers@altlinux.org> 7.12.0-alt1
+- New version 7.12.0.
+
 * Thu Jan 20 2024 Artyom Sinyugin <writers@altlinux.org> 7.8.1-alt1
 - Initial build.

@@ -2,7 +2,7 @@
 
 Name: grip-grab
 Version: 0.6.7
-Release: alt1
+Release: alt2
 Url: https://github.com/alexpasmantier/grip-grab
 Vcs: https://github.com/alexpasmantier/grip-grab.git
 Summary: A fast lightweight ripgrep alternative
@@ -11,25 +11,29 @@ Group: File tools
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: /proc
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-build-rust
 
 %description
 A fast, more lightweight ripgrep alternative for daily use cases.
 
 %prep
 %setup
-%patch0 -p1 
+%rust_prep
+%patch0 -p1
 
 %build
-cargo build --offline --release
+export RUSTFLAGS="-Copt-level=3"
+%rust_build
 
 %install
-install -Dp target/release/gg -t %buildroot%_bindir
+%rust_install -- gg
 
 %files
 %_bindir/gg
 
 %changelog
+* Thu Aug 28 2025 Artyom Sinyugin <writers@altlinux.org> 0.6.7-alt2
+- Optimized build.
+
 * Fri Feb 28 2025 Artyom Sinyugin <writers@altlinux.org> 0.6.7-alt1
 - Initial build.

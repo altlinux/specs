@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gcli
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Group: Development/Other
@@ -51,5 +51,8 @@ make check
 %_man5dir/*
 
 %changelog
+* Thu Aug 28 2025 Artyom Sinyugin <writers@altlinux.org> 2.9.0-alt1
+- New version 2.9.0.
+
 * Thu May 26 2025 Artyom Sinyugin <writers@altlinux.org> 2.8.0-alt1
 - Version 2.8.0. Initial build.

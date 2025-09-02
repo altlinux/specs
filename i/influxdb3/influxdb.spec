@@ -6,7 +6,7 @@
 %define git_hash_short e38298bbdb
 
 Name: influxdb3
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 Url: https://www.influxdata.com
 Vcs: https://github.com/influxdata/influxdb.git
@@ -21,7 +21,6 @@ Patch0: %name-%version-%release.patch
 Patch1: config.patch
 
 BuildRequires(pre): rpm-macros-rust
-BuildRequires: /proc
 BuildRequires: rust-cargo
 BuildRequires: protobuf-compiler libprotobuf-devel
 BuildRequires: python3-dev
@@ -62,12 +61,17 @@ export CARGO_ENCODED_RUSTFLAGS=-Cdebuginfo=1
 export GIT_HASH=%git_hash
 export GIT_HASH_SHORT=%git_hash_short
 # skip flags for tests which need internet connection
-%rust_test -- --skip test_load_wal_plugin_from_gh --skip test_trigger_create_validates_file_present
+%rust_test --config profile.release.lto=\"thin\" -- \
+--skip test_load_wal_plugin_from_gh \
+--skip test_trigger_create_validates_file_present
 
 %files
 %_bindir/%name
 
 %changelog
+* Thu Aug 28 2025 Artyom Sinyugin <writers@altlinux.org> 3.4.1-alt1
+- New release v3.4.1.
+
 * Thu Aug 08 2025 Artyom Sinyugin <writers@altlinux.org> 3.3.0-alt1
 - New release v3.3.0.
 - Add lto=thin to %%rust_build to prevent 'idle time limit (3600 seconds) exceeded' error in hsh.
