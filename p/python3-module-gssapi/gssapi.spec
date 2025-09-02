@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: Python GSSAPI Wrapper
@@ -16,6 +16,8 @@ Url: https://pypi.org/project/gssapi/
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Requires: libkrb5 >= 1.15
 BuildRequires(pre): rpm-build-pyproject
@@ -63,6 +65,9 @@ ENDUNITTEST
 %exclude %python3_sitelibdir/gssapi/tests/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0.
+
 * Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.8.3 -> 1.9.0.
 
