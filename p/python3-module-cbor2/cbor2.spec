@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.6.5
+Version: 5.7.0
 Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 License: MIT
@@ -14,11 +14,14 @@ Url: https://pypi.org/project/cbor2/
 Vcs: https://github.com/agronholm/cbor2
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -31,6 +34,9 @@ fully compatible with the original RFC 7049.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -48,6 +54,9 @@ fully compatible with the original RFC 7049.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1
+- 5.6.5 -> 5.7.0.
+
 * Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 5.6.5-alt1
 - 5.6.4 -> 5.6.5.
 
