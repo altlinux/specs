@@ -6,7 +6,7 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.32.8
+Version: 2.32.10
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -14,6 +14,7 @@ License: Zlib and MIT
 Group: System/Libraries
 
 Url: https://www.libsdl.org/
+Vcs: https://github.com/libsdl-org/SDL
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://www.libsdl.org/release/%name-%version.tar.gz
@@ -122,6 +123,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Tue Sep 02 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.10-alt1
+- New version 2.32.10.
+
 * Tue Jun 03 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.8-alt1
 - New version 2.32.8.
 
