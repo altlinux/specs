@@ -53,7 +53,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.12.4
-Release: alt4
+Release: alt5
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1146,6 +1146,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 4.12.4-alt5
+- Fixed FTBFS (temporarily xfail nss dbm tests).
+
 * Tue Jul 22 2025 Stanislav Levin <slev@altlinux.org> 4.12.4-alt4
 - Backported upstream HSM fixes.
 
