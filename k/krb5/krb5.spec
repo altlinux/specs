@@ -12,8 +12,8 @@
 %define _runstatedir /run
 
 Name: krb5
-Version: 1.21.3
-Release: alt2
+Version: 1.22.1
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -37,8 +37,8 @@ Source100: noport.c
 # fedora patches:
 Patch23: krb5-1.3.1-fedora-dns.patch
 Patch39: krb5-1.12-fedora-api.patch
-Patch60: krb5-1.18-fedora-pam.patch
-Patch63: krb5-1.20.1-fedora-SELinux-integration.patch
+Patch60: krb5-1.22-fedora-pam.patch
+Patch63: krb5-1.22-fedora-SELinux-integration.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 
@@ -237,7 +237,7 @@ DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 runstatedir=%_runstatedir; export runstatedir
 
 pushd src
-autoreconf --verbose --force
+%autoreconf
 %configure \
 	--enable-shared --disable-static \
 	--localstatedir=%_localstatedir/kerberos \
@@ -517,6 +517,12 @@ fi
 # {{{ changelog
 
 %changelog
+* Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 1.22.1-alt1
+- 1.22.1 (Fixes: CVE-2025-57736)
+
+* Mon Aug 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.22-alt1
+- 1.22
+
 * Sun Jun 30 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.3-alt2
 - Force modern values of %%_unitdir and %%_tmpfilesdir
   (fixes build in p11).
