@@ -4,8 +4,8 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.24.0
-Release: alt2
+Version: 1.24.5
+Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -121,6 +121,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Tue Sep 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.5-alt1
+- 1.24.5.
+
 * Thu Jun 19 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.24.0-alt2
 - Fix bug in new patch file.
 
