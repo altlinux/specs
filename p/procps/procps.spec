@@ -1,6 +1,6 @@
 Name: procps
 Version: 4.0.5
-Release: alt2
+Release: alt3
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -69,8 +69,8 @@ echo -n %version-%release > .tarball-version
 %build
 %add_optflags "-Werror"
 %ifarch %e2k
-# lcc 1.26.20 barfs on ncurses_colors (mcst#8106)
-%add_optflags "-Wno-error=unused-but-set-variable"
+# lcc 1.29.09 barfs on old_rows (see also mcst#8106)
+%add_optflags -Wno-error=maybe-uninitialized
 %endif
 ./autogen.sh
 %configure \
@@ -127,6 +127,9 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Tue Sep 02 2025 Michael Shigorin <mike@altlinux.org> 4.0.5-alt3
+- E2K: update workaround (ilyakurdyukov@; cf.: mcst#8106).
+
 * Wed Mar 19 2025 Mikhail Efremov <sem@altlinux.org> 4.0.5-alt2
 - Patches from upstream:
   + sysctl: return error on permission denied.
