@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.20
+Version: 3.2.22
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -9,6 +9,7 @@ License: Zlib and MIT
 Group: System/Libraries
 
 Url: https://www.libsdl.org/
+Vcs: https://github.com/libsdl-org/SDL
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/libsdl-org/SDL/archive/release-%version/SDL-release-%version.tar.gz
@@ -96,6 +97,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Tue Sep 02 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.22-alt1
+- New version 3.2.22.
+
 * Mon Aug 04 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.20-alt1
 - New version 3.2.20.
 
