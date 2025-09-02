@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20240825
+Version: 20250902
 Release: alt1
 
 Group: Graphics
@@ -109,18 +109,18 @@ Requires(post,preun): alternatives >= 0.2
 
 %build
 %meson \
-    -Dname='%pname' \
-    -Dpretty_name='%pname %Variant' \
-    -Dtheme=%theme \
-    -Dbranch=%altbranch \
-    -Dbrand=%brand \
-    -Dhomepage=%url \
-    -Dbugtracker=%bugtracker \
-    -Dflavour=%flavour \
-    -Ddocpage=%docpage \
-    -Dvariant=%Varant \
-    -Dvariant_id=%varant \
-    -Dversion=%version
+  -Dname='%pname' \
+  -Dpretty_name='%pname %Variant' \
+  -Dtheme=%theme \
+  -Dbranch=%altbranch \
+  -Dbrand=%brand \
+  -Dhomepage=%url \
+  -Dbugtracker=%bugtracker \
+  -Dflavour=%flavour \
+  -Ddocpage=%docpage \
+  -Dvariant=%Variant \
+  -Dvariant_id=%variant \
+  -Dversion=%version
 %meson_build
 
 %install
@@ -142,17 +142,24 @@ plymouth-set-default-theme bgrt
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Tue Sep 02 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250902-alt1
+- Fixed typo in VARIANT and VARIANT_ID.
+- Fixed version date (now it 2025 year).
+- Whitelisted dl.flathub.org.
+- Removed Ptyxis default settings.
+- Fixed vendor in os-release, thx to David Sultaniiazov <x1z53@alt-gnome.ru>.
+
 * Mon Aug 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20240825-alt1
 - Added more fields to os-release:
-  + ID_LIKE
-  + RELEASE_TYPE
-  + DOCUMENTATION_URL
-  + BUG_REPORT_URL
-  + VENDOR_NAME
-  + VENDOR_URL
-  + DEFAULT_HOSTNAME
-  + VARIANT
-  + VARIANT_ID
+  + ID_LIKE;
+  + RELEASE_TYPE;
+  + DOCUMENTATION_URL;
+  + BUG_REPORT_URL;
+  + VENDOR_NAME;
+  + VENDOR_URL;
+  + DEFAULT_HOSTNAME;
+  + VARIANT;
+  + VARIANT_ID.
 
 * Fri Aug 22 2025 Vladimir Vaskov <rirusha@altlinux.org> 20240822-alt1
 - Initial build.
