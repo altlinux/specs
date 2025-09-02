@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -27,7 +27,7 @@ BuildRequires: libexpected-devel
 BuildRequires: alterator-entry >= 0.3.1
 
 Requires: alterator-backend-packages >= 0.2.9-alt1
-Requires: alterator-backend-component >= 0.2.0-alt1
+Requires: alterator-backend-component >= 0.3.0-alt1
 Requires: alterator-backend-systeminfo
 Requires: libqbase
 Requires: alt-components-base
@@ -60,6 +60,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_bindir/alt-components
 
 %changelog
+* Fri Aug 22 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.4-alt1
+- Use alterator-interface-component 0.3.0.
+
 * Wed Aug 20 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.3-alt1
 - Fix setting of locale in D-Bus connection when starting.
 

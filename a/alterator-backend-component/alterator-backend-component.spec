@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -15,7 +15,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 Requires: alterator-interface-%{shortname} = %EVR
-Requires: alterator-module-executor >= 0.1.19
+Requires: alterator-module-executor >= 0.1.24
 Requires: alterator-entry >= 0.2.0
 Requires: alterator-backend-systeminfo >= 0.4.1
 
@@ -69,6 +69,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Sep 01 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.0-alt1
+- Use 'as' instead 'ay' for batch interfaces.
+- Insert quotes for string values in Alterator entries.
+
 * Thu Aug 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
 - Merge all scripts of components, component categories and batch to one.
 - Unify CLI arg format: use name of component/category instead file path.

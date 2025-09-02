@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.1.13
+Version: 0.1.14
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -18,11 +18,7 @@ BuildRequires: libpolkit-devel libjson-glib-devel
 Requires: alterator-manager >= 0.1.29
 Requires: alterator-module-executor >= 0.1.25
 Requires: alterator-backend-packages >= 0.2.8
-Requires: alterator-interface-component >= 0.1.9
-Requires: alterator-backend-component >= 0.1.9
-Requires: alterator-backend-component_categories >= 0.1.5-alt2
-Requires: alterator-backend-batch-components >= 0.3
-Requires: alterator-backend-batch-component_categories >= 0.3
+Requires: alterator-backend-component >= 0.3.0
 Requires: alterator-interface-edition >= 0.2.0
 Requires: alterator-interface-diag >= 0.1.4
 Requires: alterator-backend-systeminfo >= 0.4.0
@@ -54,6 +50,12 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Tue Sep 02 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.14-alt1
+- Fix localization of output of installation/removal of components.
+- Fix localization of output of installation/removal/updating of packages by apt.
+- Fix sending of wrong locale data to dbus connection.
+- Use as instead ay on batch interfaces of components.
+
 * Tue Aug 05 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.13-alt1
 - Increased the version of a required dependency from alterator-interface-edition and
 - alterator-backend-systeminfo
