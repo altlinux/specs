@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.1.11
+Version: 0.2.0
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -12,14 +12,14 @@ Summary: DDM is a fork of SDDM for DDE
 License: GPL-2.0-only or GPL-3.0-only or LGPL-3.0-only or Apache-2.0 and LGPL-2.1-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/ddm
-Vcs: git://github.com/linuxdeepin/ddm.git
+Vcs: https://github.com/linuxdeepin/ddm
 
 Source: %url/archive/%version/%name-%version.tar.xz
 Patch0: %name-%version-%release.patch
 Patch1: ddm-0.1.9-alt-pam.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel
+BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
 
 %description
 %summary.
@@ -106,7 +106,6 @@ exit 0
 %_libexecdir/ddm-helper-start-single-wayland
 %_libexecdir/ddm-helper-start-x11user
 %_unitdir/ddm.service
-%_unitdir/seatd-dde.service
 %_sysusersdir/dde.conf
 %_tmpfilesdir/ddm.conf
 
@@ -122,10 +121,11 @@ exit 0
 
 %files devel
 %dir %_libdir/cmake/DDM/
-%_libdir/cmake/DDM/DDMConfig.cmake
+%_libdir/cmake/DDM/DDMConfig*.cmake
 
 %files -n libddm-common%soverdc
-%_libdir/libddm-common.so.%{soverdc}*
+%_libdir/libddm-common.so.%soverdc
+%_libdir/libddm-common.so.%version
 
 %files -n libddm-common-devel
 %_libdir/libddm-common.so
@@ -136,7 +136,8 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %files -n libddm-auth%soverda
-%_libdir/libddm-auth.so.%{soverda}*
+%_libdir/libddm-auth.so.%soverda
+%_libdir/libddm-auth.so.%version
 
 %files -n libddm-auth-devel
 %_libdir/libddm-auth.so
@@ -147,6 +148,9 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 0.1.11-alt1
 - New version 0.1.11.
 

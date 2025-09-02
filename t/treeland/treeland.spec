@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -12,7 +12,7 @@ Summary: Wayland compositor for DDE
 License: GPL-2.0-or-later and CC-BY-3.0
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/treeland
-Vcs: https://github.com/linuxdeepin/treeland.git
+Vcs: https://github.com/linuxdeepin/treeland
 
 Source: %url/archive/%version/%name-%version.tar.xz
 Patch: %name-%version-%release.patch
@@ -128,10 +128,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %install
 %DQ6install
-mkdir -p %buildroot%_datadir/xdg-desktop-portal/
-mv -f %buildroot%_prefix/etc/xdg-desktop-portal/dde-portals.conf %buildroot%_datadir/xdg-desktop-portal/dde-portals.conf
-# prevent conflict with xdg-desktop-portal-dde
-rm -rf %buildroot%_datadir/xdg-desktop-portal/dde-portals.conf
 # cleanup illegal rpaths
 patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-needed libtreeland.so.%sover
 
@@ -139,7 +135,7 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %find_lang --with-qt treeland
 
 %files -f treeland.lang
-%doc LICENSES/
+%doc LICENSES/ README*.md debian/changelog
 %_bindir/treeland*
 %_libexecdir/treeland-sd
 %_libexecdir/treeland-shortcut
@@ -196,6 +192,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 0.6.2-alt1
 - New version 0.6.2.
 
