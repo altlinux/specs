@@ -2,7 +2,7 @@
 
 Summary: Tiny libvips / gtk+4 image viewer
 Name: vipsdisp
-Version: 4.0.0
+Version: 4.1.2
 Release: alt1
 License: MIT
 Group: Graphics
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 BuildRequires(pre): meson cmake
-BuildRequires: libgnome-devel libvips-devel >= 8.16 libgtk4-devel
+BuildRequires: libgnome-devel libvips-devel >= 8.17 libgtk4-devel
 
 %description
 This program displays an image with libvips and gtk+4. This is supposed to be a
@@ -43,6 +43,9 @@ types from 1 bit mono to 128-bit double precision complex.
 %_datadir/metainfo/%app.metainfo.xml
 
 %changelog
+* Tue Sep 02 2025 L.A. Kostis <lakostis@altlinux.ru> 4.1.2-alt1
+- 4.1.2.
+
 * Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1
 - 4.0.0.
 
