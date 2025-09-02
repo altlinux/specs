@@ -1,6 +1,6 @@
 Name: kiosk
 Version: 0.5
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -28,6 +28,9 @@ Utility for managing kiosk mode
 %_man1dir/kiosk.1.xz
 
 %changelog
+* Mon Sep 01 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt3
+- fix typo
+
 * Wed Aug 27 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt2
 - don't show extra messages with --get-mode
 
