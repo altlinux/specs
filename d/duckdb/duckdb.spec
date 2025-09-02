@@ -7,8 +7,8 @@
 %def_without check
 
 Name: duckdb
-Version: 1.2.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: An analytical in-process SQL database management system
 License: MIT
@@ -88,6 +88,9 @@ EOF
 %_cmakedir/DuckDB/
 
 %changelog
+* Tue Sep 02 2025 Artem Krasovskiy <aibure@altlinux.org> 1.3.2-alt1
+- New version 1.3.2.
+
 * Wed Mar 26 2025 Ilya Sorochan <k0tran@altlinux.org> 1.2.1-alt2
 - Switch to sisyphus libicu instead of vendored.
 - Fix jemalloc for loongarch64 and riscv64.
