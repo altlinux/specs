@@ -3,14 +3,14 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 3.4.1
-Release: alt2
+Version: 3.5.0
+Release: alt1
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
 License: Apache-2.0
 Url: https://%import_path
-Vcs: https://{%import_path}.git
+Vcs: https://%import_path.git
 Source: %name-%version.tar
 
 Source2: %name.sysconfig
@@ -147,6 +147,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Aug 29 2025 Artyom Sinyugin <writers@altlinux.org> 3.5.0-alt1
+- New version 3.5.0.
+
 * Sat Jun 28 2025 Artyom Sinyugin <writers@altlinux.org> 3.4.1-alt2
 - fix prebuilt web UI (ALT#54920)
 
