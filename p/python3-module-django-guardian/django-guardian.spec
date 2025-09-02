@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.3
+Version: 3.1.0
 Release: alt1
 
 Summary: Implementation of per object permissions for Django 1.2 or later
@@ -76,6 +76,9 @@ py.test-3 -v
 %python3_sitelibdir/guardian/*/test*
 
 %changelog
+* Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
 - Automatically updated to 3.0.3.
 
