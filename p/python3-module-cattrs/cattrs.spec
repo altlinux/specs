@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 25.1.1
-Release: alt1.1
+Version: 25.2.0
+Release: alt1
 
 Summary: Complex custom class converters for attrs
 
@@ -79,6 +79,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 25.2.0-alt1
+- Automatically updated to 25.2.0.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.1-alt1.1
 - Fixed FTBFS.
 
