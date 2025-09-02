@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.11
-Release: alt2
+Version: 0.1.12
+Release: alt1
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
@@ -63,6 +63,20 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Aug 27 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.12-alt1
+- fix size constraint of labels with tests on buses
+- fix translation by system locale
+- fix transparent tips in tool bar (closes: #55686)
+- add --bus option (thx Andrey Alekseev)
+- fix searching tool by path in cli (thx Andrey Alekseev)
+- add margins and bold text to tool variable names (thx Andrey Alekseev)
+- disable selection in variables table (thx Andrey Alekseev)
+- add splitter margins (thx Andrey Alekseev)
+- fix apply parameters immediately (thx Andrey Alekseev)
+- fix wrap editors to prevent from text highlighting (thx Andrey Alekseev)
+- fix set proper fonts to calculate elided text correctly (thx Andrey Alekseev)
+- add menu bar (thx Andrey Alekseev)
+
 * Mon Jul 07 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.11-alt2
 - fix URL in .spec file
 
