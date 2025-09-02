@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.26
+Version: 1.3.27
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -68,6 +68,9 @@ Shell functions and kbd data for %name.
 %_sysconfdir/alterator/sysconfig/gnome-kbd
 
 %changelog
+* Tue Sep 02 2025 Anton Midyukov <antohami@altlinux.org> 1.3.27-alt1
+- Fix setup xkbmap in installer.
+
 * Sun Aug 31 2025 Anton Midyukov <antohami@altlinux.org> 1.3.26-alt1
 - alterator-sysconfig-functions: do not use $destdir in write_gnome_kbd
 
