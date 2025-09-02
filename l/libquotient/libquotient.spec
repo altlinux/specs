@@ -2,7 +2,7 @@
 
 Name: libquotient
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: A Qt5 library to write cross-platfrom clients for Matrix
 
@@ -47,6 +47,10 @@ Header files for %EVR.
 %prep
 %setup
 %__subst "s|add_library(\${PROJECT_NAME} \${lib_SRCS} \${api_SRCS})|add_library(\${PROJECT_NAME} SHARED \${lib_SRCS} \${api_SRCS})|" CMakeLists.txt
+%ifarch %e2k
+# error: cannot deduce "auto" type
+sed -i 's/^    { "/    ReplacePair { "/' lib/uri.cpp
+%endif
 
 %build
 %cmake_insource
@@ -68,6 +72,9 @@ rm -rf %buildroot/usr/share/ndk-modules/
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Tue Sep 02 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.6.1-alt2
+- e2k build fix
+
 * Thu Sep 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1 (with rpmrb script)
 - library, includes and conf files changed to Quotient
