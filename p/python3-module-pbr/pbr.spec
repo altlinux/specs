@@ -12,7 +12,7 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python3-module-%pypi_name
-Version:    7.0.0
+Version:    7.0.1
 Release:    alt1
 
 Summary:    Python Build Reasonableness
@@ -96,6 +96,9 @@ excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_r
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
+- Automatically updated to 7.0.1.
+
 * Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
 - Automatically updated to 7.0.0.
 
