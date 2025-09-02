@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.20
-Release: alt2
+Release: alt3
 Summary: Certificate status monitor and PKI enrollment client
 License: GPL-3.0-or-later
 Group: System/Base
@@ -154,6 +154,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 0.79.20-alt3
+- Fixed FTBFS (temporarily xfail nss dbm tests).
+
 * Mon Jun 24 2024 Stanislav Levin <slev@altlinux.org> 0.79.20-alt2
 - Fixes FTBFS (latest rpm-macros-systemd).
 
