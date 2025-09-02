@@ -1,6 +1,6 @@
 Name: normcap
 Version: 0.6.0
-Release: alt0.beta2
+Release: alt1
 
 Summary: OCR powered screen-capture tool to capture information instead of images
 
@@ -53,8 +53,11 @@ install -Dm 0644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%name-0.6.0b2.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Tue Sep 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
+- Release: 0.6.0.
+
 * Mon Sep 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt0.beta2
 - Initial build for ALT Linux.
