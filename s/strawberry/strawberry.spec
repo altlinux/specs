@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.12
+Version: 1.2.13
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -11,7 +11,7 @@ Summary: Audio player and music collection organizer
 License: GPL-3.0-or-later and MIT
 Group: Sound
 Url: https://www.strawberrymusicplayer.org
-VCS: https://github.com/strawberrymusicplayer/strawberry.git
+VCS: https://github.com/strawberrymusicplayer/strawberry
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -24,7 +24,7 @@ BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
 BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel taglib-devel libvlc-devel protobuf-compiler sparsehash-devel rapidjson-devel
-BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc libkdsingleapplication-qt6-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
 BuildRequires: libicu-devel
 
 %if_with clang
@@ -97,6 +97,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.13-alt1
+- New version 1.2.13.
+
 * Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt1
 - New version 1.2.12.
 - Updated license tag.
