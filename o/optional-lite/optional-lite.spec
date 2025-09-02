@@ -2,7 +2,7 @@
 
 Name: optional-lite
 Version: 3.5.0
-Release: alt2.git00e9cf5c
+Release: alt3.git00e9cf5c
 
 Summary: optional lite: A single-file header-only version of a C++17-like optional
 License: BSL-1.0
@@ -22,6 +22,9 @@ a nullable object for C++98, C++11 and later
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i 's/-fno-elide-constructors//' {test,example}/CMakeLists.txt
+%endif
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -36,6 +39,9 @@ a nullable object for C++98, C++11 and later
 %_libdir/cmake/%name
 
 %changelog
+* Tue Sep 02 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.5.0-alt3.git00e9cf5c
+- e2k build fix
+
 * Mon Oct 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.0-alt2.git00e9cf5c
 - NMU: removed superfluous build requirements. Fixes FTBFS on LoongArch.
 
