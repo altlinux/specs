@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 02 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
+- add GSConnect, Session Keeper, VPN GOST
+- fix some typos (ALT #55556)
+
 * Wed Aug 06 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
 - update to ALT Workstation 11.1RC1
 - add gearlever, alien, gnome-boxes
