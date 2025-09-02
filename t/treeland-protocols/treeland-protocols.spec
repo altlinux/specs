@@ -1,15 +1,17 @@
 Name: treeland-protocols
-Version: 0.4.5
+Version: 0.5.0
 Release: alt1
 
 Summary: Wayland protocol extensions for treeland
 
-License: Apache-2.0 or LGPL-3.0-only or GPL-3.0-only
+License: MIT
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/treeland-protocols
-Vcs: git://github.com/linuxdeepin/treeland-protocols.git
+Vcs: https://github.com/linuxdeepin/treeland-protocols
 
 Source: %url/archive/%version/%name-%version.tar.xz
+Patch: %name-%version-%release.patch
+
 BuildRequires: gcc-c++ cmake
 
 %description
@@ -17,6 +19,7 @@ BuildRequires: gcc-c++ cmake
 
 %prep
 %setup
+%patch -p1
 # cmake and pc files installed in libdir only
 sed -i 's|CMAKE_INSTALL_DATADIR|CMAKE_INSTALL_LIBDIR|g' \
   cmake/CMakeLists.txt
@@ -31,13 +34,17 @@ sed -i 's|${pc_sysrootdir}||' \
 %cmake_install
 
 %files
-%doc LICENSES/ README*.md
+%doc LICENSES/ README*.md debian/changelog
 %dir %_datadir/%name/
 %_datadir/%name/treeland*.xml
 %dir %_libdir/cmake/TreelandProtocols/
-%_libdir/cmake/TreelandProtocols/TreelandProtocolsConfig.cmake
+%_libdir/cmake/TreelandProtocols/TreelandProtocolsConfig*.cmake
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+- Updated license tag.
+
 * Mon Dec 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.5-alt1
 - Initial build for ALT Sisyphus.
