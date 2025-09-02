@@ -9,7 +9,7 @@
 %def_enable alt_patches
 
 Name: impression
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Impression is a tool to create bootable drives
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Sep 02 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.0-alt1
 - 3.5.0
 

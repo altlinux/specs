@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name turnon
-%define ver_major 2.7
+%define ver_major 2.8
 %define rdn_name de.swsnr.%_name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -46,6 +46,7 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 sed -i "s/\(version := \).*$/\1'%version'/" justfile
+sed -i "s/\.Devel//" justfile
 
 # use full path for binary
 sed -i 's|\(Exec=\)\(%rdn_name\)|\1%_bindir/\2|' dbus-1/de.swsnr.turnon.service
@@ -69,6 +70,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Tue Sep 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
+- 2.8.1
+
 * Wed Aug 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
 - 2.7.4
 
