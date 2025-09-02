@@ -1,6 +1,6 @@
 Name: miraclecast
 Version: 20250608
-Release: alt1
+Release: alt2
 
 Summary: Connect external monitors to your system via Wifi-Display specification also known as Miracast
 
@@ -12,8 +12,8 @@ Vcs: https://github.com/albfan/miraclecast
 
 Source: %name-%version.tar
 
-BuildRequires(Pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: cmake gcc-c++ libsystemd-devel pkgconfig(glib-2.0)
+BuildRequires(Pre): rpm-build-python3
+BuildRequires: gcc-c++ libsystemd-devel pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libpcre2-8) libudev-devel libreadline-devel
 
 %description
@@ -25,11 +25,12 @@ the Display-Source as well as Display-Sink side.
 %setup
 
 %build
-%cmake
-%cmake_build
+%autoreconf
+%configure --prefix=/usr --sysconfdir=/etc --enable-rely-udev
+%make_build
 
 %install
-%cmake_install
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -38,5 +39,8 @@ the Display-Source as well as Display-Sink side.
 %doc *.md LICENSE*
 
 %changelog
+* Tue Sep 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250608-alt2
+- rebuild with make
+
 * Mon Sep 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250608-alt1
 - Initial build for ALT Linux.
