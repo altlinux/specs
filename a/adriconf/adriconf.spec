@@ -1,7 +1,7 @@
 %define name adriconf
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-%define version 2.7.1
+%define version 2.7.3
 %define release alt1
 
 Summary: Advanced Mesa DRI Configurator
@@ -27,7 +27,7 @@ source graphics drivers. It works by setting options and writing them to the
 standard drirc file used by the Mesa drivers.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -35,15 +35,17 @@ standard drirc file used by the Mesa drivers.
  -DCMAKE_INSTALL_LIBDIR=%_libdir \
  -DENABLE_UNIT_TESTS=NO
 %cmake_build
+
+%install
 %cmakeinstall_std
-%find_lang %{name}
+%find_lang %name
 
 mkdir -p %buildroot{%_datadir/metainfo,%_desktopdir,%_iconsdir}
-install -m644 flatpak/org.freedesktop.%name.png %buildroot%{_iconsdir}/
-install -m644 flatpak/org.freedesktop.%name.desktop %buildroot%{_desktopdir}/
-install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/metainfo/
+install -m644 flatpak/org.freedesktop.%name.png %buildroot%_iconsdir/
+install -m644 flatpak/org.freedesktop.%name.desktop %buildroot%_desktopdir/
+install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%_datadir/metainfo/
 
-%files -f %{name}.lang
+%files -f %name.lang
 %doc LICENSE AUTHORS VERSION *.md
 %_bindir/%name
 %_datadir/metainfo/org.freedesktop.%name.metainfo.xml
@@ -51,6 +53,10 @@ install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/m
 %_iconsdir/*.png
 
 %changelog
+* Tue Sep 02 2025 L.A. Kostis <lakostis@altlinux.ru> 2.7.3-alt1
+- 2.7.3.
+- Fix debuginfo processing.
+
 * Wed Sep 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2.7.1-alt1
 - 2.7.1.
 
