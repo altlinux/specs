@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define _cmake__builddir BUILD
+%define _cmake__builddir build
 
 Name: throne
 Version: 1.0.2
-Release: alt2
+Release: alt3
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
@@ -80,20 +80,14 @@ rm -rf %name-vendors-%version
 %cmake
 %cmake_build
 
-export GOFLAGS=-mod=vendor
-export GOOS=linux
-%ifarch x86_64
-export GOARCH=amd64
-%else
-export GOARCH=arm64
-%endif
-
-pushd core/protorpc/protoc-gen-protorpc
-go build .
-go install .
+pushd core/server
+export GOFLAGS="-buildmode=pie -trimpath -modcacherw -mod=vendor"
+export VERSION_SINGBOX=$(go list -m -f '{{.Version}}' github.com/sagernet/sing-box)
+export TAGS="with_clash_api,with_gvisor,with_quic,with_wireguard,with_utls,with_dhcp,with_tailscale"
+go build -o "../../%_cmake__builddir" \
+    -ldflags="-linkmode=external -w -s -X 'github.com/sagernet/sing-box/constant.Version=${VERSION_SINGBOX}'" \
+    -tags="${TAGS}"
 popd
-
-PATH=$PATH:%homedir/go/bin/ ./script/build_go.sh
 
 %install
 install -dm 755 %buildroot%_bindir
@@ -103,17 +97,12 @@ install -dm 755 %buildroot%_datadir/sing-box/rule-set
 
 pushd %_cmake__builddir
 install -pm 755 ./Throne %buildroot%_libexecdir/throne/Throne
+install -pm 755 ./Core %buildroot%_libexecdir/throne/Core
 install -pm 755 %SOURCE2 %buildroot/%_bindir/throne
 install -pm 644 %SOURCE3 %buildroot%_datadir/applications/Throne.desktop
 popd
 
 install -Dm644 ./res/public/Throne.png -t %buildroot%_datadir/pixmaps/
-
-%ifarch x86_64
-install -Dm755 ./deployment/linux-amd64/* -t %buildroot%_libexecdir/throne/
-%else
-install -Dm755 ./deployment/linux-arm64/* -t %buildroot%_libexecdir/throne/
-%endif
 
 install -Dm755 ./sing-box/*.db %buildroot%_datadir/sing-box
 install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
@@ -121,7 +110,6 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %files
 %_libexecdir/throne/Core
 %_libexecdir/throne/Throne
-%_libexecdir/throne/updater
 %_bindir/throne
 %_datadir/applications/Throne.desktop
 %_datadir/pixmaps/Throne.png
@@ -135,6 +123,10 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue Sep 02 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt3
+- Fixed runtime failure by reverting a faulty commit and pre-building protorpc 
+stubs (closes: #55737).
+
 * Wed Aug 27 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt2
 - Fixed VCS and URL.
 
