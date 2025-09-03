@@ -1,7 +1,7 @@
 %set_autoconf_version 2.71
 
 Name: nsd
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: Name Server Daemon
@@ -22,6 +22,7 @@ Source101: simdzone.tar
 Patch0: 0001-Enable-control-by-default.patch
 
 BuildRequires: flex bison libevent-devel libssl-devel
+BuildRequires: protobuf-c-compiler libprotobuf-devel libprotobuf-c-devel libfstrm-devel
 
 %description
 NSD is an authoritative only, high performance, simple
@@ -93,6 +94,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Wed Sep 03 2025 Alexei Takaseev <taf@altlinux.org> 4.13.0-alt1
+- 4.13.0
+
 * Mon Apr 28 2025 Alexei Takaseev <taf@altlinux.org> 4.12.0-alt1
 - 4.12.0
 
