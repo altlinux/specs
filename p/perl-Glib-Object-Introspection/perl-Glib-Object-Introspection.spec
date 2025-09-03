@@ -1,26 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %def_without bootstrap
 
+%define _name perl-glib-object-introspection
+%define __name Glib-Object-Introspection
+
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
-Version: 0.051
-Release: alt4
+Version: 0.052
+Release: alt1
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
 License: LGPL-2.1+
-
 Url: %CPAN Glib-Object-Introspection
-Source: %name-%version.tar
-# fc patches
-Patch1: perl-Glib-Object-Introspection_lib_pattern.patch
-# Use system-wide compiler flags when building test libraries. It's silents
-# annocheck gating tests, CPAN RT#147466, proposed to the upstream.
-Patch4: Glib-Object-Introspection-0.050-Use-CFLAGS-and-LDFLAGS-from-the-envirnoment-for-buil.patch
-# https://gitlab.gnome.org/GNOME/perl-glib-object-introspection/-/issues/7
-Patch5: Glib-Object-Introspection-0.051-Handle-pointer-types.patch
 
-BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
+Vcs: https://gitlab.gnome.org/GNOME/perl-glib-object-introspection.git
+
+Source: %_name-%version.tar
+
+BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel
+BuildRequires: perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
 # dependency loop
 %if_with bootstrap
 %add_findreq_skiplist %_bindir/perli11ndoc
@@ -41,8 +40,7 @@ BuildArch: noarch
 scripts for %name
 
 %prep
-%setup
-%autopatch -p1
+%setup -n %_name-%version
 
 %build
 # some Glib functions fail with LANG=C
@@ -62,6 +60,9 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.052-alt1
+- 0.052
+
 * Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.051-alt4
 - applied a set of fc-patches, fixed FTBFS (ALT #51996)
 
