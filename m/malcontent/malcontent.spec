@@ -8,7 +8,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
 Summary: Parental controls implementation
@@ -204,6 +204,9 @@ controls settings for users.
 
 
 %changelog
+* Wed Sep 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
