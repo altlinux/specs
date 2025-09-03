@@ -4,7 +4,7 @@
 
 %define soname 0
 # endless sigh
-%define lversion 25.5
+%define lversion 25.8
 %define qt_ver 6
 
 %def_enable alembic
@@ -22,7 +22,7 @@
 %def_enable materialx
 
 Name: OpenUSD
-Version: 25.05.01
+Version: 25.08
 Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
@@ -284,6 +284,9 @@ chmod +x uic-wrapper
      	\
      	-DPYSIDE_AVAILABLE=ON \
 	-DPYSIDEUICBINARY:PATH=${PWD}/uic-wrapper \
+	%ifarch aarch64
+	-DPXR_BUILD_EXEC=OFF \
+	%endif
 	%nil
 %cmake_build
 
@@ -411,6 +414,11 @@ done
 %python3_sitelibdir/pxr
 
 %changelog
+* Wed Sep 03 2025 L.A. Kostis <lakostis@altlinux.ru> 25.08-alt0.1
+- 25.08.
+- aarch64: disable ExecLibrary (doesn't compile).
+- rediffed/update patches.
+
 * Tue Jul 01 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05.01-alt0.1
 - 25.05.01.
 
