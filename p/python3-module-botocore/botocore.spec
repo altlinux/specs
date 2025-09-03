@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.40.7
+Version: 1.40.22
 Release: alt1
 Summary: The low-level, core functionality of boto 3
 License: Apache-2.0
@@ -16,9 +16,10 @@ Source: %name-%version.tar
 Source1: debundler.py.in
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %pyproject_runtimedeps -- vendored
-%filter_from_requires /python3(botocore\.vendored\..*)/d
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -81,6 +82,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 1.40.22-alt1
+- 1.40.7 -> 1.40.22.
+
 * Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 1.40.7-alt1
 - 1.40.6 -> 1.40.7.
 
