@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 Summary: A fast and thorough lazy object proxy
 License: BSD-2-Clause
@@ -14,6 +14,8 @@ VCS: https://github.com/ionelmc/python-lazy-object-proxy.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
 Provides: python3-module-lazy_object_proxy = %EVR
@@ -57,6 +59,9 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
+- 1.11.0 -> 1.12.0.
+
 * Thu Apr 17 2025 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1
 - 1.10.0 -> 1.11.0.
 
