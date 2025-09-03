@@ -3,7 +3,7 @@
 %global import_path github.com/swaggo/swag
 
 Name: swag
-Version: 1.16.5
+Version: 1.16.6
 Release: alt1
 Epoch: 1
 
@@ -20,7 +20,8 @@ Source1: vendor.tar
 
 Requires: golang
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 
 %description
 Swag converts Go annotations to Swagger Documentation 2.0. We've created
@@ -46,10 +47,13 @@ export IGNORE_SOURCES=1
 %golang_install
 
 %files
-%doc README* example
-%_bindir/*
+%doc README* example license
+%_bindir/%name
 
 %changelog
+* Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1:1.16.6-alt1
+- Updated to 1.16.6.
+
 * Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1:1.16.5-alt1
 - Updated to 1.16.5.
 
