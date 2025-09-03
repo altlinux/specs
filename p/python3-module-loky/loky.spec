@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.5
+Version: 3.5.6
 Release: alt1
 Summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
 License: BSD
@@ -52,6 +52,9 @@ ProcessPoolExecutor class of concurrent.futures
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 3.5.6-alt1
+- 3.5.5 -> 3.5.6.
+
 * Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 3.5.5-alt1
 - 3.5.1 -> 3.5.5.
 
