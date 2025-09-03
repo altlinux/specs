@@ -1,8 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 
+%define git_commit 7172b2d26684c7ef9d10e249bd43dc5bf73ae00c
+%define git_commit_short %(c="%git_commit"; echo "${c:0:8}")
+
 Name: anki2
-Version: 24.11
-Release: alt2
+Version: 25.07.5
+Release: alt1
 
 Summary: Flashcard program for using space repetition learning
 License: AGPL-3.0+ and BSD-3-Clause and GPL-3 and MIT and 0BSD and CC-BY-4.0 and Apache-2.0
@@ -24,10 +27,14 @@ Source3: ftl_qt-repo.tar
 Source4: yarn-cache.tar
 
 # For offline build
-Patch1: anki-24.06.3-alt-disable-git-rev-parse.patch
-Patch2: anki-24.06.3-arch-strip-formatter-deps.patch
+Patch1: anki2-25.07.5-alt-disable-git-rev-parse.patch
+Patch2: anki2-25.07.5-arch-strip-formatter-deps.patch
 Patch3: anki-24.06.3-arch-strip-type-checking-deps.patch
 Patch4: anki2-24.11-arch-move-unicode-text-direction-allow-to-crate-root.patch
+# aqt wheel contains non-python files.
+# This puts files in %%python3_sitelibdir instead of %%python3_sitelibdir_noarch
+# and satisfies sisyphus_check
+Patch5: anki2-25.07.5-alt-mark-aqt-as-non-pure-python.patch
 
 # For playing sound.
 Requires: mpv
@@ -46,6 +53,8 @@ BuildRequires: node
 BuildRequires: yarn
 BuildRequires: python3
 BuildRequires: git
+BuildRequires: uv
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-PyQt6
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-installer
@@ -63,9 +72,13 @@ as possible. Anki is based on a theory called spaced repetition.
 %patch2 -p 1
 %patch3 -p 1
 %patch4 -p 1
+%patch5 -p 1
 
 # Replace git rev-parse hash with alt release
-sed -i 's/<BUILDHASH_STRING>/%release/' build/runner/src/build.rs
+sed -i 's/@BUILDHASH_STRING@/%git_commit_short/' build/runner/src/build.rs
+# Build with system yarn
+sed -i 's/"type": "module",/"type": "module"/' package.json
+sed -i '/packageManager/d' package.json
 
 # Needed for successful build
 mkdir .git/
@@ -73,7 +86,7 @@ mkdir .git/
 # Must be set up according to
 # https://github.com/ankitects/anki/blob/main/docs/linux.md
 mkdir -p out/pyenv/bin
-ln -s "$(which python3)" out/pyenv/bin/python
+ln -s "$(command -v python3)" out/pyenv/bin/python
 
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
@@ -98,10 +111,14 @@ EOF
 # Do not download anything, disables git checks.
 export OFFLINE_BUILD=1
 
-# Use system binaries instead of downloading them.
-export NODE_BINARY="$(which node)"
-export YARN_BINARY="$(which yarn)"
-export PROTOC_BINARY="$(which protoc)"
+# Use system packages instead of downloading stuff from internet.
+export NODE_BINARY="$(command -v node)"
+export YARN_BINARY="$(command -v yarn)"
+export PROTOC_BINARY="$(command -v protoc)"
+export UV_BINARY="$(command -v uv)"
+export UV_PYTHON="$(command -v python3)"
+export UV_OFFLINE=1
+export UV_NO_BUILD_ISOLATION=1
 
 # Use local cache instead of downloading.
 export YARN_CACHE_FOLDER="$(realpath ./yarn-cache/)"
@@ -116,21 +133,24 @@ for wheel in out/wheels/*.whl; do
     python3 -m installer --destdir="%buildroot" "$wheel"
 done
 
-desktop-file-install --dir %buildroot%_desktopdir qt/bundle/lin/anki.desktop
+desktop-file-install --dir %buildroot%_desktopdir qt/launcher/lin/anki.desktop
 
-install -Dm644 qt/bundle/lin/anki.1 %buildroot%_man1dir/anki.1
-install -Dm644 qt/bundle/lin/anki.png %buildroot%_pixmapsdir/anki.png
-install -Dm644 qt/bundle/lin/anki.xpm %buildroot%_pixmapsdir/anki.xpm
-install -Dm644 qt/bundle/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
+install -Dm644 qt/launcher/lin/anki.1 %buildroot%_man1dir/anki.1
+install -Dm644 qt/launcher/lin/anki.png %buildroot%_pixmapsdir/anki.png
+install -Dm644 qt/launcher/lin/anki.xpm %buildroot%_pixmapsdir/anki.xpm
+install -Dm644 qt/launcher/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
 
 %files
 %doc README.md SECURITY.md
 %_bindir/anki
+%_bindir/ankiw
 %python3_sitelibdir/anki
 %python3_sitelibdir/aqt
 %python3_sitelibdir/_aqt
-%python3_sitelibdir/%{pyproject_distinfo anki}
-%python3_sitelibdir/%{pyproject_distinfo aqt}
+# remove zeroes from version
+# 25.07.5 -> 25.7.5
+%python3_sitelibdir/%(dir='%{pyproject_distinfo anki}'; echo ${dir//0/})
+%python3_sitelibdir/%(dir='%{pyproject_distinfo aqt}'; echo ${dir//0/})
 %_desktopdir/anki.desktop
 %_pixmapsdir/anki.png
 %_pixmapsdir/anki.xpm
@@ -138,6 +158,9 @@ install -Dm644 qt/bundle/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
 %_man1dir/anki.*
 
 %changelog
+* Thu Aug 28 2025 Alexander Stepchenko <geochip@altlinux.org> 25.07.5-alt1
+- Update to 25.07.5.
+
 * Thu Aug 28 2025 Alexander Stepchenko <geochip@altlinux.org> 24.11-alt2
 - Fix build with rust 1.89.
 
