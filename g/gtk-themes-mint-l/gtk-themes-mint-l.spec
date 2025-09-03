@@ -1,5 +1,5 @@
 Name: gtk-themes-mint-l
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Mint-L Theme
@@ -52,6 +52,9 @@ cp -a usr %buildroot/
 %_datadir/cinnamon/styles.d/00_mint-l.styles
 
 %changelog
+* Wed Sep 03 2025 Alexander Kovalev <alexvk@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Wed Jul 16 2025 Alexander Kovalev <alexvk@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 
