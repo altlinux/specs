@@ -2,11 +2,11 @@
 %define _runtimedir /run
 %define _localstatedir /var
 #Use GTK+ instead of Xlib
-%def_with gtk
+%def_with gtk4
 
 Name: spice-vdagent
 Version: 0.22.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -15,12 +15,15 @@ Url: http://spice-space.org/
 
 # VCS-git: https://gitlab.freedesktop.org/spice/linux/vd_agent.git
 Source: %name-%version.tar
-Source2: spice-vdagentd.init-alt
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.50
-%{?_with_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= 3.22}
+%if_with gtk4
+BuildRequires: pkgconfig(gtk4) >= 3.98
+%else
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
+%endif
 BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
 BuildRequires: pkgconfig(spice-protocol) >= 0.14.3
 BuildRequires: pkgconfig(alsa) >= 1.0.22
@@ -51,15 +54,14 @@ Features:
 %build
 %autoreconf
 %configure \
-    %{subst_with gtk} \
-	--with-session-info=auto \
-	--with-init-script=systemd+redhat
+    %{subst_with gtk4} \
+    --with-session-info=systemd \
+    --with-init-script=systemd
 
 %make_build
 
 %install
 %makeinstall_std tmpfilesdir=%_tmpfilesdir udevrulesdir=%_udevrulesdir systemdunitdir=%_unitdir userunitdir=%_user_unitdir
-install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 
 # fix autostart in KDE Plasma
 cp -ar %buildroot/%_sysconfdir/xdg/autostart/spice-vdagent{,-kde}.desktop
@@ -72,29 +74,23 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 	--set-key="Exec" --set-value="/usr/bin/spice-vdagent -x" \
 	%buildroot/%_sysconfdir/xdg/autostart/spice-vdagent-kde.desktop
 
-%post
-%post_service spice-vdagentd
-%systemd_user_post spice-vdagent.service
-
-%preun
-%preun_service spice-vdagentd
-%systemd_user_preun spice-vdagent.service
-
 %files
 %doc COPYING CHANGELOG.md README.md
 %_udevrulesdir/*.rules
 %_tmpfilesdir/spice-vdagentd.conf
-%_initddir/spice-vdagentd
 %_unitdir/*
 %_userunitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent*.desktop
-%_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
-%_datadir/gdm/greeter/autostart/spice-vdagent.desktop
 %_man1dir/*
 
 %changelog
+* Wed Sep 03 2025 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt3
+- Fix startup via systemd in user session.
+- Move to gtk4.
+- Drop sysvinit support.
+
 * Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt2
 - fix use systemd rpm macros in spec
 
