@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.19
+Version: 0.7.0
 Release: alt1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
@@ -16,12 +16,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
-BuildRequires: python3-module-pytest
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -40,6 +42,9 @@ grep -qs '^[ ]*git_refnames[ ]*=[ ]*".*"[ ]*$' "$vers_f" || exit 1
 sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-test.txt
+%endif
 
 %build
 %pyproject_build
@@ -56,6 +61,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
+- 0.6.19 -> 0.7.0.
+
 * Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 0.6.19-alt1
 - 0.6.17 -> 0.6.19.
 
