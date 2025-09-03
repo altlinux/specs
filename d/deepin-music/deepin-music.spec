@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.42
+Version: 7.0.44
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -12,6 +12,7 @@ Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+
 Group: Sound
 Url: https://github.com/linuxdeepin/deepin-music
+VCS: https://github.com/linuxdeepin/deepin-music
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -100,6 +101,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/lib%repo.so
 
 %changelog
+* Wed Sep 03 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.44-alt1
+- New version 7.0.44.
+- Added VCS tag.
+
 * Wed Aug 13 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.42-alt1
 - New version 7.0.42.
 - Switched to dQt6.
