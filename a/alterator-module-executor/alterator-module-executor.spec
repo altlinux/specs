@@ -1,12 +1,13 @@
 Name: alterator-module-executor
-Version: 0.1.26
-Release: alt2
+Version: 0.1.27
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
 Group: System/Configuration/Other
 URL: https://altlinux.space/alterator/alterator-module-executor
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc libtomlc99-devel libjson-c-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 BuildRequires: alterator-manager-devel >= 0.1.30
@@ -36,6 +37,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Sep 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.27-alt1
+- Fix duplication of signals in introspection.
+
 * Thu Aug 07 2025 Ivan Savin <svn17@altlinux.org> 0.1.26-alt2
 - Fix dependencies in spec.
 
