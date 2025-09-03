@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.17.0
+Version: 2.19.0
 Release: alt1
 Summary: Travel through time in your tests
 License: MIT
@@ -66,6 +66,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1
+- 2.17.0 -> 2.19.0.
+
 * Wed Aug 06 2025 Stanislav Levin <slev@altlinux.org> 2.17.0-alt1
 - 2.16.0 -> 2.17.0.
 
