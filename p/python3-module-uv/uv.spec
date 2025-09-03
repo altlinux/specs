@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.8.10
+%define uv_version 0.8.14
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -24,6 +24,8 @@ Source: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: %pypi_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -136,6 +138,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 0.8.14-alt1
+- 0.8.10 -> 0.8.14.
+
 * Thu Aug 14 2025 Stanislav Levin <slev@altlinux.org> 0.8.10-alt1
 - 0.8.9 -> 0.8.10.
 
