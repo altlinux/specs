@@ -1,7 +1,7 @@
 %define php_extension ast
 
 Name: php%_php_suffix-%php_extension
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1.%php_version
 
 Summary: Extension exposing PHP 7 abstract syntax tree
@@ -44,6 +44,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Fri Aug 29 2025 Anton Farygin <rider@altlinux.com> 1.1.3-alt1
+- 1.1.2 -> 1.1.3
 
 * Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
 - 1.1.1 -> 1.1.2
