@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        139.0.7258.154
+Version:        140.0.7339.80
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -103,13 +103,13 @@ Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
 Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
 
-Patch050: 0050-OPENMANDRIVA-ozone-dont-use-x11-on-wayland.patch
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
+Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 
-Patch061: 0061-DEBIAN-disable-buildtools-libc.patch
-Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
+Patch061: 0061-DEBIAN-rust-no-alloc-shim.patch
+Patch062: 0062-DEBIAN-android.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
@@ -648,6 +648,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Sep 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.80-alt1
+- New version (140.0.7339.80).
+- Fixes:
+  + CVE-2025-9864: Use after free in V8
+  + CVE-2025-9865: Inappropriate implementation in Toolbar
+  + CVE-2025-9866: Inappropriate implementation in Extensions
+  + CVE-2025-9867: Inappropriate implementation in Downloads
+
 * Wed Aug 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 139.0.7258.154-alt1
 - New version (139.0.7258.154).
 - Fixes:
