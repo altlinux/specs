@@ -8,7 +8,7 @@
 
 Name: minio
 Version: %version
-Release: alt1
+Release: alt2
 Summary: Cloud Storage Server
 Group: System/Servers
 License: AGPL-3.0
@@ -97,6 +97,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 2025.07.23-alt2
+- Update web console to v2.0.3 (ALT#55707)
+
 * Fri Aug 01 2025 Alexey Shabalin <shaba@altlinux.org> 2025.07.23-alt1
 - Update to RELEASE.2025-07-23T15-54-02Z
 
