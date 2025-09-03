@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
@@ -16,18 +16,15 @@ VCS: https://github.com/executablebooks/mdit-py-plugins
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 
 Provides: python3-module-%pypi_name
 
-BuildRequires(pre): rpm-build-pyproject
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit
 
 %if_with check
-%pyproject_builddeps_metadata_extra testing
-%pyproject_builddeps_metadata_extra linkify
+BuildRequires: python3-module-markdown-it-py
+BuildRequires: python3-module-pytest-regressions
 %endif
 
 %description
@@ -35,8 +32,6 @@ Collection of core plugins for markdown-it-py.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -54,6 +49,9 @@ Collection of core plugins for markdown-it-py.
 %python3_sitelibdir/%{pyproject_distinfo %mname}
 
 %changelog
+* Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
+- Automatically updated to 0.5.0 (Closes: #55825).
+
 * Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
 - Automatically updated to 0.4.2.
 
