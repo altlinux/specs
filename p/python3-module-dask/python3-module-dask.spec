@@ -3,7 +3,7 @@
 
 Name: python3-module-dask
 Version: 2021.12.0
-Release: alt2
+Release: alt2.1
 
 License: BSD
 Group: Development/Python
@@ -21,6 +21,7 @@ Patch1: dask-remove-deprecated-numpy-compat.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-intro
 BuildRequires: python3-module-setuptools
 
 # TODO
@@ -44,6 +45,7 @@ sed -i 's/readfp/read_file/' versioneer.py
 
 %install
 %pyproject_install
+%python3_prune
 
 %if_with test
 %check
@@ -55,6 +57,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 2021.12.0-alt2.1
+- NMU: Remove tests from the package (Closes: #55804).
+
 * Mon Aug 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 2021.12.0-alt2
 - NMU: Apply upstream fix for removing deprecated numpy.compat
 
