@@ -2,7 +2,7 @@
 
 Name: pdfcsp
 Version: 0.3.2
-Release: alt1
+Release: alt2
 Summary: Library for CryptoPro pdf electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
@@ -135,6 +135,9 @@ Command line tools for pdf signatures
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Wed Sep 03 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt2
+- Additional fixes for stamp embedding
+
 * Fri Aug 22 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt1
 - Fix the total objects number for a simple Xref table. (closes: #55690).
 
