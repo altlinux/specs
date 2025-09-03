@@ -2,7 +2,7 @@
 %def_with opencv
 
 Name: frei0r-plugins
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -75,6 +75,8 @@ popd
 
 %files -n frei0r-devel
 %_includedir/frei0r.h
+%_includedir/frei0r.hpp
+%_includedir/frei0r/
 %_pkgconfigdir/frei0r.pc
 
 %files -n frei0r-devel-doc
@@ -88,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.4.0-alt1
+- New version.
+
 * Fri Jun 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.3.3-alt1
 - New version.
 - Don't require plugins for frei0r-devel.
@@ -166,7 +171,7 @@ popd
 - fixed build with g++ 4.3
 
 * Sat Mar 15 2008 Led <led@altlinux.ru> 1.1.19-alt2
-- moved to %_libexecdir/%bname-%major_ver/
+- moved to %%_libexecdir/%%bname-%%major_ver/
 - fixed License
 
 * Wed May 30 2007 Led <led@altlinux.ru> 1.1.19-alt1
