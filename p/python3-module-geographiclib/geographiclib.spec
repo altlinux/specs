@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0
+Version: 2.1
 Release: alt1
 Summary: The geodesic routines from GeographicLib
 License: MIT
@@ -20,10 +20,6 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata
 %endif
-
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3-module-setuptools
 
 %description
 This is a library to solve geodesic problems on an ellipsoid model of the earth.
@@ -51,6 +47,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 2.1-alt1
+- 2.0 -> 2.1.
+
 * Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 2.0-alt1
 - 1.50 -> 2.0.
 
