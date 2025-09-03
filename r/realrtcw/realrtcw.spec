@@ -8,7 +8,7 @@
 %endif
 
 Name: realrtcw
-Version: 5.1
+Version: 5.2
 Release: alt1
 Summary: RealRTCW is a community single-player overhaul project for Return to Castle Wolfenstein
 License: GPL-3.0-only AND RTCW SP Additions
@@ -18,9 +18,8 @@ Url: https://github.com/wolfetplayer/RealRTCW
 Source0: %name-%version.tar
 Source1: %name.desktop
 
-Patch0: gcc14-compile-fix.patch
-Patch1: fix-steam-typo.patch
-Patch2: unbundle-zlib.patch
+Patch0: fix-steam-typo.patch
+Patch1: unbundle-zlib.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkg-config
@@ -73,7 +72,6 @@ $HOME/.realrtcw/
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 CFLAGS="%optflags" \
@@ -112,6 +110,9 @@ install -m 0644 misc/wolf.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 5.2-alt1
+- 5.2.
+
 * Thu Feb 27 2025 L.A. Kostis <lakostis@altlinux.ru> 5.1-alt1
 - Initial build for ALTLinux.
 
