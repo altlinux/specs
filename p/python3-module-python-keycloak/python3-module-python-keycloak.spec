@@ -3,7 +3,7 @@
 %define mod_name keycloak
 
 Name: python3-module-%pypi_name
-Version: 5.7.0
+Version: 5.8.1
 Release: alt1
 
 Summary: Python package providing access to the Keycloak API
@@ -15,7 +15,8 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,6 +47,9 @@ sed -Ei '/^version = /s|= "[0-9.]+"$|= "%version"|' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 5.8.1-alt1
+- 5.7.0 -> 5.8.1.
+
 * Fri Jul 18 2025 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1
 - 5.6.0 -> 5.7.0.
 
