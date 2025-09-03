@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: somo
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: A human-friendly alternative to netstat for socket and port monitoring
 License: MIT
@@ -61,5 +61,8 @@ install -Dm 0644 target/%name.1.* %buildroot%_man1dir/
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0
+
 * Wed Jul 16 2025 Pavel Shilov <zerospirit@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rainfrog
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 Summary: %name a database tool for the terminal
 License: MIT
@@ -15,6 +15,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
+BuildRequires: gcc-c++
+BuildRequires: libstdc++-devel
 
 %description
 %summary
@@ -24,6 +26,8 @@ BuildRequires: rust-cargo
 %autopatch -p1
 
 %build
+export CC=gcc
+export CXX=g++
 mkdir -p .cargo
 cat > .cargo/config.toml <<EOF
 [source.crates-io]
@@ -36,8 +40,10 @@ directory = "vendor"
 strip = false
 %ifarch i586
 # Use less optimisation otherwise it causes "out of memory" error on 32-bit
-lto = "thin"
-codegen-units = 16
+lto = false
+codegen-units = 1
+opt-level = 2
+panic = "abort"
 %endif
 EOF
 %rust_build
@@ -50,7 +56,10 @@ EOF
 %_bindir/%name
 
 %changelog
-* Wed Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.6-alt1
+* Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.7-alt1
+- 0.3.6 -> 0.3.7
+
+* Wed Aug 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.6-alt1
 - 0.3.5 -> 0.3.6
 
 * Mon Aug 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.5-alt1

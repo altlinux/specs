@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: tailspin
-Version: 5.4.5
+Version: 5.5.0
 Release: alt1
 Summary: A log file highlighter
 License: MIT
@@ -60,6 +60,9 @@ export CARGO_HOME=${PWD}/cargo
 %_datadir/zsh_completion.d/%short_name
 
 %changelog
+* Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 5.5.0-alt1
+- 5.4.5 -> 5.5.0
+
 * Wed Jul 02 2025 Pavel Shilov <zerospirit@altlinux.org> 5.4.5-alt1
 - Update based on upstream
 
