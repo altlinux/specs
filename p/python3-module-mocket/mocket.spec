@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.13.10
+Version: 3.13.11
 Release: alt1
 
 Summary: Python socket mock framework
@@ -75,6 +75,9 @@ py.test-3 -k "not test_file_object and \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.11-alt1
+- Automatically updated to 3.13.11.
+
 * Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.10-alt1
 - Automatically updated to 3.13.10.
 
