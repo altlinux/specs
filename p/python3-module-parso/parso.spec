@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 Summary: A Python3 Parser
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,6 +55,9 @@ Parso consists of a small API to parse Python and analyse the syntax tree.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 0.8.5-alt1
+- 0.8.4 -> 0.8.5.
+
 * Mon Nov 11 2024 Stanislav Levin <slev@altlinux.org> 0.8.4-alt1
 - 0.8.3 -> 0.8.4.
 
