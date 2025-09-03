@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.18.0
+Version: 3.19.1
 Release: alt1
 Summary: A platform independent file lock for Python
 License: Unlicense
@@ -14,14 +14,16 @@ VCS: https://github.com/tox-dev/py-filelock
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
 %add_pyproject_deps_check_filter diff-cover
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -36,6 +38,9 @@ the same lock object twice, it will not block.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -52,6 +57,9 @@ the same lock object twice, it will not block.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 3.19.1-alt1
+- 3.18.0 -> 3.19.1.
+
 * Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 3.18.0-alt1
 - 3.17.0 -> 3.18.0.
 
