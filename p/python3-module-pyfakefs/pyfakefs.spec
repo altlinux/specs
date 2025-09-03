@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.9.2
+Version: 5.9.3
 Release: alt1
 Summary: Implements a fake file system that mocks the Python file system modules
 License: Apache-2.0
@@ -15,7 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject
@@ -61,6 +62,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/{tests,pytest_tests}/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 5.9.3-alt1
+- 5.9.2 -> 5.9.3.
+
 * Thu Jul 31 2025 Stanislav Levin <slev@altlinux.org> 5.9.2-alt1
 - 5.9.1 -> 5.9.2.
 
