@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %define oname ujson
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.10.0
-Release: alt1.1
+Version: 5.11.0
+Release: alt1
 
 Summary: Ultra fast JSON encoder and decoder for Python
 
@@ -57,6 +56,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 5.11.0-alt1
+- Automatically updated to 5.11.0.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 5.10.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
