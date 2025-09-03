@@ -7,7 +7,7 @@
 
 Name: remmina
 Version: 1.4.40
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -137,7 +137,6 @@ desktop client.
 Summary: RDP plugin for Remmina Remote Desktop Client
 Group: Networking/Remote access
 Requires: %name = %EVR
-Requires: freerdp-plugins-standard
 
 %description plugins-rdp
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
@@ -228,6 +227,7 @@ This package contains the python plugin for the Remmina remote desktop client.
 %package gnome-session
 Summary: Gnome Shell session for Remmina kiosk mode
 Group: Networking/Remote access
+BuildArch: noarch
 Requires: %name = %EVR
 Requires: gnome-session
 
@@ -366,6 +366,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Aug 06 2025 Constantin Sunzow <protvin@altlinux.org> 1.4.40-alt2
+- Drop dependency on freerdp 2.
+
 * Tue Jun 24 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.40-alt1
 - New version.
 

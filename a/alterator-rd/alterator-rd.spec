@@ -4,11 +4,10 @@
 
 Name: alterator-rd
 Version: 0.0.3
-Release: alt3
+Release: alt4
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Summary: Alterator module for remote desktop
-Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -52,7 +51,7 @@ Add support for RDP (rdesktop) protocol
 
 %package freerdp
 Requires: %name == %version-%release
-Requires: xfreerdp
+Requires: xfreerdp3
 Summary: freerdp support
 Group: System/Configuration/Other
 
@@ -192,6 +191,9 @@ Meta-package to to include all available remote protocols
 %files all
 
 %changelog
+* Tue Aug 05 2025 Constantin Sunzow <protvin@altlinux.org> 0.0.3-alt4
+- Drop dependency on freerdp 2.
+
 * Mon Jun 09 2025 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt3
 - Dropped rpm-build-licenses usage.
 - Dropped gtk2-ssh-askpass from dependencies.

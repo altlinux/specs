@@ -6,7 +6,7 @@
 %endif
 
 Name: guacamole-server
-Version: 1.5.5
+Version: 1.6.0
 Release: alt1
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
@@ -18,6 +18,12 @@ Source1: %name.sysconfig
 Source2: %name.service
 Source3: %name.conf
 Patch: %name-%version.patch
+# FAIL: test_libguac 65 - [socket] nested_send_instruction: Assertion failed
+Patch1: guacamole-server-1.6.0-fix-nested-socket-initialization.patch
+# From Fedora:
+# src/libguac/wol.c: inet_pton called with a destination buffer size too small
+# https://issues.apache.org/jira/browse/GUACAMOLE-2087
+Patch2: guacamole-server-1.6.0-guacamole-2070.patch
 
 Requires: guacd
 Requires: libguac-client-ssh
@@ -30,8 +36,8 @@ BuildRequires: libjpeg-devel
 BuildRequires: libwebsockets-devel
 BuildRequires: systemd-devel
 BuildRequires: pkgconfig(cairo)
-BuildRequires: pkgconfig(freerdp2)
-BuildRequires: pkgconfig(freerdp-client2)
+BuildRequires: pkgconfig(freerdp3)
+BuildRequires: pkgconfig(freerdp-client3)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpulse)
@@ -107,7 +113,6 @@ in Kubernetes pods.
 Summary: RDP support for guacd
 Group: System/Libraries
 Requires: libguac = %EVR
-Requires: freerdp-plugins-standard
 
 %description -n libguac-client-rdp
 libguac-client-rdp is a protocol support plugin for the Guacamole proxy (guacd)
@@ -153,10 +158,10 @@ framework to translate between arbitrary protocols and the Guacamole protocol.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
-%add_optflags -Wno-error=discarded-qualifiers
+%add_optflags -Wno-error=deprecated-declarations
 %autoreconf
 %configure \
   --disable-silent-rules \
@@ -227,7 +232,7 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %files -n libguac-client-rdp
 %_libdir/libguac-client-rdp.so
 %_libdir/libguac-client-rdp.so.*
-%_libdir/freerdp2/*.so
+%_libdir/freerdp3/*.so
 
 %files -n libguac-client-ssh
 %_libdir/libguac-client-ssh.so
@@ -259,6 +264,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Tue Aug 05 2025 Constantin Sunzow <protvin@altlinux.org> 1.6.0-alt1
+- New version.
+
 * Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.5-alt1
 - New version 1.5.5.
 

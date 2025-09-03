@@ -3,7 +3,7 @@
 
 Name: openuds-client
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: Client for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
@@ -17,7 +17,6 @@ BuildRequires(pre): rpm-build-xdg rpm-build-python3
 Requires: /usr/bin/xfreerdp
 Requires: /usr/bin/x2goclient
 Requires: /usr/bin/remote-viewer
-Requires: freerdp-plugins-standard
 %py3_requires psutil
 %py3_requires Crypto
 %py3_requires PyQt6
@@ -43,6 +42,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Wed Sep 03 2025 Constantin Sunzow <protvin@altlinux.org> 4.0.0-alt2
+- Drop dependency on freerdp 2.
+
 * Mon Jun 16 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
 - v4.0 snapshot 5b044bca346ac0e5383ae593cf3d978903652acf
 
