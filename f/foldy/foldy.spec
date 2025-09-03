@@ -1,13 +1,16 @@
+# If you want to suggest changes, please send PR on
+# https://altlinux.space/alt-gnome/Foldy to altlinux branch
+
 %define _unpackaged_files_terminate_build 1
 %define app_id org.altlinux.Foldy
 %define service_name org.altlinux.FoldyService
 %define gir_name Foldy
 %define glib_min_version 2.76
-%define api_version 4
-%define minor_version 2
+%define api_version 5
+%define minor_version 0
 
 Name: foldy
-Version: 4.2
+Version: %api_version.%minor_version
 Release: alt1
 
 Summary: Folder manager aimed to mobile devices
@@ -17,9 +20,9 @@ Url: https://altlinux.space/alt-gnome/Foldy
 Vcs: https://altlinux.space/alt-gnome/Foldy.git
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
-Requires: lib%name-%api_version = %EVR
+Requires: lib%name%api_version = %EVR
 Requires: %name-service = %EVR
 
 BuildRequires(pre): rpm-macros-meson
@@ -45,54 +48,45 @@ BuildRequires: gettext-devel
 Summary: Service for categories fix in GNOME and phosh
 Group: Other
 
-Requires: lib%name-%api_version = %EVR
+Requires: lib%name%api_version = %EVR
 
 %description service
 %summary.
 
-%package -n lib%name-%api_version
+%package -n lib%name%api_version
 Summary: Foldy library
 Group: System/Libraries
 
-%description -n lib%name-%api_version
+%description -n lib%name%api_version
 %summary.
 
-%package -n lib%name-%api_version-devel
+%package -n lib%name-devel
 Summary: Foldy devel files
 Group: Development/C
 
-Requires: lib%name-%api_version = %EVR
+Provides: lib%name-devel
+Requires: lib%name%api_version = %EVR
 
-%description -n lib%name-%api_version-devel
+%description -n lib%name-devel
 %summary.
 
-%package -n lib%name-%api_version-devel-vala
-Summary: Foldy devel files for vala
-Group: Development/Other
-
-BuildArch: noarch
-Requires: lib%name-%api_version-devel = %EVR
-
-%description -n lib%name-%api_version-devel-vala
-%summary.
-
-%package -n lib%name-%api_version-gir
+%package -n lib%name%api_version-gir
 Summary: Foldy typelib files
 Group: System/Libraries
 
-Requires: lib%name-%api_version = %EVR
+Requires: lib%name%api_version = %EVR
 
-%description -n lib%name-%api_version-gir
+%description -n lib%name%api_version-gir
 %summary.
 
-%package -n lib%name-%api_version-gir-devel
+%package -n lib%name-gir-devel
 Summary: Foldy devel gir files
 Group: Development/Other
 
 BuildArch: noarch
-Requires: lib%name-%api_version-gir = %EVR
+Requires: lib%name%api_version-gir = %EVR
 
-%description -n lib%name-%api_version-gir-devel
+%description -n lib%name-gir-devel
 %summary.
 
 %prep
@@ -105,8 +99,8 @@ Requires: lib%name-%api_version-gir = %EVR
 
 %install
 %meson_install
-%find_lang %name --with-gnome
-%find_lang %service_name --with-gnome
+%find_lang %name
+%find_lang %service_name
 
 %check
 export AS_VALIDATE_NONET="true"
@@ -127,52 +121,55 @@ export AS_VALIDATE_NONET="true"
 %_datadir/dbus-1/services/%service_name.service
 %_desktopdir/%service_name.desktop
 %_xdgconfigdir/autostart/%service_name.desktop
-%_iconsdir/hicolor/*/apps/org.altlinux.FoldyService.svg
-%_iconsdir/hicolor/*/apps/org.altlinux.FoldyService-symbolic.svg
+%_iconsdir/hicolor/*/apps/%service_name.svg
+%_iconsdir/hicolor/*/apps/%service_name-symbolic.svg
 
-%files -n lib%name-%api_version
-%_libdir/lib%name-%api_version.so.*
+%files -n lib%name%api_version
+%_libdir/lib%name-%api_version.so.%api_version
+%_libdir/lib%name-%api_version.so.%api_version.*
 
-%files -n lib%name-%api_version-devel
+%files -n lib%name-devel
 %_libdir/lib%name-%api_version.so
 %_pkgconfigdir/lib%name-%api_version.pc
 %_includedir/lib%name-%api_version.h
-
-%files -n lib%name-%api_version-devel-vala
 %_vapidir/lib%name-%api_version.deps
 %_vapidir/lib%name-%api_version.vapi
 
-%files -n lib%name-%api_version-gir
+%files -n lib%name%api_version-gir
 %_typelibdir/%gir_name-%api_version.typelib
 
-%files -n lib%name-%api_version-gir-devel
+%files -n lib%name-gir-devel
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Wed Sep 03 2025 Vladimir Vaskov <rirusha@altlinux.org> 5.0-alt1
+- New version: 5.0.
+- Fixed empty window on folder deletion (closes: 55479).
+
 * Tue May 20 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.2-alt1
-- New version: 4.2
+- New version: 4.2.
 
 * Thu May 08 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.1-alt1
-- New version: 4.1
+- New version: 4.1.
 
 * Thu Apr 10 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.12-alt1
-- New version: 3.12
-- Changed upstream remote URL and VCS
+- New version: 3.12.
+- Changed upstream remote URL and VCS.
 
 * Mon Mar 24 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.8-alt1
-- New version: 3.8
+- New version: 3.8.
 
 * Tue Mar 04 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.6-alt1
-- New version: 3.6
+- New version: 3.6.
 
 * Fri Feb 21 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.5-alt1
-- New version: 3.5
+- New version: 3.5.
 
 * Wed Feb 12 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.4-alt1
-- New version: 3.4
+- New version: 3.4.
 
 * Tue Feb 11 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.3-alt1
-- New version: 3.3
+- New version: 3.3.
 
 * Tue Feb 11 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.2-alt1
 - Initial build.
