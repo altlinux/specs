@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gcc
-Version: 15.1.0
+Version: 15.2.0
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -137,6 +137,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Sep 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2.0-alt1
+- 15.2.0 released
+
 * Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.1.0-alt1
 - 15.1.0 released
 
