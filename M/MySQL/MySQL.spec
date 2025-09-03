@@ -15,8 +15,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.42
-Release: alt2
+Version: 8.0.43
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -918,6 +918,17 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Sep 02 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.43-alt1
+- new version
+  + (fixes: CVE-2025-50076, CVE-2025-50077, CVE-2025-50078, CVE-2025-50079)
+  + (fixes: CVE-2025-50080, CVE-2025-50081, CVE-2025-50082, CVE-2025-50083)
+  + (fixes: CVE-2025-50084, CVE-2025-50085, CVE-2025-50086, CVE-2025-50087)
+  + (fixes: CVE-2025-50088, CVE-2025-50091, CVE-2025-50092, CVE-2025-50093)
+  + (fixes: CVE-2025-50094, CVE-2025-50096, CVE-2025-50097, CVE-2025-50098)
+  + (fixes: CVE-2025-50099, CVE-2025-50100, CVE-2025-50101, CVE-2025-50102)
+  + (fixes: CVE-2025-50104, CVE-2025-53023)
+- update mysql-shell 8.0.42 -> 8.0.43
+
 * Fri May 30 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.42-alt2
 - quit forcing obsolete defaults for charset and symbolic links (closes: #53370)
   + server.cnf: add a hint for activating sql strict mode
