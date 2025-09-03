@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Bootloader utilities
@@ -37,8 +37,24 @@ install -pD -m755 kernel.filetrigger %buildroot/%_rpmlibdir/boot_kernel.filetrig
 mkdir -p %buildroot/%_sysconfdir/sysconfig
 
 cat > %buildroot/%_sysconfdir/sysconfig/installkernel <<-EOF
+# INITRD_GENERATOR values:
+# make-initrd (default)
+# mkinitrd
+# dracut
 #INITRD_GENERATOR=make-initrd
-MKINITRD=%_sbindir/mkinitrd-make-initrd
+#
+# MKINITRD values (with INITRD_GENERATOR=mkinitrd):
+# mkinitrd-make-initrd: make-initrd compat with mkinitrd
+# mkinitrd: mkinitrd native (default)
+# dracut: dracut compat with mkinitrd
+#MKINITRD=%_sbindir/mkinitrd-make-initrd
+#
+# MKINITRD_OPTIONS mkinitrd command line options
+#MKINITRD_OPTIONS=""
+#
+# DRACUT_OPTIONS dracut command line options
+#DRACUT_OPTIONS=""
+#
 # INITRD_AUTOUPDATE values:
 # none: Never update initrd.
 # default: Update initrd for default kernel on ucode update and
@@ -88,6 +104,10 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Mon Sep 01 2025 Alexey Shabalin <shaba@altlinux.org> 0.5.5-alt1
+- installkernel: Add dracut support.
+- Update /etc/sysconfig/installkernel.
+
 * Thu May 19 2022 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt1
 - installkernel: add detect /boot/devicetree
 - installkernel: add bootloading with separate partition /boot with extlinux.conf
