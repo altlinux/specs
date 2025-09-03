@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -25,6 +25,10 @@ Source: %name-%version.tar
 
 %define adw_ver 1.7
 %define gtksource_ver 5.6
+# https://bugzilla.altlinux.org/55825
+#Requires: python3-module-mdit-plugins >= 0.5.0
+# https://bugzilla.altlinux.org/55824
+#Requires: python3-module-markdown-it >= 4.0.0
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -85,6 +89,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Sep 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
+- 0.11.4
+
 * Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
 - 0.11.2
 
