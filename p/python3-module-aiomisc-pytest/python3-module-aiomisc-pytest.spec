@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
+Version: 1.3.4
 Release: alt1
 
 Summary: Pytest plugin for aiomisc
@@ -61,6 +61,9 @@ sed -i '/version/s/= .*$/= "%version"/' pyproject.toml
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.3.4-alt1
+- Updated to 1.3.4.
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.1-alt1
 - Updated to 1.2.1.
 

@@ -5,7 +5,7 @@
 %define pypi_name python-ulid
 
 Name: python3-module-%pypi_name
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: ULID implementation for Python
@@ -67,6 +67,9 @@ It is:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 3.1.0-alt1
+- Updated to 3.1.0.
+
 * Mon Oct 21 2024 Alexandr Shashkin <dutyrok@altlinux.org> 3.0.0-alt1
 - Updated to 3.0.0.
 

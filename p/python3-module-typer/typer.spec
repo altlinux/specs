@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.16.0
+Version: 0.17.3
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -20,7 +20,8 @@ Source1: %pyproject_deps_config_name
 Source2: clean_coverage.py
 
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
@@ -91,6 +92,9 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.3-alt1
+- Updated to 0.17.3.
+
 * Wed May 28 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.16.0-alt1
 - Updated to 0.16.0.
 

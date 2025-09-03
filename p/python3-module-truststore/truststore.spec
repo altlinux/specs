@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Verify certificates using OS trust stores
@@ -21,7 +21,8 @@ Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
@@ -81,6 +82,9 @@ luck!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.4-alt1
+- Updated to 0.10.4.
+
 * Thu Aug 07 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.3-alt1
 - Updated to 0.10.3.
 
