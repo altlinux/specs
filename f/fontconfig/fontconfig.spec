@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.17.1
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -105,6 +105,9 @@ while read CONF ; do
     ln -sr %buildroot/%_sysconfdir/fonts/conf.avail/$CONF %buildroot/%_datadir/%name/conf.avail/$CONF
 done
 
+# don't reject bitmap fonts
+rm %buildroot/%_sysconfdir/fonts/conf.d/70-*bitmaps*.conf
+
 mkdir -p %buildroot/%_libdir/libfontconfig/
 %ifarch %ix86
 install -m 0644 save_i586_fontconfig_package.so %buildroot/%_libdir/libfontconfig/
@@ -190,6 +193,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Wed Sep 03 2025 Sergey V Turchin <zerg@altlinux.org> 2.17.1-alt2
+- don't reject bitmap fonts (closes: 55780)
+
 * Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 2.17.1-alt1
 - new version
 
