@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.1.1
 Release: alt1
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
 BuildRequires(pre): rpm-build-pyproject
@@ -49,6 +51,9 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
+- 1.0.0 -> 1.1.1.
+
 * Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.9.7 -> 1.0.0.
 
