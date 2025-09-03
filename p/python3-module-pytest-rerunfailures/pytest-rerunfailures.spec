@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 15.1
+Version: 16.0.1
 Release: alt1
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
@@ -56,6 +56,9 @@ and not test_exception_match_only_rerun_in_dual_query"
 %python3_sitelibdir/pytest_rerunfailures-%version.dist-info/
 
 %changelog
+* Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 16.0.1-alt1
+- Automatically updated to 16.0.1.
+
 * Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 15.1-alt1
 - Automatically updated to 15.1.
 
