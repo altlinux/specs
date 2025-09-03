@@ -1,5 +1,5 @@
 Name: riscv32-none-elf-gcc
-Version: 15.1.0
+Version: 15.2.0
 Release: alt1
 
 Summary: GNU Compiler Collection
@@ -20,7 +20,7 @@ Requires: riscv32-none-elf-binutils >= 2.44
 %add_python_req_skip libstdcxx gdb
 
 %package c++
-Summary: Cross Compiling GNU GCC targeted at aarch64-none-elf
+Summary: Cross Compiling GNU GCC targeted at riscv32-none-elf
 Group: Development/Tools
 AutoReq: yes, nopython
 Requires: %name = %version-%release
@@ -126,6 +126,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Sep 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2.0-alt1
+- 15.2.0 released
+
 * Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.1.0-alt1
 - 15.1.0 released
 
