@@ -1,5 +1,5 @@
 Name: ad-integration-themes
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: Icon themes for AD integration BaseAlt projects
@@ -18,14 +18,19 @@ like ADMC, GPUI and other.
 %setup
 
 %install
-mkdir -p %buildroot%_datadir/%name
-cp -R themes/*/ %buildroot%_datadir/%name
+mkdir -p %buildroot%_iconsdir/%name
+cp -R scalable/ index.theme %buildroot%_iconsdir/%name
 
 %files
 %doc LICENSE README.md
-%_datadir/%name
+%_iconsdir/%name
 
 %changelog
+* Wed Aug 20 2025 Semyon Knyazev <samael@altlinux.org> 3.0-alt1
+- Move icon theme files to parent directory
+- Change parent theme from Papirus to gnome
+- Change domain info item and computer icon
+
 * Tue Jun 03 2025 Semyon Knyazev <samael@altlinux.org> 2.0-alt1
 - Removed themes ad-integration-line/duotone/color
 - Changed theme name AD-integration Kora to AD-integration

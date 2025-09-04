@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -124,6 +124,25 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Sep 03 2025 Semyon Knyazev <samael@altlinux.org> 0.22.0-alt1
+- Fixed ADMC desktop icon view on GNOME.
+- Changed domain info and computer icons in custom theme (AD-integration).
+- Fixed empty custom icons theme on GNOME: GNOME theme is set as parent
+  theme and will be displayed instead of custom theme.
+- Set custom icon theme search in standard directories for themes.
+- Icon search supplemented with symbolic names.
+- Added logout for current user.
+- Added credentials save option to authentication dialog. Credentials are
+  located in /tmp/admc_uid*/ccaches/ directory.
+- Added temporary credentials cleanup on application crash.
+- Added "Show login window on startup" option. If this option is enabled,
+  system/last credentials won't be used on startup.
+- "Use system credentials" option has been moved from main window preferences
+  to authentication dialog.
+- Disabled main window closing when auth dialog closes on failed startup.
+- Fixed broken column view restoration.
+- Fixed broken "Action" main window menu.
+
 * Fri Jun 20 2025 Semyon Knyazev <samael@altlinux.org> 0.21.0-alt1
 - Added Kerberos authentication. Changing the principal (user) is available 
   via the "Change user" action in the "File" menu or by right-clicking the 
