@@ -9,7 +9,7 @@
 
 Name: gnome-%_name
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Connections
 Group: Graphical desktop/GNOME
@@ -38,7 +38,7 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(gtk-vnc-2.0)
 # for gtk-frdp
 BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver
-BuildRequires: pkgconfig(winpr2)
+BuildRequires: pkgconfig(winpr3)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -77,6 +77,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
+- fixed BR: winpr2 -> winpr3
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
