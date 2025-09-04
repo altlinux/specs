@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: ISC
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # drop in replacement for requests-unixsocket
 Provides: python3-module-requests-unixsocket = %EVR
@@ -36,7 +38,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -58,6 +60,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 1.0.0 -> 1.0.1.
+
 * Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.4.2 -> 1.0.0.
 
