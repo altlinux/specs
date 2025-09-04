@@ -3,7 +3,7 @@
 %define _laps_schema_dir %_datadir/native-laps-schema
 
 Name: samba-extension-laps-v2-schema
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: LAPSv2 schema installer for samba DC.
@@ -43,5 +43,8 @@ install -D laps-v2-schema-extension.ldif %buildroot/%_laps_schema_dir/laps-v2-sc
 %_laps_schema_dir/laps-v2-schema-extension.ldif
 
 %changelog
+* Tue Sep 4 2025 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt1
+- Fix attribute names
+
 * Sun Mar 30 2025 Vladimir Rubanov <august@altlinux.org> 0.1.0-alt1
 - Initial build
