@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.8
+Version: 4.4.0
 Release: alt1
 Summary: Determining appropriate platform-specific dirs
 License: MIT
@@ -15,7 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,6 +54,9 @@ location.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1
+- 4.3.8 -> 4.4.0.
+
 * Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 4.3.8-alt1
 - 4.3.7 -> 4.3.8.
 

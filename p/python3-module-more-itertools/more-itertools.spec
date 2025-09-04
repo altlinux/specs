@@ -2,7 +2,7 @@
 %define pypi_name more-itertools
 
 Name: python3-module-%pypi_name
-Version: 10.7.0
+Version: 10.8.0
 Release: alt1
 Summary: More routines for operating on iterables, beyond itertools
 License: MIT
@@ -15,6 +15,8 @@ Source1: %pyproject_deps_config_name
 # wellknown PyPI name
 %py3_provides %pypi_name
 Provides: python3-module-more_itertools = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -47,6 +49,9 @@ routines for working with Python iterables.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 10.8.0-alt1
+- 10.7.0 -> 10.8.0.
+
 * Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 10.7.0-alt1
 - 10.6.0 -> 10.7.0.
 
