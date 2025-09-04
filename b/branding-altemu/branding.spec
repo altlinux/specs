@@ -9,7 +9,7 @@
 %define flavour %theme
 
 Name: branding-%flavour
-Version: 2025.05
+Version: 2025.09
 Release: alt1
 
 Url: https://www.altlinux.org/AltEMU
@@ -86,7 +86,7 @@ BuildArch: noarch
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-two-step
 Requires: plymouth
-Requires: plymouth-theme-bgrt
+Requires: plymouth-theme-altemu
 %branding_add_conflicts %flavour bootsplash
 
 %description bootsplash
@@ -114,7 +114,6 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 BuildArch: noarch
 %branding_add_conflicts %flavour phosh-settings
-Requires: udev-rules-sway-touchscreen-name
 
 %description altemu-settings
 Distribution settings of Sway window manager for altemu.
@@ -191,6 +190,10 @@ subst "s/Theme=.*/Theme=altemu/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.sway/config
 
 %changelog
+* Thu Sep  4 2025 Artyom Bystrov <arbars@altlinux.org> 2025.09-alt1
+- Bump version
+- Fix plymouth theme name
+
 * Mon May  5 2025 Artyom Bystrov <arbars@altlinux.org> 2025.05-alt1
 - Bump version
 - New branding for ALTEMU
