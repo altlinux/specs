@@ -1,10 +1,10 @@
 Name: pm-utils
 Version: 1.4.1
-Release: alt2.qa1
+Release: alt3
 Summary: Tools to suspend and hibernate computer
 Summary(ru_RU.UTF-8):  Набор утилит для приостановления работы компьютера.
 Url: http://pm-utils.freedesktop.org/
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
 
 Packager: Ildar Mulyukov <ildar@altlinux.ru>
@@ -15,7 +15,8 @@ Source2: README.ALT
 Patch: %name-alt-misc.patch
 Patch1: %name-alt-apm.patch
 
-Conflicts: powermgmt-base
+# For on_ac_power script
+Requires: powermgmt-base >= 1.38-alt1
 
 BuildRequires: docbook-dtds
 # Automatically added by buildreq on Sat Jun 21 2008
@@ -61,7 +62,14 @@ done
 %doc AUTHORS MAINTAINERS NEWS README* TODO pm/HOWTO*
 %doc doc/*
 
+%exclude %_bindir/on_ac_power
+%exclude %_man1dir/on_ac_power.1*
+
 %changelog
+* Thu Sep 04 2025 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt3
+- NMU: Use on_ac_power from powermgmt-base.
+- NMU: Update License tag.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.1-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
