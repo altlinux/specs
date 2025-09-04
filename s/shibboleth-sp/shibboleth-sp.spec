@@ -6,7 +6,7 @@
 %define _localstatedir %_var
 
 Name: shibboleth-sp
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Open source system for attribute-based Web SSO
@@ -14,9 +14,11 @@ Summary: Open source system for attribute-based Web SSO
 License: Apache-2.0
 Group: Networking/Other
 Url: https://shibboleth.net/
+VCS: https://git.shibboleth.net/git/cpp-sp
 
 Source0: https://shibboleth.net/downloads/service-provider/%version/%name-%version.tar.gz
 Source1: shibd.service
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Oct 17 2024
 # optimized out: apache2-httpd-worker boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libapr1-devel libaprutil1-devel libcrypt-devel libexpat-devel libgpg-error libldap-devel liblog4shib-devel libp11-kit libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel-compat libuuid-devel libxerces-c libxerces-c-devel libxml-security-c-devel libxml-security-c20 libxml-security-c30 libxmltooling-devel libxmltooling-lite11 perl pkg-config sh5 xalan-c
@@ -63,6 +65,7 @@ This package includes files needed for development with Shibboleth.
 
 %prep
 %setup
+%patch -p1
 
 sed -i "s|%_bindir/env bash|/bin/bash|" \
 		configs/metagen.sh
@@ -167,6 +170,10 @@ EOF
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 3.5.1-alt1
+- New version 3.5.1.
+- Added VCS tag.
+
 * Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 
