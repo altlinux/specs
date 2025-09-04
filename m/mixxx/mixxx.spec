@@ -7,7 +7,7 @@
 %endif
 
 Name: mixxx
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: Free digital DJ software
@@ -16,9 +16,10 @@ Summary(ru_RU.UTF-8): Свободная программа для цифров�
 License: GPL-2.0+
 Group: Sound
 Url: https://mixxx.org
-Vcs: git://github.com/mixxxdj/mixxx.git
+Vcs: https://github.com/mixxxdj/mixxx
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Provides: %name-data = %EVR
 Obsoletes: %name-data < %EVR
@@ -50,6 +51,7 @@ Mixxx - это бесплатная, с открытым исходным код
 
 %prep
 %setup
+%patch -p1
 
 %build
 export LC_ALL=C.UTF-8
@@ -94,6 +96,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.5.3-alt1
+- New version 2.5.3.
+
 * Mon Jun 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.5.2-alt1
 - New version 2.5.2.
 
