@@ -1,4 +1,6 @@
 %define subst_buildoption() %{expand:-DBUILD_%(echo %{1} |sed 's/./\\U&/g')=%%{?_enable_%{1}:ON}%%{?_disable_%{1}:OFF}}
+# https://lists.altlinux.org/pipermail/devel/2025-August/219531.html
+%define _libexecdir %_usr/libexec
 
 %define luaver 5.4
 
@@ -39,25 +41,24 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.22.1
+Version: 1.22.2
 Release: alt1
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
 License: GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT
 Group: Monitoring
-Url: http://conky.sourceforge.net/
+Url: https://github.com/brndnmtthws/conky
 
 VCS: git://github.com/brndnmtthws/conky.git
 Source: %name-%version.tar
 Source1: conky-dotfiles.tar.bz2
 Source99: conky.watch
-
-# git://git.altlinux.org/gears/c/conky.git
 Patch: conky-1.22.1-ALT-lua.patch
 
-BuildRequires(pre): cmake gcc-c++ rpm-build-vim
+BuildRequires(pre): rpm-build-vim rpm-build-cmake
 
+BuildRequires: cmake gcc-c++
 BuildRequires: lua%luaver-devel
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-jinja2
@@ -161,7 +162,7 @@ mkdir -p %buildroot%_sysconfdir/conky
 install -m644 -p data/conky.conf data/conky_no_x11.conf %buildroot%_sysconfdir/conky
 
 # install config converter
-mkdir -p %buildroot/usr/libexec/conky
+mkdir -p %buildroot/%_libexecdir/conky
 install -m755 -p extras/convert.lua %buildroot/usr/libexec/conky
 # install vim plugins
 mkdir -p %buildroot%vim_runtime_dir
@@ -177,7 +178,7 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %doc conky-dotfiles.tar.bz2
 
 %_bindir/conky
-/usr/libexec/conky/convert.lua
+%_libexecdir/conky
 %if_enabled lua_cairo || lua_imlib2 || lua_rsvg
 %_libdir/conky
 %endif
@@ -195,6 +196,10 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Thu Sep 04 2025 Ulysses Apokin <ulysses@altlinux.org> 1.22.2-alt1
+- Updated to 1.22.2.
+- Fixed URL.
+
 * Wed Apr 23 2025 Ulysses Apokin <ulysses@altlinux.org> 1.22.1-alt1
 - Updated to 1.22.1.
 
