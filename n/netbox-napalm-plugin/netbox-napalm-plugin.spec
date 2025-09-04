@@ -1,7 +1,7 @@
 %define pname netbox_napalm_plugin
 
 Name:    netbox-napalm-plugin
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: NetBox Napalm plugin
@@ -14,8 +14,8 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.0.2
-Conflicts: netbox > 4.3.99
+Requires: netbox >= 4.2.0
+Conflicts: netbox > 4.4.99
 Requires: python3-module-napalm
 
 BuildArch: noarch
@@ -46,6 +46,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %python3_sitelibdir/%{pyproject_distinfo %pname}
 
 %changelog
+* Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.3-alt1
+- New 0.3.3 version.
+
 * Thu Aug 07 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.2-alt1
 - New 0.3.2 version.
 

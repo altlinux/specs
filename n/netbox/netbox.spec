@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.3.7
+Version: 4.4.0
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -23,8 +23,9 @@ BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-mkdocs-material >= 9.6.18
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 0.30.0
-BuildRequires: python3-module-mkdocstrings-python
+BuildRequires: python3-module-mkdocstrings-python >= 1.18.2
 %endif
+Requires: python3-module-colorama >= 0.4.6
 Requires: python3-module-django >= 5.2.5
 Requires: python3-module-django-cors-headers >= 4.7.0
 Requires: python3-module-django-debug-toolbar >= 5.2.0
@@ -57,6 +58,7 @@ Requires: python3-module-requests >= 2.32.5
 Requires: python3-module-rq >= 2.5.0
 Requires: python3-module-social-app-django >= 5.5.1
 Requires: python3-module-social-core >= 4.7.0
+Requires: python3-module-sorl-thumbnail >= 12.11.0
 Requires: python3-module-strawberry-graphql >= 0.281.0
 Requires: python3-module-strawberry-django >= 0.65.1
 Requires: python3-module-svgwrite >= 1.4.3
@@ -128,7 +130,6 @@ mv %buildroot%_datadir/netbox/netbox/configuration_example.py %buildroot%_syscon
 ln -r -s %buildroot%_sysconfdir/netbox/configuration.py %buildroot%_datadir/netbox/netbox/configuration.py
 cp contrib/gunicorn.py %buildroot%_sysconfdir/netbox/gunicorn.py
 mkdir -p %buildroot%_sysconfdir/cron.daily/
-cp contrib/netbox-housekeeping.sh %buildroot%_sysconfdir/cron.daily/netbox-housekeeping
 touch %buildroot%_logdir/netbox/netbox.log
 install -p -D -m 644 %SOURCE6 %buildroot%_logrotatedir/netbox
 # httpd2
@@ -189,7 +190,6 @@ cert-sh generate apache2-netbox ||:
 %dir %attr(0750, root, netbox) %_sysconfdir/netbox
 %config(noreplace) %attr(0640, root, netbox) %_sysconfdir/netbox/configuration.py
 %config(noreplace) %attr(0640, root, netbox) %_sysconfdir/netbox/gunicorn.py
-%_sysconfdir/cron.daily/netbox-housekeeping
 %dir %attr(0770, root, netbox) %_sharedstatedir/netbox
 %dir %attr(0770, root, netbox) %_logdir/netbox
 %attr(0644, netbox, netbox) %_logdir/netbox/netbox.log
@@ -208,6 +208,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.0-alt1
+- New 4.4.0 version.
+
 * Wed Aug 27 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.7-alt1
 - New 4.3.7 version.
 

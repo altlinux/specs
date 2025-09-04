@@ -4,13 +4,13 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.16.12
+Version: 1.18.2
 Release: alt1
 
 Summary: A Python handler for mkdocstrings
 License: ISC
 Group:   Development/Python3
-URL:    https://pypi.org/project/mkdocstrings-python
+URL:     https://pypi.org/project/mkdocstrings-python
 VCS:     https://github.com/mkdocstrings/python
 
 BuildRequires(pre): rpm-build-python3
@@ -75,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 1.18.2-alt1
+- Updated to 1.18.2.
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.16.12-alt1
 - Automatically updated to 1.16.12.
 
