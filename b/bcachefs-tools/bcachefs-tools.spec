@@ -1,6 +1,6 @@
 Name: bcachefs-tools
 Version: 1.4.1
-Release: alt3
+Release: alt4
 
 Summary: Userspace tools and docs for bcachefs
 License: GPLv2
@@ -30,6 +30,11 @@ one would expect from a modern filesystem.
 %prep
 %setup
 sed -ri '/^VERSION/ s,v0.1-nogit,v%version,'  Makefile
+%ifarch %e2k
+# (lcc 1.29.14) error: type of cast must be integral (mcst#9685)
+sed -i '$a #undef __careful_cmp\n#define __careful_cmp __cmp' \
+	include/linux/minmax.h
+%endif
 
 %build
 %make_build NO_RUST=please EXTRA_CFLAGS='%optflags'
@@ -57,6 +62,9 @@ install -pm0755 mount.bcachefs.sh %buildroot%_sbindir/mount.bcachefs
 %_man8dir/bcachefs.8*
 
 %changelog
+* Thu Sep 04 2025 Michael Shigorin <mike@altlinux.org> 1.4.1-alt4
+- E2K: lcc 1.29 ftbfs workaround (ilyakurdyukov@; mcst#9685)
+
 * Tue Mar 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt3
 - fixed FTBFS found after libuserspace-rcu update to 0.15
 
