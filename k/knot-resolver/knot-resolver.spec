@@ -4,7 +4,7 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.12
+Version: 6.0.15
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -167,6 +167,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.15-alt1
+- 6.0.15
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.12-alt1
 - 6.0.12
 
