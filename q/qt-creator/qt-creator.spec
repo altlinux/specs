@@ -24,7 +24,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 15.0.1
+Version: 17.0.1
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -80,9 +80,7 @@ BuildRequires: elfutils-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
 BuildRequires: libxml2-devel
-# Qbs documentation
-#BuildRequires: python3-module-lxml
-#BuildRequires: python3-module-bs4
+BuildRequires: qbs-devel
 # Missing build requirements
 #BuildRequires: litehtml-devel
 BuildRequires: libffi-devel
@@ -121,8 +119,6 @@ This package contains IDE and Qt5 build environment.
 Summary: Cross-platform IDE for Qt
 Group:   Development/Tools
 Requires: %name-data = %EVR
-Provides: qbs = 1.14.0
-Obsoletes: qbs < 1.14.0
 Requires: qt6-translations
 
 %description core
@@ -168,10 +164,12 @@ sed -i 's/acceptor = acceptor/acceptor/' src/plugins/projectexplorer/projectexpl
 sed -i '/~Payload()/i Payload() {}' src/plugins/perfprofiler/perfprofilerflamegraphmodel.cpp
 %endif
 # fix build qch_docs
-sed -i '/LicenseFile/d' src/libs/qlitehtml/src/3rdparty/qt_attribution.json
-
+#sed -i '/LicenseFile/d' src/libs/qlitehtml/src/3rdparty/qt_attribution.json
+#sed -i '/LicenseId/d' src/libs/qlitehtml/src/3rdparty/qt_attribution.json
+rm -rf src/libs/qlitehtml/src/3rdparty
 
 %build
+export LC_ALL=C.UTF-8
 export QTDIR=%_qt6_prefix
 export PATH="%{_qt6_bindir}:$PATH"
 %if_with ClangCodeModel
@@ -181,15 +179,19 @@ export LLVM_INSTALL_DIR="%_prefix"
 
 %cmake -GNinja \
     -Wno-dev \
+    -DBUILD_QBS=OFF \
+    -DBUILD_WITH_INSTALL_RPATH=ON \
+    -DBUILD_PLUGIN_CLANGREFACTORING=ON \
+    -DBUILD_PLUGIN_CLANGPCHMANAGER=ON \
+    -DCLANGTOOLING_LINK_CLANG_DYLIB=ON \
     -DWITH_DOCS=ON \
-    -DBUILD_QBS=ON \
     -Djournald=ON \
-    -DBUILD_DEVELOPER_DOCS=OFF \
+    -DBUILD_DEVELOPER_DOCS=ON \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
     -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins" \
     -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1} -Wl,-rpath,%_libdir/qtcreator -Wl,-rpath,%_libdir/qtcreator/plugins"
 
-%ninja_build -C "%_cmake__builddir"
+%ninja_build -C "%_cmake__builddir" -v
 %ninja_build -C "%_cmake__builddir" qch_docs
 
 %install
@@ -214,7 +216,6 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
-%_libdir/qbs/plugins/*.so
 
 %files doc
 %_defaultdocdir/qtcreator
@@ -224,6 +225,10 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Sat Aug 30 2025 Andrey Cherepanov <cas@altlinux.org> 17.0.1-alt1
+- New version (ALT #54840).
+- Build with external qbs.
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 15.0.1-alt1
 - new version
 

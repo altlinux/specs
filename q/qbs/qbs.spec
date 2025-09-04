@@ -1,123 +1,135 @@
-%define so_version 1
+%define _untracked_files_terminate_build 1
 
-Name: qbs
-Version: 1.23.0
+%define _libexecdir %_usr/libexec
+
+%def_with check
+
+Name:    qbs
+Version: 3.0.1
 Release: alt1
 
-Summary: Qt Build Suite
+Summary: Modern build tool for software projects
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
-Group: Development/Tools
+Group:   Development/Tools 
+Url: 		 https://qbs.io/
+Vcs:     https://github.com/qbs/qbs.git
 
-Url: https://qt-project.org/wiki/Qbs
-Packager: Nazarov Denis <nenderus@altlinux.org>
+Source: %name-%version.tar
+Patch0: 0001-fixed-i586-compatibility.patch
 
-# https://download.qt.io/official_releases/%name/%version/%name-src-%version.tar.gz
-Source: %name-src-%version.tar
+BuildRequires(pre): cmake rpm-macros-qt6
+BuildRequires: ninja-build
+BuildRequires: gcc-c++
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-tools-devel
 
-BuildRequires: libstdc++-devel-static
-BuildRequires: qt5-script-devel
-BuildRequires: rpm-build-python3
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-beautifulsoup4
 
-Conflicts: qt-creator-core
-
-%add_python3_path %_datadir/%name/python/biplist
-%add_python3_path %_datadir/%name/python/ds_store
-%add_python3_path %_datadir/%name/python/mac_alias
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
-The Qt Build Suite (Qbs) is a tool that helps simplify the build process for
-developing projects across multiple platforms. Qbs can be used for any software
-project, whether it is written in Qt or not.
-
+Qbs is a tool that helps simplify the build process for developing projects
+across multiple platforms. Qbs can be used for any software project, regardless
+of programming language, toolkit, or libraries used.
+ 
 Qbs is an all-in-one tool that generates a build graph from a high-level
-project description (like qmake or cmake) and additionally undertakes the task
+project description (like qmake or CMake) and additionally undertakes the task
 of executing the commands in the low-level build graph (like make).
 
-%package common
-Summary: Common files for %name
-Group: Development/Tools
-BuildArch: noarch
-
-%description common
-Provides common files for %name
-
-%package -n lib%{name}core%so_version
-Summary: Shared library for %name
-Group: System/Libraries
-Requires: %name-common = %EVR
-
-%description -n lib%{name}core%so_version
-Provides shared library for %name
-
-%package -n lib%{name}core-devel
+%package devel
 Summary: Development files for %name
 Group: Development/Tools
-Provides: %name-devel = %EVR
-Obsoletes: %name-devel <= 1.20.1-alt1
+Requires: %name = %EVR
 
-%description -n lib%{name}core-devel
-This package is required to build native/C++ extensions for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %package examples
-Summary: Examples for the usage of %name
-Group: Development/Tools
+Summary: Example projects using %name
+Requires: %name = %EVR
 BuildArch: noarch
+Group: Development/Tools
 
 %description examples
-Provides examples for using the %name
+The %name-examples package contains example files for using %name.
 
 %prep
-%setup -n %name-src-%version
+%setup
+%patch0 -p1
 
 %build
-export LD_LIBRARY_PATH=`pwd`/lib
-%qmake_qt5 -r %name.pro \
-	QBS_INSTALL_PREFIX=%_prefix \
-	QBS_LIB_INSTALL_DIR=%_libdir \
-	QBS_LIBEXEC_INSTALL_DIR=%_libexecdir/%name \
-	QBS_PLUGINS_INSTALL_DIR=%_libdir \
-	QBS_RELATIVE_LIBEXEC_PATH=../lib/%name \
-	QBS_LIBEXEC_DESTDIR=../../../lib/%name \
-	CONFIG+=disable_rpath \
-	CONFIG+=nostrip \
-	QMAKE_LFLAGS="-Wl,--as-needed"
+export PATH="%{_qt6_bindir}:$PATH";
+export QTDIR=%_qt6_prefix; 
+	
+%cmake \
+    -GNinja \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DINSTALL_ARCHDATADIR=%_qt6_archdatadir \
+	-DINSTALL_BINDIR=%_qt6_bindir \
+	-DINSTALL_DATADIR=%_qt6_datadir \
+	-DINSTALL_DOCDIR=%_qt6_docdir \
+	-DINSTALL_EXAMPLESDIR=%_qt6_examplesdir \
+	-DQT_INSTALL_EXAMPLES_SOURCES:BOOL=ON \
+	-DINSTALL_INCLUDEDIR=%_qt6_headerdir \
+	-DINSTALL_QMLDIR=%_qt6_qmldir \
+	-DINSTALL_LIBDIR=%_qt6_libdir \
+	-DINSTALL_LIBEXECDIR=%_qt6_libexecdir \
+	-DINSTALL_PLUGINSDIR=%_qt6_plugindir \
+	-DINSTALL_SYSCONFDIR=%_qt6_sysconfdir \
+	-DINSTALL_TRANSLATIONSDIR=%_qt6_translationdir \
+	-DINSTALL_MKSPECSDIR=%_qt6_mkspecsdir \
+	-DQT_DISABLE_RPATH:BOOL=TRUE \
+  -DQBS_LIB_INSTALL_DIR=%{_libdir} \
+  -DQBS_PLUGINS_INSTALL_BASE=%{_lib} \
+  -DWITH_UNIT_TESTS=ON \
+  -DQBS_ENABLE_RPATH=OFF \
+  -DQBS_INSTALL_QCH_DOCS=ON \
+  -DQBS_DOC_INSTALL_DIR=%_qt6_docdir
 
-%make_build
+%cmake_build
 
 %install
-%install_qt5_base
-%__rm %buildroot%_libexecdir/%name/dmgbuild
+%cmake_install
+install -Dpm 0644 doc/man/qbs.1 %buildroot%_man1dir/qbs.1
+
+#Remove python dmgbuild directory, macOS specific utilites.
+rm -rfv %buildroot%_datadir/qbs/python/
+
+#Don't package tests
+rm -v %buildroot%_bindir/tst_*
+rm -v %buildroot%_bindir/clang-format-test
+
+%if_with check
+%check
+%ctest || :
+%endif
 
 %files
-%doc README.md
-%_bindir/%name
-%_bindir/%name-config
-%_bindir/%name-config-ui
-%_bindir/%name-create-project
-%_bindir/%name-setup-android
-%_bindir/%name-setup-qt
-%_bindir/%name-setup-toolchains
-%_libdir/%name
-%_libexecdir/%name
+%doc *.md LICENSE.LGPLv21 LICENSE.LGPLv3 LICENSE.GPL3-EXCEPT LGPL_EXCEPTION.txt
+%_bindir/%{name}*
+%_libdir/%name/
+%_libdir/lib%{name}*.so.*
+%_datadir/%name/
+%_libexecdir/%name/
 %_man1dir/%name.1*
-
-%files common
-%dir %_datadir/%name
-%_datadir/%name
 %exclude %_datadir/%name/examples
 
-%files -n lib%{name}core%so_version
-%_libdir/lib%{name}core.so.*
-
-%files -n lib%{name}core-devel
-%_includedir/%name
-%_libdir/lib%{name}core.prl
-%_libdir/lib%{name}core.so
+%files devel 
+%_includedir/%name/
+%_libdir/lib%{name}*.so
 
 %files examples
-%_datadir/%name/examples
+%_datadir/%name/examples/
 
 %changelog
+* Mon Sep 01 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
+- New version 3.0.1 (thanks nash@).
+
 * Thu Jul 28 2022 Nazarov Denis <nenderus@altlinux.org> 1.23.0-alt1
 - Version 1.23.0
 
