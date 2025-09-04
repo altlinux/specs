@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.38
+Version: 3.3.39.1
 Release: alt1
 
 Summary: A full featured system information script
@@ -11,6 +11,7 @@ URL: https://smxi.org
 Vcs: https://codeberg.org/smxi/inxi
 # Source-url: https://codeberg.org/smxi/inxi/archive/%version/%name-%version-1.tar.gz
 Source: %name-%version.tar.gz
+Patch0: %name-%version-%release.patch
 Patch1: %name-3.3.31.2-platform.patch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -39,6 +40,7 @@ Inxi позволяет выводить различную информацию
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p0
 
 # Disable 'update' with inxi.conf method (suggested by upstream). This will
@@ -54,6 +56,7 @@ sed -i '1s|/usr/bin/env perl|%__perl|' %name
 install -p -D -m 755 %name %buildroot/%_bindir/%name
 install -p -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 install -p -D -m 644 %name.conf %buildroot%_sysconfdir/%name.conf
+install -p -D -m 644 %name.metainfo.xml %buildroot%_datadir/metainfo/%name.metainfo.xml
 
 %check
 perl -c inxi
@@ -64,8 +67,13 @@ perl -c inxi
 %config(noreplace) %_sysconfdir/%name.conf
 %_bindir/%name
 %_man1dir/%name.1*
+%_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.39.1-alt1
+- New version 3.3.39.1.
+- Packaged metainfo file.
+
 * Mon Apr 14 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.38-alt1
 - New version 3.3.38.
 
