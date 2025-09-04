@@ -2,7 +2,7 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.7
+Version: 3.2.8
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -39,7 +39,7 @@ BuildRequires: slocate
 BuildRequires: libssl-devel openssl
 BuildRequires: libtalloc-devel
 BuildRequires: libkrb5-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libcurl-devel
@@ -52,6 +52,7 @@ BuildRequires: libpcap-devel
 BuildRequires: libcrypt-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libwbclient-devel samba-devel
+BuildRequires: librdkafka-devel
 
 # in Sisyphus/autoimports
 # BuildRequires: ykclient-devel
@@ -154,7 +155,6 @@ Summary: Perl support for freeradius
 Group: System/Servers
 Requires: %name-libs = %version-%release
 
-
 %description perl
 This plugin provides the Perl support for the FreeRADIUS server project.
 
@@ -197,6 +197,14 @@ Requires: %name-libs = %version-%release
 
 %description unixODBC
 This plugin provides the unixODBC support for the FreeRADIUS server project.
+
+%package kafka
+Summary: Kafka producer support for FreeRADIUS
+Group: System/Servers
+Requires: %name-libs = %version-%release
+
+%description kafka
+This plugin provides Kafka producer support for the FreeRADIUS server project.
 
 %prep
 %setup -q
@@ -337,7 +345,7 @@ fi
 %_tmpfilesdir/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
 # configs
-%defattr(-,root,radiusd)
+#%%defattr(-,root,radiusd)
 #%config(noreplace) %_sysconfdir/raddb/acct_users
 #%config(noreplace) %_sysconfdir/raddb/attrs
 #%config(noreplace) %_sysconfdir/raddb/attrs.access_challenge
@@ -619,7 +627,6 @@ fi
 #%_libdir/freeradius/rlm_krb5-%version.so
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/krb5
 
-
 %files perl
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/perl
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/perl
@@ -708,7 +715,18 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc.so
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
+%files kafka
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/kafka
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/kafka/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/kafka*
+%_libdir/freeradius/rlm_kafka.so
+
 %changelog
+* Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 3.2.8-alt1
+- 3.2.8
+- Add kafka subpackage.
+- Move to libpcre2.
+
 * Thu Mar 20 2025 Alexey Shabalin <shaba@altlinux.org> 3.2.7-alt1
 - 3.2.7
 
