@@ -1,6 +1,6 @@
 Name: surguch
 Version: 0.3.2
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 
 Summary: Verification and creation of digitally signed pdf documents.
@@ -15,6 +15,7 @@ BuildRequires: libmupdf-devel
 BuildRequires:  qt6-base-devel qt6-declarative-devel rpm-macros-qt6 qt6-declarative qt6-svg-devel qt6-svg qt6-tools
 
 Requires: qt6-svg qt6-declarative fonts-ttf-google-noto-sans qt6-wayland qt6-translations
+Requires: libcsppdf >= 0.3.2-alt2
 
 %description
 A gui application for verification and creation of digitally signed pdf documents.
@@ -37,6 +38,9 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Thu Sep 04 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt2
+- Additional hotfixes for the GUI
+
 * Fri Aug 29 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt1
 - New features:
   + Open URLs by ctrl+click.
