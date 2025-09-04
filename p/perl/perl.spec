@@ -6,7 +6,7 @@
 
 Name: perl
 Version: 5.38.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -1004,6 +1004,10 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 %doc	%privlib/pod/perldiag.pod
 
 %changelog
+* Thu Sep 04 2025 Igor Vlasenko <viy@altlinux.org> 1:5.38.4-alt3
+- majioa@:
+  NMU fixed incompatible pointer type explicit conversion for SvPV macros
+
 * Fri Aug 29 2025 Pavel Skrylev <majioa@altlinux.org> 1:5.38.4-alt2
 - ! fixed incompatible pointer assignment for SvPV macros passing gcc14 builds
 
