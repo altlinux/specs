@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.49
-Release: alt1.g263b4f7b4
+Version: 1.4.1.50
+Release: alt1.ge281c4508
 Summary: A music player and library organiser
 
 Group: Sound
@@ -141,6 +141,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Thu Sep 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.50-alt1.ge281c4508
+- Update upstream source to 1.4.1-50-ge281c4508
+
 * Mon Aug 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.49-alt1.g263b4f7b4
 - Update upstream source to 1.4.1-49-g263b4f7b4
 
