@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: caddy
-Version: 2.10.0
+Version: 2.10.2
 Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
@@ -25,7 +25,7 @@ Source4: https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-webserver-common rpm-macros-systemd >= 5
-BuildRequires: rpm-build-golang golang >= 1.24.0
+BuildRequires: rpm-build-golang golang >= 1.25.0
 
 Provides: webserver
 
@@ -125,6 +125,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 2.10.2-alt1
+- New version 2.10.2.
+
 * Mon Apr 21 2025 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt1
 - New version 2.10.0.
 
