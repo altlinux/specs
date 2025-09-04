@@ -12,7 +12,7 @@
 %define _tmpfilesdir %(pkg-config --variable=tmpfilesdir systemd 2>/dev/null)
 
 Name: cryptsetup
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -247,6 +247,9 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_sbindir/cryptsetup-ssh
 
 %changelog
+* Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 2.8.1-alt1
+- 2.8.1.
+
 * Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 2.8.0-alt1
 - 2.8.0.
 
