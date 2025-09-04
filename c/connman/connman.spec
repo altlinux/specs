@@ -7,7 +7,7 @@
 %define dns_backend_type internal
 
 Name: connman
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
@@ -169,6 +169,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 1.45-alt1
+- New version 1.45.
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.44-alt1
 - New version 1.44.
 
