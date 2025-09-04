@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.9.2
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -157,7 +157,7 @@ Requires: libqt6-core = %_qt6_version
 %else
 %define qdoc_found 0
 %endif
-export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
+export LLVM_INSTALL_DIR=`llvm-config --prefix`
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -165,6 +165,9 @@ export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
 %Q6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
     -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DQT_FEATURE_clang:BOOL=ON \
+    -DQT_FEATURE_clang_rtti:BOOL=ON \
+    -DQT_FEATURE_clangcpp:BOOL=ON \
     #
 %if %qdoc_found
 %Q6make --target docs
@@ -323,6 +326,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Sep 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt2
+- fix find llvm install dir (closes: 55857)
+
 * Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
 - new version
 
