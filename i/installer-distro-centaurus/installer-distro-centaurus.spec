@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 11.1
-Release: alt2
+Release: alt3
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -72,6 +72,9 @@ echo "use_edition=yes" >>%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Fri Aug 29 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt3
+- Remove 35-disable-systemd-networkd.sh
+
 * Wed Aug 13 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt2
 - Remove 80-user-dirs.sh
 
