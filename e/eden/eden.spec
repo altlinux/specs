@@ -1,22 +1,19 @@
-%define version_prefix v
-%define version_suffix -rc3
-
 Name: eden
 Version: 0.0.3
-Release: alt0.rc3
+Release: alt1
 
 Summary: Nintendo Switch Emulator
 License: GPLv3+
 Group: Emulators
 
 Url: https://%name-emu.dev/
-Vcs: https://git.%name-emu.dev/%name-dev/%name
+Vcs: https://git.%name-emu.dev/%name-emu/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExcludeArch: %ix86
 
-# https://git.%name-emu.dev/%name-dev/%name/archive/%version_prefix%version%version_suffix.tar
-Source0: %name-%version_prefix%version%version_suffix.tar
+# https://git.%name-emu.dev/%name-emu/%name/archive/v%version.tar.gz
+Source0: %name-v%version.tar
 Source1: cache-cpm.tar
 
 BuildRequires: /proc
@@ -43,13 +40,13 @@ BuildRequires: libopus-devel
 BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
+BuildRequires: libunordered_dense-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libzstd-devel
 BuildRequires: libzydis-devel
 BuildRequires: lld
 BuildRequires: llvm
-BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: qt6-tools-devel
@@ -74,10 +71,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+	-DCPMUTIL_FORCE_BUNDLED:BOOL=OFF \
+	-DQT_NO_PRIVATE_MODULE_WARNING:BOOL=ON \
 	-DENABLE_QT_TRANSLATION:BOOL=ON \
-%ifarch aarch64
-	-DENABLE_OPENSSL:BOOL=OFF \
-%endif
 	-DYUZU_USE_BUNDLED_QT:BOOL=OFF \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_SDL2:BOOL=OFF \
@@ -89,8 +85,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DYUZU_CHECK_SUBMODULES:BOOL=OFF \
 	-DYUZU_ENABLE_LTO:BOOL=ON \
 	-DYUZU_TESTS:BOOL=ON \
-	-DTITLE_BAR_FORMAT_IDLE:STRING='Eden | %version_prefix%version%version_suffix' \
-	-DTITLE_BAR_FORMAT_RUNNING:STRING='Eden | %version_prefix%version%version_suffix' \
+	-DTITLE_BAR_FORMAT_IDLE:STRING='Eden | v%version' \
+	-DTITLE_BAR_FORMAT_RUNNING:STRING='Eden | v%version' \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -106,11 +102,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 %_bindir/%name-cli
 %_bindir/%name-room
-%_desktopdir/org.%{name}_emu.%name.desktop
-%_datadir/metainfo/org.%{name}_emu.%name.metainfo.xml
-%_datadir/mime/packages/org.%{name}_emu.%name.xml
-%_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
+%_desktopdir/dev.%{name}_emu.%name.desktop
+%_datadir/metainfo/dev.%{name}_emu.%name.metainfo.xml
+%_datadir/mime/packages/dev.%{name}_emu.%name.xml
+%_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Fri Sep 05 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt1
+- Stable version 0.0.3
+
 * Mon Aug 25 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt0.rc3
 - Initial build for ALT Linux
