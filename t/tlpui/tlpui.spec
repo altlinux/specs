@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %def_with check
 
 Name:    tlpui
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: A GTK user interface for TLP written in Python
 License: GPL-2.0
@@ -14,8 +15,7 @@ Packager: Leonid Znamenok <respublica@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3(poetry)
-BuildRequires: python3(poetry.core)
+BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -51,6 +51,19 @@ of all the valid configuration values.
 mkdir -p %buildroot%_desktopdir
 install -m0644 tlpui.desktop %buildroot%_desktopdir/tlpui.desktop
 
+# icons
+for size in 16 32 48 64 96 128 256; do
+    install -Dm0644 tlpui/icons/themeable/hicolor/${size}x${size}/apps/%name.png \
+        %buildroot%_iconsdir/hicolor/${size}x${size}/apps/%name.png
+done
+
+# scalable
+install -Dm0644 tlpui/icons/themeable/hicolor/scalable/apps/%name.svg \
+    %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+
+install -Dm0644 tlpui/icons/themeable/hicolor/scalable/actions/*.svg \
+    --target-directory %buildroot%_iconsdir/hicolor/scalable/actions
+
 %check
 %pyproject_run_pytest
 
@@ -60,9 +73,17 @@ install -m0644 tlpui.desktop %buildroot%_desktopdir/tlpui.desktop
 %python3_sitelibdir/tlpui/
 %python3_sitelibdir/tlp_ui-%version.dist-info
 %_desktopdir/tlpui.desktop
-
+%_iconsdir/hicolor/*/apps/tlpui.png
+%_iconsdir/hicolor/scalable/apps/tlpui.svg
+%_iconsdir/hicolor/scalable/actions/*.svg
 
 %changelog
+* Fri Sep 05 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt2
+- Package icons (Closes: 55873).
+
+* Mon Jun 23 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt0.c10f2.1
+- Backport to c10f2.
+
 * Thu Feb 27 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
