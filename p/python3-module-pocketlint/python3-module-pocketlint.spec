@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: Addon for Pylint
@@ -43,6 +43,9 @@ python3 -v tests/pylint/runpylint.py
 
 
 %changelog
+* Fri Sep 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.26-alt1
+- 0.26
+
 * Mon Oct 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25-alt1
 - 0.25
 - ported to %%pyproject* macros
