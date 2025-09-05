@@ -1,6 +1,6 @@
 Name: surguch
-Version: 0.3.2
-Release: alt2
+Version: 0.3.3
+Release: alt1
 License: GPL-3.0-or-later
 
 Summary: Verification and creation of digitally signed pdf documents.
@@ -38,6 +38,9 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Thu Sep 04 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.3-alt1
+- Fix undefined Aim behaviour when launched without any default profile
+
 * Thu Sep 04 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt2
 - Additional hotfixes for the GUI
 
