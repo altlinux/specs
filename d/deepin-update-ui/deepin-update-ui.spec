@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.22
+Version: 1.0.27
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -9,7 +9,7 @@ Summary: DDE UI collection for updating functions
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-update-ui
-VCS: https://github.com/linuxdeepin/deepin-update-ui.git
+VCS: https://github.com/linuxdeepin/deepin-update-ui
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -45,7 +45,7 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %find_lang --with-qt --output=%name.lang %name dde-control-center
 
 %files -f %name.lang
-%doc README*.md LICENSE
+%doc README*.md LICENSE debian/changelog
 %_sysconfdir/X11/Xsession.d/98deepin-upgrade-check
 %_sysconfdir/xdg/autostart/dde-update-autostart.desktop
 %_bindir/dde-rollback
@@ -81,5 +81,8 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Fri Sep 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.27-alt1
+- New version 1.0.27.
+
 * Mon Aug 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.22-alt1
 - Initial build for ALT Sisyphus.
