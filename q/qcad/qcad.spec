@@ -1,8 +1,8 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.32.3.4
-Release: alt2
+Version: 3.32.4.0
+Release: alt1
 
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -154,6 +154,9 @@ done
 %_iconsdir/hicolor/*/apps/org.qcad.QCAD.png
 
 %changelog
+* Fri Sep 05 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.4.0-alt1
+- New version.
+
 * Sat Aug 23 2025 Anton Midyukov <antohami@altlinux.org> 3.32.3.4-alt2
 - NMU: rename icon qcad with org.qcad.QCAD to match the desktop file
 
