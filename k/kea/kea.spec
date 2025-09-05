@@ -6,8 +6,8 @@
 %define _runstatedir /run
 
 Name: kea
-Version: 3.0.0
-Release: alt2
+Version: 3.0.1
+Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
@@ -343,14 +343,14 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %_unitdir/kea-dhcp4.service
 %_man8dir/kea-dhcp4.*
 %attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-dhcp4.conf
-%attr(0640,root,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases4.csv
+%attr(0640,_kea,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases4.csv
 
 %files dhcp6
 %_sbindir/kea-dhcp6
 %_unitdir/kea-dhcp6.service
 %_man8dir/kea-dhcp6.*
 %attr(0640,root,_kea) %config(noreplace) %_sysconfdir/%name/kea-dhcp6.conf
-%attr(0640,root,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases6.csv
+%attr(0640,_kea,_kea) %config(noreplace) %_sharedstatedir/%name/kea-leases6.csv
 
 %files -n lib%name-devel
 %_bindir/kea-msg-compiler
@@ -389,6 +389,11 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Fri Sep 05 2025 Anton Farygin <rider@altlinux.com> 3.0.1-alt1
+- 3.0.0 -> 3.0.1 (Fixes: CVE:2025-40779)
+- fixed typo in dhcp4 service (Closes: #55877)
+- fixed incorrect ownership of kea-leases*.csv files (Closes: #55878)
+
 * Fri Aug 08 2025 Anton Farygin <rider@altlinux.com> 3.0.0-alt2
 - moved hooks directory to common package
 - control sockets moved from /tmp to /run/kea
