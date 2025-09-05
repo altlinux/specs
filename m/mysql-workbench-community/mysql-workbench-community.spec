@@ -1,12 +1,12 @@
 %define gdal_version 37
 
 Name: mysql-workbench-community
-Version: 8.0.42
+Version: 8.0.43
 Release: alt1
 
 Summary: A MySQL visual database modeling tool
 
-License: GPL-2.0-or-later and LGPL-2.0-or-later and CC-BY-3.0 and MIT and Scintilla and Public-Domain
+License: GPLv2+ and LGPLv2+
 Group: Development/Databases
 Url: http://wb.mysql.com
 
@@ -23,6 +23,7 @@ Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-arm-fix.patch
 Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
+Patch5: %name-8.0.43-swig-4.3.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -175,6 +176,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -258,6 +260,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Fri Sep 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 8.0.43-alt1
+- New version.
+
 * Fri Jul 04 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.42-alt1
 - New version.
 
