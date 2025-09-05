@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.40
+%define kernel_sublevel	.44
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -78,9 +78,6 @@ BuildRequires: dwarves >= 1.16
 BuildRequires: flex
 BuildRequires: gcc%kgcc_version
 BuildRequires: gcc%kgcc_version-c++
-# symlink /usr/bin/x86_64-alt-linux-g++ is needed for building gcc plugins
-# CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y
-BuildRequires: gcc-c++
 BuildRequires: gcc%kgcc_version-plugin-devel
 BuildRequires: kernel-source-%kernel_src_version
 BuildRequires: kmod
@@ -474,6 +471,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Sep 05 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.44-alt1
+- v6.12.44 (2025-08-28)
+- config: Disable gcc plugins to comply with licensing rules
+- config: Disable CONFIG_MODULE_SIG_FORCE
+- config-x86_64: Enable AMD encrypted memory
+- config: Enable CONFIG_MITIGATION_TSA
+- config-x86_64: Enable F71808E watchdog driver
+- config: Enable CPUSETS_V1 cgroups controller
+- config: Enable CONFIG_VHOST_ENABLE_FORK_OWNER_CONTROL=y
+
 * Tue Jul 29 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.40-alt1
 - v6.12.40 (2025-07-24)
 
