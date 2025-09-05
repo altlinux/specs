@@ -1,5 +1,5 @@
 Name: esptool
-Version: 4.9.0
+Version: 5.0.2
 Release: alt1
 
 Summary: Flasher for Espressif ESP8266 & ESP32 chips
@@ -8,11 +8,12 @@ Group: Development/Other
 Url: https://github.com/espressif/esptool
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
-Source: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 %description
 A Python-based, open source, platform independent, utility to communicate with
@@ -20,6 +21,8 @@ the ROM bootloader in Espressif ESP8266 & ESP32 chips.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -27,10 +30,8 @@ the ROM bootloader in Espressif ESP8266 & ESP32 chips.
 %install
 %pyproject_install
 for f in %buildroot%_bindir/*.py;
-	do mv -v $f ${f%.py*}
+	do mv -v $f ${f%%.py*}
 done
-
-%set_python3_req_method strict
 
 %files
 %doc LICENSE README.md
@@ -45,6 +46,9 @@ done
 %python3_sitelibdir/esptool-%version.dist-info
 
 %changelog
+* Fri Sep 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.0.2-alt1
+- 5.0.2 released
+
 * Fri Jun 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.9.0-alt1
 - 4.9.0 released
 
