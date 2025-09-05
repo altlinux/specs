@@ -1,12 +1,14 @@
 Name: an-anime-game-launcher
 Version: 3.15.6
-Release: alt1
+Release: alt2
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
 License: GPL-3.0
 Group: Games/Other
 Url: https://github.com/an-anime-team/an-anime-game-launcher
 Vcs: https://github.com/an-anime-team/an-anime-game-launcher.git
+
+ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -86,6 +88,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Fri Sep 05 2025 Anton Kurachenko <srebrov@altlinux.org> 3.15.6-alt2
+- Dropped aarch64 build (Closes: #55875).
+
 * Sat Aug 23 2025 Anton Kurachenko <srebrov@altlinux.org> 3.15.6-alt1
 - New version 3.15.6.
 
