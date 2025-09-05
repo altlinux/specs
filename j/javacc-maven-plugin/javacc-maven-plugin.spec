@@ -5,32 +5,32 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javacc-maven-plugin
-Version:        2.6
-Release:        alt5_35jpp11
+Version:        3.1.1
+Release:        alt1
 Summary:        JavaCC Maven Plugin
-License:        ASL 2.0
-URL:            https://github.com/mojohaus/javacc-maven-plugin
+License:        Apache-2.0
+URL:            https://www.mojohaus.org/javacc-maven-plugin
+VCS:            https://github.com/mojohaus/javacc-maven-plugin.git
 BuildArch:      noarch
 
-#svn export http://svn.codehaus.org/mojo/tags/javacc-maven-plugin-2.6
-#tar cjf javacc-maven-plugin-2.6.tar.bz2 javacc-maven-plugin-2.6
-Source0:        javacc-maven-plugin-2.6.tar.bz2
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-Patch0:         javacc-maven-plugin-pom.patch
+Source0:        https://github.com/mojohaus/javacc-maven-plugin/archive/refs/tags/%version.tar.gz
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.java.dev.javacc:javacc)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 Source44: import.info
 
@@ -47,11 +47,21 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0 -b .sav
 cp -p %{SOURCE1} .
 
+# Do not use jtb, which is unmaintained.  It is accessed only via reflection to
+# avoid depending on Java 1.5 for compilation.
+%pom_remove_dep edu.ucla.cs.compilers:jtb
+
+# Disable integration tests
+%pom_remove_plugin org.apache.maven.plugins:maven-invoker-plugin
+rm -fr src/it
+
+# Disable building the web site
+rm -fr src/site
+
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -63,6 +73,11 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Thu Sep 04 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.1.1-alt1
+- new version
+- build without jtb
+- disable building the web site
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt5_35jpp11
 - java11 build
 

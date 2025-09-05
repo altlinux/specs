@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           mojo-parent
-Version:        74
+Version:        87
 Release:        alt1
 Summary:        Codehaus MOJO parent project pom file
 License:        Apache-2.0
@@ -56,6 +56,9 @@ cp %SOURCE1 .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Thu Sep 04 2025 Anton Meleshnikov <alton@altlinux.org> 0:87-alt1
+- New version.
+
 * Thu Jul 24 2025 Anton Meleshnikov <alton@altlinux.org> 0:74-alt1
 - new version
 
