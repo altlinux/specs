@@ -1,31 +1,42 @@
-Name: python3-module-bluetooth-data-tools
-Version: 1.20.0
+%define _unpackaged_files_terminate_build 1
+%define pypi_name bluetooth-data-tools
+%define mod_name bluetooth_data_tools
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 1.28.2
 Release: alt1
 
 Summary: Tools for converting bluetooth data and packets
 License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.org/project/bluetooth-data-tools/
-
-Source0: %name-%version-%release.tar
-Source1: pyproject_deps.json
-
+Vcs: https://github.com/Bluetooth-Devices/bluetooth-data-tools
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: gcc-c++
-BuildRequires: python3(cython)
 %pyproject_builddeps_build
-BuildRequires: python3(cryptography)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
-%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -35,10 +46,13 @@ BuildRequires: python3(pytest-cov)
 %pyproject_run_pytest tests
 
 %files
-%python3_sitelibdir/bluetooth_data_tools
-%python3_sitelibdir/bluetooth_data_tools-%version.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 1.28.2-alt1
+- 1.20.0 -> 1.28.2.
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.20.0-alt1
 - 1.20.0 released
 

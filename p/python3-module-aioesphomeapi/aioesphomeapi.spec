@@ -1,28 +1,42 @@
-Name: python3-module-aioesphomeapi
-Version: 27.0.1
+%define _unpackaged_files_terminate_build 1
+%define pypi_name aioesphomeapi
+%define mod_name %pypi_name
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 30.1.0
 Release: alt1
 
 Summary: Python API to ESPHome devices
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/aioesphomeapi
-
-Source0: %name-%version-%release.tar
-Source1: pyproject_deps.json
-
+Vcs: https://github.com/esphome/aioesphomeapi
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+%endif
 
 %description
 %summary
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync check pip_reqfile requirements_test.txt
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%endif
 
 %build
 %pyproject_build
@@ -35,10 +49,13 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %_bindir/aioesphomeapi-*
-%python3_sitelibdir/aioesphomeapi
-%python3_sitelibdir/aioesphomeapi-%version.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 30.1.0-alt1
+- 27.0.1 -> 30.1.0.
+
 * Tue Nov 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 27.0.1-alt1
 - 27.0.1 released
 

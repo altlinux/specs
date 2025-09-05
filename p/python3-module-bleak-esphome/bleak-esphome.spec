@@ -1,30 +1,42 @@
-Name: python3-module-bleak-esphome
-Version: 2.0.0
+%define _unpackaged_files_terminate_build 1
+%define pypi_name bleak-esphome
+%define mod_name bleak_esphome
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 3.2.0
 Release: alt1
 
 Summary: Bleak backend of ESPHome
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/bleak-esphome/
-
-Source0: %name-%version-%release.tar
-
-BuildArch: noarch
-
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(aioesphomeapi)
-BuildRequires: python3(habluetooth)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(pytest_codspeed)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(lru)
+Vcs: https://github.com/bluetooth-devices/bleak-esphome
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 %summary
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -33,13 +45,16 @@ BuildRequires: python3(lru)
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -vra -o=addopts=''
 
 %files
-%python3_sitelibdir/bleak_esphome
-%python3_sitelibdir/bleak_esphome-%version.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 2.0.0 -> 3.2.0.
+
 * Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
 - 2.0.0 released
 
