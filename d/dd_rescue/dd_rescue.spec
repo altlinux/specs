@@ -6,7 +6,7 @@
 
 Name:           dd_rescue
 Version:        1.99.21
-Release:        alt1
+Release:        alt2
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPLv2
@@ -41,6 +41,8 @@ recovery.
 # for every source file, including those that don't have the required
 # includes and will not compile.
 sed -i 's/$(CC) $(CFLAGS) -DGEN_DEP/echo >.dep #/' Makefile
+# error: unknown register name "0"
+sed -i 's/asm(""::"r"(w):"0")/asm(""::"r"(w))/' {md5,sha*}.c
 %endif
 
 %build
@@ -67,6 +69,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzma.1*
 
 %changelog
+* Fri Sep 05 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.99.21-alt2
+- e2k build fix
+
 * Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1.99.21-alt1
 - 1.99.20 -> 1.99.21
 
