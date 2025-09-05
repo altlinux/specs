@@ -3,8 +3,8 @@
 %global import_path github.com/cenkalti/rain
 
 Name: rain
-Version: 1.12.12
-Release: alt2
+Version: 2.2.1
+Release: alt1
 Summary: Rain is the main BitTorrent client used at put.io
 License: MIT
 Group: Networking/File transfer
@@ -54,6 +54,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Sep 05 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.1-alt1
+- 1.12.12 -> 2.2.1
+
 * Mon Oct 23 2023 Vladislav Glinkin <smasher@altlinux.org> 1.12.12-alt2
 - Added 'Conflicts: bsd-games' to the .spec file
 
