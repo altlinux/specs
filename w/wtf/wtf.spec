@@ -4,7 +4,7 @@
 
 Name: wtf
 Version: 0.46.0
-Release: alt1
+Release: alt2
 Summary: The personal information dashboard for your terminal.
 License: MPL-2.0
 Group: Terminals
@@ -17,6 +17,8 @@ Source1: vendor.tar
 BuildRequires(pre): rpm-build-golang 
 BuildRequires: golang
 BuildRequires: glibc
+
+Conflicts: bsd-games
 
 %description
 WTF (aka 'wtfutil') is the personal information dashboard for your
@@ -53,6 +55,9 @@ cp -pr _sample_configs %buildroot%_docdir/
 %_docdir/_sample_configs
 
 %changelog
+* Fri Sep 05 2025 Pavel Shilov <zerospirit@altlinux.org> 0.46.0-alt2
+- Add explicit Conflicts with bsd-games.
+
 * Fri Aug 29 2025 Pavel Shilov <zerospirit@altlinux.org> 0.46.0-alt1
 - Initial build for Sisyphus.
 
