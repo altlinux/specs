@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.6.0
+Version: 7.6.1
 Release: alt1
 
 Summary: Library to access Tryton server as a client
@@ -73,6 +73,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Fri Sep 05 2025 Anton Vyatkin <toni@altlinux.org> 7.6.1-alt1
+- Version updated to 7.6.1.
+
 * Wed Apr 30 2025 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
 - Version updated to 7.6.0.
 
