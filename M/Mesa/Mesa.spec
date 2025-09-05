@@ -1,5 +1,7 @@
 %define optflags_lto %nil
 
+%define llvmver 20.1
+
 %def_enable egl
 %def_enable gles2
 
@@ -92,8 +94,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 25.1
-%define ver_minor 9
+%define ver_major 25.2
+%define ver_minor 2
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -117,7 +119,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
-BuildRequires: llvm20.1-devel clang20.1-devel
+BuildRequires: llvm%llvmver-devel clang%llvmver-devel
 %ifarch %gallium_opencl_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %endif
@@ -180,20 +182,6 @@ Group: Development/C
 %description -n libgbm-devel
 GBM buffer management development package
 
-%package -n libxatracker
-Summary: Mesa XA state tracker
-Group: System/Libraries
-
-%description -n libxatracker
-Xorg Gallium3D acceleration library
-
-%package -n libxatracker-devel
-Summary: Mesa XA state tracker development package
-Group: Development/C
-
-%description -n libxatracker-devel
-Xorg Gallium3D acceleration development package
-
 %package -n libMesaOpenCL
 Summary: Mesa OpenCL runtime library
 Group: System/Libraries
@@ -204,20 +192,6 @@ This package contains the mesa implementation of the OpenCL (Open Compute
 Language) library, which is intended for use with an ICD loader. OpenCL
 provides a standardized interface for computational analysis on graphical
 processing units.
-
-%package -n libd3d
-Summary: Mesa Direct3D9 state tracker
-Group: System/Libraries
-
-%description -n libd3d
-%summary
-
-%package -n libd3d-devel
-Summary: Mesa Direct3D9 state tracker development package
-Group: Development/C
-
-%description -n libd3d-devel
-%summary
 
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
@@ -322,9 +296,9 @@ Mesa-based DRI drivers
 tar -xf subprojects.tar
 
 %build
+export ALTWRAP_LLVM_VERSION=%llvmver
 %meson \
 	-Dplatforms=x11,wayland \
-	-Dgallium-nine=true \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay' \
@@ -332,12 +306,10 @@ tar -xf subprojects.tar
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=enabled \
 %endif
-	-Dlegacy-x11=dri2 \
 %ifarch %radeon_arches
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
 %endif
-	-Dshared-glapi=enabled \
 %if_enabled egl
 	-Degl=enabled \
 %else
@@ -348,11 +320,6 @@ tar -xf subprojects.tar
 %else
 	-Dgles2=disabled \
 %endif
-%ifarch %xa_arches
-	-Dgallium-xa=enabled \
-%else
-	-Dgallium-xa=disabled \
-%endif
 %ifarch armh
 	-Dlibunwind=false \
 %endif
@@ -362,7 +329,7 @@ tar -xf subprojects.tar
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
 	-Db_ndebug=true \
 %ifarch %gallium_opencl_arches
-	-Dgallium-opencl=icd \
+	-Dgallium-rusticl=true \
 %endif
 #
 
@@ -386,11 +353,6 @@ touch %buildroot%_sysconfdir/drirc
 
 %ifarch %armsoc_arches
 find %buildroot%_libdir/X11/modules/dri/ -type l | sed -ne "s|^%buildroot||p" > xorg-dri-armsoc.list
-%ifarch %gallium_opencl_arches
-rm -f %buildroot%_libdir/gallium-pipe/*.la
-find %buildroot%_libdir/gallium-pipe/ -type f | sed -ne "s|^%buildroot||p" >> xorg-dri-armsoc.list
-sed -i '/.*pipe_r[a236].*/d' xorg-dri-armsoc.list
-%endif
 sed -i '/.*swrast.*/d' xorg-dri-armsoc.list
 sed -i '/.*virtio.*/d' xorg-dri-armsoc.list
 sed -i '/.*nouveau.*/d' xorg-dri-armsoc.list
@@ -431,32 +393,13 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libgbm.so
 %_pkgconfigdir/gbm.pc
 
-%ifarch %xa_arches
-%files -n libxatracker
-%_libdir/libxatracker.so.*
-
-%files -n libxatracker-devel
-%_includedir/xa_*.h
-%_libdir/libxatracker.so
-%_pkgconfigdir/xatracker.pc
-%endif
-
 %ifarch %gallium_opencl_arches
 %files -n libMesaOpenCL
 %dir %_sysconfdir/OpenCL
 %dir %_sysconfdir/OpenCL/vendors
-%_sysconfdir/OpenCL/vendors/mesa.icd
-%_libdir/libMesaOpenCL.so.*
+%_sysconfdir/OpenCL/vendors/rusticl.icd
+%_libdir/libRusticlOpenCL.so.*
 %endif
-
-%files -n libd3d
-%dir %_libdir/d3d
-%_libdir/d3d/*.so.*
-
-%files -n libd3d-devel
-%_includedir/d3dadapter
-%_libdir/d3d/*.so
-%_pkgconfigdir/d3d.pc
 
 %files -n xorg-dri-swrast
 %ghost %_sysconfdir/drirc
@@ -465,10 +408,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libdril_dri.so
 %_libdir/X11/modules/dri/zink_dri.so
-%ifarch %gallium_opencl_arches
-%dir %_libdir/gallium-pipe
-%_libdir/gallium-pipe/pipe_swrast.so
-%endif
 %_libdir/libvulkan_lvp.so
 %_datadir/vulkan/icd.d/lvp_icd*.json
 %_bindir/mesa-overlay-control.py
@@ -496,11 +435,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_intel_hasvk.so
 %_datadir/vulkan/icd.d/intel_icd*.json
 %_datadir/vulkan/icd.d/intel_hasvk_icd*.json
-%ifarch %gallium_opencl_arches
-%_libdir/gallium-pipe/pipe_i9?5.so
-%_libdir/gallium-pipe/pipe_crocus.so
-%_libdir/gallium-pipe/pipe_iris.so
-%endif
 %endif
 %endif
 
@@ -513,9 +447,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_nouveau.so
 %_datadir/vulkan/icd.d/nouveau_icd*.json
 %endif
-%ifarch %gallium_opencl_arches
-%_libdir/gallium-pipe/pipe_nouveau.so
-%endif
 %endif
 
 %ifarch %radeon_arches
@@ -524,9 +455,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/r?00_dri.so
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
-%ifarch %gallium_opencl_arches
-%_libdir/gallium-pipe/pipe_r*.so
-%endif
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
 %_datadir/vulkan/icd.d/radeon_icd*.json
@@ -537,9 +465,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %ifarch %svga_arches
 %files -n xorg-dri-vmwgfx
 %_libdir/X11/modules/dri/vmwgfx_dri.so
-%ifarch %gallium_opencl_arches
-%_libdir/gallium-pipe/pipe_vmwgfx.so
-%endif
 %endif
 
 %ifarch %armsoc_arches
@@ -558,6 +483,12 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Sep 05 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.2-alt1
+- 25.2.2
+
+* Thu Aug 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.1-alt1
+- 25.2.1
+
 * Thu Aug 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.9-alt1
 - 25.1.9
 
