@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Sep 05 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.5-alt1
+- v6.16.5 (2025-09-04).
+- config: Disable CONFIG_PSI_DEFAULT_DISABLED.
+
 * Thu Aug 28 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.4-alt1
 - v6.16.4 (2025-08-28).
 - config: Build NVME as a module instead of built-in.
