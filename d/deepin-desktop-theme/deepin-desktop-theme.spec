@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.13
+Version: 1.1.14
 Release: alt1
 
 Summary: Deepin desktop themes
@@ -49,7 +49,6 @@ This package provides xdgicon2dci tool for %name.
 %prep
 %setup
 %autopatch -p1
-cp -a icons/*.dci bloom/dsg-icons/bloom/
 
 %build
 %if_enabled clang
@@ -107,6 +106,9 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_libexecdir/deepin-desktop-theme/xdgicon2dci
 
 %changelog
+* Fri Sep 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.14-alt1
+- New version 1.1.14.
+
 * Thu Aug 28 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.13-alt1
 - New version 1.1.13.
 - Renamed: desktop-theme-deepin -> deepin-desktop-themes.
