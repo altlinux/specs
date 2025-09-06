@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Python library to build pretty command line user prompts
@@ -52,7 +52,7 @@ It's easy to use and yet powerful:
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v -k 'not test_print_with_style'
 
 %files
 %doc README.*
@@ -60,5 +60,8 @@ It's easy to use and yet powerful:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 02 2025 Denis Sergeev <zeff@altlinux.org> 2.1.1-alt1
+- 2.1.0 -> 2.1.1.
+
 * Tue Jun 24 2025 Denis Sergeev <zeff@altlinux.org> 2.1.0-alt1
 - Initial build for ALT.

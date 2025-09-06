@@ -2,7 +2,7 @@
 %define pypi_name poethepoet
 
 Name: python3-module-%pypi_name
-Version: 0.36.0
+Version: 0.37.0
 Release: alt1
 
 Summary: A task runner that works well with poetry and uv
@@ -53,5 +53,8 @@ Key features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 02 2025 Denis Sergeev <zeff@altlinux.org> 0.37.0-alt1
+- 0.36.0 -> 0.37.0.
+
 * Tue Jul 01 2025 Denis Sergeev <zeff@altlinux.org> 0.36.0-alt1
 - Initial build for ALT.
