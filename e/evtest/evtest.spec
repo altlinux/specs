@@ -1,5 +1,5 @@
 Name: evtest
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: Input device event monitor and query tool
@@ -7,6 +7,7 @@ License: GPLv2+
 Group: Other
 
 Url: http://cgit.freedesktop.org/%name/
+Vcs: https://gitlab.freedesktop.org/libevdev/evtest
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: https://gitlab.freedesktop.org/libevdev/%name/-/archive/%name-%version/%name-%name-%version.tar
@@ -59,6 +60,9 @@ X.Org issue.
 %_man1dir/%name.1*
 
 %changelog
+* Sat Sep 06 2025 Nazarov Denis <nenderus@altlinux.org> 1.36-alt1
+- New version 1.36.
+
 * Sat Jun 10 2023 Nazarov Denis <nenderus@altlinux.org> 1.35-alt1
 - New version 1.35.
 
