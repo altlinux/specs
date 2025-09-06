@@ -4,8 +4,8 @@
 %def_disable precompiled_dart_sass
 
 Name: gtk3-theme-%themename
-Version: 6.2
-Release: alt1.1
+Version: 6.3
+Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
 License: LGPL-2.1
@@ -23,6 +23,7 @@ Source1: https://github.com/sass/dart-sass/releases/download/1.87.0/dart-sass-1.
 
 ExclusiveArch: x86_64
 BuildArch: noarch
+Provides: %themename = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -48,6 +49,9 @@ BuildRequires: meson
 %doc README*
 
 %changelog
+* Sat Sep 06 2025 Yuri N. Sedunov <aris@altlinux.org> 6.3-alt1
+- 6.3
+
 * Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 6.2-alt1.1
 - rebuilt with our dart-sass
 
