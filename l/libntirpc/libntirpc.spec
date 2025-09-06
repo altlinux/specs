@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libntirpc
-Version: 7.0
+Version: 7.1
 Release: alt1
 Summary: New Transport Independent RPC Library
 Group: System/Libraries
@@ -80,6 +80,9 @@ rm %buildroot%_libdir/libntirpcmonitoring.so*
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sat Sep 06 2025 Vitaly Chikunov <vt@altlinux.org> 7.1-alt1
+- Update to v7.1 (2025-09-02).
+
 * Thu Jul 31 2025 Vitaly Chikunov <vt@altlinux.org> 7.0-alt1
 - Update to v7.0 (2025-07-28).
 
