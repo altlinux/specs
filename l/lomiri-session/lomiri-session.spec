@@ -5,7 +5,7 @@
 
 Name: lomiri-session
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Integrate Lomiri Desktop Session into Display Managers
 License: LGPL-3.0
@@ -19,6 +19,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-macros-systemd
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 BuildRequires: cmake
 BuildRequires: lomiri
@@ -34,7 +35,10 @@ Requires: inotify-tools
 
 Requires: lomiri-terminal-app
 Requires: lomiri-filemanager-app
+
+%ifarch %qt5_qtwebengine_arches
 Requires: morph-browser
+%endif
 
 BuildArch: noarch
 
@@ -78,5 +82,8 @@ display manager.
 %_libexecdir/lomiri-session/run-systemd-session
 
 %changelog
+* Thu Sep 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.3-alt2
+- Enabled install on systems without qt5-webengine
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus

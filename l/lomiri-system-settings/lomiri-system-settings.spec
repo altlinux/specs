@@ -5,7 +5,7 @@
 
 Name: lomiri-system-settings
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: System Settings application for Lomiri
 License: GPL-3.0
@@ -77,7 +77,7 @@ Requires: libqt5-qml
 # qt5/qml/QtSystemInfo/qmldir
 Requires: libqt5-qtsystems
 
-%ifnarch i586
+%ifnarch i586 riscv64
 Requires: signon-ui
 %endif
 
@@ -168,5 +168,8 @@ developing applications that use %{name}.
 %_pkgconfigdir/LomiriSystemSettings.pc
 
 %changelog
+* Sat Sep 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
+- Enabled install on riscv64 architecture
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
