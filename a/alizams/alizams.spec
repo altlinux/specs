@@ -2,7 +2,7 @@
 
 Name: alizams
 Version: 1.9.10
-Release: alt1
+Release: alt2
 
 Summary: DICOM Viewer
 License: GPL-3.0
@@ -26,8 +26,6 @@ BuildRequires: libitk-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-5compat-devel
-
-ExcludeArch: i586
 
 %description
 A 2D and 3D DICOM viewer with many tools and very fast directory scanner
@@ -65,6 +63,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
        -DMDCM_USE_SYSTEM_ZLIB:BOOL=ON \
        -DMDCM_USE_SYSTEM_OPENJPEG:BOOL=ON \
        -DMDCM_USE_SYSTEM_CHARLS:BOOL=ON \
+%ifnarch x86_64 aarch64
+       -DALIZA_DISABLE_SIMDMATH:BOOL=ON \
+%endif
        -DCMAKE_INSTALL_PREFIX=%_prefix
 %cmake_build
 
@@ -81,7 +82,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*.xml
 
-
 %changelog
+* Sat Sep 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.10-alt2
+- Define DISABLE_SIMDMATH=ON only on necessary architectures.
+
 * Wed Jul 02 2025 Nikolay Strelkov <snk@altlinux.org> 1.9.10-alt1
 - Initial build for Sisyphus
