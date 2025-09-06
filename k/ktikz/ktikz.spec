@@ -2,7 +2,7 @@
 
 Name:    ktikz
 Version: 0.13.2
-Release: alt2
+Release: alt3
 
 Summary: Editor for the TikZ drawing language
 License: GPL-2.0-or-later
@@ -12,9 +12,9 @@ Url:     https://github.com/fhackenberger/ktikz
 Source: %name-%version.tar
 
 ExcludeArch: ppc64le
-ExcludeArch: i586
 
 BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-macros-qt6-webengine
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -38,7 +38,9 @@ Requires: texlive
 Requires: poppler
 
 # Required to display help
+%ifarch %qt6_qtwebengine_arches
 Requires: khelpcenter
+%endif
 Requires: kf6-kio
 
 %description
@@ -90,6 +92,9 @@ install -pDm 644 doc/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Sat Sep 06 2025 Nikolay Strelkov <snk@altlinux.org> 0.13.2-alt3
+- Enabled install on systems without qt6-webengine
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.13.2-alt2
 - Applied repocop fix for freedesktop-categories
 
