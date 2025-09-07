@@ -5,6 +5,7 @@
 
 %def_enable gfio
 %def_enable http
+%def_enable isal
 %def_enable libblkio
 %def_enable libiscsi
 %def_enable libnbd
@@ -23,8 +24,8 @@
 %endif
 
 Name: fio
-Version: 3.40
-Release: alt2
+Version: 3.41
+Release: alt1
 Summary: Flexible I/O Tester
 License: GPL-2.0
 Group: System/Kernel and hardware
@@ -45,6 +46,7 @@ BuildRequires: zlib-devel
 %{?_enable_gfapi:BuildRequires: libglusterfs-devel}
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_http:BuildRequires: libcurl-devel libssl-devel}
+%{?_enable_isal:BuildRequires: libisal-devel}
 %{?_enable_libblkio:BuildRequires: libblkio-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel}
 %{?_enable_libnbd:BuildRequires: libnbd-devel}
@@ -229,6 +231,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Sun Sep 07 2025 Vitaly Chikunov <vt@altlinux.org> 3.41-alt1
+- Update to fio-3.41 (2025-09-05).
+
 * Sat May 31 2025 Vitaly Chikunov <vt@altlinux.org> 3.40-alt2
 - Do not build pmdk engine as it is not maintained.
 
