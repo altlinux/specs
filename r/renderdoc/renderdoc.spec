@@ -1,5 +1,5 @@
 Name: renderdoc
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: A frame-capture based graphics debugger
@@ -7,9 +7,10 @@ License: MIT
 Group: Development/Debuggers
 
 Url: https://%name.org/
+Vcs: https://github.com/baldurk/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86
 
 # https://github.com/baldurk/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -39,7 +40,7 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %setup
 
 %build
-%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch -Wno-error=stringop-overread -Wno-error=alloc-size-larger-than= -Wno-error=stringop-overflow
+%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch -Wno-error=stringop-overread -Wno-error=alloc-size-larger-than= -Wno-error=stringop-overflow -I%_includedir/pcre
 %cmake \
 	-DQMAKE_QT5_COMMAND:STRING=qmake-qt5 \
 	-DVULKAN_LAYER_FOLDER:PATH=%_datadir/vulkan/implicit_layer.d \
@@ -68,6 +69,9 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %_includedir/renderdoc_app.h
 
 %changelog
+* Sun Sep 07 2025 Nazarov Denis <nenderus@altlinux.org> 1.40-alt1
+- New version 1.40.
+
 * Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.39-alt1
 - New version 1.39.
 
