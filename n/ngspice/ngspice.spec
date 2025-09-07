@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 44
+%define majver 45
 %define sover 0
 
 Name: ngspice
-Version: 44
+Version: %majver.2
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -190,6 +190,9 @@ cp -a \
 %_pkgconfigdir/ngspice.pc
 
 %changelog
+* Sun Sep 07 2025 Anton Midyukov <antohami@altlinux.org> 45.2-alt1
+- New version 45.2.
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 44-alt1
 - New version 44.
 - Add Vcs
