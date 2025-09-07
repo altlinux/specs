@@ -13,7 +13,7 @@
 %define libname %name-%apiversion
 
 Name: wireplumber
-Version: 0.5.8
+Version: 0.5.11.1.git1bde4f2c
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -39,6 +39,7 @@ BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-setuptools
 BuildRequires: python3(lxml)
 BuildRequires: doxygen >= 1.8.0
+BuildRequires: graphviz
 %endif
 %if_enabled systemd
 # Like so many other programs, WirePlumber implements logind integration via
@@ -201,6 +202,12 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Sat Sep 06 2025 Arseny Maslennikov <arseny@altlinux.org> 0.5.11.1.git1bde4f2c-alt1
+- 0.5.10 -> 0.5.11-1-g1bde4f2c.
+
+* Tue Jun 03 2025 Arseny Maslennikov <arseny@altlinux.org> 0.5.10-alt1
+- 0.5.8 -> 0.5.10.
+
 * Fri Mar 07 2025 Arseny Maslennikov <arseny@altlinux.org> 0.5.8-alt1
 - 0.5.7 -> 0.5.8.
 
