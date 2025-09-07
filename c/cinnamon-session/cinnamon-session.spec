@@ -7,7 +7,7 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
+Version: 6.4.1
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -139,6 +139,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Sun Sep 07 2025 Anton Midyukov <antohami@altlinux.org> 6.4.1-alt1
+- New version 6.4.1.
+
 * Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
 - 6.4.0
 
