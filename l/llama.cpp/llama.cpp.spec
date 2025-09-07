@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 6121
+Version: 6397
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -20,6 +20,7 @@ Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
 ExcludeArch: %ix86
 Requires: %name-cpu = %EVR
+Requires: %name-convert = %EVR
 %if_with cuda
 Requires: %name-cuda = %EVR
 %filter_from_requires /(libcudart\.so\.12)/d
@@ -70,18 +71,16 @@ Supported models:
    MoE, Smaug, Poro 34B, Bitnet b1.58 models, Flan T5, Open Elm models,
    ChatGLM3-6b + ChatGLM4-9b + GLMEdge-1.5b + GLMEdge-4b, SmolLM,
    EXAONE-3.0-7.8B-Instruct, FalconMamba Models, Jais, Bielik-11B-v2.3,
-   RWKV-6, QRWKV-6, GigaChat-20B-A3B, Trillion-7B-preview, Ling models
+   RWKV-6, QRWKV-6, GigaChat-20B-A3B, Trillion-7B-preview, Ling models,
+   LFM2 models, Hunyuan models
 
 Multimodal models:
 
    LLaVA 1.5 models, BakLLaVA, Obsidian, ShareGPT4V, MobileVLM 1.7B/3B
-   models, Yi-VL, Mini CPM, Moondream, Bunny, GLM-EDGE, Qwen2-VL
+   models, Yi-VL, Mini CPM, Moondream, Bunny, GLM-EDGE, Qwen2-VL,
+   LFM2-VL
 
-NOTE 1: For data format conversion script to work you will need to:
-
-  pip3 install -r /usr/share/llama.cpp/requirements.txt
-
-NOTE 2:
+NOTE:
   MODELS ARE NOT PROVIDED. You'll need to download them from the original
   sites (or Hugging Face Hub).
 
@@ -106,13 +105,6 @@ Requires: libllama = %EVR
 Summary: %name tools including backend for CPU
 Group: Sciences/Computer science
 Requires: libllama = %EVR
-AutoReqProv: nopython3
-Requires: python3
-Requires: python3(argparse)
-Requires: python3(glob)
-Requires: python3(os)
-Requires: python3(pip)
-Requires: python3(struct)
 %add_findreq_skiplist %_datadir/%name/examples/*
 
 %description cpu
@@ -135,6 +127,22 @@ Requires: %name-cpu = %EVR
 %description vulkan
 %summary.
 
+%package convert
+Summary: %name model converters to GGUF
+Group: Sciences/Computer science
+AutoReqProv: nopython3
+Requires: python3(pip)
+
+%description convert
+The main model format conversion script is unsupported and provided AS IS.
+Other scripts are legacy and unmaintained.
+
+For the scripts to work you will need to:
+
+  pip3 install -r /usr/share/llama.cpp/requirements.txt
+
+or install individually from the separate requirements files.
+
 %prep
 %setup
 %autopatch -p1
@@ -152,6 +160,7 @@ sed -i 's/common_has_curl()/0/' tests/test-arg-parser.cpp
 sed /test-thread-safety/d -i tests/CMakeLists.txt
 
 %build
+%define optflags_debug -g1
 # Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake fails to strip build time RPATH
 # from (installed) binaries.
 export NVCC_PREPEND_FLAGS=-ccbin=g++-12
@@ -237,8 +246,11 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs build-options.txt
 %_bindir/llama-*
-%_bindir/convert*.py
-%_datadir/%name
+%dir %_datadir/%name
+%dir %_datadir/%name/examples
+%_datadir/%name/examples/*.sh
+%_datadir/%name/grammars
+%_datadir/%name/prompts
 %dir %_libexecdir/llama
 %_libexecdir/llama/libggml-cpu*.so
 %_libexecdir/llama/libggml-rpc.so
@@ -256,7 +268,19 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_libexecdir/llama/libggml-vulkan.so
 %endif
 
+%files convert
+%_bindir/convert*.py
+%dir %_datadir/%name
+%dir %_datadir/%name/examples
+%_datadir/%name/examples/*.py
+%_datadir/%name/requirements*
+
 %changelog
+* Sat Sep 06 2025 Vitaly Chikunov <vt@altlinux.org> 1:6397-alt1
+- Update to b6397 (2025-09-06).
+- Python-based model conversion scripts are sub-packaged. Note that they are
+  not supported and are provided as-is.
+
 * Sat Aug 09 2025 Vitaly Chikunov <vt@altlinux.org> 1:6121-alt1
 - Update to b6121 (2025-08-08).
 
