@@ -1,12 +1,12 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.26.3
+Version: 1.28.0
 Release: alt1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
 BuildRequires: libGeoIP-devel
-BuildRequires: libgd2-devel
+BuildRequires: libgd-devel
 BuildRequires: libpam-devel
 BuildRequires: libxml2-devel libxslt-devel
 %def_with perl
@@ -18,6 +18,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_without debug
 %def_with geoip
 %def_with geoip2
+%def_with zip
 %def_with push_stream
 %def_with spnego
 %def_enable cache_purge
@@ -42,6 +43,7 @@ Source14: spnego-http-auth-nginx-module.tar
 Source15: nginx-accept_language-module.tar
 Source16: nginx-push-stream-module.tar
 Source17: nginx-geoip2-module.tar
+Source18: nginx-zip-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
@@ -78,6 +80,19 @@ BuildRequires: libmaxminddb-devel
 ngx_http_geoip2_module - creates variables with values from the maxmind geoip2
 databases based on the client IP (default) or from a specific variable
 (supports both IPv4 and IPv6)
+%endif
+
+%if_with zip
+%package zip
+Summary: ZIP module for nginx
+Group: System/Servers
+Requires: %name = %EVR
+
+%description zip
+mod_zip assembles ZIP archives dynamically. It can stream component files
+from upstream servers with nginx's native proxying code, so that the process
+never takes up more than a few KB of RAM at a time, even while assembling
+archives that are (potentially) gigabytes in size.
 %endif
 
 %if_with accept_language
@@ -153,7 +168,7 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17
+%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17 -a18
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -199,6 +214,9 @@ popd
 %endif
 %if_with geoip2
 	--add-dynamic-module=nginx-geoip2-module \
+%endif
+%if_with zip
+	--add-dynamic-module=nginx-zip-module \
 %endif
 %if_with accept_language
 	--add-dynamic-module=nginx-accept_language-module \
@@ -354,6 +372,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
 %modpath/ngx_http_geoip_module.so
 
+%if_with zip
+%files zip
+%config(noreplace) %nginx_etc/modules-available.d/http_zip.conf
+%modpath/ngx_http_zip_module.so
+%endif
+
 %if_with geoip2
 %files geoip2
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip2.conf
@@ -401,6 +425,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Sep 05 2025 Anton Farygin <rider@altlinux.com> 1.28.0-alt1
+- 1.26.3 -> 1.28.0
+- added mod_zip (Closes: #53631)
+
 * Wed Feb 19 2025 Anton Farygin <rider@altlinux.ru> 1.26.3-alt1
 - 1.26.2 -> 1.26.3 (Fixes: CVE-2025-23419)
 
