@@ -1,5 +1,5 @@
 Name:     gwenhywfar
-Version:  5.12.0
+Version:  5.12.2
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -102,8 +102,6 @@ export PATH=$PATH:%_qt5_bindir
 rm -f %buildroot%_datadir/gwenhywfar/ca-bundle.crt
 ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-bundle.crt
 
-rm -f /usr/share/gwenbuild/templates/*.tmpl
-
 %files -n lib%name -f %name.lang
 %doc AUTHORS README TODO
 %_bindir/gct-tool
@@ -139,10 +137,13 @@ rm -f /usr/share/gwenbuild/templates/*.tmpl
 %_libdir/cmake/*
 # gwenbuild
 %_bindir/gwbuild
-%_datadir/gwenbuild/templates/project.tmpl
+%_datadir/gwenbuild/templates/*.tmpl
 %_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Mon Sep 08 2025 Andrey Cherepanov <cas@altlinux.org> 5.12.2-alt1
+- New version.
+
 * Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 5.12.0-alt1
 - New version.
 
