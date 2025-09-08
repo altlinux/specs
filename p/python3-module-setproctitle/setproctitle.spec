@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: A library to allow customization of the process title
@@ -42,11 +42,14 @@ tools such as ps and top).
 %tox_check_pyproject -- -k "not embedded" -vra
 
 %files
-%doc COPYRIGHT *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt1
+- Automatically updated to 1.3.7.
+
 * Mon May 19 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt1
 - New version 1.3.6.
 
