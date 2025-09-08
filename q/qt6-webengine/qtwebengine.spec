@@ -26,7 +26,7 @@
 
 Name: qt6-webengine
 Version: 6.9.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -42,6 +42,9 @@ Patch1: alt-ftbfs.patch
 Patch10: qtwebengine-link-pipewire.patch
 Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
+Patch13: qtwebengine-use-openh264.patch
+Patch14: qtwebengine-SIOCGSTAMP.patch
+Patch15: chromium-130-size-assertions.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -198,6 +201,11 @@ Obsoletes: %name < %EVR
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+pushd src/3rdparty/chromium
+%patch15 -p1
+popd
 #
 #%patch200 -p1
 #%patch201 -p1
@@ -419,6 +427,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt2
+- add some fixes from Fedora
+
 * Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
 - new version
 
