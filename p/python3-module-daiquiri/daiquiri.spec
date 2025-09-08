@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.0
-Release: alt1.1
+Version: 3.4.0
+Release: alt1
 
 Summary: Library to configure Python logging easily
 
@@ -50,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
