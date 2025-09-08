@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
@@ -53,6 +53,9 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
+- 1.1.0 -> 1.1.1.
+
 * Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 0.22.3 -> 1.1.0.
 

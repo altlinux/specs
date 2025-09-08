@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: High availability Bluetooth
@@ -50,6 +50,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 5.3.1-alt1
+- 5.3.0 -> 5.3.1.
+
 * Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
 - 3.8.0 -> 5.3.0.
 
