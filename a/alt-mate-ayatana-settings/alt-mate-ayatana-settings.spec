@@ -2,7 +2,7 @@
 
 Name: alt-mate-ayatana-settings
 Version: 0.01
-Release: alt2
+Release: alt3
 
 Summary: Special settings for ALT Linux with MATE and Ayatana Indicators
 License: GPL-2.0
@@ -11,6 +11,7 @@ Url: https://github.com/N0rbert/alt-mate-ayatana-settings
 
 Source: %name-%version.tar
 
+BuildArch: noarch
 ExcludeArch: ppc64le
 
 # MATE, MATE Tweak and Ayatana-related part
@@ -44,7 +45,19 @@ Requires: mate-dock-applet
 Requires: mate-menu
 
 # Docked items
+## continue to use firefox-esr on x86_64, %%ix86, aarch64 and loongarch64
+%ifarch x86_64 %ix86 aarch64 loongarch64
 Requires: firefox-esr
+%endif
+## use chromium on riscv64
+%ifarch riscv64
+Requires: chromium
+%endif
+## use epiphany on %%e2k
+%ifarch %e2k
+Requires: epiphany
+%endif
+
 Requires: /usr/bin/caja
 Requires: mate-control-center
 Requires: mate-system-monitor
@@ -63,6 +76,29 @@ repository.
 
 %prep
 %setup
+# use chromium on riscv64 - in place patching
+%ifarch riscv64
+mv -v usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/firefox.dockitem usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/chromium.dockitem
+sed -i "s/firefox/chromium/" \
+       usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/chromium.dockitem \
+       usr/lib/alt-mate/alt-mate-settings-overlay \
+       usr/share/glib-2.0/schemas/30_alt-mate.gschema.override \
+       usr/share/mate-panel/layouts/familiar.layout \
+       usr/share/mate-panel/layouts/ubuntu-mate.layout \
+       usr/share/mate-panel/layouts/redmond.layout
+%endif
+
+# use epiphany on %%e2k - in place patching
+%ifarch %e2k
+mv -v usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/firefox.dockitem usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/epiphany.dockitem
+sed -i "s/firefox/epiphany/" \
+       usr/share/alt-mate/settings-overlay/config/plank/dock1/launchers/epiphany.dockitem \
+       usr/lib/alt-mate/alt-mate-settings-overlay \
+       usr/share/glib-2.0/schemas/30_alt-mate.gschema.override \
+       usr/share/mate-panel/layouts/familiar.layout \
+       usr/share/mate-panel/layouts/ubuntu-mate.layout \
+       usr/share/mate-panel/layouts/redmond.layout
+%endif
 
 %build
 # nothing to build here
@@ -114,6 +150,8 @@ echo "         using MATE Tweak utility!"
 %{_datadir}/plank/*
 
 %changelog
+* Mon Sep 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt3
+- Use Chromium on riscv64 and Epiphany on %%e2k
 * Wed Feb 19 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt2
 - Use Firefox ESR instead of Firefox
 * Tue Feb 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt1
