@@ -50,8 +50,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.25.0
-Release: alt2
+Version: 1.25.1
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -378,6 +378,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Sep 08 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
+- New version (1.25.1) (Fixes: CVE-2025-47910).
+
 * Tue Aug 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt2
 - Disabled dwarf5 debugdata collection (ALT#55626).
 
