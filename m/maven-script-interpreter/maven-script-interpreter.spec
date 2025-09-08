@@ -15,29 +15,28 @@ BuildRequires: jpackage-default
 %bcond_with     groovy
 
 Name:           maven-script-interpreter
-Version:        1.2
-Release:        alt1_11jpp11
+Version:        1.5
+Release:        alt1
 Summary:        Maven Script Interpreter
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-script-interpreter/
-Source0:        http://central.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+License:        Apache-2.0
+URL:            https://maven.apache.org/shared/maven-script-interpreter/
+Source0:        https://archive.apache.org/dist/maven/shared/%{name}-%{version}-source-release.zip
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 %if %{with groovy}
-BuildRequires:  mvn(org.codehaus.groovy:groovy)
+BuildRequires:  mvn(org.apache.groovy:groovy)
 %endif
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-params)
 Source44: import.info
-
 
 %description
 This component provides some utilities to interpret/execute some scripts for
@@ -57,7 +56,7 @@ API documentation for %{name}.
 %setup -q
 
 %if %{without groovy}
-%pom_remove_dep :groovy
+%pom_remove_dep org.apache.groovy:
 rm src/main/java/org/apache/maven/shared/scriptinterpreter/GroovyScriptInterpreter.java
 rm src/test/java/org/apache/maven/shared/scriptinterpreter/GroovyScriptInterpreterTest.java
 rm src/test/java/org/apache/maven/shared/scriptinterpreter/ScriptRunnerTest.java
@@ -71,13 +70,17 @@ sed -i /GroovyScriptInterpreter/d src/main/java/org/apache/maven/shared/scriptin
 %mvn_install
 
 %files -f .mfiles
-%doc DEPENDENCIES LICENSE NOTICE
+%doc README.md
+%doc --no-dereference LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 
 %changelog
+* Mon Sep 08 2025 Anton Meleshnikov <alton@altlinux.org> 1.5-alt1
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_11jpp11
 - java11 build
 

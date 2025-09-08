@@ -15,42 +15,55 @@ BuildRequires: jpackage-11-compat
 %bcond_with     groovy
 
 Name:           maven-invoker-plugin
-Version:        3.2.1
-Release:        alt1_2jpp11
+Version:        3.9.0
+Release:        alt1
 Summary:        Maven Invoker Plugin
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
 BuildArch:      noarch
 
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        https://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-collections:commons-collections)
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.shared:maven-artifact-transfer) >= 0.11.0
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
 BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
+BuildRequires:  mvn(org.assertj:assertj-core)
 %if %{with groovy}
-BuildRequires:  mvn(org.codehaus.groovy:groovy)
+BuildRequires:  mvn(org.apache.groovy:groovy)
+BuildRequires:  mvn(org.apache.groovy:groovy-bom)
+BuildRequires:  mvn(org.apache.groovy:groovy-json)
+BuildRequires:  mvn(org.apache.groovy:groovy-xml)
 %endif
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-params)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
 Source44: import.info
 
 %description
@@ -70,11 +83,11 @@ API documentation for %{name}.
 %setup -q 
 
 %if %{without groovy}
-%pom_remove_dep ':${groovy-artifactId}'
+%pom_remove_dep org.apache.groovy:
 %endif
 
 %build
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 
+%mvn_build -f
 
 %install
 %mvn_install
@@ -86,6 +99,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Sep 08 2025 Anton Meleshnikov <alton@altlinux.org> 3.9.0-alt1
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 3.2.1-alt1_2jpp11
 - new version
 
