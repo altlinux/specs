@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt7
+Release: alt8
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -480,6 +480,14 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Mon Sep 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.0-alt8
+- Update links and navigation in the "About" page (indexhtml):
+  + Update telegram channel link URL.
+  + Update links to English pages.
+  + Remove the course schedule URL because it leads to a 404 error.
+  + Update feedback link URL.
+  + Improve navigation and add new links.
+
 * Thu Aug 28 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.0-alt7
 - Add BUILD_ID, ALT_BRANCH_ID, DOCUMENTATION_UR, SUPPORT_URL,
   VARIANT and VARIANT_ID to the os-release.
