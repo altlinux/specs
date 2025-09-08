@@ -16,7 +16,7 @@
 
 Name: asterisk
 Version: 20.15.2
-Release: alt1
+Release: alt2
 
 Summary: Open source PBX
 License: GPLv2
@@ -29,7 +29,7 @@ Obsoletes: asterisk-base
 BuildRequires: curl gcc-c++
 BuildRequires: libedit-devel libncurses-devel libuuid-devel libjansson-devel
 BuildRequires: libsqlite3-devel libxml2-devel liburiparser-devel libxslt-devel
-BuildRequires: libpopt-devel libspandsp-devel libfftw3-devel
+BuildRequires: libpopt-devel libspandsp3-devel libfftw3-devel
 BuildRequires: libcurl-devel libsrtp2-devel libjansson-devel
 BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
@@ -324,6 +324,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Mon Sep 08 2025 Ilya Demyanov <turbid@altlinux.org> 20.15.2-alt2
+- migrate to libspandsp3
+
 * Fri Aug 29 2025 Ilya Demyanov <turbid@altlinux.org> 20.15.2-alt1
 - 20.15.2
 
