@@ -19,8 +19,8 @@
 %endif
 
 %define nv_version 580
-%define nv_release 76
-%define nv_minor   05
+%define nv_release 82
+%define nv_minor   07
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
@@ -318,6 +318,9 @@ done
 %endif
 
 %changelog
+* Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.07-alt1
+- new version
+
 * Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt1
 - new version
 

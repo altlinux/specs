@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 580.76.05
+Version: 580.82.07
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -153,6 +153,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.07-alt1
+- new version
+
 * Thu Aug 21 2025 Sergey V Turchin <zerg@altlinux.org> 580.76.05-alt1
 - new version
 - apply settings via XDG autostart
