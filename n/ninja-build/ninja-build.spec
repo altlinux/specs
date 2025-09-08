@@ -3,8 +3,8 @@
 %def_with docs
 
 Name:           ninja-build
-Version:        1.12.2
-Release:        alt2.1
+Version:        1.13.1
+Release:        alt1
 Epoch:          1
 
 Summary:        A small build system with a focus on speed
@@ -88,7 +88,6 @@ install -Dpm 755 ninja %buildroot%_bindir/ninja
 ln -s ninja %buildroot%_bindir/ninja-build
 install -Dpm 644 misc/bash-completion %buildroot%_sysconfdir/bash_completion.d/ninja-bash-completion
 install -Dpm 644 misc/zsh-completion %buildroot%_datadir/zsh/site-functions/_ninja
-install -Dpm 644 misc/ninja-mode.el %buildroot%_datadir/emacs/site-lisp/ninja-mode.el
 install -Dpm 644 misc/ninja.vim %buildroot%_datadir/vim/vimfiles/syntax/ninja.vim
 install -Dpm 644 %SOURCE1 %buildroot%_datadir/vim/vimfiles/ftdetect/ninja.vim
 install -Dpm 644 %SOURCE2 %buildroot%_man1dir/ninja.1
@@ -105,7 +104,6 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %_sysconfdir/bash_completion.d/
 # zsh does not have a -filesystem package
 %_datadir/zsh/site-functions/_ninja
-%_datadir/emacs/site-lisp/ninja-mode.el
 %_datadir/vim/vimfiles/syntax/ninja.vim
 %_datadir/vim/vimfiles/ftdetect/ninja.vim
 
@@ -115,6 +113,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Mon Sep 08 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.13.1-alt1
+- New version.
+
 * Wed May 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.12.2-alt2.1
 - fix %%changelog
 
