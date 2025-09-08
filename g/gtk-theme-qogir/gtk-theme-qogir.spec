@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2024.05.22
+Version: 2025.08.17
 Release: alt1
 Epoch: 1
 
@@ -8,8 +8,10 @@ Summary: Qogir GTK theme
 License: GPL-3.0-only
 Group: Graphical desktop/GNOME
 Url: https://github.com/vinceliuice/Qogir-theme
+VCS: https://github.com/vinceliuice/Qogir-theme
 
 Source: %name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -21,6 +23,7 @@ Based on Arc gtk theme
 
 %prep
 %setup
+%patch -p1
 
 %build
 
@@ -33,6 +36,10 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Mon Sep 08 2025 Leontiy Volodin <lvol@altlinux.org> 1:2025.08.17-alt1
+- New version.
+- Added VCS tag.
+
 * Fri May 24 2024 Leontiy Volodin <lvol@altlinux.org> 1:2024.05.22-alt1
 - New version.
 
