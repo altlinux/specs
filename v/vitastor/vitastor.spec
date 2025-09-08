@@ -4,7 +4,7 @@
 
 Name: vitastor
 Version: 2.2.3
-Release: alt1
+Release: alt2
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -277,6 +277,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.3-alt2
+- e2k patch update
+
 * Mon Aug 04 2025 Alexey Shabalin <shaba@altlinux.org> 2.2.3-alt1
 - 2.2.3.
 
