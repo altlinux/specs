@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      cfa6c98cec12a4bc513d44ecffc47e70515481d1
+%global commit      5e22f14bbdbf0916b0c7289066fc5fc7db447e5d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global altkernel 6.12.44-talos
 %define _libexecdir %_prefix/libexec
 %define alt_registry registry.altlinux.org
 %define alt_orchestra_registry altlinux.space/alt-orchestra
@@ -12,8 +13,8 @@
 %endif
 
 Name: talos
-Version: 1.10.6
-Release: alt2
+Version: 1.10.7
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -112,7 +113,7 @@ sed -i \
 #DefaultNTPServer
 
 # Define ALT kernel
-sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.40-talos"|' \
+sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "%altkernel"|' \
   pkg/machinery/constants/constants.go
 
 
@@ -196,6 +197,9 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %go_path/src/%import_path
 
 %changelog
+* Mon Sep 08 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.7-alt1
+- New version 1.10.7.
+
 * Wed Aug 06 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.6-alt2
 - Remove whitelist path validation.
 - Fix build with go 1.25
