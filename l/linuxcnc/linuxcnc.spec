@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.5
-Release: alt1
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -47,6 +47,8 @@ BuildRequires: intltool
 BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: asciidoc-a2x
 BuildRequires: dos2unix
+# for build with tk
+BuildRequires: libXScrnSaver-devel
 
 Obsoletes: %name-data =< %EVR
 Requires: lib%name = %EVR
@@ -249,6 +251,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Sep 08 2025 Anton Midyukov <antohami@altlinux.org> 2.9.5-alt2
+- Add build dependency on libXScrnSaver-devel.
+
 * Mon Sep 08 2025 Anton Midyukov <antohami@altlinux.org> 2.9.5-alt1
 - new version 2.9.5
 
