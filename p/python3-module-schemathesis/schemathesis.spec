@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.15
+Version: 4.1.4
 Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
@@ -26,6 +26,8 @@ BuildRequires: python3-module-aiohttp-tests
 BuildRequires: curl
 #Added because the package jsonschema is built in the repository without optional dependencies.
 BuildRequires: python3-module-rfc3339-validator
+BuildRequires: python3-module-fqdn
+BuildRequires: python3-module-idna
 %endif
 
 %description
@@ -44,7 +46,7 @@ finds crashes and validates spec compliance.
 %pyproject_install
 
 %check
-%pyproject_run_pytest --snapshot-update test/
+%pyproject_run_pytest --snapshot-update test/ -n auto
 
 %files
 %doc LICENSE README.*
@@ -54,6 +56,9 @@ finds crashes and validates spec compliance.
 %_bindir/st
 
 %changelog
+* Thu Sep 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.1.4-alt1
+- New version (4.1.4).
+
 * Thu Jul 31 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 4.0.15-alt1
 - New version (4.0.15).
 

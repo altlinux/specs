@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary:   This package provides zero dependency writer for building HAR (HTTP Archive) files in Python
@@ -15,14 +15,13 @@ Vcs:       https://github.com/schemathesis/harfile.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-hatchling
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-hypothesis
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -31,6 +30,8 @@ HAR (HTTP Archive) files in Python.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -47,5 +48,9 @@ HAR (HTTP Archive) files in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.3.1-alt1
+- New version (0.3.1).
+- Updated dependencies managment.
+
 * Mon Sep 30 2024 Martynenko Evgeniy <enimalojd@altlinux.org> 0.3.0-alt1
   - Initial build for ALT.
