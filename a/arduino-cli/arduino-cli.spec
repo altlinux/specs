@@ -1,10 +1,10 @@
-%define commit 49c154a4
-%define date 20241007
+%define commit 08ff7e2b7
+%define date 20250827
 
 %global import_path github.com/arduino/arduino-cli
 Name:    arduino-cli
-Version: 1.1.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: Arduino command line tool
 License: GPL-3.0
@@ -27,9 +27,9 @@ interfaces.
 
 %prep
 %setup
-subst 's/defaultVersionString *= .*/defaultVersionString = "%version"/' version/version.go
-subst 's/commit *= .*/commit = "%commit"/' version/version.go
-subst 's/date *= .*/date = "%date"/' version/version.go
+subst 's/defaultVersionString *= .*/defaultVersionString = "%version"/' internal/version/version.go
+subst 's/commit *= .*/commit = "%commit"/' internal/version/version.go
+subst 's/date *= .*/date = "%date"/' internal/version/version.go
 tar xf %SOURCE1
 
 %build
@@ -53,6 +53,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Sep 08 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Tue Nov 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2
 - Set application version.
 
