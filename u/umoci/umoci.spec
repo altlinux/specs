@@ -1,6 +1,6 @@
 %global import_path github.com/opencontainers/umoci
 Name:    umoci
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: umoci modifies Open Container images
@@ -59,5 +59,8 @@ done
 %_bindir/*
 
 %changelog
+* Mon Sep 08 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+
 * Thu Jun 12 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
