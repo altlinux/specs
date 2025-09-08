@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.12.0
-Release: alt2
+Release: alt3
 
 Summary: Asyncio client for kafka
 License: Apache-2.0
@@ -15,6 +15,7 @@ Vcs: https://github.com/aio-libs/aiokafka
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch1: 0001-tests-record-Adapt-ZSTD-CRC-test-for-compatibility-w.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -36,6 +37,7 @@ BuildRequires: zlib-devel
 
 %prep
 %setup
+%autopatch -p1
 
 sed -i '/packages=/d' setup.py
 cat << EOF >> packages
@@ -73,6 +75,10 @@ cat requirements-{ci,cython}.txt > requirements-tests.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 03 2025 Vasiliy Kovalev <kovalev@altlinux.org> 0.12.0-alt3
+- NMU: added a patch to fix FTBFS (tests/record: Adapt ZSTD CRC
+  test for compatibility with cramjam 2.11.0)
+
 * Thu Nov 28 2024 Egor Ignatov <egori@altlinux.org> 0.12.0-alt2
 - Add python3-module-wheel BR for setuptools < 70.1.0.
 
