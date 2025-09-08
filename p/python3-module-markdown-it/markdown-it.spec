@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.0
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: Python port of markdown-it. Markdown parsing, done right!
 License: MIT
@@ -87,6 +87,9 @@ For more details see: https://markdown-it-py.readthedocs.io.
 %_bindir/%oname
 
 %changelog
+* Mon Sep 08 2025 Anton Farygin <rider@altlinux.com> 4.0.0-alt1
+- 3.0.0 -> 4.0.0
+
 * Thu Dec 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
 - found python dependencies strictly (ALT #51334)
 
