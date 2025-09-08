@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcng-dpapi
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Client library for CNG-DPAPI
@@ -52,6 +52,10 @@ develop programs which make use of %name
 %_libdir/cng-dpapi/CNGDpApiConfig.cmake
 
 %changelog
+* Mon Sep 8 2025 Vladimir Rubanov <august@altlinux.org> 0.0.4-alt1
+- 0.0.4-alt1
+- Resolve various issues with the library.
+
 * Mon May 5 2025 Vladimir Rubanov <august@altlinux.org> 0.0.3-alt1
 - 0.0.3-alt1
 - Resolve overlinking on e2k.
