@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
 License: BSD-3-Clause
@@ -16,6 +16,8 @@ Group: Development/Python3
 URL: https://pypi.org/project/shapely
 VCS: https://github.com/shapely/shapely
 Source: %name-%version.tar
+Patch: 56e16e6eb27c54c6c24b9a251c12414e289fb7d0.patch
+Patch1: a561132c4e13c1fde597f56a8a7133c3c09b9928.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
@@ -68,6 +70,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 # workaround for versioneer
 rm versioneer.py
@@ -117,6 +121,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Sep 09 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt2
+- Fixed FTBFS.
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
 - Automatically updated to 2.1.1.
 
