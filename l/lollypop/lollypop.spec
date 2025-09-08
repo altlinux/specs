@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lollypop
-Version: %ver_major.42
+Version: %ver_major.44
 Release: alt1
 
 Summary: Lollypop music player
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 %define gtk_ver 3.22
 %define gi_ver 1.35
 
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0 typelib(Handy) = 1 typelib(Soup) = 3.0
 Requires: python3(textblob)
 Requires: gst-plugins-base1.0
@@ -81,6 +82,9 @@ Lollypop is a new GNOME music playing application.
 %doc README*
 
 %changelog
+* Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.44-alt1
+- 1.4.44
+
 * Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.42-alt1
 - 1.4.42
 
