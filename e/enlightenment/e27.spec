@@ -22,7 +22,7 @@
 
 Name: enlightenment
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -61,6 +61,7 @@ Obsoletes: e17-default e18-default
 Provides: e17-default = %EVR
 Provides: e18-default = %EVR
 
+Requires: %name-data = %EVR
 # default terminal
 Requires: terminology
 # default image viewer
@@ -117,6 +118,15 @@ Provides: e18-devel = %EVR
 
 %description devel
 Development headers for Enlightenment.
+
+%package data
+Summary: Arch-independent data for Enlightenment.
+Group: Graphical desktop/Enlightenment
+BuildArch: noarch
+
+%description data
+Arch-independent data for Enlightenment.
+
 
 %prep
 %setup -n %name-%version%beta
@@ -223,7 +233,6 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_bindir/%{name}_remote
 %_bindir/%{name}_start
 %_bindir/start_%name
-%_datadir/%name/
 %_datadir/xsessions/%name-xorg.desktop
 %exclude %{?_enable_wayland:%_datadir/wayland-sessions/%name-wayland.desktop}
 %_pixmapsdir/%name-askpass.png
@@ -232,6 +241,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_xdgmenusdir/e-applications.menu
 %doc AUTHORS COPYING README*
 
+%files data
+%_datadir/%name/
+
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
@@ -239,6 +251,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.1-alt2
+- moved huge amount of data files to a separate noarch subpackage
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.1-alt1
 - 0.27.1
 
