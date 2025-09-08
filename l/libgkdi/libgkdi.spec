@@ -2,7 +2,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libgkdi
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Client library for MS-GKDI
@@ -58,6 +58,10 @@ develop programs which make use of %name
 %_libdir/gkdi/GkdiConfig.cmake
 
 %changelog
+* Mon Sep 8 2025 Vladimir Rubanov <august@altlinux.org> 0.0.4-alt1
+- 0.0.4-alt1
+- Update magic values in IDL.
+
 * Mon May 5 2025 Vladimir Rubanov <august@altlinux.org> 0.0.3-alt1
 - 0.0.3-alt1
 - Resolve overlinking on e2k.
