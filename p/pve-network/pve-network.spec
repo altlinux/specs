@@ -2,8 +2,8 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.11.2
-Release: alt2
+Version: 1.1.6
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -15,8 +15,8 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: libpve-network-perl = %EVR
 Requires: ifupdown2
-Requires: pve-common >= 5.0.45
-Requires: pve-cluster >= 8.0.10
+Requires: pve-common >= 9.0.2
+Requires: pve-cluster >= 9.0.1
 Requires: pve-firewall >= 5.1.0
 Requires: frr frr-pythontools
 Requires: dnsmasq
@@ -75,6 +75,9 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Sat Aug 09 2025 Sergey Konev <darisishe@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.11.2-alt2
 - NMU: build on loongarch64
 

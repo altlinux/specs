@@ -3,8 +3,8 @@
 
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
-Version: 1.3.0
-Release: alt2
+Version: 2.0.2
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -45,6 +45,15 @@ __EOF__
 %tmpfiles_create %_tmpfilesdir/%name.conf
 %post_systemd_postponed %name
 
+if [ $1 -eq 2 ]; then
+    if [ ! -d /run/pve ]; then 
+        mkdir -p /run/pve || echo "failed to (re)create /run/pve" 
+    fi
+
+    ln -sf /run/%name/socket /run/pve/lxc-syscalld.sock || \ 
+        echo "failed to create backward compat symlink; running CTs might not reach us"
+fi
+
 %preun
 %preun_systemd %name
 
@@ -55,6 +64,10 @@ __EOF__
 %_libexecdir/%name/%name
 
 %changelog
+* Wed Aug 27 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 2.0.2-alt1
+- 2.0.2
+- Create compat symlink /run/pve/lxc-syscalld.sock on upgrade
+
 * Wed Dec 18 2024 Konstantin Kozoriz <kozorizki@altlinux.org> 1.3.0-alt2
 - Merged upstream fixes
 

@@ -3,8 +3,8 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 8.4.0
-Release: alt2
+Version: 9.0.8
+Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -49,6 +49,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Fri Aug 08 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.8-alt1
+- 9.0.8 
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.4.0-alt2
 - NMU: build on loongarch64
 

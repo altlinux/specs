@@ -3,8 +3,8 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 8.1.0
-Release: alt2
+Version: 9.0.6
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -104,6 +104,13 @@ __EOF__
 %post
 %post_systemd_postponed %name
 
+LEGACY_FABRICS_DIRECTORY="/etc/pve/sdn/fabrics/"
+
+if test -d "$LEGACY_FABRICS_DIRECTORY"; then
+  echo "Removing legacy sdn fabrics directory ..."
+  rm -d $LEGACY_FABRICS_DIRECTORY || echo "Failed to remove legacy sdn folder ${LEGACY_FABRICS_DIRECTORY}!"
+fi
+
 %preun
 %preun_systemd %name
 
@@ -161,6 +168,9 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Wed Aug 13 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt1
+- 9.0.6
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.1.0-alt2
 - NMU: build on loongarch64
 

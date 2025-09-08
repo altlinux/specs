@@ -2,8 +2,8 @@
 
 Name: pve-http-server
 Summary: Proxmox Asynchrounous HTTP Server Implementation
-Version: 5.2.0
-Release: alt2
+Version: 6.0.4
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -19,7 +19,7 @@ Conflicts: pve-storage < 8.2.5
 Conflicts: pmg-api < 8.1.4
 Conflicts: pve-manager < 8.2.7
 
-Requires: fonts-font-awesome javascript-jquery javascript-bootstrap
+Requires: fonts-font-awesome javascript-bootstrap
 
 BuildRequires: perl(AnyEvent/HTTP.pm) perl(AnyEvent/Handle.pm) perl(AnyEvent/IO.pm) perl(AnyEvent/Socket.pm) perl(AnyEvent/TLS.pm) perl(AnyEvent/Util.pm)
 BuildRequires: perl(Compress/Zlib.pm)
@@ -47,6 +47,9 @@ This package is used as base to implement the REST API in all perl based
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Tue Aug 26 2025 Sergey Konev <darisishe@altlinux.org> 6.0.4-alt1
+- 6.0.4
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 5.2.0-alt2
 - NMU: build on loongarch64
 

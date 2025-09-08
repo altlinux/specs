@@ -3,8 +3,8 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 8.3.12
-Release: alt2
+Version: 9.0.18
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -18,13 +18,15 @@ ExclusiveArch: x86_64 aarch64
 Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
-Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools proxmox-websocket-tunnel
+Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
+Requires: conntrack-tools
 Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 8.0.2 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
-BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 8.2.10 pve-qemu-system >= 7.1
+BuildRequires: pve-common >= 9.0.3 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
+BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.0.7 pve-qemu-system >= 7.1 pve-network
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
+BuildRequires: pkgconf libpcre2-devel
 
 %description
 %summary.
@@ -32,15 +34,15 @@ This package contains the Qemu Server tools used by Proxmox VE.
 
 %prep
 %setup
-sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=%_unitdir!' qmeventd/Makefile
-sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=%_unitdir!' query-machine-capabilities/Makefile
+sed -i 's!SERVICEDIR=.*systemd/system!SERVICEDIR=%_unitdir!' src/qmeventd/Makefile
+sed -i 's!SERVICEDIR=.*systemd/system!SERVICEDIR=%_unitdir!' src/query-machine-capabilities/Makefile
 
 %build
-%make_build qmeventd -C qmeventd
-%make_build query-machine-capabilities -C query-machine-capabilities
+%make_build qmeventd -C src/qmeventd
+%make_build query-machine-capabilities -C src/query-machine-capabilities
 
 %install
-%makeinstall_std
+%makeinstall_std -C src
 install -m0644 %SOURCE71 %buildroot%_datadir/qemu-server/bootsplash.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-cirrus.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-std.jpg
@@ -53,17 +55,18 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial3.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 
 %files
-%config(noreplace) %_sysconfdir/modules-load.d/qemu-server.conf
+%_modules_loaddir/qemu-server.conf
 %_unitdir/qmeventd.service
 %_unitdir/qmeventd.socket
 %_unitdir/pve-query-machine-capabilities.service
+%_unitdir/pve-dbus-vmstate@.service
 %_prefix/libexec/qemu-server
 %_prefix/lib/qemu-server
 %_sbindir/*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
 %_datadir/qemu-server
-%_localstatedir/qemu-server
+%_datadir/dbus-1/system.d/org.qemu.VMState1.conf
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
@@ -74,8 +77,12 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/VZDump
 %perl_vendor_privlib/PVE/*.pm
 %perl_vendor_privlib/PVE/QemuConfig/NoWrite.pm
+%perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Fri Aug 29 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.18-alt1
+- 9.0.18 
+
 * Tue May 06 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.12-alt2
 - fix merge conflicts with get_command_for_arch()
 - fix merge conflicts with kvm_user_version()

@@ -1,13 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 
 %define oname bootstrap
-%global fontname glyphicons-halflings
-%global _fontdir /usr/share/fonts/%fontname
 
 Name: javascript-%oname
 Summary: HTML, CSS and JS framework
-Version: 3.4.1
-Release: alt2
+Version: 5.3.8
+Release: alt1
 License: MIT
 Group: Development/Other
 Url: https://getbootstrap.com/
@@ -16,7 +14,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 Provides: libjs-%oname = %EVR
 
-Requires: javascript-common javascript-jquery fonts-glyphicons-halflings
+Requires: javascript-common
 BuildRequires(pre): rpm-macros-javascript
 
 %description
@@ -26,39 +24,24 @@ It includes base CSS and HTML for typography, forms, buttons, tables,
 grids, navigation, and more.
 
 
-%package -n fonts-glyphicons-halflings
-Summary: icons made for smaller graphic
-Group: System/Fonts/True type
-Conflicts: fonts-ttf-glyphicons-halflings
-
-%description -n fonts-glyphicons-halflings
-GLYPHICONS is a family of icon fonts
-created with an emphasis to simplicity and easy orientation.
-GLYPHICONS Halflings, a subset optimized for smaller graphics,
-were freely licensed as part of Bootstrap 2.x and 3.x.
-
 %prep
 %setup
 # %%patch -p1
 
 %build
 %install
-mkdir -p %buildroot{%_jsdir/%oname/fonts,%_fontdir}
+mkdir -p %buildroot%_jsdir/%oname
 cp -p -r css %buildroot%_jsdir/%oname
 cp -p -r js %buildroot%_jsdir/%oname
-cp -p fonts/* %buildroot%_fontdir
-
-for e in eot svg ttf woff woff2 ; do
-    ln -r -s {%buildroot%_fontdir/glyphicons-halflings-regular,%buildroot%_jsdir/%oname/fonts/glyphicons-halflings-regular}.$e
-done
 
 %files
 %_jsdir/%oname
 
-%files -n fonts-glyphicons-halflings
-%_fontdir
 
 %changelog
+* Wed Sep 03 2025 Sergey Konev <darisishe@altlinux.org> 5.3.8-alt1
+- 5.3.8
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 3.4.1-alt2
 - NMU: do not use deprecated rpm-macros-fontpackages
 

@@ -1,15 +1,14 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: proxmox-websocket-tunnel
-Version: 0.2.0
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: Proxmox websocket tunneling helper
 License: AGPL-3.0+
 Group: Networking/Other
 URL: https://www.proxmox.com/
 Vcs: git://git.proxmox.com/git/proxmox-websocket-tunnel.git
 Source: %name-%version.tar
-Patch1: vendored-nix-loongarch64-support.patch
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 
@@ -24,11 +23,6 @@ websocket connection.
 
 %prep
 %setup
-%autopatch -p1
-
-# allow patching vendored rust code
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-     ./vendor/nix/.cargo-checksum.json
 
 %build
 %rust_build
@@ -41,6 +35,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Fri Aug 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 1.0.0-alt1
+- 1.0.0 
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2.0-alt2
 - NMU: build on loongarch64
 

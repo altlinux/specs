@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 8.4.0
-Release: alt2
+Version: 9.0.8
+Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Thu Aug 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.8-alt1
+- remove references to missing chapters (Ceph repos, ISO installer)
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.4.0-alt2
 - NMU: build on loongarch64
 

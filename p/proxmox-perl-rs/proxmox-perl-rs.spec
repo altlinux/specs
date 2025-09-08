@@ -2,8 +2,8 @@
 %def_without check
 
 Name: proxmox-perl-rs
-Version: 0.3.4
-Release: alt4
+Version: 0.4.1
+Release: alt1
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -30,7 +30,7 @@ libpve-rs-perl and libpmg-rs-perl, loading whichever is available.
 
 %package -n libproxmox-rs-perl
 Summary: PVE/PMG common parts which have been ported to Rust
-Version: 0.3.4
+Version: 0.4.1
 Group: Development/Other
 Provides: proxmox-perl-rs = %EVR
 Provides: proxmox-rs-perl = %EVR
@@ -40,7 +40,7 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.9.1
+Version: 0.10.9
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
@@ -50,7 +50,7 @@ Provides: pve-rs-perl = %EVR
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.7.6
+Version: 0.8.0
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -95,9 +95,9 @@ popd
 %install
 pushd pve-rs
 install -pD -m0644 target/release/libpve_rs.so %buildroot%perl_vendor_autolib/libpve_rs.so
-mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/APT,PVE/RS/Firewall,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
+mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/SDN,PVE/RS/Firewall,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
 install -m0644 PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
-install -m0644 PVE/RS/APT/*.pm %buildroot%perl_vendor_privlib/PVE/RS/APT/
+install -m0644 PVE/RS/SDN/*.pm %buildroot%perl_vendor_privlib/PVE/RS/SDN/
 install -m0644 PVE/RS/Firewall/*.pm %buildroot%perl_vendor_privlib/PVE/RS/Firewall/
 install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE/RS/ResourceScheduling/
 install -m0644 common/pkg/PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
@@ -114,11 +114,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 %perl_vendor_autolib/libpve_rs.so
 %dir %perl_vendor_privlib/PVE/RS
 %dir %perl_vendor_privlib/PVE/RS/ResourceScheduling
-%dir %perl_vendor_privlib/PVE/RS/APT
+%dir %perl_vendor_privlib/PVE/RS/SDN
 %dir %perl_vendor_privlib/PVE/RS/Firewall
 %perl_vendor_privlib/PVE/RS/*.pm
 %perl_vendor_privlib/PVE/RS/ResourceScheduling/*.pm
-%perl_vendor_privlib/PVE/RS/APT/*.pm
+%perl_vendor_privlib/PVE/RS/SDN/*.pm
 %perl_vendor_privlib/PVE/RS/Firewall/*.pm
 
 %files -n libproxmox-rs-perl
@@ -131,6 +131,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Thu Aug 14 2025 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt1
+- Update:
+  + libproxmox-rs-perl 0.4.1
+  + libpve-rs-perl 0.10.9
+
 * Sun Feb 23 2025 Sergey Konev <darisishe@altlinux.org> 0.3.4-alt4
 - Better ALT repos support for APT module 
 

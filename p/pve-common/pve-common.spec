@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 8.3.1
-Release: alt3
+Version: 9.0.9
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -71,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Aug 08 2025 Sergey Konev <darisishe@altlinux.org> 9.0.9-alt1
+- 9.0.9
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.3.1-alt3
 - NMU: build on loongarch64
 
