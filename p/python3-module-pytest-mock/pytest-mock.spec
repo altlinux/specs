@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.14.1
+Version: 3.15.0
 Release: alt1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
 BuildRequires(pre): rpm-build-pyproject
@@ -56,6 +58,9 @@ to worry about undoing patches at the end of a test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
+- 3.14.1 -> 3.15.0.
+
 * Tue May 27 2025 Stanislav Levin <slev@altlinux.org> 3.14.1-alt1
 - 3.14.0 -> 3.14.1.
 
