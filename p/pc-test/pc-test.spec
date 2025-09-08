@@ -6,7 +6,7 @@
 %endif
 
 Name: pc-test
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: PC Test Suite
@@ -72,6 +72,10 @@ Requires: bash update-kernel pciutils usbutils iproute2
 #Requires: pcsc-lite
 #Requires: fio
 #Requires: glmark2
+#Requires: xdg-open
+#Requires: pactl
+#Requires: paplay
+#Requires: notify-send
 #Conflicts: openct
 #Conflicts: pcsc-lite-openct
 #Conflicts: libopenct
@@ -81,7 +85,7 @@ Packager: Leonid Krivoshein <klark@altlinux.org>
 %description
 Computers and servers test suite special for ALT Linux.
 It supports all products, based on p9, p10, c9f1, c9f2,
-c10f1 and c10f2 stable branches and Sisyphus-based
+c10f1 and c10f2 stable branches and also Sisyphus-based
 regular builds.
 
 %package doc
@@ -139,6 +143,12 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Mon Sep 08 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.6-alt1
+- Fixed:
+  + sudo configuration success check (ALT #53393)
+  + added the ability to cancel testing (ALT #53389)
+  + install dependencies for express test (ALT #55638)
+
 * Mon Aug 11 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.5-alt1
 - Added:
   + support for ALT SP 10.2.1 distro
