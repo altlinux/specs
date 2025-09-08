@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2025.07.29
+Version: 2025.09.08
 Release: alt1
 
 Summary: Common CA Certificates
@@ -48,6 +48,9 @@ install -pD -m 644 ca-bundle.trust.p11-kit \
 %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
 
 %changelog
+* Mon Sep 08 2025 Ajrat Makhmutov <rauty@altlinux.org> 2025.09.08-alt1
+- mozilla: sync with nss-3.115.1.
+
 * Tue Jul 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 2025.07.29-alt1
 - mozilla: sync with nss-3.114.
 
