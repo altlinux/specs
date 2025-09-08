@@ -10,7 +10,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -85,6 +85,10 @@ BuildRequires: python3-module-hypothesis
 %add_python3_req_skip torch
 %add_python3_req_skip torch.fft
 %add_python3_req_skip torch.linalg
+
+# Useless requirement for scipy/_lib/array_api_compat
+# that makes dependency circle
+%add_python3_req_skip dask
 
 %description
 SciPy is the library of scientific codes built on top of NumPy.
@@ -211,6 +215,9 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %_includedir/%modname-py3
 
 %changelog
+* Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.15.3-alt2
+- Removed dependency on dask.
+
 * Wed May 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.15.3-alt1
 - Build new version.
 
