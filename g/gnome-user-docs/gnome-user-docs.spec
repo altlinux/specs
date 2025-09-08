@@ -1,9 +1,11 @@
+%def_enable snapshot
+
 %define ver_major 48
 %define beta %nil
 
 Name: gnome-user-docs
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: General GNOME User Documentation
 License: CC-BY-SA-3.0
@@ -12,7 +14,11 @@ Url: ftp://ftp.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/gnome-user-docs.git
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 BuildArch: noarch
 AutoReqProv: no
@@ -35,6 +41,7 @@ directly associated with any particular GNOME application or package.
 %setup -n %name-%version%beta
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure
 %make_build
 
@@ -46,6 +53,10 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt2
+- updated to 48.2-29-g586f2d35 (fixed russian translation
+  by gammaray@ (ALT #55794, ALT #55797, ALT #55800))
+
 * Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 
