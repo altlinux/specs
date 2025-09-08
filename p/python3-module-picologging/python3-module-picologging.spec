@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: An optimized logging library for Python
@@ -44,8 +44,11 @@ which already use logging, and supports the same API as the logging module.
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-0.9.2.dist-info
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Sep 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
+- Automatically updated to 0.9.4.
+
 * Thu Jul 18 2024 Alexander Burmatov <thatman@altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus.
