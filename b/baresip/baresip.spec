@@ -1,5 +1,5 @@
 Name: baresip
-Version: 3.23.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 3.23.0
+BuildRequires: libre-devel >= 4.0.0
 
 %add_verify_elf_skiplist %_libdir/%name/modules/*.so
 
@@ -134,7 +134,7 @@ This module provides the communication channel to control and monitor baresip vi
 %package g722
 Summary: G.722 audio codec module for baresip
 Group: Communications
-BuildRequires: libspandsp-devel
+BuildRequires: libspandsp3-devel
 Requires: %name = %version-%release
 
 %description g722
@@ -145,7 +145,7 @@ This module provides the G.722 audio codec.
 %package g726
 Summary: G.726 audio codec module for baresip
 Group: Communications
-BuildRequires: libspandsp-devel
+BuildRequires: libspandsp3-devel
 Requires: %name = %version-%release
 
 %description g726
@@ -235,7 +235,7 @@ This module provides the Pipewire audio driver.
 %package plc
 Summary: Packet Loss Concealment module for baresip
 Group: Communications
-BuildRequires: libspandsp-devel
+BuildRequires: libspandsp3-devel
 Requires: %name = %version-%release
 
 %description plc
@@ -368,7 +368,7 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.20*
+%_libdir/lib%name.so.21*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -383,7 +383,6 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/ctrl_tcp.so
 %_libdir/%name/modules/debug_cmd.so
 %_libdir/%name/modules/dtls_srtp.so
-%_libdir/%name/modules/ebuacip.so
 %_libdir/%name/modules/echo.so
 %_libdir/%name/modules/evdev.so
 %_libdir/%name/modules/fakevideo.so
@@ -507,6 +506,10 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Mon Sep 08 2025 Ilya Demyanov <turbid@altlinux.org> 4.0.0-alt1
+- new version 4.0.0
+- migrate to libspandsp3-devel
+
 * Fri Jun 06 2025 Ilya Demyanov <turbid@altlinux.org> 3.23.0-alt1
 - new version 3.23.0
 

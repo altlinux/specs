@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 3.23.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -42,7 +42,7 @@ rm -f %buildroot/%_libdir/%name.a
 
 %files
 %doc CHANGELOG.md LICENSE README.md
-%_libdir/%name.so.34*
+%_libdir/%name.so.36*
 
 %files devel
 %_includedir/%oname/
@@ -52,6 +52,9 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Sep 08 2025 Ilya Demyanov <turbid@altlinux.org> 4.0.0-alt1
+- new version 4.0.0
+
 * Fri Jun 06 2025 Ilya Demyanov <turbid@altlinux.org> 3.23.0-alt1
 - new version 3.23.0
 
