@@ -1,5 +1,5 @@
 Name: zorin-desktop-themes
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 Summary: Zorin OS desktop themes
 
@@ -46,6 +46,9 @@ mkdir -p %buildroot%_datadir/themes
 cp -a Zorin* %buildroot%_datadir/themes
 
 %changelog
+* Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt1
+- New version.
+
 * Sun Sep 07 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.3-alt1
 - New version.
 
