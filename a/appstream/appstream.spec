@@ -10,8 +10,8 @@
 %define libappstreamqt6 libappstreamqt6_%sover_qt
 
 Name:    appstream
-Version: 1.0.5
-Release: alt1.1
+Version: 1.0.6
+Release: alt1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -294,6 +294,9 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
+- New version.
+
 * Mon May 26 2025 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1.1
 - NMU: new version
 
