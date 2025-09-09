@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    castxml
-Version: 0.6.11
+Version: 0.6.13
 Release: alt1
 
 Summary: C-family abstract syntax tree XML output tool
@@ -83,6 +83,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 0.6.13-alt1
+- 0.6.11 -> 0.6.13
+
 * Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 0.6.11-alt1
 - 0.6.10 -> 0.6.11
 
