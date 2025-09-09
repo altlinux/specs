@@ -1,5 +1,5 @@
 Name: friture
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Realtime audio data visualizer
@@ -44,6 +44,9 @@ in a sound.
 %python3_sitelibdir/friture-%version.dist-info
 
 %changelog
+* Tue Sep 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.53-alt1
+- 0.53 released
+
 * Thu Sep 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.52-alt1
 - 0.52 released
 
