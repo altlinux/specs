@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 101
+%define ver_major 102
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -60,6 +60,9 @@ available.
 %doc README.md
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 102-alt1
+- 102 (GNOME 49 supported)
+
 * Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 101-alt1
 - 101
 - disabled %%check due to old eslint

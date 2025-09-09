@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -207,6 +207,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.1-alt1
+- 2.61.1
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.0-alt1
 - 2.61.0
 
