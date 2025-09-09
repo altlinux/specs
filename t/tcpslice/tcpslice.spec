@@ -1,5 +1,5 @@
 Name: tcpslice
-Version: 1.3
+Version: 1.8
 Release: alt1
 
 Summary: A tool to merge or split pcap files
@@ -29,9 +29,12 @@ from one or more pcap files.
 %makeinstall_std
 
 %files
-%_sbindir/%name
+%_bindir/%name
 %_mandir/man?/*
 
 %changelog
+* Tue Sep 09 2025 Alexander Danilov <admsasha@altlinux.org> 1.8-alt1
+- New version 1.8.
+
 * Thu Aug 20 2020 Nikita Ermakov <arei@altlinux.org> 1.3-alt1
 - Initial release for ALT Sisyphus.
