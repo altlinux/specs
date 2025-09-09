@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-packageurl
-Version: 0.17.1
+Version: 0.17.5
 Release: alt1
 Summary: Python implementation of the package url spec
 License: MIT
@@ -48,6 +48,9 @@ Python library to parse and build "purl" aka. Package URLs.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 09 2025 Andrey Kovalev <ded@altlinux.org> 0.17.5-alt1
+- Updated to upstream version 0.17.5.
+
 * Tue Jun 10 2025 Andrey Kovalev <ded@altlinux.org> 0.17.1-alt1
 - Updated to upstream version 0.17.1.
 
