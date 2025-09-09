@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uid_wrapper
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: A wrapper for privilege separation
@@ -60,6 +60,11 @@ popd
 %_man1dir/uid_wrapper.1*
 
 %changelog
+* Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.2-alt1
+- Updated to new version 1.3.2 (released 2025-07-24)
+- Fixes from upstream:
+  + Fixed binding the getresgid glibc symbol
+
 * Sun Jul 14 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.3.1-alt1
 - Updated to new version 1.3.1 (released 2024-06-12)
 - Fixes from upstream:
