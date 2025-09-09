@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt20.gitbc541952
+Release: alt21.gitffc94dcd
 
 Summary: OS-level test automation
 License: GPLv2+
@@ -64,7 +64,7 @@ BuildRequires: ispell ispell-en
 #BuildConflicts: pve-qemu-aux pve-qemu-img
 BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
-BuildRequires: qemu-img qemu-aux git-core xterm xterm-console tigervnc-server icewm menu
+BuildRequires: qemu-img qemu-aux git-core xterm xterm-console tigervnc-server icewm menu jq iproute2
 BuildRequires: perl(Mojo/File.pm)
 BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint perl(File/chdir.pm) perl(Test/MockRandom.pm) perl(Test/Code/TidyAll.pm) perl(JSON/Validator.pm) perl(Net/Domain.pm) perl(File/Map.pm) perl(Feature/Compat/Try.pm)
 BuildRequires: perl(Mojolicious.pm) python3-module-setuptools perl(Time/Moment.pm)
@@ -154,6 +154,10 @@ export TESSDATA_PREFIX="%_datadir/tessdata/"
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Sep 08 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt21.gitffc94dcd
+- update to current version
+- Commit hash: gitffc94dcd
+
 * Mon May 12 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt20.gitbc541952
 - Removed unnecessary startup dependency (closes: #54216)
 

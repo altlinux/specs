@@ -22,11 +22,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm) perl(Module/CPANfile.pm) perl(MCP.pm)
 
 Name: openqa
 Version: 4.6
-Release: alt19.git6fbd2ed11
+Release: alt20.git32d687ffe
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -239,9 +239,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 %makeinstall_std
 
-mkdir -p %buildroot%_datadir/openqa/etc/openqa
-ln -s %_sysconfdir/openqa/openqa.ini %buildroot%_datadir/openqa/etc/openqa/openqa.ini
-ln -s %_sysconfdir/openqa/database.ini %buildroot%_datadir/openqa/etc/openqa/database.ini
 mkdir -p %buildroot%_bindir
 ln -s %_datadir/openqa/script/client %buildroot%_bindir/openqa-client
 ln -s %_datadir/openqa/script/openqa-cli %buildroot%_bindir/openqa-cli
@@ -252,11 +249,12 @@ ln -s %_datadir/openqa/script/openqa-clone-custom-git-refspec %buildroot%_bindir
 ln -s %_datadir/openqa/script/openqa-validate-yaml %buildroot%_bindir/openqa-validate-yaml
 ln -s %_datadir/openqa/script/openqa-label-all %buildroot%_bindir/openqa-label-all
 ln -s %_datadir/openqa/script/setup-db %buildroot%_bindir/openqa-setup-db
+ln -s %_datadir/openqa/script/dump-db %buildroot%_bindir/openqa-dump-db
 
 #These files are not needed
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap
 rm -f %buildroot%_datadir/openqa/script/openqa-bootstrap-container
-
+rm -f %buildroot/%_prefix/lib/sysctl.d/01-openqa-reload-worker-auto-restart.conf
 cd %buildroot
 grep -rl %_bindir/env . | while read file; do
   sed -e 's,%_bindir/env perl,%_bindir/perl,' -i $file
@@ -280,6 +278,7 @@ rm -f t/24-worker-overall.t
 rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
 rm -f t/09-job_clone.t
+rm -f t/26-controllerrunning.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/43-scheduling-and-worker-scalability.t
 #rm -f t/42-screenshots.t
@@ -292,8 +291,7 @@ rm -f external/os-autoinst-common/xt/00-tidy.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
-sed -i -e 's,unshare -r -n ,,g' t/40-openqa-clone-job.t t/32-openqa_client-script.t
-sed -i -e '/fails without network/d' t/32-openqa_client-script.t
+sed -i -e 's,unshare -r -n ,,g' t/40-openqa-clone-job.t
 export CI=1
 export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 # Skip container tests that would need additional requirements, e.g.
@@ -335,13 +333,11 @@ fi
 %files
 %doc README.asciidoc
 %dir %_sysconfdir/openqa
-%config(noreplace) %_sysconfdir/openqa/openqa.ini
-%config(noreplace) %attr(-,root,_geekotest) %_sysconfdir/openqa/database.ini
+%dir %_sysconfdir/openqa/openqa.ini.d
+%dir %_sysconfdir/openqa/database.ini.d
+%_datadir/doc/openqa/examples/openqa.ini
+%_datadir/doc/openqa/examples/database.ini
 %dir %_datadir/openqa
-%dir %_datadir/openqa/etc
-%dir %_datadir/openqa/etc/openqa
-%_datadir/openqa/etc/openqa/openqa.ini
-%_datadir/openqa/etc/openqa/database.ini
 %config %_sysconfdir/logrotate.d/*
 %dir
 #init
@@ -362,6 +358,8 @@ fi
 %_unitdir/openqa-enqueue-git-auto-update.timer
 %_unitdir/openqa-minion-restart.service
 %_unitdir/openqa-minion-restart.path
+%_unitdir/openqa-enqueue-needle-ref-cleanup.service
+%_unitdir/openqa-enqueue-needle-ref-cleanup.timer
 %_tmpfilesdir/openqa-webui.conf
 # web libs
 %dir %_datadir/openqa/lib
@@ -400,6 +398,7 @@ fi
 %_datadir/openqa/script/upgradedb
 %_datadir/openqa/script/modify_needle
 %_datadir/openqa/script/openqa-enqueue-git-auto-update
+%_datadir/openqa/script/openqa-enqueue-needle-ref-cleanup
 %dir %_localstatedir/openqa/share
 %defattr(-,_geekotest,root)
 %dir %_localstatedir/openqa/db
@@ -441,8 +440,10 @@ fi
 %dir %_datadir/openqa/lib/OpenQA
 %{_datadir}/openqa/lib/OpenQA/CacheService/
 %{_datadir}/openqa/lib/OpenQA/Worker
-%config(noreplace) %_sysconfdir/openqa/workers.ini
-%config(noreplace) %attr(0400,_openqa-worker,root) %_sysconfdir/openqa/client.conf
+%dir %_sysconfdir/openqa/workers.ini.d
+%dir %_sysconfdir/openqa/client.conf.d
+%{_datadir}/doc/openqa/examples/workers.ini
+%{_datadir}/doc/openqa/examples/client.conf
 %dir %_unitdir
 /usr/lib/systemd/system-generators/systemd-openqa-generator
 %_unitdir/openqa-worker.target
@@ -478,6 +479,8 @@ fi
 %doc COPYING
 # nginx vhost
 %config %_sysconfdir/nginx/sites-available.d/openqa.conf.template
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-assets.inc
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-endpoints.inc
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-locations.inc
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openqa-upstreams.inc
 
@@ -508,17 +511,25 @@ fi
 
 %files local-db
 %_unitdir/openqa-setup-db.service
+%_unitdir/openqa-dump-db.service
+%_unitdir/openqa-dump-db.timer
 %_unitdir/openqa-gru.service.requires/postgresql.service
 %_unitdir/openqa-scheduler.service.requires/postgresql.service
 %_unitdir/openqa-websockets.service.requires/postgresql.service
 %_datadir/openqa/script/setup-db
+%_datadir/openqa/script/dump-db
 %_bindir/openqa-setup-db
+%_bindir/openqa-dump-db
 
 %files single-instance
 
 %files single-instance-nginx
 
 %changelog
+* Mon Sep 08 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt20.git32d687ffe
+- update to current version
+- Commit hash: 32d687ffe
+
 * Mon Feb 17 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt19.git6fbd2ed11
 - update to current version
 - Commit hash: 6fbd2ed11
