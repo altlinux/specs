@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Sep 09 2025 Anton Midyukov <antohami@altlinux.org> 1.8.6-alt1
+- firmware: make firmware-alsa-sof is available for all architectures
+- Revert "mixin.mk: remove unused target mixin/desktop-installer"
+- regular.mk: add use/fonts/system to regualr-jeos-base
+- regular.mk: add missing +systemd target for regular icewm, gnustep
+- repo: fix condition for enable repo in rootfs
+- mixin.mk: add +nm to mixin/regular-desktop
+
 * Tue Aug 26 2025 Anton Midyukov <antohami@altlinux.org> 1.8.5-alt1
 - mixin.mk: remove condition BRANCH from mixin/cloud-init for enable services
 - regular.mk: remove use/live/rescue from jeos
