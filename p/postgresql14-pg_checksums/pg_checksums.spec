@@ -1,8 +1,8 @@
 %define pg_ver 14
 
 Name: postgresql%pg_ver-pg_checksums
-Version: 1.2
-Release: alt2
+Version: 1.3
+Release: alt1
 
 Summary: pg_checksums_ext can verify, activate or deactivate checksums
 License: PostgreSQL
@@ -41,6 +41,9 @@ online, contrary to PostgreSQL's `pg_checksums`
 %_bindir/*
 
 %changelog
+* Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 1.3-alt1
+- 1.3
+
 * Fri Sep 27 2024 Alexei Takaseev <taf@altlinux.org> 1.2-alt2
 - Change BR libecpg6-devel-static -> libecpg6-%%pg_ver-devel-static
 
