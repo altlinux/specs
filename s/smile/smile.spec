@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An emoji picker
@@ -70,6 +70,9 @@ ln -sf ../../fonts/ttf/google-noto-emoji/NotoColorEmoji.ttf \
 %doc README*
 
 %changelog
+* Wed Sep 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
+- 2.10.2
+
 * Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - 2.10.1
 
