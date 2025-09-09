@@ -2,7 +2,7 @@
 
 Name: alt-components
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -30,7 +30,7 @@ Requires: alterator-backend-packages >= 0.2.9-alt1
 Requires: alterator-backend-component >= 0.3.0-alt1
 Requires: alterator-backend-systeminfo
 Requires: libqbase
-Requires: alt-components-base
+Requires: alt-components-base >= 0.7.12-alt1
 
 Provides: alterator-application-components = %version-%release
 Obsoletes: alterator-application-components < 0.4.0
@@ -60,6 +60,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_bindir/alt-components
 
 %changelog
+* Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt2
+- Fixed dependency on supported version of alt-components-base.
+
 * Fri Aug 22 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.4-alt1
 - Use alterator-interface-component 0.3.0.
 
