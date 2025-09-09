@@ -128,8 +128,8 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.21.7
-Release: alt4
+Version: 4.21.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -445,7 +445,7 @@ Url: http://ldb.samba.org/
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
-BuildRequires: socket_wrapper >= 1.4.2
+BuildRequires: socket_wrapper >= 1.4.4
 BuildRequires: nss_wrapper >= 1.1.15
 BuildRequires: resolv_wrapper >= 1.1.8
 BuildRequires: uid_wrapper >= 1.3.0
@@ -2375,6 +2375,21 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt1
+- Update to maintenance release of Samba 4.21
+- Major fixes from upstream (Samba#14981, Samba#15844, Samba#15876, Samba#15891,
+                             Samba#15900, Samba#15663, Samba#15877, Samba#15880):
+  + netr_LogonSamLogonEx returns NR_STATUS_ACCESS_DENIED with SysvolReady=0.
+  + getpwuid does not shift to new DC when current DC is down.
+  + Windows security hardening locks out schannel'ed netlogon dc calls like
+    netr_DsRGetDCName (complete backport).
+  + Figuring out the DC name from IP address fails and breaks fork_domain_child().
+  + 'net ads group' failed to list domain groups.
+  + Apparently there is a conflict between shadow_copy2 module and
+    virusfilter (action quarantine).
+  + Fix handling of empty GPO link.
+  + SMB ACL inheritance doesn't work for files created.
+
 * Fri Aug 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.7-alt4
 - Convert HOST SPN prefix during syncing of machine password to keytab to
   lowercase for client compatibility.
