@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.15.2
-Release: alt1.1
+Version: 0.16.0
+Release: alt1
 
 Summary: Bringing order to Mongo since 2009
 License: MIT
@@ -31,17 +31,6 @@ BuildRequires: python3-module-pytz
 Database mapping layer for MongoDB on Python. Includes schema
 enforcement and some facilities for schema migration.
 
-%package tests
-Summary: Tests for Bringing order to Mongo since 2009
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-Database mapping layer for MongoDB on Python. Includes schema
-enforcement and some facilities for schema migration.
-
-This package contains tests for Ming.
-
 %prep
 %setup
 
@@ -58,13 +47,11 @@ This package contains tests for Ming.
 %doc *.rst *.txt
 %python3_sitelibdir/ming
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
 
 %changelog
+* Tue Sep 09 2025 Anton Vyatkin <toni@altlinux.org> 0.16.0-alt1
+- New version 0.16.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.15.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
