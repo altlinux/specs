@@ -3,7 +3,7 @@
 
 Name:    pciex
 Version: 0.0.2
-Release: alt2
+Release: alt3
 
 Summary: PCI topology EXplorer
 License: GPL-2.0-only
@@ -44,6 +44,11 @@ Features
 %patch1
 %patch2
 %patch3
+%ifarch %e2k
+# error: no instance of function template "std::construct_at" matches the argument list
+sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
+    src/{snapshot,linux-sysfs}.cpp
+%endif
 
 %build
 %cmake \
@@ -61,6 +66,9 @@ Features
 %_bindir/%name
 
 %changelog
+* Tue Sep 09 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.2-alt3
+- e2k build fix
+
 * Fri Mar 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.0.2-alt2
 - Applied hotfix patch from upstream to link libftxui-6.0.0.
 - Added some fixes to create pciex_version.h which provides
