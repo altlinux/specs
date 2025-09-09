@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           plexus-archiver
 Version:        4.2.7
-Release:        alt1_2jpp11
+Release:        alt2
 Summary:        Plexus Archiver Component
 License:        ASL 2.0
 URL:            https://codehaus-plexus.github.io/plexus-archiver
@@ -23,6 +23,7 @@ BuildArch:      noarch
 Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/plexus-archiver-%{version}.tar.gz
 
 Patch0:         0001-Remove-support-for-snappy.patch
+Patch1: 0002-Plexus-io-3.5.1-compatibility-alt-patch.patch
 
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
@@ -62,6 +63,7 @@ Javadoc for %{name}.
 %mvn_file :%{name} plexus/archiver
 
 %patch0 -p1
+%patch1 -p1
 %pom_remove_dep org.iq80.snappy:snappy
 rm -rf src/main/java/org/codehaus/plexus/archiver/snappy
 rm -f src/main/java/org/codehaus/plexus/archiver/tar/SnappyTarFile.java
@@ -85,6 +87,9 @@ sed -i '/getLoggerManager/d' src/test/java/org/codehaus/plexus/archiver/Duplicat
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Sep 09 2025 Ivan Khanas <xeno@altlinux.org> 0:4.2.7-alt2
+- Fix FTBFS: plexus-io API incompatibility.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:4.2.7-alt1_2jpp11
 - new version
 
