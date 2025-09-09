@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.40.3
-Release: alt1
+Release: alt2
 
 Summary: Google Auth Python Library
 License: Apache-2.0
@@ -26,6 +26,8 @@ mechanisms to access Google APIs.
 
 %prep
 %setup -n %modulename-%version
+# We have cachetools 6.2 in ALT repo:
+sed -i -e 's|cachetools>=2.0.0,<6.0|cachetools>=2.0.0|' setup.py
 
 %build
 %python3_build
@@ -38,6 +40,9 @@ mechanisms to access Google APIs.
 %doc *.md
 
 %changelog
+* Tue Sep 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.40.3-alt2
+- Fix cachetools version check.
+
 * Thu Jun 05 2025 Andrey Cherepanov <cas@altlinux.org> 2.40.3-alt1
 - New version.
 
