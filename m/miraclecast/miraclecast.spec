@@ -1,5 +1,5 @@
 Name: miraclecast
-Version: 20250905
+Version: 20250907
 Release: alt1
 
 Summary: Connect external monitors to your system via Wifi-Display specification also known as Miracast
@@ -39,6 +39,9 @@ the Display-Source as well as Display-Sink side.
 %doc *.md LICENSE*
 
 %changelog
+* Tue Sep 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250907-alt1
+- update to git.6c92dff8
+
 * Sat Sep 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250905-alt1
 - update to git.a185b70d:
   + Remove unused miracled.
