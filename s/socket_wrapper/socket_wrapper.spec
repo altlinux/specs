@@ -1,5 +1,5 @@
 Name:           socket_wrapper
-Version:        1.4.3
+Version:        1.5.0
 Release:        alt1
 Group:          Development/Other
 License:        BSD
@@ -96,6 +96,13 @@ popd
 %_libdir/cmake/%name/%{name}_noop-config*.cmake
 
 %changelog
+* Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.5.0-alt1
+- Updates to new version 1.5.0 (released 2025-05-06)
+- Fixes from upstream:
+  + Added support for quic_ko_wrapper
+  + Fixed pcap frames generation for recv(m)msg and recvfrom
+  + Fixed setsockopt(SO_REUSEPORT) with glibc 2.40 (from version 1.4.4)
+
 * Sun Jul 14 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
 - Updates to new version 1.4.3 (released 2024-06-12)
 - Fixes from upstream:
