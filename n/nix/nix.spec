@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.30.2
+Version: 2.31.1
 Release: alt1
 
 Summary: Nix software deployment system
@@ -158,6 +158,9 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Tue Sep 09 2025 Boris Yumankulov <boria138@altlinux.org> 2.31.1-alt1
+- new version 2.31.1
+
 * Mon Aug 25 2025 Boris Yumankulov <boria138@altlinux.org> 2.30.2-alt1
 - new version 2.30.2
 - fix ssl patch (ALT bug: 55674) 
