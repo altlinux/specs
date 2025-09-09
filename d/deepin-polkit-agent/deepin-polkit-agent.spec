@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 6.0.13
+Version: 6.0.14
 Release: alt1
 
 Summary: Deepin Polkit Agent
@@ -11,9 +11,10 @@ Summary: Deepin Polkit Agent
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-polkit-agent
-Vcs: git://github.com/linuxdeepin/dde-polkit-agent.git
+Vcs: https://github.com/linuxdeepin/dde-polkit-agent
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 %if_enabled clang
@@ -22,7 +23,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake libdtk6widget-devel dtk6-common-devel dqt6-tools-devel dqt6-declarative-devel libdde-shell-devel deepin-shell libpolkitqt6-qt6-devel libcups-devel
+BuildRequires: cmake libdtk6widget-devel dtk6-common-devel dqt6-tools-devel dqt6-declarative-devel libdde-shell-devel deepin-shell libpolkitqt6-dqt6-devel libcups-devel
 
 %description
 DDE Polkit Agent is the polkit agent used in Deepin Desktop Environment.
@@ -38,8 +39,17 @@ Header files and libraries for %name.
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+# find special polkitqt6
+sed \
+  -e '/Polkit-qt6_LIBRARIES/i \
+  %_dqt6_libdir/libpolkit-qt6-agent-1.so.1 \
+  %_dqt6_libdir/libpolkit-qt6-core-1.so.1 \
+  %_dqt6_libdir/libpolkit-qt6-gui-1.so.1' \
+  -e '/Polkit-qt6_LIBRARIES/d' \
+  -i CMakeLists.txt
 
 %build
+export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/polkit-qt6-1/:$CPLUS_INCLUDE_PATH
 export LC_ALL="C.UTF-8"
 %if_enabled clang
 export CC="clang"
@@ -66,6 +76,10 @@ export READELF="llvm-readelf"
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Tue Sep 09 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
+- New version 6.0.14.
+- Built with polkitqt6-dqt6 instead polkitqt6-qt6.
+
 * Thu Jun 05 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.13-alt1
 - New version 6.0.13.
 - Added vcs tag.
