@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -10,9 +10,11 @@ Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
 Url: https://github.com/linuxdeepin/deepin-terminal
-Vcs: git://github.com/linuxdeepin/deepin-terminal.git
+Vcs: https://github.com/linuxdeepin/deepin-terminal
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
@@ -64,6 +66,7 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
@@ -95,6 +98,7 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %files
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/%name
 
 %files data -f %name.lang
@@ -137,6 +141,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Sep 09 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.5-alt1
+- New version 6.5.5.
+
 * Tue Apr 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
 - New version 6.5.4.
 
