@@ -1,6 +1,6 @@
 Name:           x2goclient
 Version:        4.1.2.3
-Release:        alt1
+Release:        alt2
 Summary:        X2Go Client application (Qt)
 
 Group:          Communications
@@ -19,6 +19,7 @@ Patch4:		x2goclient-encoding.patch
 Patch5:		x2goclient-alt-no-pam.patch
 Patch7:		x2goclient-alt-select-broker-sessions.patch
 Patch9:		x2goclient-use-utf8.patch
+Patch10:	x2goclient-alt-fix-keyhash.patch
 
 BuildRequires(pre): libssh-devel
 BuildRequires(pre): rpm-build-apache2
@@ -66,6 +67,7 @@ You can use it to connect to running sessions and start new sessions.
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
+%patch10 -p1
 # update russian translations
 cat %SOURCE1 >res/i18n/x2goclient_ru.ts
 # Fix up install issues
@@ -105,6 +107,10 @@ ln -s ../../x2go/x2goplugin-apache.conf %buildroot%_sysconfdir/httpd/conf.d/x2go
 %_man1dir/%name.1*
 
 %changelog
+* Tue Sep 09 2025 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.3-alt2
+- fix deprecated fingerprint hash
+- fix startkde (Closes: #55867)
+
 * Thu Aug 21 2025 Oleg Solovyov <mcpain@altlinux.org> 4.1.2.3-alt1
 - New version
 
