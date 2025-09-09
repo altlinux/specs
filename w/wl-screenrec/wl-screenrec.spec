@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 0.1
+%define ver_major 0.2
 
 %def_disable bootstrap
 # wayland display required
 %def_disable check
 
 Name: wl-screenrec
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: High performance screen recorder for wlroots Wayland
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
 - 0.1.7
 
