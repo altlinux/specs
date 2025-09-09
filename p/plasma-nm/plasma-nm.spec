@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.4.4
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -34,7 +34,7 @@ Source: %rname-%version.tar
 # ALT
 Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
-#
+Patch13: alt-is-live.patch
 Patch14: alt-revert.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
@@ -215,7 +215,7 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %setup -n %rname-%version
 %patch11 -p1
 %patch12 -p1
-#
+%patch13 -p1
 %patch14 -p1
 
 %build
@@ -278,6 +278,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Tue Sep 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt2
+- fix detect livecd
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 
