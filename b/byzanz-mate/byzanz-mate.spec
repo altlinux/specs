@@ -4,7 +4,7 @@
 
 Name: byzanz-mate
 Version: 0.3.0
-Release: alt1_0.git202502041
+Release: alt1_1.git202502041
 
 Summary: Byzanz small screencast creator with applet for MATE Panel
 License: GPLv3+
@@ -48,10 +48,10 @@ CFLAGS="%{optflags} -Wno-deprecated-declarations"
 %install
 %makeinstall_std
 
+%find_lang %{pname}
+
 %check
 %make_build check
-
-%find_lang %{pname}
 
 %files -f %{pname}.lang
 %doc AUTHORS ChangeLog COPYING NEWS README
@@ -68,5 +68,7 @@ CFLAGS="%{optflags} -Wno-deprecated-declarations"
 %_datadir/glib-2.0/schemas/org.mate.byzanz.applet.gschema.xml
 
 %changelog
+* Tue Sep 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1_1.git202502041
+- Move %%find_lang to correct place - as the last part of %%install
 * Wed Feb 05 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1_0.git202502041
 - Initial build for Sisyphus
