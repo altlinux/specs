@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nut
-Version: 2.8.3
-Release: alt2
+Version: 2.8.4
+Release: alt1
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -447,6 +447,10 @@ fi
 %_man8dir/upsrw.*
 %_man8dir/upssched.*
 
+%_man7dir/nut.*
+
+%_docdir/nut
+
 %files server
 %doc conf/upsd.conf.sample conf/upsd.users.sample conf/ups.conf.sample docs/cables
 %_sbindir/upsd
@@ -595,6 +599,9 @@ fi
 %python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Tue Sep 09 2025 Andrey Kovalev <ded@altlinux.org> 2.8.4-alt1
+- Updated to upstream version 2.8.4.
+
 * Tue Jul 01 2025 Andrey Kovalev <ded@altlinux.org> 2.8.3-alt2
 - Fixed FTBFS: updated GD library dependency.
 
