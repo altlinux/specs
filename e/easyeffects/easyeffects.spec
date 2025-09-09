@@ -5,7 +5,7 @@
 
 Name: easyeffects
 Version: 7.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -72,6 +72,13 @@ PipeWire filters.
 sed -i 's/tbb/tbb32/' src/meson.build
 %endif
 
+%ifarch %e2k
+# -isystem/usr/include/ breaks the compiler's includes
+sed -i "s/, include_type: 'system'//" src/meson.build
+sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;/' \
+    src/plugins_box.cpp
+%endif
+
 %build
 %meson
 %meson_build
@@ -94,6 +101,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.5-alt1.1
+- fixed build for %%e2k by ilyakurdyukov@
+
 * Sat Jul 19 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.5-alt1
 - 7.2.5
 
