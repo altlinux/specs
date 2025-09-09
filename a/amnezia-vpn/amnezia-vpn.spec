@@ -3,7 +3,7 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.8.9.2
+Version: 4.8.10.0
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -11,6 +11,7 @@ License: GPL-3.0
 Group: System/Servers
 
 Url: https://amnezia.org/
+Vcs: https://github.com/amnezia-vpn/amnezia-client
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/amnezia-vpn/amnezia-client/archive/%version/amnezia-client-%version.tar.gz
@@ -122,6 +123,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Sep 09 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.10.0-alt1
+- Version 4.8.10.0
+
 * Sun Aug 03 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.9.2-alt1
 - Version 4.8.9.2
 - Fix locale (ALT #55403)
