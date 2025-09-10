@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.6
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -192,6 +192,7 @@ Patch15: hplip-alt-use-python3-in-service.patch
 Patch18: hplip-alt-add-M125ra-model.patch
 Patch19: hplip-alt-ftbfs-fix-buit.patch
 Patch20: hplip-alt-add-debug-to-hp-plugin.patch
+Patch21: hplip-alt-disable-resize-to-scan-area.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -775,6 +776,7 @@ tar -xf %SOURCE6
 %patch18 -p2
 %patch19 -p2
 %patch20 -p2
+%patch21 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1318,6 +1320,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Sep 10 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.6-alt3
+- Disabled resize to scan area (ALT #55386).
+
 * Mon Sep 01 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.6-alt2
 - Updated hplip-keyserver.patch from fedora to use keyserver.ubuntu.com
   instead of unavialable pool.sks-keyservers.net (ALT #53956).
