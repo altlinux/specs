@@ -11,7 +11,7 @@
 
 Name: corosync
 Version: 3.1.9
-Release: alt1
+Release: alt2
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
@@ -23,8 +23,7 @@ Source0: %name-%version.tar
 Source1: corosync-init
 Source2: corosync-notifyd-init
 
-# fixed systemd units
-Source11: corosync.service
+Patch: %name-%version.patch
 
 Provides: corosync2 = %version-%release
 Obsoletes: corosync2 < %version-%release
@@ -84,6 +83,7 @@ network splits)
 
 %prep
 %setup
+%patch -p1
 
 echo %version > .version
 #if release version (= tarball)
@@ -120,9 +120,6 @@ install -p -D -m644 conf/corosync-signals.conf %buildroot%_datadir/dbus-1/system
 #Initscripts
 install -p -D -m755 %SOURCE1 %buildroot%_initdir/corosync
 install -p -D -m755 %SOURCE2 %buildroot%_initdir/corosync-notifyd
-
-#fixed native systemd units
-install -p -D -m644 %SOURCE11 %buildroot%_unitdir/corosync.service
 
 ## tree fixup
 # drop static libs
@@ -205,6 +202,9 @@ ln -r -s \
 %endif
 
 %changelog
+* Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 3.1.9-alt2
+- Backport patches from upstream (Fixed: CVE-2025-30472)
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.9-alt1
 - 3.1.9
 
