@@ -6,7 +6,7 @@
 %def_without check
 
 Name: teleport
-Version: 18.1.4
+Version: 18.2.0
 Release: alt1
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
@@ -21,6 +21,8 @@ ExcludeArch: %ix86
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: webassets-%version.tar.gz
+Source3: %name-%version-vendor-build.assets-tooling.tar
+Source4: %name-%version-vendor-tool-fdpass-teleport.tar
 Patch0: %name-%version-alt.patch
 
 #sytemd services
@@ -88,7 +90,7 @@ other non-human access patterns, eliminating the need for long-lived static
 credentials in your infrastructure.
 
 %prep
-%setup -a1 -a2
+%setup -a1 -a2 -a3 -a4
 %autopatch -p1
 
 %build
@@ -127,7 +129,7 @@ make test
 %_unitdir/%name-node.service
 %_unitdir/%name-proxy.service
 %_unitdir/%name.service
-%_sysconfdir/%name/%name.yaml
+%_sysconfdir/%name/
 %doc README.md LICENSE
 %dir %attr(775,%name,%name) %_localstatedir/%name/
 
@@ -142,5 +144,8 @@ make test
 %_bindir/tbot
 
 %changelog
+* Tue Sep 09 2025 Artem Krasovskiy <aibure@altlinux.org> 18.2.0-alt1
+- New version 18.2.0.
+
 * Tue Sep 02 2025 Artem Krasovskiy <aibure@altlinux.org> 18.1.4-alt1
 - Initial build for Sisyphus.
