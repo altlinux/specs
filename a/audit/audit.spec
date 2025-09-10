@@ -5,7 +5,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: audit
-Version: 4.1.1
+Version: 4.1.2
 Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
@@ -23,6 +23,7 @@ Patch0: %name-%version-alt.patch
 %filter_from_requires /^\/bin\/systemctl$/d
 %add_findreq_skiplist %_initdir/auditd
 
+BuildRequires: /proc
 %if_without bootstrap
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -56,7 +57,7 @@ This package contains common files needed for audit libraries.
 Summary: Dynamic library for audit framework
 License: LGPL-2.0-or-later
 Group: System/Libraries
-Requires: libaudit-common = %EVR
+Requires: libaudit-common >= %EVR
 
 %description -n libaudit1
 This package contains the dynamic libraries needed for
@@ -66,7 +67,7 @@ applications to use the audit framework.
 Summary: Dynamic library for audit auparse
 License: LGPL-2.0-or-later
 Group: System/Libraries
-Requires: libaudit-common = %EVR
+Requires: libaudit-common >= %EVR
 
 %description -n libauparse0
 This package contains the dynamic libraries needed for
@@ -76,7 +77,7 @@ applications to use the audit libauparse.
 Summary: Dynamic library for audit auplugin
 License: LGPL-2.0-or-later
 Group: System/Libraries
-Requires: libaudit-common = %EVR
+Requires: libaudit-common >= %EVR
 
 %description -n libauplugin1
 This package contains the dynamic libraries needed for
@@ -169,8 +170,6 @@ export PYTHON3=python3
 %make check
 
 %post
-%post_service auditd
-
 # NOTE: Use auditctl instead of service due to
 # https://github.com/linux-audit/audit-userspace/issues/260
 
@@ -186,7 +185,6 @@ elif [ $1 -eq 1 ] ; then
 fi
 
 %preun
-%preun_service auditd
 if [ $1 -eq 0 ] ; then
     auditctl --signal stop || true
 fi
@@ -283,6 +281,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 09 2025 Egor Ignatov <egori@altlinux.org> 4.1.2-alt1
+- new version 4.1.2
+
 * Thu Jul 31 2025 Egor Ignatov <egori@altlinux.org> 4.1.1-alt1
 - new version 4.1.1
 
