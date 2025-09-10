@@ -1,11 +1,17 @@
 %global import_path github.com/varnamproject/govarnam
 
+%global descr Easily type Indic languages on computer and mobile. GoVarnam\
+is a cross-platform transliteration library. Manglish -> Malayalam,\
+Thanglish -> Tamil, Hinglish -> Hindi plus another 10 languages.\
+GoVarnam is a near-Go port of libvarnam.
+
 %define sname varnam
 %define oname govarnam
+%define abiversion 1
 
 Name: libgovarnam
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: GoVarnam is a cross-platform transliteration library
 License: GPL-3.0-or-later
@@ -13,25 +19,35 @@ Group: Graphical desktop/Other
 Url: https://varnamproject.com
 Vcs: https://github.com/varnamproject/govarnam
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: vendor.tar
+Patch0: 0001-Removed-build-dependency-on-git.patch
+Patch1: 0002-Fixed-erroneous-use-of-or.patch
+Patch2: 0003-Added-correct-names-of-library-files.patch
+Patch3: 0004-Added-correct-file-paths-for-installing-the-library.patch
+Patch4: 0005-Used-https-in-URL-instead-of-http.patch
+Patch5: 0006-Installation-moved-to-Makefile-from-install.sh.patch
 
 BuildRequires(pre): rpm-build-golang
 
 BuildRequires: golang
 BuildRequires: pkg-config
 BuildRequires: libsqlite3-devel
-BuildRequires: golang-github-mattn-go-sqlite3-devel
 
 %description
-Easily type Indic languages on computer and mobile. GoVarnam
-is a cross-platform transliteration library. Manglish -> Malayalam,
-Thanglish -> Tamil, Hinglish -> Hindi plus another 10 languages.
-GoVarnam is a near-Go port of libvarnam.
+%descr
+
+%package -n libgovarnam%abiversion
+Summary: %summary
+Group: Graphical desktop/Other
+
+%description -n libgovarnam%abiversion
+%descr
 
 %package devel
-Summary: Development files for %name
+Summary: Development files for libgovarnam
 Group: Development/Other
-Requires: %name = %EVR
+Requires: libgovarnam%abiversion = %EVR
 
 %description devel
 Contains the library and header files needed to develop applications using
@@ -40,64 +56,53 @@ Contains the library and header files needed to develop applications using
 %package -n %{sname}cli
 Summary: GoVarnam Command Line Utility (CLI)
 Group: Development/Other
-Requires: %name = %EVR
+Requires: libgovarnam%abiversion = %EVR
 
 %description -n %{sname}cli
 %summary.
 
 %prep
-%setup
+%setup -a1
+%autopatch -p1
+sed -i 's/@GITVERSION@/%version/g' Makefile
 
 %build
-export GO111MODULE=off
-export GOPROXY=off
-export GOCACHE=$PWD/.build
 export BUILDDIR=$PWD/.build
 export IMPORT_PATH=%import_path
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="-X main.Version=v%version -X main.Version=$(date +%%Y%%m%%dT%%H%%M%%S)"
-export GOPRIVATE=%go_path
+export GOFLAGS="-mod=vendor"
 %golang_prepare
 cd .build/src/%import_path
-%make_build
-# To comply with the shared library packaging convention
-mv -v %name.so %name.so.%version
+%make_build PREFIX=%prefix \
+	BINDIR=%_bindir \
+	INCLUDEDIR=%_includedir \
+	LIBDIR=%_libdir \
+	PKGCONFIGDIR=%_pkgconfigdir
 
 %install
-mkdir -p %buildroot%_bindir
-install -Dpm 0755 .build/src/%import_path/%{sname}cli %buildroot%_bindir
+cd .build/src/%import_path
+%makeinstall_std PREFIX=%prefix \
+	BINDIR=%_bindir \
+	INCLUDEDIR=%_includedir \
+	LIBDIR=%_libdir \
+	PKGCONFIGDIR=%_pkgconfigdir
 
-mkdir -p %buildroot%_libdir
-install -Dpm 0644 .build/src/%import_path/%name.so.%version %buildroot%_libdir
-ln -sf %name.so.%version %buildroot%_libdir/%name.so
-
-mkdir -p %buildroot%_pkgconfigdir
-install -Dpm 0644 .build/src/%import_path/%oname.pc %buildroot%_pkgconfigdir
-
-mkdir -p %buildroot%_includedir/%name
-install -Dpm 0644 .build/src/%import_path/%name.h \
-	%buildroot/%_includedir/%name
-install -Dpm 0644 .build/src/%import_path/c-shared.h \
-	%buildroot/%_includedir/%name
-install -Dpm 0644 .build/src/%import_path/c-shared-util.h \
-	%buildroot/%_includedir/%name
-install -Dpm 0644 .build/src/%import_path/c-shared-varray.h \
-	%buildroot/%_includedir/%name
-
-%files
-%_libdir/%name.so.*
+%files -n libgovarnam%abiversion
+%_libdir/libgovarnam.so.%{abiversion}*
 
 %files devel
-%_includedir/%name/c-shared.h
-%_includedir/%name/c-shared-util.h
-%_includedir/%name/c-shared-varray.h
-%_includedir/%name/%name.h
+%_includedir/libgovarnam
 %_pkgconfigdir/%oname.pc
-%_libdir/%name.so
+%_libdir/libgovarnam.so
 
 %files -n %{sname}cli
 %_bindir/%{sname}cli
 
 %changelog
+* Mon Sep 08 2025 Ulysses Apokin <ulysses@altlinux.org> 1.9.1-alt2
+- Fixed wrong prefix and libdir in pc-file (ALT #54897).
+- Used vendoring go modules.
+- Corrected as per shared libs policy.
+
 * Tue Apr 08 2025 Ulysses Apokin <ulysses@altlinux.org> 1.9.1-alt1
 - Initial build for Sisyphus.

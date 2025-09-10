@@ -1,6 +1,6 @@
 Name: fcitx5-varnam
 Version: 0.0.2
-Release: alt1
+Release: alt2
 
 Summary: Fcitx5 wrapper for Varnam input method
 License: GPL-3.0-or-later
@@ -10,12 +10,14 @@ Vcs: https://github.com/varnamproject/varnam-fcitx5
 
 Source: %name-%version.tar
 
-Patch: fix-fcitx5-varnam-0.02-ALT-CMakeLists.txt.patch
-
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires(pre): cmake extra-cmake-modules gcc-c++
-
-BuildRequires: libgovarnam-devel varnam-schemes fcitx5-devel pkg-config
+BuildRequires: cmake
+BuildRequires: extra-cmake-modules
+BuildRequires: fcitx5-devel
+BuildRequires: gcc-c++
+BuildRequires: libgovarnam-devel
+BuildRequires: pkg-config
+BuildRequires: varnam-schemes
 
 %description
 Fcitx5 wrapper for Varnam input method. Easily type Indian languages on Linux
@@ -23,7 +25,6 @@ desktops.
 
 %prep
 %setup
-%patch
 
 %build
 %cmake
@@ -40,5 +41,9 @@ desktops.
 %_metainfodir/com.varnamproject.Fcitx5.Addon.varnamfcitx.metainfo.xml
 
 %changelog
+* Tue Aug 12 2025 Ulysses Apokin <ulysses@altlinux.org> 0.0.2-alt2
+- Used pkg-config.
+- Cleaned spec.
+
 * Tue Apr 15 2025 Ulysses Apokin <ulysses@altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus.
