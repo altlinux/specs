@@ -2,7 +2,7 @@
 %define oname pynvim
 
 Name: python3-module-%oldname
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Python 3 client to Neovim
@@ -18,6 +18,7 @@ AutoReqProv: nopython
 %define __python %nil
 
 BuildRequires(pre): rpm-build-python3 rpm-build-licenses
+BuildRequires: python3(setuptools)
 
 %description
 Pynvim implements support for python plugins in Nvim. It also works as a library
@@ -27,17 +28,21 @@ for connecting to and scripting Nvim processes through its msgpack-rpc API.
 %setup -n %name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
+%{_bindir}/pynvim-python
 %python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version.dist-info
 %python3_sitelibdir/%oldname/
-%python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Sep 10 2025 Vladimir Didenko <cow@altlinux.org> 0.6.0-alt1
+- new release
+
 * Thu Nov 21 2024 Vladimir Didenko <cow@altlinux.org> 0.5.2-alt1
 - new release
 
