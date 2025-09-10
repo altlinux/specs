@@ -2,12 +2,16 @@
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.py
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.rb
 
+%define sover_gen 40
+%define libname lib%name
+%define libkookulargenerator_odp libkookulargenerator_odp%sover_gen
+%define libkookulargenerator_odt libkookulargenerator_odt%sover_gen
+
 Name: calligra
-Version: 4.0.1
-Release: alt3
+Version: 25.04.3
+Release: alt1
 #Epoch: 0
 %K6init no_altplace
-%define libname lib%name
 
 Group: Office
 Summary: An integrated office suite
@@ -31,9 +35,6 @@ Patch31: calligra-gcc11.patch
 # ALT
 Patch102: alt-find-ooo-sdk.patch
 Patch103: alt-disable-products.patch
-
-#https://invent.kde.org/office/calligra/-/commit/659c88eec87160d908faf9b78b7b1006eb7e5bf3
-Patch104: FTBFS_Qt69-alt-build.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: kf6-attica-devel boost-devel eigen3 glib2-devel rpm-build-python3
@@ -146,8 +147,10 @@ The KDE Office suite for 2-in-1 devices.
 %package  okular-generators
 Group: Office
 Summary:  OpenDocument text and presenter support for okular
-Requires: %name-stage
+#Requires: %name-stage
 Requires: okular-core
+Requires: %libkookulargenerator_odp >= %version
+Requires: %libkookulargenerator_odt >= %version
 Provides: calligra-okular-odp = %EVR
 Obsoletes: calligra-okular-odp < %EVR
 Provides: calligra-okular-odf = %EVR
@@ -162,6 +165,22 @@ Requires: %name-common >= %EVR
 %description -n %libname
 %name libraries
 
+%package -n %libkookulargenerator_odp
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+Conflicts: calligra-okular-generators < 20
+%description -n %libkookulargenerator_odp
+%name library
+
+%package -n %libkookulargenerator_odt
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+Conflicts: calligra-okular-generators < 20
+%description -n %libkookulargenerator_odt
+%name library
+
 %prep
 %setup
 #
@@ -169,9 +188,6 @@ Requires: %name-common >= %EVR
 #
 %patch102 -p1
 %patch103 -p1
-
-#
-%patch104 -p1
 
 # fix docs names
 for subd in po/*/docs/{sheets,stage} ; do
@@ -195,8 +211,8 @@ ls | grep -E ".A4" | xargs -I {} \
     echo 'sed -i "s|{}||" CMakeLists.txt; rm -f {}' | sh
 popd >/dev/null
 
-subst "s|VERSION 3.16|VERSION 3.5|" CMakeLists.txt
-subst "s|cmake_policy(SET CMP0022 OLD)||" CMakeLists.txt
+#subst "s|VERSION 3.16|VERSION 3.5|" CMakeLists.txt
+#subst "s|cmake_policy(SET CMP0022 OLD)||" CMakeLists.txt
 
 %build
 %K6cmake \
@@ -395,8 +411,6 @@ done
 %_datadir/metainfo/org.kde.calligra.words.metainfo.xml
 
 %files okular-generators
-%_K6lib/libkookularGenerator_odp.so*
-%_K6lib/libkookularGenerator_odt.so*
 %_K6plug/okular_generators/okularGenerator_*_calligra.so
 %_K6xdgapp/okularApplication_*_calligra.desktop
 #%_K6srv/okular*_calligra.desktop
@@ -405,8 +419,17 @@ done
 %_K6lib/lib*.so.*
 %exclude %_K6lib/libkookularGenerator_odp.so*
 %exclude %_K6lib/libkookularGenerator_odt.so*
+%files -n %libkookulargenerator_odp
+%_K6lib/libkookularGenerator_odp.so.%sover_gen
+%_K6lib/libkookularGenerator_odp.so.*
+%files -n %libkookulargenerator_odt
+%_K6lib/libkookularGenerator_odt.so.%sover_gen
+%_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Wed Sep 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
+- new version (closes: 55858)
+
 * Thu Jul 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt3
 - NMU: Fix build with Qt 6.9
 
