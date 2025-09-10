@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.4
+Version: 2.1.8
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -118,6 +118,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 2.1.8-alt1
+- Update to 2.1.8.
+
 * Tue Jun 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.4-alt1
 - 2.1.0 -> 2.1.4
 - Change trivy-db repository to altlinux.space
