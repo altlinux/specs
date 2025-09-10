@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.1
-Release: alt1.1
+Release: alt2
 
 Summary: Caching infrastructure for web apps
 License: ZPL-2.1
@@ -18,11 +18,19 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+# runtime deps
 BuildRequires: python3-module-zope.browser
 BuildRequires: python3-module-zope.component
+# zope.component.testing is required but subpackaged
 BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.event
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.schema
 BuildRequires: python3-module-zope.lifecycleevent
+
+# tests deps
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.configuration
 %endif
 
 %description
@@ -90,6 +98,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 3.1-alt2
+- Fixed FTBFS (missing tests dep).
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 3.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

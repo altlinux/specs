@@ -1,57 +1,46 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.datetime
+%define pypi_name zope.datetime
+%define ns_name zope
+%define mod_name datetime
 
-# FIXME: one test always fails on i586
-%ifarch %ix86 armh
-%def_without check
-%else
 %def_with check
-%endif
 
-Name: python3-module-%oname
-Version: 4.3.0
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 5.1
+Release: alt1
 Summary: Zope datetime
-
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.datetime/
-#Git: https://github.com/zopefoundation/zope.datetime.git
-
-# Source-url: %__pypi_url %oname
+Url: https://pypi.org/project/zope.datetime/
+Vcs: https://github.com/zopefoundation/zope.datetime
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+# setuptools(pkg_resources) is used by namespace root which is not used in ALT
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-six
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 Commonly used date and time related utility functions.
 
-%package tests
-Summary: Tests for zope.datetime
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing
-
-%description tests
-Commonly used date and time related utility functions.
-
-This package contains tests for zope.datetime.
-
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -59,22 +48,20 @@ This package contains tests for zope.datetime.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/datetime/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 4.3.0 -> 5.1.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt2
 - Moved on modern pyproject macros.
 

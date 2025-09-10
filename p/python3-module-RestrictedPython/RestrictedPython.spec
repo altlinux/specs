@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.0
-Release: alt1.1
+Release: alt2
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
 Group: Development/Python3
@@ -13,7 +13,9 @@ VCS: https://github.com/zopefoundation/RestrictedPython
 
 Source: %name-%version.tar
 BuildArch: noarch
-
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -53,6 +55,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 8.0-alt2
+- NMU: mapped PyPI name to the RPM one.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 8.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

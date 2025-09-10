@@ -1,49 +1,48 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.lifecycleevent
+%define pypi_name zope.lifecycleevent
+%define ns_name zope
+%define mod_name lifecycleevent
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 5.1
-Release: alt1.1
-
+Release: alt2
 Summary: Object life-cycle events
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.lifecycleevent
 Vcs: https://github.com/zopefoundation/zope.lifecycleevent.git
-
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+# setuptools(pkg_resources) is used by namespace root which is not used in ALT
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.configuration
-BuildRequires: python3-module-zope.component
+%pyproject_builddeps_metadata_extra test
+# zope.component.testing is required but subpackaged
 BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.testing
 %endif
-
-%py3_requires zope
 
 %description
 This package defines a specific set of event objects and API functions for
 describing the life-cycle of objects in the system: object creation, object
 modification, and object removal.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.configuration zope.testrunner
-
-%description -n python3-module-%oname-tests
-This package contains tests for %oname
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -51,27 +50,21 @@ This package contains tests for %oname
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -v
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope/lifecycleevent
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests.*
-
-%files tests
-%python3_sitelibdir/*/*/tests.*
-
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt2
+- Mapped PyPI name to the RPM one.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

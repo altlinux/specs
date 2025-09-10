@@ -3,20 +3,23 @@
 %define ns_name zope
 %define mod_name component
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0
-Release: alt2.1
-
+Version: 6.1
+Release: alt1
 Summary: Zope Component Architecture
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.component
+Url: https://pypi.org/project/zope.component/
 Vcs: https://github.com/zopefoundation/zope.component.git
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-%py3_requires zope
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 # setuptools(pkg_resources) is used by namespace root that is packaged
 # separately at python3-module-zope
 %add_pyproject_deps_runtime_filter setuptools
@@ -28,6 +31,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
+# zope.interface.tests is required but subpackaged
+BuildRequires: python3-module-zope.interface-tests
 %endif
 
 %description
@@ -41,8 +46,9 @@ defining, registering and looking up components.
 %package tests
 Summary: Tests for zope.component (Python 3)
 Group: Development/Python3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: %name = %EVR
-%py3_requires zope.testing zope.testrunner
 
 %description tests
 This package contains tests for %pypi_name
@@ -57,17 +63,12 @@ This package contains tests for %pypi_name
 
 %install
 %pyproject_install
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
 
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
@@ -95,6 +96,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
 
 %changelog
+* Tue Sep 09 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 6.0 -> 6.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

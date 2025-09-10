@@ -1,43 +1,44 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.tales
+%define pypi_name zope.tales
+%define ns_name zope
+%define mod_name tales
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1.1
-
+Release: alt2
 Summary: Zope Template Application Language Expression Syntax (TALES)
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.tales
 VCS: https://github.com/zopefoundation/zope.tales.git
-
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source1: %pyproject_deps_config_name
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+# setuptools(pkg_resources) is used by namespace root which is not used in ALT
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.interface
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
 Template Attribute Language - Expression Syntax.
 
-%package tests
-Summary: Tests for zope.tales
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testrunner
-
-%description tests
-This package contains tests for %oname
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -45,27 +46,20 @@ This package contains tests for %oname
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
-%tox_check_pyproject
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
-
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Tue Sep 09 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt2
+- Mapped PyPI name to the RPM one.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
@@ -88,9 +82,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%ubt
+* Tue Feb 20 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1%%ubt
 - 4.1.1 -> 4.2.0
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.1.1.1

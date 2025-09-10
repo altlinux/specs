@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.1
-Release: alt1.1
+Release: alt2
 
 Summary: Easily hook into the ZCML processing machinery
 License: ZPL-2.1
@@ -18,9 +18,16 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
+# runtime deps
 BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.schema
+BuildRequires: python3-module-zope.configuration
+
+# tests deps
 BuildRequires: python3-module-zope.testrunner
+# zope.component.testing is required but subpackaged
+BuildRequires: python3-module-zope.component-tests
 %endif
 
 %description
@@ -68,6 +75,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 2.1-alt2
+- Fixed FTBFS (missing tests dep).
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
