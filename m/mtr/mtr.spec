@@ -1,14 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: mtr
-Version: 0.95
-Release: alt2
+Version: 0.96
+Release: alt1
 
 Summary: Matt's Traceroute - network diagnostic tool
 License: GPLv2
 Group: Monitoring
 
 Url: http://www.bitwizard.nl/mtr/
+VCS: https://github.com/traviscross/mtr
 
-Source: http://ftp.bitwizard.nl/mtr/mtr-%version.tar.gz
+Source: mtr-%version.tar
 Source2: mtr.ru.UTF-8.8
 Source3: mtr-packet.ru.UTF-8.8
 Source4: mtr.desktop
@@ -16,7 +20,6 @@ Source5: mtr.xpm
 Source6: mtr.control
 
 Requires: mtr-packet = %EVR
-Requires(pre): shadow-utils
 Requires: /var/resolv
 
 BuildRequires: libgtk+3-devel libncurses-devel
@@ -42,6 +45,9 @@ Group: Monitoring
 # Starting with mtr 0.95-alt1, the `mtr' control facility has been moved
 # from the `mtr' package to this package.
 Conflicts: mtr < 0.95
+Requires(pre): shadow-utils
+Requires(pre): /sbin/setcap
+Requires(post): /sbin/setcap
 
 %description
 mtr combines the functionality of the traceroute and ping programs in
@@ -106,6 +112,7 @@ subst 's/|| chmod u+s/|| :/' Makefile.am
 # patch Makefile.in directly.
 subst 's/@PACKAGE_VERSION@/%version/' Makefile.in
 
+%autoreconf
 %define _configure_script ../configure
 
 mkdir -p build-xmtr
@@ -144,6 +151,7 @@ subst -p "s)@NAME@)mtr-packet); s)@LIBEXECDIR@)%_libexecdir)" "%buildroot%_contr
 if [ ! -r /var/run/control/mtr-packet.preserved ]; then
 # We're looking at pre-installed, pre-expanded content; hence absolute paths
 # and values.
+if [ -r /etc/control.d/facilities/mtr ]; then
 case "$(grep '^BINARY=' /etc/control.d/facilities/mtr)" in
 *="'"/usr/bin/mtr"'")
 # Compatibility measure: preserve admin setting from mtr < 0.95.
@@ -151,6 +159,7 @@ mkdir -p /var/run/control
 %_sbindir/control mtr > /var/run/control/mtr-packet.preserved
 ;;
 esac
+fi
 fi
 
 %post -n mtr-packet
@@ -187,6 +196,9 @@ fi
 # - netadmin group would get non-predictable gid if not pre-existed
 
 %changelog
+* Sun Sep 07 2025 Arseny Maslennikov <arseny@altlinux.org> 0.96-alt1
+- 0.95 -> 0.96. (Closes: 52647)
+
 * Thu Nov 02 2023 Arseny Maslennikov <arseny@altlinux.org> 0.95-alt2
 - Built with GTK 3 and libjansson.
 
