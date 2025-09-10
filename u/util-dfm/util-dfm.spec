@@ -5,7 +5,7 @@
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.34
+Version: 1.3.37
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
@@ -13,7 +13,7 @@ Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/util-dfm
-Vcs: https://github.com/linuxdeepin/util-dfm.git
+Vcs: https://github.com/linuxdeepin/util-dfm
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -125,7 +125,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6install
 
 %files doc
-%doc README.md LICENSE
+%doc README.md LICENSE debian/changelog
 
 %files -n libdfm6-io%sover
 %_libdir/libdfm6-io.so.%sover
@@ -179,6 +179,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Wed Sep 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.37-alt1
+- New version 1.3.37.
+
 * Wed Jul 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.34-alt1
 - New version 1.3.34.
 

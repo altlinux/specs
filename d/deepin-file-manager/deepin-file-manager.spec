@@ -6,7 +6,7 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.5.81
+Version: 6.5.91
 Release: alt1
 
 Summary: Deepin File Manager
@@ -14,13 +14,13 @@ Summary: Deepin File Manager
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-file-manager
-Vcs: https://github.com/linuxdeepin/dde-file-manager.git
+Vcs: https://github.com/linuxdeepin/dde-file-manager
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
-Patch1: deepin-file-manager-6.5.68-alt-fixes-paths.patch
+Patch1: deepin-file-manager-6.5.91-alt-fixes-paths.patch
 Patch2: deepin-file-manager-6.5.81-alt-options-uos.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
@@ -164,7 +164,7 @@ chmod +x %buildroot%_bindir/dfm-open.sh
 chmod +x %buildroot%_bindir/dde-property-dialog
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE debian/changelog
 %_bindir/%repo
 %_bindir/%repo-daemon
 %_bindir/%repo-pkexec
@@ -212,6 +212,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/polkit-1/actions/org.deepin.filemanager.accesscontrol.policy
 %_datadir/polkit-1/actions/org.deepin.filemanager.diskencrypt.policy
 %_datadir/polkit-1/actions/org.deepin.filemanager.usersharemanager.policy
+%_datadir/polkit-1/actions/org.deepin.filemanager.mountcontrol.policy
 %_datadir/polkit-1/actions/com.deepin.filemanager.vault.policy
 %_datadir/applications/context-menus/.readme
 %dir %_datadir/dsg/
@@ -302,6 +303,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Wed Sep 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.91-alt1
+- New version 6.5.91.
+
 * Wed Jul 30 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.81-alt1
 - New version 6.5.81.
 
