@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.61.0
+Version: 0.66.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -26,7 +26,7 @@ Source3: %name.sysconfig
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang wire golang >= 1.24
+BuildRequires: rpm-build-golang wire golang >= 1.24.4
 
 BuildRequires: /proc
 
@@ -64,7 +64,7 @@ Requires: trivy-db
 
 %build
 # replace default node-collector image source
-sed -i 's|ghcr.io/aquasecurity/node-collector|registry.altlinux.org/k8s-%altbranch/trivy-node-collector|g' \
+sed -i 's|ghcr.io/aquasecurity/node-collector|registry.altlinux.org/%altbranch/trivy-node-collector|g' \
     pkg/flag/kubernetes_flags.go \
     vendor/github.com/aquasecurity/trivy-kubernetes/pkg/jobs/template/node-collector.yaml
 
@@ -114,6 +114,11 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Sep 10 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.66.0-alt1
+- 0.66.0
+- Change trivy-db module url from github.com to altlinux.space
+- Change path to trivy-node-collector
+
 * Tue Apr 08 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.61.0-alt1
 - 0.61.0
 - Change name 'scanner' to 'scan' in alt as in upstream
