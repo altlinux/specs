@@ -2,7 +2,7 @@
 
 Name: alt-mate-ayatana-settings
 Version: 0.01
-Release: alt3
+Release: alt3.1
 
 Summary: Special settings for ALT Linux with MATE and Ayatana Indicators
 License: GPL-2.0
@@ -11,7 +11,6 @@ Url: https://github.com/N0rbert/alt-mate-ayatana-settings
 
 Source: %name-%version.tar
 
-BuildArch: noarch
 ExcludeArch: ppc64le
 
 # MATE, MATE Tweak and Ayatana-related part
@@ -48,13 +47,11 @@ Requires: mate-menu
 ## continue to use firefox-esr on x86_64, %%ix86, aarch64 and loongarch64
 %ifarch x86_64 %ix86 aarch64 loongarch64
 Requires: firefox-esr
-%endif
+%elifarch riscv64
 ## use chromium on riscv64
-%ifarch riscv64
 Requires: chromium
-%endif
+%elifarch %e2k
 ## use epiphany on %%e2k
-%ifarch %e2k
 Requires: epiphany
 %endif
 
@@ -66,6 +63,12 @@ Requires: mate-calc
 
 # Items on MATE Panel
 Requires: evolution
+
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=45638
+%def_disable girar_repacks_srpm
+%if_enabled  girar_repacks_srpm
+BuildArch: noarch
+%endif
 
 %description
 Special package for ALT Linux to get fully-featured MATE desktop environment
@@ -130,6 +133,11 @@ cp -pv usr/share/mate/autostart/*.desktop %{buildroot}%{_datadir}/mate/autostart
 cp -pParv usr/share/mate-panel/layouts/* %{buildroot}%{_datadir}/mate-panel/layouts/
 cp -pParv usr/share/plank/themes/* %{buildroot}%{_datadir}/plank/themes/
 
+%if_disabled  girar_repacks_srpm
+# something fake arch-like to bypass girar checks
+mkdir -p %buildroot%perl_vendor_autolib/%name
+%endif
+
 %post
 echo "WARNING: the MATE Panel layout will be automatically set to Traditional on "
 echo "         next login. If you are installing this package for the first time "
@@ -148,8 +156,13 @@ echo "         using MATE Tweak utility!"
 %{_datadir}/mate/*
 %{_datadir}/mate-panel/*
 %{_datadir}/plank/*
+%if_disabled  girar_repacks_srpm
+%perl_vendor_autolib/%name
+%endif
 
 %changelog
+* Wed Sep 10 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt3.1
+- Made package arch-dependent since we use %%ifarch
 * Mon Sep 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt3
 - Use Chromium on riscv64 and Epiphany on %%e2k
 * Wed Feb 19 2025 Nikolay Strelkov <snk@altlinux.org> 0.01-alt2
