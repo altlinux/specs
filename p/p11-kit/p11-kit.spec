@@ -5,12 +5,12 @@
 # the hash implementation -- freebl or internal
 %define hash_impl internal
 %define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
-%def_disable systemd
+%def_enable systemd
 
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.5
+Version: 0.25.7
 Release: alt1
 Epoch: 1
 
@@ -32,6 +32,7 @@ Requires: %name-trust = %version-%release
 
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: libtasn1-devel libtasn1-utils libffi-devel
+BuildRequires: bash-completion
 %if %hash_impl == freebl
 BuildRequires: libnss-devel
 %endif
@@ -148,6 +149,12 @@ cat >%buildroot%_altdir/libnssckbi-%name <<EOF
 %_libdir/libnssckbi.so	%_libdir/pkcs11/p11-kit-trust.so	30
 EOF
 
+# zsh completions
+install -pDm0644 zsh-completion/p11-kit.zsh %buildroot%_datadir/zsh/site-functions/_p11-kit
+%if_enabled trust_module
+install -pDm0644 zsh-completion/trust.zsh %buildroot%_datadir/zsh/site-functions/_trust
+%endif
+
 %check
 make check
 
@@ -179,13 +186,9 @@ rm -r -- "$TEST_DIR"
 %files
 %_bindir/%name
 %_libexecdir/%name/p11-kit-remote
+%_datadir/bash-completion/completions/p11-kit
+%_datadir/zsh/site-functions/_p11-kit
 %{?_enable_doc:%_man8dir/p11-kit.*}
-
-%if_enabled systemd
-%_prefix/lib/systemd/user/%name-remote.socket
-%_prefix/lib/systemd/user/%name-remote@.service
-%_prefix/lib/systemd/user/sockets.target.wants/%name-remote.socket
-%endif
 
 %files -n lib%name
 %doc %name/pkcs11.conf.example
@@ -222,14 +225,24 @@ rm -r -- "$TEST_DIR"
 %_libexecdir/%name/trust-extract-compat
 %{?_enable_doc:%_man1dir/trust.*}
 %_altdir/libnssckbi-%name
+%_datadir/bash-completion/completions/trust
+%_datadir/zsh/site-functions/_trust
 %endif
 
 %files server
 %_libdir/pkcs11/%name-client.so
 %_libexecdir/%name/%name-server
+%if_enabled systemd
+%_userunitdir/p11-kit-server.*
+%endif
 
 %files checkinstall
 %changelog
+* Wed Sep 10 2025 Mikhail Efremov <sem@altlinux.org> 1:0.25.7-alt1
+- Packaged bash and zsh completions.
+- Enabled systemd support.
+- 0.25.7.
+
 * Wed Jul 10 2024 Mikhail Efremov <sem@altlinux.org> 1:0.25.5-alt1
 - 0.25.5.
 
