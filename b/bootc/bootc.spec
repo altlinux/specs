@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.1.4
+Version: 1.8.0
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -15,23 +15,33 @@ Vcs: https://github.com/containers/bootc.git
 ExclusiveArch: x86_64 ppc64le aarch64
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
 Requires: composefs
 Requires: ostree
 Requires: skopeo
 Requires: podman
+Requires: bootupd
 
 BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(openssl)
-BuildRequires: pkgconfig(ostree-1)
+BuildRequires: pkgconfig(ostree-1) >= 2025.3
 
 %description
 Transactional, in-place operating system updates using OCI/Docker container images.
 
 Contains update, test and create commands.
+
+%package -n system-reinstall-bootc
+Summary: Utility to reinstall the current system via bootc
+Group: Other
+
+Requires: podman
+
+%description -n system-reinstall-bootc
+This package provides a utility to simplify reinstalling the current system to a given bootc image.
 
 %prep
 %setup
@@ -69,6 +79,13 @@ rm -fv -- %_prefix/lib/%name/storage
 %_docdir/%name/
 %doc README.md
 
+%files -n system-reinstall-bootc
+%_bindir/system-reinstall-bootc
+
 %changelog
-* Thu Feb 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.1.4-alt1
+* Tue Sep 09 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.8.0-alt1
+- New version: 1.8.0.
+- Created subpackage with utility for system reinstalling with bootc image.
+
+* Fri Feb 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.1.4-alt1
 - Initial build.

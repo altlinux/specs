@@ -15,7 +15,7 @@
 %endif
 
 Name: ostree
-Version: 2024.6
+Version: 2025.6
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 Source1: libglnx.tar
 Source2: bsdiff.tar
 
-Patch1: %name-%version.patch
+Patch1: %name-%version-%release.patch
 
 Requires: libostree = %EVR
 Requires: %_bindir/gpg2
@@ -192,6 +192,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Sep 09 2025 Vladimir Vaskov <rirusha@altlinux.org> 2025.6-alt1
+- 2025.6
+
 * Tue Jul 16 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2024.6-alt1
 - 2024.6
 - enable composefs
@@ -342,4 +345,3 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 
 * Fri Apr 26 2013 Igor Vlasenko <viy@altlinux.ru> 2013.2-alt1_1
 - initial fc import
-
