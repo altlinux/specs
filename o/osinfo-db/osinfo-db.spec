@@ -1,7 +1,7 @@
 
 Summary: osinfo database files
 Name: osinfo-db
-Version: 20240701
+Version: 20250910
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -26,6 +26,10 @@ osinfo-db-import --root %buildroot --system %SOURCE0
 %_datadir/osinfo/*
 
 %changelog
+* Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 20250910-alt1
+- 20250910
+- Add info about 10.4, 11.0 and 11.1 releases (ALT#54220).
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 20240701-alt1
 - 20240701
 
