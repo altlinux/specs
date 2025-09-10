@@ -4,8 +4,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 6.0.0
-Release: alt3
+Version: 6.0.5
+Release: alt1
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -105,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt1
+- 6.0.5-1
+
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 6.0.0-alt3
 - build on loongarch64
 
