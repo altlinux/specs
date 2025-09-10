@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.5.2
+Version:  5.6.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
 BuildRequires: rpm-build-golang golang >= 1.23.3
 BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
-BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
+BuildRequires: libgio-devel libselinux-devel libsqlite3-devel
 BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
 BuildRequires: /proc
 
@@ -126,7 +126,6 @@ pushd .gopath/src/%import_path
     SYSTEMDDIR=%_unitdir SYSTEMDGENERATORSDIR=%_systemdgeneratordir USERSYSTEMDGENERATORSDIR=%_systemdusergeneratordir \
     install.bin \
     install.remote \
-    install.modules-load \
     install.man \
     install.completions \
     install.systemd \
@@ -134,7 +133,6 @@ pushd .gopath/src/%import_path
     install.docker-docs
 popd
 
-echo br_netfilter >> %buildroot%_modulesloaddir/podman-iptables.conf
 rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
 
@@ -153,7 +151,6 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %_userunitdir/*
 %_systemdgeneratordir/*
 %_systemdusergeneratordir/*
-%_modulesloaddir/*
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
@@ -187,6 +184,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 5.6.1-alt1
+- New version 5.6.1 (Fixes: CVE-2025-9566).
+
 * Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 5.5.2-alt1
 - New version 5.5.2 (Fixes: CVE-2025-6032).
 
