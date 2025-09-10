@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.44
+%define kernel_sublevel	.45
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -183,6 +183,15 @@ If you need to compile a third-party kernel module for the Linux
 kernel package %name-%version-%release, install this package
 and specify %kbuild_dir as the kernel source
 directory.
+
+%package checkinstall
+Summary: Verify EFI-stub signature
+Group: System/Kernel and hardware
+Requires: %name = %EVR
+Requires(post): rpm-pesign-checkinstall
+
+%description checkinstall
+Verify EFI-stub signature.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
@@ -422,6 +431,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 	exit 1
 }
 
+%post checkinstall
+check-pesign-helper
+
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -470,7 +482,13 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/kernel/drivers/crypto/
 %endif
 
+%files checkinstall
+
 %changelog
+* Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.45-alt1
+- v6.12.45 (2025-09-04)
+- Introduce EFI-stub signature verification back
+
 * Fri Sep 05 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.44-alt1
 - v6.12.44 (2025-08-28)
 - config: Disable gcc plugins to comply with licensing rules
