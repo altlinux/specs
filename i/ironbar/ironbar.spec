@@ -1,6 +1,6 @@
 Name: ironbar
-Version: 0.16.1
-Release: alt2
+Version: 0.17.0
+Release: alt1
 License: MIT
 
 Summary: Customisable Wayland gtk bar
@@ -8,6 +8,8 @@ Summary: Customisable Wayland gtk bar
 Group: Graphical desktop/Other
 
 Url: https://github.com/JakeStanger/ironbar
+
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
@@ -18,7 +20,9 @@ BuildRequires: /proc
 
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(luajit)
+BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(atk)
@@ -55,6 +59,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Sep 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.17.0-alt1
+- new version (0.17.0) with rpmgs script
+
 * Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.16.1-alt2
 - pack README.md and LICENSE
 
