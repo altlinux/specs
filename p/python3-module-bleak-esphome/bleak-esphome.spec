@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Bleak backend of ESPHome
@@ -52,6 +52,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.0 -> 3.3.0.
+
 * Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
 - 2.0.0 -> 3.2.0.
 
