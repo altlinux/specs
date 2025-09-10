@@ -3,7 +3,7 @@
 %def_enable ksecretd
 
 Name: kf6-%rname
-Version: 6.16.0
+Version: 6.17.0
 Release: alt1
 %K6init
 
@@ -146,6 +146,9 @@ __EOF__
 
 
 %changelog
+* Mon Aug 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.17.0-alt1
+- new version
+
 * Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
 - new version
 

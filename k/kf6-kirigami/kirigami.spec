@@ -10,9 +10,10 @@
 %define libkirigamiprivate libkirigamiprivate%sover
 %define libkirigamilayoutsprivate libkirigamilayoutsprivate%sover
 %define libkirigamipolyfill libkirigamipolyfill%sover
+%define libkirigamitemplates libkirigamitemplates%sover
 
 Name: kf6-kirigami
-Version: 6.16.0
+Version: 6.17.0
 Release: alt1
 %K6init altplace
 
@@ -127,7 +128,12 @@ Requires: %name-common >= %EVR
 %description -n %libkirigamipolyfill
 KF6 library
 
-
+%package -n %libkirigamitemplates
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common >= %EVR
+%description -n %libkirigamitemplates
+KF6 library
 
 %prep
 %setup -n %rname-%version
@@ -184,8 +190,14 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigamipolyfill
 %_K6lib/libKirigamiPolyfill.so.%sover
 %_K6lib/libKirigamiPolyfill.so.*
+%files -n %libkirigamitemplates
+%_K6lib/libKirigamiTemplates.so.%sover
+%_K6lib/libKirigamiTemplates.so.*
 
 %changelog
+* Mon Aug 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.17.0-alt1
+- new version
+
 * Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
 - new version
 
