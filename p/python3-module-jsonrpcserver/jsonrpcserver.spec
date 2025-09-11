@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.9
-Release: alt1.1
+Release: alt2
 
 Summary: JSON-RPC 2.0 server library
 
@@ -23,6 +23,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-OSlash
 BuildRequires: python3-module-jsonschema
 %endif
@@ -50,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 5.0.9-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.9-alt1.1
 - Moved on pyproject macros.
 
