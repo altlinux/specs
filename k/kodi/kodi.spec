@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.2
-Release: alt5
+Release: alt6
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -48,7 +48,7 @@ BuildRequires: pkgconfig(libcap)
 BuildRequires: pkgconfig(libcdio)
 BuildRequires: pkgconfig(libcec)
 BuildRequires: pkgconfig(libcrypto)
-BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libcurl) >= 8.16
 BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libdvdcss)
@@ -215,6 +215,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Thu Sep 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt6
+- fixed build with curl >= 8.16
+
 * Thu May 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt5
 - E2K: even more workarounds (ilyakurdyukov@)
 
