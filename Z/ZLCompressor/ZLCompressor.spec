@@ -5,7 +5,7 @@
 %define zl_build_type RelWithDebInfo
 
 Name:    ZLCompressor
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A compressor plugin from ZL Audio
@@ -136,6 +136,9 @@ cp -a "VST3/ZL Compressor.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
