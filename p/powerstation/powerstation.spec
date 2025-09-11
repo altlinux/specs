@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: powerstation
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: Daemon for controlling TDP and performance over DBus
@@ -61,6 +61,9 @@ EOF
 %_unitdir/powerstation.service
 
 %changelog
+* Wed Sep 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Thu Jun 19 2025 Boris Yumankulov <boria138@altlinux.org> 0.6.1-alt1
 - new version 0.6.1
 
