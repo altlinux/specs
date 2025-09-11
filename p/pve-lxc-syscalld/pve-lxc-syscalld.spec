@@ -4,7 +4,7 @@
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
 Version: 2.0.2
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -13,7 +13,7 @@ Vcs: git://git.proxmox.com/git/pve-lxc-syscalld.git
 Source: %name-%version.tar
 Patch: pve-lxc-syscalld-aarch64-u8.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
 BuildRequires: rpm-build-rust libsystemd-devel
 BuildRequires: /proc
@@ -64,6 +64,9 @@ fi
 %_libexecdir/%name/%name
 
 %changelog
+* Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.2-alt2
+- NMU: build on loongarch64
+
 * Wed Aug 27 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 2.0.2-alt1
 - 2.0.2
 - Create compat symlink /run/pve/lxc-syscalld.sock on upgrade

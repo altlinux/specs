@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.4.1
-Release: alt1
+Release: alt2
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -12,9 +12,10 @@ Vcs: git://git.proxmox.com/git/proxmox-perl-rs.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 Patch1: 0001-ALT-set-correct-context-not-None.patch
+
 Source1: genpackage.pl
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel perl-devel
@@ -131,6 +132,9 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt2
+- NMU: Build on loongarch64
+
 * Thu Aug 14 2025 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt1
 - Update:
   + libproxmox-rs-perl 0.4.1
