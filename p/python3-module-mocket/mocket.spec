@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 3.13.11
-Release: alt1
+Release: alt2
 
 Summary: Python socket mock framework
 
@@ -21,6 +21,7 @@ BuildRequires(pre): python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-decorator
 BuildRequires: python3-module-http-parser
@@ -75,6 +76,9 @@ py.test-3 -k "not test_file_object and \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 3.13.11-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.11-alt1
 - Automatically updated to 3.13.11.
 
