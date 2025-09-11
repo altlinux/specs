@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.4
-Release: alt1
+Release: alt2
 
 Summary: High-performance Python API wrapper for fast bulk data exchange with Bitrix24 via REST API.
 License: MIT
@@ -26,7 +26,9 @@ BuildRequires: python3-module-icontract
 BuildRequires: python3-module-beartype
 
 %if_with check
+# synced to .github/workflows/full-test.yml
 BuildRequires: python3(pytest)
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
@@ -57,6 +59,9 @@ if you have a large dictionary using the not_document_data configuration value.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 1.7.4-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Wed Jun 19 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 1.7.4-alt1
 - Initial build for ALT Linux
 
