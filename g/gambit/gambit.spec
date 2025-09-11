@@ -2,7 +2,7 @@
 
 Name: gambit
 Version: 4.9.7
-Release: alt4
+Release: alt5
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -184,7 +184,10 @@ Development files for Gambit Scheme (x86 processor family)
 	   --enable-dynamic-clib \
 	   --docdir=%pkgdocdir \
 	   --enable-moduledir=%moduledir \
-	   --enable-trust-c-tco
+%ifnarch %e2k
+	   --enable-trust-c-tco \
+%endif
+	   %nil
 %make_build
 
 %install
@@ -273,6 +276,9 @@ EOF
 %_bindir/gambuild-x86-64
 
 %changelog
+* Wed Sep 11 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.9.7-alt5
+- Disable --enable-trust-c-tco for e2k (breaks gsc).
+
 * Sat Aug 30 2025 Paul Wolneykien <manowar@altlinux.org> 4.9.7-alt4
 - Extract C-precompiled files into the separate 'modules-C' package.
 - List all module files and directories using a script.
