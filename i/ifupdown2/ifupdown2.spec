@@ -1,6 +1,6 @@
 Name: ifupdown2
-Version: 3.2.0.11
-Release: alt4
+Version: 3.3.0.10
+Release: alt1
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -14,7 +14,6 @@ Source2: resolvconf.if-up
 Source3: resolvconf.if-down
 
 Patch1: ifupdown2-3.2.0.11-alt-dont-use-dpkg-for-getting-version.patch
-Patch2: 0002-ALT-python-3.12-compatibility.patch
 Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
 Patch4: ifupdown2-3.2.0.11-alt-replace-distutils-strtobool.patch
 
@@ -54,7 +53,6 @@ are available under /usr/share/doc/ifupdown2/examples.
 
 
 %package -n resolvconf-ifupdown2
-
 Summary: Hooks for setting up /etc/resolv.conf options via ifupdown2
 Group: System/Base
 
@@ -71,7 +69,6 @@ using resolvconf utility
 tar -xf %SOURCE1
 pushd %name
 %patch1 -p1
-%patch2 -p1
 for p in `cat ../debian/patches/series`; do
     patch -p1 < ../debian/patches/$p
 done
@@ -100,7 +97,7 @@ popd
 
 install -pD -m644 %name/etc/network/%name/addons.conf %buildroot%_sysconfdir/network/%name/addons.conf
 install -pD -m644 %name/etc/network/%name/ifupdown2.conf %buildroot%_sysconfdir/network/%name/ifupdown2.conf
-install -pD -m644 debian/proxmox-bridge-mac-from-port.json %buildroot/var/lib/%name/policy.d/proxmox-bridge-mac-from-port.json
+install -pD -m644 debian/proxmox-bridge-mac-from-port.json %buildroot%_sharedstatedir/%name/policy.d/proxmox-bridge-mac-from-port.json
 
 install -dm755 %buildroot%_datadir/%name/sbin
 install -dm755 %buildroot%_sbindir
@@ -131,7 +128,7 @@ install -D -m755 %SOURCE3 %buildroot%_sysconfdir/network/if-down.d/resolvconf
 
 %post
 if [ "$1" -eq 1 ]; then
-    mkdir -p %_sysconfdir/iproute2/rt_tables.d/
+    mkdir -p %_sysconfdir/iproute2/rt_tables.d
     touch %_sysconfdir/iproute2/rt_tables.d/ifupdown2_vrf_map.conf
 
 fi
@@ -147,6 +144,7 @@ if [ -f %_sysconfdir/network/interfaces ] ; then
 else  # ! -f %_sysconfdir/network/interfaces
     echo "Creating /etc/network/interfaces."
     echo "# interfaces(5) file used by ifup(8) and ifdown(8)" > %_sysconfdir/network/interfaces
+    echo "source /etc/network/interfaces.d/*" >> %_sysconfdir/network/interfaces
     echo "auto lo" >> %_sysconfdir/network/interfaces
     echo "iface lo inet loopback" >> %_sysconfdir/network/interfaces
 fi
@@ -172,6 +170,9 @@ fi
 %_sysconfdir/network/if-down.d/*
 
 %changelog
+* Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.0.10-alt1
+- 3.3.0-1+pmx10
+
 * Thu May 22 2025 Alexander Stepchenko <geochip@altlinux.org> 3.2.0.11-alt4
 - Replace function from distutils
 - Don't use dpkg for querying ifupdown2 version
