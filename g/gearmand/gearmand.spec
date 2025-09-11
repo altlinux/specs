@@ -2,7 +2,7 @@
 
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
-Version: 1.1.21
+Version: 1.1.22
 Release: alt1
 License: BSD
 Group: Development/C
@@ -72,6 +72,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 1.1.22-alt1
+- 1.1.21 -> 1.1.22
+
 * Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1.1.21-alt1
 - 1.1.19.1 -> 1.1.21
 
