@@ -1,12 +1,13 @@
 %define		real_version	1.8beta5
 Name:		tsocks
 Version:	1.8
-Release:	alt1.qa2
+Release:	alt2
 Summary:	Library for catching network connections, redirecting them on a SOCKS server
 Group:		Security/Networking
 License:	GPLv2+
 URL:		http://tsocks.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{real_version}.tar
+Source1:        %name.sh
 Patch0:		tsocks_remove_static_lib.patch
 Patch1:		tsocks_fix_lib_path.patch
 Patch2:		tsocks_script_validation_error.patch
@@ -31,25 +32,29 @@ program.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 %patch3 -p1
 
 %build
 %autoreconf
 %configure
-make %{?_smp_mflags}
+%make_build
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+install %SOURCE1 %buildroot%_bindir/%name
 
 %files
 %defattr(-,root,root,-)
 %doc ChangeLog COPYING FAQ TODO tsocks.conf.simple.example tsocks.conf.complex.example
-%{_bindir}/*
-%{_libdir}/libtsocks*
-%{_mandir}/man?/*
+%_bindir/*
+%_libdir/libtsocks*
+%_mandir/man?/*
 
 %changelog
+* Thu Sep 11 2025 Fr. Br. George <george@altlinux.org> 1.8-alt2
+- Provide (slightly) alternative shell script
+
 * Thu May 01 2025 Ivan A. Melnikov <iv@altlinux.org> 1.8-alt1.qa2
 - NMU: fix FTBFS via %%autoreconf.
 
