@@ -1,18 +1,25 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%ifnarch %ix86
+%set_verify_elf_method strict
+%endif
+
 Name: openrgb
-Version: 0.9
-Release: alt3
+Version: 1.0
+Release: alt1.rc1
+
+%define org_name org.%name.OpenRGB
 
 Summary: Open source RGB lighting control that doesn't depend on manufacturer software
 
 License: GPL-2.0-only
 Group: System/Configuration/Other
 Url: https://gitlab.com/CalcProgrammer1/OpenRGB
+Vcs: https://gitlab.com/CalcProgrammer1/OpenRGB
 
 # Source-url: https://gitlab.com/CalcProgrammer1/OpenRGB/-/archive/release_%version/OpenRGB-release_%version.tar.bz2
 Source: %name-%version.tar
-
-#https://openrgb.org/releases/release_0.8/60-openrgb.rules
-#Source1: 60-openrgb.rules
+Patch: %name-alt-no-strip.patch
 
 BuildRequires(pre): rpm-macros-qt5
 
@@ -23,38 +30,42 @@ BuildRequires: qt5-tools qt5-base-devel
 %description
 Open source RGB lighting control that doesn't depend on manufacturer software.
 
-Supports a wide variety of RGB components, peripherals, accessories, and lights across many manufacturers.
+Supports a wide variety of RGB components, peripherals, accessories, and lights
+across many manufacturers.
 
 %prep
 %setup
+%patch -p2
 # just to be sure
 subst "s|/usr/lib/udev/rules.d|%_udevrulesdir|g" ResourceManager.cpp
 
 %build
+export QMAKE_CXXFLAGS_RELEASE='%optflags'
 %qmake_qt5 OpenRGB.pro
-%make_build
+%make_build V=1
 
 %install
-mkdir -p %buildroot/%_udevrulesdir
-mkdir -p %buildroot/%_bindir
-mkdir -p %buildroot/%_desktopdir
-mkdir -p %buildroot/%_iconsdir/hicolor/128x128/apps/
-mkdir -p %buildroot/%_datadir/metainfo/
+mkdir -p %buildroot{%_udevrulesdir,%_bindir}
 
-cp qt/OpenRGB.desktop %buildroot/%_desktopdir/OpenRGB.desktop
-cp qt/OpenRGB.png %buildroot/%_iconsdir/hicolor/128x128/apps/OpenRGB.png
-cp qt/org.openrgb.OpenRGB.metainfo.xml %buildroot/%_datadir/metainfo/org.openrgb.OpenRGB.metainfo.xml
+install -pD -m644 qt/%org_name.desktop %buildroot/%_desktopdir/%org_name.desktop
+install -pD -m644 qt/%org_name.png %buildroot/%_iconsdir/hicolor/128x128/apps/%org_name.png
+install -pD -m644 qt/%org_name.metainfo.xml %buildroot/%_datadir/metainfo/%org_name.metainfo.xml
 
 %make_install INSTALL_ROOT=%buildroot install
 
 %files
 %_udevrulesdir/60-openrgb.rules
 %_bindir/openrgb
-%_desktopdir/OpenRGB.desktop
-%_datadir/metainfo/org.openrgb.OpenRGB.metainfo.xml
-%_iconsdir/hicolor/128x128/apps/OpenRGB.png
+%_desktopdir/%org_name.desktop
+%_datadir/metainfo/%org_name.metainfo.xml
+%_iconsdir/hicolor/128x128/apps/%org_name.png
 
 %changelog
+* Wed Sep 10 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt1.rc1
+- 1.0rc1.
+- enable debuginfo.
+- spec cleanup.
+
 * Sun Sep 01 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt3
 - fix packing udev rules
 
