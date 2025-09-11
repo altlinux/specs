@@ -1,7 +1,9 @@
 %define rdn_name net.sourceforge.liferea
+%define namespace Liferea
+%define api_ver 3.0
 
 Name: liferea
-Version: 1.16.0
+Version: 1.16.4
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -59,9 +61,6 @@ Allow Liferea to use GNOME keyring as password store
 %patch -p1
 
 %build
-# for pygobject >= 3.52.3
-sed -i 's/\(USE_GI_REPOSITORY_VERSION, \)1/\12/' configure.ac
-%add_optflags -lgirepository-2.0
 %autoreconf
 %configure \
     --enable-introspection \
@@ -76,7 +75,7 @@ xvfb-run %make_build
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog
 %_bindir/*
-%_libdir/%name/girepository-1.0/*.typelib
+%_libdir/%name/girepository-1.0/%namespace-%api_ver.typelib
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/GConf/gsettings/%name.convert
@@ -112,6 +111,12 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
+- 1.16.4
+
+* Fri Aug 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- updated to v1.16.1-3-ga01fecda0
+
 * Mon Aug 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
