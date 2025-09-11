@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: inputplumber
-Version: 0.59.3
+Version: 0.62.2
 Release: alt1
 
 Summary: Open source input router and remapper daemon for Linux
@@ -74,6 +74,9 @@ EOF
 %_udevrulesdir/90-inputplumber-autostart.rules
 
 %changelog
+* Wed Sep 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.62.2-alt1
+- new version 0.62.2
+
 * Thu Jul 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.59.3-alt1
 - new version 0.59.3
 
