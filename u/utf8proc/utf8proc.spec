@@ -1,5 +1,5 @@
 Name: utf8proc
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 
 Summary: Library for processing UTF-8 encoded Unicode strings
@@ -52,6 +52,9 @@ rm %buildroot%_libdir/libutf8proc.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Sep 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11.0-alt1
+- 2.11.0 released
+
 * Fri Jan 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10.0-alt1
 - 2.10.0 released
 
