@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.24
+Version: 1.16.25
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Thu Sep 11 2025 Oleg Solovyov <mcpain@altlinux.org> 1.16.25-alt1
+- 08-crypttab.sh: remove duplicates (Closes: #55172) 
+
 * Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 1.16.24-alt1
 - 40-autohostname.sh: skip if HOSTNAME already set
 
