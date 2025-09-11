@@ -10,7 +10,7 @@
 
 Name: %_name%abiversion
 Version: 5.9.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -38,7 +38,7 @@ Patch: %name-%version-%release.patch
 %def_enable static
 BuildRequires: librpm-devel >= 4.0.4 libssl-devel
 # Automatically added by buildreq on Wed Oct 13 2010
-BuildRequires: libnl-devel librpm-devel libsensors3-devel pdksh perl-devel python3-module-setuptools perl-Tk perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple perl-JSON perl-Mail-Sender
+BuildRequires: libnl-devel librpm-devel libsensors3-devel pdksh perl-devel python3-module-setuptools perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple perl-JSON perl-Mail-Sender
 %{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_with_mysql:BuildRequires: libmysqlclient-devel}
 %{?_with_systemd:BuildRequires: systemd-devel}
@@ -563,6 +563,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.4-alt1.2
+- NMU: fixed FTBFS
+
 * Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 5.9.4-alt1.1
 - Use GCC 13 for build
 
