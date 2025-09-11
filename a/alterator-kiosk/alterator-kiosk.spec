@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Source: %name-%version.tar
@@ -55,6 +55,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Thu Sep 11 2025 Oleg Solovyov <mcpain@altlinux.org> 1.17-alt1
+- profiles: add maliit-keyboard (Closes: #55946)
+
 * Mon Aug 18 2025 Oleg Solovyov <mcpain@altlinux.org> 1.16-alt1
 - update profiles: run systemd without enforcing security
 
