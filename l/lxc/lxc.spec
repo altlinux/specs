@@ -15,7 +15,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 6.0.4
+Version: 6.0.5
 Release: alt1
 Summary: Linux Containers
 License: LGPL-2.1-or-later
@@ -159,7 +159,7 @@ echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> s
 
 %build
 %meson \
-    -Ddistrosysconfdir='/etc/sysconfig' \
+    -Ddistrosysconfdir='%_sysconfdir/sysconfig' \
     -Dinit-script=systemd,sysvinit \
     -Dsystemd-unitdir=%_unitdir \
     -Dcapabilities=true \
@@ -232,11 +232,8 @@ groupadd -r -f vmusers ||:
 %_man1dir/lxc*
 %_man5dir/lxc*
 %_man7dir/lxc*
-
-%dir %_mandir/ja
-%dir %_mandir/ko
-%_mandir/ja/*
-%_mandir/ko/*
+%_mandir/ja/*/lxc*
+%_mandir/ko/*/lxc*
 
 %_initdir/lxc
 %_unitdir/lxc.service
@@ -286,8 +283,12 @@ groupadd -r -f vmusers ||:
 %files -n %pam_name
 %_pam_modules_dir/*
 %_man8dir/pam_cgfs.8*
+%_mandir/ja/*/pam_cgfs*
 
 %changelog
+* Thu Sep 11 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt1
+- 6.0.5.
+
 * Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.4-alt1
 - 6.0.4.
 
