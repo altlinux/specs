@@ -3,18 +3,20 @@
 %def_enable vala
 %def_enable docs
 
-%define ver_major 16.0
+%define ver_major 17.0
 %define api_ver 2.90
-%define unicode_ver 16.0.0
+%define unicode_ver 17.0.0
 
 Name: gucharmap
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
 Group: Text tools
 License: GPL-3.0 and GFDL-1.3 and Unicode
 Url: https://wiki.gnome.org/Gucharmap
+
+Vcs: https://gitlab.gnome.org/GNOME/gucharmap.git
 
 %if_disabled snapshot
 #Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -134,6 +136,9 @@ character map library.
 %endif
 
 %changelog
+* Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 17.0.0-alt1
+- 17.0.0
+
 * Sun Oct 20 2024 Yuri N. Sedunov <aris@altlinux.org> 16.0.2-alt1
 - 16.0.2
 

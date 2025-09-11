@@ -2,7 +2,7 @@
 %define ucddir %unicodedir/ucd
 
 Name: unicode-ucd
-Version: 16.0.0
+Version: 17.0.0
 Release: alt1
 
 Summary: Unicode Character Database
@@ -10,7 +10,7 @@ Group: Development/Other
 License: MIT
 Url: https://www.unicode.org/ucd/
 
-Source: https://www.unicode.org/Public/zipped/%version/UCD.zip
+Source: https://www.unicode.org/Public/%version/ucd/UCD.zip
 Source1: https://www.unicode.org/Public/%version/ucd/Unihan.zip
 # https://www.unicode.org/terms_of_use.html referenced in ReadMe.txt redirects to:
 Source2: https://www.unicode.org/copyright.html
@@ -42,6 +42,9 @@ cp -p %SOURCE2 .
 %doc copyright.html
 
 %changelog
+* Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 17.0.0-alt1
+- 17.0.0
+
 * Wed Sep 11 2024 Yuri N. Sedunov <aris@altlinux.org> 16.0.0-alt1
 - 16.0.0
 
