@@ -3,7 +3,7 @@
 
 Name:       rexi
 Version:    1.2.0
-Release:    alt1
+Release:    alt2
 BuildArch:  noarch
 
 License:    MIT
@@ -19,6 +19,7 @@ BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-typer
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-textual
@@ -68,5 +69,8 @@ Package contains python module for %name.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Thu Feb 27 2025 Sergey Savelev <medovi@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus.
