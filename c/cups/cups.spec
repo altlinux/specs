@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.12
-Release: alt2
+Version: 2.4.13
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 2.4.13-alt1
+- 2.4.12 -> 2.4.13 (Fixes: CVE-2025-58060, CVE-2025-58364)
+
 * Thu Jun 26 2025 Constantin Sunzow <protvin@altlinux.org> 2.4.12-alt2
 - Additional chromatic color model names support (ALT 46437, 54542).
 
