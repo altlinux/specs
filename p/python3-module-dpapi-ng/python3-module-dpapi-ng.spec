@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt2
+Release: alt3
 
 Summary: Python DPAPI NG Decryptor for non-Windows Platforms
 License: MIT
@@ -23,7 +23,9 @@ BuildRequires: python3(cryptography)
 BuildRequires: python3(spnego)
 
 %if_with check
+# see requirements-test.txt
 BuildRequires: python3(pytest-cov)
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 BuildArch: noarch
@@ -57,6 +59,9 @@ supplied user to retrieve the required information over RPC.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 0.2.0-alt3
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Mon Jun 09 2025 Michael Shigorin <mike@altlinux.org> 0.2.0-alt2
 - Fix BR: regarding %%check
 
