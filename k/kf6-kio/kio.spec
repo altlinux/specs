@@ -1,12 +1,12 @@
 %define rname kio
 
-%def_disable streebog
+%def_enable streebog
 %define sover 0
 %define libkuriikwsfiltereng_private libkuriikwsfiltereng_private%sover
 
 Name: kf6-%rname
 Version: 6.17.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -175,6 +175,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Thu Sep 11 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.17.0-alt2
+- reintroduce the streebog suppor
+
 * Mon Aug 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.17.0-alt1
 - new version
 - temporary disable streebog support
