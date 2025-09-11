@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.8
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,17 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt2
+- Added support for the Group Key Distribution Protocol (GKDI) to enable
+  Group-Based Resource Encryption as part of LAPSv2 (Local Administrator
+  Password Solution) (thx Vladimir Rubanov):
+  + Implemented a new DCE/RPC endpoint server (s4:rpc_server/gkdi) for
+    processing GetKey requests.
+  + Introduced time-based group key computation and root key selection logic,
+    with full support for both writable DCs and RODCs.
+  + Key derivation adheres to [MS-GKDI], including Diffie-Hellman (DH) and
+    elliptic-curve (ECDH) algorithms.
+
 * Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt1
 - Update to maintenance release of Samba 4.21
 - Major fixes from upstream (Samba#14981, Samba#15844, Samba#15876, Samba#15891,
