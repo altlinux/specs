@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.30
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -87,6 +87,9 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Thu Sep 11 2025 Ivan Savin <svn17@altlinux.org> 0.1.30-alt2
+- Update docs/README-ru.md.
+
 * Wed Aug 06 2025 Ivan Savin <svn17@altlinux.org> 0.1.30-alt1
 - Add the ability to use arrays to describe methods in backend files.
 - Update docs/README-ru.md.
