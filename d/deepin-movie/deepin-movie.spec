@@ -1,7 +1,7 @@
 %def_with clang
 
 Name: deepin-movie
-Version: 6.5.22
+Version: 6.5.25
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -9,7 +9,7 @@ Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-movie-reborn
-Vcs: https://github.com/linuxdeepin/deepin-movie-reborn.git
+Vcs: https://github.com/linuxdeepin/deepin-movie-reborn
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -117,6 +117,9 @@ export CXX=g++
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Sep 11 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.25-alt1
+- New version 6.5.25.
+
 * Mon Jul 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.22-alt1
 - New version 6.5.22.
 
