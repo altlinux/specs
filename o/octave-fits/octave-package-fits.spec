@@ -3,17 +3,18 @@ BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg fits
-Epoch: 1
+
 Name: octave-%octpkg
 Version: 1.0.7
-Release: alt4
-Summary: Reading and writing FITS (Flexible Image Transport System) files.
+Release: alt5
+Epoch: 1
 
+Summary: Reading and writing FITS (Flexible Image Transport System) files.
 Group: Sciences/Mathematics
 License: GPLv3+
-URL: http://octave.sf.net
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+URL: http://octave.sf.net
+Source: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -32,13 +33,14 @@ BuildRequires: libcfitsio-devel
 # Depends: octave (>= 3.0.0)
 Requires: octave >= 3.0.0
 
-
 %description
-The Octave-FITS package provides functions for
+The Octave-FITS package provides functions for reading
+and writing FITS (Flexible Image Transport System) files.
 
 %prep
-%setup -q -n %{octpkg}-%{version}
+%setup -n %{octpkg}-%{version}
 sed -i s,D_NINT,octave::math::x_nint,g `grep -rl D_NINT .`
+sed -i 's/image.fortran_vec()/image.data()/' src/save_fits_image{,_multi_ext}.cc
 
 %build
 %octave_build
@@ -54,6 +56,11 @@ sed -i s,D_NINT,octave::math::x_nint,g `grep -rl D_NINT .`
 %endif
 
 %changelog
+* Thu Sep 11 2025 Michael Shigorin <mike@altlinux.org> 1:1.0.7-alt5
+- added image.* related sed patch based on mandriva one (ilyakurdyukov@)
+- fixed description (it is now actually descriptive)
+- minor spec cleanup (hope it won't hurt autobuilder)
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1:1.0.7-alt4
 - rebuild with octave 5
 
