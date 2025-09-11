@@ -1,8 +1,8 @@
 %define oname arrex
 
 Name: python3-module-arrex
-Version: 0.5.2
-Release: alt1.1
+Version: 0.5.4
+Release: alt1
 
 Summary: Python module allowing to create efficient dynamic arrays of user-defined types
 
@@ -15,8 +15,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-poetry
+BuildRequires: python3-module-Cython
 
 %description
 Arrex is a module that allows to create typed arrays much like numpy.ndarray and array.array,
@@ -36,6 +36,9 @@ Its dtype system is extremely flexible and makes it ideal to work and share stru
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1
+- Build new version for python3.13.
+
 * Mon May 26 2025 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1.1
 - NMU: fixed FTBFS (PyGLM 2.8.2-alt1).
 

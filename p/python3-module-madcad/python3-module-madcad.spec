@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.19.0
-Release: alt1
+Release: alt1.1
 
 Summary: Simple yet powerful CAD (Computer Aided Design) library, written with Python
 
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(Cython)
 
 Requires: python3(pywavefront) python3(plyfile) python3(stl)
 
@@ -26,6 +27,9 @@ Requires: python3(pywavefront) python3(plyfile) python3(stl)
 
 %prep
 %setup
+
+# Force cythonize
+rm -v madcad/core.c
 
 %build
 %pyproject_build
@@ -38,6 +42,9 @@ Requires: python3(pywavefront) python3(plyfile) python3(stl)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.19.0-alt1.1
+- Fix building with python3.13.
+
 * Sat Jun 28 2025 Ivan Mazhukin <vanomj@altlinux.org> 0.19.0-alt1
 - new version 0.19.0 (with rpmrb script)
 
