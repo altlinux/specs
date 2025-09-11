@@ -8,7 +8,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.16.0
-Release: alt1
+Release: alt2
 
 Summary: Production-ready, Light, Flexible and Extensible ASGI API framework | Effortlessly Build Performant APIs
 License: MIT
@@ -74,6 +74,8 @@ BuildRequires: python3-module-litestar-htmx
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+# backported from https://github.com/litestar-org/litestar/pull/4261
+Patch0: litestar-2.16.0-pytest-8.4.patch
 
 %description
 Litestar is a powerful, flexible yet opinionated ASGI framework, focused on
@@ -83,6 +85,7 @@ and much more that's needed to get applications up and running.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -139,6 +142,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 2.16.0-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 2.16.0-alt1
 - New 2.16.0 version.
 
