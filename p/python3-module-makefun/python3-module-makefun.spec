@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: Dynamically create python functions with a proper signature
 License: BSD-3-Clause
@@ -29,6 +29,9 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter virtualenv
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# noxfile.tests => ci_tools.nox_utils.install_reqs => setup_cfg.options.tests_require
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
@@ -59,6 +62,9 @@ Small library to dynamically create python functions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 1.16.0-alt2
+- NMU: fixed FTBFS (pytest 8.4.0).
+
 * Mon May 26 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt1
 - Updated to 1.16.0.
 - Reverted building scheme "fixing".
