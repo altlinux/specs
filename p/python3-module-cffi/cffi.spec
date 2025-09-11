@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.17.1
+Version: 2.0.0
 Release: alt1
 Summary: Foreign Function Interface for Python calling C code
 License: MIT
@@ -14,6 +14,8 @@ Vcs: https://github.com/python-cffi/cffi
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: cffi-0.8.6-alt-link.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libffi-devel
@@ -50,6 +52,9 @@ Foreign Function Interface for Python calling C code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.17.1 -> 2.0.0.
+
 * Thu Sep 12 2024 Stanislav Levin <slev@altlinux.org> 1.17.1-alt1
 - 1.16.0 -> 1.17.1.
 
