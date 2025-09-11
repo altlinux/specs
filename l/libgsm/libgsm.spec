@@ -1,5 +1,5 @@
 Name: libgsm
-Version: 1.0.22
+Version: 1.0.23
 Release: alt1
 
 Summary: GSM audio encoding/decoding library
@@ -72,6 +72,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 %_man3dir/*
 
 %changelog
+* Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 1.0.23-alt1
+- 1.0.22 -> 1.0.23
+
 * Thu Apr 10 2025 Anton Farygin <rider@altlinux.com> 1.0.22-alt1
 - 1.0.17 -> 1.0.22
 - updated license tag according SPDX
