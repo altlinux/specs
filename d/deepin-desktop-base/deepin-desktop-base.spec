@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2025.06.23
+Version: 2025.08.22
 Release: alt1
 
 Summary: Base component for Deepin
@@ -7,7 +7,7 @@ Summary: Base component for Deepin
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-base
-Vcs: https://github.com/linuxdeepin/deepin-desktop-base.git
+Vcs: https://github.com/linuxdeepin/deepin-desktop-base
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -54,7 +54,7 @@ rm -r %buildroot/usr/share/python-apt
 rm -r %buildroot%_datadir/distro-info
 
 %files
-%doc LICENSE
+%doc LICENSE debian/changelog
 %exclude %_sysconfdir/appstore.json
 %dir %_datadir/deepin/
 %_datadir/deepin/distribution.info
@@ -67,6 +67,9 @@ rm -r %buildroot%_datadir/distro-info
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Thu Sep 11 2025 Leontiy Volodin <lvol@altlinux.org> 2025.08.22-alt1
+- New version 2025.08.22.
+
 * Fri Jul 18 2025 Leontiy Volodin <lvol@altlinux.org> 2025.06.23-alt1
 - New version 2025.06.23.
 
