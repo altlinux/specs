@@ -1,58 +1,53 @@
 %define rname kamoso
 
 Name:    %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
 URL:     https://userbase.kde.org/Kamoso
 License: GPL-2.0+
-%K5init no_altplace
+%K6init no_altplace
 
-Requires: kde5-runtime
-Requires: libkf5quickaddons
-Requires: kf5-purpose
-Requires: kf5-kirigami
+Requires: kde6-runtime
+Requires: kf6-purpose
+Requires: kf6-kirigami
 
 # Download from http://download.kde.org/stable/release-service/$version/src/kamoso-$version.tar.xz
 Source0: %rname-%version.tar
 Source1: %rname.watch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: gettext-tools
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-graphicaleffects
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kirigami-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: libkf5quickaddons
-BuildRequires: kf5-kdoctools-devel-static
-BuildRequires: kf5-kdoctools
+BuildRequires: qt6-declarative-devel
+BuildRequires: kf6-kauth-devel
+BuildRequires: kf6-kbookmarks-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kdeclarative-devel
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kirigami-devel
+BuildRequires: kf6-kitemviews-devel
+BuildRequires: kf6-kjobwidgets-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kservice-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: kf6-purpose-devel
+BuildRequires: kf6-solid-devel
+#BuildRequires: kf6-kdoctools
 BuildRequires: libudev-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
-BuildRequires: qt5-quickcontrols
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt6-declarative-devel
 
 %description
 Kamoso is an application to take pictures and videos out of your webcam.
@@ -62,24 +57,27 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang %name --all
 
 %files -f %name.lang
 %doc AUTHORS
-%_K5bin/%name
-%_K5icon/hicolor/*/*/*.*
-%_K5xdgapp/*%name.desktop
-%_datadir/metainfo/org.kde.kamoso.appdata.xml
-%doc %_K5doc/*/%name
-#_datadir/sounds/kamoso-shutter.wav
-%_libdir/gstreamer-1.0/gstkamosoqt5videosink.so
-%_K5notif/%name.notifyrc
+%_K6bin/%rname
+%_K6icon/hicolor/*/apps/*%{rname}*.*
+%_K6icon/hicolor/*/actions/*burst*.*
+%_K6xdgapp/*%rname.desktop
+%_datadir/metainfo/*%{rname}*.appdata.xml
+%doc %_K6doc/*/%rname
+#%_libdir/gstreamer-1.0/gstkamosoqt5videosink.so
+%_K6notif/%rname.notifyrc
 
 %changelog
+* Fri Sep 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
