@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.8
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,17 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Thu Sep 11 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt3
+- Added new features:
+  + smbclient: support domain-based dfs (thx Petr Usoltsev)
+  + dns: resolve srv records as in windows (thx Petr Usoltsev)
+- New options:
+  + 'client resolve dfs names' - If yes (by default) client library tries to
+                                 resolve dfs name to hostname.
+  + 'dns resolve srv records' -  If yes (by default) internal dns server fill
+                                 in the srv entries with ip addresses in the
+                                 additional section.
+
 * Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt2
 - Added support for the Group Key Distribution Protocol (GKDI) to enable
   Group-Based Resource Encryption as part of LAPSv2 (Local Administrator
