@@ -6,7 +6,7 @@
 %def_without check
 
 Name: lomiri-polkit-agent
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Service to prompt for policy kit permissions in Lomiri
@@ -69,5 +69,8 @@ it back to PolicyKit.
 %_libexecdir/lomiri-polkit-agent/policykit-agent
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus

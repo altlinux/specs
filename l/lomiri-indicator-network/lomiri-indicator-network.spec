@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-indicator-network
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Systems settings menu service - Network indicator
@@ -165,5 +165,8 @@ This package contains developer documentation.
 %_datadir/doc/lomiri-indicator-network/*
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus
