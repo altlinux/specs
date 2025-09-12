@@ -1,5 +1,5 @@
 Name: libtoml11
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 
 Summary: TOML for Modern C++
@@ -58,6 +58,9 @@ Group: Development/C++
 %_cmakedir/toml11/
 
 %changelog
+* Fri Mar 28 2025 Boris Yumankulov <boria138@altlinux.org> 4.4.0-alt1
+- new version 4.4.0
+
 * Thu Jan 16 2025 Boris Yumankulov <boria138@altlinux.org> 4.3.0-alt1
 - new version 4.3.0
 
