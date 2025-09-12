@@ -3,27 +3,32 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.42
+%define ver_major 2.44
 %define _libexecdir %_prefix/libexec
 # timeout multiplier for tests
 %define timeout 2
 
-# sinc 2.42.11 others -- ani, bmp, icns, ico, pnm, qtif, tga, xbm, xpm
-%def_enable others
-%def_enable gtk_doc
+# glycin is a deafult loader
+%def_enable glycin
+# since 2.42.11 others -- ani, bmp, icns, ico, pnm, qtif, tga, xbm, xpm
+%def_disable others
+%def_enable doc
 %def_enable man
 %def_enable introspection
+%def_enable thumbnailer
 %def_enable installed_tests
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
 License: LGPL-2.1
-Url: http://www.gtk.org
+Url: https://www.gtk.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gdk-pixbuf.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -35,11 +40,14 @@ Patch: %_name-2.37.92-alt-compat-version-script.patch
 Source1: %_name.map
 Source2: %_name.lds
 
-%define meson_ver 0.56
-%define glib_ver 2.48.0
+%define meson_ver 1.5
+%define glib_ver 2.56.0
 %define gi_ver 0.9.5
+%define glycin_api_ver 2
+%define glycin_ver 2.0
 
-Requires: %name-locales = %version
+%{?_enable_glycin:Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver bubblewrap}
+Requires: %name-locales = %EVR
 
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
@@ -47,8 +55,9 @@ Obsoletes: %name-loaders <= %version
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver
 BuildRequires: /proc libgio-devel >= %glib_ver
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel
-%{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
+%{?_disable_glycin:BuildRequires: libjpeg-devel libpng-devel libtiff-devel}
+%{?_enable_glycin:BuildRequires: pkgconfig(glycin-%glycin_api_ver)}
+%{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
@@ -132,33 +141,18 @@ install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 export LIBS=-lcxa
 %endif
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_disable_man:-Dman=false} \
-	%{?_disable_introspection:-Dintrospection=disabled} \
-	%{?_disable_installed_tests:-Dinstalled_tests=false} \
-	-Dbuiltin_loaders='png' \
-	%{subst_enable_meson_feature others others}
+    %{subst_enable_meson_bool doc documentation} \
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %{subst_enable_meson_feature glycin glycin} \
+    %{subst_enable_meson_feature others others} \
+    %{subst_enable_meson_feature thumbnailer thumbnailer}
 %nil
 %meson_build
 
 %install
 %meson_install
-
-ln %buildroot%_bindir/%_name-query-loaders %buildroot%_libdir/%_name-%api_ver/%binary_ver/
-
-# rpm posttrans filetriggers
-mkdir -p %buildroot%_rpmlibdir
-cat > %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger << '@@@'
-#!/bin/sh -efu
-
-LC_ALL=C sed -rn 's|(^/usr/lib(64)?)/gdk-pixbuf.*/loaders/.*|\1|p' | sort -u | while read L; do
-       if [ -x "$L/%_name-%api_ver/%binary_ver/%_name-query-loaders" ]; then
-              $L/%_name-%api_ver/%binary_ver/%_name-query-loaders --update-cache
-       fi
-done
-@@@
-chmod 755 %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
-touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 %find_lang %_name
 
@@ -167,12 +161,8 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 %files
 %_bindir/gdk-pixbuf-query-loaders
-%_bindir/gdk-pixbuf-thumbnailer
-%_libdir/libgdk_pixbuf-2.0.so.*
-%dir %_libdir/%_name-%api_ver
-%dir %_libdir/%_name-%api_ver/%binary_ver
-%dir %_libdir/%_name-%api_ver/%binary_ver/loaders
-%_libdir/%_name-%api_ver/%binary_ver/%_name-query-loaders
+%{?_enable_thumbnailer:%_bindir/gdk-pixbuf-thumbnailer}
+%_libdir/libgdk_pixbuf-%api_ver.so.*
 %{?_enable_others:
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ani.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-bmp.so
@@ -182,17 +172,13 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-qtif.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tga.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
-}
+%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so}
+%{?_disable_glycin:
+# builtin by default: jpeg, png
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-gif.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jpeg.so
-# builtin
-#%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
-%ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
-%_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
+%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so}
+%{?_enable_thumbnailer:%_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer}
 %{?_enable_man:%_man1dir/gdk-pixbuf-query-loaders*}
-%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 
 %files locales -f %_name.lang
 
@@ -206,9 +192,8 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %{?_enable_man:%_man1dir/gdk-pixbuf-csource*}
 %doc NEWS README.md
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
-#%_datadir/gtk-doc/html/*
 %_datadir/doc/%_name
 %_datadir/doc/gdk-pixdata
 %endif
@@ -231,6 +216,10 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
+- 2.44.0
+- built against glycin-2 as a default image library
+
 * Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.42.12-alt1
 - 2.42.12
 
