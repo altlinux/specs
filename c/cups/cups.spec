@@ -1,5 +1,5 @@
 Name: cups
-Version: 2.4.13
+Version: 2.4.14
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Fri Sep 12 2025 Anton Farygin <rider@altlinux.com> 2.4.14-alt1
+- 2.4.13 -> 2.4.14
+
 * Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 2.4.13-alt1
 - 2.4.12 -> 2.4.13 (Fixes: CVE-2025-58060, CVE-2025-58364)
 
