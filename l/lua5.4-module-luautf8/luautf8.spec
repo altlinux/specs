@@ -3,7 +3,7 @@
 %define luarocks_revision 1
 
 Name: lua5.4-module-luautf8
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1_lr%luarocks_revision
 
 Summary: A utf-8 support module for Lua and LuaJIT
@@ -13,11 +13,6 @@ Url: https://github.com/starwing/luautf8
 Vcs: https://github.com/starwing/luautf8
 
 Source: %name-%version.tar
-# 0.1.6-alt1_lr1
-# Upstream forgot to publish rockspec before release.
-# File was taken from f36cc914ae9015cd3045987abadd83bbcfae98f0
-# Delete in next upstream release.
-Source1: luautf8-0.1.6-1.rockspec
 
 Provides: luarocks5.4(luautf8) = %EVR
 
@@ -52,7 +47,6 @@ sequences.
 
 %prep
 %setup
-cp -v %SOURCE1 rockspecs/
 
 %build
 luarocks-5.4 make --verbose --local --deps-mode all --pack-binary-rock \
@@ -72,5 +66,8 @@ luarocks-5.4 test --test-type command \
 %lua_modulesdir/lua-utf8.so
 
 %changelog
+* Tue Sep 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.1.7-alt1_lr1
+- New version (0.1.7).
+
 * Tue Apr 08 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.1.6-alt1_lr1
 - Initial build.
