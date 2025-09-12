@@ -1,6 +1,6 @@
 Name: websocketpp
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 
 Summary: C++ WebSocket Protocol Library
 
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 # put cmake files in share/cmake instead of lib/cmake
 Patch1: websocketpp-0.4.0-cmake_noarch.patch
+Patch2: websocketpp-0.8.2-boost-1.87-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-program_options-devel
@@ -47,6 +48,7 @@ iostreams and one based on Boost Asio.
 %setup
 
 %patch1 -p1 -b .cmake_noarch
+%patch2 -p1
 
 %build
 %cmake
@@ -62,6 +64,9 @@ iostreams and one based on Boost Asio.
 %_datadir/cmake/websocketpp/
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.8.2-alt1.1
+- NMU: fixed incompatibility with Boost 1.87
+
 * Wed May 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
 - new version 0.8.2 (with rpmrb script)
 
