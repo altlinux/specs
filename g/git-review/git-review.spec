@@ -3,13 +3,14 @@
 %define _customdocdir %_defaultdocdir/%name
 
 Name:       git-review
-Version:    2.4.0
+Version:    2.5.0
 Release:    alt1
 
 Summary:    A Git helper for integration with Gerrit
 License:    ASL 2.0
 Group:      Development/Tools
-URL:        https://github.com/openstack-infra/git-review
+URL:        https://docs.opendev.org/opendev/git-review/latest/
+VCS:        https://opendev.org/opendev/git-review.git
 
 BuildArch:  noarch
 
@@ -51,8 +52,11 @@ install -p -m 0644 -D git-review.1 %buildroot%_man1dir/git-review.1
 %_man1dir/*
 
 %changelog
+* Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Mon Sep 30 2024 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt1
-- 2.4.0;
+- 2.4.0
 - build from git
 - fix typo in the package name (ALT#37977)
 
