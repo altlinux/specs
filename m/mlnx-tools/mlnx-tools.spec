@@ -11,7 +11,7 @@
 %define _udevdir /lib/udev
 
 Name: mlnx-tools
-Version: 2510.0.5
+Version: 2510.0.6
 Release: alt1
 
 Summary: Mellanox userland tools and scripts
@@ -21,7 +21,8 @@ Group: System/Kernel and hardware
 Url: https://github.com/Mellanox/mlnx-tools
 Vcs: https://github.com/Mellanox/mlnx-tools
 
-Source: https://github.com/Mellanox/mlnx-tools/releases/download/v%version/%name-%version.tar.gz
+# Source-url: https://github.com/Mellanox/mlnx-tools/releases/download/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: perl-devel python3-devel
@@ -76,6 +77,9 @@ chmod +x %buildroot%python3_sitelibdir/%name/dcbnetlink.py
 %python3_sitelibdir/%name/
 
 %changelog
+* Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 2510.0.6-alt1
+- New version 2510.0.6.
+
 * Fri Sep 05 2025 Leontiy Volodin <lvol@altlinux.org> 2510.0.5-alt1
 - New version 2510.0.5.
 
