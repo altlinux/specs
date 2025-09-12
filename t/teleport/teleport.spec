@@ -1,13 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define import_path github.com/gravitational/teleport
 
+# golang does not work well with lto
+%global optflags_lto %nil
+%ifarch loongarch64
+# avoid "relocation R_LARCH_B26 overflow" error in cgo-compiled object files
+%add_optflags -mcmodel=medium
+%endif
+
 #Disabling tests due to the need to use the network,
 #but it is not available in the build environment.
 %def_without check
 
 Name: teleport
 Version: 18.2.0
-Release: alt1
+Release: alt2
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
 License: AGPL-3.0
@@ -97,6 +104,11 @@ credentials in your infrastructure.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export CGO_CFLAGS="%optflags"
+export CGO_CXXFLAGS="%optflags"
+export CGO_LDFLAGS="%optflags"
+export RUST_TARGET_ARCH="$(rustc -vV | sed -n 's,host: ,,p')"
+
 %golang_prepare
 
 pushd $BUILDDIR/src/$IMPORT_PATH
@@ -144,6 +156,9 @@ make test
 %_bindir/tbot
 
 %changelog
+* Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 18.2.0-alt2
+- NMU: Fix FTBFS on loongarch64.
+
 * Tue Sep 09 2025 Artem Krasovskiy <aibure@altlinux.org> 18.2.0-alt1
 - New version 18.2.0.
 
