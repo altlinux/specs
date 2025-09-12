@@ -2,7 +2,7 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.21.3
+Version: 1.22.0
 Release: alt1
 
 Group: Networking/WWW
@@ -44,12 +44,16 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="-X github.com/TecharoHQ/anubis.Version=%version"
 export NODE_OPTIONS=--max_old_space_size=2048
-%golang_prepare
 export PATH="$PATH:$PWD/node_modules/.bin"
+pushd lib/challenge/preact
+./build.sh
+popd
 go generate
 web/build.sh
 xess/build.sh
+%golang_prepare
 %golang_build cmd/%name
+%golang_build cmd/robots2policy
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -82,6 +86,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Fri Sep 12 2025 Alexey Shabalin <shaba@altlinux.org> 1.22.0-alt1
+- New version 1.22.0.
+
 * Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 1.21.3-alt1
 - New version 1.21.3 (Fixes: CVE-2025-54414).
 
