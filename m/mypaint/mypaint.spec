@@ -2,7 +2,7 @@
 
 Name: mypaint
 Version: 2.0.1
-Release: alt2.2
+Release: alt2.3
 
 Summary: A simple paint program
 Group: Graphics
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 # https://github.com/mypaint/mypaint/pull/1193
 Patch1: 032a155b72f2b021f66a994050d83f07342d04af.patch
 Patch2: https://github.com/wobbol/mypaint/commit/3b682d5898f4a6b709a2cd1a4d2b1b9288277cd6.patch
+Patch3: mypaint-2.0.1-alt-numpy2.patch
 
 %define mypaintlib_ver 1.6
 
@@ -77,6 +78,7 @@ with mypaint brush library.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3
 
 # fix libdir
 subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
@@ -101,6 +103,9 @@ subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 %doc README.md Changelog.md Licenses.md
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2.3
+- lib/stroke{,map}.py: fixed for Numpy2
+
 * Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2.2
 - moved desktop and appdata files from -data to main package (ALT #47276)
 
