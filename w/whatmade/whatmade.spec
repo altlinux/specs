@@ -2,8 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: whatmade
-# NOTE: use .gear/tagit.sh HEAD to get a version number
-Version: 0.1.1_git20250826.b85e285
+Version: 0.2.0
 Release: alt1
 
 Summary: Linux daemon that monitors user-specified directories and records which process created each file
@@ -111,6 +110,9 @@ echo "      systemctl enable --now whatmade.service"
 %_datadir/caja-python/extensions/whatmade-extension.py*
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Tue Aug 26 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.1_git20250826.b85e285-alt1
 - Following upstream decision - renaming source package from whomade to whatmade
 
