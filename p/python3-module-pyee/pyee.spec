@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 13.0.0
-Release: alt1
+Release: alt2
 
 Summary: A port of node.js's EventEmitter to python
 
@@ -14,7 +14,9 @@ Url: https://pypi.org/project/pyee
 Vcs: https://github.com/jfhbrook/pyee
 
 Source: %name-%version.tar
-
+# backported from 022d42550282e6c10e821f52b45ad5ff9eeb59be to support
+# pytest-asyncio 1.0.0
+Patch0: pyee-13.0.0-Remove-fixture-from-trio-test.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -36,6 +38,7 @@ EventEmitter that comes with node.js.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -52,6 +55,9 @@ EventEmitter that comes with node.js.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 13.0.0-alt2
+- NMU: fixed FTBFS (pytest-asyncio 1.0.0).
+
 * Tue Mar 18 2025 Grigory Ustinov <grenka@altlinux.org> 13.0.0-alt1
 - Automatically updated to 13.0.0.
 
