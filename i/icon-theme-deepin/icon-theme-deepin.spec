@@ -1,5 +1,5 @@
 Name: icon-theme-deepin
-Version: 2025.8.14
+Version: 2025.9.11
 Release: alt1
 
 Summary: Icons for the Deepin Desktop Environment
@@ -7,7 +7,7 @@ Summary: Icons for the Deepin Desktop Environment
 License: GPL-3.0-only
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-icon-theme
-VCS: https://github.com/linuxdeepin/deepin-icon-theme.git
+VCS: https://github.com/linuxdeepin/deepin-icon-theme
 
 Source: %url/archive/%version/deepin-icon-theme-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -49,6 +49,9 @@ cp -a bloom/status/16/arrow-*.svg %buildroot%_iconsdir/bloom/status/20/
 %_iconsdir/vintage/
 
 %changelog
+* Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 2025.9.11-alt1
+- New version 2025.9.11.
+
 * Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 2025.8.14-alt1
 - New version 2025.8.14.
 - Added VCS tag.
