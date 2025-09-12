@@ -4,14 +4,14 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name app.fotema.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -118,6 +118,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Jun 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
