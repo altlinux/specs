@@ -1,13 +1,15 @@
 Name: pth
 Version: 2.0.7
-Release: alt6
+Release: alt9
 
 Summary: The GNU Portable Threads library
 License: LGPLv2+
 Group: System/Libraries
+
 Url: http://www.gnu.org/software/%name/
 # ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch2000: pth-2.0.7-mcst-e2k.patch
 
 %define libname lib%name
 %def_disable static
@@ -24,14 +26,12 @@ stack, signal mask and errno variable.
 Summary: The GNU Portable Threads runtime library
 Group: System/Libraries
 Provides: %name = %version-%release
-Obsoletes: %name
 
 %package -n %libname-devel
 Summary: The GNU Portable Threads developement files
 Group: Development/C
 Requires: %libname = %version-%release
 Provides: %name-devel = %version-%release
-Obsoletes: %name-devel
 
 %package -n %libname-devel-static
 Summary: The GNU Portable Threads static library
@@ -72,9 +72,14 @@ This package includes Pth static library.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+sed -i 's/makecontext(&/makecontext_e2k(\&/' configure
+sed -i 's/ac_func in makecontext/&_e2k/' configure
+%endif
 
 %build
-%configure --enable-shared %{subst_enable static}
+%configure --enable-shared %{subst_enable static} --with-mctx-mth=mcsc
 # SMP-incompatible build
 make
 
@@ -101,7 +106,23 @@ make -k check
 %_libdir/*.a
 %endif	# enabled static
 
+# TODO:
+# * "braindead" test for uname -r on linux looks, well, braindead
+# * http://bugs.debian.org/466115 regarding mctx implementations
+
 %changelog
+* Thu Sep 04 2025 Michael Shigorin <mike@altlinux.org> 2.0.7-alt9
+- Fix build by switching mctx implementation to mcsc explicitly
+  (slower but more portable; see also debian#466115; ilyakurdyukov@).
+
+* Tue Sep 02 2025 Michael Shigorin <mike@altlinux.org> 2.0.7-alt8
+- E2K:
+  + add patch from dev.mcst.ru (distributable)
+  + fix configure (ilyakurdyukov@)
+
+* Fri Mar 22 2024 Michael Shigorin <mike@altlinux.org> 2.0.7-alt7
+- Minor cleanup (see also ALT#46206).
+
 * Tue Mar 08 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0.7-alt6
 - Rebuilt for debuginfo.
 
