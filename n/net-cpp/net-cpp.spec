@@ -5,7 +5,7 @@
 %def_without check
 
 Name: net-cpp
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: A simple yet beautiful networking API for C++14
@@ -67,6 +67,7 @@ net-cpp.
 %prep
 %setup
 %patch -p1
+sed -i "s/-std=c++17/-std=c++14/" CMakeLists.txt
 
 %build
 %cmake \
@@ -82,7 +83,7 @@ net-cpp.
 %files -n lib%{name}
 %doc AUTHORS ChangeLog COPYING
 %_libdir/libnet-cpp.so.2
-%_libdir/libnet-cpp.so.3.1.1
+%_libdir/libnet-cpp.so.3.?.?
 
 %files -n lib%{name}-devel
 %_libdir/libnet-cpp.so
@@ -107,5 +108,8 @@ net-cpp.
 %_datadir/doc/net-cpp/*
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Sun Jul 27 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
 - Initial build for Sisyphus
