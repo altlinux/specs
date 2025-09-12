@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.8.3
+Version: 2.8.4
 Release: alt1
 Epoch: 1
 
@@ -272,6 +272,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/rpc-gssd.service
 %systemd_unitdir-generators/rpc-pipefs-generator
 %systemd_unitdir-generators/nfs-server-generator
+%systemd_unitdir-generators/nfsroot-generator
 
 %_sbindir/rpc.gssd
 %_sbindir/rpc.statd
@@ -321,6 +322,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Fri Sep 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.4-alt1
+- 2.8.4 released
+
 * Tue Apr 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.3-alt1
 - 2.8.3 released
 
