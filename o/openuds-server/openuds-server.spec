@@ -9,9 +9,11 @@
 %filter_from_provides /^python3(server\.urls)/d
 %filter_from_provides /^python3(server\.wsgi)/d
 
+%def_with check
+
 Name: openuds-server
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -44,6 +46,59 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python3-module-django
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-bitarray
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-saml
+BuildRequires: python3-module-six
+BuildRequires: python3-module-dns
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-ovirt-engine-sdk
+BuildRequires: python3-module-pycurl
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-mysqlclient
+BuildRequires: python3-module-ldap
+BuildRequires: python3-module-paramiko
+BuildRequires: python3-module-openssl
+BuildRequires: python3-module-pyrad
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-weasyprint
+BuildRequires: python3-module-webencodings
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-pyvmomi
+BuildRequires: python3-module-XenAPI
+BuildRequires: python3-module-jwt
+BuildRequires: python3-module-pylibmc
+BuildRequires: python3-module-gunicorn
+BuildRequires: python3-module-winrm
+BuildRequires: python3-module-whitenoise
+BuildRequires: python3-module-setproctitle
+BuildRequires: python3-module-openpyxl
+BuildRequires: python3-module-boto3
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-xxhash
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-pyotp
+BuildRequires: python3-module-qrcode
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-uvloop
+BuildRequires: python3-module-argon2-cffi
+BuildRequires: python3-module-certifi
+BuildRequires: python3-module-aiosmtpd
+BuildRequires: libpango-devel
+BuildRequires: libxmlsec1-openssl-devel
+BuildRequires: fonts-ttf-roboto
+%endif
 
 %description
 OpenUDS (Universal Desktop Services) is a multiplatform connection broker for:
@@ -115,6 +170,13 @@ install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/openuds-taskmanager.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/openuds-web.service
 install -p -D -m 644 %SOURCE17 %buildroot%_tmpfilesdir/openuds.conf
 
+%check
+export PYTHONPATH=$PWD/src
+cp src/server/settings.py.sample src/server/settings.py
+sed -i '473,557d' src/server/settings.py
+sed -i '373,470d' src/server/settings.py
+python3 -m pytest
+
 %pre
 %_sbindir/groupadd -r -f openuds >/dev/null 2>&1 ||:
 %_sbindir/useradd -M -r -g openuds -G _webserver -c 'OpenUDS Brocker Daemon' \
@@ -160,6 +222,10 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Sat Sep 06 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt2
+- Use aware datetime instead of naive datetime.
+- Enable tests.
+
 * Fri Jun 20 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt1
 - v4.0 snapshot 87974bf74577ed359db2a42db8e7829cdf758cbf.
 
