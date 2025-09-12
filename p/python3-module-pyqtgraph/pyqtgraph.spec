@@ -1,24 +1,24 @@
-%define modulename pyqtgraph
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pyqtgraph
 
-%ifarch %arm
+%ifarch i586
 %def_disable check
 %endif
 
-Name: python3-module-%modulename
-Version: 0.12.4
-Release: alt1.3
+Name: python3-module-%pypi_name
+Version: 0.13.7
+Release: alt1
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
 Group: Development/Python3
 
 Url: http://http://www.pyqtgraph.org
+VCS: https://github.com/pyqtgraph/pyqtgraph.git
 
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Patch1: pyqtgraph-upstream-generate-random-integers-directly.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-devel
@@ -49,7 +49,7 @@ BuildRequires: libOpenGL
 %add_python3_req_skip PySide6.QtCore PySide6.QtGui PySide6.QtWidgets
 %add_python3_req_skip numba
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%modulename/canvas
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%pypi_name/canvas
 
 %description
 PyQtGraph is a pure-python graphics and GUI library built on PyQt5 / PySide2
@@ -63,24 +63,29 @@ GraphicsView framework for fast display.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 rm -r %buildroot/%python3_sitelibdir/pyqtgraph/examples
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v -k "not (test_reload) and not (test_PolyLineROI)"
+%pyproject_run_pytest -v -k "not (test_reload) and not (test_PolyLineROI)"
 
 %files
 %doc CHANGELOG README.md
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 09 2025 Vasiliy Kovalev <kovalev@altlinux.org> 0.13.7-alt1
+- NMU: 0.12.4 -> 0.13.7.
+- spec: Disable check for i586 (caused by regression PyQt6).
+- Applied upstream patch (ensure comparison returns bool instead
+  of np.bool) to fix FTBFS.
+
 * Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.12.4-alt1.3
 - NMU: backport upstream patch to fix tests
   on aarch64 and ppc64le.
