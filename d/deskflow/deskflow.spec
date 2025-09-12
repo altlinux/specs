@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: deskflow
-Version: 1.23.0
+Version: 1.24.0
 Release: alt1
 
 Summary: Share a single keyboard and mouse between multiple computers
@@ -33,10 +33,10 @@ BuildRequires: cli11-devel
 BuildRequires: libgtest-devel
 
 %description
-Deskflow is a free and open source keyboard and mouse sharing app. Use 
+Deskflow is a free and open source keyboard and mouse sharing app. Use
 the keyboard, mouse, or trackpad of one computer to control nearby
-computers, and work seamlessly between them. It's like a software KVM 
-(but without the video). TLS encryption is enabled by default. Wayland 
+computers, and work seamlessly between them. It's like a software KVM
+(but without the video). TLS encryption is enabled by default. Wayland
 is supported. Clipboard sharing is supported.
 
 %prep
@@ -56,17 +56,18 @@ is supported. Clipboard sharing is supported.
 %files
 %doc README.md LICENSE SECURITY.md
 %_bindir/%name
-%_bindir/%{name}-client
-%_bindir/%{name}-server
+%_bindir/%{name}-core
 %_man1dir/%name.*
-%_man1dir/%{name}-client.*
-%_man1dir/%{name}-server.*
+%_man1dir/%{name}-core.*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/metainfo/*%{name}.*.xml
 %exclude %_datadir/licenses/deskflow
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.24.0-alt1
+- New version 1.24.0.
+
 * Thu Jul 31 2025 Nikolay Strelkov <snk@altlinux.org> 1.23.0-alt1
 - New version 1.23.0.
 
