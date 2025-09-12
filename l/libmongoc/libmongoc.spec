@@ -2,7 +2,7 @@
 
 Name: libmongoc
 Version: 1.30.5
-Release: alt1
+Release: alt2
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: Apache-2.0 and ISC and MIT and Zlib
@@ -59,6 +59,9 @@ This package contains development files of libbson.
 %prep
 %setup
 sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' build/cmake/MongoC-Warnings.cmake
+%endif
 
 %build
 %cmake \
@@ -139,6 +142,9 @@ exit $ret
 
 
 %changelog
+* Fri Sep 12 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.30.5-alt2
+- e2k build fix
+
 * Wed Jun 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.30.5-alt1
 - 1.30.5
 
