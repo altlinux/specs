@@ -2,7 +2,7 @@
 
 Name: rustfs
 Version: 1.0.0
-Release: alt1.alpha.49
+Release: alt2.alpha.49
 Summary: High-performance distributed object storage for MinIO alternative
 Group: System/Servers
 License: Apache-2.0
@@ -14,6 +14,11 @@ Source2: rustfs.service
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+
+%ifarch loongarch64 riscv64
+# need to rebuild aws-lc-sys
+BuildRequires: cmake rust-bindgen clang-devel
+%endif
 
 %description
 RustFS is a high-performance distributed object storage software built
@@ -61,5 +66,8 @@ useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/nul
 %_bindir/%name
 
 %changelog
+* Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.0-alt2.alpha.49
+- NMU: Fix FTBFS on loongarch64
+
 * Wed Sep 10 2025 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt1.alpha.49
 - initial build
