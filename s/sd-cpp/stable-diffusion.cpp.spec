@@ -10,9 +10,9 @@
 %endif
 
 Name: sd-cpp
-Version: 20250803
+Version: 20250910
 Release: alt1
-Summary: Stable Diffusion and Flux in pure C/C++
+Summary: Diffusion model (SD, Flux, Wan) inference in pure C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/leejet/stable-diffusion.cpp
@@ -39,10 +39,21 @@ BuildRequires: nvidia-cuda-devel-static
 %endif
 
 %description
-Inference of Stable Diffusion and Flux in pure C/C++.
-  Supports CPU and CUDA.
+Inference of Diffusion models in pure C/C++. Supports CPU and CUDA.
 
-  Note that on x86 only x86-64-v3 (with AVX2) is supported.
+Supported models:
+  Image Models: SD1.x, SD2.x, SD-Turbo, SDXL, SDXL-Turbo, SD3/SD3.5,
+    Flux-dev/Flux-schnell, Chroma
+  Image Edit Models: FLUX.1-Kontext-dev
+  Video Models: Wan2.1/Wan2.2
+  PhotoMaker support
+  Control Net support with SD 1.5
+  LoRA support, same as stable-diffusion-webui
+  Latent Consistency Models support (LCM/LCM-LoRA)
+  Faster and memory efficient latent decoding with TAESD
+  Upscale images generated with ESRGAN
+
+Package note: on x86 only x86-64-v3 (with AVX2) is supported.
 
 %prep
 %setup
@@ -83,6 +94,10 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp
 
 %changelog
+* Thu Sep 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250910-alt1
+- Update to master-b017918 (2025-09-10).
+- Added Wan2.2 (vid_gen) support.
+
 * Mon Aug 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250803-alt1
 - Update to master-5b8996f-1-g5900ef66 (2025-08-03).
 
