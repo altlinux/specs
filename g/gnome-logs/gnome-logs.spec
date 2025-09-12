@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 45
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Logs
 
@@ -15,6 +15,8 @@ Group: Graphical desktop/GNOME
 License: GPL-3.0
 Url: https://apps.gnome.org/Logs
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-logs.git
+
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: gsettings-desktop-schemas
@@ -27,7 +29,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
-BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
 %{?_with_man:BuildRequires: docbook-dtds docbook-style-xsl xsltproc}
 
 %description
@@ -59,6 +61,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

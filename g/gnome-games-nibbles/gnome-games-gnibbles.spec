@@ -5,12 +5,12 @@
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 4.2
+%define ver_major 4.4
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Guide a worm around a maze
@@ -61,7 +61,7 @@ much room to move.
 
 %install
 %meson_install
-%find_lang --with-gnome %__name
+%find_lang --all-name --with-gnome %__name
 
 %check
 %__meson_test
@@ -75,10 +75,13 @@ much room to move.
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
+- 4.4.0
+
 * Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.2-alt1
 - 4.2.2
 
