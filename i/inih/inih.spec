@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: inih
-Version: 61
+Version: 62
 Release: alt1
 Epoch: 1
 
@@ -88,6 +88,9 @@ Static libraries for INI Not Invented Here
 %endif
 
 %changelog
+* Fri Sep 12 2025 Nazarov Denis <nenderus@altlinux.org> 1:62-alt1
+- New version 62.
+
 * Fri Jul 25 2025 Nazarov Denis <nenderus@altlinux.org> 1:61-alt1
 - New version 61.
 
