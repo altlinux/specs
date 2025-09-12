@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-ocr
-Version: 6.5.6
+Version: 6.5.9
 Release: alt1
 
 Summary: Base character recognition ability on DDE
@@ -9,9 +9,10 @@ Summary: Base character recognition ability on DDE
 License: GPL-3.0+
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-ocr
-Vcs: https://github.com/linuxdeepin/deepin-ocr.git
+Vcs: https://github.com/linuxdeepin/deepin-ocr
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Apr 23 2025
 # optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-qml libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
@@ -29,6 +30,7 @@ Deepin OCR provides the base character recognition ability on DDE.
 
 %prep
 %setup
+%patch -p1
 # deepin's opencv_mobile does not have .pc file
 sed -i 's| opencv_mobile||' src/CMakeLists.txt
 
@@ -51,6 +53,8 @@ export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %find_lang --with-qt %name
 
 %files -f %name.lang
+%doc debian/changelog
+%doc LICENSE README*.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/com.deepin.Ocr.service
@@ -61,6 +65,9 @@ export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.9-alt1
+- New version 6.5.9.
+
 * Fri Jun 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.6-alt1
 - New version 6.5.6.
 
