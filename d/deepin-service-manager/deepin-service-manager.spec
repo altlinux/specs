@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -11,7 +11,7 @@ Summary: Manage DBus service on Deepin
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-service-manager
-Vcs: git://github.com/linuxdeepin/deepin-service-manager.git
+Vcs: https://github.com/linuxdeepin/deepin-service-manager
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -71,32 +71,24 @@ export READELF="llvm-readelf"
 %find_lang --with-qt %name
 
 %files -f %name.lang
+%doc debian/changelog
+%doc LICENSE README*.md
 %_bindir/%name
-%_sysconfdir/xdg/autostart/oom-score-adjust.desktop
-%dir %_libdir/deepin-service-manager/
-%_libdir/deepin-service-manager/libOOMScoreAdjust.so
 %_unitdir/deepin-service*.service
 %_unitdir/multi-user.target.wants/deepin-service-manager.service
 %_userunitdir/deepin-service*.service
 %_userunitdir/default.target.wants/deepin-service-manager.service
 %_datadir/dbus-1/system.d/org.deepin.ServiceManager1.conf
-%_datadir/dbus-1/system.d/org.deepin.service.OOMScoreAdjust.conf
-%_datadir/dbus-1/system-services/org.deepin.OOMScoreAdjust.service
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %_datadir/deepin-service-manager/other/manager.json
-%dir %_datadir/deepin-service-manager/system/
-%_datadir/deepin-service-manager/system/OOM-Score-Adjust.json
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.service.manager/
-%_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 
 %files -n libdeepin-qdbus-service%sover
 #%%_libdir/libdeepin-qdbus-service.so.%%{sover}*
 %_libdir/libdeepin-qdbus-service.so
 
 %files -n libdeepin-qdbus-service-devel
+%doc develop-guide.md
 %dir %_includedir/deepin-qdbus-service/
 %_includedir/deepin-qdbus-service/qdbusservice.h
 %dir %_libdir/cmake/deepin-qdbus-service/
@@ -105,6 +97,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.15-alt1
+- New version 1.0.15.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.14-alt1
 - New version 1.0.14.
 

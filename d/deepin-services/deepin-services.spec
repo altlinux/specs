@@ -7,7 +7,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -15,7 +15,7 @@ Summary: Manage DBus service on DDE
 License: LGPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dde-services
-VCS: https://github.com/linuxdeepin/dde-services.git
+VCS: https://github.com/linuxdeepin/dde-services
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -46,6 +46,7 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 %DQ6build \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
 %if_without ipwatchd
   -DENABLE_PLUGIN_IPWATCHD=OFF \
 %endif
@@ -55,21 +56,33 @@ export AR="llvm-ar"
 %DQ6install
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md debian/changelog
+%_sysconfdir/xdg/autostart/oom-score-adjust.desktop
 %dir %_libdir/deepin-service-manager/
+%_libdir/deepin-service-manager/libOOMScoreAdjust.so
 %_libdir/deepin-service-manager/libplugin-qt-thememanager.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpaperslideshow.so
 %dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/system/
 %if_with ipwatchd
 %_libdir/deepin-service-manager/libplugin-ipwatchd.so
 %_datadir/dbus-1/system.d/org.deepin.ipwatchd.conf
-%dir %_datadir/deepin-service-manager/system/
 %_datadir/deepin-service-manager/system/plugin-ipwatchd.json
 %endif
+%_datadir/dbus-1/system.d/org.deepin.service.OOMScoreAdjust.conf
+%_datadir/dbus-1/system-services/org.deepin.OOMScoreAdjust.service
+%_datadir/deepin-service-manager/system/OOM-Score-Adjust.json
 %dir %_datadir/deepin-service-manager/user/
 %_datadir/deepin-service-manager/user/plugin-qt-thememanager.json
 %_datadir/deepin-service-manager/user/plugin-qt-wallpaperslideshow.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.service.manager/
+%_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 
 %changelog
+* Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.9-alt1
+- New version 1.0.9.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1
 - Initial build for ALT Sisyphus.
