@@ -1,5 +1,5 @@
 Name:     pdf-compress
-Version:  0.3
+Version:  0.4
 Release:  alt1
 
 Summary:  Performing PDF compression operations using graphics
@@ -36,5 +36,9 @@ Requires: ghostscript-classic
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 12 2025 Kirill Izmestev <felixz@altlinux.org> 0.4-alt1
+- New version 0.4.
+- Set max length, add file names checks (ALT#55928).
+
 * Wed Sep 03 2025 Kirill Izmestev <felixz@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus.
