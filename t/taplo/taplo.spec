@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: taplo
-Version: 0.9.3
-Release: alt4
+Version: 0.10.0
+Release: alt1
 
 Summary: A TOML toolkit written in Rust
 License: MIT
@@ -12,8 +12,6 @@ Vcs: https://github.com/tamasfe/taplo
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-
-Patch0: taplo-0.9.3-alt-pprof-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
@@ -36,7 +34,7 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
-%patch0 -p2
+
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/pprof/.cargo-checksum.json
 
@@ -52,10 +50,13 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %rust_test
 
 %files
-%doc LICENSE.md README.md
+%doc LICENSE README.md
 %_bindir/%name
 
 %changelog
+* Tue Sep 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.10.0-alt1
+- New version (0.10.0).
+
 * Tue May 06 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.9.3-alt4
 - Add lsp feature during build (Closes: 53928).
 - Update vendored sources.
