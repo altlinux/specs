@@ -44,7 +44,7 @@
 
 Name: LibreOffice-still
 %define hversion 25.2
-%define urelease 4.3
+%define urelease 6.2
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -720,9 +720,12 @@ done
 # Install desktop files
 # Hack out "Education" category from Math
 subst 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
+mkdir -p %buildroot%_desktopdir
 for f in %buildroot%lodir/share/xdg/*.desktop; do
+	# Use GenericName values as Names (replace application name by its role,
+	# for example, LibreOffice Impress by Presentation)
 	n=`basename "$f"`
-	install -Dpm0644 "$f" %buildroot%_desktopdir/libreoffice-$n
+	awk '/^Name/ {next} /^GenericName/ {print;sub(/^GenericName/, "Name");print;next} {print}' "$f" > %buildroot%_desktopdir/libreoffice-$n
 done
 
 # TODO some other hack with .mime (?)
@@ -857,6 +860,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Sep 11 2025 Andrey Cherepanov <cas@altlinux.org> 25.2.6.2-alt1
+- New version.
+- Replaced application name by its role in desktop files.
+
 * Thu Jul 17 2025 Andrey Cherepanov <cas@altlinux.org> 25.2.4.3-alt1
 - New version.
 - Enabled dbus support.
