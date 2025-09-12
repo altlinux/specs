@@ -1,7 +1,7 @@
 %define pypi_name glfw
 
 Name:    python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Python bindings for GLFW
@@ -38,6 +38,9 @@ ctypes wrapper which keeps very close to the original GLFW API.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 12 2025 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt1
+- New version.
+
 * Wed Apr 16 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
 - New version.
 
