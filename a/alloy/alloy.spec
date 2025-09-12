@@ -1,13 +1,24 @@
 %global import_path github.com/grafana/alloy
+
+# golang does not work well with lto
+%global optflags_lto %nil
+%ifarch loongarch64
+# avoid "relocation R_LARCH_B26 overflow" error in cgo-compiled object files
+%add_optflags -mcmodel=medium
+%endif
+
+
 Name:    alloy
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Summary: OpenTelemetry Collector distribution with programmable pipelines
 License: Apache-2.0
 Group:   Monitoring
 Url:     https://grafana.com/oss/alloy
 Vcs:     https://github.com/grafana/alloy
+
+Packager: Maria Alexeeva <alxvmr@altlinux.org>
 
 Source: %name-%version.tar
 # Dependency source code archive (vendor dependencies)
@@ -27,6 +38,7 @@ ExcludeArch: %ix86 armh
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 BuildRequires: libsystemd-devel
+BuildRequires: libzstd-devel
 BuildRequires: /proc
 
 %description
@@ -44,7 +56,10 @@ tar -xf %SOURCE2 -C internal/web/ui
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export TAGS="netgo builtinassets promtail_journal_enabled"
+export TAGS="netgo builtinassets promtail_journal_enabled external_libzstd"
+export CGO_CFLAGS="%optflags"
+export CGO_CXXFLAGS="%optflags"
+export CGO_LDFLAGS="%optflags"
 
 %golang_prepare
 
@@ -88,6 +103,10 @@ useradd -r -g %name -c 'alloy user' \
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %changelog
+* Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.10.2-alt2
+- Fix FTBFS on loongarch64
+- Build with libzstd from the repository, instead of the vendored one
+
 * Wed Aug 20 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.10.2-alt1
 - Update version to v1.10.2
 
