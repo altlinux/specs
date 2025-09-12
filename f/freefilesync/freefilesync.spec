@@ -3,7 +3,7 @@
 
 Name: freefilesync
 Version: 14.4
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
 License: GPL-3.0
@@ -132,6 +132,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 14.4-alt2
+- Fixed FTBFS.
+
 * Thu Jul 31 2025 Nikolay Strelkov <snk@altlinux.org> 14.4-alt1
 - New version 14.4.
 
