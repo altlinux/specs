@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.17.1
+Version: 1.18.1
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -21,7 +21,8 @@ VCS: https://github.com/python/mypy
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_build_filter types-
@@ -49,6 +50,8 @@ using any Python VM with basically no runtime overhead.
 %package -n python3-module-mypyc
 Summary: Mypy to Python C Extension Compiler
 Group: Development/Python3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: python3-module-%pypi_name = %EVR
 Requires: python3-dev
 
@@ -132,6 +135,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 1.18.1-alt1
+- 1.17.1 -> 1.18.1.
+
 * Fri Aug 01 2025 Stanislav Levin <slev@altlinux.org> 1.17.1-alt1
 - 1.17.0 -> 1.17.1.
 
