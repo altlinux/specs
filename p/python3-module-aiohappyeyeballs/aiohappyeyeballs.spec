@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Summary: Happy Eyeballs
 License: PSF-2.0
 Group: Development/Python
@@ -15,6 +15,7 @@ Vcs: https://github.com/aio-libs/aiohappyeyeballs
 BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -28,6 +29,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -48,6 +50,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2
+- Fixed FTBFS (pytest-asyncio 1.1.0).
+
 * Tue May 27 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt1
 - 2.4.4 -> 2.6.1.
 
