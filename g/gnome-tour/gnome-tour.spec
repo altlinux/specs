@@ -1,10 +1,10 @@
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Tour
 %def_enable check
 
 Name: gnome-tour
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Tour and Greeter
@@ -49,11 +49,15 @@ A guided tour and greeter for GNOME.
 %_datadir/applications/%xdg_name.desktop
 %_datadir/icons/hicolor/scalable/apps/%xdg_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/%name
 %doc NEWS README.md
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

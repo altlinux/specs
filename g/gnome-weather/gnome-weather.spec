@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -24,6 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version.tar
 %endif
 
+# node hangs on 32-bit
+ExcludeArch: %ix86
 BuildArch: noarch
 
 Obsoletes: %name-data
@@ -39,18 +41,14 @@ Requires: libgjs >= %gjs_ver
 Requires: libgweather4.0-gir >= %gweather4_ver
 Requires: geoclue2
 
-# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Geoclue)
-Requires: typelib(Gio)
-Requires: typelib(GLib)
-Requires: typelib(GObject)
-Requires: typelib(Gtk) = 4.0
-Requires: typelib(GWeather) = 4.0
 Requires: typelib(Adw) = 1
-Requires: typelib(Graphene)
+Requires: typelib(GWeather) = 4.0
+Requires: typelib(Soup) = 3.0
+Requires: typelib(Json) = 1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson yelp-tools
+BuildRequires: meson /usr/bin/tsc yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver libgjs-devel >= %gjs_ver
 BuildRequires: libgweather4.0-devel >= %gweather4_ver pkgconfig(libgeoclue-2.0)
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -61,7 +59,6 @@ BuildRequires: gobject-introspection-devel >= %gi_ver libgtk4-gir-devel libgweat
 %name is a small application that allows you to monitor the current
 weather conditions for your city, or anywhere in the world, and to
 access updated forecasts provided by various internet services.
-
 
 %prep
 %setup -n %name-%version%beta
@@ -88,10 +85,13 @@ access updated forecasts provided by various internet services.
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_iconsdir/hicolor/scalable/status/*.svg
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README*
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
