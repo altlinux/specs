@@ -2,7 +2,7 @@
 %def_with check
 
 Name: reuse
-Version: 5.0.2
+Version: 5.1.1
 Release: alt1
 
 Summary: tool for REUSE copyright and license recommendations
@@ -72,5 +72,8 @@ install -D -m 0644 docs/_build/man/*.1 -t "%{buildroot}%{_man1dir}/"
 
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 5.1.1-alt1
+- New version 5.1.1.
+
 * Sun Jun 01 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.2-alt1
 - Initial build for Sisyphus
