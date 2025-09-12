@@ -3,7 +3,7 @@
 
 Name: diag-%diagnostic_tool
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
@@ -40,7 +40,7 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %check
 %ifnarch %e2k
-shellcheck %name
+shellcheck -e SC2329 %name
 %endif
 find ./alterator/ -type f -exec alterator-entry validate {} \+
 
@@ -52,6 +52,9 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Sep 12 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5-alt2
+- spec: exclude warnings SC2329 as error
+
 * Thu Jul 24 2025 Andrey Limachko <liannnix@altlinux.org> 0.5-alt1
 - fix: shell script sourcing with shellcheck directives
 - fix: remove unused message helper functions
