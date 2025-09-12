@@ -1,7 +1,7 @@
 
 Name: webterminal-session
-Version: 0.4.3
-Release: alt2
+Version: 0.5.0
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/Other
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Fri Sep 12 2025 Sergey V Turchin <zerg at altlinux dot org> 0.5.0-alt1
+- start maliit-keyboard if present
+
 * Tue May 27 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.3-alt2
 - update requires
 
