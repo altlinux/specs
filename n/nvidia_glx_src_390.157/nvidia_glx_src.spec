@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt233
+%define pkg_rel alt234
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -92,6 +92,7 @@ Version: %nv_version_full
 Release: %pkg_rel
 
 Source0: null
+Source1: rpmfusion.tar
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%tbver/NVIDIA-Linux-x86-%tbver.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver-no-compat32.run
 
@@ -100,23 +101,8 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch3: buildfix_kernel_5.19.patch
-Patch4: buildfix_kernel_5.19_uvm.patch
-Patch5: buildfix_kernel_6.0.patch
-Patch6: buildfix_kernel_6.2.patch
-Patch7: buildfix_kernel_6.3.patch
-Patch8: buildfix_kernel_6.3_uvm.patch
-Patch9: buildfix_kernel_6.4.patch
-Patch10: buildfix_kernel_6.5-garbage-collect-all-references-to-get_user.patch
-Patch11: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova.patch
-Patch12: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova_uvm.patch
-Patch13: buildfix_kernel_6.6.patch
-Patch14: gcc14.patch
-Patch15: gcc14-2.patch
-Patch16: kernel-6.8.patch
-Patch17: kernel-6.10.patch
-Patch18: kernel-6.12.patch
-Patch19: disable_fstack-clash-protection_fcf-protection.patch
+Patch3: disable_fstack-clash-protection_fcf-protection.patch
+Patch4: kernel-6.12.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -180,34 +166,21 @@ sh %SOURCE202 -x
 sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
+tar xvf %SOURCE1
 
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
-%patch4 -p1
-fi
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
-%patch8 -p1
-fi
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
-%patch12 -p1
-fi
-%patch13 -p2
-pwd
-%patch14 -p2
-%patch15 -p2
-%patch16 -p2
-%patch17 -p2
-%patch18 -p2
-%patch19 -p1
+%patch4 -p2
+for p in ../rpmfusion/*.patch; do
+    echo $p
+%ifarch %ix86 armh
+    patch -f -sp1 <$p ||:
+%else
+    patch -sp1 <$p
+%endif
+done
 rm -rf precompiled
 popd
 
@@ -395,6 +368,9 @@ fi
 %endif
 
 %changelog
+* Thu Sep 11 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt234
+- apply patches from rpmfusion
+
 * Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt233
 - disable kernel module stack-clash-protection
 
