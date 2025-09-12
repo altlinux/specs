@@ -5,7 +5,7 @@
 %def_without check
 
 Name: biometryd
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Mediates and multiplexes access to biometric devices
@@ -38,6 +38,7 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(libelf)
 BuildRequires: pkgconfig(gmock)
+BuildRequires: pkgconfig(nlohmann_json)
 
 %if_with check
 BuildRequires: ctest
@@ -116,5 +117,8 @@ biometryd.
 %_pkgconfigdir/biometryd.pc
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
+- New version 0.3.2.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus
