@@ -6,7 +6,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: persistent-cache-cpp
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary: Cache of key-value pairs with persistent storage for C++ 11
@@ -116,5 +116,8 @@ This package provides examples and the API reference.
 %_datadir/doc/persistent-cache-cpp/*
 
 %changelog
+* Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.9-alt1
+- New version 1.0.9.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.7-alt1
 - Initial build for Sisyphus
