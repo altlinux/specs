@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Entity / relation schema
@@ -53,6 +53,9 @@ readable/writable from/to various formats.
 
 
 %changelog
+* Fri Sep 12 2025 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
+- new version 2.0.1
+
 * Fri Jun 13 2025 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
