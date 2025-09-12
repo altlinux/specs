@@ -2,7 +2,7 @@
 
 Name: oha
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: Ohayou, HTTP load generator with tui animation
 License: MIT
 Group: Networking/Remote access
@@ -16,6 +16,11 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(openssl)
+
+%ifarch loongarch64 riscv64
+# need to recompile aws-lc-sys
+BuildRequires: cmake rust-bindgen clang-devel
+%endif
 
 %description
 Oha is a tiny program that sends some load to a web application and show
@@ -45,5 +50,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.9.0-alt2
+- NMU: fix FTBFS on loongarch64
+
 * Fri Jul 11 2025 Pavel Shilov <zerospirit@altlinux.org>  1.9.0-alt1
 - Initial build for Sisyphus.
