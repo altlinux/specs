@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sigil
-Version: 2.6.0
+Version: 2.6.2
 Release: alt1
 
 %set_verify_elf_method unresolved=relaxed
@@ -152,6 +152,9 @@ ln -sfv %buildroot%_libdir/%name/libsigilgumbo.so %buildroot%_libdir/libsigilgum
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 2.6.2-alt1
+- New version 2.6.2.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 2.6.0-alt1
 - New version 2.6.0.
 
