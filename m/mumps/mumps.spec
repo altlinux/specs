@@ -7,7 +7,7 @@
 
 Name: mumps
 Version: 5.3.5
-Release: alt4
+Release: alt5
 
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: ALT-Public-Domain
@@ -213,7 +213,7 @@ export INCBLAS=-I%_includedir/openblas
 	LSCOTCH="$LSCOTCH" \
 	IPORD="$IPORD" \
 	LPORD="$LPORD" \
-	OPTL="${OMPI_LDFLAGS} -flto" \
+	OPTL="${OMPI_LDFLAGS}" \
 	%nil
 
 mkdir -p %name-%version-%mpiimpl/lib
@@ -362,6 +362,9 @@ popd
 %_libdir/%name-%version-seq-examples
 
 %changelog
+* Sat Sep 13 2025 Ilya Muhamadeev <nicourced@altlinux.org> 5.3.5-alt5
+- Fix FTBFS: turn off lto.
+
 * Tue Sep 02 2025 Ilya Muhamadeev <nicourced@altlinux.org> 5.3.5-alt4
 - Fix FTBFS: add lto flag to mpi build.
 
