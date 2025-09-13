@@ -12,7 +12,7 @@
 
 Name: partclone
 Version: 0.3.32
-Release: alt1
+Release: alt2
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -115,6 +115,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Sun Sep 14 2025 Leonid Krivoshein <klark@altlinux.org> 0.3.32-alt2
+- Rebuilt with new reiser4 libraries.
+
 * Sun Dec 08 2024 Leonid Krivoshein <klark@altlinux.org> 0.3.32-alt1
 - 0.3.32, enable exfat, fix errors and warnings
 
