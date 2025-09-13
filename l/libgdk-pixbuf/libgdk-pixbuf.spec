@@ -9,19 +9,19 @@
 %define timeout 2
 
 # glycin is a deafult loader
-%def_enable glycin
+%def_disable glycin
 # since 2.42.11 others -- ani, bmp, icns, ico, pnm, qtif, tga, xbm, xpm
-%def_disable others
+%def_enable others
 %def_enable doc
 %def_enable man
 %def_enable introspection
 %def_enable thumbnailer
 %def_enable installed_tests
-%def_disable check
+%def_enable check
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -60,6 +60,7 @@ BuildRequires: /proc libgio-devel >= %glib_ver
 %{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
+%{?_enable_check:%{?_enable_glycin:BuildRequires: bubblewrap}}
 
 %description
 The GdkPixBuf library provides a number of features:
@@ -126,7 +127,6 @@ Requires: %name = %EVR
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed GdkPixBuf library.
-
 
 %prep
 %setup -n %_name-%version
@@ -216,6 +216,10 @@ export LIBS=-lcxa
 
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1.1
+- temporarily switched back to old non-glycin scheme
+- allowed "others" loaders
+
 * Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
 - 2.44.0
 - built against glycin-2 as a default image library
