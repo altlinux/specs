@@ -3,11 +3,11 @@
 %define oname icalendar
 
 Name: python3-module-%oname
-Version: 5.0.11
+Version: 6.3.1
 Release: alt1
 
 Summary: iCalendar parser/generator
-License: GPLv2.1
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/icalendar/
 
@@ -16,9 +16,12 @@ BuildArch: noarch
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-sphinx-copybutton
+BuildRequires: python3-module-pydata-sphinx-theme
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -36,11 +39,16 @@ iCalendar is a parser/generator of iCalendar files
 %setup -n %oname-%version
 
 %build
-%pyproject_build
-PYTHONPATH=../src %make -C docs html BUILDDIR=build3 SPHINXBUILD=py3_sphinx-build
+%pyproject_build 
+pushd dist
+wheel unpack %oname-%version-py3-none-any.whl
+popd
+PYTHONPATH=../dist/%oname-%version %make -C docs html BUILDDIR=build3 SPHINXBUILD=py3_sphinx-build
 
 %install
 %pyproject_install
+rm %buildroot/%python3_sitelibdir_noarch/%oname/tests/fuzzed/*.sh 
+rm %buildroot/%python3_sitelibdir_noarch/%oname/tests/*.sh 
 
 %check
 %pyproject_run_pytest src/icalendar/tests
@@ -49,9 +57,14 @@ PYTHONPATH=../src %make -C docs html BUILDDIR=build3 SPHINXBUILD=py3_sphinx-buil
 %doc docs/build3/html *.rst
 %_bindir/*
 %python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/%oname-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %oname}/
 
 %changelog
+* Thu Sep 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 6.3.1-alt1
+- NMU:
+   + 5.0.11 -> 6.3.1 (ALT #55871)
+   + change license
+
 * Sun Nov 05 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.11-alt1
 - Automatically updated to 5.0.11 (Closes: #48334).
 
