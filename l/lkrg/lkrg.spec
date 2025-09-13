@@ -3,28 +3,26 @@
 %set_verify_elf_method strict
 
 Name: lkrg
-Version: 0.9.9
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Linux Kernel Runtime Guard module
-
-License: GPL-2.0
+License: GPL-2.0-only
 Group: System/Configuration/Other
 Url:  https://lkrg.org/
-
-VCS: https://github.com/lkrg-org/lkrg.git
-Source: %name-%version.tar
-Source1: %name.init
-
-ExclusiveArch: aarch64 armh %ix86 x86_64
-BuildRequires(pre): rpm-build-kernel
-%{?!_without_check:%{?!_disable_check:
-BuildRequires: kernel-headers-modules-%{?kernel_latest}%{!?kernel_latest:un-def}
-BuildRequires: shellcheck
-}}
+Vcs: https://github.com/lkrg-org/lkrg
 Requires: lkrg-common
 
-%description
+Source: %name-%version.tar
+ExclusiveArch: aarch64 armh %ix86 x86_64
+
+BuildRequires(pre): rpm-build-kernel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-headers-modules-%kernel_latest
+BuildRequires: shellcheck
+}}
+
+%define _descr %{expand:
 Linux Kernel Runtime Guard (LKRG) is a loadable kernel module that performs
 runtime integrity checking of the Linux kernel and detection of security
 vulnerability exploits against the kernel. As controversial as this concept is,
@@ -34,6 +32,10 @@ credentials (such as user IDs) of the running processes (exploit
 detection). For process credentials, LKRG attempts to detect the exploit and
 take action before the kernel would grant the process access (such as open a
 file) based on the unauthorized credentials.
+}
+
+%description
+%_descr
 
 %package -n kernel-source-lkrg
 Summary: This package contains the LKRG sources
@@ -41,25 +43,19 @@ BuildArch: noarch
 Group: Development/Kernel
 
 %description -n kernel-source-lkrg
-%summary.
+%_descr
+
+This package contains the LKRG sources.
 
 %package common
 Summary: Common files for Linux Kernel Runtime Guard module
 BuildArch: noarch
 Group: System/Configuration/Other
-Provides: lkrg-config = %version
-Obsoletes: lkrg-config < %version
+Provides: lkrg-config = %EVR
+Obsoletes: lkrg-config < %EVR
 
 %description common
-Linux Kernel Runtime Guard (LKRG) is a loadable kernel module that performs
-runtime integrity checking of the Linux kernel and detection of security
-vulnerability exploits against the kernel. As controversial as this concept is,
-LKRG attempts to post-detect and hopefully promptly respond to unauthorized
-modifications to the running Linux kernel (integrity checking) or to
-credentials (such as user IDs) of the running processes (exploit
-detection). For process credentials, LKRG attempts to detect the exploit and
-take action before the kernel would grant the process access (such as open a
-file) based on the unauthorized credentials.
+%_descr
 
 This package contains common files for Linux Kernel Runtime Guard.
 
@@ -76,21 +72,16 @@ receiving and logging counterpart is in a userspace daemon.  There are also
 additional userspace utilities.
 
 %prep
-%setup -c
-cp -a %SOURCE1 .
+%setup
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%make_build -C %name-%version/logger LDFLAGS="" CFLAGS="%optflags"
+%make_build -C logger LDFLAGS="" CFLAGS="%optflags"
 
 %install
-mkdir -p %kernel_srcdir
-tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 %name-%version
-mkdir -p %buildroot%_sysconfdir
-cp -a %name-%version/scripts/bootup/lkrg.conf %buildroot%_sysconfdir/lkrg.conf
-
-mkdir -p %buildroot%_initdir
-install -pm755 lkrg.init %buildroot%_initdir/lkrg
+install -pDm644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%name-%version.tar
+install -Dpm644 scripts/bootup/lkrg.conf -t %buildroot%_sysconfdir
+install -Dp lkrg.init %buildroot%_initdir/lkrg
 
 mkdir -p %buildroot%_unitdir
 cat <<EOF >%buildroot%_unitdir/lkrg.service
@@ -118,28 +109,13 @@ cat <<EOF >%buildroot%_presetdir/30-lkrg.preset
 enable lkrg.service
 EOF
 
-%makeinstall_std -C %name-%version/logger PREFIX=%_usr UNITDIR=%_unitdir
+%makeinstall_std -C logger PREFIX=%_usr UNITDIR=%_unitdir
 mkdir -p %buildroot%_logdir/lkrg-logger
 touch %buildroot%_sysconfdir/lkrg-logger.conf
 
 %check
 bash -n lkrg.init
 shellcheck -x lkrg.init
-
-# Just a test build on un-def kernel.
-cd %name-%version
-for V in $(ls /lib/modules); do
-	make -s %_smp_mflags KERNELRELEASE=$V
-done
-
-%triggerun common -- lkrg-config < 0.9.2.0.1.git10ba314-alt2 lkrg-common < 0.9.2.0.1.git10ba314-alt2
-if [ -e %_sysconfdir/sysctl.d/lkrg.conf ]; then
-	echo "Migrating an LKRG config to the new place"
-	if ! diff -q %_sysconfdir/{,sysctl.d/}lkrg.conf >/dev/null; then
-		mv %_sysconfdir/lkrg.conf{,.rpmnew}
-	fi
-	mv %_sysconfdir/sysctl.d/lkrg.conf %_sysconfdir/lkrg.conf
-fi
 
 %preun common
 %preun_service lkrg
@@ -160,7 +136,7 @@ test $1 -eq 1 && ! test -s %_sysconfdir/lkrg-logger.conf && lkrg-keygen > %_sysc
 %preun_service lkrg-logger
 
 %files -n kernel-source-lkrg
-%attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
+%kernel_src/kernel-source-%name-%version.tar
 
 %files common
 %config(noreplace) %_sysconfdir/lkrg.conf
@@ -177,6 +153,9 @@ test $1 -eq 1 && ! test -s %_sysconfdir/lkrg-logger.conf && lkrg-keygen > %_sysc
 %_unitdir/lkrg-logger.service
 
 %changelog
+* Sat Sep 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt1
+- Update to v1.0.0 (2025-09-02).
+
 * Sat Dec 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.9-alt2
 - Fix FTBFS after un-def flavour is gone.
 
