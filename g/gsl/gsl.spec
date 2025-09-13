@@ -4,7 +4,7 @@
 
 Name: gsl
 Version: 2.8
-Release: alt3
+Release: alt4
 Summary: The GNU Scientific Library for numerical analysis
 License: GPLv3
 Group: Development/Other
@@ -12,6 +12,7 @@ URL: https://www.gnu.org/software/gsl/gsl.html
 VCS: https://git.savannah.gnu.org/git/gsl.git
 Source: %name-%version.tar
 Patch0: gsl-2.7-alt-build.patch
+Patch1: gsl-2.8-debian-CVE-2024-50610-fix.patch
 Conflicts: lib%name-devel < %EVR
 BuildRequires: ghostscript-module-X ghostscript-utils
 # explicitly added texinfo for info files
@@ -110,6 +111,7 @@ Sources of examples for using with GSL
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -153,6 +155,10 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Sat Sep 13 2025 Anton Farygin <rider@altlinux.com> 2.8-alt4
+- applied patch from Debian to fix integer
+  overflow in gsl_siman_solve_many (Fixes: CVE-2024-50610)
+
 * Tue Oct 15 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt3
 - fix typo in chanelog
 
