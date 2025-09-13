@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: miracle-wm
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: Wayland tiling window manager built on Mir
@@ -128,5 +128,8 @@ echo "      then logout and login to Miracle session using your favorite greeter
 %_pkgconfigdir/miracle-wm-config.pc
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Mon Jul 21 2025 Nikolay Strelkov <snk@altlinux.org> 0.6.2-alt1
 - Initial build for Sisyphus

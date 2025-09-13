@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: properties-cpp
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: C++11 library providing properties/signal
@@ -10,12 +12,17 @@ Group: System/Libraries
 Url: https://gitlab.com/ubports/development/core/lib-cpp/properties-cpp
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-disable-tests.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: ayatana-cmake-modules
+
+%if_with check
+BuildRequires: ctest
+BuildRequires: pkgconfig(gtest)
+%endif
 
 %description
 A very simple convenience library for handling properties and
@@ -33,11 +40,18 @@ This package provides development headers for properties-cpp.
 
 %prep
 %setup
-%patch -p1
 
 %build
-%cmake
+%cmake \
+%if_with check
+       -DBUILD_TESTING=ON
+%else
+       -DBUILD_TESTING=OFF
+%endif
 %cmake_build
+
+%check
+%ctest -j1 -VV
 
 %install
 %cmake_install
@@ -48,6 +62,10 @@ This package provides development headers for properties-cpp.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.0.4-alt1
+- New version 0.0.4.
+- Enabled tests.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 0.0.3-alt1
 - New version 0.0.3.
 

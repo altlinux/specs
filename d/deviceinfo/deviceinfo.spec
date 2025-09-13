@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deviceinfo
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Detect and configure devices in Lomiri
@@ -123,5 +123,8 @@ install -Dm644 tools/device-info.1 %{buildroot}%{_man1dir}/device-info.1
 %_libexecdir/update-machine-info-from-deviceinfo
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus

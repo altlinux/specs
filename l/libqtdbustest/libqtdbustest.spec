@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libqtdbustest
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: Library for testing DBus interactions using Qt
@@ -106,5 +106,8 @@ sed -i -e '/add_subdirectory(tests)/d' CMakeLists.txt
 %_bindir/qdbus-simple-test-runner
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Fri Jul 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
 - Initial build for Sisyphus

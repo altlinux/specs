@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: dbus-cpp
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 
 Summary: A header-only dbus-binding leveraging C++-11
@@ -116,5 +116,8 @@ D-Bus is a message bus used for sending messages between applications.
 %_libexecdir/dbus-cpp/examples/upower/upower
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.5-alt1
+- New version 5.0.5.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.4-alt1
 - Initial build for Sisyphus
