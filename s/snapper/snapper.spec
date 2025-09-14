@@ -1,10 +1,10 @@
 # systemd units for snapper
 %define snapper_svcs snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 
-%define soname 7
+%define soname 8
 
 Name: snapper
-Version: 0.12.2
+Version: 0.13.0
 Group: System/Base
 Release: alt1
 Summary: Tool for filesystem snapshot management
@@ -41,7 +41,11 @@ Requires: lib%name%soname = %EVR
 Requires: diffutils
 
 %description
-This package contains snapper, a tool for filesystem snapshot management.
+Snapper helps you create, compare, and restore system snapshots-like
+"save points" for your filesystems. It automatically cleans old snapshots to free
+space and works with both Btrfs filesystems and LVM thin volumes. Ideal for
+recovering lost files, tracking changes, or rolling back system updates.
+Simple commands and a friendly interface make it easy for everyday users.
 
 %package -n lib%name%soname
 Summary: Library for filesystem snapshot management
@@ -172,6 +176,7 @@ make check
 %_sbindir/snbk
 %dir %_sysconfdir/snapper/backup-configs
 %dir %_sysconfdir/snapper/certs
+%_datadir/bash-completion/completions/snbk
 %_unitdir/snapper-backup.*
 %_man8dir/snbk.8*
 %_man5dir/snapper-backup-configs.5*
@@ -199,6 +204,9 @@ make check
 %_mandir/man8/pam_snapper.8*
 
 %changelog
+* Sun Sep 14 2025 Anton Farygin <rider@altlinux.com> 0.13.0-alt1
+- 0.12.2 -> 0.13.0
+
 * Fri Apr 25 2025 Anton Farygin <rider@altlinux.com> 0.12.2-alt1
 - 0.12.1 -> 0.12.2
 
