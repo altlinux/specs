@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Relax and meditate
@@ -64,6 +64,9 @@ This pattern is recommended by experts that will help ease your anxiety.
 %doc README*
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
+- v0.1.4-2-g34c6889
+
 * Mon May 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - first build for Sisyphus (v0.1.3-57-g486487f)
 

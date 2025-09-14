@@ -10,10 +10,11 @@
 %def_enable doc
 %def_enable man
 %def_enable introspection
+%def_enable installed_tests
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.8
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -99,7 +100,8 @@ the functionality of the installed %_name library.
 %meson \
     %{subst_enable_meson_feature introspection introspection} \
     %{subst_enable_meson_feature doc documentation} \
-    %{subst_enable_meson_bool man man}
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -138,11 +140,16 @@ the functionality of the installed %_name library.
 %_datadir/doc/%_name-%api_ver
 %endif
 
+%if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/%_name-%api_ver/
 %_datadir/installed-tests/%_name-%api_ver/
+%endif
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.8-alt1
+- 1.10.8
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.6-alt1
 - 1.10.6
 

@@ -1,19 +1,22 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
-%define xdg_name org.gnome.Yelp
 
 %define ver_major 49
-%define beta .beta
+%define beta %nil
+%define api_ver 1
+%define xdg_name org.gnome.Yelp
+
 %def_disable debug
 %def_enable lzma
 %def_disable gtk_doc
+
 %define webkit_api_ver 6.0
 
 %def_enable check
 
 Name: yelp
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
 License: GPL-2.0-or-later
@@ -127,12 +130,13 @@ Yelp.
 %doc AUTHORS README* NEWS TODO
 
 %files -n lib%name
-%_libdir/*.so.*
-%_libdir/%name/
+%_libdir/lib%name-%api_ver.so.*
+%_libdir/%name-%api_ver/
 
 %files -n lib%name-devel
-%_includedir/lib%name/
+%_includedir/lib%name-%api_ver/
 %_libdir/*.so
+%_pkgconfigdir/lib%name-%api_ver.pc
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -140,6 +144,9 @@ Yelp.
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Tue Aug 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt0.5.beta
 - 49.beta (ported to Libadwaita/WebkitGtk-6.0)
 

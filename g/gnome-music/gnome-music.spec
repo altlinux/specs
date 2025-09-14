@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -85,6 +85,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
 * Thu Aug 21 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
