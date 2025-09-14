@@ -4,7 +4,7 @@
 %set_verify_elf_method none
 
 Name: lomiri-docviewer-app
-Version: 3.1.1
+Version: 3.1.3
 Release: alt1
 
 Summary: Document Viewer App for Lomiri Operating Environment
@@ -83,5 +83,8 @@ This package provides Lomiri's Document Viewer App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-docviewer-app.mo
 
 %changelog
+* Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.3-alt1
+- New version 3.1.3.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
 - Initial build for Sisyphus

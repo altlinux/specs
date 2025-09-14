@@ -4,8 +4,8 @@
 %def_with check
 
 Name: lomiri-system-settings
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: System Settings application for Lomiri
 License: GPL-3.0
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-system-settings
 
 Source: %name-%version.tar
 
-# sync with version 1.3.1-6 from Debian unstable + local fixes
+# sync with version 1.3.2-1 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -168,6 +168,9 @@ developing applications that use %{name}.
 %_pkgconfigdir/LomiriSystemSettings.pc
 
 %changelog
+* Sun Sep 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
+- New version 1.3.2.
+
 * Sat Sep 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
 - Enabled install on riscv64 architecture
 

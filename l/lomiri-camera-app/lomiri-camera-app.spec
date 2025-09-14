@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-camera-app
-Version: 4.0.8
+Version: 4.1.1
 Release: alt1
 
 Summary: Camera application for Lomiri
@@ -12,7 +12,7 @@ License: GPL-3.0 and CC-BY-SA-3.0
 Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/apps/lomiri-camera-app
 
-# sync with version 4.0.8 from Debian unstable + local fixes
+# sync with version 4.1.1+dfsg-1 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 Source: %name-%version.tar
@@ -110,5 +110,8 @@ rm -vf lomiri-camera-app-migrate.py
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-camera-app.mo
 
 %changelog
+* Sun Sep 14 2025 Nikolay Strelkov <snk@altlinux.org> 4.1.1-alt1
+- New version 4.1.1.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 4.0.8-alt1
 - Initial build for Sisyphus
