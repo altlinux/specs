@@ -1,21 +1,17 @@
-# If you want to suggest changes, please send PR on
-# https://altlinux.space/rirusha/libapi-base to altlinux branch 
-
 %define _unpackaged_files_terminate_build 1
 
-%define api_version 4
-%define minor_version 1
-%define gir_name ApiBase
+%define api_version 1
+%define gir_name AltRepo
 
-Name: libapi-base
-Version: %api_version.%minor_version
+Name: libalt-repo
+Version: 1.21.1
 Release: alt1
 
-Summary: Base objects for API libraries on Vala
+Summary: ALT Repo API library on Vala
 License: GPL-3.0-or-later
 Group: System/Libraries
-Url: https://altlinux.space/rirusha/libapi-base
-Vcs: https://altlinux.space/rirusha/libapi-base.git
+Url: https://altlinux.space/alt-gnome/libalt-repo
+Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -25,22 +21,22 @@ BuildRequires: rpm-build-vala
 BuildRequires: rpm-build-gir
 BuildRequires: meson
 BuildRequires: vala
-BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: gir(Json) = 1.0
-BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: gir(Gee) = 0.8
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(libsoup-3.0)
-BuildRequires: gir(Soup) = 3.0
-BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: gobject-introspection-devel
+BuildRequires: gir(Gee) = 0.8
+BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libapi-base-4)
+BuildRequires: gir(ApiBase) = 4
 
 %description
 %summary.
 
 %package -n %name%api_version
-Summary: Base objects for API libraries
+Summary: %{summary %name}
 Group: Development/C
+
+Obsoletes: libalt-repo-vala-1 <= 1.19.20
+Provides: libalt-repo-vala-1 = %EVR
 
 %description -n %name%api_version
 %summary.
@@ -48,6 +44,9 @@ Group: Development/C
 %package devel
 Summary: Development files for %name
 Group: Development/C
+
+Obsoletes: libalt-repo-vala-1-devel <= 1.19.20
+Provides: libalt-repo-vala-1-devel = %EVR
 
 Requires: %name%api_version = %EVR
 
@@ -57,34 +56,38 @@ Requires: %name%api_version = %EVR
 %package -n %name%api_version-gir
 Summary: Typelib files for %name
 Group: System/Libraries
-
 Requires: %name%api_version = %EVR
 
+Obsoletes: libalt-repo-vala-1-gir <= 1.19.20
+Provides: libalt-repo-vala-1-gir = %EVR
+
 %description -n %name%api_version-gir
-%summary.
+%{description %name}.
 
 %package gir-devel
-Summary: Development gir files for %name for various bindings
+Summary: GObject introspection devel data for %name
 Group: Development/Other
 BuildArch: noarch
+
+Obsoletes: libalt-repo-vala-1-gir-devel <= 1.19.20
+Provides: libalt-repo-vala-1-gir-devel = %EVR
 
 Requires: %name%api_version-gir = %EVR
 
 %description gir-devel
-%summary.
+%{summary %api_version-gir-devel}.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%meson -Drun_net_tests=false
+%meson
 %meson_build
 
 %install
 %meson_install
-
-%check
-%meson_test
+%find_lang %name
 
 %files -n %name%api_version
 %_libdir/%name-%api_version.so.*
@@ -104,9 +107,11 @@ Requires: %name%api_version-gir = %EVR
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
-* Fri Sep 05 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.1-alt1
-- New version: 4.1.
-- Changed VCS and URL.
+* Fri Sep 05 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.21.1-alt1
+- New Version 1.21.1.
+- Changed URL and VCS.
+- Corrected package names according to Shared Libs Policy.
+- Corrected packages groups.
 
-* Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.6-alt1
+* Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.19.20-alt1
 - Initial build for ALT

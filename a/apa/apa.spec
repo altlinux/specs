@@ -4,7 +4,7 @@
 
 Name: apa
 Version: 0.1.8.alpha
-Release: alt1
+Release: alt2
 
 Summary: An assistant for working with packages in your ALT distros
 License: GPL-3.0-or-later
@@ -26,7 +26,7 @@ BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(packagekit-glib2)
-BuildRequires: pkgconfig(libalt-repo-1)
+BuildRequires: pkgconfig(libalt-repo-1) >= 1.21.1
 BuildRequires: pkgconfig(libvazzy-1)
 
 %description
@@ -53,6 +53,9 @@ Use `apa help` for more information.
 %_bindir/%name
 
 %changelog
+* Fri Sep 05 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1.8.alpha-alt2
+- Fixed build with newer libapi-base version
+
 * Tue Feb 4 2025 Alexey Volkov <qualimock@altlinux.org> 0.1.8.alpha-alt1
 - New version 0.1.8.alpha (closes: #52652, #52654)
 
