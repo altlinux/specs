@@ -2,7 +2,7 @@
 
 Name:    postgresql%pg_ver-pgauditlogtofile
 Version: 1.7.2
-Release: alt1
+Release: alt2
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
 License: PostgreSQL
@@ -29,6 +29,10 @@ allows to automatically rotate the files based in a number of minutes.
 %prep
 %setup
 #%%patch0 -p1
+%ifarch %e2k
+# error: unrecognized command line option
+sed -i 's/-fanalyzer//' Makefile
+%endif
 
 %build
 %make_build USE_PGXS=1 PG_CONFIG=%_bindir/pg_server_config top_builddir=%_libdir/pgsql/pgxs
@@ -46,6 +50,9 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Sep 11 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.2-alt2
+- e2k build fix
+
 * Mon Aug 25 2025 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
