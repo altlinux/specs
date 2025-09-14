@@ -3,14 +3,13 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: firejail
-Version: 0.9.74
+Version: 0.9.76
 Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
 Group: Development/Tools
 Url: https://firejail.wordpress.com/
-
-# https://github.com/netblue30/firejail.git
+VCS: https://github.com/netblue30/firejail.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -58,6 +57,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Sun Sep 14 2025 Anton Farygin <rider@altlinux.com> 0.9.76-alt1
+- 0.9.74 -> 0.9.76
+
 * Mon Mar 31 2025 Anton Farygin <rider@altlinux.com> 0.9.74-alt1
 - 0.9.72 -> 0.9.74
 
