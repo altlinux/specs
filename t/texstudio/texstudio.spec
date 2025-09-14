@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel pkgconfig(lcms
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.8.8
+Version:        4.8.9
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -132,6 +132,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Sun Sep 14 2025 Ilya Mashkin <oddity@altlinux.ru> 4.8.9-alt1
+- 4.8.9
+
 * Tue Jul 15 2025 Ilya Mashkin <oddity@altlinux.ru> 4.8.8-alt1
 - 4.8.8
 
