@@ -20,8 +20,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -153,6 +153,22 @@ export LIBS=-lcxa
 
 %install
 %meson_install
+ln %buildroot%_bindir/%_name-query-loaders %buildroot%_libdir/%_name-%api_ver/%binary_ver/
+
+# rpm posttrans filetriggers
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger << '@@@'
+#!/bin/sh -efu
+
+LC_ALL=C sed -rn 's|(^/usr/lib(64)?)/gdk-pixbuf.*/loaders/.*|\1|p' | sort -u | while read L; do
+       if [ -x "$L/%_name-%api_ver/%binary_ver/%_name-query-loaders" ]; then
+              $L/%_name-%api_ver/%binary_ver/%_name-query-loaders --update-cache
+       fi
+done
+@@@
+chmod 755 %buildroot%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
+touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
+
 
 %find_lang %_name
 
@@ -163,6 +179,10 @@ export LIBS=-lcxa
 %_bindir/gdk-pixbuf-query-loaders
 %{?_enable_thumbnailer:%_bindir/gdk-pixbuf-thumbnailer}
 %_libdir/libgdk_pixbuf-%api_ver.so.*
+%dir %_libdir/%_name-%api_ver
+%dir %_libdir/%_name-%api_ver/%binary_ver
+%dir %_libdir/%_name-%api_ver/%binary_ver/loaders
+%_libdir/%_name-%api_ver/%binary_ver/%_name-query-loaders
 %{?_enable_others:
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ani.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-bmp.so
@@ -179,6 +199,8 @@ export LIBS=-lcxa
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so}
 %{?_enable_thumbnailer:%_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer}
 %{?_enable_man:%_man1dir/gdk-pixbuf-query-loaders*}
+%ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
+%_rpmlibdir/gdk-pixbuf-loaders.filetrigger
 
 %files locales -f %_name.lang
 
@@ -216,6 +238,9 @@ export LIBS=-lcxa
 
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
+- 2.44.1
+
 * Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1.1
 - temporarily switched back to old non-glycin scheme
 - allowed "others" loaders

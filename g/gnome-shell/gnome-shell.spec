@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -316,6 +316,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.5-alt1
+- 48.5
+
 * Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
 - 48.4
 

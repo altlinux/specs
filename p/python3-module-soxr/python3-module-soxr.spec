@@ -6,7 +6,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.5.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Python-SoXR is a Python wrapper of libsoxr
@@ -15,6 +15,7 @@ License: LGPL-2.1-or-later
 Url: https://pypi.org/project/soxr
 
 Vcs: https://github.com/dofuuz/python-soxr.git
+
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
@@ -53,6 +54,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README*
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
