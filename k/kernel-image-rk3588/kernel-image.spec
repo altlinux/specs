@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.44
+%define kernel_sublevel	.47
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -511,6 +511,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun Sep 14 2025 Alexei Takaseev <taf@altlinux.org> 6.12.47-alt1
+- v6.12.47 (2025-09-11).
+
 * Fri Aug 29 2025 Alexei Takaseev <taf@altlinux.org> 6.12.44-alt1
 - v6.12.44 (2025-08-28).
 - config: Build NVME as a module instead of built-in.
