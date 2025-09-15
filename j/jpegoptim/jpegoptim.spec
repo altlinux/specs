@@ -1,5 +1,5 @@
 Name: jpegoptim
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 
 Summary: Utility to optimize jpeg files
@@ -8,6 +8,7 @@ License: GPL-3.0-or-later
 Url: https://github.com/tjko/jpegoptim
 
 Vcs: https://github.com/tjko/jpegoptim.git
+
 Source: %url/archive/v%version/%name-%version.tar.gz
 
 BuildRequires: libjpeg-devel
@@ -34,6 +35,9 @@ maximum quality factor.
 %doc README
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.6-alt1
+- 1.5.6
+
 * Thu Aug 10 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
 - 1.5.5
 
