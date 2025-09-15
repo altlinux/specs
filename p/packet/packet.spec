@@ -3,7 +3,7 @@
 %define nautilus_extdir %_datadir/nautilus-python/extensions
 
 Name: packet
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 # Fails to link under aarch64
@@ -44,7 +44,7 @@ An extension for Nautilus that allows you to quickly share files using packet.
 
 %prep
 %setup -a1
-install -vD %SOURCE2 .cargo/config.toml
+install -vDm644 %SOURCE2 .cargo/config.toml
 
 %build
 %meson
@@ -56,7 +56,7 @@ mkdir -p %buildroot%nautilus_extdir
 mv %buildroot%_datadir/%name/plugins/%{name}_nautilus.py \
     %buildroot%nautilus_extdir/%{name}_nautilus.py
 # drop unknown languages, find known
-rm -r %buildroot%_datadir/locale/zh_Hans
+rm -r %buildroot%_datadir/locale/zh_Han*
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -75,6 +75,9 @@ rm -r %buildroot%_datadir/locale/zh_Hans
 %nautilus_extdir/__pycache__/*
 
 %changelog
+* Tue Aug 26 2025 Alexander Davydzik <paladindev@altlinux.org> 0.5.4-alt1
+- 0.5.4
+
 * Mon Jun 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
