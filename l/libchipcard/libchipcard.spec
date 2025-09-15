@@ -1,6 +1,6 @@
 Name:     libchipcard
 Version:  5.1.6
-Release:  alt1
+Release:  alt2
 
 Summary:  A library for easy access to smart cards (chipcards)
 License:  LGPL-2.1
@@ -13,6 +13,7 @@ Source:   %name-%version.tar
 Source1:  %name.init
 
 Patch1:  %name-alt-pkgconfig-fix.patch
+Patch2: libchipcard_usbtan_test-5.1.6-build.patch
 
 BuildRequires: gcc-c++ glibc-devel 
 BuildRequires: libgwenhywfar-devel >= 4.0.0
@@ -57,6 +58,7 @@ local card readers.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p0
 
 %build
 %autoreconf
@@ -106,6 +108,9 @@ rm -f %buildroot%_libdir/pkgconfig/%name-server.pc
 %attr(754,root,root) %_initrddir/chipcardd
 
 %changelog
+* Mon Sep 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 5.1.6-alt2
+- FTBFS: fix: error: implicit declaration of function 'toupper'.
+
 * Mon Jan 03 2022 Andrey Cherepanov <cas@altlinux.org> 5.1.6-alt1
 - New version.
 
