@@ -10,7 +10,7 @@
 %endif
 
 Name: ispc
-Version: 1.27.0
+Version: 1.28.1
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -70,7 +70,12 @@ Static libraries for %name.
 %package checkinstall
 Summary: checkinstall for %name
 Group: Development/C
-Requires(pre): gcc-c++ python3-devel python3-module-nanobind
+Requires(pre): gcc-c++ python3-devel tbb-devel
+%ifnarch aarch64
+# cpu/attention fails on aarch64 due unhandled width
+# so just skip it
+Requires: python3-module-nanobind
+%endif
 Requires(pre): %name = %EVR
 
 %description checkinstall
@@ -141,6 +146,9 @@ cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
 %_bindir/%name
 %_bindir/check_isa
 %_includedir/ispcrt
+%_includedir/stdlib
+%_includedir/intrinsics
+%_includedir/%name/%name.h
 %_libdir/cmake
 %_libdir/*.so*
 %docdir
@@ -171,6 +179,14 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon Sep 15 2025 L.A. Kostis <lakostis@altlinux.ru> 1.28.1-alt1
+- 1.28.1.
+- checkinstall: fix aarch64 build.
+
+* Thu Aug 14 2025 L.A. Kostis <lakostis@altlinux.ru> 1.28.0-alt1
+- 1.28.0.
+- checkinstall: update BR (add tbb-devel) and %%ix86 patch.
+
 * Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1.27.0-alt1
 - 1.27.0.
 - Build w/ llvm20.1.
