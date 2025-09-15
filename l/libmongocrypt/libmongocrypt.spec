@@ -6,7 +6,7 @@
 
 Name: libmongocrypt
 Version: 1.15.1
-Release: alt1
+Release: alt2
 
 Summary: The companion C library for client side encryption in drivers
 
@@ -86,6 +86,9 @@ This package provides development files for libkms_message.
   -DENABLE_ONLINE_TESTS=OFF \
   -DENABLE_STATIC=OFF \
 #
+%ifarch %e2k
+sed -i 's/_M_AMD64/__e2k__/' %_cmake__builddir/_deps/intel_dfp-src/LIBRARY/float128/architecture.h
+%endif
 %cmake_build
 
 %install
@@ -93,7 +96,7 @@ This package provides development files for libkms_message.
 
 %if_enabled check
 %check
-cd %_host_alias
+cd %_cmake__builddir
 ctest
 %endif
 
@@ -122,5 +125,8 @@ ctest
 %_pkgconfigdir/libkms_message.pc
 
 %changelog
+* Mon Sep 15 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.15.1-alt2
+- e2k build fix
+
 * Tue Aug 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.15.1-alt1
 - Initial commit for ALT Sisyphus (for mongo-php-driver).
