@@ -3,8 +3,9 @@
 %define ext_schema_id io.github.jeffshee.hanabi-extension
 
 Name: gnome-shell-extension-hanabi
-Version: 20250307
-Release: alt1
+Version: 1
+Release: alt1.20fe84dc.1
+Epoch: 1
 
 Summary: Live Wallpaper for GNOME
 Summary(ru_RU.UTF-8): Живые обои для GNOME
@@ -16,7 +17,7 @@ Vcs: https://github.com/jeffshee/gnome-ext-hanabi.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
 Requires: gnome-shell >= 42.0
 
@@ -46,7 +47,7 @@ or 'Force GtkMediaFile' in the extension settings can help.
 
 %install
 %meson_install
-%find_lang %ext_id --with-gnome
+%find_lang %ext_id
 
 %check
 %meson_test
@@ -57,5 +58,9 @@ or 'Force GtkMediaFile' in the extension settings can help.
 %doc README.md
 
 %changelog
+* Mon Sep 15 2025 Vladimir Vaskov <rirusha@altlinux.org> 1:1-alt1.20fe84dc.1
+- New snapshot.
+- Switched to snapshot version instaed of date tag.
+
 * Fri Mar 28 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250307-alt1
 - Initial build.
