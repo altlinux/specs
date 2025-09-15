@@ -5,7 +5,7 @@
 # LTO causes errors, disable it
 %global optflags_lto %nil
 
-%define major 4.0.5
+%define major 4.0.6
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -13,7 +13,7 @@
 
 Name: firebird
 Version: %major
-Release: alt2
+Release: alt1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 Source1: %name.init
 Source2: %name.tmpfiles.conf.in
 Source3: %name-logrotate
+Patch0: %name-%version-%release.patch
 
 # from OpenSuse
 Patch101: %name-4.0.0.2496.0-fedora-add-pkgconfig-files.patch
@@ -33,7 +34,7 @@ Patch203: %name-4.0.5-debian-no-copy-from-icu.patch
 Patch205: %name-4.0.5-debian-cloop-honour-build-flags.patch
 
 # from upstream
-Patch301: %name-4.0.0.2496.0-fedora-c++17.patch
+Patch301: %name-4.0.6-fedora-c++17.patch
 Patch302: %name-4.0.0.2496.0-fedora-noexcept.patch
 
 # ALT patches
@@ -47,6 +48,8 @@ Patch2000: %name-e2k.patch
 Patch3500: %name-loongarch.patch
 
 Requires: libfbclient = %EVR
+# altbug #55658
+Requires: libicu
 
 BuildRequires(pre): rpm-build-compat
 BuildRequires: libtinfo-devel libicu-devel libedit-devel
@@ -143,6 +146,7 @@ Examples for Firebird SQL server.
 
 %prep
 %setup
+%patch0 -p1
 %patch101 -p1
 %patch203 -p1
 %patch205 -p1
@@ -410,6 +414,11 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Mon Sep 15 2025 Anton Farygin <rider@altlinux.com> 4.0.6-alt1
+- 4.0.5 -> 4.0.6
+- added an explicit dependency on libicu to prevent startup errors (closes: #55658)
+- fixed the incorrect path to the intl module in the default fbintl config file (closes: #55673)
+
 * Wed Oct 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.5-alt2
 - e2k build fix
 
