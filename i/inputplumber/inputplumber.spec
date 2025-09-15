@@ -2,7 +2,7 @@
 
 Name: inputplumber
 Version: 0.62.2
-Release: alt1
+Release: alt2
 
 Summary: Open source input router and remapper daemon for Linux
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
 
+Patch: inputplumber-0.58.6-alt-loongarch64-nix-0.26.4.patch
+
 BuildRequires: rust-cargo
 BuildRequires: cmake gcc-c++
 BuildRequires: libudev-devel clang-devel libiio-devel
@@ -25,6 +27,10 @@ InputPlumber is an open source input routing and control daemon for Linux. It ca
 
 %prep
 %setup -a1
+
+%patch -p3
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/nix-0.26.4/.cargo-checksum.json
 
 mkdir .cargo
 cat >.cargo/config <<EOF
@@ -46,7 +52,7 @@ replace-with = "vendored-sources"
 EOF
 
 %build
-%make_build build
+%make_build build -Onone
 
 %install
 %make_install install PREFIX=%buildroot/%prefix NO_RELOAD=true
@@ -74,6 +80,10 @@ EOF
 %_udevrulesdir/90-inputplumber-autostart.rules
 
 %changelog
+* Mon Sep 15 2025 Ivan A. Melnikov <iv@altlinux.org> 0.62.2-alt2
+- NMU: restore patching vendored nix 0.26.4 for loongarch64 support
+  (fixes FTBFS on loongarch64, again)
+
 * Wed Sep 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.62.2-alt1
 - new version 0.62.2
 
