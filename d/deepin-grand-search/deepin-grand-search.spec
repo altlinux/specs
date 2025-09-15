@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.20
+Version: 6.0.24
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -11,7 +11,7 @@ Summary: Basic search tool for DDE
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-grand-search
-Vcs: https://github.com/linuxdeepin/dde-grand-search.git
+Vcs: https://github.com/linuxdeepin/dde-grand-search
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -57,7 +57,7 @@ export READELF="llvm-readelf"
 %find_lang --with-qt --output=%repo.lang %repo dde-shell
 
 %files -f %repo.lang
-%doc README.md LICENSE.txt
+%doc README.md LICENSE.txt debian/changelog
 %_bindir/dde-grand-search*
 %_desktopdir/%repo.desktop
 %dir %_libdir/dde-dock/
@@ -109,6 +109,9 @@ export READELF="llvm-readelf"
 # ---
 
 %changelog
+* Mon Sep 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.24-alt1
+- New version 6.0.24.
+
 * Mon Jul 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
 - New version 6.0.20.
 

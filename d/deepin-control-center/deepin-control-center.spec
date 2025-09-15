@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.40
+Version: 6.1.47
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -14,7 +14,7 @@ Summary: New control center for Linux Deepin
 License: GPL-3.0-or-later and MIT
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
-Vcs: https://github.com/linuxdeepin/dde-control-center.git
+Vcs: https://github.com/linuxdeepin/dde-control-center
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -102,7 +102,7 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
-%doc LICENSE README.md
+%doc LICENSE README.md debian/changelog
 %_bindir/%repo
 %_desktopdir/org.deepin.dde.control-center.desktop
 %_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
@@ -114,6 +114,7 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %dir %_libdir/%repo/org/deepin/
 %_libdir/%repo/org/deepin/dcc/
 %_libdir/%repo/sidebar.dci
+%_libdir/%repo/reddot.dci
 %dir %_libdir/dde-grand-search-daemon/
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
@@ -125,6 +126,12 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_datadir/dsg/configs/org.deepin.region-format.json
 %dir %_datadir/%repo/
 %_userunitdir/org.deepin.dde.control-center.service
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.control-center.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.control-center.json
 # package outside find_lang
 %dir %_datadir/%repo/translations/
 %dir %_datadir/%repo/translations/v1.0/
@@ -140,6 +147,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Mon Sep 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.47-alt1
+- New version 6.1.47.
+
 * Mon Aug 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.40-alt1
 - New version 6.1.40.
 - Fixed plugin detection.
