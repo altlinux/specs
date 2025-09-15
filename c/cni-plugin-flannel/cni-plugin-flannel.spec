@@ -1,22 +1,22 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/flannel-io/cni-plugin
 
-Name:     cni-plugin-flannel
-Epoch:    1
-Version:  1.7.1.1
-Release:  alt1
+Name: cni-plugin-flannel
+Epoch: 1
+Version: 1.7.1.2
+Release: alt1
 
-Summary:  A CNI network plugin that is powered by flannel
-License:  Apache-2.0
-Group:    Other
-Url:      https://github.com/flannel-io/cni-plugin
+Summary: A CNI network plugin that is powered by flannel
+License: Apache-2.0
+Group: Other
+Url: https://github.com/flannel-io/cni-plugin
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
 
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.24.3
 
 %description
 This plugin is designed to work in conjunction with flannel, a network fabric
@@ -55,14 +55,17 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
-install -pD -m 755 %buildroot%_bindir/cni-plugin %buildroot%_prefix/libexec/cni/flannel
+install -pD -m 755 %buildroot%_bindir/cni-plugin %buildroot%prefix/libexec/cni/flannel
 rm %buildroot%_bindir/cni-plugin
 
 %files
-%_prefix/libexec/cni/flannel
+%prefix/libexec/cni/flannel
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1:1.7.1.2-alt1
+- Update to 1.7.1.2.
+
 * Fri May 16 2025 Nadezhda Fedorova <fedor@altlinux.org> 1:1.7.1.1-alt1
 - 1.5.1.3 -> 1.7.1.1
 

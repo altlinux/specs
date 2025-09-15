@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.27.0
+Version: 0.27.3
 Release: alt1
 
 Summary: flannel is a network fabric for containers
@@ -57,6 +57,11 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 0.27.3-alt1
+- Update to 0.27.3.
+- Fixes:
+  + CVE-2025-22868: Unexpected memory consumption during token parsing in golang.org/x/oauth2
+
 * Tue Jun 10 2025 Alexander Stepchenko <geochip@altlinux.org> 0.27.0-alt1
 - 0.26.7 -> 0.27.0
 
