@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oha
-Version: 1.9.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 Summary: Ohayou, HTTP load generator with tui animation
 License: MIT
 Group: Networking/Remote access
@@ -50,6 +50,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon Sep 15 2025 Pavel Shilov <zerospirit@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0
+
 * Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.9.0-alt2
 - NMU: fix FTBFS on loongarch64
 
