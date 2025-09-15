@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.55.1
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,6 +68,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch: 0001-feature-runtime-Check-and-create-the-necessary-devic.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -400,6 +401,10 @@ fi
 %endif
 
 %changelog
+* Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt2
+- add upstream patch:
+  + feature/runtime: Check and create the necessary device files (Closes: 55834)
+
 * Sun Aug 10 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt1
 - Feature fsck:
   + Split fsck arguments. fsck.f2fs enters an infinite loop with the
