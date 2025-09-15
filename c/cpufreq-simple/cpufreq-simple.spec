@@ -1,17 +1,17 @@
 Name: cpufreq-simple
-Version: 0.4.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: System/Base
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
-
 Requires: cpupower libshell
+# For on_ac_power
+Requires: powermgmt-base >= 1.38-alt1
 
 %description
 Install this package if you would like it to attempt
@@ -47,6 +47,15 @@ install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 %_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Mon Sep 15 2025 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- cpufreq-simple: Don't report an error if driver not detected.
+- Don't use rpm-build-licenses.
+- cpufreq-simple: Drop EXTRA_MODULES variable support.
+- cpufreq-simple: Always try to load cpufreq module.
+- cpufreq-simple: Add status command.
+- cpufreq-simple: Support amd-pstate-epp driver (closes: #54124).
+- cpufreq-simple: Use on_ac_power to get power state.
+
 * Thu Nov 06 2014 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - cpufreq-simple.sysconfig: Update comments.
 - Set 'powersave' governor as default on AC for intel_pstate.
