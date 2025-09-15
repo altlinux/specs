@@ -1,6 +1,6 @@
 Name: khal
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: CLI calendar application
 
@@ -12,6 +12,8 @@ VCS: https://github.com/pimutils/khal
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Requires: python3-module-vdirsyncer
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -48,5 +50,8 @@ install -Dm 0644 misc/%name.desktop %buildroot%_datadir/applications/%name.deskt
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Mon Sep 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.0-alt2
+- add requires vdirsyncer
+
 * Sat Sep 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.0-alt1
 - Initial build for ALT Linux.
