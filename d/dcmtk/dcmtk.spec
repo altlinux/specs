@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.9
-Release: alt2.1
+Release: alt3
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -17,6 +17,7 @@ Patch1: dcmtk-3.6.9-upstream-cve-2025-2357.patch
 Patch2: dcmtk-3.6.9-upstream-cve-2025-25472.patch
 Patch3: dcmtk-3.6.9-upstream-cve-2025-25474.patch
 Patch4: dcmtk-3.6.9-upstream-cve-2025-25475.patch
+Patch5: dcmtk-3.6.9-upstream-cve-2025-9732.patch
 
 Requires: lib%name%soname = %EVR
 BuildRequires: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
@@ -102,6 +103,10 @@ sed -i -E '/ofstd_(std_|tuple)/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Mon Sep 15 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.9-alt3
+- Fixes:
+  + CVE-2025-9732 Out-of-bounds Write
+
 * Thu Jul 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.9-alt2.1
 - e2k build fix
 
