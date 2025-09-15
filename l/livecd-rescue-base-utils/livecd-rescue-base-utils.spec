@@ -1,6 +1,6 @@
 Name: livecd-rescue-base-utils
 Version: 1.1
-Release: alt4
+Release: alt5
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
@@ -17,6 +17,7 @@ Requires: hdparm
 Requires: lsblk
 Requires: lsmount
 Requires: lvm2
+Requires: nvme
 Requires: mdadm
 Requires: photorec
 Requires: sleuthkit
@@ -85,6 +86,9 @@ Requires: mokutil
 %files
 
 %changelog
+* Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt5
+- Add dependency on nvme.
+
 * Tue Jul 01 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt4
 - Add dependency on wipefreespace again.
 
