@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.6
+Version: 3.7.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Sep 15 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.0-alt1
+- allow to setup background for wide screens
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.6-alt1
 - fix window icon
 
