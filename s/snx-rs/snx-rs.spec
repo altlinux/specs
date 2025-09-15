@@ -1,7 +1,7 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: Open source VPN client for Checkpoint security gateways
 
@@ -30,6 +30,7 @@ BuildRequires: pkgconfig(gdk-3.0)
 %if_feature webkit2gtk 4.1
 # webkit2gtk (?)
 BuildRequires: pkgconfig(webkit2gtk-4.1)
+Requires: libayatana-appindicator3-1
 %endif
 
 %description
@@ -90,6 +91,9 @@ install -D -m 0644 assets/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.d
 %_sysconfdir/snx-rs/snx-rs.conf
 
 %changelog
+* Mon Sep 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt2
+- NMU: obviously required libayatana-appindicator3-1 (ALT #55965).
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1 (with rpmrb script)
 
