@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: box64
-Version: 0.3.4
+Version: 0.3.6
 Release: alt1
 
 Summary: Linux Userspace x86_64 Emulator with a twist
@@ -74,6 +74,9 @@ tar -xvf %SOURCE2 -C %buildroot%sysroot --strip-components=1
 %sysroot
 
 %changelog
+* Tue Sep 16 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Mon Mar 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
