@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.12
+%define major 10.13
 %define rel %nil
 
 # the packages will conflict with that
@@ -921,6 +921,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Sep 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.13-alt1
+- new version 10.13 (with rpmrb script)
+
 * Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.12-alt1
 - new version 10.12 (with rpmrb script)
 
