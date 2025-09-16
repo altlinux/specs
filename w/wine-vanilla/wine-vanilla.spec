@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.14
+%define major 10.15
 %define rel %nil
 
 # the packages will conflict with that
@@ -921,6 +921,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Tue Sep 16 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.15-alt1
+- new version 10.15 (with rpmrb script)
+
 * Thu Sep 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.14-alt1
 - new version 10.14 (with rpmrb script)
 - set strict require wine-mono 10.2.0
