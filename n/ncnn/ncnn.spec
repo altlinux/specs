@@ -13,8 +13,8 @@
 %endif
 
 Name: ncnn
-Version: 20250503
-Release: alt2
+Version: 20250916
+Release: alt1
 
 Summary: Mobile neural network inference framework
 
@@ -23,9 +23,11 @@ Group: Engineering
 Url: https://github.com/Tencent/ncnn
 Vcs: https://github.com/Tencent/ncnn.git
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Source1: vendor.tar
-Patch: ncnn-20250503-upstream-fix-conv-crash-6038.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
+Source1: glslang.tar
+Source2: pybind11.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 31 2023
@@ -82,12 +84,10 @@ The package provides python3 module for %name.
 %endif
 
 %prep
-%setup -a1
-%autopatch -p1
+%setup -a1 -a2
+%patch0 -p1
 
 %if_without glslang
-rmdir glslang
-mv -f vendor/glslang . -v
 sed -i '/OGLCompiler /d' CMakeLists.txt
 %endif
 
@@ -97,9 +97,6 @@ sed -i '24a include(pybind11_add_module)' \
   python/CMakeLists.txt
 sed -i '/add_subdirectory(pybind11)/d' \
   python/CMakeLists.txt
-%else
-rmdir python/pybind11
-mv -f vendor/python/pybind11 python -v
 %endif
 
 %build
@@ -153,6 +150,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 20250916-alt1
+- New version 20250916.
+
 * Mon Jun 02 2025 Leontiy Volodin <lvol@altlinux.org> 20250503-alt2
 - Fixed ncnn2table crash (ALT #54190).
 

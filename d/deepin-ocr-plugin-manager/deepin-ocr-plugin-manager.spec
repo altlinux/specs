@@ -4,7 +4,7 @@
 
 Name: deepin-ocr-plugin-manager
 Version: 0.0.2.0019
-Release: alt1
+Release: alt2
 
 Summary: Deepin OCR plugin manager
 
@@ -14,7 +14,9 @@ Url: https://github.com/linuxdeepin/deepin-ocr-plugin-manager
 Vcs: https://github.com/linuxdeepin/deepin-ocr-plugin-manager.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-ocr-plugin-manager-0.0.2.0019-alt-fixes-symbols.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-ocr-plugin-manager-0.0.2.0019-alt-fixes-symbols.patch
+Patch2: deepin-ocr-plugin-manager-0.0.2.0019-alt-ncnn-20250916.patch
 
 ExcludeArch: ppc64le
 
@@ -55,7 +57,9 @@ The package provides models for %name.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p2
 # deepin's opencv_mobile does not have .pc file
 sed -i 's| opencv_mobile||; s|stdc++fs|stdc++|' \
   src/CMakeLists.txt
@@ -95,5 +99,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%name/model/
 
 %changelog
+* Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2.0019-alt2
+- Fixed build with ncnn 20250916.
+
 * Thu Mar 27 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2.0019-alt1
 - Initial build for ALT Sisyphus.

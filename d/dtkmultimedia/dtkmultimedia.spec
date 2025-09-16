@@ -6,7 +6,7 @@
 
 Name: dtkmultimedia
 Version: 6.0.2
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit multimedia modules
 
@@ -19,7 +19,7 @@ License: Apache-2.0 and BSL-1.0 and GPL-2.0-or-later and LGPL-3.0-or-later
 # src/ocr/ppocr/clipper.hpp: BSL-1.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkmultimedia
-Vcs: https://github.com/linuxdeepin/dtkmultimedia.git
+Vcs: https://github.com/linuxdeepin/dtkmultimedia
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
@@ -109,7 +109,8 @@ This package provides %name documantation.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %if_enabled clang
@@ -175,6 +176,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt2
+- Fixed build with ncnn 20250916.
+
 * Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt1
 - New version 6.0.2.
 
