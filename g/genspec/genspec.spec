@@ -1,12 +1,11 @@
 Name:     genspec
-Version:  1.4.2
-Release:  alt2
+Version:  1.4.3
+Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
 Group:    System/Configuration/Packaging
 URL:      http://altlinux.org/genspec
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
@@ -34,6 +33,10 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
+- Removed Packager tag from templates
+- java-maven: simplified spec template
+
 * Wed Feb 28 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.2-alt2
 - Fix working with python 3.12
 
