@@ -6,7 +6,7 @@
 
 Name: asciinema
 Version: 3.0.0
-Release: alt1.rc5
+Release: alt2
 
 Summary: Terminal session recorder
 License: GPLv3
@@ -80,6 +80,9 @@ install -Dm 644 doc/man/%name-upload.1 %buildroot%_man1dir/%name-upload.1
 %fish_completionsdir/%name.fish
 
 %changelog
+* Tue Sep 16 2025 Denis Sergeev <zeff@altlinux.org> 3.0.0-alt2
+- 3.0.0-rc5 -> 3.0.0.
+
 * Fri Aug 01 2025 Denis Sergeev <zeff@altlinux.org> 3.0.0-alt1.rc5
 - 3.0.0-rc4 -> 3.0.0-rc5.
 
