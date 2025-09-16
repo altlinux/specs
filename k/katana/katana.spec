@@ -2,7 +2,7 @@
 %define import_path github.com/projectdiscovery/katana
 
 Name: katana
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Next-generation crawling and spidering framework
@@ -17,8 +17,9 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.21
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+BuildRequires: golang >= 1.24
 
 %description
 Katana is a fast, next-generation web crawling and spidering
@@ -63,6 +64,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Sep 16 2025 Denis Sergeev <zeff@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2.
+
 * Fri Aug 01 2025 Denis Sergeev <zeff@altlinux.org> 1.2.1-alt1
 - 1.1.3 -> 1.2.1.
 
