@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt20.git32d687ffe
+Release: alt21.git32d687ffe
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -526,6 +526,9 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue Sep 16 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt21.git32d687ffe
+- Updated patch addpseudouser
+
 * Mon Sep 08 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt20.git32d687ffe
 - update to current version
 - Commit hash: 32d687ffe
