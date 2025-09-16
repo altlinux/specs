@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 4.57.7
+Version: 4.58.0
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -334,6 +334,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Tue Sep 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.58.0-alt1
+- 4.58.0
+
 * Wed Jun 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.57.7-alt1
 - 4.57.7
 - new package gui (replaces cgi and deprecates cgiserv), removed cgiserv
