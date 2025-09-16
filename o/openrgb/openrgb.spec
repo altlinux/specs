@@ -6,7 +6,7 @@
 
 Name: openrgb
 Version: 1.0
-Release: alt1.rc1
+Release: alt1.rc2
 
 %define org_name org.%name.OpenRGB
 
@@ -21,11 +21,11 @@ Vcs: https://gitlab.com/CalcProgrammer1/OpenRGB
 Source: %name-%version.tar
 Patch: %name-alt-no-strip.patch
 
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt6 rpm-macros-systemd
 
 BuildRequires: libhidapi-devel libusb-devel
 BuildRequires: libmbedtls13-devel
-BuildRequires: qt5-tools qt5-base-devel
+BuildRequires: qt6-tools qt6-base-devel
 
 %description
 Open source RGB lighting control that doesn't depend on manufacturer software.
@@ -38,29 +38,29 @@ across many manufacturers.
 %patch -p2
 # just to be sure
 subst "s|/usr/lib/udev/rules.d|%_udevrulesdir|g" ResourceManager.cpp
+subst "s|/etc/systemd/system|%_unitdir|g" OpenRGB.pro
 
 %build
 export QMAKE_CXXFLAGS_RELEASE='%optflags'
-%qmake_qt5 OpenRGB.pro
+%qmake_qt6 OpenRGB.pro
 %make_build V=1
 
 %install
-mkdir -p %buildroot{%_udevrulesdir,%_bindir}
-
-install -pD -m644 qt/%org_name.desktop %buildroot/%_desktopdir/%org_name.desktop
-install -pD -m644 qt/%org_name.png %buildroot/%_iconsdir/hicolor/128x128/apps/%org_name.png
-install -pD -m644 qt/%org_name.metainfo.xml %buildroot/%_datadir/metainfo/%org_name.metainfo.xml
-
 %make_install INSTALL_ROOT=%buildroot install
 
 %files
-%_udevrulesdir/60-openrgb.rules
-%_bindir/openrgb
+%_unitdir/%name.service
+%_udevrulesdir/60-%name.rules
+%_bindir/%name
 %_desktopdir/%org_name.desktop
 %_datadir/metainfo/%org_name.metainfo.xml
 %_iconsdir/hicolor/128x128/apps/%org_name.png
 
 %changelog
+* Tue Sep 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt1.rc2
+- 1.0rc2.
+- qt5->qt6.
+
 * Wed Sep 10 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt1.rc1
 - 1.0rc1.
 - enable debuginfo.
