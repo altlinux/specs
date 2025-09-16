@@ -9,7 +9,7 @@
 %define sover 37
 
 Name: gdal
-Version: 3.11.3
+Version: 3.11.4
 Release: alt1
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
@@ -216,8 +216,7 @@ popd
 %_bindir/sozip
 %exclude %_bindir/gdal-config
 %exclude %_bindir/*.py
-%_datadir/bash-completion/completions/gdal*
-%_datadir/bash-completion/completions/ogr*
+%_datadir/bash-completion/completions/*
 %_libdir/cmake/%name/*.cmake
 %_man1dir/*
 %exclude %_man1dir/gdal-config.1*
@@ -247,6 +246,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.4-alt1
+- New version.
+
 * Sat Jul 26 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.3-alt1
 - New version.
 
