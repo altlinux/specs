@@ -1,5 +1,5 @@
 Name: esptool
-Version: 5.0.2
+Version: 5.1.0
 Release: alt1
 
 Summary: Flasher for Espressif ESP8266 & ESP32 chips
@@ -46,6 +46,9 @@ done
 %python3_sitelibdir/esptool-%version.dist-info
 
 %changelog
+* Tue Sep 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.1.0-alt1
+- 5.1.0 released
+
 * Fri Sep 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.0.2-alt1
 - 5.0.2 released
 
