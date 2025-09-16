@@ -5,7 +5,7 @@
 
 Name: python3-module-pydanclick
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Summary: Add click options from a Pydantic model
 License: MIT
 Group: Development/Python3
@@ -59,5 +59,8 @@ Use Pydantic models as Click options.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 16 2025 Andrey Kovalev <ded@altlinux.org> 0.5.0-alt2
+- Fixed FTBFS.
+
 * Tue Feb 25 2025 Andrey Kovalev <ded@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus.
