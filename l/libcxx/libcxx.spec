@@ -1,13 +1,16 @@
-%global maj_ver 19.1
-%global libcxx_version %maj_ver.5
+%global maj_ver 20.1
+%global llvm_ver 20.1
+%global libcxx_version %maj_ver.7
 #global rc_ver 4
 %global libcxx_srcdir libcxx-%libcxx_version%{?rc_ver:-rc%rc_ver}.src
 %global libcxxabi_srcdir libcxxabi-%libcxx_version%{?rc_ver:-rc%rc_ver}.src
 %global libunwind_srcdir libunwind-%libcxx_version%{?rc_ver:-rc%rc_ver}.src
 
+%define optflags_lto %nil
+
 Name: libcxx
 Version: %libcxx_version%{?rc_ver:~rc%rc_ver}
-Release: alt2
+Release: alt1
 Summary: C++ standard library targeting C++11
 Group: System/Libraries
 License: Apache-2.0 WITH LLVM-exception OR MIT OR NCSA
@@ -15,17 +18,22 @@ Url: http://libcxx.llvm.org/
 Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/%libcxx_srcdir.tar.xz
 Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/%libcxxabi_srcdir.tar.xz
 Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/%libunwind_srcdir.tar.xz
+Source6: libc-shared.src.tar.xz
 Source7: CMakeLists.txt
 Source8: https://github.com/llvm/llvm-project/raw/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/runtimes/cmake/Modules/HandleFlags.cmake
 Source9: https://github.com/llvm/llvm-project/raw/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/runtimes/cmake/Modules/WarningFlags.cmake
+Source10: https://github.com/llvm/llvm-project/raw/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/runtimes/cmake/Modules/FindLibcCommonUtils.cmake
+Source11: https://github.com/llvm/llvm-project/raw/llvmorg-%libcxx_version%{?rc_ver:-rc%rc_ver}/runtimes/cmake/Modules/HandleLitArguments.cmake
 
 Patch0: standalone.patch
 # The cmake dependencies for this target are somehow broken upstream.
 # However, the libcxx.imp file is only needed for running include-what-you-use.
 Patch1: do-not-install-libcxx.imp.patch
 
-BuildRequires(pre): rpm-build-cmake
-BuildRequires: clang%{maj_ver} llvm%{maj_ver}-devel llvm%{maj_ver}-cmake-common-modules libstdc++-devel ninja-build
+ExcludeArch: armh
+
+BuildRequires(pre): cmake
+BuildRequires: clang%{llvm_ver} llvm%{llvm_ver}-devel llvm%{llvm_ver}-cmake-common-modules libstdc++-devel ninja-build
 # We need python3-devel for shebang fix
 BuildRequires: rpm-build-python3
 
@@ -113,7 +121,6 @@ Summary: libunwind documentation
 # generated from sphinx-doc under BSD 2-Clause License.
 # Source: https://github.com/sphinx-doc/sphinx
 License: BSD-2-Clause AND (Apache-2.0 WITH LLVM-exception OR NCSA OR MIT)
-BuildArch: noarch
 
 %description -n llvm-libunwind-doc
 Documentation for LLVM libunwind
@@ -122,14 +129,17 @@ Documentation for LLVM libunwind
 %setup -T -b 0 -n %libcxx_srcdir
 %setup -T -b 2 -n %libcxxabi_srcdir
 %setup -T -b 4 -n %libunwind_srcdir
+%setup -T -b 6 -n libc-shared.src
 %setup -T -c -n build
 
 cp %SOURCE7 .
 mv ../%libcxx_srcdir libcxx
 mv ../%libcxxabi_srcdir libcxxabi
 mv ../%libunwind_srcdir libunwind
+mkdir -p libc
+mv ../libc-shared.src/* libc
 mkdir -p runtimes/cmake/Modules
-cp %SOURCE8 %SOURCE9 runtimes/cmake/Modules/
+cp %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 runtimes/cmake/Modules/
 %autopatch -p1
 
 pushd libcxx/utils
@@ -137,9 +147,10 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 popd
 
 %build
+%add_optflags -Wno-frame-larger-than=
 # Copy CFLAGS into ASMFLAGS, so -fcf-protection is used when compiling assembly files.
 export ASMFLAGS=$CFLAGS
-export ALTWRAP_LLVM_VERSION=%maj_ver
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 %cmake -GNinja \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
@@ -147,7 +158,7 @@ export ALTWRAP_LLVM_VERSION=%maj_ver
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DCMAKE_MODULE_PATH="%prefix/lib/llvm-%maj_ver/%_lib/cmake/llvm;%prefix/lib/llvm-%maj_ver/share/cmake/Modules" \
+	-DCMAKE_MODULE_PATH="%prefix/lib/llvm-%llvm_ver/%_lib/cmake/llvm;%prefix/lib/llvm-%llvm_ver/share/cmake/Modules" \
 	-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 %if 0%{?_libsuff} == 64
 	-DLIBCXX_LIBDIR_SUFFIX:STRING=64 \
@@ -156,10 +167,10 @@ export ALTWRAP_LLVM_VERSION=%maj_ver
 %endif
 	-DLIBCXX_INCLUDE_BENCHMARKS=OFF \
 	-DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON \
-	-DLIBCXX_ENABLE_ABI_LINKER_SCRIPT=ON \
+	-DLIBCXX_ENABLE_ABI_LINKER_SCRIPT=OFF \
 	-DLIBCXXABI_USE_LLVM_UNWINDER=OFF \
 	-DLLVM_BUILD_DOCS=ON \
-	-DLLVM_ENABLE_SPHINX=ON \
+	-DLLVM_ENABLE_SPHINX=OFF \
 	-DLIBUNWIND_INCLUDE_DOCS=ON \
 	-DLIBUNWIND_INSTALL_INCLUDE_DIR=%_includedir/llvm-libunwind \
 	-DLIBUNWIND_INSTALL_SPHINX_HTML_DIR=%_docdir/html/libunwind
@@ -183,8 +194,6 @@ mkdir -p %buildroot/%_libdir/llvm-unwind/
 pushd %buildroot/%_libdir/llvm-unwind
 ln -s ../libunwind.so.1.0 libunwind.so
 popd
-
-rm %buildroot%_docdir/html/libunwind/.buildinfo
 
 %files
 %doc libcxx/LICENSE.TXT libcxx/CREDITS.TXT libcxx/TODO.TXT
@@ -236,11 +245,13 @@ rm %buildroot%_docdir/html/libunwind/.buildinfo
 %files -n llvm-libunwind-static
 %_libdir/libunwind.a
 
-%files -n llvm-libunwind-doc
-%doc libunwind/LICENSE.TXT
-%_docdir/html/libunwind
-
 %changelog
+* Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 20.1.7-alt1
+- Update to new version 20.1.7 (thanks nash@).
+
+* Sat Jan 18 2025 Andrey Cherepanov <cas@altlinux.org> 19.1.5-alt1.p10.1
+- Backport new version to p10 branch.
+
 * Wed Jan 15 2025 Andrey Cherepanov <cas@altlinux.org> 19.1.5-alt2
 - Fix conflicts with libc++1 and libc++abi1.
 
