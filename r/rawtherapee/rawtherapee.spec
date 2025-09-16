@@ -10,7 +10,7 @@
 
 Name: rawtherapee
 Version: 5.12%{?_enable_snapshot:.%git_distance}
-Release: alt1%(echo %beta| tr - .)
+Release: alt1.1%(echo %beta| tr - .)
 
 Summary: THe Experimental RAw Photo Editor
 License: GPL-3.0-or-later
@@ -26,6 +26,7 @@ Source: rawtherapee-%version%beta.tar
 #Source: https://rawtherapee.com/shared/source/%name-%version.tar.xz
 Source: https://github.com/Beep6581/RawTherapee/releases/download/%version%beta/%name-%version%beta.tar.xz
 %endif
+Patch2000: rawtherapee-e2k.patch
 
 %define gtk_ver 3.24.3
 %define tiff_ver 4.0.4
@@ -63,6 +64,20 @@ This package provides noarch data needed for Raw Therapee to work.
 
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
+%ifarch %e2k
+%patch2000 -p2
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+sed -i 's/-Wall/& -Wno-sign-compare -Wno-unused/' CMakeLists.txt
+sed -i 's/switch(settings->denoiselabgamma)/if(1) &/' rtengine/color.cc
+sed -i -E ":a;/\\\\$/{N;ba};\
+/^[[:space:]]*# *pragma omp .*[[:space:])](num_threads|if *|schedule)\(/{s/#/for(long &/;\
+s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
+s/(#.*if *\()([^()]*)\)/_xxxi=\\2,\\1_xxxi)/;\
+s/(#.*schedule\([^()]*, *)([^()]*)\)/_xxxs=\\2,\\1_xxxs)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
+	rtengine/{cplx_wavelet_level.h,*.cc} rtgui/*.cc
+sed -i 's/default(none)//' rtengine/libraw/src/preprocessing/raw2image.cpp
+%endif
 
 %build
 %define _optlevel 3
@@ -91,6 +106,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12-alt1.1
+- ilyakurdyukov@: fixed build for E2K
+
 * Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12-alt1
 - 5.12
 
