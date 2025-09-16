@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define soversion %version
+%define soversion 2.12.0
 Name: labplot
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
@@ -101,6 +101,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_K6link/liblabplot.so
 
 %changelog
+* Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 2.12.1-alt1
+- 2.12.0 -> 2.12.1
+
 * Sat May 03 2025 Anton Farygin <rider@altlinux.com> 2.12.0-alt1
 - 2.11.1 -> 2.12.0
 - built devel and shared libs packages
