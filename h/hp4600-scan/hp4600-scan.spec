@@ -1,9 +1,9 @@
 Name:          hp4600-scan
 Version:       0.2
-Release:       alt1
+Release:       alt2
 Summary:       Scanning utility for HP Scanjet 4600 and 4670 scanners
 Summary(ru_RU.UTF-8): Утилитка для оцифровки сканерами HP Scanjet 4600 и 4670
-License:       Unlicenced
+License:       Unlicense
 Group:         Graphics
 Url:           http://www.chmil.org/hp4600linux/
 Vcs:           https://github.com/Triften/hp4600.git
@@ -11,7 +11,7 @@ Vcs:           https://github.com/Triften/hp4600.git
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-perl
 BuildRequires: libusb-compat-devel
-BuildRequires: perl-Tk-devel
+BuildRequires: cpan{tk}
 Requires:      udev
 
 %description
@@ -41,6 +41,9 @@ echo %_udevrulesdir/
 
 
 %changelog
+* Mon Sep 15 2025 Pavel Skrylev <majioa@altlinux.org> 0.2-alt2
+- ! fixed call to close in favor of fclose
+
 * Thu Nov 07 2024 Pavel Skrylev <majioa@altlinux.org> 0.2-alt1
 - ^ 0.1 -> 0.2 (on 2024.05)
 - + makefile, and rules fiels

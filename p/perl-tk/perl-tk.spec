@@ -4,7 +4,7 @@
 
 Name:          perl-%dist
 Version:       804.036.28
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Perl modules providing the Tk graphics library
 License:       Artistic-1.0 or GPL-2.0-or-later
 Group:         Development/Perl
@@ -24,9 +24,12 @@ BuildRequires: xvfb-run
 BuildRequires: libXcursor
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: fonts-type1-urw
+Provides:      cpan(tk) = %version
 
-Provides:      perl-Tk-JPEG
-Obsoletes:     perl-Tk-JPEG
+Provides:      perl-Tk = %EVR
+Provides:      perl-Tk-JPEG = %EVR
+Obsoletes:     perl-Tk < %EVR
+Obsoletes:     perl-Tk-JPEG < %EVR
 # provides for demos are useless
 %add_findprov_skiplist %perl_vendor_archlib/Tk/demos/*/*.pl
 %add_findreq_skiplist %perl_vendor_archlib/Tk/demos/widget_lib/*.pl
@@ -56,6 +59,9 @@ Summary:       Perl modules providing the Tk graphics library
 License:       TCL and Artistic-1.0 or GPL-2.0-or-later
 Group:         Development/Perl
 Requires:      %name = %EVR
+Provides:      cpan{tk} = %version
+Provides:      perl-Tk-devel = %EVR
+Obsoletes:     perl-Tk-devel < %EVR
 
 %description   devel
 This is a set of Perl modules which provide access to the Tk library,
@@ -130,6 +136,9 @@ xvfb-run -a make test
 
 
 %changelog
+* Mon Sep 15 2025 Pavel Skrylev <majioa@altlinux.org> 804.036.28-alt0.2
+- ! fixed provides/obsolete deps for packages
+
 * Fri Aug 29 2025 Pavel Skrylev <majioa@altlinux.org> 804.036.28-alt0.1
 - ^ 804.036 -> 804.036p27
 - ! fixed incompatible pointer type compilation error along with others
