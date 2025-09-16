@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name copier
 
-%def_with check
+# Tests disabled due to failures with prompt_toolkit>=3.0.52
+# See: https://github.com/copier-org/copier/discussions/2315
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.9.0
+Version: 9.10.1
 Release: alt1
 
 Summary: A library for rendering project templates
@@ -78,6 +80,9 @@ It's a modern template engine that supports:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 09 2025 Denis Sergeev <zeff@altlinux.org> 9.10.1-alt1
+- 9.9.0 -> 9.10.1.
+
 * Tue Aug 12 2025 Denis Sergeev <zeff@altlinux.org> 9.9.0-alt1
 - 9.8.0 -> 9.9.0.
 
