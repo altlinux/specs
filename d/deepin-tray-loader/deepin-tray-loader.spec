@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.5
+Version: 2.0.10
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -11,7 +11,7 @@ Summary: Tray plugins that integrated into task bar for DDE
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-tray-loader
-Vcs: git://github.com/linuxdeepin/dde-tray-loader.git
+Vcs: https://github.com/linuxdeepin/dde-tray-loader
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -86,7 +86,7 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %find_lang --with-qt trayplugin-loader
 
 %files -f trayplugin-loader.lang
-%doc README*
+%doc README* debian/changelog
 %_libexecdir/trayplugin-loader
 %_dqt6_plugindir/wayland-shell-integration/libplugin-shell.so
 %dir %_datadir/dsg/
@@ -146,6 +146,9 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_pkgconfigdir/dde-dock.pc
 
 %changelog
+* Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.10-alt1
+- New version 2.0.10.
+
 * Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.5-alt1
 - New version 2.0.5.
 
