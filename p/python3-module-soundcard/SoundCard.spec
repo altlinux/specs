@@ -1,14 +1,14 @@
 %define nameD soundcard
 
 Name: python3-module-%nameD
-Version: 0.4.4
-Release: alt2
+Version: 0.4.5
+Release: alt1
 
 Summary: A Pure-Python Real-Time Audio Library
 License: BSD-3-Clause
 Group: Development/Python3
 
-Url: https://pypi.org/project/SoundCard/
+Url: https://pypi.org/project/SoundCard
 Vcs: https://github.com/bastibe/SoundCard
 
 BuildRequires(pre): rpm-build-python3
@@ -43,6 +43,9 @@ the native audio libraries of Linux, Windows and macOS.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Tue Sep 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.5-alt1
+- 0.4.4 -> 0.4.5
+
 * Thu Jul 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4-alt2
 - fixed import error (ALT #55035)
 
