@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf6-%rname
-Version: 6.17.0
+Version: 6.18.0
 Release: alt1
 %K6init no_altplace
 
@@ -22,7 +22,6 @@ Obsoletes: libkf5baloowidgets < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
-Patch2: alt-paths.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -73,7 +72,6 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 %build
 %K6build
@@ -109,6 +107,9 @@ KF6 library
 
 
 %changelog
+* Mon Sep 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
+- new version
+
 * Mon Aug 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.17.0-alt1
 - new version
 
