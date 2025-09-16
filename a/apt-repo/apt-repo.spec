@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.8
+Version:  1.4.9
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -25,16 +25,25 @@ component, branch name or task number.
 install -Dm755 %name %buildroot%_bindir/%name
 install -Dpm 644 %name.8 %buildroot%_man8dir/%name.8
 install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
+install -Dpm 644 bash-completion.sh %buildroot%_datadir/bash-completion/completions/%name
 
 %find_lang %name
+
+%check
+perl -Mstrict -cw apt-repo
+bash -n bash-completion.sh
 
 %files -f %name.lang
 %doc TODO
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_bindir/%name
 %_man8dir/%name.8*
+%_datadir/bash-completion/completions/%name
 
 %changelog
+* Sat Sep 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.9-alt1
+- Added bash-completion script.
+
 * Fri Dec 27 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.8-alt1
 - Remove all branches with any optional components after classic.
 
