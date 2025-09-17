@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -98,6 +98,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Wed Sep 17 2025 Anton Midyukov <antohami@altlinux.org> 128.0-alt2
+- fix build with glib >= 2.86.0
+
 * Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 128.0-alt1
 - 128.0
 
