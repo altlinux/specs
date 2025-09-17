@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.17
+Version: 1.0.22
 Release: alt1
 
 Summary: Document parser library by deepin
@@ -11,12 +11,14 @@ Summary(ru): Библиотека синтаксического анализа 
 License: LGPL-3.0-or-later and GPL-3.0-or-later
 Group: Text tools
 Url: https://github.com/linuxdeepin/docparser
-Vcs: https://github.com/linuxdeepin/docparser.git
+Vcs: https://github.com/linuxdeepin/docparser
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake libpoppler-cpp-devel libzip-devel libpugixml-devel libxml2-devel libuuid-devel libtinyxml2-devel libfreetype-devel
+BuildRequires: gcc-c++ cmake libpoppler-cpp-devel libzip-devel libpugixml-devel libxml2-devel libuuid-devel libtinyxml2-devel libfreetype-devel libmagic-devel
 
 %description
 The file content analysis library is provided for the full-text search function
@@ -65,10 +67,12 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 %cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DLIB_INSTALL_DIR=%_libdir \
 #
 %cmake_build
@@ -77,7 +81,7 @@ Header files and libraries for %name.
 %cmake_install
 
 %files common
-%doc LICENSE* README*
+%doc LICENSE* README* debian/changelog
 
 %files -n lib%repo%soname
 %_libdir/lib%repo.so.%{soname}*
@@ -89,6 +93,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Wed Sep 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.22-alt1
+- New version 1.0.22.
+
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
 - New version 1.0.17.
 
