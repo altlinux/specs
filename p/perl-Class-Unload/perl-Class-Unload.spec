@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Class-Unload
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Unload a class
@@ -46,11 +46,14 @@ the parent namespace.
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
