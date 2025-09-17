@@ -1,11 +1,11 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v410
+%define nameVR _v411
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 410
+Version: 411
 Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
@@ -56,6 +56,20 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Wed Sep 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 411-alt1
+- 410 -> 411:
+  + Updated default prefix backup.
+  + Updated prefix configurations.
+  + Updated list of Wine versions.
+  + Updated list of dxvk and vkd3d versions.
+  + Updated libs in utils.
+  + Fixed DLSS option.
+  + Fixed games autoinstall.
+  + Removed OpenGL mode message.
+  + Removed VULKAN mode message.
+  + Added output colors in terminal.
+  + wine explorer now opens in of current prefix.
+
 * Sun Apr 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 410-alt1
 - 4.0.9 -> 410
 
