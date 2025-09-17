@@ -2,13 +2,13 @@
 %def_without check
 
 Name: helix
-Version: 25.01.1
-Release: alt3
+Version: 25.07.1
+Release: alt1
 
 Summary: A post-modern modal text editor written in Rust
 License: MPL-2.0
 Group: Editors
-Url: https://helix-editor.com/
+Url: https://helix-editor.com
 VCS: https://github.com/helix-editor/helix.git
 
 # Source-url: https://github.com/%name-editor/%name/archive/refs/tags/%version.tar.gz
@@ -16,8 +16,10 @@ Source: %name-%version.tar
 Source1: vendor-%version.tar
 Source2: grammars-%version.tar
 Patch1: alt-use-local-grammar-sources.patch
+Patch2: alt-fix-build-x86-arch.patch
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires: cargo-vendor-checksum
 BuildRequires: rust-cargo
 BuildRequires: gcc-c++
 
@@ -36,6 +38,10 @@ Requires: %name >= %EVR
 %prep
 %setup -a1 -a2
 %patch1 -p1
+%ifarch %ix86
+%patch2 -p1
+%endif
+%__rm -rf runtime/grammars
 %__mv grammars runtime/
 
 mkdir -p .cargo
@@ -46,6 +52,8 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+
+cargo-vendor-checksum --vendor vendor --all
 
 %build
 export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
@@ -65,7 +73,7 @@ export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
 
 %__mkdir -p %buildroot%_libdir/%name
 %__mv runtime/grammars %buildroot%_libdir/%name/
-ln -s %_libdir/%name/grammars runtime/grammars
+%__ln_s %_libdir/%name/grammars runtime/grammars
 
 %__mkdir -p %buildroot%_datadir/helix
 %__mv ./runtime %buildroot%_datadir/helix
@@ -85,6 +93,8 @@ ln -s %_libdir/%name/grammars runtime/grammars
 
 %files
 %doc %_defaultdocdir/%name/README.md
+%dir %_datadir/%name
+%dir %_libdir/%name
 %dir %_libdir/%name/grammars
 %_bindir/hx
 %_datadir/%name/runtime/
@@ -98,6 +108,10 @@ ln -s %_libdir/%name/grammars runtime/grammars
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Wed Sep 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.07.1-alt1
+- new version
+- exclude the gitcommit grammar when building for the x86 architecture
+
 * Thu Mar 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.01.1-alt3
 - Used only third-party tree-sitter's. Fixes the package build for
   branches other than sisyphus.
