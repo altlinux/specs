@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  2.4
+Version:  2.6
 Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
@@ -12,7 +12,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
 BuildRequires(Pre): rpm-macros-cmake
-BuildRequires: build-essential gcc-c++ cmake libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel libxkbcommon-devel
+BuildRequires: build-essential gcc-c++ cmake libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel libxkbcommon-devel libuuid-devel
 
 
 %description
@@ -47,6 +47,9 @@ install -D -m 0644 licence.md %buildroot%_datadir/%name/
 %_iconsdir/%name.png
 
 %changelog
+* Wed Sep 17 2025 Artyom Bystrov <arbars@altlinux.org> 2.6-alt1
+- Update to new version
+
 * Thu Dec 12 2024 Artyom Bystrov <arbars@altlinux.org> 2.4-alt1
 - Update to new version
 - Temporary remove russian locale
