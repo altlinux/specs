@@ -1,6 +1,6 @@
 Name: rbdoom3bfg
 Version: 1.5.1
-Release: alt1.git15be4c6
+Release: alt2.git15be4c6
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
@@ -10,6 +10,7 @@ Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
 
 Source: %name-%version.tar
 Source2: %name.png
+Patch2000: %name-e2k.patch
 
 ExclusiveArch: x86_64 %e2k loongarch64
 
@@ -43,8 +44,11 @@ $HOME/.rbdoom3bfg/
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p2
+%endif
 %__subst \
-%ifarch loongarch64
+%ifarch loongarch64 %e2k
 	's,-march=native,,' \
 %else
 	's,-march=native,-mcpu=native,' \
@@ -96,6 +100,9 @@ install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Wed Sep 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.1-alt2.git15be4c6
+- e2k build fix
+
 * Wed Feb 26 2025 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt1.git15be4c6
 - Fix FTBFS
 
