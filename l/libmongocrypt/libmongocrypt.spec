@@ -5,17 +5,18 @@
 %endif
 
 Name: libmongocrypt
-Version: 1.15.1
-Release: alt2
+Version: 1.15.2
+Release: alt1
 
 Summary: The companion C library for client side encryption in drivers
 
 License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/mongodb/libmongocrypt
-VCS: https://github.com/mongodb/libmongocrypt.git
+VCS: https://github.com/mongodb/libmongocrypt
 
-Source: https://github.com/mongodb/libmongocrypt/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/mongodb/libmongocrypt/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: libmongocrypt-1.15.1-fedora-static-libbson.patch
 
@@ -125,6 +126,9 @@ ctest
 %_pkgconfigdir/libkms_message.pc
 
 %changelog
+* Wed Sep 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.15.2-alt1
+- New version 1.15.2.
+
 * Mon Sep 15 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.15.1-alt2
 - e2k build fix
 
