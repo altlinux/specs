@@ -2,7 +2,7 @@
 Epoch: 2
 %define dist Time-Piece
 Name: perl-%dist
-Version: 1.36
+Version: 1.3701
 Release: alt1
 
 Summary: Object Oriented time objects
@@ -35,11 +35,14 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_install
 
 %files
-%doc Changes README reverse_deps.txt
+%doc Changes README.md
 %perl_vendor_archlib/Time
 %perl_vendor_autolib/Time
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 2:1.3701-alt1
+- automated CPAN update
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 2:1.36-alt1
 - automated CPAN update
 
