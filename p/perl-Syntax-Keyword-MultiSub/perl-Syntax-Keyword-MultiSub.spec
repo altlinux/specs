@@ -7,8 +7,8 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/ShareDir.pm) perl(Module/Bui
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.04
-Release: alt2
+Version: 0.05
+Release: alt1
 Summary: multiple dispatch on subroutines
 Group: Development/Perl
 License: perl
@@ -47,6 +47,9 @@ rm -f t/01multi.t
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
+- automated CPAN update
+
 * Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.04-alt2
 - NMU: fixed build
 
