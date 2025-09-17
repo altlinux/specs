@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: perl-%module
-Version: 20231003.0
+Version: 20250809.0
 Release: alt1
 
 Summary: IPC-Run - system() and background procs w/ piping, redirs, ptys (Unix, Win32)
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NJ/NJM/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ mixed.
 %exclude %perl_vendor_privlib/IPC/Run/Win*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 20250809.0-alt1
+- automated CPAN update
+
 * Thu Oct 05 2023 Igor Vlasenko <viy@altlinux.org> 20231003.0-alt1
 - automated CPAN update
 
