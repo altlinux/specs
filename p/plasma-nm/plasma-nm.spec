@@ -8,8 +8,8 @@
 %endif
 
 Name: %rname
-Version: 6.4.4
-Release: alt2
+Version: 6.4.5
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -278,6 +278,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Tue Sep 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt2
 - fix detect livecd
 

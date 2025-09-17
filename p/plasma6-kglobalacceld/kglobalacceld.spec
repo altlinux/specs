@@ -8,7 +8,7 @@
 %define libkglobalacceld libkglobalacceld%sover
 
 Name: plasma6-%rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -88,6 +88,9 @@ Requires: %name-common >= %EVR
 %_K6lib/cmake/KGlobalAccelD/
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

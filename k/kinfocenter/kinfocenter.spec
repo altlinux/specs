@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -171,6 +171,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

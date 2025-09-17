@@ -5,7 +5,7 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -81,6 +81,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -95,8 +95,7 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 %find_lang %name --with-kde --all-name
 
 %post
-/sbin/setcap CAP_WAKE_ALARM=+ep %_K6libexecdir/org_kde_powerdevil ||:
-
+/usr/sbin/setcap CAP_WAKE_ALARM=+ep %_K6libexecdir/org_kde_powerdevil ||:
 
 %files common -f %name.lang
 %doc COPYING*
@@ -131,6 +130,9 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

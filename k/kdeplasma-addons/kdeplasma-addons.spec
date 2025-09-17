@@ -14,7 +14,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -177,6 +177,9 @@ touch touch-%_arch
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

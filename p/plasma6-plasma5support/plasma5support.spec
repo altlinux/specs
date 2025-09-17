@@ -2,9 +2,10 @@
 
 %define sover 6
 %define libplasma5support libplasma5support%sover
+%define libplasma_geolocation_interface libplasma-geolocation-interface%sover
 
 Name: plasma6-%rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -19,7 +20,7 @@ Patch1: alt-freespace-thread-timer.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libvulkan-devel libXfixes-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
-BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
+BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-networkmanager-qt-devel
 BuildRequires: kf6-knotifications-devel kf6-solid-devel kf6-kio-devel kf6-kidletime-devel
 BuildRequires: plasma6-libksysguard-devel plasma6-activities-devel
 
@@ -51,6 +52,13 @@ Requires: %name-common >= %EVR
 %description -n %libplasma5support
 KF6 library
 
+%package -n %libplasma_geolocation_interface
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common >= %EVR
+%description -n %libplasma_geolocation_interface
+KF6 library
+
 
 %prep
 %setup -n %rname-%version
@@ -76,6 +84,7 @@ KF6 library
 
 %files devel
 %_K6inc/Plasma5Support/
+%_K6inc/plasma/geolocation/
 %_K6link/lib*.so
 %_K6lib/cmake/Plasma5Support/
 
@@ -83,8 +92,14 @@ KF6 library
 %_K6lib/libPlasma5Support.so.*
 %_K6lib/libPlasma5Support.so.%sover
 
+%files -n %libplasma_geolocation_interface
+%_K6lib/libplasma-geolocation-interface.so.*
+%_K6lib/libplasma-geolocation-interface.so.%sover
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

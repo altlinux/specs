@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -152,6 +152,9 @@ done
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 

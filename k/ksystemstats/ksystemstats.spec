@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: %rname
-Version: 6.4.4
+Version: 6.4.5
 Release: alt1
 %K6init
 
@@ -32,12 +32,17 @@ KSystemStats is a daemon that collects statistics about the running system.
 %prep
 %setup -n %rname-%version
 
+sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
+
 %build
 %K6build
 
 %install
 %K6install
 %find_lang %name --all-name
+
+%post
+/usr/sbin/setcap CAP_PERFMON=+ep %_K6libexecdir/ksystemstats_intel_helper ||:
 
 %files -f %name.lang
 %doc LICENSES/*
@@ -50,6 +55,9 @@ KSystemStats is a daemon that collects statistics about the running system.
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
+- new version
+
 * Fri Aug 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.4-alt1
 - new version
 
