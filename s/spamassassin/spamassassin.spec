@@ -4,7 +4,7 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: Spam filter for email written in perl
@@ -264,6 +264,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed Sep 17 2025 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt1
+- 4.0.2.
+
 * Tue Apr 09 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt1
 - 4.0.1.
 
