@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/File.pm) p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.92
+Version: 1.93
 Release: alt1
 Summary: A pure perl BibTeX parser
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 1.93-alt1
+- automated CPAN update
+
 * Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 1.92-alt1
 - automated CPAN update
 
