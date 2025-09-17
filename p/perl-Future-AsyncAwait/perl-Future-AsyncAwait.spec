@@ -20,7 +20,7 @@ BuildRequires: perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm)
 %endif
 
 Name: perl-%module_name
-Version: 0.70
+Version: 0.71
 Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
@@ -61,6 +61,9 @@ The new syntax takes the form of two new keywords, async and await.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.71-alt1
+- automated CPAN update
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.70-alt1
 - automated CPAN update
 
