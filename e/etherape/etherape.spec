@@ -1,7 +1,7 @@
 Summary: Graphical network viewer modeled after etherman.
 Name: etherape
-Version: 0.9.20
-Release: alt2
+Version: 0.9.21
+Release: alt1
 License: GPLv2+
 Group: Networking/Other
 Packager: Ilya Mashkin <oddity at altlinux.ru>
@@ -57,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #_var/lib/scrollkeeper/*
 
 %changelog
+* Wed Sep 17 2025 Ilya Mashkin <oddity@altlinux.ru> 0.9.21-alt1
+- 0.9.21
+
 * Thu May 08 2025 Anton Midyukov <antohami@altlinux.org> 0.9.20-alt2
 - NMU: use pkexec instead consolehelper (Closes: 54156)
 
