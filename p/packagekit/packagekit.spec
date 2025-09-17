@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt5
+Release:   alt6
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -321,6 +321,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Wed Sep 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt6
+- add package installation from a file (closes: 55337)
+
 * Mon Jul 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt5
 - Move the polkit rule to a separate package that allows users in the wheel
   group to install any packages.
