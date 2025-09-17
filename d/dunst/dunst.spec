@@ -2,12 +2,13 @@
 %def_enable check
 
 Name: dunst
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 Summary: Lightweight replacement for the notification-daemons
 License: BSD
 Group: Graphical desktop/Other
 Url: https://dunst-project.org
+Vcs: https://github.com/dunst-project/dunst.git
 Source: %name-%version.tar.gz
 
 %if_enabled check
@@ -52,6 +53,9 @@ sed -i '/RUN_SUITE(suite_draw)/d' test/test.c
 %_sysconfdir/%name
 
 %changelog
+* Tue Sep 09 2025 Ulysses Apokin <ulysses@altlinux.org> 1.13.0-alt1
+- Autobuild version bump to 1.13.0
+
 * Mon Mar 24 2025 Ulysses Apokin <ulysses@altlinux.org> 1.12.2-alt1
 - NMU: Autobuild version bump to 1.12.2
 - Add sh-completions
