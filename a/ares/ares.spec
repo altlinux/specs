@@ -1,5 +1,5 @@
 Name:     ares
-Version:  145
+Version:  146
 Release:  alt1
 
 Summary:  ares is a cross-platform, open source, multi-system emulator, focusing on accuracy and preservation.
@@ -43,6 +43,9 @@ cp -dr --no-preserve=ownership ./mia/Database/ %buildroot%_datadir/%name/
 %doc LICENSE
 
 %changelog
+* Wed Sep 17 2025 Artyom Bystrov <arbars@altlinux.org> 146-alt1
+- update to new version
+
 * Fri Aug 22 2025 Artyom Bystrov <arbars@altlinux.org> 145-alt1
 - update to new version
 
