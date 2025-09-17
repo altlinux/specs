@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISBN-Data
-Version: 20250801.001
+Version: 20250915.001
 Release: alt1
 
 Summary: data pack for Business::ISBN
@@ -72,6 +72,9 @@ future releases.
 %perl_vendor_privlib/Business*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 20250915.001-alt1
+- automated CPAN update
+
 * Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 20250801.001-alt1
 - automated CPAN update
 
