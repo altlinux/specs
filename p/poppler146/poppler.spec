@@ -3,7 +3,7 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_disable compat
+%def_enable compat
 %def_enable jpeg2000
 
 %if_disabled compat
@@ -28,14 +28,14 @@
 %endif
 
 %define rname poppler
-%define somajor 151
+%define somajor 146
 %define somajor_cpp 2
 %define somajor_qt 3
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
 %define major 25
-%define minor 07
+%define minor 02
 %define bugfix 0
 
 %if_disabled compat
@@ -45,7 +45,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -76,9 +76,6 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
-# FC
-Patch1: poppler-0.90.0-position-independent-code.patch
-Patch2: poppler-21.01.0-glib-introspection.patch
 # ALT
 Patch10: alt-e2k.patch
 Patch11: alt-openjpeg-version.patch
@@ -284,9 +281,7 @@ GObject introspection devel data for the Poppler library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
-%patch2 -p1
-#
+%patch10 -p1
 %patch11 -p1
 %if_enabled cryptopro
 %patch12 -p1
@@ -412,8 +407,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed Sep 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.07.0-alt4
-- new version
+* Wed Sep 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt5
+- build only compat library
 
 * Thu Aug 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.02.0-alt4
 - fixed the client crash when attempting to verify a signature via the
