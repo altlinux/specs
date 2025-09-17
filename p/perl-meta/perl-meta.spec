@@ -15,7 +15,7 @@ BuildRequires: perl-podlators
 %bcond_without perl_meta_enables_optional_test
 
 Name:           perl-meta
-Version:        0.013
+Version:        0.014
 Release:        alt1
 Summary:        Meta-programming API
 License:        GPL-1.0-or-later OR Artistic-1.0-Perl
@@ -104,6 +104,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.014-alt1
+- automated CPAN update
+
 * Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.013-alt1
 - automated CPAN update
 
