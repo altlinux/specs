@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.30.0
+Version: 0.36.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -28,6 +28,11 @@ When using with ollama it's important to increase its context limit by
 setting in /etc/sysconfig/ollama:
 
     OLLAMA_CONTEXT_LENGTH=131072
+
+Warning: The tool is provided experimentally without warranty of
+functionality, performance, or availability. Features may change, regress,
+or fail without notice; use at your own risk. The tool is provided solely
+as a showcase and proof-of-concept, without upstream support.
 
 %prep
 %setup
@@ -77,6 +82,7 @@ codex --version | grep -Fx '%name-cli %version'
   codex debug landlock --full-auto touch a
   rm a
 ! codex debug landlock --full-auto touch ../a || exit 2
+! grep -i 'Update available|api.github.com' %buildroot%_bindir/%name || exit 3
 
 %files
 %define _customdocdir %_docdir/%name
@@ -88,5 +94,11 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Tue Sep 16 2025 Vitaly Chikunov <vt@altlinux.org> 0.36.0-alt1
+- Experimental update to rust-v0.36.0 (2025-09-15).
+- Disabled unsolicited remote version check and upgrade banner.
+- Allow to disable --oss mode with --oss=false, which is required for API
+  access to any models except gpt-oss via local Ollama.
+
 * Sat Sep 06 2025 Vitaly Chikunov <vt@altlinux.org> 0.30.0-alt1
 - Experimental import rust-v0.30.0 (2025-09-05).
