@@ -1,5 +1,5 @@
-%define quake2_ver 8.51
-%define ref_vk_ver 1.0.10
+%define quake2_ver 8.60
+%define ref_vk_ver 1.0.11
 
 Name: yquake2
 Version: %quake2_ver
@@ -60,6 +60,10 @@ ln -sf %_libdir/%name/quake2 %buildroot%_gamesbindir/quake2
 %_gamesbindir/q2ded
 
 %changelog
+* Wed Sep 17 2025 L.A. Kostis <lakostis@altlinux.ru> 8.60-alt1
+- quake2: updated to 8.60.
+- ref_vk: updated to 1.0.11.
+
 * Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 8.51-alt1
 - quake2: update to 8.51.
 
