@@ -6,8 +6,8 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
 License: perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.14-alt2
 - fixed build with perl 5.38
 
