@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: inputplumber
-Version: 0.62.2
-Release: alt2
+Version: 0.63.1
+Release: alt1
 
 Summary: Open source input router and remapper daemon for Linux
 
@@ -20,7 +20,7 @@ Patch: inputplumber-0.58.6-alt-loongarch64-nix-0.26.4.patch
 BuildRequires: rust-cargo
 BuildRequires: cmake gcc-c++
 BuildRequires: libudev-devel clang-devel libiio-devel
-Requires: dbus udev
+Requires: dbus udev polkit
 
 %description
 InputPlumber is an open source input routing and control daemon for Linux. It can be used to combine any number of input devices (like gamepads, mice, and keyboards) and translate their input to a variety of virtual device formats.
@@ -73,6 +73,7 @@ EOF
 %_bindir/inputplumber
 %_datadir/dbus-1/system.d/org.shadowblip.InputPlumber.conf
 %_datadir/inputplumber/
+%_datadir/polkit-1/actions/org.shadowblip.InputPlumber.policy
 %_unitdir/inputplumber-suspend.service
 %_unitdir/inputplumber.service
 %_udevhwdbdir/59-inputplumber.hwdb
@@ -80,6 +81,9 @@ EOF
 %_udevrulesdir/90-inputplumber-autostart.rules
 
 %changelog
+* Wed Sep 17 2025 Boris Yumankulov <boria138@altlinux.org> 0.63.1-alt1
+- new version 0.63.1
+
 * Mon Sep 15 2025 Ivan A. Melnikov <iv@altlinux.org> 0.62.2-alt2
 - NMU: restore patching vendored nix 0.26.4 for loongarch64 support
   (fixes FTBFS on loongarch64, again)
