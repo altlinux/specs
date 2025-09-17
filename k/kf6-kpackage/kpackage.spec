@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.18.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: dont-generate-appstream-data.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-tools-devel
@@ -47,6 +48,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -R -p1
 
 %build
 %K6build
@@ -72,6 +74,9 @@ KF6 library
 
 
 %changelog
+* Wed Sep 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt2
+- enable generation appstream data by default
+
 * Mon Sep 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
 - new version
 
