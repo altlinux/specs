@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires: perl-Encode-CN perl-Encode-JP perl-Encode-KR perl-Encode-TW
 
 Name: perl-%module_name
-Version: 1.07
+Version: 1.08
 Release: alt1
 Summary: Log::Report in the lightest form
 Group: Development/Perl
@@ -32,10 +32,13 @@ export NPROCS=1
 %perl_vendor_install
 
 %files
-%doc ChangeLog README README.md
+%doc ChangeLog README.md
 %perl_vendor_privlib/L*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
+- automated CPAN update
+
 * Thu Jan 21 2021 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
 - automated CPAN update
 
