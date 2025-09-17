@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-multicorn2
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Multicorn Python3 Wrapper for Postgresql %pg_ver Foreign Data Wrapper
 License: PostgreSQL
@@ -44,7 +44,7 @@ rm -rf python/multicorn/gitfdw.py
 %doc README.md
 %doc %_defaultdocdir/postgresql/extension/multicorn.md
 %_libdir/pgsql/*.so
-%ifnarch %e2k loongarch64
+%ifnarch %e2k
 %_libdir/pgsql/bitcode/multicorn*
 %endif
 %python3_sitelibdir/multicorn
@@ -52,6 +52,9 @@ rm -rf python/multicorn/gitfdw.py
 %_datadir/pgsql/extension
 
 %changelog
+* Wed Sep 17 2025 Ivan A. Melnikov <iv@altlinux.org> 3.1-alt2
+- NMU: revert loongarch that is not relevant anymore
+
 * Thu Aug 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.1-alt1
 - New version.
 
