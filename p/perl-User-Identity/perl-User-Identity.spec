@@ -18,7 +18,7 @@ BuildRequires: perl(Hash/Ordered.pm)
 %define _enable_test 1
 
 Name: perl-User-Identity
-Version: 1.02
+Version: 1.03
 Release: alt1
 
 Summary: Define a user
@@ -57,11 +57,14 @@ or whatever. Extension to simplify this task are still to be developed.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
-%doc README ChangeLog README.md
+%doc ChangeLog README.md
 %perl_vendor_privlib/User/*
 %perl_vendor_privlib/Mail/*
 
 %changelog
+* Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 1.03-alt1
+- automated CPAN update
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
 - automated CPAN update
 
