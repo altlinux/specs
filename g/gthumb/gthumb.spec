@@ -6,9 +6,7 @@
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.gThumb
 
-%def_enable exiv2
 %def_enable libbrasero
-%def_enable webservices
 %def_disable libchamplain
 %def_enable clutter
 %def_enable libraw
@@ -22,7 +20,7 @@
 %endif
 
 Name: gthumb
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -56,30 +54,25 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define desktop_file_utils_ver 0.8
 %define appstream_ver 0.14.6
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson intltool yelp-tools
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libexiv2-devel >= %exiv2_ver gcc-c++
 %{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver}
 %{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel librsvg-devel
 BuildRequires: libwebp-devel >= %webp_ver libjson-glib-devel
-BuildRequires: libsecret-devel
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libsoup-devel >= %soup_ver  pkgconfig(webkit2gtk-4.0) >= %webkit_ver
 %{?_enable_libraw:BuildRequires: libraw-devel >= %libraw_ver libgomp-devel}
 %{?_enable_libheif:BuildRequires: libheif-devel >= %heif_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
-%{?_enable_webservices:BuildRequires: bison flex}
 %{?_enable_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_colord:BuildRequires: libcolord-devel}
 %{?_enable_libjxl:BuildRequires: libjxl-devel}
-
-%if_enabled exiv2
-BuildRequires: libexiv2-devel >= %exiv2_ver gcc-c++
-%endif
 
 BuildRequires: libjpeg-devel libtiff-devel libXrender-devel libXext-devel libX11-devel
 BuildRequires: libXtst-devel libXxf86vm-devel libXi-devel
@@ -114,18 +107,19 @@ This package provides noarch data needed for gThumb to work.
 %package devel
 Summary: gThumb development files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains headers needed to build extensions for gThumb.
 
 %prep
 %setup
+sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
+    extensions/image_rotation/rotation-utils.c
 
 %build
 %meson \
     -Dlibtiff=true \
-    %{subst_enable_meson_bool exiv2 exiv2} \
     %{subst_enable_meson_bool libbrasero libbrasero} \
     %{subst_enable_meson_bool libchamplain libchamplain} \
     %{subst_enable_meson_bool libraw libraw} \
@@ -147,9 +141,10 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/%name/extensions/*
 %dir %_libexecdir/%name
 %_libexecdir/%name/video-thumbnailer
+%_desktopdir/*
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %files data  -f %name.lang
-%_desktopdir/*
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.change-date.gschema.xml
@@ -159,16 +154,13 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.convert-format.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.crop.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.enums.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.facebook.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.file-manager.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.flickr.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gstreamer-tools.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.image-print.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.image-viewer.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.importer.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.photo-importer.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.picasaweb.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.pixbuf-savers.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.rename-series.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.resize.gschema.xml
@@ -177,7 +169,6 @@ This package contains headers needed to build extensions for gThumb.
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.terminal.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/gthumb.1.*
 %doc AUTHORS NEWS README*
 
@@ -187,6 +178,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.8-alt1
+- 3.12.8
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt1
 - 3.12.7
 
