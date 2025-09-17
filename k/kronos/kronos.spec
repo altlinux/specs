@@ -1,7 +1,7 @@
 %set_gcc_version 13
 Name:     kronos
-Version:  2.6.2
-Release:  alt2
+Version:  2.7.0
+Release:  alt1
 
 Summary:  Sega Saturn Emulator
 License:  GPL2
@@ -24,6 +24,8 @@ Yet Another Buggy And Uncomplete Saturn Emulator
 %setup
 export CC=%__cc
 export CXX=%__cxx
+sed -i 's/^cmake_minimum_required(VERSION [.0-9]*)/cmake_minimum_required(VERSION 3.5)/' yabause/CMakeLists.txt
+sed -i 's/^cmake_minimum_required(VERSION [.0-9]*)/cmake_minimum_required(VERSION 3.5)/' yabause/src/core/m68k/musashi/CMakeLists.txt
 
 %build
 cd yabause
@@ -46,6 +48,10 @@ cd yabause
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Sep 17 2025 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt1
+- Update to new version
+- Fix build with new CMake
+
 * Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt2
 - Fix build.
 
