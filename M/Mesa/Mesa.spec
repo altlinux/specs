@@ -95,7 +95,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.2
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -126,7 +126,7 @@ BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches %vulkan_nouveau_arches
 BuildRequires: libvulkan-devel
 %endif
-%ifarch %vulkan_nouveau_arches
+%ifarch %vulkan_nouveau_arches %gallium_opencl_arches
 BuildRequires: cbindgen rust rust-bindgen
 %endif
 %ifnarch %e2k
@@ -483,6 +483,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Sep 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.3-alt1
+- 25.2.3
+
 * Fri Sep 05 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.2-alt1
 - 25.2.2
 
