@@ -1,7 +1,7 @@
 %define soversion 3.0
 
 Name: SFML
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -9,6 +9,7 @@ License: Zlib
 Group: System/Libraries
 
 Url: http://www.sfml-dev.org/
+Vcs: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # Source-url: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
@@ -84,6 +85,9 @@ developing applications that use SFML.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Thu Sep 18 2025 Nazarov Denis <nenderus@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Tue Apr 22 2025 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 
