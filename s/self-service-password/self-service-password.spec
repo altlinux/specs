@@ -4,7 +4,7 @@
 
 Name: self-service-password
 Version: 1.7.3
-Release: alt1
+Release: alt2
 
 Summary: LDAP password change web interface
 
@@ -18,14 +18,7 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-php-version >= 7.3
-# BuildRequires: php-devel = %php_version
-
-Requires: php%_php_suffix-gd
-Requires: php%_php_suffix-ldap
-Requires: php%_php_suffix-mbstring
-Requires: php%_php_suffix-Smarty
-Requires: php%_php_suffix-sodium
+BuildRequires(pre): rpm-build-php
 
 %description
 Self Service Password is a simple PHP application that allows users to change
@@ -33,6 +26,8 @@ their password on an LDAP directory.
 
 Self Service Password is provided by LDAP Tool Box project:
 http://ltb-project.org
+
+Recommends: php-gd, php-ldap, php-mbstring, php-smarty, php-sodium.
 
 %prep
 %setup -n ltb-project-%name-%version
@@ -79,7 +74,7 @@ install -p -m 644 packaging/rpm/SOURCES/self-service-password-apache.conf \
 
 # Adapt Smarty paths
 sed \
-  -e 's:%_datadir/php/smarty3:%_datadir/php/Smarty:' \
+  -e 's:/usr/share/php/smarty3:%php_moddir/smarty/lib:' \
   -e 's:^#$smarty_cache_dir.*:$smarty_cache_dir = "'%ssp_cachedir/cache'";:' \
   -e 's:^#$smarty_compile_dir.*:$smarty_compile_dir = "'%ssp_cachedir/templates_c'";:' \
   -i conf/config.inc.php
@@ -136,5 +131,8 @@ rm -rf %ssp_cachedir/{cache,templates_c}/*
 %attr(-,apache,apache) %ssp_cachedir/templates_c
 
 %changelog
+* Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.3-alt2
+- Fixed build with php-smarty 5.5.2-alt1.
+
 * Mon Aug 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.3-alt1
 - Initial build for ALT Sisyphus.

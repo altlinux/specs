@@ -1,9 +1,9 @@
-%define _smartydir %php_datadir/Smarty
-%define php_extension Smarty
+%define _smartydir %php_moddir/smarty
+%define php_extension smarty
 
-Name: smarty
-Version: 5.5.1
-Release: alt1
+Name: php%_php_suffix-%php_extension
+Version: 5.5.2
+Release: alt%php_version.%php_release
 
 Summary: Template engine for PHP
 
@@ -12,10 +12,12 @@ Group: Development/Other
 Url: https://www.smarty.net
 VCS: https://github.com/smarty-php/smarty
 
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source0: php-%php_extension-%version.tar
+Patch0: php-%php_extension-%version-alt.patch
 
-BuildRequires: rpm-build-php-version
+BuildArch: noarch
+
+BuildRequires(pre): rpm-build-php8.4-version
 
 %description
 Smarty is a template engine for PHP. Smarty provides your basic
@@ -25,33 +27,27 @@ as configuration files, template functions, variable modifiers, and
 making all of this functionality as easy as possible to use for both
 programmers and template designers.
 
-%package -n php%_php_suffix-%php_extension
-Summary: Template engine for PHP
-Group: Development/Other
-BuildArch: noarch
-
-%description -n php%_php_suffix-%php_extension
-Smarty is a template engine for PHP. Smarty provides your basic
-variable substitution and dynamic block functionality, and also takes
-a step further to be a "smart" template engine, adding features such
-as configuration files, template functions, variable modifiers, and
-making all of this functionality as easy as possible to use for both
-programmers and template designers.
-
 %prep
-%setup
+%setup -n php-%php_extension-%version
 %patch0 -p1
 
 %install
-install -d %buildroot%_smartydir
-install libs/Smarty.class.php %buildroot%_smartydir
+install -D libs/Smarty.class.php -t %buildroot%_smartydir/libs
+cp -a src %buildroot%_smartydir
 
 %files -n php%_php_suffix-%php_extension
 %doc LICENSE CHANGELOG.md README.md CONTRIBUTING.md TODO.txt
-%dir %_smartydir
-%_smartydir/*.class.php
+%_smartydir
 
 %changelog
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- rebuilt with php-devel = %php_version-%php_release
+
+* Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.2-alt1
+- New version 5.5.2.
+- Renamed: smarty -> php-smarty.
+- Packaged src files for the libs.
+
 * Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.1-alt1
 - New version 5.5.1.
 - Returned to Sisyphus (for self-service-password).
