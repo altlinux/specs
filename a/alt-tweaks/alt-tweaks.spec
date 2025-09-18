@@ -1,8 +1,9 @@
 %define xdg_name org.alt.Tweaks
+%add_python3_path /usr/share/alt-tweaks/alt_tweaks/
 
 Name: alt-tweaks
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
 Group: Graphical desktop/GNOME
@@ -31,6 +32,7 @@ BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
 BuildRequires: libhandy1-devel 
+AutoProv: nopython3
 
 %description
 Mobile Advanced Settings App for phosh and related components of ALT Mobile OS.
@@ -65,6 +67,9 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %doc README*
 
 %changelog
+* Tue Sep 16 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt3
+- Add python3-module-yaml in Requires
+
 * Thu Apr 17 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt2
 - Remove lockscreen wallpaper option
 
