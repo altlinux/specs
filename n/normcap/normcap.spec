@@ -1,6 +1,6 @@
 Name: normcap
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: OCR powered screen-capture tool to capture information instead of images
 
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: tesseract
+Requires: tesseract xsel
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling python3-module-wheel
@@ -56,6 +56,9 @@ install -Dm 0644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Thu Sep 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt2
+- add requires xsel
+
 * Tue Sep 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
 - Release: 0.6.0.
 
