@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-arcmenu
-Version: 67.0
+Version: v67.1
 Release: alt1
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
@@ -47,6 +47,9 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> v67.1-alt1
+- New version v67.1.
+
 * Mon Sep 08 2025 Anton Midyukov <antohami@altlinux.org> 67.0-alt1
 - New version 67.0.
 

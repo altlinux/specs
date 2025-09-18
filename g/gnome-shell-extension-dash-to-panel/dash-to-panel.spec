@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-dash-to-panel
-Version: 68
-Release: alt5.119a5928.1
+Version: 70
+Release: alt1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -55,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 %doc README.md COPYING
 
 %changelog
+* Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 70-alt1
+- New version 70.
+
 * Tue Jul 29 2025 Anton Midyukov <antohami@altlinux.org> 68-alt5.119a5928.1
 - update russian translation
 
