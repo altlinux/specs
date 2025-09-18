@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -50,6 +50,10 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Tue Sep 16 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.15-alt1
+- Fixed printing of components of selected editions.
+- Fix of confirmation message for packages apt operations.
+
 * Tue Sep 02 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.14-alt1
 - Fix localization of output of installation/removal of components.
 - Fix localization of output of installation/removal/updating of packages by apt.
