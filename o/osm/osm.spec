@@ -1,5 +1,5 @@
 Name: osm
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Open Sound Meter
@@ -56,6 +56,9 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Sep 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.2-alt1
+- 1.5.2 released
+
 * Mon Sep 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.1-alt1
 - 1.5.1 released
 
