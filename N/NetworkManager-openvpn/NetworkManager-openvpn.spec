@@ -11,7 +11,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -115,6 +115,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Sep 17 2025 Mikhail Efremov <sem@altlinux.org> 1.12.3-alt1
+- Updated to 1.12.3.
+
 * Tue Aug 12 2025 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
 - Build auth-dialog with GTK3 for now.
 - Updated to 1.12.2.
