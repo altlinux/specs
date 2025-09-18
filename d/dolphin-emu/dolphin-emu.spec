@@ -1,13 +1,14 @@
-%define git_commit 9843115ad8414970312c954d83145300d7cdbec3
+%define git_commit f0519d4f6cfa650846674d0b15849035b4c27e74
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
-%define implot_version 0.16
-%define rcheevos_commit 0115d9198ff7a73ff6568027dfb948ef6031818c
+%define implot_commit 3da8bd34299965d3b0ab124df743fe3e076fa222
+%define rcheevos_version 12.0.0
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 %define zlib_ng_commit ce01b1e41da298334f8214389cc9369540a7560f
+%define watcher_version 0.13.6
 
 Name: dolphin-emu
-Version: 2506a
+Version: 2509
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -23,20 +24,21 @@ ExclusiveArch: x86_64 aarch64
 Source0: dolphin-%version.tar
 # https://github.com/lsalzman/enet/archive/%enet_commit/enet-%enet_commit.tar.gz
 Source1: enet-%enet_commit.tar
-# https://github.com/epezent/implot/archive/v%implot_version/implot-%implot_version.tar.gz
-Source2: implot-%implot_version.tar
-# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source3: rcheevos-%rcheevos_commit.tar
+# https://github.com/epezent/implot/archive/%implot_commit/implot-%implot_commit.tar.gz
+Source2: implot-%implot_commit.tar
+# https://github.com/RetroAchievements/rcheevos/archive/v%rcheevos_version/rcheevos-%rcheevos_version.tar.gz
+Source3: rcheevos-%rcheevos_version.tar
 # https://github.com/syoyo/tinygltf/archive/%tinygltf_commit/tinygltf-%tinygltf_commit.tar.gz
 Source4: tinygltf-%tinygltf_commit.tar
 # https://github.com/zlib-ng/zlib-ng/archive/$zlib_ng_commit/zlib-ng-%zlib_ng_commit.gz
 Source5: zlib-ng-%zlib_ng_commit.tar
+# https://github.com/e-dant/watcher/archive/%watcher_version/watcher-%watcher_version.tar.gz
+Source6: watcher-%watcher_version.tar
 
 Patch0: dolphin-gbacore-alt.patch
 
 BuildRequires: bzlib-devel
-BuildRequires: cmake
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libSFML-devel
 BuildRequires: libXi-devel
 BuildRequires: libXrandr-devel
@@ -57,7 +59,7 @@ BuildRequires: liblzo2-devel
 BuildRequires: libmbedtls-compat-devel
 BuildRequires: libmgba-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libminizip-ng-compat-devel
+BuildRequires: libminizip-ng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libspng-devel
@@ -71,7 +73,6 @@ BuildRequires: libxml2-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzstd-devel
 BuildRequires: llvm-devel
-BuildRequires: llvm18.1-gold
 BuildRequires: qt6-svg-devel
 BuildRequires: zlib-devel
 
@@ -80,13 +81,14 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4 -b 5
+%setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 
 %__mv -Tf ../enet-%enet_commit Externals/enet/enet
-%__mv -Tf ../implot-%implot_version Externals/implot/implot
-%__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
+%__mv -Tf ../implot-%implot_commit Externals/implot/implot
+%__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 %__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
+%__mv -Tf ../watcher-%watcher_version Externals/watcher/watcher
 
 %patch0 -p1
 
@@ -122,6 +124,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Thu Sep 18 2025 Nazarov Denis <nenderus@altlinux.org> 2509-alt1
+- Version 2509
+
 * Fri Jun 06 2025 Nazarov Denis <nenderus@altlinux.org> 2506a-alt1
 - Version 2506a
 
