@@ -1,19 +1,14 @@
 %define pg_ver 14
 %define prog_name tds_fdw
-%ifarch loongarch64
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Summary: TDS Foreign data wrapper
 Name: postgresql%pg_ver-%prog_name
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 License: PostgreSQL
 Group: Databases
 Url: https://github.com/tds-fdw/tds_fdw
-Packager: Pavel Vasenkov <pav@altlinux.org>
 Source: %prog_name.tar
 
 BuildRequires: libfreetds-devel
@@ -35,6 +30,7 @@ as Sybase databases and Microsoft SQL server.
 %make PG_CONFIG=%_bindir/pg_server_config USE_PGXS=1
 %make_build
 
+%install
 %makeinstall_std
 
 %files
@@ -48,6 +44,10 @@ as Sybase databases and Microsoft SQL server.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Sep 18 2025 Alexei Takaseev <taf@altlinux.org> 2.0.5-alt1
+- 2.0.5
+- Add lost %%install section
+
 * Mon Sep 30 2024 Alexei Takaseev <taf@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
