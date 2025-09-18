@@ -1,5 +1,5 @@
 Name: pavucontrol
-Version: 6.1
+Version: 6.2
 Release: alt1
 
 Summary: PulseAudio Volume Control
@@ -42,8 +42,12 @@ the volume of hardware devices and of each playback stream seperately.
 %_datadir/metainfo/*.xml
 %_datadir/doc/pavucontrol
 %_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.*
 
 %changelog
+* Thu Sep 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 6.2-alt1
+- 6.2 released
+
 * Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1-alt1
 - 6.1 released
 
