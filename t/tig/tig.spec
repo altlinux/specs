@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.12
+Version: 2.6.0
 Release: alt1
 
 Summary: Text-mode interface for git
@@ -81,6 +81,9 @@ script -e -c 'make test-address-sanitizer' /dev/null
 %_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Wed Sep 17 2025 Vitaly Chikunov <vt@altlinux.org> 2.6.0-alt1
+- Update to tig-2.6.0 (2025-09-16).
+
 * Thu Feb 06 2025 Vitaly Chikunov <vt@altlinux.org> 2.5.12-alt1
 - Update to tig-2.5.12 (2025-02-05).
 
