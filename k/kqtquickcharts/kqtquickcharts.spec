@@ -1,23 +1,23 @@
 %define rname kqtquickcharts
 
 Name: %rname
-Version: 24.12.3
+Version: 25.08.1
 Release: alt1
-%K5init
+%K6init
 
 Group: Graphical desktop/KDE
 Summary: Beautiful and interactive charts for Qt Quick
 Url: http://www.kde.org
 License: BSD-3-Clause
 
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 Provides:  kde5-kqtquickcharts = %EVR
 Obsoletes: kde5-kqtquickcharts < %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel
 
 %description
 Beautiful and interactive charts for Qt Quick.
@@ -26,7 +26,7 @@ Beautiful and interactive charts for Qt Quick.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 Provides:  kde5-kqtquickcharts-common = %EVR
 Obsoletes: kde5-kqtquickcharts-common < %EVR
 %description common
@@ -44,24 +44,27 @@ developing applications that use %name.
 %setup -n %rname-%version
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
 
 %files
-%_K5qml/org/kde/charts/
+%_K6qml/org/kde/charts/
 
 %files devel
-%_K5inc/kqtquickcharts_version.h
+%_K6inc/kqtquickcharts_version.h
 %_libdir/cmake/KQtQuickCharts/
 
 
 %changelog
+* Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

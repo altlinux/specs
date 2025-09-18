@@ -1,9 +1,9 @@
 %define rname ktouch
 
 Name: %rname
-Version: 24.12.3
+Version: 25.08.1
 Release: alt1
-%K5init
+%K6init
 
 Group: Education
 Summary: A program for learning touch typing
@@ -16,14 +16,16 @@ Obsoletes: kde5-ktouch < %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-declarative-devel qt5-script-devel qt5-x11extras-devel qt5-xmlpatterns-devel qt5-quickcontrols2-devel
+BuildRequires: qt6-declarative-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libXres-devel
-BuildRequires: kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel
-BuildRequires: kf5-kitemviews-devel kf5-kpackage-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kiconthemes-devel
+BuildRequires: libXres-devel libxml2-devel
+BuildRequires: libX11-devel libxkbcommon-devel libxkbfile-devel libxcb-devel
+BuildRequires: kf6-kcmutils-devel kf6-kcompletion-devel kf6-kdeclarative-devel kf6-kdoctools-devel
+BuildRequires: kf6-kitemviews-devel kf6-kpackage-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kqtquickcharts-devel
 
 %description
 KTouch is a program for learning touch typing. KTouch is a way to learn
@@ -37,25 +39,28 @@ to write. KTouch can also help you to remember what fingers to use.
 %setup -n %rname-%version
 
 %build
-%K5build \
+%K6build \
     -DCOMPILE_QML=OFF \
     #
 
 %install
-%K5install
-%K5install_move data ktouch
+%K6install
+%K6install_move data ktouch
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K5bin/ktouch
-%_K5xdgapp/org.kde.ktouch.desktop
-%_K5icon/*/*/apps/ktouch.*
-%_K5data/ktouch/
-%_K5cfg/ktouch.kcfg
+%_K6bin/ktouch
+%_K6xdgapp/org.kde.ktouch.desktop
+%_K6icon/*/*/apps/ktouch.*
+%_K6data/ktouch/
+%_K6cfg/ktouch.kcfg
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

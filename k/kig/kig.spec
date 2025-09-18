@@ -1,12 +1,12 @@
 %define rname kig
-%add_python3_path %_K5bin
-%add_findreq_skiplist %_K5bin/pykig.py
+%add_python3_path %_K6bin
+%add_findreq_skiplist %_K6bin/pykig.py
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: %rname
-Version: 24.12.3
+Version: 25.08.1
 Release: alt1
-%K5init
+%K6init
 
 Group: Education
 Summary: Interactive Geometry
@@ -18,17 +18,15 @@ Provides:  kde5-kig = %EVR
 Obsoletes: kde5-kig < %EVR
 
 Source: %rname-%version.tar
-# upstream
-Patch1: 0001-explicitly-use-QLibrary-to-load-libpython-like-pykde.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-python3
-BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-svg-devel qt5-xmlpatterns-devel
+BuildRequires(pre): rpm-build-kf6 rpm-build-python3
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel
 BuildRequires: boost-devel-headers boost-python3-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel
-BuildRequires: kf5-kemoticons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-syntax-highlighting-devel
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel  kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel
+BuildRequires: kf6-kjobwidgets-devel kf6-kparts-devel kf6-kservice-devel kf6-ktexteditor-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel kf6-syntax-highlighting-devel
 
 %description
 Kig is a program for exploring geometric constructions.
@@ -36,14 +34,13 @@ Kig is a program for exploring geometric constructions.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 sed -i '1d' pykig/pykig.py
 sed -i '1i#!%__python3' pykig/pykig.py
 #sed -i -E '/[[:space:]]except[[:space:]]+.*,.*/s/(^.*except[[:space:]]+)([[:alpha:]].*):$/\1(\2):/' pykig/pykig.py
 
 %build
 PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
-%K5build \
+%K6build \
     -DPYTHON_EXECUTABLE:PATH=%__python3 \
     -DPYTHON_INCLUDE_DIR=%__python3_includedir \
     -DPYTHON_LIBRARY=%__libpython3 \
@@ -52,23 +49,26 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
     #
 
 %install
-%K5install
-%K5install_move data kig katepart
+%K6install
+%K6install_move data kig katepart
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K5bin/kig
-%_K5bin/pykig.py
-%_K5plug/kf5/parts/*kig*.so
-%_K5data/kig/
+%_K6bin/kig
+%_K6bin/pykig.py
+%_K6plug/kf6/parts/*kig*.so
+%_K6data/kig/
 %_datadir/katepart5/syntax/*-kig.xml
-%_K5icon/*/*/apps/kig.*
-%_K5icon/*/*/mimetypes/application-x-kig.*
-%_K5xdgapp/org.kde.kig.desktop
+%_K6icon/*/*/apps/kig.*
+%_K6icon/*/*/mimetypes/application-x-kig.*
+%_K6xdgapp/org.kde.kig.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
