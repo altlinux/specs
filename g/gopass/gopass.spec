@@ -1,10 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/gopasspw/gopass
 
+%define git_commit_short 56e4bad6
+
 %def_with check
 
 Name: gopass
-Version: 1.15.15
+Version: 1.15.17
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -18,13 +20,8 @@ Source1: vendor.tar
 
 # Fixes a unit test for the vendored build
 Patch0: gopass-1.15.5-alt-fix-tests-for-vendored-build.patch
-# Temporarily skipping TestGPGVerify due to key expiration issue
-# waiting for https://github.com/gopasspw/gopass/pull/3048
-# to be released
-Patch1: gopass-1.15.15-alt-disable-test-gpg-verify.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires: rpm-build-golang golang >= 1.24.1
 
 %if_with check
 BuildRequires: git gnupg gnupg2
@@ -42,31 +39,22 @@ Full autonomy - No network connectivity required, unless you want it.
 %prep
 %setup -a 1
 %patch0 -p0
-%patch1 -p1
 # -buildmode=pie requires external (cgo) linking
 sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/' Makefile
+# don't strip debuginfo
+sed -i 's/-s -w//' Makefile
+# used by Makefile to set main.commit variable
+echo %git_commit_short > COMMIT
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-
-cd .build/src/%import_path
 %make_build all
 
 %install
-export BUILDDIR="$PWD/.build"
-export IGNORE_SOURCES=1
-
-cd .build/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%prefix install
 
 %check
 git config --global user.name "nobody"
 git config --global user.email "foo.bar@example.org"
-cd .build/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%prefix test
 %make DESTDIR=%buildroot PREFIX=%prefix test-integration
 
@@ -79,6 +67,9 @@ cd .build/src/%import_path
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Sep 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.15.17-alt1
+- 1.15.15 -> 1.15.17
+
 * Wed Apr 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1.15.15-alt1
 - 1.15.14 -> 1.15.15
 
