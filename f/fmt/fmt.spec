@@ -1,72 +1,77 @@
-%define sover 11
+%define sover 12
 
-Name: libfmt
-Version: 11.2.0
+Name: fmt
+Version: 12.0.0
 Release: alt1
 Epoch: 1
 
 Summary: An open-source formatting library for C++
 License: BSD
 Group: System/Libraries
-Url: http://fmtlib.net/
 
-# https://github.com/fmtlib/fmt/archive/%version/fmt-%version.tar.gz
-Source: fmt-%version.tar
+Vcs: https://github.com/%{name}lib/%name
+Url: http://%{name}lib.net/
 
-BuildRequires: cmake ctest gcc-c++
+# https://github.com/%{name}lib/%name/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
-%package -n %name%sover
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: gcc-c++
+
+%description
+fmt (formerly cppformat) is an open-source formatting library.
+It can be used as a fast and safe alternative to printf and IOStreams.
+
+%package -n lib%name%sover
 Summary: An open-source formatting library for C++
 Group: System/Libraries
 
-%package devel
+%description -n lib%name%sover
+fmt (formerly cppformat) is an open-source formatting library.
+It can be used as a fast and safe alternative to printf and IOStreams.
+
+%package -n lib%name-devel
 Summary: An open-source formatting library for C++
 Group: Development/C++
 
-%define desc fmt (formerly cppformat) is an open-source formatting library. \
+%description -n lib%name-devel
+fmt (formerly cppformat) is an open-source formatting library.
 It can be used as a fast and safe alternative to printf and IOStreams.
 
-%description
-%desc
-
-%description -n %name%sover
-%desc
-
-%description devel
-%desc
-This package contains development part of fmt.
-
 %prep
-%setup -n fmt-%version
+%setup
 
 %build
-%cmake_insource \
-	-DFMT_PKGCONFIG_DIR=%_pkgconfigdir \
-	-DBUILD_SHARED_LIBS=ON \
+%cmake \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+	-DFMT_PKGCONFIG_DIR:PATH=%_pkgconfigdir \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
 	%nil
 
-%make_build VERBOSE=1
+%cmake_build
 
-%ifnarch %ix86
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-make test
-%endif
+%ctest
 
 %install
-%makeinstall_std
+%cmake_install
 
-%files -n %name%sover
-%doc LICENSE* README*
-%_libdir/libfmt.so.*
+%files -n lib%name%sover
+%doc CONTRIBUTING.md ChangeLog.md LICENSE README.md
+%_libdir/lib%name.so.%sover
+%_libdir/lib%name.so.*
 
-%files devel
-%_includedir/fmt
-%_libdir/cmake/fmt
-%_pkgconfigdir/fmt.pc
-%_libdir/libfmt.so
+%files -n lib%name-devel
+%_includedir/%name
+%_cmakedir/%name
+%_pkgconfigdir/%name.pc
+%_libdir/lib%name.so
 
 %changelog
+* Wed Sep 17 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.0.0-alt1
+- New version 12.0.0.
+
 * Sun May 04 2025 Nazarov Denis <nenderus@altlinux.org> 1:11.2.0-alt1
 - New version 11.2.0.
 
