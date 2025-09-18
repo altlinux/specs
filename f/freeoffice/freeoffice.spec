@@ -1,6 +1,6 @@
 Name:    freeoffice
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Free Office Application Suite
 License: Proprietary
@@ -26,6 +26,7 @@ Requires: surguch
 Requires: alt-csp-cryptopro
 Requires: chromium
 Requires: ca-certificates-digital.gov.ru
+Requires: zenity
 
 Summary(ru_RU.UTF-8): Пакет офисных приложений Свободный офис
 
@@ -80,12 +81,19 @@ install -Dpm0644 license-ru.html %buildroot%_datadir/%name/license-ru.html
 install -Dpm0644 com.Basealt.FreeOffice.appdata.xml %buildroot%_datadir/metainfo/com.Basealt.FreeOffice.appdata.xml
 install -Dpm0644 freeoffice.svg %buildroot%_pixmapsdir/freeoffice.svg
 install -Dpm0644 freeoffice-symbolic.svg %buildroot%_pixmapsdir/freeoffice-symbolic.svg
+install -Dpm0755 freeoffice-installed %buildroot%_bindir/freeoffice-installed
+install -Dpm0644 com.Basealt.FreeOffice.desktop %buildroot%_desktopdir/com.Basealt.FreeOffice.desktop
 
 %files
+%_bindir/freeoffice-installed
 %_datadir/%name
 %_datadir/metainfo/*.xml
 %_pixmapsdir/*.svg
+%_desktopdir/*.desktop
 
 %changelog
+* Thu Sep 18 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt2
+- Added information dialog to menu.
+
 * Mon Aug 18 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.
