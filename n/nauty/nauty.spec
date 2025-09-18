@@ -1,7 +1,7 @@
-%define lver 2_9_0
+%define lver 2_9_1
 
 Name: nauty
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,7 @@ Url: https://pallini.di.uniroma1.it/
 
 # Source-url: https://pallini.di.uniroma1.it/nauty%lver.tar.gz
 Source: nauty-%version.tar.gz
-Patch: nauty-uninitialized.patch
+Patch: nauty-%version-%release.patch
 
 BuildRequires: automake libgmp-devel libtool >= 2 zlib-devel
 
@@ -54,7 +54,7 @@ applications that want to make use of libnauty.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 rm -f makefile aclocal.m4
 
 %build
@@ -93,6 +93,9 @@ rm -f %buildroot%_libdir/{*.la,*.a}
 %_pkgconfigdir/libnauty*.pc
 
 %changelog
+* Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.9.1-alt1
+- New version 2.9.1.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.9.0-alt1
 - New version 2.9.0.
 
