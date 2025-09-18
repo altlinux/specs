@@ -1,6 +1,6 @@
 Name: udev-rules-goodix-touchscreen
 Version: 3
-Release: alt2
+Release: alt3
 Summary: Fix orientation of Goodix touchscreen on number of devices
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -41,6 +41,9 @@ install -m 0644 20-udev-rules-goodix-touchscreen.preset %buildroot%_presetdir/
 %_presetdir/20-udev-rules-goodix-touchscreen.preset
 
 %changelog
+* Thu Sep 18 2025 Artyom Bystrov <arbars@altlinux.org> 3-alt3
+- minor fixes
+
 * Thu Sep 18 2025 Artyom Bystrov <arbars@altlinux.org> 3-alt2
 - Fix checking model of device for x86_64 CPU
 
