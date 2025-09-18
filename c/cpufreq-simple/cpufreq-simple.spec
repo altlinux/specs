@@ -1,5 +1,5 @@
 Name: cpufreq-simple
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
@@ -47,6 +47,12 @@ install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 %_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Thu Sep 18 2025 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- cpufreq-simple: Show available and current EPP.
+- cpufreq-simple: Show available governors.
+- cpufreq-simple: Add energy performance policy support.
+- cpufreq-simple: Refactor setting governor code.
+
 * Mon Sep 15 2025 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - cpufreq-simple: Don't report an error if driver not detected.
 - Don't use rpm-build-licenses.
