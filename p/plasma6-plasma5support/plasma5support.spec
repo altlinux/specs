@@ -6,7 +6,7 @@
 
 Name: plasma6-%rname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -33,7 +33,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
 Conflicts: plasma5-workspace-common < 1:6
-Conflicts: plasma-workspace-common < %version
+Conflicts: plasma-workspace-common < 6.4
 %description common
 %name common package
 
@@ -53,9 +53,10 @@ Requires: %name-common >= %EVR
 KF6 library
 
 %package -n %libplasma_geolocation_interface
+Epoch: 1
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common >= %EVR
+Requires: %name-common >= %version-%release
 %description -n %libplasma_geolocation_interface
 KF6 library
 
@@ -97,6 +98,9 @@ KF6 library
 %_K6lib/libplasma-geolocation-interface.so.%sover
 
 %changelog
+* Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt2
+- add Epoch for libplasma-geolocation-interface to upgrade old one from plasma-workspace
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 
