@@ -6,7 +6,7 @@
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
-%global max_jobs 48
+%global max_jobs 112
 
 %global llvm_version 20.1
 
@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        140.0.7339.127
+Version:        140.0.7339.185
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -367,7 +367,7 @@ FLAGS+=' -Wno-error -Wno-undef'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
-export LDFLAGS="$LDFLAGS -stdlib=libc++ -L/usr/lib64 -lc++"
+export LDFLAGS="$LDFLAGS -stdlib=libc++ -L/usr/lib64 -lc++ -lc++abi"
 
 # Debian:
 # enable_vr=false
@@ -476,6 +476,7 @@ gn_arg+=( icu_use_data_file=true )
 %endif
 
 %ifarch x86_64 aarch64
+gn_arg+=( angle_enable_vulkan=true )
 gn_arg+=( enable_vulkan=true )
 %else
 gn_arg+=( enable_vulkan=false )
@@ -648,6 +649,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Sep 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.185-alt1
+- New version (140.0.7339.185).
+- Fixes:
+  + CVE-2025-10585: Type Confusion in V8
+  + CVE-2025-10500: Use after free in Dawn
+  + CVE-2025-10501: Use after free in WebRTC
+  + CVE-2025-10502: Heap buffer overflow in ANGLE
+
 * Wed Sep 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.127-alt1
 - New version (140.0.7339.127).
 - Fixes:
