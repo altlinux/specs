@@ -6,7 +6,7 @@
 %def_enable bfd
 %def_enable fwmark
 %def_enable snmp
-%def_disable dbus
+%def_enable dbus
 %def_enable regex
 %def_enable json
 %def_enable routes
@@ -16,17 +16,18 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 
 Summary: HA monitor built upon LVS, VRRP and services poller
 License: GPL-2.0-or-later
 Group: Networking/Other
 
-Url: http://www.keepalived.org
+Url: https://www.keepalived.org/
+Vcs:https://github.com/acassen/keepalived.git
 Source0: %name-%version.tar
 Source1: %name.init
-Patch0: 0002-update-systemd-unit-file.patch
+Patch0: keepalived-2.3.4-alt-update-systemd-unit.patch
 
 BuildRequires: libpopt-devel libssl-devel
 BuildRequires: pkgconfig(libkmod)
@@ -36,6 +37,7 @@ BuildRequires: pkgconfig(libkmod)
 %{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0) pkgconfig(libnl-3.0)}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
+%{?_enable_dbus:BuildRequires: pkgconfig(gio-2.0)}
 BuildRequires: libmagic-devel
 BuildRequires: systemd-devel
 
@@ -74,7 +76,9 @@ sed -i 's,"O0",0,' lib/utils.c
 	%{subst_enable routes} \
 	%{subst_enable libipset} \
 	%{subst_enable nftables} \
+	%{subst_enable libnl} \
 	--with-init=systemd \
+	--enable-hardening \
 	--with-systemdsystemunitdir=%_unitdir
 
 %make_build STRIP=/bin/true
@@ -111,6 +115,10 @@ done
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_datadir/mibs/%name
+%if_enabled dbus
+%config(noreplace) %_sysconfdir/dbus-1/system.d/org.keepalived.Vrrp1.conf
+%_datadir/dbus-1/interfaces/*.xml
+%endif
 
 %doc AUTHOR ChangeLog README
 %doc doc/keepalived.conf.SYNOPSIS
@@ -119,6 +127,14 @@ done
 %doc doc/samples
 
 %changelog
+* Wed Sep 17 2025 Anton Farygin <rider@altlinux.com> 2.3.4-alt1
+- 2.3.4
+- built with dbus support
+- enforced libnl support in configure
+- hardened systemd unit: added sandboxing options
+- enabled configure option --enable-hardening to build with
+  extra security hardening
+
 * Thu Dec 12 2024 Anton Farygin <rider@altlinux.ru> 2.3.2-alt1
 - 2.3.2
 
