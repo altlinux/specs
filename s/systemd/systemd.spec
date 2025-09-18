@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2608,6 +2608,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Sep 18 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.9-alt1
+- 257.9.
+
 * Tue Aug 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.8-alt1
 - 257.8.
 
