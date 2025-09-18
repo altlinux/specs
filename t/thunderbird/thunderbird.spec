@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 142.0
+Version: 143.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -39,6 +39,7 @@ Patch004: 0004-Fix-types-defination.patch
 Patch005: 0005-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch006: 0006-Correction-of-the-Russian-translation.patch
 Patch007: 0007-ALT-stop-putting-commonDialogs.properties-into-share.patch
+Patch008: 0008-allocator-api2-Fix-build-with-rust-1.89.0.patch
 ### End Patches
 
 Provides: mailclient
@@ -178,6 +179,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch5 -p2
 %patch6 -p1
 %patch7 -p2
+%patch8 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -384,6 +386,20 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Sep 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0-alt1
+- New version.
+- Fixes:
+  + CVE-2025-10527: Sandbox escape due to use-after-free in the Graphics: Canvas2D component
+  + CVE-2025-10528: Sandbox escape due to undefined behavior, invalid pointer in the Graphics: Canvas2D component
+  + CVE-2025-10529: Same-origin policy bypass in the Layout component
+  + CVE-2025-10530: Spoofing issue in the WebAuthn component in Firefox for Android
+  + CVE-2025-10531: Mitigation bypass in the Web Compatibility: Tooling component
+  + CVE-2025-10532: Incorrect boundary conditions in the JavaScript: GC component
+  + CVE-2025-10533: Integer overflow in the SVG component
+  + CVE-2025-10534: Spoofing issue in the Site Permissions component
+  + CVE-2025-10536: Information disclosure in the Networking: Cache component
+  + CVE-2025-10537: Memory safety bugs fixed in Firefox ESR 140.3, Thunderbird ESR 140.3, Firefox 143 and Thunderbird 143
+
 * Wed Aug 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 142.0-alt1
 - New version.
 - Fixes:
