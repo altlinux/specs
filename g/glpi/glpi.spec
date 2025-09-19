@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.19
+Version: 10.0.20
 Release: alt1
 
 Summary: IT and asset management software
@@ -69,6 +69,17 @@ Requires: php8.3-bz2, php8.3-exif, php8.3-ldap, php8.3-opcache, php8.3-openssl, 
 
 %description php8.3
 php8.3 dependencies for %name
+
+%package php8.4
+Summary: PHP8.4 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.4
+Requires: php8.4-curl, php8.4-fileinfo, php8.4-gd2, php8.4-json, php8.4-mbstring, php8.4-mysqlnd-mysqli, php8.4-session, php8.4-zlib, php8.4-intl
+Requires: php8.4-bz2, php8.4-exif, php8.4-ldap, php8.4-opcache, php8.4-openssl, php8.4-sodium, php8.4-xmlreader, php8.4-zip
+
+%description php8.4
+php8.4 dependencies for %name
 
 %prep
 %setup
@@ -178,7 +189,13 @@ fi
 
 %files php8.3
 
+%files php8.4
+
 %changelog
+* Fri Sep 12 2025 Pavel Zilke <zidex@altlinux.org> 10.0.20-alt1
+- New version 10.0.20
+- Added glpi-php8.4 (ALT #55848)
+
 * Wed Jul 16 2025 Pavel Zilke <zidex@altlinux.org> 10.0.19-alt1
 - New version 10.0.19
 - This release fixes a security issue that has been recently discovered. Update is recommended!
