@@ -14,7 +14,7 @@
 
 Name: LibreSSL
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -191,6 +191,11 @@ Common uses include:
 %prep
 %setup -n %oname-%version
 %autopatch -p2
+%ifarch %e2k
+touch crypto/{bn/bn_arch,crypto_arch}.h
+echo 'noinst_HEADERS += bn/bn_arch.h' >> crypto/Makefile.am
+echo 'noinst_HEADERS += crypto_arch.h' >> crypto/Makefile.am
+%endif
 
 %build
 %autoreconf
@@ -313,6 +318,9 @@ done
 %_man1dir/netcat.1*
 
 %changelog
+* Thu Sep 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.0-alt2
+- e2k build fix
+
 * Wed Apr 30 2025 Ivan A. Melnikov <iv@altlinux.org> 4.1.0-alt1
 - Updated to 4.1.0.
 
