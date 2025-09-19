@@ -3,7 +3,7 @@
 
 Name:    pciex
 Version: 0.0.2
-Release: alt3
+Release: alt3.1
 
 Summary: PCI topology EXplorer
 License: GPL-2.0-only
@@ -15,6 +15,7 @@ Patch0: pciex-0.0.2-alt-unbundle-deps.patch
 Patch1: pciex-0.0.2-alt-compile-error-fix.patch
 Patch2: pciex-0.0.2-alt-upstream-fix-ftxui.patch
 Patch3: pciex-0.0.2-alt-setversion.patch
+Patch4: pciex-0.0.2-alt-fmt-12.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -44,6 +45,7 @@ Features
 %patch1
 %patch2
 %patch3
+%patch4
 %ifarch %e2k
 # error: no instance of function template "std::construct_at" matches the argument list
 sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
@@ -66,6 +68,9 @@ sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
 %_bindir/%name
 
 %changelog
+* Sat Sep 20 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.2-alt3.1
+- fix build with fmt 12
+
 * Tue Sep 09 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.2-alt3
 - e2k build fix
 
