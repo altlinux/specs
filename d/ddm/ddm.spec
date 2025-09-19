@@ -4,12 +4,12 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
 
-License: GPL-2.0-only or GPL-3.0-only or LGPL-3.0-only or Apache-2.0 and LGPL-2.1-or-later
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/ddm
 Vcs: https://github.com/linuxdeepin/ddm
@@ -148,6 +148,10 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Fri Sep 19 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.1-alt1
+- New version 0.2.1.
+- Updated license tag.
+
 * Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
