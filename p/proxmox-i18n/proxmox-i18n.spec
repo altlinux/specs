@@ -2,7 +2,7 @@
 
 Name: proxmox-i18n
 Summary: Internationalization support for Proxmox
-Version: 3.4.2
+Version: 3.6.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Internationalization
@@ -38,6 +38,13 @@ Group: System/Internationalization
 %description -n pve-i18n
 %summary.
 
+%package -n pdm-i18n
+Summary: Internationalization support for Proxmox Datacenter Manager
+Group: System/Internationalization
+
+%description -n pdm-i18n
+%summary.
+
 %prep
 %setup
 %patch -p1
@@ -55,7 +62,14 @@ Group: System/Internationalization
 %files -n pve-i18n
 %_datadir/pve-i18n
 
+%files -n pdm-i18n
+%_datadir/pdm-i18n
+
 %changelog
+* Thu Sep 18 2025 Sergey Konev <darisishe@altlinux.org> 3.6.0-alt1
+- 3.6.0 (Closes: #56046)
+- Translations for PDM
+
 * Fri Apr 18 2025 Sergey Konev <darisishe@altlinux.org> 3.4.2-alt1
 - 3.4.2
 - update Russian translation
