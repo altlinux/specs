@@ -1,6 +1,6 @@
-%global import_path github.com/ansible-semaphore/semaphore
+%global import_path github.com/semaphoreui/semaphore
 Name:     semaphore
-Version:  2.16.29
+Version:  2.16.31
 Release:  alt1
 
 Summary:  Open Source alternative to Ansible Tower
@@ -33,9 +33,9 @@ BuildRequires: golang
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="${LDFLAGS:-} -X github.com/ansible-semaphore/semaphore/util.Ver=%version"
-export LDFLAGS="${LDFLAGS:-} -X github.com/ansible-semaphore/semaphore/util.Commit="
-export LDFLAGS="${LDFLAGS:-} -X github.com/ansible-semaphore/semaphore/util.Date="
+export LDFLAGS="${LDFLAGS:-} -X %import_path/util.Ver=%version"
+export LDFLAGS="${LDFLAGS:-} -X %import_path/util.Commit="
+export LDFLAGS="${LDFLAGS:-} -X %import_path/util.Date="
 
 %golang_prepare
 
@@ -56,6 +56,9 @@ mkdir -p %buildroot%_datadir/bash-completion/completions
 mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %buildroot%_bindir/%name completion fish > %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
+%check
+%buildroot%_bindir/%name version | grep -Eq '[0-9]+\.[0-9]+\.[0-9]+'
+
 %files
 %_bindir/%name
 %doc README.ALT
@@ -65,6 +68,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Sep 17 2025 Mikhail Gordeev <obirvalger@altlinux.org> 2.16.31-alt1
+- new version 2.16.31
+
 * Fri Sep 12 2025 Mikhail Gordeev <obirvalger@altlinux.org> 2.16.29-alt1
 - new version 2.16.29
 
