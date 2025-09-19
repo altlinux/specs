@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name app.fotema.%_name
 
 %def_enable check
@@ -39,9 +39,10 @@ Patch: fotema-1.19.0-alt-loongarch64-size_t-ort-crate.patch
 
 %define gtk_ver 4.0
 %define adwaita_ver 1.5
+%define glycin_api_ver 2
 
 # for glycin
-Requires: bubblewrap glycin-loaders
+Requires: bubblewrap glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -118,6 +119,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Fri Sep 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
