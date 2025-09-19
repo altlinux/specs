@@ -4,8 +4,8 @@
 %define soname 6
 
 Name: libtiff
-Version: 4.7.0
-Release: alt4
+Version: 4.7.1
+Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
@@ -14,12 +14,6 @@ Url: https://libtiff.gitlab.io/libtiff/
 VCS: https://gitlab.com/libtiff/libtiff.git
 
 Source: %name-%version.tar
-Patch: libtiff-4.7.0-upstream-race-condition-in-tiffcrop.patch
-Patch1: libtiff-4.7.0-upstream-cve-2025-8176.patch
-Patch2: libtiff-4.7.0-upstream-cve-2025-8177.patch
-Patch3: libtiff-4.7.0-upstream-cve-2025-8534.patch
-Patch4: libtiff-4.7.0-upstream-cve-2024-13978.patch
-Patch5: libtiff-4.7.0-upstream-cve-2025-9165.patch
 
 %def_enable cxx
 
@@ -175,6 +169,11 @@ autoheader
 %endif
 
 %changelog
+* Fri Sep 19 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.1-alt1
+- Fixes:
+  + CVE-2025-8961 Improper bounds checking on memory operations
+- New version.
+
 * Tue Sep 02 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt4
 - Fixes:
   + CVE-2024-13978 NULL Pointer Dereference
