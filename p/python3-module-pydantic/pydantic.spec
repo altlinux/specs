@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.11.7
+Version: 2.11.9
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -12,17 +11,15 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pydantic
 Vcs: https://github.com/pydantic/pydantic
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
 %pyproject_runtimedeps_metadata
-
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter eval-type-backport
 %add_pyproject_deps_check_filter pytest-codspeed
@@ -73,6 +70,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.11.9-alt1
+- Updated to 2.11.9.
+
 * Thu Jun 19 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.11.7-alt1
 - Updated to 2.11.7.
 

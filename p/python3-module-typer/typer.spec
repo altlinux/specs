@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.17.3
+Version: 0.17.4
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -26,14 +26,6 @@ BuildRequires: rpm-build-pyproject
 
 %if_with check
 BuildRequires: /proc
-
-# There's no sense to use the static type checkers for tests
-%add_pyproject_deps_runtime_filter mypy
-%add_pyproject_deps_runtime_filter ruff
-
-# using of coverage module will be cleaned from the tests' files below
-%add_pyproject_deps_runtime_filter coverage
-
 %pyproject_builddeps_check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra all
@@ -92,6 +84,9 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.4-alt1
+- Updated to 0.17.4.
+
 * Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.3-alt1
 - Updated to 0.17.3.
 

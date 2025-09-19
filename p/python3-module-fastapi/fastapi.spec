@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.116.1
-Release: alt4
+Version: 0.116.2
+Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -27,7 +27,8 @@ Provides: %name-slim = %EVR
 # Filter fastapi-cli, because it's needed for managing fastapi project.
 %add_pyproject_deps_runtime_filter fastapi-cli
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
@@ -89,13 +90,14 @@ ENDTESTS
 
 %files
 %doc README.*
-# Temporary exclude /usr/bin/fastapi to resolve conflict with fastapi-cli.
-# For more details see https://github.com/fastapi/fastapi-cli/pull/85
-%exclude %_bindir/%pypi_name
+%_bindir/%pypi_name
 %python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.2-alt1
+- Updated to 0.116.2.
+
 * Tue Sep 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.1-alt4
 - Fixed FTBFS by skipping the failing test.
 
