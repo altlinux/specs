@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -147,6 +147,13 @@ Requires: %name-common >= %EVR
 %description -n libkpim6akonadixml
 %name library
 
+%package -n libkpim6akonadiagentwidgetbase
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n libkpim6akonadiagentwidgetbase
+%name library
+
 %prep
 %setup -n %rname-%version
 %patch1 -p1
@@ -197,6 +204,10 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 %_K6bin/akonadictl
 %_K6bin/akonadiserver
 %_K6bin/akonadiselftest
+%_K6bin/akonadiagentconfigdialog
+%_K6plug/pim6/akonadi/config/*config*.so
+%_K6qml/org/kde/akonadi/
+%_K6xdgapp/*akonadi*.desktop
 %_K6dbus_srv/org.freedesktop.Akonadi.Control.service
 %if_enabled tools
 %_K6bin/akonadi2xml
@@ -244,6 +255,8 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 %_kf6_data/akonadi/*.xs*
 %_K6data/kdevappwizard/templates/*akonadi*
 
+%files -n libkpim6akonadiagentwidgetbase
+%_K6lib/libKPim6AkonadiAgentWidgetBase.so.*
 %files -n libkpim6akonadiprivate
 %_K6lib/libKPim6AkonadiPrivate.so.*
 %files -n libkpim6akonadiagentbase
@@ -260,6 +273,9 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

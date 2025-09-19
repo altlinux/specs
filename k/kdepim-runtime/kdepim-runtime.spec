@@ -7,9 +7,10 @@
 %define libkmindexreader libkmindexreader%pim_sover
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 %define libnewmailnotifier libnewmailnotifier%pim_sover
+%define libakonadi_singlefileresource_widget libakonadi-singlefileresource-widget%pim_sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -113,6 +114,13 @@ Requires: %name-common >= %EVR
 %description -n %libakonadi_singlefileresource
 %name library
 
+%package -n %libakonadi_singlefileresource_widget
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libakonadi_singlefileresource_widget
+%name library
+
 %prep
 %setup -n %rname-%version
 
@@ -175,9 +183,15 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 %files -n %libakonadi_singlefileresource
 %_K6lib/libakonadi-singlefileresource.so.%pim_sover
 %_K6lib/libakonadi-singlefileresource.so.*
+%files -n %libakonadi_singlefileresource_widget
+%_K6lib/libakonadi-singlefileresource-widget.so.%pim_sover
+%_K6lib/libakonadi-singlefileresource-widget.so.*
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

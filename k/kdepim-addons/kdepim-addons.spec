@@ -17,9 +17,10 @@
 %define libscamconfiguresettings libscamconfiguresettings%sover
 %define libopenurlwithconfigure libopenurlwithconfigure%sover
 %define libakonadidatasetools libakonadidatasetools%sover
+%define libkpim6autogeneratetext libkpim6autogeneratetext%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -254,6 +255,13 @@ Obsoletes: libakonadidatasetools5 < %EVR
 %description -n %libakonadidatasetools
 %name library
 
+%package -n %libkpim6autogeneratetext
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkpim6autogeneratetext
+%name library
+
 %prep
 %setup -n %rname-%version
 
@@ -283,6 +291,7 @@ Obsoletes: libakonadidatasetools5 < %EVR
 %_K6bin/kmail_*.sh
 %_K6plug/pim6/kmail/
 %_K6plug/pim6/mailtransport/
+%_K6plug/pim6/mailtransportactivities/
 
 %files korganizer
 %_K6plug/pim6/akonadi/emailaddressselectionldapdialogplugin.so
@@ -299,6 +308,7 @@ Obsoletes: libakonadidatasetools5 < %EVR
 %_K6plug/pim6/importwizard/
 %_K6plug/pim6/templateparser/
 %_K6plug/pim6/webengineviewer/
+%_K6plug/pim6/ldapactivities/
 
 %files devel
 #%_datadir/qtcreator/templates/*
@@ -339,10 +349,16 @@ Obsoletes: libakonadidatasetools5 < %EVR
 %files -n %libakonadidatasetools
 %_K6lib/libakonadidatasetools.so.%sover
 %_K6lib/libakonadidatasetools.so.*
+%files -n %libkpim6autogeneratetext
+%_K6lib/libKPim6AutoGenerateText.so.%sover
+%_K6lib/libKPim6AutoGenerateText.so.*
 
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -61,6 +61,12 @@ Obsoletes: libkf5akonadicalendar < %EVR
 %description -n libkpim6akonadicalendar
 %name library
 
+%package -n libkpim6akonadicalendarcore
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n libkpim6akonadicalendarcore
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -87,14 +93,21 @@ Obsoletes: libkf5akonadicalendar < %EVR
 
 %files devel
 %_includedir/KPim6/AkonadiCalendar/
+%_includedir/KPim6/AkonadiCalendarCore/
 %_K6link/lib*.so
-%_K6lib/cmake/K*AkonadiCalendar/
+%_K6lib/cmake/K*AkonadiCalendar*/
 
 %files -n libkpim6akonadicalendar
 %_K6lib/libKPim6AkonadiCalendar.so.*
 
+%files -n libkpim6akonadicalendarcore
+%_K6lib/libKPim6AkonadiCalendarCore.so.*
+
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

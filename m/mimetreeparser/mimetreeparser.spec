@@ -5,7 +5,7 @@
 %define libkpim6mimetreeparserwidgets libkpim6mimetreeparserwidgets%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -21,6 +21,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libGLU-devel libvulkan-devel
 BuildRequires: libcups-devel
 BuildRequires: kde6-libkleo-devel kf6-kcalendarcore-devel kf6-kcodecs-devel kf6-ki18n-devel kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
 BuildRequires: kmbox-devel
 
 %description
@@ -85,6 +86,9 @@ Requires: %name-common
 
 
 %changelog
+* Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
