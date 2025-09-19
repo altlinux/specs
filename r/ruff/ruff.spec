@@ -3,11 +3,11 @@
 
 %define ruff_pypi_name ruff
 %define ruff_import_name ruff
-%define ruff_version 0.12.10
+%define ruff_version 0.13.1
 
 %define ty_pypi_name ty
 %define ty_import_name ty
-%define ty_version 0.0.1a19
+%define ty_version 0.0.1a21
 
 %define bash_completionsdir %_datadir/bash-completion/completions
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
@@ -15,7 +15,7 @@
 
 Name: %ruff_pypi_name
 Version: %ruff_version
-Release: alt2
+Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
 License: MIT
@@ -148,6 +148,10 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Fri Sep 19 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.1-alt1
+- Updated ruff to 0.13.1.
+- Updated ty to 0.0.1a21.
+
 * Tue Aug 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.12.10-alt2
 - Packaged ty (ruff and ty are in the same repo).
 
