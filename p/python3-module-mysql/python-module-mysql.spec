@@ -2,7 +2,7 @@
 #def_with bootstrap
 
 Name: python3-module-mysql
-Version: 8.0.22
+Version: 8.0.33
 Release: alt1
 
 Summary: MySQL Connector for Python 3
@@ -20,6 +20,7 @@ Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++
 
 Provides: %{oname}3 = %version
 
@@ -66,6 +67,9 @@ cd build ; ln -s lib.linux* lib ; cd ..
 %python3_sitelibdir/mysql/connector/django/
 
 %changelog
+* Fri Sep 19 2025 Alexander Danilov <admsasha@altlinux.org> 8.0.33-alt1
+- new version 8.0.33
+
 * Thu Nov 12 2020 Vitaly Lipatov <lav@altlinux.ru> 8.0.22-alt1
 - new version 8.0.22 (with rpmrb script) (ALT bug 39255)
 
