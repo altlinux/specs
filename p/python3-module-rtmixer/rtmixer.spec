@@ -1,6 +1,6 @@
 Name: python3-module-rtmixer
 Version: 0.1.7
-Release: alt2
+Release: alt3
 
 Summary: Realtime Audio Mixer for Python
 License: MIT
@@ -29,6 +29,9 @@ PortAudio via the sounddevice module.
 %install
 %pyproject_install
 
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
+
 %files
 %python3_sitelibdir/_rtmixer.*
 %python3_sitelibdir/rtmixer.py
@@ -36,6 +39,9 @@ PortAudio via the sounddevice module.
 %python3_sitelibdir/rtmixer-%version.dist-info
 
 %changelog
+* Fri Sep 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.7-alt3
+- drop versioned python abi req
+
 * Thu Jan 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.7-alt2
 - ftbfs fixed
 
