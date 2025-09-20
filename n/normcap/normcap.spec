@@ -1,6 +1,6 @@
 Name: normcap
 Version: 0.6.0
-Release: alt2
+Release: alt3
 
 Summary: OCR powered screen-capture tool to capture information instead of images
 
@@ -17,6 +17,7 @@ Requires: tesseract xsel
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling python3-module-wheel
+BuildRequires: gettext-tools
 
 %description
 %summary.
@@ -41,12 +42,18 @@ EOF
 
 %build
 %pyproject_build
+for locale in ca cs de_DE es_ES fr_FR hi_IN it_IT ja_JP pl_PL pt_BR pt_PT ru_RU sv_SE ta uk_UA zh_CN; do
+ msgfmt %name/resources/locales/${locale}/LC_MESSAGES/messages.po -o \
+ 	%name/resources/locales/${locale}/LC_MESSAGES/messages.mo
+ rm -v %name/resources/locales/${locale}/LC_MESSAGES/messages.po
+done
 
 %install
 %pyproject_install
 install -Dm 0644 %name.desktop %buildroot%_datadir/applications/%name.desktop
+cp -f -r %name/resources/locales %buildroot%python3_sitelibdir/%name/resources
 
-%files
+%files 
 %doc *.md
 %_bindir/%name
 %_datadir/applications/%name.desktop
@@ -56,6 +63,9 @@ install -Dm 0644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Sat Sep 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt3
+- add locales
+
 * Thu Sep 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt2
 - add requires xsel
 
