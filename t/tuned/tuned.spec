@@ -6,7 +6,7 @@
 %define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.25.1
+Version: 2.26.0
 Release: alt1
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
@@ -508,6 +508,9 @@ fi
 %files checkinstall
 
 %changelog
+* Sat Sep 20 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt1
+- Update to v2.26.0 (2025-08-24).
+
 * Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 2.25.1-alt1
 - Update to v2.25.1 (2025-02-03).
 
