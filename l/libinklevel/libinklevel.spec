@@ -1,5 +1,5 @@
 Name: libinklevel
-Version: 0.9.5
+Version: 0.9.7
 Release: alt1
 
 Summary: Library for retrieving the ink level of a printer
@@ -49,6 +49,9 @@ ln -sf /usr/share/license/GPL-2 COPYING
 %_includedir/*.h
 
 %changelog
+* Sat Sep 20 2025 Ilya Mashkin <oddity@altlinux.ru> 0.9.7-alt1
+- 0.9.7
+
 * Mon Oct 23 2023 Ilya Mashkin <oddity@altlinux.ru> 0.9.5-alt1
 - 0.9.5
 
