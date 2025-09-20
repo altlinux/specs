@@ -7,7 +7,7 @@
 
 Name: vtk
 Version: %ver.2
-Release: alt1
+Release: alt1.1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -34,6 +34,7 @@ Patch6: vtk-%version-alt.patch
 Patch7: vtk-9.4.1-fix-vtkparseproperties-getnth-setnth-detection.patch
 Patch8: vtk-9.4.1-fix-restore-visibility-of-findpoint-method.patch
 Patch9: vtk-9.4.2-fix-build-netcdf.patch
+Patch10: vtk-9.4.2-alt-fmt-12.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -1557,6 +1558,9 @@ EOF
 %endif
 
 %changelog
+* Fri Sep 19 2025 Nazarov Denis <nenderus@altlinux.org> 9.4.2-alt1.1
+- Fix build with fmt 12
+
 * Sat Apr 05 2025 Anton Farygin <rider@altlinux.com> 9.4.2-alt1
 - 9.4.1 -> 9.4.2
 
