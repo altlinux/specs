@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: flatpak-builder
-Version: 1.4.4
+Version: 1.4.6
 Release: alt1
 Epoch:1
 
@@ -47,7 +47,7 @@ Requires: /usr/bin/rofiles-fuse
 Requires: /usr/bin/strip
 Requires: /usr/bin/svn
 Requires: /bin/tar
-Requires: /usr/bin/unzip
+Requires: /usr/bin/bsdunzip
 Requires: /usr/bin/7z
 %{?_with_system_debugedit:Requires: debugedit >= %debugedit_ver}
 
@@ -119,6 +119,9 @@ the functionality of the installed Flatpak-builder.
 %_datadir/installed-tests/%name
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.6-alt1
+- 1.4.6
+
 * Fri Jul 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.4-alt1
 - 1.4.4
 

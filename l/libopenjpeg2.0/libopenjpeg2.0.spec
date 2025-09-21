@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
@@ -88,7 +88,7 @@ developing with %name library.
 %install
 %cmake_install
 
-# to avoid conflict with libopenjpeg-1.x
+# to avoid conflict with libopenjpeg-1.x (in <= P10)
 for file in %buildroot%_bindir/opj_*; do
     mv $file ${file/opj_/opj2_}
 done
@@ -126,6 +126,9 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/cmake/%_
 %endif
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.4-alt1
+- 2.5.4
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.3-alt1
 - 2.5.3
 
