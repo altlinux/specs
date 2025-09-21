@@ -4,8 +4,8 @@
 %def_enable opencl
 
 Name: cpu-x
-Version: 5.3.1
-Release: alt1.1
+Version: 5.4.0
+Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
@@ -80,6 +80,10 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Sun Sep 21 2025 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt1
+- 5.4.0.
+- Update vulkan-rt and gl-vendor patches.
+
 * Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 5.3.1-alt1.1
 - vulkan: Fix vulkan RT detection (we can't just create vk instance with RT, it
   require more steps like pipeline setup, so do simple query extension instead
