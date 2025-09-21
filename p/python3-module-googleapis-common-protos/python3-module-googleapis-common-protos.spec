@@ -1,11 +1,11 @@
 Name:    python3-module-googleapis-common-protos
-Version: 1.66.0
+Version: 1.70.0
 Release: alt1
 
 Summary: Common protobufs used in Google APIs
 License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/googleapis/python-api-common-protos
+URL:     https://github.com/googleapis/google-cloud-python
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -26,9 +26,11 @@ protos in the googleapis/api-common-protos repository.
 %setup -n python-api-common-protos-%version
 
 %build
+cd packages/googleapis-common-protos
 %pyproject_build
 
 %install
+cd packages/googleapis-common-protos
 %pyproject_install
 
 %files
@@ -36,6 +38,10 @@ protos in the googleapis/api-common-protos repository.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Sep 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.70.0-alt1
+- New version.
+- New upstream URL https://github.com/googleapis/google-cloud-python.
+
 * Wed Nov 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.66.0-alt1
 - New version.
 
