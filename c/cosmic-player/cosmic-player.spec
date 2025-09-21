@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.7
+%define beta .beta.1
 %define rdn_name com.system76.CosmicPlayer
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-player
 Version: %ver_major.0
-Release: alt0.70%beta
+Release: alt0.80%beta
 
 Summary: COSMIC Media Player
 License: GPL-3.0
@@ -63,10 +63,14 @@ just rootdir=%buildroot install
 %files
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
+%_datadir/thumbnailers/%rdn_name.thumbnailer
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.80.beta.1
+- 1.0.0-beta.1
+
 * Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
 - 1.0.0-alpha.7
 

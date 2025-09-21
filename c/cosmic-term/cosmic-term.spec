@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.7
+%define beta .beta.1
 %define rdn_name com.system76.CosmicTerm
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-term
 Version: %ver_major.0
-Release: alt0.70%beta
+Release: alt0.80%beta
 
 Summary: COSMIC terminal emulator
 License: GPL-3.0
@@ -45,9 +45,9 @@ renderer based on cosmic-text (https://github.com/pop-os/cosmic-text).
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
-%patch1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    vendor/cosmic-files/.cargo-checksum.json
+#%%patch1
+#sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+#    vendor/cosmic-files/.cargo-checksum.json
 
 %build
 export VERGEN_GIT_SHA=%version
@@ -72,6 +72,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.80.beta.1
+- 1.0.0-beta.1
+
 * Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
 - 1.0.0-alpha.7
 

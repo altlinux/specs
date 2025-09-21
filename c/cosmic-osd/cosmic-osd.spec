@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.7
+%define beta .beta.1
 %define rdn_name com.system76.CosmicOsd
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-osd
 Version: %ver_major.0
-Release: alt0.70%beta
+Release: alt0.80%beta
 
 Summary: COSMIC OSD
 License: GPL-3.0
@@ -28,7 +28,10 @@ Source1: %name-%version%beta-cargo.tar
 BuildRequires(pre): rpm-build-rust
 BuildRequires: make
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: clang-devel
 
 #ExcludeArch: %ix86 armh
 
@@ -55,6 +58,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.80.beta.1
+- 1.0.0-beta.1
+
 * Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
 - 1.0.0-alpha.7
 

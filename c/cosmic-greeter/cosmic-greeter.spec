@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.7
+%define beta .beta.1
 %define rdn_name com.system76.CosmicGreeter
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.0
-Release: alt0.70%beta
+Release: alt0.80%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -25,7 +25,8 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 
-Requires: greetd cosmic-comp
+Requires: greetd
+Requires: cosmic-comp cosmic-randr
 Provides: greetd-greeter
 
 BuildRequires(pre): rpm-build-rust rpm-macros-pam0
@@ -67,6 +68,7 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 
 %files
 %_bindir/%name
+%_bindir/%name-start
 %_bindir/%name-daemon
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
@@ -74,6 +76,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.80.beta.1
+- 1.0.0-beta.1
+
 * Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
 - 1.0.0-alpha.7
 
