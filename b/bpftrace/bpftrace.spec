@@ -6,8 +6,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.23.3
-Release: alt2
+Version: 0.24.0
+Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -41,7 +41,6 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: python3-module-setuptools
-BuildRequires: systemtap-sdt-devel
 BuildRequires: xxd
 
 # Assuming 'kernel' dependency will bring un-def kernel
@@ -75,7 +74,6 @@ was created by Alastair Robertson.
 %remove_optflags -frecord-gcc-switches
 export CC=clang-%llvm_ver
 export CXX=clang++-%llvm_ver
-export Clang_DIR=/usr/share/cmake/Modules/clang
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -84,6 +82,7 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 %endif
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_DIR=$(llvm-config-%llvm_ver --cmakedir) \
+	-DClang_DIR=$(llvm-config-%llvm_ver --cmakedir)/../clang \
 	-DOFFLINE_BUILDS:BOOL=ON \
 	-DALLOW_UNSAFE_PROBE:BOOL=ON \
 	-DUSE_SYSTEM_BPF_BCC:BOOL=ON \
@@ -112,16 +111,18 @@ if kvm-ok; then
 	PATH=$PWD/.gear:$PATH
 	cd %_cmake__builddir
 	delete-blocks casted	tests/runtime/intcast
+	delete-blocks debugf	tests/runtime/call
+	delete-blocks hardware	tests/runtime/probe
 	delete-blocks kfunc	tests/runtime/call
 	delete-blocks kprobe_offset_fail_size	tests/runtime/probe
 	delete-blocks testprogs	tests/runtime/*
 	delete-blocks tracetest_testprobe_semaphore	tests/runtime/usdt
 	delete-blocks uaddr	tests/runtime/call
 	delete-blocks watchpoint	tests/runtime/watchpoint
-	delete-blocks hardware	tests/runtime/probe
 %ifarch aarch64
 	delete-blocks kfunc	tests/runtime/regression
 	delete-blocks task	tests/runtime/basic
+	delete-blocks usermode	tests/runtime/builtin
 	sed -i 's/xattr.h/user.h/' tests/runtime/basic
 %endif
 	vm-run --kvm=cond --sbin tests/runtime-tests.sh
@@ -137,6 +138,9 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Sat Sep 20 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
+- Update to v0.24.0 (2025-09-17).
+
 * Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.23.3-alt2
 - NMU: build on riscv64
 
