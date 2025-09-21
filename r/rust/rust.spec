@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.89.0
+Version: 1.90.0
 Release: alt1
 Epoch: 1
 
@@ -51,15 +51,11 @@ BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
 BuildRequires: pkgconfig(libffi)
 
-# clang=17.0.6-alt2: fix wrong -print-runtime-dir on %%ix86.
-BuildRequires: clang%{llvm_version} >= 18
+BuildRequires: clang%{llvm_version}
 BuildRequires: clang%{llvm_version}-devel
+BuildRequires: clang%{llvm_version}-support
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
-# This is necessary to avoid error: could not find native static library
-# `/usr/lib/llvm-18.1/lib64/clang/18/lib/x86_64-unknown-linux-gnu/libclang_rt.profile.a`,
-# perhaps an -L flag is missing?
-BuildRequires: clang%{llvm_version}-support
 %else
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -237,26 +233,6 @@ rm -rf -- src/llvm-project
 mkdir -p -- src/llvm-project/libunwind/
 %endif
 
-# We never enable emscripten.
-rm -rf src/llvm-emscripten/
-
-# We never enable other LLVM tools.
-rm -rf src/tools/clang
-rm -rf src/tools/lld
-rm -rf src/tools/lldb
-
-# Remove other unused vendored libraries
-rm -rf vendor/curl-sys/curl
-rm -rf vendor/jemalloc-sys/jemalloc
-rm -rf vendor/libz-sys/src/zlib
-rm -rf vendor/lzma-sys/xz-*
-rm -rf vendor/openssl-src/openssl
-
-# Remove hidden files from source
-find src/ -type f -name '.appveyor.yml' -delete
-find src/ -type f -name '.travis.yml' -delete
-find src/ -type f -name '.cirrus.yml' -delete
-
 # The configure macro will modify some autoconf-related files, which upsets
 # cargo when it tries to verify checksums in those files.  If we just truncate
 # that file list, cargo won't have anything to complain about.
@@ -264,30 +240,24 @@ find vendor \
 	-name .cargo-checksum.json \
 	-exec sed -i -e 's/"files":{[^}]*}/"files":{ }/' '{}' '+'
 
-
-%build
+# Environment.
 cat >env.sh <<EOF
 export RUST_BACKTRACE=1
 export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2"
 %ifarch loongarch64
 export RUSTFLAGS="$RUSTFLAGS -Ccode-model=medium"
 %endif
-# Don't use system libgit2 for now...
-# https://github.com/rust-lang/rust/issues/63476
-#export LIBGIT2_SYS_USE_PKG_CONFIG=1
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
 export DESTDIR="%buildroot"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
 
-. ./env.sh
-
 CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
-
 test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
-cat > config.toml <<EOF
-change-id = 123711
+# Build configuration.
+cat > bootstrap.toml <<EOF
+change-id = 144675
 [build]
 target = ["%rust_triple", "wasm32-unknown-unknown"]
 cargo = "%cargo"
@@ -337,10 +307,13 @@ cc = "clang"
 cxx = "clang++"
 ar = "llvm-ar"
 ranlib = "llvm-ranlib"
-llvm-config = "/usr/bin/llvm-config"
+llvm-config = "%_bindir/llvm-config"
 profiler = "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 %endif
 EOF
+
+%build
+. ./env.sh
 
 python3 x.py build
 python3 x.py doc
@@ -395,9 +368,11 @@ export LD_LIBRARY_PATH="%buildroot/%_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 # https://rustc-dev-guide.rust-lang.org/tests/intro.html
 failed=
 for i in \
-	codegen \
+	codegen-llvm \
 	codegen-units \
 	incremental \
+	debuginfo \
+	coverage \
 ; do
 	: "### rust_src_test: running $i"
 	status='done'
@@ -473,6 +448,9 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Fri Sep 19 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.90.0-alt1
+- New version (1.90.0).
+
 * Fri Aug 22 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.89.0-alt1
 - New version (1.89.0).
 - Add wasm32-unknown-unknown target support (Closes: 55591).
