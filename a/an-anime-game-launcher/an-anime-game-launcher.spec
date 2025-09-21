@@ -1,6 +1,6 @@
 Name: an-anime-game-launcher
-Version: 3.15.6
-Release: alt2
+Version: 3.17.0
+Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
 License: GPL-3.0
@@ -35,14 +35,14 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.35.0"]
+[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.36.3"]
 git = "https://github.com/an-anime-team/anime-game-core"
-tag = "1.35.0"
+tag = "1.36.3"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.31.0"]
+[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.32.0"]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.31.0"
+tag = "1.32.0"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -88,6 +88,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Sun Sep 21 2025 Anton Kurachenko <srebrov@altlinux.org> 3.17.0-alt1
+- New version 3.17.0.
+
 * Fri Sep 05 2025 Anton Kurachenko <srebrov@altlinux.org> 3.15.6-alt2
 - Dropped aarch64 build (Closes: #55875).
 
