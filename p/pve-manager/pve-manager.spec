@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -30,6 +30,7 @@ Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-e
 Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.10.4
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
 Requires: librados2-perl >= 1.3.1
+Requires: sequoia-sqv
 
 Source: %name-%version.tar
 Source2: 50-pve.preset
@@ -177,6 +178,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Sun Sep 21 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt2
+- apl: use sqv instead of gpgv to verify signatures
+
 * Fri Aug 22 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt1
 - 9.0.6
 
