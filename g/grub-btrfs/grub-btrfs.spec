@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: grub-btrfs
-Version: 4.13
-Release: alt3
+Version: 4.14
+Release: alt1
 
 Summary: Include btrfs snapshots at boot options. (Grub menu)
 License: GPLv3
 Group: System/Kernel and hardware
-URL: https://github.com/Antynea/grub-btrfs
+Url: https://github.com/Antynea/grub-btrfs
+Vcs: https://github.com/Antynea/grub-btrfs.git
+
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: grub-btrfs-4.13-alt-disable-root-check.patch
+Patch: %name-%version-alt-disable-root-check.patch
 
 %description
 Improves grub by adding "btrfs snapshots" to the grub menu.
@@ -21,7 +23,7 @@ Supports manual snapshots, snapper, timeshift ...
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 %make_build DESTDIR=%buildroot
@@ -43,6 +45,11 @@ rm -v %buildroot/%_datadir/licenses/%name/LICENSE
 %_man8dir/%{name}d.8.xz
 
 %changelog
+* Sun Sep 21 2025 Anton Kurachenko <srebrov@altlinux.org> 4.14-alt1
+- New version 4.14.
+- Added VCS tag.
+- Minor spec changes.
+
 * Sun Jun 23 2024 Anton Kurachenko <srebrov@altlinux.org> 4.13-alt3
 - Fix FTBFS.
 
