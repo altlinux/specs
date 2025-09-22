@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.2
-Release: alt4
+Release: alt5
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -57,6 +57,7 @@ Summary: Lib files for %name
 %setup
 
 %build
+%add_optflags --std=c++26
 %autoreconf -if
 %configure
 %make_build
@@ -85,6 +86,9 @@ mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Mon Sep 22 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt5
+- Fixed build with bobcat 6.09.00
+
 * Tue May 13 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt4
 - Excluded arch: %ix86
 
