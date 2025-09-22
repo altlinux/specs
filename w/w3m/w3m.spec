@@ -2,7 +2,7 @@
 
 Name: w3m
 Version: 0.5.3
-Release: alt5.git20230121
+Release: alt5.git20230121.1
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
@@ -22,6 +22,10 @@ Patch10: %name-0.5.3-alt-DSO.patch
 Patch4:  %{name}-rh707994-fix-https-segfault.patch
 
 #https://bugzilla.redhat.com/show_bug.cgi?id=1038009
+
+# upstream patches
+Patch100: w3m-upstream-fix-oob-access-due-to-multiple-backspaces.patch
+
 
 %add_findreq_skiplist %_libexecdir/w3m/cgi-bin/w3mhelp.cgi
 
@@ -61,6 +65,8 @@ linux framebuffer.
 %patch4 -p0
 # alt patches
 %patch10 -p2
+# upstream patches
+%patch100 -p1
 
 %build
 %add_optflags -I%_includedir/gc
@@ -95,6 +101,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Mon Sep 22 2025 Alexander Danilov <admsasha@altlinux.org> 0.5.3-alt5.git20230121.1
+- Applied upstream patch (fixed CVE-2022-38223).
+
 * Thu Dec 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.3-alt5.git20230121
 - New version (Closes: #29696, #29697, #31584).
 
