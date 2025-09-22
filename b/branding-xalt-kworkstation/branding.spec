@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -497,6 +497,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt4
+- setup installer background for wide screens
+
 * Thu Jul 10 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt3
 - using license from distro-licenses package
 
