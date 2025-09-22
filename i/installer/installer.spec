@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.25
+Version: 1.16.26
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 1.16.26-alt1
+- 30-setup-network.sh: create configs for all eth interfaces
+
 * Thu Sep 11 2025 Oleg Solovyov <mcpain@altlinux.org> 1.16.25-alt1
 - 08-crypttab.sh: remove duplicates (Closes: #55172) 
 
