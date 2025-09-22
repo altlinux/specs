@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.18
+Version: 1.3.19
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon Sep 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.19-alt1
+- Add common and static licenses for ALT Education 11.0 and 11.1.
+
 * Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.3.18-alt1
 - fix ALT_Domain_License/11.1 version 11.0 -> 11.1
 
