@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.14
+Version: 1.1.16
 Release: alt1
 
 Summary: Deepin desktop themes
@@ -13,7 +13,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-theme
 VCS: https://github.com/linuxdeepin/deepin-desktop-theme
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
@@ -100,12 +101,16 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_datadir/dsg/icons/bloom-dark/
 %_datadir/dsg/icons/bloom/
 %_datadir/dsg/icons/vintage/
+%_datadir/dsg/icons/nirvana/
 
 %files -n xdgicon2dci
 %dir %_libexecdir/deepin-desktop-theme/
 %_libexecdir/deepin-desktop-theme/xdgicon2dci
 
 %changelog
+* Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.16-alt1
+- New version 1.1.16.
+
 * Fri Sep 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.14-alt1
 - New version 1.1.14.
 
