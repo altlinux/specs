@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.23.2
+Version: 1.26.0
 Release: alt1
 
 Summary: Extensions for using Django with htmx
@@ -45,6 +45,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 1.26.0-alt1
+- New version 1.26.0.
+
 * Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.23.2-alt1
 - New version 1.23.2.
 

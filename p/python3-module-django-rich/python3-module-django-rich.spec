@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Extensions for using Rich with Django
@@ -48,6 +48,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Tue May 13 2025 Alexander Burmatov <thatman@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.7.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Django app for handling the server headers required for Cross-Origin Resource Sharing (CORS)
@@ -45,6 +45,9 @@ This allows in-browser requests to your Django application from other origins.
 %pyproject_run_pytest
 
 %changelog
+* Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 4.9.0-alt1
+- Update version to 4.9.0.
+
 * Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
 - Update version to 4.7.0.
 

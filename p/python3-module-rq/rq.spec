@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Simple job queues for Python
@@ -56,6 +56,9 @@ processing them.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 2.6.0-alt1
+- Updated to upstream version 2.6.0.
+
 * Wed Aug 27 2025 Alexander Burmatov <thatman@altlinux.org> 2.5.0-alt1
 - Updated to upstream version 2.5.0.
 
