@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -31,6 +31,15 @@ Group: System/Configuration/Other
 Requires: alt-components-base = %version-%release
 
 %description -n alt-editions-server
+%summary.
+
+%package -n alt-editions-education
+Summary: Editions of BaseALT distribution ALT Education
+Group: System/Configuration/Other
+
+Requires: alt-components-base = %version-%release
+
+%description -n alt-editions-education
 %summary.
 
 %package -n alt-components-vendors
@@ -143,7 +152,14 @@ done
 %_alterator_datadir/editions/edition_server
 %_alterator_datadir/editions/edition_domain
 
+%files -n alt-editions-education
+%dir %_alterator_datadir/editions
+%_alterator_datadir/editions/edition_education
+
 %changelog
+* Mon Sep 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.9.0-alt1
+- editions: add edition_education for ALT Education product
+
 * Tue Sep 16 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.8.4-alt1
 - components: add alt-domain-docs
 - components: update links to official "Basealt LLC" documentation
