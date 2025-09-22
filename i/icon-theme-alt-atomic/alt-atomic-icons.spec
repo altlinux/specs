@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: icon-theme-alt-atomic
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Icon theme for ALT Atomic
@@ -17,8 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: python3(cairosvg)
-BuildRequires: gtk4-update-icon-cache
+BuildRequires: %_bindir/rsvg-convert
 
 %description
 %summary.
@@ -48,20 +47,11 @@ Requires: icon-theme-hicolor
 %description -n alt-atomic-icons
 %summary.
 
-%package -n alt-atomic-logos
-Summary: ALT Atomic logos
-Group: Graphics
-
-BuildArch: noarch
-
-%description -n alt-atomic-logos
-%summary.
-
 %prep
 %setup
 
 %build
-python3 ./create_png.py
+./create_png
 %meson
 %meson_build
 
@@ -75,9 +65,10 @@ python3 ./create_png.py
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 
-%files -n alt-atomic-logos
-%_datadir/distro-logos/*
-
 %changelog
+* Thu Sep 11 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.2-alt1
+- Fixed logo visual issues.
+- Deleted subpackage with logos.
+
 * Thu Aug 21 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1-alt1
 - Initial build.
