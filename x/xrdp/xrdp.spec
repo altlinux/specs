@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.4.1
-Release: alt1
+Release: alt3
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -56,7 +56,6 @@ BuildRequires: xorg-resourceproto-devel
 BuildRequires: xorg-scrnsaverproto-devel
 BuildRequires: libXfont2-devel
 BuildRequires: libfuse3-devel
-BuildRequires: libfreerdp-devel
 BuildRequires: libopus-devel
 BuildRequires: openssl
 BuildRequires: xorg-sdk
@@ -304,6 +303,20 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 0.10.4.1-alt3
+- xrdp-sesman.pam: run gnome-keyring, if available
+
+* Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 0.10.4.1-alt2
+- xrdp-alt-startwm.patch: fix for p11:
+  + On p11 systems with systemd, there is only /etc/locale.conf
+  + For the STARTUP command to be meaningful, it must be passed as
+    an Xsession argument
+  + In GNOME, the 'runwm default' command returns nothing, so we
+    need to get it from /usr/share/xsessions/. To avoid breaking the
+    old Xsessions behavior, we first try to get
+    DESKTOP_SESSION by running the 'runwm default' command.
+- remove unneeded BR on libfreerdp-devel.
+
 * Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 0.10.4.1-alt1
 - New version.
 
