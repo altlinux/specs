@@ -1,20 +1,24 @@
 %def_disable snapshot
-%define ver_major 0.54
+%define _name subtitleeditor
+%define ver_major 0.55
 %define gst_api_ver 1.0
+%define rdn_name org.kitone.%_name
 
-Name: subtitleeditor
+Name: %_name
 Version: %ver_major.0
 Release: alt1
 
 Summary: Graphical subtitle editor with sound waves representation
 Group: Video
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://github.com/kitone/%name
 
+Vcs: https://github.com/kitone/subtitleeditor.git
+
 %if_disabled snapshot
-Source: https://github.com/kitone/%name/releases/download/%version//%name-%version.tar.gz
+Source: https://github.com/kitone/%_name/archive/%version/%_name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 Requires: gstreamer%gst_api_ver
@@ -26,7 +30,7 @@ Requires: iso-codes
 BuildRequires: gcc-c++ intltool
 BuildRequires: libgtkmm3-devel libxml++2-devel
 BuildRequires: gst-plugins%gst_api_ver-devel libgstreamermm%gst_api_ver-devel gst-plugins-good%gst_api_ver
-BuildRequires: iso-codes-devel libenchant-devel
+BuildRequires: iso-codes-devel libenchant2-devel
 
 %description
 Subtitle Editor is a GTK+2 tool to edit subtitles for GNU/Linux/*BSD.
@@ -38,6 +42,7 @@ waves, which makes it easier to synchronise subtitles to voices.
 %setup
 
 %build
+%autoreconf
 %configure --disable-debug \
            --disable-gl
 %make_build
@@ -50,18 +55,20 @@ waves, which makes it easier to synchronise subtitles to voices.
 %_bindir/%name
 %_libdir/%name/
 %_libdir/*.so.*
-%_desktopdir/%name.desktop
+%_desktopdir/%rdn_name.desktop
 %_man1dir/*
-%_pixmapsdir/*
 %_datadir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %exclude %_libdir/*.so
 
 %changelog
+* Mon Sep 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
+- 0.55.0
+
 * Tue Jul 18 2017 Yuri N. Sedunov <aris@altlinux.org> 0.54.0-alt1
 - 0.54.0 (new url)
 
