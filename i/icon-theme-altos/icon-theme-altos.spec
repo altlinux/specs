@@ -1,5 +1,5 @@
 Name: icon-theme-altos
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Group: Graphics
@@ -113,6 +113,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_iconsdir/altos-dark/
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.5-alt1
+- update hwinfo icon
+
 * Thu Mar 13 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.4-alt1
 - remove extra delimiter in index.theme
 
