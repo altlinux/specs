@@ -1,5 +1,5 @@
 Name: xtools
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: A collection of small utilities for use with XBPS
@@ -22,6 +22,9 @@ from a void-packages checkout.
 %setup
 
 %install
+mv xq xq-%name
+mv fish/completions/xq.fish fish/completions/xq-%name.fish
+sed -i 's/xq/xq-%name/g' xq-%name fish/completions/xq-%name.fish xtools.1 _xtools
 %makeinstall_std PREFIX=%prefix
 
 %files
@@ -62,7 +65,7 @@ from a void-packages checkout.
 %_bindir/xpkg
 %_bindir/xpkgdiff
 %_bindir/xpstree
-%_bindir/xq
+%_bindir/xq-%name
 %_bindir/xrevbump
 %_bindir/xrevshlib
 %_bindir/xrs
@@ -108,7 +111,7 @@ from a void-packages checkout.
 %_man1dir/xpkg.1.xz
 %_man1dir/xpkgdiff.1.xz
 %_man1dir/xpstree.1.xz
-%_man1dir/xq.1.xz
+%_man1dir/xq-%name.1.xz
 %_man1dir/xrevbump.1.xz
 %_man1dir/xrevshlib.1.xz
 %_man1dir/xrs.1.xz
@@ -121,5 +124,9 @@ from a void-packages checkout.
 %_datadir/fish/vendor_functions.d/*
 
 %changelog
+* Wed Sep 10 2025 Ulysses Apokin <ulysses@altlinux.org> 0.69-alt1
+- New version.
+- Renamed xq to xq-%name to avoid name conflict with xq from yq.
+
 * Tue Mar 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.68-alt1
 - Initial build for Sisyphus.
