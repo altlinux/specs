@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.55.1
-Release: alt2
+Release: alt3
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -69,6 +69,7 @@ AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
 Patch: 0001-feature-runtime-Check-and-create-the-necessary-devic.patch
+Patch1: 0002-guess-device-tree-fix-typo-in-the-variable-name-moda.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -401,6 +402,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt3
+- guess/device-tree: fix typo in the variable name "modalias" (Closes: 56085)
+
 * Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt2
 - add upstream patch:
   + feature/runtime: Check and create the necessary device files (Closes: 55834)
