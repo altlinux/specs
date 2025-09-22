@@ -1,5 +1,5 @@
 Name: theme-kworkstation
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Workstatio K theme
@@ -40,5 +40,8 @@ done
 %_datadir/plasma/desktoptheme/altos-*/icons/*alt*.*
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2-alt1
+- update alterator and alt-main-menu icons
+
 * Mon Dec 23 2024 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1
 - initial build
