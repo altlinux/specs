@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -144,6 +144,13 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Sep 16 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.8.4-alt1
+- components: add alt-domain-docs
+- components: update links to official "Basealt LLC" documentation
+  (thx Olga Kamaeva)
+- editions: replace alt-server-docs with alt-domain-docs
+  in edition_domain
+
 * Tue Aug 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.8.3-alt1
 - feat: update editions validation with vendors components not included
 - components: replace vendors to separate packages
