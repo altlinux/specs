@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.9
+Version: 2.0.12
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -11,7 +11,7 @@ Summary: Launcher for DDE - next generation
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-launchpad
-Vcs: https://github.com/linuxdeepin/dde-launchpad.git
+Vcs: https://github.com/linuxdeepin/dde-launchpad
 
 Provides: %repo = %EVR
 Conflicts: deepin-launcher
@@ -77,6 +77,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.12-alt1
+- New version 2.0.12.
+
 * Tue Aug 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
 - New version 2.0.9.
 
