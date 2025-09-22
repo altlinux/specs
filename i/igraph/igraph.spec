@@ -1,9 +1,9 @@
-%define soname 3
+%define soname 4
 
 %def_disable clang
 
 Name: igraph
-Version: 0.10.16
+Version: 1.0.0
 Release: alt1
 
 Summary: Library for creating and manipulating graphs
@@ -11,8 +11,10 @@ License: GPL-2.0+
 Group: System/Libraries
 
 Url: https://igraph.org/
-Vcs: git://github.com/igraph/igraph.git
-Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
+Vcs: https://github.com/igraph/igraph
+# Source-url: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
+Source: igraph-%version.tar
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
@@ -46,6 +48,13 @@ tasks. It also provides implementation to many classic and new graph
 algorithms like: maximum flows, graph isomorphism, scale-free
 networks, community structure finding, etc.
 
+%package -n lib%name-doc
+Summary: %summary
+Group: Documentation
+
+%description -n lib%name-doc
+The package provides the documentation for %name.
+
 %package -n lib%name%soname
 Summary: %summary
 Group: System/Libraries
@@ -70,6 +79,7 @@ documentation needed to develop application with %name.
 
 %prep
 %setup
+%patch -p1
 # Cannot find out the version number of this package; IGRAPH_VERSION is missing.
 #
 # The official igraph tarballs should contain this file, therefore you are
@@ -119,9 +129,11 @@ export LDFLAGS="$LDFLAGS -fopenmp"
 install -pDm0644 doc/igraph.3 %buildroot%_man3dir/igraph.3
 find . -name '.arch-ids' | xargs rm -rf
 
-%files -n lib%name%soname
+%files -n lib%name-doc
 %doc COPYING
 %doc AUTHORS CHANGELOG.md doc/html/ ACKNOWLEDGEMENTS.md doc/licenses/
+
+%files -n lib%name%soname
 %_libdir/libigraph.so.%{soname}*
 
 %files -n lib%name-devel
@@ -133,6 +145,10 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+- Packaged docs separately.
+
 * Wed Jun 11 2025 Leontiy Volodin <lvol@altlinux.org> 0.10.16-alt1
 - New version 0.10.16.
 

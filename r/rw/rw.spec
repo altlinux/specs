@@ -2,7 +2,7 @@
 
 Name: rw
 Version: 0.9
-Release: alt2
+Release: alt3
 
 Summary: Program that calculates rank-width and rank-decompositions
 Summary(ru): Программа, вычисляющая ранговую ширину и декомпозицию рангов
@@ -11,8 +11,9 @@ License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://sourceforge.net/projects/rankwidth/
 
-Source: https://downloads.sourceforge.net/rankwidth/%name-%version.tar.gz
-Patch: rw-0.9-alt-fix-build-with-igraph.patch
+# Source-url: https://downloads.sourceforge.net/rankwidth/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: rw-0.9-alt-fix-igraph1.patch
 
 Provides: rankwidth = %version-%release
 
@@ -37,7 +38,6 @@ from the Lexicographical Index" Б.П. Баклза и М. Либанона и
 %package -n lib%name%soname
 Summary: Libraries for %name
 Group: Sciences/Mathematics
-Requires: %name = %version-%release
 
 %description -n lib%name%soname
 This package contains the libraries for %name.
@@ -51,16 +51,15 @@ This package contains the header files for %name.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 
 %build
+%autoreconf
 %configure --disable-static
 
-# Get rid of undesirable hardcoded rpaths; workaround libtool reordering
-# -Wl,--as-needed after all the libraries.
+# Get rid of undesirable hardcoded rpaths.
 sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -e 's|CC="\(.*g..\)"|CC="\1 -Wl,--as-needed"|' \
     -i libtool
 
 %make_build
@@ -82,6 +81,9 @@ rm %buildroot%_libdir/*.la
 %_libdir/lib%name.so
 
 %changelog
+* Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 0.9-alt3
+- Fix build with igraph 1.0.0.
+
 * Tue Sep 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.9-alt2
 - Fix build with igraph 0.10.0.
 
