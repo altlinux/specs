@@ -4,7 +4,7 @@
 
 Name: igraph
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Library for creating and manipulating graphs
 License: GPL-2.0+
@@ -51,6 +51,7 @@ networks, community structure finding, etc.
 %package -n lib%name-doc
 Summary: %summary
 Group: Documentation
+BuildArch: noarch
 
 %description -n lib%name-doc
 The package provides the documentation for %name.
@@ -145,6 +146,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1.1
+- Packaged libigraph-doc subpackage as noarch.
+
 * Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
 - New version 1.0.0.
 - Packaged docs separately.
