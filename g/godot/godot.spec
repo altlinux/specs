@@ -1,7 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %def_with server
+%define arch_alias %_arch
+%ifarch aarch64
+%define arch_alias arm64
+%endif
 
-%def_with builtin_bullet # need version >=2.88 to build against system library
+%def_without builtin_bullet
+%def_without builtin_certs
+# embree 3
+%def_with builtin_embree
 %def_without builtin_enet
 %def_without builtin_freetype
 %def_without builtin_libogg
@@ -10,30 +17,32 @@
 %def_without builtin_libvorbis
 %def_without builtin_libvpx
 %def_without builtin_libwebp
+# not packaged
+%def_with builtin_wslay
 %def_without builtin_mbedtls
+%def_without builtin_miniupnpc
 %def_without builtin_opus
 %def_without builtin_pcre2
+# not packaged
 %def_with builtin_recast
-%def_with builtin_squish
-%def_with builtin_thekla_atlas
+%def_without builtin_squish
+%def_without builtin_xatlas
 %def_without builtin_zlib
 %def_without builtin_zstd
 
 Name: godot
-Version: 3.6
+Version: 3.6.1
 Release: alt1
 
-Summary: Godot Engine - Multi-platform 2D and 3D game engine
+Summary: Libre game engine
 License: %mit
 Group: Development/Tools
 Url: https://godotengine.org/
-# embree 3 build failed
-ExcludeArch: aarch64
+VCS: https://github.com/godotengine/godot.git
 
 Source0: godot-%version.tar
-Source1: %name.desktop
-Source2: %name-icon-48.png
-Source3: %name.svg
+Patch: godot-3.6.1-alt-unbundle-xatlas.patch
+Patch1: godot-3.6.1-fedora-miniupnp228.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ ccache scons
@@ -55,11 +64,12 @@ BuildRequires: python3-module-zombie-imp python3-module-distutils-extra
 %{!?_with_builtin_libvpx:BuildRequires: libvpx-devel}
 %{!?_with_builtin_libwebp:BuildRequires: libwebp-devel}
 %{!?_with_builtin_mbedtls:BuildRequires: libmbedtls13-devel}
+%{!?_with_builtin_miniupnpc:BuildRequires: libminiupnpc-devel}
 %{!?_with_builtin_opus:BuildRequires: libopus-devel libopusfile-devel}
 %{!?_with_builtin_pcre2:BuildRequires: libpcre2-devel}
 %{!?_with_builtin_recast:BuildRequires: librecast-devel}
 %{!?_with_builtin_squish:BuildRequires: libsquish-devel}
-%{!?_with_builtin_thekla_atlas:BuildRequires: libtheklaatlas-devel}
+%{!?_with_builtin_xatlas:BuildRequires: libxatlas-devel}
 %{!?_with_builtin_zlib:BuildRequires: zlib-devel}
 %{!?_with_builtin_zstd:BuildRequires: libzstd-devel}
 
@@ -74,22 +84,22 @@ web-based (HTML5) platforms.
 #----------------------------------------------------------------------
 
 %if_with server
-%package        server
-Summary:        Godot headless binary for servers
-Group:          Games/Other
+%package server
+Summary: Godot headless binary for servers
+Group: Games/Other
 
-%description    server
+%description server
 This package contains the headless binary for the Godot game engine,
 particularly suited for running dedicated servers.
 %endif
 
 #----------------------------------------------------------------------
 
-%package        runner
-Summary:        Shared binary to play games developed with the Godot engine
-Group:          Games/Other
+%package runner
+Summary: Shared binary to play games developed with the Godot engine
+Group: Games/Other
 
-%description    runner
+%description runner
 This package contains a godot-runner binary for the Linux X11 platform,
 which can be used to run any game developed with the Godot engine simply
 by pointing to the location of the game's data package.
@@ -98,9 +108,7 @@ by pointing to the location of the game's data package.
 
 %prep
 %setup
-cp %SOURCE1 .
-cp %SOURCE2 .
-cp %SOURCE3 .
+%autopatch -p1
 %ifarch %e2k
 # unsupported as of lcc 1.25.17 (mcst#6261)
 sed -i  -e 's,-fno-tree-copy-prop,,' -e 's,-fno-tree-ccp,,' \
@@ -111,7 +119,9 @@ sed -i version.py \
   -e '/short_name/ s/godot/godot3/' \
   -e '/name/ s/Godot Engine/Godot Engine 3/' \
   #
+pushd thirdparty
 rm -rf \
+  bullet \
   enet \
   freetype \
   libogg \
@@ -121,19 +131,21 @@ rm -rf \
   libvpx \
   libwebp \
   mbedtls \
+  miniupnpc \
   opus \
   pcre2 \
-  recast \
   squish \
-  thekla_atlas \
+  xatlas \
   zlib \
   zstd \
   #
+popd
 
 %build
-%define subst_builtin() %{expand:%{1}=%%{?_with_%{1}:yes}}%{expand:%%{?_without_%{1}:no}}
+%define subst_builtin() %{expand:%1=%%{?_with_%1:yes}}%{expand:%%{?_without_%1:no}}
 
 %define godot_common_builtin_options \\\
+	%{subst_builtin builtin_certs} \\\
 	%{subst_builtin builtin_bullet} \\\
 	%{subst_builtin builtin_enet} \\\
 	%{subst_builtin builtin_freetype} \\\
@@ -144,11 +156,12 @@ rm -rf \
 	%{subst_builtin builtin_libvpx} \\\
 	%{subst_builtin builtin_libwebp} \\\
 	%{subst_builtin builtin_mbedtls} \\\
+	%{subst_builtin builtin_miniupnpc} \\\
 	%{subst_builtin builtin_opus} \\\
 	%{subst_builtin builtin_pcre2} \\\
 	%{subst_builtin builtin_recast} \\\
 	%{subst_builtin builtin_squish} \\\
-	%{subst_builtin builtin_thekla_atlas} \\\
+	%{subst_builtin builtin_xatlas} \\\
 	%{subst_builtin builtin_zlib} \\\
 	%{subst_builtin builtin_zstd} \\\
 %nil
@@ -163,6 +176,8 @@ scons \
 	verbose=yes \
 	target=release_debug \
 	use_static_cpp=no \
+	arch=%arch_alias \
+	system_certs_path=%_datadir/ca-certificates/ca-bundle.crt \
     -j %__nprocs
 
 # Build game runner (without tools)
@@ -173,6 +188,8 @@ scons \
 	verbose=yes \
 	target=release \
 	use_static_cpp=no \
+	arch=%arch_alias \
+	system_certs_path=%_datadir/ca-certificates/ca-bundle.crt \
     -j %__nprocs
 
 %if_with server
@@ -184,39 +201,45 @@ scons \
 	verbose=yes \
 	target=release_debug \
 	use_static_cpp=no \
+	arch=%arch_alias \
+	system_certs_path=%_datadir/ca-certificates/ca-bundle.crt \
     -j %__nprocs
 %endif
 
 %install
-install -Dm 0755 bin/godot.x11.opt.tools.* %buildroot%_bindir/%{name}
-install -m755 bin/%{name}.x11.opt.[0-9]* %buildroot%_bindir/%{name}-runner
+install -Dm 0755 bin/godot.x11.opt.tools.* %buildroot%_bindir/godot
+install -m755 bin/godot.x11.opt.%arch_alias %buildroot%_bindir/godot-runner
 %if_with server
-install -m755 bin/%{name}_server.x11.opt.tools.[0-9]* %buildroot%_bindir/%{name}-server
+install -m755 bin/godot_server.x11.opt.tools.%arch_alias \
+  %buildroot%_bindir/godot-server
 %endif
 
-install -m 644 -D %name-icon-48.png %buildroot%_liconsdir/%name.png
 mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps/
-install -m 644 -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/
+install -m 644 -D logo.svg %buildroot%_iconsdir/hicolor/scalable/apps/godot.svg
 mkdir -p %buildroot%_desktopdir/
-install -m 644 -D %name.desktop %buildroot%_desktopdir/
+install -m 644 -D misc/dist/linux/org.godotengine.Godot.desktop \
+  -t %buildroot%_desktopdir
 
 %files
-%_bindir/%name
-%_desktopdir/%name.desktop
-%_liconsdir/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_bindir/godot
+%_desktopdir/org.godotengine.Godot.desktop
+%_iconsdir/hicolor/scalable/apps/godot.svg
 
 %files runner
 %doc AUTHORS.md COPYRIGHT.txt LICENSE.txt
-%_bindir/%{name}-runner
+%_bindir/godot-runner
 
 %if_with server
 %files server
 %doc AUTHORS.md COPYRIGHT.txt LICENSE.txt
-%_bindir/%{name}-server
+%_bindir/godot-server
 %endif
 
 %changelog
+* Tue Sep 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.1-alt1
+- Enable build on aarch64 architecture.
+- New version.
+
 * Fri Apr 25 2025 Constantin Sunzow <protvin@altlinux.org> 3.6-alt1
 - Security fix: CVE-2021-26826.
 - Security fix: CVE-2021-26825.

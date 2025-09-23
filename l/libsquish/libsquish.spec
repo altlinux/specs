@@ -2,7 +2,7 @@
 
 Name: libsquish
 Version: 1.15
-Release: alt1
+Release: alt2
 Summary: Open source DXT compression library
 Group: System/Libraries
 License: MIT
@@ -40,8 +40,18 @@ applications which use DXT compression.
 
 %cmake_build
 
+%make PREFIX=%prefix LIB_PATH=%_lib libsquish.pc
+# Hack from Debian
+sed -r -i \
+  -e 's/-llibsquish/-lsquish/' \
+  -e 's/^(Version: ).*$$/\1%version/' \
+  libsquish.pc \
+  #
+
 %install
 %cmakeinstall_std
+
+install -Dm644 libsquish.pc -t %buildroot%_pkgconfigdir
 
 %files
 %doc LICENSE.txt
@@ -52,8 +62,12 @@ applications which use DXT compression.
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/libsquish.pc
 
 %changelog
+* Tue Sep 23 2025 Constantin Sunzow <protvin@altlinux.org> 1.15-alt2
+- Fix pkg-config.
+
 * Mon Apr 13 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.15-alt1
 - Initial build for ALT.
 

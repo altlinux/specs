@@ -5,7 +5,7 @@
 
 Name: bullet3
 Version: 3.25
-Release: alt2
+Release: alt3
 
 Summary: Professional 3D collision detection library
 
@@ -92,6 +92,10 @@ Development headers and libraries for %name extra libraries.
 %prep
 %setup
 %autopatch -p1
+
+# Fix the pkg-config module so it doesn't list the prefix twice
+# in the include install dir. Hack from Fedora.
+sed -i 's|${prefix}/@INCLUDE_INSTALL_DIR@|@INCLUDE_INSTALL_DIR@|' bullet.pc.cmake
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -204,6 +208,9 @@ rm -rv {data/,examples/}
 %_libdir/libBulletXmlWorldImporter.so
 
 %changelog
+* Tue Sep 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.25-alt3
+- Fix the pkg-config module.
+
 * Fri Sep 15 2023 Mikhail Tergoev <fidel@altlinux.org> 3.25-alt2
 - revert to git
 
