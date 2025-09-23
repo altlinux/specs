@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 5.038
+Version: 5.040
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -13,7 +13,7 @@ VCS: https://github.com/verilator/verilator
 # VCS: https://github.com/verilator/verilator
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-ExcludeArch: armh
+ExcludeArch: i586 armh
 
 BuildRequires: flex gcc-c++
 BuildRequires: rpm-build-python3
@@ -74,6 +74,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Tue Sep 16 2025 Andrey Kovalev <ded@altlinux.org> 5.040-alt1
+- new version 5.040
+
 * Tue Jul 22 2025 Andrey Kovalev <ded@altlinux.org> 5.038-alt1
 - new version 5.038
 
