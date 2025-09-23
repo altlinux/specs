@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.9
+Version: 2.0.11
 Release: alt1
 
 Summary: Plugins for DDE
@@ -14,7 +14,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-shell
 Vcs: https://github.com/linuxdeepin/dde-shell
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-shell-2.0.3-alt-fixes-bad-symbols.patch
 
@@ -147,6 +148,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Tue Sep 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.11-alt1
+- New version 2.0.11.
+
 * Mon Sep 15 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
 - New version 2.0.9.
 
