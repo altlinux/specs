@@ -5,7 +5,7 @@ Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation-batocera
 Epoch: 1
 Version: 39
-Release: alt1.git07e87f4
+Release: alt2.gitc3d5c67
 License: MIT
 Group: Emulators
 Url: https://github.com/Maks1mS/batocera-emulationstation
@@ -86,8 +86,7 @@ install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/%{name}/es_systems.cfg
 install -m 0775 %{SOURCE4} %{buildroot}%{_bindir}/run_emulationstation
 
 # Install themes
-mkdir -p %{buildroot}%{_sysconfdir}/%{name}/themes/
-cp -R ./themes %{buildroot}%{_sysconfdir}/%{name}/
+cp -R ./themes %{buildroot}%{_datadir}/%{name}/
 
 # Provide a .desktop file
 mkdir -p %{buildroot}%{_datadir}/applications/
@@ -112,11 +111,11 @@ rm -rf %{buildroot}%{_includedir}
 
 %files -f emulationstation2.lang
 %doc GAMELISTS.md LICENSE.md README.md SYSTEMS.md THEMES.md
-%dir %{_sysconfdir}/%{name}
+%dir %{_datadir}/%{name}
 %dir %{_sysconfdir}/%{name}/gamelists/
-%dir %{_sysconfdir}/%{name}/themes/
-%dir %{_sysconfdir}/%{name}/themes/simple/
-%config(noreplace) %{_sysconfdir}/%{name}/themes/simple/*
+%dir %{_datadir}/%{name}/themes/
+%dir %{_datadir}/%{name}/themes/simple/
+%config(noreplace) %{_datadir}/%{name}/themes/simple/*
 %config(noreplace) %{_sysconfdir}/%{name}/es_systems.cfg
 %{_bindir}/%oname
 %{_bindir}/run_emulationstation
@@ -126,6 +125,13 @@ rm -rf %{buildroot}%{_includedir}
 %_libexecdir/libid3v2.a
 
 %changelog
+* Tue Sep 23 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt2.gitc3d5c67
+- Update sources
+
+* Tue Aug 26 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt1.gitc3d5c67
+- Update sources
+- Fix bluetooth control
+
 * Fri Mar 21 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt1.git07e87f4
 - Switch to fork of Maks1mS@ with next improvements:
 - Add basic common linux API system
