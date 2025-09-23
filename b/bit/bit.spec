@@ -4,7 +4,7 @@
 
 Name: bit
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: Bit is a modern Git CLI
 License: Apache-2.0
@@ -13,8 +13,12 @@ Url: https://pkg.go.dev/github.com/chriswalz/bit
 Vcs: https://github.com/chriswalz/bit
 ExclusiveArch: %go_arches
 
+Packager: Alexandr Shashkin <dutyrok@altlinux.org>
+
 Source0: %name-%version.tar
 Source1: vendor.tar
+
+Patch: %name-%version-%release.patch
 
 Requires: git
 
@@ -37,6 +41,7 @@ conflicts
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -58,6 +63,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Sep 23 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.2-alt2
+- NMU: Update vendored golang.org/x/sys to fix FTBFS on loongarch64
+
 * Wed Aug 09 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus
 
