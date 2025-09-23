@@ -1,7 +1,7 @@
 %define soversion 1
 
 Name: whisper-cpp
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Port of OpenAI's Whisper model in C/C++
@@ -68,5 +68,8 @@ Contains development files for lib%name%soversion.
 %_libdir/pkgconfig/whisper.pc
 
 %changelog
+* Tue Sep 23 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 1.7.6-alt1
+- New version 1.7.6.
+
 * Tue Jun  3 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 1.7.5-alt1
 - Initial build for Sisyphus.
