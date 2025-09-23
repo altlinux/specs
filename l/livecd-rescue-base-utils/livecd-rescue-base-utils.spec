@@ -1,12 +1,27 @@
 Name: livecd-rescue-base-utils
 Version: 1.1
-Release: alt5
+Release: alt6
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
 Group: System/Base
 
 Url: https://www.altlinux.org/Rescue
+
+# Common
+Requires: acl
+Requires: coreutils
+Requires: glibc-nss
+Requires: glibc-utils
+Requires: man
+Requires: man-pages
+Requires: util-linux
+Requires: eject
+Requires: binutils
+Requires: usbutils
+
+# Package management
+Requires: apt-repo
 
 # Disk utils
 Requires: dc3dd
@@ -72,7 +87,6 @@ Requires: system-backup
 Requires: gostsum
 Requires: flashrom
 Requires: dialog
-Requires: usbutils
 
 %ifarch x86_64
 # UEFI Secure Boot
@@ -86,6 +100,9 @@ Requires: mokutil
 %files
 
 %changelog
+* Tue Sep 23 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt6
+- Add dependency on base utilities.
+
 * Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt5
 - Add dependency on nvme.
 
