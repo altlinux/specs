@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.26
+Version: 1.16.27
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,10 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Tue Sep 23 2025 Anton Midyukov <antohami@altlinux.org> 1.16.27-alt1
+- 30-setup-network.sh, 31-enable-networkmanager.sh: fix conditions
+- 30-setup-network.sh: simplify conditions
+
 * Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 1.16.26-alt1
 - 30-setup-network.sh: create configs for all eth interfaces
 
