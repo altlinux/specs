@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.16
+%define major 22.19
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -16,7 +16,7 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.9.2
+%define npm_version 10.9.3
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -38,7 +38,11 @@
 
 # check: openssl 3.0 inside (TODO: QUIC support, FIPS support)
 %define openssl_version 3.0.15
+%if_feature openssl3
 %def_with systemssl
+%endif
+
+%def_with systemgyp
 
 # check deps/uv/include/uv/version.h
 %define libuv_version 1.49.2
@@ -57,7 +61,7 @@
 %endif
 
 # TODO: some strange build error
-%ifarch armh
+%ifarch armh %ix86
 %global optflags_lto %nil
 %endif
 
@@ -313,7 +317,11 @@ rm -rv deps/openssl
 # disable external libs
 # TODO:
 # deps/gtest
+
+%if_with systemgyp
 rm -rv tools/gyp
+%endif
+
 rm -rv deps/zlib deps/cares deps/brotli
 # make no sense for a first build
 %__subst "s|deps/zlib/zlib.gyp||" Makefile
@@ -511,6 +519,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Mon Sep 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.19.0-alt1
+- 2025-08-28, Version 22.19.0 'Jod' (LTS), @aduh95
+- disable LTO on %%ix86 (ALT bug 56065)
+- set npm >= 10.9.3
+
 * Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.16.0-alt1
 - 2025-05-21, Version 22.16.0 'Jod' (LTS), @aduh95
 
