@@ -4,8 +4,8 @@
 %endif
 
 Name:       hedgewars
-Version:    1.0.2
-Release:    alt4
+Version:    1.0.3
+Release:    alt1
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -24,10 +24,6 @@ Source11:   hedgewars-server.cabal
 }
 
 Patch:      fix_non_inline_ShiftWorld.patch
-# https://github.com/hedgewars/hw/pull/74
-Patch2:     ffmpeg6.0-support.patch
-
-Patch3:     hedgewars-1.0.2-fix_build_with_cmake_4.0.patch
 
 %{?_with_server:
 Patch10:    hedgewars-1.0.2-mtl_2.3.patch
@@ -102,6 +98,7 @@ BuildArch: noarch
 
 %description data
 This package contains all the data files for %name.
+
 %description data -l ru_RU.UTF-8
 Этот пакет содержит все файлы данных для игры %name.
 
@@ -109,8 +106,6 @@ This package contains all the data files for %name.
 %setup
 
 %patch -p2
-%patch2 -p1
-%patch3 -p2
 
 %{?_with_server:
 %setup -D -T -a 10
@@ -176,6 +171,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Tue Sep 23 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
+- Build new version.
+
 * Wed Apr 30 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.2-alt4
 - Rebuilt with GHC 9.6.6.
 
