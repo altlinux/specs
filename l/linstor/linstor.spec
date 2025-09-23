@@ -1,5 +1,5 @@
 %define GRADLE_TASKS installdist
-%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon --exclude-task generateJava -PjavaHome=/usr/lib/jvm/jre-21
+%define GRADLE_FLAGS --offline --gradle-user-home .gradlehome --no-daemon --exclude-task generateJava -PjavaHome=/usr/lib/jvm/jre-21
 %define LS_PREFIX %_datadir/linstor-server
 %define FIREWALLD_SERVICES %_usr/lib/firewalld/services
 %define NAME_VERS %name-server-%version
@@ -8,8 +8,8 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.31.1
-Release: alt4
+Version: 1.32.1
+Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -42,8 +42,10 @@ gradle %GRADLE_TASKS %GRADLE_FLAGS
 
 %install
 mkdir -p %buildroot%LS_PREFIX
-cp -r %_builddir/%NAME_VERS/build/install/linstor-server/lib %buildroot%LS_PREFIX
-rm %buildroot/%LS_PREFIX/lib/%NAME_VERS.jar
+cp -r %_builddir/%NAME_VERS/controller/build/install/controller/lib %buildroot/%LS_PREFIX
+cp -r %_builddir/%NAME_VERS/satellite/build/install/satellite/lib %buildroot/%LS_PREFIX
+cp -r %_builddir/%NAME_VERS/server/build/install/server/lib %buildroot/%LS_PREFIX
+
 chmod a-x %buildroot/%LS_PREFIX/lib/*.jar
 mkdir -p %buildroot/%LS_PREFIX/lib/conf
 cp %_builddir/%NAME_VERS/server/logback.xml %buildroot/%LS_PREFIX/lib/conf
@@ -65,7 +67,7 @@ mkdir -p %buildroot%_sysconfdir/drbd.d/
 cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/drbd.d/
 #touch %%buildroot%%LS_PREFIX/{.server,.satellite,.controller}
 mkdir -p %buildroot%_sysconfdir/linstor
-cp %_builddir/%NAME_VERS/docs/linstor_satellite.toml-example %buildroot%_sysconfdir/linstor/
+cp %_builddir/%NAME_VERS/scripts/linstor_satellite-example.toml %buildroot/%_sysconfdir/linstor/
 touch %buildroot%_sysconfdir/linstor/linstor.toml
 mkdir -p %buildroot/var/lib/linstor
 
@@ -93,8 +95,8 @@ Linstor shared components between linstor-controller and linstor-satellite
 Summary: Linstor controller specific files
 Group: System/Servers
 Requires: linstor-common = %EVR
-Requires(post): java-21-openjdk
-Requires(post): java-common
+Requires: java-21-openjdk
+Requires: java-common
 
 %description controller
 Linstor controller manages linstor satellites and persistant data storage.
@@ -103,6 +105,9 @@ Linstor controller manages linstor satellites and persistant data storage.
 %dir %LS_PREFIX
 %dir %LS_PREFIX/lib
 %LS_PREFIX/lib/controller-%version.jar
+%exclude %LS_PREFIX/lib/server-%version.jar
+%exclude %LS_PREFIX/lib/jclcrypto-%version.jar
+
 %dir %LS_PREFIX/bin
 %LS_PREFIX/bin/Controller
 %LS_PREFIX/bin/linstor-config
@@ -110,7 +115,6 @@ Linstor controller manages linstor satellites and persistant data storage.
 %LS_PREFIX/bin/controller.postinst.sh
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
-%_sysconfdir/linstor/linstor_satellite.toml-example
 %ghost %config(noreplace) %_sysconfdir/linstor/linstor.toml
 
 
@@ -139,12 +143,15 @@ and creates drbd resource files.
 %dir %LS_PREFIX
 %dir %LS_PREFIX/lib
 %LS_PREFIX/lib/satellite-%version.jar
+%exclude %LS_PREFIX/lib/server-%version.jar
+%exclude %LS_PREFIX/lib/jclcrypto-%version.jar
 %dir %LS_PREFIX/bin
 %LS_PREFIX/bin/Satellite
 %_unitdir/linstor-satellite.service
 %FIREWALLD_SERVICES/linstor-satellite.xml
 %FIREWALLD_SERVICES/drbd.xml
 %config(noreplace) %_sysconfdir/drbd.d/linstor-resources.res
+%_sysconfdir/linstor/linstor_satellite-example.toml
 
 %post satellite
 %post_service linstor-satellite
@@ -154,6 +161,12 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Tue Sep 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.32.1-alt1
+- 1.32.1
+
+* Tue Sep 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.31.1-alt5
+- fix R: for linstor-controller
+
 * Mon Jun 30 2025 Ivan A. Melnikov <iv@altlinux.org> 1.31.1-alt4
 - NMU: enable building on riscv64
 
