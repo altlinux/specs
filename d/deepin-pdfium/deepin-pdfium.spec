@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: deepin-pdfium
-Version: 1.5.1
+Version: 1.5.3.0.3.1518
 Release: alt1
 
 Summary: Development library for pdf on Deepin
@@ -11,10 +11,10 @@ Summary: Development library for pdf on Deepin
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pdfium
-Vcs: https://github.com/linuxdeepin/deepin-pdfium.git
+Vcs: https://github.com/linuxdeepin/deepin-pdfium
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-pdfium-1.5.1-alt-pkgconfig-dqt6.patch
+Patch0: %name-%version-%release.patch
 
 BuildRequires: dqt6-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
 %if_with clang
@@ -55,7 +55,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %DQ6build \
-  -DVERSION=%version \
+  -DVERSION=1.5.3 \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
 #
 
@@ -74,6 +74,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Sep 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.3.0.3.1518-alt1
+- New version 1.5.3-3-g1518dd6.
+- Fixed build with gcc15.
+
 * Tue Mar 11 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
 - New version 1.5.1.
 - Switched to dqt6.
