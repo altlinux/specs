@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.27
+Version: 6.5.33
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -12,9 +12,10 @@ Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
 Url: https://github.com/linuxdeepin/deepin-system-monitor
-Vcs: https://github.com/linuxdeepin/deepin-system-monitor.git
+Vcs: https://github.com/linuxdeepin/deepin-system-monitor
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-system-monitor-6.5.8-alt-fix-GNUInstallDirs.patch
 Patch2: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
@@ -125,6 +126,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Tue Sep 23 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.33-alt1
+- New version 6.5.33.
+
 * Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.27-alt1
 - New version 6.5.27.
 
