@@ -6,7 +6,7 @@
 
 Name: alpaca
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: Chat with AI models
 License: GPL-3.0-or-later
@@ -33,7 +33,7 @@ BuildRequires: /usr/bin/appstreamcli
 BuildRequires: /usr/bin/glib-compile-schemas
 %endif
 
-ExclusiveArch: aarch64 x86_64
+ExcludeArch: %ix86
 
 %description
 A private AI client
@@ -111,6 +111,9 @@ by any models.
 %files local
 
 %changelog
+* Tue Sep 23 2025 Ivan A. Melnikov <iv@altlinux.org> 5.3.0-alt2
+- build on architectures except %%ix86
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
