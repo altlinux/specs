@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -74,6 +74,9 @@ install -m644 -v \
 %config(noreplace)%_sysconfdir/*.plist
 
 %changelog
+* Tue Sep 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6.1-alt1
+- 0.6 -> 0.6.1
+
 * Thu Aug 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6-alt1
 - 0.5 -> 0.6
 

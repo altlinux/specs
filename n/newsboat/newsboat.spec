@@ -1,5 +1,7 @@
+%def_without check
+
 Name:	 newsboat
-Version: 2.40
+Version: 2.41
 Release: alt1
 
 Summary: An RSS/Atom feed reader for the text console
@@ -12,6 +14,7 @@ Vcs:	 https://github.com/newsboat/newsboat.git
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: %name.watch
+Source3: Cargo.lock
 
 Provides:  newsbeuter = %EVR
 Obsoletes: newsbeuter < %EVR
@@ -56,6 +59,7 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 [profile.release]
 strip = false
 EOF
+cp -fv %SOURCE3 .
 
 %build
 ./config.sh
@@ -88,6 +92,9 @@ cargo test
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Sep 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.41-alt1
+- Updated to r2.41.
+
 * Tue Jun 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.40-alt1
 - Updated to r2.40.
 
