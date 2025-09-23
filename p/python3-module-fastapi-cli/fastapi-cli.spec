@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name fastapi-cli
 %define mod_name fastapi_cli
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.12
+Version: 0.0.13
 Release: alt1
 
 Summary: Run and manage FastAPI apps from the command line with FastAPI CLI
@@ -13,7 +12,6 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/fastapi-cli/
 Vcs: https://github.com/fastapi/fastapi-cli
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -24,7 +22,6 @@ Source2: clean_coverage.py
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -61,6 +58,9 @@ your FastAPI app, manage your FastAPI project, and more.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.13-alt1
+- Updated to 0.0.13.
+
 * Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.12-alt1
 - Updated to 0.0.12.
 

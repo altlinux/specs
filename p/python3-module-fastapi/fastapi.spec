@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name fastapi
 %define module_name %pypi_name
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.116.2
+Version: 0.117.1
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -13,7 +12,6 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/fastapi
 Vcs: https://github.com/fastapi/fastapi
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -30,7 +28,6 @@ Provides: %name-slim = %EVR
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata
@@ -95,6 +92,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.117.1-alt1
+- Updated to 0.117.1.
+
 * Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.116.2-alt1
 - Updated to 0.116.2.
 

@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name sqlmodel
 %define mod_name %pypi_name
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.24
+Version: 0.0.25
 Release: alt1
 
 Summary: SQL databases in Python, designed for simplicity, compatibility, and robustness
@@ -13,7 +12,6 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/sqlmodel/
 Vcs: https://github.com/fastapi/sqlmodel
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -21,9 +19,9 @@ Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 BuildRequires: python3-module-black
 %pyproject_builddeps_metadata
@@ -75,6 +73,9 @@ export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.25-alt1
+- Updated to 0.0.25.
+
 * Mon Mar 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.24-alt1
 - Updated to 0.0.24.
 

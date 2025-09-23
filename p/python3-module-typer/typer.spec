@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-
 %define pypi_name typer
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.17.4
+Version: 0.19.1
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -12,7 +11,6 @@ License: MIT
 Group: Development/Python3
 Url: https://typer.tiangolo.com/
 Vcs: https://github.com/tiangolo/typer
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -23,7 +21,6 @@ Source2: clean_coverage.py
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 BuildRequires: /proc
 %pyproject_builddeps_check
@@ -84,6 +81,9 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.19.1-alt1
+- Updated to 0.19.1.
+
 * Thu Sep 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.4-alt1
 - Updated to 0.17.4.
 
