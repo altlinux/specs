@@ -1,6 +1,6 @@
 Name: wlroots
-Version: 0.19.0
-Release: alt2
+Version: 0.19.1
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -88,6 +88,9 @@ This package provides development files for libwlroots library.
 %_pkgconfigdir/wlroots-%soversion.pc
 
 %changelog
+* Tue Sep 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.19.1-alt1
+- 0.19.1 released
+
 * Thu Sep 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.19.0-alt2
 - dropped needless freerdp builddep
 
