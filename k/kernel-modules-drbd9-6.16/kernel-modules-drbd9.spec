@@ -1,6 +1,6 @@
 %define module_name     drbd9
-%define module_version  9.2.14
-%define module_release  alt2
+%define module_version  9.2.15
+%define module_release  alt1
 %define flavour         6.16
 %define karch %ix86 x86_64 aarch64 ppc64le armh
 
@@ -44,7 +44,7 @@ tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 
 %build
 #sed -i s/SUBDIRS=/M=/g Makefile
-make -C drbd KDIR=/lib/modules/*/build
+make -C drbd KDIR=/lib/modules/*/build CONFIG_DRBD_COMPAT_84=y
 
 %install
 install -d %buildroot/%module_dir
