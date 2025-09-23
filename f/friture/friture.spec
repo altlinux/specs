@@ -1,5 +1,5 @@
 Name: friture
-Version: 0.53
+Version: 0.54
 Release: alt1
 
 Summary: Realtime audio data visualizer
@@ -34,16 +34,25 @@ in a sound.
 
 %install
 %pyproject_install
+install -pm0644 -D resources/images-src/window-icon.svg \
+	%buildroot%_iconsdir/hicolor/scalable/apps/friture.svg
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
 %doc README* INSTALL* COPYING*
 %_bindir/friture
 %_desktopdir/friture.desktop
+%_iconsdir/*/*/*/friture.*
 %python3_sitelibdir/friture
 %python3_sitelibdir/friture_extensions
 %python3_sitelibdir/friture-%version.dist-info
 
 %changelog
+* Mon Sep 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.54-alt1
+- 0.54 released
+
 * Tue Sep 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.53-alt1
 - 0.53 released
 

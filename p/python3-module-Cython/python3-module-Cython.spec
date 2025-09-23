@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 3.0.12
+Version: 3.1.4
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -96,7 +96,8 @@ This package provides modules for debugging Cython programms.
 %setup -n cython-%version
 
 %build
-%pyproject_build
+%pyproject_build --backend-config-settings \
+        '{"--build-option": ["build_ext", "--cython-limited-api"]}'
 
 %install
 %pyproject_install
@@ -106,6 +107,9 @@ done
 
 %check
 %tox_check
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
 %_bindir/cython
@@ -133,6 +137,9 @@ done
 %endif
 
 %changelog
+* Fri Sep 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.4-alt1
+- 3.1.4
+
 * Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.12-alt1
 - 3.0.12
 
