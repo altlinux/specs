@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -28,11 +28,28 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++ 
 %endif
 
+Requires: %name-data = %EVR
 %add_findprov_lib_path %_dqt6_libdir
 
 %description
 Treeland is a wayland compositor based on wlroots and QtQuick, designed
 to provide efficient and flexible graphical interface support.
+
+%package data
+Summary: Data files for %name
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description data
+This package provides data files for %name.
+
+%package wayland-session
+Summary: Wayland files for %name
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description wayland-session
+This package provides wayland files for %name.
 
 %package -n libtreeland%sover
 Summary: Library for %name
@@ -136,7 +153,8 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 
 %files -f treeland.lang
 %doc LICENSES/ README*.md debian/changelog
-%_bindir/treeland*
+%_bindir/treeland
+%_bindir/treeland.sh
 %_libexecdir/treeland-sd
 %_libexecdir/treeland-shortcut
 %_unitdir/treeland.service
@@ -148,13 +166,20 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_userunitdir/treeland*
 %dir %_libdir/treeland/
 %_libdir/treeland/plugins/
+%dir %_datadir/treeland/
+%dir %_datadir/treeland/translations
+
+%files data
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %_datadir/dsg/configs/org.deepin.treeland/
 %dir %_datadir/treeland/
-%dir %_datadir/treeland/translations
 %_datadir/treeland/shortcuts/
-%_datadir/wayland-sessions/treeland*.desktop
+%_datadir/wayland-sessions/treeland.desktop
+
+%files wayland-session
+%_bindir/treeland-user-wrapper
+%_datadir/wayland-sessions/treeland-user.desktop
 
 %files -n libtreeland%sover
 %_libdir/libtreeland.so.%{sover}*
@@ -192,6 +217,10 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.3-alt1
+- New version 0.7.3.
+- Packaged data and wayland files separately.
+
 * Fri Sep 19 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.2-alt1
 - New version 0.7.2.
 
