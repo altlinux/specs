@@ -5,7 +5,7 @@
 
 Name: libgio-qt
 Version: 0.0.16
-Release: alt1
+Release: alt2
 Summary: Qt wrapper library of Gio
 License: LGPL-3.0+
 Group: System/Libraries
@@ -15,7 +15,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/gio-qt-%version.tar.gz
 Patch0: gio-qt-%version-%release.patch
-Patch1: gio-qt-0.0.14-alt-fix-detection-dqt6-pkgconfig.patch
+Patch1: gio-qt-0.0.16-alt-fix-detection-dqt6-pkgconfig.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 BuildRequires: gcc-c++ cmake libglibmm-devel dqt6-base-devel
@@ -55,7 +55,7 @@ This package provides %name documantation for QtCreator.
 %prep
 %setup -n gio-qt-%version
 %patch0 -p1
-%patch1 -p1
+%patch1 -p2
 sed -i '/qt5.cmake/d' \
   gio-qt/CMakeLists.txt \
   qgio-tools/CMakeLists.txt
@@ -94,6 +94,9 @@ install -D BUILD/docs/qch/gio-qt-0.0.16.qch %buildroot%_dqt6_docdir/gio-qt.qch
 %endif
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.16-alt2
+- Built required packages with dQt instead default Qt.
+
 * Fri Aug 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.16-alt1
 - New version 0.0.16.
 - Disabled qch documentation (by upstream).

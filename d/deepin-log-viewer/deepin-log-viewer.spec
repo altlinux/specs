@@ -4,7 +4,7 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.17
+Version: 6.5.21
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -17,10 +17,12 @@ License: GPL-3.0-or-later
 # 3rdparty/DocxFactory/: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-log-viewer
-Vcs: https://github.com/linuxdeepin/deepin-log-viewer.git
+Vcs: https://github.com/linuxdeepin/deepin-log-viewer
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 %if_enabled clang
@@ -28,7 +30,7 @@ BuildRequires(pre): clang-devel lld-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: boost-devel-headers cmake deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libminizip-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt6-svg-devel dqt6-tools-devel dqt6-5compat-devel rapidjson-devel libpolkitqt6-qt6-devel libcups-devel libgio-qt6-devel
+BuildRequires: boost-devel-headers cmake deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libminizip-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt6-svg-devel dqt6-tools-devel dqt6-5compat-devel rapidjson-devel libpolkitqt6-dqt6-devel libcups-devel libgio-qt6-devel libicu-devel
 
 %description
 %summary.
@@ -51,7 +53,8 @@ This package provides development files for logviewerplugin.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
   cmake/translation-generate.cmake
 
@@ -61,7 +64,6 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:%_includedir/qt6
 %DQ6build \
   -DQT_LRELEASE=%_dqt6_bindir/lrelease \
   -DVERSION=%version \
@@ -83,7 +85,7 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %files -f %name.lang
-%doc README.md LICENSE.txt
+%doc README.md LICENSE.txt debian/changelog
 %_bindir/*
 %_userunitdir/coredump-reporter.service
 %_userunitdir/coredump-reporter.timer
@@ -130,6 +132,10 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.21-alt1
+- New version 6.5.21.
+- Built with deepin polkitqt6.
+
 * Fri Jun 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.17-alt1
 - New version 6.5.17.
 

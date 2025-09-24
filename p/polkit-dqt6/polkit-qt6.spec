@@ -7,7 +7,7 @@
 
 Name: polkit-dqt6
 Version: 0.175.0
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Summary: Qt 6 PolicyKit bindings fork for DDE
 License: GPL-2.0-or-later
@@ -65,6 +65,7 @@ Requires: libpolkit-dqt6-gui
 
 %prep
 %setup -n polkit-dqt-1-%version
+sed -i '/Requires:/d' *.pc.cmake
 
 %build
 %DQ6build \
@@ -102,6 +103,9 @@ rm -fv html/installdox
 %_dqt6_libdir/cmake/PolkitQt6-1/
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.175.0-alt0.dde.2
+- build required packages with dQt instead default Qt
+
 * Wed Sep 03 2025 Leontiy Volodin <lvol@altlinux.org> 0.175.0-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 - enable vulkan support
