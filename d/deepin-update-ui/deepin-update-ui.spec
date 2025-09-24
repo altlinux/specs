@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.27
+Version: 1.0.29
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -11,7 +11,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-update-ui
 VCS: https://github.com/linuxdeepin/deepin-update-ui
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-update-ui-1.0.22-alt-fix-underlinked-libraries.patch
 Patch2: deepin-update-ui-1.0.22-alt-fix-unmets.patch
@@ -81,6 +82,9 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.29-alt1
+- New version 1.0.29.
+
 * Fri Sep 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.27-alt1
 - New version 1.0.27.
 
