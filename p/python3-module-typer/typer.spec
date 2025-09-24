@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.1
+Version: 0.19.2
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -76,11 +76,14 @@ export COLUMNS=135
 
 %files
 %_bindir/%pypi_name
-%doc README.md docs
+%doc README.md LICENSE docs
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 24 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.19.2-alt1
+- Updated to 0.19.2.
+
 * Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.19.1-alt1
 - Updated to 0.19.1.
 
@@ -112,13 +115,13 @@ export COLUMNS=135
 - Updated to 0.12.5.
 
 * Mon Apr 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.3-alt1
-- 0.11.0 -> 0.12.3.
+- Updated to 0.12.3.
 
 * Thu Mar 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt1
-- 0.9.0 -> 0.11.0.
+- Updated to 0.11.0.
 
 * Sat Oct 21 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt2
-- Fixed FTBFS: deselect some tests for bash completion
+- Fixed FTBFS: deselect some tests for bash completion.
 
 * Thu Sep 14 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt1
-- Initial build for ALT Sisyphus
+- Initial build for ALT Sisyphus.
