@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -13,7 +13,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-tray-loader
 Vcs: https://github.com/linuxdeepin/dde-tray-loader
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
@@ -25,6 +26,13 @@ Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 %description
 The project provides a set of tray plugins that integrated
 into task bar and the tool loader which can load the plugins.
+
+%package -n dde-wirelesscasting-plugin
+Summary: dde-wirelesscasting-plugin for dde-dock
+Group: Graphical desktop/Other
+
+%description -n dde-wirelesscasting-plugin
+DDE wirelesscasting plugin for dde-dock.
 
 %package -n libdde-trayplugin-interface%soverdti
 Summary: Library for %name
@@ -82,7 +90,8 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 
 %install
 %DQ6install
-%find_lang --with-qt --output=dde-dock.lang dde-dock dock-wirelesscasting-plugin
+%find_lang --with-qt dde-dock
+%find_lang --with-qt dock-wirelesscasting-plugin
 %find_lang --with-qt trayplugin-loader
 
 %files -f trayplugin-loader.lang
@@ -118,20 +127,18 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/*.so
+%exclude %_libdir/dde-dock/plugins/libdock-wirelesscasting-plugin.so
 %dir %_libdir/dde-dock/plugins/system-trays/
 %_libdir/dde-dock/plugins/system-trays/*.so
 %dir %_datadir/dde-dock/
 %dir %_datadir/dde-dock/icons/
 %dir %_datadir/dde-dock/icons/dcc-setting/
 %_datadir/dde-dock/icons/dcc-setting/*.dci
+%exclude %_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
 # The translations outside find_lang
 %dir %_datadir/dde-dock/translations/
 %_datadir/dde-dock/translations/dde-dock.qm
 %_datadir/dde-dock/translations/dde-dock_ky@Arab.qm
-%dir %_datadir/dock-wirelesscasting-plugin/
-%dir %_datadir/dock-wirelesscasting-plugin/translations/
-%_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin.qm
-%_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin_ky@Arab.qm
 # ---
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
@@ -145,7 +152,26 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 %_pkgconfigdir/dde-dock.pc
 
+%files -n dde-wirelesscasting-plugin -f dock-wirelesscasting-plugin.lang
+# The translations outside find_lang
+%dir %_datadir/dock-wirelesscasting-plugin/
+%dir %_datadir/dock-wirelesscasting-plugin/translations/
+%_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin.qm
+%_datadir/dock-wirelesscasting-plugin/translations/dock-wirelesscasting-plugin_ky@Arab.qm
+# ---
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
+%_libdir/dde-dock/plugins/libdock-wirelesscasting-plugin.so
+%dir %_datadir/dde-dock/
+%dir %_datadir/dde-dock/icons/
+%dir %_datadir/dde-dock/icons/dcc-setting/
+%_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
+
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.11-alt1
+- New version 2.0.11.
+- Packaged dde-wirelesscasting-plugin separately.
+
 * Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.10-alt1
 - New version 2.0.10.
 
