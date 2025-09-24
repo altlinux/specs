@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2025.08.22
+Version: 2025.09.22
 Release: alt1
 
 Summary: Base component for Deepin
@@ -11,7 +11,8 @@ Vcs: https://github.com/linuxdeepin/deepin-desktop-base
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
@@ -67,6 +68,9 @@ rm -r %buildroot%_datadir/distro-info
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 2025.09.22-alt1
+- New version 2025.09.22.
+
 * Thu Sep 11 2025 Leontiy Volodin <lvol@altlinux.org> 2025.08.22-alt1
 - New version 2025.08.22.
 
