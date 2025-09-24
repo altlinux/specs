@@ -84,7 +84,7 @@ AutoProv: nopython
 # this is not for linking but for building :)
 %def_with lld
 
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 ppc64le aarch64 loongarch64
 %def_with clang
 %def_with mold
 %define optflags_lto -flto=thin -ffat-lto-objects
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -139,6 +139,9 @@ Patch107: offload-amdgpu-rocm-path.patch
 
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
+
+# backport upstream changes for loongarch64
+Patch200: llvm-loongarch64-changing-the-default-code-model-to-medium.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -755,6 +758,9 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch111 -p1
 %patch112 -p1
 
+# upstream patches for loongarch
+%patch200 -p1
+
 # debian patches
 %patch300 -p1
 
@@ -781,6 +787,9 @@ fi
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %add_optflags -Wno-error=return-type
+%ifarch loongarch64
+%add_optflags -mcmodel=medium
+%endif
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
 %ifnarch loongarch64
@@ -1490,6 +1499,12 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Sep 24 2025 Ivan A. Melnikov <iv@altlinux.org> 20.1.8-alt0.2
+- Chage the default code model to "medium" for loongarch64
+  (backport upstream commit 2d876ed33ee38 from LLVM 21),
+  and use it when building llvm.
+- Build with mold and LTO on loongarch64.
+
 * Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.8-alt0.1
 - Update to 20.1.8.
 
