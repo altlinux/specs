@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.17.0
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -91,11 +91,7 @@ BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libpam-devel
 BuildRequires: libdbus-glib-devel
-%ifarch %e2k
-BuildRequires: chrpath
-%else
 BuildRequires: patchelf
-%endif
 %if_with SDL
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_ttf-devel
@@ -435,15 +431,11 @@ the RDP protocol.
 rm -f %buildroot%_libdir/*.a \
       %buildroot%_libdir/freerdp/*.a
 
-%ifarch %e2k
-# patchelf damages e2k binaries
-setrpath="chrpath -r"
-%else
-setrpath="patchelf --set-rpath"
-%endif
-
+%ifnarch %e2k
 # Set rpath to %_libdir/freerdp3 for freerdp-proxy executable
-$setrpath %_libdir/freerdp3 %buildroot%_bindir/freerdp-proxy
+# (NB: patchelf damages e2k binaries but is unneeded as of 3.16.0)
+patchelf --set-rpath %_libdir/freerdp3 %buildroot%_bindir/freerdp-proxy
+%endif
 
 # Install services and timers
 install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.service
@@ -554,6 +546,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sun Sep 14 2025 Michael Shigorin <mike@altlinux.org> 3.17.0-alt2
+- E2K: drop chrpath as unneeded
+
 * Fri Aug 22 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
 - New version.
 
