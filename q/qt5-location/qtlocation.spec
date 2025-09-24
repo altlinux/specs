@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.15.16
-Release: alt2
+Version: 5.15.17
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -154,7 +154,7 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?Location.so.*
 %_qt5_plugindir/geoservices/
 %_qt5_qmldir/QtLocation/
-#%_qt5_qmldir/Qt/labs/location/
+%_qt5_qmldir/Qt/labs/location/
 
 %files devel
 %_qt5_headerdir/QtPositioning/
@@ -177,6 +177,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
 * Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt2
 - add upstream fixes
 

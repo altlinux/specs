@@ -36,7 +36,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.16
+Version: 5.15.17
 Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
@@ -874,6 +874,9 @@ make check -k ||:
 
 
 %changelog
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
 * Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
 - new version
 

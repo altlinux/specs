@@ -32,7 +32,7 @@
 #endif
 
 Name: qt5-webengine
-Version: 5.15.18
+Version: 5.15.19
 Release: alt1
 
 Group: System/Libraries
@@ -42,8 +42,6 @@ License: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %qt_module-everywhere-src-%version.tar
-Source100: pako.min.js
-Source101: d3.min.js
 # FC
 Patch4:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch5:  qtwebengine-everywhere-src-5.15.5-no-icudtl-dat.patch
@@ -61,9 +59,8 @@ Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 Patch41: verbose-gn-bootstrap.patch
 Patch42: sandbox-time64-syscalls.patch
 Patch43: disable-catapult.patch
+Patch44: ninja-1.12.patch
 #
-Patch46: python3.13-pipes.patch
-Patch47: python3.12-imp.patch
 Patch48: python3.12-six.patch
 Patch49: system-nspr-prtime.patch
 Patch50: system-icu-utf.patch
@@ -72,8 +69,7 @@ Patch52: system-openjpeg2.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
-Patch103: qtwebengine-everywhere-src-5.15.0-chromium-add-ppc64le-support.patch
-Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
+#
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 Patch107: alt-js-check-size.patch
@@ -216,10 +212,9 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
+%patch44 -p1
 #
 %if_enabled python3
-%patch46 -p1
-%patch47 -p1
 %patch48 -p1
 %endif
 %patch49 -p1
@@ -229,8 +224,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
-#%patch104 -p1
+#
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
@@ -277,10 +271,6 @@ for f in \
     src/3rdparty/chromium/third_party/catapult/common/py_vulcanize/third_party/rjsmin/bench/jsmin.py \
     src/3rdparty/chromium/third_party/web-animations-js/sources/web-animations-next-lite.min.js
 do mkdir -p `dirname $f`; touch $f; done
-mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
-install -m 0644 %SOURCE100 src/3rdparty/chromium/third_party/catapult/tracing/third_party/pako/
-mkdir -p src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
-install -m 0644 %SOURCE101 src/3rdparty/chromium/third_party/catapult/tracing/third_party/d3/
 pushd src/3rdparty/chromium/third_party/jstemplate
     cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
 popd
@@ -467,6 +457,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.19-alt1
+- new version
+
 * Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
 - new version
 
