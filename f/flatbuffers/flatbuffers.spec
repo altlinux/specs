@@ -4,13 +4,15 @@ without parsing/unpacking it first, while still having great forwards/backwards 
 compatibility.
 
 Name: flatbuffers
-Version: 25.2.10
+Version: 25.9.23
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
 License: APL
 Group: System/Libraries
+
 Url: https://google.github.io/%name/
+Vcs: https://github.com/google/%name
 
 # https://github.com/google/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -102,6 +104,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 24 2025 Nazarov Denis <nenderus@altlinux.org> 25.9.23-alt1
+- New version 25.9.23.
+
 * Tue Feb 11 2025 Nazarov Denis <nenderus@altlinux.org> 25.2.10-alt1
 - New version 25.2.10.
 
