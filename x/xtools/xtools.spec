@@ -1,5 +1,5 @@
 Name: xtools
-Version: 0.69
+Version: 0.70
 Release: alt1
 
 Summary: A collection of small utilities for use with XBPS
@@ -124,6 +124,9 @@ sed -i 's/xq/xq-%name/g' xq-%name fish/completions/xq-%name.fish xtools.1 _xtool
 %_datadir/fish/vendor_functions.d/*
 
 %changelog
+* Tue Sep 23 2025 Ulysses Apokin <ulysses@altlinux.org> 0.70-alt1
+- New version.
+
 * Wed Sep 10 2025 Ulysses Apokin <ulysses@altlinux.org> 0.69-alt1
 - New version.
 - Renamed xq to xq-%name to avoid name conflict with xq from yq.
