@@ -9,7 +9,7 @@
 %endif
 
 Name: suricata
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -148,6 +148,9 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Wed Sep 17 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.1-alt1
+- 8.0.1 (Fixed: CVE-2025-59147, CVE-2025-59148, CVE-2025-59149, CVE-2025-59150)
+
 * Tue Jul 08 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
 - 8.0.0
 - Added user permission for logrotate rule (ALT #48246).
