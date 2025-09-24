@@ -5,12 +5,13 @@
 %define _systemddir /usr/lib/systemd
 
 Name: atop
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
 URL: https://www.atoptool.nl
+# Source-url: https://www.atoptool.nl/download/atop-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -74,6 +75,9 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.12.1-alt1
+- atop 2.12.1
+
 * Mon Jun 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.12.0-alt1
 - atop 2.12.0
 
