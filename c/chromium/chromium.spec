@@ -6,7 +6,7 @@
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
-%global max_jobs 112
+%global max_jobs 96
 
 %global llvm_version 20.1
 
@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        140.0.7339.185
+Version:        140.0.7339.207
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -108,7 +108,6 @@ Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 
-Patch061: 0061-DEBIAN-rust-no-alloc-shim.patch
 Patch062: 0062-DEBIAN-android.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
@@ -116,9 +115,12 @@ Patch065: 0065-DEBIAN-stdatomic.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
+
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
+Patch075: 0075-FEDORA-chromium-rust-no-alloc-shim-is-unstable.patch
+
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
 %endif
@@ -649,6 +651,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Sep 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.207-alt1
+- New version (140.0.7339.207).
+- Fixes:
+  + CVE-2025-10890: Side-channel information leakage in V8
+  + CVE-2025-10891: Integer overflow in V8
+  + CVE-2025-10892: Integer overflow in V8
+
 * Thu Sep 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.185-alt1
 - New version (140.0.7339.185).
 - Fixes:
