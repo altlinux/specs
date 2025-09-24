@@ -4,8 +4,10 @@
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
+%def_disable check
+
 Name: pantheon-terminal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -62,8 +64,10 @@ This package provides Vala language bindings for the %name.
 
 %install
 %meson_install
-
 %find_lang %rdn_name
+
+%check
+%__meson_test
 
 %files -f %rdn_name.lang
 %doc README*
@@ -72,7 +76,7 @@ This package provides Vala language bindings for the %name.
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/open-%name-here.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_man1dir/%rdn_name.1*
 %_datadir/fish/vendor_conf.d/pantheon_terminal_process_completion_notifications.fish
 
@@ -82,6 +86,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 7.1.2-alt1
+- 7.1.2
+
 * Sat Aug 23 2025 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1
 - 7.1.1
 
