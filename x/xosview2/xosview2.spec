@@ -1,8 +1,8 @@
 #set_verify_elf_method strict
 
 Name: xosview2
-Version: 2.3.3
-Release: alt2
+Version: 2.3.4
+Release: alt1
 Summary: An X Window System utility for monitoring system resources
 License: GPL-2.0 and BSD-4-Clause-UC
 Group: Monitoring
@@ -71,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*.png
 
 %changelog
+* Thu Sep 25 2025 Ilya Mashkin <oddity@altlinux.ru> 2.3.4-alt1
+- 2.3.4
+
 * Tue Oct 31 2023 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt2
 - Fixed build for Elbrus (Thanks to Ilya Kurdyukov)
 
