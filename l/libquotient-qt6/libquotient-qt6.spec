@@ -11,12 +11,12 @@ older use the previous name - libQMatrixClient.}
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: libquotient-qt6
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt library to write cross-platform clients for Matrix
-Url: https://github.com/quotient-im/%libname
+Url: https://github.com/quotient-im/libQuotient
 License: BSD-3-Clause AND LGPL-2.1-or-later
 
 Source0: %appname-%version.tar
@@ -66,5 +66,8 @@ rm -rf %buildroot/%_datadir/ndk-modules
 %_libdir/pkgconfig/%{aname}Qt?.pc
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 0.9.5-alt1
+- new version
+
 * Wed Apr 23 2025 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
 - initial build
