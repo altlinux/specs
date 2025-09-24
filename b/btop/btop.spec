@@ -1,5 +1,5 @@
 Name: btop
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Resource monitor that shows usage and stats for processor, memory, disks, network and processes.
@@ -7,11 +7,12 @@ License: Apache-2.0
 Group: Monitoring
 
 Url: https://github.com/aristocratos/btop
+VCS: https://github.com/aristocratos/btop.git
+
 Source: %name-%version.tar.gz
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8): Монитор ресурсов, показывающий загрузку процессора, памяти, дисков, сети и список процессов.
-
 BuildRequires(pre): gcc-c++ 
 BuildRequires: lowdown
 
@@ -41,6 +42,9 @@ PREFIX=%buildroot/%_prefix make install
 
 
 %changelog
+* Wed Sep 24 2025 Alexei Mezin <alexvm@altlinux.org> 1.4.5-alt1
+- New version
+
 * Sun Jul 06 2025 Alexei Mezin <alexvm@altlinux.org> 1.4.4-alt1
 - New version
 
