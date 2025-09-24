@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.18.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,10 @@ Url: http://www.kde.org
 License: LGPL-3.0-only
 
 Source: %rname-%version.tar
-Patch1: alt-icons-defaults.patch
+# SuSE
+Patch1: kf6-breeze-icons-generate-dark.patch
+#
+Patch10: alt-icons-defaults.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
@@ -55,6 +58,8 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+#
+%patch10 -p1
 
 chmod a+x *.sh
 
@@ -159,6 +164,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt2
+- fix breeze-dark icons too dark
+
 * Mon Sep 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
 - new version
 
