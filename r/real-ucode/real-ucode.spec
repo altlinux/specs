@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: real-ucode
-Version: 20250913
+Version: 20250922
 Release: alt1
 Summary: Actually provides the latest CPU microcode for AMD and Intel
 License: Redistributable, no modification permitted
@@ -11,6 +11,11 @@ Url: https://github.com/divestedcg/real-ucode/
 
 Source: %name-%version.tar
 BuildArch: noarch
+
+ExclusiveArch: x86_64
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iucode_tool
+}}
 
 %define disclaimer %{expand:
 DISCLAIMER: All the microcodes below come only from official BIOS/UEFI updates,
@@ -88,17 +93,22 @@ Microcode updates for Intel CPUs.
 %install
 install -Dm644 microcode/amd-ucode/*   -t %buildroot/lib/firmware/updates/amd-ucode
 install -Dm644 microcode/intel-ucode/* -t %buildroot/lib/firmware/updates/intel-ucode
+# iucode_tool is incompatible with non-microcode files.
+rm %buildroot/lib/firmware/updates/*-ucode/LICENSE.*
+
+%check
+/usr/sbin/iucode_tool --write-earlyfw=ucode.cpio %buildroot/lib/firmware/updates/intel-ucode
+cpio -t < ucode.cpio
+rm ucode.cpio
 
 %files -n firmware-amd-real-ucode
 %doc LICENSE LICENSE.amd-ucode README.md index-amd-official.txt index-amd.txt
 %dir /lib/firmware/updates/amd-ucode
-/lib/firmware/updates/amd-ucode/LICENSE.amd-ucode
 /lib/firmware/updates/amd-ucode/*.bin.official
 
 %files -n firmware-amd-real-ucode-resigned
 %doc LICENSE LICENSE.amd-ucode README.md index-amd-official.txt index-amd.txt
 %dir /lib/firmware/updates/amd-ucode
-/lib/firmware/updates/amd-ucode/LICENSE.amd-ucode
 /lib/firmware/updates/amd-ucode/*.bin.resigned
 
 %files -n firmware-intel-real-ucode
@@ -106,6 +116,10 @@ install -Dm644 microcode/intel-ucode/* -t %buildroot/lib/firmware/updates/intel-
 /lib/firmware/updates/intel-ucode
 
 %changelog
+* Wed Sep 24 2025 Vitaly Chikunov <vt@altlinux.org> 20250922-alt1
+- Update to b08b470 (2025-09-22).
+- Fix install of firmware-intel-real-ucode (ALT#56076).
+
 * Sun Sep 14 2025 Vitaly Chikunov <vt@altlinux.org> 20250913-alt1
 - Update to c471526 (2025-09-13).
 
