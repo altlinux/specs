@@ -6,7 +6,7 @@
 
 Name:    qbs
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: Modern build tool for software projects
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
@@ -30,6 +30,9 @@ BuildRequires: python3-module-beautifulsoup4
 %if_with check
 BuildRequires: ctest
 %endif
+
+Provides: %name-common = %EVR
+Obsoletes: %name-common < %EVR
 
 %description
 Qbs is a tool that helps simplify the build process for developing projects
@@ -127,6 +130,9 @@ rm -v %buildroot%_bindir/clang-format-test
 %_datadir/%name/examples/
 
 %changelog
+* Wed Sep 24 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt2
+- Fixed update from qbs-1.23.
+
 * Mon Sep 01 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - New version 3.0.1 (thanks nash@).
 
