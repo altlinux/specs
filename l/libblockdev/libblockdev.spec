@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3.1
+Version: %ver_major.4.0
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
@@ -650,6 +650,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Thu Sep 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1 (fixed CVE-2025-6019) (ALT #54834)
 
