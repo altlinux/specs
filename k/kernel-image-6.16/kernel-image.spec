@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 25 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.9-alt1
+- v6.16.9 (2025-09-25).
+- config: Enable more OmniVision cameras (ALT#56101).
+- config: Enable TPS68470 related options for Intel IPU3 cameras.
+- config: Enable IPU6/MIPI cameras related options (IPU_BRIDGE, LJCA,
+  DMABUF).
+
 * Fri Sep 19 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.8-alt1
 - v6.16.8 (2025-09-19).
 
