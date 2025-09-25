@@ -2,7 +2,7 @@
 
 Name: vcpkg
 Version: 2025.05.19
-Release: alt1
+Release: alt1.1
 
 Summary: C++ Library Manager
 
@@ -35,7 +35,7 @@ or unset the VCPKG_DISABLE_METRICS environment variable.
 %prep
 %setup
 # https://github.com/microsoft/vcpkg-tool/pull/634
-# subst 's|inline namespace v8|inline namespace v9|' include/vcpkg/base/fwd/format.h
+subst 's|inline namespace v11|inline namespace v12|' include/vcpkg/base/fwd/fmt.h
 
 
 # Fixing line endings...
@@ -75,6 +75,9 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Thu Sep 25 2025 Nazarov Denis <nenderus@altlinux.org> 2025.05.19-alt1.1
+- fix build with fmt 12
+
 * Tue May 27 2025 Vitaly Lipatov <lav@altlinux.ru> 2025.05.19-alt1
 - new version (2025.05.19) with rpmgs script (ALT bug 53482)
 
