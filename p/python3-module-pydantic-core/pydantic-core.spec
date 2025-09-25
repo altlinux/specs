@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.33.2
-Release: alt1
+Release: alt2
 
 Summary: Core validation logic for pydantic written in rust
 License: MIT
@@ -17,6 +17,7 @@ Vcs: https://github.com/pydantic/pydantic-core
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: crates.tar
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 
@@ -45,6 +46,7 @@ tests/benchmarks/ for details.
 
 %prep
 %setup -a2
+%autopatch -p1
 mkdir -p .cargo
 cat << EOF > .cargo/config.toml
 [source.crates-io]
@@ -95,6 +97,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Sep 25 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.33.2-alt2
+- Fixed FTBFS by correcting some tests to pass with pytest >=8.4.
+
 * Tue May 06 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.33.2-alt1
 - Updated to 2.33.2.
 
