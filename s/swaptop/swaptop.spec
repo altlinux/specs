@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaptop
-Version: 1.0.1
+Version: 1.0.3
 Release: alt1
 Summary: swap usage monitor written in rust
 License: MIT
@@ -45,5 +45,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Sep 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.3-alt1
+- 1.0.1 -> 1.0.3
+
 * Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
