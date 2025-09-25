@@ -11,12 +11,8 @@
 %def_enable deprecated
 %def_enable experimental
 
-# LTO causes test-vcp to fail
-# https://github.com/bluez/bluez/issues/683
-%global optflags_lto %nil
-
 Name: bluez
-Version: 5.83
+Version: 5.84
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -101,8 +97,6 @@ Zsh completion for %name.
 %prep
 %setup
 %patch -p1
-# test-vcp fails: https://github.com/bluez/bluez/issues/683
-sed -e "s@unit_tests += unit/test-vcp@@" -i Makefile.am
 
 %build
 %autoreconf
@@ -207,6 +201,7 @@ fi
 %_pkgconfigdir/*.pc
 %_man5dir/*.5*
 %_man7dir/hci.7*
+%_man7dir/iso.7*
 %_man7dir/l2cap.7*
 %_man7dir/mgmt.7*
 %_man7dir/sco.7*
@@ -227,6 +222,11 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Wed Sep 24 2025 L.A. Kostis <lakostis@altlinux.ru> 5.84-alt1
+- 5.84.
+- re-enable LTO.
+- unit/test-vcp: enable again (fixed by upstream).
+
 * Wed Jun 04 2025 L.A. Kostis <lakostis@altlinux.ru> 5.83-alt1
 - 5.83.
 
