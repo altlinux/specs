@@ -5,11 +5,11 @@
 
 Name: %rname
 Version: 25.08.1
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
-Summary: QToolButton with color popup menu with lets you select a color
+Summary: Abstracted library for things related to weather
 Url: https://invent.kde.org/libraries/kweathercore
 License: LGPL-2.0-or-later
 
@@ -80,6 +80,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKWeatherCore.so.*
 
 %changelog
+* Thu Sep 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt2
+- fix package description (closes: 56145)
+
 * Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 
