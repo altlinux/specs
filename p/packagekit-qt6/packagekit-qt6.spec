@@ -3,7 +3,7 @@
 %define libpackagekitqt6 libpackagekitqt6_%sover
 
 Name: packagekit-qt6
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Group: System/Libraries
@@ -68,6 +68,9 @@ Provides: PackageKit-Qt6-devel = %version-%release
 %_libdir/cmake/packagekitqt6/
 
 %changelog
+* Thu Sep 25 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1
+- new version
+
 * Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
 - new version
 
