@@ -11,7 +11,7 @@
 %def_with jemalloc
 
 Name: fluent-bit
-Version: 4.0.10
+Version: 4.1.0
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -124,7 +124,7 @@ sed -i 's|c-ares|cares|' \
 rm -rvf %buildroot%_includedir
 
 %check
-cd %_target_alias
+cd %_cmake__builddir
 ctest
 
 %post
@@ -142,6 +142,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Fri Sep 19 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.10-alt1
 - New version 4.0.10.
 
