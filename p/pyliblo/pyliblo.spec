@@ -4,7 +4,7 @@
 
 Name: %oname
 Version: 0.10.2
-Release: alt3
+Release: alt4
 Summary: Python bindings for the liblo OSC library
 
 License: GPLv2+
@@ -13,6 +13,7 @@ URL: http://das.nasophon.de/pyliblo/
 
 VCS: https://github.com/bonktree/pyliblo
 Source0:        %name-%version.tar
+Patch0: 0001-long-type-is-no-more.patch
 Patch1: 0001-liblo.pyx-quelch-Wincompatible-pointer-types.patch
 
 BuildRequires:  gcc
@@ -76,6 +77,9 @@ chmod -x examples/*
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.2-alt4
+- fixed FTBFS with cython>3.1
+
 * Sat Nov 23 2024 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt3
 - Fix compatibility with GCC 14 default warnings.
 
