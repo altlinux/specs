@@ -2,7 +2,7 @@
 %global import_path github.com/byawitz/ggh
 
 Name: ggh
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 Summary: Recall your SSH sessions (also search your SSH config file)
 License: Apache-2.0
@@ -45,5 +45,8 @@ mkdir -p %buildroot%_datadir/%name
 %_bindir/%name
 
 %changelog
+* Thu Sep 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.5-alt1
+- 0.1.4 -> 0.1.5
+
 * Tue May 06 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.4-alt1
 - Initial build for Sisyphus.
