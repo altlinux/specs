@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name:    pcm
-Version: 202405
-Release: alt2
+Version: 202509
+Release: alt1
 
 Summary: Intel Performance Counter Monitor (Intel PCM)
 License: BSD-3-Clause
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libsimdjson-devel
+BuildRequires: libssl-devel
 BuildRequires: libstdc++-devel
 
 %description
@@ -28,16 +29,26 @@ Intel Performance Counter Monitor (Intel PCM) is an application
 programming interface (API) and a set of tools based on the API to
 monitor performance and energy metrics of Intel Core, Xeon, Atom
 and Xeon Phi processors. PCM works on Linux, Windows, Mac OS X,
-FreeBSD, DragonFlyBSD and ChromeOS operating systems.
+FreeBSD and DragonFlyBSD operating systems.
 
 %prep
 %setup
 # Our compiler has this enabled, and redefining it produces a warning.
-sed -i s/-D_FORTIFY_SOURCE=1// CMakeLists.txt
+sed -i s/-D_FORTIFY_SOURCE=2// CMakeLists.txt
+# Non-relevant documentation.
+rm doc/CUSTOM-COMPILE-OPTIONS.md
+rm doc/DOCKER_README.md
+rm doc/FREEBSD_HOWTO.txt
+rm doc/generate_summary_readme.md
+rm doc/MAC_HOWTO.txt
+rm doc/WINDOWS_HOWTO.md
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLINUX_SYSTEMD=TRUE
+%cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DLINUX_SYSTEMD=TRUE \
+	-DLINUX_SYSTEMD_UNITDIR=%_unitdir
 %cmake_build
 
 %install
@@ -62,7 +73,6 @@ rm -rv %buildroot%_datadir/doc/PCM
 %_sbindir/pcm-daemon
 %_sbindir/pcm-iio
 %_sbindir/pcm-latency
-%_sbindir/pcm-lspci
 %_sbindir/pcm-memory
 %_sbindir/pcm-mmio
 %_sbindir/pcm-msr
@@ -79,6 +89,9 @@ rm -rv %buildroot%_datadir/doc/PCM
 %_datadir/pcm/
 
 %changelog
+* Wed Sep 24 2025 Vitaly Chikunov <vt@altlinux.org> 202509-alt1
+- Update to 202509 (2025-09-12).
+
 * Sat Sep 14 2024 Vitaly Chikunov <vt@altlinux.org> 202405-alt2
 - spec: Build with simdjson.
 - spec: Enable building debuginfo.

@@ -4,10 +4,10 @@
 %set_verify_elf_method strict
 
 Name: libsimdjson
-Version: 3.9.4
+Version: 4.0.6
 Release: alt1
 Summary: Parsing gigabytes of JSON per second
-License: Apache-2.0
+License: Apache-2.0 or MIT
 Group: System/Libraries
 Url: https://simdjson.org/
 Vcs: https://github.com/simdjson/simdjson
@@ -28,6 +28,7 @@ RapidJSON and 25x faster than JSON for Modern C++.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
+AutoReq: nocpp
 
 %description devel
 %summary
@@ -64,6 +65,9 @@ cd jsonexamples
 %_pkgconfigdir/simdjson.pc
 
 %changelog
+* Tue Sep 23 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.6-alt1
+- Update to v4.0.6 (2025-09-21).
+
 * Sun Jun 16 2024 Vitaly Chikunov <vt@altlinux.org> 3.9.4-alt1
 - Update to v3.9.4 (2024-06-11).
 
