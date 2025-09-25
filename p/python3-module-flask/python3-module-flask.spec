@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: Flask is a lightweight WSGI web application framework
 License: BSD-3-Clause
@@ -37,6 +37,14 @@ complex applications. It began as a simple wrapper around Werkzeug and
 Jinja and has become one of the most popular Python web application
 frameworks.
 
+%package -n %name+async
+Summary: %summary
+Group: %group
+Requires: %name
+%pyproject_runtimedeps_metadata -- --extra async
+%description -n %name+async
+Extra 'async' for %pypi_name.
+
 %prep
 %setup
 %autopatch -p1
@@ -61,7 +69,12 @@ frameworks.
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
+%files -n %name+async
+
 %changelog
+* Thu Sep 25 2025 Anton Zhukharev <ancieg@altlinux.org> 3.1.2-alt2
+- Provided flask+async extra.
+
 * Wed Aug 20 2025 Anton Zhukharev <ancieg@altlinux.org> 3.1.2-alt1
 - Updated to 3.1.2.
 
