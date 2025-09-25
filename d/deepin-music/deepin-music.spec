@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.44
+Version: 7.0.47
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -101,6 +101,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.47-alt1
+- New version 7.0.47.
+
 * Wed Sep 03 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.44-alt1
 - New version 7.0.44.
 - Added VCS tag.
