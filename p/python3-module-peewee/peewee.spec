@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.17.9
-Release: alt1
+Release: alt2
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 
@@ -16,6 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch0: cython-3.1.patch
 
 Obsoletes: python-module-peewee
 Provides: python-module-peewee
@@ -62,6 +63,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch0 -p2
 
 find -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
@@ -91,6 +93,9 @@ python3 runtests.py
 %doc docs/_build/html/*
 
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.17.9-alt2
+- fixed FTBFS with cython>3.1
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 3.17.9-alt1
 - new version 3.17.9 (with rpmrb script)
 
