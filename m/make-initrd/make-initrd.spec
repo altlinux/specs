@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.55.1
-Release: alt3
+Release: alt4
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -62,6 +62,9 @@ Requires: udev >= 167-alt1
 
 # blkid
 Requires: util-linux >= 2.17.2-alt1
+
+# tools/pack-image
+Requires: cpio
 
 # This avoids getting a dependency on sh from "#!/bin/sh".
 #AutoReq: yes, nopam, noperl, nopython, noshell, notcl
@@ -194,7 +197,7 @@ Summary: kickstart module for %name
 Group: System/Base
 BuildArch: noarch
 Requires: %name = %version-%release
-Requires: btrfs-progs coreutils cpio e2fsprogs eject mount rsync sfdisk tar unzip util-linux wget
+Requires: btrfs-progs coreutils e2fsprogs eject mount rsync sfdisk tar unzip util-linux wget
 AutoReq: noshell, noshebang
 
 %description kickstart
@@ -255,7 +258,7 @@ Summary: guestfs feature for %name
 BuildArch: noarch
 Group: System/Base
 Requires: %name = %version-%release
-Requires: cpio file mount rsync
+Requires: file mount rsync
 Requires: fdisk sfdisk gdisk parted zerofree
 Requires: binutils gzip-utils nfs-utils mdadm-tool
 Requires: e2fsprogs guestfsd xfsprogs reiserfsprogs
@@ -402,6 +405,9 @@ fi
 %endif
 
 %changelog
+* Thu Sep 25 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt4
+- add runtime dependency on cpio (Closes: 56148)
+
 * Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt3
 - guess/device-tree: fix typo in the variable name "modalias" (Closes: 56085)
 
