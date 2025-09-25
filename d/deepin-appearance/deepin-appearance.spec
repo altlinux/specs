@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.67
+Version: 1.1.70
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -11,11 +11,13 @@ Summary: Set the theme and appearance of DDE
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-appearance
-Vcs: https://github.com/linuxdeepin/dde-appearance.git
+Vcs: https://github.com/linuxdeepin/dde-appearance
 
 Provides: %repo = %EVR
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel kf6-kconfig-devel kf6-kwindowsystem-devel kf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
@@ -30,6 +32,7 @@ BuildRequires(pre): gcc-c++
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 %if_enabled clang
@@ -44,7 +47,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %find_lang --with-qt plugin-dde-appearance
 
 %files -f plugin-dde-appearance.lang
-%doc README.md
+%doc README.md LICENSE debian/changelog
 %_bindir/dde-fakewm
 %_userunitdir/dde-fakewm.service
 %dir %_libdir/deepin-service-manager/
@@ -67,6 +70,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.70-alt1
+- New version 1.1.70.
+
 * Fri Jul 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.67-alt1
 - New version 1.1.67.
 
