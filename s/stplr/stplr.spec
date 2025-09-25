@@ -5,7 +5,7 @@
 
 Name: stplr
 Version: 0.0.27
-Release: alt1
+Release: alt2
 
 Summary: Universal package build and management system for Linux
 License: GPL-3.0-or-later
@@ -18,6 +18,8 @@ ExclusiveArch: %go_arches
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
+
+Requires: sysctl-conf-userns
 
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
 BuildRequires: rpm-build-golang
@@ -56,6 +58,9 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Thu Sep 25 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.27-alt2
+- Add requires sysctl-conf-userns (ALT#56136).
+
 * Sat Aug 30 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.27-alt1
 - New version 0.0.27.
 
