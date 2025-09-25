@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -143,6 +143,7 @@ BuildRequires: libappstream-qt6-devel
 %if_disabled bootstrap
 BuildRequires: kde6-libkexiv2-devel
 %endif
+BuildRequires: packagekit-qt6-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: wayland-protocols plasma-wayland-protocols
 BuildRequires: libdrm-devel libcups-devel
@@ -362,9 +363,6 @@ msgcat --use-first po/ru/plasma_lookandfeel_org.kde.lookandfeel.po %SOURCE3 > po
 cat po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp > po/ru/plasma_lookandfeel_org.kde.lookandfeel.po
 rm -f po/ru/plasma_lookandfeel_org.kde.lookandfeel.po.tmp
 
-# disable find PackageKitQt6
-sed -i 's|PackageKitQt6|PackageKitQt6_UBUNTU_ONLY|' CMakeLists.txt
-
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
     for f in %_libdir/cmake/AppStreamQt6/*.cmake ; do
@@ -400,6 +398,7 @@ done
     -DGLIBC_LOCALE_GENERATED:BOOL=ON \
     -DGLIBC_LOCALE_GEN:BOOL=OFF \
     -DAppStreamQt_DIR:PATH=$PWD/cmake/AppStreamQt \
+    -DPACKAGEKIT_OFFLINE_UPDATES:BOOL=ON \
     #
 
 %install
@@ -597,6 +596,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Sep 25 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt2
+- enable packagekit integration
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt1
 - new version
 
