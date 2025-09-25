@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define pypi_name pydantic-settings
 %define mod_name pydantic_settings
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.10.1
+Version: 2.11.0
 Release: alt1
 
 Summary: Settings management using pydantic
@@ -14,16 +12,15 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pydantic-settings/
 Vcs: https://github.com/pydantic/pydantic-settings
-
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-macros-pyproject
+BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter pytest-examples
 %add_pyproject_deps_check_filter typed-ast
@@ -65,11 +62,14 @@ for discussion.
     --ignore='tests/test_source_gcp_secret_manager.py'
 
 %files
-%doc README.md docs
+%doc README.md LICENSE docs
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 25 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.11.0-alt1
+- Updated to 2.11.0.
+
 * Thu Jun 26 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.1-alt1
 - Updated to 2.10.1.
 
