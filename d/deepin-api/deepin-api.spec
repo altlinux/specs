@@ -1,7 +1,7 @@
 %define goipath github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 6.0.24
+Version: 6.0.26
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -75,6 +75,9 @@ export GOPATH="%go_path"
 %go_path/src/%goipath
 
 %changelog
+* Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.26-alt1
+- New version 6.0.26.
+
 * Thu Aug 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.24-alt1
 - New version 6.0.24.
 
