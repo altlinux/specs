@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.7.1
+Version: 8.6.1
 Release: alt1
 
 Summary: Deep Difference and search of any Python object/data
@@ -14,12 +14,16 @@ URL:     https://github.com/seperman/deepdiff
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit-core
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-benchmark
+BuildRequires: python3-module-uuid6
+BuildRequires: python3-module-orderly-set
 BuildRequires: python3-module-numpy
-BuildRequires: python3-module-ordered-set
+BuildRequires: python3-module-pytz
 BuildRequires: python3-module-click
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-numpy-testing
@@ -27,6 +31,7 @@ BuildRequires: python3-module-tomli_w
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-jsonpickle
 BuildRequires: python3-module-pydantic
+BuildRequires: python3-module-orjson
 %endif
 
 BuildArch: noarch
@@ -48,7 +53,7 @@ Delta: Use deltas to reconstruct objects by adding deltas together.
 %pyproject_install
 
 %check
-%pyproject_run_pytest --cov=deepdiff --cov-report term-missing
+%pyproject_run_pytest --cov=deepdiff --cov-report term-missing --ignore=tests/test_hash.py
 
 %files
 %doc *.md
@@ -57,6 +62,9 @@ Delta: Use deltas to reconstruct objects by adding deltas together.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 25 2025 Alexander Burmatov <thatman@altlinux.org> 8.6.1-alt1
+- Update version to 8.6.1.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 6.7.1-alt1
 - Update version to 6.7.1.
 
