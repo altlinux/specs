@@ -4,7 +4,7 @@
 
 Name:       python3-module-%oname
 Version:    1.0.2.4
-Release:    alt2
+Release:    alt3
 
 License:    %mit
 Group:      Development/Python3
@@ -12,6 +12,8 @@ Summary:    Python bindings for CityHash
 
 Url:        https://github.com/xzkostyan/python-cityhash
 Source:     %name-%version.tar
+Patch0:     0001-Change-local-import-of-cityhash-to-absolute-from-top.patch
+Patch1:     0001-Fix-building-with-Python-3.13.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -41,6 +43,8 @@ Package contains tests for %name.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 %python3_build
@@ -61,6 +65,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_cityhash/
 
 
 %changelog
+* Thu Sep 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2.4-alt3
+- fixed FTBFS with cython>3.1
+
 * Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.2.4-alt2
 - Add build dependency on Cython.
 
