@@ -1,6 +1,6 @@
 Name: altemu-overlayfs
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Merging several dirs with ROM files into one dir
 
@@ -39,5 +39,8 @@ install -m 0644 20-%name.preset %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Wed Sep 24 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
+- Fix case with only one card
+
 * Tue Sep 23 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
