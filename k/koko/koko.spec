@@ -3,7 +3,7 @@
 %define libkokocommon libkokocommon%sover
 
 Name: %rname
-Version: 25.04.2
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -91,6 +91,9 @@ rm -f cities1000.txt
 
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

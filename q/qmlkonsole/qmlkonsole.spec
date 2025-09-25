@@ -1,7 +1,7 @@
 %define rname qmlkonsole
 
 Name: %rname
-Version: 25.04.2
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -45,6 +45,9 @@ Terminal application offering additional keyboard buttons useful on touch device
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

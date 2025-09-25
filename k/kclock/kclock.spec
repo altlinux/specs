@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: %rname
-Version: 25.04.2
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -24,7 +24,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-knotifications-devel
 BuildRequires: kf6-kpackage-devel kf6-kservice-devel kf6-kstatusnotifieritem-devel kf6-kwindowsystem-devel
-BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kcrash-devel kf6-ksvg-devel kf6-kio-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel
 
@@ -70,6 +70,7 @@ developing applications that use %name.
 %_K6bin/kclock*
 %_K6plug/plasma/applets/*kclock*.so
 %_K6start/*kclock*.desktop
+%_K6data/krunner/dbusplugins/*kclock*.desktop
 %_K6xdgapp/*kclock*.desktop
 %_K6dbus_srv/*kclock*.service
 %_K6icon/*/*/apps/*kclock*.*
@@ -83,6 +84,9 @@ developing applications that use %name.
 
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname angelfish
 
 Name: %rname
-Version: 25.04.2
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -31,7 +31,7 @@ BuildRequires: qcoro6-devel
 BuildRequires: futuresql-qt6-devel
 BuildRequires: extra-cmake-modules kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-purpose-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-kconfig-devel kf6-kdbusaddons-devel kf6-knotifications-devel
-BuildRequires: kf6-qqc2-desktop-style-devel
+BuildRequires: kf6-qqc2-desktop-style-devel kf6-kcrash-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: desktop-file-utils
 
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kweather
 
 Name: %rname
-Version: 25.04.2
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -10,11 +10,11 @@ Summary: Weather application
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Requires: qml6(QtCharts)
 Requires: kf6-kirigami-addons
+
 Provides: kde5-kweather = %EVR
 Obsoletes: kde5-kweather < %EVR
-
-Requires: qml6(QtCharts)
 
 Source: %rname-%version.tar
 Patch1: alt-clear-country-names.patch
@@ -52,6 +52,9 @@ A convergent weather application for Plasma.
 
 
 %changelog
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Jun 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
