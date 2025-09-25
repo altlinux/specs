@@ -5,7 +5,7 @@
 
 Name: vapoursynth
 Version: 72
-Release: alt1
+Release: alt2
 
 Summary: Video processing framework with simplicity in mind
 
@@ -129,7 +129,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n python3-module-%name
 %python3_sitelibdir/%name.so
 %if_with python_ext
-%python3_sitelibdir/%name.cpython*.so
+%python3_sitelibdir/%name.abi3.so
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 %endif
 
@@ -143,7 +143,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files tools
 %_bindir/vspipe
 
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
+
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 72-alt2
+- fixed FTBFS with cython>3.1
+
 * Wed Aug 20 2025 Leontiy Volodin <lvol@altlinux.org> 72-alt1
 - New version 72.
 - Prevented build error with cython less 3.1.0.
