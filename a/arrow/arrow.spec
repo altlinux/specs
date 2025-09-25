@@ -15,7 +15,7 @@
 
 Name: arrow
 Version: 12.0.0
-Release: alt2.4
+Release: alt2.5
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
 
@@ -769,6 +769,9 @@ rm -rf %buildroot%_docdir/%name
 %python3_sitelibdir/pyarrow/include
 
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 12.0.0-alt2.5
+- fixed FTBFS with cython>3.1
+
 * Fri Jul 11 2025 Vasiliy Kovalev <kovalev@altlinux.org> 12.0.0-alt2.4
 - NMU: fix FTBFS: [Python] Address NumPy 2.0 ABI breakages in
   PyArray_Descr and pandas_compat.
