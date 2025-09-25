@@ -1,8 +1,8 @@
 %define oname rencode
 
 Name: python3-module-%oname
-Version: 1.0.6
-Release: alt3
+Version: 1.0.8
+Release: alt1
 
 Summary: The rencode module is similar to bencode from the BitTorrent project
 
@@ -14,10 +14,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/aresch/rencode/archive/v%version.tar.gz
 Source: %name-%version.tar
-Patch1: CVE-2021-40839.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-Cython python3-module-wheel
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(cython)
+BuildRequires: python3(poetry-core)
+BuildRequires: python3(wheel)
 
 %description
 The rencode module is similar to bencode from the BitTorrent project.
@@ -29,19 +30,22 @@ written by Petru Paler, Connelly Barnes et al.
 
 %prep
 %setup
-%patch1 -p1
+sed -i /COMPILE_ARGS/d build.py
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Wed Sep 04 2024 Alexander Danilov <admsasha@altlinux.org> 1.0.6-alt3
 - Applied security fixes from upstream (Fixes: CVE-2021-40839).
 
