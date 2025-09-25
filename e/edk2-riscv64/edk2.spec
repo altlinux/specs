@@ -22,8 +22,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-%target_arch
-Version: 20250521
-Release: alt2
+Version: 20250808
+Release: alt1
 Summary: UEFI firmware for %target_arch virtual machines
 
 License: BSD-2-Clause-Patent
@@ -40,9 +40,6 @@ Source10: openssl-snapshot.tar
 Source11: pylibfdt-snapshot.tar
 
 Source100: Alt_linux_logo.bmp
-
-# https://github.com/tianocore/edk2/pull/11309
-Patch1: edk2-alt-sata-for-loongarchvirt.patch
 
 # one primary architecture should be enough
 ExcludeArch: aarch64 %ix86
@@ -77,9 +74,6 @@ sed -i '/BrotliCompress/d' BaseTools/Source/C/GNUmakefile
 
 tar --strip-components=1 -xf %SOURCE10 -C CryptoPkg/Library/OpensslLib/openssl
 tar --strip-components=1 -xf %SOURCE11 -C MdePkg/Library/BaseFdtLib/libfdt
-
-# now we can patch anything
-%autopatch -p1
 
 # include paths pointing to unused submodules
 mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
@@ -137,6 +131,9 @@ done
 %_datadir/qemu/firmware/*edk2-%{target_arch}*.json
 
 %changelog
+* Thu Sep 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt1
+- edk2-stable202508
+
 * Thu Jul 17 2025 Ivan A. Melnikov <iv@altlinux.org> 20250521-alt2
 - build RiscVVirtQemu platform as edk2-riscv64
 - repackage riscv64 images as qcow2
