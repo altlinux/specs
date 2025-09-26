@@ -20,11 +20,11 @@
 
 %define nv_version 580
 %define nv_release 82
-%define nv_minor   07
+%define nv_minor   09
 %define pkg_rel alt1
-%define nv_version_full %nv_version.%nv_release.%nv_minor
-%if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
+%if "%nv_minor" != "%nil"
+%define nv_version_full %nv_version.%nv_release.%nv_minor
 %endif
 Name: nvidia_glx_libs_%nv_version_full
 Version: %nv_version_full
@@ -318,6 +318,9 @@ done
 %endif
 
 %changelog
+* Fri Sep 26 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.09-alt1
+- new version
+
 * Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.07-alt1
 - new version
 

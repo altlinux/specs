@@ -15,12 +15,12 @@
 
 %define nv_version 580
 %define nv_release 82
-%define nv_minor 07
-%define pkg_rel alt301
+%define nv_minor 09
+%define pkg_rel alt302
 
-%define tbver %{nv_version}.%{nv_release}.%{nv_minor}
-%if "%nv_minor" == "%nil"
 %define tbver %{nv_version}.%{nv_release}
+%if "%nv_minor" != "%nil"
+%define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %endif
 %define module_version	%nv_version%nv_release%nv_minor
 %define module_release	%pkg_rel
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri Sep 26 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.09-alt302
+- new version
+
 * Thu Sep 11 2025 Sergey V Turchin <zerg@altlinux.org> 580.82.07-alt301
 - turn on modeset by default
 
