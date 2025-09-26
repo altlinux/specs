@@ -16,7 +16,7 @@ BuildRequires: java-17-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.107
+%define version 9.0.109
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: java-17-devel
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 107
+%global micro_version 109
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -583,6 +583,9 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Thu Sep 25 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.109-alt1
+- new version
+
 * Fri Jul 18 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.107-alt1
 - new version
 
