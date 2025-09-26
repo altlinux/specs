@@ -1,14 +1,14 @@
 %define repo atlasrep
 
 Name: gap-atlasrep
-Version: 2.1.6
+Version: 2.1.9
 Release: alt1
 Summary: GAP: Interface to the Atlas of Group Representations
 License: GPL-3.0+
 Group: Sciences/Mathematics
-Url: http://www.math.rwth-aachen.de/homes/Thomas.Breuer/atlasrep/
+Url: https://www.math.rwth-aachen.de/homes/Thomas.Breuer/atlasrep/
 
-Source: http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrep-%version.tar.gz
+Source: https://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrep-%version.tar.gz
 
 BuildArch: noarch
 BuildPreReq: fdupes
@@ -38,6 +38,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo/*
 
 %changelog
+* Fri Sep 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.9-alt1
+- New version 2.1.9 (with rpmgs script).
+
 * Tue Nov 22 2022 Leontiy Volodin <lvol@altlinux.org> 2.1.6-alt1
 - 2.1.6 (with rpmgs script).
 
