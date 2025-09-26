@@ -2,7 +2,7 @@
 %def_disable online_editor
 
 Name: hygg
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: Simplifying the way you read
@@ -110,6 +110,9 @@ install -D target/release/cli-justify %buildroot%_bindir/cli-justify
 %_bindir/cli-justify
 
 %changelog
+* Fri Sep 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.18-alt1
+- 0.1.17 -> 0.1.18
+
 * Thu Jul 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.17-alt1
 - 0.1.16 -> 0.1.17
 
