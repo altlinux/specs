@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.25
+Version: 1.27
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -45,9 +45,13 @@ know about or cannot detect.
 %doc README COPYING
 %_libexecdir/%name-cpuid-helper
 %_sbindir/%name
+%_sbindir/%name-cvm
 %_man1dir/*
 
 %changelog
+* Sat Sep 27 2025 Ilya Mashkin <oddity@altlinux.ru> 1.27-alt1
+- 1.27
+
 * Wed Sep 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1.25-alt1
 - 1.25
 
