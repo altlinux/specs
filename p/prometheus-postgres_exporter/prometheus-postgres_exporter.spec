@@ -1,7 +1,7 @@
 %global import_path github.com/prometheus-community/prometheus-postgres_exporter
 Name:    prometheus-postgres_exporter
-Version: 0.17.1
-Release: alt3
+Version: 0.18.0
+Release: alt1
 
 Summary: A PostgreSQL metric exporter for Prometheus
 License: Apache-2.0
@@ -72,6 +72,9 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/postgres-exporter
 %dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/postgres-exporter
 
 %changelog
+* Fri Sep 26 2025 Andrey Cherepanov <cas@altlinux.org> 0.18.0-alt1
+- New version.
+
 * Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.17.1-alt3
 - Removed socket file, fixed service file.
 
