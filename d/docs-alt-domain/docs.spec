@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,5 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Sep 26 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
+- fix typos (closes #56055, #56054, #56053, #56052, #56051, #56162, #56179)
+- small improvements (closes #56164, #56165, #56166, #56167, #56176)
+- fix command samba-tool (#56163, #56170, #56171, #56172 #56175)
+
 * Fri Aug 22 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
 - initial build for Sisyphus
