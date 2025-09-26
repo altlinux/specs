@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
-Release: alt3
+Version: 1.3.2
+Release: alt1
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -66,9 +66,12 @@ EXCLUDE_TESTS_CONDITION="not (\
 %files
 %doc LICENSE README.rst CHANGELOG.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%mod_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 26 2025 Anton Zhukharev <ancieg@altlinux.org> 1.3.2-alt1
+- Updated to 1.3.2.
+
 * Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt3
 - Fixed FTBFS (pytz 2025.1).
 
