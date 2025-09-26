@@ -12,7 +12,7 @@
 
 
 Name: libnotify
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Desktop notification library
@@ -147,6 +147,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Fri Sep 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
+- 0.8.7
+
 * Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
 - 0.8.6
 
