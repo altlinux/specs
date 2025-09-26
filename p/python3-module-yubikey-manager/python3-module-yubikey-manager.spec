@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.7.2
+Version: 5.8.0
 Release: alt1
 
 Summary: Library and CLI for managing your YubiKey configuration
@@ -44,7 +44,7 @@ all USB interfaces.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -63,10 +63,13 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %_bindir/ykman
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/yubikit/
-%python3_sitelibdir/%{pep427_name %pypi_name}-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_man1dir/%mod_name.1.*
 
 %changelog
+* Fri Sep 26 2025 Anton Zhukharev <ancieg@altlinux.org> 5.8.0-alt1
+- Updated to 5.8.0.
+
 * Mon Jun 23 2025 Anton Zhukharev <ancieg@altlinux.org> 5.7.2-alt1
 - Updated to 5.7.2.
 
