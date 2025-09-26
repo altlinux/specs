@@ -1,7 +1,7 @@
 %define lname libcjson
 
 Name: cjson
-Version: 1.7.18
+Version: 1.7.19
 Release: alt1
 
 Summary: Ultralightweight JSON parser in ANSI C 
@@ -65,6 +65,9 @@ ctest -V
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Sep 26 2025 Alexander Danilov <admsasha@altlinux.org> 1.7.19-alt1
+- new version 1.7.19 (fixes CVE-2025-57052).
+
 * Mon Dec 23 2024 Alexander Danilov <admsasha@altlinux.org> 1.7.18-alt1
 - new version 1.7.18 (fixes CVE-2023-50471, CVE-2023-50472).
 
