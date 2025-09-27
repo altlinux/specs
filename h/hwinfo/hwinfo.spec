@@ -1,8 +1,8 @@
 %def_without static
 
 Name: hwinfo
-Version: 23.3
-Release: alt2
+Version: 25.0
+Release: alt1
 
 Summary: Hardware detection tool
 License: GPLv2
@@ -160,6 +160,9 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Sat Sep 27 2025 Ilya Mashkin <oddity@altlinux.ru> 25.0-alt1
+- 25.0
+
 * Tue Feb 25 2025 Michael Shigorin <mike@altlinux.org> 23.3-alt2
 - E2K: fix build (ilyakurdyukov@)
 - Minor spec cleanup
