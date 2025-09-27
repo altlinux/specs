@@ -1,22 +1,23 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gnome-menus
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: GNOME desktop menu
 License: GPL-2.0
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org
+Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-menus.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gnome-menus.git
 Source: %name-%version.tar
 %endif
 Patch1: %name-3.31.4-alt-add-config-dir.patch
@@ -147,6 +148,9 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 
 
 %changelog
+* Sat Sep 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.38.1-alt1
+- 3.38.1
+
 * Thu Sep 21 2023 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
 - 3.36.0-21-g61daaf1 (updated translations)
 - new -x-gnome subpackage with X-GNOME .directory files (ALT #47413)
@@ -263,7 +267,7 @@ GObject introspection devel data for the GNOME Desktop Menu Library
 * Mon Jul 27 2009 Alexey Rusakov <ktirf@altlinux.org> 2.26.2-alt2.1
 - added unowned directories
 
-* Fri Jul 19 2009 Alexey Rusakov <ktirf@altlinux.org> 2.26.2-alt2
+* Sun Jul 19 2009 Alexey Rusakov <ktirf@altlinux.org> 2.26.2-alt2
 - moved docs to lib%name from %name because lib%name can be used without
   %name
 - put locale files to a separate subpackage (-common) to facilitate menu

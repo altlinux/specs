@@ -4,7 +4,7 @@
 %def_disable precompiled_dart_sass
 
 Name: gtk3-theme-%themename
-Version: 6.3
+Version: 6.4
 Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
@@ -49,6 +49,9 @@ BuildRequires: meson
 %doc README*
 
 %changelog
+* Sat Sep 27 2025 Yuri N. Sedunov <aris@altlinux.org> 6.4-alt1
+- 6.4
+
 * Sat Sep 06 2025 Yuri N. Sedunov <aris@altlinux.org> 6.3-alt1
 - 6.3
 

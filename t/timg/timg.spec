@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 Name: timg
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: terminal image viewer
@@ -59,6 +59,9 @@ character blocks if these are not available.
 %doc README*
 
 %changelog
+* Sat Sep 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Sun May 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
