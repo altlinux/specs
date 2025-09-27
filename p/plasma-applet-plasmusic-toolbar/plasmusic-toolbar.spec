@@ -2,7 +2,7 @@
 %define nameLC plasma_applet_plasmusic.toolbar
 
 Name: plasma-applet-%nameL
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: Plasma widget that shows playing song information and provide controls
@@ -43,6 +43,9 @@ done
 %_datadir/plasma/plasmoids/%nameL
 
 %changelog
+* Sat Sep 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.5.0-alt1
+- 3.4.0 -> 3.5.0
+
 * Fri Aug 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.4.0-alt1
 - 3.3.0 -> 3.4.0
 
