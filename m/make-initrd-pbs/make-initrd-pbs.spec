@@ -3,12 +3,12 @@
 
 Name: %parent-%child
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
 License: GPL-3.0
 Group: System/Base
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: %name-%version.tar
 
@@ -32,6 +32,9 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Thu Jun 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt2
+- NMU: build on loongarch64
+
 * Fri Mar 14 2025 Sergey Konev <darisishe@altlinux.org> 1.0.6-alt1
 - switch MODULES_TRY_ADD to MODULES_LOAD
 - Use only ntfs3 module
