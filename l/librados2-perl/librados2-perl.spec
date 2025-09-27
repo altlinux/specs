@@ -1,13 +1,13 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
 Version: 1.4.1
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: librados2-perl.tar
 
@@ -31,6 +31,9 @@ This package contains librados perl binding used by PVE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Sat Sep 27 2025 Ivan A. Melnikov <iv@altlinux.org> 1.4.1-alt2
+- build on loongarch64
+
 * Mon Nov 20 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
