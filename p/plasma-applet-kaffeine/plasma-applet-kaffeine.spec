@@ -1,7 +1,7 @@
 %define nameL Kaffeine
 
 Name: plasma-applet-kaffeine
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: caffeine kde. button to lock the screen auto lock
@@ -30,5 +30,8 @@ mv %nameL %buildroot%_datadir/plasma/plasmoids/
 %_datadir/plasma/plasmoids/%nameL/*
 
 %changelog
+* Sun Sep 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4
+
 * Sun Apr 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3-alt1
 - Initial build for ALT Linux.
