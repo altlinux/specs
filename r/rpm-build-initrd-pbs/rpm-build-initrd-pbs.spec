@@ -11,14 +11,14 @@
 
 Name: rpm-build-initrd-pbs
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: RPM helper post script for building PBS initrd image
 License: GPL
 Group: Development/Other
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Requires(pre): make-initrd
 Requires(pre): make-initrd-pbs
@@ -66,6 +66,9 @@ chmod 0644 %imagedir/{bzImage,initramfs.img}
 %config(noreplace) %imagedir/proxmox-backup-restore-image.mk
 
 %changelog
+* Sat Sep 27 2025 Ivan A. Melnikov <iv@altlinux.org> 0.1-alt3
+- NMU: build on loongarch64
+
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 0.1-alt2
 - Added support for c10f2 branch.
 
