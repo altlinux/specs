@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 2.2.3
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -77,6 +77,18 @@ Group: System/Base
 
 %description client
 Vitastor client library and command-line interface.
+
+%package ublk
+Summary: Vitastor SDS UBLK proxy
+Group: System/Base
+
+%description ublk
+ublk is a new io_uring-based Linux interface
+for user-space block device drivers, available since Linux 6.0.
+
+It's not zero-copy, but it's still a fast implementation, outperforming both NBD
+and VDUSE iops-wise and may or may not outperform VDUSE in linear I/O MB/s.
+ublk also allows to recover devices even if the server (vitastor-ublk process) dies.
 
 %package nbd
 Summary: Vitastor SDS NBD proxy
@@ -249,6 +261,9 @@ fi
 %_bindir/%name-rm
 %_bindir/vita
 
+%files ublk
+%_bindir/%name-ublk
+
 %files nbd
 %_bindir/%name-nbd
 
@@ -277,6 +292,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 27 2025 Sergey Konev <darisishe@altlinux.org> 2.4.0-alt1
+- 2.4.0 (closes: #56150)
+
 * Mon Sep 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.3-alt2
 - e2k patch update
 
