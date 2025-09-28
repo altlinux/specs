@@ -1,8 +1,8 @@
 %global __find_debuginfo_files %nil
 
 Name: musikcube
-Version: 3.0.4
-Release: alt2
+Version: 3.0.5
+Release: alt1
 
 Summary: a cross-platform, terminal-based audio engine, library, player and server written in c++
 
@@ -12,14 +12,12 @@ URL: https://musikcube.com
 VCS: https://github.com/clangen/musikcube
 
 Source: %name-%version.tar
-Source1: submodules.tar
 
-BuildRequires: /proc cmake gcc-c++ libavformat-devel libcurl-devel
+BuildRequires: /proc asio-devel cmake gcc-c++ libavformat-devel libcurl-devel
 BuildRequires: libev-devel libgme-devel liblame-devel libmicrohttpd-devel
 BuildRequires: libmpg123-devel libncursesw-devel libopenmpt-devel
 BuildRequires: libportaudio2-devel libpulseaudio-devel libswresample-devel
 BuildRequires: libsystemd-devel libtag-devel patchelf pipewire-libs-devel
-BuildRequires: libcryptopp-devel libssl-devel
 
 %description
 a cross-platform, terminal-based audio engine, library, player
@@ -30,10 +28,10 @@ It also runs well on a raspberry pi with raspbian, and can be setup
 as a streaming audio server.
 
 %prep
-%setup -a1
+%setup
 
 %build
-rm -rv src/3rdparty/bin
+rm -rv src/3rdparty/{asio,bin}
 sed -i 's/share/%_lib/' src/musikcube*/musikcube*.in
 sed -i 's|share/%name|%_lib/%name|g' .cmake/InstallFiles.cmake
 cmake \
@@ -55,6 +53,10 @@ cmake \
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Sep 28 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.5-alt1
+- New version 3.0.5.
+- Remove submodule asio.
+
 * Sun Aug 10 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.4-alt2
 - Build with submodule asio to fix FTBFS.
 
