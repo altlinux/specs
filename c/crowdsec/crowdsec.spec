@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/crowdsecurity/crowdsec
 # git rev-parse --short v%version
-%global commit_hash f209766e
+%global commit_hash c3036e21
 
 Name: crowdsec
-Version: 1.6.8
+Version: 1.7.0
 Release: alt1
 Summary: Security solution offering crowdsourced protection against malicious IPs
 License: MIT
@@ -15,9 +15,9 @@ VCS: https://github.com/crowdsecurity/crowdsec
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: gcc-c++
-BuildRequires: golang
 BuildRequires: libre2-devel
 
 %description
@@ -139,6 +139,9 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %_sysconfdir/cron.daily/%name
 
 %changelog
+* Sun Sep 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.0-alt1
+- Updated to version 1.7.0.
+
 * Fri Apr 25 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.8-alt1
 - Updated to version 1.6.8.
 
