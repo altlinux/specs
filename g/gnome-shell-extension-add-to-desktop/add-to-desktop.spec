@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-add-to-desktop
-Version: 14
+Version: 15
 Release: alt1
 Summary: An easy way to create desktop app shortcuts in GNOME
 License: GPL-3.0-or-later
@@ -52,5 +52,8 @@ cp -r locale %buildroot%_datadir/
 %doc README.md LICENSE
 
 %changelog
+* Sun Sep 28 2025 Anton Midyukov <antohami@altlinux.org> 15-alt1
+- New version 15.
+
 * Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 14-alt1
 - initial build
