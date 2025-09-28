@@ -8,8 +8,9 @@
 %endif
 
 Name: altcenter
-Version: 2.0
-Release: alt1
+Version: 1.0
+Release: alt0.18
+Epoch: 1
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -30,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 
 Requires: inxi
 Requires: alteratorctl
-Requires: alt-components
+Requires: polkit-rule-packagekit-allow-install
 
 %description
 This is the grapical plugin-based application for show information and
@@ -59,8 +60,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
-* Sat Sep 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.0-alt1
-- Components: replace components module with alt-components launcher (Closes: 54844, 56088).
+* Sun Sep 28 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.18
+- Useful: added links to useful articles (ALT #55198).
+- Components: fixed freezing during download.
 
 * Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.17
 - Required polkit-rule-packagekit-allow-install to install packages (ALT #54844).
