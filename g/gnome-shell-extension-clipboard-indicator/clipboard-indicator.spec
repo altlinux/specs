@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-clipboard-indicator
-Version: 68
-Release: alt5
+Version: 69
+Release: alt1
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -44,10 +44,6 @@ mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/lo
 find %buildroot%_datadir/locale \
 	-name *.po -exec rm {} \;
 
-# remove unsupported locales
-rm %buildroot%_datadir/locale/ja/LC_MESSAGES/ja.mo
-rm %buildroot%_datadir/locale/ko/LC_MESSAGES/ko.mo
-
 # remove docs from directory of extension
 rm %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/*.rst
 
@@ -59,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/*.
 %doc README.rst LICENSE.rst
 
 %changelog
+* Sun Sep 28 2025 Anton Midyukov <antohami@altlinux.org> 69-alt1
+- New version 69.
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt5
 - fix install translations
 
