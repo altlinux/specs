@@ -2,7 +2,7 @@
 
 Name: hashlink
 Version: 1.15
-Release: alt1
+Release: alt2
 
 Summary: HashLink is a virtual machine for Haxe
 License: MIT
@@ -10,8 +10,12 @@ Group: Development/Other
 
 Url: https://hashlink.haxe.org/
 
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 # Source-url: https://github.com/HaxeFoundation/hashlink/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch1: hashlink-1.15-upstream-more-architectures-support.patch
+Patch2: hashlink-1.15-alt-x86-context-workaround.patch
 
 ExcludeArch: armh
 ExcludeArch: ppc64le aarch64
@@ -40,6 +44,7 @@ Group: %group
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake_insource -D BUILD_TESTING=OFF \
@@ -73,6 +78,12 @@ install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
 %_includedir/hlc_main.c
 
 %changelog
+* Sun Sep 28 2025 Ivan A. Melnikov <iv@altlinux.org> 1.15-alt2
+- NMU: portability fixes (fixes FTBFS on aarch64, loongarch64,
+  and riscv64):
+  + backport upstream change for hl_debug_break portabilty
+  + quick fix for src/profile.c
+
 * Sat May 24 2025 Vitaly Lipatov <lav@altlinux.ru> 1.15-alt1
 - new version 1.15 (with rpmrb script)
 
