@@ -14,7 +14,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -42,7 +42,7 @@ Patch1: alt-def-color-scheme.patch
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
 Patch4: alt-def-kicker.patch
-#
+Patch5: alt-start-baloo.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-singleclick.patch
 #
@@ -156,7 +156,7 @@ SDDM breeze theme
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 #
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt2
+- fix start baloo from settings
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 
