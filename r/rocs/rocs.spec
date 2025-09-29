@@ -4,7 +4,7 @@
 %define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.08.1
 Release: alt1
 %K5init
 
@@ -94,6 +94,9 @@ Requires: %name-common >= %EVR
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
