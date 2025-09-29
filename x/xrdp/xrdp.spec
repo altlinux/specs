@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.4.1
-Release: alt3
+Release: alt4
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -303,6 +303,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 0.10.4.1-alt4
+- xrdp-alt-startwm.patch: fix for p11
+
 * Mon Sep 22 2025 Anton Midyukov <antohami@altlinux.org> 0.10.4.1-alt3
 - xrdp-sesman.pam: run gnome-keyring, if available
 
