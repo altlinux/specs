@@ -1,6 +1,6 @@
 Name: kernel-image-6.17
-Release: alt0.rc7
-%define kernel_src_version	6.16
+Release: alt1
+%define kernel_src_version	6.17
 %define kernel_base_version	6.17
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -612,6 +612,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 29 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt1
+- Update to v6.17 (2025-09-28) release.
+- config: Enable more OmniVision cameras.
+- config: Enable TPS68470 related options for Intel IPU3 cameras.
+- config: Enable IPU6/MIPI cameras related options (IPU_BRIDGE, LJCA,
+  DMABUF).
+
 * Mon Sep 22 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt0.rc7
 - Update to v6.17-rc7 (2025-09-21).
 
