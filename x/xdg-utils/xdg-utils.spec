@@ -3,13 +3,14 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt5
+Release: alt6
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
 License: MIT
 Group: System/Base
-Url: https://www.freedesktop.org/wiki/Software/xdg-utils/
+URL: https://www.freedesktop.org/wiki/Software/xdg-utils/
+VCS: https://gitlab.freedesktop.org/xdg/xdg-utils
 
 # Source-url: https://portland.freedesktop.org/download/xdg-utils-%version.tar.gz
 Source: %name-%version.tar
@@ -34,6 +35,8 @@ Patch20: xdg-terminal-added-dde-support.patch
 Patch21: xdg-terminal-fix-generic.patch
 #
 Patch24: xdg-screensaver.in-add-xfce4-screensaver-support.patch
+# https://bugzilla.altlinux.org/45772
+Patch25: xdg-open-open_gnome3-try-gio-mount.patch
 
 BuildArch: noarch
 
@@ -98,6 +101,7 @@ popd
 %patch21 -p2
 #
 %patch24 -p1
+%patch25 -p2
 
 %build
 %autoreconf
@@ -124,6 +128,9 @@ rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt6
+- xdg-open: try gio mount before open in open_gnome3 function (Closes: 45772)
+
 * Tue May 20 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt5
 - update description according to binaries list
 
