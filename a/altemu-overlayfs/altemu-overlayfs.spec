@@ -1,6 +1,6 @@
 Name: altemu-overlayfs
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Merging several dirs with ROM files into one dir
 
@@ -27,6 +27,9 @@ install -Dm0644 %name.service %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_presetdir
 install -m 0644 20-%name.preset %buildroot%_presetdir/20-%name.preset
 
+mkdir -p %buildroot%_datadir/altemu
+install -m 0644 dir-list %buildroot%_datadir/altemu/
+
 %post
 %post_service %name.service
 
@@ -35,10 +38,15 @@ install -m 0644 20-%name.preset %buildroot%_presetdir/20-%name.preset
 
 %files
 %_bindir/%name
+%_datadir/altemu/dir-list
 %_unitdir/%name.service
 %_presetdir/20-%name.preset
 
 %changelog
+* Fri Sep 25 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt3
+- Add function for creating dirs of game systems
+- Fix overlay creation
+
 * Wed Sep 24 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
 - Fix case with only one card
 

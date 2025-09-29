@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2025.09
-Release: alt1
+Release: alt2
 
 Url: https://www.altlinux.org/AltEMU
 
@@ -188,8 +188,14 @@ subst "s/Theme=.*/Theme=altemu/" /etc/plymouth/plymouthd.conf
 
 %files altemu-settings
 %_sysconfdir/skel/.sway/config
+%_sysconfdir/skel/storage/roms/README.md
+
 
 %changelog
+* Fri Sep 26 2025 Artyom Bystrov <arbars@altlinux.org> 2025.09-alt2
+- Minor cleanup
+- Add storage directory
+
 * Thu Sep  4 2025 Artyom Bystrov <arbars@altlinux.org> 2025.09-alt1
 - Bump version
 - Fix plymouth theme name
