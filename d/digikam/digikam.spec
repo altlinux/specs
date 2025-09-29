@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.7.0
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 %define sover %version
@@ -221,7 +221,7 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
     -DENABLE_MYSQLSUPPORT=%{?_enable_mysql:ON}%{!?_enable_mysql:OFF} \
     -DENABLE_KFILEMETADATASUPPORT=%{?_enable_baloo:ON}%{!?_enable_baloo:OFF} \
     -DENABLE_APPSTYLES=ON \
-    -DENABLE_GEOLOCATION=OFF \
+    -DENABLE_GEOLOCATION=ON \
     -DBUILD_TESTING=OFF \
     -DENABLE_OPENCV3=%{?_enable_opencv3:ON}%{!?_enable_opencv3:OFF} \
     #
@@ -287,6 +287,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt3
+- enable geolocation feature
+
 * Mon Jul 14 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt2
 - update russian translation
 
