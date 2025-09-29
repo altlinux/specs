@@ -1,14 +1,18 @@
 %define repo utils
 
 Name: gap-utils
-Version: 0.84
+Version: 0.92
 Release: alt1
 Summary: GAP: Utility functions in GAP
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/utils
+VCS: https://github.com/gap-packages/utils
 
-Source: https://github.com/gap-packages/utils/releases/download/v%version/utils-%version.tar.gz
+# Source-url: https://github.com/gap-packages/utils/releases/download/v%version/utils-%version.tar.gz
+Source: utils-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildPreReq: rpm-macros-gap
 BuildRequires: xz
 
@@ -22,17 +26,22 @@ The Utils package provides a collection of utility functions gleaned
 from many packages.
 
 %prep
-%setup -n utils-%version
+%setup -n utils
+%patch -p1
 
 %build
 %install
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%gap_sitelib/%repo/
 
 %changelog
+* Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.92-alt1
+- New version 0.92.
+- Added VCS tag.
+- Moved files from utils-version to utils.
+
 * Wed Sep 13 2023 Leontiy Volodin <lvol@altlinux.org> 0.84-alt1
 - New version.
 

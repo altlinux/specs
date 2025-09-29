@@ -1,25 +1,27 @@
 Name: gap
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 Summary: System for Computational Discrete Algebra
-License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
+License: Artistic-2.0 or GPL-2.0-only and GPL-2.0-or-later
 Group: Sciences/Mathematics
 Url: https://gap-system.org/
-Vcs: git://github.com/gap-system/gap.git
+VCS: https://github.com/gap-system/gap
 
-Source: https://github.com/gap-system/gap/releases/download/v%version/gap-%version.tar.gz
+# Source-url: https://github.com/gap-system/gap/releases/download/v%version/gap-%version.tar.gz
+Source0: gap-%version.tar
 Source2: macros.gap
 Source3: %name-rpmlintrc
 
+Patch0: %name-%version-%release.patch
 # Patch applied in bootstrap mode to break circular dependencies.
-Patch: %name-bootstrap.patch
+Patch1: %name-bootstrap.patch
 # This patch applies a change from Debian to allow help files to be in gzip
 # compressed DVI files, and also adds support for viewing with xdg-open.
-Patch1: %name-help.patch
+Patch2: %name-help.patch
 # Fix broken references in the reference manual's lab file
-Patch2: %name-ref.patch
+Patch3: %name-ref.patch
 # Fix paths in gac
-Patch3: %name-gac.patch
+Patch4: %name-gac.patch
 # On i386 only, and with recent versions of gcc only, various parts of the
 # compiled code disagree about the size of a BagHeader.  Some parts think it
 # is 12 bytes, and some parts think it is 16 bytes.  This leads to pointers
@@ -27,7 +29,7 @@ Patch3: %name-gac.patch
 # weird failure modes.  This does not affect 32-bit ARM, so it is not purely
 # a 32-bit issue.  I do not yet know if this behavior is due to a GCC bug, or
 # if the GAP code is in fact wrong, but this patch works around the issue.
-Patch4: %name-bagheader.patch
+Patch5: %name-bagheader.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgmp-devel
@@ -42,7 +44,7 @@ Obsoletes: gap-data < %version
 Provides: gap-data = %version
 #Requires: gap-gapdoc >= 1.5.1
 
-%define soname 9
+%define soname 10
 %global gap_sitearch %_libdir/gap/pkg
 %global gap_sitelib  %_datadir/gap/pkg
 
@@ -132,11 +134,12 @@ This subpackage will pull in all optional packages of the GAP distribution.
 
 %prep
 %setup
-#%%patch -p0
-%patch1 -p0
-#%%patch2 -p0
+%patch0 -p1
+#%%patch1 -p0
+%patch2 -p0
 #%%patch3 -p0
-%patch4 -p0
+#%%patch4 -p0
+%patch5 -p0
 # Don't exist in doc/.
 sed -i 's|ext in css html js txt pdf six lab|xml|' \
   Makefile.rules
@@ -172,8 +175,6 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files
 %doc CITATION CONTRIBUTING.md COPYRIGHT INSTALL.md LICENSE README.md
 %_bindir/gap
-%dir %_libdir/gap/
-%_libdir/gap/gap
 %_datadir/gap/
 
 %files -n lib%name%soname
@@ -193,6 +194,10 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.0-alt1
+- New version 4.15.0.
+- Updated license tag.
+
 * Wed Dec 11 2024 Leontiy Volodin <lvol@altlinux.org> 4.14.0-alt1
 - New version 4.14.0.
 - Added vcs tag.
