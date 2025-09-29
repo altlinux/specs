@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systeroid
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 Summary: A more powerful alternative to sysctl(8) with a terminal user interface.
 License: Apache-2.0 and MIT 
@@ -49,6 +49,9 @@ install -Dm 755 target/release/%name-tui %buildroot%_bindir/%name-tui
 %_bindir/*
 
 %changelog
+* Mon Sep 29 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.6-alt1
+- 0.4.5 -> 0.4.6
+
 * Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.5-alt1
 - 0.4.4 -> 0.4.5
 
