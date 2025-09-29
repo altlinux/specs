@@ -2,7 +2,7 @@
 
 Name:    %rname
 Version: 25.08.1
-Release: alt1
+Release: alt2
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
@@ -10,6 +10,7 @@ URL:     https://userbase.kde.org/Kamoso
 License: GPL-2.0+
 %K6init no_altplace
 
+Requires: gst-plugins-good1.0-qt6
 Requires: kde6-runtime
 Requires: kf6-purpose
 Requires: kf6-kirigami
@@ -75,6 +76,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_K6notif/%rname.notifyrc
 
 %changelog
+* Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt2
+- fix requires
+
 * Fri Sep 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 
