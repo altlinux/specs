@@ -10,7 +10,7 @@
 %endif
 
 Name: ispc
-Version: 1.28.1
+Version: 1.28.2
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -179,6 +179,9 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon Sep 29 2025 L.A. Kostis <lakostis@altlinux.ru> 1.28.2-alt1
+- 1.28.2.
+
 * Mon Sep 15 2025 L.A. Kostis <lakostis@altlinux.ru> 1.28.1-alt1
 - 1.28.1.
 - checkinstall: fix aarch64 build.
