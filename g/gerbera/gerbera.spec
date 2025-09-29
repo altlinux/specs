@@ -7,8 +7,8 @@
 %endif
 
 Name: gerbera
-Version: 2.4.1
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
 Summary: UPnP Media Server
 Group: System/Servers
@@ -20,13 +20,11 @@ Patch: %name-%version-%release.patch
 Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-ninja-build
-BuildRequires: cmake >= 3.18 ninja-build
+BuildRequires: ninja-build
 BuildRequires: gcc-c++
 BuildRequires: libupnp-devel >= 1.14.12
-BuildRequires: libfmt-devel >= 7.1.3
 BuildRequires: libspdlog-devel >= 1.8.5
 BuildRequires: libuuid-devel
-BuildRequires: libexpat-devel
 BuildRequires: libsqlite3-devel >= 3.35.5
 BuildRequires: libduktape-devel >= 2.5.0
 BuildRequires: libcurl-devel
@@ -36,14 +34,11 @@ BuildRequires: libwavpack-devel >= 5.1.0
 BuildRequires: libpugixml-devel >= 1.10
 BuildRequires: libexif-devel
 BuildRequires: libexiv2-devel >= 0.26
-BuildRequires: libavformat-devel
-BuildRequires: libavutil-devel
-BuildRequires: libavcodec-devel
 BuildRequires: libffmpegthumbnailer-devel >= 2.2.0
-BuildRequires: zlib-devel
-BuildRequires: libebml-devel >= 1.4.2 libmatroska-devel >= 1.6.3
-BuildRequires: libsystemd-devel
-BuildRequires: libmysqlclient-devel
+BuildRequires: libmatroska-devel >= 1.6.3
+BuildRequires: libmysqlclient21-devel
+BuildRequires: jsoncpp-devel
+BuildRequires: libicu-devel
 
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: ctest libgtest-devel}}
@@ -139,8 +134,12 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 
 %files data
 %_datadir/%name
+%_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Sep 19 2025 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt1
+- New version 2.6.1.
+
 * Fri Apr 04 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.1-alt2
 - Fixed build for Elbrus.
 
