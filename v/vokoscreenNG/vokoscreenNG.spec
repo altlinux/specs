@@ -2,7 +2,7 @@
 
 Name:     vokoscreenNG
 Version:  4.7.0
-Release:  alt1
+Release:  alt2
 
 Summary:  VokscreenNG is a user friendly Open Source screencaster for Linux and Windows
 License:  GPL-2.0
@@ -12,6 +12,7 @@ Url:      https://github.com/vkohaupt/vokoscreenNG
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
+Patch0:   %name-alt-mkv-playback.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -27,6 +28,7 @@ BuildRequires: libpulseaudio-devel
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 cd src
@@ -45,6 +47,9 @@ install -Dpm0644 src/applications/%name.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Sep 29 2025 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt2
+- Fixed crash on MKV playback (ALT #55913) (thanks @dan1257).
+
 * Thu Sep 25 2025 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt1
 - New version.
 
