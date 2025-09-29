@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -54,16 +54,16 @@ Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes icc-profiles
 Requires: xmessage
 Requires: qt6-dbus qt6-declarative qt6-virtualkeyboard dbus-tools-gui
-Requires: qml6(QtLocation)
+Requires: libqt6-location
 Requires: kf6-kconfig kf6-kded kf6-kdeclarative
 Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
-#Requires: kde6-kio-extras
+#Requires: kio-extras
 Requires: kf6-kquickcharts kf6-kirigami
 Requires: plasma6-kpipewire plasma6-kglobalacceld
 Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
 Requires: kwin kwin-x11
 Requires: kf6-kirigami-addons
-#Requires: kde6-kio-fuse
+#Requires: kio-fuse
 #Requires: appmenu-gtk-module
 
 Source: %rname-%version.tar
@@ -596,6 +596,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt3
+- update requires
+
 * Thu Sep 25 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt2
 - enable packagekit integration
 
