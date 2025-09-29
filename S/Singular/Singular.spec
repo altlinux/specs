@@ -1,7 +1,9 @@
 %global singulardir %_libdir/Singular
 %global upstreamver	4-4-1
 %global py3_slim_version %(rpm --eval %_python3_version | tr -d .)
-%global patchver p6
+%global patchver p3
+%global shortver 4.4.1
+%global addver 0.9.6
 
 %def_with python
 %def_with emacs
@@ -12,8 +14,8 @@
 %endif
 
 Name: Singular
-Version: 4.4.1
-Release: alt3
+Version: 4.4.1p3
+Release: alt1
 
 Summary: Computer Algebra System for polynomial computations
 # License analysis:
@@ -31,7 +33,7 @@ License: GPL-2.0 or GPL-3.0
 Group: Sciences/Mathematics
 
 Url: https://www.singular.uni-kl.de/
-Vcs: git://github.com/Singular/Singular.git
+Vcs: https://github.com/Singular/Singular
 # Java sources omitted from the source tarball.  To recreate this:
 # - git clone https://github.com/Singular/Singular.git
 # - cd Sources
@@ -40,34 +42,38 @@ Vcs: git://github.com/Singular/Singular.git
 # - tar cJf surfex.tar.xz Singular/LIB/surfex
 #Source1: surfex.tar.xz
 # Source-url: https://github.com/Singular/Singular/archive/Release-%{upstreamver}%{?patchver}.tar.gz
-Source: singular-%version.tar.gz
+Source: singular-%version.tar
+Patch0: %name-%version-%release.patch
 
 # fedora patches
 # Support S390(x) architectures
-Patch0: %name-arches.patch
+Patch1: %name-arches.patch
 # Fix overlinking
-Patch1:	 %name-link.patch
+Patch2:	 %name-link.patch
 # Fix the desktop files
-Patch2: %name-desktop.patch
+Patch3: %name-desktop.patch
 # Adapt to new template code in NTL 8
-Patch3:	 %name-ntl8.patch
+Patch4:	 %name-ntl8.patch
 # Fix code that can overflow a character buffer with sprintf
-Patch4: %name-format.patch
+Patch5: %name-format.patch
 # Add missing parentheses that can change code meaning in a macro
-Patch5: %name-parens.patch
+Patch6: %name-parens.patch
 # Unbundle gfanlib
-Patch6:	 %name-gfanlib.patch
+Patch7:	 %name-gfanlib.patch
 # Let ESingular read a compressed singular.info file
-Patch7: %name-emacs.patch
+Patch8: %name-emacs.patch
 # Fix several "use after free" scenarios due to temporary objects
-Patch8:	 %name-use-after-free.patch
+Patch9:	 %name-use-after-free.patch
 # Change little-endian-specific code to endian-agnostic code
-Patch9: %name-endian.patch
+Patch10: %name-endian.patch
 # Disable examples that use the network to avoid hangs on the koji builders
-Patch10: %name-doc-hang.patch
+Patch11: %name-doc-hang.patch
 # Fix an off-by-one error in polymake.lib that leads to failed examples
 # https://github.com/Singular/Singular/issues/1210
-Patch11: %name-polymake-lib.patch
+Patch12: %name-polymake-lib.patch
+# ALT patches
+# Fix gcc error: control reaches end of non-void function
+Patch13: %name-end-non-void.patch
 
 BuildRequires: 4ti2
 BuildRequires: bison
@@ -119,11 +125,11 @@ Group: System/Libraries
 %description libs
 This package contains common Singular libraries.
 
-%package -n libSingular%version
+%package -n libSingular%shortver
 Summary: Singular library
 Group: System/Libraries
 
-%description -n libSingular%version
+%description -n libSingular%shortver
 This package contains libSingular library.
 
 %package -n libSingular-devel
@@ -153,12 +159,12 @@ Requires: emacs-common
 %description emacs
 Emacs interface to Singular.
 
-%package -n libfactory%version
+%package -n libfactory%shortver
 Summary: C++ class library for multivariate polynomial data
 Group: System/Libraries
 Requires: libfactory-gftables = %EVR
 
-%description -n libfactory%version
+%description -n libfactory%shortver
 Factory is a C++ class library that implements a recursive
 representation of multivariate polynomial data.  It handles sparse
 multivariate polynomials over different coefficient domains, such as Z,
@@ -171,17 +177,17 @@ factorization of multivariate polynomials with integer coefficients.
 %package -n libfactory-devel
 Summary: Development files for the Singular factory
 Group: Development/C++
-Requires: libfactory%version = %EVR
+Requires: libfactory%shortver = %EVR
 Requires: libgmp-devel
 
 %description -n libfactory-devel
 Development files for the Singular factory.
 
-%package -n libomalloc0.9.6
+%package -n libomalloc%addver
 Summary: libomalloc library for %name
 Group: System/Libraries
 
-%description -n libomalloc0.9.6
+%description -n libomalloc%addver
 This package contains libomalloc library for %name.
 
 %package -n libomalloc-devel
@@ -191,11 +197,11 @@ Group: Development/C++
 %description -n libomalloc-devel
 Development files for the Singular omalloc.
 
-%package -n libsingular_resources%version
+%package -n libsingular_resources%shortver
 Summary: libsingular_resources library for %name
 Group: System/Libraries
 
-%description -n libsingular_resources%version
+%description -n libsingular_resources%shortver
 This package contains libsingular_resources library for %name.
 
 %package -n libsingular_resources-devel
@@ -213,12 +219,12 @@ BuildArch: noarch
 %description -n libfactory-gftables
 Factory uses addition tables to calculate in GF(p^n) in an efficient way.
 
-%package -n libpolys%version
+%package -n libpolys%shortver
 Summary: C++ class library for polynomials in Singular
 Group: System/Libraries
-Requires: libfactory%version = %EVR
+Requires: libfactory%shortver = %EVR
 
-%description -n libpolys%version
+%description -n libpolys%shortver
 Libpolys contains the data structures and basic algorithms for
 polynomials in Singular.
 
@@ -412,6 +418,7 @@ make check
 %_datadir/ml_python/
 %_datadir/ml_singular/
 %_datadir/singular/html/
+%dir %singulardir/
 %singulardir/Singular
 %singulardir/TSingular
 
@@ -422,8 +429,8 @@ make check
 %exclude %_datadir/singular/LIB/surfex.lib
 #%%exclude %%_datadir/singular/LIB/surfex
 
-%files -n libSingular%version
-%_libdir/libSingular-%version.so
+%files -n libSingular%shortver
+%_libdir/libSingular-%shortver.so
 
 %files -n libSingular-devel
 %_bindir/libsingular-config
@@ -467,24 +474,24 @@ make check
 %_datadir/singular/LIB/surfex.lib
 #%%_datadir/singular/LIB/surfex/
 
-%files -n libfactory%version
-%_libdir/libfactory-%version.so
+%files -n libfactory%shortver
+%_libdir/libfactory-%shortver.so
 
 %files -n libfactory-devel
 %_includedir/factory/
 %_libdir/libfactory.so
 %_pkgconfigdir/factory.pc
 
-%files -n libomalloc0.9.6
-%_libdir/libomalloc-0.9.6.so
+%files -n libomalloc%addver
+%_libdir/libomalloc-%addver.so
 
 %files -n libomalloc-devel
 %_includedir/omalloc/
 %_libdir/libomalloc.so
 %_pkgconfigdir/omalloc.pc
 
-%files -n libsingular_resources%version
-%_libdir/libsingular_resources-%version.so
+%files -n libsingular_resources%shortver
+%_libdir/libsingular_resources-%shortver.so
 
 %files -n libsingular_resources-devel
 %_includedir/resources/
@@ -494,8 +501,8 @@ make check
 %files -n libfactory-gftables
 %_datadir/factory/
 
-%files -n libpolys%version
-%_libdir/libpolys-%version.so
+%files -n libpolys%shortver
+%_libdir/libpolys-%shortver.so
 
 %files -n libpolys-devel
 %_bindir/libpolys-config
@@ -509,6 +516,9 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1p3-alt1
+- New version Release-4-4-1p3.
+
 * Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt3
 - Removed surf-geometry from BRs.
 
