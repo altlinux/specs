@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libntirpc
-Version: 7.1
+Version: 7.2
 Release: alt1
 Summary: New Transport Independent RPC Library
 Group: System/Libraries
@@ -66,9 +66,6 @@ Development headers and auxiliary files for developing with %name.
 # tests/ contain sole rpcping binary which is not installed and isn't a test
 # (also having incorrect rpath).
 
-# Delete incorrectly built monitoring libraries (empty stubs).
-rm %buildroot%_libdir/libntirpcmonitoring.so*
-
 %files
 # NEWS and ChangeLog are very old and suggest to view git log.
 %doc AUTHORS COPYING THANKS README
@@ -80,6 +77,9 @@ rm %buildroot%_libdir/libntirpcmonitoring.so*
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Mon Sep 29 2025 Vitaly Chikunov <vt@altlinux.org> 7.2-alt1
+- Update to v7.2 (2025-09-23).
+
 * Sat Sep 06 2025 Vitaly Chikunov <vt@altlinux.org> 7.1-alt1
 - Update to v7.1 (2025-09-02).
 
