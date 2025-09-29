@@ -2,7 +2,7 @@
 %global import_path github.com/OJ/gobuster/v3
 
 Name: gobuster
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 Summary: Directory/File, DNS and VHost busting tool written in Go.
 License: Apache-2.0
@@ -49,6 +49,9 @@ rm -rf -- %buildroot%go_root
 %_bindir/*
 
 %changelog
+* Mon Sep 29 2025 Pavel Shilov <zerospirit@altlinux.org> 3.8.2-alt1
+- 3.8.1 -> 3.8.2
+
 * Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 3.8.1-alt1
 - 3.8.0 -> 3.8.1
 
