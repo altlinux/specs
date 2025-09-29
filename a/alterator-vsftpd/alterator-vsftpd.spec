@@ -1,19 +1,18 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-vsftpd
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
-
-BuildArch:	noarch
+BuildArch: noarch
 
 Source:%name-%version.tar
 
 Summary: alterator module for vsftpd configuration
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.6-alt4 alterator-sh-functions >= 0.13-alt2 libshell vsftpd
+Requires: alterator >= 4.6-alt4 alterator-sh-functions >= 0.13-alt2 libshell
+Requires: vsftpd >= 3.0.3-alt3
 Requires: alterator-l10n >= 1.1-alt4
 Conflicts: alterator-fbi < 5.25-alt9
 Conflicts: ahttpd < 3.2-alt3
@@ -41,6 +40,9 @@ alterator module for vsftpd configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 0.10.2-alt1
+- Fix for compatiblity with vsftpd >= 3.0.3-alt3.
+
 * Wed Oct 29 2014 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1
 - Disable UI for local users setting.
 
