@@ -3,7 +3,7 @@
 Name: proxmox-i18n
 Summary: Internationalization support for Proxmox
 Version: 3.6.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Internationalization
 Url: https://www.proxmox.com
@@ -45,6 +45,13 @@ Group: System/Internationalization
 %description -n pdm-i18n
 %summary.
 
+%package -n pve-yew-mobile-i18n
+Summary: Internationalization support for Proxmox Virtual Environment (yew PWA)
+Group: System/Internationalization
+
+%description -n pve-yew-mobile-i18n
+%summary.
+
 %prep
 %setup
 %patch -p1
@@ -65,7 +72,13 @@ Group: System/Internationalization
 %files -n pdm-i18n
 %_datadir/pdm-i18n
 
+%files -n pve-yew-mobile-i18n
+%_datadir/pve-yew-mobile-i18n
+
 %changelog
+* Sat Sep 27 2025 Sergey Konev <darisishe@altlinux.org> 3.6.0-alt2
+- Translations for PVE Mobile Web UI
+
 * Thu Sep 18 2025 Sergey Konev <darisishe@altlinux.org> 3.6.0-alt1
 - 3.6.0 (Closes: #56046)
 - Translations for PDM
