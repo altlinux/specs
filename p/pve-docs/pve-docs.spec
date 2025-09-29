@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: PVE Documentation
 Version: 9.0.8
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 BuildArch: noarch
-BuildRequires: asciidoc-a2x asciidoc-latex source-highlight xmlto librsvg-utils mailcap pve-common pve-doc-generator
+BuildRequires: asciidoc-a2x asciidoc-latex asciidoc source-highlight xmlto librsvg-utils mailcap pve-common pve-doc-generator
 BuildRequires: perl(MediaWiki/API.pm) perl(JSON.pm)
 BuildRequires: pve-manager
 BuildRequires: proxmox-widget-toolkit-dev
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Thu Sep 25 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.8-alt2
+- fix: correct resource paths, drop obsolete links (ALT #56110)
+
 * Thu Aug 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.8-alt1
 - remove references to missing chapters (Ceph repos, ISO installer)
 

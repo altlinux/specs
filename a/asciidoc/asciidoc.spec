@@ -2,7 +2,7 @@
 %define docdir %_docdir/%name-%version
 
 Name: asciidoc
-Version: 10.2.0
+Version: 10.2.1
 Release: alt1
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
@@ -15,7 +15,6 @@ BuildArch: noarch
 
 # Source-url: https://github.com/asciidoc-py/asciidoc-py/releases/download/%version/asciidoc-%version.tar.gz
 Source: %name-%version.tar
-Patch1: asciidoc-table-separator.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildRequires: python3-devel python3-module-pip python3-module-setuptools python3-module-wheel
@@ -74,7 +73,6 @@ This package contains AsciiDoc documentation and examples.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %autoreconf
@@ -121,6 +119,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %exclude %docdir/README.md
 
 %changelog
+* Fri Sep 26 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 10.2.1-alt1
+- 10.2.1 
+
 * Tue Feb 06 2024 Alexey Shabalin <shaba@altlinux.org> 10.2.0-alt1
 - 10.2.0
 - fix invalid escape sequence (ALT#49310)
