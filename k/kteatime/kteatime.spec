@@ -1,7 +1,7 @@
 %define rname kteatime
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -20,7 +20,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kcolorscheme-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-knotifyconfig-devel kf6-ktextwidgets-devel
-BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-sonnet-devel
+BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-sonnet-devel kf6-kstatusnotifieritem-devel
 
 %description
 Handy timer for steeping tea.
@@ -46,6 +46,9 @@ Handy timer for steeping tea.
 
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

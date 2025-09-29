@@ -2,7 +2,7 @@
 %def_disable tunepimp
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -17,8 +17,7 @@ Obsoletes: kde5-juk < %EVR
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel
-BuildRequires: qt6-phonon-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
 BuildRequires: libssl-devel libtag-devel
 BuildRequires: kf6-kcrash-devel kf6-kdoctools-devel kf6-kglobalaccel-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kio-devel kf6-knotifications-devel kf6-ktextwidgets-devel kf6-kwallet-devel kf6-kwindowsystem-devel
@@ -56,6 +55,9 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

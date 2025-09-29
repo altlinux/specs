@@ -4,7 +4,7 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -24,6 +24,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: libvncserver-devel
 BuildRequires: libxcbutil-image-devel libXdamage-devel libXext-devel libXtst-devel
 BuildRequires: libgbm-devel libepoxy-devel
+BuildRequires: liblzo2-devel libjpeg-devel libpng-devel libgcrypt-devel libgnutls-devel libsystemd-devel
 BuildRequires: pipewire-libs-devel plasma6-kpipewire-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel  kf6-kdnssd-devel
@@ -97,6 +98,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

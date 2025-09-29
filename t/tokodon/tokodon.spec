@@ -1,7 +1,7 @@
 %define rname tokodon
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -26,6 +26,7 @@ BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel qt6-webs
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel qt6-webview-devel
 %endif
+BuildRequires: qcoro6-devel
 BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kirigami-addons-devel kf6-kirigami-devel
 BuildRequires: kf6-knotifications-devel kf6-qqc2-desktop-style-devel kf6-purpose-devel
 BuildRequires: kf6-kiconthemes-devel
@@ -55,6 +56,9 @@ A modern Mastodon client.
 %_datadir/metainfo/*tokodon*.xml
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

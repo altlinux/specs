@@ -1,7 +1,7 @@
 %define rname kde-inotify-survey
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init man
 
@@ -51,6 +51,9 @@ Sporting a kded module to tell you when things are getting dicey and a CLI tool 
 
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

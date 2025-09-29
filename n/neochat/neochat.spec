@@ -1,8 +1,8 @@
 %define rname neochat
 
 Name: %rname
-Version: 25.04.3
-Release: alt2
+Version: 25.08.1
+Release: alt1
 %K6init
 
 Group: Networking/Chat
@@ -16,6 +16,7 @@ Requires: kf6-kirigami kf6-purpose kf6-kquickcharts kf6-kconfig
 Requires: libkf6prison libkf6prisonscanner
 Requires: kf6-kirigami-addons
 Requires: kde6-kquickimageeditor
+Requires: kunifiedpush
 
 Source: %rname-%version.tar
 
@@ -25,7 +26,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: libquotient-qt6-devel libolm-devel
 BuildRequires: cmark-devel cmark
 BuildRequires: qcoro6-devel libqtkeychain-qt6-devel
-BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-location-devel
+BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-location-devel qt6-speech-devel
 # qt6-positioning-devel
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel qt6-webview-devel
@@ -36,6 +37,7 @@ BuildRequires: kf6-kitemmodels-devel kf6-kiconthemes-devel kf6-kstatusnotifierit
 BuildRequires: kf6-kdoctools-devel
 BuildRequires: kf6-syntax-highlighting-devel
 BuildRequires: kf6-kirigami-addons-devel kde6-kquickimageeditor-devel
+BuildRequires: kunifiedpush-devel
 
 %description
 NeoChat is a client for [Matrix](https://matrix.org), the decentralized
@@ -59,10 +61,14 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_K6icon/*/*/apps/*neochat*
 %_K6data/krunner/dbusplugins/*neochat*.desktop
 %_K6notif/*neochat*.notifyrc
+%_K6dbus_srv/*neochat*.service
 %_datadir/qlogging-categories6/*neochat*.*categories
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt2
 - fix requires (closes: 55474)
 

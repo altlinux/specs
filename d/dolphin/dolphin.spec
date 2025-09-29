@@ -12,7 +12,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -34,7 +34,7 @@ Patch4: alt-fix-unmounting-during-preview-generation.patch
 Patch5: upstream-8d7e600f.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel 
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel
 BuildRequires: libxapian-devel desktop-file-utils
 BuildRequires: packagekit-qt6-devel
 BuildRequires: kf6-kfilemetadata-devel
@@ -158,6 +158,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

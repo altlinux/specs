@@ -8,7 +8,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init no_altplace
 
@@ -27,7 +27,6 @@ Obsoletes: kde4-konsole < %EVR
 
 Source: %rname-%version.tar
 Source10: profiles.tar
-Patch1: kdebug-491562.patch
 #
 Patch11: alt-sover.patch
 Patch12: alt-def-font.patch
@@ -96,7 +95,6 @@ Obsoletes: libkonsoleapp1 < %EVR
 
 %prep
 %setup -q -n %rname-%version -a10
-%patch1 -p1
 #
 %patch11 -p1
 #patch12 -p1
@@ -142,13 +140,12 @@ __EOF__
 #%attr(2711,root,utempter) %_K6bin/konsole
 %_K6bin/konsole
 %_K6bin/konsoleprofile
-%_K6conf_bin/konsole_globalaccel
 %_K6plug/kf6/parts/*konsole*.so
 %_K6plug/konsoleplugins/
 %_K6xdgapp/org.kde.konsole.desktop
 %_datadir/konsole/
-%_K6conf_bin/*konsole*
-%_K6conf_up/*konsole*
+#%_K6conf_bin/*konsole*
+#%_K6conf_up/*konsole*
 %_K6data/kio/servicemenus/konsolerun.desktop
 #
 %_K6notif/*
@@ -166,6 +163,9 @@ __EOF__
 
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

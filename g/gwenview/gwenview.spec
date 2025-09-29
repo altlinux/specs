@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 Source1: add-ru-gwenview.po
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-phonon-devel qt6-declarative-devel qt6-svg-devel
+BuildRequires: extra-cmake-modules qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel libtiff-devel
 #BuildRequires: libcfitsio-devel
 BuildRequires: wayland-protocols qt6-wayland-devel
@@ -112,6 +112,9 @@ rm -f po/ru/gwenview.po.tmp
 
 
 %changelog
+* Mon Sep 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Thu Jul 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

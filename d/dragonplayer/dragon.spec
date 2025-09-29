@@ -1,7 +1,7 @@
 %define rname dragon
 
 Name: %{rname}player
-Version: 25.04.3
+Version: 25.08.1
 Release: alt1
 %K6init
 
@@ -10,6 +10,7 @@ Summary: Video Player for KDE
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Requires: kf6-kirigami
 Provides:  kde5-dragon = %EVR
 Obsoletes: kde5-dragon < %EVR
 Conflicts: dragon
@@ -17,13 +18,12 @@ Conflicts: dragon
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel
-BuildRequires: qt6-phonon-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools kf6-kdoctools-devel kf6-ki18n-devel
 BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kparts-devel
 BuildRequires: kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
-BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel
+BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel kf6-kirigami-devel
 
 %description
 %summary.
@@ -41,17 +41,16 @@ BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K6xdgconf/*rc
-%_K6bin/*
-%_K6plug/kf6/parts/*.so
-%_K6xdgapp/*.desktop
-%_K6icon/*/*/apps/*.*
-%_K6icon/*/*/actions/player-*.*
-%_K6data/kio/servicemenus/*dragon*.desktop
-%_K6data/solid/actions/*.desktop
+%_K6bin/*dragon*
+%_K6qml/org/kde/dragon/
+%_K6xdgapp/*dragon*.desktop
+%_K6icon/*/*/apps/*dragon*.*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
+- new version
+
 * Fri Jul 25 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
