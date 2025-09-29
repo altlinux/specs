@@ -1,7 +1,7 @@
 %define _name app.drey.Damask
 
 Name: damask
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary:  Automatically set wallpaper images from a variety of sources for Gnome
@@ -37,7 +37,7 @@ It currently supports setting the wallpaper image from the following sources:
 %install
 %meson_install
 
-%find_lang %name --with-gnome  --all-name
+%find_lang %name --with-gnome --all-name
 
 %check
 %meson_test
@@ -51,6 +51,9 @@ It currently supports setting the wallpaper image from the following sources:
 %doc *.md COPYING
 
 %changelog
+* Mon Sep 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.1-alt1
+- 0.3.0 -> 0.3.1
+
 * Sat Sep 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.0-alt1
 - 0.2.2 -> 0.3.0
 
