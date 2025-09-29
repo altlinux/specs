@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.18
+Release: alt0.19
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -60,6 +60,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Sep 29 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.19
+- Settings: used DE-specific application magazine (ALT #55289).
+
 * Sun Sep 28 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.18
 - Useful: added links to useful articles (ALT #55198).
 - Components: fixed freezing during download.
