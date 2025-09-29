@@ -1,6 +1,6 @@
 %global import_path github.com/goreleaser/goreleaser
 Name:    goreleaser
-Version: 1.18.2
+Version: 2.12.3
 Release: alt1
 
 Summary: Deliver Go binaries as fast and easily as possible
@@ -55,5 +55,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Sep 29 2025 Mikhail Gordeev <obirvalger@altlinux.org> 2.12.3-alt1
+- new version 2.12.3
+
 * Mon May 15 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.2-alt1
 - Initial build for Sisyphus
