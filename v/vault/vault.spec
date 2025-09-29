@@ -6,7 +6,7 @@
 
 Name:    vault
 Version: 1.13.12
-Release: alt7
+Release: alt8
 Epoch:   1
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
@@ -21,6 +21,10 @@ Patch3: vault-1.13.12-alt-fix-CVE-2024-2048.patch
 Patch4: vault-1.13.12-alt-fix-CVE-2024-8185.patch
 Patch5: vault-1.13.12-alt-fix-CVE-2024-9180.patch
 Patch6: vault-1.13.12-alt-fix-CVE-2024-6468.patch
+Patch7: vault-1.13.12-alt-fix-CVE-2025-5999.patch
+Patch8: vault-1.13.12-alt-fix-CVE-2025-6000.patch
+Patch9: vault-1.13.12-alt-fix-CVE-2025-6004.patch
+Patch10: vault-1.13.12-alt-fix-CVE-2025-6010-6011.patch
 Source1: %name.hcl.example
 Source2: %name.service
 Source3: %name.init
@@ -47,6 +51,10 @@ BuildRequires: /proc
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 %if_without prebuild_webui
 ln -sf %nodejs_sitelib/node-sass ui/node_modules
@@ -114,6 +122,14 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Sep 14 2025 Nikolay Burykin <bne@altlinux.org> 1:1.13.12-alt8
+- Security fixes:
+  + CVE-2025-5999
+  + CVE-2025-6000
+  + CVE-2025-6004
+  + CVE-2025-6010
+  + CVE-2025-6011
+
 * Mon Jun 30 2025 Alexander Danilov <admsasha@altlinux.org> 1:1.13.12-alt7
 - Revert to 1.13.12
 
