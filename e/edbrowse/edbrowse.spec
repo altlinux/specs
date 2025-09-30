@@ -1,6 +1,6 @@
 Name: edbrowse
 Version: 3.8.12
-Release: alt1
+Release: alt2
 
 Summary: ed-alike webbrowser written in C
 License: GPL-1.0+
@@ -65,6 +65,8 @@ edbrowse.
 %prep
 %setup
 %patch0 -p1
+sed -i -e 's|/usr/share/doc/edbrowse/usersguide.html|/usr/share/doc/edbrowse-doc-%version/usersguide.html|g' \
+  doc/man-edbrowse-debian.1
 
 %build
 %make
@@ -72,8 +74,7 @@ edbrowse.
 
 %install
 install -Dm755 src/%name %buildroot%_bindir/%name
-mkdir -p %buildroot/%_man1dir
-mv doc/man-edbrowse-debian.1 %buildroot/%_man1dir/%name.1
+install -Dm644 doc/man-edbrowse-debian.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc README CHANGES
@@ -87,6 +88,9 @@ mv doc/man-edbrowse-debian.1 %buildroot/%_man1dir/%name.1
 %doc doc/*.ebrc
 
 %changelog
+* Tue Sep 30 2025 Nikolay Burykin <bne@altlinux.org> 3.8.12-alt2
+- Fix path to usersguide.html in man page (Closes: #55089)
+
 * Tue Jul 01 2025 Nikolay Burykin <bne@altlinux.org> 3.8.12-alt1
 - 3.8.12
 
