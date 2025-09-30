@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Imager
-Version: 1.026
+Version: 1.028
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -13,6 +13,7 @@ URL: http://imager.perl.org/
 
 Source: Imager-%version.tar
 Patch: perl-Imager-1.026-freetype-include.patch
+Patch1: perl-Imager-1.028-tiff-warn-about-unknown-tags.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: git-core
@@ -31,7 +32,6 @@ BuildRequires: perl-PerlIO-utf8_strict
 BuildRequires: perl-Pod-Spell
 BuildRequires: perl-Test-Pod-Coverage
 BuildRequires: perl-bignum
-BuildRequires: t1lib-devel
 BuildRequires: xorg-rgb
 
 %description
@@ -49,21 +49,31 @@ Imager - модуль  Perl для  создания  и работы с  гра
 
 %prep
 %setup  -n Imager-%version
-%patch -p1
+%autopatch -p1
+# xt/x91manifest.t failed
+echo .perl.req >> MANIFEST.SKIP
 
 %build
-IM_SUPPRESS_PROM=1 %perl_vendor_build
+IM_SUPPRESS_PROM=1 \
+  %perl_vendor_build \
+  --disable=FT1 \
+  --disable=T1 \
+  #
 
 %install
 %perl_vendor_install
 
 %files
 %doc Changes README Changes.old adobe.txt
+%exclude %perl_vendor_archlib/Imager/Font/Type1.pm
 %perl_vendor_archlib/Imager*
 %perl_vendor_autolib/Imager
 %exclude /.perl.req
 
 %changelog
+* Tue Sep 30 2025 Constantin Sunzow <protvin@altlinux.org> 1.028-alt1
+- New version.
+
 * Tue Mar 25 2025 Constantin Sunzow <protvin@altlinux.org> 1.026-alt1
 - New version.
 
