@@ -1,7 +1,7 @@
 %define gemname github-linguist
 
 Name: gem-github-linguist
-Version: 9.2.0
+Version: 9.3.0
 Release: alt1
 Summary: GitHub Language detection
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: gem(rugged)
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
-Provides: gem(github-linguist) = 9.2.0
+Provides: gem(github-linguist) = %version
 
 %description
 We use this library at GitHub to detect blob languages, highlight code, ignore
@@ -33,7 +33,7 @@ graphs.
 Summary: GitHub Language detection
 Group: Other
 
-Requires: gem(github-linguist) = 9.2.0
+Requires: gem(github-linguist) = %version
 
 %description  -n github-linguist
 We use this library at GitHub to detect blob languages, highlight code, ignore
@@ -44,7 +44,7 @@ graphs.
 Summary: Headers for gem-github-linguist
 Group: Development/Ruby
 
-Requires: gem(github-linguist) = 9.2.0
+Requires: gem(github-linguist) = %version
 
 %description devel
 This package contains development files for gem-github-linguist.
@@ -53,7 +53,7 @@ This package contains development files for gem-github-linguist.
 Summary: Docs for gem-github-linguist
 Group: Development/Documentation
 
-Requires: gem(github-linguist) = 9.2.0
+Requires: gem(github-linguist) = %version
 
 %description doc
 This package contains docs for gem-github-linguist.
@@ -86,6 +86,9 @@ install -Dm 644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/linguist/
 %_bindir/github-linguist
 
 %changelog
+* Tue Sep 30 2025 Andrey Kovalev <ded@altlinux.org> 9.3.0-alt1
+- Update to uptream version 9.3.0.
+
 * Tue Jul 29 2025 Andrey Kovalev <ded@altlinux.org> 9.2.0-alt1
 - Update to uptream version 9.2.0.
 
