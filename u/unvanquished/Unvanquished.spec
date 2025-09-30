@@ -1,5 +1,5 @@
 Name: unvanquished
-Version: 0.55.4
+Version: 0.55.5
 Release: alt1
 
 Summary: An FPS/RTS hybrid game powered by the Daemon engine (a combination of ioq3 and XreaL)
@@ -14,9 +14,9 @@ Source1: daemon.tar
 Source2: libs.tar
 
 # https://dl.unvanquished.net/deps/
-Source3: linux-amd64-default_10.tar
-Source4: linux-arm64-default_10.tar
-Source5: linux-i686-default_10.tar
+Source3: linux-amd64-default_11.tar
+Source4: linux-arm64-default_11.tar
+Source5: linux-i686-default_11.tar
 
 ExclusiveArch: x86_64 i586 aarch64
 
@@ -148,6 +148,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %doc *.md *.txt
 
 %changelog
+* Tue Sep 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.5-alt1
+- 0.55.4 -> 0.55.5
+
 * Tue May 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.4-alt1
 - 0.55.3 -> 0.55.4
 
