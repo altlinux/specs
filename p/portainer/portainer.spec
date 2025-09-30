@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.33.1
+Version: 2.33.2
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -9,7 +9,8 @@ Group: System/Configuration/Other
 Url: https://www.portainer.io
 Vcs: https://github.com/portainer/portainer
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 # go mod vendor
 Source1: vendor.tar
 #Source2-url: https://github.com/portainer/portainer/releases/download/%version/portainer-%{version}-linux-amd64.tar.gz
@@ -31,7 +32,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.4"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.6"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -61,7 +62,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=83322328400271e634d4a48274c499da1d0e8710' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=52ea23ef56cb25eede29c995f7d971d011eb24d0' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -108,6 +109,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.2-alt1
+- New LTS version 2.33.2 (Fixes: CVE-2025-4676, CVE-2025-47907).
+
 * Wed Aug 27 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.1-alt1
 - New LTS version 2.33.1 (Fixes: CVE-2025-22871, CVE-2025-22868,
   CVE-2025-22869, CVE-2025-4673, CVE-2024-45341, CVE-2024-45336,

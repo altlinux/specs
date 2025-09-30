@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.33.1
+Version: 2.33.2
 Release: alt1
 
 Summary: Agent for portainer
@@ -9,7 +9,8 @@ Group: System/Configuration/Other
 Url: https://www.portainer.io
 Vcs: https://github.com/portainer/agent
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 # go mod vendor
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
@@ -40,6 +41,9 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.2-alt1
+- New LTS version 2.33.2.
+
 * Wed Aug 27 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.1-alt1
 - New LTS version 2.33.1 (Fixes: GHSA-2464-8j7c-4cjm).
 
