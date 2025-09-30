@@ -10,37 +10,40 @@
 
 Name: shadps4
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
 Group: Emulators
 
 Url: http://%name.net/
+Vcs: https://github.com/%name-emu/shadPS4
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
 # https://github.com/%name-emu/shadPS4/archive/%version/shadPS4-v.%version.tar.gz
 Source0: shadPS4-v.%version.tar
-# https://github.com/shadps4-emu/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
+# https://github.com/%name-emu/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source1: sirit-%sirit_commit.tar
-# https://github.com/shadps4-emu/tracy/archive/%tracy_commit/tracy-%tracy_commit.tar.gz
+# https://github.com/%name-emu/tracy/archive/%tracy_commit/tracy-%tracy_commit.tar.gz
 Source2: tracy-%tracy_commit.tar
 # https://github.com/zyantific/zydis/archive/%zydis_commit/zydis-%zydis_commit.tar.gz
 Source3: zydis-%zydis_commit.tar
-# https://github.com/shadps4-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
+# https://github.com/%name-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
 Source4: ext-imgui-%dear_imgui_commit.tar
-# https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
+# https://github.com/%name-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source5: ext-discord-rpc-%discord_rpc_commit.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
 Source6: Vulkan-Headers-%vulkan_headers_version.tar
-# https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
+# https://github.com/%name-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
 Source7: ext-LibAtrac9-%libatrac9_commit.tar
-# https://github.com/shadps4-emu/ext-libusb/archive/c4d237a5803900b78dcc2961d057fcc8a678d3fd/ext-libusb-c4d237a5803900b78dcc2961d057fcc8a678d3fd.tar.gz
+# https://github.com/%name-emu/ext-libusb/archive/%libusb_commit/ext-libusb-%libusb_commit.tar.gz
 Source8: ext-libusb-%libusb_commit.tar
-# https://github.com/shadps4-emu/ext-hwinfo/archive/%hwinfo_commit/ext-hwinfo-%hwinfo_commit.tar.gz
+# https://github.com/%name-emu/ext-hwinfo/archive/%hwinfo_commit/ext-hwinfo-%hwinfo_commit.tar.gz
 Source9: ext-hwinfo-%hwinfo_commit.tar
+
+Patch0: %name-0.11.0-fmt-12-alt.patch
 
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
@@ -80,6 +83,7 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
 %setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
+%patch0 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
@@ -127,6 +131,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libexecdir/%name
 
 %changelog
+* Tue Sep 30 2025 Nazarov Denis <nenderus@altlinux.org> 0.11.0-alt1.1
+- Fix build with fmt 12
+
 * Thu Sep 18 2025 Nazarov Denis <nenderus@altlinux.org> 0.11.0-alt1
 - Version 0.11.0
 
