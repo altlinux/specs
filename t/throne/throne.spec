@@ -2,8 +2,8 @@
 %define _cmake__builddir build
 
 Name: throne
-Version: 1.0.2
-Release: alt3
+Version: 1.0.6
+Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
@@ -74,6 +74,9 @@ mv %name-vendors-%version/sing-geosite/rule-set/*.srs sing-box/rule-set
 mv %name-vendors-%version/sing-geoip/*.db sing-box/ 
 mv %name-vendors-%version/sing-geoip/rule-set/*.srs sing-box/rule-set 
 
+
+mv %name-vendors-%version/srslist.h ./
+
 rm -rf %name-vendors-%version
 
 %build
@@ -123,6 +126,9 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue Sep 30 2025 Andrey Kovalev <ded@altlinux.org> 1.0.6-alt1
+- Updated to upstream version 1.0.6 (closes: #56192).
+
 * Tue Sep 02 2025 Andrey Kovalev <ded@altlinux.org> 1.0.2-alt3
 - Fixed runtime failure by reverting a faulty commit and pre-building protorpc 
 stubs (closes: #55737).
