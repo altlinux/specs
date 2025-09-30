@@ -2,11 +2,11 @@
 
 Name:           miniplanets
 Version:        rev0.4
-Release:        alt1
-Summary:        Doom styled first person shooter game
+Release:        alt2
+Summary:        Minimalistic platformer for Sega Megadrive/Genesis
 Group: Games/Other
 
-License:        BSD
+License:        Zlib
 URL:            https://sik.itch.io/miniplanets
 Vcs:		https://github.com/sikthehedgehog/miniplanets.git
 Source0:        %name-%version.tar
@@ -28,12 +28,18 @@ back to normal.
 
 %install
 
-mkdir -p %buildroot%_romsdir/smd
-install -p -m 0644 "Miniplanets REMIX Ver (REV04).bin" %buildroot%_romsdir/smd/%name.md
+mkdir -p %buildroot%_romsdir/{genesis,megadrive}
+install -p -m 0644 "Miniplanets REMIX Ver (REV04).bin" %buildroot%_romsdir/genesis/%name.gen
+install -p -m 0644 "Miniplanets REMIX Ver (REV04).bin" %buildroot%_romsdir/megadrive/%name.smd
 
 %files
-%_romsdir/smd/%name.md
+%_romsdir/megadrive/%name.smd
+%_romsdir/genesis/%name.gen
 
 %changelog
+* Tue Sep 30 2025 Artyom Bystrov <arbars@altlinux.org> rev0.4-alt2
+- Change description and license
+- Change paths for roms for compatibility with emulationstation-batocera
+
 * Tue Feb  4 2025 Artyom Bystrov <arbars@altlinux.org> rev0.4-alt1
 - Initial build for Sisyphus
