@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: resticprofile
-Version: 0.31.0
-Release: alt2
+Version: 0.32.0
+Release: alt1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
 Group: Archiving/Backup
@@ -66,6 +66,9 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Sep 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.32.0-alt1
+- Update to v0.32.0 (2025-09-25).
+
 * Wed Jul 30 2025 Andrew Guschin <guschin@altlinux.org> 0.31.0-alt2
 - NMU: fix FTBFS on riscv64 (-buildmode=pie requires CGO here).
 
