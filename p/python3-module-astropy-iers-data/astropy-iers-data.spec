@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2025.9.22.0.37.25
+Version: 0.2025.9.29.0.35.48
 Release: alt1
 
 Summary: IERS Earth Rotation and Leap Second tables for the astropy core package
@@ -46,6 +46,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 30 2025 Grigory Ustinov <grenka@altlinux.org> 0.2025.9.29.0.35.48-alt1
+- Automatically updated to 0.2025.9.29.0.35.48.
+
 * Tue Sep 23 2025 Grigory Ustinov <grenka@altlinux.org> 0.2025.9.22.0.37.25-alt1
 - Automatically updated to 0.2025.9.22.0.37.25.
 
