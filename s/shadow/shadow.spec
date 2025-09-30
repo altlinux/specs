@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.18.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -483,6 +483,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Tue Sep 30 2025 Mikhail Efremov <sem@altlinux.org> 1:4.18.0-alt2
+- useradd: Fixed variable initialization.
+- newgrp: Fixed build without LTO.
+
 * Thu Jun 26 2025 Mikhail Efremov <sem@altlinux.org> 1:4.18.0-alt1
 - useradd,usermod: Use fields.h for valid_field().
 - lib/chkname.c: Use fields.h for valid_field().
