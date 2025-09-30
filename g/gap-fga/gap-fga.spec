@@ -1,14 +1,18 @@
 %define repo fga
 
 Name: gap-fga
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: GAP: Free Group Algorithms
 License: GPL-2.0-or-later
 Group: Sciences/Mathematics
-Url: http://www.icm.tu-bs.de/ag_algebra/software/sievers/FGA/
+Url: https://gap-packages.github.io/fga/
+VCS: https://github.com/gap-packages/fga
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/FGA-%version.tar.bz2
+# Source-url: https://github.com/gap-packages/fga/archive/v%version/fga-%version.tar.gz
+Source: fga-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -29,15 +33,20 @@ write any such automorphism as word in these generators.
 
 %prep
 %setup -n fga
+%patch -p1
 
 %build
 %install
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo/
-%gap_sitelib/%repo/*
+%gap_sitelib/%repo/
 
 %changelog
+* Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+- Updated url tag.
+- Added VCS tag.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.0-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

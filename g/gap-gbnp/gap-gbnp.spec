@@ -2,19 +2,23 @@
 
 Name: gap-gbnp
 Summary: GAP: computing Grobner bases of noncommutative polynomials
-Version: 1.0.5
+Version: 1.1.0
 Release: alt1
 License: LGPL-2.1+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/gbnp/
+VCS: https://github.com/gap-packages/gbnp
 
-Source: https://github.com/gap-packages/gbnp/archive/v%version/GBNP-%version.tar.gz
+# Source-url: https://github.com/gap-packages/gbnp/archive/v%version/GBNP-%version.tar.gz
+Source: GBNP-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
-BuildRequires: fdupes
 BuildRequires: rpm-macros-gap
-Requires: gap >= 4.4
-Requires: gap-gapdoc >= 0.99
+# PackageInfo.g
+Requires: gap >= 4.8
+Requires: gap-gapdoc >= 1.5
 
 %description
 This package enhances GAP4 to support computing Grobner bases of
@@ -28,18 +32,20 @@ of the word problem for finitely presented semigroups.
 
 %prep
 %setup -n gbnp
+%patch -p1
 
 %build
 %install
-find . -type f -name .depend -delete
 %gappkg_simple_install
-fdupes %buildroot%_prefix
 
 %files -f %name.files
-%dir %gap_sitelib/%repo/
-%gap_sitelib/%repo/*
+%gap_sitelib/%repo/
 
 %changelog
+* Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+- Added VCS tag.
+
 * Wed May 18 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.5-alt1
 - 1.0.5.
 - Updated url tag.
