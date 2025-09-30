@@ -5,7 +5,7 @@
 Name: cmark
 Version: 0.31.1
 %define soversion %version
-Release: alt1
+Release: alt2
 Summary: CommonMark parsing and rendering
 License: BSD-2-Clause AND MIT
 Group: Text tools
@@ -28,13 +28,13 @@ CommonMark, or an XML representation of the AST.  It also provides a
 command-line program (cmark) for parsing and rendering CommonMark
 documents.
 
-%package devel
+%package -n libcmark-devel
 Summary: Development files for cmark
 Group: Development/C++
-Provides: libcmark-devel = %EVR
+Provides: cmark-devel = %EVR
 Requires: libcmark%soversion = %EVR
 
-%description devel
+%description -n libcmark-devel
 This package provides the development files for cmark.
 
 %package -n libcmark%soversion
@@ -72,7 +72,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc COPYING
 %_libdir/libcmark.so.%soversion
 
-%files devel
+%files -n libcmark-devel
 %doc COPYING README.md
 %_includedir/*
 %_libdir/libcmark.so
@@ -81,6 +81,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Tue Sep 30 2025 Andrey Kovalev <ded@altlinux.org> 0.31.1-alt2
+- Renamed cmark-devel to libcmark-devel (closes: #47223).
+
 * Thu Aug 08 2024 Andrey Kovalev <ded@altlinux.org> 0.31.1-alt1
 - Updated to upstream version 0.31.1.
 
