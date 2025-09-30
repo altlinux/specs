@@ -2,7 +2,7 @@
 
 Name: zip
 Version: 3.0
-Release: alt4
+Release: alt5
 
 Epoch: 30000000
 
@@ -36,6 +36,7 @@ Patch15: fedora-zip-3.0-format-security.patch
 Patch16: fedora-zip-3.0-man-strip-extra.patch
 Patch17: fedora-zip-gnu89-build.patch
 Patch18: fedora-zipnote.patch
+Patch19: debian-buffer-overflow-cve-2018-13410.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -85,6 +86,7 @@ subst \
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %ifarch %ix86
 sed -i 's/-o zip$E/-no-pie &/' unix/Makefile
@@ -109,6 +111,9 @@ make -f unix/Makefile prefix=$RPM_BUILD_ROOT%{_prefix} \
 %_man1dir/*
 
 %changelog
+* Tue Sep 30 2025 Alexander Danilov <admsasha@altlinux.org> 30000000:3.0-alt5
+- Applied debian patch (fixed CVE-2018-13410).
+
 * Thu Feb 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 30000000:3.0-alt4
 - fix FTBFS with gcc14
 - dozen patches from Debian and Fedora
