@@ -11,7 +11,7 @@
 %define _udevdir /lib/udev
 
 Name: mlnx-tools
-Version: 2510.0.8
+Version: 2510.0.9
 Release: alt1
 
 Summary: Mellanox userland tools and scripts
@@ -44,18 +44,17 @@ The package provides python3 bindings for %name.
 %prep
 %setup -n %name-%version
 %autopatch -p1
-sed -i 's|/usr/share/mlnx-tools/python|%python3_sitelibdir/%name|g' \
-    Makefile \
-    python/Python/dcbnetlink.py \
-    python/mlnx_qos
-sed -e 's|/usr/bin/python|%__python3|;' \
-    -e 's|/usr/bin/env python3|%__python3|;' \
-    -e 's|/usr/bin/env python|%__python3|;' \
+sed -e 's|/usr/share/mlnx-tools/python|%python3_sitelibdir/%name|g' \
+    -i Makefile \
+    -i python/Python/dcbnetlink.py \
+    -i python/mlnx_qos
+sed -e 's|/usr/bin/env python3|%__python3|;' \
     -i $(find ./python -type f -print) \
     -i tsbin/mlnx-sf \
     -i tsbin/doca-hugepages
-sed -i 's|openvswitch-switch|openvswitch|g' \
-    tsbin/mlnx_bf_configure
+sed -e 's|openvswitch-switch|openvswitch|g;' \
+    -e 's|/usr/lib/systemd/system|%_unitdir|;' \
+    -i tsbin/mlnx_bf_configure
 
 %install
 %makeinstall_std
@@ -77,6 +76,9 @@ chmod +x %buildroot%python3_sitelibdir/%name/dcbnetlink.py
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 2510.0.9-alt1
+- New version 2510.0.9.
+
 * Fri Sep 19 2025 Leontiy Volodin <lvol@altlinux.org> 2510.0.8-alt1
 - New version 2510.0.8.
 
