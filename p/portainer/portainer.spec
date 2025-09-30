@@ -1,6 +1,6 @@
 Name: portainer
 Version: 2.33.2
-Release: alt1
+Release: alt2
 
 Summary: A lightweight docker management UI
 
@@ -22,7 +22,7 @@ Source5: portainer.png
 Source6: portainer.service
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 BuildRequires(pre): golang
 BuildRequires: rpm-build-golang /proc
@@ -45,7 +45,8 @@ Requires: docker-compose-v2
 
 %prep
 %setup -a1
-%ifarch x86_64
+# use portainer/public from x86_64 release on loongarch64 and riscv64
+%ifarch x86_64 loongarch64 riscv64
     tar -xf %SOURCE2
 %endif
 %ifarch aarch64
@@ -55,7 +56,7 @@ Requires: docker-compose-v2
 
 %build
 %if_enabled genbin
-go build \
+go build -x \
    -mod=vendor \
    -buildmode=pie \
    -trimpath \
@@ -65,6 +66,11 @@ go build \
    -X 'github.com/portainer/portainer/pkg/build.GitCommit=52ea23ef56cb25eede29c995f7d971d011eb24d0' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
+%else
+%ifarch loongarch64 riscv64
+echo >&2 "Using prebuild binearies is not supported on this architecture"
+exit 1
+%endif
 %endif
 
 %install
@@ -109,6 +115,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Tue Sep 30 2025 Ivan A. Melnikov <iv@altlinux.org> 2.33.2-alt2
+- NMU: Build on loongarch64 and riscv64.
+
 * Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.2-alt1
 - New LTS version 2.33.2 (Fixes: CVE-2025-4676, CVE-2025-47907).
 
