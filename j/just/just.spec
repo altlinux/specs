@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.42.4
+Version: 1.43.0
 Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
@@ -81,6 +81,9 @@ just version | grep -Fx '%name %version'
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Sun Sep 28 2025 Vitaly Chikunov <vt@altlinux.org> 1.43.0-alt1
+- Update to 1.43.0 (2025-09-27).
+
 * Sat Jul 26 2025 Vitaly Chikunov <vt@altlinux.org> 1.42.4-alt1
 - Update to 1.42.4 (2025-07-24).
 
