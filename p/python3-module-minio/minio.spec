@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.16
+Version: 7.2.18
 Release: alt1
 
 Summary: MinIO Client SDK for Python
@@ -51,6 +51,9 @@ Object Storage or other Amazon S3 compatible service.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 7.2.18-alt1
+- Updated to 7.2.18.
+
 * Wed Jul 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 7.2.16-alt1
 - Updated to 7.2.16.
 
