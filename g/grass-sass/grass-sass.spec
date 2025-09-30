@@ -2,7 +2,7 @@
 
 Name: grass-sass
 Version: 0.13.4
-Release: alt1
+Release: alt2
 Summary: Sass compiler written purely in Rust
 License: MIT
 Group: Text tools
@@ -10,6 +10,9 @@ Url: https://github.com/connorskees/grass
 Source: https://github.com/connorskees/grass/archive/refs/tags/0.13.4.tar.gz#/%oname-%version.tar.gz
 Source1: vendor.tar
 ExcludeArch: i586 armh
+
+# Binary name collision
+Conflicts: grass
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
@@ -56,5 +59,8 @@ EOF
 %_bindir/*
 
 %changelog
+* Tue Sep 30 2025 Sergey Konev <darisishe@altlinux.org> 0.13.4-alt2
+- NMU: Add 'Conflicts: grass' (Closes: #55046)
+
 * Sun Mar 16 2025 Ildar Mulyukov <ildar@altlinux.ru> 0.13.4-alt1
 - Initial build for Sisyphus
