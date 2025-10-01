@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.20
+Version: 11.0.0
 Release: alt1
 
 Summary: IT and asset management software
@@ -36,17 +36,6 @@ Group: Networking/Other
 Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
-
-%package php8.1
-Summary: PHP8.1 dependencies for %name
-Group: Networking/Other
-Requires: %name = %version-%release
-Requires: php8.1
-Requires: php8.1-curl, php8.1-fileinfo, php8.1-gd2, php8.1-json, php8.1-mbstring, php8.1-mysqlnd-mysqli, php8.1-session, php8.1-zlib, php8.1-intl
-Requires: php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.1-xmlreader, php8.1-zip
-
-%description php8.1
-php8.1 dependencies for %name
 
 %package php8.2
 Summary: PHP8.2 dependencies for %name
@@ -137,7 +126,6 @@ fi
 %dir %attr(2770,root,%webserver_group) %installdir/files
 %dir %attr(2770,root,%webserver_group) %installdir/files/_cache
 %dir %attr(2770,root,%webserver_group) %installdir/files/_cron
-%dir %attr(2770,root,%webserver_group) %installdir/files/_dumps
 %dir %attr(2770,root,%webserver_group) %installdir/files/_graphs
 %dir %attr(2770,root,%webserver_group) %installdir/files/_inventories
 %dir %attr(2770,root,%webserver_group) %installdir/files/_locales
@@ -153,23 +141,20 @@ fi
 %installdir/ajax
 %installdir/bin
 %installdir/css
-%installdir/css_compiled
+%installdir/dependency_injection
 %installdir/front
 %installdir/inc
 %installdir/install
-%installdir/js
 %installdir/lib
 %installdir/locales
-%installdir/pics
 %installdir/plugins
 %installdir/public
 %installdir/resources
-%installdir/sound
+%installdir/routes
 %installdir/src
 %installdir/templates
 %installdir/vendor
 %installdir/version
-%installdir/*.php
 %installdir/LICENSE
 %doc CHANGELOG.md
 %doc CONTRIBUTING.md
@@ -183,8 +168,6 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php8.1
-
 %files php8.2
 
 %files php8.3
@@ -192,6 +175,10 @@ fi
 %files php8.4
 
 %changelog
+* Wed Oct 01 2025 Pavel Zilke <zidex@altlinux.org> 11.0.0-alt1
+- New version 11.0.0
+- Deleted glpi-php8.1
+
 * Fri Sep 12 2025 Pavel Zilke <zidex@altlinux.org> 10.0.20-alt1
 - New version 10.0.20
 - Added glpi-php8.4 (ALT #55848)
