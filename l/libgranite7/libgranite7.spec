@@ -1,10 +1,10 @@
 %def_disable snapshot
-%def_disable docs
+%def_enable docs
 %def_enable check
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.6
+%define ver_major 7.7
 %define namespace Granite
 %define api_ver_major 7
 %define api_ver 7.0
@@ -28,7 +28,7 @@ Source: %_name-%version.tar
 %endif
 
 %define glib_ver 2.50
-%define gtk4_ver 4.4
+%define gtk4_ver 4.12
 %define vala_ver 0.40
 
 Requires: elementary-icon-theme >= 7.3
@@ -39,6 +39,7 @@ BuildRequires: vala-tools >= %vala_ver libgio-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: libgee0.8-devel gobject-introspection-devel
 BuildRequires: libgtk4-gir-devel libgee0.8-gir-devel
+BuildRequires: pkgconfig(shumate-1.0)
 %{?_enable_docs:BuildRequires: gtk-doc valadoc}
 
 %description
@@ -95,7 +96,7 @@ GObject introspection devel data for the Granite library.
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_docs:-Ddocumentation=true}
+%meson %{subst_enable_meson_bool docs documentation}
 %meson_build
 
 %install
@@ -131,6 +132,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 7.7.0-alt1
+- 7.7.0
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 7.6.0-alt1
 - 7.6.0
 
