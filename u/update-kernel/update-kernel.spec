@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.21
+Version: 1.22
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Oct 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.22-alt1
+- remove-old-kernels: Fix removing old kernels for x.y flavours.
+
 * Thu Sep 25 2025 Vitaly Chikunov <vt@altlinux.org> 1.21-alt1
 - remove-old-kernels: Remove flavours deleted from the repository (ALT#55977).
 - remove-old-kernels: Treat stable kernels as single flavour.
