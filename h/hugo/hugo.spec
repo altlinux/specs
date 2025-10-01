@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hugo
-Version: 0.145.0
+Version: 0.150.1
 Release: alt1
 
 Summary: Configurable static site generator
@@ -63,6 +63,9 @@ install -Dm 0644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Oct 01 2025 Egor Ignatov <egori@altlinux.org> 0.150.1-alt1
+- Update to v0.150.1 from upstream.
+
 * Sat Apr 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.145.0-alt1
 - Update to v0.145.0 from upstream.
 
