@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-server
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Volumes description for ALT Server distribution
@@ -30,6 +30,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Wed Oct 01 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.3-alt1
+- 10-vm-profile.sh: Round up the SWAP to 32 GB
+
 * Tue Jan 14 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.2-alt1
 - 10-vm-profile.sh: add nvme support
 
