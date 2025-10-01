@@ -1,9 +1,10 @@
-%define  snapshot  20250113
+%define  snapshot  20250827
 %define  addonsdir %python_sitelibdir/odoo/addons
 
 Name:    odoo
-Version: 18.0
+Version: 17.0
 Release: alt1.%snapshot
+Epoch:   1
 
 Summary: Odoo is a suite of web based open source business apps
 License: LGPL-3.0
@@ -17,7 +18,6 @@ Source2: odoo.init
 Source3: README.ALT
 
 Patch1: %name-alt-fix-openerp-import.patch
-Patch2: %name-werkzeug-3.1.patch
 
 BuildArch: noarch
 
@@ -71,7 +71,6 @@ http://www.openerp.com/ or  http://apps.openerp.com/
 %prep
 %setup -q -n %name
 %patch1 -p1
-%patch2 -p1
 cp %SOURCE3 .
 rm -f addons/hw_drivers/iot_handlers/drivers/PrinterDriver_W.py \
       addons/hw_drivers/iot_handlers/interfaces/PrinterInterface_W.py
@@ -144,6 +143,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Tue Sep 30 2025 Andrey Cherepanov <cas@altlinux.org> 1:17.0-alt1.20250827
+- New version on branch 17.0.
+
 * Wed Jan 15 2025 Andrey Cherepanov <cas@altlinux.org> 18.0-alt1.20250113
 - New version (ALT #49620).
 
