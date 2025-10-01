@@ -1,7 +1,7 @@
 %def_with tests
 
 Name: corectrl
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -78,6 +78,9 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Thu Sep 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
+- 1.5.2.
+
 * Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
 - 1.5.1.
 - qt5->qt6.
