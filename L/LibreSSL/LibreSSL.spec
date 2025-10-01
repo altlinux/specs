@@ -13,8 +13,8 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 4.1.0
-Release: alt2
+Version: 4.1.1
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -318,6 +318,9 @@ done
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Oct 01 2025 Ivan A. Melnikov <iv@altlinux.org> 4.1.1-alt1
+- Updated to 4.1.1 (Fixes: CVE-2025-9230).
+
 * Thu Sep 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.0-alt2
 - e2k build fix
 
