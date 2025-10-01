@@ -1,17 +1,20 @@
+%define rname isoimagewriter
 %define nameL org.kde.isoimagewriter
 
 Name: isoimagewriter
 Version: 25.08.1
-Release: alt1
+Release: alt2
 
+Group: Archiving/Cd burning
 Summary: Program to write hybrid ISO files onto USB disks
 License: GPL-3.0-or-later
-Group: Graphical desktop/KDE
-
 Url: https://apps.kde.org/ru/isoimagewriter
 Vcs: https://invent.kde.org/utilities/isoimagewriter
 
-Source: %name-%version.tar
+Provides: rosa-imagewriter = %version
+Obsoletes: rosa-imagewriter < 3
+
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
@@ -23,7 +26,7 @@ BuildRequires: kf6-solid-devel
 %summary
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
 %K6cmake
@@ -43,6 +46,9 @@ BuildRequires: kf6-solid-devel
 %_datadir/metainfo/%nameL.appdata.xml
 
 %changelog
+* Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt2
+- obsolete rosa-imagewriter
+
 * Fri Sep 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 25.08.1-alt1
 - 25.08.0 -> 25.08.1
 
