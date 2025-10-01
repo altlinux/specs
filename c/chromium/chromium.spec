@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        140.0.7339.207
+Version:        141.0.7390.54
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -77,8 +77,10 @@ Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
+Patch010: 0010-gentoo-stylesheet.patch
 
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch012: 0012-DEBIAN-rust-no-alloc-shim.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
@@ -90,7 +92,7 @@ Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
+# Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch029: 0029-DEBIAN-constexpr3.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
@@ -102,6 +104,7 @@ Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
 Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
+Patch046: 0046-DEBIAN-libcpp-headers.patch
 
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
@@ -119,7 +122,6 @@ Patch068: 0068-DEBIAN-adler1.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
 Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
-Patch075: 0075-FEDORA-chromium-rust-no-alloc-shim-is-unstable.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -651,6 +653,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Oct 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.54-alt1
+- New version (141.0.7390.54).
+
 * Wed Sep 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.207-alt1
 - New version (140.0.7339.207).
 - Fixes:
