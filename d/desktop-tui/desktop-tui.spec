@@ -3,7 +3,7 @@
 
 Name: desktop-tui
 Version: 0.3.1
-Release: alt1
+Release: alt2
 Summary: A desktop environment without graphics.
 License: MIT
 Group: Graphical desktop/Other
@@ -11,6 +11,8 @@ Url: https://github.com/Julien-cpsn/desktop-tui
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+# Remove when nix crate is updated
+Patch0: desktop-tui-0.3.1-alt-update-nix.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -23,6 +25,8 @@ A desktop environment without graphics (tmux-like).
 %prep
 %setup -a 1
 %autopatch -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/nix/.cargo-checksum.json
 
 %build
 mkdir -p .cargo
@@ -43,5 +47,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Oct 01 2025 Ilya Sorochan <k0tran@altlinux.org> 0.3.1-alt2
+- Add loongarch64 patch for nix crate.
+
 * Thu Sep 25 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.1-alt1
 - Initail build for Sisuphus.
