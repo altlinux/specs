@@ -1,22 +1,24 @@
 %filter_from_requires /perl.DB[DI]/d
 %filter_from_requires /perl.SNMP.pm/d
+%ifarch %ix86
+%filter_from_requires /perl.Log.Syslog.Fast.pm/d
+%endif
 
 Name: snmptt
-Version: 1.4.2
+Version: 1.5
 Release: alt1
 Summary: An SNMP trap handler written in Perl
 
 Group: System/Servers
 License: GPLv2+
 Url: http://www.snmptt.org/
+Vcs: https://github.com/snmptt/snmptt
 
 Source0: http://downloads.sourceforge.net/snmptt/%{name}-%{version}.tar
 
 #TODO: Upstream
 Source1: %name.service
 Source2: %name.init
-
-BuildArch: noarch
 
 BuildRequires: perl-Text-Balanced perl-Config-IniFiles
 
@@ -36,6 +38,7 @@ Summary: MySQL support for %name
 Group: System/Servers
 Requires: perl(DBD/mysql.pm)
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description mysql
 MySQL support for %name
@@ -47,6 +50,7 @@ Summary: PostgreSQL support for %name
 Group: System/Servers
 Requires: perl(DBD/Pg.pm)
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description postgresql
 PostgreSQL support for %name
@@ -58,6 +62,7 @@ Summary: ODBC support for %name
 Group: System/Servers
 Requires: perl(DBD/ODBC.pm)
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description odbc
 ODBC support for %name
@@ -69,6 +74,7 @@ Summary: NET-SNMP support for %name
 Group: System/Servers
 Requires: perl(SNMP.pm)
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description net-snmp
 NET-SNMP support for %name
@@ -79,7 +85,7 @@ NET-SNMP support for %name
 %setup
 
 mv sample-*trap* examples/
-mv examples/snmptt.conf.generic snmptt.conf
+mv examples/snmptt.conf.generic %name.conf
 
 # convert ChangeLog to UTF-8
 iconv -f ISO-8859-1 -t UTF-8 ChangeLog > ChangeLog.utf8 && \
@@ -95,13 +101,13 @@ install -D -p -m 0755 snmptthandler %buildroot%_sbindir/snmptthandler
 install -D -p -m 0644 snmptthandler-embedded %buildroot%_datadir/snmptt/snmptthandler-embedded
 install -D -p -m 0755 snmpttconvert %buildroot%_bindir/snmpttconvert
 install -D -p -m 0755 snmpttconvertmib %buildroot%_bindir/snmpttconvertmib
-install -D -p -m 0644 snmptt.conf %buildroot%_sysconfdir/snmp/snmptt.conf
-install -D -p -m 0644 snmptt.ini %buildroot%_sysconfdir/snmp/snmptt.ini
+install -D -p -m 0644 snmptt.conf %buildroot%_sysconfdir/%name/snmptt.conf
+install -D -p -m 0644 snmptt.ini %buildroot%_sysconfdir/%name/snmptt.ini
 install -D -p -m 0644 -p %SOURCE1 %buildroot%_unitdir/%name.service
 install -D -p -m 0755 -p %SOURCE2 %buildroot%_initdir/snmptt
-install -D -p -m 0644 snmptt.logrotate %buildroot%_logrotatedir/snmptt
-install -d %buildroot%_var/spool/snmptt
-install -d %buildroot%_logdir/snmptt
+install -D -p -m 0644 snmptt.logrotate %buildroot%_logrotatedir/%name
+install -d %buildroot%_var/spool/%name
+install -d %buildroot%_logdir/%name
 
 %pre
 /usr/sbin/groupadd -r -f snmptt ||:
@@ -115,8 +121,9 @@ install -d %buildroot%_logdir/snmptt
 
 %files
 %_initdir/%name
-%config(noreplace) %_sysconfdir/snmp/%name.conf
-%config(noreplace) %_sysconfdir/snmp/%name.ini
+%attr(1770,root,%name) %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name/%name.ini
 %config(noreplace) %_logrotatedir/%name
 %_bindir/snmpttconvert
 %_bindir/snmpttconvertmib
@@ -136,6 +143,11 @@ install -d %buildroot%_logdir/snmptt
 %files net-snmp
 
 %changelog
+* Thu Sep 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt1
+- Updated to upstream version 1.5.
+- make package arch-specific due Log-Syslog-Fast deps.
+- move config location /etc/snmp->/etc/snmptt.
+
 * Tue Oct 27 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.2-alt1
 - Updated to upstream version 1.4.2 (Fixes: CVE-2020-24361).
 
@@ -146,10 +158,12 @@ install -d %buildroot%_logdir/snmptt
 - Rebuild for work with net-snmp-5.7.3 and up
 
 * Wed Jan  6 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt3
-- Change mode/owner of /var/log/snmptt to 1770/root:snmptt according to ALT Secure Packaging Policy
+- Change mode/owner of /var/log/snmptt to 1770/root:snmptt according to ALT
+  Secure Packaging Policy
 
 * Wed Apr  8 2015 Evgenii Terechkov <evg@altlinux.org> 1.4-alt2
-- Change /var/spool/snmptt/ ownership to snmptt:root to work with buggy snmptrapd (ALT #30926)
+- Change /var/spool/snmptt/ ownership to snmptt:root to work with buggy
+  snmptrapd (ALT #30926)
 - Missed Requires: added to subpackages
 - Fix initscript's condrestart
 
