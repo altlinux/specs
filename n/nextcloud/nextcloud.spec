@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 31.0.6
+Version: 32.0.0
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -160,6 +160,7 @@ ssl_generate "nextcloud"
 %installdir/index.html
 %installdir/robots.txt
 %installdir/LICENSES
+%installdir/REUSE.toml
 
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
@@ -168,6 +169,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Oct 01 2025 Andrey Cherepanov <cas@altlinux.org> 32.0.0-alt1
+- New version.
+
 * Mon Jun 23 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.6-alt1
 - New version.
 
@@ -175,7 +179,7 @@ ssl_generate "nextcloud"
 - Do not show pride themes (thanks x1z53 <x1z53@alt-gnome.ru> for patch).
 
 * Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.5-alt1
-- New version.
+- New version (fixes: CVE-2025-47791, CVE-2025-47790).
 - Do now show pride themes (thanks x1z53 <x1z53@yandex.ru> for patch).
 
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.2-alt1
@@ -183,17 +187,18 @@ ssl_generate "nextcloud"
 - Used current supported PHP version in repository.
 
 * Wed Mar 19 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.1-alt1
-- New version.
+- New version (fixes: CVE-2025-47794).
 
 * Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 30.0.5-alt1
 - New version.
 
 * Wed Dec 18 2024 Andrey Cherepanov <cas@altlinux.org> 30.0.4-alt1
 - New version (fixes since 30.0.0: CVE-2024-52513, CVE-2024-52517,
-  CVE-2024-52518, CVE-2024-52521, CVE-2024-52523, CVE-2024-52525).
+  CVE-2024-52518, CVE-2024-52521, CVE-2024-52523, CVE-2024-52525,
+  CVE-2025-47791).
 
 * Wed Nov 13 2024 Kirill Izmestev <felixz@altlinux.org> 30.0.2-alt1
-- New version (ALT #52028).
+- New version (ALT #52028) (fixes: CVE-2025-47793)
 
 * Thu Oct 10 2024 Andrey Cherepanov <cas@altlinux.org> 30.0.0-alt1
 - New version (fixes: CVE-2024-37887, CVE-2024-37884, CVE-2024-37882,
