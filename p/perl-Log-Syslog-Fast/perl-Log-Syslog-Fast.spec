@@ -3,12 +3,14 @@
 
 Name: perl-%module_name
 Version: 0.68
-Release: alt1
+Release: alt2
 Summary: Perl extension for sending syslog messages over TCP, UDP, or UNIX sockets with minimal CPU overhead
 Group: Development/Perl
 License: %perl_license
 URL: %CPAN %module_name
 Vcs: https://github.com/athomason/Log-Syslog-Fast
+
+Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 Source0: https://cpan.metacpan.org/authors/id/A/AT/ATHOMASON/%module_name-%version.tar
 
@@ -16,7 +18,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators perl-Log-Syslog-Constant
 BuildRequires(pre): rpm-build-licenses
 
 # never worked on %%ix86
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86
 
 %description
 %summary
@@ -36,6 +38,10 @@ ExclusiveArch: x86_64 aarch64
 %perl_vendor_autolib/L*
 
 %changelog
+* Wed Oct 01 2025 Ivan A. Melnikov <iv@altlinux.org> 0.68-alt2
+- NMU: Replace ExclusiveArch with ExcludeArch to build this
+  package on riscv64 and loongarch64.
+
 * Thu Sep 18 2025 L.A. Kostis <lakostis@altlinux.ru> 0.68-alt1
 - Initial build for ALTLinux.
 
