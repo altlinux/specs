@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Source: %name-%version.tar
@@ -35,6 +35,17 @@ profiles for kiosk
 install -Dm 0755 %SOURCE1 %buildroot%_bindir/activate-kiosk.sh
 install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 
+%triggerin -n kiosk-profiles -- kiosk-profiles < 1.18-alt1
+# update symlinks to keep profiles enabled
+if [ -L /etc/alterator/kiosk/profiles_enabled/user-startup ]; then
+    rm -f /etc/alterator/kiosk/profiles_enabled/user-startup
+    ln -s /etc/alterator/kiosk/{profiles,profiles_enabled}/kde-startup
+fi
+if [ -L /etc/alterator/kiosk/profiles_enabled/user-shutdown ]; then
+    rm -f /etc/alterator/kiosk/profiles_enabled/user-shutdown
+    ln -s /etc/alterator/kiosk/{profiles,profiles_enabled}/kde-shutdown
+fi
+
 %post
 %post_service kiosk
 
@@ -55,6 +66,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Fri Sep 26 2025 Oleg Solovyov <mcpain@altlinux.org> 1.18-alt1
+- rename user-startup/user-shutdown profiles
+
 * Thu Sep 11 2025 Oleg Solovyov <mcpain@altlinux.org> 1.17-alt1
 - profiles: add maliit-keyboard (Closes: #55946)
 
