@@ -5,7 +5,7 @@
 %endif
 
 Name: libmongocrypt
-Version: 1.15.2
+Version: 1.16.0
 Release: alt1
 
 Summary: The companion C library for client side encryption in drivers
@@ -19,6 +19,7 @@ VCS: https://github.com/mongodb/libmongocrypt
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: libmongocrypt-1.15.1-fedora-static-libbson.patch
+Patch2: libmongocrypt-1.16.0-alt-libbson1.patch
 
 BuildRequires: cmake gcc-c++ git-core libbson-devel libssl-devel python3
 %if_enabled check
@@ -76,6 +77,9 @@ This package provides development files for libkms_message.
 %setup
 %patch0 -p1
 %patch1 -p1
+%if "%(rpmquery --qf '%%{VERSION}' libbson-devel)" < "2"
+%patch2 -p2
+%endif
 
 %build
 %cmake \
@@ -126,6 +130,9 @@ ctest
 %_pkgconfigdir/libkms_message.pc
 
 %changelog
+* Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 1.16.0-alt1
+- New version 1.16.0.
+
 * Wed Sep 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.15.2-alt1
 - New version 1.15.2.
 
