@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 10.05.1
+Version: 10.06.0
 Release: alt1
 
 %define ijsver	0.35
@@ -39,6 +39,9 @@ Patch112: Ubuntu-2010_add_build_timestamp_setting.patch
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
 Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
+
+## upstream patches
+Patch800: ghostscript-10.06.0-upstream-compilation-failure-on-32-bit-archs.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
@@ -195,6 +198,9 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 %patch500 -p1
 %patch502 -p1
 
+## upstream apply patches
+%patch800 -p1
+
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
 sed -i 's/ -dNO/ -dNOSAFER -dNO/' lib/pfbtopfa
 
@@ -317,6 +323,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Tue Sep 30 2025 Alexander Danilov <admsasha@altlinux.org> 10.06.0-alt1
+- New version 10.06.0.
+
 * Thu May 15 2025 Fr. Br. George <george@altlinux.org> 10.05.1-alt1
 - Autobuild version bump to 10.05.1
 
