@@ -1,20 +1,24 @@
 %define repo laguna
 
 Name: gap-laguna
-Version: 3.9.6
+Version: 3.9.7
 Release: alt1
 Summary: GAP: Lie AlGebras and UNits of group Algebras
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/laguna/
+VCS: https://github.com/gap-packages/laguna
 
-Source: https://github.com/gap-packages/laguna/releases/download/v%version/laguna-%version.tar.gz
+# Source-url: https://github.com/gap-packages/laguna/releases/download/v%version/laguna-%version.tar.gz
+Source: laguna-%version.tar
+Patch: laguna-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
-Requires: gap >= 4.8
-Requires: gap-gapdoc >= 1.5.1
-#Suggests:       gap-sophus >= 1.2
+Requires: gap >= 4.9
+Requires: gap-gapdoc >= 1.6.1
+#Recommends: gap-sophus >= 1.24
 
 %description
 LAGUNA extends GAP functionality for computations in group rings.
@@ -25,8 +29,11 @@ finite group satisfies certain Lie properties; and it can calculate
 the structure of the normalized unit group of a group algebra of a
 finite p-group over the field of p elements.
 
+Recommends: gap-sophus >= 1.24.
+
 %prep
-%setup -n laguna-%version
+%setup -n laguna
+%patch -p1
 
 %build
 %install
@@ -34,10 +41,14 @@ rm -Rf scripts
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%gap_sitelib/%repo/
 
 %changelog
+* Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 3.9.7-alt1
+- New version 3.9.7.
+- Added VCS tag.
+- Moved files from laguna-version to laguna.
+
 * Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 3.9.6-alt1
 - New version.
 

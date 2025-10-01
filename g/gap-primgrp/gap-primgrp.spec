@@ -1,18 +1,22 @@
 %define repo primgrp
 
 Name: gap-primgrp
-Version: 3.4.4
+Version: 4.0.1
 Release: alt1
 Summary: GAP: Primitive Permutation Groups Library
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/primgrp/
+VCS: https://github.com/gap-packages/primgrp
 
-Source: https://github.com/gap-packages/primgrp/releases/download/v%version/primgrp-%version.tar.gz
+# Source-url: https://github.com/gap-packages/primgrp/releases/download/v%version/primgrp-%version.tar.gz
+Source: primgrp-%version.tar
+Patch: primgrp-%version-%release.patch
 
 BuildArch: noarch
+
 BuildRequires: rpm-macros-gap
-Requires: gap >= 4.9
+Requires: gap >= 4.10
 Requires: gap-gapdoc >= 1.5
 
 %description
@@ -22,7 +26,8 @@ conjugacy in the corresponding symmetric group), all primitive
 permutation groups of degree < 4096.
 
 %prep
-%setup -n primgrp-%version
+%setup -n primgrp
+%patch -p1
 
 %build
 perl -i -pe 's{#!%_bindir/env }{#!/bin/}' scripts/*
@@ -31,10 +36,15 @@ perl -i -pe 's{#!%_bindir/env }{#!/bin/}' scripts/*
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%gap_sitelib/%repo/
 
 %changelog
+* Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.1-alt1
+- New version 4.0.1.
+- Fixed license tag.
+- Added VCS tag.
+- Moved files from primgrp-version to primgrp.
+
 * Thu Mar 09 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.4-alt1
 - New version (3.4.4).
 
