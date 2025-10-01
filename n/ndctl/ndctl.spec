@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 82
+Version: 83
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -199,6 +199,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 83-alt1
+- 83
+
 * Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 82-alt1
 - 82
 
