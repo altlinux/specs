@@ -3,16 +3,18 @@
 %def_disable python
 
 Name: brial
-Version: 1.2.14
+Version: 1.2.15
 Release: alt1
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
 License: GPL-2.0+ and BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/BRiAl/BRiAl/
-VCS: https://github.com/BRiAl/BRiAl.git
+VCS: https://github.com/BRiAl/BRiAl
 
-Source: %url/releases/download/%version/%name-%version.tar.bz2
+# Source-url: %url/releases/download/%version/%name-%version.tar.bz2
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 Patch3500: brial-boost-loongarch64.patch
 
 # cudd/cudd.h:#define CUDD_VERSION "2.5.0"
@@ -71,17 +73,13 @@ Python 3 interface to %name.
 
 %prep
 %setup
+%patch0 -p1
 %patch3500 -p1
 
 %build
 export CPPFLAGS="-DPBORI_NDEBUG"
 %autoreconf
 %configure --enable-shared --disable-static
-# Get rid of undesirable hardcoded rpaths.
-# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-#     -i libtool
-
 %make_build
 
 %if_enabled python
@@ -124,6 +122,9 @@ make check
 %endif
 
 %changelog
+* Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.15-alt1
+- New version 1.2.15.
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.14-alt1
 - New version 1.2.14.
 - Added VCS tag.
