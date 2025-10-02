@@ -9,7 +9,7 @@
 
 Name: rust
 Version: 1.90.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Rust Programming Language
@@ -252,6 +252,8 @@ export DESTDIR="%buildroot"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
 
+. ./env.sh
+
 CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
 test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
@@ -448,6 +450,10 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Wed Sep 24 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.90.0-alt2
+- Use CLANG_RUNTIME_DIR from the specified clang, instead
+  of the default one (fixes FTBFS on loongarch64).
+
 * Fri Sep 19 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.90.0-alt1
 - New version (1.90.0).
 
