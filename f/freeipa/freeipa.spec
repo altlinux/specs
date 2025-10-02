@@ -37,7 +37,9 @@
 %define bind_version 9.11
 %define bind_dyndb_ldap_version 11.1-alt7
 %define certmonger_version 0.79.17
-%define ds_version 2.1.0
+# https://www.freeipa.org/release-notes/4-12-5.html
+# CVE-2025-7493 requires https://github.com/389ds/389-ds-base/issues/6857
+%define ds_version 3.1.3-alt3
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
 %define pki_version 10.10.5
@@ -52,8 +54,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.12.4
-Release: alt5
+Version: 4.12.5
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1146,6 +1148,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Oct 02 2025 Stanislav Levin <slev@altlinux.org> 4.12.5-alt1
+- 4.12.4 -> 4.12.5 (fixes: CVE-2025-7493).
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 4.12.4-alt5
 - Fixed FTBFS (temporarily xfail nss dbm tests).
 
