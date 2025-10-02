@@ -1,22 +1,28 @@
 %define repo resclasses
 
 Name: gap-resclasses
-Version: 4.7.3
+Version: 4.7.4
 Release: alt1
 Summary: GAP: Set-Theoretic Computations with Residue Classes
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/resclasses/
+VCS: https://github.com/gap-packages/resclasses
 
-Source: https://github.com/gap-packages/resclasses/releases/download/v%version/%repo-%version.tar.gz
+# Source-url: https://github.com/gap-packages/resclasses/releases/download/v%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %repo-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
-Requires: gap >= 4.8.7
+
+# PackageInfo.g
+Requires: gap >= 4.11.1
 Requires: gap-gapdoc >= 1.5.1
 Requires: gap-polycyclic >= 2.11
 Requires: gap-utils >= 0.40
-#Suggests:       gap-io >= 4.4.5
+#Recommends: gap-io >= 4.4.5
 
 %description
 ResClasses is a package for set-theoretic computations with residue
@@ -27,18 +33,25 @@ taking the set of all residue classes as a basis, as far as the usual
 restrictions imposed by the finite- ness of computing resources
 permit this.
 
+Recommends: gap-io >= 4.4.5.
+
 %prep
-%setup -n resclasses-%version
+%setup -n resclasses
+%patch -p1
 
 %build
 %install
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%gap_sitelib/%repo/
 
 %changelog
+* Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 4.7.4-alt1
+- New version 4.7.4.
+- Added VCS tag.
+- Moved files from resclasses-version to resclasses.
+
 * Thu Mar 02 2023 Leontiy Volodin <lvol@altlinux.org> 4.7.3-alt1
 - New version (4.7.3).
 

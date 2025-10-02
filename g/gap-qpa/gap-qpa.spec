@@ -1,14 +1,18 @@
 %define repo qpa
 
 Name: gap-qpa
-Version: 1.34
+Version: 1.36
 Release: alt1
 Summary: GAP: Quivers and Path Algebras
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sciences/Mathematics
 Url: https://folk.ntnu.no/oyvinso/QPA/
+VCS: https://github.com/gap-packages/qpa
 
-Source: https://github.com/gap-packages/%repo/archive/v%version/%repo-%version.tar.gz
+# Source-url: https://github.com/gap-packages/%repo/archive/v%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %repo-%version-%release.patch
+
 BuildPreReq: rpm-macros-gap
 BuildPreReq: xz
 
@@ -25,7 +29,8 @@ algebras, and modules, homomorphisms and complexes of modules over
 quotients of path algebras.
 
 %prep
-%setup -n qpa-%version
+%setup -n qpa
+%patch -p1
 
 %build
 %install
@@ -34,10 +39,15 @@ find "%buildroot" -type f "(" -name "*.g?" -o -name "*.xml" ")" \
 	-exec chmod a-x "{}" "+"
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%gap_sitelib/%repo/
 
 %changelog
+* Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.36-alt1
+- New version 1.36.
+- Fixed license tag.
+- Added VCS tag.
+- Moved files from qpa-version to qpa.
+
 * Fri Aug 05 2022 Leontiy Volodin <lvol@altlinux.org> 1.34-alt1
 - New version (1.34).
 
