@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A chess game for GNOME
@@ -70,6 +70,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Thu Oct 02 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Sat Aug 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
