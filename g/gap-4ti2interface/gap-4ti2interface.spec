@@ -1,6 +1,6 @@
 Name: gap-4ti2interface
 Version: 2024.11.01
-Release: alt2
+Release: alt3
 Summary: GAP: Interface to 4ti2
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 BuildPreReq: rpm-macros-gap
 Requires: gap >= 4.12.1
-# Requires: gap-io >= 4.2
+Requires: gap-io >= 4.2
 
 %description
 This package provides a GAP module to interface with 4ti2,
@@ -34,6 +34,9 @@ geometric and combinational problems on linear spaces.
 %gap_sitelib/4ti2Interface/
 
 %changelog
+* Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 2024.11.01-alt3
+- Added require on gap-io.
+
 * Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 2024.11.01-alt2
 - Moved files from 4ti2interface-version to 4ti2interface.
 

@@ -1,6 +1,6 @@
 Name: gap
 Version: 4.15.0
-Release: alt1
+Release: alt2
 Summary: System for Computational Discrete Algebra
 License: Artistic-2.0 or GPL-2.0-only and GPL-2.0-or-later
 Group: Sciences/Mathematics
@@ -93,6 +93,7 @@ GAP modules that itself do not require the presence of GAP.
 Summary: Metapackage to cause installation of the GAP Distribution
 Group: Sciences/Mathematics
 BuildArch: noarch
+Requires: gap-io
 Requires: gap-4ti2interface
 Requires: gap-autpgrp
 Requires: gap-polycyclic
@@ -194,6 +195,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.0-alt2
+- Added gap-io to requires for gap-full.
+
 * Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.0-alt1
 - New version 4.15.0.
 - Updated license tag.
