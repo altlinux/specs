@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.19.04
+Version: 0.19.05
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -84,12 +84,12 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 # Hopefully temporary workaround for
 #   verify-elf: ERROR: ./usr/bin/stress-ng: uses non-LFS functions: __ppoll_chk
 # See https://github.com/ColinIanKing/stress-ng/issues/350
-%add_optflags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
-%ifarch ppc64le
+%ifarch ppc64le aarch64
 # Disable LTO as is does not build on ppc64:
 #   https://github.com/ColinIanKing/stress-ng/issues/273
 #   {standard input}: Assembler messages:
 #   {standard input}:20240: Error: unrecognized opcode: `darn'
+# aarch64: https://github.com/ColinIanKing/stress-ng/issues/568
 %define optflags_lto %nil
 %endif
 %make_build CFLAGS="%optflags" --no-print-directory VERBOSE=1
@@ -119,6 +119,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Thu Oct 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.05-alt1
+- Update to V0.19.05 (2025-10-01).
+
 * Tue Sep 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.04-alt1
 - Update to V0.19.04 (2025-09-01).
 
