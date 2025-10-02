@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Oct 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.10-alt1
+- v6.16.10 (2025-10-02).
+
 * Thu Sep 25 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.9-alt1
 - v6.16.9 (2025-09-25).
 - config: Enable more OmniVision cameras (ALT#56101).
