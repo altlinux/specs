@@ -1,6 +1,6 @@
 Name:    gptokeyb
 Version: 0.2.9
-Release: alt1.git2c7a017
+Release: alt3.gitb85b098
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
 License: GPLv2
@@ -15,6 +15,7 @@ Source5: gamepadtokeyboard
 Source6: gptokeyb.service
 Source7: 20-gptokeyb.preset
 Source8: 65-gptokeyb-uinput.rules
+Source9: gamecontrollerdb.handhelds.txt
 
 BuildRequires(pre): cmake rpm-build-cmake
 BuildRequires: gcc-c++ libSDL2-devel libevdev-devel
@@ -53,6 +54,8 @@ install -Dm0644 %SOURCE6 %buildroot%_unitdir/%name.service
 
 install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 
+install -Dm0644 %SOURCE9 %buildroot%_datadir/gamecontrollerdb.handhelds.txt
+
 %post -n %name-handheld-control
 %post_service %name.service
 
@@ -73,8 +76,19 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %_unitdir/%name.service
 %dir %_presetdir
 %_presetdir/20-%name.preset
+%_datadir/gamecontrollerdb.handhelds.txt
 
 %changelog
+* Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt3.gitb85b098
+- Fix button mapping
+
+* Thu Aug 28 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt2.gitb85b098
+- Add bunch of devices:
+- Retroid Pocket 5;
+- Powkiddy RGB20SX;
+- Powkiddy x35S;
+- Powkiddy X35H.
+
 * Wed Apr  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt1.git2c7a017
 - Add new device: Anbernic RG503
 
