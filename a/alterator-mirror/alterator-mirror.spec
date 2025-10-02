@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.6.0
-Release: alt2
+Version: 0.6.1
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -80,6 +80,9 @@ install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/addit
 %config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Thu Oct 02 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- alterator-mirror/allowed: add p11 repository.
+
 * Mon Mar 03 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt2
 - alterator-mirror-additional-repo required apt-repo-tools
 
