@@ -18,7 +18,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2
+Version: 10.2.2
 Release: alt1
 Epoch: 1
 Url: https://altsp.su
@@ -141,5 +141,8 @@ fi
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %changelog
+* Thu Oct 02 2025 Nadezhda Fedorova <fedor@altlinux.org> 1:10.2.2-alt1
+- bump version
+
 * Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt1
 - Initial build
