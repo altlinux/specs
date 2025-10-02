@@ -1,6 +1,6 @@
 Name: python3-module-elftools
 Version: 0.32
-Release: alt1
+Release: alt2
 
 Summary: Pure-Python library for parsing and analyzing ELF files
 
@@ -8,6 +8,8 @@ License: Unlicense
 Group: Development/Python3
 URL: https://pypi.org/project/pyelftools
 VCS: https://github.com/eliben/pyelftools
+
+Provides: python3-module-pyelftools = %EVR
 
 Source: %name-%version.tar
 
@@ -37,6 +39,9 @@ and DWARF debugging information.
 %python3_sitelibdir/pyelftools-%version.dist-info
 
 %changelog
+* Thu Oct 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.32-alt2
+- provide pep503 name
+
 * Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 0.32-alt1
 - Automatically updated to 0.32.
 
