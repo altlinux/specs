@@ -4,7 +4,7 @@
 %def_with check
 
 Name: pkcs11-provider
-Version: 1.0
+Version: 1.1.0
 Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
@@ -25,7 +25,6 @@ BuildRequires: libnss-devel
 BuildRequires: nss-utils
 BuildRequires: softhsm
 BuildRequires: opensc
-BuildRequires: gnutls-utils
 BuildRequires: openssl
 BuildRequires: expect
 %endif
@@ -56,6 +55,9 @@ compatible to previous versions as well.
 %modulesdir/pkcs11.so
 
 %changelog
+* Thu Oct 02 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0 -> 1.1.0.
+
 * Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 1.0-alt1
 - 0.6 -> 1.0.
 
