@@ -5,10 +5,10 @@
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1
-%define kernel_need_version	6.6
+%define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	6.6
-%define kernel_sublevel .56
+%define kernel_base_version	6.12
+%define kernel_sublevel .49
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -441,6 +441,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Oct 03 2025 Dmitry Terekhin <jqt4@altlinux.org> 1:6.12.49-alt1
+- Updated to 6.12.49 (Closes: 56059)
+- https://github.com/raspberrypi/linux.git rpi-6.12.y commit 2f4a28199c418599ba0224186e42926b482b523c
+- Baikal-M support http://git.altlinux.org/people/kernelbot/packages/kernel-image.git
+- Revert ffab4de2b668 to keep Bluetooth working on RPi3B+
+
 * Fri Oct 11 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.6.56-alt1
 - Updated to 6.6.56
 - https://github.com/raspberrypi/linux.git rpi-6.6.y commit e53eefbc711622f0702e887f88d69f867aa0bf1a
