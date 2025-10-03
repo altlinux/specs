@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: winehelper
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -9,6 +11,8 @@ Group: Emulators
 Url: https://git.linux-gaming.ru/CastroFidel/winehelper
 
 Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
 
 Requires: wine
 Requires: ca-certificates
@@ -25,11 +29,19 @@ ExclusiveArch: x86_64
 Program for easy installation of Windows applications with the possibility
 of automatic prefix tuning.
 
+%package qt
+Group: Emulators
+Summary: Graphical interface for WineHelper
+Requires: %name = %EVR
+%description qt
+%summary
+
 %prep
 %setup
 
 %build
 %install
+# base files:
 install -Dm755 %name %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,database,image}
@@ -39,22 +51,47 @@ install -m644 sha256sum.list %buildroot%_datadir/%name/
 install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
-install -m644 image/* %buildroot%_datadir/%name/image/
+install -m644 image/*.png %buildroot%_datadir/%name/image/
 
 install -Dm644 auto_completion/bash_completion/%name %buildroot%_sysconfdir/bash_completion.d/%name
 install -Dm644 auto_completion/zsh_completion/_%name %buildroot%_datadir/zsh/Completion/Linux/_%name
 
+# GUI files:
+install -Dm644 %name.desktop %buildroot%_desktopdir/%name.desktop
+install -Dm644 image/gui/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -Dm644 image/gui/%name-symbolic.svg %buildroot%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
+
 %files
-%doc LICENSE CHANGELOG COPYING THIRD-PARTY
+%doc LICENSE LICENSE_AGREEMENT CHANGELOG COPYING THIRD-PARTY README.md
 %_bindir/%name
 %_datadir/%name/
+%exclude %_datadir/%name/%{name}_gui.py
 %_sysconfdir/bash_completion.d/%name
 %_datadir/zsh/Completion/Linux/_%name
 
+%files qt
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/%name/%{name}_gui.py
+
 %changelog
+* Wed Oct 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.6.0-alt1
+- updated to version 0.6.0
+- fixed typos (ALT bug: 55538)
+- added Qt5 graphics mode
+- added tray icon for Qt5 graphics mode
+- updated installation scripts for t-flex-*
+- updated installation script for scadoffice
+- added manual installation of NetTest (demo version)
+- added ARM-KT installation scripts
+- winehelper killall - kills only processes running in WinwHelper
+- other minor script improvements and optimizations
+
 * Mon Jul 14 2025 Mikhail Tergoev <fidel@altlinux.org> 0.5.0-alt1
 - 0.5.0
-- removed requires: cups-pdf (ALT bug: 55212
+- removed requires: cups-pdf (ALT bug: 55212)
 - removed check requires libOSMesa from scripts (ALT bug: 55211)
 
 * Fri Jul 04 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.9-alt1
