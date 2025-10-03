@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.2.0
-Release: alt2
+Version: 140.3.0
+Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -434,6 +434,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Sep 23 2025 Pavel Vasenkov <pav@altlinux.org> 140.3.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-10527 Sandbox escape due to use-after-free in the Graphics: Canvas2D component
+  + CVE-2025-10528 Sandbox escape due to undefined behavior, invalid pointer in the Graphics: Canvas2D component
+  + CVE-2025-10529 Same-origin policy bypass in the Layout component
+  + CVE-2025-10532 Incorrect boundary conditions in the JavaScript: GC component
+  + CVE-2025-10533 Integer overflow in the SVG component
+  + CVE-2025-10536 Information disclosure in the Networking: Cache component
+  + CVE-2025-10537 Memory safety bugs fixed in Firefox ESR 140.3, Thunderbird ESR 140.3, Firefox 143 and Thunderbird 143
+
 * Sat Aug 30 2025 Andrey Cherepanov <cas@altlinux.org> 140.2.0-alt2
 - Build with gcc and bfd linker on i586.
 
