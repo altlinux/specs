@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.33
+Version: 1.2.35
 Release: alt1
 
 Summary: App manager for Deepin
@@ -12,9 +12,10 @@ Summary: App manager for Deepin
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-application-manager
-Vcs: git://github.com/linuxdeepin/dde-application-manager.git
+Vcs: https://github.com/linuxdeepin/dde-application-manager
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
@@ -95,6 +96,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Fri Oct 03 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.35-alt1
+- New version 1.2.35.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.33-alt1
 - New version 1.2.33.
 
