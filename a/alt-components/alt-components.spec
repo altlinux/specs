@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.5.4
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -58,8 +58,22 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_datadir/polkit-1/actions/*.policy
 %_datadir/dbus-1/interfaces/*.xml
 %_bindir/alt-components
+%_desktopdir/*.desktop
 
 %changelog
+* Fri Oct 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.0-alt1
+- Add ability to sync with software sources (such as apt-get update)
+  using application.
+- Add option for hiding of "Other components" section with non edition
+  components (thx Maria Alexeeva).
+- Fix warnings when clicking on category in component tree.
+- Fix missing display of kernel module components and packages in
+  transaction.
+- Fix crash after view mode switching if edition is not selected.
+- Fix zero counter of components of edition when Plain view mode selected
+  (thx Maria Alexeeva).
+- Add desktop entry (thx Andrey Alekseev).
+
 * Wed Sep 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt2
 - Fixed dependency on supported version of alt-components-base.
 
