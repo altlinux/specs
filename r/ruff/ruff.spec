@@ -3,7 +3,7 @@
 
 %define ruff_pypi_name ruff
 %define ruff_import_name ruff
-%define ruff_version 0.13.2
+%define ruff_version 0.13.3
 
 %define ty_pypi_name ty
 %define ty_import_name ty
@@ -148,8 +148,11 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Fri Oct 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.3-alt1
+- Updated ruff to 0.13.3.
+
 * Fri Sep 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.2-alt1
-- Updated to ruff 0.13.2.
+- Updated ruff to 0.13.2.
 
 * Fri Sep 19 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.1-alt1
 - Updated ruff to 0.13.1.
