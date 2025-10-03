@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.16
+Version: 1.1.17
 Release: alt1
 
 Summary: Deepin desktop themes
@@ -108,6 +108,9 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_libexecdir/deepin-desktop-theme/xdgicon2dci
 
 %changelog
+* Fri Oct 03 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.17-alt1
+- New version 1.1.17.
+
 * Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.16-alt1
 - New version 1.1.16.
 
