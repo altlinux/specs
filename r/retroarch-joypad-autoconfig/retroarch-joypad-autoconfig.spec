@@ -1,6 +1,6 @@
 Name:           retroarch-joypad-autoconfig
 Version:        1.17.0
-Release:        alt1
+Release:        alt2
 Summary:        RetroArch Joypad Autoconfig Files
 License:        MIT
 Group:          Emulators
@@ -28,7 +28,7 @@ Autoconfig files included in this package are used to recognize input devices an
 
 %makeinstall_std
 
-install -Dm0644 %SOURCE1 %{buildroot}%{_datadir}/libretro/autoconfig/udev
+install -Dm0644 %SOURCE1 %{buildroot}%{_datadir}/libretro/autoconfig/udev/"GAMESIR Gamesir-X2 Type-C.cfg"
 
 %files
 %doc README.md COPYING
@@ -36,5 +36,8 @@ install -Dm0644 %SOURCE1 %{buildroot}%{_datadir}/libretro/autoconfig/udev
 %{_datadir}/libretro/autoconfig/*
 
 %changelog
+* Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt2
+- Add configs for handhelds (tnx ROCKNIX)
+
 * Wed Mar 20 2024 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt1
 - Initial commit for Sisyphus
