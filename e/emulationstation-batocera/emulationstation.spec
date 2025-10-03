@@ -5,7 +5,7 @@ Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation-batocera
 Epoch: 1
 Version: 39
-Release: alt7.gitc3d5c67
+Release: alt8.gitc3d5c67
 License: MIT
 Group: Emulators
 Url: https://github.com/Maks1mS/batocera-emulationstation
@@ -125,6 +125,9 @@ rm -rf %{buildroot}%{_includedir}
 %_libexecdir/libid3v2.a
 
 %changelog
+* Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt8.gitc3d5c67
+- Fix path for copying themes
+
 * Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt7.gitc3d5c67
 - Add check of es_systems.cfg
 - Update es_systems.cfg
