@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,11 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Sep 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.9.1-alt1
+- editions: update final-notes for edition_domain, edition_server,
+  edition_education (thx Maria Fokanova)
+- components: fix typo in displayname of docs category (thx Kirill Sharov)
+
 * Mon Sep 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.9.0-alt1
 - editions: add edition_education for ALT Education product
 
