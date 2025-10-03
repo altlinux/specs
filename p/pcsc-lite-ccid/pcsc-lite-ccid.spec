@@ -1,6 +1,6 @@
 Name: pcsc-lite-ccid
-Version: 1.6.2
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Generic USB CCID smart card reader driver
 License: BSD-3-Clause AND GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: flex
-BuildRequires: pkgconfig(libpcsclite) pkgconfig(libusb-1.0) pkgconfig(zlib)
+BuildRequires: pkgconfig(libpcsclite) pkgconfig(libusb-1.0) pkgconfig(zlib) pkgconfig(udev)
 
 Provides: ccid = %version-%release
 Obsoletes: ccid < %version-%release
@@ -47,8 +47,12 @@ PC/SC Lite daemon.
 %config(noreplace) %_sysconfdir/reader.conf.d/libccidtwin
 %ifddir/ifd-ccid.bundle
 %_libdir/pcsc/drivers/serial/libccidtwin.so
+%_udev_rulesdir/92_pcscd_ccid.rules
 
 %changelog
+* Fri Oct 03 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New version.
+
 * Wed Apr 09 2025 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt2
 - Use meson for build.
 
