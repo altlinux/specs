@@ -1,7 +1,7 @@
 %define zabbix_group    zabbix
 
 Name:   zabbix-agent2-plugin-mssql
-Version: 7.0.18
+Version: 7.0.19
 Release: alt1
 
 Summary: Provides native Zabbix solution for monitoring MS-SQL
@@ -42,6 +42,9 @@ mv mssql.conf %{buildroot}%{_sysconfdir}/zabbix/zabbix_agent2.conf.d/plugins.d
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/zabbix/zabbix_agent2.conf.d/plugins.d/mssql.conf
 
 %changelog
+* Fri Oct 03 2025 Alexei Takaseev <taf@altlinux.org> 7.0.19-alt1
+- 7.0.19
+
 * Tue Aug 26 2025 Alexei Takaseev <taf@altlinux.org> 7.0.18-alt1
 - 7.0.18
 
