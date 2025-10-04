@@ -1,9 +1,24 @@
+
+# TODO(iv@):
+# - check if we can enable more importexport modules
+# - unbundle fonts (they are now shipped as Qt resources)
+# - see what other libraries we can unbundle (liblouis? pugixml? utfcpp?)
+# - check what other ways of calling home (in addition to updates) should be disabled
+
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+# disable lto to workaround "No data signature found" rcc
+# issue -- https://bugreports.qt.io/browse/QTBUG-73834
+%define optflags_lto %nil
+
 %define rname mscore
-%define mversion 3.6
+%define mversion 4.6
 
 Name: musescore
-Version: %mversion.2
-Release: alt5
+Version: %mversion.0
+Release: alt1
 
 Summary: Music notation and composition software
 
@@ -12,24 +27,75 @@ Group: Sound
 Url: https://musescore.org
 Vcs: https://github.com/musescore/MuseScore.git
 
+# verify-elf: ERROR: ./usr/bin/mscore: uses non-LFS functions: fopen fstat stat
+# and I don't want to fix that -- iv@
+ExcludeArch: %ix86
+
 Source: %name-%version.tar
 Patch:  %name-%version-%release.patch
 
-BuildRequires(pre): chrpath rpm-build-xdg
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires: /proc
+BuildRequires(pre): rpm-build-xdg
 
-# Automatically added by buildreq on Thu Jan 06 2011
-BuildRequires: ccmake doxygen gcc-c++ ghostscript-utils graphviz latex2html
-BuildRequires: libalsa-devel libjack-devel libportaudio2-devel libsndfile-devel
-BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
-BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
-BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
-BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel libportmidi-devel
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: cmake gcc-c++
 
-# for pallets panel:
-Requires: qt5-quickcontrols2 qt5-graphicaleffects
+# Qt6:
+BuildRequires: qt6-tools-devel
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6NetworkAuth)
+BuildRequires: pkgconfig(Qt6OpenGL)
+BuildRequires: pkgconfig(Qt6PrintSupport)
+BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: pkgconfig(Qt6Quick)
+BuildRequires: pkgconfig(Qt6QuickControls2)
+BuildRequires: pkgconfig(Qt6QuickTemplates2)
+BuildRequires: pkgconfig(Qt6QuickWidgets)
+BuildRequires: pkgconfig(Qt6ShaderTools)
+BuildRequires: pkgconfig(Qt6StateMachine)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Test)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6WebSockets)
+BuildRequires: pkgconfig(Qt6Xml)
+
+# Others:
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(flac)
+BuildRequires: pkgconfig(flac++)
+BuildRequires: pkgconfig(fluidsynth)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(libopusenc)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libpulse-mainloop-glib)
+BuildRequires: pkgconfig(libpulse-simple)
+BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(portaudiocpp)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(tinyxml2)
+BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(vorbisenc)
+BuildRequires: pkgconfig(vorbisfile)
+
+BuildRequires: liblame-devel
+
+# Docs:
+# BuildRequires: doxygen ghostscript-utils graphviz latex2html
+
+# QML dependencies:
+Requires: libqt6-quickcontrols2
+Requires: libqt6-quickcontrols2basic
+Requires: libqt6-quickcontrols2fusion
+Requires: libqt6-quickeffects
+Requires: libqt6-quicklayouts
+Requires: libqt6-qml
 
 %description
 Music notation and composition software
@@ -49,50 +115,54 @@ Music notation and composition software
 %setup
 %autopatch -p1
 
-# Remove -lporttime on RPM-based systems where PortTime is part of PortMidi
-sed -i 's/ -lporttime//' mscore/CMakeLists.txt
-
 %build
-export PATH=$PATH:%_qt5_bindir
-echo $PATH
-mkdir build.debug && cd build.debug
-cmake \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.10 \
-    -DCMAKE_BUILD_TYPE=RELEASE \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-    -DBUILD_SCRIPTGEN=FALSE \
-    -DUSE_SYSTEM_FREETYPE=ON \
-    -DBUILD_WEBENGINE=OFF \
-    ..
+export LANG="C.UTF-8"
+export PATH="%_qt6_bindir:$PATH"
 
-make lrelease
-make manpages
-make mops1 mops2
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DMUSESCORE_BUILD_CONFIGURATION=app \
+    -DMUSE_APP_BUILD_MODE=release \
+    -DMUSE_MODULE_DIAGNOSTICS_CRASHPAD_CLIENT:BOOL=OFF \
+    -DMUE_BUILD_UPDATE_MODULE:BOOL=OFF \
+    -DMUSE_ENABLE_UNIT_TESTS:BOOL=OFF \
+    -DMUE_BUILD_BRAILLE_TESTS:BOOL=OFF \
+    -DMUE_BUILD_ENGRAVING_TESTS:BOOL=OFF \
+    -DMUE_BUILD_IMPORTEXPORT_TESTS:BOOL=OFF \
+    -DMUE_BUILD_NOTATION_TESTS:BOOL=OFF \
+    -DMUE_BUILD_PLAYBACK_TESTS:BOOL=OFF \
+    -DMUE_BUILD_PROJECT_TESTS:BOOL=OFF \
+    -DMUE_BUILD_CONVERTER_TESTS:BOOL=OFF \
+    -DMUSE_COMPILE_USE_PCH:BOOL=OFF \
+    -DMUE_COMPILE_USE_SYSTEM_FLAC:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_FREETYPE:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_HARFBUZZ:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_OPUS:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_OPUSENC:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_TINYXML:BOOL=ON \
+    -DMUE_DOWNLOAD_SOUNDFONT:BOOL=OFF \
+    -DMUSE_MODULE_GLOBAL_LOGGER_DEBUGLEVEL:BOOL=OFF \
+    -DMUSE_COMPILE_STRING_DEBUG_HACK:BOOL=OFF \
+    -DMUSE_MODULE_NETWORK_WEBSOCKET:BOOL=ON \
+    -DMUSE_MODULE_UPDATE:BOOL=OFF \
+    -DMUSE_MODULE_AUDIO_JACK:BOOL=OFF \
+    -DMUSE_PIPEWIRE_AUDIO_DRIVER:BOOL=ON \
+    -Wno-dev
+
+%cmake_build
 
 %install
-cd build.debug
-%makeinstall_std
-for f in ../fonts/*.ttf ../fonts/*.xml; do
-     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/$(basename $f)
-done
-for f in ../fonts/bravura/*.otf ../fonts/bravura/*.json; do
-     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/bravura/$(basename $f)
-done
-for f in ../fonts/gootville/*.otf ../fonts/gootville/*.json; do
-     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/gootville/$(basename $f)
-done
-for f in ../fonts/mscore/*.ttf  ../fonts/mscore/*.json; do
-     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/mscore/$(basename $f)
-done
+export LANG="C.UTF-8"
+export PATH="%_qt6_bindir:$PATH"
+%cmake_install
 
-chrpath -d %buildroot%_bindir/mscore
+rm -rvf %buildroot%_includedir %buildroot%_libdir
 
 %files
+%doc README.md
 %_bindir/*
 %_datadir/metainfo/org.musescore.MuseScore.appdata.xml
-%_desktopdir/mscore.desktop
+%_desktopdir/*.desktop
 %_datadir/mscore-%mversion
 %_man1dir/*
 %_xdgmimedir/packages/musescore.xml
@@ -101,6 +171,11 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Fri Oct 03 2025 Ivan A. Melnikov <iv@altlinux.org> 4.6.0-alt1
+- 4.6.0
+- switch to Qt6
+- disable updates module
+
 * Fri Apr 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.6.2-alt5
 - NMU: fix FTBFS with cmake 4.0
 
