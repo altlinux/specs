@@ -23,7 +23,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-%target_arch
 Version: 20250808
-Release: alt1
+Release: alt2
 Summary: UEFI firmware for %target_arch virtual machines
 
 License: BSD-2-Clause-Patent
@@ -112,25 +112,31 @@ build \
 for raw in Build/%efi_platform_name/DEBUG_GCC5/FV/*.fd; do
     truncate -s 32M "$raw"
     qemu-img convert -f raw -O qcow2 "$raw" "${raw%%.fd}.qcow2"
-    rm -vf "$raw"
 done
 %endif
 
 %install
 mkdir -p %buildroot%install_dir
 install -pm 644 -t %buildroot%install_dir \
-    Build/%efi_platform_name/DEBUG_GCC5/FV/*.%{?_with_qcow2:qcow2}%{?!_with_qcow2:fd}
+    Build/%efi_platform_name/DEBUG_GCC5/FV/*.fd
+
+%if_with qcow2
+install -pm 644 -t %buildroot%install_dir \
+    Build/%efi_platform_name/DEBUG_GCC5/FV/*.qcow2
+%endif
 
 mkdir -p %buildroot%_datadir/qemu/firmware
-for f in %_sourcedir/*edk2-%{target_arch}*.json; do
-    install -pm 644 $f %buildroot%_datadir/qemu/firmware
-done
+install -pm 644 -t %buildroot%_datadir/qemu/firmware \
+    %_sourcedir/*edk2-%{target_arch}*.json
 
 %files
 %install_dir
 %_datadir/qemu/firmware/*edk2-%{target_arch}*.json
 
 %changelog
+* Sat Oct 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt2
+- ship raw images on riscv64
+
 * Thu Sep 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt1
 - edk2-stable202508
 
