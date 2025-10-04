@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vector
-Version: 0.48.0
+Version: 0.49.0
 Release: alt1
 
 Summary: A lightweight and ultra-fast tool for building observability pipelines
@@ -28,6 +28,7 @@ BuildRequires: libssl-devel libsasl2-devel zlib-devel liblz4-devel libzstd-devel
 BuildRequires: librdkafka-devel
 BuildRequires: perl(Pod/Usage.pm) perl(IPC/Cmd.pm) protobuf-compiler
 BuildRequires: /proc
+BuildRequires: cargo-vendor-checksum
 
 %description
 Vector is a high-performance, end-to-end (agent & aggregator) observability
@@ -47,10 +48,12 @@ sed -i '/#!\[deny(warnings)\]/d' src/lib.rs
 cat %SOURCE5 >> %_builddir/%name-%version/.cargo/config.toml
 
 %build
+cargo-vendor-checksum --vendor vendor --files-in-vendor-dir openssl-src/openssl/.gitattributes
+
 export CFLAGS="-O3 -DPIC -fPIC"
 export RUST_BACKTRACE=1
 #export CARGO_FEATURE_DYNAMIC_LINKING=1
-export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=1 --cfg rustix_use_libc"
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=1 -A mismatched_lifetime_syntaxes --cfg rustix_use_libc"
 %rust_build
 
 %install
@@ -87,6 +90,9 @@ usermod -a -G adm vector >/dev/null 2>&1 || :
 %dir %attr(0770, root, vector) %_sharedstatedir/vector
 
 %changelog
+* Sat Sep 28 2025 Ilya Muhamadeev <nicourced@altlinux.org> 0.49.0-alt1
+- New version.
+
 * Fri Aug 08 2025 Ilya Muhamadeev <nicourced@altlinux.org> 0.48.0-alt1
 - New version.
 - Get rid of cumulative patch.
