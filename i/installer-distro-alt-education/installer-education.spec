@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
-Version: 11.0
-Release: alt7
+Version: 11.1
+Release: alt1
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -125,6 +125,12 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sat Oct 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt1
+- installer-steps:
+  + Add sysconfig-proxy step.
+  + Select additional applications before
+    partitioning the disk and check for free space.
+
 * Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt7
 - Move network setup step to stage2.
 - stage2: add alterator-net-wifi and alterator-net-vlan.

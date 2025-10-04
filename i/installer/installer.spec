@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.27
+Version: 1.16.28
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Wed Sep 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.16.28-alt1
+- steps: add sysconfig-proxy
+
 * Tue Sep 23 2025 Anton Midyukov <antohami@altlinux.org> 1.16.27-alt1
 - 30-setup-network.sh, 31-enable-networkmanager.sh: fix conditions
 - 30-setup-network.sh: simplify conditions

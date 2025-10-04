@@ -35,8 +35,8 @@
 %endif
 
 Name: branding-%flavour
-Version: 11.0
-Release: alt8
+Version: 11.1
+Release: alt1
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -156,6 +156,7 @@ Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: pam-limits-desktop
 Requires: alt-os-release
+Requires: alt-editions-education
 Conflicts: altlinux-release-%altbranch
 
 %description release
@@ -348,6 +349,10 @@ mv %buildroot%_sysconfdir/os-release %buildroot%_libexecdir/os-release
 
 find %buildroot -name \*.in -delete
 
+#edition
+mkdir -p %buildroot/%_sysconfdir/dconf/db/default.d/
+install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
+
 %post bootloader
 %ifarch %ix86 x86_64 aarch64
 . shell-config
@@ -420,6 +425,7 @@ fi
 %_sysconfdir/system-release
 %_libexecdir/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%_sysconfdir/dconf/db/default.d/*
 
 %files notes
 %_datadir/alt-notes/*
@@ -457,9 +463,9 @@ fi
 %files indexhtml
 %ghost %_defaultdocdir/indexhtml/index.html
 %_defaultdocdir/indexhtml/*
-#_desktopdir/*
-#_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
-#attr(0755,root,root) _datadir/Desktop/indexhtml.desktop
+%_desktopdir/*
+%_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
+%attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
 %_iconsdir/hicolor/*/apps/alt-%theme-desktop.svg
 
 %files menu
@@ -480,6 +486,10 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Tue Sep 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt1
+- Add default edition to os-release and dconf.
+- Return indexhtml to menu and desktop.
+
 * Mon Sep 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.0-alt8
 - Update links and navigation in the "About" page (indexhtml):
   + Update telegram channel link URL.
