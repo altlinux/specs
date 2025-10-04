@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -61,6 +61,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Oct 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.1-alt1
+- Fix launch wihout displaying because of user locale.
+
 * Fri Oct 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.0-alt1
 - Add ability to sync with software sources (such as apt-get update)
   using application.
