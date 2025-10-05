@@ -1,7 +1,7 @@
 %global import_path github.com/vmware-tanzu/velero
 
 Name:     velero
-Version:  1.16.1
+Version:  1.17.0
 Release:  alt1
 
 Summary:  Backup and migrate Kubernetes applications and their persistent volumes
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Sun Oct 05 2025 Nikolay Burykin <bne@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Sat Jun 07 2025 Nikolay Burykin <bne@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
