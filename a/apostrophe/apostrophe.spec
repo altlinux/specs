@@ -1,8 +1,8 @@
 %def_enable snapshot
 %define _name apostrophe
-%define ver_major 3.2
+%define ver_major 3.4
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
-%define reveal_ver 5.1.0
+%define reveal_ver 5.2.1
 
 Name: %_name
 Version: %ver_major
@@ -32,7 +32,7 @@ BuildArch: noarch
 %define webkit_api_ver 6.0
 
 Requires: pandoc dconf
-Requires: typelib(Gtk) = %gtk_api_ver
+Requires: typelib(Adw) = 1
 Requires: typelib(WebKit) = %webkit_api_ver
 %add_typelib_req_skiplist typelib(WebKit2)
 Requires: typelib(GtkSource) = %gtksource_api_ver
@@ -46,7 +46,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gtk) = %gtk_api_ver
 BuildRequires: gir(Adw) = 1
 #BuildRequires: reveal.js >= %reveal_ver
-%{?_enable_check: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Apostrophe is a GTK4 based distraction free Markdown editor, mainly
@@ -56,7 +56,7 @@ interface.
 
 %prep
 %setup -n %_name-%version -a1
-%patch1 -b .reveal
+#%%patch1 -b .reveal
 mkdir -p %name/libs/reveal.js
 cp -r reveal.js-%reveal_ver/* %name/libs/reveal.js
 
@@ -80,6 +80,7 @@ cp -r reveal.js-%reveal_ver/* %buildroot/%_datadir/%name/libs/reveal.js
 %python3_sitelibdir_noarch/%_name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/%_name/
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -87,6 +88,9 @@ cp -r reveal.js-%reveal_ver/* %buildroot/%_datadir/%name/libs/reveal.js
 
 
 %changelog
+* Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4
+
 * Wed Oct 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2
 
