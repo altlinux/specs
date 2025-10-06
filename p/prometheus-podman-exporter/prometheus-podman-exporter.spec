@@ -2,8 +2,8 @@
 %{!?_userunitdir: %global _userunitdir /usr/lib/systemd/user}
 
 Name: prometheus-podman-exporter
-Version: 1.18.1
-Release: alt1.1
+Version: 1.19.0
+Release: alt1
 
 Summary: Prometheus exporter for podman environment
 
@@ -12,7 +12,8 @@ Group: System/Configuration/Other
 Url: https://github.com/containers/prometheus-podman-exporter
 Vcs: https://github.com/containers/prometheus-podman-exporter
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre):  rpm-build-golang /proc
 BuildRequires: git-core libdevmapper-devel glib2-devel libgpgme-devel libassuan-devel libbtrfs-devel libsystemd-devel
@@ -51,6 +52,9 @@ install -Dm644 contrib/systemd/user/%name.service -t %buildroot%_userunitdir/
 %_userunitdir/%name.service
 
 %changelog
+* Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.19.0-alt1
+- New version 1.19.0 (Fixes: CVE-2025-47910, CVE-2025-47906).
+
 * Mon Sep 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.18.1-alt1.1
 - Specified closed security vulnerabilities (Fixes: CVE-2025-58058).
 
