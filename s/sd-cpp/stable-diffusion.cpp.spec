@@ -10,7 +10,7 @@
 %endif
 
 Name: sd-cpp
-Version: 20250910
+Version: 20250925
 Release: alt1
 Summary: Diffusion model (SD, Flux, Wan) inference in pure C/C++
 License: MIT
@@ -94,6 +94,9 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp
 
 %changelog
+* Mon Oct 06 2025 Vitaly Chikunov <vt@altlinux.org> 20250925-alt1
+- Update to master-309-35843c7 (2025-09-25).
+
 * Thu Sep 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250910-alt1
 - Update to master-b017918 (2025-09-10).
 - Added Wan2.2 (vid_gen) support.
