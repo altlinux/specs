@@ -1,12 +1,12 @@
 Name: altemu-overlayfs
 Version: 0.1
-Release: alt8
+Release: alt9
 
 Summary: Merging several dirs with ROM files into one dir
 
 License: GPLv2
 Group: System/Configuration/Boot and Init
-ExclusiveArch: aarch64
+ExclusiveArch: aarch64 x86_64
 BuildRequires(pre): rpm-macros-systemd
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
@@ -43,6 +43,9 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/95-%name.preset
 
 %changelog
+* Mon Oct 6 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt9
+- Change method of check external storage
+
 * Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt8
 - Fix access rights
 
