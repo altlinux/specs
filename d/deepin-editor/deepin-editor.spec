@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.21
+Version: 6.5.38
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -9,10 +9,12 @@ Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
 Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
-Vcs: git://github.com/linuxdeepin/deepin-editor.git
+VCS: https://github.com/linuxdeepin/deepin-editor
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-editor-6.0.16-armh-ppc64le.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: deepin-editor-%version-%release.patch
+Patch1: deepin-editor-6.0.16-armh-ppc64le.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Wed Apr 09 2025
@@ -33,7 +35,8 @@ BuildRequires: gcc-c++
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
   cmake/translation-generate.cmake
 
@@ -53,7 +56,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %find_lang --with-qt %name
 
 %files -f %name.lang
-%doc README.md LICENSE.txt
+%doc README.md LICENSE.txt debian/changelog
 %_bindir/%name
 %dir %_datadir/%name/
 %dir %_datadir/%name/themes/
@@ -78,6 +81,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.38-alt1
+- New version 6.5.38.
+
 * Wed Apr 09 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.21-alt1
 - New version 6.5.21.
 
