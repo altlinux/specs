@@ -2,10 +2,10 @@ Name: kernel-image-6.17
 Release: alt1
 %define kernel_src_version	6.17
 %define kernel_base_version	6.17
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -612,6 +612,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Oct 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.1-alt1
+- v6.17.1 (2025-10-06).
+- config: Enable CONFIG_HID_UNIVERSAL_PIDFF=m.
+- config-aarch64: CONFIG_REGULATOR_AXP20X=y, CONFIG_MFD_AXP20X_I2C=y.
+
 * Mon Sep 29 2025 Vitaly Chikunov <vt@altlinux.org> 6.17.0-alt1
 - Update to v6.17 (2025-09-28) release.
 - config: Enable more OmniVision cameras.
