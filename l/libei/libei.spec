@@ -17,7 +17,7 @@
 
 Name: libei
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library for Emulated Input
 Group: System/Libraries
@@ -47,10 +47,12 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: python3(attr) python3(jinja2)
 #BuildRequires: pkgconfig(epoll-shim)
 %{?_enable_documentation:BuildRequires: doxygen graphviz hugo}
+# these should have been under check but:
+# test/meson.build:156:15: ERROR:
+# python3 is missing modules: pytest, structlog, dbusmock
+BuildRequires: python3(pytest) python3(dbusmock) python3(structlog)
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: /proc python3(pytest) python3(xdist)
-BuildRequires: python3(dbusmock) python3(structlog) python3(black)
-BuildRequires: python3(yaml)
+BuildRequires: /proc python3(xdist) python3(black) python3(yaml)
 BuildRequires: ruff
 %ifarch %valgrind_arches
 BuildRequires: valgrind
@@ -127,6 +129,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1.1
+- mike@: fixed build with check knob disabled
+
 * Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
