@@ -1,7 +1,7 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2025.09.05
+Version: 2025.09.26
 Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
@@ -75,6 +75,9 @@ rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 %python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Mon Oct 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2025.09.26-alt1
+- Updated to 2025.09.26 (ALT#56272).
+
 * Tue Sep 09 2025 Cronbuild Service <cronbuild@altlinux.org> 2025.09.05-alt1
 - Updated to 2025.09.05.
 
