@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: simple-scan
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -68,6 +68,9 @@ sed -i 's|libsane-hpaio|hplip-sane|' src/app-window.vala
 %_man1dir/*
 
 %changelog
+* Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
+- 49.0.1
+
 * Fri Sep 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
