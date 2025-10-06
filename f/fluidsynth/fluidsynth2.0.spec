@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.4.8
+Version: 2.5.0
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -52,6 +52,8 @@ BuildRequires: doxygen graphviz xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: glib2-devel >= %glib_ver libsndfile-devel libalsa-devel >= %alsa_ver
 BuildRequires: libalsa-devel >= %alsa_ver libe2fs-devel
 BuildRequires: libncurses-devel libreadline-devel
+# since 2.5.0
+BuildRequires: gcem-devel
 %{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_enable_ladcca:BuildRequires: libladcca-devel >= %ladcca_ver}
 %{?_enable_lash:BuildRequires: liblash-devel}
@@ -212,8 +214,8 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/%name/FluidSynthConfig.cmake
 %_libdir/cmake/%name/FluidSynthConfigVersion.cmake
-%_libdir/cmake/%name/FluidSynthTargets-release.cmake
-%_libdir/cmake/%name/FluidSynthTargets.cmake
+%_libdir/cmake/%name/FluidSynth-shared-targets.cmake
+%_libdir/cmake/%name/FluidSynth-shared-targets-release.cmake
 %{?_enable_docs:%doc html}
 %doc TODO
 
@@ -223,6 +225,9 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %endif
 
 %changelog
+* Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.8-alt1
 - 2.4.8
 
