@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 6.0.15
+Version: 6.0.16
 Release: alt1
 
 Summary: Deepin Polkit Agent
@@ -62,14 +62,18 @@ export READELF="llvm-readelf"
 
 %install
 %DQ6install
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
 %doc README.md
 %doc LICENSE
 %doc debian/changelog
 %dir %_libexecdir/polkit-1-dde
 %_libexecdir/polkit-1-dde/%repo
-%_datadir/%repo/
+# package outside find_lang
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/%repo.qm
 
 %files devel
 %dir %_includedir/dpa/
@@ -77,6 +81,10 @@ export READELF="llvm-readelf"
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
+- New version 6.0.16.
+- Applied FindLang Policy.
+
 * Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.15-alt1
 - New version 6.0.15.
 
