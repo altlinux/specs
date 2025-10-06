@@ -1,7 +1,7 @@
 %define php_extension mongodb
 
 Name: php%_php_suffix-%php_extension
-Version: 2.1.1
+Version: 2.1.2
 Release: alt%php_version.%php_release
 
 Summary: MongoDB driver for PHP
@@ -69,6 +69,10 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - rebuilt with php-devel = %php_version-%php_release
+
+* Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.2-alt1
+- 2.1.1 -> 2.1.2
+- built from upstream git
 
 * Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt2
 - Finally packaged as a universal php package.
