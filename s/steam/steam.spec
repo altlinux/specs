@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.84
+Version: 1.0.0.85
 Release: alt1
 
 Summary: Launcher for the Steam software distribution service
@@ -76,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Mon Oct 06 2025 Nazarov Denis <nenderus@altlinux.org> 1.0.0.85-alt1
+- Version 1.0.0.86
+
 * Thu Aug 28 2025 Nazarov Denis <nenderus@altlinux.org> 1.0.0.84-alt1
 - Version 1.0.0.84
 
