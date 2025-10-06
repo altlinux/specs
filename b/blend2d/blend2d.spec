@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: blend2d
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: 2D Vector Graphics Engine
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 #https://blend2d.com/download/blend2d-%version.tar.gz
 
 #Add soname to library
-Patch: CMakeLists-0.20.0-alt-fixes.patch
+Patch: CMakeLists-0.21.0-alt-fixes.patch
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -66,5 +66,8 @@ developing applications that use %name.
 %_libdir/cmake/%name
 
 %changelog
-* Sat Oct 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt1
+* Mon Oct 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.21.0-alt1
+- 0.20.0 -> 0.21.0
+
+* Sun Oct 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt1
 - Initial build for ALT Linux.
