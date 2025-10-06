@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.49
+%define ver_major 0.50
 %define beta %nil
-%define gmobile_ver 0.2.1
+%define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
 
 %def_disable embed_gmobile
@@ -34,6 +34,7 @@ Source10: gvc-%gvc_ver.tar
 
 %define phoc_ver %ver_major
 %define phosh_ver %ver_major
+%define phosh_settings_ver 0.40
 %define desktop_ver 44
 
 Requires: dconf feedbackd lm_sensors3
@@ -52,13 +53,15 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
-BuildRequires: pkgconfig(phosh-settings) >= %phosh_ver
+BuildRequires: pkgconfig(phosh-settings) >= %phosh_settings_ver
 BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libportal-gtk4)
 # since 0.49
 BuildRequires: pkgconfig(libcellbroadcast-0.0)
+# since 0.50
+BuildRequires: pkgconfig(yaml-0.1)
 # for gvc
 BuildRequires: pkgconfig(libpulse)
 %if_enabled embed_gmobile
@@ -106,6 +109,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 

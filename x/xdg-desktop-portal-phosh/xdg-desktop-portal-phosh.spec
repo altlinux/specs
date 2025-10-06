@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.49
+%define ver_major 0.50
 %define beta %nil
 
 %define _name phosh
@@ -35,7 +35,7 @@ Source1: %name-%version%beta-cargo.tar
 %define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
 %define gsds_ver 47
-%define pfs_ver 0.0.4
+%define pfs_ver 0.0.5
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
@@ -87,6 +87,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 

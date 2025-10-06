@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.49
+%define ver_major 0.50
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -286,6 +286,7 @@ xvfb-run %__meson_test
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/%name/
 %_unitdir/phosh.service
+%_userunitdir/mobi.phosh.OSK.target
 %_userunitdir/gnome-session@%name.target.d/session.conf
 %_userunitdir/%rdn_name.service
 %_userunitdir/%rdn_name.target
@@ -316,6 +317,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 

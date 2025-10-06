@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.49
+%define ver_major 0.50
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -8,8 +8,8 @@
 
 %define dev_uid 500
 %define wlroots_ver_major 0.19
-%define wlroots_ver %wlroots_ver_major.0
-# since 0.48 system 0.19.0 may be used but patched version required
+%define wlroots_ver %wlroots_ver_major.1
+# since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %define gmobile_ver 0.1.0
@@ -47,6 +47,7 @@ Source3: gvdb-%gvdb_ver.tar
 %define gmobile_ver 0.1.0
 %define wayland_proto_ver 1.15
 %define gnome_desktop_ver 43
+%define libinput_ver 1.27
 
 Provides: greetd-greeter
 
@@ -55,7 +56,7 @@ BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= %gnome_desktop_ver
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
-BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libinput) >= %libinput_ver
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(xkbcommon)
@@ -151,6 +152,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 

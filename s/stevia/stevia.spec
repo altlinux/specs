@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.49
+%define ver_major 0.50
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -19,12 +19,12 @@ Release: alt1%beta
 Summary: Stevia is an alternative keyboard for Phosh
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
-Url: https://gitlab.gnome.org/guidog/stevia
+Url: https://gitlab.gnome.org/World/Phosh/stevia
 
-Vcs: https://gitlab.gnome.org/guidog/stevia.git
+Vcs: https://gitlab.gnome.org/World/Phosh/stevia.git
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/guidog/phosh-osk-stub/-/archive/v%version/%name-v%version%beta.tar.gz
+Source: https://gitlab.gnome.org/World/Phosh/stevia/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -43,6 +43,7 @@ Provides: phosh-osk-stub = %EVR
 Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
 Requires: fzf words
+Requires: varnam-schemes
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson
@@ -63,10 +64,10 @@ BuildRequires: pkgconfig(libsystemd) >= %systemd_ver
 BuildRequires: pkgconfig(hunspell)
 # https://bugzilla.altlinux.org/54897
 BuildRequires: fzf
-#BuildRequires: pkgconfig(govarnam)
+BuildRequires: pkgconfig(govarnam)
 %{?_enable_gtk_doc:BuildRequires: gobject-introspection-devel gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
-%{?_enable_check:BuildRequires: at-spi2-core xvfb-run words}
+%{?_enable_check:BuildRequires: at-spi2-core xvfb-run words varnam-schemes}
 %description
 %{summary}.
 The purpose of Stevia is:
@@ -133,12 +134,16 @@ xvfb-run %__meson_test
 %_datadir/%binary_name/completers/hunspell.completer
 %_datadir/glib-2.0/schemas/mobi.phosh.osk.enums.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.osk.gschema.xml
+%_userunitdir/%rdn_name.service
 %{?_enable_man:%_man1dir/%binary_name.1*}
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* NEWS
 
 
 %changelog
+* Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Fri Aug 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 
