@@ -1,7 +1,7 @@
 %define modulename furo
 
 Name:     python3-module-%modulename
-Version:  2024.01.29
+Version:  2024.08.06
 Release:  alt1
 
 Summary:  A clean customizable documentation theme for Sphinx
@@ -58,6 +58,9 @@ nodeenv --node=system --prebuilt --clean-src $PWD/.nodeenv
 %doc *.md
 
 %changelog
+* Mon Feb 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.08.06-alt1
+- 2024.08.06.
+
 * Mon Mar 25 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.01.29-alt1
 - 2024.01.29.
 - Adopted build process from RH.
