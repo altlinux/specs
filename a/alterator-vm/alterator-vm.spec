@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.47
+Version: 0.4.48
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Sat Oct 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.4.48-alt1
+- Enable going back to change package set in vm/blonde.
+
 * Mon Aug 11 2025 Oleg Solovyov <mcpain@altlinux.org> 0.4.47-alt1
 - do not round down required partition sizes (Closes: #51746)
 
