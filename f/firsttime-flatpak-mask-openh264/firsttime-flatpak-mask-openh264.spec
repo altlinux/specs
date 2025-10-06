@@ -1,5 +1,5 @@
 Name: firsttime-flatpak-mask-openh264
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Mon Oct 06 2025 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
+- fix apply command (closes: 56250)
+
 * Thu Oct 02 2025 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
 - don't require flatpak
 
