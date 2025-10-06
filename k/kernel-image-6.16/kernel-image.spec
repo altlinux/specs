@@ -2,7 +2,7 @@ Name: kernel-image-6.16
 Release: alt1
 %define kernel_src_version	6.16
 %define kernel_base_version	6.16
-%define kernel_sublevel	.10
+%define kernel_sublevel	.11
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Oct 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.11-alt1
+- v6.16.11 (2025-10-06).
+- config: Enable CONFIG_HID_UNIVERSAL_PIDFF=m.
+- config-aarch64: CONFIG_REGULATOR_AXP20X=y, CONFIG_MFD_AXP20X_I2C=y.
+
 * Thu Oct 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.16.10-alt1
 - v6.16.10 (2025-10-02).
 
