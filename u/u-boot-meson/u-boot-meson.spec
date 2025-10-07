@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2025.07
+Version: 2025.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -24,6 +24,9 @@ This package supports various AMLogic Meson family boards.
 
 %prep
 %setup
+sed -e '/^CONFIG_DEFAULT_DEVICE_TREE/ s,gsking-x,ugoos-am6,' \
+    -e '/^CONFIG_IDENT_STRING/ s,beelink,ugoos-am6,' \
+    < configs/beelink-gsking-x_defconfig > configs/ugoos-am6_defconfig
 
 %build
 export DTC=%_bindir/dtc
@@ -37,14 +40,16 @@ done
 
 %install
 mkdir -p %buildroot%_datadir/u-boot
-cd out
-find . -type f | cpio -pmd %buildroot%_datadir/u-boot
+cp -a out/* %buildroot%_datadir/u-boot
 
 %files
 %doc README doc/board/amlogic
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10-alt1
+- 2025.10 released
+
 * Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
 - 2025.07 released
 
