@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
-Version: 2025.07
-Release: alt2
+Version: 2025.10
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -70,14 +70,16 @@ done
 
 %install
 mkdir -p %buildroot%_datadir/u-boot
-cd out 
-find . -type f | cpio -pmd %buildroot%_datadir/u-boot
+cp -a out/* %buildroot%_datadir/u-boot
 
 %files
 %doc README doc/README.rockchip doc/board/rockchip
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10-alt1
+- 2025.10 released
+
 * Tue Jul 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt2
 - added rk3566-powkiddy-x35s board (closes: 55304)
 
