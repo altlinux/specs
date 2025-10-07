@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 2.2
+%define ver_major 2.3
 %define rdn_name app.fotema.%_name
 
 %def_enable check
@@ -119,6 +119,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Tue Oct 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Fri Sep 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
