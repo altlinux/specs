@@ -1,5 +1,5 @@
 Name: u-boot-qemu
-Version: 2025.07
+Version: 2025.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -55,6 +55,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10-alt1
+- 2025.10 released
+
 * Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
 - 2025.07 released
 
