@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 25.3.3.42
+Version: 25.8.8.26
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -154,7 +154,9 @@ export ROOT_PATH=$PWD
 	-DPARALLEL_LINK_JOBS=$NPROCS \
 %endif
 	-DOMIT_HEAVY_DEBUG_SYMBOLS=ON \
-	-DSPLIT_DEBUG_SYMBOLS=OFF \
+	-DSPLIT_DEBUG_SYMBOLS=ON \
+	-DBUILD_STRIPPED_BINARY=ON \
+	-DENABLE_CLICKHOUSE_SELF_EXTRACTING=1 \
 	-DENABLE_RUST=OFF \
 	-DBUILD_STANDALONE_KEEPER=1 \
 	-DENABLE_CLICKHOUSE_KEEPER=1 \
@@ -244,7 +246,9 @@ fi
 %_bindir/clickhouse-server
 %_bindir/clickhouse-keeper
 %_bindir/clickhouse-keeper-client
+%_bindir/clickhouse-keeper-utils
 %_bindir/clickhouse-keeper-converter
+%_bindir/clickhouse-fst-dump-tree
 %_unitdir/clickhouse-server.service
 %dir %attr(0750,_clickhouse,_clickhouse) %_logdir/clickhouse-server
 %dir %attr(0750,_clickhouse,_clickhouse) %_localstatedir/clickhouse
@@ -252,6 +256,7 @@ fi
 %files client
 %dir %_sysconfdir/clickhouse-client
 %config(noreplace) %_sysconfdir/clickhouse-client/config.xml
+%_bindir/clickhouse-chdig
 %_bindir/clickhouse-client
 %_bindir/clickhouse-local
 %_bindir/clickhouse-compressor
@@ -267,6 +272,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Thu Oct 02 2025 Anton Farygin <rider@altlinux.com> 25.8.8.26-alt1
+- 25.3.3.42 -> 25.8.8.26
+
 * Fri May 16 2025 Anton Farygin <rider@altlinux.com> 25.3.3.42-alt1
 - 24.8.13.16 -> 25.3.3.42
 
