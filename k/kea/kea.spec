@@ -7,7 +7,7 @@
 
 Name: kea
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
@@ -389,8 +389,11 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Oct 07 2025 Anton Farygin <rider@altlinux.com> 3.0.1-alt2
+- fixed typo in changelog
+
 * Fri Sep 05 2025 Anton Farygin <rider@altlinux.com> 3.0.1-alt1
-- 3.0.0 -> 3.0.1 (Fixes: CVE:2025-40779)
+- 3.0.0 -> 3.0.1 (Fixes: CVE-2025-40779)
 - fixed typo in dhcp4 service (Closes: #55877)
 - fixed incorrect ownership of kea-leases*.csv files (Closes: #55878)
 
