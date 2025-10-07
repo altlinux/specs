@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2025.07
+Version: 2025.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -7,10 +7,13 @@ License: GPLv2+
 Group: System/Kernel and hardware
 Url: https://docs.u-boot.org/en/latest/
 
+%ifndef crossbuild
 ExclusiveArch: aarch64
+%endif
 
 Source: %name-%version-%release.tar
 
+BuildRequires: aarch64-none-elf-gcc
 BuildRequires: bc dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 
 %description
@@ -26,22 +29,26 @@ This package supports Raspberry Pi 3/4 boards.
 %setup
 
 %build
+export DTC=%_bindir/dtc
+export CROSS_COMPILE=aarch64-none-elf-
 for board in %rpis; do
 	O=build/${board}
-	%make_build DTC=%_bindir/dtc O=${O} ${board}_defconfig all
+	%make_build O=${O} ${board}_defconfig all
 	install -pm0644 -D ${O}/u-boot.bin out/${board}/%img
 done
 
 %install
 mkdir -p %buildroot%_datadir/u-boot
-cd out
-find . -type f | cpio -pmd %buildroot%_datadir/u-boot
+cp -a out/* %buildroot%_datadir/u-boot
 
 %files
 %doc README doc/board/broadcom
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10-alt1
+- 2025.10 released
+
 * Tue Jul 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.07-alt1
 - 2025.07 released
 
