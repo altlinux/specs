@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20240927
+Version: 20250807
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -23,7 +23,6 @@ Source13: grammar.asl.result
 Source14: converterSample.asl.result
 Source15: run-misc-tests.sh
 
-
 # other miscellaneous patches
 Patch100: unaligned.patch
 Patch101: OPT_LDFLAGS.patch
@@ -32,12 +31,9 @@ Patch103: f23-harden.patch
 Patch104: template.patch
 Patch105: arm7hl.patch
 Patch107: mips-be-fix.patch
-Patch108: cve-2017-13693.patch
-Patch109: cve-2017-13694.patch
 Patch110: cve-2017-13695.patch
 Patch111: str-trunc-warn.patch
 Patch112: ptr-cast.patch
-Patch113: armv7-str-fixes.patch
 Patch114: dbtest.patch
 Patch116: dangling-ptr.patch
 Patch117: uuid-len.patch
@@ -105,7 +101,7 @@ cp -p %SOURCE14 converterSample.asl.result
 cp -p %SOURCE15 tests/run-misc-tests.sh
 chmod a+x tests/run-misc-tests.sh
 
-%ifarch %e2k
+%ifarch %e2k %ix86 %arm %mips32
 sed -i 's,-Werror ,,' generate/unix/iasl/Makefile
 %endif
 
@@ -115,7 +111,7 @@ CWARNINGFLAGS="\
     -Wall \
     -Wbad-function-cast \
     -Wdeclaration-after-statement \
-%ifnarch %e2k
+%ifnarch %e2k %ix86 %arm %mips32
     -Werror \
 %endif
     -Wformat=2 \
@@ -146,7 +142,7 @@ CWARNINGFLAGS="\
 OPT_CFLAGS="%optflags $CWARNINGFLAGS"
 export OPT_CFLAGS
 
-%make HOST=_LINUX NOFORTIFY=TRUE
+NOFORTIFY=TRUE %make_build
 
 %install
 # Install the binaries
@@ -173,6 +169,9 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Mon Oct 06 2025 Alexey Shabalin <shaba@altlinux.org> 20250807-alt1
+- 20250807
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240927-alt1
 - 20240927
 
