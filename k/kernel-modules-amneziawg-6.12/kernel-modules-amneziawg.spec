@@ -1,5 +1,5 @@
 %define module_name	amneziawg
-%define module_version	1.0.20241112
+%define module_version	1.0.20251004
 %define module_release	alt1
 
 %define flavour		6.12
@@ -45,8 +45,9 @@ and efficient solution within modern VPN infrastructures.
 
 %prep
 rm -rf kernel-source-%module_name-%module_version
-tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
-%setup -D -T -n kernel-source-%module_name-%module_version
+mkdir kernel-source-%module_name-%module_version
+tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2 -C kernel-source-%module_name-%module_version
+%setup -D -T -n kernel-source-%module_name-%module_version/src
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=`pwd`
@@ -62,6 +63,9 @@ install amneziawg.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Oct 07 2025 Anton Farygin <rider@altlinux.com> 1.0.20251004-alt1
+- 1.0.20241112 -> 1.0.20251004
 
 * Sat Mar 22 2025 Anton Farygin <rider@altlinux.com> 1.0.20241112-alt1.%kcode.%kbuildrelease
 - Initial build for ALT Linux.

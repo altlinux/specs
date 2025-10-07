@@ -2,7 +2,7 @@
 
 Name: kernel-source-amneziawg
 
-Version: 1.0.20241112
+Version: 1.0.20251004
 Release: alt1
 
 Summary: AmneziaWG kernel module source for Amnezia VPN based on WireGuard
@@ -27,15 +27,18 @@ kernel version 6.12, provided as an out-of-tree module.
 %setup
 
 %build
-mv %name %name-%version
+
 %install
 mkdir -p %kernel_srcdir
-tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
+tar -cjf %kernel_srcdir/%name-%version.tar.bz2 .
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Oct 07 2025 Anton Farygin <rider@altlinux.com> 1.0.20251004-alt1
+- 1.0.20241112 - 1.0.20251004
+
 * Sat Mar 22 2025 Anton Farygin <rider@altlinux.com> 1.0.20241112-alt1
 - initial build for ALT Linux
 
