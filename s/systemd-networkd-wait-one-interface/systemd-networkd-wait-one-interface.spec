@@ -1,6 +1,6 @@
 Name: systemd-networkd-wait-one-interface
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Wait for only one interface
 License: GPL-2.0-or-later
@@ -9,6 +9,8 @@ Group: Networking/Other
 Url: https://www.altlinux.org
 
 BuildRequires(pre): rpm-macros-systemd
+Requires: systemd-networkd
+AutoReq: no
 
 BuildArch: noarch
 
@@ -33,6 +35,9 @@ EOF
 %_unitdir/systemd-networkd-wait-online.service.d/%name.conf
 
 %changelog
+* Mon Oct 06 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt2
+- add runtime dependencies on systemd-networkd, AutoReq: no (Closes: 56283)
+
 * Wed Sep 10 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - add TimeoutStartSec=15s
 
