@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 25.6
+Version: 25.9
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -63,6 +63,9 @@ cp man/man1/* %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Wed Oct 08 2025 Ilya Mashkin <oddity@altlinux.ru> 25.9-alt1
+- 25.9
+
 * Mon Aug 18 2025 Ilya Mashkin <oddity@altlinux.ru> 25.6-alt1
 - 25.6
 
