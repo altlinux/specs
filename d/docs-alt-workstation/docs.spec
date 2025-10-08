@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Oct 08 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt4
+- add etcnet
+- update loupe, foldy, surguch
+- minor improvements (ALT #56263, #56277)
+
 * Tue Sep 02 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
 - add GSConnect, Session Keeper, VPN GOST
 - fix some typos (ALT #55556)
