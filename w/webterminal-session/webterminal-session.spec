@@ -1,29 +1,29 @@
 
 Name: webterminal-session
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/Other
-Summary: Start WEB-Terminal application
+Summary: Apply WEB-Terminal application
 License: GPL-2.0-only
 URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
 BuildArch: noarch
 
 Requires: kde6-runtime kwin
+Provides: installer-feature-webterminal-setup = 0.5
+Obsoletes: installer-feature-webterminal-setup < 0.5
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 
 %description
-Start WEB-Terminal application for kiosk mode.
+Apply WEB-Terminal application for kiosk mode.
 
 %prep
 %setup
-
-#build
 
 %install
 mkdir -p %buildroot/%_bindir/
@@ -34,16 +34,24 @@ mkdir -p %buildroot/%_datadir/xsessions/
 install -m 0755 webterminal.desktop %buildroot/%_datadir/xsessions/
 mkdir -p %buildroot/%_x11sysconfdir/wmsession.d/
 install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
-
+mkdir -p %buildroot/%_sysconfdir/alterator/kiosk/profiles/
+install -m 0644 kiosk-webterminal-addon %buildroot/%_sysconfdir/alterator/kiosk/profiles/webterminal-addon
+mkdir -p %buildroot/%_sysconfdir/firsttime.d/
+install -m 0755 firsttime-setup.sh %buildroot/%_sysconfdir/firsttime.d/webterminal-setup.sh
 
 %files
 %dir %_sysconfdir/webterminal-session/
 %config(noreplace) %_sysconfdir/webterminal-session/start-webterminal
+%config(noreplace) %_sysconfdir/alterator/kiosk/profiles/webterminal-addon
+%_sysconfdir/firsttime.d/*.sh
 %_bindir/start-webterminal
 %_x11sysconfdir/wmsession.d/*WEBTERMINAL*
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Wed Oct 08 2025 Sergey V Turchin <zerg at altlinux dot org> 0.6.0-alt1
+- setup kiosk on first start
+
 * Fri Sep 12 2025 Sergey V Turchin <zerg at altlinux dot org> 0.5.0-alt1
 - start maliit-keyboard if present
 
