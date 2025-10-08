@@ -7,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 0.5.12
+Version: 0.5.13
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -29,7 +29,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 # To create icons
 BuildRequires: librsvg-utils
 #For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: xvfb-run libappstream-glib desktop-file-utils}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: xvfb-run appstream desktop-file-utils}}
 
 Conflicts: zatura-pdf-poppler < 0.3.3-alt1
 Conflicts: zatura-djvu < 0.2.10-alt1
@@ -91,6 +91,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Oct 08 2025 Mikhail Efremov <sem@altlinux.org> 0.5.13-alt1
+- Updated to 0.5.13.
+
 * Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.12-alt1
 - Updated to 0.5.12.
 
