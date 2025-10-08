@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%define appdir  %_datadir/gambas3
+%define appdir %_datadir/gambas3
 %ifnarch %qt6_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
 %endif
-%def_enable     opengl
+%def_enable opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
 %def_with jit
 %def_without sqlite2
@@ -15,9 +15,9 @@ Provides:  gambas3-%{*} = %EVR \
 Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
-Name:    gambas
+Name: gambas
 Version: 3.20.4
-Release: alt1
+Release: alt2
 
 Summary: IDE based on a basic interpreter with object extensions
 License: GPL-2.0+
@@ -118,6 +118,7 @@ Patch5: %name-3.11.4-alt-libpoppler-bool-type-fix.patch
 Patch6: %name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7: %name-alt-mysql8-bool-type-fix.patch
 Patch8: gambas3-3.13.0-poppler-0.73.0.patch
+Patch9: gambas3-3.20.2-poppler-25.07.0.patch
 
 Provides:  gambas3 = %EVR
 Obsoletes: gambas3 < %EVR
@@ -246,8 +247,8 @@ program into many languages, create network applications easily, and so
 on...
 
 %package runtime
-Summary:	Runtime environment for Gambas3
-Group:		Development/Tools
+Summary: Runtime environment for Gambas3
+Group: Development/Tools
 %prov3 runtime
 
 %description runtime
@@ -256,9 +257,9 @@ with object extensions, like Visual Basic. This package contains the
 runtime components necessary to run programs designed in Gambas3.
 
 %package devel
-Summary:	Development environment for Gambas3
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Development environment for Gambas3
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 devel
 
 %description devel
@@ -267,10 +268,10 @@ projects without having to install the complete development environment
 (gambas3-ide).
 
 %package scripter
-Summary:	Scripter program that allows the creation of Gambas3 scripts
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
-Requires:	%name-devel = %EVR
+Summary: Scripter program that allows the creation of Gambas3 scripts
+Group: Development/Tools
+Requires: %name-runtime = %EVR
+Requires: %name-devel = %EVR
 %prov3 scripter
 
 %description scripter
@@ -278,10 +279,10 @@ This package includes the scripter program that allows the user to
 write script files in Gambas.
 
 %package ide
-Summary:	The complete Gambas3 Development Environment
-Group:		Development/Tools
-License:	GPLv2+
-Provides:	%name = %EVR
+Summary: The complete Gambas3 Development Environment
+Group: Development/Tools
+License: GPLv2+
+Provides: %name = %EVR
 %prov3 ide
 
 Requires: tar, gzip, rpm-build, gettext
@@ -300,9 +301,6 @@ Requires: %name-gb-form-mdi = %EVR
 Requires: %name-gb-form-stock = %EVR
 Requires: %name-gb-form-terminal = %EVR
 Requires: %name-gb-highlight = %EVR
-#Requires: %name-gb-gtk3 = %EVR
-#Requires: %name-gb-gtk3-x11 = %EVR
-#Requires: %name-gb-gtk3-webview = %EVR
 Requires: %name-gb-gui = %EVR
 Requires: %name-gb-image = %EVR
 Requires: %name-gb-image-effect = %EVR
@@ -334,62 +332,62 @@ and the database manager. Installing this package will give you all
 of the Gambas3 components.
 
 %package gb-args
-Summary:	Gambas3 component package for args
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for args
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-args
 
 %description gb-args
 This package contains the Gambas3 component package for args.
 
 %package gb-cairo
-Summary:	Gambas3 component package for cairo
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for cairo
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-cairo
 
 %description gb-cairo
 This package contains the Gambas3 Cario components.
 
 %package gb-chart
-Summary:	Gambas3 component package for chart
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for chart
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-chart
 
 %description gb-chart
 This package contains the Gambas3 Chart components.
 
 %package gb-clipper
-Summary:	Gambas3 component package for clipper
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
+Summary: Gambas3 component package for clipper
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
 %prov3 gb-clipper
 
 %description gb-clipper
 %{summary}
 
 %package gb-clipper2
-Summary:	Gambas3 component package for clipper2
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
+Summary: Gambas3 component package for clipper2
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
 
 %description gb-clipper2
 %{summary}
 
 %package gb-complex
-Summary:	Gambas3 component package for complex
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for complex
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-complex
 
 %description gb-complex
 This component brings complex numbers support to the interpreter.
 
 %package gb-compress
-Summary:	Gambas3 component package for compress
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for compress
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-compress
 
 %description gb-compress
@@ -397,18 +395,18 @@ This component allows you to compress/uncompress data or files
 with the bzip2 and zip algorithms.
 
 %package gb-crypt
-Summary:	Gambas3 component package for crypt
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for crypt
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-crypt
 
 %description gb-crypt
 This component contains cryptography support.
 
 %package gb-data
-Summary:	Gambas3 component package for data
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for data
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-data
 
 %description gb-data
@@ -416,9 +414,9 @@ The gb.data component provides Abstract Datatypes (ADT) which are data
 containers with a well-defined interface but variable implementation.
 
 %package gb-db
-Summary:	Gambas3 component package for db
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db
 
 %description gb-db
@@ -426,103 +424,103 @@ This component allows you to access many databases management
 systems, provided that you install the needed driver packages.
 
 %package gb-db-form
-Summary:	Gambas3 component package for db.form
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db.form
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db-form
 
 %description gb-db-form
 This package contains the Gambas3 Database form components.
 
 %package gb-db-mysql
-Summary:	Gambas3 component package for db.mysql
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db.mysql
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db-mysql
 
 %description gb-db-mysql
 This component allows you to access MySQL databases.
 
 %package gb-db-odbc
-Summary:	Gambas3 component package for db.odbc
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db.odbc
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db-odbc
 
 %description gb-db-odbc
 This component allows you to access ODBC databases.
 
 %package gb-db-postgresql
-Summary:	Gambas3 component package for db.postgresql
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db.postgresql
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db-postgresql
 
 %description gb-db-postgresql
 This component allows you to access PostgreSQL databases.
 
 %package gb-db-sqlite3
-Summary:	Gambas3 component package for db.sqlite3
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db.sqlite3
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-db-sqlite3
 
 %description gb-db-sqlite3
 This component allows you to access SQLite 3 databases.
 
 %package gb-db2
-Summary:	Gambas3 component package for db2
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2
 This component allows you to access many databases management
 systems, provided that you install the needed driver packages.
 
 %package gb-db2-form
-Summary:	Gambas3 component package for db2.form
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2.form
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2-form
 This package contains the Gambas3 Database form components (version 2).
 
 %package gb-db2-mysql
-Summary:	Gambas3 component package for db2.mysql
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2.mysql
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2-mysql
 This component allows you to access MySQL databases (version 2).
 
 %package gb-db2-odbc
-Summary:	Gambas3 component package for db2.odbc
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2.odbc
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2-odbc
 This component allows you to access ODBC databases (version 2).
 
 %package gb-db2-postgresql
-Summary:	Gambas3 component package for db2.postgresql
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2.postgresql
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2-postgresql
 This component allows you to access PostgreSQL databases (version 2).
 
 %package gb-db2-sqlite3
-Summary:	Gambas3 component package for db2.sqlite3
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for db2.sqlite3
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 
 %description gb-db2-sqlite3
 This component allows you to access SQLite 3 databases (version 2).
 
 %package gb-desktop
-Summary:	Gambas3 component package for desktop
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for desktop
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-desktop
 
 %description gb-desktop
@@ -530,9 +528,9 @@ This Gambas3 component allows you to operate with XDG-compliant desktop
 environmnents.
 
 %package gb-desktop-gnome
-Summary:	Gambas3 component package for GNOME desktop
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for GNOME desktop
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-desktop-gnome
 
 %description gb-desktop-gnome
@@ -540,81 +538,81 @@ This Gambas3 component allows you to operate with GNOME desktop
 environmnents.
 
 %package gb-dbus
-Summary:	Gambas3 component package for dbus
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for dbus
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-dbus
 
 %description gb-dbus
 This package contains the Gambas3 D-bus components.
 
 %package gb-eval-highlight
-Summary:	Gambas3 component package for eval highlight
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for eval highlight
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-eval-highlight
 
 %description gb-eval-highlight
 This component implements the eval-highlight componet.
 
 %package gb-form
-Summary:	Gambas3 component package for form
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for form
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form
 
 %description gb-form
 This component implements the form control.
 
 %package gb-form-dialog
-Summary:	Gambas3 component package for form.dialog
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for form.dialog
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-dialog
 
 %description gb-form-dialog
 This component implements the form-dialog control.
 
 %package gb-form-mdi
-Summary:	Gambas3 component package for form.mdi
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for form.mdi
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-mdi
 
 %description gb-form-mdi
 This component implements the form-mdi control.
 
 %package gb-form-stock
-Summary:	Gambas3 component package for form.stock
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for form.stock
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-stock
 
 %description gb-form-stock
 This component implements the form-stock control.
 
 %package gb-httpd
-Summary:	Gambas3 component package for httpd
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for httpd
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-httpd
 
 %description gb-httpd
 Gambas3 component package for httpd.
 
 %package gb-gmp
-Summary:	Gambas3 component package for gmp
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
+Summary: Gambas3 component package for gmp
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
 %prov3 gb-gmp
 
 %description gb-gmp
 %{summary}
 
 %package gb-gsl
-Summary:	Gambas3 component package for gsl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gsl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gsl
 
 %description gb-gsl
@@ -622,18 +620,18 @@ This component aims at providing most of the features
 of the Gnu Scientific Library.
 
 %package gb-gtk
-Summary:	Gambas3 component package for gtk
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gtk
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gtk
 
 %description gb-gtk
 This package includes the Gambas3 GTK2 GUI component.
 
 %package gb-gtk3
-Summary:	Gambas3 component package for gtk3
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gtk3
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gtk3
 
 %description gb-gtk3
@@ -668,9 +666,9 @@ Requires: %name-gb-gtk3 = %EVR
 
 %if_enabled opengl
 %package gb-gtk-opengl
-Summary:	Gambas3 component package for gtk.opengl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gtk.opengl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gtk-opengl
 
 %description gb-gtk-opengl
@@ -678,9 +676,9 @@ This component allows to use the gb.opengl component in
 GTK+ applications.
 
 %package gb-gtk3-opengl
-Summary:	Gambas3 component package for gtk3.opengl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gtk3.opengl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gtk-opengl
 
 %description gb-gtk3-opengl
@@ -689,9 +687,9 @@ GTK+ 3.x applications.
 %endif
 
 %package gb-gui
-Summary:	Gambas3 component package for gui
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for gui
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-gui
 
 %description gb-gui
@@ -699,46 +697,46 @@ This is a component that just loads gb.qt if you are running KDE or
 gb.gtk in the other cases.
 
 %package gb-image
-Summary:	Gambas3 component package for image
-License:	GPLv2 or QPL
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for image
+License: GPLv2 or QPL
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-image
 
 %description gb-image
 Image processing component for Gambas3.
 
 %package gb-image-effect
-Summary:	Gambas3 component package for image.effect
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for image.effect
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-image-effect
 
 %description gb-image-effect
 This component allows you to apply various effects to images.
 
 %package gb-image-imlib
-Summary:	Gambas3 component package for image.imlib
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for image.imlib
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-image-imlib
 
 %description gb-image-imlib
 This component allows you to manipulate images with imlibs.
 
 %package gb-image-io
-Summary:	Gambas3 component package for image.io
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for image.io
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-image-io
 
 %description gb-image-io
 This component allows you to perform images input output operations.
 
 %package gb-inotify
-Summary:	Gambas3 component package for inotify (unstable)
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for inotify (unstable)
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-inotify
 
 %description gb-inotify
@@ -746,9 +744,9 @@ This component allows you to perform inotify operations.
 
 %if_with jit
 %package gb-jit
-Summary:	Gambas3 Just In Time compiler
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 Just In Time compiler
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-jit
 
 %description gb-jit
@@ -756,9 +754,9 @@ Gambas3 Just In Time compiler.
 %endif
 
 %package gb-logging
-Summary:	Gambas3 component package for logging
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
+Summary: Gambas3 component package for logging
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
 %prov3 gb-logging
 
 %description gb-logging
@@ -819,9 +817,9 @@ Requires:   %name-runtime = %EVR
 Gambas3 component package for ncurses
 
 %package gb-net
-Summary:	Gambas3 component package for net
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for net
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-net
 
 %description gb-net
@@ -829,9 +827,9 @@ This Gambas3 component allows you to use TCP/IP and UDP sockets, and to
 access any serial ports.
 
 %package gb-net-curl
-Summary:	Gambas3 component package for net.curl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for net.curl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-net-curl
 
 %description gb-net-curl
@@ -839,9 +837,9 @@ This Gambas3 component allows your programs to easily become FTP or HTTP
 clients.
 
 %package gb-net-pop3
-Summary:	Gambas3 component package for net.pop3
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for net.pop3
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-net-pop3
 
 %description gb-net-pop3
@@ -850,9 +848,9 @@ following the POP3 protocol. It support SSL/TLS encryption provided
 that openssl is installed on your system.
 
 %package gb-net-smtp
-Summary:	Gambas3 component package for net.smtp
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for net.smtp
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-net-smtp
 
 %description gb-net-smtp
@@ -872,27 +870,27 @@ Gambas3 component package for openal.
 
 %if_enabled opengl
 %package gb-opengl
-Summary:	Gambas3 component package for opengl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for opengl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-opengl
 
 %description gb-opengl
 This component allows you to use the Mesa libraries to do 3D operations.
 
 %package gb-opengl-glu
-Summary:	Gambas3 component package for opengl.glu
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for opengl.glu
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-opengl-glu
 
 %description gb-opengl-glu
 This component allows you to use the Mesa libraries to do 3D operations.
 
 %package gb-opengl-glsl
-Summary:	Gambas3 component package for opengl.glsl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for opengl.glsl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-opengl-glsl
 
 %description gb-opengl-glsl
@@ -900,37 +898,37 @@ This component allows you to use the Mesa libraries to do 3D operations.
 %endif
 
 %package gb-opengl-sge
-Summary:	Gambas3 component package for opengl-sge
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
-Requires:	%{name}-gb-opengl = %{version}-%{release}
+Summary: Gambas3 component package for opengl-sge
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
+Requires: %{name}-gb-opengl = %{version}-%{release}
 %prov3 gb-opengl-sge
 
 %description gb-opengl-sge
 %{summary}
 
 %package gb-openssl
-Summary:	Gambas3 component package for openssl
-Group:		Development/Tools
-Requires:	%{name}-runtime = %{version}-%{release}
+Summary: Gambas3 component package for openssl
+Group: Development/Tools
+Requires: %{name}-runtime = %{version}-%{release}
 %prov3 gb-openssl
 
 %description gb-openssl
 %{summary}
 
 %package gb-option
-Summary:	Gambas3 component package for option
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for option
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-option
 
 %description gb-option
 This component allows you to interpret command-line options.
 
 %package gb-pcre
-Summary:	Gambas3 component package for pcre
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for pcre
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-pcre
 
 %description gb-pcre
@@ -938,54 +936,54 @@ This component allows you to use Perl compatible regular expresions
 within Gambas code.
 
 %package gb-pdf
-Summary:	Gambas3 component package for pdf
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for pdf
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-pdf
 
 %description gb-pdf
 This component allows you to manipulate pdf files with Gambas code.
 
 %package gb-qt4
-Summary:	Gambas3 component package for qt4
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt4
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt4
 
 %description gb-qt4
 This package includes Gambas3 QT4 GUI component.
 
 %package gb-qt4-ext
-Summary:	Gambas3 component package for qt4.ext
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt4.ext
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt4-ext
 
 %description gb-qt4-ext
 This package contains the Gambas3 qt-ext components.
 
 %package gb-qt4-opengl
-Summary:	Gambas3 component package for qt4-opengl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt4-opengl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt4-opengl
 
 %description gb-qt4-opengl
 This package contains the Gambas3 qt-opengl components.
 
 %package gb-report
-Summary:	Gambas3 component package for report
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for report
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-report
 
 %description gb-report
 This package contains the Gambas3 Report components.
 
 %package gb-report2
-Summary:	Gambas3 new component package for report
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 new component package for report
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-report2
 
 %description gb-report2
@@ -993,10 +991,10 @@ This package contains the new and better implementation of the Gambas3
 reporting component.
 
 %package gb-scanner
-Summary:	Gambas3 component package for work with scanners
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
-Requires:	sane
+Summary: Gambas3 component package for work with scanners
+Group: Development/Tools
+Requires: %name-runtime = %EVR
+Requires: sane
 %prov3 gb-scanner
 
 %description gb-scanner
@@ -1004,10 +1002,10 @@ This package contains the component based on SANE to help dealing with
 scanners.
 
 %package gb-sdl
-Summary:	Gambas3 component package for sdl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
-Requires:	fonts-ttf-dejavu
+Summary: Gambas3 component package for sdl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
+Requires: fonts-ttf-dejavu
 %prov3 gb-sdl
 
 %description gb-sdl
@@ -1017,9 +1015,9 @@ stored in a file. If OpenGL drivers are installed it uses them to
 accelerate 2D and 3D drawing.
 
 %package gb-sdl-sound
-Summary:	Gambas3 component package for sdl.sound
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for sdl.sound
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-sdl-sound
 
 %description gb-sdl-sound
@@ -1029,45 +1027,45 @@ one music track that can play music from a file. Everything is mixed
 in real time.
 
 %package gb-sdl2
-Summary:	Gambas3 component for sdl2
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component for sdl2
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-sdl2
 
 %description gb-sdl2
 Gambas3 component for sdl2
 
 %package gb-sdl2-audio
-Summary:	Gambas3 component for sdl2-audio
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component for sdl2-audio
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-sdl2-audio
 
 %description gb-sdl2-audio
 Gambas3 component for sdl2-audio.
 
 %package gb-settings
-Summary:	Gambas3 component package for settings
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for settings
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-settings
 
 %description gb-settings
 This components allows you to deal with configuration files.
 
 %package gb-signal
-Summary:	Gambas3 component package for signal
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for signal
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-signal
 
 %description gb-signal
 This package contains the Gambas3 Signal components.
 
 %package gb-util
-Summary:	Component written in Gambas3 that provides utility functions to the interpreter
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Component written in Gambas3 that provides utility functions to the interpreter
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-util
 
 %description gb-util
@@ -1075,9 +1073,9 @@ Component written in Gambas3 that provides utility functions to the
 interpreter.
 
 %package gb-util-web
-Summary:	Component written in Gambas3 that provides utility functions to web applications
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Component written in Gambas3 that provides utility functions to web applications
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-util-web
 
 %description gb-util-web
@@ -1085,18 +1083,18 @@ Component written in Gambas3 that provides utility functions to the
 web applications.
 
 %package gb-v4l
-Summary:	Gambas3 component package for v4l
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for v4l
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-v4l
 
 %description gb-v4l
 This component allows access to Video4Linux devices.
 
 %package gb-vb
-Summary:	Gambas3 component package for vb
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for vb
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-vb
 
 %description gb-vb
@@ -1105,9 +1103,9 @@ the behaviour of Visual Basic(tm) functions. Use it only if you try
 to port some VB projects.
 
 %package gb-web
-Summary:	Gambas3 component package for web
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for web
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-web
 
 %description gb-web
@@ -1115,9 +1113,9 @@ This components allows you to make CGI web applications using Gambas,
 with an ASP-like interface.
 
 %package gb-xml
-Summary:	Gambas3 component package for xml
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for xml
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-xml
 
 %description gb-xml
@@ -1125,63 +1123,63 @@ These components brings the power of the libxml and libxslt libraries to
 Gambas3 for XML processing.
 
 %package gb-xml-html
-Summary:	Gambas3 component package for xml.html
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for xml.html
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-xml-html
 
 %description gb-xml-html
 These component allows to process XHTML documents.
 
 %package gb-xml-libxml
-Summary:	Gambas3 component package for libxml
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for libxml
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-xml-libxml
 
 %description gb-xml-libxml
 Gambas3 component package for libxml.
 
 %package gb-xml-rpc
-Summary:	Gambas3 component package for xml.rpc
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for xml.rpc
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-xml-rpc
 
 %description gb-xml-rpc
 This component allows you to use xml-rpc.
 
 %package gb-xml-xslt
-Summary:	Gambas3 component package for xml.xslt
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for xml.xslt
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-xml-xslt
 
 %description gb-xml-xslt
 This component allows you to use xml-xslt.
 
 %package gb-form-editor
-Summary:	Gambas3 component package for form.editor
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for form.editor
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-editor
 
 %description gb-form-editor
 This package contains form.editor component.
 
 %package gb-qt6
-Summary:	Gambas3 component package for qt6
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt6
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt6
 
 %description gb-qt6
 This package includes Gambas3 QT5 GUI component.
 
 %package gb-qt6-opengl
-Summary:	Gambas3 component package for qt6-opengl
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt6-opengl
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt6-opengl
 
 %package gb-qt6-wayland
@@ -1215,27 +1213,27 @@ Requires: %name-gb-qt6 = %EVR
 This package contains the Gambas3 qt6-opengl components.
 
 %package gb-qt6-ext
-Summary:	Gambas3 component package for qt6 (additional)
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for qt6 (additional)
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-qt6-ext
 
 %description gb-qt6-ext
 This package contains the Gambas3 qt6 component with additional stuff.
 
 %package gb-form-terminal
-Summary:	Gambas3 component package for terminal in forms
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for terminal in forms
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-terminal
 
 %description gb-form-terminal
 This package contains the Gambas3 component for terminal in form.
 
 %package gb-term
-Summary:	Gambas3 component package for making the GUI of terminal applications
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for making the GUI of terminal applications
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-term
 
 %description gb-term
@@ -1243,18 +1241,18 @@ This package contains the Gambas3 component for making the GUI of
 terminal applications.
 
 %package gb-test
-Summary:	Gambas3 component package for tests
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for tests
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-test
 
 %description gb-test
 This package contains the Gambas3 component for tests.
 
 %package gb-form-print
-Summary:	Gambas3 component package for print form
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
+Summary: Gambas3 component package for print form
+Group: Development/Tools
+Requires: %name-runtime = %EVR
 %prov3 gb-form-print
 
 %description gb-form-print
@@ -1310,17 +1308,18 @@ Requires: %name-runtime = %EVR
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %ifarch %e2k
 find . -name 'gambas.h' -exec sed -i "/ifndef NO_GAMBAS_CASE_REPLACEMENT/a #ifdef __cplusplus\n#include <bits/locale_facets.h>\n#endif" {} \;
 %endif
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
-	sed -i 's|$AM_CFLAGS -O3|$AM_CFLAGS|g' $i
-	sed -i 's|$AM_CXXFLAGS -Os -fno-omit-frame-pointer|$AM_CXXFLAGS|g' $i
-	sed -i 's|$AM_CFLAGS -Os|$AM_CFLAGS|g' $i
-	sed -i 's|$AM_CFLAGS -O0|$AM_CFLAGS|g' $i
-	sed -i 's|$AM_CXXFLAGS -O0|$AM_CXXFLAGS|g' $i
+    sed -i 's|$AM_CFLAGS -O3|$AM_CFLAGS|g' $i
+    sed -i 's|$AM_CXXFLAGS -Os -fno-omit-frame-pointer|$AM_CXXFLAGS|g' $i
+    sed -i 's|$AM_CFLAGS -Os|$AM_CFLAGS|g' $i
+    sed -i 's|$AM_CFLAGS -O0|$AM_CFLAGS|g' $i
+    sed -i 's|$AM_CXXFLAGS -O0|$AM_CXXFLAGS|g' $i
 done
 # Need this for gcc44
 sed -i 's|-fno-exceptions||g' gb.db.sqlite3/acinclude.m4
@@ -1339,34 +1338,34 @@ chmod -x main/lib/option/main.c
 # Gambas can't deal with -Wp,-D_FORTIFY_SOURCE=2
 MY_CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 %configure \
-	--datadir="%_datadir" \
-	--enable-intl \
-	--enable-conv \
-	--disable-qt4 \
-	--disable-qt5 \
-	--enable-qt6 \
-	--enable-kde \
-	--enable-net \
-	--enable-curl \
-	--enable-postgresql \
-	--enable-mysql \
-	--enable-sqlite3 \
-	--enable-sdl \
-	--enable-vb \
-	--enable-pdf \
-	--with-ffi-includes=`pkg-config libffi --variable=includedir` \
-	--with-ffi-libraries=`pkg-config libffi --variable=libdir` \
-	--with-mysql-libraries=%_libdir/mysql \
-	--disable-static \
+     --datadir="%_datadir" \
+     --enable-intl \
+     --enable-conv \
+     --disable-qt4 \
+     --disable-qt5 \
+     --enable-qt6 \
+     --enable-kde \
+     --enable-net \
+     --enable-curl \
+     --enable-postgresql \
+     --enable-mysql \
+     --enable-sqlite3 \
+     --enable-sdl \
+     --enable-vb \
+     --enable-pdf \
+     --with-ffi-includes=`pkg-config libffi --variable=includedir` \
+     --with-ffi-libraries=`pkg-config libffi --variable=libdir` \
+     --with-mysql-libraries=%_libdir/mysql \
+     --disable-static \
 %ifarch %e2k
-	AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS -std=c++17"
+    AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS -std=c++17"
 %else
-	AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS"
+    AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS"
 %endif
 # rpath removal
 for i in main; do
-	sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' $i/libtool
-	sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' $i/libtool
+    sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' $i/libtool
+    sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' $i/libtool
 done
 # for some unholy reason, using system libtool breaks on qt5. so we don't.
 #pushd gb.qt5
@@ -1974,6 +1973,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Tue Oct 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.20.4-alt2
+- NMU: fix FTBFS.
+
 * Wed May 21 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.4-alt1
 - New version.
 
