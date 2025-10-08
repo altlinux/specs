@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.7
+Version: 0.25.10
 Release: alt1
 Epoch: 1
 
@@ -238,6 +238,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Oct 08 2025 Mikhail Efremov <sem@altlinux.org> 1:0.25.10-alt1
+- 0.25.10.
+
 * Wed Sep 10 2025 Mikhail Efremov <sem@altlinux.org> 1:0.25.7-alt1
 - Packaged bash and zsh completions.
 - Enabled systemd support.
