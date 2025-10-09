@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.30
-Release: alt2
+Version: 0.1.31
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -55,10 +55,13 @@ mkdir -p %buildroot%_sysconfdir/alterator/backends
 mkdir -p %buildroot%_sysconfdir/alterator/backends/user
 mkdir -p %buildroot%_sysconfdir/alterator/backends/system
 mkdir -p %buildroot%_datadir/polkit-1/actions
+mkdir -p %buildroot%_docdir/%name-%version
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager.service-user \
       %buildroot%_prefix/lib/systemd/user/alterator-manager.service
 mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service-user \
       %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
+cp README.md %buildroot%_docdir/%name-%version/
+cp -r docs %buildroot%_docdir/%name-%version/
 
 %files
 %_sbindir/%name
@@ -75,7 +78,7 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %dir %_sysconfdir/alterator/backends
 %dir %_sysconfdir/alterator/backends/user
 %dir %_sysconfdir/alterator/backends/system
-%doc docs/*
+%doc %_docdir/%name-%version
 
 %files devel
 %_includedir/alterator
@@ -87,6 +90,10 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Thu Oct 09 2025 Ivan Savin <svn17@altlinux.org> 0.1.31-alt1
+- Update documentation architecture (alxvmr@).
+- Move source files to the src folder (alxvmr@).
+
 * Thu Sep 11 2025 Ivan Savin <svn17@altlinux.org> 0.1.30-alt2
 - Update docs/README-ru.md.
 
