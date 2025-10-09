@@ -9,8 +9,8 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.6.15.1
-Release: alt2
+Version: 1.6.16
+Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -192,6 +192,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Thu Oct 09 2025 Anton Farygin <rider@altlinux.com> 1.6.16-alt1
+- 1.6.15.1 -> 1.6.16
+
 * Wed Mar 19 2025 Anton Farygin <rider@altlinux.ru> 1.6.15.1-alt2
 - built with systemd configuration (closes: #28047)
 
