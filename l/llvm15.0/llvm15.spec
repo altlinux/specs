@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt9
+Release: alt10
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -106,6 +106,7 @@ Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
 # ROCm needs this
 Patch19: llvm-D132140.patch
+Patch20: llvm-support-python-3.13.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-15-alt-rocm-device-libs-path.patch
@@ -648,6 +649,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %patch101 -p1
 %patch102 -p2
@@ -1246,6 +1248,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 15.0.7-alt10
+- NMU: fixed build with python3.13.
+
 * Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt9
 - x86_64: Added IGC patches to match IGC requirements.
 

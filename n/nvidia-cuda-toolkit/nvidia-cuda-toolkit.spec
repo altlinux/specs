@@ -21,7 +21,7 @@
 
 Name: nvidia-cuda-toolkit
 Version: 12.8.1
-Release: alt1
+Release: alt1.1
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -378,7 +378,7 @@ cp -vr cuda_demo_suite/extras/* %buildroot%_datadir/%name/extras/
 mkdir -p %buildroot%_docdir/%name/
 cp -vr cuda_documentation/* %buildroot%_docdir/%name/
 
-for i in "3.8" "3.9" "3.10" "3.11"
+for i in "3.8" "3.9" "3.10" "3.11" "3.12"
 do rm -v cuda_gdb/bin/cuda-gdb-python${i}-tui
 done
 cp -vr cuda_gdb/bin/* %buildroot%_bindir/
@@ -744,6 +744,9 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/nvprof
 
 %changelog
+* Sat Sep 13 2025 Grigory Ustinov <grenka@altlinux.org> 12.8.1-alt1.1
+- Fixed building with python3.13.
+
 * Thu May 01 2025 Mikhail Tergoev <fidel@altlinux.org> 12.8.1-alt1
 - updated to 12.8.1 (ALT bug: 53832 54080)
 - removed version from name *.pc files

@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: Python wrapper for the FLTK
 
@@ -19,6 +19,8 @@ Source: %oname-%version.tar
 
 # from Debian
 Patch: build-with-swig-4.1.patch
+
+Patch1: 0001-Adjustments-for-swig-V4.2.patch
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -75,6 +77,9 @@ rm -r %buildroot%python3_sitelibdir/fltk/docs/
 %python3_sitelibdir/%{pyproject_distinfo %mname}/
 
 %changelog
+* Tue Sep 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1.2
+- NMU: fixed FTBFS.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.8-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

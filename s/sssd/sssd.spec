@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.7
-Release: alt3
+Release: alt4
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -923,6 +923,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Sep 16 2025 Grigory Ustinov <grenka@altlinux.org> 2.9.7-alt4
+- NMU: fixed building with krb5 1.22.
+
 * Sat Jul 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt3
 - Add dependency to libldb-modules-dc for sssd-ad (closes: 54957).
 

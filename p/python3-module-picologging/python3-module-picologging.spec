@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.9.4
-Release: alt1
+Release: alt2
 
 Summary: An optimized logging library for Python
 License: MIT
@@ -22,6 +22,7 @@ BuildRequires: python3-module-hypothesis
 %endif
 
 Source: %pypi_name-%version.tar
+Patch: pr-212.patch
 
 %description
 Picologging is a high-performance logging library for Python. picologging is
@@ -31,6 +32,7 @@ which already use logging, and supports the same API as the logging module.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -47,6 +49,9 @@ which already use logging, and supports the same API as the logging module.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt2
+- Fixed build with python3.13.
+
 * Tue Sep 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
 - Automatically updated to 0.9.4.
 

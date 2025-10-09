@@ -2,7 +2,7 @@
 
 Name: python3-module-gattlib
 Version: 0.20150805
-Release: alt2
+Release: alt3
 
 Summary: Python library to access Bluetooth LE devices
 License: BSD
@@ -11,6 +11,7 @@ Url: https://pypi.org/project/gattlib/
 
 Source: %name-%version.tar
 Patch1: alt-boost-compat.patch
+Patch2: py313.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ boost-python3-devel
@@ -23,6 +24,7 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 
 sed -i -e "s:@PY3VER@:%{python_version_nodots python3}:g" setup.py
 
@@ -37,6 +39,9 @@ sed -i -e "s:@PY3VER@:%{python_version_nodots python3}:g" setup.py
 %python3_sitelibdir/gattlib-%version-*-info
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.20150805-alt3
+- Fix building with python3.13.
+
 * Tue May 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.20150805-alt2
 - Rebuilt with boost-1.76.0.
 

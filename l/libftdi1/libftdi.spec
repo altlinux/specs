@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
 Version:   1.5
-Release:   alt3.1
+Release:   alt3.2
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -166,6 +166,9 @@ fi
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Tue Sep 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.5-alt3.2
+- NMU: fixed FTBFS
+
 * Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.5-alt3.1
 - NMU: added build dependency on setuptools
 

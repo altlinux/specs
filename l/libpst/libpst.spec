@@ -2,7 +2,7 @@
 
 Name: libpst
 Version: 0.6.76
-Release: alt5
+Release: alt6
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://www.five-ten-sg.com/libpst
 Source0: %url/packages/%name-%version.tar
 Source100: libpst.watch
 Patch1: %name-%version-alt-known-fields.patch
-Patch2: %name-%version-python3.12.patch
+Patch2: %name-%version-python3.13.patch
 
 Patch3: %name-%version-fedora-incompatible-pointer-i586.patch
 
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/python*/site-packages/*.la
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.76-alt6
+- Fix building with python3.13.
+
 * Thu Jul 17 2025 Leonid Znamenok <respublica@altlinux.org> 0.6.76-alt5
 - NMU: fix FTBFS on i586.
 

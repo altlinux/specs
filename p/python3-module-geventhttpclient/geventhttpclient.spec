@@ -1,10 +1,10 @@
 %define oname geventhttpclient
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 2.3.4
-Release: alt1
+Release: alt2
 
 Summary: http client library for gevent
 License: MIT
@@ -64,6 +64,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jul 10 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt2
+- Bootstrap for python3.13.
+
 * Tue Jul 08 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt1
 - Build new version.
 

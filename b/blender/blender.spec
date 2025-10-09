@@ -56,7 +56,7 @@
 
 Name: blender
 Version: 4.3.2
-Release: alt1
+Release: alt1.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -110,6 +110,9 @@ Patch40: blender-4.3.0-upstream-update-oiio-apis.patch
 # ALT bug 54359
 # upstream 1865de1c738a1a1ead520fbd38487815e13906e9
 Patch41: blender-4.3-upstream-129926-fix-python3.12.patch
+# python3.13 compatibility
+# https://sources.debian.org/data/main/b/blender/4.3.2%2Bdfsg-2/debian/patches/0006-fix_FTBFS_py313.patch
+Patch42: 0006-fix_FTBFS_py313.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -353,6 +356,7 @@ EOF
 %patch39 -p1 -b .osl-1.14
 %patch40 -p1 -b .oiio-3.x
 %patch41 -p1 -b .python3.12
+%patch42 -p1 -b .python3.13
 
 %ifarch %e2k
 %patch2000 -p1
@@ -506,6 +510,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.2-alt1.1
+- NMU: fixed building with python3.13.
+
 * Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.2-alt1
 - Update to 4.3.2.
 - cycles: more updates for OIIO API 3.x changes (upstream

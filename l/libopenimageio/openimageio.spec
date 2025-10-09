@@ -9,9 +9,11 @@
 %define oname openimageio
 %define soname 3.0
 
+%def_with bootstrap
+
 Name:           lib%oname
 Version:        3.0.9.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -36,8 +38,10 @@ BuildRequires:  boost-devel boost-python3-devel boost-filesystem-devel boost-asi
 BuildRequires:  libGLEW-devel
 BuildRequires:  openexr-devel imath-devel
 BuildRequires:  libpng-devel libtiff-devel libjpeg-devel libturbojpeg-devel libopenjpeg2.0-devel
+%if_without bootstrap
 %ifnarch %ix86
 BuildRequires:  openshadinglanguage-devel
+%endif
 %endif
 BuildRequires:  libgif-devel
 BuildRequires:  libwebp-devel >= 1.6.0-alt1.1
@@ -220,6 +224,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.9.1-alt1.1
+- NMU: bootstrap for python3.13.
+
 * Thu Aug 28 2025 Anton Farygin <rider@altlinux.com> 3.0.9.1-alt1
 - 3.0.9.0 -> 3.0.9.1
 

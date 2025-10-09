@@ -61,7 +61,7 @@
 
 Name: %{project}4.5
 Version: 4.5.2
-Release: alt1
+Release: alt1.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -70,7 +70,7 @@ Vcs: https://projects.blender.org/blender/blender.git
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExcludeArch: %ix86
+ExcludeArch: %ix86 aarch64
 
 # https://projects.blender.org/blender/blender
 Source: %name-%version.tar
@@ -542,6 +542,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 4.5.2-alt1.1
+- NMU: disabled aarch64 build.
+
 * Mon Aug 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.2-alt1
 - 4.5.2.
 - Remove redurant optix cmake switch (enabled by default).

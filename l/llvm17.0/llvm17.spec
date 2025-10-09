@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4.3
+Release: alt4.4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -137,6 +137,7 @@ Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
 Patch22: clang-D142199.patch
 Patch23: clang-alt-riscv64-dynamic-linker-path.patch
+Patch24: llvm-support-python-3.13.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
@@ -779,6 +780,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch20 -p1 -b .clang-rocm-device-path
 %patch22 -p1 -b .recommonmark
 %patch23 -p1
+%patch24 -p1
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
@@ -1519,6 +1521,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 17.0.6-alt4.4
+- NMU: fixed build with python3.13.
+
 * Fri Dec 27 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.0.6-alt4.3
 - Workarounded breakage with cmake >= v3.31.0-rc1~307^2~1.
 - Fixed build with gcc 14 (for aarch64).

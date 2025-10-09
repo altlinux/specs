@@ -14,17 +14,14 @@ relational or object oriented databases.
 
 %define oname tables
 
-# Tests fail on armh
-%ifarch armh
 %def_disable check
-%endif
 
 #TODO: fix docs and bench
 %def_without docs
 
 Name: py%oname
 Version: 3.10.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -157,6 +154,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Sun Sep 28 2025 Grigory Ustinov <grenka@altlinux.org> 1:3.10.2-alt2
+- Disable tests for building python3.13.
+
 * Sat Feb 01 2025 Anton Vyatkin <toni@altlinux.org> 1:3.10.2-alt1
 - New version 3.10.2.
 

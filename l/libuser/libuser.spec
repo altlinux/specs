@@ -1,6 +1,6 @@
 Name: libuser
 Version: 0.64
-Release: alt1
+Release: alt1.1
 
 Summary: A user and group account administration library
 License: LGPLv2+
@@ -10,6 +10,8 @@ Url: https://pagure.io/libuser
 Source0: %name-%version.tar
 Source1: import.info
 Patch1: %name-0.63-downstream_test_xcrypt.patch
+# Python3.13 compatibility
+Patch2: 3341a12021e5dbfd198cdb13ea8c4e1509ba2d42.patch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
@@ -38,6 +40,7 @@ BuildRequires: gettext-tools libasprintf-devel
 BuildRequires: gtk-doc gtk-doc-mkpdf
 BuildRequires: libaudit-devel
 BuildRequires: liblmdb-devel
+BuildRequires: python3-module-crypt-r
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
@@ -73,6 +76,7 @@ administering user and group accounts.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 ./autogen.sh
@@ -116,6 +120,9 @@ make
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Sep 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.64-alt1.1
+- NMU: fixed building with python3.13.
+
 * Mon Apr 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.64-alt1
 - change build scheme to get sources from upstream git repo tags
 - updatee to latest releas and clean already applied patches

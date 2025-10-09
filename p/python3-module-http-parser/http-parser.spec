@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.0
-Release: alt3
+Release: alt4
 Summary: http request/response parser
 License: MIT
 Group: Development/Python3
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(Cython)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(imp)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -54,6 +55,9 @@ rm -f http_parser/parser.c
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 26 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt4
+- Fixed FTBFS.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt3
 - Moved on pyproject macros.
 

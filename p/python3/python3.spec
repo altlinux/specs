@@ -12,9 +12,9 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.12
+%global pybasever 3.13
 # pybasever without the dot:
-%global pyshortver 312
+%global pyshortver 313
 
 %global pyabi %nil
 
@@ -93,7 +93,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3
-Version: %{pybasever}.11
+Version: %{pybasever}.0
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -146,7 +146,7 @@ Patch1003: python-3.8.0-skip-test_setrusage_refcount-alt.patch
 
 # Disable "-i386-linux-gnu"-like suffixes for lib-dynload/*.so modules.
 # Disables test for those suffixes.
-Patch1004: python-3.12.0-alt-disable-build-PLATFORM_TRIPLET.patch
+Patch1004: python-3.13.0-alt-disable-build-PLATFORM_TRIPLET.patch
 
 # Use a common /usr/lib/python3/site-packages (without the minor version)
 Patch1005: python3-site-packages.patch
@@ -161,9 +161,6 @@ Patch1007: python3-sslv2-compat.patch
 
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
-
-# Replaces absolute import with relative ones.
-Patch1012: python3-lib2to3-import.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -248,6 +245,8 @@ Group: Development/Python3
 Requires: %name = %EVR
 Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
+
+%add_python3_self_prov_path %buildroot%tool_dir/clinic/libclinic
 
 %description tools
 This package contains several tools included with Python 3
@@ -365,8 +364,6 @@ rm -r Modules/_decimal/libmpdec || exit 1
 
 %patch1011 -p2
 
-%patch1012 -p2
-
 %ifarch %e2k
 # add e2k arch
 sed -i "/elif defined(__hppa__)/i\\\n# elif defined (__e2k__)\n        e2k-linux-gnu" configure*
@@ -426,7 +423,6 @@ export LDFLAGS_NODIST="-fno-semantic-interposition"
 %endif
   --with-dbmliborder=gdbm:ndbm:bdb \
   --with-system-expat \
-  --with-system-ffi \
   --with-system-libmpdec \
   --enable-loadable-sqlite-extensions \
   --with-lto \
@@ -476,8 +472,6 @@ cp -av ../build-shared/python-config %buildroot%_bindir/python3-config
 cp -av ../build-shared/pyconfig.h %buildroot%include_dir
 cp -av ../build-shared/build/lib.linux-*-%pybasever/_sysconfigdata__linux_%pyarch.py %buildroot%pylibdir
 
-mv %buildroot%_bindir/2to3 %buildroot%_bindir/python3-2to3
-
 # Development tools
 install -m755 -d %buildroot%tool_dir
 install Tools/README %buildroot%tool_dir/
@@ -485,12 +479,6 @@ cp -ar Tools/freeze %buildroot%tool_dir/
 cp -ar Tools/i18n %buildroot%tool_dir/
 cp -ar Tools/unittestgui %buildroot%tool_dir/
 cp -ar Tools/clinic %buildroot%tool_dir/
-
-# Benchmarks
-cp -ar Tools/ccbench %buildroot%tool_dir/
-cp -ar Tools/iobench %buildroot%tool_dir/
-cp -ar Tools/stringbench %buildroot%tool_dir/
-cp -ar Tools/importbench %buildroot%tool_dir/
 
 # Simple scripts
 cp -ar Tools/scripts %buildroot%tool_dir/
@@ -503,15 +491,13 @@ cp -ar Doc/tools %buildroot%pylibdir/Doc/
 mkdir -p %buildroot/%_datadir/gdb/python
 cp -ar Tools/gdb/* %buildroot/%_datadir/gdb/python
 
-file_list='%tool_dir/clinic/cpp.py
-    %tool_dir/freeze/bkfile.py
+file_list='%tool_dir/freeze/bkfile.py
     %tool_dir/freeze/checkextensions.py
     %tool_dir/freeze/makeconfig.py
     %tool_dir/freeze/makefreeze.py
     %tool_dir/freeze/makemakefile.py
     %tool_dir/freeze/parsesetup.py
-    %_datadir/gdb/python/libpython.py
-    %tool_dir/scripts/2to3'
+    %_datadir/gdb/python/libpython.py'
 
 for file_name in $file_list
 do
@@ -564,7 +550,7 @@ EOF
 # Split this out so it goes directly to the pyconfig-32.h/pyconfig-64.h
 # variants:
 sed -i -e "s/'pyconfig.h'/'%_pyconfig_h'/" \
-  %buildroot%pylibdir/sysconfig.py
+  %buildroot%pylibdir/sysconfig/__init__.py
 %else
 %global _pyconfig_h pyconfig.h
 %endif
@@ -587,15 +573,6 @@ find . -name "*~" -exec rm -v {} \;
 # Heal, not kill. ALT#49401
 sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%pylibdir/encodings/rot_13*.py
 
-# Skip the 2to3 test data (which might contain Python2 code)
-%global lib2to3_tests %pylibdir/test/test_lib2to3
-%add_python3_compile_exclude %lib2to3_tests/data
-%add_findreq_skiplist %lib2to3_tests/data/*
-%add_findprov_skiplist %lib2to3_tests/data/*
-# http://bugs.python.org/issue26911 :
-# remove a seemingly unused source file with broken code (a broken import):
-rm -v %buildroot%lib2to3_tests/{,__pycache__/}pytree_idempotency*.py*
-
 # http://bugs.python.org/issue26912 :
 # rm another seemingly unused source file with a broken import:
 rm -v %buildroot%pylibdir/test/test_email/{,__pycache__/}torture_test*.py*
@@ -610,7 +587,6 @@ rm -v %buildroot%pylibdir/test/libregrtest/{,__pycache__/}win_utils*.py*
 rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
 rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
-rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 # Get rid of bad* tests
 rm -v %buildroot%pylibdir/test/test_future_stmt/bad*.py
 # Get rid of crap
@@ -639,8 +615,6 @@ find %buildroot \
 export LD_LIBRARY_PATH=%buildroot%_libdir
 find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -wholename "*/tests/*" -a -not -wholename "*/scripts/*" -print0 | xargs -0 %buildroot%_bindir/%name -c 'import py_compile, sys; [py_compile.compile(f, dfile=f.partition("%buildroot")[2]) for f in sys.argv[1:]]'
 find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -wholename "*/tests/*" -a -not -wholename "*/scripts/*" -print0 | xargs -0 %buildroot%_bindir/%name -O -c 'import py_compile, sys; [py_compile.compile(f, dfile=f.partition("%buildroot")[2]) for f in sys.argv[1:]]'
-
-sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pybasever/cgi.py
 
 # Replace the shell implementation with the more correct .py one
 # (BTW, the .py one used to be packaged in python3-3.3):
@@ -770,7 +744,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_codecs_kr.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_tw.cpython-%pyshortver%pyabi.so
 %dynload_dir/_contextvars.cpython-%pyshortver%pyabi.so
-%dynload_dir/_crypt.cpython-%pyshortver%pyabi.so
 %dynload_dir/_csv.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ctypes.cpython-%pyshortver%pyabi.so
 %dynload_dir/_datetime.cpython-%pyshortver%pyabi.so
@@ -782,6 +755,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 %dynload_dir/_hashlib.cpython-%pyshortver%pyabi.so
 %dynload_dir/_heapq.cpython-%pyshortver%pyabi.so
+%dynload_dir/_interpchannels.cpython-%pyshortver%pyabi.so
+%dynload_dir/_interpqueues.cpython-%pyshortver%pyabi.so
+%dynload_dir/_interpreters.cpython-%pyshortver%pyabi.so
 %dynload_dir/_json.cpython-%pyshortver%pyabi.so
 %dynload_dir/_lsprof.cpython-%pyshortver%pyabi.so
 %dynload_dir/_lzma.cpython-%pyshortver%pyabi.so
@@ -801,45 +777,33 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
 %dynload_dir/_statistics.cpython-%pyshortver%pyabi.so
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
-%dynload_dir/_testclinic.cpython-%pyshortver%pyabi.so
-%dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
-%dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
-%dynload_dir/_testsinglephase.cpython-%pyshortver%pyabi.so
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
-%dynload_dir/_xxinterpchannels.cpython-%pyshortver%pyabi.so
-%dynload_dir/_xxsubinterpreters.cpython-%pyshortver%pyabi.so
-%dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
 %dynload_dir/_zoneinfo.cpython-%pyshortver%pyabi.so
 %dynload_dir/array.cpython-%pyshortver%pyabi.so
-%dynload_dir/audioop.cpython-%pyshortver%pyabi.so
 %dynload_dir/binascii.cpython-%pyshortver%pyabi.so
 %dynload_dir/cmath.cpython-%pyshortver%pyabi.so
 %dynload_dir/fcntl.cpython-%pyshortver%pyabi.so
 %dynload_dir/grp.cpython-%pyshortver%pyabi.so
 %dynload_dir/math.cpython-%pyshortver%pyabi.so
 %dynload_dir/mmap.cpython-%pyshortver%pyabi.so
-%dynload_dir/ossaudiodev.cpython-%pyshortver%pyabi.so
 %dynload_dir/pyexpat.cpython-%pyshortver%pyabi.so
 %dynload_dir/readline.cpython-%pyshortver%pyabi.so
 %dynload_dir/resource.cpython-%pyshortver%pyabi.so
 %dynload_dir/select.cpython-%pyshortver%pyabi.so
-%dynload_dir/spwd.cpython-%pyshortver%pyabi.so
 %dynload_dir/syslog.cpython-%pyshortver%pyabi.so
 %dynload_dir/termios.cpython-%pyshortver%pyabi.so
 %dynload_dir/unicodedata.cpython-%pyshortver%pyabi.so
-%dynload_dir/xxlimited.cpython-%pyshortver%pyabi.so
-%dynload_dir/xxlimited_35.cpython-%pyshortver%pyabi.so
-%dynload_dir/xxsubtype.cpython-%pyshortver%pyabi.so
 %dynload_dir/zlib.cpython-%pyshortver%pyabi.so
 
 %pylibdir/*.py
 %dir %pylibdir/__pycache__/
 %pylibdir/__pycache__/*%bytecode_suffixes
 
-%dir %pylibdir/__phello__/
-%dir %pylibdir/__phello__/__pycache__/
-%pylibdir/__phello__/*.py
-%pylibdir/__phello__/__pycache__/*%bytecode_suffixes
+%dir %pylibdir/_pyrepl/
+%dir %pylibdir/_pyrepl/__pycache__/
+%pylibdir/_pyrepl/*.py
+%pylibdir/_pyrepl/mypy.ini
+%pylibdir/_pyrepl/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/asyncio/
 %dir %pylibdir/asyncio/__pycache__/
@@ -914,17 +878,26 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/json/*.py
 %pylibdir/json/__pycache__/*%bytecode_suffixes
 
-%pylibdir/lib2to3
 %pylibdir/logging
 %pylibdir/multiprocessing
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
 %exclude %pylibdir/multiprocessing/__pycache__/popen_spawn_win32%bytecode_suffixes
 %pylibdir/pydoc_data
 
+%dir %pylibdir/pathlib/
+%dir %pylibdir/pathlib/__pycache__/
+%pylibdir/pathlib/*.py
+%pylibdir/pathlib/__pycache__/*%bytecode_suffixes
+
 %dir %pylibdir/re/
 %dir %pylibdir/re/__pycache__/
 %pylibdir/re/*.py
 %pylibdir/re/__pycache__/*%bytecode_suffixes
+
+%dir %pylibdir/sysconfig/
+%dir %pylibdir/sysconfig/__pycache__/
+%pylibdir/sysconfig/*.py
+%pylibdir/sysconfig/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/tomllib/
 %dir %pylibdir/tomllib/__pycache__/
@@ -984,6 +957,10 @@ $(pwd)/python -m test.regrtest \
 %dir %include_dir/cpython
 %dir %include_dir/internal
 %include_dir/internal/*.h
+%dir %include_dir/internal/mimalloc
+%dir %include_dir/internal/mimalloc/mimalloc
+%include_dir/internal/mimalloc/*.h
+%include_dir/internal/mimalloc/mimalloc/*.h
 %include_dir/cpython/*.h
 %exclude %include_dir/%_pyconfig_h
 %doc Misc/README.valgrind Misc/valgrind-python.supp
@@ -997,8 +974,6 @@ $(pwd)/python -m test.regrtest \
 %_libdir/pkgconfig/python3-embed.pc
 
 %files tools
-%_bindir/python3-2to3
-%_bindir/2to3-%pybasever
 %_bindir/idle*
 %if_with desktop_file
 %_desktopdir/idle3.desktop
@@ -1007,9 +982,7 @@ $(pwd)/python -m test.regrtest \
 %_niconsdir/idle3.png
 %_liconsdir/idle3.png
 
-%dir %tool_dir
 %tool_dir
-%exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
 
 %files module-gdb_libpython
@@ -1044,14 +1017,30 @@ $(pwd)/python -m test.regrtest \
 
 %files test
 %pylibdir/test
+
+%dir %pylibdir/__phello__/
+%dir %pylibdir/__phello__/__pycache__/
+%pylibdir/__phello__/*.py
+%pylibdir/__phello__/__pycache__/*%bytecode_suffixes
+
 %dynload_dir/_ctypes_test.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testclinic.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testclinic_limited.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testexternalinspection.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testimportmultiple.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testlimitedcapi.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testsinglephase.cpython-%pyshortver%pyabi.so
+%dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
+%dynload_dir/xxlimited.cpython-%pyshortver%pyabi.so
+%dynload_dir/xxlimited_35.cpython-%pyshortver%pyabi.so
+%dynload_dir/xxsubtype.cpython-%pyshortver%pyabi.so
 %if_with tk
 %pylibdir/idlelib/idle_test
 %endif
-%tool_dir/scripts/run_tests.py
 
 %if_with docs
 %files doc
@@ -1059,6 +1048,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Mon Jul 14 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.0-alt1
+- Updated to upstream version 3.13.0.
+
 * Sat Jul 12 2025 Grigory Ustinov <grenka@altlinux.org> 3.12.11-alt1
 - Updated to upstream version 3.12.11.
 

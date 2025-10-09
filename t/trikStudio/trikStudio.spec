@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2025.2
-Release: alt1.2
+Release: alt1.3
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -101,6 +101,10 @@ tar -xf ./.gear/qslog.tar.bz2
 tar -xf ./.gear/checkapp.tar.bz2
 rm -rf qscintilla quazip
 
+# Hot fix for python3.13
+find . -name PythonQt.cpp | xargs sed -i '/PyEval_ThreadsInitialized/,+2d'
+find . -name pythonEngineWorker.cpp | xargs sed -i '/Py_SetPath/d'
+
 pushd thirdparty/gamepad
 %patch1
 popd
@@ -185,7 +189,7 @@ mkdir -p %buildroot%_datadir/%name/languages
 popd
 
 find %buildroot%_libdir/%name -name 'libtrikScriptRunner.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
-find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.12.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
+find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.13.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
 
 %files
 %_bindir/*
@@ -216,6 +220,9 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.12.so.*
 %endif
 
 %changelog
+* Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 2025.2-alt1.3
+- NMU: fixed build for python3.13
+
 * Mon Jun 02 2025 Maria Alexeeva <alxvmr@altlinux.org> 2025.2-alt1.2
 - NMU: Fixed build for loongarch64
 

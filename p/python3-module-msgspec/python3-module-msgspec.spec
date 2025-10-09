@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.18.6
-Release: alt1
+Release: alt2
 
 Summary: A fast serialization and validation library, with builtin support for JSON, MessagePack, YAML, and TOML
 License: BSD-3-Clause
@@ -20,12 +20,14 @@ BuildRequires: python3-module-mypy
 %endif
 
 Source: %pypi_name-%version.tar
+Patch: msgspec-0.18.6-python3.13-pr-711.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
@@ -57,5 +59,8 @@ py.test-3 -v \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 28 2025 Grigory Ustinov <grenka@altlinux.org> 0.18.6-alt2
+- Fixed build with python3.13.
+
 * Wed Jul 17 2024 Alexander Burmatov <thatman@altlinux.org> 0.18.6-alt1
 - Initial build for Sisyphus. (thx toni@)

@@ -10,7 +10,7 @@
 
 Name: %_name%abiversion
 Version: 5.9.4
-Release: alt1.2
+Release: alt1.3
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -462,7 +462,6 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %_bindir/snmpwalk
 %_bindir/snmpping
 %_bindir/snmpps
-%_bindir/snmptop
 
 %_man1dir/agentxtrap.*
 %_man1dir/encode_keychange*
@@ -486,7 +485,6 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %_man1dir/snmpvacm.*
 %_man1dir/snmpwalk.*
 %_man1dir/snmpps.*
-%_man1dir/snmptop.*
 %_man5dir/snmp.conf.*
 
 %files -n %_name-utils
@@ -563,6 +561,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.4-alt1.3
+- NMU: fixed build with python3.13
+
 * Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.4-alt1.2
 - NMU: fixed FTBFS
 

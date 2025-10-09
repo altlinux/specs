@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.19.19
-Release: alt9.2
+Release: alt9.3
 
 Summary: Python bindings generator for C++ class libraries
 
@@ -46,6 +46,9 @@ Header files for sip (Python 3).
 %patch1 -p2
 sed -i 's/distutils/setuptools/g' sipdistutils.py
 
+# Hot fix for python3.13
+sed -i 's/PyEval_CallObject/PyObject_CallObject/g' siplib/{qtlib.c,siplib.c}
+
 %build
 python3 configure.py --debug -d %python3_sitelibdir
 sed -i \
@@ -82,6 +85,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 #doc doc/*
 
 %changelog
+* Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9.3
+- Fixed build with python3.13.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.19.19-alt9.2
 - Add missed dependency on setuptools.
 
