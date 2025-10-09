@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt6
+Release:   alt7
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -321,6 +321,13 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt7
+- Add package maintainer information.
+- Implement license fetching from an rpm file.
+- Add fetching package information from a local file.
+- Restored the retrieval of details about the installation package for
+  PackageKit clients.
+
 * Wed Sep 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt6
 - add package installation from a file (closes: 55337)
 

@@ -4,7 +4,7 @@
 
 Name: packagekit-qt6
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt support library for PackageKit
@@ -15,6 +15,7 @@ Url: https://www.freedesktop.org/software/PackageKit/
 Source: PackageKit-Qt-%version.tar
 # SuSE
 Patch1: 0001-Fix-PackageKit-not-emitting-network-state-changed-signal.patch
+Patch2: alt-add-author-detail.patch
 
 BuildRequires: cmake libssl-devel qt6-base-devel
 BuildRequires: libpackagekit-glib-devel
@@ -40,6 +41,7 @@ Provides: PackageKit-Qt6-devel = %version-%release
 %prep
 %setup -qn PackageKit-Qt-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %ifarch %e2k
@@ -68,6 +70,9 @@ Provides: PackageKit-Qt6-devel = %version-%release
 %_libdir/cmake/packagekitqt6/
 
 %changelog
+* Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.3-alt2
+- maintainer information retrieval for installed packages
+
 * Thu Sep 25 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1
 - new version
 

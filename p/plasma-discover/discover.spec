@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -60,6 +60,8 @@ Patch16: alt-fix-size-markdown-text.patch
 Patch17: alt-beautify-changelog.patch
 Patch18: alt-notify-small-amount-free-space.patch
 Patch19: alt-3dparty-warning.patch
+Patch20: alt-fix-displayed-local-details.patch
+Patch21: alt-add-maintainer-detail.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -224,6 +226,8 @@ KF6 library
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -350,6 +354,10 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.4.5-alt2
+- added display of the package maintainer when installing from a file
+- fixed and improved the package details displayed when installing from a file
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 
