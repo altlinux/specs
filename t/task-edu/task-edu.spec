@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.10
+Version: 1.7.11
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -385,8 +385,46 @@ Requires: pip
 Summary(ru_RU.UTF-8): Среда XFCE для Альт Образование
 Summary: XFCE for Alt Education
 Group: Education
-# slinux/base
-Requires: xfce4-full
+Requires: xfce4-default
+Requires: pavucontrol
+Requires: xfce-polkit
+Requires: xfce4-clipman-plugin
+Requires: xfce4-pulseaudio-plugin
+Requires: xfwm4-themes
+Requires: orage
+Requires: xfce4-screenshooter
+Requires: xarchiver
+Requires: ristretto
+Requires: parole
+Requires: catfish
+Requires: xfce4-panel-profiles
+Requires: xfce4-battery-plugin
+Requires: xfce4-calculator-plugin
+Requires: xfce4-cpufreq-plugin
+Requires: xfce4-cpugraph-plugin
+Requires: xfce4-diskperf-plugin
+Requires: xfce4-docklike-plugin
+Requires: xfce4-eyes-plugin
+Requires: xfce4-fsguard-plugin
+Requires: xfce4-generic-slider-plugin
+Requires: xfce4-genmon-plugin
+Requires: xfce4-mailwatch-plugin
+Requires: xfce4-mount-plugin
+Requires: xfce4-netload-plugin
+Requires: xfce4-notes-plugin
+Requires: xfce4-notification-plugin
+Requires: xfce4-places-plugin
+Requires: xfce4-sensors-plugin
+Requires: xfce4-smartbookmark-plugin
+Requires: xfce4-stopwatch-plugin
+Requires: xfce4-systemload-plugin
+Requires: xfce4-time-out-plugin
+Requires: xfce4-timer-plugin
+Requires: xfce4-verve-plugin
+Requires: xfce4-wavelan-plugin
+Requires: xfce4-weather-plugin
+Requires: xfce4-whiskermenu-plugin
+Requires: xfce4-xkb-plugin
 Requires: thunar-shares-plugin
 Requires: xfce4-screensaver
 Requires: libcanberra-gtk2
@@ -627,6 +665,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Oct 08 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.11-alt1
+- xfce: Replace the requirement from xfce4-full to xfce4-default.
+- xfce: Get rid of xfce4-dict.
+
 * Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.10-alt1
 - server-apps: return mediawiki.
 - highschool: restore kdeedu from task-edu-kde.
