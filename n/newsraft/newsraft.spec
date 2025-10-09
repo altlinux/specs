@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    newsraft
-Version: 0.32
+Version: 0.34
 Release: alt1
 
 Summary: Newsraft is a feed reader with ncurses user interface
@@ -42,6 +42,9 @@ It's greatly inspired by Newsboat and tries to be its lightweight counterpart.
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Oct 08 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.34-alt1
+- New version.
+
 * Thu Jul 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.32-alt1
 - New version.
 
