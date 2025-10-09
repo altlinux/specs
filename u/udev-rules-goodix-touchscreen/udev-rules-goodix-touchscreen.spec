@@ -1,6 +1,6 @@
 Name: udev-rules-goodix-touchscreen
-Version: 3
-Release: alt3
+Version: 4
+Release: alt1
 Summary: Fix orientation of Goodix touchscreen on number of devices
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -10,8 +10,9 @@ ExclusiveArch: aarch64 x86_64
 
 Source: %name-%version.tar
 
-Conflicts: udev-rules-MIG-goodix-touchpad
-Obsoletes: udev-rules-MIG-goodix-touchpad
+Conflicts: udev-rules-MIG-goodix-touchpad udev-rules-goodix-touchpad
+Obsoletes: udev-rules-MIG-goodix-touchpad udev-rules-goodix-touchpad
+Provides: udev-rules-MIG-goodix-touchpad = %EVR udev-rules-goodix-touchpad = %EVR
 
 %description
 %summary.
@@ -41,6 +42,9 @@ install -m 0644 20-udev-rules-goodix-touchscreen.preset %buildroot%_presetdir/
 %_presetdir/20-udev-rules-goodix-touchscreen.preset
 
 %changelog
+* Tue Oct  7 2025 Artyom Bystrov <arbars@altlinux.org> 4-alt1
+- Ready to replace udev-rules-MIG-goodix-touchpad and udev-rules-goodix-touchpad
+
 * Thu Sep 18 2025 Artyom Bystrov <arbars@altlinux.org> 3-alt3
 - minor fixes
 
