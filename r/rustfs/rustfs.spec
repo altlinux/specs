@@ -2,7 +2,7 @@
 
 Name: rustfs
 Version: 1.0.0
-Release: alt2.alpha.49
+Release: alt2.alpha.60
 Summary: High-performance distributed object storage for MinIO alternative
 Group: System/Servers
 License: Apache-2.0
@@ -32,6 +32,7 @@ distributed features for high-performance object storage.
 
 %prep
 %setup
+%rust_prep
 
 %build
 %rust_build -p %name
@@ -66,6 +67,9 @@ useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/nul
 %_bindir/%name
 
 %changelog
+* Tue Sep 30 2025 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt2.alpha.60
+- new version
+
 * Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.0-alt2.alpha.49
 - NMU: Fix FTBFS on loongarch64
 
