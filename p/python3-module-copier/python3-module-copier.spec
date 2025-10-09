@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.10.1
+Version: 9.10.2
 Release: alt1
 
 Summary: A library for rendering project templates
@@ -80,6 +80,9 @@ It's a modern template engine that supports:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 07 2025 Denis Sergeev <zeff@altlinux.org> 9.10.2-alt1
+- 9.10.1 -> 9.10.2.
+
 * Tue Sep 09 2025 Denis Sergeev <zeff@altlinux.org> 9.10.1-alt1
 - 9.9.0 -> 9.10.1.
 
