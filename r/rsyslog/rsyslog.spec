@@ -29,7 +29,7 @@
 
 Name: rsyslog
 Version: 8.2502.0
-Release: alt3
+Release: alt4
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -38,7 +38,7 @@ Url: http://www.rsyslog.com
 # https://github.com/rsyslog/rsyslog.git
 Source: %name-%version.tar
 Patch0: %name-%version.patch
-Patch1: rsyslog-8.2502.0-alt-config-fix.patch
+Patch1: %name-%version-alt-config-fix.patch
 
 BuildRequires: flex
 BuildRequires: zlib-devel
@@ -390,7 +390,7 @@ all other functions:
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+%patch1
 
 %build
 %autoreconf
@@ -689,6 +689,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Oct 09 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.2502.0-alt4
+- Logfile ownership corrected in rsyslog.d/00_common.conf (Closes: #55643).
+- Removed systemd Requires=syslog.socket (Closes: #44911), thx Rocky.
+- Fixed double screened quotes from mongo config (Closes: #54959).
+
 * Wed Jun 25 2025 Andrey Cherepanov <cas@altlinux.org> 8.2502.0-alt3
 - Revert "fix run rsyslog".
 
