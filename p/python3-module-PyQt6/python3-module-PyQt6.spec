@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 6.9.1
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 6
 License: GPL-3.0
@@ -43,7 +43,7 @@ BuildRequires: libdbus-devel
 BuildRequires: python3-module-dbus-devel
 %endif
 
-BuildRequires: qt6-connectivity-devel qt6-multimedia-devel qt6-sensors-devel
+BuildRequires: qt6-connectivity-devel qt6-location-devel qt6-multimedia-devel qt6-sensors-devel
 BuildRequires: qt6-serialport-devel qt6-speech-devel
 BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel
 BuildRequires: qt6-declarative-devel qt6-webchannel-devel
@@ -149,6 +149,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Thu Oct 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- NMU: update build requires to the future when QtLocation bindings will appear
+
 * Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - NMU: new version
 
