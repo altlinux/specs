@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: Manage your Julia dependencies from Python
@@ -41,7 +41,9 @@ Source: %name-%version.tar
 %check
 # test_resolve test_executable test_project
 # need internet connection
-%pyproject_run_pytest -k'not test_resolve and not test_executable and not test_project'
+# test_editable_setuptools
+# we dont need it in package
+%pyproject_run_pytest -k'not test_resolve and not test_executable and not test_project and not test_editable_setuptools'
 
 %files
 %doc LICENSE *.md
@@ -49,5 +51,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.18-alt1
+- Automatically updated to 0.1.18.
+
 * Thu Jul 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.17-alt1
 - Initial build for Sisyphus

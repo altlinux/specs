@@ -1,9 +1,10 @@
 %define module_name pycares
 %def_with docs
+# Tests need internet connection
 %def_without check
 
 Name: python3-module-%module_name
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Summary: Python interface for c-ares
@@ -20,10 +21,6 @@ BuildRequires: libcares-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cffi
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -61,6 +58,9 @@ export LANG=en_US.UTF-8
 %endif
 
 %changelog
+* Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.11.0-alt1
+- Automatically updated to 4.11.0.
+
 * Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt1
 - Automatically updated to 4.10.0.
 

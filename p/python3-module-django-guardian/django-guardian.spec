@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Implementation of per object permissions for Django 1.2 or later
@@ -24,6 +24,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-django
 BuildRequires: python3-module-django-environ
 BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-typing-extensions
 %endif
 
 %py3_provides %oname
@@ -76,6 +77,9 @@ py.test-3 -v
 %python3_sitelibdir/guardian/*/test*
 
 %changelog
+* Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 

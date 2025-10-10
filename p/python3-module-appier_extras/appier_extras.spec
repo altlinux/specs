@@ -1,7 +1,7 @@
 %define oname appier_extras
 
 Name: python3-module-%oname
-Version: 0.26.3
+Version: 0.26.6
 Release: alt1
 
 Summary: Appier Framework Extra Elements
@@ -38,6 +38,9 @@ rm -rf %buildroot%_bindir/markdown
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.26.6-alt1
+- Automatically updated to 0.26.6.
+
 * Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 0.26.3-alt1
 - Automatically updated to 0.26.3.
 
