@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.1
-Release: alt1
+Release: alt2
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -125,6 +125,10 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sun Oct 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt2
+- installer-steps: Replace vm-blonde with vm-ortodox.
+- installer-steps: Move sysconfig-proxy step after installer-network step.
+
 * Sat Oct 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt1
 - installer-steps:
   + Add sysconfig-proxy step.
