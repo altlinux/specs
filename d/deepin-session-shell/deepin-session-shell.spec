@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.6.4.0.433.86a0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Deepin desktop-environment - Session shell module
@@ -12,7 +12,7 @@ Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-shell
-VCS: https://github.com/linuxdeepin/dde-session-shell.git
+VCS: https://github.com/linuxdeepin/dde-session-shell
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -20,7 +20,7 @@ Patch: %name-%version-%release.patch
 # Requires: chkpwd-pam
 
 BuildRequires(pre): deepin-gettext-tools
-BuildRequires: cmake dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXcursor-devel libXrandr-devel libXtst-devel libcups-devel libdtk6widget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel lightdm-devel
+BuildRequires: cmake dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXcursor-devel libXrandr-devel libXtst-devel libcups-devel libdtk6widget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel dde-lightdm-devel
 %if_with clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -64,6 +64,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6build \
   -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
   -DLIB_DESTINATION=%_lib \
+  -DCMAKE_EXE_LINKER_FLAGS='-L%_dqt6_libdir -L%_libdir' \
 #
 
 %install
@@ -113,6 +114,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Thu Oct 09 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.433.86a0-alt2
+- Built with another liblightdm-qt6 (use Qt for DDE only).
+
 * Wed Aug 06 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.433.86a0-alt1
 - New version 5.6.4-433-g86a050b4.
 
