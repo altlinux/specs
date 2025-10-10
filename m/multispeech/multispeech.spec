@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.2
-Release: alt5
+Release: alt6
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -11,8 +11,6 @@ Group:   Sound
 Url:     https://github.com/poretsky/multispeech
 
 Source: %name-%version.tar
-
-ExcludeArch: %ix86
 
 Requires: ru_tts
 Requires: mbrola-voices-en1
@@ -86,6 +84,9 @@ mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Fri Oct 10 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt6
+- I586 build restored
+
 * Mon Sep 22 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt5
 - Fixed build with bobcat 6.09.00
 

@@ -3,7 +3,7 @@
 
 Name:    bobcat
 Version: 6.10.00
-Release: alt1
+Release: alt2
 
 Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
 License: GPL-3.0-or-later
@@ -11,8 +11,6 @@ Group:   Development/C++
 Url:     https://gitlab.com/fbb-git/bobcat
 
 Source: %name-%version.tar
-
-ExcludeArch: %ix86
 
 BuildRequires: icmake
 BuildRequires: gcc-c++
@@ -59,6 +57,10 @@ Group: Other
 %setup
 
 %build
+%ifarch i586
+%add_optflags -Wno-return-local-addr
+%endif
+
 export CXXFLAGS="%optflags --std=c++2a -Werror -fdiagnostics-color=never -ffat-lto-objects"
 export CXX="g++"
 sed -i 's/^#define CXX/\/\/ #define CXX/g' bobcat/INSTALL.im
@@ -67,12 +69,13 @@ sed -i 's/^#define DOC/\/\/ #define DOC/g' bobcat/INSTALL.im
 sed -i 's/^#define HDR/\/\/ #define HDR/g' bobcat/INSTALL.im
 sed -i 's/^#define LIB/\/\/ #define LIB/g' bobcat/INSTALL.im
 echo "/* created during rpmbuild */"                            >> bobcat/INSTALL.im
-echo "#define CXX         \"${CXX} -std=c++20\""                           >> bobcat/INSTALL.im
-echo "#define CXXFLAGS    \"${CXXFLAGS} -std=c++20\""                      >> bobcat/INSTALL.im
+echo "#define CXX         \"${CXX} -std=c++2a\""                           >> bobcat/INSTALL.im
+echo "#define CXXFLAGS    \"${CXXFLAGS} -std=c++2a\""                      >> bobcat/INSTALL.im
 echo "#define DOC         \"%_docdir/bobcat\""   >> bobcat/INSTALL.im
 echo "#define HDR         \"%_includedir/bobcat\""          >> bobcat/INSTALL.im
 echo "#define LIB         \"%_libdir\""                       >> bobcat/INSTALL.im
-export ICMAKE_CPPSTD=--std=c++20
+export ICMAKE_CPPSTD=--std=c++2a
+
 pushd bobcat
 ./build libraries all
 ./build man 
@@ -104,6 +107,9 @@ rm -v %buildroot%_libdir/lib%name.a
 %_docdir/%name
 
 %changelog
+* Fri Oct 10 2025 Artem Semenov <savoptik@altlinux.org> 6.10.00-alt2
+- Fixed build on I586
+
 * Thu Oct 09 2025 Artem Semenov <savoptik@altlinux.org> 6.10.00-alt1
 - Updated to new version 6.10.00
 
