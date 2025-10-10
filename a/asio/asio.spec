@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: asio
-Version: 1.34.2
+Version: 1.36.0
 Release: alt1
 
 Summary: A cross-platform C++ library for network programming
@@ -79,6 +79,9 @@ echo "int main() {}" > src/examples/cpp14/operations/composed_8.cpp
 %_datadir/pkgconfig/asio.pc
 
 %changelog
+* Tue Sep 16 2025 Ilya Mashkin <oddity@altlinux.ru> 1.36.0-alt1
+- 1.36.0
+
 * Thu Jul 24 2025 Ilya Mashkin <oddity@altlinux.ru> 1.34.2-alt1
 - 1.34.2
 
