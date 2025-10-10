@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.15
+Version: 9.0.16
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -17,6 +17,7 @@ Vcs: https://github.com/google/libphonenumber.git
 Source: %url/archive/v%version/%name-%version.tar.gz
 # link libgeocoding against libphonenumber
 Patch1: %name-8.13.4-alt-link.patch
+Patch2: %name-9.0.16-alt-fix-nostatic-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -46,6 +47,7 @@ developing applications that use %name.
 %prep
 %setup -n %name-%version/cpp
 %patch1 -b .link
+%patch2 -b .static
 
 %ifarch %e2k
 # the problematic warning actually sits in protobuf (-Winvalid-offsetof)
@@ -59,13 +61,13 @@ sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
 %build
 %cmake \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
-    -DBUILD_SHARED_LIBS=ON
+    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_STATIC_LIB=OFF
 %nil
 %cmake_build
 
 %install
 %cmake_install
-rm -f %buildroot%_libdir/*.a
 
 %check
 %cmake_build -t tests
@@ -82,6 +84,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 9.0.16-alt1
+- 9.0.16
+
 * Thu Sep 25 2025 Yuri N. Sedunov <aris@altlinux.org> 9.0.15-alt1
 - 9.0.15
 
