@@ -1,6 +1,6 @@
 Name:    cage
-Version: 0.2.0
-Release: alt3.2e593fe5.1
+Version: 0.2.1
+Release: alt1
 
 Summary: A Wayland kiosk
 License: MIT
@@ -42,6 +42,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Oct 04 2025 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt1
+- New version 0.2.1.
+
 * Wed Jul 30 2025 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt3.2e593fe5.1
 - New snapshot.
 
