@@ -2,7 +2,7 @@
 
 Name: letters
 Version: 0.1.1
-Release: alt2
+Release: alt3
 Summary: Modern word processor for the GNOME desktop.
 License: GPLv3+
 Group: Editors
@@ -28,7 +28,7 @@ Conflicts: footage
 %prep
 %setup
 %autopatch -p1
-sed -i 's/^Categories=.*/Categories=Office;TextEditor;/' data/net.codelogistics.letters.desktop.in
+sed -i 's/^Categories=.*/Categories=Utility;TextEditor;/' data/net.codelogistics.letters.desktop.in
 
 %build
 %meson
@@ -59,6 +59,9 @@ sed -i 's/^Categories=.*/Categories=Office;TextEditor;/' data/net.codelogistics.
 %_datadir/metainfo/net.codelogistics.%name.metainfo.xml
 
 %changelog
+* Fri Oct 10 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.1-alt3
+- Update Freedesktop Additional Categories.
+
 * Mon Oct 06 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.1-alt2
 - Add missing Freedesktop Additional Categories to fix freedesktop-categories warn.
 
