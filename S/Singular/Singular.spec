@@ -1,7 +1,7 @@
 %global singulardir %_libdir/Singular
 %global upstreamver	4-4-1
 %global py3_slim_version %(rpm --eval %_python3_version | tr -d .)
-%global patchver p3
+%global patchver p4
 %global shortver 4.4.1
 %global addver 0.9.6
 
@@ -14,7 +14,7 @@
 %endif
 
 Name: Singular
-Version: 4.4.1p3
+Version: 4.4.1p4
 Release: alt1
 
 Summary: Computer Algebra System for polynomial computations
@@ -71,9 +71,6 @@ Patch11: %name-doc-hang.patch
 # Fix an off-by-one error in polymake.lib that leads to failed examples
 # https://github.com/Singular/Singular/issues/1210
 Patch12: %name-polymake-lib.patch
-# ALT patches
-# Fix gcc error: control reaches end of non-void function
-Patch13: %name-end-non-void.patch
 
 BuildRequires: 4ti2
 BuildRequires: bison
@@ -516,6 +513,9 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Tue Oct 07 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1p4-alt1
+- New version Release-4-4-1p4.
+
 * Mon Sep 29 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1p3-alt1
 - New version Release-4-4-1p3.
 
