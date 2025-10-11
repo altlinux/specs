@@ -5,7 +5,7 @@
 %define verlib_ver 0.21
 
 Name: python3-module-%{basic_name}
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: Lib that helps to work with the Sisyphus repo and it's branches
@@ -46,6 +46,11 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Oct 10 2025 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
+- Fixed "PackageNames" function;
+- A new function "RemoveSynonymousPackages" that helps to deal with synonymous
+  packages.
+
 * Thu Sep 26 2024 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
 - Initial release of a new incarnation of the "alt" module of the "ax" library
   as a separate project.

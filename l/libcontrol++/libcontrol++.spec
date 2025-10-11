@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.34.0
+Version: 0.35.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,9 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sun Oct 05 2025 Alexey Appolonov <alexey@altlinux.org> 0.35.0-alt1
+- Slightly modified API (Keys >> GetKeys, KeysV >> GetKeysV).
+
 * Tue Jan 21 2025 Alexey Appolonov <alexey@altlinux.org> 0.34.0-alt1
 - Ability to explicitly stop instant feedback provided through an object of the
   "TPrinter" class.
