@@ -3,7 +3,7 @@
 
 Name: buffybox
 Version: 3.2.0
-Release: alt1.gc683350
+Release: alt2.gc683350
 
 Summary: A suite of graphical applications for the terminal
 License: GPL-3.0-or-later
@@ -35,6 +35,7 @@ on Linux framebuffer.
 %package -n unl0kr
 Summary: Disk unlocker for the initramfs based on LVGL
 Group: Accessibility
+Requires: xkeyboard-config
 
 %description -n unl0kr
 Unl0kr is an osk-sdl clone written in LVGL and rendering
@@ -65,6 +66,9 @@ depend on GPU hardware acceleration.
 %_man5dir/buffyboard*
 
 %changelog
+* Mon Oct 06 2025 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt2.gc683350
+- unl0kr: add runtime dependencies on xkeyboard-config
+
 * Mon Sep 29 2025 Egor Shestakov <ved@altlinux.org> 3.2.0-alt1.gc683350
 - Initial build:
   + unl0kr package has become part of the buffybox suite
