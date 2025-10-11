@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 2.2.2
+Version: 3.0.1
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -58,34 +58,20 @@ provides live thermal performance details.
 %package -n %{name}d
 Summary: Monitor and control your cooling devices daemon
 Group: %group
+Provides: %name-liqctld = %EVR
+Obsoletes: %name-liqctld < 3.0.0
+Obsoletes: python3-module-%{name}_liqctld < 3.0.0
 
 %description -n %{name}d
 %{name}d is the main daemon containing the core logic for interfacing with
 devices, and is installed as "coolercontrold". It is meant to run in the
 background as a system daemon. It handles all device communication and data
-management and processing, additionally connecting to the coolercontrol-liqctld
-daemon for liquidctl supported devices.
+management and processing, additionally connecting to the liqctld daemon for
+liquidctl supported devices.
 
 It has a REST API that services client programs, such as the Desktop
 Application and Web UI.  Additionally, the Web UI is embedded in the daemon for
 access over a local browser without the need for any additional package.
-
-%package -n %name-liqctld
-Summary: %name service daemon written in Python for interacting with liquidctl
-Group: %group
-BuildArch: noarch
-Requires: python3-module-%{name}_liqctld = %EVR
-
-%description -n %name-liqctld
-%name service daemon written in Python for interacting with liquidctl
-
-%package -n python3-module-%{name}_liqctld
-Summary: %name service daemon written in Python for interacting with liquidctl
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n python3-module-%{name}_liqctld
-Python3 module for interacting with liquidctl
 
 %prep
 %setup
@@ -101,12 +87,14 @@ git = "https://github.com/codifryed/nvml-wrapper"
 branch = "coolercontrol-2-0"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/codifryed/tower-governor"]
+[source."git+https://github.com/codifryed/tower-governor?branch=0.7"]
 git = "https://github.com/codifryed/tower-governor"
+branch = "0.7"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
 [profile.release]
 strip = "none"
 lto= "thin"
@@ -118,10 +106,6 @@ tar -xf %SOURCE2
 popd
 
 %build
-# python
-pushd %name-liqctld
-%pyproject_build
-popd
 # desktop app
 pushd %qt_dir
 %cmake
@@ -132,10 +116,9 @@ popd
 make build-daemon-offline
 
 %install
-(cd %name-liqctld; %pyproject_install)
-install -Dpm 755 %{name}d/target/release/%{name}d -t %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_unitdir}
-cp -p packaging/systemd/{%{name}d,%name-liqctld}.service %{buildroot}%{_unitdir}
+install -Dpm 755 %{name}d/target/release/%{name}d -t %buildroot%_bindir
+mkdir -p %buildroot%_unitdir
+cp -p packaging/systemd/%{name}d.service %buildroot%_unitdir/
 (cd %qt_dir; %cmake_install)
 desktop-file-install --dir=%buildroot%_desktopdir packaging/metadata/%ap_id.desktop
 mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps
@@ -152,17 +135,9 @@ cp -p packaging/metadata/%ap_id.metainfo.xml %buildroot%_datadir/metainfo/
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xml
 
 %files -n %{name}d
-%{_bindir}/%{name}d
-%{_unitdir}/%{name}d.service
+%_bindir/%{name}d
+%_unitdir/%{name}d.service
 %doc LICENSE README.md CHANGELOG.md
-
-%files -n %name-liqctld
-%_bindir/%name-liqctld
-%{_unitdir}/%name-liqctld.service
-
-%files -n python3-module-%{name}_liqctld
-%python3_sitelibdir_noarch/%{name}_liqctld
-%python3_sitelibdir_noarch/%{name}_liqctld-%{version}.dist-info/
 
 %files
 %_bindir/%name
@@ -174,6 +149,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Sat Oct 11 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.1-alt1
+- 3.0.1.
+- merge -liquidctl modules into coolercontrold (by upstream).
+
 * Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt1
 - 2.2.2.
 
