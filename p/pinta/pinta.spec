@@ -3,7 +3,7 @@
 %def_with prebuild
 
 Name: pinta
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: An easy to use drawing and image editing program
@@ -73,6 +73,9 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=true
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Fri Oct 10 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.4-alt1
+- new version 3.0.4
+
 * Thu Oct 02 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.3-alt1
 - new version 3.0.3
 - build with .NET 9
