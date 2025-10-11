@@ -1,7 +1,7 @@
 %def_with check
 
 Name: bottom
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
@@ -49,6 +49,9 @@ install -D -m 644 target/tmp/bottom/completion/_btm %buildroot%_datadir/zsh/site
 %_datadir/zsh/site-functions/_btm
 
 %changelog
+* Sat Oct 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.11.2-alt1
+- Updated to version 0.11.2.
+
 * Sat Aug 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.11.1-alt1
 - Updated to version 0.11.1.
 
@@ -67,4 +70,3 @@ install -D -m 644 target/tmp/bottom/completion/_btm %buildroot%_datadir/zsh/site
 
 * Thu Jan 26 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.0-alt1
 - Initial build for ALT
-
