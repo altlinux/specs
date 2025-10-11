@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -31,6 +31,7 @@ BuildRequires: cereal-devel
 BuildRequires: clang%llvm_pkgver-devel
 BuildRequires: cmake
 BuildRequires: flex
+BuildRequires: gcc-c++
 BuildRequires: libbcc-devel
 BuildRequires: libbpf-devel
 BuildRequires: libdw-devel
@@ -71,9 +72,6 @@ was created by Alastair Robertson.
 %setup
 
 %build
-%remove_optflags -frecord-gcc-switches
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -110,19 +108,9 @@ vm-run --kvm=cond %_cmake__builddir/src/bpftrace -l 'kprobe:*_sleep_*'
 if kvm-ok; then
 	PATH=$PWD/.gear:$PATH
 	cd %_cmake__builddir
-	delete-blocks casted	tests/runtime/intcast
-	delete-blocks debugf	tests/runtime/call
 	delete-blocks hardware	tests/runtime/probe
-	delete-blocks kfunc	tests/runtime/call
-	delete-blocks kprobe_offset_fail_size	tests/runtime/probe
 	delete-blocks testprogs	tests/runtime/*
-	delete-blocks tracetest_testprobe_semaphore	tests/runtime/usdt
-	delete-blocks uaddr	tests/runtime/call
-	delete-blocks watchpoint	tests/runtime/watchpoint
 %ifarch aarch64
-	delete-blocks kfunc	tests/runtime/regression
-	delete-blocks task	tests/runtime/basic
-	delete-blocks usermode	tests/runtime/builtin
 	sed -i 's/xattr.h/user.h/' tests/runtime/basic
 %endif
 	vm-run --kvm=cond --sbin tests/runtime-tests.sh
@@ -138,6 +126,10 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Fri Oct 10 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.1-alt1
+- Update to v0.24.1 (2025-10-03).
+- spec: Build with gcc instead of clang.
+
 * Sat Sep 20 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
 - Update to v0.24.0 (2025-09-17).
 
