@@ -2,7 +2,7 @@
 %def_with check
 
 Name: openfreebuds
-Version: 0.15.1
+Version: 0.17.1
 Release: alt1
 Summary: Open source app for HUAWEI FreeBuds
 License: GPL-3.0
@@ -16,6 +16,8 @@ Patch1: alt-fix-desktop-comment.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pdm
+BuildRequires: python3-module-pdm-backend
 BuildRequires: python3-module-poetry
 BuildRequires: python3-module-PyQt6-devel
 BuildRequires: qt6-tools
@@ -97,5 +99,8 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %exclude %python3_sitelibdir/openfreebuds_qt/designer/*.ui
 
 %changelog
+* Sat Oct 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt1
+- Updated to version 0.17.1.
+
 * Tue Dec 03 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.1-alt1
 - Initial build for ALT.
