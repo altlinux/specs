@@ -4,12 +4,13 @@
 
 Name: python3-module-%module_name
 Version: 2.9.1
-Release: alt1
+Release: alt2
 Summary: Library for creating and manipulating HTML documents using an elegant DOM API
 License: LGPL-3.0
 Group: Development/Python3
 Url: https://github.com/Knio/dominate
 Source: %name-%version.tar
+Patch: alt-fix-build.patch
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
@@ -28,6 +29,7 @@ lets you take advantage of the more powerful features of Python.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -44,6 +46,9 @@ lets you take advantage of the more powerful features of Python.
 %doc LICENSE.txt README.md
 
 %changelog
+* Sat Oct 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.9.1-alt2
+- Fixed FTBFS with python 3.13.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.9.1-alt1
 - Updated to version 2.9.1.
 
