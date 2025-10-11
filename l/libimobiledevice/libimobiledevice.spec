@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define api_ver 1.0
 
 %def_disable python
 %def_enable check
 
 Name: libimobiledevice
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
@@ -16,7 +16,7 @@ Url: http://www.libimobiledevice.org
 Vcs: https://github.com/libimobiledevice/libimobiledevice.git
 
 %if_disabled snapshot
-Source: %url/downloads/%name-%version.tar.bz2
+Source: https://github.com/libimobiledevice/libimobiledevice/releases/download/%version/%name-%version.tar.bz2
 %else
 Source: %name-%version.tar
 %endif
@@ -92,6 +92,9 @@ echo %version > .tarball-version
 %endif
 
 %changelog
+* Sat Oct 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
 - updated to 1.3.0-297-g34b170f
 
