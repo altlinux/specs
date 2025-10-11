@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/authelia/authelia
 # git rev-parse --short v%version
-%global commit_hash 6deeae303
+%global commit_hash 001c2edec
 
 Name: authelia
-Version: 4.39.10
+Version: 4.39.12
 Release: alt1
 Summary: The Single Sign-On Multi-Factor portal for web apps
 License: Apache-2.0
@@ -102,5 +102,8 @@ touch %buildroot%_sysconfdir/authelia/{configuration,users_database}.yml
 %doc LICENSE
 
 %changelog
+* Sat Oct 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.39.12-alt1
+- Updated to version 4.39.12.
+
 * Sat Sep 27 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.39.10-alt1
 - Initial build for ALT.
