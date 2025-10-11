@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.56
+%define ver_major 3.58
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
@@ -9,7 +9,7 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -166,6 +166,7 @@ GObject introspection devel data for the GNOME Panel shared library.
 %dir %_datadir/%name
 %_datadir/%name/*
 %_desktopdir/%name.desktop
+%_userunitdir/%name.service
 %_iconsdir/hicolor/*x*/apps/%{name}*.png
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 %_man1dir/*
@@ -196,6 +197,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.1-alt1
+- 3.58.1
+
 * Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 

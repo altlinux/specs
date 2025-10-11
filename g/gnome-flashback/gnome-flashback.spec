@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.56
+%define ver_major 3.58
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -149,21 +149,24 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/gnome-control-center/keybindings/50-gnome-flashback-screenshots.xml
 %_xdgmenusdir/%name-applications.menu
 %_datadir/xsessions/%name-metacity.desktop
-%_xdgconfigdir/autostart/%name-idle-monitor.desktop
 %_xdgconfigdir/autostart/%name-nm-applet.desktop
-%_xdgconfigdir/autostart/%name-clipboard.desktop
-%_xdgconfigdir/autostart/%name-media-keys.desktop
-%_xdgconfigdir/autostart/%name-polkit.desktop
-
 %_userunitdir/%name.service
 %_userunitdir/%name.target
-%_userunitdir/gnome-session@gnome-flashback-metacity.target.d/session.conf
+%_userunitdir/gnome-session@%name-metacity.target.d/session.conf
+%_userunitdir/%name-clipboard.service
+%_userunitdir/%name-idle-monitor.service
+%_userunitdir/%name-media-keys.service
+%_userunitdir/%name-polkit.service
+%_userunitdir/gnome-session-x11@%name-compiz.target
+%_userunitdir/gnome-session-x11@%name-metacity.target
+%_userunitdir/gnome-session@%name-compiz.target.d/compiz.conf
+%_userunitdir/gnome-session@%name-metacity.target.d/metacity.conf
 %doc AUTHORS NEWS README*
 
 %if_with compiz
 %files session-compiz
 %_libexecdir/%name-compiz
-%_userunitdir/gnome-session@gnome-flashback-compiz.target.d/session.conf
+%_userunitdir/gnome-session@%name-compiz.target.d/session.conf
 %_datadir/gnome-session/sessions/%name-compiz.session
 %_datadir/xsessions/%name-compiz.desktop
 %_sysconfdir/compizconfig/%name.conf
@@ -172,6 +175,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 

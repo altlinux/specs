@@ -2,14 +2,14 @@
 
 %define _name Iconic
 %define binary_name folder_icon
-%define ver_major 2025.3
+%define ver_major 2025.9
 %define rdn_name nl.emphisia.icon
 
 %def_enable check
 %def_disable bootstrap
 
 Name: iconic
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Easilly add icons on top of folders
@@ -26,15 +26,22 @@ Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
 
+# xmp_toolkit failed for 32-bit
+ExcludeArch: %ix86
+# and with LTO
+%define optflags_lto %nil
+
 Requires: dconf
 Requires: icon-theme-adwaita
 
-%define adw_ver 1.6
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libxml-2.0)
+# for vendor/xmp_toolkit
+BuildRequires: gcc-c++ libexpat-devel zlib-devel
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli
 BuildRequires: /usr/bin/glib-compile-schemas}
 
@@ -64,14 +71,14 @@ folder-svg-path='%_iconsdir/Adwaita/scalable/places/folder.svg'
 _EOF_
 
 
-%find_lang --output=%name.lang %binary_name
+%find_lang --output=%name.lang %_name
 
 %check
 %__meson_test
 
 %files -f %name.lang
-%attr(0755,root,root) %_bindir/%binary_name
-%_datadir/%binary_name/
+%attr(0755,root,root) %_bindir/%_name
+%_datadir/%_name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -80,6 +87,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.9.1-alt1
+- 2025.9.1
+
 * Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3.2-alt1
 - 2025.3.2
 

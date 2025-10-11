@@ -1,12 +1,16 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
+
+
 %define _name metacity
-%define ver_major 3.56
+%define ver_major 3.58
 %define api_ver 3.0
+%define xdg_name org.gnome.%_name
 %def_disable static
 %def_enable vulkan
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Metacity window manager
@@ -36,11 +40,10 @@ Obsoletes: %name-theme-crux < %version-%release		%name-theme-esco < %version-%re
 Obsoletes: %name-theme-gorilla < %version-%release	%name-theme-metabox < %version-%release
 Obsoletes: %name-theme-simple < %version-%release
 
-Requires: lib%name = %version-%release
-Requires: zenity
+Requires: lib%name = %EVR
 
 # From configure.ac
-BuildRequires(pre): rpm-build-gnome
+BuildRequires(pre): rpm-build-gnome rpm-build-systemd
 BuildRequires: autoconf-archive
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -50,7 +53,7 @@ BuildRequires: libXcomposite-devel >= %xcomposite_ver
 BuildRequires: libXfixes-devel libXrender-devel libXdamage-devel libXtst-devel
 BuildRequires: libXrender-devel
 BuildRequires: libXcursor-devel libXt-devel libXinerama-devel libXext-devel
-BuildRequires: yelp-tools itstool zenity libcanberra-gtk3-devel
+BuildRequires: yelp-tools itstool libcanberra-gtk3-devel
 BuildRequires: libXrandr-devel libX11-devel libXres-devel libSM-devel
 BuildRequires: libICE-devel libXpresent-devel perl-XML-Parser libgtop-devel
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
@@ -73,7 +76,7 @@ This package contains shared library needed to run Metacity.
 Summary: Development files for lib%name
 Group: Development/C
 Conflicts: lib%_name-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: libgtk+3-devel >= %gtk_ver
 
 %description -n lib%name-devel
@@ -83,7 +86,7 @@ This package contains headers and development libraries for lib%name
 Summary: Static version of lib%name
 Group: Development/C
 Conflicts: lib%_name-devel-static
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 This package contains the lib%name static library.
@@ -111,12 +114,14 @@ This package contains the lib%name static library.
 %_bindir/%_name
 %_bindir/%_name-message
 %_bindir/%_name-theme-viewer
+%_libexecdir/%_name-dialog
 %_desktopdir/%_name.desktop
 %_datadir/gnome-control-center/keybindings/50-%{_name}*.xml
-%_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%_name.keybindings.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%_name.theme.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.%_name.enums.xml
+%_userunitdir/%_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.keybindings.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.theme.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_man1dir/%_name.1.*
 %_man1dir/%_name-message.1.*
 %_man1dir/%_name-theme-viewer.1.*
@@ -137,6 +142,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.1-alt1
+- 3.58.1
+
 * Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 

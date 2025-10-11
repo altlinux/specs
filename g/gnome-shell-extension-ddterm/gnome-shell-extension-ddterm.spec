@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 61
+%define ver_major 62
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
+Version: %ver_major.0.0
 Release: alt1%beta
 
 %define gettext_domain %name
@@ -71,6 +71,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 62.0.0-alt1
+- 62.0.0
+
 * Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 61-alt1
 - 61
 - spec cleanup (ALT #54094)

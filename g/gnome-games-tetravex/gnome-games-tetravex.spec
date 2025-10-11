@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _name tetravex
@@ -8,13 +8,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A game based on Tetravex
 Group: Games/Boards
 License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Tetravex
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-tetravex.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
@@ -31,7 +33,7 @@ Provides:  gnome-games-gnotravex = %version-%release
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: yelp-tools /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 
@@ -42,7 +44,6 @@ times are stored in a system-wide scoreboard.
 
 %prep
 %setup -n %__name-%version
-sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 
 %build
 %meson
@@ -63,6 +64,9 @@ sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 
 
 %changelog
+* Sat Sep 20 2025 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt1
+- 3.38.3
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
 - updated to 3.38.2-18-g867c4c9
 - fixed build with meson >= 0.61

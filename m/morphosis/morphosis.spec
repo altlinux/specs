@@ -1,11 +1,13 @@
-%define _name Morphosis
-%define ver_major 48
-%define rdn_name garden.jamie.%_name
+%define __name Morphosis
+%define _name morphosis
+%define pypi_name %_name
+%define ver_major 49
+%define rdn_name garden.jamie.%__name
 
 %def_enable check
 
-Name: morphosis
-Version: %ver_major.2
+Name: %_name
+Version: %ver_major.0
 Release: alt1
 
 Summary: Documents converter for the Gnome Desktop
@@ -18,8 +20,6 @@ BuildArch: noarch
 Vcs: https://gitlab.gnome.org/World/morphosis.git
 
 Source: %name-%version.tar
-
-%add_python3_path %_datadir/%name
 
 Requires: python3-module-pygobject3
 Requires: /usr/bin/pandoc dconf
@@ -50,6 +50,7 @@ Libadwaita. Conversions are done with Pandoc.
 
 %files -f %name.lang
 %_bindir/%name
+%python3_sitelibdir_noarch/%pypi_name/
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
@@ -59,6 +60,9 @@ Libadwaita. Conversions are done with Pandoc.
 %doc README.*
 
 %changelog
+* Tue Sep 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

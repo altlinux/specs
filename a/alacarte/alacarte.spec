@@ -1,4 +1,4 @@
-%define ver_major 3.56
+%define ver_major 3.58
 %define xdg_name org.gnome.alacarte
 
 %def_enable documentation
@@ -62,6 +62,9 @@ specification.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Tue Sep 23 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 

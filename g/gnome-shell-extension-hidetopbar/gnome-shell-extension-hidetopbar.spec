@@ -1,8 +1,8 @@
 %def_disable snapshot
 
 %define _name hidetopbar
-%define ver_major 120
-%define git_tag e9ececc2d6a5e64d010166de0086a39f603299c2
+%define ver_major 121
+%define git_tag bd46cf82150e849902df6bcdcf514f2ca11a2041
 %define beta %nil
 %define uuid hidetopbar@mathieu.bidon.ca
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -57,6 +57,9 @@ cp -ar locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/{*.pot*,
 %doc README.md
 
 %changelog
+* Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 121-alt1
+- 121 (GNOME 49 supported)
+
 * Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 120-alt1
 - 120
 

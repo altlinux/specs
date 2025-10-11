@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.5
+%define ver_major 1.6
 %define rdn_name org.gnome.design.Emblem
 
 %def_disable bootstrap
@@ -23,8 +23,8 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.17
-%define adw_ver 1.7
+%define gtk_ver 4.20
+%define adw_ver 1.8
 %define rsvg_ver 2.52
 
 BuildRequires(pre): rpm-macros-meson
@@ -62,12 +62,16 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Tue Sep 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 

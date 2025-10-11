@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Time Tracker for GNOME
@@ -71,6 +71,9 @@ software (since it's a CSV file).
 %doc README*
 
 %changelog
+* Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt1
+- 2.1.8
+
 * Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
 - 2.1.7
 

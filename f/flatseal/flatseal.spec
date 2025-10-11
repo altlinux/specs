@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _name Flatseal
-%define ver_major 2.3
+%define ver_major 2.4
 %define beta %nil
 %define rdn_name com.github.tchx84.Flatseal
 %def_enable check
 
 Name: flatseal
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -24,7 +24,7 @@ Source: %_name-%version.tar
 %endif
 
 %define gjs_ver 1.73.1
-%define adw_ver 1.5
+%define adw_ver 1.8
 %define webkit_ver 2.40
 %define appstream_ver 1.0
 
@@ -69,11 +69,15 @@ xvfb-run %__meson_test -v
 %_datadir/%name/
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%{rdn_name}*.svg
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Tue Sep 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Fri Apr 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 

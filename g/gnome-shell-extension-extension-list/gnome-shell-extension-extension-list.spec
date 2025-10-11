@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name extension-list
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
 
 %define ego 3088/%_name
 # EGO=3088/extension-list sh cli/get-version.sh
-%define ego_ver 42
+%define ego_ver 43
 
 %def_enable check
 
@@ -65,6 +65,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Wed Oct 08 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

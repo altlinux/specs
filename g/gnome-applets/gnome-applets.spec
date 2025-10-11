@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.56
+%define ver_major 3.58
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -201,6 +201,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 
