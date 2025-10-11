@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.9.0
+Version: 6.10.0
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -23,6 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinx-copybutton
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -73,6 +74,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Thu Sep 18 2025 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt1
+- Automatically updated to 6.10.0.
+
 * Fri Feb 07 2025 Grigory Ustinov <grenka@altlinux.org> 6.9.0-alt1
 - Automatically updated to 6.9.0.
 

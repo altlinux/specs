@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: A python implementation of mongodb queries
@@ -53,6 +53,9 @@ by JSON or YAML parsers.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Sep 18 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
+- Automatically updated to 1.4.3.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
 - Automatically updated to 1.4.2.
 
