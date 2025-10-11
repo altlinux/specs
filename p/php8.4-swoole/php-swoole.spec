@@ -1,10 +1,10 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	6.0.1
+%define		real_version	6.0.2
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
-Release:	alt2.%_php_release_version
+Release:	alt1.%_php_release_version
 ExcludeArch: %ix86 armh
 Summary:	Coroutine-based concurrency library for PHP
 License:	Apache-2.0
@@ -102,6 +102,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Fri Sep 26 2025 Anton Farygin <rider@altlinux.com> 6.0.2-alt1
+- 6.0.1 -> 6.0.2
 
 * Tue Mar 04 2025 Anton Farygin <rider@altlinux.ru> 6.0.1-alt2
 - fixed build with brotli (Closes: #53195, #53260, #53132, #45264)
