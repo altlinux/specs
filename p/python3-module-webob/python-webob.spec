@@ -1,12 +1,10 @@
-%define _unpackaged_files_terminate_build 1
-
 %define pypi_name WebOb
 
 %def_with check
 
 Name: python3-module-webob
 Version: 1.8.9
-Release: alt1.1
+Release: alt1.2
 
 Summary: WSGI request and response object
 License: MIT
@@ -22,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3(pytest)
+BuildRequires: python3-module-legacy-cgi
 %endif
 
 %description
@@ -49,6 +47,9 @@ environment.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.9-alt1.2
+- Fixed FTBFS.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.8.9-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
