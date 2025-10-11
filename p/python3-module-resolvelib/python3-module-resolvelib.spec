@@ -1,7 +1,7 @@
 %define  modulename resolvelib
 
 Name:    python3-module-%modulename
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Resolve abstract dependencies into concrete ones 
@@ -40,6 +40,9 @@ on how it should interact with them, and it will spit out a resolution result.
 %python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Sat Oct 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
+- New version.
+
 * Thu Jun 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version.
 
