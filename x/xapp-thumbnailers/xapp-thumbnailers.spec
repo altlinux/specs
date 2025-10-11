@@ -1,5 +1,5 @@
 Name: xapp-thumbnailers
-Version: 1.2.5
+Version: 1.2.8
 Release: alt1
 
 Summary: Thumbnailers for GTK Desktop Environments
@@ -76,6 +76,22 @@ Requires: %name = %EVR
 %description -n xapp-jxl-thumbnailer
 Produces thumbnails for JPEG XL files.
 
+%package -n xapp-ora-thumbnailer
+Summary: OpenRaster thumbnailer
+Group: Graphics
+Requires: %name = %EVR
+
+%description -n xapp-ora-thumbnailer
+Produces thumbnails for OpenRaster (.ora) files.
+
+%package -n xapp-aiff-thumbnailer
+Summary: AIFF thumbnailer
+Group: Graphics
+Requires: %name = %EVR
+
+%description -n xapp-aiff-thumbnailer
+Produces thumbnails for aiff files.
+
 %prep
 %setup
 
@@ -121,8 +137,24 @@ chmod 755 %buildroot/usr/bin/xapp-vorbiscomment-thumbnailer
 %_bindir/xapp-jxl-thumbnailer
 %_datadir/thumbnailers/xapp-jxl-thumbnailer.thumbnailer
 
+%files -n xapp-ora-thumbnailer
+%_bindir/xapp-ora-thumbnailer
+%_datadir/thumbnailers/xapp-ora-thumbnailer.thumbnailer
 
+%files -n xapp-aiff-thumbnailer
+%_bindir/xapp-aiff-thumbnailer
+%_datadir/thumbnailers/xapp-aiff-thumbnailer.thumbnailer
+
+    
 %changelog
+* Tue Oct 07 2025 Ivan Mazhukin <vanomj@altlinux.org> 1.2.8-alt1
+- new version (1.2.8) with rpmgs script
+- added subpackage for aiff files thumbnailers
+
+* Tue Mar 04 2025 Ivan Mazhukin <vanomj@altlinux.org> 1.2.6-alt1
+- new version 1.2.6 (with rpmrb script)
+- added subpackage for ora files thumbnailers
+
 * Mon Jul 29 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.2.5-alt1
 - new version (1.2.5) with rpmgs script
 - added subpackage for JPEG XL files thumbnailers
