@@ -9,11 +9,11 @@
 %define oname openimageio
 %define soname 3.0
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name:           lib%oname
-Version:        3.0.9.1
-Release:        alt1.1
+Version:        3.0.11.0
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -224,6 +224,10 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Sat Oct 11 2025 Anton Farygin <rider@altlinux.com> 3.0.11.0-alt1
+- 3.0.9.1 -> 3.0.11.0
+- disabled bootstrap
+
 * Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.9.1-alt1.1
 - NMU: bootstrap for python3.13.
 
