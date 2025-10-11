@@ -2,7 +2,7 @@
 
 Name: libtiff5
 Version: 4.4.0
-Release: alt8
+Release: alt9
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
@@ -41,6 +41,7 @@ Patch25: libtiff-4.4.0-upstream-cve-2024-13978.patch
 Patch26: libtiff-4.4.0-upstream-cve-2025-8851.patch
 Patch27: libtiff-4.4.0-upstream-cve-2025-9165.patch
 Patch28: libtiff-4.4.0-upstream-cve-2025-8961.patch
+Patch29: libtiff-4.4.0-upstream-cve-2025-9900.patch
 
 %def_disable static
 %def_enable cxx
@@ -124,6 +125,10 @@ rm -rv %buildroot{%_bindir,%_mandir,%_pkgconfigdir,%_libdir/*.so,%_includedir,%d
 %docdir/[A-Z]*
 
 %changelog
+* Sat Oct 11 2025 Constantin Sunzow <protvin@altlinux.org> 4.4.0-alt9
+- Fixes:
+  + CVE-2025-9900 Write-what-where condition
+
 * Sat Sep 20 2025 Constantin Sunzow <protvin@altlinux.org> 4.4.0-alt8
 - Fixes:
   + CVE-2025-8961 Improper bounds checking on memory operations
