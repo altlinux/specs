@@ -2,6 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_without compat
+%def_without devel
 %def_with webkitgtk
 %def_with sdl
 
@@ -9,7 +10,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt7.20250310.1
+Release: alt8.20250310.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -362,12 +363,31 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 
 %find_lang wxstd30 wxmsw30 --output=wxstd.lang
 
+%if_without devel
+rm %buildroot%_libdir/libwx_gtk3u_*.so
+rm -r %buildroot%_libdir/wx/config/gtk3-unicode-3.0
+rm -r %buildroot%_libdir/wx/include/gtk3-unicode-3.0
+rm -r %buildroot%_datadir/wx-%wxbranch/examples
+rm %buildroot%_bindir/wx-config
+rm %buildroot%_bindir/wxrc
+rm %buildroot%_bindir/wxrc-%wxbranch
+rm %buildroot%_bindir/wx-config-%wxbranch
+rm -r %buildroot%_includedir/wx-%wxbranch
+rm %buildroot%_libdir/libwx_baseu*.so
+rm -r %buildroot%_libdir/wx/config
+rm -r %buildroot%_libdir/wx/include
+rm %buildroot%_datadir/aclocal/wxwin.m4
+rm -r %buildroot%_datadir/bakefile/presets-%wxbranch
+rm -r %buildroot%_libexecdir/%name
+%endif
+
 %files -n libwxBase%wxbranch
 %_libdir/libwx_baseu-*.so.*
 %_libdir/libwx_baseu_net-*.so.*
 %_libdir/libwx_baseu_xml-*.so.*
 %dir %_libdir/wx
 
+%if_with devel
 %files -n libwxBase%wxbranch-devel
 %_bindir/wx-config
 %_bindir/wxrc
@@ -375,12 +395,12 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_bindir/wx-config-%wxbranch
 %_includedir/wx-%wxbranch
 %_libdir/libwx_baseu*.so
-%dir %_libdir/wx
 %dir %_libdir/wx/config
 %dir %_libdir/wx/include
 %_datadir/aclocal/wxwin.m4
 %_datadir/bakefile/presets-%wxbranch
 %_libexecdir/%name
+%endif
 
 %if_with sdl
 %files -n lib%name-sound_sdlu
@@ -418,10 +438,12 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %files -n lib%name-media
 %_libdir/libwx_gtk3u_media-*.so.*
 
+%if_with devel
 %files -n lib%name-devel
 %_libdir/libwx_gtk3u_*.so
 %_libdir/wx/config/gtk3-unicode-3.0
 %_libdir/wx/include/gtk3-unicode-3.0
+%endif
 
 %if_with compat
 %files -n compat-lib%name-gtk2
@@ -452,10 +474,15 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 
 %files i18n -f wxstd.lang
 
+%if_with devel
 %files examples
 %_datadir/wx-%wxbranch/examples
+%endif
 
 %changelog
+* Sat Oct 11 2025 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt8.20250310.1
+- disable devel subpackage
+
 * Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt7.20250310.1
 - fix the consequences of the build with autoconf 2.72
 

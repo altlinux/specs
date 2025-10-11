@@ -13,7 +13,7 @@ BuildRequires: libGL-devel libGLU-devel
 %define _localstatedir %{_var}
 Name:           perl-Wx-GLCanvas
 Version:        0.09
-Release:        alt2_28
+Release:        alt3_28
 Summary:        Interface to wxWidgets' OpenGL canvas
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Wx-GLCanvas
@@ -28,7 +28,7 @@ BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Wx/build/MakeMaker.pm)
-BuildRequires:  libwxGTK3.0-devel
+BuildRequires:  libwxGTK3.2-devel
 
 %if 0%{?with_tests}
 BuildRequires:  perl(base.pm)
@@ -74,6 +74,9 @@ DISPLAY=:0.0 make test
 %{perl_vendor_archlib}/Wx*
 
 %changelog
+* Sat Oct 11 2025 Anton Midyukov <antohami@altlinux.org> 0.09-alt3_28
+- NMU: build with wxGTK3.2
+
 * Thu Oct 21 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt2_28
 - build with wxGTK3.0
 

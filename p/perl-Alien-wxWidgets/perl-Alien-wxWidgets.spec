@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.69
-Release: alt2
+Release: alt3
 
 Summary: Alien-wxWidgets - building, finding and using wxWidgets binaries
 
@@ -14,8 +14,8 @@ Url: http://www.cpan.org
 Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/%{dist}-%{version}.tar.gz
 
 BuildRequires: gcc-c++ perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-autodie perl-Module-Pluggable
-BuildRequires: libwxGTK3.0-devel
-Requires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
+Requires: libwxGTK3.2-devel
 
 %description
 Alien::wxWidgets allows wxPerl to easily find information about
@@ -38,6 +38,9 @@ build and install a private copy of wxWidgets as part of the build process
 %perl_vendor_archlib/Alien/wxWidgets*
 
 %changelog
+* Sat Oct 11 2025 Anton Midyukov <antohami@altlinux.org> 0.69-alt3
+- NMU: rebuild with wxWidgets 3.2
+
 * Sat Oct 09 2021 Igor Vlasenko <viy@altlinux.org> 0.69-alt2
 - rebuild with wxWidgets 3.0
 

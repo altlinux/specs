@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Wx
 Version: 0.9932
-Release: alt3
+Release: alt4
 
 Summary: wxPerl - Perl bindings for wxWindows
 License: GPL+ or Artistic
@@ -13,6 +13,10 @@ Source0: http://www.cpan.org/authors/id/M/MD/MDOOTSON/Wx-%{version}.tar.gz
 # wxGTK, CPAN RT#121464, <http://trac.wxwidgets.org/ticket/13599>.
 Patch0:         Wx-0.9932-Undefine-BOM_UTF8.patch
 Patch1:         gtk3.patch
+Patch2:         wxWidgets_3.2_MakeMaker.patch
+Patch3:         wxWidgets_3.2_port.patch    
+
+BuildPrereq: dos2unix
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: gcc-c++ perl-Encode perl-ExtUtils-CBuilder perl-ExtUtils-XSpp perl-IO-String perl-autodie perl-threads xvfb-run
@@ -25,8 +29,8 @@ for cross-platform GUI developement.
 Summary: Wx Perl development files
 Group: Development/Perl
 Requires: %name = %version-%release
-BuildRequires: libwxGTK3.0-devel perl-Alien-wxWidgets
-Requires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel perl-Alien-wxWidgets
+Requires: libwxGTK3.2-devel
 
 %description devel
 Development files useful for building Perl applications depending on Wx.
@@ -35,6 +39,13 @@ Development files useful for building Perl applications depending on Wx.
 %setup -q -n Wx-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+# Hooray for line ending differences.
+dos2unix MANIFEST
+dos2unix typemap
+
+%patch3 -p1
 
 %ifdef __buildreqs
 # these tests open /usr/share/applications/*.desktop
@@ -88,6 +99,9 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Sat Oct 11 2025 Anton Midyukov <antohami@altlinux.org> 0.9932-alt4
+- NMU: rebuild with wxWidgets 3.2
+
 * Sat Oct 09 2021 Igor Vlasenko <viy@altlinux.org> 0.9932-alt3
 - rebuild with wxWidgets 3.0
 
