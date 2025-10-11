@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 License: MIT
 
@@ -42,6 +42,9 @@ subst 's|"rfkill"|"%_sbindir/rfkill"|' src/services/bluetooth/mod.rs
 %_bindir/%name
 
 %changelog
+* Sun Oct 12 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.6.0-alt1
+- new version (0.6.0) with rpmgs script
+
 * Sun Jun 08 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5.0-alt1
 - new version (0.5.0) with rpmgs script
 - config: 
