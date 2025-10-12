@@ -1,7 +1,7 @@
 %define pypi_name python-docs-theme
 
 Name:    python3-module-%pypi_name
-Version: 2025.9.1
+Version: 2025.9.2
 Release: alt1
 
 Summary: The Sphinx theme for the CPython docs and related projects
@@ -38,6 +38,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2025.9.2-alt1
+- Automatically updated to 2025.9.2.
+
 * Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 2025.9.1-alt1
 - Automatically updated to 2025.9.1.
 
