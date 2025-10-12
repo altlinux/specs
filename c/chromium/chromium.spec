@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        141.0.7390.54
+Version:        141.0.7390.76
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -92,7 +92,6 @@ Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-# Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch029: 0029-DEBIAN-constexpr3.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
@@ -457,13 +456,13 @@ gn_arg+=( clang_base_path=\"$LLVM_PREFIX\" )
 gn_arg+=( is_clang=true )
 gn_arg+=( clang_use_chrome_plugins=false )
 gn_arg+=( use_lld=true )
-if [ "$bits" = 64 ]; then
+%ifarch x86_64
     gn_arg+=( use_thin_lto=true )
     gn_arg+=( thin_lto_enable_optimizations=true )
-else
+%else
     gn_arg+=( use_thin_lto=false )
     gn_arg+=( thin_lto_enable_optimizations=false )
-fi
+%endif
 gn_arg+=( is_cfi=false )
 gn_arg+=( use_cfi_icall=false )
 gn_arg+=( chrome_pgo_phase=0 )
@@ -653,8 +652,32 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Oct 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.76-alt1
+- New version (141.0.7390.76).
+- Disable LTO on aarch64.
+
+* Wed Oct 08 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.65-alt1
+- New version (141.0.7390.65).
+- Fix CHROME_WRAPPER (Closes #40695).
+- Fixes:
+  + CVE-2025-11458: Heap buffer overflow in Sync
+  + CVE-2025-11460: Use after free in Storage
+
 * Wed Oct 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.54-alt1
 - New version (141.0.7390.54).
+- Fixes:
+  + CVE-2025-11205: Heap buffer overflow in WebGPU
+  + CVE-2025-11206: Heap buffer overflow in Video
+  + CVE-2025-11207: Side-channel information leakage in Storage
+  + CVE-2025-11208: Inappropriate implementation in Media
+  + CVE-2025-11209: Inappropriate implementation in Omnibox
+  + CVE-2025-11210: Side-channel information leakage in Tab
+  + CVE-2025-11211: Out of bounds read in Media
+  + CVE-2025-11212: Inappropriate implementation in Media
+  + CVE-2025-11213: Inappropriate implementation in Omnibox
+  + CVE-2025-11215: Off by one error in V8
+  + CVE-2025-11216: Inappropriate implementation in Storage
+  + CVE-2025-11219: Use after free in V8
 
 * Wed Sep 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 140.0.7339.207-alt1
 - New version (140.0.7339.207).
