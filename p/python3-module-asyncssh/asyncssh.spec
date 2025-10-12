@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.21.0
+Version: 2.21.1
 Release: alt1
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
@@ -61,6 +61,9 @@ rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.21.1-alt1
+- Automatically updated to 2.21.1.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 2.21.0-alt1
 - Automatically updated to 2.21.0.
 
