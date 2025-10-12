@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Suite of tools and fixtures to manage daemons for testing
@@ -64,6 +64,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
