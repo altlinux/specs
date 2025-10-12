@@ -1,9 +1,9 @@
-#%%def_disable check
+%def_with check
 
 %define  modulename treq
 Name:    python3-module-%modulename
 Version: 22.2.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python requests like API built on top of Twisted's HTTP client
 License: MIT
@@ -15,9 +15,7 @@ BuildRequires: python3-dev
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-incremental
-%if_disabled check
-%else
-#BuildRequires: pytest3
+%if_with check
 BuildRequires: python3(twisted)
 BuildRequires: python3(twisted.trial)
 BuildRequires: python3(twisted.web)
@@ -26,6 +24,7 @@ BuildRequires: python3(requests)
 BuildRequires: python3(service_identity)
 BuildRequires: python3(httpbin)
 BuildRequires: python3-module-twisted-core-tests
+BuildRequires: python3-module-legacy-cgi
 %endif
 
 BuildArch: noarch
@@ -55,13 +54,15 @@ rm -rf %buildroot%python3_sitelibdir/%modulename/testing.py
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
 trial treq || exit 1
-#pytest3 -v
 
 %files
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 22.2.0-alt2.1
+- Fixed FTBFS.
+
 * Wed Jun 21 2023 Grigory Ustinov <grenka@altlinux.org> 22.2.0-alt2
 - Fixed dependencies for building without check.
 
