@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -72,6 +72,9 @@ it on other machines, then you have found what you were looking for!
 %make test
 %make shellcheck
 
+%post
+%post_service alteratord
+
 %files
 %_alterator_backend3dir/kopidel
 %_alterator_datadir/applications/kopidel.desktop
@@ -84,6 +87,15 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Sat Oct 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.3-alt1
+- Fix not ignoring regular expressions from
+  the default-ignored-files.txt (Closes: 56016).
+- UI: Fix the compression warning when switching
+  to another image creating method (Closes: 55998).
+- libexec/check-fs-features.sh: Remove ntfs from BAD_FS (Closes: 55997).
+- Add the ability to run the kopidel from a regular user (Closes: 55996).
+- Add the restart of the alteratord service after installation.
+
 * Sat Aug 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.2-alt1
 - CLI: Fix /image/Metadata directory creation for external drives.
 - CLI: Implement Ctrl+C interrupt handling.
