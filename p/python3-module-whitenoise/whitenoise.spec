@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.10.0
+Version: 6.11.0
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -74,6 +74,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 6.11.0-alt1
+- Automatically updated to 6.11.0.
+
 * Thu Sep 18 2025 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt1
 - Automatically updated to 6.10.0.
 
