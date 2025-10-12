@@ -1,5 +1,3 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname m2crypto
 
 %ifnarch %ix86 armh
@@ -9,7 +7,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 0.45.1
+Version: 0.46.2
 Release: alt1
 
 Summary: Support for using OpenSSL in python scripts.
@@ -24,7 +22,8 @@ Source: %name-%version.tar
 BuildRequires: libssl-devel swig
 BuildRequires: /usr/bin/openssl
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-py libnumpy-py3-devel
+BuildRequires: python3-module-py
+BuildRequires: libnumpy-py3-devel
 
 %add_python3_req_skip M2Crypto.six.moves.http_client
 %add_python3_req_skip M2Crypto.six.moves.http_cookies
@@ -68,11 +67,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3 -v
 
 %files
-%doc CHANGES LICENCE README.rst tests doc/*
+%doc CHANGES README.rst tests doc/*
 %python3_sitelibdir/M2Crypto
 %python3_sitelibdir/M2Crypto-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.46.2-alt1
+- Automatically updated to 0.46.2.
+
 * Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.45.1-alt1
 - Automatically updated to 0.45.1.
 
