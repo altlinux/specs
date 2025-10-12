@@ -6,7 +6,7 @@
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
 Version: 3.26.1
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -15,16 +15,18 @@ Source: %name-%version.tar
 
 # Add old status names to gps.h for compatibility
 Patch0: gpsd-3.25-fedora-apistatus.patch
+Patch1: %name-%version-%release.patch
 Requires: libgps%abiversion = %EVR
 BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor gem-rouge
 
 BuildRequires: scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel pps-tools-devel
 BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-serial python3-module-matplotlib
 BuildRequires: python3-module-setuptools
+BuildRequires: libncurses-devel
 %add_findreq_skiplist */gpsdebuginfo
 
 %if_with libQgpsmm
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 %endif
 
 BuildRequires: libbluez-devel
@@ -119,6 +121,7 @@ Python bindings to libgps
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 scons \
@@ -135,7 +138,7 @@ scons \
     python_shebang=%__python3 \
     %if_with libQgpsmm
 	qt=yes \
-	qt_versioned=5 \
+	qt_versioned=6 \
     %else
 	 qt=no \
     %endif
@@ -280,6 +283,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 12 2025 Anton Farygin <rider@altlinux.com> 3.26.1-alt2
+- built with qt6
+
 * Wed May 21 2025 Anton Farygin <rider@altlinux.com> 3.26.1-alt1
 - 3.26 -> 3.26.1
 
