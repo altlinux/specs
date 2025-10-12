@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.3.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Callback API implemented over Proton
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-qpid-proton
+BuildRequires: python3-module-legacy-cgi
 %endif
 
 BuildArch: noarch
@@ -51,6 +52,9 @@ It provides a callback-based API for message passing.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1.2
+- Fixed FTBFS.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
