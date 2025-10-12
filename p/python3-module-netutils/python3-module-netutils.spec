@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.6.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python library that is a collection of functions and objects for common network automation tasks
 License: Apache-2.0
@@ -21,6 +21,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-toml
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-crypt-r
 %endif
 
 %add_python3_req_skip distutils.version
@@ -55,6 +56,9 @@ rm -f %buildroot%python3_sitelibdir/README.md
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2.1
+- Fixed FTBFS.
+
 * Mon Nov 20 2023 Alexander Burmatov <thatman@altlinux.org> 1.6.0-alt2
 - Skip distutils requires.
 
