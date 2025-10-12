@@ -2,7 +2,7 @@ Name: kernel-image-6.17
 Release: alt1
 %define kernel_src_version	6.17
 %define kernel_base_version	6.17
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest1
@@ -612,6 +612,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Oct 12 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.2-alt1
+- v6.17.2 (2025-10-12).
+- config: enable all accelerometers.
+- config: Enable PS4/PS5 controllers (ALT#52522).
+
 * Mon Oct 06 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.1-alt1
 - v6.17.1 (2025-10-06).
 - config: Enable CONFIG_HID_UNIVERSAL_PIDFF=m.
