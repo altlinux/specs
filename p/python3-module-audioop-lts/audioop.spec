@@ -1,9 +1,9 @@
-%def_with check
-
 %define srcname audioop-lts
 
+%def_with check
+
 Name:    python3-module-%srcname
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: LTS Port of Python audioop
@@ -49,5 +49,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/audioop_lts-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
+- Automatically updated to 0.2.2.
+
 * Tue Jul 29 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus.
