@@ -1,10 +1,8 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname mimeparse
 
 Name: python3-module-%oname
 Version: 1.6.0
-Release: alt4
+Release: alt4.1
 
 Summary: Basic functions for handling mime-types in python
 License: MIT
@@ -17,6 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(json)
+BuildRequires: python3-module-legacy-cgi
 
 
 %description
@@ -55,6 +54,9 @@ Contents:
 
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt4.1
+- Fixed FTBFS.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt4
 - Build for python2 disabled.
 
