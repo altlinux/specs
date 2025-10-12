@@ -1,9 +1,10 @@
 %define pypi_name lizard
 
+%def_without version_fix
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.17.31
+Version: 1.18.0
 Release: alt1
 
 Summary: A simple code complexity analyser without caring about the C/C++ header files or Java imports, supports most of the popular languages
@@ -36,9 +37,11 @@ duplicate detection) and many other forms of static code analysis.
 %prep
 %setup
 
-# Upstream forget to bump version every release
+%if_with version_fix
+# Upstream often forget to bump version every release
 # This is permanent fix of this problem
 sed -i '2i## %version' CHANGELOG.md
+%endif
 
 %build
 %pyproject_build
@@ -59,6 +62,9 @@ sed -i '2i## %version' CHANGELOG.md
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.18.0-alt1
+- Automatically updated to 1.18.0.
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.17.31-alt1
 - Automatically updated to 1.17.31.
 
