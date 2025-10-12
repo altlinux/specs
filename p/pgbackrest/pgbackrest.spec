@@ -1,6 +1,6 @@
 Name:    pgbackrest
 Version: 2.54.2
-Release: alt1
+Release: alt2
 
 Summary: Reliable PostgreSQL Backup & Restore
 License: MIT
@@ -10,7 +10,7 @@ Url:     https://github.com/pgbackrest/pgbackrest
 Source: %name-%version.tar
 
 #BuildRequires:
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 BuildRequires: openssl-devel 
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
@@ -56,6 +56,9 @@ popd
 %_bindir/*
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 2.54.2-alt2
+- Change BR: libpq5-devel -> libpq-devel
+
 * Thu Apr 10 2025 Kirill Izmestev <felixz@altlinux.org> 2.54.2-alt1
 - new version 2.54.2
 

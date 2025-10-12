@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.30.0
-Release: alt1.9.g5b14653
+Release: alt1.9.g5b14653.1
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_check
 BuildRequires: python3-module-pytest
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 BuildRequires: postgresql17-server
 BuildRequires: postgresql17-contrib
 %endif
@@ -65,6 +65,9 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %exclude %python3_sitelibdir/%mod_name/_testbase/
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 0.30.0-alt1.9.g5b14653.1
+- NMU: Change BR libpq5-devel -> libpq-devel
+
 * Mon Jun 23 2025 Anton Zhukharev <ancieg@altlinux.org> 0.30.0-alt1.9.g5b14653
 - Updated to 5b14653 (fixes FTBFS).
 

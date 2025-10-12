@@ -1,7 +1,7 @@
 %define libname postgresql
 Name: ocaml-%libname
 Version: 5.1.3
-Release: alt1.2
+Release: alt1.3
 Summary: PostgreSQL Bindings for OCaml
 Group: Development/ML
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -10,7 +10,7 @@ Source0: %name-%version.tar
 BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-stdio-devel
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 BuildRequires: chrpath
 
 %description
@@ -45,6 +45,9 @@ chrpath -d %buildroot%_libdir/ocaml/stublibs/dllpostgresql_stubs.so
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Sep 27 2025 Alexei Takaseev <taf@altlinux.org> 5.1.3-alt1.3
+- NMU: change BR libpq5-devel -> libpq-devel
+
 * Mon Mar 03 2025 Alexei Takaseev <taf@altlinux.org> 5.1.3-alt1.2
 - Change BR libpq5-17-devel -> libpq5-devel
 

@@ -6,7 +6,7 @@
 
 Name:          gem-data-objects
 Version:       0.10.17
-Release:       alt2
+Release:       alt2.1
 Summary:       DataObjects basic API and shared driver specifications
 License:       Unlicense
 Group:         Development/Ruby
@@ -18,8 +18,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libmysqlclient21-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libpq5-devel
-BuildRequires: postgresql17-server-devel
+BuildRequires: postgresql-devel
 %if_enabled check
 BuildRequires: gem(addressable) >= 2.1
 BuildRequires: gem(rake) >= 0
@@ -444,6 +443,9 @@ Provide a standard and simplified API for communicating with RDBMS from Ruby
 
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 0.10.17-alt2.1
+- NMU: change BR libpq5-devel,postgresql17-server-devel -> postgresql-devel
+
 * Wed Nov 06 2024 Pavel Skrylev <majioa@altlinux.org> 0.10.17-alt2
 - ! fixed builddeps and spec structure
 - ! rebased

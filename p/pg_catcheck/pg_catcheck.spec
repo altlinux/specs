@@ -1,6 +1,6 @@
 Name: pg_catcheck
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Simple tool for diagnosing system catalog corruption
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # optimized out: libkrb5-devel libpq-devel libsasl2-3 libssl-devel libxml2-devel postgresql-devel python-base python-modules python3 python3-base setproctitle
 BuildRequires: libecpg-devel-static libpam-devel libreadline-devel libselinux-devel libxslt-devel setproctitle-devel zlib-devel
 BuildRequires: libssl-devel libkrb5-devel libzstd-devel liblz4-devel
-BuildRequires: postgresql-devel
+BuildRequires: postgresql-devel libnuma-devel
 
 %description
 pg_catcheck is a simple tool for diagnosing system catalog corruption.
@@ -40,6 +40,9 @@ you should use PostgreSQL's checksum feature (initdb -k).
 %_bindir/*
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 1:1.6.0-alt2
+- Add BR libnuma-devel
+
 * Wed Nov 06 2024 Alexei Takaseev <taf@altlinux.org> 1:1.6.0-alt1
 - 1.6.0
 

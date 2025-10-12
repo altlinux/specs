@@ -2,7 +2,7 @@
 
 Name: sqlsmith
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Random SQL query generator
 Group: Development/Tools
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 
 BuildRequires: autoconf-archive
 BuildRequires: libpqxx-devel
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 BuildRequires: boost-devel
 BuildRequires: gcc-c++
 
@@ -39,5 +39,8 @@ It currently supports generating queries for PostgreSQL, SQLite 3 and MonetDB.
 %_bindir/sqlsmith
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 1.4-alt2
+- NMU: change BR libpq5-devel -> libpq-devel
+
 * Wed May 15 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 1.4-alt1
 - Initial build.

@@ -17,7 +17,7 @@
 
 Name: lighttpd
 Version: 1.4.81
-Release: alt1
+Release: alt2
 
 Summary: A fast webserver with minimal memory-footprint
 License: BSD
@@ -44,7 +44,7 @@ BuildRequires: bzlib-devel libbrotli-devel libfcgi-devel libpcre2-devel libxxhas
 %{?_with_ldap:BuildPreReq: libldap-devel}
 %{?_with_lua:BuildPreReq: lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
-%{?_with_pgsql:BuildPreReq: libpq5-devel}
+%{?_with_pgsql:BuildPreReq: libpq-devel}
 %{?_with_libdeflate:BuildPreReq: libdeflate-devel}
 %{?_with_tests:BuildPreReq: perl-devel perl-Digest-SHA}
 
@@ -285,6 +285,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 1.4.81-alt2
+- Change BR libpq5-devel -> libpq-devel
+
 * Mon Aug 18 2025 Alexei Takaseev <taf@altlinux.org> 1.4.81-alt1
 - 1.4.81
 

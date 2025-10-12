@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1.0
-Release: alt1.1
+Release: alt2
 
 Summary: PyGreSQL is a Python module that interfaces to a PostgreSQL database
 License: PostgreSQL
@@ -22,11 +22,11 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 %if_with check
 %pyproject_builddeps_metadata
 BuildRequires: python3-module-pytest
-BuildRequires: postgresql17-server
+BuildRequires: postgresql18-server
 %endif
 
 %description
@@ -69,6 +69,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 6.1.0-alt2
+- NMU: Change BR libpq5-devel -> libpq-devel
+
 * Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

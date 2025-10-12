@@ -5,7 +5,7 @@
 
 Name: aprutil%aprver
 Version: 1.6.3
-Release: alt2
+Release: alt3
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -78,7 +78,7 @@ This package contains APU static library.
 %package -n lib%name-pgsql
 Group: System/Libraries
 Summary: APR utility library PostgreSQL DBD driver
-BuildRequires: libpq5-devel
+BuildRequires: libpq-devel
 Requires: lib%name = %EVR
 
 %description -n lib%name-pgsql
@@ -209,6 +209,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_crypto_openssl*.so
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt3
+- NMU: change BR libpq5-devel -> libpq-devel
+
 * Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 1.6.3-alt2
 - built with lmdb instead of BerkleyDB (thnx, Fedora)
 - added openssl subpackage with crypto support

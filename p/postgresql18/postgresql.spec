@@ -1,5 +1,5 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 # Use ICU
 %def_with icu
@@ -20,9 +20,9 @@
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
-%define postgresql_major     17
-%define postgresql_minor     6
-%define postgresql_altrel    2
+%define postgresql_major     18
+%define postgresql_minor     0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -63,7 +63,7 @@ Conflicts: %prog_name > %EVR
 Conflicts: %{prog_name}17-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
-BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel
+BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel libnuma-devel liburing-devel
 %if_with icu
 BuildRequires: libicu-devel
 %endif
@@ -134,8 +134,8 @@ Conflicts: %libpq_name-13
 Conflicts: %libpq_name-14
 Conflicts: %libpq_name-15
 Conflicts: %libpq_name-16
+Conflicts: %libpq_name-17
 Conflicts: %libpq_name-17-1C
-Conflicts: %libpq_name-18
 
 %description -n %libpq_name-%postgresql_major
 C and C++ libraries to enable user programs to communicate with the
@@ -197,8 +197,8 @@ Conflicts: %libpq_name-13-devel
 Conflicts: %libpq_name-14-devel
 Conflicts: %libpq_name-15-devel
 Conflicts: %libpq_name-16-devel
+Conflicts: %libpq_name-17-devel
 Conflicts: %libpq_name-17-1C-devel
-Conflicts: %libpq_name-18-devel
 
 %description -n %libpq_name-%postgresql_major-devel
 The libpq package provides the essential shared library for any PostgreSQL
@@ -224,8 +224,8 @@ Conflicts: %{prog_name}13-devel
 Conflicts: %{prog_name}14-devel
 Conflicts: %{prog_name}15-devel
 Conflicts: %{prog_name}16-devel
+Conflicts: %{prog_name}17-devel
 Conflicts: %{prog_name}17-1C-devel
-Conflicts: %{prog_name}18-devel
 
 %description devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -251,12 +251,13 @@ BuildArch: noarch
 %if_with devel
 Provides: rpm-macros-%prog_name
 %endif
+
 Conflicts: rpm-macros-%prog_name-13
 Conflicts: rpm-macros-%prog_name-14
 Conflicts: rpm-macros-%prog_name-15
 Conflicts: rpm-macros-%prog_name-16
+Conflicts: rpm-macros-%prog_name-17
 Conflicts: rpm-macros-%prog_name-17-1C
-Conflicts: rpm-macros-%prog_name-18
 
 %description -n rpm-macros-%prog_name-%postgresql_major
 RPM macros to PostgreSQL for build server extentions
@@ -271,12 +272,13 @@ Requires: %libpq_name-%postgresql_major-devel = %EVR
 %add_findreq_skiplist %_libdir/libecpg*.so*
 %add_findreq_skiplist %_libdir/libpgtypes*.so*
 %endif
+
 Conflicts: %libecpg_name-13
 Conflicts: %libecpg_name-14
 Conflicts: %libecpg_name-15
 Conflicts: %libecpg_name-16
+Conflicts: %libecpg_name-17
 Conflicts: %libecpg_name-17-1C
-Conflicts: %libecpg_name-18
 
 %description -n %libecpg_name-%postgresql_major
 An embedded SQL program consists of code written in an ordinary programming
@@ -292,12 +294,13 @@ Requires: %libecpg_name-%postgresql_major = %EVR
 %if_without devel
 %add_findprov_skiplist %_libdir/pkgconfig/*.pc
 %endif
+
 Conflicts: %libecpg_name-13-devel
 Conflicts: %libecpg_name-14-devel
 Conflicts: %libecpg_name-15-devel
 Conflicts: %libecpg_name-16-devel
+Conflicts: %libecpg_name-17-devel
 Conflicts: %libecpg_name-17-1C-devel
-Conflicts: %libecpg_name-18-devel
 
 %description -n %libecpg_name-%postgresql_major-devel
 ECPG development files.  You will need to install this package to build any
@@ -336,8 +339,8 @@ Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}14-server-devel
 Conflicts: %{prog_name}15-server-devel
 Conflicts: %{prog_name}16-server-devel
+Conflicts: %{prog_name}17-server-devel
 Conflicts: %{prog_name}17-1C-server-devel
-Conflicts: %{prog_name}18-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -501,7 +504,9 @@ export CLANG=/usr/bin/clang-19
     --with-gnu-ld \
     --with-ossp-uuid \
     --with-lz4 \
-    --with-zstd
+    --with-zstd \
+    --with-libnuma \
+    --with-liburing
 
 %make_build pkglibdir=%_libdir/%PGSQL
 
@@ -867,6 +872,9 @@ fi
 %_libdir/%PGSQL/pg_freespacemap.so
 %_datadir/%PGSQL/extension/pg_freespacemap-*.sql
 %_datadir/%PGSQL/extension/pg_freespacemap.control
+%_libdir/%PGSQL/pg_logicalinspect.so
+%_datadir/%PGSQL/extension/pg_logicalinspect-*.sql
+%_datadir/%PGSQL/extension/pg_logicalinspect.control
 %_libdir/%PGSQL/pg_prewarm.so
 %_datadir/%PGSQL/extension/pg_prewarm-*.sql
 %_datadir/%PGSQL/extension/pg_prewarm.control
@@ -974,6 +982,7 @@ fi
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
+%_libdir/%PGSQL/pg_overexplain.so
 %dir %_datadir/%PGSQL
 %_datadir/%PGSQL/errcodes.txt
 %dir %_datadir/%PGSQL/timezone
@@ -1113,10 +1122,11 @@ fi
 %endif
 
 %changelog
-* Wed Sep 24 2025 Alexei Takaseev <taf@altlinux.org> 17.6-alt2
-- Disable -devel
-- Add triggerpostun and conflict for PG 18
-- Remove triggerpostun and conflict for PG 12 and 16-1C
+* Wed Sep 24 2025 Alexei Takaseev <taf@altlinux.org> 18.0-alt1
+- 18.0
+- Enable NUMA support
+- Enable io_uring support
+- Remove triggerpostun and conflict for PG 16-1C
 - Add libpq-devel, libpq-devel-static, libecpg-devel, libecpg-devel-static,
   postgresql-devel, postgresql-devel-static subpackage
 

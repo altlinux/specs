@@ -16,7 +16,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.28
-Release: alt2.1
+Release: alt3
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -43,7 +43,7 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 
 %if_enabled sql
-BuildRequires: libMySQL-devel postgresql-devel libsqlite3-devel
+BuildRequires: libMySQL-devel libpq-devel libsqlite3-devel
 %endif
 
 %if_enabled ldap
@@ -307,6 +307,10 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 2.1.28-alt3
+- Change BR: postgresql-devel -> libpq-devel to reduce the size
+  of the build environment
+
 * Sun Dec 29 2024 Alexei Takaseev <taf@altlinux.org> 2.1.28-alt2.1
 - Use GCC 13
 
