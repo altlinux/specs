@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.1.0
+Version: 7.1.1
 Release: alt1
 
 Summary: Astronomy and astrophysics core library
@@ -88,6 +88,9 @@ export ASTROPY_USE_SYSTEM_ALL=1
 %python3_sitelibdir/%pypi_name/*/*/*/*/tests
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt1
+- Automatically updated to 7.1.1.
+
 * Thu Jul 10 2025 Grigory Ustinov <grenka@altlinux.org> 7.1.0-alt1
 - Automatically updated to 7.1.0.
 
