@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.1.18
+Version: 0.1.22
 Release: alt1
 
 Summary: Manage your Julia dependencies from Python
@@ -20,6 +20,8 @@ BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-filelock
 BuildRequires: python3-module-semver
+BuildRequires: python3-module-tomlkit
+BuildRequires: python3-module-tomli
 %endif
 
 BuildArch: noarch
@@ -51,6 +53,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.22-alt1
+- Automatically updated to 0.1.22.
+
 * Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.18-alt1
 - Automatically updated to 0.1.18.
 
