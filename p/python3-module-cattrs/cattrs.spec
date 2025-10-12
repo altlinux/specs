@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 25.2.0
+Version: 25.3.0
 Release: alt1
 
 Summary: Complex custom class converters for attrs
@@ -79,6 +79,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 25.3.0-alt1
+- Automatically updated to 25.3.0.
+
 * Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 25.2.0-alt1
 - Automatically updated to 25.2.0.
 
