@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.6.1
+Version: 2.6.3
 Release: alt1
 
 Summary: Fork of the standard library cgi and cgitb modules, being deprecated in PEP-594
@@ -16,7 +16,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-poetry-core
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -49,5 +49,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.3-alt1
+- Automatically updated to 2.6.3.
+
 * Sat Dec 14 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
 - Initial build for Sisyphus.
