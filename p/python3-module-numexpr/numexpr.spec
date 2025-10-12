@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.12.1
+Version: 2.13.1
 Release: alt1
 Epoch: 1
 
@@ -27,7 +27,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python3(numpy.testing)
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -80,6 +80,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1:2.13.1-alt1
+- Automatically updated to 2.13.1.
+
 * Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 1:2.12.1-alt1
 - Automatically updated to 2.12.1.
 
