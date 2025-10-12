@@ -1,6 +1,6 @@
 Name: python3-module-webpy
 Version: 0.62
-Release: alt1
+Release: alt1.1
 Summary: A simple web framework for Python
 Group: Development/Python3
 
@@ -25,7 +25,7 @@ BuildArch: noarch
 
 %py3_provides web
 
-BuildRequires: rpm-build-python3 
+BuildRequires: python3-module-legacy-cgi
 
 %description
 web.py is a web framework for python that is as simple as it is
@@ -46,6 +46,9 @@ purpose with absolutely no restrictions.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.62-alt1.1
+- Fixed FTBFS.
+
 * Tue Dec 07 2021 Anton Farygin <rider@altlinux.ru> 0.62-alt1
 - 0.40 -> 0.62
 
