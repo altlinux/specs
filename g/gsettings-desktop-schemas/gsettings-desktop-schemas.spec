@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define namespace GDesktopEnums
 %define api_ver 3.0
@@ -135,6 +135,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

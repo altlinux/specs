@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 66
+%define ver_major 67
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -104,6 +104,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Fri Sep 19 2025 Yuri N. Sedunov <aris@altlinux.org> 67-alt1
+- 67 (GNOME 49 supported)
+
 * Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 66-alt1
 - 66
 

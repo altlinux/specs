@@ -3,12 +3,20 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
+%def_enable man
+# 13/15 Web view test              FAIL
+# libEGL warning: DRI3 error: Could not get DRI3 device
+# libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+# bwrap: No permissions to creating new namespace, 
+# likely because the kernel does not allow non-privileged user namespaces...
+%def_disable check
+
 Name: epiphany
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -33,8 +41,8 @@ Obsoletes: %name-extensions
 %define glib_ver 2.74.0
 %define webki_api_ver 6.0
 %define webkit_ver 2.43.4
-%define gtk4_ver 4.13.3
-%define adwaita_ver 1.6
+%define gtk4_ver 4.19
+%define adwaita_ver 1.8
 %define gcr4_ver 3.9.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
@@ -47,7 +55,8 @@ Obsoletes: %name-extensions
 Requires: %name-data = %version-%release indexhtml iso-codes
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson gcc-c++ blueprint-compiler
+BuildRequires: yelp-tools /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gcr4-libs-devel >= %gcr4_ver
@@ -62,6 +71,8 @@ BuildRequires: libjson-glib-devel
 BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libarchive-devel
 BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkitgtk-%webki_api_ver) >= %webkit_ver
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
+%{?_enable_chek:BuildRequires: bubblewrap xdg-dbus-proxy}
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -83,7 +94,9 @@ This package contains common noarch files needed for Epiphany.
 %setup -n %name-%version%beta
 
 %build
-%meson
+%meson \
+    %{?_subst_enable_meson_feature man man-pages}
+%nil
 %meson_build
 
 %install
@@ -96,6 +109,10 @@ _EOF_
 
 %find_lang --with-gnome --output=%name.lang %name
 
+%check
+export XDG_RUNTIME_DIR=${PWD}
+xvfb-run %__meson_test
+
 %files
 %_bindir/%name
 %dir %_libexecdir/%name
@@ -106,21 +123,24 @@ _EOF_
 %_libdir/%name/*.so
 %dir %_libdir/%name/web-process-extensions
 %_libdir/%name/web-process-extensions/libephywebprocessextension.so
+%_desktopdir/%xdg_name.desktop
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README* TODO
 
 %files data -f %name.lang
-%_desktopdir/%xdg_name.desktop
 %_datadir/%name
 %_datadir/dbus-1/services/*
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.gschema.override
-%_man1dir/*
+%{?_enable_man:%_man1dir/*}
 %_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 48.5-alt1
 - 48.5
 

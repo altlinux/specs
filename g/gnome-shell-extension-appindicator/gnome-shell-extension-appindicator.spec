@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 60
+%define ver_major 61
 %define beta %nil
 %define uuid appindicatorsupport@rgcjonas.gmail.com
 %define xdg_name org.gnome.shell.extensions.appindicator
@@ -59,6 +59,9 @@ into GNOME Shell, including support for legacy tray icons.
 %doc AUTHORS.md README.md
 
 %changelog
+* Thu Sep 18 2025 Yuri N. Sedunov <aris@altlinux.org> 61-alt1
+- 61 (GNOME 49 supported)
+
 * Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 60-alt1
 - 60
 

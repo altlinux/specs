@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.16
+%define ver_major 5.18
 %define namespace GtkSource
 %define api_ver 5
 
@@ -37,7 +37,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.72
+%define glib_ver 2.76
 %define gtk_ver 4.17
 %define pcre2_ver 10.21
 %define libxml2_ver 2.6.0
@@ -149,7 +149,6 @@ dbus-run-session xvfb-run %__meson_test
 %_vapidir/%_name-%api_ver.deps
 %_vapidir/%_name-%api_ver.vapi
 %endif
-%doc HACKING
 
 %if_enabled doc
 %files devel-doc
@@ -173,6 +172,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 5.18.0-alt1
+- 5.18.0
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 5.16.0-alt1
 - 5.16.0
 

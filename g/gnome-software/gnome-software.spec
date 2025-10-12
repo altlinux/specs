@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
-%define plugins_ver 22
+%define plugins_ver 23
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -24,6 +24,8 @@
 %def_enable packagekit
 %def_enable webapps
 %def_enable odrs
+# disabled by default
+%def_disable dkms
 # dropped since 3.27.90
 %def_disable rpm
 %def_disable rpm_ostree
@@ -39,8 +41,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -79,7 +81,7 @@ Requires: gnome-app-list >= %applist_ver
 %{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-systemd
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
@@ -147,6 +149,7 @@ GNOME Software.
     %{subst_enable_meson_bool fwupd fwupd} \
     %{subst_enable_meson_bool flatpak flatpak} \
     %{subst_enable_meson_bool snap snap} \
+    %{subst_enable_meson_bool dkms dkms} \
     %{subst_enable_meson_bool ostree ostree} \
     %{subst_enable_meson_bool rpm_ostree rpm_ostree} \
     %{subst_enable_meson_bool packagekit packagekit} \
@@ -173,7 +176,6 @@ _EOF_
 %__meson_test
 
 %files -f %name.lang
-%_xdgconfigdir/autostart/%xdg_name.desktop
 %_bindir/%name
 %_libexecdir/%name-cmd
 %_libexecdir/%name-restarter
@@ -184,6 +186,7 @@ _EOF_
 %_libdir/libgnomesoftware.so.%plugins_ver
 %_libdir/%name/plugins-%plugins_ver/
 %{?_enable_fwupd:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_fwupd.so}
+%_userunitdir/%name.service
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-local-file-flatpak.desktop
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
@@ -220,6 +223,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Thu Aug 21 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1.1
 - new optional -plugin-fwupd subpackage (ALT #55681)
 

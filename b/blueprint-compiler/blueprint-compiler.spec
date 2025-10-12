@@ -8,7 +8,7 @@
 
 Name: blueprint-compiler
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
@@ -72,6 +72,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt2
+- updated to 0.18.0-29-g3ee03cf
+
 * Wed Jul 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
 - 0.18.0
 

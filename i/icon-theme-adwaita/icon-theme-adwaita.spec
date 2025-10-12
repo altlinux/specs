@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name adwaita-icon-theme
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 
 Name: icon-theme-adwaita
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Adwaita icon theme
@@ -53,6 +53,9 @@ Adwaita icon theme for GTK.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

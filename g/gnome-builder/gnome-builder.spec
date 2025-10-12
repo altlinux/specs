@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -37,12 +37,12 @@ Source1: %name-ru.po
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.76.0
+%define glib_ver 2.86
 %define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 %define panel_ver 1.7
 %define gtksourceview_api_ver 5
-%define gtksourceview_ver 5.15
+%define gtksourceview_ver 5.18
 %define git2_ver 1.1.0
 %define devhelp_ver 3.30.0
 %define xml_ver 2.9.0
@@ -52,7 +52,7 @@ Source1: %name-ru.po
 %define gtkmm_ver 3.20
 %define peas_ver 2.0.0
 %define json_glib_ver 1.2.0
-%define template_glib_ver 3.36.1
+%define template_glib_ver 3.38
 %define soup3_ver 3.0
 %define webkit_api_ver 6.0
 %define webkit_ver 2.40.0
@@ -103,6 +103,7 @@ BuildRequires: cmark-devel
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: libdex-devel >= %dex_ver
 BuildRequires: pkgconfig(gom-1.0)
+BuildRequires: pkgconfig(yaml-0.1)
 %{?_enable_clang:BuildRequires: llvm-devel clang-devel}
 %{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_enable_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
@@ -158,6 +159,8 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
 %_includedir/%name-%ver_major/
 %_pkgconfigdir/%name-%version.pc
+%_desktopdir/%xdg_name.desktop
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* AUTHORS NEWS
 
 %if_enabled clang
@@ -166,7 +169,6 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %endif
 
 %files data
-%_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.clang.gschema.xml
@@ -177,6 +179,7 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.flatpak.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.git.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugin.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project.gschema.xml
@@ -189,12 +192,15 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %_datadir/glib-2.0/schemas/org.gnome.builder.valgrind.gschema.xml
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+
 
 %{?_enable_docs:%_datadir/doc/libide/}
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sat Aug 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
 - 48.3
 

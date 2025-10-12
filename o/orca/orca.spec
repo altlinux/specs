@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 
 %def_enable braille
@@ -8,7 +8,7 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -40,6 +40,7 @@ Requires: at-spi2-core
 Requires: espeak-ng
 #Requires: RHVoice-Russian
 #Requires: RHVoice-English
+Requires: python3-module-pygobject3
 Requires: python3-module-speechd
 
 BuildArch: noarch
@@ -48,9 +49,16 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc meson yelp-tools
 BuildRequires: libgtk+3-devel >= 3.24
 BuildRequires: libgtk+3-gir
-BuildRequires: pkgconfig(atspi-2) >= 2.50.0
+BuildRequires: pkgconfig(atspi-2) >= 2.52.0
 BuildRequires: pkgconfig(atk-bridge-2.0)
 BuildRequires: pkgconfig(pygobject-3.0) >= 3.18
+# since 49
+BuildRequires: python3(dasbus)
+BuildRequires: python3(brlapi)
+#BuildRequires: python3(louis)
+BuildRequires: python3(psutil)
+#BuildRequires: python3(gi.repository.Wnck)
+BuildRequires: python3(speechd)
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -86,6 +94,7 @@ Jaws For Windows компании Freedom Scientific.
 %doc AUTHORS ChangeLog NEWS README* TODO
 %_bindir/%name
 %python3_sitelibdir/%name/
+%_userunitdir/%name.service
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
@@ -94,6 +103,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Thu Jun 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.6-alt1
 - 48.6
 

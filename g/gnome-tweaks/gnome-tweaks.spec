@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 49
 %define beta %nil
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
@@ -9,13 +9,15 @@
 %def_enable check
 
 Name: gnome-tweaks
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/GNOME/gnome-tweaks
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-tweaks.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -30,6 +32,7 @@ BuildArch: noarch
 %define adw_ver 1.4
 %define pygobject_ver 3.46.0
 
+Requires: python3-module-pygobject3
 Requires: gnome-settings-daemon >= %ver_major
 Requires: gsettings-desktop-schemas-devel >= %gsds_ver
 Requires: sound-theme-freedesktop
@@ -86,12 +89,16 @@ Features:
 %python3_sitelibdir_noarch/%pypi_name/
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Apr 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

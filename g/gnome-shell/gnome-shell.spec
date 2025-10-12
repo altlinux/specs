@@ -2,9 +2,9 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
-%define api_ver 16
+%define api_ver 17
 %define gst_api_ver 1.0
 %define gvc_ver 5f9768a
 
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -40,7 +40,7 @@ Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
-%define gjs_ver 1.73.1
+%define gjs_ver 1.85.1
 %define mutter_ver %ver_major
 %define gtk_ver 4.0
 %define adwaita_ver 1.0
@@ -61,7 +61,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.19
-%define gsds_ver 47
+%define gsds_ver 49
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
@@ -229,8 +229,8 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
     %{subst_enable_meson_bool extensions_tool extensions_tool} \
     %{subst_enable_meson_bool extensions_app extensions_app} \
     %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
-#%meson_build %name-pot %name-update-po
 %nil
+#%meson_build %name-pot %name-update-po
 %meson_build -v
 
 %install
@@ -262,7 +262,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %files data -f %name.lang
 %{?_enable_extensions_tool:%_datadir/bash-completion/completions/gnome-extensions}
-%_desktopdir/%xdg_name.desktop
+#%_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name.Extensions.desktop
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
@@ -270,6 +270,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/dbus-1/services/%xdg_name.HotplugSniffer.service
 %_datadir/dbus-1/interfaces/%xdg_name.Introspect.xml
 %_datadir/dbus-1/interfaces/%xdg_name.PadOsd.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Brightness.xml
 %_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
 %_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider2.xml
@@ -316,6 +317,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.5-alt1
 - 48.5
 

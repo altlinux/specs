@@ -3,12 +3,14 @@
 
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 16
+%define api_ver 17
 %define sover 0
 %define xdg_name org.gnome.mutter
+%define rdn_name org.gnome.Mutter
+
 %define _libexecdir %_prefix/libexec
 # only private lib now
 %def_enable privatelib
@@ -21,7 +23,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -65,10 +67,10 @@ Source: %name-%version%beta.tar
 # xwayland with ei support
 %define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
-%define libinput_ver 1.26
+%define libinput_ver 1.27
 %define fribidi_ver 1.0.0
-%define gsds_ver 47
-%define gudev_ver 232
+%define gsds_ver 48
+%define gudev_ver 238
 %define pipewire_ver 0.3.21
 %define sysprof_ver 3.38
 %define json_glib_ver 0.12.0
@@ -76,8 +78,9 @@ Source: %name-%version%beta.tar
 %define wacom_ver 0.13
 %define lcms_ver 2.6
 %define colord_ver 1.4.5
-%define eis_ver 1.4.0
+%define eis_ver 1.5.0
 %define display_info_ver 0.2
+%define glycin_ver 2.0
 
 Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
@@ -88,7 +91,8 @@ BuildRequires: meson /proc xvfb-run python3(dbusmock)
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(epoxy)
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
@@ -110,6 +114,8 @@ BuildRequires: pkgconfig(sysprof-capture-4)
 BuildRequires: libgraphene-gir-devel >= %graphene_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver
 BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
+BuildRequires: pkgconfig(libevdev) pkgconfig(umockdev-1.0)
+BuildRequires: pkgconfig(glycin-2) >= %glycin_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gudev_ver
@@ -209,7 +215,7 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 
 sed -i 's|/usr\(/bin/bash\)|\1|' src/tests/socket-launch.sh
 
-sed -i 's/\.beta//' meson.build
+#sed -i 's/\.beta//' meson.build
 
 %build
 %meson \
@@ -235,13 +241,20 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -f %name.lang
 %_bindir/%name
 %_bindir/gdctl
+%_bindir/gnome-service-client
 %_udevrulesdir/61-%name.rules
+%_libexecdir/%name-backlight-helper
+%_libexecdir/%name-devkit
 %_libexecdir/%name-restart-helper
 %_libexecdir/%name-x11-frames
 %dir %pkglibdir/plugins
 %pkglibdir/plugins/*.so
 %dir %pkgdatadir
 %pkgdatadir/tests/
+%_desktopdir/%rdn_name.Mdk.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.devkit.gschema.xml
+%_iconsdir/hicolor/*/apps/%rdn_name.Mdk*.svg
+%_datadir/polkit-1/actions/%xdg_name.backlight-helper.policy
 %_man1dir/*
 %_datadir/bash-completion/completions/gdctl
 %doc NEWS README.md
@@ -296,6 +309,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:49.0-alt1
+- 49.0
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1:48.5-alt1
 - 48.5
 

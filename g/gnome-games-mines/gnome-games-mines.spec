@@ -4,14 +4,14 @@
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Mines
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Classic find the mines in the minefield game
@@ -32,14 +32,15 @@ Obsoletes: gnome-games-gnomine
 Provides:  gnome-games-gnomine = %EVR
 
 %define glib_ver 2.40.0
-%define gtk_ver 4.6
+%define gtk_ver 4.20
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) librsvg-devel
-BuildRequires: pkgconfig(libgnome-games-support-2)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver librsvg-devel
+BuildRequires: pkgconfig(gee-0.8)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -54,7 +55,7 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 
 %install
 %meson_install
-%find_lang --with-gnome %__name
+%find_lang --all-name --with-gnome %__name
 
 %check
 %__meson_test
@@ -71,6 +72,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %doc README*
 
 %changelog
+* Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
+- 49.0.1
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

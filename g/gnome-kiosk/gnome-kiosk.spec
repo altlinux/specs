@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Kiosk
 
@@ -8,7 +8,7 @@
 
 Name: gnome-kiosk
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: GNOME Kiosk
 License: GPL-2.0-or-later
@@ -25,8 +25,8 @@ Vcs: https://gitlab.gnome.org/halfline/gnome-kiosk.git
 
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 16
-%define mutter_ver 48
+%define mutter_api_ver 17
+%define mutter_ver 49
 %define ibus_ver 1.5.24
 
 Requires: dconf gnome-settings-daemon
@@ -114,6 +114,9 @@ sed -i 's|/usr/\(bin/sh\)|/\1|' kiosk-script/%name-script
 
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Jul 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
 - gnome-kiosk-script: fix shebang again (ALT #55086)
 

@@ -1,11 +1,11 @@
 %define _name pyatspi
-%define ver_major 2.46
+%define ver_major 2.58
 
 %def_enable tests
 %def_disable check
 
 Name: python3-module-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -19,8 +19,8 @@ BuildArch: noarch
 
 %define pygobject_ver 3.9.90
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson python3-devel python3-module-pygobject3-devel >= %pygobject_ver
 BuildRequires:  libX11-devel libICE-devel libSM-devel
 %{?_enable_tests:BuildRequires: python3-module-dbus-gobject python3-module-dbus-devel
 BuildRequires: libat-spi2-core-devel libgtk+3-devel libxml2-devel}
@@ -42,18 +42,14 @@ This package includes a Python 3 client library for at-spi.
 %setup -n %_name-%version
 
 %build
-export PYTHON=%__python3
-%autoreconf
-%configure --with-python=%__python3 \
-	%{subst_enable tests}
-%nil
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %python3_sitelibdir/%_name/
@@ -61,6 +57,9 @@ export PYTHON=%__python3
 
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt1
 - 2.46.1
 

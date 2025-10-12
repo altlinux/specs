@@ -1,4 +1,4 @@
-%define ver_major 48
+%define ver_major 49
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -7,27 +7,30 @@
 %def_enable check
 
 Name: dspy
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A tool to discover and explore D-Bus services
 Group: Development/Tools
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Builder
 
 Vcs: https://gitlab.gnome.org/GNOME/d-spy.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 Requires: dbus-tools-gui
 
-%define glib_ver 2.76
-%define gtk4_ver 4.12
-%define libadwaita_ver 1.5
+%define glib_ver 2.80
+%define gtk4_ver 4.16
+%define libadwaita_ver 1.7
+%define dex_ver 0.11
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %libadwaita_ver
+BuildRequires: pkgconfig(libdex-1) >= %dex_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -52,11 +55,15 @@ D-Spy was originally part of GNOME Builder.
 %files -f %name.lang
 %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

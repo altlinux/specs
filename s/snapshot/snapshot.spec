@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -26,17 +26,19 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define pango_ver 1.51
-%define gtk_ver 4.16
-%define adwaita_ver 1.7
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 %define gst_ver 1.20
 %define seccomp_ver 2.5.0
+%define glycin_api_ver 2
+%define glycin_ver 2.0
 
 Provides: gnome-camera = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
 Requires: gst-plugins-libcamera1.0
 Requires: gst-plugin-gtk4
-Requires: glycin-loaders
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -76,6 +78,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -83,6 +86,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri Mar 21 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0.1-alt1
 - 48.0.1
 

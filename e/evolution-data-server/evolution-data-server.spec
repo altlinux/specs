@@ -3,8 +3,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.56
-%define ver_base 3.56
+%define ver_major 3.58
+%define ver_base 3.58
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define sover_libecal 3
@@ -33,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -67,7 +67,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 Requires: dconf
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-xdg rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake rpm-build-xdg rpm-build-gir rpm-macros-systemd
 BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: gnome-common
@@ -229,10 +229,11 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %_libdir/%name/libedbus-private.so
 %_datadir/%name/
 %_datadir/dbus-1/services/*
-%_prefix/lib/systemd/user/evolution-addressbook-factory.service
-%_prefix/lib/systemd/user/evolution-calendar-factory.service
-%_prefix/lib/systemd/user/evolution-source-registry.service
-%_prefix/lib/systemd/user/evolution-user-prompter.service
+%_userunitdir/evolution-addressbook-factory.service
+%_userunitdir/evolution-calendar-factory.service
+%_userunitdir/evolution-source-registry.service
+%_userunitdir/evolution-user-prompter.service
+%_userunitdir/evolution-alarm-notify.service
 
 %_datadir/pixmaps/*
 %_iconsdir/hicolor/scalable/apps/org.gnome.Evolution-alarm-notify.svg
@@ -294,6 +295,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.2-alt1
 - 3.56.2
 

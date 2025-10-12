@@ -3,14 +3,14 @@
 %define _libexecdir %_prefix/libexec
 %define _name vte
 %define xdg_name org.gnome.Vte
-%define ver_major 0.80
+%define ver_major 0.82
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.3
-Release: alt1.2
+Version: %ver_major.0
+Release: alt1
 
 %def_disable static
 %def_enable gtk3
@@ -29,7 +29,7 @@ Release: alt1.2
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL-3.0-or-later
 Group: Terminals
-Url: http://www.gnome.org/
+Url: https://www.gnome.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/vte.git
 
@@ -48,6 +48,9 @@ Source: %_name-%version.tar
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
 %define pcre_ver 10.21
+%define lz4_ver 1.9
+%define simdutf_ver 6.2.0
+%define fmt_ver 11.0.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson gcc-c++ gperf
@@ -60,9 +63,11 @@ BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
 BuildRequires: libpcre2-devel >= %pcre_ver
 BuildRequires: vala-tools libvala-devel
-BuildRequires: pkgconfig(liblz4)
+BuildRequires: pkgconfig(liblz4) >= %lz4_ver
 BuildRequires: libfast_float-devel
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(fmt) >= %fmt_ver
+BuildRequires: pkgconfig(simdutf) >= %simdutf_ver
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver %{?_enable_gtk3:libgtk+3-gir-devel}
 %{?_enable_gtk4:BuildRequires:libgtk4-gir-devel}}
@@ -227,6 +232,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.82.0-alt1
+- 0.82.0
+
 * Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.3-alt1.2
 - disabled glade support
 

@@ -6,7 +6,7 @@
 
 Name: nautilus-python
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
@@ -16,13 +16,17 @@ Url: https://www.gnome.org/
 Provides: python-module-nautilus = %version-%release
 Obsoletes: python-module-nautilus
 
-Requires: typelib(Nautilus) = 4.0
+Requires: python3-module-pygobject3
+# for GNOME-49
+# https://gitlab.gnome.org/GNOME/nautilus-python/-/issues/38
+Requires: typelib(Nautilus) = 4.1
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
+Patch1: %name-4.0.1-up-nautilis-4.1.patch
 
 %define ext_api_ver 4
 %define nautilus_extdir %_libdir/nautilus/extensions-%ext_api_ver
@@ -66,6 +70,7 @@ Development documentation for %name.
 
 %prep
 %setup -n %name-%version%beta
+%patch1 -p1
 
 %build
 %meson \
@@ -94,6 +99,9 @@ mkdir -p %buildroot%_datadir/nautilus-python/extensions/__pycache__
 %exclude %_docdir/%name
 
 %changelog
+* Thu Sep 18 2025 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt2
+- adapted for nautilus-49
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -25,8 +25,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.64
-%define gtk4_ver 4.15.3
-%define adwaita_ver 1.6
+%define gtk4_ver 4.20
+%define adwaita_ver 1.8
 %define vala_ver 0.56.11
 %define folks_ver 0.15.6
 %define eds_ver 3.42
@@ -37,7 +37,7 @@ Requires: gst-plugins-base1.0
 Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
+BuildRequires: meson vala-tools blueprint-compiler
 BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-vala libvala-devel >= %vala_ver
@@ -81,6 +81,9 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 %doc README*
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

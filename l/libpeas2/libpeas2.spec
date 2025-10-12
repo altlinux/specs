@@ -1,8 +1,9 @@
 %def_disable snapshot
 
 %define _name libpeas
-%define ver_major 2.0
+%define ver_major 2.2
 %define api_ver 2
+%define namespace Peas
 
 %def_enable gjs
 # not ready for lua-5.3
@@ -15,19 +16,23 @@
 %def_disable demo
 
 Name: %_name%api_ver
-Version: %ver_major.7
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Libpeas
 
+Vcs: https://gitlab.gnome.org/GNOME/libpeas.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
+
+%define mozjs_ver_major 140
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson gnome-common
@@ -36,7 +41,7 @@ BuildRequires: libgio-devel >= 2.74.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.2.0
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 1.39}
-%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.77.1 libmozjs128-devel gcc-c++}
+%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.77.1 libmozjs%mozjs_ver_major-devel gcc-c++}
 %{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -176,10 +181,10 @@ This package contains %name demonstration programs.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Peas-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Peas-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled demo
@@ -191,6 +196,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1.1
 - devel: enabled vapi data (ALT #53777)
 

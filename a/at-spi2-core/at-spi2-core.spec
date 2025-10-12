@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.56
+%define ver_major 2.58
 %define api_ver_major 2
 %define api_ver 2.0
 %define namespace Atspi
@@ -11,10 +11,11 @@
 %def_enable gtk2
 %def_disable xevie
 %def_enable doc
+%def_enable systemd
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -35,10 +36,11 @@ Requires: dbus-tools-gui
 %define glib_ver 2.67.4
 %define dbus_ver 1.5
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg rpm-build-python3
 BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver
 BuildRequires: /usr/bin/dbus-daemon libdbus-devel >= %dbus_ver
 BuildRequires: libxml2-devel pkgconfig(libei-1.0) pkgconfig(xkbcommon)
+%{?_enable_systemd:BuildRequires:pkgconfig(systemd)}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
@@ -186,6 +188,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
     %{subst_enable_meson_feature x11 x11} \
     %{subst_enable_meson_bool gtk2 gtk2_atk_adaptor} \
     %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool systemd use_systemd} \
     %{subst_enable_meson_bool doc docs}
 %nil
 %meson_build
@@ -204,7 +207,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %_datadir/dbus-1/services/org.a11y.Bus.service
 %_datadir/defaults/at-spi2/accessibility.conf
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
-%_userunitdir/at-spi-dbus-bus.service
+%{?_enable_systemd:%_userunitdir/at-spi-dbus-bus.service}
+%python3_sitelibdir/gi/overrides/%namespace.py
+%python3_sitelibdir/gi/overrides/__pycache__/*
 %doc README* MAINTAINERS NEWS
 
 %files -n lib%name
@@ -256,6 +261,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Sat Aug 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.56.4-alt1
 - 2.56.4
 

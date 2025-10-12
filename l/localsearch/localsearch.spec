@@ -1,6 +1,6 @@
 %define _name localsearch
 %define old_name tracker-miners
-%define ver_major 3.9
+%define ver_major 3.10
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -35,6 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %def_enable libflac
 %def_enable exempi
 %def_enable libgif
+%def_enable webp
 %def_enable libcue
 %def_enable abiword
 %def_enable dvi
@@ -85,6 +86,7 @@ BuildRequires: libenca-devel libseccomp-devel libdbus-devel
 BuildRequires: pkgconfig(systemd) pkgconfig(blkid)
 BuildRequires: libavformat-devel >= %libav_ver libavcodec-devel libavutil-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: python3(dbusmock)
 # discoverer
 BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
@@ -101,6 +103,7 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_libvorbis:BuildRequires: libflac-devel >= %flac_ver}
 %{?_enable_exempi:BuildRequires: libexempi-devel >= %exempi_ver}
 %{?_enable_libgif:BuildRequires: libgif-devel}
+%{?_enable_webp:BuildRequires: pkgconfig(libwebpdemux)}
 %{?_enable_libcue:BuildRequires: libcue-devel >= %libcue_ver }
 %{?_enable_libosinfo:BuildRequires: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
@@ -130,6 +133,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
     %{subst_enable_meson_feature libjpeg jpeg} \
     %{subst_enable_meson_feature libtiff tiff} \
     %{subst_enable_meson_feature libgif gif} \
+    %{subst_enable_meson_feature webp webp} \
     %{subst_enable_meson_feature libpng png} \
     %{subst_enable_meson_feature raw raw} \
     %{subst_enable_meson_feature exempi xmp} \
@@ -170,10 +174,11 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_userunitdir/%name-writeback*.service
 %{?_enable_man:
 %_man1dir/%name-%{api_ver_major}.1*
-%_man1dir/%name-daemon.1*
+%_man1dir/%name.1*
 %_man1dir/%name-extract.1*
 %_man1dir/%name-index.1*
 %_man1dir/%name-info.1*
+%_man1dir/%name-inhibit.1*
 %_man1dir/%name-reset.1*
 %_man1dir/%name-search.1*
 %_man1dir/%name-status.1*
@@ -194,9 +199,14 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_datadir/glib-2.0/schemas/%xdg_name.FTS.gschema.xml
 %_datadir/glib-2.0/schemas/org.freedesktop.TrackerMiners%api_ver_major.enums.xml
 
+%_datadir/bash-completion/completions/%name
+
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.9.0-alt1
 - 3.9.0
 

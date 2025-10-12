@@ -1,10 +1,9 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
-%def_enable session_selector
 %def_enable docs
 %def_enable man
 %def_enable x11
@@ -25,18 +24,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
-Source1: gnome.svg
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=775463
-Patch: %name-2.91.6-alt-autosave_session.patch
-
-# fedora patches:
-# Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
-Patch11: gnome-session-3.3.92-nv30.patch
-
-# From configure.ac
-%define glib_ver 2.46.0
-%define gtk_ver 3.22.0
+%define glib_ver 2.82.0
 %define polkit_ver 0.91
 %define upower_ver 0.9
 %define systemd_ver 242
@@ -52,9 +41,9 @@ Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson
-BuildRequires: libgio-devel glib2-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgnome-desktop3-devel libjson-glib-devel
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk4-devel
+BuildRequires: pkgconfig(gnome-desktop-4) libjson-glib-devel
 BuildRequires: perl-XML-Parser xmlto docbook-utils
 BuildRequires: pkgconfig(systemd) >= %systemd_ver
 %{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(sm) pkgconfig(ice)
@@ -71,14 +60,6 @@ manager for the X Window System.
 
 This package provides the GNOME session manager, as well as a
 configuration program to choose applications starting on login.
-
-%package selector
-Summary: The session selector for the GNOME
-Group: Graphical desktop/GNOME
-Requires: %name = %EVR
-
-%description selector
-This package permits to choose a saved GNOME session.
 
 %package wayland
 Summary: A Wayland session for the GNOME
@@ -102,13 +83,11 @@ This package permits to log into GNOME using Xorg.
 
 %prep
 %setup -n %name-%version%beta
-%patch11 -p1 -b .nv30
 
 %build
 export PATH=$PATH:/sbin
 %meson \
     %{subst_enable_meson_bool x11 x11} \
-    %{subst_enable_meson_bool session_selector session_selector} \
     %{subst_enable_meson_bool docs docbook} \
     %{subst_enable_meson_bool man man}
 %nil
@@ -127,33 +106,22 @@ export PATH=$PATH:/sbin
 %{?_enable_x11:
 %_bindir/%name-inhibit
 %_bindir/%name-quit}
-%_libexecdir/%name-binary
+%_libexecdir/%name-init-worker
+%_libexecdir/%name-service
 %_libexecdir/%name-ctl
-%{?_enable_x11:
-%_libexecdir/%name-check-accelerated
-%_libexecdir/%name-check-accelerated-gl-helper
-%_libexecdir/%name-check-accelerated-gles-helper}
-%_libexecdir/%name-failed
+%_desktopdir/gnome-mimeapps.list
 %dir %_datadir/%name
-%_datadir/%name/hardware-compatibility
 %_datadir/xdg-desktop-portal/gnome-portals.conf
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
-%_datadir/%name/sessions/gnome-dummy.session
-
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
-%{?_enable_man:
-%_man1dir/%name-inhibit.*
-%_man1dir/%name-quit.*
-%_man1dir/%name.*}
-%doc AUTHORS NEWS README*
-
-%dir %_userunitdir/gnome-launched-.scope.d
-%_userunitdir/gnome-launched-.scope.d/override.conf
+%dir %_userunitdir/app-flatpak-.scope.d
+%_userunitdir/app-flatpak-.scope.d/override.conf
+%dir %_userunitdir/app-gnome-.scope.d
+%_userunitdir/app-gnome-.scope.d/override.conf
 %dir %_userunitdir/gnome-session@gnome.target.d
 %_userunitdir/gnome-session@gnome.target.d/gnome.session.conf
-%_userunitdir/%name-failed.service
-%_userunitdir/%name-failed.target
+%_userunitdir/%name-basic-services.target
 %_userunitdir/%name-initialized.target
 %_userunitdir/%name-manager.target
 %_userunitdir/%name-manager@.service
@@ -172,20 +140,19 @@ export PATH=$PATH:/sbin
 %_userunitdir/%name-x11.target
 %_userunitdir/%name-x11@.target
 }
+%{?_enable_man:
+%_man1dir/%name-inhibit.*
+%_man1dir/%name-quit.*
+%_man1dir/%name.*}
 
-%if_enabled session_selector
-%files selector
-%{?_enable_x11:
-%_bindir/%name-custom-session
-%_bindir/%name-selector}
-%_datadir/%name/session-selector.ui
-%{?_enable_man:%_man1dir/%name-selector.*}
-%_datadir/xsessions/gnome-custom-session.desktop
-%endif
+%doc NEWS README*
+%doc %_datadir/doc/%name/
 
+%if_enabled x11
 %files xsession
 %_datadir/xsessions/gnome.desktop
-%{?_enable_x11:%_datadir/xsessions/gnome-xorg.desktop}
+%_datadir/xsessions/gnome-xorg.desktop
+%endif
 
 %files wayland
 %_datadir/wayland-sessions/gnome.desktop
@@ -193,6 +160,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

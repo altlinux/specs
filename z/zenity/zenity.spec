@@ -1,4 +1,4 @@
-%define ver_major 4.0
+%define ver_major 4.2
 %define beta %nil
 %define xdg_name org.gnome.Zenity
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: zenity
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME port of dialog(1)
@@ -16,6 +16,7 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Zenity
 
 Vcs: https://gitlab.gnome.org/GNOME/zenity.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define adw_ver 1.2
@@ -58,6 +59,9 @@ and shell scripts.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Sep 19 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 4.0.5-alt1
 - 4.0.5
 

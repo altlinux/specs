@@ -1,18 +1,20 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 45
+%define ver_major 49
 %define beta %nil
 %define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.0.1
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Projects/dconf
+
+Vcs: https://gitlab.gnome.org/GNOME/dconf-editor.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -65,12 +67,15 @@ This package provides graphical dconf configuration editor.
 %_iconsdir/hicolor/*/*/*.*
 %_man1dir/%name.1.*
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 # "nosort" bad option?
 %_datadir/bash-completion/completions/%name
 %doc README*
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Tue Nov 19 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt2
 - 45.0-67-gd109e6b1 (updated translations) (ALT #52102)
 

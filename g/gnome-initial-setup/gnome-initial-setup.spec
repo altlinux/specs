@@ -1,15 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%def_enable systemd
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -26,6 +25,7 @@ Source: %name-%version%beta.tar
 %endif
 
 %define systemd_ver 242
+%define session_ver %ver_major
 %define nm_ver 1.2
 %define nma_ver 1.0
 %define glib_ver 2.64.0
@@ -45,9 +45,10 @@ Source: %name-%version%beta.tar
 #Requires: gnome-shell >= 3.37.92 gdm
 #Requires: gnome-online-accounts >= %goa_ver
 
+Requires: gnome-session >= %session_ver
 Requires: gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
-Requires: ibus gnome-keyring tecla
+Requires: ibus tecla
 Requires: gnome-tour
 Requires: shadow-utils
 %{?_enable malcontent:Requires: malcontent >= %malcontent_ver}
@@ -80,7 +81,6 @@ you through configuring it. It is integrated with gdm.
 
 %build
 %meson \
-    %{subst_enable_meson_bool systemd systemd} \
     %{subst_enable_meson_feature malcontent parental_controls}
 %nil
 %meson_build
@@ -99,8 +99,6 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %files -f %name.lang
 %_libexecdir/%name
 %_libexecdir/%name-copy-worker
-%_sysconfdir/xdg/autostart/%name-copy-worker.desktop
-%_sysconfdir/xdg/autostart/%name-first-login.desktop
 %_desktopdir/%name.desktop
 %_datadir/dconf/profile/%name
 %dir %_datadir/%name
@@ -116,6 +114,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

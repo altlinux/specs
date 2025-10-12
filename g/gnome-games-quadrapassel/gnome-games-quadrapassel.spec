@@ -1,36 +1,48 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 40
+%define ver_major 49
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
-Summary: A tetris clone
+Summary: Fit falling blocks together
 Group: Games/Boards
-License: GPLv3+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Quadrapassel
 
+Vcs: https://gitlab.gnome.org/GNOME/quadrapassel.git
+
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
-Provides:  %_name = %version-%release
+Provides:  %_name = %EVR
 
-%define glib_ver 2.32.0
-%define gtk_ver 3.12.0
+%define glib_ver 2.44
+%define gtk_ver 4.4
+%define adw_ver 1.1
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools blueprint-compiler
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: librsvg-devel libclutter-gtk3-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: librsvg-devel pkgconfig(gee-0.8)
 BuildRequires: libmanette-devel libgsound-devel
 
 %description
 GNOME version of the popular russian game Tetris.
+The goal of the game is to create complete horizontal lines of blocks,
+which will disappear.
 
 %prep
 %setup -n %_name-%version
@@ -41,20 +53,24 @@ GNOME version of the popular russian game Tetris.
 
 %install
 %meson_install
-%find_lang --with-gnome %_name
+%find_lang --all-name --with-gnome %_name
 
 %files -f %_name.lang
-%attr(2711,root,games) %_bindir/%_name
+%_bindir/%_name
 %_desktopdir/%xdg_name.desktop
-%_datadir/%_name/
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/sounds/%_name/
 %_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 %_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
+- 49.0.1
+
 * Fri Jun 11 2021 Yuri N. Sedunov <aris@altlinux.org> 40.2-alt1
 - 40.2
 

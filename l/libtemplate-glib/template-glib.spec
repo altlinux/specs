@@ -3,16 +3,16 @@
 %define _name template-glib
 # probably meson bug
 %define libname libtemplate_glib
-%define ver_major 3.36
+%define ver_major 3.38
 %define api_ver 1.0
 %define namespace Template
 
 %def_enable introspection
-%def_enable gtk_doc
+%def_enable docs
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A templating library for GLib
@@ -31,8 +31,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson bison flex vala-tools
 BuildRequires: libgio-devel
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_docs:BuildRequires: gi-docgen}
 
 %description
 Template-GLib is a templating library for GLib. It includes a simple
@@ -82,7 +82,7 @@ This package contains development documentation for %name
 
 %build
 %meson \
-    %{subst_enable_meson_bool gtk_doc gtk_doc}
+    %{subst_enable_meson_bool docs docs}
 %nil
 %meson_build
 
@@ -96,7 +96,7 @@ This package contains development documentation for %name
 
 %files -f %_name.lang
 %_libdir/%libname-%api_ver.so.*
-%doc README.md NEWS AUTHORS
+%doc README.md NEWS
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -113,12 +113,15 @@ This package contains development documentation for %name
 %_girdir/%namespace-%api_ver.gir
 %endif
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/%_name/
+%_datadir/doc/%_name-%api_ver/
 %endif
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
+- 3.38.0
+
 * Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
 - 3.36.3
 

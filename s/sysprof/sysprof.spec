@@ -2,13 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
 %define capture_ver 4
 %define xdg_name org.gnome.Sysprof
 %define _libexecdir %_prefix/libexec
+
 
 %def_enable sysprofd
 %def_enable gtk
@@ -17,7 +18,7 @@
 %endif
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -99,6 +100,7 @@ developing applications that use GtkGHex library.
 %if_enabled sysprofd
 %_libexecdir/sysprofd
 %_unitdir/sysprof3.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/system-services/%{xdg_name}%{service_ver}.service
 %_datadir/dbus-1/system.d/%{xdg_name}%{service_ver}.conf
 %_datadir/polkit-1/actions/org.gnome.sysprof%{service_ver}.policy
@@ -109,7 +111,7 @@ developing applications that use GtkGHex library.
 %endif
 
 %_datadir/mime/packages/%name-mime.xml
-%_datadir/metainfo/org.gnome.Sysprof.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS NEWS README*
 
 %files devel
@@ -120,6 +122,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

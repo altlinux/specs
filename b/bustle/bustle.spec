@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.12
+%define ver_major 0.13
 %define rdn_name org.freedesktop.Bustle
 
 %def_disable check
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define adw_ver 1.6
+%define adw_ver 1.8
 
 # /usr/bin/dbus-monitor
 Requires: dbus-tools
@@ -72,6 +72,9 @@ dbus-run-session %__meson_test
 %doc README*
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

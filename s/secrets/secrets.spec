@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 11
+%define ver_major 12
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
 %def_disable check
 
 Name: secrets
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -24,8 +24,8 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.80
-%define gtk_ver 4.18
-%define adwaita_ver 1.7
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 %define pygobject_ver 3.52
 %define gtksource_api_ver 5
 
@@ -83,6 +83,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 12.0-alt1
+- 12.0
+
 * Mon Apr 14 2025 Yuri N. Sedunov <aris@altlinux.org> 11.1.1-alt1
 - 11.1.1
 

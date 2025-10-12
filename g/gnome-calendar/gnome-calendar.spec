@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -24,9 +24,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.68.0
-%define gtk4_ver 4.18
-%define adwaita_ver 1.7
+%define glib_ver 2.80.0
+%define gtk4_ver 4.20
+%define adwaita_ver 1.8
 %define ical_ver 1.0.1
 %define eds_ver 3.46
 %define gsds_ver 3.21.2
@@ -34,7 +34,8 @@ Source: %name-%version%beta.tar
 %define geocode_ver 3.26.3
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson yelp-tools /usr/bin/appstreamcli
+BuildRequires: meson blueprint-compiler
+BuildRequires: yelp-tools /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
@@ -78,7 +79,6 @@ This package provides Calendar reference manual.
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_desktopdir/%xdg_name.desktop
-#%_man1dir/*
 %_datadir/glib-2.0/schemas/org.gnome.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
 %_iconsdir/hicolor/scalable/apps/*.svg
@@ -92,6 +92,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
+- 49.0.1
+
 * Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

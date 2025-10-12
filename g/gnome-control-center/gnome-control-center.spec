@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -11,6 +11,7 @@
 %define gxdp_ver e68375c
 
 %def_disable debug
+%def_enable x11
 %def_enable bluetooth
 %def_enable snap
 %def_enable malcontent
@@ -18,7 +19,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -38,12 +39,12 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 
 %define glib_ver 2.76.6
 %define gtk4_ver 4.17.5
-%define adwaita_ver 1.7
+%define adwaita_ver 1.8
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
 %define gsds_ver 48
 # nm_client_get_permissions_state()
-%define nm_ver 1.46
+%define nm_ver 1.52
 %define goa_ver 3.51.0
 %define acc_ver 23.11.69
 %define sett_daemon_ver 48
@@ -94,18 +95,18 @@ Requires: gnome-remote-desktop
 Requires: power-profiles-daemon
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
+BuildRequires: meson blueprint-compiler
+BuildRequires: desktop-file-utils gtk-doc xsltproc /usr/bin/appstreamcli
 BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4) pkgconfig(gnome-rr-4)
+BuildRequires: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4)
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildRequires: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
 BuildRequires: libibus-devel >= %ibus_ver libxkbfile-devel setxkbmap
 BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel
-BuildRequires: libX11-devel libXi-devel
 BuildRequires: libgtop-devel libcups-devel >= %cups_ver
 BuildRequires: libpulseaudio-devel >= %pulse_ver iso-codes-devel
 BuildRequires: libpwquality-devel >= %pwq_ver libkrb5-devel libsmbclient-devel
@@ -121,6 +122,7 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
 BuildRequires: tecla-devel
+%{?_enable_x11:BuildRequires: libX11-devel libXi-devel}
 %{?_enable_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
 %{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
@@ -212,7 +214,7 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %{?_enable_doc:%_man1dir/%name.1.*}
 %_datadir/bash-completion/completions/gnome-control-center
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README*
 
 %files devel
@@ -224,6 +226,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Aug 03 2025 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
 - 48.4
 

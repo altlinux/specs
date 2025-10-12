@@ -1,11 +1,10 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.44
+%define ver_major 45
 %define api_ver 2.8
 %def_enable external_plugin
 %def_enable mpris_plugin
-%def_enable tracker3_plugin
 %def_enable gtk
 %define media_engine gstreamer
 
@@ -20,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -57,10 +56,9 @@ Source: %name-%version.tar
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
 %define libsoup_ver 3.2
-%define gtk_ver 3.22
+%define gtk_ver 4.14
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
-%define tracker_ver 3.0
 
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -96,13 +94,13 @@ BuildRequires: pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: gir(Gst) = 1.0
 %endif
+BuildRequires: pkgconfig(tinysparql-3.0)
 %{?_enable_api_docs:BuildRequires: gtk-doc valadoc}
-%{?_enable_tracker3_plugin:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver}
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
 BuildRequires: vapi(gupnp-1.6) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
 BuildRequires: gir(GUPnP) = 1.6 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
-%{?_enable_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
+%{?_enable_gtk:BuildRequires: pkgconfig(gtk4) >= %gtk_ver}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: pkgconfig(systemd)
 
@@ -134,13 +132,13 @@ This package contains documentation needed to develop applications using Rygel
 libraries.
 
 %package tracker
-Summary: Tracker3 plugin for %name
+Summary: LocalSearch plugin for %name
 Group: System/Servers
 Requires: %name = %EVR
 Requires: localsearch
 
 %description tracker
-A plugin for rygel to use tracker to locate media on the local machine.
+A plugin for rygel to use LocalSearch to locate media on the local machine.
 
 %package gir
 Summary: GObject introspection data for the %name
@@ -183,8 +181,8 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_libdir/lib%name-*.so.*
 %_libdir/%name-%api_ver/
 
-%exclude %_libdir/%name-%api_ver/plugins/lib%name-tracker3.so
-%exclude %_libdir/%name-%api_ver/plugins/tracker3.plugin
+%exclude %_libdir/%name-%api_ver/plugins/lib%name-localsearch.so
+%exclude %_libdir/%name-%api_ver/plugins/localsearch.plugin
 
 %_datadir/%name
 %_desktopdir/*
@@ -196,8 +194,8 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %doc AUTHORS NEWS README*
 
 %files tracker
-%_libdir/%name-%api_ver/plugins/librygel-tracker3.so
-%_libdir/%name-%api_ver/plugins/tracker3.plugin
+%_libdir/%name-%api_ver/plugins/librygel-localsearch.so
+%_libdir/%name-%api_ver/plugins/localsearch.plugin
 
 %files devel
 %_libdir/lib%name-*.so
@@ -217,6 +215,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.44.2-alt1
 - 0.44.2
 

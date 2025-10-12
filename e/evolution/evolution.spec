@@ -2,8 +2,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.56
-%define ver_base 3.56
+%define ver_major 3.58
+%define ver_base 3.58
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -85,7 +85,6 @@ BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libpst-devel >= %pst_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
-#BuildRequires: pkgconfig(gcr-4-gtk3) >= %gcr4_ver
 BuildRequires: libcryptui-devel libsecret-devel
 BuildRequires: libkrb5-devel libsqlite3-devel >= %sqlite3_ver
 BuildRequires: cmark-devel highlight
@@ -214,13 +213,15 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 %_libexecdir/%name/killev
 %_libdir/%name-data-server/camel-providers/libcamelrss.so
 %_libdir/%name-data-server/camel-providers/libcamelrss.urls
+%_desktopdir/*
+%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name-pst.metainfo.xml
 %doc AUTHORS ChangeLog NEWS README*
 
 %exclude %evo_module_dir/module-bogofilter.so
 %exclude %evo_module_dir/module-spamassassin.so
 
 %files data -f %name.lang
-%_desktopdir/*
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.evolution.addressbook.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.calendar.gschema.xml
@@ -243,8 +244,6 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 %_datadir/GConf/gsettings/evolution.convert
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
-%_datadir/metainfo/%xdg_name-pst.metainfo.xml
 
 %files devel
 %_includedir/*
@@ -273,6 +272,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.2-alt1
 - 3.56.2
 

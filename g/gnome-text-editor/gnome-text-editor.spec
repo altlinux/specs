@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
 %def_enable check
 
 Name: gnome-text-editor
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -23,10 +23,10 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.80
-%define gtk_ver 4.15
-%define gtksource_ver 5.10
+%define gtk_ver 4.20
+%define gtksource_ver 5.15
 %define spelling_ver 0.3.1
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
@@ -66,6 +66,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
 - 48.3
 

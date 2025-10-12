@@ -1,9 +1,9 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
-%define api_ver 4.0
+%define api_ver 4.1
 %define ext_api_ver 4
 %define ext_sover 4
 %define xdg_name org.gnome.Nautilus
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -34,7 +34,7 @@ Source: %name-%version%beta.tar
 %endif
 
 %define desktop_file_utils_ver 0.8
-%define glib_ver 2.79.0
+%define glib_ver 2.84.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
 %define gtk4_ver 4.16
@@ -71,6 +71,7 @@ BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libseccomp-devel
 BuildRequires: libcloudproviders-devel
+BuildRequires: pkgconfig(icu-uc) pkgconfig(icu-i18n)
 %{?_enable_extensions:BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)}
 %{?_enable_docs:BuildRequires: docbook-utils gi-docgen}
@@ -162,8 +163,6 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
-#%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Extract.service
-#%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Files.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
@@ -173,7 +172,6 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %dir %_datadir/%name/ontology
 %_datadir/%name/ontology/%name.description
 %_datadir/%name/ontology/%name.ontology
-#%_datadir/localsearch3/domain-ontologies/%xdg_name.domain.rule
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
@@ -183,7 +181,6 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_libdir/lib%name-extension.so.%{ext_sover}*
 %{?_enable_extensions:
 %dir %_libdir/%name/extensions-%ext_api_ver
-#%_libdir/%name/extensions-%ext_api_ver/libnautilus-sendto.so
 %_libdir/%name/extensions-%ext_api_ver/libnautilus-image-properties.so
 %_libdir/%name/extensions-%ext_api_ver/libtotem-properties-page.so}
 
@@ -207,6 +204,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Mon Jun 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
 - 48.3
 

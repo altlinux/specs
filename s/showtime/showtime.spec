@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name Showtime
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define rdn_name org.gnome.%_name
 
 %def_enable check
 
 Name: showtime
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Movie player for GNOME
@@ -31,7 +31,8 @@ BuildArch: noarch
 
 %define gst_api_ver 1.0
 %define gst_ver 1.24
-%define adw_ver 1.6
+%define bp_ver 0.17
+%define adw_ver 1.8
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -45,7 +46,7 @@ Requires: gst-libav
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson blueprint-compiler
+BuildRequires: meson blueprint-compiler >= %bp_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver gir(Adw)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -75,12 +76,16 @@ straightforward viewing experience.
 %python3_sitelibdir_noarch/%name/
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun May 04 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

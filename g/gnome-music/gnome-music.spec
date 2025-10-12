@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.2
+Version: %ver_major.0.2
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -76,7 +76,7 @@ Music playing application for GNOME3.
 %_bindir/%name
 %_datadir/%xdg_name/
 %_desktopdir/%xdg_name.desktop
-#%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
 
 %_iconsdir/hicolor/*/*/*.svg
@@ -85,6 +85,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.2-alt1
+- 49.0.2
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

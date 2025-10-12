@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.84
+%define ver_major 1.86
 %define api_ver 1.0
 %define gir_api_ver 1.0
 %def_enable doctool
@@ -169,6 +169,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.86.0-alt1
+- 1.86.0
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.0-alt1
 - 1.84.0
 

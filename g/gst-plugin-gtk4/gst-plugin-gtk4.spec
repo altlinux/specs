@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 0.13
+%define ver_major 0.14
 
 %def_disable bootstrap
 %def_disable check
 
 Name: gst-plugin-gtk4
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer GTK4 Sink element and Paintable widget
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 %endif
 %{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
-%define gtk_ver 4.18
+%define gtk_ver 4.19
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo-c
@@ -58,6 +58,9 @@ cargo cinstall %opts --destdir=%buildroot
 %doc README*
 
 %changelog
+* Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Tue Jul 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt1
 - 0.13.7
 

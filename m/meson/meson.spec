@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.8
+%define ver_major 1.9
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -140,6 +140,12 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Thu Sep 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
+* Mon Aug 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Wed Aug 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 

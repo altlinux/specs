@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 
 %def_enable check
 
 Name: gnome-%_name
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: GNOME Connections
 Group: Graphical desktop/GNOME
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(gtk-vnc-2.0)
 # for gtk-frdp
@@ -77,6 +78,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
 - fixed BR: winpr2 -> winpr3
 

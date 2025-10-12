@@ -1,16 +1,20 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.52
+%define ver_major 3.54
 %define api_ver 3.0
 %define gtk_api_ver 3.0
+
+%define pythoncapi_compat_ver 632d1aa0c
+%define gi_tests_ver d70a37ae2
+
 %def_enable pycairo
 %def_disable devel_doc
 %def_enable tests
 %def_disable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.3
+Version: %ver_major.2
 Release: alt1
 
 Summary: Python3 bindings for GObject
@@ -24,6 +28,10 @@ Vcs: https://gitlab.gnome.org/GNOME/pygobject.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
+# https://github.com/python/pythoncapi-compat.git
+Source1: pythoncapi-compat-%pythoncapi_compat_ver.tar
+# https://gitlab.gnome.org/GNOME/gobject-introspection-tests.git
+Source2: gobject-introspection-tests-%gi_tests_ver.tar
 %endif
 Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 
@@ -35,6 +43,8 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 # gi/_gtktemplate.py -> overrides/Gtk.py
 %filter_from_requires /typelib(Gtk)/d
 %filter_from_requires /typelib(GdkX11)/d
+# since 3.54.0
+%filter_from_requires /typelib(GioWin32)/d
 
 %define meson_ver 0.64
 %define glib_ver 2.80.0
@@ -110,8 +120,14 @@ Conflicts: %name-common-devel < %version-%release
 Development documentation for %_name.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version %{?_enable_snapshot:-a1 -a2}
 %patch -p1
+%{?_enable_snapshot: mv pythoncapi-compat-%pythoncapi_compat_ver \
+subprojects/pythoncapi-compat
+pushd subprojects/pythoncapi-compat
+patch -p1 < ../packagefiles/pythoncapi-compat-meson.diff
+popd
+mv gobject-introspection-tests-%gi_tests_ver subprojects/gobject-introspection-tests}
 
 %build
 %meson \
@@ -155,6 +171,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.2-alt1
+- 3.54.2
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.52.3-alt1
 - 3.52.3
 

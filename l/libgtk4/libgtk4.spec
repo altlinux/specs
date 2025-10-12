@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.18
+%define ver_major 4.20
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -29,6 +29,8 @@
 %def_enable gstreamer
 # droped in 4.13.7
 %def_disable ffmpeg
+%def_enable cups
+%def_disable accesskit
 
 %def_disable sysprof
 %def_enable tests
@@ -39,7 +41,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -59,19 +61,19 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 # backported from main
 Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 
-%define meson_ver 1.2.0
-%define glib_ver 2.80
-%define gi_ver 1.76
+%define meson_ver 1.5.0
+%define glib_ver 2.82
+%define gi_ver 1.84
 %define cairo_ver 1.18.2
-%define pango_ver 1.50.0
+%define pango_ver 1.56.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.32.1
 %define colord_ver 0.1.9
-%define cups_ver 1.6
-%define wayland_ver 1.23
-%define wayland_protocols_ver 1.41
+%define cups_ver 2.0
+%define wayland_ver 1.24
+%define wayland_protocols_ver 1.44
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
 %define graphene_ver 1.10
@@ -80,6 +82,7 @@ Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 %define vulkan_ver 1.3
 %define harfbuzz_ver 8.4.0
 %define gst_ver 1.24
+%define accesskit_api_ver 0.15
 
 Requires: gtk4-update-icon-cache = %EVR
 Requires: at-spi2-core
@@ -99,13 +102,13 @@ BuildRequires: libatk-devel >= %atk_ver
 BuildRequires: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildRequires: libtiff-devel libjpeg-devel
 BuildRequires: fontconfig-devel >= %fontconfig_ver
-BuildRequires: libcups-devel >= %cups_ver
 BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: libgraphene-devel >= %graphene_ver
 BuildRequires: iso-codes-devel
 BuildRequires: libfribidi-devel
 BuildRequires: docbook-utils zlib-devel
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: bash-completion
 %if_enabled x11
 BuildRequires: libXdamage-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
@@ -119,6 +122,8 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: /usr/bin/glslc vulkan-devel >= %vulkan_ver}
+%{?_enable_cups:BuildRequires: libcups-devel >= %cups_ver}
+%{?_enable_accesskit:BuildRequires: pkgconfig(accesskit-c-%accesskit_api_ver)}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel >= %harfbuzz_ver python3-module-pygobject3
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
@@ -254,6 +259,8 @@ the functionality of the installed GTK+3 packages.
     %{subst_enable_meson_bool testsuite build-testsuite} \
     %{subst_enable_meson_feature vulkan vulkan} \
     %{subst_enable_meson_feature gstreamer media-gstreamer} \
+    %{subst_enable_meson_feature cups print-cups} \
+    %{subst_enable_meson_feature accesskit accesskit}
 %nil
 %meson_build
 
@@ -291,10 +298,6 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %dir %_libdir/gtk-%api_ver/modules
 %dir %fulllibpath
 %dir %fulllibpath/engines
-%dir %fulllibpath/printbackends
-%dir %fulllibpath/media
-%fulllibpath/printbackends/libprintbackend-*.so
-%{?_enable_gstreamer:%fulllibpath/media/libmedia-gstreamer.so}
 %{?_enable_ffmpeg:%fulllibpath/media/libmedia-ffmpeg.so}
 %dir %_datadir/gtk-%api_ver/
 %_datadir/gtk-%api_ver/emoji/
@@ -334,6 +337,10 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_man1dir/gtk4-image-tool.1*
 %_man1dir/gtk4-path-tool.1*
 %_man1dir/gtk4-rendernode-tool.1*}
+%_datadir/bash-completion/completions/gtk4-builder-tool
+%_datadir/bash-completion/completions/gtk4-image-tool
+%_datadir/bash-completion/completions/gtk4-path-tool
+%_datadir/bash-completion/completions/gtk4-rendernode-tool
 
 %if_enabled wayland
 %_pkgconfigdir/gtk%api_ver_major-wayland.pc
@@ -383,6 +390,11 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_man1dir/gtk4-node-editor.1*
 %endif
 
+%_datadir/bash-completion/completions/gtk4-demo
+%_datadir/bash-completion/completions/gtk4-node-editor
+%_datadir/bash-completion/completions/gtk4-print-editor
+%_datadir/bash-completion/completions/gtk4-widget-factory
+
 %if_enabled gtk_doc
 %files devel-doc
 %_datadir/doc/gdk4/
@@ -417,6 +429,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 4.20.1-alt1
+- 4.20.1
+
 * Tue Jun 10 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.6-alt1
 - 4.18.6
 

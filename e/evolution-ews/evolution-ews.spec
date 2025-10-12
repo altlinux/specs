@@ -1,12 +1,12 @@
 %set_verify_elf_method rpath=relaxed
-%define ver_major 3.56
-%define ver_base 3.56
+%define ver_major 3.58
+%define ver_base 3.58
 %define evo_ver_base %ver_base
 
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -51,10 +51,10 @@ versions 2007 and later, through its Exchange Web Services (EWS) interface.
 %add_optflags %(getconf LFS_CFLAGS)
 # reenable RPATH* to link against private libraries
 %cmake -GNinja \
-	-DCMAKE_SKIP_RPATH:BOOL=OFF \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-	-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
-	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF
+    -DCMAKE_SKIP_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON \
+    -DENABLE_SCHEMAS_COMPILE:BOOL=OFF
 %cmake_build
 
 %install
@@ -79,6 +79,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.2-alt1
 - 3.56.2
 

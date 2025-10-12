@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define ver_major 2.84
+%define ver_major 2.86
 %define ver_base 2.68
 %define api_ver %ver_base
 
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%ver_major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.84.0
+%define glib_ver 2.86.0
 %define sigc_ver 3.0.0
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
@@ -109,6 +109,12 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Fri Sep 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.86.0-alt1
+- 2.86.0
+
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2.85.0-alt1
+- 2.85.0
+
 * Mon Mar 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.84.0-alt1
 - 2.84.0
 

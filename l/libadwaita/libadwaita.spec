@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.8
 %define beta %nil
 %define namespace Adw
 %define api_ver 1
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -29,7 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define meson_ver 0.59
+%define meson_ver 0.63
 %define glib_ver 2.80.0
 %define gtk_ver 4.17.5
 %define gi_ver 1.84
@@ -116,13 +116,11 @@ xvfb-run -s -noreset %__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-#%_libdir/%name-%api_ver-internal.so.*
 %doc README.md NEWS
 
 %files devel
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-#%_libdir/%name-%api_ver-internal.so
 %_pkgconfigdir/%name-%api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.*}
 
@@ -148,6 +146,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.0-alt1
+- 1.8.0
+
 * Sat Aug 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.6-alt1
 - 1.7.6
 

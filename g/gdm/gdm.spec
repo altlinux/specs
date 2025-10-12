@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %ifndef _priority_distbranch
 %define altbranch `rpm --eval %_priority_distbranch`
@@ -9,7 +9,7 @@
 %define altbranch sisyphus
 %endif
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define api_ver 1.0
 
@@ -35,8 +35,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.0
-Release: alt5%beta
+Version: %ver_major.0.1
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0-or-later
@@ -79,7 +79,7 @@ Provides: gnome-dm
 # from meson.build
 %define glib_ver 2.56.0
 %define gtk_ver 3.16.0
-%define shell_ver %ver_major
+%define shell_ver 48
 %define libcanberra_ver 0.4
 %define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
@@ -115,7 +115,7 @@ BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 
 %{?_enable_x11:
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
-BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel
+BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel xorg-sdk
 BuildRequires: xorg-xephyr xorg-server
 BuildRequires: libdmx-devel
 BuildRequires: libXdmcp-devel
@@ -194,10 +194,6 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's|/usr\(/bin/touch\)|\1|
-        s|/usr\(/bin/rm\)|\1|
-        s|/usr\(/lib/systemd/system-sleep/nvidia\)|\1|' data/61-gdm.rules.in
-
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 %patch8 -p1 -b .XSession-Xterm
@@ -209,8 +205,11 @@ fi
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
 %build
+# to find /sbin/nologin
+export PATH=$PATH:/sbin
 %meson \
     %{subst_enable_meson_bool ipv6 ipv6} \
+    -Drun-dir=/run/gdm \
     -Dinitial-vt='%vt_nr' \
     -Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
     -Dsysconfsubdir='%gdm_subconfdir' \
@@ -273,7 +272,7 @@ dbus-run-session %__meson_test
 %exclude %_libexecdir/gdm-auth-config-redhat
 %_pam_modules_dir/pam_gdm.so
 %_unitdir/gdm.service
-%_userunitdir/gnome-session@gnome-login.target.d/session.conf
+%_userunitdir/gnome-session@gnome-login.target.d/gnome-login.session.conf
 %doc AUTHORS NEWS README*
 
 %files data -f %name.lang
@@ -282,7 +281,6 @@ dbus-run-session %__meson_test
 %config %_sysconfdir/pam.d/gdm-launch-environment
 %config %_sysconfdir/pam.d/gdm-smartcard
 %config %_sysconfdir/pam.d/gdm-fingerprint
-%{?_enable_x11:%_udevrulesdir/61-%name.rules}
 %_datadir/dbus-1/system.d/%name.conf
 %config %_datadir/polkit-1/rules.d/20-%name.rules
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
@@ -311,8 +309,6 @@ dbus-run-session %__meson_test
 %attr(0600, gdm, gdm) %_localstatedir/lib/gdm/.config/pulse/default.pa
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
-%dir %_datadir/%name/greeter/autostart
-%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files help -f %name-help.lang
 
@@ -333,6 +329,12 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
+- 49.0.1
+
+* Mon Sep 01 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt0.9.rc
+- 49.rc (restored Xorg session by default)
+
 * Tue Aug 12 2025 Anton Midyukov <antohami@altlinux.org> 48.0-alt5
 - Revert "Disable Xorg session by default" for p11
 

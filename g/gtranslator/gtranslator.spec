@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
@@ -26,8 +26,8 @@ Source: %name-%version.tar
 
 Requires: libgda6-sqlite gettext-tools
 
-%define gtk_ver 4.16
-%define adw_ver 1.6
+%define gtk_ver 4.20
+%define adw_ver 1.8
 %define spell_ver 0.2.0
 %define gtksourceview_api_ver 5
 %define gtksourceview_ver 5.10.0
@@ -38,7 +38,8 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: libgda6-devel libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libsoup3.0-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libspelling-devel >= %spell_ver libxml2-devel >= %xml_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
@@ -70,6 +71,7 @@ GNU gettext/GNOME desktop world.
 %_bindir/%name
 %_datadir/%name/
 %_datadir/gtksourceview-%gtksourceview_api_ver/language-specs/%name.lang
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/*.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
@@ -79,6 +81,9 @@ GNU gettext/GNOME desktop world.
 
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

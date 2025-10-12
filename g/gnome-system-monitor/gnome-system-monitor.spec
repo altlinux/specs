@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %def_enable systemd
 %def_disable check
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple process monitor
@@ -27,11 +27,10 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.68.0
-%define gtk_ver 4.12
+%define gtk_ver 4.19
 %define glibmm_ver 2.68
-%define gtkmm_ver 4.0.0
+%define gtkmm_ver 4.19.1
 %define libgtop_ver 2.38.0
-%define libxml_ver 2.0
 %define rsvg_ver 2.35
 %define adw_ver 1.6
 
@@ -45,7 +44,6 @@ BuildRequires: pkgconfig(glibmm-2.68) >= %glibmm_ver
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(gtkmm-4.0) >= %gtkmm_ver
 BuildRequires: libgtop-devel >= %libgtop_ver
-BuildRequires: libxml2-devel >= %libxml_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
@@ -89,6 +87,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

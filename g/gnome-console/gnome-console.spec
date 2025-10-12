@@ -3,7 +3,7 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 %define _name console
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
@@ -11,7 +11,7 @@
 %def_without nautilus
 
 Name: gnome-%_name
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Console
@@ -29,8 +29,8 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.80
 %define pango_ver 1.52
-%define gtk4_ver 4.14
-%define adwaita_ver 1.6
+%define gtk4_ver 4.20
+%define adwaita_ver 1.8
 %define vte_ver 0.77.0
 %define nautilus_ver 43
 
@@ -42,7 +42,7 @@ Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson yelp-tools
-BuildRequires: desktop-file-utils %_bindir/appstream-util
+BuildRequires: desktop-file-utils %_bindir/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(pango) >= %pango_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
@@ -102,6 +102,9 @@ EOF
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0.1-alt1
 - 48.0.1
 

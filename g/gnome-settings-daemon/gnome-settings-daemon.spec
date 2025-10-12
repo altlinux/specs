@@ -1,19 +1,22 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
 %def_enable smartcard
 %def_enable systemd
-%def_enable wayland
+# disabled by default
+%def_enable x11
+# enabled by default
+%def_enable xwayland
 # tests require, as minimum, running colord
 %def_disable check
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -30,7 +33,6 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.70.0
-%define gtk_ver 3.16
 %define gnome_desktop_ver 3.37.1
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
@@ -60,9 +62,8 @@ Requires: upower >= %upower_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
+BuildRequires: pkgconfig(gnome-desktop-4) >= %gnome_desktop_ver
 BuildRequires: libnotify-devel >= %notify_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
@@ -70,16 +71,15 @@ BuildRequires: libdbus-devel libpolkit1-devel >= %polkit_ver
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: pkgconfig(gck-2)}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
 BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: libcups-devel libgudev-devel
-BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xext)
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libgweather4.0-devel >= %gweather_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(gcr-4)
+%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xext) pkgconfig(xfixes)}
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
 %description
@@ -111,7 +111,8 @@ The %name-tests package provides programms for testing GSD plugins.
 %build
 %meson \
     %{subst_enable_meson_bool smartcard smartcard} \
-    %{subst_enable_meson_bool wayland wayland} \
+    %{subst_enable_meson_bool x11 x11} \
+    %{subst_enable_meson_bool xwayland xwayland} \
     -Dudev_dir='%_udevdir'
 %nil
 %meson_build
@@ -127,7 +128,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %dir %_libdir/%name-%ver_major
 %_libdir/%name-%ver_major/libgsd.so
 %_libexecdir/gsd-a11y-settings
-%_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-color
 %_libexecdir/gsd-datetime
 %_libexecdir/gsd-housekeeping
@@ -142,19 +142,14 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-smartcard
 %_libexecdir/gsd-sound
 %_libexecdir/gsd-usb-protection
-%_libexecdir/gsd-wacom
-%_libexecdir/gsd-wacom-oled-helper
 %_libexecdir/gsd-wwan
 %_libexecdir/gsd-xsettings
 %_userunitdir/*
 %_datadir/%name/
-%_sysconfdir/xdg/autostart/*.desktop
 %dir %_sysconfdir/xdg/Xwayland-session.d
 %_sysconfdir/xdg/Xwayland-session.d/00-xrdb
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
-%_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
 %exclude %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 %doc AUTHORS NEWS
 
@@ -187,6 +182,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sat Apr 19 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1 (ALT #53577)
 

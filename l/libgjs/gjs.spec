@@ -1,17 +1,17 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.84
+%define ver_major 1.86
 %define _name gjs
 %define api_ver 1.0
-%define mozjs_ver_major 128
-%define mozjs_ver 128.1.0
+%define mozjs_ver_major 140
+%define mozjs_ver 140.1.0
 
 %def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -27,7 +27,7 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.68.0
+%define glib_ver 2.85.1
 %define gir_api_ver 1.0
 %define gir_ver 1.72
 
@@ -117,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Sep 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.86.0-alt1
+- 1.86.0
+
 * Mon Apr 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.2-alt1
 - 1.84.2
 

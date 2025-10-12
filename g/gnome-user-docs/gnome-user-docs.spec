@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: General GNOME User Documentation
 License: CC-BY-SA-3.0
@@ -41,7 +41,7 @@ directly associated with any particular GNOME application or package.
 %setup -n %name-%version%beta
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
 %configure
 %make_build
 
@@ -53,6 +53,9 @@ NOCONFIGURE=1 ./autogen.sh
 %doc README* NEWS
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt2
 - updated to 48.2-29-g586f2d35 (fixed russian translation
   by gammaray@ (ALT #55794, ALT #55797, ALT #55800))

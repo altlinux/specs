@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.54
+%define ver_major 3.56
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.OnlineAccounts
 %define namespace Goa
@@ -13,12 +13,11 @@
 %def_enable exchange
 %def_enable google
 %def_enable imap_smtp
-%def_enable windows_live
 %def_enable doc
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -124,8 +123,7 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
     %{subst_enable_meson_bool imap_smtp imap_smtp} \
     %{subst_enable_meson_bool kerberos kerberos} \
     %{subst_enable_meson_bool owncloud owncloud} \
-    %{subst_enable_meson_bool webdav webdav} \
-    %{subst_enable_meson_bool windows_live windows_live}
+    %{subst_enable_meson_bool webdav webdav}
 %nil
 %meson_build
 
@@ -139,7 +137,6 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %_libexecdir/goa-identity-service
 %_libexecdir/goa-oauth2-handler
 %_desktopdir/%xdg_name.OAuth2.desktop
-%_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
 %_datadir/dbus-1/services/org.gnome.Identity.service
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_man:%_man8dir/goa-daemon.*}
@@ -183,6 +180,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sat Aug 02 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.5-alt1
 - 3.54.5
 
