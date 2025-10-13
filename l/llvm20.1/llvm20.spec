@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -532,6 +532,7 @@ Documentation for the LLD linker.
 %package -n %lldb_name
 Summary: A next-level high-performance debugger
 Group: Development/Debuggers
+Requires: python3-module-%lldb_name = %EVR
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -936,6 +937,9 @@ rm -rf %buildroot%llvm_datadir/gdb
 mkdir -p %buildroot%_datadir/bash-completion/completions
 ln -sr %buildroot%llvm_datadir/clang/bash-autocomplete.sh %buildroot%_datadir/bash-completion/completions/clang-%v_major
 
+# Install FileCheck from llvm/utils
+install -pm755 %builddir/bin/FileCheck %buildroot%llvm_bindir/FileCheck
+
 # Symlink executables to %_bindir.
 mkdir -p %buildroot%_bindir
 for b in %buildroot%llvm_bindir/*; do
@@ -1096,7 +1100,7 @@ bin	verify-uselistorder
 bin	tblgen-to-irdl
 bin	reduce-chunk-list
 
-man	FileCheck
+bin,man	FileCheck
 man	extraclangtools
 man	lit
 man	llvm-ifs
@@ -1499,6 +1503,11 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Sat Oct 11 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.8-alt0.3
+- .spec:
+  + lldb: added python3-module-lldb to requires (closes #55313).
+  + llvm: added FileCheck (closes #56070).
+
 * Wed Sep 24 2025 Ivan A. Melnikov <iv@altlinux.org> 20.1.8-alt0.2
 - Chage the default code model to "medium" for loongarch64
   (backport upstream commit 2d876ed33ee38 from LLVM 21),
