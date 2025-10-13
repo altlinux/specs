@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.4
+Version: 1.0.0
 Release: alt1
 
 Summary: Utility that helps with local TCP ports managment
@@ -51,6 +51,9 @@ It can find an unused TCP localhost port and remember the association.
 %python3_sitelibdir/%{pyproject_distinfo port_for}
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Thu Oct 10 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt1
 - Automatically updated to 0.7.4.
 
