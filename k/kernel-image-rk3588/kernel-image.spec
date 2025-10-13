@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.51
+%define kernel_sublevel	.52
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -511,6 +511,11 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon Oct 13 2025 Alexei Takaseev <taf@altlinux.org> 6.12.52-alt1
+- v6.12.52 (2025-10-12).
+- config: enable all accelerometers.
+- config: Enable PS4/PS5 controllers.
+
 * Tue Oct 07 2025 Alexei Takaseev <taf@altlinux.org> 6.12.51-alt1
 - v6.12.51 (2025-10-06).
 - config: Enable CONFIG_HID_UNIVERSAL_PIDFF=m.
