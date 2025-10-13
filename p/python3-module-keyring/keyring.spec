@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 25.6.0
-Release: alt1
+Release: alt2
 
 Summary: Keyring provides an easy way to access the system keyring service
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-toml
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-secretstorage
 BuildRequires: python3-module-jaraco.classes
@@ -73,6 +74,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 25.6.0-alt2
+- Fixed FTBFS.
+
 * Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 25.6.0-alt1
 - Automatically updated to 25.6.0.
 
