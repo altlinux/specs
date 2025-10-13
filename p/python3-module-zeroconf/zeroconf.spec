@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.139.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Python Multicast DNS Service Discovery Library
@@ -7,25 +7,22 @@ License: LGPLv2
 Group: Development/Python
 Url: https://pypi.org/project/zeroconf/
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-python3 
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(cython)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(pytest_codspeed)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(ifaddr)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -35,13 +32,19 @@ BuildRequires: python3(ifaddr)
 
 %check
 export SKIP_IPV6=1
-%pyproject_run_pytest
+%pyproject_run_pytest -o=addopts=
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
 %python3_sitelibdir/zeroconf
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Wed Oct 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
+
 * Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.139.0-alt1
 - 0.139.0 released
 
