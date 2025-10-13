@@ -6,7 +6,7 @@
 %define libze_version 1.23.1
 
 Name: intel-compute-runtime
-Version: 25.31.34666.3
+Version: 25.35.35096.9
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -128,6 +128,9 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %_includedir/ocloc_api.h
 
 %changelog
+* Tue Sep 23 2025 Andrey Kovalev <ded@altlinux.org> 25.35.35096.9-alt1
+- Updated to upstream version 25.35.35096.9.
+
 * Thu Aug 28 2025 L.A. Kostis <lakostis@altlinux.ru> 25.31.34666.3-alt1
 - Updated to upstream version 25.31.34666.3.
 - Pin igc/libze version requirements.

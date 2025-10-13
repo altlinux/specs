@@ -5,7 +5,7 @@
 %set_verify_elf_method skip
 
 Name: intel-graphics-compiler
-Version: 2.16.0
+Version: 2.18.5
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -138,6 +138,9 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Tue Sep 23 2025 Andrey Kovalev <ded@altlinux.org> 2.18.5-alt1
+- Updated to upstream version 2.18.5.
+
 * Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 2.16.0-alt1
 - Updated to upstream version 2.16.0.
 
