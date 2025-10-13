@@ -1,5 +1,6 @@
 %define  oname llvmlite
-%define  llvm_version 15.0
+%define  llvm_version 20.1
+%define  clang_version %(echo %llvm_version | cut -d . -f 1)
 %define  optflags_lto -flto=thin
 
 #[armh] LLVM ERROR: Symbol not found: __aeabi_unwind_cpp_pr0
@@ -10,7 +11,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.44.0
+Version: 0.45.1
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -22,8 +23,12 @@ VCS:     https://github.com/numba/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools python3-module-wheel
 BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel libstdc++-devel lld%{llvm_version}
+BuildRequires: cmake
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: zlib-devel
 
 Source:  %name-%version.tar
 
@@ -53,11 +58,9 @@ following approach:
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
-%remove_optflags -frecord-gcc-switches
-%add_optflags -grecord-gcc-switches -fPIC -DNDEBUG
 export ALTWRAP_LLVM_VERSION=%{llvm_version}
-export CXX=clang
-export LDFLAGS='-fuse-ld=lld'
+export CXX=/usr/bin/clang++-%{clang_version}
+export CC=/usr/bin/clang-%{clang_version}
 %pyproject_build
 
 %install
@@ -72,6 +75,9 @@ export LDFLAGS='-fuse-ld=lld'
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.45.1-alt1
+- Automatically updated to 0.45.1.
+
 * Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.44.0-alt1
 - Automatically updated to 0.44.0.
 
