@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 143.0
+Version: 143.0.4
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sun Oct 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0.4-alt1
+- New version (143.0.4).
+
+* Thu Oct 02 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0.3-alt1
+- New version (143.0.3).
+- Fix the new_argv to match the standard argv
+  format in the wrapper (Closes: 56190).
+- Fixes:
+  + CVE-2025-11152: Sandbox escape due to integer overflow in the Graphics: Canvas2D component
+  + CVE-2025-11153: JIT miscompilation in the JavaScript Engine: JIT component
+
 * Wed Sep 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0-alt1
 - New version (143.0).
 - Fixes:

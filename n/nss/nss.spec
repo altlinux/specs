@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.116
+Version:	3.117
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -172,8 +172,10 @@ cp -aL "$DESTDIR"/lib/* %buildroot%_libdir
 rm -f -- %buildroot%_libdir/*.TOC
 
 # Install NSS headers
-mkdir -p %buildroot%_includedir
-cp -aL public/nss %buildroot%_includedir
+# Link: https://bugzilla.mozilla.org/show_bug.cgi?id=1992417#c8
+# mkdir -pv %buildroot%_includedir
+# cp -aL public/nss %buildroot%_includedir
+install -Dt %buildroot%_includedir/nss/ -m644 public/nss/*.h
 
 # Copy some freebl include files we also want
 mkdir -p -- %buildroot/%_includedir/%name/private
@@ -273,6 +275,15 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Sat Oct 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.117-alt1
+- New version (3.117).
+- Fix FTBFS in mozilla products.
+- Certificate Authority Changes:
+  + Add CN=OISTE Client Root ECC G1
+  + Add CN=OISTE Client Root RSA G1
+  + Add CN=OISTE Server Root ECC G1
+  + Add CN=OISTE Server Root RSA G1
+
 * Sat Sep 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.116-alt1
 - New version (3.116).
 
