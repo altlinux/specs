@@ -1,37 +1,31 @@
 Name: python3-module-telegram-bot
-Version: 21.3
+Version: 22.5
 Release: alt1
 
 Summary: Python interface for the Telegram Bot API
 License: LGPLv3
 Group: Development/Python
 Url: https://pypi.org/project/python-telegram-bot/
+VCS: https://github.com/python-telegram-bot/python-telegram-bot
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
 
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(xdist)
-BuildRequires: python3(flaky)
-
-BuildRequires: python3(anyio)
-BuildRequires: python3(cachetools)
-BuildRequires: python3(h2)
-BuildRequires: python3(httpx)
-BuildRequires: python3(pytz)
-BuildRequires: python3(socksio)
-BuildRequires: python3(tornado)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup tests
 
 %build
 %pyproject_build
@@ -40,7 +34,7 @@ BuildRequires: python3(tornado)
 %pyproject_install
 
 %check
-# some tests are online
+# some tests are online and/or depend on optional packages
 %pyproject_run_pytest -n auto --dist=loadgroup -m no_req ||:
 
 %files
@@ -48,6 +42,9 @@ BuildRequires: python3(tornado)
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Mon Oct 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 22.5-alt1
+- 22.5 released
+
 * Fri Jul 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt1
 - 21.3 released
 
