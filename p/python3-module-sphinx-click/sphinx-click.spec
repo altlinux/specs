@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: A Sphinx plugin to automatically document click-based applications
@@ -17,6 +17,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr
 
@@ -37,11 +38,10 @@ Source: %name-%version.tar
 %setup
 
 %build
-export PBR_VERSION="%version"
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-export PBR_VERSION="%version"
 %pyproject_install
 
 %check
@@ -53,6 +53,9 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 
