@@ -11,7 +11,7 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: The GNU Image Manipulation Program
@@ -35,7 +35,7 @@ BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libXcursor-devel libXfixes-d
 BuildRequires: libarchive-devel libexpat-devel libgexiv2-devel libgs-devel libgtk+3-gir-devel libgudev-devel libheif-devel liblcms2-devel liblzma-devel
 BuildRequires: libmng-devel libmypaint-devel libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkit2gtk-devel libwebp-devel
 BuildRequires: libjxl-devel libwmf-devel openexr-devel python3-module-pygobject3 vala-tools xdg-utils meson cmake iso-codes-devel libbabl-devel libgegl-devel
-BuildRequires: libbabl-gir libgegl-gir libexiv2-devel mypaint-brushes%brushes_ver-devel
+BuildRequires: libbabl-gir libgegl-gir libexiv2-devel mypaint-brushes%brushes_ver-devel libappstream-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -75,7 +75,7 @@ Development libraries and header files for writing GIMP plugins and extensions.
 
 tar -xf gimp-data.tar.xz
 %ifnarch ix86
-sed 's|lib/gir|lib64/gir|' -i data/environ/python.env app/main.c
+sed 's|lib/gir|lib64/gir|' -i app/main.c # data/environ/python.env
 %endif
 
 %build
@@ -127,6 +127,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 13 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.6-alt1
+- 3.0.6
+
 * Wed May 21 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.4-alt1
 - 3.0.4
 
