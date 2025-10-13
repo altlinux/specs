@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 5.4.0
-Release: alt3
+Release: alt4
 Summary: 3D printer control software
 License: LGPL-3.0-or-later
 
@@ -59,6 +59,7 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-keyring >= 21
 BuildRequires: python3-module-dbus
 BuildRequires: python3(importlib_metadata)
+BuildRequires: python3-module-numpy libnumpy-py3-devel python3-module-numpy-tests
 %endif
 
 %py3_requires serial zeroconf
@@ -159,6 +160,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 1:5.4.0-alt4
+- NMU: add numpy modules in BuildRequires
+
 * Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt3
 - add dependency on python3(stl) (Closes: 49331)
 - spec: convert License to SPDX format
