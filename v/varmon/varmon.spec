@@ -1,6 +1,6 @@
 Name: varmon
 Version: 1.2.1
-Release: alt1.qa1
+Release: alt2
 
 Summary: RAID management tool for Mylex DAC960/DAC1164 controllers
 License: GPL
@@ -9,6 +9,9 @@ Group: Monitoring
 Url: http://varmon.sourceforge.net
 Source0: http://dl.sourceforge.net/varmon/%name-%version.tar.gz
 # Source0-md5:	fd251b64ad4976ef8573f0d2a20a02f9
+
+Patch: varmon-1.2.1-alt-build.patch
+
 Packager: Ilya Mashkin <oddity@altlinux.org>
 
 BuildRequires: ncurses-devel
@@ -27,6 +30,7 @@ kontrolerach Mylex z rodziny DAC960/DAC1164.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 cc %optflags -o varmon varmon.c -Wall -lncurses -I%_includedir/ncurses
@@ -39,6 +43,9 @@ install -D varmon %buildroot%_sbindir/varmon
 %_sbindir/varmon
 
 %changelog
+* Mon Oct 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt2
+- FTBFS: fix: error: invalid use of incomplete typedef 'WINDOW' {aka 'struct _win_st'}.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
