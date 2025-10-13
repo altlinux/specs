@@ -5,7 +5,7 @@
 %def_without glib
 
 Name: python3-module-pyudev
-Version: 0.24.3
+Version: 0.24.4
 Release: alt1
 
 Summary: Udev bindings for Python
@@ -132,6 +132,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.24.4-alt1
+- Automatically updated to 0.24.4.
+
 * Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.3-alt1
 - Automatically updated to 0.24.3.
 
