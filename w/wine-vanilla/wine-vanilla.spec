@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.15
+%define major 10.16
 %define rel %nil
 
 # the packages will conflict with that
@@ -858,8 +858,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_datadir/%wineproduct/wine.inf
 %_datadir/%wineproduct/nls/
 %_datadir/%wineproduct/fonts/
-
-
+%_datadir/%wineproduct/winmd/
 
 %files full
 
@@ -921,6 +920,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Oct 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16-alt1
+- new version 10.16 (with rpmrb script)
+
 * Tue Sep 16 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.15-alt1
 - new version 10.15 (with rpmrb script)
 
