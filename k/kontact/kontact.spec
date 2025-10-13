@@ -4,7 +4,7 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: %rname
-Version: 25.08.1
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -102,6 +102,9 @@ Obsoletes: libkontactprivate5 < %EVR
 
 
 %changelog
+* Fri Oct 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 
