@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.6.1
+Version: 25.9.2
 Release: alt1
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
@@ -75,7 +75,7 @@ cp -fR test/ %buildroot%python3_sitelibdir/%oname/
 %tox_check_pyproject
 
 %files
-%doc *.rst examples/
+%doc LICENSE examples/
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/%oname/test/
 
@@ -84,6 +84,9 @@ cp -fR test/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 25.9.2-alt1
+- Automatically updated to 25.9.2.
+
 * Mon Jun 30 2025 Anton Vyatkin <toni@altlinux.org> 25.6.1-alt1
 - New version 25.6.1.
 
