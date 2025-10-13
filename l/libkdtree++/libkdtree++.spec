@@ -7,13 +7,13 @@
 %def_disable py_module
 
 Name: libkdtree++
-Version: 0.7.3
+Version: 0.7.5
 Release: alt1
 
 Summary: C++ template container implementation of kd-tree sorting
 
-Url: https://salsa.debian.org/debian/libkdtreepp
-VCS: https://salsa.debian.org/debian/libkdtreepp
+Url: https://github.com/nvmd/libkdtree
+VCS: https://github.com/nvmd/libkdtree
 
 Group: System/Libraries
 License: Artistic-2.0
@@ -122,6 +122,10 @@ install -pm 0644 python-bindings/kdtree.py %buildroot%python3_sitelibdir_noarch/
 %doc examples/test*.cpp
 
 %changelog
+* Mon Oct 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.5-alt1
+- 0.7.3 -> 0.7.5
+- change upstream url
+
 * Wed Jul 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.3-alt1
 - 0.7.0 -> 0.7.3
 - url changed and vcs added
