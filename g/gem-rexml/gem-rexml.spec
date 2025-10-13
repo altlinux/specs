@@ -5,7 +5,7 @@
 %define        gemname rexml
 
 Name:          gem-rexml
-Version:       3.3.9
+Version:       3.4.4
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby
 License:       BSD-2-Clause
@@ -27,7 +27,7 @@ BuildRequires: gem(test-unit-ruby-core) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rexml) = 3.3.9
+Provides:      gem(rexml) = 3.4.4
 
 
 %description
@@ -44,14 +44,14 @@ features such as XPath.
 
 %if_enabled    doc
 %package       -n gem-rexml-doc
-Version:       3.3.9
+Version:       3.4.4
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rexml
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rexml) = 3.3.9
+Requires:      gem(rexml) = 3.4.4
 
 %description   -n gem-rexml-doc
 REXML is an XML toolkit for Ruby documentation files.
@@ -73,14 +73,14 @@ features such as XPath.
 
 %if_enabled    devel
 %package       -n gem-rexml-devel
-Version:       3.3.9
+Version:       3.4.4
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rexml
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rexml) = 3.3.9
+Requires:      gem(rexml) = 3.4.4
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(benchmark_driver) >= 0
@@ -135,6 +135,9 @@ features such as XPath.
 
 
 %changelog
+* Mon Oct 13 2025 Alexander Danilov <admsasha@altlinux.org> 3.4.4-alt1
+- ^ 3.3.9 -> 3.4.4
+
 * Thu Jan 30 2025 Alexander Danilov <admsasha@altlinux.org> 3.3.9-alt1
 - ^ 3.3.2 -> 3.3.9
 
