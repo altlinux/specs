@@ -1,7 +1,7 @@
 %define modname pypresence
 
 Name: python3-module-%modname
-Version: 4.3.0
+Version: 4.5.2
 Release: alt1
 
 Summary: Discord RPC and Rich Presence wrapper library
@@ -9,9 +9,12 @@ Summary: Discord RPC and Rich Presence wrapper library
 License: MIT
 Group: Development/Python3
 Url: https://qwertyquerty.github.io/pypresence/html/index.html
-# https://github.com/qwertyquerty/pypresence
+VCS: https://github.com/qwertyquerty/pypresence
 
-Source: %url/archive/%version/%modname-%version.tar.gz
+# Source-url: %url/archive/%version/%modname-%version.tar.gz
+Source: %modname-%version.tar
+Patch0: %modname-%version-%release.patch
+Patch1: %modname-4.5.2-alt-pyproject.patch
 
 BuildArch: noarch
 
@@ -22,6 +25,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-wheel
 
 %prep
 %setup -n %modname-%version
+%patch0 -p1
+%patch1 -p2
 # description-file will not be supported in future versions
 sed -i 's|description-file|description_file|' setup.cfg
 
@@ -36,6 +41,10 @@ sed -i 's|description-file|description_file|' setup.cfg
 %python3_sitelibdir_noarch/%{modname}*
 
 %changelog
+* Mon Oct 13 2025 Leontiy Volodin <lvol@altlinux.org> 4.5.2-alt1
+- New version 4.5.2.
+- Added VCS tag.
+
 * Mon Jul 10 2023 Leontiy Volodin <lvol@altlinux.org> 4.3.0-alt1
 - New version 4.3.0.
 
