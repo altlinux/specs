@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 6.0.0
 Release: alt1
 
 Summary: A Python interface to Last.fm (and other API compatible social networks)
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
+- Automatically updated to 6.0.0.
+
 * Mon Mar 10 2025 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Automatically updated to 5.5.0.
 
