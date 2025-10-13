@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
@@ -59,6 +59,9 @@ Available features:
 %python3_sitelibdir/pytest_spec-%version.dist-info
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Thu Sep 11 2025 Anton Vyatkin <toni@altlinux.org> 5.1.0-alt1
 - New version 5.1.0.
 
