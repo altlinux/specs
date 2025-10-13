@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.13.11
-Release: alt2
+Version: 3.14.0
+Release: alt1
 
 Summary: Python socket mock framework
 
@@ -76,6 +76,9 @@ py.test-3 -k "not test_file_object and \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.14.0-alt1
+- Automatically updated to 3.14.0.
+
 * Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 3.13.11-alt2
 - NMU: fixed FTBFS (pytest 8.4.0).
 
