@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.9.4
+Version: 1.9.6
 Release: alt1
 
 Summary: Rust within Python
@@ -40,7 +40,6 @@ tar cf %SOURCE1 .cargo vendor
 
 %install
 %pyproject_install
-chmod +x %buildroot%_bindir/maturin
 
 %files
 %_bindir/maturin
@@ -48,6 +47,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Thu Oct 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.6-alt1
+- 1.9.6 released
+
 * Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.4-alt1
 - 1.9.4 released
 
