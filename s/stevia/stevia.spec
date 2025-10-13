@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Stevia is an alternative keyboard for Phosh
@@ -141,6 +141,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
+- 0.50.1
+
 * Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 
