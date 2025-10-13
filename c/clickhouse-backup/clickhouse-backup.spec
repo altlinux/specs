@@ -6,7 +6,7 @@
 # $ git commit -n --no-post-rewrite -m "update go vendor modules"
 
 Name: clickhouse-backup
-Version: 2.6.21
+Version: 2.6.39
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
@@ -48,6 +48,9 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Tue Oct 07 2025 Anton Farygin <rider@altlinux.com> 2.6.39-alt1
+- 2.6.21 -> 2.6.39
+
 * Fri May 30 2025 Anton Farygin <rider@altlinux.com> 2.6.21-alt1
 - 2.6.16 -> 2.6.21
 
