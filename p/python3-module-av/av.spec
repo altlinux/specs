@@ -1,20 +1,20 @@
 Name: python3-module-av
-Version: 14.2.0
-Release: alt2
+Version: 15.1.0
+Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
 License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.org/project/av/
 
-Autoreq: yes, nocpp
+Autoreq: yes, nocpp, nopython3
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(Cython)
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavdevice)
@@ -23,11 +23,15 @@ BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libswresample)
 
+%pyproject_runtimedeps_metadata
+
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -35,12 +39,18 @@ BuildRequires: pkgconfig(libswresample)
 %install
 %pyproject_install
 
+# extensions built against stable API, drop versioned ABI reqi
+%filter_from_requires /%python3_ABI_dep/d
+
 %files
 %_bindir/pyav
 %python3_sitelibdir/av
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.1.0-alt1
+- 15.1.0 released
+
 * Mon Jul 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
 - suppressed extra reqs on ffmpeg (closes: 55369)
 
