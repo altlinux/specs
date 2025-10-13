@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name lsprotocol
 %define mod_name %pypi_name
 
@@ -7,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.0.1
+Version: 2025.0.0
 Release: alt1
 Summary: Python implementation of the Language Server Protocol
 License: MIT
@@ -15,15 +14,17 @@ Group: Development/Python3
 Url: https://pypi.org/project/lsprotocol
 Vcs: https://github.com/microsoft/lsprotocol
 BuildArch: noarch
+Patch: 7b5d4f7422bfe4c597b8124f99861e751d47f153.patch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-cattrs
+BuildRequires: python3-module-importlib-resources
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-pyhamcrest
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -39,14 +40,7 @@ it is updated.
 
 %prep
 %setup
-%autopatch -p1
-pushd %python_path
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-popd
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements.in
-%endif
+%patch -p1
 
 %build
 pushd %python_path
@@ -66,5 +60,8 @@ python3 -m pytest tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 2025.0.0-alt1
+- Automatically updated to 2025.0.0.
+
 * Mon Jun 17 2024 Stanislav Levin <slev@altlinux.org> 2023.0.1-alt1
 - Initial build for Sisyphus.
