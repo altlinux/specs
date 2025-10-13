@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sniffnet
-Version: 1.3.1
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: Application to comfortably monitor your network traffic
 License: Apache-2.0 or MIT
@@ -12,8 +12,6 @@ Vcs: https://github.com/GyulyVGC/sniffnet
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-
-Patch: sniffnet-1.3.1-linux-char-loongarch.patch
 
 Requires(post,preun): libcap-utils
 
@@ -48,7 +46,11 @@ quiet = false
 root = "%buildroot%prefix"
 
 [build]
+%ifarch i586
+rustflags = ["-Copt-level=1", "-Cdebuginfo=0", "--cfg=rustix_use_libc"]
+%else
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+%endif
 
 [profile.release]
 strip = false
@@ -63,8 +65,6 @@ EOF
 # allow patching vendored rust code
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
     ./vendor/linux-raw-sys/.cargo-checksum.json
-
-%patch -p1
 
 %build
 cargo build %_smp_mflags --offline --release
@@ -92,6 +92,9 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Tue Oct 07 2025 Andrey Kovalev <ded@altlinux.org> 1.4.1-alt1
+- Updated to 1.4.1.
+
 * Thu Aug 08 2024 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt2
 - Add patch that fixes linux-raw-sys C_char for loongarch64 (by k0tran@).
 
