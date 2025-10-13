@@ -3,8 +3,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
-Version:	20250130
-Release:	alt2
+Version:	20251012
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -158,6 +158,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Sun Oct 12 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
+- Update to new version
+
 * Thu Mar 13 2025 Ilya Sorochan <k0tran@altlinux.org> 20250130-alt2
 - riscv64-only fixes:
   + turned off sse for kronos, yabause, yabasanshiro

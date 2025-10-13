@@ -3,8 +3,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-engines
-Version:	20240628
-Release:	alt2
+Version:	20251012
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -44,7 +44,7 @@ RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
 
-%define engines boom3 cannonball dinothawr ecwolf jumpnbump lutro mrboom numero nxengine prboom reminiscence superbroswar tyrquake vitaquake2 xrick
+%define engines boom3 cannonball dinothawr jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 xrick
 %{expand:%(\
     for engine in %{engines}; do \
         echo -e "%%package ${engine}\n";\
@@ -85,7 +85,7 @@ export CC=%__cc
 export CXX=%__cxx
 %build
 
-for core in boom3 cannonball chailove dinothawr ecwolf jumpnbump lutro mrboom numero nxengine prboom reminiscence superbroswar tyrquake vitaquake2 xrick; do
+for core in boom3 cannonball chailove dinothawr jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 xrick; do
 ./libretro-build.sh $core
 done
 
@@ -106,6 +106,13 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
+- Update to new versions
+
+* Mon Feb  3 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
+- Update to new versions
+- remove ecwolf and superbroswars (too mush bundled deps)
+
 * Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2
 - Stay on GCC13
 

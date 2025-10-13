@@ -3,7 +3,7 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-arcades
-Version:	20250130
+Version:	20251012
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -54,7 +54,7 @@ libretro API and that's it - we take care of the rest.
 
 THs set contains cores for arcade machines emulation (except FBNeo - this is multi-system emulator)
 
-%define arcades daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo galaksija mame2000 mame2003 mame2003_midway mame2003_plus
+%define arcades daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_midway mame2003_plus
 %{expand:%(\
     for arcade in %{arcades}; do \
         echo -e "%%package $arcade\n";\
@@ -105,7 +105,7 @@ export CC=%__cc
 export CXX=%__cxx
 %build
 
-for core in daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo galaxy mame2000 mame2003 mame2003_midway mame2003_plus; do
+for core in daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo mame2000 mame2003 mame2003_midway mame2003_plus; do
 ./libretro-build.sh $core
 done
 
@@ -126,6 +126,12 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
+- Update to new versions
+
+* Tue Jul 15 2025 Artyom Bystrov <arbars@altlinux.org> 20250715-alt1
+- Update to new versions
+
 * Fri Jan 31 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
 - Update to new versions
 

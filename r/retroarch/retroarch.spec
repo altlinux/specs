@@ -1,5 +1,5 @@
 Name:           retroarch
-Version:        1.20.0
+Version:        1.21.0
 Release:        alt1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
@@ -10,7 +10,7 @@ Source1:        retroarch-mobile.cfg
 Source2:        retroarch-mobile.desktop
 Source3:        retroarch-mobile.sh
 
-Patch0:         retroarch-1.18.0-config.patch
+Patch0:         0002-Update-config.patch
 
 Patch2000: 0001-Fix-E2K-build.patch
 Patch2001: 0002-Add-E2K-init.patch
@@ -170,6 +170,9 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Sat Oct 11 2025 Artyom Bystrov <arbars@altlinux.org> 1.21.0-alt1
+- Update to new version
+
 * Fri Jan 24 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
 - Update to new version
 
