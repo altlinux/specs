@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define soversion 11
+%define soversion 15
 %set_verify_elf_method strict
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -8,7 +8,7 @@
 %def_enable static
 
 Name: libconfig
-Version: 1.7.3
+Version: 1.8.1
 Release: alt1
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -124,7 +124,8 @@ sed -i '/examples.*Makefile/d' configure.ac
 %_libdir/cmake/libconfig/libconfigConfig.cmake
 
 %files -n libconfig-c++%soversion
-%_libdir/libconfig++.so.*
+%_libdir/libconfig++.so.%soversion
+%_libdir/libconfig++.so.%soversion.*
 
 %files -n libconfig-c++-devel
 %_libdir/libconfig++.so
@@ -140,6 +141,12 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Mon Oct 13 2025 Andrey Kovalev <ded@altlinux.org> 1.8.1-alt1
+- Updated to upstream version 1.8.1.
+
+* Tue May 06 2025 Andrey Kovalev <ded@altlinux.org> 1.8-alt1
+- Updated to upstream version 1.8.
+
 * Thu Sep 05 2024 Andrey Kovalev <ded@altlinux.org> 1.7.3-alt1
 - Updated to upstream version 1.7.3.
 - Built according to shared libs policy.
