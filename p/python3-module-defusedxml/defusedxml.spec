@@ -1,13 +1,14 @@
 Name: python3-module-defusedxml
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: XML bomb protection for Python stdlib modules
 License: Python-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/defusedxml/
 
-Source0: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
 BuildArch: noarch
 BuildRequires: rpm-build-python3 python3-module-setuptools
@@ -17,6 +18,7 @@ defusedxml -- defusing XML bombs and other exploits.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -32,6 +34,10 @@ defusedxml -- defusing XML bombs and other exploits.
 %python3_sitelibdir/defusedxml-%version-*-info
 
 %changelog
+* Mon Oct 13 2025 Ivan A. Melnikov <iv@altlinux.org> 0.7.1-alt2
+- NMU: backport upstream changes for modern unittest module
+  support (fixes FTBFS)
+
 * Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.1-alt1
 - 0.7.1 released
 
