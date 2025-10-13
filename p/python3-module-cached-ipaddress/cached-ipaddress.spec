@@ -1,28 +1,28 @@
 Name: python3-module-cached-ipaddress
-Version: 0.8.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: Cache construction of ipaddress objects
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/cached-ipaddress/
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-Requires: python3(propcache)
-
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(cython)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(propcache)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -31,13 +31,19 @@ BuildRequires: python3(propcache)
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o=addopts= tests
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
 %python3_sitelibdir/cached_ipaddress
 %python3_sitelibdir/cached_ipaddress-%version.dist-info
 
 %changelog
+* Thu Oct 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.1-alt1
+- 1.0.1 released
+
 * Mon Nov 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8.0-alt2
 - added propcache as runtime dep
 
