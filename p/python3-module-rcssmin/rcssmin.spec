@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: CSS Minifier
@@ -48,6 +48,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/_%oname.*.so
 
 %changelog
+* Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Automatically updated to 1.2.2.
+
 * Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
 - Automatically updated to 1.2.1.
 
