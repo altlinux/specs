@@ -1,8 +1,8 @@
-%define sover 17
+%define sover 18
 
 Name: libgloox
-Version: 1.0.23
-Release: alt2
+Version: 1.0.28
+Release: alt1
 
 Summary: A full-featured Jabber/XMPP client library
 License: GPLv3
@@ -65,6 +65,9 @@ export PTHREAD_LIBS="-lpthread"
 %_libdir/libgloox.so
 
 %changelog
+* Thu Feb 13 2025 Constantin Sunzow <protvin@altlinux.org> 1.0.28-alt1
+- New version.
+
 * Fri Jul 14 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.23-alt2
 - Add #import <ctime> for fix build proccess
 

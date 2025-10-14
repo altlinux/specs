@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
-Version: 0.27.0
-Release: alt2
+Version: 0.27.1
+Release: alt1
 
 Summary: Libre realtime strategy game of ancient warfare
 License: GPL-2.0-or-later and MIT
@@ -19,7 +19,7 @@ Source1: cxxtest.tar
 Source2: fcollada.tar
 
 Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
-Patch2: 0ad-0.27-alt-mozjs128.patch
+Patch2: 0ad-0.27.1-upstream-mozjs128.patch
 Patch3: 0ad-0.27-alt-mozjs128-strict-mode.patch
 
 BuildRequires: boost-filesystem-devel
@@ -60,7 +60,7 @@ BuildRequires: libdispatch-devel
 BuildRequires: /proc
 
 %description
-0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
+0 A.D. (pronounced "zero ey-dee") is a free software, cross-platform
 real-time strategy (RTS) game of ancient warfare. In short, it is a
 historically-based war/economy game that allows players to relive or
 rewrite the history of Western civilizations, focusing on the years
@@ -141,6 +141,9 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Tue Oct 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.1-alt1
+- New version.
+
 * Tue May 06 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.0-alt2
 - Rebuild against libmozjs128 (ALT 54116).
 

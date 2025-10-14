@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 0ad-data
-Version: 0.27.0
-Release: alt1.1
+Version: 0.27.1
+Release: alt1
 Epoch: 1
 
 Summary: Data for 0ad: libre realtime strategy game of ancient warfare
@@ -15,7 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 %description
-0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
+0 A.D. (pronounced "zero ey-dee") is a free software, cross-platform
 real-time strategy (RTS) game of ancient warfare. In short, it is a
 historically-based war/economy game that allows players to relive or
 rewrite the history of Western civilizations, focusing on the years
@@ -44,6 +44,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Tue Oct 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.1-alt1
+- New version.
+
 * Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.27.0-alt1.1
 - removed Requires: 0ad
   + avoids potential unmet dependencies
