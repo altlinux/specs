@@ -2,11 +2,13 @@
 %define pypi_name hypothesis
 %define module_name %pypi_name
 
-%def_without check
+%def_with check
+%def_without crosshair_check
+%def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.136.2
-Release: alt2
+Version: 6.140.3
+Release: alt1
 
 Summary: A library for property based testing
 License: MPL-2.0-no-copyleft-exception
@@ -25,6 +27,10 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%if_without crosshair_check
+%add_pyproject_deps_check_filter hypothesis-crosshair
+%add_pyproject_deps_check_filter crosshair-tool
+%endif
 %add_pyproject_deps_check_filter dpcontracts
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
@@ -70,7 +76,14 @@ cp %SOURCE1 ./
 # Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
 # flaw of python3-module-dateutil packaging and we don't create and package
 # dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
-%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests
+%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests \
+%if_without crosshair_check
+	--ignore="tests/crosshair" \
+%endif
+%if_with relaxed_check
+	||:
+%endif
+	%nil
 
 %files
 %doc README.md
@@ -85,6 +98,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Mon Oct 13 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.140.3-alt1
+- Updated to 6.140.3.
+
 * Wed Jul 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.136.2-alt2
 - Adapted Hypothesis for the Python 3.13 update.
 
