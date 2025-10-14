@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define abiversion 3.0
+%define abiversion 3.2
 %define socketxxsoname 1.2
 
 %define libgdcm_common libgdcmcommon%abiversion
@@ -19,11 +19,11 @@
 %define libgdcm_vtk libgdcmvtk%{vtk_version}_%vtk_soname
 
 Name: gdcm
-Version: 3.0.26
+Version: 3.2.2
 Release: alt1
 
 Summary: Cross-platform DICOM implementation
-License: BSD
+License: BSD-3-Clause
 Group: System/Libraries
 Url: https://sourceforge.net/projects/gdcm/
 VCS: https://git.code.sf.net/p/gdcm/gdcm.git
@@ -393,6 +393,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Mon Oct 13 2025 Constantin Sunzow <protvin@altlinux.org> 3.2.2-alt1
+- New version.
+
 * Mon Jul 21 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.26-alt1
 - New version.
 
