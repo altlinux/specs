@@ -2,7 +2,7 @@
 %define mod_name precis_i18n
 
 Name:    python3-module-%mod_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Python3 implementation of PRECIS framework (RFC 8264, RFC 8265, RFC 8266)
@@ -58,6 +58,9 @@ Representing Nicknames (RFC 8266)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Automatically updated to 1.1.2.
+
 * Wed Nov 13 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
 - Automatically updated to 1.1.1.
 
