@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name turnon
-%define ver_major 2.8
+%define ver_major 2.9
 %define rdn_name de.swsnr.%_name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define rust_ver 1.89
-%define adw_ver 1.6
+%define adw_ver 1.8
 
 Requires: dconf
 
@@ -70,6 +70,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
+- 2.9.3
+
 * Tue Sep 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
 - 2.8.1
 

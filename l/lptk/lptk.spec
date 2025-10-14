@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name lptk
-%define ver_major 0.7
+%define ver_major 0.8
 %define rdn_name me.ogarcia.%_name
 %def_enable check
 
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define adw_ver 1.7
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-rust
 BuildRequires: meson rust-cargo
@@ -74,6 +74,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - updated to 0.7.0-2-g1c5f677
 
