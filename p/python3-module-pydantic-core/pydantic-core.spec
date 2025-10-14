@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.33.2
-Release: alt2
+Version: 2.41.3
+Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
 License: MIT
@@ -97,6 +97,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Oct 14 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.41.3-alt1
+- Updated to 2.41.3.
+
 * Thu Sep 25 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.33.2-alt2
 - Fixed FTBFS by correcting some tests to pass with pytest >=8.4.
 
