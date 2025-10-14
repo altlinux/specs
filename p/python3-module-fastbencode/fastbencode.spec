@@ -1,5 +1,5 @@
 Name: python3-module-fastbencode
-Version: 0.3.2
+Version: 0.3.6
 Release: alt1
 
 Summary: An implementation of the bencode serialization format originally used by BitTorrent
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: python3-module-setuptools-rust
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-wheel
 
@@ -41,6 +42,9 @@ python3 -m unittest
 %python3_sitelibdir/fastbencode-%version.dist-info
 
 %changelog
+* Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 0.3.6-alt1
+- Automatically updated to 0.3.6.
+
 * Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.3.2-alt1
 - Automatically updated to 0.3.2.
 
