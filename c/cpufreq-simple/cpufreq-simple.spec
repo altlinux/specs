@@ -1,5 +1,5 @@
 Name: cpufreq-simple
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Simple scripts for managing CPUfreq settings
@@ -47,6 +47,11 @@ install -pDm644 %name-wake.service %buildroot%_unitdir/%name-wake.service
 %_libexecdir/pm-utils/sleep.d/*
 
 %changelog
+* Tue Oct 14 2025 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
+- udev-rules: Check that service is enabled.
+- cpufreq-simple: Add --check-service option.
+- cpufreq-simple: Don't allow to change default values in the config.
+
 * Thu Sep 18 2025 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - cpufreq-simple: Show available and current EPP.
 - cpufreq-simple: Show available governors.
