@@ -5,11 +5,11 @@
 
 %global _unpackaged_files_terminate_build 1
 
-%define git_commit   f20bbad
+%define git_commit 1cf4bc4
 
 Name:    etcd
-Version: 3.5.16
-Release: alt4
+Version: 3.5.23
+Release: alt1
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group:   System/Servers
@@ -25,7 +25,7 @@ Obsoletes: etcd3.5.16 < 3.5.16-alt3
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.24
 
 %description
 Etcd is a distributed key value store that provides a reliable way to store data
@@ -112,6 +112,17 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Tue Oct 14 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.23-alt1
+- 3.5.16 -> 3.5.23
+- Fixes:
+  + CVE-2024-45337: Misuse of connection.serverAuthenticate may cause authorization bypass in golang.org/x/crypto
+  + CVE-2024-45338: Non-linear parsing of case-insensitive content in golang.org/x/net/html
+  + CVE-2024-51744: Bad documentation of error handling in ParseWithClaims can lead to potentially dangerous situations in golang-jwt
+  + CVE-2025-22869: Potential denial of service in golang.org/x/crypto
+  + CVE-2025-22870: HTTP Proxy bypass using IPv6 Zone IDs in golang.org/x/net
+  + CVE-2025-22872: Incorrect Neutralization of Input During Web Page Generation in x/net in golang.org/x/net
+  + CVE-2025-30204: jwt-go allows excessive memory allocation during header parsing
+
 * Thu May 08 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt4
 - Fix systemd service disabling before package deletion (Closes: #49768)
 
