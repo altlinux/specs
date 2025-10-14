@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.19
+Version: 1.4.0
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,25 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Oct 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4.0-alt1
+- Prepare licenses for new product releases.
+- Fix typos in licenses (thx Alexey Ossotoff):
+  + ALT_Domain_License
+  + ALT_Product_License
+  + ALT_Regular_License
+  + ALT_Container_OS_License
+  + ALT_Orchestra_License english
+  + ALT_SP_License
+  + ALT_Server_License
+  + ALT_Product_License english
+  + ALT_SP_Container_License
+  + ALT_Container_License
+- Add open license (thx Alexey Ossotoff):
+  + ALT_Community_License
+  + ALT_Orchestra_License
+  + ALT_Simply_License
+  + ALT_Product_License
+
 * Mon Sep 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.19-alt1
 - Add common and static licenses for ALT Education 11.0 and 11.1.
 
