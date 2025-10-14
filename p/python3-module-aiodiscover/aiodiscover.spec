@@ -1,5 +1,5 @@
 Name: python3-module-aiodiscover
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: Async Host discovery
@@ -10,8 +10,10 @@ Url: https://github.com/bdraco/aiodiscover
 Source0: %name-%version-%release.tar
 Source1: pyproject_deps.json
 
-BuildArch: noarch
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
+BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
@@ -40,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/aiodiscover-%version.dist-info
 
 %changelog
+* Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7.1-alt1
+- 2.7.1 released
+
 * Wed Jul 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7.0-alt1
 - 2.7.0 released
 
