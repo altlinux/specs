@@ -2,8 +2,8 @@
 
 Name:           NovaTheSquirrel
 Version:        1405
-Release:        alt1
-Summary:        Minimalistic platformer for Sega Megadrive/Genesis
+Release:        alt2
+Summary:        Minimalistic platformer for NES/Famicom
 Group: Games/Other
 
 License:        GPLv3 and CC BY-NC-SA 4.0
@@ -37,5 +37,8 @@ install -p -m 0644 nova.nes %buildroot%_romsdir/nes/%name.nes
 %_romsdir/nes/%name.nes
 
 %changelog
+* Tue Oct 14 2025 Artyom Bystrov <arbars@altlinux.org> 1405-alt2
+- Fix summary
+
 * Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 1405-alt1
 - Initial build for Sisyphus
