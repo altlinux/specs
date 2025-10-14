@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.13.1
+Version: 2.14.1
 Release: alt1
 Epoch: 1
 
@@ -80,6 +80,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 1:2.14.1-alt1
+- Automatically updated to 2.14.1.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1:2.13.1-alt1
 - Automatically updated to 2.13.1.
 
