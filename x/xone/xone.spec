@@ -1,7 +1,7 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: xone
-Version: 0.4.5
+Version: 0.4.8
 Release: alt1
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
@@ -72,6 +72,9 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Tue Oct 14 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.8-alt1
+- 0.4.8
+
 * Mon Sep 22 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
