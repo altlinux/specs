@@ -23,8 +23,8 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.5
-Release: alt3
+Version: 0.4.6
+Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
@@ -90,6 +90,10 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Tue Oct 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.6-alt1
+- Fix crash after launch and after date of last update checking in some
+  cases.
+
 * Fri Jul 11 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.5-alt3
 - Rename package to alt-systeminfo with providing.
 
