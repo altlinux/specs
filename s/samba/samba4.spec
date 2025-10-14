@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.8
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,9 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Mon Oct 06 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt4
+- smbclient, dns: fix new options default values.
+
 * Thu Sep 11 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt3
 - Added new features:
   + smbclient: support domain-based dfs (thx Petr Usoltsev)
