@@ -1,8 +1,8 @@
 Name: altemu-overlayfs
-Version: 0.1
-Release: alt9
+Version: 0.2
+Release: alt1
 
-Summary: Merging several dirs with ROM files into one dir
+Summary: Merging several dirs with ROMS files into one dir
 
 License: GPLv2
 Group: System/Configuration/Boot and Init
@@ -43,6 +43,12 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/95-%name.preset
 
 %changelog
+* Tue Oct 14 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Change order of activating service
+
+* Fri Oct 10 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt10
+- Able to use NTFS-formatted memory cards
+
 * Mon Oct 6 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt9
 - Change method of check external storage
 
