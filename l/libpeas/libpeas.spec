@@ -1,6 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 1.36
+%define ver_major 1.38
+%define beta .alpha
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -18,7 +19,7 @@
 
 Name: libpeas
 Version: %ver_major.0
-Release: alt1.1
+Release: alt0.5%beta
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -28,12 +29,14 @@ Url: https://wiki.gnome.org/Projects/Libpeas
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
+%define glib_ver 2.85.0
+
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson gnome-common
-BuildRequires: libgio-devel >= 2.44.0 libgtk+3-devel >= 3.0.0
+BuildRequires: meson
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= 3.0.0
 # for python3 support
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.1.1
@@ -144,15 +147,15 @@ to GTK+ and glib-based applications.
 This package contains %name demonstration programs
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_enable_python2:-Dpython2=true} \
-	%{?_enable_vala:-Dvapi=true} \
-	%{?_disable_introspection:-Dintrospection=false} \
-	%{?_disable_glade_catalog:-Dglade_catalog=false}
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_python2:-Dpython2=true} \
+    %{?_enable_vala:-Dvapi=true} \
+    %{?_disable_introspection:-Dintrospection=false} \
+    %{?_disable_glade_catalog:-Dglade_catalog=false}
 %nil
 %meson_build
 
@@ -221,6 +224,10 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt0.5.alpha
+- libpeas-1.36.0-7-g53657c0 from 1.38 branch 
+  (see https://gitlab.gnome.org/GNOME/libpeas/-/issues/58)
+
 * Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.36.0-alt1.1
 - disabled glade support
 

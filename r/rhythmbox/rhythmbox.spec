@@ -23,7 +23,7 @@
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -58,6 +58,7 @@ Source: %name-%version.tar
 
 Requires: lib%name = %EVR
 
+Requires: python3-module-pygobject3
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: libgst-plugins%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -482,6 +483,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %endif
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.9-alt1
+- 3.4.9
+
 * Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.8-alt1
 - 3.4.8
 
