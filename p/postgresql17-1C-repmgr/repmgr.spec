@@ -1,4 +1,4 @@
-%define pg_ver 16
+%define pg_ver 17-1C
 %define prog_name repmgr
 %def_with jit
 

@@ -1,14 +1,10 @@
 %define pg_ver 14
 %define prog_name repmgr
-%ifarch loongarch64
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.5.0
-Release: alt1
+Release: alt3
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -75,12 +71,12 @@ install -p -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%prog_name
 install -p -m644 repmgr.conf.sample %buildroot%_sysconfdir/%prog_name/%prog_name.conf
 
 %post
-%post_service %name
+%post_service %prog_name
 echo "Execute the following psql command inside any database that you want to update:"
 echo "ALTER EXTENSION repmgr UPDATE;                                                 "
 
 %preun
-%preun_service %name
+%preun_service %prog_name
 
 %files
 %doc README.md LICENSE
@@ -95,10 +91,8 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %_tmpfilesdir/%prog_name.conf
 %attr(1775,root,postgres) %dir %_logdir/%prog_name
 %_libdir/pgsql/*.so
-%if %pg_ver >= 11
 %if_with jit
 %_libdir/pgsql/bitcode/*
-%endif
 %endif
 %_datadir/pgsql/extension/*
 
@@ -106,6 +100,13 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Tue Oct 14 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt3
+- Enable JIT on LoongArch
+- Remove PostgreSQL 11 and older support
+
+* Tue Mar 18 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt2
+- Fix service name (ALT #53502)
+
 * Tue Feb 11 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt1
 - 5.5.0
 - Support for PostgreSQL 17 added
