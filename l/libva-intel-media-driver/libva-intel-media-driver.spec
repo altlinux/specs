@@ -1,6 +1,6 @@
 %define soname 7
 Name: libva-intel-media-driver
-Version: 25.3.3
+Version: 25.3.4
 Release: alt1
 
 Summary: Intel(R) Media Driver for VAAPI
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 BuildRequires: libdrm-devel libX11-devel libGL-devel libEGL-devel gcc-c++ libpciaccess-devel
 BuildRequires: libva-devel >= 2.20.0
 BuildRequires: cmake rpm-macros-cmake
-BuildRequires: intel-gmmlib-devel >= 22.6.0
+BuildRequires: intel-gmmlib-devel >= 22.8.2
 ExclusiveArch: x86_64
 
 %description
@@ -66,6 +66,9 @@ This package provides the development environment for libigfxcmrt
 %_pkgconfigdir/igfxcmrt.pc
 
 %changelog
+* Tue Oct 14 2025 Anton Farygin <rider@altlinux.com> 25.3.4-alt1
+- 25.3.3 -> 25.3.4
+
 * Fri Aug 29 2025 Anton Farygin <rider@altlinux.com> 25.3.3-alt1
 - 25.2.5 -> 25.3.3
 
