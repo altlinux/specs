@@ -12,7 +12,7 @@
 
 
 Name: gnome-firmware
-Version: 47.0
+Version: 49.0
 Release: alt1
 Summary: Install firmware on devices
 Group: System/Configuration/Hardware
@@ -59,12 +59,16 @@ export LIB=%_lib
 %_bindir/*
 %_datadir/metainfo/%org.metainfo.xml
 %_datadir/glib-2.0/schemas/%org.gschema.xml
+%_datadir/dbus-1/services/%org.service
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/symbolic/apps/*.svg
 %_man1dir/*
 
 %changelog
+* Sun Oct 12 2025 L.A. Kostis <lakostis@altlinux.ru> 49.0-alt1
+- 49.0.
+
 * Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 47.0-alt1
 - 47.0.
 
