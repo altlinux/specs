@@ -1,8 +1,9 @@
+# no git-version-gen in tarball
 %def_enable snapshot
 
 Name: ifuse
-Version: 1.1.4
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
@@ -12,14 +13,15 @@ Url: http://www.libimobiledevice.org/
 Vcs: https://github.com/libimobiledevice/ifuse
 
 %if_disabled snapshot
-Source: %url/downloads/%name-%version.tar.bz2
+#Source: %url/downloads/%name-%version.tar.bz2
+Source: https://github.com/libimobiledevice/ifuse/releases/download/%version/%name-%version.tar.bz2
 %else
 Source: %name-%version.tar
 %endif
 
 %define fuse_ver 3.0
 %define plist_ver 2.2.0
-%define imobiledevice_ver 1.3.0
+%define imobiledevice_ver 1.4.0
 
 Requires: fuse3 >= %fuse_ver
 
@@ -52,6 +54,9 @@ echo %version > .tarball-version
 %doc AUTHORS README*
 
 %changelog
+* Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt2
 - updated to 1.1.4-9-gbbf2838
 
