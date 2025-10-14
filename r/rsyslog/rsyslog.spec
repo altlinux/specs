@@ -29,7 +29,7 @@
 
 Name: rsyslog
 Version: 8.2502.0
-Release: alt4
+Release: alt4.1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -689,6 +689,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Oct 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.2502.0-alt4.1
+- Added read permission for adm group to whole directory /var/log/syslog.
+- Added umask for service process instead of default 0066 (ALT #55643).
+- Additional fix mongo config to run rsyslog correctly added (ALT #54959).
+
 * Thu Oct 09 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.2502.0-alt4
 - Logfile ownership corrected in rsyslog.d/00_common.conf (Closes: #55643).
 - Removed systemd Requires=syslog.socket (Closes: #44911), thx Rocky.
