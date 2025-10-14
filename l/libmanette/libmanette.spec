@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: A simple GObject game controller library
@@ -116,6 +116,9 @@ This package contains commandline tools from %name package.
 %_bindir/%_name-test
 
 %changelog
+* Sun Oct 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
+- 0.2.13
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt1
 - 0.2.12
 

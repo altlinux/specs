@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name decoder
-%define ver_major 0.7
+%define ver_major 0.8
 %define xdg_name com.belmoussaoui.Decoder
 
 %define optflags_lto %nil
@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: gnome-qr-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Scan and Generate QR Codes
@@ -24,12 +24,13 @@ Source1: %_name-%version-cargo.tar
 
 %define glib_ver 2.80
 %define gtk_ver 4.16.0
-%define adwaita_ver 1.7
+%define adwaita_ver 1.8
 %define gst_api_ver 1.0
 %define gst_ver 1.20
 %define pipewire_ver 0.3
 
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
+Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -68,6 +69,7 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -75,6 +77,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 

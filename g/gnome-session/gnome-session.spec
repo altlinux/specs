@@ -9,7 +9,7 @@
 %def_enable x11
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -160,6 +160,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

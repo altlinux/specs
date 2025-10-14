@@ -5,12 +5,12 @@
 %define ver_major 49
 %define beta %nil
 %def_enable systemd
-%def_disable check
+%def_enable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Simple process monitor
@@ -78,7 +78,6 @@ Gnome-system-monitor is a simple process and system monitor.
 %_libexecdir/%name/gsm-renice
 %_libexecdir/%name/gsm-taskset
 %_desktopdir/*
-%_datadir/%name/
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
@@ -87,6 +86,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

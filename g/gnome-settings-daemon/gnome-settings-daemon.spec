@@ -16,7 +16,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -79,7 +79,7 @@ BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsv
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: libgweather4.0-devel >= %gweather_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
 BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(gcr-4)
-%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xext) pkgconfig(xfixes)}
+%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xfixes)}
 %{?_enable_check:BuildRequires: /proc dbus gnome-color-manager}
 
 %description
@@ -182,6 +182,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

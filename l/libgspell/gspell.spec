@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gspell
 %define namespace Gspell
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spell-checking library for GTK+3 applications
@@ -137,6 +137,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Oct 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0 (ported to Meson build system, soname bumped)
 

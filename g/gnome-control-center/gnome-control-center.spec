@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -36,13 +36,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %endif
 Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %{?_enable_snapshot:Source10: libgxdp-%gxdp_ver.tar}
+# merged for gnome-50 (f32559f)
+#Patch10: 
 
 %define glib_ver 2.76.6
 %define gtk4_ver 4.17.5
 %define adwaita_ver 1.8
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
-%define gsds_ver 48
+%define gsds_ver %ver_major
 # nm_client_get_permissions_state()
 %define nm_ver 1.52
 %define goa_ver 3.51.0
@@ -93,6 +95,8 @@ Requires: rygel
 Requires: gnome-remote-desktop
 # for power management
 Requires: power-profiles-daemon
+# GPU detection
+Requires: switcheroo-control
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson blueprint-compiler
@@ -226,6 +230,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

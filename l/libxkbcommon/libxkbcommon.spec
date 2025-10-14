@@ -11,7 +11,7 @@
 %def_disable python_tests
 
 Name: lib%_name
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -39,6 +39,7 @@ BuildRequires: bash-completion
 %{?_enable_xkbregistry:BuildRequires: libxml2-devel}
 %{?_enable_docs:BuildRequires: doxygen graphviz}
 %{?_enable_check:BuildRequires: python3(pytest) python3(jinja2) %{?_enable_x11:xvfb-run}
+BuildRequires: setxkbmap
 %ifarch %valgrind_arches
 BuildRequires: valgrind
 %endif}
@@ -153,6 +154,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Sun Oct 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Sat Aug 09 2025 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

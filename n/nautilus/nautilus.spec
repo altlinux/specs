@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -139,6 +139,13 @@ GObject introspection devel data for the nautilus-extension library
 %prep
 %setup -n %name-%version%beta
 
+%ifarch %e2k
+# xdp-gnome/externalwindow-wayland.c ftbfs as of lcc 1.29.06:
+#  74 static struct mutter_x11_interop *x11_interop = NULL;
+# 222   struct mutter_x11_interop **x11_interop = user_data;
+sed -i '/-Werror=shadow/d' meson.build
+%endif
+
 %build
 %meson \
     %{subst_enable_meson_bool docs docs} \
@@ -204,6 +211,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

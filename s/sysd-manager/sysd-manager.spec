@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.32
+%define ver_major 2.0
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define adw_ver 1.6
+%define adw_ver 1.8
 %define rust_ver 1.89
 
 Requires: dconf polkit
@@ -76,6 +76,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc CHANGELOG*  README*
 
 %changelog
+* Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Fri Sep 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.32.4-alt1
 - 1.32.4
 

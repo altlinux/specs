@@ -8,7 +8,7 @@
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1
 
 Summary: Fit falling blocks together
@@ -27,8 +27,9 @@ Source: %_name-%version.tar
 Provides:  %_name = %EVR
 
 %define glib_ver 2.44
-%define gtk_ver 4.4
-%define adw_ver 1.1
+%define gtk_ver 4.20
+%define adw_ver 1.8
+%define manette_ver 0.2.10
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools blueprint-compiler
@@ -37,7 +38,7 @@ BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: librsvg-devel pkgconfig(gee-0.8)
-BuildRequires: libmanette-devel libgsound-devel
+BuildRequires: libmanette-devel >= %manette_ver libgsound-devel
 
 %description
 GNOME version of the popular russian game Tetris.
@@ -68,6 +69,9 @@ which will disappear.
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
 - 49.0.1
 
