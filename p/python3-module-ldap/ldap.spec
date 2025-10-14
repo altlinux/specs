@@ -1,19 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name python-ldap
-%define mname ldap
+%define mod_name ldap
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 3.4.4
+Name: python3-module-%mod_name
+Version: 3.4.5
 Release: alt1
 Summary: Python modules for implementing LDAP clients
 License: Python-style or MIT
 Group: Development/Python3
-Url: https://www.python-ldap.org
+Url: https://pypi.org/project/python-ldap/
 Vcs: https://github.com/python-ldap/python-ldap
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -40,12 +42,9 @@ stuff (e.g. processing LDIF, LDAPURLs, LDAPv3 sub-schema, etc.).
 
 %prep
 %setup
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
-# Fix python interpreter path in Demo directory
-grep -rl '^#!/usr/bin/env python' | \
-	xargs sed -i '1s|^#!/usr/bin/env python|#!/usr/bin/python3|'
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -59,16 +58,19 @@ export BIN="$PATH:%_sbindir"
 %pyproject_run_unittest discover -v -s Tests -p 't_*'
 
 %files
-%doc LICENCE CHANGES README TODO Demo
+%doc README
 %python3_sitelibdir/slapdtest/
 %python3_sitelibdir/_ldap.cpython-*.so
-%python3_sitelibdir/ldap
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/ldapurl.py*
 %python3_sitelibdir/ldif.py*
 %python3_sitelibdir/__pycache__/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 14 2025 Stanislav Levin <slev@altlinux.org> 3.4.5-alt1
+- 3.4.4 -> 3.4.5 (fixes: CVE-2025-61911, CVE-2025-61912).
+
 * Mon Nov 27 2023 Stanislav Levin <slev@altlinux.org> 3.4.4-alt1
 - 3.4.3 -> 3.4.4 (closes: #48579).
 
