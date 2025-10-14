@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,14 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Oct 13 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.9.2-alt1
+Fix edition_domain: add alterator-service-samba-ad component
+Fix components (thx Maria Alexeeva):
+  + new alterator-service-samba-ad component
+  + add the alt-services package to the alterator-explorer component
+  + update packages names in alterator-explorer component
+Fix docs: change .section to .edition (thx Maria Alexeeva)
+
 * Tue Sep 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.9.1-alt1
 - editions: update final-notes for edition_domain, edition_server,
   edition_education (thx Maria Fokanova)
