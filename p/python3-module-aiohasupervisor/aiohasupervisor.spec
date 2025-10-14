@@ -1,25 +1,34 @@
 Name: python3-module-aiohasupervisor
-Version: 0.2.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Client Library for Home Assistant Supervisor
 License: Apache-2.0
 Group: Development/Python
 Url: https://pypi.org/project/propcache/
+VCS: https://github.com/home-assistant-libs/python-supervisor-client
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter codespell
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+sed -ri '/^version\s+=/ s,"[^"]+","%version",' pyproject.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -27,11 +36,17 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -o=addopts= tests
+
 %files
 %python3_sitelibdir/aiohasupervisor
 %python3_sitelibdir/aiohasupervisor-%version.dist-info
 
 %changelog
+* Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.3-alt1
+- 0.3.3 released
+
 * Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.2-alt1
 - 0.2.2 released
 
