@@ -1,12 +1,13 @@
 Name: varmon
 Version: 1.2.1
-Release: alt2
+Release: alt2.1
 
 Summary: RAID management tool for Mylex DAC960/DAC1164 controllers
 License: GPL
 Group: Monitoring
 
 Url: http://varmon.sourceforge.net
+VCS: https://github.com/jd/varmon
 Source0: http://dl.sourceforge.net/varmon/%name-%version.tar.gz
 # Source0-md5:	fd251b64ad4976ef8573f0d2a20a02f9
 
@@ -43,6 +44,9 @@ install -D varmon %buildroot%_sbindir/varmon
 %_sbindir/varmon
 
 %changelog
+* Tue Oct 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt2.1
+- add VCS
+
 * Mon Oct 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt2
 - FTBFS: fix: error: invalid use of incomplete typedef 'WINDOW' {aka 'struct _win_st'}.
 

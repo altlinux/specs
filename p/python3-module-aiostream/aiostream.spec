@@ -1,7 +1,7 @@
 %define nameD aiostream
 
 Name: python3-module-aiostream
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Generator-based operators for asynchronous iteration
@@ -36,5 +36,8 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Tue Oct 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
+- 0.7.0 -> 0.7.1
+
 * Mon Sep 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
 - Initial build for ALT Linux.
