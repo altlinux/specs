@@ -10,7 +10,7 @@
 %def_disable checks
 
 Name: alglib
-Version: 4.05.0
+Version: 4.06.0
 Release: alt1
 
 Summary: A numerical analysis and data processing library
@@ -137,6 +137,9 @@ popd
 %doc manual.cpp.html
 
 %changelog
+* Tue Oct 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.06.0-alt1
+- 4.05.0 -> 4.06.0
+
 * Fri Jul 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.05.0-alt1
 - 4.01.0 -> 4.05.0
 
