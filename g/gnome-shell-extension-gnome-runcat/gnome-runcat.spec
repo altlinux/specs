@@ -1,21 +1,24 @@
 %define exID runcat@kolesnikov.se
 
 Name: gnome-shell-extension-gnome-runcat
-Version: 29
+Version: 30
 Release: alt1
 
 Summary: RunCat for GNOME Shell
 Summary(ru_RU.UTF-8): Бегущий кот для GNOME Shell 
 
-BuildArch: noarch
-
-License: GPL-3.0 license
+License: GPL-3.0-only
 Group:  Graphical desktop/GNOME
 Url: https://github.com/win0err/gnome-runcat
 VCS: https://github.com/win0err/gnome-runcat
 
-Source: %name-%version.tar
+ExcludeArch: i586
 
+Source: %name-%version.tar
+Source1: node_modules.tar
+Source2: arch64.tar
+
+BuildRequires(Pre): rpm-build-nodejs
 BuildRequires: unzip %_bindir/glib-compile-schemas %_bindir/gnome-extensions
 Requires: gnome-shell >= 47
 
@@ -25,8 +28,12 @@ Animation speed changes depending on CPU usage.
 
 %prep
 %setup
-
-# subst 's|"47"|"47", "48"|' src/metadata.json
+%ifarch x86_64
+	tar -xf %SOURCE1 -C ./
+%endif
+%ifarch aarch64
+	tar -xf %SOURCE2 -C ./
+%endif
 
 %build
 %make_build
@@ -41,6 +48,9 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas/
 %doc *.md LICENSE 
 
 %changelog
+* Thu Sep 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 30-alt1
+- 29 -> 30
+
 * Fri Mar 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 29-alt1
 - 28 -> 29
 
