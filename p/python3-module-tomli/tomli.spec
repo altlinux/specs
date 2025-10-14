@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tomli
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 Summary: A lil' TOML parser
 License: MIT
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -43,10 +46,13 @@ v1.0.0.
 
 %files
 %doc README.md
-%python3_sitelibdir/tomli/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 14 2025 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.1 -> 2.3.0.
+
 * Thu Nov 28 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - 2.1.0 -> 2.2.1.
 
