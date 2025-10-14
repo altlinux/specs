@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.4.1
+Version: 4.4.2
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -22,21 +22,21 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-mkdocs-material >= 9.6.20
 BuildRequires: python3-module-mkdocs-material-extensions
-BuildRequires: python3-module-mkdocstrings >= 0.30.0
+BuildRequires: python3-module-mkdocstrings >= 0.30.1
 BuildRequires: python3-module-mkdocstrings-python >= 1.18.2
 %endif
 Requires: python3-module-colorama >= 0.4.6
 Requires: python3-module-django >= 5.2.6
-Requires: python3-module-django-cors-headers >= 4.8.0
+Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 5.2.0
 Requires: python3-module-django-filter >= 25.1
-Requires: python3-module-django-htmx >= 1.24.1
+Requires: python3-module-django-htmx >= 1.26.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
 Requires: python3-module-django-mptt >= 0.17
 Requires: python3-module-django-pglocks >= 1.0.4
 Requires: python3-module-django-prometheus >= 2.4.1
 Requires: python3-module-django-redis >= 6.0.0
-Requires: python3-module-django-rich >= 2.1.0
+Requires: python3-module-django-rich >= 2.2.0
 Requires: python3-module-django-rq >= 3.1
 Requires: python3-module-django-storages >= 1.14.6
 Requires: python3-module-django-taggit >= 6.1.0
@@ -53,7 +53,7 @@ Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.0
 Requires: python3-module-Pillow >= 11.3.0
 Requires: python3-module-psycopg >= 3.2.10
-Requires: python3-module-pyaml >= 6.0.2
+Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-requests >= 2.32.5
 Requires: python3-module-rq >= 2.6.0
 Requires: python3-module-social-app-django >= 5.5.1
@@ -208,8 +208,11 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Oct 01 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.2-alt1
+- New 4.4.2 version.
+
 * Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.1-alt1
-- New 4.4.0 version.
+- New 4.4.1 version.
 - README has fixed (ALT #55895).
 
 * Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.0-alt1

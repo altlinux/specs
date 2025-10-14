@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 6.0.2
-Release: alt1.1
+Version: 6.0.3
+Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT
@@ -60,6 +60,9 @@ support, and relatively sensible error messages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 13 2025 Alexander Burmatov <thatman@altlinux.org> 6.0.3-alt1
+- 6.0.3 released
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

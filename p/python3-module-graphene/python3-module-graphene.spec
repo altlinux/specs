@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.3.0
+Version: 3.4.3
 Release: alt1
 
 Summary: GraphQL framework for Python
@@ -17,14 +17,14 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-graphql-core
-BuildRequires: python3-module-aniso8601
 BuildRequires: python3-module-graphql-relay
-BuildRequires: python3-module-pytz
 BuildRequires: python3-module-pytest-snapshot
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytest-benchmark
 BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-typing_extensions
 %endif
 
 BuildArch: noarch
@@ -57,8 +57,11 @@ rm -fr %python3_sitelibdir_noarch/%pypi_name/validation/tests
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-3.3.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 13 2025 Alexander Burmatov <thatman@altlinux.org> 3.4.3-alt1
+- New 3.4.3 version.
+
 * Thu Oct 05 2023 Alexander Burmatov <thatman@altlinux.org> 3.3.0-alt1
 - Initial build for Sisyphus.
