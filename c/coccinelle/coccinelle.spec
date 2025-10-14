@@ -7,12 +7,13 @@
 
 Name:		coccinelle
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary:	Semantic patching for Linux (spatch)
 Group:		Development/C
 License:	GPL-2.0-only
-Url:		http://coccinelle.lip6.fr/
-Vcs:		https://github.com/coccinelle/coccinelle.git
+Url:		https://coccinelle.gitlabpages.inria.fr/website/
+Vcs:		https://gitlab.inria.fr/coccinelle/coccinelle
+# Vcs mirror:	https://github.com/coccinelle/coccinelle
 Provides:	spatch
 Requires:	python3-dev
 
@@ -109,7 +110,7 @@ find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
 	--disable-opt \
 	%nil
 
-make VERBOSE=yes
+make VERBOSE=yes OCAMLCCFLAGS=-g
 
 %install
 %make DESTDIR=%buildroot install
@@ -172,6 +173,11 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Tue Oct 14 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt3
+- Apply pyml fix for Python 3.13 (_PyObject_NextNotImplemented.)
+- Fix debuginfo on aarch64.
+- Update Url and Vcs tags to new locations.
+
 * Mon Dec 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt2
 - Disable optimization on x86_64 (as it is already on other architectures).
 - spec: Disable parallel build as it causing failures.
