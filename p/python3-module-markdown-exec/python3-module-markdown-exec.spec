@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Utilities to execute code blocks in Markdown files
@@ -21,6 +21,8 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-markupsafe
 BuildRequires: python3-module-pymdown-extensions
+BuildRequires: python3-module-griffe
+BuildRequires: python3-module-mkdocstrings
 %endif
 
 BuildArch: noarch
@@ -59,6 +61,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 14 2025 Alexander Burmatov <thatman@altlinux.org> 1.11.0-alt1
+- New 1.11.0 version.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.8.0-alt1
 - New 1.8.0 version.
 
