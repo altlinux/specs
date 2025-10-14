@@ -1,13 +1,13 @@
 Name:    pkgcmp
-Version: 0.2.1
-Release: alt1.1
+Version: 0.2.1.0.1.6352
+Release: alt1
 
 Summary: A utility for comparing lists of RPM packages
 Summary(ru_RU.UTF-8): Утилита для сравнения списков RPM пакетов
 License: MIT
 Group:   Development/Tools
 URL:     https://gitlab.basealt.space/semenovai/pkgcmp
-Vcs:     https://gitlab.basealt.space/semenovai/pkgcmp.git
+Vcs:     https://gitlab.basealt.space/semenovai/pkgcmp
 
 Source0: %name-%version.tar
 
@@ -45,6 +45,11 @@ install -pm644 report_template.html %buildroot%_datadir/%name/
 %_datadir/%name/report_template.html
 
 %changelog
+* Tue Oct 14 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.1.0.1.6352-alt1
+- New version 0.2.1-1-g6352f5eb.
+- Upstream:
+  + update repo.csv.
+
 * Mon Mar 31 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.1-alt1.1
 - Fixed url tag.
 - Added vcs tag.
