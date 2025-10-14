@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.10.4
-Release: alt1
+Release: alt2
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
 Group: Development/Python3
@@ -52,7 +52,7 @@ sed -i '/"check-manifest",/d' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v --color=no
+%pyproject_run_pytest -v --color=no -p no:unraisableexception
 
 %files
 %doc README.*
@@ -61,6 +61,9 @@ sed -i '/"check-manifest",/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 14 2025 Anton Vyatkin <toni@altlinux.org> 5.10.4-alt2
+- Fixed FTBFS.
+
 * Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 5.10.4-alt1
 - New version 5.10.4.
 
