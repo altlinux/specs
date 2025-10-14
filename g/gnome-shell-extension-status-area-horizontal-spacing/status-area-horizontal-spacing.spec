@@ -3,7 +3,7 @@
 %define nameS org.gnome.shell.extensions.status-area-horizontal-spacing
 
 Name: gnome-shell-extension-status-area-horizontal-spacing
-Version: 2.9.1
+Version: 2.9.3
 Release: alt1
 
 Summary: Reduces the horizontal spacing between icons/indicators in the status area
@@ -40,6 +40,9 @@ cp -a *.js *.json %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Sun Oct 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.9.3-alt1
+- 2.9.1 -> 2.9.3
+
 * Mon Jun 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.9.1-alt1
 - Initial build for Sisyphus (git.4759e3b111).
 
