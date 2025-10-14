@@ -1,8 +1,8 @@
 %define rname kamoso
 
 Name:    %rname
-Version: 25.08.1
-Release: alt3
+Version: 25.08.2
+Release: alt1
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
@@ -18,7 +18,6 @@ Requires: kf6-kirigami
 # Download from http://download.kde.org/stable/release-service/$version/src/kamoso-$version.tar.xz
 Source0: %rname-%version.tar
 Source1: %rname.watch
-Patch1: 0b06ea289b4a7c9eb74df87979df4f91f3d707b6.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -56,7 +55,6 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
@@ -80,6 +78,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_K6notif/%rname.notifyrc
 
 %changelog
+* Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Thu Oct 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt3
 - fix folder dialog usage
 

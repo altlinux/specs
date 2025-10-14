@@ -1,7 +1,7 @@
 %define rname keysmith
 
 Name: %rname
-Version: 25.08.1
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -15,6 +15,7 @@ Obsoletes: kde5-keysmith < %EVR
 
 # org.kde.prison.scanner QML
 Requires: libkf6prisonscanner
+Requires: kf6-kirigami-addons
 
 Source: %rname-%version.tar
 
@@ -25,6 +26,8 @@ BuildRequires: libkf6prisonscanner
 BuildRequires: qt6-declarative-devel qt6-svg-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-qqc2-desktop-style-devel kf6-kcoreaddons-devel kf6-kconfig-devel
+#
+BuildRequires: kf6-kirigami-addons-devel
 
 %description
 Keysmith is an application to generate two-factor authentication (2FA)
@@ -51,6 +54,9 @@ tokens when logging in to your (online) accounts.
 
 
 %changelog
+* Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Tue Sep 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 

@@ -2,8 +2,8 @@
 %define nameL org.kde.isoimagewriter
 
 Name: isoimagewriter
-Version: 25.08.1
-Release: alt2
+Version: 25.08.2
+Release: alt1
 
 Group: Archiving/Cd burning
 Summary: Program to write hybrid ISO files onto USB disks
@@ -46,6 +46,9 @@ BuildRequires: kf6-solid-devel
 %_datadir/metainfo/%nameL.appdata.xml
 
 %changelog
+* Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt2
 - obsolete rosa-imagewriter
 
