@@ -1,0 +1,81 @@
+Name:    postgresql-1C-deploy-cert
+Version: 0.10
+Release: alt1
+
+Summary: deploy script for postgresql cert config
+License: MIT
+Group:   Other
+Url:     https://git.altlinux.org/gears/p/postgresql-1C-deploy-cert.git
+
+Source: %name-%version.tar
+
+BuildArch: noarch
+Requires: deploy
+Requires: integalert-postgresql
+%filter_from_requires /^\/etc\/sysconfig\/postgresql/d
+%filter_from_requires /^\/usr\/bin\/pg_checksums_ext/d
+
+%description
+A module for deploy ansible configuration maker for postgresql config
+
+%prep
+%setup
+
+%install
+mkdir -p %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 postgresql-1C-cert.yml %buildroot%_datadir/deploy/postgresql-1C-cert.yml
+install -Dm 0644 *.conf  %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 *.acl  %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 main.yml  %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 postgresql.pam  %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 postgresql.logrotate  %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0644 pw_blocker.sysconfig %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+install -Dm 0755 postgresql-check-db.cron %buildroot/%_datadir/deploy/postgresql-1C-cert/tasks
+
+%files
+%_datadir/deploy/postgresql-1C-cert.yml
+%_datadir/deploy/postgresql-1C-cert/tasks/*
+
+%changelog
+* Tue Oct 14 2025 Alexei Takaseev <taf@altlinux.org> 0.10-alt1
+- PostgreSQL 17 -> PostgreSQL 17-1C
+
+* Mon Mar 31 2025 Alexei Takaseev <taf@altlinux.org> 0.9-alt1
+- PostgreSQL 16 -> PostgreSQL 17
+
+* Tue Feb 04 2025 Alexei Takaseev <taf@altlinux.org> 0.8-alt9
+- Add cron.hourly script for check databases
+
+* Tue Oct 22 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt8
+- audit and other changes in conf
+
+* Thu Oct 17 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt7
+- fixed initial contents of config, added additional logging
+
+* Tue Oct 15 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt6
+- corrected pg_hba transport,
+redesigned config for blocking script
+
+* Wed Oct 02 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt5
+- added missing logrotate feature
+
+* Sun Sep 29 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt4
+- dependency to integalert-postgresql
+
+* Sun Sep 29 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt3
+- copy instead of file statement used
+
+* Sat Sep 28 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt2
+- create dir for triggers if not exists
+
+* Fri Sep 27 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt1
+- added subpackage with scripts
+
+* Wed Sep 25 2024 "Denis Medvedev" <nbr@altlinux.org> 0.7-alt1
+- fixes and minor config changes
+
+* Thu Jun 27 2024 "Denis Medvedev" <nbr@altlinux.org> 0.6-alt1
+- added packages for cluster and checksums
+
+* Mon Jun 03 2024 "Denis Medvedev" <nbr@altlinux.org> 0.5-alt1
+- Initial build for ALT
