@@ -2,7 +2,7 @@
 
 Name: letters
 Version: 0.1.1
-Release: alt3
+Release: alt4
 Summary: Modern word processor for the GNOME desktop.
 License: GPLv3+
 Group: Editors
@@ -21,6 +21,7 @@ BuildRequires: python3-module-pypandoc
 BuildRequires: python3-module-weasyprint
 
 Conflicts: footage
+Requires: python3-module-weasyprint
 
 %description
 %summary
@@ -59,6 +60,9 @@ sed -i 's/^Categories=.*/Categories=Utility;TextEditor;/' data/net.codelogistics
 %_datadir/metainfo/net.codelogistics.%name.metainfo.xml
 
 %changelog
+* Tue Oct 14 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.1-alt4
+- Add reqires for package (ALT #56374).
+
 * Fri Oct 10 2025 Pavel Shilov <zerospirit@altlinux.org> 0.1.1-alt3
 - Update Freedesktop Additional Categories.
 
