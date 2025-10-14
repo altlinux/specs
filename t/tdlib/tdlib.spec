@@ -14,8 +14,8 @@
 %endif
 
 Name: tdlib
-Version: 1.8.21
-Release: alt2
+Version: 1.8.52
+Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -133,6 +133,9 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Aug 26 2025 Artem Semenov <savoptik@altlinux.org> 1.8.52-alt1
+- Updated to 1.8.52
+
 * Thu Feb 8 2024 Artem Semenov <savoptik@altlinux.org> 1.8.21-alt2
 - Disabled provision of static targets to CMake;
 - Fix provide libs in devel package (closes: 48693).
