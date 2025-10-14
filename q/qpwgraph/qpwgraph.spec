@@ -2,7 +2,7 @@
 %global provider org.rncbc.qpwgraph
 
 Name: qpwgraph
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: PipeWire Graph Qt GUI Interface
@@ -56,6 +56,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%provider.met
 desktop-file-validate %buildroot%_desktopdir/*.desktop
 
 %changelog
+* Tue Oct 14 2025 Mikhail Tergoev <fidel@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Mon Aug 25 2025 Mikhail Tergoev <fidel@altlinux.org> 0.9.5-alt1
 - 0.9.5
 
