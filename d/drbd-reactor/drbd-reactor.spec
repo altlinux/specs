@@ -1,8 +1,8 @@
 %define _libexecdir /usr/libexec
 
 Name: drbd-reactor
-Version: 1.9.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 Summary: React to DRBD events via plugins.
 
 Group: System/Servers
@@ -88,6 +88,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Wed Oct 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.10.0-alt1
+- v1.10.0
+
 * Fri Sep 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.9.0-alt2
 - fix FTBFS (Closes: #55722)
 
