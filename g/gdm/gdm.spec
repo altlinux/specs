@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -52,7 +52,6 @@ Source: %name-%version%beta.tar
 %endif
 
 Source1: gdm_xdmcp-45.0.control
-Source3: default.pa-for-gdm
 
 # PAM config files
 Source10: gdm.pam
@@ -242,9 +241,6 @@ mkdir -p %buildroot{%gdm_confdir,%_datadir/%name}/env.d
 # control gdm/xdmcp
 install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp}
 
-# default.pa for gdm
-install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/default.pa
-
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
 
@@ -303,10 +299,6 @@ dbus-run-session %__meson_test
 %_datadir/%name/greeter-dconf-defaults
 %_datadir/gnome-session/sessions/gnome-login.session
 %_datadir/dconf/profile/%name
-%attr(1770, gdm, gdm) %dir %_localstatedir/lib/gdm
-%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config
-%attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.config/pulse
-%attr(0600, gdm, gdm) %_localstatedir/lib/gdm/.config/pulse/default.pa
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 
@@ -329,6 +321,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
 - 49.0.1
 
