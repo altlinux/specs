@@ -1,14 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Refine
 %define __name refine
-%define ver_major 0.5
+%define ver_major 0.6
 %define beta %nil
 %define rdn_name page.tesk.%_name
 %def_enable check
 
 Name: gnome-%__name
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
@@ -31,7 +31,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%__name
 
-%define adw_ver 1.7
+%define adw_ver 1.8
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 typelib(XdpGtk4) dconf
@@ -74,6 +74,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0-1-g3714ecf
+
 * Tue Jul 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.10-alt1
 - 0.5.10
 
