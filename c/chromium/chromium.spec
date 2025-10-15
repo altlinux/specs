@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        141.0.7390.76
+Version:        141.0.7390.107
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -652,6 +652,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Oct 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.107-alt1
+- New version (141.0.7390.107).
+- Fixes:
+  + CVE-2025-11756: Use after free in Safe Browsing
+
 * Fri Oct 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.76-alt1
 - New version (141.0.7390.76).
 - Disable LTO on aarch64.
