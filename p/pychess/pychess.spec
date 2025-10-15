@@ -1,9 +1,9 @@
 Name: pychess
-Version: 1.0.5
+Version: 1.1.0
 Release: alt1
 
-Summary: Chess game for GNOME
-License: GPLv2
+Summary: Free and feature-rich chess client
+License: GPLv3
 Group: Games/Boards
 Url: https://github.com/pychess/pychess/
 VCS: https://github.com/pychess/pychess.git
@@ -12,7 +12,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch0: pychess-alt-fix-sysprefix-processing-in-hasher.patch
-Patch1: pr2235.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: rpm-build-compat >= 1.2
@@ -25,16 +24,11 @@ BuildRequires: python3(gi)
 BuildRequires: python3(cairo)
 BuildRequires: gobject-introspection-devel
 BuildRequires: librsvg-gir-devel
-BuildRequires: python3-module-pygobject3-pygtkcompat
+BuildRequires: python3-module-pygobject3
 
-# needed:
-Requires: gnome-icon-theme
-Requires: typelib(GtkSource) = 3.0
-
+# Avoid unment dependency:
+#   pychess: Depends: python3(gi.repository.GdkPixbuf) (< 0) but it is not installable
 %add_python3_req_skip gi.repository.GdkPixbuf
-
-%filter_from_requires /python2.*/d
-%filter_from_requires /typelib(WebKit)/d
 
 %description
 PyChess is a GTK+ chess game for Linux. It is designed to at the same time
@@ -44,9 +38,9 @@ advanced players
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
+# Set PYTHONPATH to prevent ModuleNotFoundError (see commit 8ecfef18 for details).
 PYTHONPATH=lib %__python3 pgn2ecodb.py
 PYTHONPATH=lib %__python3 create_theme_preview.py
 %pyproject_build
@@ -61,7 +55,7 @@ PYTHONPATH=lib %__python3 create_theme_preview.py
 %python3_sitelibdir/*.dist-info/
 %_bindir/%name
 %_datadir/%name/
-%_datadir/gtksourceview-3.0/language-specs/pgn.lang
+%_datadir/gtksourceview-4/language-specs/pgn.lang
 %_datadir/mime/packages/%name.xml
 %_datadir/metainfo/%name.metainfo.xml
 %_desktopdir/%name.desktop
@@ -69,6 +63,9 @@ PYTHONPATH=lib %__python3 create_theme_preview.py
 %_man1dir/*
 
 %changelog
+* Wed Oct 15 2025 Leonid Znamenok <respublica@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Thu Jan 23 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.5-alt1
 - New version 1.0.5.
 
