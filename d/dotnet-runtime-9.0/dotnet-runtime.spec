@@ -3,11 +3,11 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.2%preview
-%define _dotnet_sdkversion 9.0.103%preview
-%define _dotnet_corerelease 9.0.2
+%define _dotnet_coreversion 9.0.10%preview
+%define _dotnet_sdkversion 9.0.111%preview
+%define _dotnet_corerelease 9.0.10
 # used for build
-%define _dotnet_sdkrelease 9.0.103
+%define _dotnet_sdkrelease 9.0.111
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -397,6 +397,11 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.10-alt1
+- .NET 9.0.10
+- fixed CVEs:
+ + CVE-2025-55248: .NET Information Disclosure Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.2-alt1
 - .NET 9.0.2
 - fixed CVEs:

@@ -5,16 +5,16 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.2
-%define _dotnet_sdkversion 9.0.103%preview
+%define _dotnet_coreversion 9.0.10
+%define _dotnet_sdkversion 9.0.111%preview
 
-%define _dotnet_corerelease 9.0.2
-%define _dotnet_corerelease1 9.0.2
+%define _dotnet_corerelease 9.0.10
+%define _dotnet_corerelease1 9.0.10
 
 %define _dotnet_sdkmanifestsrelease0 8.0.100
 #define _dotnet_sdkmanifestsrelease1 9.0.103
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.103
+%define _dotnet_sdkrelease 9.0.111
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -176,6 +176,13 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.111-alt1
+- .NET SDK 9.0.111 release
+- fixed CVEs:
+ + CVE-2025-26646: .NET and Visual Studio Spoofing Vulnerability
+ + CVE-2025-30399: .NET Remote Code Execution Vulnerability
+ + CVE-2025-55247: .NET Denial of Service Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.103-alt1
 - .NET SDK 9.0.103 release
 

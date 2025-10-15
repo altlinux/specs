@@ -2,16 +2,16 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.2%preview
-%define _dotnet_sdkversion 9.0.103%preview
+%define _dotnet_coreversion 9.0.10%preview
+%define _dotnet_sdkversion 9.0.111%preview
 
-%define _dotnet_corerelease 9.0.2
+%define _dotnet_corerelease 9.0.10
 %define _dotnet_corerelease1 %nil
 
 %define _dotnet_sdkmanifestsrelease0 8.0.100
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.103
+%define _dotnet_sdkrelease 9.0.111
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -22,9 +22,6 @@
 
 
 %define _dotnetdir %_libdir/%name
-#define mdsourceurl https://raw.githubusercontent.com/dotnet/core/refs/heads/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
-%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
-#define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/9.0/preview/rc1/9.0.0-rc.1.md
 
 Name: dotnet-bootstrap-%_dotnet_major
 Version: %_dotnet_sdkrelease
@@ -41,11 +38,11 @@ Group: Development/Other
 
 
 # x86_64
-# Source-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
+# Source-url: https://builds.dotnet.microsoft.com/dotnet/Sdk/%{_dotnet_sdkrelease}/dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
+# Source2-url: https://builds.dotnet.microsoft.com/dotnet/Sdk/%{_dotnet_sdkrelease}/dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -144,6 +141,17 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.111-alt1
+- The .NET 9.0.10 and .NET SDK 9.0.111 release
+- fixed CVEs:
+ + CVE-2025-24070: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-26682: .NET Denial of Service Vulnerability
+ + CVE-2025-26646: .NET and Visual Studio Spoofing Vulnerability
+ + CVE-2025-30399: .NET Remote Code Execution Vulnerability
+ + CVE-2025-55248: .NET Information Disclosure Vulnerability
+ + CVE-2025-55315: .NET Security Feature Bypass Vulnerability
+ + CVE-2025-55247: .NET Denial of Service Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.103-alt1
 - The .NET 9.0.2 and .NET SDK 9.0.103 release
 - fixed CVEs:

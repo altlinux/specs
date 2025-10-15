@@ -2,9 +2,9 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.2%preview
-%define _dotnet_corerelease 9.0.2
-%define _dotnet_corerelease1 9.0.2
+%define _dotnet_coreversion 9.0.10%preview
+%define _dotnet_corerelease 9.0.10
+%define _dotnet_corerelease1 9.0.10
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
 
@@ -131,6 +131,14 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.10-alt1
+- ASP.NET 9.0.10 release
+- fixed CVEs:
+ + CVE-2025-24070: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-26682: .NET Denial of Service Vulnerability
+ + CVE-2025-55315: .NET Security Feature Bypass Vulnerability
+
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.2-alt1
 - ASP.NET 9.0.2 release
 
