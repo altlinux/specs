@@ -2,8 +2,8 @@
 
 %define _name gpu-profile-selector
 %define __name GPU_profile_selector
-%define ver_major 48
-%define ego_ver 21
+%define ver_major 49
+%define ego_ver 24
 %define beta %nil
 %define uuid %{__name}@lorenzo9904.gmail.com
 %define xdg_name org.gnome.shell.extensions.%__name
@@ -57,6 +57,9 @@ cp -a schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
 %doc README.md
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49-alt1
+- 49
+
 * Wed Apr 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
 - first build for Sisyphus
 

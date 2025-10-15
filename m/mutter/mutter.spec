@@ -23,7 +23,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -217,6 +217,10 @@ sed -i 's|/usr\(/bin/bash\)|\1|' src/tests/socket-launch.sh
 
 #sed -i 's/\.beta//' meson.build
 
+%ifarch %e2k
+sed -i '/-Werror=return-type/d' meson.build
+%endif
+
 %build
 %meson \
     -Dintrospection=true \
@@ -309,6 +313,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:49.1-alt1
+- 49.1
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:49.0-alt1
 - 49.0
 
