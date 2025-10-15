@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 143.0.4
+Version: 144.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 15 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0-alt1
+- New version (144.0).
+- Fixes:
+  + CVE-2025-11708: Use-after-free in MediaTrackGraphImpl::GetInstance()
+  + CVE-2025-11709: Out of bounds read/write in a privileged process triggered by WebGL textures
+  + CVE-2025-11710: Cross-process information leaked due to malicious IPC messages
+  + CVE-2025-11711: Some non-writable Object properties could be modified
+  + CVE-2025-11716: Sandboxed iframes allowed links to open in external apps (Android only)
+  + CVE-2025-11717: The password edit screen was not hidden in Android card view
+  + CVE-2025-11712: An OBJECT tag type attribute overrode browser behavior on web resources without a content-type
+  + CVE-2025-11718: Address bar could be spoofed on Android using visibilitychange
+  + CVE-2025-11713: Potential user-assisted code execution in "Copy as cURL" command
+  + CVE-2025-11719: Use-after-free caused by the native messaging web extension API on Windows
+  + CVE-2025-11720: Spoofing risk in Android custom tabs
+  + CVE-2025-11714: Memory safety bugs fixed in Firefox ESR 115.29, Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+  + CVE-2025-11715: Memory safety bugs fixed in Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+  + CVE-2025-11721: Memory safety bug fixed in Firefox 144 and Thunderbird 144
+
 * Sun Oct 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0.4-alt1
 - New version (143.0.4).
 
