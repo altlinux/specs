@@ -6,7 +6,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.4.3
 Release: alt1
 Summary: Consume Server-Sent Event (SSE) messages with HTTPX
 License: MIT
@@ -47,6 +47,9 @@ BuildRequires: python3-module-sse-starlette
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 0.4.3-alt1
+- 0.4.1 -> 0.4.3.
+
 * Fri Jul 11 2025 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1.
 

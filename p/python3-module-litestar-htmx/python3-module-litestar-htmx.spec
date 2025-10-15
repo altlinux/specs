@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.4.1
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Litestar plugin for HTMX
 License: MIT
@@ -48,6 +48,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 0.5.0-alt1
+- New 0.5.0 version.
+
 * Fri Jun 06 2025 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt2
 - Fix build.
 

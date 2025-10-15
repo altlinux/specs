@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.7.0
+Version: 4.8.1
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -16,6 +16,7 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-requests-oauthlib
 BuildRequires: python3-module-openid
@@ -51,10 +52,6 @@ This package contains tests for %name.
 
 %prep
 %setup -n %pypi_name-%version
-sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
-    $(find . -name 'utils.py')
-sed -i 's/license = "BSD-3-Clause"/license = {file = "LICENSE"}/' pyproject.toml
-sed -i '/license-files/d' pyproject.toml
 
 %build
 %pyproject_build
@@ -78,6 +75,9 @@ sed -i '/license-files/d' pyproject.toml
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 4.8.1-alt1
+- Update to version 4.8.1.
+
 * Mon Jul 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
 - Update to version 4.7.0.
 

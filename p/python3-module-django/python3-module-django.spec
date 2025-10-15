@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.6
+Version: %branch.7
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,13 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.7-alt1
+- New version 5.2.7.
+- Fixes for the following security vulnerabilities:
+  + CVE-2025-59681: Potential SQL injection in QuerySet.annotate(), alias(), aggregate(), and extra() on MySQL and MariaDB
+  + CVE-2025-59682: Potential partial directory-traversal via archive.extract()
+- Some bugfixes.
+
 * Mon Sep 22 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.6-alt1
 - New version 5.2.6.
 - Fixes for the following security vulnerabilities:
