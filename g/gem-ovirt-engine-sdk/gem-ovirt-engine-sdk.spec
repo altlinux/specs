@@ -6,7 +6,7 @@
 
 Name:          gem-ovirt-engine-sdk
 Version:       4.6.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -38,6 +38,7 @@ BuildConflicts: gem(json) >= 3
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
+%ruby_ignore_names gem-ovirt-engine-sdk
 Requires:      gem(json) >= 1
 Conflicts:     gem(json) >= 3
 Obsoletes:     ruby-ovirt-engine-sdk < %EVR
@@ -60,7 +61,7 @@ http://bugzilla.redhat.com
 %if_enabled    doc
 %package       -n gem-ovirt-engine-sdk-doc
 Version:       4.6.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ovirt-engine-sdk
 Group:         Development/Documentation
@@ -90,7 +91,7 @@ http://bugzilla.redhat.com
 %if_enabled    devel
 %package       -n gem-ovirt-engine-sdk-devel
 Version:       4.6.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The oVirt Ruby SDK is a Ruby gem that simplyfies access to the oVirt Engine API development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ovirt-engine-sdk
 Group:         Development/Ruby
@@ -161,6 +162,10 @@ http://bugzilla.redhat.com
 
 
 %changelog
+* Thu Oct 09 2025 Pavel Skrylev <majioa@altlinux.org> 4.6.0-alt1.1
+- ! fixed abundant files generation due to explicit gem-ovirt-engine-sdk name
+  ignorance
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 4.6.0-alt1
 - ^ 4.4.1 -> 4.6.0
 

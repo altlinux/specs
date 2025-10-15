@@ -5,7 +5,7 @@
 %define        gemname passenger
 
 Name:          gem-passenger
-Version:       6.0.23
+Version:       6.1.0
 Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нжинкс
@@ -13,7 +13,7 @@ License:       MIT
 Group:         System/Servers
 Url:           https://github.com/phusion/passenger
 Vcs:           https://github.com/phusion/passenger.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Source1:       passenger.load
@@ -35,28 +35,32 @@ BuildRequires: apache2-httpd-worker
 BuildRequires: gcc-c++
 BuildRequires: gnu-config
 %if_enabled check
+BuildRequires: gem(drake) >= 0
+BuildRequires: gem(gpgme) >= 0
 BuildRequires: gem(json) >= 0
 BuildRequires: gem(mime-types) >= 3.5.1
 BuildRequires: gem(rack) >= 1.6.13
+BuildRequires: gem(rackup) >= 1.0.1
 BuildRequires: gem(rake) >= 12.3.3
 BuildRequires: gem(rspec) >= 3.10.0
 BuildRequires: gem(rspec-collection_matchers) >= 0
 BuildRequires: gem(webrick) >= 1.8.1
-BuildRequires: gem(rackup) >= 2.1
-BuildConflicts: gem(mime-types) >= 3.6
+BuildConflicts: gem(mime-types) >= 4
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(webrick) >= 1.9
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency mime-types >= 3.5.2,mime-types < 4
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 Requires(pre): apache2 >= %apache2_version-%apache2_release
+Requires:      ruby >= 2.5
 Requires:      gem(rack) >= 1.6.13
+Requires:      gem(rackup) >= 1.0.1
 Requires:      gem(rake) >= 12.3.3
-Requires:      gem(rackup) >= 2.1
 Conflicts:     ruby1.8-passenger
-Provides:      gem(passenger) = 6.0.23
+Provides:      gem(passenger) = 6.1.0
 
 %ruby_on_build_rake_tasks apache2
 
@@ -65,16 +69,16 @@ Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
 applications, such as those built on the revolutionary Ruby on Rails web
 framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 "Don't-Repeat-Yourself".
-* Deployment is only a matter of uploading application files. No Ruby
-  (on Rails)-specific server configuration required!
+* Deployment is only a matter of uploading application files. No Ruby (on
+Rails)-specific server configuration required!
 * Supports both the industry standard Apache web server and the fast and
-  lightweight Nginx web server.
+lightweight Nginx web server.
 * Allows Ruby on Rails applications to use about 33%% less memory, when used in
-  combination with Ruby Enterprise Edition (optional).
+combination with Ruby Enterprise Edition (optional).
 * Zero maintenance. No port management, server process monitoring or stale file
-  cleanup required. Errors are automatically recovered whenever possible.
+cleanup required. Errors are automatically recovered whenever possible.
 * Designed for performance, stability and security. Phusion Passenger should
-  never crash Apache even in case of crashing Rails applications
+never crash Apache even in case of crashing Rails applications
 * Well-documented, for both system administrators and developers!
 
 %description         -l ru_RU.UTF-8
@@ -82,14 +86,14 @@ Phusion Passenger™ известный как mod_rails или mod_rack
 
 
 %package       -n passenger
-Version:       6.0.23
+Version:       6.1.0
 Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета passenger
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(passenger) = 6.0.23
+Requires:      gem(passenger) = 6.1.0
 
 %description   -n passenger
 Easy and robust deployment Ruby on Rails applications on Apache and Nginx
@@ -117,14 +121,14 @@ never crash Apache even in case of crashing Rails applications
 
 %if_enabled    doc
 %package       -n gem-passenger-doc
-Version:       6.0.23
+Version:       6.1.0
 Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета passenger
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(passenger) = 6.0.23
+Requires:      gem(passenger) = 6.1.0
 
 %description   -n gem-passenger-doc
 Easy and robust deployment Ruby on Rails applications on Apache and Nginx
@@ -153,22 +157,16 @@ never crash Apache even in case of crashing Rails applications
 
 %if_enabled    devel
 %package       -n gem-passenger-devel
-Version:       6.0.23
+Version:       6.1.0
 Release:       alt1
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета passenger
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(passenger) = 6.0.23
-Requires:      gem(json) >= 0
-Requires:      gem(mime-types) >= 3.5.1
-Requires:      gem(rspec) >= 3.10.0
-Requires:      gem(rspec-collection_matchers) >= 0
-Requires:      gem(webrick) >= 1.8.1
-Conflicts:     gem(mime-types) >= 3.6
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(webrick) >= 1.9
+Requires:      gem(passenger) = 6.1.0
+Requires:      gem(drake) >= 0
+Requires:      gem(gpgme) >= 0
 
 %description   -n gem-passenger-devel
 Easy and robust deployment Ruby on Rails applications on Apache and Nginx
@@ -178,16 +176,16 @@ Phusion Passenger - a.k.a. mod_rails or mod_rack - makes deployment of Ruby web
 applications, such as those built on the revolutionary Ruby on Rails web
 framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 "Don't-Repeat-Yourself".
-* Deployment is only a matter of uploading application files. No Ruby
-  (on Rails)-specific server configuration required!
+* Deployment is only a matter of uploading application files. No Ruby (on
+Rails)-specific server configuration required!
 * Supports both the industry standard Apache web server and the fast and
-  lightweight Nginx web server.
+lightweight Nginx web server.
 * Allows Ruby on Rails applications to use about 33%% less memory, when used in
-  combination with Ruby Enterprise Edition (optional).
+combination with Ruby Enterprise Edition (optional).
 * Zero maintenance. No port management, server process monitoring or stale file
-  cleanup required. Errors are automatically recovered whenever possible.
+cleanup required. Errors are automatically recovered whenever possible.
 * Designed for performance, stability and security. Phusion Passenger should
-  never crash Apache even in case of crashing Rails applications
+never crash Apache even in case of crashing Rails applications
 * Well-documented, for both system administrators and developers!
 
 %description   -n gem-passenger-devel -l ru_RU.UTF-8
@@ -196,16 +194,16 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 
 
 %package       -n apache2-mod-passenger
-Version:       6.0.23
+Version:       6.1.0
 Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers apache module files
 Summary(ru_RU.UTF-8): Модуль passenger для вебсервера apache
 Group:         System/Servers
 
-Requires:      passenger = 6.0.23
+Requires:      passenger = 6.1.0
 Requires:      apache2-httpd-worker
-Provides:      apache2-mod_passenger = 6.0.23
-Provides:      mod_passenger = 6.0.23
+Provides:      apache2-mod_passenger = 6.1.0
+Provides:      mod_passenger = 6.1.0
 
 %description   -n apache2-mod-passenger
 Easy and robust deployment Ruby on Rails applications on Apache and Nginx
@@ -316,13 +314,13 @@ if [ "$1" = "0" ] ; then # last uninstall
 fi
 
 %files
-%doc README.md src/cxx_supportlib/oxt/Readme.txt src/cxx_supportlib/vendor-modified/libev/README src/cxx_supportlib/vendor-modified/websocketpp/readme.md
+%doc CHANGELOG CONTRIBUTING.md CONTRIBUTORS LICENSE README.md CODE_OF_CONDUCT.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %files         -n passenger
-%doc README.md src/cxx_supportlib/oxt/Readme.txt src/cxx_supportlib/vendor-modified/libev/README src/cxx_supportlib/vendor-modified/websocketpp/readme.md
+%doc CHANGELOG CONTRIBUTING.md CONTRIBUTORS LICENSE README.md CODE_OF_CONDUCT.md
 %_bindir/passenger
 %_bindir/passenger-install-apache2-module
 %_bindir/passenger-install-nginx-module
@@ -333,13 +331,13 @@ fi
 
 %if_enabled    doc
 %files         -n gem-passenger-doc
-%doc README.md src/cxx_supportlib/oxt/Readme.txt src/cxx_supportlib/vendor-modified/libev/README src/cxx_supportlib/vendor-modified/websocketpp/readme.md
+%doc CHANGELOG CONTRIBUTING.md CONTRIBUTORS LICENSE README.md CODE_OF_CONDUCT.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-passenger-devel
-%doc README.md src/cxx_supportlib/oxt/Readme.txt src/cxx_supportlib/vendor-modified/libev/README src/cxx_supportlib/vendor-modified/websocketpp/readme.md
+%doc CHANGELOG CONTRIBUTING.md CONTRIBUTORS LICENSE README.md CODE_OF_CONDUCT.md
 %endif
 
 %files         -n apache2-mod-passenger
@@ -352,6 +350,10 @@ fi
 
 
 %changelog
+* Thu Oct 02 2025 Pavel Skrylev <majioa@altlinux.org> 6.1.0-alt1
+- ^ 6.0.23 -> 6.1.0 (closes ALT#39147)
+- * rebase to upstream
+
 * Wed Jul 31 2024 Pavel Skrylev <majioa@altlinux.org> 6.0.23-alt1
 - ^ 6.0.11 -> 6.0.23
 

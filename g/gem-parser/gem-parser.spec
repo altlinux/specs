@@ -6,14 +6,14 @@
 
 Name:          gem-parser
 Epoch:         1
-Version:       3.3.4.0
-Release:       alt1
+Version:       3.3.9.0.2
+Release:       alt0.1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/whitequark/parser
 Vcs:           https://github.com/whitequark/parser.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -23,32 +23,34 @@ BuildRequires: gem(cliver) >= 0.3.2
 BuildConflicts: ragel6 >= 7.0
 BuildConflicts: gem(cliver) >= 0.4
 %if_enabled check
+BuildRequires: gem(ast) >= 2.4.1
 BuildRequires: gem(bundler) >= 1.15
-BuildRequires: gem(rake) >= 13.0.1
-BuildRequires: gem(yard) >= 0
+BuildRequires: gem(gauntlet) >= 0
 BuildRequires: gem(kramdown) >= 0
 BuildRequires: gem(minitest) >= 5.10
+BuildRequires: gem(racc) >= 1.8.1
+BuildRequires: gem(rake) >= 13.0.1
 BuildRequires: gem(simplecov) >= 0.15.1
-BuildRequires: gem(gauntlet) >= 0
-BuildRequires: gem(ast) >= 1.1
-BuildRequires: gem(racc) = 1.8.0
+BuildRequires: gem(yard) >= 0
+BuildConflicts: gem(ast) >= 2.5
 BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(simplecov) >= 1
-BuildConflicts: gem(ast) >= 3.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency racc >= 1.8.1,racc < 2
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-Requires:      gem(ast) >= 1.1
-Requires:      gem(racc) = 1.8.0
-Conflicts:     gem(ast) >= 3.0
-Provides:      gem(parser) = 3.3.4.0
+Requires:      ruby >= 2.0.0
+Requires:      gem(ast) >= 2.4.1
+Requires:      gem(racc) >= 1.8.1
+Conflicts:     gem(ast) >= 2.5
+Provides:      gem(parser) = 3.3.9.0.2
 
-%ruby_on_build_rake_tasks generate_release
+%ruby_use_gem_version parser:3.3.9.0.2
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -59,14 +61,17 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n ruby-parse
-Version:       3.3.4.0
-Release:       alt1
+Version:       3.3.9.0.2
+Release:       alt0.1
 Summary:       A Ruby parser executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.4.0
+Requires:      gem(parser) = 3.3.9.0.2
+Requires:      gem(ast) >= 2.4.1
+Requires:      gem(racc) >= 1.8.1
+Conflicts:     gem(ast) >= 2.5
 
 %description   -n ruby-parse
 A Ruby parser executable(s).
@@ -83,14 +88,14 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %if_enabled    doc
 %package       -n gem-parser-doc
-Version:       3.3.4.0
-Release:       alt1
+Version:       3.3.9.0.2
+Release:       alt0.1
 Summary:       A Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.4.0
+Requires:      gem(parser) = 3.3.9.0.2
 
 %description   -n gem-parser-doc
 A Ruby parser documentation files.
@@ -108,28 +113,28 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %if_enabled    devel
 %package       -n gem-parser-devel
-Version:       3.3.4.0
-Release:       alt1
+Version:       3.3.9.0.2
+Release:       alt0.1
 Summary:       A Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.4.0
-Requires:      gem(bundler) >= 1.15
-Requires:      gem(rake) >= 13.0.1
-Requires:      gem(cliver) >= 0.3.2
-Requires:      gem(yard) >= 0
-Requires:      gem(kramdown) >= 0
-Requires:      gem(minitest) >= 5.10
-Requires:      gem(simplecov) >= 0.15.1
-Requires:      gem(gauntlet) >= 0
 Requires:      ragel6 >= 6.0
 Requires:      racc
+Requires:      gem(parser) = 3.3.9.0.2
+Requires:      gem(bundler) >= 1.15
+Requires:      gem(cliver) >= 0.3.2
+Requires:      gem(gauntlet) >= 0
+Requires:      gem(kramdown) >= 0
+Requires:      gem(minitest) >= 5.10
+Requires:      gem(rake) >= 13.0.1
+Requires:      gem(simplecov) >= 0.15.1
+Requires:      gem(yard) >= 0
 Conflicts:     gem(bundler) >= 3
-Conflicts:     gem(rake) >= 14
 Conflicts:     gem(cliver) >= 0.4
 Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(rake) >= 14
 Conflicts:     gem(simplecov) >= 1
 Conflicts:     ragel6 >= 7.0
 
@@ -160,24 +165,31 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 %ruby_test
 
 %files
+%doc LICENSE.txt CHANGELOG.md CONTRIBUTING.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n ruby-parse
+%doc LICENSE.txt CHANGELOG.md CONTRIBUTING.md README.md
 %_bindir/ruby-parse
 %_bindir/ruby-rewrite
 
 %if_enabled    doc
 %files         -n gem-parser-doc
+%doc LICENSE.txt CHANGELOG.md CONTRIBUTING.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-parser-devel
+%doc LICENSE.txt CHANGELOG.md CONTRIBUTING.md README.md
 %endif
 
 
 %changelog
+* Thu Oct 02 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.3.9.0.2-alt0.1
+- ^ 3.3.4.0 -> 3.3.9.0p2
+
 * Fri Aug 02 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.3.4.0-alt1
 - ^ 3.3.0.5 -> 3.3.4.0 with epoch change due to gem-ruby-parser's binary
 

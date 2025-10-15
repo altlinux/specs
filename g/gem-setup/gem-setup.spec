@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt20
+Release:       alt21
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,12 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Oct 02 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt21
+- + added levitate gemspc parser module
+- ! fixed inner require to load embedded extension before original
+- ! fixed hoe loader and documentator
+- * changes source searcher and other things originated from baltix
+
 * Wed Mar 26 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt20
 - ! enable to proceed the data tree except the other trees from the
     beginning of the path

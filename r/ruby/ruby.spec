@@ -5,10 +5,11 @@
 %define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
 %define        _version %{ruby_version_core}.8
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
+%def_disable   html
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -299,7 +300,7 @@ DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
    --with-vendordir=%_libexecdir/%name/vendor_ruby \
    --with-vendorlibdir=%_libexecdir/%name/vendor_ruby \
    --with-vendorarchdir=%_libexecdir/%name/vendor_ruby \
-   --with-rdoc=ri,html \
+   --with-rdoc=ri%{?_enable_html:,html} \
    -C --prefix=%_prefix \
 
 mkdir -p \
@@ -373,6 +374,11 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Wed Oct 01 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt2
+- ! fixed invalid home gemie binary path usage (closes ALT#56231)
+- - removed mentioning of the emdedded racc for the ruby build
+- + added enable feature for html doc to build
+
 * Thu Jun 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt1
 - ^ 3.3.7 -> 3.3.8
 - * replaced rvm-devel with rvm in favor of better understandbility
