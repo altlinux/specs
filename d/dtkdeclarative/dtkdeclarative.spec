@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.7.19
+Version: 5.7.23
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -12,10 +12,12 @@ Summary(ru): Инструментарий по разработке виджет
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
-Vcs: git://github.com/linuxdeepin/dtkdeclarative.git
+VCS: https://github.com/linuxdeepin/dtkdeclarative
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkdeclarative-5.6.28-alt-pkgconfig-find-requires.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: dtkdeclarative-5.6.28-alt-pkgconfig-find-requires.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -33,7 +35,7 @@ BuildRequires: gcc-c++
 #BuildRequires: doxygen graphviz dqt5-base-doc
 # Automatically added by buildreq on Fri Oct 20 2023
 # optimized out: alt-os-release clang17.0 clang17.0-support cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp17 libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-qml libdqt5-qmlmodels libdqt5-quick libdqt5-quickcontrols2 libdqt5-quicktemplates2 libdqt5-svg libdqt5-widgets libdqt5-xml libsasl2-3 libssl-devel libstdc++-devel llvm-common llvm17.0-libs pkg-config python3 python3-base dqt5-base-devel dqt5-declarative-devel dqt5-tools sh5
-BuildRequires: cmake libdtkgui-devel dqt5-quickcontrols2-devel dqt5-tools-devel dqt5-declarative-devel
+BuildRequires: cmake libdtkgui-devel dqt5-quickcontrols2-devel dqt5-tools-devel dqt5-declarative-devel libwayland-client-devel
 
 Requires: libdqt5-qml = %_dqt5_version libdqt5-quick = %_dqt5_version libdqt5-quickcontrols2 = %_dqt5_version
 
@@ -104,7 +106,8 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 export PATH=%_dqt5_bindir:$PATH
@@ -140,7 +143,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %cmake_install
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md CHANGELOG.md
 %_bindir/dtk-exhibition
 %_dqt5_qmldir/QtQuick/Controls.2/Chameleon/*
 %dir %_dqt5_qmldir/org/deepin/
@@ -165,6 +168,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
+- New version 5.7.23.
+
 * Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
 - New version 5.7.19.
 

@@ -3,18 +3,19 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.7.14
-Release: alt2
+Version: 5.7.23
+Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt5platform-plugins
-Vcs: git://github.com/linuxdeepin/qt5platform-plugins.git
+VCS: https://github.com/linuxdeepin/qt5platform-plugins
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch0: %name-%version-%release.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %repo-%version-%release.patch
 Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
@@ -39,7 +40,8 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcb
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 # Unsupported by upstream.
 sed -i '/wayland/d' CMakeLists.txt
@@ -74,6 +76,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
+- New version 5.7.23.
+
 * Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.14-alt2
 - Built without outdated dwayland.
 

@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtk6log
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -9,9 +9,10 @@ Summary: Deepin tool kit log modules
 License: LGPL-2.1
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6log
-Vcs: git://github.com/linuxdeepin/dtk6log.git
+Vcs: https://github.com/linuxdeepin/dtk6log
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Provides: libdtk6-log = %EVR
@@ -50,7 +51,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 %build
 %if_enabled clang
@@ -69,7 +70,7 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6install
 
 %files -n lib%{name}0
-%doc README.md LICENSE*
+%doc README.md LICENSE* CHANGELOG.md
 %_libdir/lib%name.so.0
 %_libdir/lib%name.so.%version
 
@@ -84,6 +85,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.6-alt1
+- New version 0.0.6.
+
 * Mon Jul 14 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
 - New version 0.0.5.
 

@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.7.14
+Version: 5.7.23
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -11,16 +11,17 @@ Summary: Qt platform theme integration plugins for DDE
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt5integration
-Vcs: git://github.com/linuxdeepin/qt5integration.git
+VCS: https://github.com/linuxdeepin/qt5integration
 
-Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %repo-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5ThemeSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-svg-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel libwayland-client-devel
 
 # Requires: deepin-qt5platform-plugins
 Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-widgets = %_dqt5_version
@@ -36,7 +37,7 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch -p1
 
 %build
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5X11Extras:%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
@@ -57,6 +58,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files
 %doc README.md
 %doc LICENSE
+%doc CHANGELOG.md
 %_dqt5_plugindir/iconengines/libdicon.so
 %_dqt5_plugindir/iconengines/libdsvgicon.so
 %_dqt5_plugindir/imageformats/libdci.so
@@ -65,6 +67,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
+- New version 5.7.23.
+
 * Wed Apr 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.14-alt1
 - New version 5.7.14.
 

@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.41
+Version: 6.0.43
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -14,7 +14,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6core
 Vcs: https://github.com/linuxdeepin/dtk6core
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: dtk6core-6.0.9-alt-uos-version.patch
 
@@ -120,6 +121,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.43-alt1
+- New version 6.0.43.
+
 * Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
 - New version 6.0.41.
 

@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtk6gui
-Version: 6.0.41
+Version: 6.0.43
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -15,7 +15,8 @@ Vcs: https://github.com/linuxdeepin/dtk6gui
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
@@ -104,6 +105,9 @@ export READELF="llvm-readelf"
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.43-alt1
+- New version 6.0.43.
+
 * Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
 - New version 6.0.41.
 

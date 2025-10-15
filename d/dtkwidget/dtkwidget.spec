@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.7.19
+Version: 5.7.23
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -10,12 +10,14 @@ Summary: Deepin tool kit widget modules
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkwidget
-Vcs: git://github.com/linuxdeepin/dtkwidget.git
+VCS: https://github.com/linuxdeepin/dtkwidget
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkwidget-5.6.28-alt-pkgconfig-find-requires.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: dtkwidget-5.6.28-alt-pkgconfig-find-requires.patch
 
 # for webp (dci) icons
 Requires: dqt5-imageformats
@@ -31,7 +33,7 @@ BuildRequires(pre): gcc-c++
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Thu Oct 19 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5 xorg-proto-devel
-BuildRequires: cmake doxygen dtk6-common-devel gsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel
+BuildRequires: cmake doxygen dtk6-common-devel libgsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel libwayland-client-devel
 
 %description
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -83,7 +85,8 @@ This package provides %name documantation.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %if_enabled clang
@@ -118,7 +121,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %cmake_install
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE CHANGELOG.md
 %dir %_libdir/dtk5/
 %dir %_libdir/dtk5/DWidget/
 %_libdir/dtk5/DWidget/bin/
@@ -144,6 +147,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_docdir/dtkwidget.qch
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
+- New version 5.7.23.
+
 * Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
 - New version 5.7.19.
 

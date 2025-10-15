@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.7.19
+Version: 5.7.23
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -11,12 +11,14 @@ Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkgui
-Vcs: git://github.com/linuxdeepin/dtkgui.git
+VCS: https://github.com/linuxdeepin/dtkgui
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkgui-alt-git.patch
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: dtkgui-alt-git.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static -> libQt5XkbCommonSupport.a
@@ -58,7 +60,8 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -113,6 +116,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
+- New version 5.7.23.
+- Fixed undefined elfs for libdtkgui.
+
 * Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.19-alt1
 - New version 5.7.19.
 
