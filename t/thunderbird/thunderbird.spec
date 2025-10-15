@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 143.0.1
+Version: 144.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -39,7 +39,6 @@ Patch004: 0004-Fix-types-defination.patch
 Patch005: 0005-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch006: 0006-Correction-of-the-Russian-translation.patch
 Patch007: 0007-ALT-stop-putting-commonDialogs.properties-into-share.patch
-Patch008: 0008-allocator-api2-Fix-build-with-rust-1.89.0.patch
 ### End Patches
 
 Provides: mailclient
@@ -179,7 +178,6 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch5 -p2
 %patch6 -p1
 %patch7 -p2
-%patch8 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -386,6 +384,21 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Oct 15 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0-alt1
+- New version.
+- Fixes:
+  + CVE-2025-11708: Use-after-free in MediaTrackGraphImpl::GetInstance()
+  + CVE-2025-11709: Out of bounds read/write in a privileged process triggered by WebGL textures
+  + CVE-2025-11710: Cross-process information leaked due to malicious IPC messages
+  + CVE-2025-11711: Some non-writable Object properties could be modified
+  + CVE-2025-11716: Sandboxed iframes allowed links to open in external apps (Android only)
+  + CVE-2025-11712: An OBJECT tag type attribute overrode browser behavior on web resources without a content-type
+  + CVE-2025-11713: Potential user-assisted code execution in "Copy as cURL" command
+  + CVE-2025-11719: Use-after-free caused by the native messaging web extension API on Windows
+  + CVE-2025-11714: Memory safety bugs fixed in Firefox ESR 115.29, Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+  + CVE-2025-11715: Memory safety bugs fixed in Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+  + CVE-2025-11721: Memory safety bug fixed in Firefox 144 and Thunderbird 144
+
 * Sun Oct 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 143.0.1-alt1
 - New version.
 
