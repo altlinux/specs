@@ -17,10 +17,10 @@
 # https://github.com/GreycLab/gmic-qt
 %define gmic_qt_ver v.3.5.0-7-gb55b8ca
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-235-ga914b118
+%define gmic_comm_ver gmic-3.4.3-272-gc9960ae2
 
 Name: gmic
-Version: 3.6.2
+Version: 3.6.3
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -222,6 +222,9 @@ popd
 %gimpplugindir/plug-ins/*}
 
 %changelog
+* Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 - gmic-qt: build with QT6
