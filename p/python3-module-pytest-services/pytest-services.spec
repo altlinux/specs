@@ -1,8 +1,8 @@
 %define oname pytest-services
 
 Name: python3-module-%oname
-Version: 2.2.1
-Release: alt3
+Version: 2.2.2
+Release: alt1
 
 Summary: Services plugin for pytest testing framework
 
@@ -12,7 +12,6 @@ Url: https://pypi.python.org/pypi/pytest-services/
 
 # Source-git: https://github.com/pytest-dev/pytest-services.git
 Source: %name-%version.tar
-Patch: support-python3.12.patch
 
 BuildArch: noarch
 
@@ -41,7 +40,6 @@ service processes for your tests with pytest.
 
 %prep
 %setup
-%patch -p1
 
 # Added by upstream in initial commit, 10 years didn't removed ¯\_(ツ)_/¯
 rm -v pytest_services/gui.py.orig
@@ -62,6 +60,9 @@ py.test3 -vv --fixtures tests
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
+- Automatically updated to 2.2.2.
+
 * Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt3
 - Bring back to Sisyphus with python3.12 support.
 
