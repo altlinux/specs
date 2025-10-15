@@ -8,7 +8,7 @@ language.
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Python FTP server library
@@ -41,16 +41,6 @@ BuildArch: noarch
 
 %description
 %descr
-
-%package tests
-Summary: Documentation for %oname
-Group: Development/Python3
-%py3_requires %oname
-
-%description tests
-%descr
-
-This package contains tests for %oname.
 
 %if_with docs
 %package docs
@@ -107,15 +97,10 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %_bindir/*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/%oname/test
 %if_with docs
 %_man1dir/*
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
-
-%files tests
-%python3_sitelibdir/%oname/test
-%exclude %python3_sitelibdir/%oname/test/README
 
 %if_with docs
 %files docs
@@ -126,6 +111,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 
