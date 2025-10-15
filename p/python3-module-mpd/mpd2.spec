@@ -1,7 +1,7 @@
 %def_with check
 
 Name: python3-module-mpd
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: A client interface for the Music Player Daemon
@@ -45,6 +45,9 @@ Python library providing a client interface for MPD.
 %python3_sitelibdir/python_mpd2-%version.dist-info
 
 %changelog
+* Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt1
+- Automatically updated to 3.1.2.
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 
