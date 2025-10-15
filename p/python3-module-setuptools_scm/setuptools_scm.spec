@@ -2,15 +2,8 @@
 %define mod_name setuptools_scm
 %define pypi_name setuptools-scm
 
-%def_with bootstrap
-
-%if_without bootstrap
 %def_with check
-%else
-%def_without check
-%endif
 
-# What a crap is it?
 %define add_python_extra() \
 %{expand:%%package -n %%name+%1 \
 Summary: %%summary \
@@ -24,8 +17,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 9.1.1
-Release: alt1.1
+Version: 9.2.1
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -35,18 +28,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-
-BuildRequires: git-core
-Requires: git-core
-%if_without bootstrap
-Requires: mercurial
-%else
-%filter_from_requires /^mercurial/d
-%endif
-
 # manually manage extra dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+Requires: git-core mercurial
 %py3_provides %pypi_name
 # mapping from PyPI name
 Provides: python3-module-%pypi_name = %EVR
@@ -55,6 +40,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata_extra rich
 %pyproject_builddeps_check
+BuildRequires: git-core mercurial
 %endif
 
 %description
@@ -95,6 +81,9 @@ archive.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 14 2025 Stanislav Levin <slev@altlinux.org> 9.2.1-alt1
+- 9.1.1 -> 9.2.1.
+
 * Mon Aug 25 2025 Grigory Ustinov <grenka@altlinux.org> 9.1.1-alt1.1
 - Bootstrap for python3.13.
 
