@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Biblioteca
-%define ver_major 1.6
+%define ver_major 1.7
 %define beta %nil
 %define rdn_name app.drey.%_name
 
@@ -90,6 +90,9 @@ install -pD -m755 build-aux/build-index.js %buildroot%_datadir/%rdn_name/
 %doc README*
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
