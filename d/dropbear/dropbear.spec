@@ -14,7 +14,7 @@
 Name: %pkgname
 Summary: A smallish SSH server and client
 Version: 2025.88
-Release: alt1
+Release: alt2
 License: MIT
 # "Dropbear is open source software, distributed under a MIT-style license."
 Group: System/Servers
@@ -138,8 +138,13 @@ EOF
 %_bindir/scp
 
 %changelog
+* Tue Oct 14 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt2
+- Try to fix ALT beekeeper rebuilds under load with allow_reuse_address.
+
 * Mon May 12 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt1
 - Update to DROPBEAR_2025.88 (2025-05-07), (fixes: CVE-2025-47203).
+
+* Thu Mar 27 2025 Vitaly Chikunov <vt@altlinux.org> 2025.87-alt2
 - Add dropbear-musl package with statically built dropbear.
 
 * Fri Mar 14 2025 Vitaly Chikunov <vt@altlinux.org> 2025.87-alt1
