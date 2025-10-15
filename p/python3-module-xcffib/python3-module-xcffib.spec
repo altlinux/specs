@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 1.9.0
+Version: 1.11.2
 Release: alt1
 
 Summary: A drop-in replacement for xpyb based on cffi
@@ -67,6 +67,9 @@ sed -i "s/__version__ = .*/__version__ = \"%version\"/" xcffib/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Oct 15 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.2-alt1
+- 1.11.2
+
 * Sun Jun 08 2025 Leonid Znamenok <respublica@altlinux.org> 1.9.0-alt1
 - 1.9.0
 - Build generator using rpm-build-haskell-vendored
