@@ -1,7 +1,9 @@
 %define oname uritemplate
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 
 Summary: Python implementation of RFC6570, URI Template
@@ -14,6 +16,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -25,16 +32,23 @@ templates up to and including Level 4 in that specification.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Wed May 07 2025 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
 - Build new version.
 
