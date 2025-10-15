@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.6
-Release:       alt2
+Release:       alt3
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -19,6 +19,7 @@ Source3:       known-hosts
 Source4:       pcsd.gemspec
 Patch:         compat.patch
 Patch1:        disable-ruby-build.patch
+Patch2:        use-rackup-webrick.patch
 
 %add_python3_req_skip pyagentx
 Requires:      python3-module-pcs = %version
@@ -170,6 +171,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Mon May 19 2025 Pavel Skrylev <majioa@altlinux.org> 1:0.11.6-alt3
+- > use webrick rackup handler for new rack 3.x (ALT #54154)
+
 * Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 1:0.11.6-alt2
 - ! fixed rack/handler for new rack 3.x (closes #51647)
 
