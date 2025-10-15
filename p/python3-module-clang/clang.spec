@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname clang
-%define llvm_ver 18.1
+%define llvm_ver 19.1
+%define git 4fb1d60
 
 %def_without check
 
 Name:       python3-module-%oname
-Version:    18.1.1
-Release:    alt1
+Version:    19.1.3
+Release:    alt0.1.g%{git}
 
 Summary:    Libclang python bindings
 License:    Apache-2.0
@@ -53,6 +54,9 @@ ln -s $libdir/libclang.so %buildroot%python3_sitelibdir/%oname/native/libclang.s
 %python3_sitelibdir/lib%oname-%version.dist-info
 
 %changelog
+* Tue Oct 14 2025 L.A. Kostis <lakostis@altlinux.ru> 19.1.3-alt0.1.g4fb1d60
+- Update to GIT 4fb1d60 (llvm-19.1.3).
+
 * Tue Apr 23 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.1-alt1
 - NMU: update to llvm-18.
 
