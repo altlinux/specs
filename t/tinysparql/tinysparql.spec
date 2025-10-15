@@ -24,7 +24,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
@@ -259,6 +259,9 @@ GObject introspection devel data for the Tracker library.
 %endif
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

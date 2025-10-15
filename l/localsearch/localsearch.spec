@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -91,7 +91,7 @@ BuildRequires: python3(dbusmock)
 BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
 %{?_enable_libpng:BuildRequires: libpng-devel >= %libpng_ver}
-%{?_enable_raw:BuildRequires: libgexiv2-devel}
+%{?_enable_raw:BuildRequires: libgexiv2-0.16-devel}
 %{?_enable_poppler:BuildRequires: libpoppler-glib-devel >= %poppler_ver}
 %{?_enable_libgxps:BuildRequires: libgxps-devel}
 %{?_enable_libexif:BuildRequires: libexif-devel >= %libexif_ver}
@@ -204,6 +204,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
+- 3.10.1
+
 * Sun Sep 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 
