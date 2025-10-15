@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt3
+Release: alt4
 Epoch: 1
 %K6init
 
@@ -59,7 +59,7 @@ Requires: kf6-kconfig kf6-kded kf6-kdeclarative
 Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
 #Requires: kio-extras
 Requires: kf6-kquickcharts kf6-kirigami
-Requires: plasma6-kpipewire plasma6-kglobalacceld
+Requires: plasma6-kpipewire plasma6-kglobalacceld milou
 Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
 Requires: kwin kwin-x11
 Requires: kf6-kirigami-addons
@@ -596,6 +596,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt4
+- fix requires (closes: 56334)
+
 * Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt3
 - update requires
 
