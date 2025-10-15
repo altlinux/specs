@@ -1,43 +1,53 @@
 Name: python3-module-fnv-hash-fast
-Version: 1.0.2
+Version: 1.6.0
 Release: alt1
 
-Summary: CPP implementation of fnv1a
+Summary: A fast version of fnv1a
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/fnv-hash-fast/
+VCS: https://github.com/bluetooth-devices/fnv-hash-fast
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: pyproject_deps.json
 
-BuildRequires: gcc-c++
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(fnvhash)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
-%pyproject_deps_resync_build
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o addopts= tests
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
 %python3_sitelibdir/fnv_hash_fast
 %python3_sitelibdir/fnv_hash_fast-%version.dist-info
 
 %changelog
+* Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
+- 1.6.0 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2-alt1
 - 1.0.2 released
 
