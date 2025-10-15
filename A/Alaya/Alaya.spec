@@ -5,8 +5,8 @@
 %define oname alaya
 
 Name:    Alaya
-Version: 4.6
-Release: alt2
+Version: 5.3
+Release: alt1
 
 Summary: Webdav enabled webserver mostly focused on file storage
 
@@ -15,7 +15,7 @@ Group:   System/Servers
 Url:     https://github.com/ColumPaget/Alaya
 
 Source: %name-%version.tar
-Patch: Alaya-4.6-alt-fix-inc-ptr-type.patch
+Patch:  %name-%version-alt-pr_mdwe_no-definition.patch
 
 BuildRequires: LibreSSL-devel libcrypto3
 BuildRequires: libcap-devel
@@ -62,8 +62,8 @@ needed functionality like resizeable strings, linked lists and maps.
 %install
 %makeinstall_std
 install -d %buildroot%_man1dir
-help2man --name='Alaya Webdav Server' --no-info --source='Alaya %version' \
---version-string='Alaya' --output='%buildroot%_man1dir/%oname.1' \
+help2man --name='%name Webdav Server' --no-info --source='%name %version' \
+--version-string='%name' --output='%buildroot%_man1dir/%oname.1' \
 %buildroot%_sbindir/%oname
 
 %if_with devlib
@@ -88,6 +88,9 @@ cp --preserve=all %lib_name/*.md %buildroot%_defaultdocdir/%lib_name-%version
 %endif
 
 %changelog
+* Wed Oct 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.3-alt1
+- New version.
+
 * Tue Apr 01 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.6-alt2
 - Version inside man page fixed.
 
