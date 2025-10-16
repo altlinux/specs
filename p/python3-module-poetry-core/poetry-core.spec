@@ -10,7 +10,7 @@
 %def_without vendored
 
 Name: python3-module-%pypi_name
-Version: 2.1.3
+Version: 2.2.1
 Release: alt1
 Summary: Poetry Core
 License: MIT
@@ -21,8 +21,10 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # namespace root
-%py3_requires poetry
+Requires: python3-module-poetry-alt-namespace
 %if_without vendored
 %pyproject_runtimedeps -- vendored
 %endif
@@ -48,7 +50,6 @@ BuildRequires: python3-module-virtualenv
 
 %if_with vendored
 # self-contained deps
-%add_findreq_skiplist %python3_sitelibdir/%vendor_path/*
 %add_findprov_skiplist %python3_sitelibdir/%vendor_path/*
 %endif
 
@@ -86,6 +87,9 @@ rm -r ./src/%vendor_path/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.1.3 -> 2.2.1.
+
 * Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 2.1.2 -> 2.1.3.
 
