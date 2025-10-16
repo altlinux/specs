@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libtsm
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: Terminal-emulator State Machine
 Group: System/Libraries
 License: MIT
 Url: https://github.com/Aetf/libtsm
 Source: %name-%version.tar
-BuildRequires: cmake
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(check)
 
@@ -43,24 +44,25 @@ developing applications that use %name.
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
-
-%cmake_build
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
 %files
-%doc COPYING README
+%doc COPYING README.md
 %_libdir/*.so.*
 
 %files devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_libdir/cmake/%name
 
 %changelog
+* Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 4.2.0-alt1
+- New version 4.2.0.
+
 * Fri Jul 25 2025 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
 - New version 4.1.0.
 
