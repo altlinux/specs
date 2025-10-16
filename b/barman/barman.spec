@@ -1,14 +1,15 @@
 Name: barman
-Version: 3.16.0
+Version: 3.16.1
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
 License: GPL-3.0+
 Group: Databases
 Url: http://www.pgbarman.org/
-VCS: https://github.com/EnterpriseDB/barman.git
+VCS: https://github.com/EnterpriseDB/barman
 
-Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
+# Source-url: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: barman.cron
 Source2: barman.logrotate
 Patch: %name-%version-%release.patch
@@ -140,6 +141,9 @@ exit 0
 %python3_sitelibdir/%name/
 
 %changelog
+* Thu Oct 16 2025 Leontiy Volodin <lvol@altlinux.org> 3.16.1-alt1
+- New version 3.16.1.
+
 * Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 3.16.0-alt1
 - New version 3.16.0.
 
