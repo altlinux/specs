@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.25
+Version: 0.0.27
 Release: alt1
 
 Summary: SQL databases in Python, designed for simplicity, compatibility, and robustness
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/sqlmodel/
+Url: https://sqlmodel.tiangolo.com/
 Vcs: https://github.com/fastapi/sqlmodel
 BuildArch: noarch
 
@@ -73,6 +73,9 @@ export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.27-alt1
+- Updated to 0.0.27.
+
 * Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.25-alt1
 - Updated to 0.0.25.
 
