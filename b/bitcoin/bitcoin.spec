@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 29.1
+Version: 30.0
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -12,7 +12,7 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel boost-asio-devel
 BuildRequires: gcc-c++ libevent-devel libprotobuf-devel libqrencode-devel libsqlite3-devel
-BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools-devel
+BuildRequires: libssl-devel protobuf-compiler python3-dev qt6-base-devel qt6-tools-devel capnproto-devel
 BuildRequires: cmake
 
 %description
@@ -49,17 +49,19 @@ Before each transaction the coin's validity will be checked.
 %install
 %cmake_install
 
-ln -s %name-qt %buildroot%_bindir/%name
-
 %pre
 rm -f %_bindir/%name
 
 %files
 %_bindir/%{name}*
+/usr/libexec/*
 %_mandir/man1/bitcoin*.1.*
 %doc doc/*
 
 %changelog
+* Thu Oct 16 2025 Alexei Takaseev <taf@altlinux.org> 30.0-alt1
+- 30.0
+
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 29.1-alt1
 - 29.1
 
