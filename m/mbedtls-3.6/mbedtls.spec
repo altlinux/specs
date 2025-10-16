@@ -1,33 +1,36 @@
-%define so_tls_version 22
-%define so_crypto_version 17
-%define so_x509_version 8
-%define so_tfpsacrypto_version 1
-%define tf_psa_crypto_version 1.0.0
+%define pkgname mbedtls
+%define optflags_lto %nil
+%define so_tls_version 21
+%define so_crypto_version 16
+%define so_x509_version 7
+%define framework_commit 457996474728cb8e968ed21953b72f74d2f536b2
 %def_disable static
 
-Name: mbedtls
-Version: 4.0.0
+%filter_from_provides /^pkgconfig(mbedcrypto)/d
+%filter_from_provides /^pkgconfig(mbedtls)/d
+%filter_from_provides /^pkgconfig(mbedx509)/d
+
+Name: %pkgname-3.6
+Version: 3.6.5
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: https://www.trustedfirmware.org/projects/mbed-tls/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/ARMmbed/%name/archive/%name-%version/%name%name-%version.tar.gz
-Source0: %name-%name-%version.tar
-# https://github.com/Mbed-TLS/TF-PSA-Crypto/archive/tf-psa-crypto-%tf_psa_crypto_version/TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version.tar.gz
-Source1: TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version.tar
-# https://github.com/Mbed-TLS/%name-framework/archive/%name-%version_tf-psa-crypto-%tf_psa_crypto_version/%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version.tar.gz
-Source2: %name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version.tar
+# https://github.com/ARMmbed/%name/archive/v%version/%pkgname-%version.tar.gz
+Source: %pkgname-%version.tar
+# https://github.com/Mbed-TLS/%pkgname-framework/archive/%framework_commit/%pkgname-framework-%framework_commit.tar.gz
+Source1: %pkgname-framework-%framework_commit.tar
 
-BuildRequires: ctest
+BuildRequires: cmake
 BuildRequires: libssl-devel
 BuildRequires: python3-dev
-BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-mpl_toolkits
 
 %description
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
@@ -35,12 +38,12 @@ library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
 applications with as little hassle as possible.
 
-%package -n lib%name%so_tls_version
+%package -n lib%pkgname%so_tls_version
 Summary: Transport Layer Security protocol suite
-Group: System/Libraries
+Group: System/Legacy libraries
 Conflicts: hiawatha
 
-%description -n lib%name%so_tls_version
+%description -n lib%pkgname%so_tls_version
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbed TLS makes it easy for developers to include
 cryptographic and SSL/TLS capabilities in their (embedded)
@@ -48,7 +51,7 @@ applications with as little hassle as possible.
 
 %package -n libmbedcrypto%so_crypto_version
 Summary: Cryptographic base library for mbedtls
-Group: System/Libraries
+Group: System/Legacy libraries
 
 %description -n libmbedcrypto%so_crypto_version
 This subpackage of mbedtls contains a library that exposes
@@ -57,7 +60,7 @@ AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
 
 %package -n libmbedx509-%so_x509_version
 Summary: Library to work with X.509 certificates
-Group: System/Libraries
+Group: System/Legacy libraries
 Conflicts: hiawatha < 10.10
 
 %description -n libmbedx509-%so_x509_version
@@ -65,19 +68,11 @@ This subpackage of mbedtls contains a library that can read, verify
 and write X.509 certificates, read/write Certificate Signing Requests
 and read Certificate Revocation Lists.
 
-%package -n libtfpsacrypto%so_tfpsacrypto_version
-Summary: PSA Cryptographic library for mbedtls
-Group: System/Libraries
-
-%description -n libtfpsacrypto%so_tfpsacrypto_version
-This subpackage of mbedtls contains a library that exposes
-cryptographic ciphers, hashes, algorithms and format support such as
-AES, MD5, SHA, Elliptic Curves, BigNum, PKCS, ASN.1, BASE64.
-
 %package -n lib%name-devel
 Summary: Development files for mbed TLS
 Group: Development/C
 Conflicts: hiawatha
+Conflicts: lib%pkgname-devel
 
 %description -n lib%name-devel
 Contains libraries and header files for
@@ -87,24 +82,16 @@ developing applications that use mbed TLS
 %package -n lib%name-devel-static
 Summary: Static libraries for mbed TLS
 Group: Development/C
+Conflicts: lib%pkgname-devel-static
 
 %description -n lib%name-devel-static
 Static libraries for developing applications
 that use mbed TLS
 %endif
 
-%package utils
-Summary: Utilities for PolarSSL
-Group: Development/Tools
-
-%description utils
-Cryptographic utilities based on mbed TLS
-
 %prep
-%setup -n %name-%name-%version -b 1 -b 2
-%__mv -Tf ../TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto
-%__cp -Tr ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version framework
-%__mv -Tf ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto/framework
+%setup -n %pkgname-%version -b 1
+%__mv -Tf ../%pkgname-framework-%framework_commit framework
 %ifarch aarch64
 %add_optflags -Wno-error=array-bounds
 %endif
@@ -127,62 +114,50 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 
 %install
 %cmakeinstall_std
-%__ln_s -r %buildroot%_libdir/libmbedcrypto.so.%so_crypto_version %buildroot%_libdir/libmbedcrypto.so
-%__ln_s -r %buildroot%_libdir/libmbedcrypto.so.%version %buildroot%_libdir/libmbedcrypto.so.%so_crypto_version
-mkdir -p %buildroot%_libexecdir/%name
-mv %buildroot%_bindir/* %buildroot%_libexecdir/%name
-rm -rf %buildroot%_bindir
+%__rm -rf %buildroot%_bindir
 
-%check
-%ctest ||:
-
-%files -n lib%name%so_tls_version
-%_libdir/lib%name.so.%so_tls_version
-%_libdir/lib%name.so.%version
+%files -n lib%pkgname%so_tls_version
+%_libdir/lib%pkgname.so.%so_tls_version
+%_libdir/lib%pkgname.so.*
 
 %files -n libmbedcrypto%so_crypto_version
 %_libdir/libmbedcrypto.so.%so_crypto_version
-%_libdir/libmbedcrypto.so.%version
+%_libdir/libmbedcrypto.so.*
 
 %files -n libmbedx509-%so_x509_version
 %_libdir/libmbedx509.so.%so_x509_version
-%_libdir/libmbedx509.so.%version
-
-%files -n libtfpsacrypto%so_tfpsacrypto_version
-%_libdir/libtfpsacrypto.so.%so_tfpsacrypto_version
-%_libdir/libtfpsacrypto.so.%tf_psa_crypto_version
+%_libdir/libmbedx509.so.*
 
 %files -n lib%name-devel
 %doc ChangeLog LICENSE README.md
-%_includedir/%name
+%_includedir/%pkgname
 %_includedir/psa
-%_includedir/tf-psa-crypto
+%_includedir/everest
 %_libdir/libmbedcrypto.so
-%_libdir/lib%name.so
+%_libdir/lib%pkgname.so
 %_libdir/libmbedx509.so
-%_libdir/libtfpsacrypto.so
 %_libdir/cmake/MbedTLS
-%_libdir/cmake/TF-PSA-Crypto
 %_pkgconfigdir/mbedcrypto.pc
 %_pkgconfigdir/mbedtls.pc
 %_pkgconfigdir/mbedx509.pc
-%_pkgconfigdir/tfpsacrypto.pc
+%if_disabled static
+%_libdir/libeverest.a
+%_libdir/libp256m.a
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/libmbedcrypto.a
-%_libdir/lib%name.a
+%_libdir/lib%pkgname.a
 %_libdir/libmbedx509.a
-%_libdir/libtfpsacrypto.a
+%_libdir/libeverest.a
+%_libdir/libp256m.a
 %endif
 
-%files utils
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
-
 %changelog
-* Wed Oct 15 2025 Nazarov Denis <nenderus@altlinux.org> 4.0.0-alt1
-- New version 4.0.0.
+* Wed Oct 15 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.5-alt1
+- New version 3.6.5.
+- Buid as legacy library with devel subpackage
 
 * Tue Jul 01 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.4-alt1
 - New version 3.6.4.
