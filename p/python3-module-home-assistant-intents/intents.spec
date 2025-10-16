@@ -1,26 +1,32 @@
 Name: python3-module-home-assistant-intents
-Version: 2025.1.1
+Version: 2025.10.1
 Release: alt1
 
 Summary: Intents for Home Assistant
 License: CC-BY-4.0
 Group: Development/Python
-Url: https://pypi.org/project/home-assistant-intents/
+Url: https://pypi.org/project/home-assistant-intents
+VCS: https://github.com/OHF-Voice/intents
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(hassil)
-BuildRequires: python3(yaml)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra dev
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 O=home_assistant_intents/data
 mkdir -p $O && python3 script/merged_output.py $O
 
@@ -35,6 +41,9 @@ mkdir -p $O && python3 script/merged_output.py $O
 %python3_sitelibdir/home_assistant_intents-%version.dist-info
 
 %changelog
+* Thu Oct 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10.1-alt1
+- 2025.10.1 released
+
 * Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.1.1-alt1
 - 2025.1.1 released
 
