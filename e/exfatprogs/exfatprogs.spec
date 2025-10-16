@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: exfatprogs
-Version: 1.2.9
+Version: 1.3.0
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -44,6 +44,7 @@ at the level of exfat utilities in windows.
 %make -k check VERBOSE=1
 
 %files
+%_sbindir/defrag.exfat
 %_sbindir/dump.exfat
 %_sbindir/exfatlabel
 %_sbindir/fsck.exfat
@@ -54,6 +55,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.9-alt1
 - 1.2.9
 
