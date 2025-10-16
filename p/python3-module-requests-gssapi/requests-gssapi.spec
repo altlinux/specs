@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
@@ -17,9 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# PyPI name
-%py3_provides requests-gssapi
-Provides: python3-module-requests_gssapi = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -53,11 +52,14 @@ guaranteed to be compatible.
 %pyproject_run_pytest -ra
 
 %files
-%doc AUTHORS LICENSE *.rst
+%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0.
+
 * Fri Feb 16 2024 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.3 -> 1.3.0.
 

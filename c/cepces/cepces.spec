@@ -2,7 +2,7 @@
 
 Name:           cepces
 Version:        0.3.8
-Release:        alt2
+Release:        alt3
 Summary:        Certificate Enrollment through CEP/CES
 Group:          System/Configuration/Other
 BuildArch:      noarch
@@ -33,7 +33,7 @@ BuildRequires:  python3(setuptools)
 BuildRequires:  python3(cryptography)
 BuildRequires:  python3(requests)
 BuildRequires:  python3(gssapi)
-BuildRequires:  python3(requests-gssapi)
+BuildRequires:  python3(requests_gssapi)
 
 %description -n python3-module-%name
 %name is an application for enrolling certificates through CEP and CES.
@@ -113,6 +113,9 @@ fi
 %_libexecdir/certmonger/%name-submit
 
 %changelog
+* Thu Oct 16 2025 Stanislav Levin <slev@altlinux.org> 0.3.8-alt3
+- Fixed FTBFS (new requests-gssapi).
+
 * Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 0.3.8-alt2
 - Migrated from removed setuptools test command.
 
