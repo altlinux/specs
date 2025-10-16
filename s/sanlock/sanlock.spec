@@ -2,7 +2,7 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.9.5
+Version: 4.1.0
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -197,6 +197,9 @@ useradd -r -d -M /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %na
 %_man8dir/sanlk-reset*
 
 %changelog
+* Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 3.9.5-alt1
 - 3.9.5
 
