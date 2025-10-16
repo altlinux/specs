@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gnome-characters
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Character map application for GNOME
@@ -86,6 +86,9 @@ xvfb-run %__meson_test
 %doc NEWS COPYING README*
 
 %changelog
+* Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
