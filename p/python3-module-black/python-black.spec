@@ -1,11 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name black
+%define mod_name %pypi_name
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 25.1.0
-Release: alt2
+Version: 25.9.0
+Release: alt1
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
@@ -15,11 +27,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
-
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -43,6 +53,8 @@ Formatting becomes transparent after a while and you can focus on the content
 instead.
 
 Black makes code review faster by producing the smallest diffs possible.
+
+%add_python_extra d
 
 %prep
 %setup
@@ -70,12 +82,16 @@ Black makes code review faster by producing the smallest diffs possible.
 %_bindir/blackd
 %python3_sitelibdir/__pycache__/_black_version.cpython*
 %python3_sitelibdir/_black_version.py
-%python3_sitelibdir/black/
+%python3_sitelibdir/_black_version.pyi
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/blackd/
 %python3_sitelibdir/blib2to3/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 15 2025 Stanislav Levin <slev@altlinux.org> 25.9.0-alt1
+- 25.1.0 -> 25.9.0.
+
 * Thu May 22 2025 Stanislav Levin <slev@altlinux.org> 25.1.0-alt2
 - Fixed FTBFS (click 8.2.0).
 
