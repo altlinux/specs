@@ -4,13 +4,14 @@
 %def_disable fltk
 
 Name: pinentry
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
-Summary: Simple PIN or passphrase entry dialog
-License: GPLv2+
 Group: File tools
-Url: http://gnupg.org/related_software/pinentry/
+Summary: Simple PIN or passphrase entry dialog
+License: GPL-2.0-or-later
+Url: https://gnupg.org/related_software/pinentry/
+VCS: git://git.gnupg.org/pinentry.git
 
 Requires: %name-common
 Requires: %name-qt5
@@ -265,6 +266,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Thu Oct 16 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
+- new version
+
 * Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
 - set pinentry-qt6 as pinentry-qt provider
 
