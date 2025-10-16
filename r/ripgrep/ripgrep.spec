@@ -2,7 +2,7 @@
 %def_with check
 
 Name: ripgrep
-Version: 14.1.1
+Version: 15.0.0
 Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
@@ -13,8 +13,8 @@ Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: 0001-pcre2-sys-disable-JIT-on-LoongArch-not-supported.patch
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: cargo-vendor-checksum
 BuildRequires: diffstat
 
@@ -29,14 +29,7 @@ your current directory for a regex pattern.
 %prep
 %setup -a 1
 %patch1 -p1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 diffstat -p1 -l %PATCH1 | sed -re 's@vendor/@@' | \
 xargs cargo-vendor-checksum --files-in-vendor-dir
 
@@ -72,6 +65,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Thu Oct 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 15.0.0-alt1
+- Updated to version 15.0.0.
+
 * Sun Sep 29 2024 Alexander Makeenkov <amakeenk@altlinux.org> 14.1.1-alt1
 - Updated to version 14.1.1.
 
@@ -98,4 +94,3 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 
 * Fri Jun 12 2020 Alexander Makeenkov <amakeenk@altlinux.org> 12.1.1-alt1
 - Initial build for ALT
-
