@@ -1,5 +1,5 @@
 Name: kexec-tools
-Version: 2.0.31
+Version: 2.0.32
 Release: alt1
 
 Summary: Load one kernel from another
@@ -40,6 +40,9 @@ rm -vf %buildroot%_libdir/kexec-tools/kexec_test
 %_man8dir/vmcore-dmesg.8*
 
 %changelog
+* Thu Oct 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.32-alt1
+- 2.0.32 released
+
 * Tue Apr 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.31-alt1
 - 2.0.31 released
 
