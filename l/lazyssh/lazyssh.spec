@@ -2,7 +2,7 @@
 
 %global import_path github.com/Adembc/lazyssh
 Name: lazyssh
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: A terminal-based SSH manager inspired by lazydocker and k9s
@@ -44,5 +44,8 @@ install -Dpm755 main %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus
