@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-download-manager
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Lomiri Upload/Download Manager
@@ -178,5 +178,8 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_docdir/%name/*
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.2-alt1
+- New version 0.2.2.
+
 * Tue Jul 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus

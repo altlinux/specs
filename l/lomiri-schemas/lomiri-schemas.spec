@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lomiri-schemas
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Configuration schemas used by Lomiri
@@ -78,5 +78,8 @@ This package contains the development files for %name.
 %_datadir/dbus-1/interfaces/com.lomiri.touch.AccountsService.Sound.xml
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.9-alt1
+- New version 0.1.9.
+
 * Mon Jul 14 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.8-alt1
 - Initial build for Sisyphus

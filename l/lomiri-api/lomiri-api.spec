@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-api
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: API for Lomiri shell integration
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-api
 
 Source: %name-%version.tar
 
-# sync with version 0.2.2-1 from Debian unstable
+# sync with version 0.2.3-1 from Debian unstable
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -64,7 +64,7 @@ cases on phone, tablet or desktop devices.
 
 Lomiri API Library for integrating with the Lomiri shell.
 
-This package contains the API documentation. 
+This package contains the API documentation.
 
 %package -n liblomiri-api-devel
 Summary: API for Lomiri shell integration (development headers)
@@ -77,7 +77,7 @@ cases on phone, tablet or desktop devices.
 
 Lomiri API Library for integrating with the Lomiri shell.
 
-This package contains the development files. 
+This package contains the development files.
 
 %prep
 %setup
@@ -117,5 +117,8 @@ This package contains the development files.
 %_docdir/lib%{name}/*
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.3-alt1
+- New version 0.2.3.
+
 * Sat Jul 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus

@@ -3,7 +3,7 @@
 %def_with check
 
 Name: lomiri-action-api
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Lomiri Action Qt5 API
@@ -121,5 +121,8 @@ This package contains developer documentation.
 %_datadir/doc/lomiri-action-api/*
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus

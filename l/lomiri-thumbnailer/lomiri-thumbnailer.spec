@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-thumbnailer
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: D-Bus service for out of process thumbnailing
@@ -36,6 +36,7 @@ BuildRequires: pkgconfig(liblomiri-api)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(libapparmor)
 BuildRequires: pkgconfig(libpersistent-cache-cpp)
+BuildRequires: ayatana-cmake-modules
 
 %if_with check
 BuildRequires: ctest
@@ -134,5 +135,8 @@ This package provides the development files for the library.
 %_libdir/liblomiri-thumbnailer-qt.so
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.5-alt1
+- New version 3.0.5.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.4-alt1
 - Initial build for Sisyphus
