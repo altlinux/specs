@@ -1,26 +1,23 @@
 Name: python3-module-yarl
-Version: 1.18.3
+Version: 1.22.0
 Release: alt1
 
 Summary: Yet another URL library
 License: Apache-2.0
 Group: Development/Python
-Url: https://github.com/aio-libs/yarl
+Url: https://pypi.org/project/yarl
+VCS: https://github.com/aio-libs/yarl
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(cython)
-BuildRequires: python3(expandvars)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_cov)
-BuildRequires: python3(pytest_codspeed)
-BuildRequires: python3(idna)
-BuildRequires: python3(multidict)
-BuildRequires: python3(propcache)
-BuildRequires: python3(hypothesis)
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 The module provides handy URL class for url parsing and changing.
@@ -28,9 +25,11 @@ See http://yarl.readthedocs.io for more
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
 
 %build
-python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 %pyproject_build
 
 %install
@@ -38,13 +37,16 @@ python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 
 %check
 export YARL_NO_EXTENSIONS=1
-%pyproject_run_pytest -m "not hypothesis" --no-cov tests
+%pyproject_run_pytest -o addopts= tests
 
 %files
 %python3_sitelibdir/yarl
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Wed Oct 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.22.0-alt1
+- 1.22.0 released
+
 * Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.18.3-alt1
 - 1.18.3 released
 
