@@ -1,5 +1,5 @@
 Name: hyprpaper
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 License: BSD-3-Clause
 
@@ -44,7 +44,7 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %setup
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=lib
+%cmake
 %cmake_build
 
 %install
@@ -56,6 +56,9 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %_userunitdir/%name.service
 
 %changelog
+* Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.6-alt1
+- new version 0.7.6 (with rpmrb script)
+
 * Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.5-alt1
 - new version 0.7.5 (with rpmrb script)
 

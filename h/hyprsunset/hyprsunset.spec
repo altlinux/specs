@@ -1,5 +1,5 @@
 Name: hyprsunset
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 License: BSD-3-Clause
 
@@ -34,7 +34,7 @@ BuildRequires: pkgconfig(libffi)
 %setup
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=lib
+%cmake
 %cmake_build
 
 %install
@@ -45,6 +45,9 @@ BuildRequires: pkgconfig(libffi)
 %_userunitdir/%name.service
 
 %changelog
+* Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.3-alt1
+- new version 0.3.3 (with rpmrb script)
+
 * Thu Aug 14 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.2-alt1
 - new version 0.3.2 (with rpmrb script)
 - fix scheduling
