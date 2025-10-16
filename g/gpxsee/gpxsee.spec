@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gpxsee
-Version: 13.47
+Version: 14.1
 Release: alt1
 
 Summary: GPS log file viewer and analyzer
@@ -17,6 +17,7 @@ BuildRequires: qt6-tools
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-svg-devel
+BuildRequires: pkgconfig(zlib)
 
 Requires: qtpbfimageplugin-qt6
 
@@ -30,7 +31,7 @@ Features
   ONmove OMD/GHP, TwoNav (TRK, RTE, WPT), GPSDump WPT, Velocitek VTK,
   Vakaros VKX, 70mai GPS logs and geotagged JPEG files.
 - Opens geo URIs (RFC 5870).
-- User-definable online maps (OpenStreetMap/Google tiles, WMTS, WMS, 
+- User-definable online maps (OpenStreetMap/Google tiles, WMTS, WMS,
   TMS, QuadTiles).
 - Offline maps (MBTiles, OziExplorer maps, TrekBuddy maps/atlases,
   Garmin IMG/GMAP & JNX maps, TwoNav RMaps, GeoTIFF images, BSB charts,
@@ -79,6 +80,9 @@ qmake-qt6 \
 %_datadir/mime/packages/%{name}.xml
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 14.1-alt1
+- New version 14.1.
+
 * Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 13.47-alt1
 - New version 13.47.
 

@@ -2,7 +2,7 @@
 %def_with check
 
 Name: reuse
-Version: 5.1.1
+Version: 6.1.2
 Release: alt1
 
 Summary: tool for REUSE copyright and license recommendations
@@ -28,6 +28,7 @@ BuildRequires: python3(boolean)
 BuildRequires: python3(click)
 BuildRequires: python3(license-expression)
 BuildRequires: python3(debian)
+BuildRequires: python3(magic)
 %endif
 
 # FIXME?
@@ -37,11 +38,11 @@ Source: %name-%version.tar
 
 %description
 Managing copyright and licensing is difficult, especially when reusing
-software from different projects that are released under various 
-different licenses. REUSE was started by the Free Software Foundation 
+software from different projects that are released under various
+different licenses. REUSE was started by the Free Software Foundation
 Europe (FSFE) to provide a set of recommendations to make licensing your
 Free Software projects easier. Not only do these recommendations make it
-easier for you to declare the licenses under which your works are 
+easier for you to declare the licenses under which your works are
 released, but they also make it easier for a computer to understand how
 your project is licensed.
 
@@ -72,6 +73,9 @@ install -D -m 0644 docs/_build/man/*.1 -t "%{buildroot}%{_man1dir}/"
 
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 6.1.2-alt1
+- New version 6.1.2.
+
 * Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 5.1.1-alt1
 - New version 5.1.1.
 
