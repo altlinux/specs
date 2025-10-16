@@ -1,6 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
+%define _name cellbroadcastd
 %define libname libcellbroadcast
 %define xdg_name org.freedesktop.cbd
 %define ver_major 0.0
@@ -10,7 +11,7 @@
 %define gvdb_ver 4758f6f
 
 %def_enable introspection
-%def_disable vala
+%def_enable vala
 %def_disable man
 %def_disable gtk_doc
 %ifarch %ix86
@@ -20,8 +21,8 @@
 %endif
 
 
-Name: cellbroadcastd
-Version: %ver_major.2
+Name: %_name
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cell broadcast daemon
@@ -157,6 +158,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Fri Jun 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
 - 0.0.2
 
