@@ -8,7 +8,7 @@
 %def_enable docs
 
 Name:		python3-module-%modname
-Version:	3.8.0
+Version:	3.9.0
 Release:	alt1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
@@ -70,6 +70,9 @@ rm -rf html/.{buildinfo,doctrees}
 
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 3.9.0-alt1
+- updated version to 3.9.0
+
 * Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 3.8.0-alt1
 - updated version to 3.8.0
 

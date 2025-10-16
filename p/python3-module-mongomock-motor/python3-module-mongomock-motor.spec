@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.35
+Version: 0.0.36
 Release: alt1
 
 Summary: Library for mocking AsyncIOMotorClient built on top of mongomock
@@ -37,6 +37,7 @@ Source: %pypi_name-%version.tar
 
 %prep
 %setup -n %pypi_name-%version
+sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -50,8 +51,11 @@ Source: %pypi_name-%version.tar
 %files
 %doc *.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%mod_name-0.0.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 0.0.36-alt1
+- New 0.0.36 version.
+
 * Mon Apr 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.0.35-alt1
 - Initial build for Sisyphus.

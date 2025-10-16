@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2021.12.29
-Release: alt1
+Release: alt2
 
 Summary: PyTest Helpers Namespace
 License: Apache-2.0
@@ -13,7 +13,7 @@ Group:   Development/Python3
 URL:     https://github.com/saltstack/pytest-helpers-namespace
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools_scm python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,6 +32,7 @@ your conftest.py to be used within your tests without having to import them.
 %setup -n %pypi_name-%version
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -43,8 +44,11 @@ your conftest.py to be used within your tests without having to import them.
 %files
 %doc *.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%mod_name-0.0.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 2021.12.29-alt2
+- Fix version.
+
 * Mon Oct 14 2024 Alexander Burmatov <thatman@altlinux.org> 2021.12.29-alt1
 - Initial build for Sisyphus.

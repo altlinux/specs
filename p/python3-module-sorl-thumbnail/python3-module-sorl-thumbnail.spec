@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 12.11.0
-Release: alt1
+Release: alt2
 
 Summary: Thumbnails for Django
 License: BSD-3-Clause
@@ -14,7 +14,7 @@ Group:   Development/Python3
 URL:     https://github.com/jazzband/sorl-thumbnail
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools_scm python3-module-wheel
 # Deprecated
 %add_python3_req_skip boto
 %add_python3_req_skip boto.dynamodb2.table
@@ -36,6 +36,7 @@ Source: %pypi_name-%version.tar
 %setup -n %pypi_name-%version
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -47,8 +48,11 @@ Source: %pypi_name-%version.tar
 %files
 %doc *.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/sorl_thumbnail-0.0.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 12.11.0-alt2
+- Fix version.
+
 * Wed Sep 03 2025 Alexander Burmatov <thatman@altlinux.org> 12.11.0-alt1
 - Initial build for Sisyphus.

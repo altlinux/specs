@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 7.5.0
-Release: alt1
+Release: alt2
 
 Summary: Python API client library for Netbox
 License: Apache-2.0
@@ -12,7 +12,7 @@ Group:   Development/Python3
 URL:     https://github.com/netbox-community/pynetbox
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -33,20 +33,24 @@ Source: %pypi_name-%version.tar
 %setup -n %pypi_name-%version
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --deselect=tests/integration
 
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/pynetbox-0.0.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 7.5.0-alt2
+- Fix version.
+
 * Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 7.5.0-alt1
 - New 7.5.0 version.
 

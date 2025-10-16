@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.3.1
-Release: alt2
+Version: 5.5.1
+Release: alt1
 
 Summary: A JSON Web Token authentication plugin for the Django REST Framework
 License: MIT
@@ -13,7 +13,7 @@ Group:   Development/Python3
 URL:     https://github.com/jazzband/djangorestframework-simplejwt
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools_scm python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-django
@@ -29,16 +29,14 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 
-Patch0: fix-tests.patch
-
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
-%patch0 -p1
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -51,9 +49,12 @@ Patch0: fix-tests.patch
 %files -f %name.lang
 %doc *.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/djangorestframework_simplejwt-0.0.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 5.5.1-alt1
+- New 5.5.1 version.
+
 * Mon Aug 05 2024 Alexander Burmatov <thatman@altlinux.org> 5.3.1-alt2
 - Fix tests.
 

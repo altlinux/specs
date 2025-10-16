@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.4.3
+Version: 4.4.4
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -20,7 +20,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs
-BuildRequires: python3-module-mkdocs-material >= 9.6.21
+BuildRequires: python3-module-mkdocs-material >= 9.6.22
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 0.30.1
 BuildRequires: python3-module-mkdocstrings-python >= 1.18.2
@@ -60,9 +60,9 @@ Requires: python3-module-social-app-django >= 5.6.0
 Requires: python3-module-social-core >= 4.8.1
 Requires: python3-module-sorl-thumbnail >= 12.11.0
 Requires: python3-module-strawberry-graphql >= 0.283.3
-Requires: python3-module-strawberry-django >= 0.66.1
+Requires: python3-module-strawberry-django >= 0.66.2
 Requires: python3-module-svgwrite >= 1.4.3
-Requires: python3-module-tablib >= 3.8.0
+Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2025.2
 Requires: python3-module-packaging
 Requires: python3-module-django-auth-ldap
@@ -208,6 +208,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.4-alt1
+- New 4.4.4 version.
+
 * Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.3-alt1
 - New 4.4.3 version.
 
