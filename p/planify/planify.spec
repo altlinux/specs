@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name planify
-%define ver_major 4.14
+%define ver_major 4.15
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
@@ -17,7 +17,7 @@ Url: https://github.com/alainm23/planify
 Vcs: https://github.com/alainm23/planify.git
 
 %if_disabled snapshot
-Source: %url/archive/%version/%_name-%version.tar.gz
+Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -40,6 +40,7 @@ BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(webkitgtk-6.0)
 BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(libspelling-1)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libecal-2.0) >= %ecal_ver
 BuildRequires: pkgconfig(libedataserver-1.2)
@@ -89,9 +90,6 @@ This package contains files necessary to develop Planify plugins.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/appdata/%rdn_name.appdata.xml
-%_datadir/gtksourceview-5/language-specs/markdownpp.lang
-%_datadir/gtksourceview-5/styles/markdown.xml
-%_datadir/gtksourceview-5/styles/markdown_dark.xml
 %doc README*
 
 %files -n lib%_name
@@ -104,6 +102,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 4.15.1-alt1
+- 4.15.1
+
 * Tue Sep 30 2025 Yuri N. Sedunov <aris@altlinux.org> 4.14.1-alt1
 - 4.14.1
 
