@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-freon
 Version: 58
-Release: alt3
+Release: alt4
 Summary: Shows CPU temperature, disk temperature, video card temperature
 # OFL-1.1 for material-icons
 License: GPL-3.0-or-later AND OFL-1.1
@@ -59,6 +59,9 @@ cp freon@UshakovVasilii_Github.yahoo.com/icons/material-icons/LICENSE LICENSE-ma
 %doc README.md LICENSE LICENSE-material-icons
 
 %changelog
+* Thu Oct 16 2025 Anton Midyukov <antohami@altlinux.org> 58-alt4
+- metadata.json: add GNOME 49 support
+
 * Tue May 20 2025 Anton Midyukov <antohami@altlinux.org> 58-alt3
 - pack material-icons
 - update License (add "AND OFL-1.1" for material-icons)
