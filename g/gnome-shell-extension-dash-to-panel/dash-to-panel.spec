@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-dash-to-panel
-Version: 70
+Version: 72
 Release: alt1
 
 %define sname dash-to-panel
@@ -55,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 %doc README.md COPYING
 
 %changelog
+* Wed Oct 15 2025 Anton Midyukov <antohami@altlinux.org> 72-alt1
+- New version 72.
+
 * Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> 70-alt1
 - New version 70.
 
