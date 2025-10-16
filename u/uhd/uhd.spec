@@ -21,7 +21,7 @@
 %endif
 
 Name: uhd
-Version: 4.8.0.0
+Version: 4.9.0.1
 Release: alt1
 Summary: Universal Hardware Driver for Ettus Research products
 License: GPL-3.0-or-later
@@ -147,11 +147,6 @@ pushd host
 %cmake_build
 popd
 
-# tools
-pushd tools/uhd_dump
-%make_build
-popd
-
 %check
 pushd host
 %cmake_build --target test || :
@@ -197,7 +192,6 @@ popd
 
 # tools
 install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usrp_x3xx_fpga_jtag_programmer.sh
-install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 
 %files
 %exclude %_docdir/%name/doxygen
@@ -205,7 +199,6 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %doc _tmpdoc/*
 %_bindir/*
 #exclude %_bindir/aurora_bist_test.py
-%exclude %_bindir/chdr_log
 #exclude %_bindir/e320_bist
 #exclude %_bindir/usrp_update_fs
 %exclude %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
@@ -234,7 +227,6 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %files tools
 %doc tools/README.md
 #_bindir/aurora_bist_test.py
-%_bindir/chdr_log
 #_bindir/e320_bist
 #_bindir/usrp_update_fs
 %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
@@ -246,6 +238,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Tue Oct 14 2025 Anton Midyukov <antohami@altlinux.org> 4.9.0.1-alt1
+- New version 4.9.0.1.
+
 * Wed May 21 2025 Anton Midyukov <antohami@altlinux.org> 4.8.0.0-alt1
 - New version 4.8.0.0.
 
