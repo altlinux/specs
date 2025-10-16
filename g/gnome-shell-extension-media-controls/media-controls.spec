@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-media-controls
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: A mpris client for the Gnome shell
 
@@ -55,6 +55,9 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Thu Oct 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.0-alt3
+- update to git.c6d1e16
+
 * Sat Jul 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.0-alt2
 - only for Gnome 48 or later
 

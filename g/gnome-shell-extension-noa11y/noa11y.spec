@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-noa11y
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Hides the accessibility button on the top bar
 
@@ -24,8 +24,8 @@ A simple GNOME extension that hides the accessibility button on the top bar.
 %prep
 %setup -n %nameU-%version
 
-#fixed for Gnome 48
-subst 's|"47"|"47", "48"|' metadata.json
+#fixed for Gnome 49
+subst 's|"47"|"47", "48", "49"|' metadata.json
 
 %build
 %install
@@ -37,6 +37,9 @@ cp -a *.js *.json LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Thu Oct 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 7.0-alt2
+- fixed for GNOME 49
+
 * Mon Jun 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 7.0-alt1
 - Initial build for Sisyphus.
 

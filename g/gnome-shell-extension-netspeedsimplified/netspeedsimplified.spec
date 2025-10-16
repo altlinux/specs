@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-netspeedsimplified
 Version: 44
-Release: alt1
+Release: alt2
 
 Summary: Net speed Simplified
 
@@ -25,7 +25,7 @@ A Net Speed monitor With Loads of Customization.
 %prep
 %setup -n %nameU-%version
 
-# subst 's|"47"|"47", "48"|' metadata.json
+subst 's|"48"|"48", "49"|' metadata.json
 
 %build
 %install
@@ -41,6 +41,9 @@ cp -a *.js *.json *.css LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID
 %doc *.md LICENSE 
 
 %changelog
+* Thu Oct 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 44-alt2
+- fixed for GNOME 49
+
 * Wed May 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 44-alt1
 - 43 -> 44
 
