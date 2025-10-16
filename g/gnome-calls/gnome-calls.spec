@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -97,6 +97,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1.1-alt1
+- 49.1.1
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
