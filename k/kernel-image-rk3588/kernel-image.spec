@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.52
+%define kernel_sublevel	.53
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -511,6 +511,11 @@ fi
 %modules_dir/build
 
 %changelog
+* Thu Oct 16 2025 Alexei Takaseev <taf@altlinux.org> 6.12.53-alt1
+- v6.12.53 (2025-10-15).
+- arm64: rockchip: Add Thin_88RK-1A Board support.
+- config: Enable ZONE_DEVICE, DEVICE_PRIVATE, HSA_AMD_SVM, GPIO_PCA953X_IRQ, CONFIG_RTC_DRV_RX8111=m
+
 * Mon Oct 13 2025 Alexei Takaseev <taf@altlinux.org> 6.12.52-alt1
 - v6.12.52 (2025-10-12).
 - config: enable all accelerometers.
