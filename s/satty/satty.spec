@@ -1,5 +1,5 @@
 Name: satty
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 License: MPL-2.0
 
@@ -46,5 +46,8 @@ install -D assets/satty.svg %buildroot%_iconsdir/hicolor/scalable/apps/satty.svg
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.20.0-alt1
+- new version 0.20.0 (with rpmrb script)
+
 * Wed Jun 18 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.19.0-alt1
 - Initial build
