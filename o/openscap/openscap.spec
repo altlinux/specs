@@ -1,7 +1,7 @@
 %define with_sce 1
 
 Name: openscap
-Version: 1.3.10
+Version: 1.3.12
 Release: alt1
 
 Summary: Set of open source libraries enabling integration of the SCAP line of standards
@@ -12,7 +12,7 @@ URL: http://www.open-scap.org/
 # https://github.com/OpenSCAP/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source0: %{name}-%{version}.tar
 
-Patch1: %{name}-1.3.10-alt-rpmPushMacro.patch
+Patch1: %{name}-1.3.12-alt-rpmPushMacro.patch
 Patch2: %{name}-1.3.10-alt-rpmvercmp.patch
 
 BuildRequires: cmake >= 3
@@ -295,6 +295,9 @@ cp AUTHORS NEWS README.md COPYING docs/oscap-scan.cron \
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 16 2025 Alexey Appolonov <alexey@altlinux.org> 1.3.12-alt1
+- New version.
+
 * Tue Apr 16 2024 Alexey Appolonov <alexey@altlinux.org> 1.3.10-alt1
 - New version.
 
