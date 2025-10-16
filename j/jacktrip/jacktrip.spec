@@ -1,5 +1,5 @@
 Name:    jacktrip
-Version: 2.6.0
+Version: 2.7.1
 Release: alt1
 
 Summary: JackTrip: multi-machine audio network performance over the Internet
@@ -42,6 +42,7 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 %meson \
     -Drtaudio=enabled \
     -Dnovs=true \
+    -Dwair=true \
     -Dlibsamplerate=auto
 
 %meson_build
@@ -60,6 +61,9 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Oct 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.7.1-alt1
+- 2.6.0 -> 2.7.1
+
 * Wed Jun 25 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.6.0-alt1
 - 2.4.1 -> 2.6.0
 - added libsamplerate support
