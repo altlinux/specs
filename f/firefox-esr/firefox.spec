@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.3.0
+Version: 140.4.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -434,6 +434,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 15 2025 Pavel Vasenkov <pav@altlinux.org> 140.4.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-11708 Use-after-free in MediaTrackGraphImpl::GetInstance()
+  + CVE-2025-11709 Out of bounds read/write in a privileged process triggered by WebGL textures
+  + CVE-2025-11710 Cross-process information leaked due to malicious IPC messages
+  + CVE-2025-11711 Some non-writable Object properties could be modified
+  + CVE-2025-11712 An OBJECT tag type attribute overrode browser behavior on web resources without a content-type
+  + CVE-2025-11713 Potential user-assisted code execution in 'Copy as cURL' command
+  + CVE-2025-11714 Memory safety bugs fixed in Firefox ESR 115.29, Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+  + CVE-2025-11715 Memory safety bugs fixed in Firefox ESR 140.4, Thunderbird ESR 140.4, Firefox 144 and Thunderbird 144
+
+* Wed Oct 15 2025 Pavel Vasenkov <pav@altlinux.org> 140.3.1-alt1
+- New ESR version.
+
 * Tue Sep 23 2025 Pavel Vasenkov <pav@altlinux.org> 140.3.0-alt1
 - New ESR version.
 - Security fixes:
@@ -533,7 +548,7 @@ rm -rf -- \
   + CVE-2025-1933 JIT corruption of WASM i32 return values on 64-bit CPUs
   + CVE-2025-1934 Unexpected GC during RegExp bailout processing
   + CVE-2025-1935 Clickjacking the registerProtocolHandler info-bar
-  + CVE-2025-1936 Adding %00 and a fake extension to a jar: URL changed the interpretation of the contents
+  + CVE-2025-1936 Adding %%00 and a fake extension to a jar: URL changed the interpretation of the contents
   + CVE-2025-1937 Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 115.21, Firefox ESR 128.8, and Thunderbird 128.8
   + CVE-2025-1938 Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 128.8, and Thunderbird 128.8
 
