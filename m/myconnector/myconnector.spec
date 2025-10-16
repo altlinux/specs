@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.6.1
+Version:  2.6.2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -29,6 +29,7 @@ Requires: xdg-utils
 Requires: /usr/bin/xfreerdp
 Requires: zenity
 Requires: curl
+Requires: libayatana-appindicator3-gir
 
 Provides:  connector = %EVR
 Obsoletes: connector
@@ -140,6 +141,11 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri Oct 16 2025 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.2-alt1
+- [kiosk] Uses x11 instead of wayland on KDE (ALT #56375)
+- Fixed tray indicator (ALT #56313)
+- Fixed menu icons (ALT #43116)
+
 * Fri Aug 29 2025 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6.1-alt1
 - [CLI] Added program removal
 - [FreeRDP] Fixed tiny typo (-sec-nla)
