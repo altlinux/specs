@@ -3,7 +3,7 @@
 %define pypi_name sphinxnotes-mock
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.1
 Release: alt1
 
 Summary: Sphinx extension for mocking directives and roles without modifying documents
@@ -30,18 +30,21 @@ Patch: %name-%version-%release.patch
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
 %dir %python3_sitelibdir/sphinxnotes
 %python3_sitelibdir/sphinxnotes/mock/
-%python3_sitelibdir/sphinxnotes_mock-%{version}-*-nspkg.pth
-%python3_sitelibdir/*egg-info
+%dir %python3_sitelibdir/*.dist-info
+%python3_sitelibdir/*.dist-info/METADATA
 
 %changelog
+* Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 1.1-alt1
+- New version 1.1.
+
 * Sun Mar 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
