@@ -1,5 +1,5 @@
 Name: ironbar
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 License: MIT
 
@@ -59,6 +59,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.17.1-alt1
+- new version (0.17.1) with rpmgs script
+
 * Wed Sep 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.17.0-alt1
 - new version (0.17.0) with rpmgs script
 
