@@ -13,7 +13,7 @@
 
 Name: gcr%gcr_api_ver
 Version: %ver_major.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
@@ -27,6 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
+Source1: gcr-ssh-agent.sh
 
 Requires: %name-libs = %EVR
 Requires: libtasn1-utils
@@ -131,6 +132,7 @@ This package contains development documentation for GCR libraries.
 
 %install
 %meson_install
+install -pD -m755 %SOURCE1 %buildroot%_sysconfdir/profile.d/gcr-ssh-agent.sh
 %find_lang %_name-%gcr_api_ver
 
 %check
@@ -140,6 +142,7 @@ xvfb-run %__meson_test -t 8
 %_bindir/%_name-viewer-gtk4
 %_libexecdir/%name-ssh-askpass
 %{?_enable_ssh_agent:
+%_sysconfdir/profile.d/gcr-ssh-agent.sh
 %_libexecdir/%_name-ssh-agent
 %_userunitdir/%_name-ssh-agent.service
 %_userunitdir/%_name-ssh-agent.socket}
@@ -179,6 +182,9 @@ xvfb-run %__meson_test -t 8
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.0.1-alt1.1
+- added /etc/profile.d/gcr-ssh-agent.sh
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.0.1-alt1
 - 4.4.0.1
 
