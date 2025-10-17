@@ -7,7 +7,7 @@
 
 Name: ngspice
 Version: %majver.2
-Release: alt1
+Release: alt2
 Summary: A mixed level/signal circuit simulator
 
 License: BSD
@@ -29,7 +29,6 @@ BuildRequires: libXaw-devel
 BuildRequires: libXext-devel
 BuildRequires: libtinfo-devel
 BuildRequires: mot-adms
-BuildRequires: libfftw3-devel
 BuildRequires: libncurses-devel
 BuildRequires: libreadline-devel
 Requires: %name-data = %EVR
@@ -190,6 +189,9 @@ cp -a \
 %_pkgconfigdir/ngspice.pc
 
 %changelog
+* Fri Oct 17 2025 Anton Midyukov <antohami@altlinux.org> 45.2-alt2
+- Build without fftw3 (Closes: 56446).
+
 * Sun Sep 07 2025 Anton Midyukov <antohami@altlinux.org> 45.2-alt1
 - New version 45.2.
 
