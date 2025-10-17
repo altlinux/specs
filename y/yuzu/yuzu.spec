@@ -6,7 +6,7 @@
 
 Name: yuzu
 Version: 1734
-Release: alt7
+Release: alt7.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -59,7 +59,7 @@ BuildRequires: libenet-devel
 BuildRequires: libffi-devel
 BuildRequires: libgamemode-devel
 BuildRequires: liblz4-devel
-BuildRequires: libmbedtls-devel
+BuildRequires: libmbedtls-3.6-devel
 BuildRequires: libopus-devel
 BuildRequires: libsimpleini-devel
 BuildRequires: libstb-devel
@@ -147,6 +147,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Fri Oct 17 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt7.1
+- Fix FTBFS
+
 * Thu Aug 21 2025 Nazarov Denis <nenderus@altlinux.org> 1734-alt7
 - Add optflag -DXBYAK_STRICT_CHECK_MEM_REG_SIZE=0 (ALT #55675)
 
