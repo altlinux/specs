@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 4.0
+%define ver_major 4.1
 %define beta %nil
 
 %def_enable docs
 
 Name: nautilus-python
-Version: %ver_major.1
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
@@ -26,7 +26,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
-Patch1: %name-4.0.1-up-nautilis-4.1.patch
 
 %define ext_api_ver 4
 %define nautilus_extdir %_libdir/nautilus/extensions-%ext_api_ver
@@ -70,7 +69,6 @@ Development documentation for %name.
 
 %prep
 %setup -n %name-%version%beta
-%patch1 -p1
 
 %build
 %meson \
@@ -99,6 +97,9 @@ mkdir -p %buildroot%_datadir/nautilus-python/extensions/__pycache__
 %exclude %_docdir/%name
 
 %changelog
+* Tue Oct 07 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Thu Sep 18 2025 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt2
 - adapted for nautilus-49
 
