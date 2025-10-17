@@ -5,7 +5,7 @@
 
 Name:    pi-hole-ftl
 Version: 6.2.3
-Release: alt1
+Release: alt2
 
 Summary: The Pi-hole FTL engine
 License: EUPL-1.2
@@ -23,7 +23,7 @@ BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(libidn2)
 BuildRequires: libgmp-devel
 BuildRequires: libidn-devel
-BuildRequires: libmbedtls-devel
+BuildRequires: libmbedtls-3.6-devel
 BuildRequires: libnettle-devel
 BuildRequires: libreadline-devel libreadline-devel-static
 BuildRequires: libunistring-devel
@@ -84,6 +84,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.3-alt2
+- fix FTBFS with libmbedtls
+
 * Tue Aug 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.3-alt1
 - v6.2.3
 
