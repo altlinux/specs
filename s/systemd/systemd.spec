@@ -96,11 +96,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 257
+%define ver_major 258
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.9
+Version: %ver_major.1
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -173,7 +173,7 @@ Patch1: %name-%version.patch
 
 %define dbus_ver 1.11.0
 
-BuildRequires(pre): rpm-build-xdg meson >= 0.60.0
+BuildRequires(pre): rpm-build-xdg meson >= 0.62.0
 BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
@@ -294,11 +294,10 @@ Requires: sysvinit-utils
 # Obsoletes: SysVinit
 Provides: %name-sysvinit = %EVR
 Obsoletes: %name-sysvinit < 1:255.7-alt1
-Provides: SysVinit = 2.88-alt0.1
 #Obsoletes:      upstart
 Conflicts: upstart
 Conflicts: SysVinit
-Provides: /sbin/init /sbin/reboot /sbin/halt /sbin/poweroff /sbin/shutdown /sbin/telinit /sbin/runlevel
+Provides: /sbin/init /sbin/reboot /sbin/halt /sbin/poweroff /sbin/shutdown
 
 # SBAT generation number for ALT (refer to SBAT.md)
 %define sbat_distro altlinux
@@ -624,6 +623,10 @@ Conflicts: make-initrd < 2.2.10
 Obsoletes: bash-completion-udev < %EVR
 Obsoletes: zsh-completion-udev < %EVR
 
+# Newer versions of those are required to support X11 keycode remapping
+Conflicts: xorg-drv-evdev < 2.11.0
+Conflicts: xorg-drv-libinput < 1.5.0
+
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
 system are visible to userspace in a hierarchal fashion through
@@ -660,13 +663,17 @@ Static library for libudev.
 
 %package tests
 Summary: Internal unit tests for systemd
-Requires: %name = %EVR
-Requires: %name-utils = %EVR
 Group: Development/Other
 License: LGPLv2+
+Requires: %name = %EVR
+Requires: %name-utils = %EVR
+Requires: libnss-mymachines = %EVR
+Requires: libnss-resolve = %EVR
+Requires: libfido2_1 libqrencode4 libarchive
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-50-DISSECT.dissect.sh
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-81-GENERATORS.fstab-generator.sh
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-86-MULTI-PROFILE-UKI.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-07-PID1.private-bpf.sh
 %filter_from_requires /^.usr.lib.os-release/d
 
 %description tests
@@ -747,9 +754,10 @@ Conflicts: startup < 0.9.9.14
 %prep
 %setup -q
 %patch1 -p1
+sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
+sed -i "s|/usr/bin/bash|/bin/bash|" mkosi/mkosi.images/exitrd/mkosi.extra/shutdown
 
 %build
-
 %meson \
         -Dmode=release \
         -Dlink-udev-shared=false \
@@ -918,6 +926,10 @@ rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 rm -f %buildroot%_systemd_dir/boot/efi/linuxia32.elf.stub
 %endif
 
+%if_disabled bpf_framework
+rm -f %buildroot%_systemd_dir/tests/unit-tests/manual/test-bpf-token
+%endif
+
 %if_disabled tpm2
 # for some weird reason, systemd still installs these man pages
 # even though the corresponding binaries are not built
@@ -1043,6 +1055,8 @@ touch %buildroot%_sysconfdir/machine-info
 mkdir -p %buildroot{%_systemd_dir,%_sysconfdir/systemd}/system.conf.d
 mkdir -p %buildroot{%_systemd_dir,%_sysconfdir/systemd}/user.conf.d
 
+install -d -m 0700 %buildroot%_sysconfdir/userdb
+
 # Make sure the shutdown/sleep drop-in dirs exist
 mkdir -p %buildroot%_systemd_dir/system-shutdown
 mkdir -p %buildroot%_systemd_dir/system-sleep
@@ -1079,8 +1093,6 @@ install -D -m 0644 -t %buildroot%_user_unitdir/slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_sysctldir/ %SOURCE47
 
 install -D -m 0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
-
-sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_systemd_dir/tests/run-unit-tests.py
 
 mkdir -p %buildroot%_sysconfdir/systemd/network
 mkdir -p %buildroot%_sysconfdir/systemd/nspawn
@@ -1393,11 +1405,20 @@ fi
 
 %post -n libnss-systemd
 if [ -f /etc/nsswitch.conf ] ; then
-            grep -E -q '^(passwd|group):.* systemd' /etc/nsswitch.conf ||
+            grep -E -q '^(passwd|shadow|group|gshadow):.* systemd' /etc/nsswitch.conf ||
             sed -i.rpmorig -r -e '
-                s/^(\s*passwd\s*):(.*)/\1:\2 systemd/
-                /^\s*group\s*:.*\s+role\s*$/ s/^(\s*group\s*):(.*)(\s+role)\s*$/\1:\2 systemd\3/
-                /^\s*group\s*:.*\s+role\s*$/! s/^(\s*group\s*):(.*)/\1:\2 systemd/
+                s/^(passwd|shadow|gshadow):.*/& systemd/
+                s/^(group:.*)(\s+role)?\s*$/\1 [SUCCESS=merge] systemd\2/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    # Fix: add systemd to shadow and gshadow
+            grep -E -q '^(shadow|gshadow):.* systemd' /etc/nsswitch.conf ||
+            sed -i.rpmorig -r -e '
+                s/^(shadow|gshadow):.*/& systemd/
+                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    # Fix: add [SUCCESS=merge] before systemd to group
+            grep -E -q '^group:.*[SUCCESS=merge] systemd' /etc/nsswitch.conf ||
+            sed -i.rpmorig -r -e '
+		s/^(group:.*)(systemd)/\1[SUCCESS=merge] \2/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1417,7 +1438,7 @@ update_chrooted all
 if [ -f /etc/nsswitch.conf ] ; then
         grep -E -q '^hosts:.* resolve' /etc/nsswitch.conf ||
         sed -i.rpmorig -r -e '
-                s/^(hosts):(.*)(files)/\1:\2resolve [!UNAVAIL=return] \3/
+                s/^(hosts:.*)(files)/\1resolve [!UNAVAIL=return] \2/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1437,17 +1458,18 @@ update_chrooted all
 if [ -f /etc/nsswitch.conf ] ; then
         grep -E -q '^hosts:.* myhostname' /etc/nsswitch.conf ||
         sed -i.rpmorig -r -e '
-                s/^(hosts):(.*) files(.*) dns/\1:\2 files myhostname\3 dns/
+                s/^(hosts:.*)(dns)/\1myhostname \2/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
-    # Fix: move myhostname after files
+    # Fix: move myhostname before dns
     if grep -E -q '^hosts:.* dns myhostname' /etc/nsswitch.conf ; then
         sed -i.rpmorig -r -e '
-                s/^(hosts):(.*) files(.*) dns myhostname/\1:\2 files myhostname\3 dns/
+                s/^(hosts.*)(dns) (myhostname)/\1\3 \2/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
     fi
+    # Fix: move myhostname after files
     if grep -E -q '^hosts:.* myhostname.*files' /etc/nsswitch.conf ; then
         sed -i.rpmorig -r -e '
-                s/^(hosts):(.*) myhostname(.*) files(.*)/\1:\2 files myhostname\3\4/
+		s/^(hosts):(.*) myhostname(.*) files(.*)/\1:\2 files myhostname\3\4/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
     fi
 fi
@@ -1625,6 +1647,7 @@ fi
 %dir %_sysconfdir/kernel/install.d
 %dir %_prefix/lib/kernel
 %dir %_kernel_installdir
+%dir %_systemd_dir/initrd-preset
 
 %files -f %name.lang
 %_sbindir/init
@@ -1632,33 +1655,29 @@ fi
 %_sbindir/halt
 %_sbindir/poweroff
 %_sbindir/shutdown
-%_sbindir/telinit
-%_sbindir/runlevel
 %_man1dir/init*
 %_man8dir/halt*
 %_man8dir/reboot*
 %_man8dir/shutdown*
 %_man8dir/poweroff*
-%_man8dir/telinit*
-%_man8dir/runlevel*
 %_initdir/README
 
 %_systemd_dir/user.conf.d/env-path.conf
 
 %config %_sysconfdir/profile.d/systemd.sh
-%_sysconfdir/profile.d/70-systemd-shell-extra.sh
-%_systemd_dir/profile.d/70-systemd-shell-extra.sh
+%_sysconfdir/profile.d/*
+%_systemd_dir/profile.d/*
 
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
 %_tmpfilesdir/journal-nocow.conf
 %_tmpfilesdir/provision.conf
 %_tmpfilesdir/credstore.conf
+%_tmpfilesdir/20-systemd-osc-context.conf
 %_tmpfilesdir/20-systemd-shell-extra.conf
 %_tmpfilesdir/20-systemd-ssh-generator.conf
 %_tmpfilesdir/20-systemd-stub.conf
 %_tmpfilesdir/20-systemd-userdb.conf
-
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
@@ -1764,6 +1783,9 @@ fi
 %_systemd_dir/systemd-storagetm
 %_man8dir/systemd-storagetm.*
 
+%_bindir/systemd-pty-forward
+%_man1dir/systemd-pty-forward.*
+
 %if_enabled firstboot
 %_bindir/systemd-firstboot
 %_man8dir/systemd-firstboot.*
@@ -1833,7 +1855,6 @@ fi
 %_man1dir/systemd-stdio-bridge*
 %_systemd_dir/systemd
 %_bindir/systemd-ac-power
-%_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
 %_bindir/systemd-cryptsetup
 %_systemd_dir/systemd-cryptsetup
@@ -1855,10 +1876,10 @@ fi
 %endif
 %endif
 %_systemd_dir/systemd-boot-check-no-failures
+%_systemd_dir/systemd-factory-reset
 %_systemd_dir/systemd-fsck
 %_systemd_dir/systemd-growfs
 %_systemd_dir/systemd-hibernate-resume
-%_systemd_dir/systemd-initctl
 %_systemd_dir/systemd-journald
 %_systemd_dir/systemd-makefs
 %_systemd_dir/systemd-quotacheck
@@ -1868,19 +1889,20 @@ fi
 %_systemd_dir/systemd-rfkill
 %_systemd_dir/systemd-sleep
 %_systemd_dir/systemd-socket-proxyd
+%_systemd_dir/systemd-ssh-issue
 %_systemd_dir/systemd-ssh-proxy
 %_systemd_dir/systemd-update-done
 %_systemd_dir/systemd-update-helper
 %_systemd_dir/systemd-update-utmp
 %_systemd_dir/systemd-user-runtime-dir
 %_systemd_dir/systemd-user-sessions
+%_systemd_dir/systemd-validatefs
 %_systemd_dir/systemd-vconsole-setup
 %_systemd_dir/systemd-volatile-root
 %_systemd_dir/systemd-sysroot-fstab-check
 %_systemd_dir/systemd-sysv-install
 %_systemd_dir/systemd-sulogin-shell
 %_systemd_dir/systemd-xdg-autostart-condition
-
 %_bindir/bootctl
 %_man1dir/bootctl.*
 %_man5dir/systemd.pcrlock*
@@ -1895,6 +1917,7 @@ fi
 %if_enabled bootloader
 %_systemd_dir/systemd-pcrextend
 %_systemd_dir/systemd-tpm2-setup
+%_systemd_dir/systemd-tpm2-clear
 %_man1dir/systemd-measure*
 %_man8dir/systemd-pcrlock*
 %_man8dir/systemd-pcrfs*
@@ -1915,8 +1938,9 @@ fi
 %_user_presetdir/*
 %_user_gen_dir/*
 %_user_env_gen_dir/*
-%exclude %_gen_dir/systemd-import-generator
+%_systemd_dir/initrd-preset/*
 
+%exclude %_gen_dir/systemd-import-generator
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
@@ -2031,16 +2055,18 @@ fi
 %endif
 
 %_man8dir/systemd-boot-check*
+%_man8dir/systemd-confext-initrd*
 %_man8dir/systemd-debug-generator*
+%_man8dir/systemd-factory-reset*
 %_man8dir/systemd-fsck*
 %_man8dir/systemd-fstab-generator*
 %_man8dir/systemd-getty-generator*
 %_man8dir/systemd-gpt-auto-generator*
 %_man8dir/systemd-growfs*
+%_man8dir/systemd-loop*
 %_man8dir/systemd-sysv-generator*
 %_man8dir/systemd-hibernate*
 %_man8dir/*sleep*
-%_man8dir/systemd-initctl*
 %_man8dir/systemd-kexec*
 %_man8dir/systemd-makefs*
 %_man8dir/systemd-mkswap*
@@ -2054,6 +2080,7 @@ fi
 %_man8dir/systemd-socket-proxyd*
 %_man8dir/systemd-soft-reboot*
 %_man8dir/systemd-suspend*
+%_man8dir/systemd-sysext-initrd*
 %_man8dir/systemd-system-update-generator*
 %_man8dir/systemd-update-utmp*
 %_man8dir/systemd-user-sessions*
@@ -2061,6 +2088,7 @@ fi
 %_man8dir/systemd-halt*
 %_man8dir/systemd-reboot*
 %_man8dir/systemd-poweroff*
+%_man8dir/systemd-validatefs*
 %_man8dir/systemd-volatile-root*
 %_man8dir/systemd-xdg-autostart-generator*
 %_mandir/*/*login*
@@ -2127,6 +2155,7 @@ fi
 
 %if_enabled polkit
 %_datadir/polkit-1/actions/*.policy
+%_datadir/polkit-1/rules.d/10-systemd-logind-root-ignore-inhibitors.rules.example
 %exclude %_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.network1.policy
 %exclude %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
@@ -2305,6 +2334,7 @@ fi
 %_man1dir/resolvectl.*
 %_man1dir/resolvconf.*
 %_man5dir/dnssec-trust-anchors.d.*
+%_man5dir/systemd.dns-delegate*
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
 %_man5dir/systemd.network.*
@@ -2328,7 +2358,7 @@ fi
 %_bindir/systemd-dissect
 %_bindir/systemd-nspawn
 %_sbindir/mount.ddi
-%_systemd_dir/import-pubring.gpg
+%_systemd_dir/import-pubring.pgp
 %_tmpfilesdir/systemd-nspawn.conf
 %_unitdir/*.machine1.*
 %_unitdir/*.import1.*
@@ -2357,6 +2387,7 @@ fi
 %_systemd_dir/network/80-container-ve.network
 %_systemd_dir/network/80-container-vz.network
 %_systemd_dir/network/80-namespace-ns.network
+%_systemd_dir/network/80-namespace-ns-tun.network
 %_systemd_dir/network/80-vm-vt.network
 %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %_datadir/dbus-1/system-services/org.freedesktop.import1.service
@@ -2549,6 +2580,10 @@ fi
 %if_enabled tests
 %files tests
 %_systemd_dir/tests
+# TODO: fix sisyphus_check
+# sisyphus_check: check-systemd ERROR: systemd unit path violation
+%exclude %_systemd_dir/tests/mkosi/mkosi.*/%_unitdir/*.service
+%exclude %_systemd_dir/tests/mkosi/mkosi.*/*/*/%_unitdir/*.service
 %endif
 
 %files -n libudev1
@@ -2608,6 +2643,14 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Wed Oct 15 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.1-alt1
+- 258.1.
+- Fix update nsswitch.conf.
+
+* Thu Sep 18 2025 Alexey Shabalin <shaba@altlinux.org> 1:258-alt1
+- 258.
+- Drop support SYSV configs from /etc/sysconfig (network, i18n).
+
 * Thu Sep 18 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.9-alt1
 - 257.9.
 

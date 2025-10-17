@@ -1,8 +1,10 @@
 %def_enable check
+%define _localstatedir /var
+%define _libexecdir %_prefix/libexec
 
 Name: realmd
 Version: 0.17.1
-Release: alt7
+Release: alt8
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -23,6 +25,7 @@ BuildRequires: /usr/bin/net
 %{?_enable_check:BuildRequires: python3-devel}
 Requires: polkit
 Requires: packagekit
+Conflicts: oddjob-mkhomedir < 0.34.7-alt2
 
 %description
 realmd is a DBus system service which manages discovery and enrollment in realms
@@ -36,9 +39,6 @@ Group: Development/Documentation
 %description devel-docs
 The %name-devel package contains developer documentation for developing
 applications that use %name.
-
-%define _localstatedir /var
-%define _libexecdir %_prefix/libexec
 
 %prep
 %setup -q
@@ -55,7 +55,7 @@ applications that use %name.
 %makeinstall_std
 
 %find_lang %name
-
+mkdir -p %buildroot%_sysconfdir
 install -m755 -D service/realmd-altlinux-helper %buildroot%_prefix/lib/realmd/
 install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/
 
@@ -65,21 +65,26 @@ install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/
 %files -f realmd.lang
 %doc AUTHORS COPYING NEWS README
 %config(noreplace) %_sysconfdir/realmd.conf
-%_sysconfdir/dbus-1/system.d/org.freedesktop.realmd.conf
 %_sbindir/realm
 %_prefix/lib/realmd
 %_libexecdir/realmd
 %_unitdir/realmd.service
 %_datadir/dbus-1/system-services/org.freedesktop.realmd.service
+%_datadir/dbus-1/system.d/org.freedesktop.realmd.conf
 %_datadir/polkit-1/actions/org.freedesktop.realmd.policy
 %_man8dir/realm.*
 %_man5dir/realmd.conf.*
-%_localstatedir/cache/realmd/
+%_cachedir/realmd
 
 %files devel-docs
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Thu Oct 09 2025 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt8
+- Build upstream master snapshot.
+- Add oddjob support to realmd-altlinux.conf.
+- Avoid dependencies to telinit.
+
 * Mon Sep 04 2023 Alexander Burmatov <thatman@altlinux.org> 0.17.1-alt7
 - Updating the distro config (ALT #47410).
 

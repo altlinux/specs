@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
+%define _libexecdir %_usr/libexec
 
 Name: oddjob
 Version: 0.34.7
-Release: alt1
+Release: alt2
 Summary: A D-Bus service which runs odd jobs on behalf of client applications
 
 Group: System/Servers
@@ -41,6 +42,8 @@ bus.
 Summary: An oddjob helper which creates and populates home directories
 Group: System/Servers
 Requires: %name = %EVR
+# For /usr/bin/dbus-send
+Requires: dbus-tools
 
 %description mkhomedir
 This package contains the oddjob helper which can be used by the
@@ -65,12 +68,12 @@ This package contains a trivial sample oddjob service.
     --disable-static \
     --enable-pie \
     --enable-now \
+    --with-pam \
     --with-selinux-acls \
     --with-selinux-labels \
     --without-python \
     --enable-xml-docs \
-    --enable-systemd \
-    --disable-sysvinit \
+    --with-systemdsystemunitdir=%_unitdir \
     --enable-sample
 %make_build
 
@@ -90,11 +93,17 @@ install -m755 sample/oddjob-sample.sh		%buildroot/%_libexecdir/%name/
 
 mkdir -p %buildroot/%_lib/security
 mv %buildroot%_libdir/security/pam_oddjob_mkhomedir.so \
-%buildroot/%_lib/security/
+   %buildroot/%_lib/security/
 rm %buildroot%_libdir/security/pam_oddjob_mkhomedir.la
 
 %check
 %make check
+
+%post
+%post_service oddjobd
+
+%preun
+%preun_service oddjobd
 
 %files
 %doc *.dtd COPYING NEWS QUICKSTART doc/oddjob.html src/reload
@@ -124,19 +133,16 @@ rm %buildroot%_libdir/security/pam_oddjob_mkhomedir.la
 %config(noreplace) %_sysconfdir/dbus-*/system.d/oddjob-mkhomedir.conf
 %config(noreplace) %_sysconfdir/oddjobd.conf.d/oddjobd-mkhomedir.conf
 
-
 %files sample
 %_libexecdir/%name/oddjob-sample.sh
 %config %_sysconfdir/dbus-*/system.d/oddjob-sample.conf
 %config %_sysconfdir/oddjobd.conf.d/oddjobd-sample.conf
 
-%post
-%post_service oddjobd
-
-%preun
-%preun_service oddjobd
-
 %changelog
+* Thu Oct 09 2025 Alexey Shabalin <shaba@altlinux.org> 0.34.7-alt2
+- Build upstream masrer snapshot.
+- Define _libexecdir as /usr/libexec (path to mkhomedir the same for all arches).
+
 * Wed Jun 23 2021 Stanislav Levin <slev@altlinux.org> 0.34.7-alt1
 - 0.34.6 -> 0.34.7.
 
