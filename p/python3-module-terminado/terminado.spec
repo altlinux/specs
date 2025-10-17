@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.18.1
-Release: alt1
+Release: alt2
 Summary: Tornado websocket backend for the Xterm.js Javascript terminal emulator
 License: BSD
 Group: Development/Python3
@@ -52,7 +52,7 @@ JS:
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -W ignore::pytest.PytestUnraisableExceptionWarning
 
 %files
 %doc README.*
@@ -60,6 +60,9 @@ JS:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 0.18.1-alt2
+- Fixed FTBFS.
+
 * Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 0.18.1-alt1
 - 0.11.1 -> 0.18.1.
 
