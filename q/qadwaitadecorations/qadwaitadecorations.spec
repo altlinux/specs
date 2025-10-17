@@ -2,8 +2,8 @@
 %def_with qt6
 
 Name: qadwaitadecorations
-Version: 0.1.6
-Release: alt3
+Version: 0.1.7
+Release: alt1
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
@@ -92,6 +92,9 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %changelog
+* Sat Oct 04 2025 Anton Midyukov <antohami@altlinux.org> 0.1.7-alt1
+- new version (0.1.7) with rpmgs script
+
 * Thu Jul 03 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt3
 - require rebuild with new qt5/qt6 (Closes: 55028)
 
