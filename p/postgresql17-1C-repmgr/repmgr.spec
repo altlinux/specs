@@ -4,7 +4,7 @@
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.5.0
-Release: alt3
+Release: alt4
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -28,7 +28,7 @@ Obsoletes: %prog_name < %EVR
 BuildRequires: libreadline-devel libzstd-devel perl-parent zlib-devel
 BuildRequires: flex
 BuildRequires: libssl-devel libselinux-devel liblz4-devel libxslt-devel libpam-devel
-BuildRequires: libkrb5-devel libcurl-devel libjson-c-devel
+BuildRequires: libkrb5-devel libcurl-devel libjson-c-devel libnuma-devel
 BuildRequires: postgresql%pg_ver-devel-static
 # for build doc
 BuildRequires: docbook-dtds docbook-style-xsl
@@ -100,6 +100,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt4
+- Add BR libnuma-devel
+
 * Tue Oct 14 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt3
 - Enable JIT on LoongArch
 - Remove PostgreSQL 11 and older support
