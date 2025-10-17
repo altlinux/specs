@@ -1,4 +1,4 @@
-%define pg_ver 14
+%define pg_ver 18
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -19,17 +19,17 @@ Source: %name-%version.tar
 # optimized out: elfutils libcloog-isl4 libcom_err-devel libkrb5-devel libpq-devel libsasl2-3 postgresql-devel python-base setproctitle
 BuildRequires: libpam-devel libreadline-devel libselinux-devel libssl-devel setproctitle-devel zlib-devel
 BuildRequires: postgresql%pg_ver-devel-static
-BuildRequires: libkrb5-devel liblz4-devel
+BuildRequires: libkrb5-devel liblz4-devel libzstd-devel libnuma-devel
 
 Requires: postgresql%pg_ver-server
 
 Conflicts: pg_rman
 Conflicts: pg_rman12
 Conflicts: pg_rman13
+Conflicts: pg_rman14
 Conflicts: pg_rman15
 Conflicts: pg_rman16
 Conflicts: pg_rman17
-Conflicts: pg_rman18
 
 %description
 The goal of the pg_rman project is providing a method for online
@@ -57,10 +57,14 @@ cp -r sql examples/
 
 %changelog
 * Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 1.3.18-alt2
-- Add Conflicts: pg_rman18
+- Build for PG 18
 
 * Wed Jul 30 2025 Alexei Takaseev <taf@altlinux.org> 1.3.18-alt1
 - Updated to upstream version 1.3.18.
+
+* Tue Feb 11 2025 Alexei Takaseev <taf@altlinux.org> 1.3.17-alt1
+- Build for PG 17
+- Updated to upstream version 1.3.17.
 
 * Tue Feb 11 2025 Alexei Takaseev <taf@altlinux.org> 1.3.16-alt3
 - Replace BR libecpg6-%%pg_ver-devel-static libpq5-devel-static and
@@ -70,9 +74,11 @@ cp -r sql examples/
 - Fix BuildReq
 
 * Fri Dec 15 2023 Alexei Takaseev <taf@altlinux.org> 1.3.16-alt1
+- Build for PG 16
 - Updated to upstream version 1.3.16.
 
 * Mon Sep 18 2023 Alexei Takaseev <taf@altlinux.org> 1.3.15-alt1
+- Build for PG 15
 - Updated to upstream version 1.3.15.
 
 * Thu May 11 2023 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt4
