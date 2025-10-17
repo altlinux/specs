@@ -2,19 +2,25 @@
 
 Name: deepin-turbo
 Version: 0.0.9.0.28.8f4b
-Release: alt1
+Release: alt2
+
 Summary: A daemon that helps to launch applications faster
+
 License: LGPL-2.1-only and GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-turbo
+VCS: https://github.com/linuxdeepin/deepin-turbo
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Mon Sep 09 2024
 # optimized out: cmake-modules dqt5-base-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-qml libdqt5-qmlmodels libdqt5-quick libdqt5-widgets libdqt5-x11extras libdqt5-xml libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-svg libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base sh5
-BuildRequires: cmake dqt5-declarative-devel libdbus-devel libdtkdeclarative-devel libdtkwidget-devel libsystemd-devel
+BuildRequires: cmake dqt5-declarative-devel libdbus-devel libdtkdeclarative-devel libdtkwidget-devel libsystemd-devel libwayland-client-devel
 
 %description
 %summary.
@@ -36,6 +42,7 @@ This package provides development files for %name.
 
 %prep
 %setup
+%patch -p1
 # Fix python shebang.
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' scripts/library-helper.py
 # Fix unmets.
@@ -72,6 +79,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/lib%name.so
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.9.0.28.8f4b-alt2
+- Fixed build with dtk 5.7.23.
+- Added VCS tag.
+
 * Mon Sep 09 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.9.0.28.8f4b-alt1
 - New version 0.0.9-28-g8f4b0a09.
 - Built via separate qt5 instead system (ALT #48138).
