@@ -1,5 +1,5 @@
 Name: fd
-Version: 10.2.0
+Version: 10.3.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
@@ -9,8 +9,8 @@ Url: https://github.com/sharkdp/fd
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 
 %ifarch i586 armh
 %filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
@@ -28,14 +28,7 @@ fd is an alternative to GNU find. It features:
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -60,6 +53,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Oct 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 10.3.0-alt1
+- Updated to version 10.3.0.
+
 * Sat Aug 24 2024 Alexander Makeenkov <amakeenk@altlinux.org> 10.2.0-alt1
 - Updated to version 10.2.1.
 
@@ -92,4 +88,3 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 
 * Sat Jun 13 2020 Alexander Makeenkov <amakeenk@altlinux.org> 8.1.1-alt1
 - Initial build for ALT
-
