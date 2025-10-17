@@ -3,11 +3,12 @@
 
 Name: postgresql%pg_ver-%prog_name
 Version: 2.3.0
-Release: alt2
+Release: alt3
 License: GPL
 Group: Databases
 Summary: PostgreSQL complex IP Address text field query
 Source: %prog_name-%version.tar.gz
+# VCS: https://github.com/OpenNMS/iplike
 URL: http://www.opennms.org
 
 # Automatically added by buildreq on Thu Jun 21 2007
@@ -40,6 +41,9 @@ echo "CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bo
 %_libdir/pgsql/*.so
 
 %changelog
+* Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 2.3.0-alt3
+- Add VCS URL
+
 * Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 2.3.0-alt2
 - Add Conflicts: iplike and libiplike
 
