@@ -4,22 +4,24 @@
 
 Name: deepin-widgets
 Version: 6.0.25
-Release: alt1
+Release: alt2
 
 Summary: Desktop widgets service/implementation for DDE
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-widgets
-Vcs: git://github.com/linuxdeepin/dde-widgets.git
+VCS: https://github.com/linuxdeepin/dde-widgets
 
-Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-widgets-6.0.25-alt-fix-elfs.patch
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch0: deepin-widgets-%version-%release.patch
+Patch1: deepin-widgets-6.0.25-alt-fix-elfs.patch
 
 Provides: %repo = %EVR
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-BuildRequires: cmake dtkcore libdtkwidget-devel dqt5-svg-devel dqt5-x11extras-devel libgtest-devel
+BuildRequires: cmake dtkcore libdtkwidget-devel dqt5-svg-devel dqt5-x11extras-devel libgtest-devel libwayland-client-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -87,6 +89,9 @@ cmake --build %_cmake__builddir -j1
 %_libdir/cmake/DdeWidgets/DdeWidgetsConfig.cmake
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt2
+- Fixed build with dtk 5.7.23.
+
 * Tue Feb 11 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt1
 - New version 6.0.25.
 - Added vcs tag.
