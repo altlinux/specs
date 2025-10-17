@@ -1,29 +1,32 @@
 Name: python3-module-aiooui
-Version: 0.1.7
+Version: 0.1.9
 Release: alt1
 
 Summary: Async OUI lookups
 License: MIT
 Group: Development/Python
-Url: https://github.com/bluetooth-devices/aiooui
+Url: https://pypi.org/project/aiooui
+VCS: https://github.com/bluetooth-devices/aiooui
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(requests)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -32,13 +35,16 @@ BuildRequires: python3(requests)
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o addopts= tests
 
 %files
 %python3_sitelibdir/aiooui
 %python3_sitelibdir/aiooui-%version.dist-info
 
 %changelog
+* Fri Oct 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.9-alt1
+- 0.1.9 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.7-alt1
 - 0.1.7 released
 
@@ -47,4 +53,3 @@ BuildRequires: python3(requests)
 
 * Wed Mar 13 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.5-alt1
 - 0.1.5 released
-
