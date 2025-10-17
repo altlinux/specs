@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Run a subprocess in a pseudo terminal
 
@@ -43,6 +43,10 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 	tests/test_invalid_binary.py \
 	tests/test_preexec_fn.py
 
+# Hotfix for python3.13
+# https://github.com/pexpect/ptyprocess/commit/a44312974bd9084aa568d2e18ce5b2a7e0e45983
+sed -i '/makeSuite/d' tests/test_invalid_binary.py
+
 %build
 %python3_build
 
@@ -58,6 +62,9 @@ py.test3 -v
 %python3_sitelibdir/ptyprocess-*.egg-info
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt2
+- Fixed FTBFS.
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
