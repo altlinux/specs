@@ -1,14 +1,8 @@
 %define pg_ver 17
-%ifarch loongarch64
-# XXX: psql jit uses LLVM, versions <= 15.
-# These versions do not support LoongArch targets.
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Name: postgresql%pg_ver-pg_cron
-Version: 1.6.5
+Version: 1.6.7
 Release: alt1
 
 Summary: The pg_cron is a simple cron-based job scheduler for PostgreSQL
@@ -40,6 +34,7 @@ the database.
 %makeinstall_std
 
 %files
+%doc LICENSE README.md pg_cron.conf
 %_libdir/pgsql/*.so
 %if_with jit
 %_libdir/pgsql/bitcode/*
@@ -47,5 +42,9 @@ the database.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 1.6.7-alt1
+- 1.6.7
+- Enable JIT on LoongArch
+
 * Tue Mar 04 2025 Alexei Takaseev <taf@altlinux.org> 1.6.5-alt1
 - Initial build for ALT Linux
