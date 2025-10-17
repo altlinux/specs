@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.32
-Release: alt1
+Release: alt2
 
 Summary: Applying JSON Patches in Python
 License: BSD
@@ -24,6 +24,10 @@ Library to apply JSON Patches according to RFC 6902.
 %prep
 %setup -q -n %pypi_name-%version
 
+# Hotfix for python3.13
+# https://github.com/stefankoegl/python-json-patch/pull/159/commits/c54b939576d604f240d652de350def810f6f4748
+sed -i 's/unittest.makeSuite/unittest.defaultTestLoader.loadTestsFromTestCase/g' $(grep -rl makeSuite)
+
 %build
 export LC_ALL=en_US.UTF-8
 %python3_build
@@ -42,6 +46,9 @@ export LC_ALL=en_US.UTF-8
 
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 1.32-alt2
+- Fixed FTBFS.
+
 * Mon May 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.32-alt1
 - new version 1.32 (with rpmrb script)
 
