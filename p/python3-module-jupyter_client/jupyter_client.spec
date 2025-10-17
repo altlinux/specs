@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 8.6.3
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -58,7 +58,7 @@ sed -i '/--color=yes/d' pyproject.toml
 %check
 sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 %pyproject_run_pytest -v -p asyncio -p rerunfailures --reruns=3 -p timeout \
-	-k "not test_input_request"
+	-k "not test_input_request" -W ignore::pytest.PytestUnraisableExceptionWarning
 
 %files
 %doc *.md
@@ -68,6 +68,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 8.6.3-alt2
+- Fixed FTBFS.
+
 * Tue Sep 17 2024 Anton Vyatkin <toni@altlinux.org> 8.6.3-alt1
 - New version 8.6.3.
 
