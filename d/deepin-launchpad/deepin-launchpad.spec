@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.12
+Version: 2.0.13
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -17,7 +17,8 @@ Provides: %repo = %EVR
 Conflicts: deepin-launcher
 Obsoletes: deepin-launcher
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: %url/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
@@ -77,6 +78,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Thu Oct 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.13-alt1
+- New version 2.0.13.
+
 * Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.12-alt1
 - New version 2.0.12.
 
