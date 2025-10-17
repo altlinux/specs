@@ -2,7 +2,7 @@
 
 Name: deepin-tweak
 Version: 1.2.2.0.17.6a00
-Release: alt2.1
+Release: alt3
 
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
@@ -12,7 +12,8 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/deepin-tweak
 VCS: https://github.com/linuxdeepin/deepin-tweak
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-tweak-1.1.0-alt-fix-undefined-elfs.patch
 
@@ -24,7 +25,7 @@ Requires: dtkdeclarative
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-qml libdqt5-qmlmodels libdqt5-quick libdqt5-svg libdqt5-widgets libdqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-declarative-devel sh5
-BuildRequires: cmake gsettings-qt-devel libdtkdeclarative-devel dqt5-declarative-devel dqt5-tools
+BuildRequires: cmake gsettings-qt-devel libdtkdeclarative-devel dqt5-declarative-devel dqt5-tools libwayland-client-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -82,6 +83,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/%name/lib%{name}*.so
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.17.6a00-alt3
+- Fixed build with dtk 5.7.23.
+
 * Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.17.6a00-alt2.1
 - Fixed url tag.
 - Added VCS tag.
