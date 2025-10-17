@@ -1,24 +1,33 @@
 Name: python3-module-jsonrpc-async
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: JSON-RPC client implementation for asyncio python code
 License: BSD
 Group: Development/Python
-Url: https://pypi.org/project/jsonrpc-async/
+Url: https://pypi.org/project/jsonrpc-async
+VCS: http://github.com/emlove/jsonrpc-async
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements-test.txt
 
 %build
 %pyproject_build
@@ -26,12 +35,18 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -o addopts= tests.py
+
 %files
 %doc LICENSE.* README.*
 %python3_sitelibdir/jsonrpc_async
 %python3_sitelibdir/jsonrpc_async-%version.dist-info
 
 %changelog
+* Fri Oct 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
+- 2.1.3 released
+
 * Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.2-alt1
 - 2.1.2 released
 
