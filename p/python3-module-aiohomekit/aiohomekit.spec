@@ -1,24 +1,34 @@
 Name: python3-module-aiohomekit
-Version: 3.2.3
+Version: 3.2.20
 Release: alt1
 
 Summary: This library implements the HomeKit protocol
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/aiohomekit/
+Url: https://pypi.org/project/aiohomekit
+VCS: https://github.com/Jc2k/aiohomekit
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
-Requires: python3(chacha20poly1305)
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter asynctest
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -26,12 +36,18 @@ Requires: python3(chacha20poly1305)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -o addopts= tests
+
 %files
 %_bindir/aiohomekitctl
 %python3_sitelibdir/aiohomekit
 %python3_sitelibdir/aiohomekit-%version.dist-info
 
 %changelog
+* Fri Oct 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.20-alt1
+- 3.2.20 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.3-alt1
 - 3.2.3 released
 
