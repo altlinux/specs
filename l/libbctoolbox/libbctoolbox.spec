@@ -1,5 +1,5 @@
 Name: libbctoolbox
-Version: 5.4.36
+Version: 5.4.50
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
@@ -12,7 +12,7 @@ BuildRequires(pre): cmake
 
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: bcunit gnu-config libstdc++-devel perl pkg-config python-base
-BuildRequires: bcunit-devel gcc-c++ libmbedtls-devel >= 3.0
+BuildRequires: bcunit-devel gcc-c++ libmbedtls-3.6-devel
 
 %description
 Utilities library used by Belledonne Communications
@@ -56,6 +56,10 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCToolbox
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.50-alt1
+- 5.4.50.
+- Build with libmbedtls-3.6.
+
 * Wed Aug 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.36-alt1
 - 5.4.36
 
