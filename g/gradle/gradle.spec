@@ -1,23 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+%ifnarch %ix86
 %def_without bootstrap
+%def_with java21
+%else
+%def_with bootstrap
+%def_without java21
+%endif
 
 Name: gradle
 Version: 8.14.3
-Release: alt1
+Release: alt2
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
 Group: Development/Java
 Url: https://gradle.org
 Vcs: https://github.com/gradle/gradle.git
-ExcludeArch: i586
+BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: %name-%version-tags.tar
-%if_with bootstrap
-Source3: %name-bin.tar
-%endif
+%{?_with_bootstrap:Source3: %name-bin.tar}
 Source4: commit.sh
 
 Patch0: 0001-Gradle-adoptium-alt-patch.patch
@@ -26,11 +30,11 @@ Patch2: 0003-Gradle-set-git-specifications-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
-BuildRequires: gradle
+%{!?_with_bootstrap:BuildRequires: gradle}
 BuildRequires: rpm-build-java-osgi
 BuildRequires: java-11-openjdk-devel
 BuildRequires: java-17-openjdk-devel
-BuildRequires: java-21-openjdk-devel
+%{?_with_java21:BuildRequires: java-21-openjdk-devel}
 BuildRequires: git
 
 %description
@@ -44,6 +48,11 @@ Android, Groovy, C++, and Swift.
 %prep
 %setup -a1 -a2
 %autopatch -p1
+
+%if_without java21
+find -type f -name gradle.properties -print0 |
+        xargs -r0 sed -i 's,-Xmx3100m,-Xmx1500m,'
+%endif
 
 %if_with bootstrap
 tar -xf %SOURCE3
@@ -62,9 +71,16 @@ export GRADLE_USER_HOME="$PWD/.gradle"
 COMMITHASH=$(./commit.sh)
 
 # Skip task :docs:javadocAll that requires .git directory.
-gradle installAll \
+%{?_with_java21:gradle installAll} \
+%{!?_with_java21:./gradlew installAll} \
   -x :docs:javadocAll \
-  -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk,%_jvmdir/java-21-openjdk" \
+  %{!?_with_java21:-x :docs:compileJava} \
+  %{?_with_java21:\
+  -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk,%_jvmdir/java-21-openjdk"\
+  } \
+  %{!?_with_java21:\
+  -Porg.gradle.java.installations.paths="%_jvmdir/java-11-openjdk,%_jvmdir/java-17-openjdk" \
+  } \
   -Porg.gradle.java.installations.auto-detect=false \
   -Pgradle_installPath="$PWD/dist" \
   -PfinalRelease=true \
@@ -100,6 +116,9 @@ ln -s %_datadir/gradle/bin/gradle \
 %_datadir/gradle/
 
 %changelog
+* Fri Oct 17 2025 Ivan Khanas <xeno@altlinux.org> 8.14.3-alt2
+- Noarch packaging.
+
 * Mon Aug 18 2025 Ivan Khanas <xeno@altlinux.org> 8.14.3-alt1
 - New version.
 - Change installation paths.
@@ -163,4 +182,3 @@ ln -s %_datadir/gradle/bin/gradle \
 * Tue Aug 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_9jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
-
