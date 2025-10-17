@@ -5,7 +5,7 @@
 %def_with gtk4
 
 Name: NetworkManager-ssh
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -110,6 +110,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Fri Oct 17 2025 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
+- Updated to 1.4.2.
+
 * Mon Jun 09 2025 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
 - Updated to 1.4.1.
 
