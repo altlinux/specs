@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt21.git32d687ffe
+Release: alt22.gita802d1dd2
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -306,6 +306,12 @@ rm -rf %buildroot/DB
 
 %post
 %tmpfiles_create %_tmpfilesdir/openqa-webui.conf
+if [ -f /etc/openqa/openqa.ini ]; then
+    mv -n /etc/openqa/openqa.ini /etc/openqa/openqa.ini.d/00-openqa.ini
+fi
+if [ -f /etc/openqa/database.ini ]; then
+    mv -n /etc/openqa/database.ini /etc/openqa/database.ini.d/00-openqa.ini
+fi
 
 %pre
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -526,6 +532,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue Oct 17 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt22.gita802d1dd2
+- update to current version
+- Commit hash: a802d1dd2
+
 * Tue Sep 16 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt21.git32d687ffe
 - Updated patch addpseudouser
 
