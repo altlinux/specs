@@ -3,7 +3,7 @@
 
 Name:       python3-module-%pypi_name
 Version:    2.0
-Release:    alt2
+Release:    alt3
 Summary:    Resolve JSON Pointers in Python
 Group:      Development/Python3
 
@@ -22,6 +22,9 @@ Library to resolve JSON Pointers according to RFC 6901.
 %prep
 %setup
 
+# Hotfix for python3.13
+sed -i 's/unittest.makeSuite/unittest.defaultTestLoader.loadTestsFromTestCase/g' $(grep -rl makeSuite)
+
 %build
 %python3_build
 
@@ -39,6 +42,9 @@ export LC_ALL=en_US.UTF-8
 
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 2.0-alt3
+- Fixed FTBFS.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt2
 - Build for python2 disabled.
 
