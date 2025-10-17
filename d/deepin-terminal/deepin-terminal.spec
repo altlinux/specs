@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.5.17
+Version: 6.5.18
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -25,7 +25,7 @@ Requires: libdqt5-widgets = %_dqt5_version
 #Recommends:     zssh
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf rpm-macros-cmake
-BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel libchardet-devel libuchardet-devel
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel libchardet-devel libuchardet-devel libwayland-client-devel
 
 %description
 %summary.
@@ -141,6 +141,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu Oct 16 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.18-alt1
+- New version 6.5.18.
+
 * Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.17-alt1
 - New version 6.5.17.
 
