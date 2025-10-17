@@ -1,14 +1,16 @@
 Name: deepin-clone
 Version: 5.0.15.0.4.bc86
-Release: alt2
+Release: alt3
 
 Summary: Disk and partition backup/restore tool
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-clone
+VCS: https://github.com/linuxdeepin/deepin-clone
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
@@ -16,7 +18,7 @@ ExcludeArch: armh
 Requires: icon-theme-hicolor partclone
 
 BuildRequires(pre): desktop-file-utils cmake rpm-build-ninja
-BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-common-devel dqt5-linguist libpolkitqt5-qt5-devel dqt5-base-devel
+BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-common-devel dqt5-linguist libpolkitqt5-qt5-devel dqt5-base-devel libwayland-client-devel
 
 %description
 %summary.
@@ -65,6 +67,10 @@ chmod +x %buildroot%_sbindir/deepin-clone-ionice
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt3
+- Fixed build with dtk 5.7.23.
+- Added VCS tag.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
