@@ -1,4 +1,4 @@
-%define pg_ver 14
+%define pg_ver 18
 %def_with jit
 
 Name: postgresql%pg_ver-pg_repack
