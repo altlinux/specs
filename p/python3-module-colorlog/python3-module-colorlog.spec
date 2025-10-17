@@ -3,20 +3,23 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 6.9.0
+Version: 6.10.1
 Release: alt1
 
 Summary: Python 3 module for log formatting with colors
 Group: Development/Python3
 License: MIT
-Url: http://pypi.python.org/pypi/%pypi_name
-Source: http://pypi.io/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
+Url: https://pypi.python.org/pypi/%pypi_name
+
+Vcs: https://github.com/borntyping/python-colorlog.git
+
+Source: https://pypi.io/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest)}
 
 %description
 colorlog.ColoredFormatter is a formatter for use with Python's logging
@@ -42,6 +45,9 @@ py.test3
 
 
 %changelog
+* Fri Oct 17 2025 Yuri N. Sedunov <aris@altlinux.org> 6.10.1-alt1
+- 6.10.1
+
 * Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 6.9.0-alt1
 - 6.9.0
 
