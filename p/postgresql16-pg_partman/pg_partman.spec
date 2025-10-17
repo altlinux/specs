@@ -1,14 +1,8 @@
 %define pg_ver 16
-%ifarch loongarch64
-# XXX: PostgreSQL jit relies on LLVM versions <= 15 (due to typed pointers).
-# LoongArch targets are supported by LLVM versions >= 16.
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Name: postgresql%pg_ver-pg_partman
-Version: 5.2.4
+Version: 5.3.0
 Release: alt1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
@@ -60,15 +54,18 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %files
 %_bindir/*
 %_libdir/pgsql/pg_partman_bgw.so
-%if %pg_ver >= 11
 %if_with jit
 %_libdir/pgsql/bitcode/src/pg_partman_bgw*
-%endif
 %endif
 %_datadir/pgsql/extension/*
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 5.3.0-alt1
+- 5.3.0
+- Enable JIT on LoongArch
+- Remove PostgreSQL 11 and older support
+
 * Wed Jan 08 2025 Alexei Takaseev <taf@altlinux.org> 5.2.4-alt1
 - 5.2.4
 
