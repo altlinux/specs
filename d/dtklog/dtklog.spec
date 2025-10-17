@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtklog
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -9,9 +9,11 @@ Summary: Deepin tool kit log modules
 License: LGPL-2.1
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtklog
-Vcs: git://github.com/linuxdeepin/dtklog.git
+VCS: https://github.com/linuxdeepin/dtklog
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: %url/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Provides: libdtk5-log = %EVR
 Obsoletes: libdtk5-log < %EVR
@@ -49,6 +51,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %if_enabled clang
@@ -86,6 +89,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtklog.pri
 
 %changelog
+* Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.6-alt1
+- New version 0.0.6.
+
 * Tue Jul 22 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.5-alt1
 - New version 0.0.5.
 
