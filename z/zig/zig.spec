@@ -4,7 +4,7 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.14.1
+Version: 0.15.2
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -18,7 +18,7 @@ ExclusiveArch: %zig_arches
 
 Source: %name-%version.tar
 
-%define llvm_ver 19
+%define llvm_ver 20
 %define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-zig
@@ -107,6 +107,12 @@ rm -rf -- "$t" "$HOME/.cache/zig"
 %files checkinstall
 
 %changelog
+* Sat Oct 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.2-alt1
+- Update to 0.15.2 (2025-10-10).
+
+* Fri Aug 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.1-alt1
+- Update to 0.15.1 (2025-08-19).
+
 * Mon May 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.14.1-alt1
 - Update to 0.14.1 (2025-05-21).
 
