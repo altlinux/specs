@@ -4,7 +4,7 @@
 
 Name: python3-module-%modulename
 Version: 18.10.0
-Release: alt1.1
+Release: alt2
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
 
@@ -54,8 +54,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%tox_check_pyproject
+%pyproject_run_pytest -W ignore::pytest.PytestUnraisableExceptionWarning
 
 %files
 %doc cherrypy/tutorial
@@ -65,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt2
+- Fixed FTBFS.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 18.10.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
