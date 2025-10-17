@@ -1,14 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define soname 25.6
+%define somajor 26
+%define sominor 10
+%define soname %somajor.%sominor
 %define python3_name python3-module-mupdf
 
 Name: mupdf
-Version: 1.25.6
-Release: alt2
+Version: 1.26.10
+Release: alt1
 Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
 Group: Office
 Url: https://github.com/ArtifexSoftware/mupdf
-License: AGPL-3.0
+License: AGPL-3.0-or-later
 
 Source: %name-%version.tar
 Source1: %name-%version-thirdparty-extract.tar
@@ -18,6 +20,7 @@ Source3: %name-%version-thirdparty-mujs.tar
 Patch0: mupdf-1.25.2-alt1-disable_strip.patch
 Patch1: mupdf-1.25.6-alt1-do-not-require-libclang-and-swig.patch
 Patch2: mupdf-1.25.6-alt1-no-venv.patch
+Patch3: mupdf-1.26.10-alt1-disable-auto-rpath.patch
 
 BuildRequires: make gcc-c++
 BuildRequires: zlib-devel libopenjpeg2.0-devel libjbig2dec-devel libgumbo-devel
@@ -28,17 +31,19 @@ BuildRequires: clang
 BuildRequires: swig
 BuildRequires: python3-dev
 BuildRequires: tesseract-devel
+BuildRequires: libbrotli-devel
+BuildRequires: libXrandr-devel
 
-Requires: lib%name%soname = %EVR
+Requires: libmupdf%soname = %EVR
 
-%package -n lib%name%soname
+%package -n libmupdf%soname
 Summary: MuPDF library for PDF render
 Group: System/Libraries
 
-%package -n lib%name-devel
+%package -n libmupdf-devel
 Summary: Development files for MuPDF library
 Group: Development/C
-Requires: lib%name%soname = %EVR
+Requires: libmupdf%soname = %EVR
 
 %package -n libmupdfcpp%soname
 Summary: C++ bindings for MuPDF
@@ -50,9 +55,9 @@ Group: System/Libraries
 
 %description
 MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
-%description -n lib%name%soname
+%description -n libmupdf%soname
 MuPDF shared library
-%description -n lib%name-devel
+%description -n libmupdf-devel
 Header files for the MuPDF shared library
 
 %description -n libmupdfcpp%soname
@@ -81,7 +86,7 @@ make INSTALL="/bin/install -p" \
 	 libdir=%_libdir \
 	 incdir=%_includedir \
 	 mandir=%_mandir \
-	 prefix=%_prefix \
+	 prefix=%prefix \
 	 install-shared-c \
 	 install-shared-python \
 	 install-apps \
@@ -91,23 +96,25 @@ make INSTALL="/bin/install -p" \
 rm -f %buildroot%_libdir/libmupdf-third.a \
      %buildroot%_libdir/libmupdf.a
 
+# Deleting installed from makefile upstream documentation(install-docs)
+rm -r %buildroot%_defaultdocdir/mupdf
+# Installing examples for later packaging
+install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
+
 %files
+%doc CHANGES COPYING README
 %_bindir/mupdf-gl
 %_bindir/mupdf-x11
-%_bindir/mupdf-x11-curl
-%_bindir/muraster
 %_bindir/mutool
 %_mandir/man1/*
 
 %files -n libmupdf%soname
-%dir %_defaultdocdir/mupdf
-%_libdir/libmupdf.so.%{soname}*
-%doc %_defaultdocdir/mupdf/CHANGES
-%doc %_defaultdocdir/mupdf/COPYING
-%doc %_defaultdocdir/mupdf/README
+%_libdir/libmupdf.so.%somajor
+%_libdir/libmupdf.so.%soname
 
 %files -n libmupdfcpp%soname
-%_libdir/libmupdfcpp.so.%{soname}*
+%_libdir/libmupdfcpp.so.%somajor
+%_libdir/libmupdfcpp.so.%soname
 
 %files -n libmupdf-devel
 %dir %_includedir/mupdf
@@ -126,6 +133,9 @@ rm -f %buildroot%_libdir/libmupdf-third.a \
 %python3_sitelibdir/mupdf/_mupdf.so
 
 %changelog
+* Tue Sep 30 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.10-alt1
+- New version (1.26.10).
+
 * Mon May 12 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.25.6-alt2
 - Built with tesseract ocr.
 

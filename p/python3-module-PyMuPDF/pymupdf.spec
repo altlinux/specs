@@ -5,11 +5,11 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.25.5 
+Version: 1.26.5
 Release: alt1
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
-License: AGPL-3.0
+License: AGPL-3.0-or-later
 Group: Development/Python3
 Url: https://pymupdf.readthedocs.io
 VCS: https://github.com/pymupdf/PyMuPDF.git
@@ -33,6 +33,8 @@ BuildRequires: python3-module-psutil
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-fonttools
 %endif
+
+Requires: python3-module-mupdf
 
 %description
 %summary.
@@ -70,8 +72,11 @@ SKIP="$SKIP and not test_subset_fonts"
 SKIP="$SKIP and not test_spikes"
 # these compare renderings with system fonts or missing fonts
 SKIP="$SKIP and not test_4180"
+# tries to download / install stuff through git and pip
+SKIP="$SKIP and not test_4445 and not test_4457 and not test_barcode"
+SKIP="$SKIP and not test_open2 and not test_4533 and not test_4702"
 %ifarch %ix86
-# On the i586 architecture, some tests related to text rendering and positioning, 
+# On the i586 architecture, some tests related to text rendering and positioning,
 # may give minor discrepancies in pixels.
 SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4182"
 %endif
@@ -85,5 +90,9 @@ SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 13 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.5-alt1
+- New version (1.26.5).
+- Added runtime dependency on python3-module-mupdf (closes: #56207).
+
 * Wed May 07 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.25.5-alt1
 - Initial build for ALT.
