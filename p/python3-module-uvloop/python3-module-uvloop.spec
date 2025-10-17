@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.0
-Release: alt2
+Version: 0.22.1
+Release: alt1
 
 Summary: Ultra fast asyncio event loop
 License: MIT and Apache-2.0
@@ -15,18 +15,18 @@ Url: https://pypi.org/project/uvloop/
 Vcs: https://github.com/MagicStack/uvloop
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-Cython
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: libuv-devel
 
 %if_with check
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-OpenSSL
 BuildRequires: /proc
 BuildRequires: /dev/pts
 %endif
@@ -38,6 +38,8 @@ uvloop is implemented in Cython and uses libuv under the hood.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %global build_option "build_ext", "--cython-always","--use-system-libuv"
@@ -65,6 +67,10 @@ uvloop is implemented in Cython and uses libuv under the hood.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 17 2025 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt1
+- Updated to 0.22.1.
+- Reverted building scheme "fixing".
+
 * Wed Oct 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.21.0-alt2
 - Fixed building scheme for backport to stable branches.
 
