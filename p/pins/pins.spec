@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: pins
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Create and edit app shortcuts
@@ -25,7 +25,7 @@ Source: %_name-%version.tar
 Source: %url/archive/v%version/%_name-%version.tar.gz
 %endif
 
-%define adw_ver 1.7
+%define adw_ver 1.8
 
 Requires: dconf
 
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Fri Oct 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Fri Aug 29 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
