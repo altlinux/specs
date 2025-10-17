@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name platformdirs
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 Summary: Determining appropriate platform-specific dirs
 License: MIT
@@ -50,10 +51,13 @@ location.
 
 %files
 %doc README.rst
-%python3_sitelibdir/platformdirs/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 16 2025 Stanislav Levin <slev@altlinux.org> 4.5.0-alt1
+- 4.4.0 -> 4.5.0.
+
 * Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1
 - 4.3.8 -> 4.4.0.
 
