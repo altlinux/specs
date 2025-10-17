@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -87,6 +87,10 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Fri Oct 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.4-alt1
+- Speed up the search for ignored files
+  when using regular expressions (Closes: 55999).
+
 * Sat Oct 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.3-alt1
 - Fix not ignoring regular expressions from
   the default-ignored-files.txt (Closes: 56016).
