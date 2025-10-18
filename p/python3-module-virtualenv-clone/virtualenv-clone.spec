@@ -4,14 +4,14 @@
 
 Name: python3-module-%oname
 Version: 0.5.7
-Release: alt2
+Release: alt3
 Summary: script for cloning a non-relocatable virtualenv
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/virtualenv-clone/
 Vcs: https://github.com/edwardgeorge/virtualenv-clone
 Source: %name-%version.tar
-Patch0: venv-clone-%version-alt-py3.11-fix.patch
+Patch: venv-clone-0.5.7-tests-fix.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -27,7 +27,7 @@ A script for cloning a non-relocatable virtualenv.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 %build
 %pyproject_build
@@ -46,6 +46,9 @@ A script for cloning a non-relocatable virtualenv.
 %_bindir/virtualenv-clone
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 0.5.7-alt3
+- Fixed FTBFS.
+
 * Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.5.7-alt2
 - Fix FTBFS (migrate to pyproject macroses).
 
