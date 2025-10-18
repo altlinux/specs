@@ -1,6 +1,6 @@
 Name: fastfetch
-Version: 2.43.0
-Release: alt1.2
+Version: 2.54.0
+Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
 License: MIT
@@ -90,6 +90,8 @@ popd
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Sat Oct 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.54.0-alt1
+- NMU: 2.43.0 -> 2.54.0 (ALT #56347)
 
 * Mon Jun 23 2025 Artyom Bystrov <arbars@altlinux.org> 2.43.0-alt1.2
 - Fix build
