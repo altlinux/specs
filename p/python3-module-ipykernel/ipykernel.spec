@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.30.1
+Version: 7.0.1
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -39,6 +39,8 @@ BuildRequires: python3-module-ipyparallel
 BuildRequires: python3-module-trio
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-matplotlib-inline
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-numpy-tests
 %endif
 
 %add_python3_req_skip gtk gobject
@@ -71,10 +73,7 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-# https://github.com/ipython/ipykernel/issues/1301
-%pyproject_run_pytest -W ignore::DeprecationWarning \
-	              --ignore tests/test_eventloop.py \
-		      --ignore tests/inprocess tests/
+%pyproject_run_pytest -v tests/
 
 %files
 %doc README.*
@@ -89,6 +88,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
+- New version 7.0.1.
+
 * Tue Aug 05 2025 Anton Vyatkin <toni@altlinux.org> 6.30.1-alt1
 - New version 6.30.1.
 
