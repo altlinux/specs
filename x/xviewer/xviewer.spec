@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.4.11
+Version: 3.4.12
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -31,6 +31,10 @@ BuildRequires: libxapps-devel
 BuildRequires: meson
 
 Requires: xapps-icons
+Requires: libpeas-python3-loader < 2.0
+Requires: typelib(Peas) = 1.0
+Requires: typelib(PeasGtk) = 1.0
+Requires: typelib(GtkSource) = 4
 
 %description
 This is Xviewer, a fast and functional image viewer.
@@ -75,6 +79,10 @@ the functionality of the Xviewer GUI.
 
 %find_lang --with-gnome %name
 
+# cleanup defelopment files
+rm -r %buildroot%_includedir/%name
+rm -r %buildroot%_pkgconfigdir/%name.pc
+
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/*
@@ -85,19 +93,19 @@ the functionality of the Xviewer GUI.
 %config %_datadir/glib-2.0/schemas/org.x.viewer.enums.xml
 %config %_datadir/glib-2.0/schemas/org.x.viewer.gschema.xml
 %_datadir/metainfo/%name.appdata.xml
+%dir %_libdir/%name/girepository-1.0
+%_libdir/%name/girepository-1.0/*.typelib
 %_datadir/gtk-doc/html/%name
 %doc AUTHORS MAINTAINERS
 %doc README.md THANKS
 
-%files devel
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%_pkgconfigdir/%name.pc
-
-%files gir
-%_libdir/%name/girepository-1.0/*.typelib
-
 %changelog
+* Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.4.12-alt1
+- new version 3.4.12
+- switch to girepository-2.0 so it works with new pygobject3
+- remove development subpackage
+- merge with gir subpackage
+
 * Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 3.4.11-alt1
 - New version 3.4.11.
 
