@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name pwvucontrol
-%define ver_major 0.4
+%define ver_major 0.5
 %define xdg_name com.saivert.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -18,18 +18,19 @@ Url: https://github.com/saivert/pwvucontrol
 Vcs: https://github.com/saivert/pwvucontrol.git
 
 %if_disabled snapshot
-Source: https://github.com/saivert/pwvucontrol/releases/download/v%version/%name-%version.tar.xz
+Source: https://github.com/saivert/pwvucontrol/releases/download/%version/%name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
-Source1: %name-%version-cargo.tar
+# tarball contains vendored sources
+%{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
 ExcludeArch: %ix86 armh
 
 %define gtk_ver 4.10.0
 %define adw_ver 1.2
 %define pw_ver 0.3.83
-%define wp_ver 0.4.15
+%define wp_ver 0.4.16
 
 Requires: wireplumber >= %wp_ver
 Requires: dconf
@@ -60,7 +61,7 @@ Card profile selection
 Port selection for sinks and sources
 
 %prep
-%setup %{?_disable_bootstrap:-a1}
+%setup %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -87,6 +88,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat Oct 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.9-alt1
 - 0.4.9
 
