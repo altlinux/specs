@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: A basic implementation of the __geo_interface__
 License: LGPLv2.1+
@@ -51,6 +51,9 @@ data.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Mon Jun 16 2025 Anton Vyatkin <toni@altlinux.org> 1.5.1-alt2
 - Fixed FTBFS.
 
