@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name:    mylibrary
-Version: 4.1
-Release: alt2
+Version: 4.2.1
+Release: alt1
 
 Summary: Home librarian
 License: GPL-3.0
@@ -22,10 +24,15 @@ BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libgcrypt)
 BuildRequires: pkgconfig(ddjvuapi)
+BuildRequires: pkgconfig(Magick++)
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: /usr/bin/pdflatex
 BuildRequires: texlive-dist
+
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 MyLibrary is a simple program for managing .fb2, .epub, .pdf and .djvu
@@ -53,11 +60,18 @@ sed -i 's|^Categories=.*|Categories=Office;Database;Viewer;|' ru.mail.bobilev_yu
        -D CREATE_PDF_DOCS_PLUGINIFC=ON
 %cmake_build
 
+%if_with check
+%cmake_build --target test
+%endif
+
 %install
 %cmake_install
 rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 
 %find_lang %name --all-name
+
+%check
+%ctest
 
 %files -f %name.lang
 %doc COPYING *.md
@@ -83,6 +97,9 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/doc/MLPluginIfc/*
 
 %changelog
+* Sat Oct 18 2025 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
+- New version 4.2.1.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 4.1-alt2
 - Applied repocop fix for freedesktop-categories
 

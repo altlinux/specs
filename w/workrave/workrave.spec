@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: workrave
-Version: 1.10.53
+Version: 1.10.54
 Release: alt1
 
 Summary: Repetitive Strain Injury prevention tool
@@ -186,5 +186,8 @@ find %buildroot -name 'libworkrave-*private*.so' -print -delete
 %_datadir/xfce4/panel/plugins/workrave-xfce-applet.desktop
 
 %changelog
+* Sat Oct 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.10.54-alt1
+- New version 1.10.54.
+
 * Sat Mar 08 2025 Nikolay Strelkov <snk@altlinux.org> 1.10.53-alt1
 - Initial build for Sisyphus
