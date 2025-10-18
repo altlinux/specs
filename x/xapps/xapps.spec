@@ -4,9 +4,10 @@
 %define translations_name xapp
 
 %define libxappsdir /usr/lib/xapps
+%define dataxappdir %_datadir/xapp
 
 Name: xapps
-Version: 2.8.12
+Version: 3.0.1
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -17,7 +18,7 @@ Url: https://github.com/linuxmint/xapps
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-AutoReqProv: nopython
+AutoProv: nopython3
 %define __python %nil
 
 Requires: lib%name = %version-%release
@@ -78,7 +79,7 @@ XApps libraries.
 %package -n lib%name-devel
 Summary: XApps development libraries and includes
 Group: Development/GNOME and GTK+
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 XApps development libraries and includes
@@ -86,40 +87,40 @@ XApps development libraries and includes
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
-GObject introspection data for the %name library
+GObject introspection data for the %name library.
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the %name library
+GObject introspection devel data for the %name library.
 
 %package -n python3-module-%name-overrides
 Summary: Python3 Xapp overrides Library
 Group: Development/Python3
 
 %description -n python3-module-%name-overrides
-Python3 Xapp pverrides Library
+Python3 Xapp pverrides Library.
 
 %package -n %name-applet-constants
 Summary: Common constants for XApps applets
 Group: Graphical desktop/GNOME
 
 %description -n %name-applet-constants
-Common constants for XApps applets
+Common constants for XApps applets.
 
 %package -n xapp-sn-watcher
 Summary: XApp Status Notifier Watcher
 Group: Graphical desktop/GNOME
 
 %description -n xapp-sn-watcher
-XApp Status Notifier Watcher
+XApp Status Notifier Watcher.
 
 %package -n xapp-gpu-offload
 Summary: XApp GPU offload utility
@@ -127,7 +128,7 @@ Group: Graphical desktop/GNOME
 Requires: switcheroo-control
 
 %description -n xapp-gpu-offload
-XApp GPU offload utility
+XApp GPU offload utility.
 
 %package -n mate-xapp-status-applet
 Summary: XAppStatusIcon applet for mate panel
@@ -136,7 +137,15 @@ Requires: %name-applet-constants
 BuildArch: noarch
 
 %description -n mate-xapp-status-applet
-XAppStatusIcon applet for mate panel
+XAppStatusIcon applet for mate panel.
+
+%package -n xapp-scan-code-for-adwaita-symbolic-icons
+Summary: XApp scan code for adwaita symbolic icons
+Group: Graphical desktop/GNOME
+Requires: %name-applet-constants
+
+%description -n xapp-scan-code-for-adwaita-symbolic-icons
+XApp scan code for adwaita symbolic icons.
 
 %prep
 %setup
@@ -176,6 +185,8 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_libdir/*.so.*
 %_libdir/gtk-3.0/modules/*.so
 %_x11sysconfdir/profile.d/*
+%dir %libxappsdir
+%dir %dataxappdir
 
 %files -n lib%name-devel
 %_includedir/*
@@ -196,7 +207,6 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %python3_sitelibdir/gi/overrides/__pycache__/*
 
 %files -n %name-applet-constants
-%dir %libxappsdir
 %libxappsdir/applet_constants.*
 %dir %libxappsdir/__pycache__/
 %libxappsdir/__pycache__/*
@@ -214,7 +224,14 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
+%files -n xapp-scan-code-for-adwaita-symbolic-icons
+%_bindir/xapp-scan-code-for-adwaita-symbolic-icons
+%dataxappdir/adwaita-symbolic-icons.info
+
 %changelog
+* Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Mon Aug 11 2025 Anton Midyukov <antohami@altlinux.org> 2.8.12-alt1
 - New version 2.8.12.
 
