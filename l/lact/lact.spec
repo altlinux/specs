@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Linux GPU Control Application
 License: MIT
 Group: Monitoring
 
-URL: https://github.com/ilya-zlobintsev/LACT
+Url: https://github.com/ilya-zlobintsev/LACT
+Vcs: https://github.com/ilya-zlobintsev/LACT
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
@@ -77,6 +78,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sat Oct 18 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Thu Aug 07 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 
