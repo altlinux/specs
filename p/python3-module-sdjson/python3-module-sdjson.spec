@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Custom JSON Encoder for Python utilising functools.singledispatch to support custom encoders for both Python's built-in classes and user-created classes, without as much legwork
 License: MIT
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt2
+- Fixed FTBFS.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.0-alt1
 - Updated to 0.5.0.
 
