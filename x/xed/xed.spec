@@ -6,7 +6,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.8.1
+Version: 3.8.4
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -30,6 +30,9 @@ Obsoletes: xed-data < %EVR
 Provides: xed-data = %EVR
 Provides: typelib(Xed)
 
+# All xed python modules are intended for internal usage only
+Autoprov: nopython3
+
 BuildPreReq: rpm-build-gnome
 BuildPreReq: rpm-build-python3
 
@@ -51,6 +54,11 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgtksourceview4-gir-devel
 BuildRequires: libgspell-devel
 BuildRequires: libxapps-devel
+
+Requires: libpeas-python3-loader < 2.0
+Requires: typelib(Peas) = 1.0
+Requires: typelib(PeasGtk) = 1.0
+Requires: typelib(GtkSource) = 4
 
 %add_python3_path %pluginsdir
 
@@ -118,6 +126,14 @@ rm -f %buildroot%_libdir/%name/*.la
 
 %find_lang --with-gnome %name
 
+# remove broken plugins
+#rm -r  %buildroot%pkglibdir/plugins/*
+#rm -r  %buildroot%pkgdatadir/plugins/*
+
+# remove development files
+rm -r %buildroot%_includedir/*
+rm -r %buildroot%_pkgconfigdir/*
+
 %files -f %name.lang
 %_bindir/*
 %pkglibdir
@@ -130,14 +146,12 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/services/org.x.editor.*service
 %doc README.md AUTHORS
 
-# All xed python modules are intended for internal usage only
-%filter_from_provides /python3/d
-
-%files devel
-%_includedir/*
-%_pkgconfigdir/*
-
 %changelog
+* Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.8.4-alt1
+- new version 3.8.4
+- switch to girepository-2.0 so it works with new pygobject3
+- remove devel package
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.8.1-alt1
 - new version 3.8.1
 - build from git tag
