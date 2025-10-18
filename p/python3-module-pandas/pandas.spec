@@ -4,8 +4,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.3.1
-Release: alt2
+Version: 2.3.3
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -157,6 +157,9 @@ py.test-3 -n auto \
 %endif
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 2.3.3-alt1
+- New version 2.3.3.
+
 * Sun Jul 27 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt2
 - Removed extra build dependency.
 
