@@ -5,7 +5,7 @@
 
 Name: imhex
 Version: 1.37.4
-Release: alt2
+Release: alt2.1
 
 Summary: A hex editor for reverse engineers and programmers
 
@@ -21,7 +21,7 @@ Patch0: 0001-build-Updated-libfmt-2234.patch
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cli11-devel libcapstone-devel libcurl-devel libfmt-devel libglfw3-devel libmagic-devel
-BuildRequires: libmbedtls-devel libnativefiledialog-extended-devel libyara-devel nlohmann-json-devel
+BuildRequires: libmbedtls-3.6-devel libnativefiledialog-extended-devel libyara-devel nlohmann-json-devel
 BuildRequires: libfreetype-devel libXrandr-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: ctest
@@ -101,6 +101,9 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/mime/packages/imhex.xml
 
 %changelog
+* Sat Oct 18 2025 Nazarov Denis <nenderus@altlinux.org> 1.37.4-alt2.1
+- fixed FTBFS
+
 * Mon Jul 07 2025 Mikhail Tergoev <fidel@altlinux.org> 1.37.4-alt2
 - fixed FTBFS
 
