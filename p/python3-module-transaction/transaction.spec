@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt2
+Release: alt3
 Summary: Transaction management for Python
 License: ZPL-2.1
 Group: Development/Python3
@@ -42,6 +42,8 @@ manager in transaction.tests.test_SampleDataManager.
 
 %prep
 %setup
+# Hotfix for python3.13
+sed -i 's/unittest.makeSuite/unittest.defaultTestLoader.loadTestsFromTestCase/g' $(grep -rl makeSuite)
 
 %build
 %pyproject_build
@@ -59,6 +61,9 @@ manager in transaction.tests.test_SampleDataManager.
 %exclude %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt3
+- Fixed FTBFS.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Moved on modern pyproject macros.
 
