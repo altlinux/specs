@@ -3,9 +3,9 @@
 %define _customdocdir %_docdir/%name
 
 # git log --oneline upstream/master | wc -l
-%define rev 2243
+%define rev 2249
 # just some first digits from upstream/master SHA
-%define snapshot d64b2ab9
+%define snapshot 28b149ec
 
 Name:    nih-plug-plugins
 Version: 0.0.0.r%rev.%snapshot
@@ -98,5 +98,8 @@ done
 %_libdir/vst3/*
 
 %changelog
+* Sat Oct 18 2025 Ivan A. Melnikov <iv@altlinux.org> 0.0.0.r2249.28b149ec-alt1
+- new snapshot (fixes building with recent rust)
+
 * Sat May 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.0.0.r2243.d64b2ab9-alt1
 - initial build
