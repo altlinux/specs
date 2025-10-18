@@ -1,12 +1,13 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.50
-Release: alt1.ge281c4508
+Version: 1.4.1.58
+Release: alt1.gbae968a2f
 Summary: A music player and library organiser
 
 Group: Sound
-License: %lgpl3only
+License: GPL-3.0-or-later AND GPL-2.0-or-later AND BSL-1.0 AND LGPL-2.0-or-later AND LGPL-2.1-only AND Apache-2.0 AND (LGPL-2.1-only WITH Qt-LGPL-exception-1.1 OR GPL-3.0-only) AND (LGPL-2.1-only WITH Qt-LGPL-exception-1.1 OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND MIT
+
 Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
@@ -141,6 +142,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.58-alt1.gbae968a2f
+- Update upstream source to 1.4.1-58-gbae968a2f
+- Change License (Closes: #56437)
+
 * Thu Sep 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.50-alt1.ge281c4508
 - Update upstream source to 1.4.1-50-ge281c4508
 
