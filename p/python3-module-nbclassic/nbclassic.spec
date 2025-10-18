@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary: Jupyter Notebook as a Jupyter Server extension
 License: BSD-3-Clause
@@ -92,6 +92,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/nbclassic.json \
 %python3_sitelibdir/%pypi_name/*/tests
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 1.3.3-alt1
+- new version 1.3.3
+
 * Fri Sep 05 2025 Anton Vyatkin <toni@altlinux.org> 1.3.2-alt1
 - new version 1.3.2
 
