@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
@@ -40,6 +40,8 @@ extra meta-data.
 %prep
 %setup
 
+sed -i '/addopts/d' pyproject.toml
+
 %build
 %pyproject_build
 
@@ -59,6 +61,9 @@ extra meta-data.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 0.2.2-alt1
+- New version 0.2.2.
+
 * Wed Aug 20 2025 Anton Vyatkin <toni@altlinux.org> 0.2.1-alt1
 - New version 0.2.1.
 
