@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.11
+Version: 1.7.12
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -449,7 +449,6 @@ Requires: mplayer
 %ifarch x86_64
 Requires: libva-driver-intel
 Requires: libva-intel-media-driver
-Requires: vulkan-amdgpu
 %endif
 # Multimedia                                                                                  
 Requires: vlc-maxi
@@ -508,7 +507,6 @@ Requires: mplayer
 %ifarch x86_64
 Requires: libva-driver-intel
 Requires: libva-intel-media-driver
-Requires: vulkan-amdgpu
 %endif
 # Multimedia                                                                                  
 Requires: simplescreenrecorder
@@ -665,6 +663,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sat Oct 18 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.12-alt1
+- Removed vulkan-amdgpu (ALT #56017).
+
 * Wed Oct 08 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.11-alt1
 - xfce: Replace the requirement from xfce4-full to xfce4-default.
 - xfce: Get rid of xfce4-dict.
