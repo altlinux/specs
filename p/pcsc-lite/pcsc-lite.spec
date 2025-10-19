@@ -4,8 +4,8 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 2.3.3
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
@@ -131,6 +131,7 @@ fi
 %_initdir/pcscd
 %if_enabled systemd
 %_unitdir/pcscd.*
+%_libexecdir/sysusers.d/pcscd-sysusers.conf
 %endif
 %_tmpfilesdir/pcsc-lite.conf
 %_sbindir/pcscd
@@ -163,6 +164,9 @@ fi
 %endif
 
 %changelog
+* Sun Oct 19 2025 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- New version.
+
 * Wed Apr 09 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.3-alt2
 - Use meson for build.
 - Use /etc/sysconfig/pcscd from upstream.
