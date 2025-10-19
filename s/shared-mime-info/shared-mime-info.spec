@@ -7,7 +7,7 @@
 
 Name: shared-mime-info
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt1.1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -58,6 +58,14 @@ In addition, freedesktop.org provides a shared database in this format
 to avoid inconsistencies between desktops. This database has been
 created by converting the existing KDE and GNOME databases to the new
 format and merging them together.
+
+%package devel
+Summary: pkg-config file for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description devel
+This package provides pkg-config file for %name.
 
 %prep
 %setup
@@ -112,7 +120,6 @@ multipart,text,video,XMLnamespaces}
 %_bindir/update-mime-database
 %_xdgmimedir/packages/freedesktop.org.xml
 %_man1dir/update-mime-database.1.*
-%_datadir/pkgconfig/%name.pc
 %_datadir/gettext/its/%name.*
 
 %exclude  %config(noreplace) %_sysconfdir/profile.d/*
@@ -123,7 +130,14 @@ multipart,text,video,XMLnamespaces}
 
 %exclude %_datadir/locale
 
+%files devel
+%_datadir/pkgconfig/%name.pc
+
 %changelog
+* Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1.1
+- moved pc-file to new -devel subpackage
+  to avoid dependency on pkgconfig
+
 * Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 
