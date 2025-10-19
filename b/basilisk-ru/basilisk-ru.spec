@@ -15,11 +15,11 @@
 Name: basilisk-ru
 
 Version: 2025.02.22
-Release: alt1
+Release: alt1.1
 
 ExclusiveArch: x86_64 aarch64
 
-Summary: Russian (RU) Language Pack for Pale Moon
+Summary: Russian (RU) Language Pack for Basilisk
 License: MPL-2.0
 
 Group: Networking/WWW
@@ -100,6 +100,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 #%search_dir
 
 %changelog
+* Sun Oct 19 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2025.02.22-alt1.1
+- Fix spec
+
 * Sat Oct 18 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2025.02.22-alt1
 - Init Build
 
