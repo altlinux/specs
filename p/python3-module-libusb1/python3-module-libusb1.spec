@@ -1,6 +1,6 @@
 Name:    python3-module-libusb1
-Version: 3.1.0
-Release: alt2
+Version: 3.3.1
+Release: alt1
 
 Summary: Python 3 ctype-based wrapper around libusb1
 License: LGPL-2.1-or-later
@@ -47,6 +47,9 @@ sed -i 's/\(^\s\+git_refnames = \).*$/\1"%version"/' usb1/_version.py
 %exclude %python3_sitelibdir/usb1/__pyinstaller
 
 %changelog
+* Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2
 - migrated from removed setuptools' test command (see #50996).
 
