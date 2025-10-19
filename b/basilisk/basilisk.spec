@@ -1,9 +1,9 @@
-%define git_commit 57a539a
+%define git_commit ec3ec70
 
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version 2025.07.04
+%define vendor_version 2025.10.10
 
 Name: basilisk
 Version:  %vendor_version
@@ -15,7 +15,8 @@ Release: alt1
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
 
-Url: https://repo.palemoon.org/Basilisk-Dev/Basilisk.git
+Url: https://basilisk-browser.org/
+Vcs: https://repo.palemoon.org/Basilisk-Dev/Basilisk.git
 
 ExclusiveArch: x86_64 aarch64
 
@@ -28,6 +29,7 @@ Source6: %name.desktop
 
 Source7: firefox.c
 
+Patch0:	 basilisk-locale-2025.10.10.patch
 Patch1:  mozilla-%name-52.9.0-bug-1153109-enable-stdcxx-compat.patch
 Patch2:  basilisk-snake-2024.08.16.patch
 Patch22: basilisk_rpath-52.9.0.patch
@@ -44,43 +46,39 @@ Provides: webclient
 
 %set_autoconf_version 2.13
 
-
-# Automatically added by buildreq on Sun Feb 04 2024
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel
-BuildRequires: libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json python-modules-wsgiref unzip yasm zip
-
-BuildRequires: libGConf-devel 
-BuildRequires: atasm nasm
-
-
-# BEGIN SourceDeps(oneline):
-BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
-BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
-# END SourceDeps(oneline)
-
-BuildPreReq: %_bindir/python2.7 python2-base 
-BuildPreReq: libXcomposite-devel libXdamage-devel libavcodec-devel
-
-%ifarch x86_64
-BuildRequires: libcpuid-devel
-%endif
-
-# BEGIN SourceDeps(oneline):
-BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
-# END SourceDeps(oneline)
-
 BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
 
-#BuildRequires: gcc%%{_gcc_version}-c++
-
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
-BuildRequires: libhunspell-devel
+BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
+BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
+
+# Automatically added by buildreq on Sat Oct 18 2025
+# optimized out: alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel openssl-config perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev sh5 xorg-proto-devel zlib-devel
+BuildRequires: alt-os-release doxygen gcc-c++ libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel libpulseaudio-devel libsocket 
+BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools 
+BuildRequires: unzip yasm zip
+
+# BEGIN SourceDeps(oneline):
+BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
+BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
+BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
+# END SourceDeps(oneline)
+
+BuildPreReq: %_bindir/python2.7 python2-base
+BuildPreReq: libXcomposite-devel libXdamage-devel
+
+
+%ifarch x86_64 %ix86
+BuildRequires: libcpuid-devel
+%endif
+
+#BuildRequires: gcc%%{_gcc_version}-c++
+
 
 %description
 The %name project is a redesign of Mozilla's  Firefox browser component,
@@ -138,6 +136,13 @@ echo 'ac_add_options --enable-optimize="-O3 -w -flto=auto"' >> .mozconfig
 #echo "ac_add_options --with-arch=aarch64" >> .mozconfig
 %endif
 
+%ifarch %ix86
+ echo 'ac_add_options --enable-optimize="-O2 -march=i586 -w -msse2 -mfpmath=sse"'  >> .mozconfig
+ echo "ac_add_options --with-arch=i586"  >> .mozconfig
+ echo "_BUILD_64=" | cat - .mozconfig | sponge .mozconfig
+%endif
+
+%patch -p1
 %patch1 -p1
 %patch2 -p1
 %patch22 -p1
@@ -263,31 +268,11 @@ rm -rf -- \
 install -D -m 644 %SOURCE6 ./%_desktopdir/%name.desktop
 install -d -m 755 %buildroot/%basilisk_bindir/browser/defaults/preferences/
 
-# cat > %buildroot/%basilisk_bindir/browser/defaults/preferences/%name-l10n.js <<EOF
-# pref("intl.locale.matchOS",		true);
-# pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-# pref("extensions.getAddons.cache.enabled", false);
-# EOF
-
-# cat << EOF >> %buildroot%basilisk_bindir/defaults/pref/prefs.js
-# user_pref("browser.EULA.override", true);
-# user_pref("browser.ctrlTab.previews", true);
-# user_pref("browser.tabs.insertRelatedAfterCurrent", false);
-# user_pref("browser.tabs.onTop", true);
-# user_pref("browser.startup.homepage", "file://%_docdir/HTML/index.html");
-# user_pref("browser.backspace_action", 2);
-# user_pref("browser.display.use_system_colors", true);
-# user_pref("browser.download.folderList", 1);
-# user_pref("browser.link.open_external", 3);
-# user_pref("app.update.auto", false);
-# user_pref("app.update.enabled", false);
-# user_pref("app.update.autoInstallEnabled", false);
-# user_pref("dom.ipc.plugins.enabled.nswrapper*", false);
-# user_pref("extensions.autoDisableScopes", 0);
-# user_pref("extensions.shownSelectionUI", true);
-# user_pref("network.manage-offline-status", true);
-# user_pref("browser.urlbar.decodeURLsOnCopy", true);
-# EOF
+cat > %buildroot/%basilisk_bindir/browser/defaults/preferences/%name-l10n.js <<EOF
+pref("intl.locale.matchOS",		true);
+pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+pref("extensions.getAddons.cache.enabled", false);
+EOF
 
 echo %_builddir
 ls -d %_builddir/%name-%version/%name/branding/*
@@ -351,6 +336,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Sat Oct 18 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1:2025.10.10-alt1
+- Update to v2025.10.10
+
 * Wed Aug 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1:2025.07.04-alt1
 - Update to v2025.07.04
 
@@ -377,4 +365,5 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0-alt1
 - Init Build
+
 
