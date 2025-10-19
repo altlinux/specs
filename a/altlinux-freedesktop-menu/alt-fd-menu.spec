@@ -6,7 +6,7 @@
 
 Name: altlinux-freedesktop-menu
 Version: 0.70
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the freedesktop.org menu specification
 License: ALT-Public-Domain or GPLv2+
@@ -34,6 +34,7 @@ Requires(pre): %name-icon-theme
 Requires: %name-icon-theme
 Requires: wm-common-freedesktop
 #Conflicts: altlinux-menus < 0.5.2
+%filter_from_requires s/^su$//
 
 %description common
 %summary
@@ -359,6 +360,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %endif
 
 %changelog
+* Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 0.70-alt2
+- common: filter runtime dependency on su
+
 * Mon Nov 27 2023 Igor Vlasenko <viy@altlinux.org> 0.70-alt1
 - removed kde4 menu
 - use Icon=applications-internet in altlinux-network.directory
