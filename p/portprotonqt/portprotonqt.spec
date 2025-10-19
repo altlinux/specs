@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 0.1.6
+Version: 0.1.8
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -45,5 +45,8 @@ mv -v %buildroot/usr/lib %buildroot/usr/lib64
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sun Oct 19 2025 Boris Yumankulov <boria138@altlinux.org> 0.1.8-alt1
+- new version 0.1.8
+
 * Tue Sep 23 2025 Mikhail Tergoev <fidel@altlinux.org> 0.1.6-alt1
 - Initial build for ALT Sisyphus
