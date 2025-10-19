@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1.1
+Release: alt2
 
 Summary: Some handy archive helpers for Python
 License: MIT
@@ -18,6 +18,8 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: 18b4319972210d7b4512bb3431c2746708ff8be5.patch
+Patch1: 85526bff5b6b46aa77dd361ba031291fcb21b195.patch
 
 %py3_provides %pypi_name
 
@@ -36,6 +38,8 @@ BuildRequires: python3-test
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -61,6 +65,9 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt2
+- Fixed FTBFS.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt1.1
 - NMU: Ignore deprecation warnings in tests.
 
