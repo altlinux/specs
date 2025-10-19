@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.15.1
+Version: 1.16.0
 Release: alt1
 Summary: Python bindings for libmongocrypt
 License: Apache-2.0
@@ -46,6 +46,9 @@ Python wrapper library for libmongocrypt that supports client side encryption in
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 19 2025 Anton Vyatkin <toni@altlinux.org> 1.16.0-alt1
+- new version 1.16.0
+
 * Tue Sep 09 2025 Anton Vyatkin <toni@altlinux.org> 1.15.1-alt1
 - new version 1.15.1
 
