@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: falcond
-Version: 1.1.7
+Version: 1.1.9
 Release: alt1
 
 Summary: Advanced Linux Gaming Performance Daemon
@@ -44,6 +44,9 @@ install -Dm644 debian/falcond.service %buildroot%_unitdir
 
 
 %changelog
+* Sun Oct 19 2025 Boris Yumankulov <boria138@altlinux.org> 1.1.9-alt1
+- new version 1.1.9
+
 * Mon Sep 29 2025 Boris Yumankulov <boria138@altlinux.org> 1.1.7-alt1
 - initial build for ALT Sisyphus
 
