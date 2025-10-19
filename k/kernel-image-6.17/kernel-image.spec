@@ -2,10 +2,10 @@ Name: kernel-image-6.17
 Release: alt1
 %define kernel_src_version	6.17
 %define kernel_base_version	6.17
-%define kernel_sublevel	.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	latest1
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Oct 19 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.4-alt1
+- v6.17.4 (2025-10-19).
+
 * Wed Oct 15 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.3-alt1
 - v6.17.3 (2025-10-15).
 - config: Enable PCI_P2PDMA, HSA_AMD_P2P, DMABUF_MOVE_NOTIFY.
