@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.19.1
+Version: 2.19.3
 Release: alt1
 
 License: GPL-3.0
@@ -13,6 +13,7 @@ Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
 Source3: ansible.cfg
+Patch1: 0001-package_facts-fix-get-binary-RPM-data-ALT-55884.patch
 
 BuildArch: noarch
 
@@ -61,6 +62,7 @@ Requires: python3(passlib)
 
 %prep
 %setup -n %rname-%version
+%autopatch -p1
 grep -Rl '^#!.*python$' * | xargs subst 's|^#!.*python$|#!%__python3|'
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
@@ -86,6 +88,13 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Oct 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.19.3-alt1
+- New version.
+- package_facts: fixed get binary RPM data (ALT #55884).
+
+* Wed Sep 24 2025 Andrey Cherepanov <cas@altlinux.org> 2.19.2-alt1
+- New version.
+
 * Wed Aug 27 2025 Andrey Cherepanov <cas@altlinux.org> 2.19.1-alt1
 - New version.
 
