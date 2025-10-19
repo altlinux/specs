@@ -4,8 +4,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.4.10
-Release: alt2
+Version: 6.4.13
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPL-2.0-or-later
@@ -214,6 +214,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 6.4.13-alt1
+- New version 6.4.13.
+
 * Thu Oct 02 2025 Anton Midyukov <antohami@altlinux.org> 6.4.10-alt2
 - cinnamon-settings: run lightdm-settings without pkexec (Closes: 56246)
 
