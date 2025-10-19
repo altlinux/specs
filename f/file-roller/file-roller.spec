@@ -9,7 +9,7 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
@@ -48,6 +48,7 @@ BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libjson-glib-devel libportal-devel libportal-gtk4-devel >= %portal_ver
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_nautilus_actions:BuildRequires: libnautilus-devel >= 43}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 File Roller is an archive manager for the GNOME environment.  This means that
@@ -110,6 +111,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %install
 %meson_install
 
+%check
+%__meson_test
+
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -124,11 +128,14 @@ rm -f data/%xdg_name.desktop{,.in}
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %{?_enable_nautilus_actions:%_libdir/nautilus/extensions-%nau_api_ver/*.so}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 44.6-alt1
+- 44.6
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
 - 44.5
 
