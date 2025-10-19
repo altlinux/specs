@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.170
+Version: 2.9.171
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,11 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Sun Oct 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.9.171-alt1
+- alterator-kopidel:
+  + enhance russian translations (Closes: 56362)
+  + new translations from 1.0.5
+
 * Sat Oct 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.9.170-alt1
 - alterator-kopidel: Fix the russian translation
   of the custom list of ignored files
