@@ -1,7 +1,10 @@
-%define oname pypandoc
+%define pypi_name pypandoc
 
-Name: python3-module-%oname
-Version: 1.5
+# online tests included
+%def_disable check
+
+Name: python3-module-%pypi_name
+Version: 1.15
 Release: alt1
 
 Summary: Thin wrapper for pandoc
@@ -10,15 +13,16 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/pypandoc/
 BuildArch: noarch
 
-# https://github.com/bebraw/pypandoc.git
+Vcs: https://github.com/JessicaTegner/pypandoc.git
+
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 python3(wheel) python3(poetry-core)
 BuildRequires: pandoc
+%{?_enable_check:BuildRequires: python3(pandocfilters) /usr/bin/pdflatex}
 
-%py3_provides %oname
+%py3_provides %pypi_name
 Requires: pandoc
-
 
 %description
 Thin wrapper for "pandoc" (MIT).
@@ -30,22 +34,24 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%if 0
-%__python3 setup.py test
-%endif
+%__python3 tests.py
 
 %files
-%doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%doc README.md
 
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15-alt1
+- 1.15 (ALT #56289)
+
 * Mon Jun 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt1
 - Version updated to 1.5.
 

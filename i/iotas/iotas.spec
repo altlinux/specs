@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.11
+%define ver_major 0.12
 %define rdn_name org.gnome.World.Iotas
 
 %def_enable check
 
 Name: iotas
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -23,19 +23,22 @@ Source: https://gitlab.gnome.org/World/iotas/-/archive/%version/%name-%version.t
 Source: %name-%version.tar
 %endif
 
-%define adw_ver 1.7
+%define adw_ver 1.8
 %define gtksource_ver 5.6
+%define pandoc_ver 3.8
 # https://bugzilla.altlinux.org/55825
-#Requires: python3-module-mdit-plugins >= 0.5.0
+Requires: python3-module-mdit-plugins >= 0.5.0
 # https://bugzilla.altlinux.org/55824
-#Requires: python3-module-markdown-it >= 4.0.0
+Requires: python3-module-markdown-it >= 4.0.0
+# https://bugzilla.altlinux.org/56289
+Requires: python3-module-pypandoc >= 1.15
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(WebKit) = 6.0
 Requires: dconf gnome-keyring
-Requires: pandoc
+Requires: pandoc >= %pandoc_ver
 
 BuildArch: noarch
 
@@ -47,7 +50,8 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gtksourceview-5) >= %gtksource_ver
 %{?_enable_check:BuildRequires: python3-module-pygobject3 python3(pytest)
-BuildRequires: python3(markdown_it) python3(mdit_py_plugins) python3(pypandoc)
+BuildRequires: python3(markdown_it) python3(mdit_py_plugins)
+BuildRequires: python3(pypandoc) python3(sqlite3) python3(requests)
 BuildRequires: typelib(Adw) = 1 typelib(GtkSource) = 5 typelib(WebKit) = 6.0
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
@@ -74,7 +78,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_bindir/%name
 %_libexecdir/%name-search-provider
 %python3_sitelibdir_noarch/%name/
-%python3_sitelibdir_noarch/markdown_it_img_lazyload_plugin/
+%python3_sitelibdir_noarch/markdown_it_img_figures_plugin/
 %python3_sitelibdir_noarch/markdown_it_modified_tasklists_plugin/
 %_datadir/%name/
 %_datadir/gtksourceview-5/language-specs/%name-markdown.lang
@@ -89,6 +93,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Wed Oct 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
+- 0.12.1
+
 * Mon Sep 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.4-alt1
 - 0.11.4
 
