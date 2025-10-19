@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.15
+%define major 10.16
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -48,13 +48,20 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %define min_llvm_ver 11
 %endif
 
-%define llvm_ver %(LANG=C printf %%.0f %_llvm_version)
+# used _llvm_version from rpm-macros-llvm-common
+%if %{defined _llvm_version}
+%define llvm_ver %(LANG=C printf %%.0f %{_llvm_version})
+%else
+%define llvm_ver 0
+%endif
+
 %if %llvm_ver < %min_llvm_ver
 %global _llvm_version %min_llvm_ver.0
 %define llvm_ver %min_llvm_ver
 %endif
 
-%if_feature llvm %_llvm_version
+# use %min_llvm_ver instead of _llvm_version (feature version can be obsoleted)
+%if_feature llvm %min_llvm_ver
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
 %else
@@ -127,6 +134,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_with buildwow64
     %undefine _with_build64
     %define winearch wine
+%else
+    %def_without buildwow64
 %endif
 
 %ifarch %ix86
@@ -272,7 +281,7 @@ AutoProv:no
 BuildRequires: /proc
 
 # used llvm/clang toolchain if needed
-%if "%_vendor" == "alt"
+%if "%_vendor" == "alt" && %{defined _llvm_version}
 %define llvm_br clang%_llvm_version llvm%_llvm_version lld%_llvm_version
 %else
 # just use default llvm
@@ -296,7 +305,9 @@ BuildRequires: git-core
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
+%if "%_vendor" == "alt"
 BuildRequires(pre): rpm-macros-llvm-common
+%endif
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libattr-devel
@@ -596,6 +607,9 @@ export LD=lld-%llvm_ver
 %remove_optflags -Wp,-D_FORTIFY_SOURCE=2
 %remove_optflags -D_FORTIFY_SOURCE=2
 
+%if_without buildwow64
+echo "Needed llvm %_llvm_version is not present on the build platform, build without wow64 support."
+%endif
 
 %configure --with-x \
 	--disable-win16 \
@@ -861,7 +875,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_datadir/%wineproduct/wine.inf
 %_datadir/%wineproduct/nls/
 %_datadir/%wineproduct/fonts/
-
+%_datadir/%wineproduct/winmd/
 
 
 %files full
@@ -924,6 +938,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Oct 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16.1-alt1
+- new version 10.16
+- spec: improve llvm version handling
+
 * Wed Sep 17 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.15.1-alt1
 - new version 10.15
 - set strict require wine-mono 10.2.0
