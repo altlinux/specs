@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.5
-Release: alt2
+Release: alt3
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -83,6 +83,7 @@ Requires: python3-module-pygobject3
 
 %filter_from_requires s/^.*rip-environment//
 %filter_from_requires s/^.*typelib(Cairo)//
+%filter_from_requires s/^sudo$//
 
 %add_python3_path %_datadir/qtvcp
 %add_python3_path %_datadir/%name/ncfiles
@@ -251,6 +252,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 2.9.5-alt3
+- filter runtime dependency on sudo.
+
 * Mon Sep 08 2025 Anton Midyukov <antohami@altlinux.org> 2.9.5-alt2
 - Add build dependency on libXScrnSaver-devel.
 
