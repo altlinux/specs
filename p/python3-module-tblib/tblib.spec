@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: Traceback serialization library
 License: BSD
@@ -65,6 +65,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Thu Oct 17 2024 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 1.3.0 -> 3.0.0.
 
