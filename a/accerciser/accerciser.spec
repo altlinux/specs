@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.46
+%define ver_major 3.48
 %define xdg_name org.gtk.accerciser
 %define uuid %name@%name.gnome.org
 
 Name: accerciser
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+Requires: python3-module-pygobject3
 Requires: python3-module-%name = %EVR
 Requires: python3-module-ipython
 Requires: at-spi2-core
@@ -101,6 +102,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.46.2-alt1
 - 3.46.2
 
@@ -234,5 +238,5 @@ desktop-file-install --dir %buildroot%_desktopdir \
 - Added without-pyreqs flag to avoid checking for modules at rpmbuild time
 - Added locales to files section
 
-* Wed Feb 22 2007 Peter Parente <parente@cs.unc.edu>
+* Thu Feb 22 2007 Peter Parente <parente@cs.unc.edu>
 - First release

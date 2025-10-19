@@ -1,12 +1,12 @@
 %define pypi_name arrow
 %def_disable docs
-# 25 failed, 1804 passed, 1 xfailed, 1 xpassed in 33.01s
-# probably dateutil too old or need to rebuild
+#1 failed, 1862 passed
+# dateutil-zoneinfo.tar.gz required
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -28,8 +28,9 @@ BuildRequires: python3-module-python-dateutil >= %dateutil_ver
 %{?_enable_docs:
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3(sphinx) python3(sphinx_autodoc_typehints}
-%{?_enable_check:BuildRequires: python3(tox) python3(dateparser) >= 1.0
-BuildRequires: python3(pytest_mock) python3(pytest_cov) python3(simplejson)}
+%{?_enable_check:BuildRequires: python3(tox) python3(dateparser)
+BuildRequires: python3(pytest_mock) python3(pytest_cov) python3(simplejson)
+BuildRequires: python3(tzdata)}
 
 %description
 Arrow is a Python library that offers a sensible, human-friendly
@@ -66,6 +67,9 @@ cp -fR docs/_build/html/* man/
 %{?_enable_docs: man/}
 
 %changelog
+* Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1.1
 - removed python3-module-chai from BR (ALT #51769)
 

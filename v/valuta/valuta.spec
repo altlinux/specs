@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Valuta
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name io.github.idevecore.%_name
 
 # online screenshots
@@ -9,7 +9,7 @@
 
 Name: valuta
 Version: %ver_major.2
-Release: alt2
+Release: alt1
 
 Summary: Currency converter for GNOME
 License: GPL-3.0-or-later
@@ -19,9 +19,9 @@ Url: https://apps.gnome.org/Valuta
 Vcs: https://github.com/ideveCore/valuta.git
 
 %if_disabled snapshot
-Source: https://github.com/ideveCore/valuta/releases/download/v%version/%name-%version.tar.gz
+Source: https://github.com/ideveCore/valuta/archive/v%version/%name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
 BuildArch: noarch
@@ -32,6 +32,7 @@ BuildArch: noarch
 %define gst_ver 1.18
 %define adw_ver 1.0
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: typelib(Soup) = 3.0
 Requires: dconf
@@ -51,7 +52,7 @@ budgeting, or anytime else you need to quickly convert between two
 currencies.
 
 %prep
-%setup -n %name-%version
+%setup -n %_name-%version
 
 %build
 %meson
@@ -69,6 +70,7 @@ currencies.
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_iconsdir/hicolor/*/*/*.svg
@@ -76,6 +78,9 @@ currencies.
 %doc README*
 
 %changelog
+* Sun Oct 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt2
 - updated to v1.3.2-38-gd4c86cd
 

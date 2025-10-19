@@ -11,10 +11,10 @@
 %def_enable pycairo
 %def_disable devel_doc
 %def_enable tests
-%def_disable check
+%def_enable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: Python3 bindings for GObject
@@ -171,6 +171,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Sat Oct 18 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.5-alt1
+- 3.54.5
+
 * Mon Sep 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
 - 3.54.3
 
