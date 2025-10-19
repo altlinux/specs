@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 %define libexecdir /usr/libexec
 
-%define kernel_base_version 6.16
+%define kernel_base_version 6.17
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -24,7 +24,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -98,6 +98,7 @@ Source33: hypervfcopyd.rules
 Patch1: 0002-rtla-basic-loongarch-support.patch
 Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
 Patch5: 0001-ALT-Run-libslang-include-subdir-test.patch
+Patch617: 0001-perf-bpf-filter-Fix-opts-declaration-on-older-libbpf.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -341,6 +342,7 @@ sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 sed -Ei 's/(-static-libasan|-fsanitize\S+)//g' testing/selftests/{openat2,fchmodat2}/Makefile
 grep -lrZ -e '-nostdlib' testing/selftests/arm64 | xargs -0 sed -i 's/-nostdlib/-g &/'
 sed -i 's/ -s //' testing/selftests/arm64/gcs/Makefile
+sed -i '/CFLAGS_NOLIBC_TEST/s/=/& -g/' testing/selftests/nolibc/Makefile.include
 
 # loongarch64 doesn't support 4K pages, change it to 16K
 %ifarch loongarch64
@@ -825,6 +827,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 6.17-alt1
+- Update to v6.17 (2025-09-28).
+
 * Fri Aug 01 2025 Vitaly Chikunov <vt@altlinux.org> 6.16-alt2
 - Fix FTBFS due to absent BR:libncurses-devel related to python-3.13.
 
