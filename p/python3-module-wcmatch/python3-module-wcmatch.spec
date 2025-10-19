@@ -1,5 +1,5 @@
 Name: python3-module-wcmatch
-Version: 8.5
+Version: 10.1
 Release: alt1
 Summary: Wilcard File Name matching library
 License: MIT
@@ -53,6 +53,9 @@ there may be a few corner cases in which we've intentionally chosen to not exact
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 10.1-alt1
+- Automatically updated to 10.1.
+
 * Tue Jan 30 2024 Alexey Shabalin <shaba@altlinux.org> 8.5-alt1
 - Initial build.
 
