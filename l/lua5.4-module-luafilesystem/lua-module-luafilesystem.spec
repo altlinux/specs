@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 %define luarocks_revision 1
+%add_optflags %optflags_shared
 
 Name: lua5.4-module-luafilesystem
 Version: 1.8.0
-Release: alt2_lr%luarocks_revision
+Release: alt3_lr%luarocks_revision
 
 Summary: File System Library for the Lua Programming Language
 License: MIT
@@ -54,6 +55,9 @@ rm -v %buildroot%luarocks_dbdir/manifest
 %lua_modulesdir/lfs.so
 
 %changelog
+* Sat Oct 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.8.0-alt3_lr1
+- Fix FTBFS on x86_64 with GCC 14 by adding PIC flags.
+
 * Tue Jul 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.8.0-alt2_lr1
 - Change the build system from make to luarocks.
 - Add the vcs tag.
