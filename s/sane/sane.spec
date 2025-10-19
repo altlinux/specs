@@ -1,7 +1,7 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: This package contains the SANE docs and utils
@@ -21,7 +21,7 @@ Source2: %name.xinetd
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
-Patch5: sane-backends-1.2.1-xerox-blacklist-workcentre-322x.patch
+Patch5: sane-backends-1.4.0-xerox-blacklist-workcentre-322x.patch
 
 # Support for Avision FB2280E
 Patch6: sane-backends-1.0.32-avision-FB2280E.patch
@@ -295,6 +295,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Oct 17 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script) (ALT bug 56269)
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
 - new version 1.3.1 (with rpmrb script)
 
