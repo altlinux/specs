@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dm-secdel
-Version: 1.0.11
-Release: alt2
+Version: 1.0.12
+Release: alt1
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -18,16 +18,7 @@ BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: figlet
 BuildRequires: rpm-build-vm
-%if 0%{?kernel_latest:1}
-BuildRequires: kernel-headers-modules-latest
-%else
-BuildRequires: kernel-headers-modules-std-def
-BuildRequires: kernel-headers-modules-un-def
-%endif
-%if 0%{?kernel_new:1}
-BuildRequires: kernel-new
-BuildRequires: kernel-headers-modules-new
-%endif
+BuildRequires: kernel-headers-modules-%kernel_latest
 }}
 
 %description
@@ -70,6 +61,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.12-alt1
+- Port to v6.16-v6.18 (only FTBFS fixes).
+
 * Sat Nov 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.11-alt2
 - More compatibility with removal or un-def/std-def.
 
