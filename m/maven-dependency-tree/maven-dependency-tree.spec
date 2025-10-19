@@ -1,71 +1,40 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
+Name:    maven-dependency-tree
+Version: 3.3.0
+Release: alt1
+Summary: Maven dependency tree artifact
+License: Apache-2.0
+Group:   Development/Java
+URL:     https://maven.apache.org/
+BuildArch: noarch
+
+Source0: https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+BuildRequires: unzip
+BuildRequires: maven-local
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.eclipse.aether:aether-api)
+BuildRequires: mvn(org.eclipse.aether:aether-util)
+BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 
-Name:          maven-dependency-tree
-Version:       3.1.0
-Release:       alt1_2jpp11
-Summary:       Maven dependency tree artifact
-License:       ASL 2.0
-URL:           https://maven.apache.org/
-BuildArch:     noarch
-
-Source0:       https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.eclipse.aether:aether-api)
-BuildRequires:  mvn(org.eclipse.aether:aether-util)
-%endif
-
-Provides:      maven-shared-dependency-tree = %{version}-%{release}
-Source44: import.info
+Provides: maven-shared-dependency-tree = %EVR
 
 %description
 Apache Maven dependency tree artifact. Originally part of maven-shared.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%javadoc_package
 
 %prep
-%setup -q
-
-rm -R src/main/java/org/apache/maven/shared/dependency/graph/internal/maven30
-rm src/main/java/org/apache/maven/shared/dependency/graph/internal/Maven3DependencyGraphBuilder.java
-rm src/main/java/org/apache/maven/shared/dependency/graph/internal/Maven3DependencyCollectorBuilder.java
-%pom_remove_dep org.sonatype.aether:
-
+%setup
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-invoker-plugin
 
 %build
-# Incompatible version of jMock (Fedora has 2.x, upstream uses 1.x)
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -73,10 +42,10 @@ rm src/main/java/org/apache/maven/shared/dependency/graph/internal/Maven3Depende
 %files -f .mfiles
 %doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
-
 %changelog
+* Wed Oct 08 2025 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- New version.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_2jpp11
 - new version
 
