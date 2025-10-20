@@ -45,13 +45,20 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %define min_llvm_ver 11
 %endif
 
-%define llvm_ver %(LANG=C printf %%.0f %_llvm_version)
+# used _llvm_version from rpm-macros-llvm-common
+%if %{defined _llvm_version}
+%define llvm_ver %(LANG=C printf %%.0f %{_llvm_version})
+%else
+%define llvm_ver 0
+%endif
+
 %if %llvm_ver < %min_llvm_ver
 %global _llvm_version %min_llvm_ver.0
 %define llvm_ver %min_llvm_ver
 %endif
 
-%if_feature llvm %_llvm_version
+# use %min_llvm_ver instead of _llvm_version (feature version can be obsoleted)
+%if_feature llvm %min_llvm_ver
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
 %else
@@ -124,6 +131,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_with buildwow64
     %undefine _with_build64
     %define winearch wine
+%else
+    %def_without buildwow64
 %endif
 
 %ifarch %ix86
@@ -134,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -269,7 +278,7 @@ AutoProv:no
 BuildRequires: /proc
 
 # used llvm/clang toolchain if needed
-%if "%_vendor" == "alt"
+%if "%_vendor" == "alt" && %{defined _llvm_version}
 %define llvm_br clang%_llvm_version llvm%_llvm_version lld%_llvm_version
 %else
 # just use default llvm
@@ -289,7 +298,9 @@ BuildRequires: %llvm_br
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
+%if "%_vendor" == "alt"
 BuildRequires(pre): rpm-macros-llvm-common
+%endif
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libattr-devel
@@ -593,6 +604,9 @@ export LD=lld-%llvm_ver
 %remove_optflags -Wp,-D_FORTIFY_SOURCE=2
 %remove_optflags -D_FORTIFY_SOURCE=2
 
+%if_without buildwow64
+echo "Needed llvm %_llvm_version is not present on the build platform, build without wow64 support."
+%endif
 
 %configure --with-x \
 	--disable-win16 \
@@ -920,6 +934,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Oct 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16-alt2
+- spec: improve llvm version handling
+
 * Sat Oct 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16-alt1
 - new version 10.16 (with rpmrb script)
 
