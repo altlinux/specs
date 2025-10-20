@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -21,6 +21,7 @@ Requires: p7zip
 %add_findreq_skiplist %_datadir/%name/winetricks_*
 %add_findreq_skiplist %_datadir/%name/autoinstall/*
 %add_findreq_skiplist %_datadir/%name/manualinstall/*
+%add_findreq_skiplist %_datadir/%name/testinstall/*
 %add_findreq_skiplist %_datadir/%name/database/*
 
 ExclusiveArch: x86_64
@@ -44,12 +45,13 @@ Requires: %name = %EVR
 # base files:
 install -Dm755 %name %buildroot%_bindir/%name
 
-mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,database,image}
+mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,testinstall,database,image}
 install -m755 dependencies.sh %buildroot%_datadir/%name/
 install -m755 winetricks_* %buildroot%_datadir/%name/
 install -m644 sha256sum.list %buildroot%_datadir/%name/
 install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
+install -m644 testinstall/*  %buildroot%_datadir/%name/testinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
 install -m644 image/*.png %buildroot%_datadir/%name/image/
 
@@ -77,6 +79,17 @@ install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 %_datadir/%name/%{name}_gui.py
 
 %changelog
+* Mon Oct 20 2025 Mikhail Tergoev <fidel@altlinux.org> 0.7.0-alt1
+- updated to version 0.7.0
+- GUI: added a button to open a directory with backups and logs
+- GUI: added a button to open a directory with a prefix
+- GUI: added a button to block buttons for an installed application if it is already running
+- GUI: added a display of the installation process for third-party components using winetricks
+- GUI: added the ability to display and install test scripts (disabled by default)
+- added installation scripts for t-flex version 18
+- added a list of test software installation scripts to the CLI
+- added the ability to associate files for transfer to applications launched in WineHelper
+
 * Wed Oct 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.6.0-alt1
 - updated to version 0.6.0
 - fixed typos (ALT bug: 55538)
