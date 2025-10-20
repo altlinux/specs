@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.22.0
+Version: 0.22.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -42,7 +42,7 @@ BuildRequires: libgkdi-devel
 
 Requires: libsasl2
 Requires: libsasl2-plugin-gssapi
-Requires: ad-integration-themes
+Requires: ad-integration-themes >= 3.0
 
 Source0: %name-%version.tar
 
@@ -124,6 +124,12 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Fri Oct 17 2025 Semyon Knyazev <samael@altlinux.org> 0.22.1-alt1
+- Fixed frozen permission checkboxes in security tab.
+- Fixed mixing of log message and principal in the status bar
+  (log message length is limited).
+- Fixed crash on LAPS tab usage.
+
 * Wed Sep 03 2025 Semyon Knyazev <samael@altlinux.org> 0.22.0-alt1
 - Fixed ADMC desktop icon view on GNOME.
 - Changed domain info and computer icons in custom theme (AD-integration).
