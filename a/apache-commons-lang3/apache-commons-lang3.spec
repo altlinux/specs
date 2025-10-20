@@ -1,5 +1,5 @@
 Name:    apache-commons-lang3
-Version: 3.17.0
+Version: 3.19.0
 Release: alt1
 Summary: Provides a host of helper utilities for the java.lang API
 License: Apache-2.0
@@ -9,7 +9,6 @@ URL:     https://commons.apache.org/lang
 BuildArch: noarch
 
 Source0: https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
-Patch1: 0001-Remove-test-dependency-on-JUnit-Pioneer.patch
 
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
@@ -45,8 +44,6 @@ package.
 %prep
 %setup -q -n commons-lang3-%{version}-src
 
-%patch1 -p1
-
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_dep org.openjdk.jmh:jmh-core
 %pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
@@ -78,6 +75,9 @@ sed -i '/<argLine>/d' pom.xml
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Mon Oct 20 2025 Alexander Danilov <admsasha@altlinux.org> 3.19.0-alt1
+- new version
+
 * Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
 - new version
 
