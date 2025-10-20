@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       java-atk-wrapper
-Version:    0.42.1
+Version:    0.44.0
 Release:    alt1
 Summary:    Java ATK Wrapper
 
@@ -71,6 +71,9 @@ install -m 444 %SOURCE1 README.fedora
 %_datadir/%name
 
 %changelog
+* Mon Oct 20 2025 Artem Semenov <savoptik@altlinux.org> 0.44.0-alt1
+- Updated to new version 0.44.0
+
 * Tue Aug 05 2025 Artem Semenov <savoptik@altlinux.org> 0.42.1-alt1
 - Builded new wersion 0.42.1
 
