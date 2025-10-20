@@ -1,6 +1,6 @@
 Name:     kde-kup
 Version:  0.10.0
-Release:  alt1
+Release:  alt2
 
 Summary:  KDE-based frontend for bup backup software and incremental backups
 License:  GPL-2.0+
@@ -39,6 +39,7 @@ Provides: kde5-kup = %EVR
 Obsoletes: kde5-kup < %EVR
 
 Requires: bup
+Requires: par2cmdline
 
 %description
 Kup is a KDE-based frontend for the very excellent bup backup software,
@@ -69,6 +70,9 @@ that gives you easy and fast incremental backups!
 %_datadir/qlogging-categories6/kup.categories
 
 %changelog
+* Mon Oct 20 2025 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt2
+- Required par2cmdline.
+
 * Sun Oct 19 2025 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
 - New version.
 - Renamed to kde-kup.
