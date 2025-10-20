@@ -66,10 +66,17 @@
 # Default Xfce-4.20 background
 %define xfce_default_background xfce-x.svg
 
+# Repo branch
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
+
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 11.0
+Version: 11.0.900
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -316,8 +323,9 @@ Summary: Some system settings for Simply Linux
 License: GPLv2+
 Group: System/Base
 BuildArch: noarch
+Requires: polkit-rule-nm-modify-system
 # Due to /usr/share/install3/lightdm-gtk-greeter.conf
-Conflicts: branding-alt-workstation-mate-settings
+%branding_add_conflicts simply-linux mate-settings
 
 %description system-settings
 Some system settings for Simply Linux.
@@ -333,7 +341,7 @@ sed -i 's,#alt-simply,&-e2k,' components/indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME='%codename' GTK_THEME=%gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
+THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME='%codename' BUILD_BRANCH=%altbranch GTK_THEME=%gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
 make
 
 %install
@@ -363,7 +371,7 @@ __EOF__
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
 install -pD -m644 components/systemd/os-release %buildroot%_prefix/lib/os-release
-echo "%Name %version %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+echo "%Name %version%status (%codename)" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
@@ -494,10 +502,29 @@ fi
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %files system-settings
-%_datadir/polkit-1/rules.d/*.rules
 %_datadir/install3/*
 
 %changelog
+* Mon Oct 20 2025 Mikhail Efremov <sem@altlinux.org> 11.0.900-alt1
+- os-release.in: Add VARIANT and VARIANT_ID.
+- alterator: Use no_image.svg as installer step icons.
+- alterator: Update logo_width.png.
+- system-settings: Add conflict with all branding-*-mate-settings.
+- system-settings: Use polkit-rule-nm-modify-system.
+- os-release.in: Add DOCUMENTATION_URL and SUPPORT_URL.
+- os-release.in: Add LOGO.
+- os-release.in: Add ALT_BRANCH_ID.
+- graphics: Add new system-logo.png (closes: #55976).
+- images: Drop old unused logo.png.
+- indexhtml: Fix some links.
+- release: Remove duplicate space in altlinux-release.
+- menu: Add 'PulseAudio' to Name of pavucontrol desktop file.
+- xfce-settings: Fix description in Thunar/uca.xml.
+- xfce-settings: Replace mate-search-tool with catfish.
+- xfce4-settings: Set pwvucontrol as mixer command.
+- menu: Add pwvucontrol desktop file.
+- xfce-settings: Add power-profiles-daemon settings.
+
 * Fri Aug 08 2025 Mikhail Efremov <sem@altlinux.org> 11.0-alt1
 - spec: use claws-mail as mail reader on e2k (by Michael Shigorin).
 - alterator: Change installer background color.
