@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.4.0
+Version: 11.5.0
 Release: alt1
 
 Summary: Installer common files
@@ -43,7 +43,6 @@ Requires: x-cursor-theme-jimmac
 #features
 Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-desktop-suspend-stage2
-Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-slideshow
 Requires: installer-feature-xdg-user-dirs
 
@@ -76,6 +75,7 @@ Requires: alterator-luks
 #features
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-lightdm-stage3
+Requires: installer-feature-nvidia
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -126,6 +126,11 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/livecd-fininstall.d/*
 
 %changelog
+* Mon Oct 20 2025 Mikhail Efremov <sem@altlinux.org> 11.5.0-alt1
+- Add installer-feature-nvidia.
+- postinstall: Add 70-nvidia.
+- Drop installer-feature-samba-usershares-stage2.
+
 * Fri Jul 11 2025 Mikhail Efremov <sem@altlinux.org> 11.4.0-alt1
 - livecd: Add livecd-fininstall.d/99-reboot.sh.
 - postinstall: Drop 05-virtualbox hook.
