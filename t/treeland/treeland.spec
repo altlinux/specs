@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -14,7 +14,8 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/treeland
 Vcs: https://github.com/linuxdeepin/treeland
 
-Source: %url/archive/%version/%name-%version.tar.xz
+# Source-url: %url/archive/%version/%name-%version.tar.xz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja patchelf
@@ -217,6 +218,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.4-alt1
+- New version 0.7.4.
+
 * Wed Sep 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.3-alt1
 - New version 0.7.3.
 - Packaged data and wayland files separately.
