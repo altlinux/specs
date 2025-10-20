@@ -1,18 +1,21 @@
 %define oname eigen
-Name: %{oname}3
-Version: 3.4.0
-Release: alt3
+%def_with docs
 
-Summary: C++ template library for linear algebra
-License: LGPLv3+ or GPLv2+
+Name: %{oname}3
+Version: 5.0.0
+Release: alt1
+
+Summary: A lightweight C++ template library for vector and matrix math
+License: Apache-2.0 AND MPL-2.0 AND BSD-3-Clause AND Minpack
 Group: Development/C++
 
 Url: http://eigen.tuxfamily.org/
 Source: %name-%version.tar
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# Fix the include paths in the new Eigen3Config.cmake file
-Patch2: eigen3-3.3.1-fixcmake.patch
+# Fix/workaround doc build failures
+Patch0: eigen3_docs.patch
+# Fix lib install dir
+Patch1: eigen3_libinstalldir.patch
 # Avoid SSE4.2/AVX on e2k
 Patch3: eigen3-3.4.0-alt-e2k.patch
 # Temporarily disable EIGEN_ALTIVEC_DISABLE_MMA on PPC64le
@@ -21,7 +24,11 @@ Patch4: eigen_mma.patch
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: libsuitesparse-devel libscotch-devel libgoogle-sparsehash
-BuildRequires: gcc-c++ doxygen
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
+%if_with docs
+BuildRequires: doxygen graphviz
+%endif
 BuildRequires: libsuperlu-devel libmpfr-devel libgmp-devel
 BuildRequires: libfftw3-devel libGLU-devel libgsl-devel gcc-fortran
 BuildRequires: liblapack-devel libglew-devel libGLUT-devel libXi-devel
@@ -30,20 +37,41 @@ BuildRequires: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libxkbfile-devel libXpm-devel
 BuildRequires: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: boost-devel
-
-# TODO: add devel subpackage and move stuff
-Provides: %{name}-devel = %EVR
-Provides: %{oname}-devel = %EVR
+BuildRequires: libopenblas-devel
 
 %description
 Eigen is a C++ template library for linear algebra: matrices, vectors,
 numerical solvers, and related algorithms.
 
+%package devel
+Summary: A lightweight C++ template library for vector and matrix math
+Group: Development/C++
+Provides: %{oname}-devel = %EVR
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+ 
+%description devel
+Eigen is a C++ template library for linear algebra: matrices, vectors,
+numerical solvers, and related algorithms.
+
+%package blas
+Summary: BLAS library built on top of eigen3
+Group: Development/C++
+
+%description blas
+%{summary}.
+
+%package lapack
+Summary: LAPACK library built on top of eigen3
+Group: Development/C++
+
+%description lapack
+%{summary}.
+
 %package docs
 Summary: Documentation for Eigen3
 Group: Development/Documentation
 BuildArch: noarch
-#BuildArch: noarch
 
 %description docs
 Eigen is a C++ template library for linear algebra: matrices, vectors,
@@ -63,7 +91,8 @@ This package contains examples for Eigen.
 
 %prep
 %setup
-%patch2 -p0 -b .fixcmake
+%patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 %patch3 -p2 -b .e2k
 # crashes with a bus error
@@ -78,6 +107,9 @@ export PATH=$PATH:%_libdir/pastix/bin
 
 %cmake -GNinja \
 	-Wno-dev \
+    -DEIGEN_BUILD_SHARED_LIBS=ON \
+    -DEIGEN_BUILD_BLAS=ON \
+    -DEIGEN_BUILD_LAPACK=ON \
 	-DINCLUDE_INSTALL_DIR=%_includedir/%name \
 	-DPKGCONFIG_INSTALL_DIR=%_libdir/pkgconfig \
 	-DCMAKEPACKAGE_INSTALL_DIR=%_libdir/cmake/%name \
@@ -92,31 +124,47 @@ export PATH=$PATH:%_libdir/pastix/bin
 	-DMETIS_INCLUDE_DIRS=%_includedir/metis
 
 %cmake_build
+%if_with docs
 %cmake_build -t doc
+%endif
 
 %install
 %cmake_install
-
+rm %buildroot%_libdir/*.a
+%if_with docs
 install -d %buildroot%_bindir
 cd %_cmake__builddir
 rm -fR doc/examples/CMakeFiles doc/examples/*.out \
 	doc/examples/*.cmake
 install -m755 doc/examples/* %buildroot%_bindir
 cd -
+%endif
 
-%files
+%files devel
 %_includedir/*
 %_pkgconfigdir/*
 %_libdir/cmake/%name
 
+%files blas
+%_libdir/libeigen_blas.so
+
+%files lapack
+%_libdir/libeigen_lapack.so
+
+%if_with docs
 %files examples
 %_bindir/*
 %doc doc/examples/*
 
 %files docs
 %doc %_cmake__builddir/doc/html/*
+%endif
 
 %changelog
+* Tue Oct 14 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+- Build without documentation.
+
 * Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt3
 - Fixed path to includes in pkgconfig file (ALT #53643).
 
