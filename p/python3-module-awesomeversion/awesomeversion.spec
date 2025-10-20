@@ -1,29 +1,33 @@
 Name: python3-module-awesomeversion
-Version: 24.6.0
+Version: 25.8.0
 Release: alt1
 
 Summary: Python version manipulations
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/awesomeversion/
+Url: https://pypi.org/project/awesomeversion
+VCS: https://github.com/ludeeus/awesomeversion
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra dev
 
 %description
 %summary
 
 %prep
 %setup
+sed -ri '/^version\s+=/ s,"[^"]+,"%version,' pyproject.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -32,13 +36,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o addopts= tests
 
 %files
 %python3_sitelibdir/awesomeversion
 %python3_sitelibdir/awesomeversion-%version.dist-info
 
 %changelog
+* Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 25.8.0-alt1
+- 25.8.0 released
+
 * Thu Jul 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.6.0-alt1
 - 24.6.0 released
 
