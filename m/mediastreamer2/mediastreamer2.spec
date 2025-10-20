@@ -4,14 +4,14 @@
 %def_without bcg729
 
 Name: mediastreamer2
-Version: 5.4.30
+Version: 5.4.50
 Release: alt1
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
 Group: System/Libraries
 Url: https://gitlab.linphone.org/BC/public/mediastreamer2
-Vcs: git://gitlab.linphone.org/BC/public/mediastreamer2.git
+VCS: https://gitlab.linphone.org/BC/public/mediastreamer2
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -162,6 +162,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Sun Oct 19 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.50-alt1
+- New version 5.4.50.
+
 * Tue Jul 29 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.30-alt1
 - New version 5.4.30.
 
