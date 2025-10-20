@@ -5,8 +5,8 @@
 %def_with gtk4
 
 Name: spice-vdagent
-Version: 0.22.1
-Release: alt3
+Version: 0.23.0
+Release: alt1
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -86,6 +86,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Mon Oct 20 2025 Alexey Shabalin <shaba@altlinux.org> 1:0.23.0-alt1
+- 0.23.0
+
 * Wed Sep 03 2025 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt3
 - Fix startup via systemd in user session.
 - Move to gtk4.
