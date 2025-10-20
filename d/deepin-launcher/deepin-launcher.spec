@@ -4,13 +4,14 @@
 
 Name: deepin-launcher
 Version: 6.0.19
-Release: alt3
+Release: alt4
 
 Summary: Deepin desktop-environment - Launcher module
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-launcher
+VCS: https://github.com/linuxdeepin/dde-launcher
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -25,7 +26,7 @@ Conflicts: deepin-launchpad
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5
-BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel
+BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel libwayland-client-devel
 %if_with clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -96,6 +97,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dde-launcher/*.h
 
 %changelog
+* Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt4
+- Fixed build with dtk 5.7.23.
+- Added VCS tag.
+
 * Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt3
 - Obsoleted by deepin-launchpad.
 
