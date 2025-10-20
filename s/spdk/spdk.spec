@@ -6,7 +6,7 @@
 %def_enable clang
 
 Name: spdk
-Version: 25.05
+Version: 25.05.1
 Release: alt1
 
 Summary: Storage Performance Development Kit
@@ -14,21 +14,22 @@ Summary: Storage Performance Development Kit
 License: BSD-3-Clause
 Group: Development/Tools
 Url: https://spdk.io
-VCS: https://github.com/spdk/spdk.git
+VCS: https://github.com/spdk/spdk
 
 ExcludeArch: i586 ppc64le armh
 
-Source: spdk-%version.tar.gz
-Patch0: spdk-25.05-alt-scripts-syntax.patch
-Patch1: spdk-24.09-alpinelinux-use-system-isal.patch
-Patch2: spdk-23.09-alpinelinux-remove-stupid.patch
+Source: spdk-%version.tar
+Patch0: spdk-%version-%release.patch
+Patch1: spdk-25.05-alt-scripts-syntax.patch
+Patch2: spdk-24.09-alpinelinux-use-system-isal.patch
+Patch3: spdk-23.09-alpinelinux-remove-stupid.patch
 # python module
-Patch3: spdk-25.05-upstream-python-1.patch
-Patch4: spdk-25.05-upstream-python-2.patch
-Patch5: spdk-25.05-upstream-python-3.patch
-Patch6: spdk-25.05-upstream-python-4.patch
+Patch4: spdk-25.05-upstream-python-1.patch
+Patch5: spdk-25.05-upstream-python-2.patch
+Patch6: spdk-25.05-upstream-python-3.patch
+Patch7: spdk-25.05-upstream-python-4.patch
 # ---
-Patch7: spdk-25.05-alt-fix-symbols.patch
+Patch8: spdk-25.05-alt-fix-symbols.patch
 
 # This is a minimal set of requirements needed for SPDK apps to run when built with
 # default configuration. These are also predetermined by rpmbuild. Extra requirements
@@ -55,7 +56,7 @@ Requires: systemd-utils
 
 # Automatically added by buildreq on Mon Oct 16 2023
 # optimized out: bash5 bashrc glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libncurses-devel libstdc++-devel libtinfo-devel pkg-config python3 python3-base python3-dev sh5
-BuildRequires: libaio-devel libfuse3-devel libisal-devel libisal_crypto-devel libssl-devel libuuid-devel libsystemd-devel libncurses-devel patchelf python3-devel
+BuildRequires: libaio-devel libfuse3-devel libisal-devel libisal_crypto-devel libssl-devel libuuid-devel libsystemd-devel libncurses-devel patchelf python3-devel libcap-devel
 BuildRequires: rdma-core-devel zlib-devel libpcap-devel libdbus-devel libelf-devel libzstd-devel libjansson-devel dpdk-devel
 BuildRequires: python3-module-pyproject-installer python3-module-wheel python3-module-setuptools python3-module-hatchling
 %if_enabled clang
@@ -116,11 +117,12 @@ This package provides python3 module for %name.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1 -R
+%patch3 -p1
 %patch4 -p1 -R
 %patch5 -p1 -R
 %patch6 -p1 -R
-%patch7 -p1
+%patch7 -p1 -R
+%patch8 -p1
 
 sed -i '/CONFIG_PREFIX=/s|/usr/local|%_prefix|' CONFIG
 
@@ -339,6 +341,10 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir_noarch/%{name}-*
 
 %changelog
+* Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 25.05.1-alt1
+- New version 25.05.1 (Fixes: CVE-2025-57275).
+- Fixed build with libsystemd 258.1.
+
 * Wed Jun 11 2025 Leontiy Volodin <lvol@altlinux.org> 25.05-alt1
 - New version 25.05.
 - Added VCS tag.
