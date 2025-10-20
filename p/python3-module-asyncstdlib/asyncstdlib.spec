@@ -1,25 +1,32 @@
 Name: python3-module-asyncstdlib
-Version: 3.12.5
+Version: 3.13.1
 Release: alt1
 
 Summary: Async-compatible stdlib reimplementation
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/asyncstdlib
+VCS: https://github.com/maxfischer2781/asyncstdlib
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
-BuildRequires: python3(flit_core)
-BuildRequires: python3(pytest)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra tests
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -35,6 +42,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/asyncstdlib-%version.dist-info
 
 %changelog
+* Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.13.1-alt1
+- 3.13.1 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.12.5-alt1
 - 3.12.5 released
 
