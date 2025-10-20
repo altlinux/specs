@@ -1,33 +1,35 @@
 Name: python3-module-charset-normalizer
-Version: 3.2.0
+Version: 3.4.4
 Release: alt1
 
 Summary: The Real First Universal Charset Detector
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/charset-normalizer/
+Url: https://pypi.org/project/charset-normalizer
+VCS: https://github.com/jawah/charset_normalizer
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-%ifnarch %ix86
-BuildRequires: python3(mypyc)
-%endif
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildArch: noarch
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup dev
 
 %build
-%ifnarch %ix86
-export CHARSET_NORMALIZER_USE_MYPYC=1
-%endif
 %pyproject_build
 
 %install
@@ -39,9 +41,12 @@ export CHARSET_NORMALIZER_USE_MYPYC=1
 %python3_sitelibdir/charset_normalizer-%version.dist-info
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o addopts= tests
 
 %changelog
+* Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.4.4-alt1
+- 3.4.4 released
+
 * Fri May 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.0-alt1
 - 3.2.0 released
 
