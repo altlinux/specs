@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,9 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Sun Oct 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt1
+- components: remove alt-domain-server from education-server-apps
+
 * Wed Oct 15 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.3-alt1
 - Remove fonts-ttf-ms from education edition.
 - Fix the changelog for the 0.9.2-alt1.

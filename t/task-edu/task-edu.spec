@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.12
+Version: 1.7.13
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -558,7 +558,6 @@ Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
 Requires: installed-db-office-server-moodle
 Requires: moodle-qtype_coderunner
-Requires: alt-domain-server
 Requires: alterator-fbi
 #Requires: alterator-bacula
 Requires: alterator-ca
@@ -663,6 +662,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sun Oct 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.13-alt1
+- server-apps: Stop requiring alt-domain-server.
+
 * Sat Oct 18 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.12-alt1
 - Removed vulkan-amdgpu (ALT #56017).
 
