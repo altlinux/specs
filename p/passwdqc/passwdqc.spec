@@ -1,6 +1,6 @@
 Name: passwdqc
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -170,6 +170,9 @@ install -pD -m755 passwdqc-match.control \
 %_man1dir/*
 
 %changelog
+* Fri Mar 14 2025 Egor Shestakov <ved@altlinux.org> 2.0.3-alt3
+- Increase minimal pincodes length to 6 (Closes: #53446).
+
 * Fri Aug 30 2024 Egor Shestakov <ved@altlinux.org> 2.0.3-alt2
 - Added control(8) for passwdqc min and match properties (Closes: #51342).
 
