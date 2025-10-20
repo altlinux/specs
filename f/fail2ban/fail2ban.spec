@@ -1,6 +1,6 @@
 Name: fail2ban
-Version: 0.11.2
-Release: alt4
+Version: 1.1.0
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -16,11 +16,6 @@ Source3: fail2ban-logrotate
 Source4: paths-altlinux.conf
 Source5: paths-altlinux-systemd.conf
 
-# CVE-2021-32749
-Patch1: 410a6ce5c80dd981c22752da034f2529b5eee844.patch
-Patch2: 747d4683221b5584f9663695fb48145689b42ceb.patch
-# python 3.10 fix
-Patch3: ea26509594a3220b012071604d73bb42d0ecae2c.patch
 # python 3.12 fix
 Patch4: drop-distutils.patch
 Patch5: fail2ban-0.11.2-generateman-alt-fix.patch
@@ -54,31 +49,24 @@ Recommends: python3-module-systemd
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %__subst "s|paths-debian.conf|paths-altlinux.conf|g" config/jail.conf
-# setuptools>=58 breaks support for use_2to3
-%__subst "s|.*use_2to3.*||" setup.py
-python3-2to3 -w --no-diffs bin/* fail2ban
 %__subst "s|/usr/bin/env python|%__python3|" bin/*
 
 %build
 %python3_build
 export PYTHONPATH=$PWD
-cd man
-./generate-man
+gzip man/*.{1,5}
 
 %install
 %python3_install
 %python3_prune
 
 mkdir -p %buildroot%_man1dir/
-cp man/*.1 %buildroot%_man1dir/
+cp man/fail2ban-*.1.gz %buildroot%_man1dir/
 mkdir -p %buildroot%_man5dir/
-cp man/*.5 %buildroot%_man5dir/
+cp man/jail.conf.5.gz %buildroot%_man5dir/
 install -d %buildroot%_var/run/fail2ban
 
 install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
@@ -129,6 +117,9 @@ mkdir -p %buildroot%_var/lib/fail2ban/
 %_logrotatedir/%name
 
 %changelog
+* Mon Oct 20 2025 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Jan 30 2024 Anton Vyatkin <toni@altlinux.org> 0.11.2-alt4
 - Fixed FTBFS.
 
