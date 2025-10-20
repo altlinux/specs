@@ -1,5 +1,5 @@
 Name: alacritty
-Version: 0.15.1
+Version: 0.16.0
 Release: alt1
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
@@ -29,16 +29,13 @@ set of features with high performance. The supported platforms currently consist
 of BSD, Linux, macOS and Windows.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
-cargo vendor crates
-tar cf %SOURCE1 crates
-%else
-tar xf %SOURCE1
+cargo vendor
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %build
-export CARGO_HOME=${PWD}/cargo
 cargo build --release
 
 %install
@@ -72,6 +69,9 @@ install -pm0644 -D /dev/null %buildroot%_sysconfdir/alacritty/alacritty.toml
 %_man5dir/alacritty*.5*
 
 %changelog
+* Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.0-alt1
+- 0.16.0 released
+
 * Mon Feb 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.15.1-alt1
 - 0.15.1 released
 
