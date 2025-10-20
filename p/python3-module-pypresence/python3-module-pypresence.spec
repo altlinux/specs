@@ -1,7 +1,7 @@
 %define modname pypresence
 
 Name: python3-module-%modname
-Version: 4.6.0
+Version: 4.6.1
 Release: alt1
 
 Summary: Discord RPC and Rich Presence wrapper library
@@ -37,6 +37,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-wheel
 %python3_sitelibdir_noarch/%{modname}*
 
 %changelog
+* Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 4.6.1-alt1
+- New version 4.6.1.
+
 * Thu Oct 16 2025 Leontiy Volodin <lvol@altlinux.org> 4.6.0-alt1
 - New version 4.6.0.
 
