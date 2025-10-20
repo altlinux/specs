@@ -1,21 +1,27 @@
 Name: chemical-mime-data
 Version: 0.1.94
-Release: alt3
+Release: alt3.1
 
 Summary: Chemical MIME types database
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://github.com/dleidert/chemical-mime
 
+Vcs: https://github.com/dleidert/chemical-mime.git
+
 Source: https://downloads.sourceforge.net/chemical-mime/%name-%version.tar.gz
 
 # from Fedora
 Patch: chemical-mime-data-0.1.94-turbomole.patch
+Patch1: %name-0.1.94-alt-use-rsvg-convert.patch
 
 BuildArch: noarch
 
 Requires: shared-mime-info
-BuildRequires: shared-mime-info intltool xml-utils xsltproc ImageMagick-tools
+BuildRequires: pkgconfig(shared-mime-info)
+BuildRequires: intltool xml-utils xsltproc
+#BuildRequires: ImageMagick-tools
+BuildRequires: /usr/bin/rsvg-convert
 
 %description
 A collection of data files which tries to give support for various chemical
@@ -27,8 +33,10 @@ proposed in 1995, though it seems they have never been registered with IANA.
 %prep
 %setup -q
 %patch -p1 -b .turbomole
+%patch1 -b .rsvg
 
 %build
+%autoreconf
 %configure --disable-update-database \
            --without-gnome-mime \
            --without-pixmaps \
@@ -48,6 +56,11 @@ cp AUTHORS ChangeLog HACKING NEWS README THANKS TODO %buildroot%pkgdocdir
 %doc %pkgdocdir
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.94-alt3.1
+- fixed BR
+- used rsvg-convert instead of convert (from ImageMagick)
+  to avoid difference of types (RGB(A)) of produced png's files for aarch64
+
 * Tue Dec 24 2019 Yuri N. Sedunov <aris@altlinux.org> 0.1.94-alt3
 - disabled "chemical/x-turbomole-vibrational" (ALT #37671)
 - updated Url and License tags

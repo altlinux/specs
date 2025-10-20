@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -36,7 +36,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
 %define rust_ver 1.85.1
-%define cargo_c_ver 0.9.19
+%define cargo_c_ver 0.10.10
 %define glib_ver 2.52.0
 %define pango_ver 1.46
 %define gtk3_ver 3.10.0
@@ -207,6 +207,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.2-alt1
+- 2.61.2
+
 * Tue Sep 09 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.61.1-alt1
 - 2.61.1
 
