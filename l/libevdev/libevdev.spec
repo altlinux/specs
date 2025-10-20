@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.13.4
+Version: 1.13.5
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
-BuildRequires: meson glibc-kernheaders libcheck-devel python3-module-setuptools
+BuildRequires: meson glibc-kernheaders libcheck-devel python3(setuptools)
 %{?_enable_doc:BuildRequires: doxygen}
 %ifarch %valgrind_arches
 BuildRequires: valgrind
@@ -73,6 +73,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.5-alt1
+- 1.13.5
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.4-alt1
 - 1.13.4
 

@@ -1,4 +1,7 @@
 %def_disable snapshot
+
+%define _name exaile
+%define rdn_name org.%_name.%_name
 %define beta %nil
 %define gst_api_ver 1.0
 
@@ -6,8 +9,8 @@
 %def_disable exfalso
 %def_disable ipod
 
-Name: exaile
-Version: 4.1.4
+Name: %_name
+Version: 4.2.0
 Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
@@ -102,7 +105,7 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %{?_enable_ipod:%exclude %_datadir/%name/plugins/ipod}
 %{?_enable_exfalso:%exclude %_datadir/%name/plugins/exfalso}
 %_datadir/%name
-%_datadir/metainfo/exaile.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/dbus-1/services/org.exaile.Exaile.service
 %_liconsdir/%name.png
 %_niconsdir/%name.png
@@ -124,6 +127,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.4-alt1
 - 4.1.4
 
