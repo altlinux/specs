@@ -1,5 +1,5 @@
 Name: kew
-Version: 3.5.3
+Version: 3.6.3
 Release: alt1
 
 Summary: A terminal music player
@@ -38,7 +38,7 @@ Features:
 %setup
 
 %build
-%make_build OPTFLAGS='%optflags'
+%make_build OPTFLAGS='%optflags' PREFIX=%_prefix
 
 %install
 %make_install DESTDIR=%buildroot PREFIX=%_prefix MAN_DIR=%_mandir install
@@ -49,6 +49,9 @@ Features:
 %_man1dir/kew.1*
 
 %changelog
+* Mon Oct 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.6.3-alt1
+- 3.6.3 released
+
 * Mon Oct 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.3-alt1
 - 3.5.3 released
 
