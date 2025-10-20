@@ -4,7 +4,7 @@
 
 Name:               python3-module-munch
 Version:            4.0.0
-Release:            alt1
+Release:            alt2
 
 Summary:            A dot-accessible dictionary (a la JavaScript objects)
 
@@ -13,6 +13,7 @@ License:            MIT
 URL:                https://pypi.io/project/munch
 
 Source:             %name-%version.tar
+Patch:              84651ee872f9ea6dbaed986fd3818202933a8b50.patch
 
 BuildArch:          noarch
 
@@ -35,6 +36,7 @@ JavaScript.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export PBR_VERSION=%version
@@ -53,6 +55,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Oct 20 2025 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Fixed FTBFS.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 
