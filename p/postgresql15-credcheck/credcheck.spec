@@ -1,14 +1,8 @@
 %define pg_ver 15
-%ifarch loongarch64
-# XXX: psql jit uses LLVM, versions <= 15.
-# These versions do not support LoongArch targets.
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Name: postgresql%pg_ver-credcheck
-Version: 3.0
+Version: 4.1
 Release: alt1
 
 Summary: The credcheck PostgreSQL extension provides few general credential checks
@@ -49,6 +43,7 @@ By using this extension, we can define a set of rules:
 %makeinstall_std
 
 %files
+%doc LICENSE README.md
 %_libdir/pgsql/*.so
 %if_with jit
 %_libdir/pgsql/bitcode/*
@@ -56,6 +51,17 @@ By using this extension, we can define a set of rules:
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Oct 20 2025 Alexei Takaseev <taf@altlinux.org> 4.1-alt1
+- 4.1
+- Drop view pg_banned_rolename, fixed on upstream
+- Fix build for PostgreSQL 16 and older
+
+* Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 4.0-alt1
+- 4.0
+- Add view pg_banned_rolename show banned roles as rolenames
+- Add to package docs
+- Enable JIT for loongarch64
+
 * Tue Jan 14 2025 Alexei Takaseev <taf@altlinux.org> 3.0-alt1
 - 3.0
 
