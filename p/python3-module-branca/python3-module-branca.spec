@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Generate complex HTML+JS pages with Python
@@ -52,5 +52,8 @@ and not test_color_brewer_extendability"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 20 2025 Anton Vyatkin <toni@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Sat May 03 2025 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt1
 - Initial build for Sisyphus.
