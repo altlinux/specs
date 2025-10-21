@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: pytest plugin for aiohttp support
 License: Apache-2.0
 Group: Development/Python3
@@ -50,6 +50,9 @@ pytest plugin for aiohttp support
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS.
+
 * Fri Jan 24 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.5 -> 1.1.0.
 
