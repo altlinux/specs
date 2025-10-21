@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.26.5
-Release: alt1
+Release: alt2
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
 License: AGPL-3.0-or-later
@@ -90,6 +90,9 @@ SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 21 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.5-alt2
+- Added support swig p11 compatibility.
+
 * Mon Oct 13 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.5-alt1
 - New version (1.26.5).
 - Added runtime dependency on python3-module-mupdf (closes: #56207).
