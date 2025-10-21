@@ -1,16 +1,17 @@
 Name: xtruss
-Version: 20211025
+Version: 20250428
 Release: alt1
 Summary: Trace X protocol exchanges, in the manner of strace
-License: MIT/X11
+License: X11
 Group: System/X11
 Source: %name-%version.tar.gz
 Url: http://www.chiark.greenend.org.uk/~sgtatham/xtruss/
 
-# Automatically added by buildreq on Tue Jun 21 2022
-# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libsasl2-3 perl python3-base sh4
-BuildRequires: cmake halibut
+# Automatically added by buildreq on Tue Oct 21 2025
+# optimized out: bash5 cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 perl pkg-config python2-base python3 python3-base sh5
+BuildRequires: cmake halibut xorg-xcbproto-devel rpm-build-python3
 
+# TODO is the provided generator handy?
 %description
 XTruss is a utility which logs everything that passes between
 the X server and one or more X client programs. In this it is
@@ -21,13 +22,14 @@ functionality with an interface much more similar to strace(1).
 %setup
 
 %build
-%cmake
+%cmake -DUSING_XTRGEN=Yes
 %cmake_build
 rm %name.1
 halibut --man=%name.1 doc/man-xtruss.but
 
 %install
 %cmakeinstall_std
+install -D xtrgen.py %buildroot%_bindir/xtrgen.py
 
 %files
 %doc README
@@ -35,6 +37,10 @@ halibut --man=%name.1 doc/man-xtruss.but
 %_man1dir/*
 
 %changelog
+* Tue Oct 21 2025 Fr. Br. George <george@altlinux.org> 20250428-alt1
+- Autobuild version bump to 20250428
+- Introduce generated XCB proto profile
+
 * Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 20211025-alt1
 - Autobuild version bump to 20211025
 
