@@ -1,6 +1,8 @@
+%set_gcc_version 13
+
 Name: openmsx
-Version: 19.1
-Release: alt1.1
+Version: 21.0
+Release: alt1
 Summary: An emulator of the MSX home computer system	
 Group: Emulators
 License: GPL2
@@ -8,7 +10,7 @@ Url: https://openmsx.org/
 
 Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ make rpm-macros-make
+BuildRequires: gcc13-c++ make rpm-macros-make
 BuildRequires: zlib-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_ttf-devel
@@ -66,6 +68,9 @@ mkdir -p %buildroot%prefix
 %_datadir/%name
 
 %changelog
+* Tue Oct 21 2025 Artyom Bystrov <arbars@altlinux.org> 21.0-alt1
+- Update to new version
+
 * Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 19.1-alt1.1
 - fix version
 
