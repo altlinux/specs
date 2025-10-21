@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgit
-Version: 2.12
+Version: 2.13
 Release: alt1
 Epoch: 1
 
@@ -58,6 +58,9 @@ install -pDm755 bin/qgit %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Oct 20 2025 Ivan A. Melnikov <iv@altlinux.org> 1:2.13-alt1
+- 2.13
+
 * Sun Sep 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:2.12-alt1
 - 2.12
 
