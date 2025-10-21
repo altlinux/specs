@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Python Microformats2 parser
 License: MIT
@@ -21,6 +21,8 @@ BuildRequires: python3-module-poetry-core
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-mock
 %endif
 
@@ -50,6 +52,9 @@ microformats1.
 
 
 %changelog
+* Tue Oct 21 2025 Stanislav Levin <slev@altlinux.org> 2.0.1-alt2
+- Fixed FTBFS (new beautifulsoup4).
+
 * Wed Dec 27 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 

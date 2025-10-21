@@ -4,8 +4,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 4.13.5
+Version: 4.14.2
 Release: alt1
 Summary: Screen-scraping library
 License: MIT
@@ -17,6 +28,8 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Provides: python3-module-BeautifulSoup4 = %EVR
 Obsoletes: python3-module-BeautifulSoup4
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -39,6 +52,9 @@ screen-scraping. Three features make it powerful:
 - Beautiful Soup sits on top of popular Python parsers like lxml and html5lib,
   allowing you to try out different parsing strategies or trade speed for
   flexibility.
+
+%add_python_extra lxml
+%add_python_extra html5lib
 
 %prep
 %setup
@@ -63,6 +79,9 @@ screen-scraping. Three features make it powerful:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 21 2025 Stanislav Levin <slev@altlinux.org> 4.14.2-alt1
+- 4.13.5 -> 4.14.2.
+
 * Mon Sep 01 2025 Stanislav Levin <slev@altlinux.org> 4.13.5-alt1
 - 4.13.4 -> 4.13.5.
 
