@@ -20,7 +20,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -44,10 +44,11 @@ Source2: %_name.lds
 %define glib_ver 2.56.0
 %define gi_ver 0.9.5
 %define glycin_api_ver 2
-%define glycin_ver 2.0
+%define glycin_ver 2.0.1
 
 %{?_enable_glycin:Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver bubblewrap}
 Requires: %name-locales = %EVR
+Requires: shared-mime-info
 
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
@@ -55,8 +56,9 @@ Obsoletes: %name-loaders <= %version
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver
 BuildRequires: /proc libgio-devel >= %glib_ver
+BuildRequires: pkgconfig(shared-mime-info)
 %{?_disable_glycin:BuildRequires: libjpeg-devel libpng-devel libtiff-devel}
-%{?_enable_glycin:BuildRequires: pkgconfig(glycin-%glycin_api_ver)}
+%{?_enable_glycin:BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver}
 %{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
@@ -238,6 +240,12 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.4-alt1
+- 2.44.4
+
+* Tue Sep 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.3-alt1
+- 2.44.3
+
 * Sat Sep 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
 - 2.44.1
 
