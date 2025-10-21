@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 %def_disable static
 %def_enable gtk3
@@ -74,7 +74,15 @@ BuildRequires: pkgconfig(simdutf) >= %simdutf_ver
 %{?_enable_docs:BuildRequires: gi-docgen}
 
 %description
-VTE is a terminal emulator widget for use with GTK+
+VTE is a terminal emulator widget for use with GTK+3
+
+%package gtk4
+Summary: VTE Terminal for GTK4
+Group: Terminals
+Requires: lib%name = %EVR
+
+%description gtk4
+GTK4-based VTE terminal emulator
 
 %package utils
 Summary: VTE utilities and test programs
@@ -180,10 +188,12 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 
 %files
 %_bindir/%_name-%api_ver
-%_bindir/%_name-%api_ver-gtk4
 %_desktopdir/%xdg_name.App.Gtk3.desktop
-%_desktopdir/%xdg_name.App.Gtk4.desktop
 %_datadir/xdg-terminals/%xdg_name.App.Gtk3.desktop
+
+%files gtk4
+%_bindir/%_name-%api_ver-gtk4
+%_desktopdir/%xdg_name.App.Gtk4.desktop
 %_datadir/xdg-terminals/%xdg_name.App.Gtk4.desktop
 
 %files -n lib%name -f %name.lang
@@ -232,6 +242,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.82.1-alt1.1
+- new vte3-gtk4 subpackage (ALT #56524)
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.82.1-alt1
 - 0.82.1
 
