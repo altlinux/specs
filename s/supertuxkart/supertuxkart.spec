@@ -2,7 +2,7 @@
 
 Name: supertuxkart
 Version: 1.5
-Release: alt0.2.rc1
+Release: alt1
 
 Summary: SuperTuxKart is a kart racing game
 
@@ -13,7 +13,7 @@ Vcs: https://github.com/supertuxkart/stk-code
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %name-%version-src.tar.gz
+Source: %name-%version-src.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
@@ -69,7 +69,7 @@ rm -f %buildroot%_includedir/wiiuse.h
 rm -f %buildroot%_datadir/%name/data/optimize_data.sh
 
 %files
-#doc README.md CHANGELOG.md NETWORKING.md
+%doc README.md CHANGELOG.md NETWORKING.md
 %_bindir/*
 %_desktopdir/%name.desktop
 %dir %_datadir/%name
@@ -86,6 +86,9 @@ rm -f %buildroot%_datadir/%name/data/optimize_data.sh
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Tue Oct 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt1
+- New version 1.5.
+
 * Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.2.rc1
 - New release-candidate version 1.5-rc1.
 

@@ -1,6 +1,6 @@
 Name: supertuxkart-data
 Version: 1.5
-Release: alt0.2.rc1
+Release: alt1
 
 License: GPL-3.0-or-later and CC-BY-SA-3.0 and CC-BY-SA-4.0
 Url: http://supertuxkart.sourceforge.net
@@ -8,8 +8,8 @@ Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
 BuildArch: noarch
 
-# svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets stk-assets
-Source: %name-%version.tar.xz
+# svn checkout https://svn.code.sf.net/p/supertuxkart/code/stk-assets supertuxkart-data
+Source: %name-%version.tar
 
 %description
 SuperTuxCart is a kart racing game
@@ -43,9 +43,13 @@ rm %buildroot%_datadir/supertuxkart/data/check_licenses.php
 
 %files
 %doc licenses.txt
+%dir %_datadir/supertuxkart/
 %_datadir/supertuxkart/data
 
 %changelog
+* Tue Oct 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt1
+- New version 1.5.
+
 * Fri Aug 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.5-alt0.2.rc1
 - New release-candidate version (1.5-rc1).
 
