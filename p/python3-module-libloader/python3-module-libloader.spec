@@ -2,7 +2,7 @@
 %define pypi_name libloader
 
 Name:    python3-module-%pypi_name
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 
 Summary: Cross-platform shared library loader which expects a certain path structure
@@ -18,6 +18,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
 
@@ -41,6 +42,9 @@ Windows and Linux.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 21 2025 Artem Semenov <savoptik@altlinux.org> 1.4.0-alt1
+- updated to new version 1.4.0
+
 * Tue Aug 05 2025 Artem Semenov <savoptik@altlinux.org> 1.3.3-alt1
 - updated to new version 1.3.3
 
