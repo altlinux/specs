@@ -2,14 +2,16 @@
 
 Name: planarity
 Summary: Implementations of several planarity-related graph algorithms
-Version: 4.0.0.0
+Version: 4.0.1.0
 Release: alt1
 License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/graph-algorithms/edge-addition-planarity-suite
-Vcs: https://github.com/graph-algorithms/edge-addition-planarity-suite.git
+VCS: https://github.com/graph-algorithms/edge-addition-planarity-suite
 
-Source: %url/archive/Version_%version/%name-%version.tar.gz
+# Source-url: https://github.com/graph-algorithms/edge-addition-planarity-suite/archive/Version_%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc
 
@@ -59,6 +61,7 @@ for %name.
 
 %prep
 %setup -n edge-addition-%name-suite-Version_%version
+%patch -p1
 
 # Use unix line endings in installed headers and debugsource files
 f=$(find ./c -name '*.c' -o -name '*.h')
@@ -74,8 +77,7 @@ done
 %autoreconf
 %configure --enable-static=false
 
-# Eliminate hardcoded rpaths, and workaround libtool moving all -Wl options
-# after the libraries to be linked
+# Eliminate hardcoded rpaths
 sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
     -i libtool
@@ -102,6 +104,9 @@ rm -rf %buildroot%_docdir
 %_pkgconfigdir/libplanarity.pc
 
 %changelog
+* Tue Oct 21 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.1.0-alt1
+- New version 4.0.1.0.
+
 * Mon Mar 17 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.0.0-alt1
 - New version 4.0.0.0.
 - Added vcs tag.
