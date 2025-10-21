@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1 
 
 Name:    guake
-Version: 3.10
-Release: alt2
+Version: 3.10.1
+Release: alt1
 Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 
@@ -69,6 +69,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 3.10.1-alt1
+- New version.
+
 * Mon Jul 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.10-alt2
 - Remove python3(pbr) requirement.
 
