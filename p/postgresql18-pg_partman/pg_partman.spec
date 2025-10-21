@@ -2,7 +2,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-pg_partman
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
@@ -61,6 +61,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Tue Oct 21 2025 Alexei Takaseev <taf@altlinux.org> 5.3.1-alt1
+- 5.3.1
+
 * Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 5.3.0-alt1
 - 5.3.0
 - Enable JIT on LoongArch
