@@ -14,7 +14,7 @@
 
 Name: python3-module-%pyname
 Version: 0.18.0
-Release: alt1
+Release: alt2
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -113,6 +113,10 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Tue Oct 21 2025 Anton Farygin <rider@altlinux.com> 0.18.0-alt2
+- applied upstream fixes improving compatibility with
+  Python 3.13-3.14 and NumPy 2.3
+
 * Mon May 12 2025 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt1
 - New version 0.18.0.
 
