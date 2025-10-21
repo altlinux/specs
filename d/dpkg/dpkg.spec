@@ -3,7 +3,7 @@
 
 Name: dpkg
 Version: 1.21.22
-Release: alt2
+Release: alt3
 
 Summary: Package maintenance system for Debian Linux
 
@@ -13,6 +13,7 @@ Url: http://packages.debian.org/unstable/base/dpkg
 
 Source0: http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 Patch: dpkg-ALT-e2k-cputable.patch
+Patch2: CVE-2025-6297.patch
 
 # boostrap notes:
 # 1) build dep loop via perl-Dpkg (just add noarch package);
@@ -42,6 +43,7 @@ This module provides dpkg functionalities.
 %prep
 %setup
 %patch -p2
+%patch2 -p1
 
 %build
 %autoreconf
@@ -115,6 +117,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Mon Oct 20 2025 Alexander Danilov <admsasha@altlinux.org> 1.21.22-alt3
+- Applied upstream patch (fixed CVE-2025-6297).
+
 * Tue Aug 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt2
 - add Requires: perl-Digest-SHA (ALT bug 46636)
 
