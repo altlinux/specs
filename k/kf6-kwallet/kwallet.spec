@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.18.0
+Version: 6.19.0
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ Source1: kwalletd6.po
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
 Patch4: alt-fdo-secrets-ksecretd.patch
+Patch5: alt-l10n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules glibc-devel qt6-tools-devel qt6-declarative-devel
@@ -74,6 +75,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 msgcat --use-first po/ru/kwalletd6.po %SOURCE1 > po/ru/kwalletd6.po.tmp
 cat po/ru/kwalletd6.po.tmp >po/ru/kwalletd6.po
@@ -139,6 +141,9 @@ __EOF__
 
 
 %changelog
+* Fri Oct 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt1
+- new version
+
 * Mon Sep 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
 - new version
 
