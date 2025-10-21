@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.17.3
+Version: 2.0.0
 Release: alt1
 
 Summary: A Python module for decorators, wrappers and monkey patching
@@ -19,6 +19,10 @@ BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: python3-devel python3-module-pytest
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
+
+%if_with check
+BuildRequires: python3-module-mypy
+%endif
 
 %py3_provides %oname
 
@@ -73,7 +77,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/pickle
@@ -85,6 +89,9 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 1.17.3-alt1
 - Automatically updated to 1.17.3.
 
