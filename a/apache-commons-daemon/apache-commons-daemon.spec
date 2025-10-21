@@ -1,10 +1,10 @@
-%global base_name   daemon
-%global short_name  commons-%{base_name}
+%global base_name daemon
+%global short_name commons-%{base_name}
 
 Name: apache-commons-daemon
 Summary: Defines API to support an alternative invocation mechanism
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 License: Apache-2.0
 Group: System/Base
@@ -16,11 +16,8 @@ Patch33: apache-commons-daemon-1.2.0-e2k.patch
 Patch34: apache-commons-daemon-1.2.0-riscv64.patch
 Patch35: apache-commons-daemon-1.2.4-loongarch64.patch
 
-BuildRequires:  autoconf
-BuildRequires:  dos2unix
-BuildRequires:  gcc
-BuildRequires:  xmlto
-
+BuildRequires: dos2unix
+BuildRequires: xmlto
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-17-compat
 BuildRequires: maven-local
@@ -35,22 +32,15 @@ method.  This specification covers the behavior and life cycle of what
 we define as Java daemons, or, in other words, non interactive
 Java applications.
 
-%package        jsvc
+%package jsvc
 Group: System/Base
-Summary:        Java daemon launcher
-Provides:       jsvc = 1:%{version}-%{release}
+Summary: Java daemon launcher
+Provides: jsvc = %EVR
 
-%description    jsvc
+%description jsvc
 Java daemon launcher.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-Requires:       jpackage-utils
-BuildArch:      noarch
-
-%description    javadoc
-API documentation for apache-commons-daemon.
+%javadoc_package
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
@@ -71,7 +61,7 @@ xmlto man man/jsvc.1.xml
 # build native jsvc
 pushd src/native/unix
 #sh support/buildconf.sh
-%configure --with-java=%{java_home}
+%configure --with-java=$JAVA_HOME
 %make_build
 popd
 
@@ -96,10 +86,10 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 %{_bindir}/jsvc
 %{_mandir}/man1/jsvc.1*
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
 %changelog
+* Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.4.1-alt2
+- Fixed build with $JAVA_HOME.
+
 * Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.4.1-alt1
 - new version
 
