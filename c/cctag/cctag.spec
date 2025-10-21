@@ -2,7 +2,7 @@
 
 Name:          cctag
 Version:       1.0.3
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Detection of CCTag markers made up of concentric circles
 License:       MPL-2.0
 Group:         System/Libraries
@@ -85,6 +85,7 @@ The library is the implementation of the paper:
 %prep
 %setup
 %autopatch -p1
+subst 's/3\.3\.4/5.0.0/' CMakeLists.txt
 
 %build
 %cmake -DCCTAG_WITH_CUDA:BOOL=OFF \
@@ -109,6 +110,9 @@ The library is the implementation of the paper:
 
 
 %changelog
+* Tue Oct 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1.2
+- FTBFS: fixed build with eigen 5.0.0.
+
 * Sat Apr 27 2024 Ivan A. Melnikov <iv@altlinux.org> 1.0.3-alt1.1
 - Fix build with boost 1.85.0
 
