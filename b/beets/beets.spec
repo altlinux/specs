@@ -4,7 +4,7 @@
 %def_with check
 
 Name: beets
-Version: 2.3.1
+Version: 2.5.1
 Release: alt1
 Summary: Music library manager and MusicBrainz tagger.
 License: MIT and ISC
@@ -47,6 +47,11 @@ BuildRequires: python3-module-requests-oauthlib
 BuildRequires: python3-module-discogs-client
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-distutils-extra
+BuildRequires: gstreamer1.0
+BuildRequires: ffmpeg
+BuildRequires: ImageMagick
+BuildRequires: unrar
+BuildRequires: bash-completion
 
 Requires: python3
 Requires: python3(jellyfish)
@@ -60,6 +65,7 @@ Requires: python3(acoustid)
 Requires: python3(requests)
 Requires: python3(pylast)
 Requires: gstreamer1.0
+Requires: ffmpeg
 Requires: python3(flask)
 Requires: python3(lap)
 
@@ -132,5 +138,8 @@ sed -i 's/from distutils\.spawn import find_executable/from shutil import which/
 %python3_sitelibdir/beetsplug/
 
 %changelog
+* Tue Oct 21 2025 Pavel Shilov <zerospirit@altlinux.org> 2.5.1-alt1
+- 2.3.1 -> 2.5.1
+
 * Tue Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus.

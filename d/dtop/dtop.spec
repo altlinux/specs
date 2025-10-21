@@ -2,7 +2,7 @@
 %global import_path github.com/amir20/dtop
 
 Name: dtop
-Version: 0.0.43
+Version: 0.2.0
 Release: alt1
 Summary: Terminal dashboard for Docker monitoring across multiple hosts with Dozzle integration.
 License: MIT
@@ -45,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Oct 21 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.0-alt1
+- 0.2.0 -> 0.0.43
+
 * Wed Sep 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.0.43-alt1
 - 0.0.40 -> 0.0.43
 
