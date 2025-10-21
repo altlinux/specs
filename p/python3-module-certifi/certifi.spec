@@ -1,18 +1,23 @@
 Name: python3-module-certifi
-Version: 2024.12.14
+Version: 2025.10.5
 Release: alt1
 
-Summary: Python package for providing Mozilla's CA Bundle
+Summary: Python package providing Mozilla's CA Bundle
 License: MPL-2.0
 Group: Development/Python
-Url: https://pypi.python.org/pypi/certifi/
+Url: https://pypi.org/project/certifi
+VCS: https://github.com/certifi/python-certifi
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %description
 This installable Python package contains a CA Bundle that you can
@@ -24,6 +29,8 @@ is derived from Mozilla Firefox's canonical set.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -32,11 +39,13 @@ is derived from Mozilla Firefox's canonical set.
 %pyproject_install
 
 %files
-%doc LICENSE *.rst
 %python3_sitelibdir/certifi
 %python3_sitelibdir/certifi-%version.dist-info
 
 %changelog
+* Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10.5-alt1
+- 2025.10.05 released
+
 * Thu Jan 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.12.14-alt1
 - 2024.12.14 released
 
@@ -73,4 +82,3 @@ is derived from Mozilla Firefox's canonical set.
 
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 14.05.14-alt1
 - Initial build for Sisyphus
-
