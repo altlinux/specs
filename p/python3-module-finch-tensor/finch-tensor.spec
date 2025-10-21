@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2.12
+Version: 0.2.14
 Release: alt1
 
 Summary: Sparse and Structured Tensor Programming in Python
@@ -49,5 +49,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/finch_tensor-%version.dist-info
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.14-alt1
+- Automatically updated to 0.2.14.
+
 * Thu Jul 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.12-alt1
 - Initial build for Sisyphus
