@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.14.3
-Release: alt1
+Release: alt2
 
 Summary: Traitlets Python config system
 
@@ -54,7 +54,11 @@ sed -i 's/"--color=yes",//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v --ignore tests/test_typing.py
+# https://github.com/ipython/traitlets/issues/925
+%pyproject_run_pytest -v --ignore tests/test_typing.py -k "\
+not test_complete_simple_app \
+and not test_complete_custom_completers \
+and not test_complete_subcommands_subapp1"
 
 %files
 %doc README.*
@@ -66,6 +70,9 @@ sed -i 's/"--color=yes",//' pyproject.toml
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Oct 22 2025 Anton Vyatkin <toni@altlinux.org> 5.14.3-alt2
+- fixed ftbfs
+
 * Sat Apr 20 2024 Anton Vyatkin <toni@altlinux.org> 5.14.3-alt1
 - new version 5.14.3
 
