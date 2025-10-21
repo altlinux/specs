@@ -1,9 +1,11 @@
 %def_enable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+# disable symbol versioning to avoid mass rebuild with pcre2 >= 10.47
+%def_disable symvers
 %def_enable check
 
 Name: pcre2
-Version: 10.46
+Version: 10.47
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -88,6 +90,7 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
     --enable-stack-for-recursion \
     --enable-unicode \
     --disable-valgrind \
+    %{subst_enable symvers} \
     %{subst_enable static}
 %nil
 %make_build
@@ -139,6 +142,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 10.47-alt1
+- 10.47
+
 * Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 10.46-alt1
 - 10.46 (fixed CVE-2025-58050)
 
