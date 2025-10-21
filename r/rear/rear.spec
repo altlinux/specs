@@ -1,9 +1,18 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 Name: rear
 Version: 2.9
-Release: alt1
+Release: alt2
 
 Summary: Relax-and-Recover is a Linux disaster recovery and system migration tool
-License: GPL-3.0
+License: GPL-2.0-or-later AND GPL-3.0-only
 Group: System/Base
 URL: http://relax-and-recover.org/
 
@@ -21,6 +30,7 @@ BuildRequires: ronn
 
 %ifarch %ix86 x86_64
 Requires: syslinux
+Requires: syslinux-extlinux
 %endif
 Requires: binutils
 Requires: ethtool
@@ -34,7 +44,7 @@ Requires: attr
 Requires: bc
 
 ### If you require NFS, you may need the below packages
-#Requires: nfsclient portmap rpcbind
+#Requires: nfs-client rpcbind
 
 ### Required for Bacula support
 #Requires: bacula
@@ -67,16 +77,18 @@ removes any excuse for not having a disaster recovery solution implemented.
 
 %prep
 %setup
+sed -i -e 's!/usr/share/rear/!/usr/share/doc/rear/!g' `grep -rl /usr/share/rear/ [A-Za-z]*`
+echo -e "OS_VENDOR=ALT\nOS_VERSION=%altbranch" >etc/rear/os.conf
 
 %build
 TZ=UTC %make_build doc
 
 %install
-%make_install install DESTDIR="%buildroot" sbindir="%_sbindir" OFFICIAL=1
-chmod a+x %buildroot%_datadir/%name/lib/*.sh
-rm -r %buildroot%_datadir/%name/skel/SESAM
-rm -r %buildroot%_datadir/%name/restore/VEEAM
-rm -r %buildroot%_datadir/%name/skel/default/usr/lib/systemd
+%make_install install DESTDIR="%buildroot" sbindir="%_sbindir" datadir="%_datadir/doc" OFFICIAL=1
+chmod a+x %buildroot%_datadir/doc/%name/lib/*.sh
+rm -r %buildroot%_datadir/doc/%name/skel/SESAM
+rm -r %buildroot%_datadir/doc/%name/restore/VEEAM
+mv %buildroot%_datadir/doc/man %buildroot%_datadir
 
 %check
 %make validate OFFICIAL=1
@@ -84,13 +96,16 @@ rm -r %buildroot%_datadir/%name/skel/default/usr/lib/systemd
 %files
 %doc MAINTAINERS COPYING README.md doc/*.txt
 %config(noreplace) %_sysconfdir/%name/
-%config(noreplace) %_sysconfdir/%name/cert/
-%_datadir/%name/
+%_datadir/doc/%name/
 %_localstatedir/%name/
 %_sbindir/%name
 %_man8dir/%name.8*
 
 %changelog
+* Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.9-alt2
+- change datadir to /usr/share/doc/rear to fit systemd units path test (Closes: #56457)
+- add R: syslinux-extlinux (Closes: #56456)
+
 * Thu Oct 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.9-alt1
 - Initial build for ALT.
 
