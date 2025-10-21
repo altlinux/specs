@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: JOSE implementation in Python
 Group: Development/Python3
 License: MIT
@@ -24,7 +24,9 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3(setuptools)
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-cryptography
+#BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-pycryptodome
+BuildRequires: python3-module-pycrypto
 BuildRequires: python3-module-ecdsa
 BuildRequires: python3-module-rsa
 BuildRequires: python3-module-pyasn1
@@ -61,6 +63,9 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 %python3_sitelibdir/python_jose-%version.dist-info
 
 %changelog
+* Wed Oct 22 2025 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt2
+- Fixed FTBFS.
+
 * Thu May 29 2025 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 
