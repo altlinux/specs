@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: otree
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: A command line tool to view objects (JSON/YAML/TOML) in TUI tree widget. 
 License: MIT
@@ -52,6 +52,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Oct 21 2025 Pavel Shilov <zerospirit@altlinux.org> 0.6.2-alt1
+- 0.6.1 -> 0.6.2
+
 * Wed Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 0.6.1-alt1
 - 0.5.0 -> 0.6.1
 
