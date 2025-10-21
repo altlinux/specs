@@ -1,14 +1,18 @@
 Name: python3-module-holidays
-Version: 0.64
+Version: 0.83
 Release: alt1
 
 Summary: Holidays calculator
 License: BSD
 Group: Development/Python
-Url: https://pypi.org/project/holidays/
+Url: https://pypi.org/project/holidays
+VCS: https://github.com/vacanza/holidays
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
@@ -35,13 +39,16 @@ a specific date is a holiday as fast and flexible as possible.
 
 %check
 scripts/l10n/generate_mo_files.py
-%pyproject_run_pytest tests/countries
+%pyproject_run_pytest -o addopts= tests/countries
 
 %files
 %python3_sitelibdir/holidays
 %python3_sitelibdir/holidays-%version.dist-info
 
 %changelog
+* Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.83-alt1
+- 0.83 released
+
 * Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.64-alt1
 - 0.64 released
 
