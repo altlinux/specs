@@ -2,7 +2,7 @@
 
 Name:    proxmox-wasm-builder
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Proxmox rust to WASM build tool
 License: AGPL-3.0+
 Group:   Development/Tools
@@ -32,5 +32,8 @@ Tool to build rust programs to WASM for the web
 %_bindir/%name
 
 %changelog
+* Thu Oct 16 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 0.2.0-alt2
+- Bump wasm-bindgen-cli-support version to 0.2.104 
+
 * Thu Mar 27 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 0.2.0-alt1
 - Initial build
