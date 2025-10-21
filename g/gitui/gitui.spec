@@ -5,7 +5,7 @@
 
 Name: gitui
 Version: 0.27.0
-Release: alt1
+Release: alt2
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
 Group: Development/Other
@@ -72,6 +72,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Tue Oct 21 2025 Aleksandr Dovydenkov <asd@altlinux.org> 0.27.0-alt2
+- Fix FTBFS.
+
 * Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 0.27.0-alt1
 - Update to v0.27.0 (2025-01-14).
 
