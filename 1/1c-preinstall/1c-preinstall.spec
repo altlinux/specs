@@ -1,9 +1,9 @@
-%define tested_version 8.3.27.1644
+%define tested_version 8.3.27.1688
 %define ftrigger 1c.filetrigger
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt24
+Release: alt25
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -30,7 +30,6 @@ Requires: libcairo
 Requires: libcairo-gobject
 Requires: libcom_err
 Requires: libcups
-Requires: libdatrie
 Requires: libdbus
 Requires: libdrm
 Requires: libEGL
@@ -125,6 +124,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Tue Oct 21 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt25
+- minus libdatrie
+
 * Tue Jul 29 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt24
 - requires libwxGTK3.2-gl instead of libwxGTK3.0-gl
 - plus libavif, libdrm, libEGL,libGLU
