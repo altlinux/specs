@@ -1,16 +1,14 @@
-%define soversion 1
+%define soversion 2
 Name: libscfg
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 Summary: C library for a simple configuration file format
 License: MIT
 Group: Development/C
-URL: https://sr.ht/~emersion/libscfg/
-VCS: https://git.sr.ht/~emersion/libscfg
+URL: https://codeberg.org/emersion/libscfg
+VCS: https://codeberg.org/emersion/libscfg
 
 Source: %name-%version.tar
-
-Patch1: libscfg-0.1.1-upstream-build-set-library-version-and-soversion.patch
 
 BuildRequires:  gcc
 BuildRequires:  meson
@@ -37,8 +35,6 @@ developing applications that use libscfg.
 %prep
 %setup
 
-%patch1 -p1
-
 %build
 %meson
 %meson_build
@@ -60,5 +56,8 @@ developing applications that use libscfg.
 %_libdir/pkgconfig/scfg.pc
 
 %changelog
+* Tue Oct 21 2025 Andrey Kovalev <ded@altlinux.org> 0.2.0-alt1
+- Updated to upstream version 0.2.0.
+
 * Wed Oct 09 2024 Andrey Kovalev <ded@altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus.
