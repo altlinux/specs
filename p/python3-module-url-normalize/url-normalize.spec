@@ -1,34 +1,51 @@
 Name: python3-module-url-normalize
-Version: 1.4.3
+Version: 2.2.1
 Release: alt1
 
 Summary: URI Normalization function
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/url-normalize/
+Url: https://pypi.org/project/url-normalize
+VCS: https://github.com/niksite/url-normalize
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra dev
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -o addopts= tests
 
 %files
+%_bindir/url-normalize
 %python3_sitelibdir/url_normalize
-%python3_sitelibdir/url_normalize-%version-*-info
+%python3_sitelibdir/url_normalize-%version.dist-info
 
 %changelog
+* Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.1-alt1
+- 2.2.1 released
+
 * Fri Mar 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.3-alt1
 - 1.4.3 released
 
