@@ -20,7 +20,7 @@ License: Apache-2.0 AND GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT AND GPL-2
 #  https://github.com/NVIDIA/nvidia-modprobe/blob/main/utils.mk
 Url: https://github.com/NVIDIA/libnvidia-container
 Vcs: https://github.com/NVIDIA/libnvidia-container.git
-Version: 1.17.8
+Version: 1.17.9
 Release: alt1
 Summary: NVIDIA container runtime library
 Group: System/Libraries
@@ -127,6 +127,9 @@ This package contains command-line tools that facilitate using the library.
 %_bindir/*
 
 %changelog
+* Tue Oct 21 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17.9-alt1
+- 1.17.9.
+
 * Sat Jun 21 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17.8-alt1
 - Initial build for ALTLinux.
 
