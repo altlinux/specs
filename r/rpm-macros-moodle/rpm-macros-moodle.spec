@@ -1,19 +1,13 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 %define macrosname moodle
 
 Name: rpm-macros-%macrosname
-Version: 2.4
-Release: %branch_release alt1
+Version: 5.1
+Release:alt1
 
 Summary: RPM helper macros and dependency utils to build Mooodle packages
-License: %gpl2plus
+License: GPL-2.0+
 Group: Development/Other
 
-Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 Source1: %macrosname.rpm-macros
@@ -21,12 +15,9 @@ Source1: %macrosname.rpm-macros
 Requires: rpm-macros-webserver-common >= 1.1
 Conflicts: rpm-build-moodle < 2.0
 
-BuildRequires(pre): rpm-macros-branch
-BuildPreReq: rpm-build-licenses
-
 %description
-These helper macros and dependency calculation utils facilitate creation of 
-RPM packages containing Moodle bytecode archives etc.
+These helper macros and dependency calculation utils facilitate creation of RPM
+packages containing Moodle bytecode archives etc.
 
 %install
 install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%macrosname
@@ -35,6 +26,9 @@ install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%macrosname
 %_rpmmacrosdir/%macrosname
 
 %changelog
+* Mon Oct 20 2025 Andrey Cherepanov <cas@altlinux.org> 5.1-alt1
+- Adapted macros to Moodle 5.1.
+
 * Fri Feb 17 2012 Aleksey Avdeev <solo@altlinux.ru> 2.4-alt1
 - Update mascros
   + %%moodle_datadir

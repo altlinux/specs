@@ -2,11 +2,11 @@
 %def_without pam
 
 Name: moodle
-Version: 5.0.2
+Version: 5.1.0
 Release: alt1
 
 Summary: The world's open source learning platform
-License: GPLv3
+License: GPL-3.0+
 Group: Networking/WWW
 
 Url: http://moodle.org/
@@ -14,7 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-php
-BuildRequires(pre): rpm-macros-moodle
+BuildRequires(pre): rpm-macros-moodle >= 5.1
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): perl-HTML-Parser
 BuildRequires: fonts-ttf-freefont
@@ -26,7 +26,6 @@ Source: %name-%version.tar
 Source1: distrolib.php
 Source2: %name.cron
 Source3: %name.ini
-Source10: %moodle_name.httpd.conf
 Source20: %moodle_name.httpd2.conf
 Source21: %moodle_name.start.extra.conf
 Source22: %moodle_name.start.mods.conf
@@ -36,7 +35,7 @@ Source23: %moodle_name.httpd2.inc.conf
 # Download by elinks https://download.moodle.org/download.php/langpack/5.0/ru.zip for example
 Source30: langpack.tar
 
-%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%moodle_dir/filter/algebra/'
+%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%moodle_filterdir/algebra/'
 
 Requires: %name-base = %version-%release
 %if_with pam
@@ -160,8 +159,7 @@ PAM (Pluggable Authentication Modules) authentication methods for Moodle
 
 %prep
 %setup
-
-rm -f filter/tex/*mimetex*
+rm -f public/filter/tex/*mimetex*
 rm -f lib/default.ttf
 
 %build
@@ -175,17 +173,14 @@ cp -rp * %buildroot%moodle_dir/
 # create empty config.php (for ghost packing)
 touch %buildroot%moodle_dir/config.php
 
-%define mimetexlinux_filter %moodle_filterdir/tex/mimetex.linux
-ln -srf %buildroot%webserver_cgibindir/mimetex.cgi %buildroot%mimetexlinux_filter
+#%define mimetexlinux_filter %moodle_filterdir/tex/mimetex.linux
+#ln -srf %buildroot%webserver_cgibindir/mimetex.cgi %buildroot%mimetexlinux_filter
 
 %define default_ttf %moodle_libdir/default.ttf
 ln -srf %buildroot%_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%default_ttf
 
 # install distrolib.php
 install -pD -m0644 %SOURCE1 %buildroot%moodle_dir/install/distrolib.php
-
-# TODO: install apache config
-# install -pD -m0644 %SOURCE10 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
 # install apache2 config
 install -pD -m0644 %SOURCE20 %buildroot%apache2_extra_available/%name.conf
@@ -254,6 +249,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Sat Oct 04 2025 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- New version.
+
 * Fri Aug 08 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.2-alt1
 - New version.
 - (fixes: CVE-2025-49518, CVE-2025-49517, CVE-2025-49516, CVE-2025-49515,
