@@ -1,7 +1,7 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.4.4
+Version: 0.5
 Release: alt1
 
 Summary: Netboot feature for make-initrd
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 Requires: make-initrd >= 0.9.0
 
 # Programs packed into initrd
-Requires: coreutils curl dhcpcd >= 9.0.0 grep hwclock iproute2 ntpdate sed tar zstd
+Requires: coreutils curl dhcpcd >= 9.0.0 grep hwclock iproute2 chrony sed tar zstd
 
 BuildArch: noarch
 
@@ -38,6 +38,10 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Tue Oct 21 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt1
+- Changed the feature to use chrony instead of ntpdate.
+- Fixed service order for make-initrd >= 2.36.0.
+
 * Mon Sep 12 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.4-alt1
 - Fixed trivial bug introduced in the previous change (ALT#43752).
 
