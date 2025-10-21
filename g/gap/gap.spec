@@ -1,6 +1,6 @@
 Name: gap
-Version: 4.15.0
-Release: alt2
+Version: 4.15.1
+Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Artistic-2.0 or GPL-2.0-only and GPL-2.0-or-later
 Group: Sciences/Mathematics
@@ -13,15 +13,9 @@ Source2: macros.gap
 Source3: %name-rpmlintrc
 
 Patch0: %name-%version-%release.patch
-# Patch applied in bootstrap mode to break circular dependencies.
-Patch1: %name-bootstrap.patch
 # This patch applies a change from Debian to allow help files to be in gzip
 # compressed DVI files, and also adds support for viewing with xdg-open.
 Patch2: %name-help.patch
-# Fix broken references in the reference manual's lab file
-Patch3: %name-ref.patch
-# Fix paths in gac
-Patch4: %name-gac.patch
 # On i386 only, and with recent versions of gcc only, various parts of the
 # compiled code disagree about the size of a BagHeader.  Some parts think it
 # is 12 bytes, and some parts think it is 16 bytes.  This leads to pointers
@@ -136,10 +130,7 @@ This subpackage will pull in all optional packages of the GAP distribution.
 %prep
 %setup
 %patch0 -p1
-#%%patch1 -p0
 %patch2 -p0
-#%%patch3 -p0
-#%%patch4 -p0
 %patch5 -p0
 # Don't exist in doc/.
 sed -i 's|ext in css html js txt pdf six lab|xml|' \
@@ -195,6 +186,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Tue Oct 21 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.1-alt1
+- New version 4.15.1.
+
 * Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.0-alt2
 - Added gap-io to requires for gap-full.
 

@@ -1,14 +1,17 @@
 %define repo cohomolo
 
 Name: gap-cohomolo
-Version: 1.6.11
+Version: 1.6.12
 Release: alt1
 Summary: GAP: Cohomology groups of finite groups on finite modules
 License: GPL-2.0
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/cohomolo
+VCS: https://github.com/gap-packages/cohomolo
 
-Source: https://github.com/gap-packages/cohomolo/releases/download/v%version/%repo-%version.tar.gz
+# Source-url: https://github.com/gap-packages/cohomolo/releases/download/v%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %repo-%version-%release.patch
 
 BuildPreReq: fdupes
 BuildPreReq: rpm-macros-gap
@@ -23,6 +26,7 @@ modules.
 
 %prep
 %setup -n cohomolo-%version
+%patch -p1
 sed -i 's/FILE  *ip,*op;/extern FILE  *ip,*op;/' \
     standalone/progs.d/crp1.c \
     standalone/progs.d/testchb.c
@@ -44,6 +48,10 @@ fdupes %buildroot%_prefix
 %gap_sitearch/%repo-%version/*
 
 %changelog
+* Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.6.12-alt1
+- New version 1.6.12.
+- Added VCS tag.
+
 * Mon Feb 20 2023 Leontiy Volodin <lvol@altlinux.org> 1.6.11-alt1
 - 1.6.11.
 
