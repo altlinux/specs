@@ -1,23 +1,32 @@
 Name: python3-module-ciso8601
-Version: 2.3.0
-Release: alt2
+Version: 2.3.3
+Release: alt1
 
 Summary: ISO8601/RFC3339 date time strings converter
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/ciso8601/
+Url: https://pypi.org/project/ciso8601
+VCS: https://github.com/closeio/ciso8601
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -25,12 +34,21 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_unittest
+
 %files
 %python3_sitelibdir/ciso8601
 %python3_sitelibdir/ciso8601.*.so
 %python3_sitelibdir/ciso8601-%version.dist-info
 
 %changelog
+* Fri Sep 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.3-alt1
+- 2.3.3 released
+
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.2-alt1
+- 2.3.2 released
+
 * Thu Jul 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3.0-alt2
 - drop deps on now retired nose
 
