@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Summary: An AST unparser for Python
 License: PSF-2.0
@@ -58,6 +58,9 @@ in Python 3.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt2
+- Fixed FTBFS.
+
 * Fri Dec 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.3-alt1
 - Built for ALT Sisyphus.
 
