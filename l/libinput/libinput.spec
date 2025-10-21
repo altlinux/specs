@@ -13,7 +13,7 @@
 %endif
 
 Name: libinput
-Version: 1.29.1
+Version: 1.29.2
 Release: alt1
 
 Summary: Input devices library
@@ -202,6 +202,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.2-alt1
+- 1.29.2
+
 * Thu Aug 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.1-alt1
 - 1.29.1
 
