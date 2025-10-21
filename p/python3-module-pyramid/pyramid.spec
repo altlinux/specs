@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        2.0.2
-Release:        alt2
+Release:        alt3
 Summary:        The Pyramid web application framework, a Pylons project
 Group:          Development/Python3
 License:        BSD
@@ -43,6 +43,7 @@ fun, more predictable, and more productive.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -71,6 +72,9 @@ pytest3 tests -v -k "not test_scan_integration and not test_scan_integration_con
 %_bindir/pviews
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt3
+- Fixed FTBFS.
+
 * Mon Feb 26 2024 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt2
 - Disable failed tests.
 
