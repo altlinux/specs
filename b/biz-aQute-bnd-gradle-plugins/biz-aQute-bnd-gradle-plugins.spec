@@ -2,14 +2,14 @@
 
 Name: biz-aQute-bnd-gradle-plugins
 Version: 7.1.0
-Release: alt1
+Release: alt2
 
 Summary: Gradle plugins for bnd - tools for OSGi bundle development and management
 License: Apache-2.0
 Group: Development/Java
 Url: https://bndtools.org
 Vcs: https://github.com/bndtools/bnd
-ExcludeArch: i586
+BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -20,7 +20,7 @@ Patch0: 0001-Build-shadowJar-alt-patch.patch
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: java-21-openjdk-devel
+BuildRequires: java-17-openjdk-devel
 BuildRequires: gradle
 BuildRequires: git
 
@@ -83,5 +83,8 @@ popd
 %_javadocdir/biz-aQute-bnd-gradle-plugins/biz.aQute.bnd.gradle-javadoc.jar
 
 %changelog
+* Tue Oct 21 2025 Ivan Khanas <xeno@altlinux.org> 7.1.0-alt2
+- Noarch packaging.
+
 * Thu Aug 21 2025 Ivan Khanas <xeno@altlinux.org> 7.1.0-alt1
 - First build for ALT.

@@ -1,15 +1,18 @@
 %define _unpackaged_files_terminate_build 1
+%ifarch %ix86
+%def_with heap_optimization
+%endif
 
 Name: shadow-gradle-plugin
 Version: 8.3.8
-Release: alt2
+Release: alt3
 
 Summary: Gradle plugin for creating fat/uber JARs
 License: Apache-2.0
 Group: Development/Java
 Url: https://gradleup.com/shadow
 Vcs: https://github.com/GradleUp/shadow.git
-ExcludeArch: i586
+BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -19,7 +22,7 @@ Patch1: 0002-Build-plugin-jar-in-fat-jar.patch
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: java-21-openjdk-devel
+BuildRequires: java-17-openjdk-devel
 BuildRequires: gradle
 
 %description
@@ -32,6 +35,10 @@ executable command-line tools.
 %prep
 %setup -a1
 %autopatch -p1
+
+%if_with heap_optimization
+sed -i 's/\(-Xmx\)4g/\12g/' gradle.properties
+%endif
 
 %build
 gradle publishToMavenLocal \
@@ -63,6 +70,9 @@ gradle spotlessApply \
 %_datadir/maven-poms/shadow-gradle-plugin/shadow-gradle-plugin.pom
 
 %changelog
+* Tue Oct 21 2025 Ivan Khanas <xeno@altlinux.org> 8.3.8-alt3
+- Noarch packaging.
+
 * Thu Aug 07 2025 Ivan Khanas <xeno@altlinux.org> 8.3.8-alt2
 - Start packing in fat jar.
 

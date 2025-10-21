@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:           atinject
 Version:        1.0.5
-Release:        alt1_3jpp11
+Release:        alt2
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            https://github.com/eclipse-ee4j/injection-api
@@ -49,7 +49,7 @@ beneficial to most nontrivial applications.
 %pom_remove_plugin :moditect-maven-plugin
 
 %mvn_alias : javax.inject:javax.inject
-%mvn_file : atinject
+%mvn_file : atinject jakarta.inject-api
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -61,6 +61,9 @@ beneficial to most nontrivial applications.
 %doc --no-dereference LICENSE.txt NOTICE.md
 
 %changelog
+* Tue Oct 21 2025 Ivan Khanas <xeno@altlinux.org> 0:1.0.5-alt2
+- Create jakarta.inject-api symlink.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.5-alt1_3jpp11
 - new version
 
