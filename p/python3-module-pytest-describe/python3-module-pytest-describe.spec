@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Describe-style plugin for the pytest framework
@@ -57,6 +57,9 @@ Jasmine (JavaScript).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
+- Updated to 2.2.1.
+
 * Sun Feb 11 2024 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Updated to 2.2.0.
 
