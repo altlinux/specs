@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name libipuz
 %define ver_major 0.5
@@ -15,7 +15,7 @@
 %def_enable sandboxed
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library for parsing and writing .ipuz puzzle files
@@ -140,6 +140,9 @@ popd}
 
 
 %changelog
+* Wed Oct 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - updated to 0.5.2-2-g03293f2
 

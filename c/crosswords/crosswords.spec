@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id org.gnome.Crosswords
-%def_enable check
 
 Name: crosswords
-Version: 0.3.15
+Version: 0.3.16.1
 Release: alt1
 
 Summary: Solve crossword puzzles
@@ -25,14 +24,14 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libipuz-0.5)
-%if_enabled check
 BuildRequires: appstream
 BuildRequires: desktop-file-utils
-%endif
+BuildRequires: blueprint-compiler
 
 Requires: %name-puzzle-sets-cats-and-dogs
 Requires: %name-puzzle-sets-uri
 Requires: ipuz-convertor
+Requires: ipuz2pdf
 
 %description
 A simple and fun game of crosswords. Load your crossword files, or play one of
@@ -101,6 +100,17 @@ Requires: %name
 %description -n ipuz-convertor
 ipuz-converter is a script to convert puzzle files from puz to ipuz.
 
+%package -n ipuz2pdf
+Summary: New helper utility that converts some ipuz files to pdfs
+Group: Games/Puzzles
+
+Requires: %name
+
+%description -n ipuz2pdf
+It can be used to convert an ipuz file to a pdf for printing, and can be
+packaged independently from crossword player or editor (similar to the
+thumbnailer).
+
 %prep
 %setup
 %patch -p 1
@@ -111,7 +121,9 @@ ipuz-converter is a script to convert puzzle files from puz to ipuz.
 
 %install
 %meson_install
-%find_lang --with-gnome %name
+%find_lang %name
+
+rm %buildroot%_libexecdir/gen-word-list-resource
 
 %check
 %meson_test
@@ -154,9 +166,19 @@ ipuz-converter is a script to convert puzzle files from puz to ipuz.
 %_datadir/%name/ipuz-convertor
 %_libexecdir/ipuz-convertor
 
+%files -n ipuz2pdf
+%_bindir/ipuz2pdf
+
 %files doc
 %doc docs
 
 %changelog
+* Wed Oct 22 2025 David Sultaniiazov <x1z53@altlinux.org> 0.3.16.1-alt1
+- New version 0.3.16.1
+- Change spec:
+  + Remove `--with-gnome`
+  + Remove check
+  + New subpackage `ipuz2pdf`
+
 * Wed Jun 04 2025 David Sultaniiazov <x1z53@altlinux.org> 0.3.15-alt1
 - Initial build
