@@ -1,9 +1,9 @@
 %define llvmversion 15
-%define git bef3fbc4
+%define git 9c47ecad
 
 Name: spirv-llvm%llvmversion.0-translator
 Version: 15.0.15
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 
 Summary: LLVM 15 to SPIRV Translator
 License: NCSA
@@ -56,7 +56,7 @@ Summary: %name translator CLI
 Group: Development/C++
 Requires: lib%name = %EVR
 Conflicts: llvm-spirv
-Conflicts: llvm14-spirv 
+Conflicts: llvm14-spirv
 
 %description -n llvm%llvmversion-spirv
 command line utility for translating between LLVM bitcode and SPIR-V binary.
@@ -93,6 +93,9 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Wed Oct 22 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.15-alt2.g9c47ecad
+- 15.0.15 GIT 9c47ecad.
+
 * Wed Aug 27 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.15-alt1.gbef3fbc4
 - 15.0.15 GIT bef3fbc4 (for latest IGC).
 
