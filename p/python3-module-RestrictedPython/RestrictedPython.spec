@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.0
-Release: alt2
+Version: 8.1
+Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
 Group: Development/Python3
@@ -55,6 +55,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Oct 22 2025 Grigory Ustinov <grenka@altlinux.org> 8.1-alt1
+- Automatically updated to 8.1.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 8.0-alt2
 - NMU: mapped PyPI name to the RPM one.
 
