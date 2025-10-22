@@ -4,7 +4,7 @@
 %define majver 9.0
 
 Name: kicad
-Version: 9.0.4
+Version: 9.0.5
 Release: alt1
 Epoch: 1
 
@@ -71,7 +71,6 @@ BuildRequires: opencascade-devel
 BuildRequires: openmpi-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
-
 #Requires: kicad-packages3D >= %majver
 Requires: kicad-symbols >= %majver
 Requires: kicad-footprints >= %majver
@@ -196,6 +195,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Mon Oct 20 2025 Polina Poidenko <polipoki@altlinux.org> 1:9.0.5-alt1
+- New version 9.0.5.
+
 * Fri Aug 22 2025 Anton Midyukov <antohami@altlinux.org> 1:9.0.4-alt1
 - New version 9.0.4.
 
