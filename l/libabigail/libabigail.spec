@@ -1,31 +1,34 @@
+%define soversion 7
+
 Name: libabigail
-Version: 1.8.2
+Version: 2.8
 Release: alt1
 Summary: ABI Generic Analysis and Instrumentation Library and tools
 Group: Development/Other
 
-License: LGPLv3+
+License: Apache-2.0 WITH LLVM-exception
 Url: https://sourceware.org/libabigail/
 Source0: %name-%version.tar
 
-# Automatically added by buildreq on Wed Mar 28 2018 (-bi)
-BuildRequires: doxygen gcc-c++ libdw-devel libxml2-devel makeinfo python3-module-sphinx
+# Automatically added by buildreq on Wed Oct 22 2025 (-bi)
+# optimized out: bashrc cpio debugedit elfutils glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libctf-nobfd0 libelf-devel libgpg-error libstdc++-devel openssl-config perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent perl-unicore pkg-config python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-requests python3-module-roman_numerals python3-module-six python3-module-snowballstemmer python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-urllib3 rpm-build-file sh5 termutils xz zlib-devel
+BuildRequires: binutils-devel doxygen gcc-c++ libbpf-devel libdw-devel liblzma-devel libxml2-devel libxxhash-devel makeinfo python3-module-sphinx
 
 %description
 This package contains %summary.
 
-%package -n libabigail0
+%package -n libabigail%soversion
 Summary: ABI Generic Analysis and Instrumentation Library runtime
 Group: System/Libraries
 Conflicts: libabigail < %version
 
-%description -n libabigail0
+%description -n libabigail%soversion
 This package contains %summary.
 
 %package devel
 Summary: ABI Generic Analysis and Instrumentation Library development files
 Group: Development/C
-Requires: libabigail0 = %EVR
+Requires: libabigail%soversion = %EVR
 
 %description devel
 This package contains %summary.
@@ -33,7 +36,7 @@ This package contains %summary.
 %package -n abigail-tools
 Summary: ABI Generic Analysis and Instrumentation Library tools
 Group: Development/Other
-Requires: libabigail0 = %EVR
+Requires: libabigail%soversion = %EVR
 Provides: libabigail = %version
 Obsoletes: libabigail < %version, libabigail-doc < %version
 
@@ -57,15 +60,16 @@ is correct.
 
 %build
 %autoreconf
+# Workaround autoconf bug that breaks AC_SYS_LARGEFILE for C++ projects.
+%if 0%{?_is_ilp32}
+export ac_cv_sys_largefile_opts='-D_FILE_OFFSET_BITS=64'
+%endif
 %configure \
 	--disable-silent-rules \
-	--disable-zip-archive \
-	--enable-cxx11=yes \
 	--disable-static \
-	FOUND_SPHINX_BUILD=yes \
 	#
 %make_build
-%make_build -C doc/manuals man info SPHINXBUILD=sphinx-build-3
+%make_build -C doc/manuals man info
 
 %install
 %makeinstall_std
@@ -82,9 +86,9 @@ make -C doc/manuals install-man-and-info-doc DESTDIR=%buildroot
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%files -n libabigail0
+%files -n libabigail%soversion
 %_libdir/libabigail/
-%_libdir/libabigail.so.*
+%_libdir/libabigail.so.%{soversion}*
 
 %files devel
 %_includedir/*
@@ -98,6 +102,10 @@ make -C doc/manuals install-man-and-info-doc DESTDIR=%buildroot
 %_infodir/abigail.info*
 
 %changelog
+* Wed Oct 22 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.8-alt1
+- 1.8.2 -> 2.8.
+- Updated package license: LGPLv3+ -> Apache-2.0 WITH LLVM-exception.
+
 * Thu Feb 25 2021 Dmitry V. Levin <ldv@altlinux.org> 1.8.2-alt1
 - 1.8 -> 1.8.2.
 
