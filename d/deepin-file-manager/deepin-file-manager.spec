@@ -6,7 +6,7 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.5.91
+Version: 6.5.97
 Release: alt1
 
 Summary: Deepin File Manager
@@ -18,10 +18,10 @@ Vcs: https://github.com/linuxdeepin/dde-file-manager
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-file-manager/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-file-manager-6.5.91-alt-fixes-paths.patch
-Patch2: deepin-file-manager-6.5.81-alt-options-uos.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
 # error: static assertion failed:
@@ -160,7 +160,6 @@ export CPLUS_INCLUDE_PATH=%_includedir/qt6:$CPLUS_INCLUDE_PATH
 %install
 %makeinstall_std -C %__builddir
 chmod +x %buildroot%_sysconfdir/deepin/dde-file-manager/dfm-dlnfs-automount
-chmod +x %buildroot%_bindir/dfm-open.sh
 chmod +x %buildroot%_bindir/dde-property-dialog
 
 %files
@@ -174,7 +173,6 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_bindir/dde-file-dialog
 %_bindir/deepin-diskencrypt-service
 %_bindir/file-manager.sh
-%_bindir/dfm-open.sh
 %_libexecdir/%repo
 %_libexecdir/%repo-preview
 %_datadir/%repo/
@@ -303,6 +301,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Wed Oct 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.97-alt1
+- New version 6.5.97.
+
 * Wed Sep 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.91-alt1
 - New version 6.5.91.
 
