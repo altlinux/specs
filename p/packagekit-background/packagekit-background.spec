@@ -1,5 +1,5 @@
 Name: packagekit-background
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Script to update the system with PackageKit
@@ -50,6 +50,10 @@ install -m 0644 %SOURCE1  %buildroot/%_sysconfdir/sysconfig/packagekit-backgroun
 %_unitdir/timers.target.wants/packagekit-background.timer
 %_unitdir/packagekit-background.timer
 
+
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
+- don't use --background option because pkcon freeze
+
 * Tue Oct 07 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
