@@ -3,14 +3,14 @@
 
 Name:    proxmox-datacenter-manager
 Version: 0.9.1
-Release: alt1
+Release: alt1.1
 License: AGPL-3.0
 Summary: Manage multiple Proxmox VE cluster and other Proxmox projects
 Group:   System/Servers
 Url:     https://github.com/proxmox/proxmox-datacenter-manager
 Vcs:     git://git.proxmox.com/git/proxmox-datacenter-manager.git
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 Source:   %name-%version.tar
 
 # Git submodule
@@ -128,6 +128,9 @@ rm -f %buildroot%_unitdir/%name-daily-update.timer
 %_datadir/javascript/%name/
 
 %changelog
+* Wed Oct 22 2025 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1.1
+- NMU: build on loongarch64
+
 * Thu Oct 16 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 0.9.1-alt1
 - 0.9.1
 - Provide PAM config for PDM authentication
