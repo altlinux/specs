@@ -6,7 +6,7 @@
 
 Name: waylock
 Summary: A small, secure Wayland screenlocker
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -48,6 +48,9 @@ mv ./vendor %_zig_cache_dir
 /usr/share/man/man1/waylock.1.xz
 
 %changelog
+* Wed Oct 22 2025 Ilya Sorochan <k0tran@altlinux.org> 1.5.0-alt1
+- Update version.
+
 * Wed Aug 27 2025 Ilya Sorochan <k0tran@altlinux.org> 1.4.0-alt1
 - Update version.
 
