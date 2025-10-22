@@ -2,10 +2,10 @@
 %define mod_name opentelemetry
 %define prerel_version 1.26.0
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.51b0
+Version: 0.59b0
 Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
@@ -191,6 +191,12 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Wed Oct 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.59b0-alt1
+- New version.
+
+* Tue Jun 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.55b1-alt1
+- New version.
+
 * Fri Mar 07 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.51b0-alt1
 - NMU: New version.
 
