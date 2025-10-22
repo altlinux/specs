@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Chat
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-only AND GPL-3.0-or-later AND BSD-3-Clause
 
 Requires: qml6(QtLocation)
+Requires: qml6(QtTextToSpeech)
 Requires: qml6(org.kde.desktop)
 Requires: kf6-kirigami kf6-purpose kf6-kquickcharts kf6-kconfig
 Requires: libkf6prison libkf6prisonscanner
@@ -66,6 +67,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt2
+- fix requires (closes: 56553)
+
 * Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
