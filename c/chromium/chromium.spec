@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        141.0.7390.107
+Version:        141.0.7390.122
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -84,10 +84,12 @@ Patch012: 0012-DEBIAN-rust-no-alloc-shim.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
+Patch016: 0016-DEBIAN-disable-font-tests.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
 Patch021: 0021-FEDORA-System-brotli.patch
+Patch022: 0022-ALT-block-error-from-google.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
@@ -652,6 +654,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Oct 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.122-alt1
+- New version (141.0.7390.122).
+- Fixes:
+  + CVE-2025-12036: Inappropriate implementation in V8
+
 * Wed Oct 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.107-alt1
 - New version (141.0.7390.107).
 - Fixes:
