@@ -1,6 +1,6 @@
 Name: doxygen
-Version: 1.14.0
-Release: alt2
+Version: 1.15.0
+Release: alt1
 Epoch: 1
 
 Summary: Doxygen is a documentation system for C, C++ and IDL
@@ -31,6 +31,7 @@ BuildRequires: graphviz
 BuildRequires: perl
 BuildRequires: texlive-collection-basic texlive-dist
 BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
 BuildRequires: sassc node-uglify-js
 
 # graphviz uses pango as the default backend. pango needs some font and
@@ -127,6 +128,9 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Wed Oct 22 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.15.0-alt1
+- 1.15.0
+
 * Wed Aug 06 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.14.0-alt2
 - Add workaround for broken nodejs on i586
 
