@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Universal Python binding for the LMDB 'Lightning' Database
@@ -47,6 +47,9 @@ py.test3
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Oct 22 2025 Grigory Ustinov <grenka@altlinux.org> 1.7.5-alt1
+- Automatically updated to 1.7.5.
+
 * Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt1
 - Automatically updated to 1.7.4.
 
