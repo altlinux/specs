@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.7
+%define ver_major 0.8
 
 %def_enable check
 
 Name: xdg-desktop-portal-wlr
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: xdg-desktop-portal backend for wlroots
@@ -62,6 +62,9 @@ mkdir -p %buildroot/%_xdgconfigdir/%name
 
 
 %changelog
+* Wed Oct 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - updated to v0.7.1-3-g1eae4bf
 
