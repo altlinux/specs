@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
@@ -112,6 +112,9 @@ popd
 %doc docs/netCDF4/index.html
 
 %changelog
+* Wed Oct 22 2025 Anton Vyatkin <toni@altlinux.org> 1.7.3-alt1
+- New version 1.7.3.
+
 * Wed Aug 13 2025 Anton Vyatkin <toni@altlinux.org> 1.7.2-alt1
 - New version 1.7.2.
 
