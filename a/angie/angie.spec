@@ -5,10 +5,15 @@
 %define angie_spool %_spooldir/angie
 %define angie_log %_logdir/angie
 %define modpath %_libdir/angie/modules
+%def_with debug
+%def_with geoip
+%def_with image_filter
+%def_with perl
+%def_with xslt
 
 Name: angie
 Version: 1.10.2
-Release: alt1
+Release: alt2
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
 License: BSD-2-Clause
@@ -28,12 +33,67 @@ BuildRequires: LibreSSL-devel
 BuildRequires: make
 BuildRequires: perl-devel
 BuildRequires: zlib-devel
+%{?_with_geoip:BuildRequires: libGeoIP-devel}
+%{?_with_image_filter:BuildRequires: libgd-devel}
+%{?_with_xslt:BuildRequires: libxslt-devel}
 
 %description
 %summary.
 
+%if_with geoip
+%package geoip
+Summary: GeoIP module for Angie
+Group: System/Servers
+Requires: GeoIP-Lite-City GeoIP-Lite-Country
+Requires: angie = %EVR
+
+%description geoip
+GeoIP module for Angie
+%endif
+
+%if_with image_filter
+%package image_filter
+Summary: image_filter module for Angie
+Group: System/Servers
+Requires: angie = %EVR
+
+%description image_filter
+image_filter module for Angie
+%endif
+
+%if_with perl
+%package perl
+Summary: Perl for Angie
+Group: System/Servers
+Requires: angie = %EVR
+
+%description perl
+Perl for Angie
+%endif
+
+%package xslt
+Summary: XSLT module for Angie
+Group: System/Servers
+%def_with xslt
+Requires: angie = %EVR
+
+%description xslt
+XSLT module for Angie
+
 %prep
 %setup -a1
+%if_with perl
+sed -i auto/lib/perl/make \
+  -e 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' \
+  -e 's/nginx/angie/g' \
+  #
+mv src/http/modules/perl/{nginx,angie}.pm
+mv src/http/modules/perl/{nginx,angie}.xs
+sed -i 's/nginx/angie/g' \
+  src/http/modules/perl/Makefile.PL \
+  src/http/modules/perl/angie.pm \
+  #
+%endif
 
 # https://en.angie.software/angie/docs/installation/sourcebuild/#paths
 %build
@@ -54,15 +114,19 @@ BuildRequires: zlib-devel
   --modules-path=%modpath \
   --pid-path=%_var/run/angie.pid \
   --sbin-path=%_sbindir/angie \
+  %{?_with_debug:--with-debug} \
   --with-file-aio \
   --with-http_acme_module `# angie` \
   --with-http_addition_module \
   --with-http_auth_request_module \
   --with-http_dav_module \
   --with-http_flv_module \
+  %{?_with_geoip:--with-http_geoip_module=dynamic} \
   --with-http_gunzip_module \
   --with-http_gzip_static_module \
+  %{?_with_image_filter:--with-http_image_filter_module=dynamic} \
   --with-http_mp4_module \
+  %{?_with_perl:--with-http_perl_module=dynamic} \
   --with-http_random_index_module \
   --with-http_realip_module \
   --with-http_secure_link_module \
@@ -72,6 +136,7 @@ BuildRequires: zlib-devel
   --with-http_sub_module \
   --with-http_v2_module \
   --with-http_v3_module `#angie` \
+  %{?_with_xslt:--with-http_xslt_module=dynamic} \
   --with-mail \
   --with-mail_ssl_module \
   --with-stream \
@@ -81,22 +146,32 @@ BuildRequires: zlib-devel
   --with-stream_ssl_module \
   --with-stream_ssl_preread_module `#angie` \
   --with-threads \
-%nil
+  #
 
 %make_build DESTDIR=%buildroot
 
 %install
 mkdir -p \
   %buildroot%angie_etc/conf-{enabled,available}.d \
+  %buildroot%angie_etc/modules-{enabled,available}.d \
   %buildroot%angie_etc/sites-{enabled,available}.d \
   %buildroot%angie_log \
   %buildroot%angie_spool/tmp/{client,proxy,fastcgi,scgi,uwsgi} \
   %buildroot%_datadir/angie/html \
   %buildroot%_lockdir/angie \
   %buildroot%modpath \
-%nil
+  #
 
 %makeinstall_std
+
+for s in %buildroot/%modpath/*.so; do
+  fn=${s##*/}
+  module=${fn%%.so}
+  module=${module#ngx_}
+  module=${module%%_module}
+  echo "load_module %modpath/$fn;" >>\
+    %buildroot%angie_etc/modules-available.d/$module.conf
+done
 
 install -Dpm 644 man/angie.8 -t %buildroot%_man8dir
 install -Dpm 644 dist/angie.conf -t %buildroot%_sysconfdir/angie
@@ -148,6 +223,7 @@ mv %buildroot/html/{50x.html,index.html} \
 %dir %attr(1770,root,%angie_group) %angie_spool/tmp/uwsgi
 %dir %angie_etc
 %dir %angie_etc/http.d
+%dir %angie_etc/modules-available.d
 %dir %angie_etc/stream.d
 %dir %_datadir/angie
 %dir %_libdir/angie
@@ -168,7 +244,39 @@ mv %buildroot/html/{50x.html,index.html} \
 %_sbindir/angie
 %_unitdir/angie.service
 
+%if_with geoip
+%files geoip
+%config(noreplace) %angie_etc/modules-available.d/http_geoip.conf
+%modpath/ngx_http_geoip_module.so
+%endif
+
+%if_with image_filter
+%files image_filter
+%config(noreplace) %angie_etc/modules-available.d/http_image_filter.conf
+%modpath/ngx_http_image_filter_module.so
+%endif
+
+%if_with perl
+%files perl
+%config(noreplace) %angie_etc/modules-available.d/http_perl.conf
+%modpath/ngx_http_perl_module.so
+%perl_vendor_archlib/angie.pm
+%perl_vendor_autolib/angie
+%endif
+
+%files xslt
+%config(noreplace) %angie_etc/modules-available.d/http_xslt_filter.conf
+%modpath/ngx_http_xslt_filter_module.so
+
 %changelog
+* Wed Oct 22 2025 Constantin Sunzow <protvin@altlinux.org> 1.10.2-alt2
+- Build with:
+  + debug (ALT 56455).
+  + geoip (ALT 56453).
+  + image_filter (ALT 56452).
+  + perl (ALT 56454).
+  + xslt (ALT 56450).
+
 * Tue Sep 02 2025 Constantin Sunzow <protvin@altlinux.org> 1.10.2-alt1
 - New version.
 
