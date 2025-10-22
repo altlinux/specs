@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-openvpn
-Version: 0.8.15
+Version: 0.8.16
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -43,6 +43,9 @@ Alterator module for openvpn connections configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 01 2025 Alexey Volkov <qualimock@altlinux.org> 0.8.16-alt1
+- NMU: remove ncp_disable option due to obsolescence
+
 * Thu Jun 18 2020 Slava Aseev <ptrnine@altlinux.org> 0.8.15-alt1
 - Fix broken web interface in 0.8.14-alt1
 - Fix import of CA certificate
