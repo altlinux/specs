@@ -1,6 +1,6 @@
 Name:    pgbackrest
-Version: 2.54.2
-Release: alt2
+Version: 2.57.0
+Release: alt1
 
 Summary: Reliable PostgreSQL Backup & Restore
 License: MIT
@@ -9,13 +9,17 @@ Group:   Other
 Url:     https://github.com/pgbackrest/pgbackrest
 Source: %name-%version.tar
 
-#BuildRequires:
+BuildRequires(pre): meson
+
 BuildRequires: libpq-devel
-BuildRequires: openssl-devel 
+BuildRequires: libssl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libyaml-devel
 BuildRequires: zlib-devel
-BuildRequires: bzip2-devel
+BuildRequires: bzlib-devel
+BuildRequires: liblz4-devel
+BuildRequires: libzstd-devel
+BuildRequires: libssh2-devel
 
 %description
 pgBackRest aims to be a reliable, easy-to-use backup and restore \
@@ -43,19 +47,22 @@ The following features are available:
 %setup
 
 %build
-pushd src
-%configure
-%make_build
-popd
+%meson
+%meson_build
 
 %install
-%makeinstall_std -C src
+%meson_install
 
 %files
 %doc *.md
 %_bindir/*
 
 %changelog
+* Wed Oct 22 2025 Alexei Takaseev <taf@altlinux.org> 2.57.0-alt1
+- 2.57.0
+- Add support PostgreSQL 18
+- Use meson for build
+
 * Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 2.54.2-alt2
 - Change BR: libpq5-devel -> libpq-devel
 
