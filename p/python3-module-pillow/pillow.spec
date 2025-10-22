@@ -1,22 +1,28 @@
-Name: python3-module-Pillow
-Version: 11.3.0
-Release: alt2
+Name: python3-module-pillow
+Version: 12.0.0
+Release: alt1
 
 Summary: Python Imaging Library
 License: MIT-CMU
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pillow/
+Url: https://pypi.python.org/pypi/pillow
+VCS: https://github.com/python-pillow/Pillow
 
-Provides: python3-module-pillow = %EVR
+Provides: python3-module-Pillow = %EVR
+Obsoletes: python3-module-Pillow
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_timeout)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+# subpackaged apart for no apparent reason, see ALT#56559
+BuildRequires: python3(numpy.testing)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libopenjp2)
 BuildRequires: pkgconfig(libtiff-4)
@@ -35,6 +41,9 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -43,9 +52,7 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %pyproject_install
 
 %check
-%pyproject_run_pytest Tests
-
-%add_python3_req_skip tkinter
+%pyproject_run_pytest -o addopts= Tests
 
 %files
 %doc *.rst docs/COPYING LICENSE *.md
@@ -53,6 +60,9 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %python3_sitelibdir/pillow-%version.dist-info
 
 %changelog
+* Wed Oct 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 12.0.0-alt1
+- 12.0.0 released
+
 * Thu Sep 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 11.3.0-alt2
 - fixed tests for freetype>=2.14.1
 
