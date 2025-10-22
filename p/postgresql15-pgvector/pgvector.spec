@@ -2,7 +2,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-pgvector
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: Open-source vector similarity search for Postgres
 License: PostgreSQL
@@ -50,5 +50,9 @@ pgvector development header files
 %_includedir/pgsql/server/extension/*
 
 %changelog
+* Wed Oct 22 2025 Alexei Takaseev <taf@altlinux.org> 0.8.1-alt1
+- 0.8.1
+- Add support PostgreSQL 18
+
 * Wed Sep 03 2025 Alexei Takaseev <taf@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Linux
