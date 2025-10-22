@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20251011
+Version: 20251021
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -140,6 +140,9 @@ end
 /lib/firmware/mellanox
 
 %changelog
+* Wed Oct 22 2025 Vitaly Chikunov <vt@altlinux.org> 20251021-alt1
+- Update to 20251021 (2025-10-20).
+
 * Fri Oct 10 2025 Vitaly Chikunov <vt@altlinux.org> 20251011-alt1
 - Update to 20251011 (2025-10-10).
 - Workaround regression with mt7921e Wi-Fi (ALT#56288).
