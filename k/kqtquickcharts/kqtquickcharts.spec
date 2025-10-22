@@ -1,7 +1,7 @@
 %define rname kqtquickcharts
 
 Name: %rname
-Version: 25.08.1
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -62,6 +62,9 @@ developing applications that use %name.
 
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname ktouch
 
 Name: %rname
-Version: 25.08.1
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -58,6 +58,9 @@ to write. KTouch can also help you to remember what fingers to use.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Thu Sep 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.1-alt1
 - new version
 

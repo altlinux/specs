@@ -1,7 +1,7 @@
 %define rname kbruch
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -49,6 +49,9 @@ to practice with fractions. The program checks the user's input and gives feedba
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 

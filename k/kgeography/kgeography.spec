@@ -1,8 +1,8 @@
 %define rname kgeography
 
 Name: %rname
-Version: 25.04.3
-Release: alt2
+Version: 25.08.2
+Release: alt1
 %K6init
 
 Group: Education
@@ -61,6 +61,9 @@ mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt2
 - don't overclean flags
 

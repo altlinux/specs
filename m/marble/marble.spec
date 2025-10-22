@@ -11,7 +11,7 @@
 %endif
 
 Name: %rname
-Version: 25.04.3
+Version: 25.08.2
 Release: alt1
 %K6init
 
@@ -185,6 +185,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
