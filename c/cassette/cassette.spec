@@ -2,8 +2,8 @@
 %define xdg_name space.rirusha.Cassette
 
 Name: cassette
-Version: 0.2.1
-Release: alt2
+Version: 0.2.1.g49
+Release: alt1
 
 Summary: GTK/Adwaita application that allows you to use Yandex Music service on Linux operating systems
 License: GPL-3.0
@@ -52,6 +52,9 @@ sed -i "s/subdir('tests')/# subdir('tests')/" meson.build
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Oct 21 2025 Alexey Volkov <qualimock@altlinux.org> 0.2.1.g49-alt1
+- new version 0.2.1.g49
+
 * Mon Jun 09 2025 Michael Shigorin <mike@altlinux.org> 0.2.1-alt2
 - E2K: tests ftbfs workaround (Anton Palgunov)
 
