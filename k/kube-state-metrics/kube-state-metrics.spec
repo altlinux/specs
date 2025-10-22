@@ -3,7 +3,7 @@
 %global import_path github.com/kubernetes/kube-state-metrics
 
 Name: kube-state-metrics
-Version: 2.15.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Generate metrics about the state of Kubernetes objects
@@ -31,8 +31,16 @@ nodes and pods.
 %setup -a1
 
 %build
-export GOROOT="%_libexecdir/golang"
-%gobuild -mod=vendor
+export DATE=$(date -u '+%%Y-%%m-%%d')
+export GOROOT="%{_libexecdir}/golang"
+
+%gobuild -mod=vendor -ldflags "-s -w \
+    -X github.com/prometheus/common/version.Version=%version \
+    -X github.com/prometheus/common/version.Revision=%release \
+    -X github.com/prometheus/common/version.Branch=main \
+    -X github.com/prometheus/common/version.BuildUser=alt \
+    -X github.com/prometheus/common/version.BuildDate=$DATE" \
+    -o kube-state-metrics
 
 %install
 install -Dpm755 %name %buildroot%_bindir/%name
@@ -42,5 +50,8 @@ install -Dpm755 %name %buildroot%_bindir/%name
 %_bindir/kube-state-metrics
 
 %changelog
+* Tue Oct 21 2025 Denis Rastyogin <gerben@altlinux.org> 2.17.0-alt1
+- Updated to 2.17.0 (closes: #55789).
+
 * Thu Jul 24 2025 Denis Rastyogin <gerben@altlinux.org> 2.15.0-alt1
 - Initial build for Sisyphus.
