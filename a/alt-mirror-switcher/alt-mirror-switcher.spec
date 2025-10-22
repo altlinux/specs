@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -37,6 +37,9 @@ install -d %buildroot
 %doc README.md
 
 %changelog
+* Wed Oct 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.1-alt1
+- 0.2 -> 0.2.1
+
 * Mon Oct 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2-alt1
 - 0.1 -> 0.2
 
