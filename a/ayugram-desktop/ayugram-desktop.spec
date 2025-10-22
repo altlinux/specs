@@ -25,7 +25,7 @@
 
 Name: ayugram-desktop
 Version: 5.12.3
-Release: alt2
+Release: alt3
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -49,6 +49,7 @@ Patch3: alt-qt69.patch
 #Patch8: telegram-desktop-use-external-gsl.patch
 #Patch9: telegram-desktop-try-fix-circular-deps.patch
 Patch20: telegram-desktop-fix-protoc.patch
+Patch21: telegram-desktop-fix-glibmm-2.86-compatibility.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -78,7 +79,7 @@ BuildRequires(pre): rpm-macros-ninja-build
 
 BuildRequires: gcc-c++ libstdc++-devel
 # for -lstdc++fs
-BuildRequires: libstdc++%__gcc_version-devel-static
+BuildRequires: libstdc++%__gcc_version_major-devel-static
 
 BuildRequires: python3
 
@@ -138,8 +139,10 @@ BuildRequires: libopenal-devel >= 1.21.1
 # used by qt imageformats: libwebp-devel
 BuildRequires: libva-devel libdrm-devel
 
+# Required for screen streaming to work on Wayland
+BuildRequires: pipewire-libs-devel
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.12
+BuildRequires: libowt-tg-devel >= 4.3.0.13
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
@@ -254,6 +257,7 @@ We are not responsible for the possible blocking of your account. Use the client
 %patch2 -p2
 %patch3 -p1
 %patch20 -p1
+%patch21 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -371,7 +375,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %if_with ninja
 %ninja_install
 %else
-%cmakeinstall_std
+%cmake_install
 %endif
 # XDG files
 #install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
@@ -400,6 +404,15 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Sun Oct 18 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 5.12.3-alt3
+- Replace hardcoded cld3_src with standard CMake paths.
+- Added patch fix-glibmm-2.86-compatibility
+  for building with glib >= 2.86.0
+- Add pipewire-libs-devel and bump libowt-tg-devel (>=4.3.0.13)
+  for Wayland screen sharing.
+- Fixed the __gcc_version macro to __gcc_version_major,
+  which could lead to errors in the future.
+
 * Mon Jun 09 2025 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2
 - NMU: fix compile with Qt-6.9
 

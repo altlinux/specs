@@ -3,11 +3,11 @@
 # Dynamic build is not supported by upstream
 %def_enable static
 
-%def_disable pipewire
+%def_enable pipewire
 
 Name: libowt-tg
-Version: 4.3.0.12
-Release: alt2
+Version: 4.3.0.13
+Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -124,8 +124,8 @@ sed -i 's/_thread()){this}/_thread())=rtc::WeakPtrFactory<DataChannelController>
 %endif
 
 # TODO (used in cmake checks):
-rm -rv src/third_party/libyuv
-rm -rv src/third_party/crc32c
+#rm -rv src/third_party/libyuv
+#rm -rv src/third_party/crc32c
 rm -v cmake/libyuv.cmake
 rm -v cmake/libcrc32c.cmake
 rm -rfv src/base/android/
@@ -180,6 +180,12 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Mon Jan 20 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 4.3.0.13-alt1
+- build from git 5c5c71258777d0196dbb3a09cc37d2f56ead28ab
+- and abseil-cpp-20250814.1 libsrtp-2.7.0
+- Update patch 0012-cmake-libwebrtcbuild.
+- Pipewire support for Wayland is enabled (ALT bug 48406).
+
 * Mon Jan 20 2025 Michael Shigorin <mike@altlinux.org> 4.3.0.12-alt2
 - E2K: lcc 1.29.06 ftbfs workaround (ilyakurdyukov@)
 
