@@ -4,7 +4,7 @@
 %def_disable orc
 
 Name: vips
-Version: 8.17.1
+Version: 8.17.2
 Release: alt1
 
 Summary: Large image processing library
@@ -206,6 +206,9 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Wed Oct 22 2025 L.A. Kostis <lakostis@altlinux.ru> 8.17.2-alt1
+- 8.17.2.
+
 * Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 8.17.1-alt1
 - 8.17.1.
 
