@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Separate project for HTML cleaning functionalities copied from lxml.html.clean.
@@ -36,6 +36,10 @@ Therefore we decided to extract the problematic part to a separate project.
 
 %prep
 %setup
+# This test requires newer version of libxml2
+# https://src.fedoraproject.org/rpms/libxml2/pull-request/16
+rm tests/test_clean.txt
+sed -i "s@tests/test_clean.txt@@" tox.ini
 
 %build
 %pyproject_build
@@ -52,6 +56,9 @@ Therefore we decided to extract the problematic part to a separate project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 22 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
+- Automatically updated to 0.4.3.
+
 * Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
 - Automatically updated to 0.4.2.
 
