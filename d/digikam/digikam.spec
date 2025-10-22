@@ -19,8 +19,8 @@ Name: %rname
 %define ver_major 8
 %define ver_minor 5
 %define ver_bugfix 0
-Version: 8.7.0
-Release: alt3
+Version: 8.8.0
+Release: alt1
 %K6init no_altplace
 
 %define sover %version
@@ -28,9 +28,9 @@ Release: alt3
 %define libdigikamcore libdigikamcore%sover
 %define libdigikamgui libdigikamgui%sover
 
+Group: Graphics
 Summary: digiKam is an advanced digital photo management application for linux
 License: GPL-2.0-or-later
-Group: Graphics
 Url: http://www.digikam.org/
 
 ExcludeArch: %not_qt6_qtwebengine_arches
@@ -287,6 +287,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Tue Oct 21 2025 Sergey V Turchin <zerg@altlinux.org> 8.8.0-alt1
+- new version
+
 * Mon Sep 29 2025 Sergey V Turchin <zerg@altlinux.org> 8.7.0-alt3
 - enable geolocation feature
 
