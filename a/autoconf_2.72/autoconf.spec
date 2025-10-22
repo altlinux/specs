@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 2.72
-Release: alt1
+Release: alt2
 
 Summary: A GNU tool for automatically configuring source code
 License: GPLv2+
@@ -108,6 +108,10 @@ done
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Wed Oct 22 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.72-alt2
+- Backported upstream fixes for C++ support in AC_SYS_LARGEFILE
+  (thx Paul Eggert).
+
 * Wed May 14 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.72-alt1
 - Updated to v2.72.
 

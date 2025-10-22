@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 14.3.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20250812
+%define snapshot 20251017
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2155,6 +2155,12 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Wed Oct 22 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt2
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + releases/gcc-14 (snapshot 20251017)
+  commit r14-12103-g0054191e7b3759a58a04d612bbcbec544bd5537e.
+- Enabled -fcf-protection by default on x86_64.
+
 * Sun Aug 24 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.3.1-alt1
 - Updated to 14.3.1.
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
