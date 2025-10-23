@@ -2,8 +2,8 @@
 %define pypi_name manimpango
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
-Release: alt1.1
+Version: 0.6.1
+Release: alt1
 
 Summary: Python bindings to Pango library
 Group: Development/Python3
@@ -38,6 +38,9 @@ Python3 bindings for Pango for using with Manim.
 
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1.1
 - fixed build with setuptools 75.8.1
 
