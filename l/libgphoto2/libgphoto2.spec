@@ -1,16 +1,16 @@
 %define sover 6
 %define sover_port 12
 %def_disable static
-%define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.32
+Version: 2.5.33
 Release: alt1
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 Url: http://www.gphoto.org/
+Vcs: https://github.com/gphoto/libgphoto2.git
 License: LGPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
@@ -34,8 +34,9 @@ Group: System/Libraries
 Summary: Library to access to digital cameras
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 License: LGPLv2+
-Provides: %name = %version-%release
-Obsoletes: %name < %version-%release
+Requires: %name-common = %EVR
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 
 %description -n %name-%sover
 The %name library can be used by applications to access various digital
@@ -55,12 +56,22 @@ camera models, via standard protocols such as USB Mass Storage and PTP,
 or vendor-specific protocols.
 This package contains the runtime code for port access.
 
+%package common
+Group: System/Libraries
+Summary: Common files for %name
+Summary (ru_RU.UTF-8): Общие файлы для библиотеки libgphoto2
+License: LGPLv2+
+BuildArch: noarch
+
+%description common
+Common files for %name.
+
 %package -n %name-devel
 Group: Development/C
 Summary: Headers and links to compile against the %name library
 Summary (ru_RU.UTF-8): Заголовочные и другие файлы для компиляции приложений с библиотекой libgphoto2
 License: LGPLv2+
-Requires: %name-%sover = %version-%release
+Requires: %name-%sover = %EVR
 
 %description -n %name-devel
 This package contains all files which one needs to compile programs using
@@ -69,10 +80,10 @@ the %name library.
 %package -n %name-devel-doc
 Group: Development/Other
 Summary: Development documentation of the %name library
-Summary (ru_RU.UTF-8): Докумнтация для разработчиков библиотеки libgphoto2
+Summary (ru_RU.UTF-8): Документация для разработчиков библиотеки libgphoto2
 License: LGPLv2+
 BuildArch: noarch
-Requires: %name-%sover = %version-%release
+Requires: %name-common = %EVR
 
 %description -n %name-devel-doc
 This package contains development documentation of the %name library.
@@ -83,7 +94,7 @@ Group: Development/C
 Summary: Static versions of %name
 Summary (ru_RU.UTF-8): Статические версии библиотек libgphoto2
 License: LGPLv2+
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description -n %name-devel-static
 This package contains libraries which one needs to compile programs statically linked
@@ -106,14 +117,17 @@ against %name library.
 Библиотека libgphoto2 используется приложениями для доступа к различным моделям
 цифровых камер, посредством стандартных протоколов, таких как USB-накопитель
 и PTP, или специфических протоколов производителей.
-Этот пакет ссодержит исполнимый код для доступа к портам.
+Этот пакет ссодержит исполняемый код для доступа к портам.
+
+%description common -l ru_RU.UTF-8
+Общие файлы для библиотеки libgphoto2.
 
 %description -n %name-devel -l ru_RU.UTF-8
 Пакет содержит все необходимые файлы для компиляции программ, использующих
 библиотеку libgphoto2.
 
 %description -n %name-devel-doc -l ru_RU.UTF-8
-Пакет содержит докумнтацию для разработчиков библиотеки libgphoto2.
+Пакет содержит документацию для разработчиков библиотеки libgphoto2.
 
 %if_enabled static
 %description -n %name-devel-static  -l ru_RU.UTF-8
@@ -140,15 +154,15 @@ export utilsdir=%_libexecdir/%name
 %makeinstall_std
 
 # create udev support
+export LD_LIBRARY_PATH=%buildroot%_libdir
+export CAMLIBS=%buildroot%_libdir/%name/%version
 mkdir -p %buildroot%_udevrulesdir
-touch %buildroot%_udevrulesdir/40-%name.rules
+%buildroot%_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > %buildroot%_udevrulesdir/40-%name.rules 2> /dev/null
 mkdir -p %buildroot%_udevhwdbdir
-touch %buildroot%_udevhwdbdir/20-%name.hwdb
+%buildroot%_libexecdir/%name/print-camera-list hwdb > %buildroot%_udevhwdbdir/20-%name.hwdb 2> /dev/null
 
-# correct content of doc. directory
-rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
-cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
-
+# remove unneded print-camera-list
+rm -f %buildroot%_libexecdir/%name/print-camera-list
 # remove circular symlink in /usr/include/gphoto2
 rm -f %buildroot%_includedir/gphoto2/gphoto2
 # udev helper not used now
@@ -156,55 +170,50 @@ rm -f %buildroot%_udevdir/check-ptp-camera
 # remove .la files
 rm -f %buildroot%_libdir/%name/*/*.la
 rm -f %buildroot%_libdir/%{name}_port/*/*.la
+# correct content of doc. directory
+rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
+cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
 
 %find_lang --output=%name.lang %name-%sover
 %find_lang --append --output=%name.lang %{name}_port-%sover_port
 
 ##### PRE/POST INSTALL SCRIPTS #####
 
-%pre -n %name-%sover
+%pre common
 # create group
 groupadd -fr camera || :
-
-%post -n %name-%sover
-# create udev rules
-%_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > %_udevrulesdir/40-%name.rules 2> /dev/null
-%_libexecdir/%name/print-camera-list hwdb > %_udevhwdbdir/20-%name.hwdb 2> /dev/null
 
 %triggerpostun -- %name <= 2.4.0
 ldconfig
 
-
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
-%files -n %name-%sover -f %name.lang
+%files -n %name-%sover
 %_libdir/%name.so.*
 %dir %_libdir/%name
 %dir %_libdir/%name/*
 %_libdir/%name/*/*.so
-%dir %_libexecdir/%name
-%_libexecdir/%name/print-camera-list
-%ghost %_udevrulesdir/*
-%ghost %_udevhwdbdir/*
+
+%files -n %{name}_port-%sover_port
+%_libdir/%{name}_port.so.*
+%dir %_libdir/%{name}_port
+%dir %_libdir/%{name}_port/*
+%_libdir/%{name}_port/*/*.so
+
+%files common -f %name.lang
+%_udevrulesdir/*
+%_udevhwdbdir/*
 %dir %_datadir/%name
 %_datadir/%name/*
+%dir %_datadir/%{name}_port
+%_datadir/%{name}_port/*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/AUTHORS
 %_datadir/doc/%name/NEWS
 %_datadir/doc/%name/README.md
 %_datadir/doc/%name/OUTDATED.txt
-%exclude %_datadir/locale/*/LC_MESSAGES/%{name}_port*
-
-%files -n %{name}_port-%sover_port -f %name.lang
-%_libdir/%{name}_port.so.*
-%dir %_libdir/%{name}_port
-%dir %_libdir/%{name}_port/*
-%_libdir/%{name}_port/*/*.so
-%dir %_datadir/%{name}_port
-%_datadir/%{name}_port/*
 %dir %_datadir/doc/%{name}_port
 %_datadir/doc/%{name}_port/*
-%exclude %_datadir/locale/*/LC_MESSAGES/%{name}*
 
 %files -n %name-devel
 %_bindir/*-config
@@ -228,6 +237,10 @@ ldconfig
 %endif
 
 %changelog
+* Mon Oct 20 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.33-alt1
+- 2.5.33
+- moved common files to %name-common package
+
 * Tue Jul 15 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.32-alt1
 - 2.5.32
 
