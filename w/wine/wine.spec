@@ -9,12 +9,12 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 10.2.0
+%define mono_version 10.3.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.16
+%define major 10.17
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -938,6 +938,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17.1-alt1
+- new version 10.17.1 (with rpmrb script)
+- set strict require wine-mono 10.3.0
+
 * Sun Oct 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16.1-alt1
 - new version 10.16
 - spec: improve llvm version handling
