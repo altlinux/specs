@@ -3,7 +3,7 @@
 
 Name: dpkg
 Version: 1.21.22
-Release: alt3
+Release: alt4
 
 Summary: Package maintenance system for Debian Linux
 
@@ -26,7 +26,7 @@ BuildRequires: perl-podlators perl-Storable perl-TimeDate perl-File-FcntlLock pe
 
 BuildRequires: zlib-devel liblzma-devel libmd-devel libzstd-devel
 
-Requires: perl-Digest-SHA
+Requires: perl-Digest-SHA perl-Term-ANSIColor
 
 %description
 This is dpkg, Debian's package maintenance system.
@@ -117,6 +117,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1.21.22-alt4
+- add Requires: perl-Term-ANSIColor (ALT bug 56550)
+
 * Mon Oct 20 2025 Alexander Danilov <admsasha@altlinux.org> 1.21.22-alt3
 - Applied upstream patch (fixed CVE-2025-6297).
 
