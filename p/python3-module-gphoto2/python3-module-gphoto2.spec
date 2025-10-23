@@ -1,7 +1,7 @@
 %define pypi_name gphoto2
 
 Name: python3-module-%pypi_name
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
@@ -13,7 +13,7 @@ Vcs: https://github.com/jim-easterbrook/python-gphoto2.git
 
 Source: https://pypi.io/packages/source/g/%pypi_name/%pypi_name-%version.tar.gz
 
-%define gphoto_ver 2.5.10
+%define gphoto_ver 2.5.33
 BuildRequires: libgphoto2-devel >= %gphoto_ver swig
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3(wheel) python3(setuptools)
@@ -40,6 +40,9 @@ functions, but sometimes in a rather un-Pythonic manner.
 
 
 %changelog
+* Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Tue Jul 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 
