@@ -9,12 +9,12 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 10.2.0
+%define mono_version 10.3.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.16
+%define major 10.17
 %define rel %nil
 
 # the packages will conflict with that
@@ -143,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -934,6 +934,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17-alt1
+- new version 10.17 (with rpmrb script)
+- set strict require wine-mono 10.3.0
+
 * Sun Oct 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.16-alt2
 - spec: improve llvm version handling
 
