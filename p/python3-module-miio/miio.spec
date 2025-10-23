@@ -1,17 +1,24 @@
 Name: python3-module-miio
 Version: 0.5.12
-Release: alt2
+Release: alt3
+
+Provides: python3-module-python-miio = %EVR
 
 Summary: Python miIO library
 License: BSD
 Group: Development/Python
 Url: https://pypi.org/project/python-miio/
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %package -n miio-tools
 Summary: miIO tools
@@ -28,6 +35,8 @@ with devices using Xiaomi's miIO and miOT protocols.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -48,6 +57,9 @@ find %buildroot%python3_sitelibdir -type d -name tests |\
 %_bindir/*
 
 %changelog
+* Thu Oct 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.12-alt3
+- provide python-miio
+
 * Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.12-alt2
 - avoid appdirs dependency
 
