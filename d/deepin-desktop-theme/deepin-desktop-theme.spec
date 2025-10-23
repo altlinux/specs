@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.17
+Version: 1.1.18
 Release: alt1
 
 Summary: Deepin desktop themes
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6core-devel
+BuildRequires: cmake dqt6-base-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6gui-devel libdtk6widget-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel libstdc++-devel
 %else
@@ -47,6 +47,14 @@ Requires: libdqt6-gui = %_dqt6_version
 %description -n xdgicon2dci
 This package provides xdgicon2dci tool for %name.
 
+%package -n deepin-xdgicon-convert
+Summary: Tools for %name
+Group: Graphical desktop/Other
+
+%description -n deepin-xdgicon-convert
+This package provides deepin-xdgicon-convert tool
+for %name.
+
 %prep
 %setup
 %autopatch -p1
@@ -64,6 +72,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6install
 # remove broken icon symlinks
 find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*symbolic.dci" -delete
+# package language files
+%find_lang --with-qt deepin-xdgicon-convert
 
 %files -n deepin-desktop-themes
 %doc README.md README.zh_CN.md debian/changelog
@@ -76,6 +86,7 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_datadir/deepin-themes/macaron/
 %_datadir/deepin-themes/square/
 %_datadir/deepin-themes/nirvana/
+%_datadir/deepin-themes/origin/
 %dir %_iconsdir/flow/
 %_iconsdir/flow/*
 %dir %_iconsdir/hazy-color/
@@ -88,6 +99,8 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_iconsdir/square/*
 %dir %_iconsdir/nirvana/
 %_iconsdir/nirvana/*
+%dir %_iconsdir/origin/
+%_iconsdir/origin/*
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/icons/
 %_datadir/dsg/icons/*.dci
@@ -102,12 +115,24 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %_datadir/dsg/icons/bloom/
 %_datadir/dsg/icons/vintage/
 %_datadir/dsg/icons/nirvana/
+%_datadir/dsg/icons/origin/
 
 %files -n xdgicon2dci
 %dir %_libexecdir/deepin-desktop-theme/
 %_libexecdir/deepin-desktop-theme/xdgicon2dci
 
+%files -n deepin-xdgicon-convert -f deepin-xdgicon-convert.lang
+%_bindir/deepin-xdgicon-convert
+%_desktopdir/deepin-xdgicon-convert.desktop
+%_iconsdir/hicolor/scalable/apps/deepin-xdgicon-convert.svg
+%dir %_datadir/deepin-xdgicon-convert/
+%dir %_datadir/deepin-xdgicon-convert/translations/
+
 %changelog
+* Thu Oct 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.18-alt1
+- New version 1.1.18.
+- New subpackage: deepin-xdgicon-convert.
+
 * Fri Oct 03 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.17-alt1
 - New version 1.1.17.
 
