@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -18,12 +18,12 @@ Url: https://github.com/saivert/pwvucontrol
 Vcs: https://github.com/saivert/pwvucontrol.git
 
 %if_disabled snapshot
-Source: https://github.com/saivert/pwvucontrol/releases/download/%version/%name-%version.tar.xz
+Source: https://github.com/saivert/pwvucontrol/archive/%version/%name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
 # tarball contains vendored sources
-%{?_enable_snapshot:Source1: %name-%version-cargo.tar}
+Source1: %name-%version-cargo.tar
 
 ExcludeArch: %ix86 armh
 
@@ -61,7 +61,7 @@ Card profile selection
 Port selection for sinks and sources
 
 %prep
-%setup %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
+%setup %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -88,6 +88,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sat Oct 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

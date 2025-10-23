@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -317,6 +317,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
+- 0.50.1
+
 * Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 

@@ -13,7 +13,7 @@
 %define gvc_ver 5f9768a
 
 Name: phosh-mobile-settings
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Mobile Settings App for phosh and related components
@@ -109,6 +109,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
+- 0.50.1
+
 * Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 

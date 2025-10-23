@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %prefix/libexec
 
 %define ver_major 0.46
@@ -11,7 +11,7 @@
 
 Name: phrog
 Version: %ver_major.0
-Release: alt0.5
+Release: alt0.6
 
 Summary: Mobile device greeter
 Group: Graphical desktop/GNOME
@@ -65,6 +65,8 @@ install -pD -m 644 data/%name.session -t %buildroot%_datadir/gnome-session/sessi
 install -pD -m 644 data/%xdg_name.desktop -t %buildroot%_desktopdir
 install -pD -m 644 dist/fedora/greetd-config.toml -t %buildroot%_sysconfdir/%name/
 install -pD -m 644 dist/fedora/%name.service -t %buildroot%_unitdir/
+install -pD -m 644 data/%xdg_name.service -t %buildroot%_userunitdir/
+install -pD -m 644 data/%xdg_name.target -t %buildroot%_userunitdir/
 install -pD -m 644 data/systemd-session.conf -T %buildroot%_userunitdir/gnome-session@phrog.target.d/session.conf
 install -Dpm 0755 data/%name-greetd-session -t %buildroot%_libexecdir/
 install -d %buildroot%_datadir/%name/autostart
@@ -81,6 +83,8 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %_bindir/%name
 %_libexecdir/%name-greetd-session
 %_unitdir/%name.service
+%_userunitdir/%xdg_name.service
+%_userunitdir/%xdg_name.target
 %dir %_userunitdir/gnome-session@phrog.target.d
 %_userunitdir/gnome-session@phrog.target.d/session.conf
 %_desktopdir/%xdg_name.desktop
@@ -89,6 +93,9 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %doc README*
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt0.6
+- 0.46.0-16-g07ec9c2 (adapted to gnome-session-49)
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt0.5
 - 0.46.0
 - added greetd-greeter provides
