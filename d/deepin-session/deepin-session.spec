@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -12,11 +12,12 @@ Summary: Launching DDE components systemd service
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session
-Vcs: git://github.com/linuxdeepin/dde-session.git
+Vcs: https://github.com/linuxdeepin/dde-session
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-session/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-session-2.0.6-alt-uos-version.patch
 
@@ -37,9 +38,6 @@ BuildRequires: gcc-c++
 
 %description
 %summary.
-
-Recommends for install: startdde, deepin-shell,
-deepin-session-ui, deepin-polkit-agent, deepin-kwin2.
 
 %prep
 %setup -n %repo-%version
@@ -87,6 +85,10 @@ export READELF="llvm-readelf"
 %_userunitdir/dde-xsettings-checker.service
 
 %changelog
+* Thu Oct 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.7-alt1
+- New version 2.0.7.
+- Fixed overlinked libraries.
+
 * Thu Jul 17 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.6-alt1
 - New version 2.0.6.
 - Added vcs tag.
