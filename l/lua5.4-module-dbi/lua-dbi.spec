@@ -1,6 +1,8 @@
-Name: lua5.4-module-dbi
-Version: 0.7.2
-Release: alt2
+%define luaver 5.4
+
+Name: lua%luaver-module-dbi
+Version: 0.7.5
+Release: alt1
 
 License: MIT
 Url: https://github.com/mwild1/luadbi
@@ -8,16 +10,20 @@ Group: Databases
 Summary: Database interface library for Lua
 
 Source0: luadbi-%version.tar
+Patch0: Fix-duckdb-install.patch
 
 Provides: lua-dbi = %EVR
-Provides: lua5.4-dbi = %EVR
-Obsoletes: lua5.4-dbi < %EVR
+Provides: lua%luaver-dbi = %EVR
+Obsoletes: lua%luaver-dbi < %EVR
 
-BuildRequires: lua5.4
-BuildRequires: liblua5.4-devel
+BuildRequires: lua%luaver
+BuildRequires: liblua%luaver-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libmariadb-devel
-BuildRequires: postgresql-devel
+BuildRequires: libpq-devel
+%ifnarch %ix86
+BuildRequires: duckdb duckdb-devel
+%endif
 
 %description
 LuaDBI is a database interface library for Lua. It is designed to provide a
@@ -31,21 +37,54 @@ with native database drivers.
 %prep
 %setup -n luadbi-%version
 
+%patch0 -p1
+
 %build
-%make_build free \
+%make_build mysql \
 	CFLAGS="%optflags" \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
 	MYSQL_LDFLAGS="-L%_libdir/mysql -lmysqlclient"
 
+%make_build psql \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir"
+
+%make_build sqlite3 \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir"
+
+%ifnarch %ix86
+%make_build duckdb \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir"
+%endif
+
 %install
-make install_free INSTALL='install -p' \
+make install_mysql INSTALL='install -p' \
 	CFLAGS="%optflags" \
 	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
 	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch \
 	MYSQL_LDFLAGS="-L%_libdir/mysql -lmysqlclient"
 
+make install_psql INSTALL='install -p' \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
+	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch
+
+make install_sqlite3 INSTALL='install -p' \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
+	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch
+
+%ifnarch %ix86
+make install_duckdb INSTALL='install -p' \
+	CFLAGS="%optflags" \
+	LUA_V=%current_lua_version LUA_INC="-I%_includedir" \
+	LUA_CDIR=%buildroot%lua_modulesdir LUA_LDIR=%buildroot%lua_modulesdir_noarch
+%endif
+
 %check
-lua5.4 -e \
+lua%luaver -e \
 	'package.cpath="%buildroot%lua_modulesdir/?.so;"..package.cpath;
 	package.path="%buildroot%lua_modulesdir_noarch/?.lua;"..package.path;
 	local DBI = require("DBI"); print("Hello from "..DBI._VERSION.."!");'
@@ -56,6 +95,11 @@ lua5.4 -e \
 %lua_modulesdir_noarch/DBI.lua
 
 %changelog
+* Thu Oct 23 2025 Alexei Takaseev <taf@altlinux.org> 0.7.5-alt1
+- 0.7.5
+- Fix FTBFS
+- Change BR postgresql-devel -> libpq-devel
+
 * Sat Jul 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt2
 - Rebuilt for consistent package name for all lua versions.
 - Provided and obsoleted previous lua-dbi builds.
