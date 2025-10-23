@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.56
+Version: 6.1.59
 Release: alt1
 Epoch: 2
 
@@ -19,7 +19,8 @@ Vcs: https://github.com/linuxdeepin/dde-daemon
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source0: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-daemon/archive/%version/%repo-%version.tar.gz
+Source0: %repo-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
@@ -34,8 +35,6 @@ Requires: bamfdaemon at-spi2-core
 %ifnarch s390 s390x %arm ppc64le
 Requires: rfkill
 %endif
-# Manually founded requires in the code.
-#Requires: glibc-utils deepin-launcher deepin-kwin setxkbmap systemd-services dbus-tools qt5-dbus libgio deepin-system-monitor coreutils util-linux xinitrc lightdm gdm-data sddm lxde-lxdm python3 zsh xterm xauth setup xorg-server sysvinit
 %ifnarch armh i586
 Requires: lshw
 %endif
@@ -78,7 +77,6 @@ sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
 # Replace reference of google-chrome to chromium-browser
 sed -i 's/google-chrome/chromium-browser/g' \
     bin/user-config/config_datas.go \
-    launcher/manager_uninstall.go \
     misc/data/deepin_icons.ini \
     misc/data/window_patterns.json
 
@@ -116,8 +114,6 @@ sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
 # /sbin
 
 # /lib
-sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
-    bin/dde-authority/fprint_transaction.go
 sed -i 's|${DESTDIR}/lib/systemd/|${DESTDIR}%_systemddir|g' Makefile
 sed -i 's|/lib/udev/rules.d|%_udev_rulesdir|g' Makefile
 
@@ -163,9 +159,6 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %dir %_sysconfdir/deepin/daemon/
 %config(noreplace) %_sysconfdir/deepin/daemon/resource-control.json
 %config %_sysconfdir/pam.d/deepin-auth-keyboard
-%config %_sysconfdir/acpi/actions/deepin_lid.sh
-%config %_sysconfdir/acpi/events/deepin_lid
-%config %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
 %prefix/lib/%name/
 %dir %_libexecdir/%repo/
 %dir %_libexecdir/%repo/keybinding/
@@ -183,11 +176,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %dir %_datadir/deepin/scheduler/
 %_datadir/deepin/scheduler/config.json
 %_datadir/polkit-1/actions/*.policy
+%_datadir/polkit-1/rules.d/org.deepin.dde.accounts.rules
+%_datadir/polkit-1/rules.d/org.deepin.dde.grub2.rules
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
-/var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.accounts.pkla
-/var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.fprintd.pkla
-/var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
-%_udev_rulesdir/80-deepin-fprintd.rules
 #%%_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
 # %%_unitdir/dbus-com.deepin.dde.lockservice.service
@@ -196,7 +187,6 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_userunitdir/dde-session-initialized.target.wants/dde-display-task-refresh-brightness.service
 %dir %_userunitdir/dde-session-pre.target.wants/
 %_userunitdir/dde-session-pre.target.wants/org.dde.session.Daemon1.service
-%_unitdir/dde-authority.service
 %_unitdir/dde-backlight-helper.service
 %_unitdir/dde-greeter-setter.service
 %_unitdir/dde-lock-service.service
@@ -214,6 +204,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Thu Oct 23 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.59-alt1
+- New version 6.1.59.
+
 * Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.56-alt1
 - New version 6.1.56.
 
