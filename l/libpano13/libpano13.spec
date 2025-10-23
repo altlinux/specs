@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 2.9.22
+Version: 2.9.23
 Release: alt1
 
 Group: System/Libraries
@@ -117,6 +117,9 @@ panoinfo    - Display info from pano12 dll/library
 %doc doc/*.txt tools/README.PTmender
 
 %changelog
+* Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.23-alt1
+- 2.9.23
+
 * Tue Sep 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.22-alt1
 - 2.9.22
 - enabled optional "Sparse Levenberg Marquardt" algorithm using
