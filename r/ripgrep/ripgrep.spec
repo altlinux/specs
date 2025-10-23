@@ -2,7 +2,7 @@
 %def_with check
 
 Name: ripgrep
-Version: 15.0.0
+Version: 15.1.0
 Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
@@ -65,6 +65,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Thu Oct 23 2025 Alexander Makeenkov <amakeenk@altlinux.org> 15.1.0-alt1
+- Updated to version 15.1.0.
+
 * Thu Oct 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 15.0.0-alt1
 - Updated to version 15.0.0.
 
