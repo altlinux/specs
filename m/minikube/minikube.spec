@@ -6,8 +6,10 @@
 
 %global import_path k8s.io/minikube
 
+%define git_commit 65318f4cfff9c12cc87ec9eb8f4cdd57b25047f3
+
 Name: minikube
-Version: 1.36.0
+Version: 1.37.0
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -39,10 +41,11 @@ export GOPATH="$BUILDDIR:%go_path"
 
 cd .build/src/%import_path
 export PKGPATH="%import_path/pkg"
-export VERSION="$PKGPATH/version.version=%version"
-export ISOVERSION="$PKGPATH/version.isoVersion=%version"
-export STORAGEPROVISIONERVERSION="$PKGPATH/version.storageProvisionerVersion=5"
-export LDFLAGS="-X $VERSION -X $ISOVERSION -X $STORAGEPROVISIONERVERSION"
+export VERSION="$PKGPATH/version.version=v%version"
+export ISOVERSION="$PKGPATH/version.isoVersion=v%version"
+export STORAGEPROVISIONERVERSION="$PKGPATH/version.storageProvisionerVersion=v5"
+export COMMIT="$PKGPATH/version.gitCommitID=%git_commit"
+export LDFLAGS="-X $VERSION -X $ISOVERSION -X $STORAGEPROVISIONERVERSION -X $COMMIT"
 %golang_build cmd/minikube
 
 %install
@@ -65,6 +68,10 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_%name
 
 %changelog
+* Thu Oct 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.37.0-alt1
+- 1.36.0 -> 1.37.0
+- Fix image download errors on minikube start.
+
 * Fri Jul 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.36.0-alt1
 - 1.31.1 -> 1.36.0
 
