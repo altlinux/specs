@@ -1,20 +1,21 @@
+%define java_home %_jvmdir/jre
+
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Epoch:          1
 Version:        1.2.35
-Release:        alt1_1jpp11
+Release:        alt1_2jpp11
 Summary:        Tomcat native library
 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  gcc-c++
-BuildRequires:  jpackage-utils
+BuildRequires:  jpackage-17-compat
 BuildRequires:  libapr1-devel >= 1.4.3
 BuildRequires:  libssl-devel >= 1.0.2
 # Upstream compatibility:
@@ -54,9 +55,6 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
-
-
-
 %files
 %{!?_licensedir:%global license %%doc}
 %doc --no-dereference LICENSE NOTICE
@@ -66,6 +64,11 @@ rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 %changelog
+* Thu Oct 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:1.2.35-alt1_2jpp11
+- fixed FTBFS
+- updated License tag
+- updated Java version to 17
+
 * Tue Mar 21 2023 Igor Vlasenko <viy@altlinux.org> 1:1.2.35-alt1_1jpp11
 - update
 
