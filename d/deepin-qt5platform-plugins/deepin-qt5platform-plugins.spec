@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.7.23
+Version: 5.7.24
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -76,6 +76,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Fri Oct 24 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.24-alt1
+- New version 5.7.24.
+
 * Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.23-alt1
 - New version 5.7.23.
 
