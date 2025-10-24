@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.7.0
+Version: 2.8.1
 Release: alt1
 
 Summary: Database-backed Periodic Tasks
@@ -60,5 +60,8 @@ and how often they should run.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Oct 22 2025 Yaroslav Bahtin <alpacost@altlinux.org> 2.8.1-alt1
+- 2.7.0 -> 2.8.1
+
 * Tue Oct 15 2024 Yaroslav Bahtin <alpacost@altlinux.org> 2.7.0-alt1
 - Initial build
