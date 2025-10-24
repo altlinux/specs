@@ -1,5 +1,5 @@
 Name:           rsibreak
-Version:        0.12.15
+Version:        0.13.0
 Release:        alt1
 Summary:        A small utility which bothers you at certain intervals
 Group:          Graphical desktop/KDE
@@ -8,23 +8,25 @@ URL:            https://projects.kde.org/projects/unmaintained/rsibreak
 Source0:        %name-%version.tar
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-kidletime-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-knotifyconfig-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-kdoctools-devel-static
-BuildRequires: kf5-kdoctools
+BuildRequires: qt6-declarative-devel
+BuildRequires: kf6-kcolorscheme-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kdoctools
+BuildRequires: kf6-kdoctools-devel-static
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kidletime-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-knotifyconfig-devel
+BuildRequires: kf6-kstatusnotifieritem-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kxmlgui-devel
 
 %description
 RSIBreak is a small utility which bothers you at certain intervals. The
@@ -34,28 +36,32 @@ is to let you know when it is time to have a break from your computer.
 This can help people to prevent Repetive Strain Injury.
 
 %prep
-%setup -q
+%setup
 
 %build
-%K5init no_altplace
-%K5build
+%K6init no_altplace
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog LICENSES NEWS TODO
-%_K5bin/%name
-%_K5xdgapp/*.desktop
-%_K5start/%{name}_autostart.desktop
-%_K5dbus_iface/org.%name.rsiwidget.xml
-%_K5notif/%name.notifyrc
+%_K6bin/%name
+%_K6xdgapp/*.desktop
+%_K6start/%{name}_autostart.desktop
+%_K6dbus_iface/org.%name.rsiwidget.xml
+%_K6notif/%name.notifyrc
 %_iconsdir/hicolor/*/apps/%name.png
 %_iconsdir/hicolor/*/actions/*.png
 %_datadir/metainfo/org.kde.rsibreak.appdata.xml
 
 %changelog
+* Sun Oct 19 2025 Andrey Cherepanov <cas@altlinux.org> 0.13.0-alt1
+- New version.
+- Built with KF6.
+
 * Wed Jun 08 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.15-alt1
 - New version.
 
