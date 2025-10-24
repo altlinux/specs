@@ -1,6 +1,6 @@
 %define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.15.1
+%define module_version	0.15.2
 %define module_release	alt1
 
 %define flavour		6.12
@@ -62,6 +62,9 @@ install v4l2loopback.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.org> 0.15.2-alt1
+- 0.15.2.
 
 * Thu Sep 25 2025 L.A. Kostis <lakostis@altlinux.org> 0.15.1-alt1
 - 0.15.1.
