@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -10,12 +10,12 @@ Source:  %name-%version.tar
 Group: Office
 
 BuildRequires: gcc-c++ cmake ninja-build
-BuildRequires: libaltcsp-devel libcsppdf-devel >= 0.3.2-alt2
+BuildRequires: libaltcsp-devel libcsppdf-devel >= 0.4.0-alt1
 BuildRequires: libmupdf-devel
 BuildRequires:  qt6-base-devel qt6-declarative-devel rpm-macros-qt6 qt6-declarative qt6-svg-devel qt6-svg qt6-tools
 
 Requires: qt6-svg qt6-declarative fonts-ttf-google-noto-sans qt6-wayland qt6-translations
-Requires: libcsppdf >= 0.3.2-alt2
+Requires: libcsppdf >= 0.4.0-alt1
 
 %description
 A gui application for verification and creation of digitally signed pdf documents.
@@ -38,6 +38,12 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Tue Oct 14 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.0-alt1
+- New features:
+    + Add machine-readable power of attorney (MRPA) support.
+    + Work with document packages.
+    + Sign files in bulk with detached/attached signature.
+
 * Thu Sep 04 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.3-alt1
 - Fix undefined Aim behaviour when launched without any default profile
 

@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pdfcsp
-Version: 0.3.2
-Release: alt2
-Summary: Library for CryptoPro pdf electronic signatures support.
+Version: 0.4.0
+Release: alt1
+Summary: Library for CryptoPro PDF electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://gitlab.basealt.space/proskurinov/csp_pdf
@@ -14,6 +14,8 @@ Patch: pdfcsp-0.3.1-alt-loongarch64-support.patch
 BuildPreReq: gcc-c++ cmake ninja-build rpm-macros-cmake rpm-build-licenses
 BuildRequires: libqpdf-devel boost-devel-headers boost-interprocess-devel glibc-devel libsignimage_c_wrapper-devel libspdlog-devel libfmt-devel
 BuildRequires: boost-locale-devel gettext-tools boost-program_options-devel
+BuildRequires:  cppcodec-devel zlib-devel libzip-devel libxml++3-devel
+
 %description
 Library for CryptoPro pdf electronic signatures support.
 
@@ -84,10 +86,19 @@ Command line tools for pdf signatures
 %_libdir/libcsp_ipc_client.so.0.1
 %_libdir/libcsp_ipc_client.so.0
 
+%_libdir/libmrpa.so.0.1
+%_libdir/libmrpa.so.0
+
+%_libdir/libzipcpp.so.0.1
+%_libdir/libzipcpp.so.0
+
 %files -n libaltcsp-devel
 %_libdir/libaltcsp.so
 %_libdir/libcsp_c_bridge.so
 %_libdir/libcsp_ipc_client.so
+%_libdir/libmrpa.so
+%_libdir/libzipcpp.so
+
 
 %_includedir/%name/altcsp.hpp
 %_includedir/%name/message.hpp
@@ -129,12 +140,27 @@ Command line tools for pdf signatures
 %_includedir/%name/annotation.hpp
 %_includedir/%name/sig_val.hpp
 %_includedir/%name/pdf_csp_c.hpp
+%_includedir/%name/doc_archive_public.hpp
+%_includedir/%name/context_c.h
+%_includedir/%name/mrpa_typedefs.hpp
+%_includedir/%name/file_stat.hpp
+%_includedir/%name/zip_cpp.hpp
+
+
+
+
 
 %files -n pdfcspcli
 %_bindir/signpdf
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Mon Oct 13 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.0-alt1
+- New features:
+  + Add machine-readable power of attorney (MRPA) support.
+  + ZIP archives supports.
+  + Attached and detached signature files support.
+  
 * Wed Sep 03 2025 Oleg Proskurin <proskur@altlinux.org> 0.3.2-alt2
 - Additional fixes for stamp embedding
 
