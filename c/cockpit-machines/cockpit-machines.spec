@@ -1,5 +1,5 @@
 Name: cockpit-machines
-Version: 315
+Version: 342
 Release: alt1
 
 Summary: Cockpit user interface for virtual machines
@@ -28,6 +28,7 @@ Requires: qemu-audio-spice
 Requires: qemu-char-spice
 Requires: libvirt-client
 Requires: libvirt-dbus >= 1.2.0
+Requires: virt-install
 
 %description
 Cockpit component for managing virtual machines.
@@ -55,6 +56,12 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/metainfo/*
 %_datadir/metainfo/*
 
 %changelog
+* Thu Oct 16 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 342-alt1
+- update version
+
+* Thu Oct 31 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 322-alt1
+- update version
+
 * Mon Jul 01 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 315-alt1
 - Initial build for Sisyphus (closes: 44671)
 
