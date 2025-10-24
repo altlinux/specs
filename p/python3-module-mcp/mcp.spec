@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.4
+Version: 1.18.0
 Release: alt1
 Summary: The official Python SDK for Model Context Protocol servers and clients.
 License: MIT
@@ -26,16 +26,39 @@ BuildRequires: python3(pip)
 BuildRequires: python3(anyio)
 BuildRequires: python3(httpx)
 BuildRequires: python3-module-httpx-sse
-BuildRequires: python3(pydantic)
+BuildRequires: python3(pydantic) 
 BuildRequires: python3(starlette)
 BuildRequires: python3-module-python-multipart
 BuildRequires: python3-module-sse-starlette
 BuildRequires: python3-module-pydantic-settings
 BuildRequires: python3(jsonschema)
+BuildRequires: python3(typer)
+BuildRequires: python3(uv)
+BuildRequires: python3-module-uv-build  
+BuildRequires: python3(websockets)
+BuildRequires: python3-module-inline-snapshot
+BuildRequires: python3-module-dirty-equals
+BuildRequires: python3-module-pydantic-core
+BuildRequires: python3-module-ruff
+BuildRequires: python3(httpcore)
 
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-pytest-examples
+BuildRequires: python3(uvicorn)
+BuildRequires: python3(requests)
 %endif
+
+Requires: python3(anyio)
+Requires: python3(httpx)
+Requires: python3(uvicorn)
+Requires: python3(typer)
+Requires: python3-module-sse-starlette
+Requires: python3-module-pydantic-settings
+Requires: python3(websockets)
+Requires: python3-module-inline-snapshot
+Requires: python3-module-dirty-equals
 
 %py3_provides %pypi_name
 
@@ -70,5 +93,8 @@ sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 24 2025 Pavel Shilov <zerospirit@altlinux.org> 1.18.0-alt1
+- 1.12.4 -> 1.18.0
+
 * Fri Aug 08 2025 Pavel Shilov <zerospirit@altlinux.org> 1.12.4-alt1
 - Initial build for Sisyphus.
