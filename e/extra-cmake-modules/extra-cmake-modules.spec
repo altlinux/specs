@@ -22,7 +22,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 6.19.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -39,6 +39,7 @@ Requires: clang-devel
 
 Source: %name-%version.tar
 Patch1: alt-hide-about-reusetool.patch
+Patch2: alt-old-cmake.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake qt6-tools qt6-tools-devel
@@ -53,6 +54,7 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # can't do %%ifarch here becouse noarch build
 if [ "$(arch)" = "e2k" ]; then
@@ -83,6 +85,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt2
+- workaround for old cmake
+
 * Fri Oct 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt1
 - new version
 
