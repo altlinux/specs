@@ -6,7 +6,7 @@
 %endif
 
 Name:    typst
-Version: 0.13.1
+Version: 0.14.0
 Release: alt1
 
 Summary: New markup-based typesetting system that is powerful and easy to learn
@@ -52,9 +52,9 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/typst/typst-dev-assets?tag=v0.13.1"]
+[source."git+https://github.com/typst/typst-dev-assets?tag=v%version"]
 git = "https://github.com/typst/typst-dev-assets"
-tag = "v0.13.1"
+tag = "v%version"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -104,6 +104,9 @@ install -m644 -v ./crates/%name-cli/artifacts/%name.bash \
 %_datadir/bash-completion/completions/%name.bash
 
 %changelog
+* Fri Oct 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.0-alt1
+- New version.
+
 * Tue Mar 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.1-alt1
 - New version.
 
