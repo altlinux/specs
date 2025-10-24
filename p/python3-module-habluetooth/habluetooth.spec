@@ -1,29 +1,23 @@
-%define _unpackaged_files_terminate_build 1
-%define pypi_name habluetooth
-%define mod_name %pypi_name
-
-%def_with check
-
-Name: python3-module-%pypi_name
-Version: 5.6.2
+Name: python3-module-habluetooth
+Version: 5.7.0
 Release: alt1
 
 Summary: High availability Bluetooth
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/habluetooth/
-Vcs: https://github.com/bluetooth-devices/habluetooth
+Url: https://pypi.org/project/habluetooth
+VCS: https://github.com/bluetooth-devices/habluetooth
+
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
+Source1: pyproject_deps.json
+
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-%endif
 
 %description
 %summary
@@ -32,9 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -43,13 +35,19 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=''
+%pyproject_run_pytest -o addopts= tests
+
+# extensions built against stable API, drop versioned ABI req
+%filter_from_requires /%python3_ABI_dep/d
 
 %files
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/habluetooth
+%python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.7.0-alt1
+- 5.7.0 released
+
 * Wed Sep 10 2025 Stanislav Levin <slev@altlinux.org> 5.6.2-alt1
 - 5.3.1 -> 5.6.2.
 
