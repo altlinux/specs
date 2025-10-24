@@ -2,7 +2,7 @@
 
 Name: foomuuri
 Version: 0.29
-Release: alt1
+Release: alt2
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
 License: GPL-2.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-systemd
 Requires: nftables
 Requires: fping
+%py3_requires systemd.daemon
 
 %description
 Foomuuri is a firewall generator for nftables based on the concept of zones.
@@ -92,6 +93,10 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir BINDIR=%_sbindir %makeinstall_std
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Fri Oct 24 2025 Alexey Shabalin <shaba@altlinux.org> 0.29-alt2
+- Add requires python3(systemd.daemon),fixed start
+  foomuuri-dbus.service and foomuuri-monitor.service with Type=notify.
+
 * Mon Oct 06 2025 Alexey Shabalin <shaba@altlinux.org> 0.29-alt1
 - New version 0.29.
 
