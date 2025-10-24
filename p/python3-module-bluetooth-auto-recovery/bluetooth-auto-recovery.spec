@@ -1,30 +1,24 @@
-%define _unpackaged_files_terminate_build 1
-%define pypi_name bluetooth-auto-recovery
-%define mod_name bluetooth_auto_recovery
-
-%def_with check
-
-Name: python3-module-%pypi_name
-Version: 1.5.2
+Name: python3-module-bluetooth-auto-recovery
+Version: 1.5.3
 Release: alt1
 
 Summary: Recover bluetooth adapters that are in an stuck state
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bluetooth-auto-recovery/
-Vcs: https://github.com/bluetooth-devices/bluetooth-auto-recovery
+Url: https://pypi.org/project/bluetooth-auto-recovery
+VCS: https://github.com/bluetooth-devices/bluetooth-auto-recovery
+
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-BuildArch: noarch
-# manually manage runtime dependencies with metadata
+Source1: pyproject_deps.json
+
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+
+BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-%endif
 
 %description
 %summary
@@ -33,9 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -44,13 +36,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=''
+%pyproject_run_pytest -o addopts= tests
 
 %files
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/bluetooth_auto_recovery
+%python3_sitelibdir/bluetooth_auto_recovery-%version.dist-info
 
 %changelog
+* Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.3-alt1
+- 1.5.3 released
+
 * Fri Sep 05 2025 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.4.2 -> 1.5.2.
 

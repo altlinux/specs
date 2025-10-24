@@ -1,5 +1,5 @@
-Name: python3-module-hass-frontend
-Version: 20250103.0
+Name: python3-module-home-assistant-frontend
+Version: 20251001.4
 Release: alt1
 
 Summary: Home automation platform -- frontend
@@ -9,8 +9,9 @@ Url: https://www.home-assistant.io/
 
 Source0: hass-frontend-%version.tar
 
+Autoreqprov: yes,nopython3
+
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
 
 %description
 Home Assistant is a home automation platform running on Python 3.
@@ -27,6 +28,9 @@ tar xf %SOURCE0 -C %buildroot%python3_sitelibdir/
 %python3_sitelibdir/home_assistant_frontend-*-info
 
 %changelog
+* Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 20251001.4-alt1
+- 20251001.4
+
 * Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 20250103.0-alt1
 - 20250103.0
 

@@ -1,51 +1,35 @@
 Name: hass
-Version: 2025.1.2
-Release: alt2
+Version: 2025.10.3
+Release: alt1
 
 Summary: Home automation platform
-License: APL
+License: Apache-2.0
 Group: System/Servers
 Url: https://www.home-assistant.io/
+VCS: https://github.com/home-assistant/core
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: pyproject_deps.json
 
 BuildArch: noarch
+BuildRequires(pre): jq
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: python3(atomicwrites)
-BuildRequires: python3(awesomeversion)
-BuildRequires: python3(aiohttp_fast_url_dispatcher)
-BuildRequires: python3(black)
-BuildRequires: python3(ciso8601)
-BuildRequires: python3(dateutil)
-BuildRequires: python3(ifaddr)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(jwt)
-BuildRequires: python3(lru)
-BuildRequires: python3(numpy)
-BuildRequires: python3(orjson)
-BuildRequires: python3(slugify)
-BuildRequires: python3(tqdm)
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(ulid_transform)
-BuildRequires: python3(voluptuous)
-BuildRequires: python3(voluptuous_serialize)
-BuildRequires: python3(yaml)
+%pyproject_builddeps_metadata
 
 %package core
 Summary: Home automation platform
 Group: System/Servers
-Requires: python3-module-pip >= 21.0
-Requires: python3-module-hass-frontend >= 20250103.0
-Requires: python3-module-aiohttp-fast-zlib >= 0.1.1
-Requires: python3-module-go2rtc-client >= 0.1.2
-Requires: python3(uv)
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps precious
 
 %package -n python3-module-hass
 Summary: Home automation platform
-Group: System/Servers
-AutoReq: no
+Group: Development/Python
+
+Autoreq: yes, nopython3
 
 %define desc Home Assistant is a home automation platform running on Python 3.\
 It is able to track and control all devices at home and offer a platform \
@@ -64,10 +48,15 @@ This package contains most of Home Assistant modules.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+sed -re 's,^,homeassistant/components/,; s,$,/manifest.json,' < precious |\
+     xargs jq -rs '.[].requirements|arrays|.[]' |\
+     sort -u > precious.txt
+%pyproject_deps_resync precious pip_reqfile precious.txt
 python3 -m script.translations develop --all
 
 %build
-%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -76,9 +65,9 @@ install -pm0644 -D hass.service %buildroot%_unitdir/hass.service
 install -pm0644 -D hass.sysconfig %buildroot%_sysconfdir/sysconfig/hass
 mkdir -p %buildroot%_localstatedir/hass
 
-find %buildroot%python3_sitelibdir/homeassistant/components -type f -name manifest.json |\
+find %buildroot%python3_sitelibdir/homeassistant -type f -name manifest.json |\
      sed -re 's,^%buildroot(/.+)/manifest.json,\1,' |sort > all.files
-sed -re 's,^,%python3_sitelibdir/homeassistant/,' < precious > core.files
+sed -re 's,^,%python3_sitelibdir/homeassistant/components/,' < precious > core.files
 cat all.files core.files |sort |uniq -u > rest.files
 sed -re 's,^,%exclude ,' < rest.files > core.files
 
@@ -86,12 +75,6 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %_sbindir/groupadd -r -f _hass &> /dev/null
 %_sbindir/useradd -r -g _hass -d %_localstatedir/hass -s /dev/null \
 	-c 'Home Assistant' -n _hass &> /dev/null ||:
-
-%set_python3_req_method strict
-%add_python3_req_skip av
-%add_python3_req_skip custom_components
-%add_python3_req_skip homeassistant.components.cloud
-%add_python3_req_skip _typeshed
 
 %files core -f core.files
 %_sysconfdir/sysconfig/hass
@@ -106,6 +89,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10.3-alt1
+- 2025.10.3 relesed
+
 * Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.1.2-alt2
 - dropped obsolete buildreqs
 
