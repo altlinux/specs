@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -65,7 +65,7 @@ install -Dm644 image/gui/%name-symbolic.svg %buildroot%_iconsdir/hicolor/symboli
 install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 
 %files
-%doc LICENSE LICENSE_AGREEMENT CHANGELOG COPYING THIRD-PARTY README.md
+%doc LICENSE LICENSE_AGREEMENT CHANGELOG COPYING THIRD-PARTY GENERAL README.md
 %_bindir/%name
 %_datadir/%name/
 %exclude %_datadir/%name/%{name}_gui.py
@@ -79,6 +79,12 @@ install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 %_datadir/%name/%{name}_gui.py
 
 %changelog
+* Fri Oct 24 2025 Mikhail Tergoev <fidel@altlinux.org> 0.8.0-alt1
+- updated to version 0.8.0
+- added autodetection of .reg and .dll files to add them to the prefix registry
+- added links to certificate pages to the "Help" tab
+- other minor improvements and optimizations to scripts and the graphical interface
+
 * Mon Oct 20 2025 Mikhail Tergoev <fidel@altlinux.org> 0.7.0-alt1
 - updated to version 0.7.0
 - GUI: added a button to open a directory with backups and logs
