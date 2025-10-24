@@ -1,6 +1,6 @@
 %define sover 1
-%define glslang_ver 15.4.0
-%define spirv_tools_ver 2025.3
+%define glslang_ver 16.0.0
+%define spirv_tools_ver 2025.4
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %def_disable static
@@ -11,7 +11,7 @@
 %endif
 
 Name: shaderc
-Version: 2025.3
+Version: 2025.4
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -26,7 +26,7 @@ Patch0: %name-%version-%release.patch
 Patch1: %name-alt-skip-dirs.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ spirv-headers >= 1.5.5-alt19 libspirv-tools-devel >= %spirv_tools_ver glslang-devel >= %glslang_ver
+BuildRequires: gcc-c++ spirv-headers >= 1.5.5-alt20 libspirv-tools-devel >= %spirv_tools_ver glslang-devel >= %glslang_ver
 BuildRequires: python3-devel ninja-build
 %if_with doc
 BuildRequires: asciidoctor
@@ -120,6 +120,10 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 
 %changelog
+* Thu Oct 23 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.4-alt0.1
+- v2025.4.
+- BR: bump deps.
+
 * Mon Aug 18 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.3-alt0.1
 - v2025.3.
 - BR: bump deps.

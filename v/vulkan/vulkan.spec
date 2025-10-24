@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.4.321
+Version: 1.4.328.1
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -14,8 +14,6 @@ Source1: vulkan-tools.tar
 # https://github.com/KhronosGroup/Vulkan-ValidationLayers
 Source2: vulkan-layers.tar
 
-Patch: 0001-build-Remove-pkg-config-provided-library-names.patch
-
 BuildRequires: bison chrpath
 BuildRequires(pre): cmake gcc-c++
 BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
@@ -24,9 +22,9 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 # strict requires due internal dependency
 BuildRequires: vulkan-headers = %version
 BuildRequires: vulkan-registry = %version
-BuildRequires: glslang-devel = 15.4.0
-BuildRequires: libspirv-tools-devel >= 2025.3-alt0.1.rc1
-BuildRequires: spirv-headers >= 1.5.5-alt19
+BuildRequires: glslang-devel = 16.0.0
+BuildRequires: libspirv-tools-devel >= 2025.4-alt0.1
+BuildRequires: spirv-headers >= 1.5.5-alt20
 # -layers need it
 BuildRequires: vulkan-utility-libraries-devel = %version librobin-hood-hashing-devel
 # -tools need it
@@ -103,9 +101,6 @@ pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 popd
-pushd ../vulkan-tools
-%patch -p1
-popd
 
 %build
 for dir in loader layers; do
@@ -177,6 +172,14 @@ rm -rf %buildroot%_libdir/*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Thu Oct 23 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.328.1-alt1
+- BR:
+  + Bump version requires
+- Updated to sdk-1.4.328.1:
+  + vulkan-layers: Updated to 83bcbddf08
+  + vulkan-tools: Updated to c08c91e473
+  + vulkan-loader: Updated to 0a278cc725
+
 * Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.321-alt1
 - BR:
   + Bump version requires
