@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt25
+Release: alt26
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: libX11-devel extra-cmake-modules gettext qt6-base-devel qt6-speech-devel
 BuildRequires: libcryptsetup-devel libcryptsetup
 BuildRequires: kf6-knotifications-devel
-BuildRequires: kf6-kdoctools-devel-static kf6-kio-devel
+BuildRequires: kf6-kdoctools-devel kf6-kio-devel
 BuildRequires: kf6-ki18n-devel kf6-kxmlgui-devel kf6-kconfig-devel qt6-declarative-devel kf6-kauth-devel
 
 %description
@@ -56,6 +56,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Fri Oct 24 2025 Sergey V Turchin <zerg@altlinux.org> 0.6-alt26
+- update build requires
+
 * Mon Jun 30 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.6-alt25
 - fix formatting (closes: 54181)
 
