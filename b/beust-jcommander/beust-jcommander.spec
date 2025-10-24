@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 
 Name:           beust-jcommander
 Version:        1.78
-Release:        alt1_7jpp11
+Release:        alt2
 Summary:        Java framework for parsing command line parameters
 License:        ASL 2.0
 URL:            http://jcommander.org/
@@ -58,7 +58,7 @@ cp -p %SOURCE1 pom.xml
 sed -i 's/@VERSION@/%{version}/g' pom.xml
 
 %build
-%mvn_file : %{name}
+%mvn_file : %{name} jcommander
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
@@ -71,6 +71,9 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 %doc license.txt notice.md
 
 %changelog
+* Thu Oct 23 2025 Ivan Khanas <xeno@altlinux.org> 1.78-alt2
+- Create symlink to maintain the naming of artifacts.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.78-alt1_7jpp11
 - update
 
