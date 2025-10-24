@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.23.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -86,6 +86,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Wed Oct 22 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 1:0.23.0-alt2
+- Fix spice-vdagent.service (ALT bug 56073).
+
 * Mon Oct 20 2025 Alexey Shabalin <shaba@altlinux.org> 1:0.23.0-alt1
 - 0.23.0
 
