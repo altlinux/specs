@@ -128,8 +128,8 @@
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.21.8
-Release: alt4
+Version: 4.21.9
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,14 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Oct 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt1
+- Update to security release of Samba 4.21
+- Security fixes (Fixes: CVE-2025-9640, CVE-2025-10230):
+  + CVE-2025-9640:  Uninitialized memory disclosure via vfs_streams_xattr.
+                    https://www.samba.org/samba/security/CVE-2025-9640.html
+  + CVE-2025-10230: Command injection via WINS server hook script.
+                    https://www.samba.org/samba/security/CVE-2025-10230.html
+
 * Mon Oct 06 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.8-alt4
 - smbclient, dns: fix new options default values.
 
