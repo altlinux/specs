@@ -1,5 +1,5 @@
 Name: libxslt
-Version: 1.1.39
+Version: 1.1.43
 Release: alt1
 
 Summary: Library providing XSLT support
@@ -156,7 +156,6 @@ make check
 %_includedir/*
 %_libdir/cmake/libxslt
 %_libdir/pkgconfig/*
-%_datadir/aclocal/*
 
 %files devel-doc
 %_man3dir/*
@@ -184,6 +183,9 @@ make check
 %endif # enabled python
 
 %changelog
+* Fri Oct 24 2025 Alexander Danilov <admsasha@altlinux.org> 1.1.43-alt1
+- v1.1.39 -> v1.1.43.
+
 * Sun May 26 2024 Arseny Maslennikov <arseny@altlinux.org> 1.1.39-alt1
 - v1.1.37 -> v1.1.39.
 
