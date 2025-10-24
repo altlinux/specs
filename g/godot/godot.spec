@@ -31,7 +31,7 @@
 %def_without builtin_zstd
 
 Name: godot
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 
 Summary: Libre game engine
@@ -42,7 +42,6 @@ VCS: https://github.com/godotengine/godot.git
 
 Source0: godot-%version.tar
 Patch: godot-3.6.1-alt-unbundle-xatlas.patch
-Patch1: godot-3.6.1-fedora-miniupnp228.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ ccache scons
@@ -236,6 +235,9 @@ install -m 644 -D misc/dist/linux/org.godotengine.Godot.desktop \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.2-alt1
+- New version.
+
 * Tue Sep 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.6.1-alt1
 - Enable build on aarch64 architecture.
 - New version.
