@@ -2,7 +2,7 @@
 %define APP_ID io.github.radiolamp.mangojuice
 
 Name: mangojuice
-Version: 0.8.3
+Version: 0.8.8
 Release: alt1
 
 Summary: A graphical user interface for MangoHud configuration
@@ -28,6 +28,15 @@ MangoJuice is a graphical user interface application that allows users
 to configure MangoHud, a Vulkan and OpenGL overlay for monitoring FPS,
 temperature, CPU and GPU statistics, and more.
 
+%package vkbasalt
+Summary: vkBasalt optional dependence for Mangojuice
+Group: Graphics
+
+Requires: vkBasalt
+
+%description vkbasalt
+%summary.
+
 %prep
 %setup
 
@@ -43,9 +52,17 @@ temperature, CPU and GPU statistics, and more.
 %_bindir/%name
 %_desktopdir/%APP_ID.desktop
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
-%_iconsdir/hicolor/scalable/apps/*.svg
+%_datadir/metainfo/%APP_ID.metainfo.xml
+
+%files vkbasalt
 
 %changelog
+* Fri Oct 24 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.8-alt1
+- New version 0.8.8
+- Fixed duplicate icon files in build
+- Added metainfo.xml to package files
+- Added vkBasalt dependency subpackage
+
 * Sun Apr 13 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.3-alt1
 - New version 0.8.3
 
