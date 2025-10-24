@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.1
-Release: alt1.1
+Version: 4.6.0
+Release: alt1
 
 Summary: OpenStack Oslo Policy library
 
@@ -126,6 +126,9 @@ install -pDm 644 man/oslopolicy-sample-generator.1 %buildroot%_man1dir/oslopolic
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

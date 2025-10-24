@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.7.0
-Release: alt1.1
+Version: 5.8.0
+Release: alt1
 
 Summary: OpenStack Oslo Serialization library
 
@@ -108,6 +108,9 @@ install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 5.8.0-alt1
+- Automatically updated to 5.8.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

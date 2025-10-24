@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.10.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Client Library for OpenStack Zaqar Messaging API
@@ -37,7 +37,6 @@ BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-ddt >= 1.0.1
-BuildRequires: python3-module-osc-lib-tests
 BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
@@ -113,6 +112,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
 - Automatically updated to 2.10.0.
 

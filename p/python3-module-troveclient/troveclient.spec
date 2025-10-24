@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.7.0
+Version: 8.9.0
 Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
@@ -121,6 +121,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 8.9.0-alt1
+- Automatically updated to 8.9.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 8.7.0-alt1
 - Automatically updated to 8.7.0.
 

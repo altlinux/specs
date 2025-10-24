@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.2.1
+Version: 8.2.0
 Release: alt1
 
 Summary: OpenStack Command-line Client
@@ -21,9 +21,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-cliff >= 3.5.0
+BuildRequires: python3-module-cliff >= 4.8.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-openstacksdk >= 3.3.0
+BuildRequires: python3-module-openstacksdk >= 4.6.0
 BuildRequires: python3-module-osc-lib >= 2.3.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-keystoneclient >= 3.17.0
@@ -32,7 +32,7 @@ BuildRequires: python3-module-stevedore >= 2.0.1
 
 %if_with check
 BuildRequires: python3-module-keystoneauth1 >= 3.6.2
-BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-requests >= 2.27.0
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
@@ -45,7 +45,6 @@ BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-osc-lib-tests
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-cryptography >= 2.7
-BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
@@ -85,6 +84,9 @@ This package contains documentation for %oname.
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
+
+# Install some missed files
+echo "recursive-include openstackclient *" > MANIFEST.in
 
 %build
 %pyproject_build
@@ -127,6 +129,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 8.2.0-alt1
+- Automatically updated to 8.2.0.
+
 * Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt1
 - Automatically updated to 7.2.1.
 

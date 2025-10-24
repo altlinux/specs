@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: OpenStack Image Service Store Library
@@ -48,9 +48,9 @@ BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-boto3 >= 1.9.199
 BuildRequires: python3-module-ddt >= 1.4.4
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-openstacksdk >= 0.10.0
 BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-openstacksdk >= 0.10.0
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
 %endif
@@ -148,6 +148,9 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 

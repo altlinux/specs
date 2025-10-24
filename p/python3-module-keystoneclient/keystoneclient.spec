@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 5.7.0
 Release: alt1
 
 Summary: Client Library for OpenStack Identity
@@ -124,6 +124,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 5.7.0-alt1
+- Automatically updated to 5.7.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Automatically updated to 5.5.0.
 

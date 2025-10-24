@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.0.0
+Version: 7.2.0
 Release: alt1
 
 Summary: Client Library for OpenStack Barbican Key Management API
@@ -113,6 +113,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
+- Automatically updated to 7.2.0.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
 - Automatically updated to 7.0.0.
 

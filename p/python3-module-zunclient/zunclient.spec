@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: OpenStack Client Library for Zun
@@ -124,6 +124,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
 - Automatically updated to 5.2.0.
 

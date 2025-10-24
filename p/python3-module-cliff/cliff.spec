@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Summary: OpenStack Command Line Interface Formulation Framework
@@ -69,6 +69,9 @@ This package contains documentation for %oname.
 # Remove bundled egg-info
 rm -rfv *.egg-info
 
+# Install some missed files
+echo "recursive-include cliff *" > MANIFEST.in
+
 %build
 %pyproject_build
 
@@ -109,6 +112,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.11.0-alt1
+- Automatically updated to 4.11.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 4.10.0-alt1
 - Automatically updated to 4.10.0.
 

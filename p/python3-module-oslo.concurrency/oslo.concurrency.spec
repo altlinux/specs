@@ -4,8 +4,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.1.0
-Release: alt1.1
+Version: 7.2.0
+Release: alt1
 
 Summary: OpenStack Oslo Concurrency library
 
@@ -115,6 +115,9 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
+- Automatically updated to 7.2.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

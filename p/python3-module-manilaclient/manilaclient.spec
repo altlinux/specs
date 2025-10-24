@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1
 
 Summary: Client library for OpenStack Manila API.
@@ -120,6 +120,9 @@ install -pDm 644 tools/manila.bash_completion \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt1
+- Automatically updated to 5.6.0.
+
 * Wed Jul 02 2025 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Automatically updated to 5.5.0.
 - Updated watch file.

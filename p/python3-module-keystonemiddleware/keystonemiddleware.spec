@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 10.10.0
+Version: 10.12.0
 Release: alt1
 
 Summary: Middleware for OpenStack Identity
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-keystoneauth1 >= 3.12.0
-BuildRequires: python3-module-oslo.cache >= 1.26.0
+BuildRequires: python3-module-oslo.cache >= 3.11.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -127,6 +127,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 10.12.0-alt1
+- Automatically updated to 10.12.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 10.10.0-alt1
 - Automatically updated to 10.10.0.
 

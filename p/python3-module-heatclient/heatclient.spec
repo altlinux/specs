@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: OpenStack Orchestration API Client Library
@@ -42,6 +42,7 @@ BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-openstackclient
 %endif
 
 %if_with docs
@@ -122,6 +123,9 @@ install -pDm 644 tools/heat.bash_completion \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
+- Automatically updated to 4.3.0.
+
 * Thu Jul 03 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 

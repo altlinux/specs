@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.5.1
-Release: alt1.1
+Version: 6.6.0
+Release: alt1
 
 Summary: OpenStack Oslo i18n library
 
@@ -14,7 +14,6 @@ Url: https://pypi.org/project/oslo.i18n
 
 Source: %oname-%version.tar
 Source1: %oname.watch
-Patch1: oslo.i18n-6.0.0-alt-fix-tests-for-python-3.11.patch
 
 BuildArch: noarch
 
@@ -65,7 +64,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch1 -p2
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -110,6 +108,9 @@ install -pDm 644 man/osloi18n.1 %buildroot%_man1dir/osloi18n.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 6.6.0-alt1
+- Automatically updated to 6.6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

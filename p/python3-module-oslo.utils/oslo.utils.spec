@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Utility library
@@ -119,6 +119,9 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 9.1.0-alt1
+- Automatically updated to 9.1.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
 - Automatically updated to 9.0.0.
 

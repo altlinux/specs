@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 Epoch: 1
 
@@ -131,6 +131,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 1:6.0.2-alt1
+- Automatically updated to 6.0.2.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 1:6.0.1-alt1
 - Automatically updated to 6.0.1.
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.7.0
-Release: alt2.2
+Version: 1.8.0
+Release: alt1
 
 Summary: Python library for consuming OpenStack sevice-types-authority data
 
@@ -23,14 +23,13 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 1.1.0
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-oslotest >= 3.8.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
-BuildRequires: python3-module-six >= 1.10.0
 %endif
 
 %if_with docs
@@ -71,6 +70,9 @@ This package contains documentation for %oname.
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
+
+# Install some missed files
+echo "recursive-include os_service_types *" > MANIFEST.in
 
 %build
 %pyproject_build
@@ -115,6 +117,9 @@ cp os_service_types/data/service-types.json %buildroot%python3_sitelibdir/os_ser
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
+- Automatically updated to 1.8.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt2.2
 - Dropped build dependency on python3-module-reno.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
@@ -135,6 +135,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
+- Automatically updated to 4.2.1.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 

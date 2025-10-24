@@ -1,43 +1,44 @@
 %define oname os-client-config
-
-%def_without check
-#ifarch %ix86 x86_64
-#def_with check
-#else
-#def_without check
-#endif
+%def_with check
+%def_without docs
 
 Name: python3-module-%oname
-Version: 2.1.0
-Release: alt2.2
+Version: 2.3.0
+Release: alt1
+
 Summary: OpenStack Client Configuration Library
-Group: Development/Python3
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/os-client-config
+
+Source: %oname-%version.tar.gz
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pbr >= 2.0.0
+
 %if_with check
 BuildRequires: python3-module-yaml >= 3.1.0
-BuildRequires: python3-module-appdirs >= 1.3.0
-BuildRequires: python3-module-keystoneauth1 >= 2.1.0
-BuildRequires: python3-module-requestsexceptions >= 1.1.1
-BuildRequires: python3-module-testtools
-BuildRequires: python3-module-testscenarios
-BuildRequires: python3-module-subunit
-BuildRequires: python3-module-extras
+BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-openstacksdk >= 0.13.0
-BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-glanceclient
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-jsonschema >= 3.2.0
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
 %endif
 
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%endif
 
 %description
 The os-client-config is a library for collecting client configuration for
@@ -50,7 +51,6 @@ have to know extra info to use OpenStack
 * If you have a config file, you will get the clouds listed in it
 * If you have environment variables, you will get a cloud named `envvars`
 * If you have neither, you will get a cloud named `defaults` with base defaults
-
 
 %package tests
 Summary: Tests for %oname
@@ -69,31 +69,29 @@ Documentation for the os-client-config library.
 
 %prep
 %setup -n %oname-%version
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
 
 %build
-%python3_build
-
-#python setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-#rm -fr doc/build/html/.buildinfo
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%__python3 -m stestr run
 
 %files
-%doc ChangeLog CONTRIBUTING.rst PKG-INFO README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/os_client_config
+%python3_sitelibdir/os_client_config-%version.dist-info
+%exclude %python3_sitelibdir/os_client_config/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/os_client_config/tests
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2.2
 - Dropped build dependency on python3-module-reno.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.6.0
+Version: 4.7.1
 Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
@@ -24,7 +24,7 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-yaml >= 3.13
 BuildRequires: python3-module-requestsexceptions >= 1.2.0
 BuildRequires: python3-module-jsonpatch >= 1.16
-BuildRequires: python3-module-os-service-types >= 1.7.0
+BuildRequires: python3-module-os-service-types >= 1.8.0
 BuildRequires: python3-module-keystoneauth1 >= 5.10.0
 BuildRequires: python3-module-munch >= 2.1.0
 BuildRequires: python3-module-decorator >= 4.4.1
@@ -92,6 +92,9 @@ This package contains documentation for %oname.
 # Remove bundled egg-info
 rm -rfv *.egg-info
 
+# Install some missed files
+echo "recursive-include openstack *" > MANIFEST.in
+
 %build
 %pyproject_build
 
@@ -112,9 +115,6 @@ rm -rf html/.{doctrees,buildinfo}
 # install man page
 install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
-
-# Install missing files to proper location
-cp openstack/config/*.json %buildroot%python3_sitelibdir/openstack/config
 
 # Needs openstack/_hacking/checks.py which is not packaging
 rm -v %buildroot%python3_sitelibdir/openstack/tests/unit/test_hacking.py
@@ -144,6 +144,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.7.1-alt1
+- Automatically updated to 4.7.1.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 

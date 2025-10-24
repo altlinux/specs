@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Context library
@@ -109,6 +109,9 @@ install -pDm 644 man/oslocontext.1 %buildroot%_man1dir/oslocontext.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.7.0
+Version: 4.9.0
 Release: alt1
 
 Summary: OpenStack Client library for Magnum API
@@ -27,14 +27,13 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-os-client-config >= 1.28.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-cryptography >= 3.0
 BuildRequires: python3-module-decorator >= 3.4.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
@@ -42,6 +41,7 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-openstackclient-tests
 BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-openstacksdk >= 0.10.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-testscenarios >= 0.4
@@ -126,6 +126,9 @@ install -pDm 644 tools/magnum.bash_completion \
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
+- Automatically updated to 4.9.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
 - Automatically updated to 4.7.0.
 

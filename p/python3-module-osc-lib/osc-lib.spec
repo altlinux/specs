@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 4.2.0
 Release: alt1
 
 Summary: OpenStackClient Library
@@ -21,8 +21,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-cliff >= 3.2.0
-BuildRequires: python3-module-keystoneauth1 >= 3.14.0
+BuildRequires: python3-module-cliff >= 4.9.0
+BuildRequires: python3-module-keystoneauth1 >= 5.10.0
 BuildRequires: python3-module-openstacksdk >= 0.15.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
@@ -71,6 +71,9 @@ This package contains documentation for %oname.
 # Remove bundled egg-info
 rm -rfv *.egg-info
 
+# Install some missed files
+echo "recursive-include osc_lib *" > MANIFEST.in
+
 %build
 %pyproject_build
 
@@ -111,6 +114,9 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 

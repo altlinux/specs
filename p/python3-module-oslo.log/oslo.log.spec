@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.2.0
+Version: 7.2.1
 Release: alt1
 
 Summary: OpenStack Oslo Log library
@@ -116,6 +116,9 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt1
+- Automatically updated to 7.2.1.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
 - Automatically updated to 7.2.0.
 

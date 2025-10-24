@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: OpenStack library for privilege separation
@@ -118,6 +118,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
+- Automatically updated to 3.8.0.
+
 * Sun Jun 29 2025 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 

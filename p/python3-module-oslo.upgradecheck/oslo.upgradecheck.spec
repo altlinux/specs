@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.0
-Release: alt1.1
+Version: 2.6.0
+Release: alt1
 
 Summary: OpenStack Common code for writing OpenStack upgrade checks
 
@@ -110,6 +110,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
