@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name lupa
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5
+Version: 2.6
 Release: alt1
 Summary: Python wrapper around Lua and LuaJIT
 License: MIT
@@ -14,6 +15,8 @@ Vcs: https://github.com/scoder/lupa
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -68,10 +71,13 @@ ENDUNITTEST
 
 %files
 %doc README.rst CHANGES.rst
-%python3_sitelibdir/lupa/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 24 2025 Stanislav Levin <slev@altlinux.org> 2.6-alt1
+- 2.5 -> 2.6.
+
 * Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 2.5-alt1
 - 2.4 -> 2.5.
 
