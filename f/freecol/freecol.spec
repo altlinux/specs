@@ -2,7 +2,7 @@
 
 Name: freecol
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: FreeCol is opensource Colonization clone.
 Url: http://freecol.org
 Vcs: https://github.com/FreeCol/freecol
@@ -34,6 +34,7 @@ The objective of the game is to create an independent nation.
 %setup
 %patch1 -p1
 #%patch2 -p1
+subst 's|1.1.0+git|%version|' src/net/sf/%name/FreeCol.java
 
 %build
 export CLASSPATH=$(build-classpath junit)
@@ -71,6 +72,9 @@ install -p %SOURCE2 %buildroot%_niconsdir/%name.xpm
 %_niconsdir/%name.xpm
 
 %changelog
+* Fri Oct 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt2
+- fix version number
+
 * Tue Jul 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0
 
