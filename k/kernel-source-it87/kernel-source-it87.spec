@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	it87
 %define module_version  1.0
-%define git 4bff981
+%define git 60d9def
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: IT86XXX/87XXX/Sis950 sensor kernel module driver
 License: GPL-2.0-or-later
@@ -77,6 +77,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_datadir/lm_sensors3/configs/Gigabyte_%module_name
 
 %changelog
+* Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt3.g60d9def
+- GIT 60d9def.
+
 * Sun Aug 10 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt2.g4bff981
 - Add B550 AORUS ELITE V2.
 - Rename module to gb-i87 to coexists with existing in-kernel module.

@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt11.g%{git}
+Release: alt12.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Proprietary
@@ -69,6 +69,10 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt12.g6adc981
+- Added fix for kernels 6.17+
+  (https://bugs.launchpad.net/ubuntu/+source/broadcom-sta/+bug/2120508).
+
 * Mon Jun 30 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt11.g6adc981
 - Apply patches from debian for 6.15+ compatibility:
   + 38-build-don-t-use-deprecated-EXTRA_-FLAGS.patch
