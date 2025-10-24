@@ -1,6 +1,6 @@
 Name: altemu-overlayfs
 Version: 0.2
-Release: alt3
+Release: alt4
 
 Summary: Merging several dirs with ROMS files into one dir
 
@@ -43,11 +43,14 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/95-%name.preset
 
 %changelog
+* Fri Oct 24 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt4
+- Add missing parameter for chown
+
 * Tue Oct 21 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt3
 - Fix filesystem check
 
 * Wed Oct 15 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt2
-- Fix order of activating servic
+- Fix order of activating service
 
 * Tue Oct 14 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
 - Change order of activating service
