@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Wikipedia reader for the GNOME Desktop
@@ -22,6 +22,7 @@ Patch0: wike-3.0.1-alt-data_dynamic_default_language.patch
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: dconf
 Requires: typelib(Adw) = 1 typelib(WebKit) = 6.0
 
@@ -63,6 +64,9 @@ articles.
 %doc README.*
 
 %changelog
+* Fri Oct 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt1
+- 3.1.2
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
 - 3.1.1
 

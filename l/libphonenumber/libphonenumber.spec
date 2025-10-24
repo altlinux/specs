@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.16
+Version: 9.0.17
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -84,6 +84,9 @@ sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Oct 24 2025 Yuri N. Sedunov <aris@altlinux.org> 9.0.17-alt1
+- 9.0.17
+
 * Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 9.0.16-alt1
 - 9.0.16
 
