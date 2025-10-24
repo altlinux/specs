@@ -1,24 +1,31 @@
 Name: python3-module-hatasmota
-Version: 0.9.2
-Release: alt1.1
+Version: 0.10.1
+Release: alt1
 
 Summary: Python library to interface with Tasmota devices
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/hatasmota/
+Url: https://pypi.org/project/hatasmota
+VCS: https://github.com/emontnemery/hatasmota
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -28,9 +35,12 @@ BuildRequires: python3(wheel)
 
 %files
 %python3_sitelibdir/hatasmota
-%python3_sitelibdir/%{pyproject_distinfo hatasmota}/
+%python3_sitelibdir/hatasmota-%version.dist-info
 
 %changelog
+* Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.1-alt1
+- 0.10.1 released
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
