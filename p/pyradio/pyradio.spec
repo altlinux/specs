@@ -1,8 +1,8 @@
 %define pypi_name pyradio
 
 Name: %pypi_name
-Version: 0.9.3.11.19
-Release: alt3
+Version: 0.9.3.11.20
+Release: alt1
 
 Summary: Curses based internet radio player
 
@@ -18,10 +18,8 @@ Source1: %pypi_name.desktop
 
 Patch: radio-0.9.3.11.16-alt-fixes.patch
 Patch1: main-0.9.3.11.16-alt-fixes.patch
-Patch2: win-0.9.3.11.16-alt-linux.patch
+Patch2: win-0.9.3.11.20-alt-linux.patch
 Patch3: config-0.9.3.11.16-alt-fixes.patch
-#https://github.com/coderholic/pyradio/issues/307
-Patch4: common-0.9.3.19-fix.patch
 
 Requires: python3-module-psutil python3-module-dns mpv 
 
@@ -60,6 +58,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.20-alt1
+- 0.9.3.11.19 -> 0.9.3.11.20
+
 * Fri Oct 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.19-alt3
 - fix: adding some stations to favorites (thx s-n-g)
 
