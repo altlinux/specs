@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: Installer configuration (Virtualization ONE)
 License: GPLv2
@@ -77,6 +77,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Oct 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0.0-alt0.3
+- Fix last step (ALT #55975).
+
 * Wed Jul 09 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.2
 - Add requires to systemd-resolved symlink installer feature,
   so now /etc/resolv.conf will be managed by systemd-resolved

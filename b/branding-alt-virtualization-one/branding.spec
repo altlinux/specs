@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.1
+Release: alt0.2
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -42,7 +42,8 @@ License: GPLv2+
 %define variant ONE Edition
 %define variant_id one
 %define distro_name %component_name %variant %version%status_en
-%define distro_name_ru Альт Виртуализации редакция ONE %version%status
+%define distro_name_ru Альт Виртуализация редакция ONE %version%status
+%define distro_logo basealt
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -214,7 +215,7 @@ cp /usr/share/distro-licenses/ALT_Product_License/license.{all,ru}.html.in notes
 autoconf
 THEME=%theme NAME='%component_name' VARIANT='%variant' VARIANT_ID='%variant_id' BRAND_FNAME='%brand' \
 BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' \
-PRODUCT_NAME='%distro_name' CODENAME='%codename' BRANCH='%altbranch' ./configure
+PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -290,5 +291,8 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Oct 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.2
+- Fix LOGO in /etc/os-release.
+
 * Tue Jun 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.1
 - Version 11.0 based on server-v.
