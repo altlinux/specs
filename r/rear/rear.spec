@@ -9,7 +9,7 @@
 
 Name: rear
 Version: 2.9
-Release: alt2
+Release: alt3
 
 Summary: Relax-and-Recover is a Linux disaster recovery and system migration tool
 License: GPL-2.0-or-later AND GPL-3.0-only
@@ -18,13 +18,11 @@ URL: http://relax-and-recover.org/
 
 Vcs: https://github.com/rear/rear.git
 Source: %name-%version.tar
-
-BuildArch: noarch
+Patch0: rear-alt-add-kernel-modules.patch
 
 BuildRequires: ronn
 
 %filter_from_requires /^\/.OPAL_PBA_SETTINGS\.sh/d
-%filter_from_requires /^\/bin\/sshd/d
 %filter_from_requires /^\/etc\/scripts\/dhcp-setup-functions\.sh/d
 %filter_from_requires /^\/etc\/scripts\/system-setup-functions\.sh/d
 
@@ -77,18 +75,22 @@ removes any excuse for not having a disaster recovery solution implemented.
 
 %prep
 %setup
-sed -i -e 's!/usr/share/rear/!/usr/share/doc/rear/!g' `grep -rl /usr/share/rear/ [A-Za-z]*`
+%autopatch -p1
+sed -i -e 's!/usr/share/rear/!/usr/share/doc/rear/!g' `grep -rl /usr/share/rear/ [A-Za-z]* | grep -v rear.8`
+sed -i -e 's!etc/ssh!etc/openssh!g' `grep -rl /etc/ssh [A-Za-z]*`
+sed -i -e 's!/etc/s\[s\]h!/etc/opens[s]h!g' `grep -rl '/etc/s\[s\]h' [A-Za-z]*`
+sed -i -e 's!/bin/sshd!/usr/sbin/sshd!' `grep -rl /bin/sshd [A-Za-z]*`
+sed -i -e 's! /sbin/sshd! /usr/sbin/sshd!' `grep -rl -w /sbin/sshd [A-Za-z]*`
 echo -e "OS_VENDOR=ALT\nOS_VERSION=%altbranch" >etc/rear/os.conf
 
 %build
 TZ=UTC %make_build doc
 
 %install
-%make_install install DESTDIR="%buildroot" sbindir="%_sbindir" datadir="%_datadir/doc" OFFICIAL=1
+%make_install install DESTDIR="%buildroot" sbindir="%_sbindir" datadir="%_datadir/doc" mandir="%_datadir/man" OFFICIAL=1
 chmod a+x %buildroot%_datadir/doc/%name/lib/*.sh
 rm -r %buildroot%_datadir/doc/%name/skel/SESAM
 rm -r %buildroot%_datadir/doc/%name/restore/VEEAM
-mv %buildroot%_datadir/doc/man %buildroot%_datadir
 
 %check
 %make validate OFFICIAL=1
@@ -102,6 +104,11 @@ mv %buildroot%_datadir/doc/man %buildroot%_datadir
 %_man8dir/%name.8*
 
 %changelog
+* Wed Oct 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.9-alt3
+- fix path to ssh config files and sshd (Closes: #56564)
+- not build as noarch due to Requires: (Closes: #56456)
+- add support for ALT kernel modules (Closes: #56579) (tnx glinkinvd@)
+
 * Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.9-alt2
 - change datadir to /usr/share/doc/rear to fit systemd units path test (Closes: #56457)
 - add R: syslinux-extlinux (Closes: #56456)
