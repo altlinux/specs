@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name casilda
 %define namespace Casilda
-%define ver_major 0.9
+%define ver_major 1.0
 %define api_ver_major 1
 %define api_ver 1.0
 %define sover 0
@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Wayland compositor widget for GTK4
@@ -97,6 +97,7 @@ Requires: %name = %EVR
 Requires: gtk4-demo
 Requires: /usr/bin/gjs typelib(%namespace) = %api_ver
 Requires: python3-module-pygobject3
+Requires: lib%_name-gir = %EVR
 
 %add_python3_path %_libexecdir/%_name
 
@@ -153,6 +154,9 @@ install -pD -m755  %__sourcedir/examples/*.{py,js} \
 %endif
 
 %changelog
+* Sat Oct 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - first build for sisyphus (0.9.2-10-gf26d2c6)
 
