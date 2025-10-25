@@ -5,7 +5,7 @@ Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation-batocera
 Epoch: 1
 Version: 39
-Release: alt12.gitc3d5c67
+Release: alt13.gitc3d5c67
 License: MIT
 Group: Emulators
 Url: https://github.com/Maks1mS/batocera-emulationstation
@@ -125,6 +125,10 @@ rm -rf %{buildroot}%{_includedir}
 %_libexecdir/libid3v2.a
 
 %changelog
+* Sun Oct 26 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt13.gitc3d5c67
+- Add quotes for every variabels
+- Change wrong variable for themes path
+
 * Fri Oct 24 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt12.gitc3d5c67
 - Fix definitions of variable in run script
 
