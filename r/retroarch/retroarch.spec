@@ -1,6 +1,6 @@
 Name:           retroarch
 Version:        1.21.0
-Release:        alt3
+Release:        alt4
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -170,6 +170,9 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Fri Oct 24 2025 Artyom Bystrov <arbars@altlinux.org> 1.21.0-alt4
+- Update config #2
+
 * Thu Oct 23 2025 Artyom Bystrov <arbars@altlinux.org> 1.21.0-alt3
 - Update config
 
