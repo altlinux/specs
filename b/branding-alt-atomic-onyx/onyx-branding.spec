@@ -15,7 +15,7 @@
 %define docpage https://atomic.alt-gnome.ru/
 
 Name: branding-alt-atomic-onyx
-Version: 20250902
+Version: 20250925
 Release: alt1
 
 Group: Graphics
@@ -142,6 +142,9 @@ plymouth-set-default-theme bgrt
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Thu Sep 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250925-alt1
+- A more accurate ID was used in the release file.
+
 * Tue Sep 02 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250902-alt1
 - Fixed typo in VARIANT and VARIANT_ID.
 - Fixed version date (now it 2025 year).
