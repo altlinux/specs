@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Wikipedia reader for the GNOME Desktop
@@ -64,6 +64,9 @@ articles.
 %doc README.*
 
 %changelog
+* Sat Oct 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.3-alt1
+- 3.1.3
+
 * Fri Oct 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.2-alt1
 - 3.1.2
 
