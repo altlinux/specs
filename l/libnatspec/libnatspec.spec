@@ -1,5 +1,5 @@
 Name: libnatspec
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Library for national and language-specific issues
@@ -95,6 +95,11 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Mon May 12 2025 Vitaly Lipatov <lav@altlinux.ru> 0.3.5-alt1
+- update data generator code
+- configure.ac: fix AC_ARG_WITH using
+- update charset relation data (with gen_data.sh)
+
 * Fri May 09 2025 Kirill Izmestev <felixz@altlinux.org> 0.3.4-alt1
 - Add Ossetian locale support.
 
