@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define APP_ID org.gnome.design.AppIconPreview
 %def_enable check
 
 Name: app-icon-preview
-Version: 3.4.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Tool for designing applications icons
@@ -25,9 +26,9 @@ BuildRequires: pkgconfig(gtk4) >= 4.0.0
 BuildRequires: pkgconfig(libadwaita-1) >= 1.5.beta
 BuildRequires: pkgconfig(libxml-2.0)
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
-BuildRequires: %_bindir/glib-compile-schemas
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
+BuildRequires: libgio
 %endif
 
 %description
@@ -58,5 +59,10 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%{APP_ID}.metainfo.xml
 
 %changelog
+* Sat Oct 25 2025 Oleg Shchavelev <oleg@altlinux.org> 3.5.1-alt1
+- New version 3.5.1
+- Updated build dependencies for check
+- Enabled strict mode for unpackaged files
+
 * Fri Nov 08 2024 Oleg Shchavelev <oleg@altlinux.org> 3.4.0-alt1
 - Initial build
