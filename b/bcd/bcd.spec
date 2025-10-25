@@ -11,7 +11,7 @@
 
 Name: bcd
 Version: 1.1
-Release: alt2.%{?date0}git%{?shortcommit0}
+Release: alt3.%{?date0}git%{?shortcommit0}
 Summary: Bayesian Collaborative Denoiser for Monte-Carlo Rendering
 Group: Graphics
 # BSD: main program
@@ -38,6 +38,10 @@ Patch5: bcd-json.patch
 # TODO
 # BCD calls exit
 #https://github.com/superboubek/bcd/issues/13
+
+# Eigen 5.X.X requires C++14
+# https://gitlab.com/libeigen/eigen/-/releases/5.0.0
+Patch6: bcd-cxx14.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: make
@@ -119,6 +123,7 @@ export LDFLAGS="$(pkg-config --libs eigen3 OpenEXR)"
   -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
   %{?_with_cuda: \
    -DCUDA_TOOLKIT_ROOT_DIR=%prefix \
+   -DCUDA_NVCC_FLAGS="--std c++14" \
    -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF \
   } \
   %{!?_with_cuda:-DBCD_USE_CUDA=OFF}
@@ -149,6 +154,9 @@ cp -pr include/* %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Sat Oct 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt3.20180610gitd94c9fa
+- Use -std=c++14 for new eigen3 and cuda (to fix FTBFS).
+
 * Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt2.20180610gitd94c9fa
 - BR: simplify for new cuda.
 
