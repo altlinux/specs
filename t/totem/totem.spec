@@ -35,7 +35,7 @@
 
 Name: totem
 Version: %ver_major.2
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -49,7 +49,9 @@ Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
-Patch10: totem-43.2-alt-32-bit-format.patch
+Patch10: %name-43.2-alt-32-bit-format.patch
+# https://src.fedoraproject.org/rpms/totem/raw/rawhide/f/girepository-2.0.patch
+Patch11: %name-43.2-fc-girepository-2.0.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -144,6 +146,7 @@ GObject introspection devel data for the Totem library
 Summary: default plugins for Totem
 Group: Video
 Requires: %name = %EVR
+%{?_enable_python:Requires: libpeas-python3-loader}
 
 %description plugins
 A default plugins for Totem:
@@ -228,6 +231,7 @@ used by other applications like filemanagers.
 %ifarch %ix86 armh
 %patch10 -b .format
 %endif
+%patch11 -p1 -b .gir-2.0
 
 subst "s|'pylint'|'pylint.py3'|" meson.build
 
@@ -333,6 +337,10 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Sat Oct 25 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt3
+- updated to 43.2-6-g75e51e3d9
+- fixed build with girepository-2.0
+
 * Thu Aug 07 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt2
 - updated to 43.2-3-g65cffb553
 - removed libpeas-python3-loader redundant dependency
