@@ -1,6 +1,6 @@
 Name: rdesktop
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: A RDP client for accessing Windows Remote Desktop Services
 
@@ -11,6 +11,8 @@ Url: http://www.rdesktop.org/
 # Source0-url: https://github.com/rdesktop/rdesktop/archive/v%version.tar.gz
 Source0: %name-%version.tar
 Patch0: rdesktop-1.8.3-deb-alt-openssl1.1-support.patch
+Patch1: configure-1.9.0-build.patch
+Patch2: ssl-1.9.0-build.patch
 
 BuildRequires: libgnutls-devel libkrb5-devel libnettle-devel libpcsclite-devel libtasn1-devel
 BuildRequires: libao-devel libsamplerate-devel 
@@ -26,6 +28,8 @@ Vista, 2008, 7, and 2008 R2.
 %prep
 %setup
 #patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -49,6 +53,11 @@ sed -i 's/slash 0x56 altgr/#slash 0x56 altgr/' %buildroot%_datadir/%name/keymaps
 %_man1dir/*
 
 %changelog
+* Sat Oct 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.9.0-alt2
+- FTBFS: fix: error:
+	+ passing argument 1 of '__gmpz_sizeinbase' from incompatible pointer type
+	+ use correct modulus and exponent in rdssl_rkey_get_exp_mod (ALT #37370)
+
 * Sun Oct 13 2019 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 - use GnuTLS and nettle instead of OpenSSL
