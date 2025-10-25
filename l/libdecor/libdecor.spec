@@ -16,7 +16,7 @@
 #
 
 Name: libdecor
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Wayland client side decoration library
@@ -75,6 +75,9 @@ Libraries and header files for developing applications that target libdecor.
 %_libdir/pkgconfig/libdecor-0.pc
 
 %changelog
+* Sat Oct 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.4-alt1
+- Automatically updated to 0.2.4.
+
 * Wed May 14 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt1
 - Automatically updated to 0.2.3.
 
