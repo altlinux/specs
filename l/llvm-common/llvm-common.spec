@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 19.1
+%global _llvm_version 20.1
 
 Name: llvm-common
-Version: 19.1.0
+Version: 20.1.0
 Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
@@ -519,6 +519,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Wed Oct 15 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.0-alt1
+- Bump llvm_version to 20.1.
+
 * Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.0-alt1
 - Bump llvm_version to 19.1.
 
