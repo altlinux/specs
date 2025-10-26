@@ -1,5 +1,5 @@
 Name: kernel-image-6.18
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.17
 %define kernel_base_version	6.18
 %define kernel_sublevel	.0
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Oct 26 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc3
+- Update to v6.18-rc3 (2025-10-26).
+
 * Mon Oct 20 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc2
 - Update to v6.18-rc2 (2025-10-19).
 - config: Enable PCI_P2PDMA, HSA_AMD_P2P, DMABUF_MOVE_NOTIFY.
