@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 11.0.6
+Version: 11.0.7
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -38,6 +38,9 @@ and privacy.
 %prep
 %setup
 %patch100 -p1
+
+# https://codeberg.org/forgejo/forgejo/src/branch/forgejo/release-notes-published/11.0.7.md#go-1-25-upgrade
+sed -i "s|^go 1.25.0|go 1.24|" go.mod
 
 sed -i \
     -e "s|^APP_NAME = ; Gitea: Git with a cup of tea|APP_NAME = Forgejo: Beyond coding. We Forge.|" \
@@ -113,6 +116,10 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sun Oct 26 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.0.7-alt1
+- 11.0.7.
+- Set minimum required Go version to 1.24.
+
 * Mon Oct 06 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.0.6-alt1
 - 11.0.6.
 
