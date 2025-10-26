@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    mylibrary
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: Home librarian
@@ -97,6 +97,9 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/doc/MLPluginIfc/*
 
 %changelog
+* Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 4.2.2-alt1
+- New version 4.2.2.
+
 * Sat Oct 18 2025 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
 - New version 4.2.1.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keymapper
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: A cross-platform context-aware key remapper
@@ -62,6 +62,9 @@ A cross-platform context-aware key remapper. It allows to:
 %_datadir/kwin/scripts/keymapper/*
 
 %changelog
+* Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 5.1.0-alt1
 - New version 5.1.0.
 
