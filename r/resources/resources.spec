@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.8
+%define ver_major 1.9
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
@@ -27,8 +27,8 @@ Source1: %name-%version-cargo.tar
 
 ExcludeArch: ppc64le
 
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 
 Requires: dconf /usr/sbin/dmidecode polkit
 
@@ -90,6 +90,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

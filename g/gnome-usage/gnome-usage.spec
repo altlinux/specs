@@ -2,12 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
-%define ver_major 46
+%define ver_major 48
 
 %def_enable check
 
 Name: gnome-usage
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME system information viewer
@@ -25,10 +25,10 @@ Source: %name-%version.tar
 
 %define gtk_ver 4.14
 %define gtop_ver 2.34.0
-%define accountsservice_ver 0.6.40
-%define adw_ver 1.5
+%define adw_ver 1.6
+%define nm_ver 1.44
 
-Requires: accountsservice >= %accountsservice_ver
+Requires: localsearch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
@@ -36,7 +36,9 @@ BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgtop-devel >= %gtop_ver
 BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: pkgconfig(tracker-sparql-3.0)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(tinysparql-3.0)
+BuildRequires: pkgconfig(libnm) >= %nm_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -63,10 +65,13 @@ disk space.
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS
 
 %changelog
+* Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Wed Mar 05 2025 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
