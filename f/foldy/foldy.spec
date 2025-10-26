@@ -7,7 +7,7 @@
 %define gir_name Foldy
 %define glib_min_version 2.76
 %define api_version 5
-%define minor_version 0
+%define minor_version 1
 
 Name: foldy
 Version: %api_version.%minor_version
@@ -142,6 +142,9 @@ export AS_VALIDATE_NONET="true"
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Sat Oct 25 2025 Vladimir Romanov <rirusha@altlinux.org> 5.1-alt1
+- New version: 5.1.
+
 * Wed Sep 03 2025 Vladimir Vaskov <rirusha@altlinux.org> 5.0-alt1
 - New version: 5.0.
 - Fixed empty window on folder deletion (closes: 55479).
