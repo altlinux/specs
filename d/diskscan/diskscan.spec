@@ -23,8 +23,8 @@ BuildRequires: libtinfo-devel
 
 
 Name:           diskscan
-Version:        0.20
-Release:        alt1_3.11.1
+Version:        0.21
+Release:        alt1
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
@@ -68,6 +68,9 @@ subst "s|VERSION 3.0.2|VERSION 3.5|" CMakeLists.txt
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sun Oct 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.21-alt1
+- 0.20 -> 0.21
+
 * Mon Jun 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.20-alt1_3.11.1
 - NMU: fixed FTBFS
 
