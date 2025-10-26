@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: far2l
-Version: 2.6.5
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Linux port of FAR v2
 
@@ -14,8 +14,6 @@ VCS: https://github.com/elfmz/far2l.git
 
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
-# https://github.com/elfmz/far2l/issues/2744
-Patch: fix-input-non-ASCII-with-wxGTK3.2.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -35,6 +33,7 @@ BuildRequires: libxerces-c-devel
 BuildRequires: libXi-devel
 BuildRequires: libX11-devel
 BuildRequires: libxml2-devel
+BuildRequires: desktop-file-utils
 
 # skip optional requires from /usr/share/far2l scripts
 %filter_from_requires /^sudo/d
@@ -102,10 +101,18 @@ desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/far2l.svg
 %_iconsdir/far2ledit.svg
+%_iconsdir/far2l-wx.svg
+%_iconsdir/far2ledit-wx.svg
 %_mandir/ru/man1/far2l.*
 %_man1dir/far2l.*
 
 %changelog
+* Sun Oct 26 2025 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
+- new version (2.7.0) with rpmgs script
+
+* Thu May 15 2025 Anton Midyukov <antohami@altlinux.org> 2.6.5-alt3
+- add build dependency on desktop-file-utils
+
 * Sun May 11 2025 Anton Midyukov <antohami@altlinux.org> 2.6.5-alt2
 - fix input non-ASCII characters (Closes: 54201)
 
