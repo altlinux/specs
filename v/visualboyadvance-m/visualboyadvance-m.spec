@@ -1,7 +1,7 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Summary: Game Boy Advance Emulator
@@ -108,7 +108,7 @@ cp %buildroot/usr/etc/%{shortname}.cfg %buildroot%_sysconfdir
 %_datadir/icons/hicolor/96x96/apps/%name.png
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 %_datadir/locale/cs/LC_MESSAGES/wxvbam.mo
-%_datadir/locale/de/LC_MESSAGES/wxvbam.mo
+#_datadir/locale/de/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/en_US/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/es/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/es_419/LC_MESSAGES/wxvbam.mo
@@ -131,6 +131,9 @@ cp %buildroot/usr/etc/%{shortname}.cfg %buildroot%_sysconfdir
 
 
 %changelog
+* Sun Oct 26 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.3-alt1
+- 2.2.3
+
 * Mon Aug 04 2025 Ilya Mashkin <oddity@altlinux.ru> 2.2.2-alt1
 - 2.2.2
 
