@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -15,6 +15,7 @@ Vcs: https://github.com/containers/bootc.git
 ExclusiveArch: x86_64 ppc64le aarch64
 
 Source: %name-%version.tar
+Source10: vendor.tar
 Patch: %name-%version-%release.patch
 
 Requires: composefs
@@ -25,6 +26,7 @@ Requires: bootupd
 
 BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
+BuildRequires: go-md2man
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(ostree-1) >= 2025.3
@@ -44,11 +46,11 @@ Requires: podman
 This package provides a utility to simplify reinstalling the current system to a given bootc image.
 
 %prep
-%setup
+%setup -a10
 %autopatch -p1
 
 %build
-%make_compile
+%make_build
 
 %install
 %makeinstall_std
@@ -61,28 +63,36 @@ rm -fv -- %buildroot/%_unitdir/bootc-publish-rhsm-facts.service
 %make test-bin-archive
 
 %post
-# Check if system is immutable and create link removed at %install
-if [ -d "/sysroot" ]; then
-    ln -s -- /sysroot/ostree/bootc/storage %_prefix/lib/%name/storage
+# Create link to ostree bootc storage removed at %install
+if [ -e /sysroot/ostree/bootc/storage ] && [ ! -L "%_prefix/lib/%name/storage" ]; then
+    ln -s -- /sysroot/ostree/bootc/storage "%_prefix/lib/%name/storage"
 fi
 
 %preun
 # Remove file created in %post
-rm -fv -- %_prefix/lib/%name/storage
+if [ -e "%_prefix/lib/%name/storage" ]; then
+    rm -fv -- "%_prefix/lib/%name/storage"
+fi
 
 %files
 %_bindir/%name
 %_prefix/lib/%name/
 %_gen_dir/bootc-systemd-generator/
 %_unitdir/bootc-*
-%_unitdir/multi-user.target.wants/bootc-*
+%_unitdir/composefs-finalize-staged.service
 %_docdir/%name/
+%_man5dir/bootc*
+%_man8dir/bootc*
+%_man8dir/system-reinstall-bootc*
 %doc README.md
 
 %files -n system-reinstall-bootc
 %_bindir/system-reinstall-bootc
 
 %changelog
+* Sat Oct 11 2025 Vladimir Romanov <rirusha@altlinux.org> 1.9.0-alt1
+- New version: 1.9.0.
+
 * Tue Sep 09 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.8.0-alt1
 - New version: 1.8.0.
 - Created subpackage with utility for system reinstalling with bootc image.
