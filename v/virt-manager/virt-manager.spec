@@ -3,7 +3,7 @@
 %define default_hvs "qemu,lxc"
 
 Name: virt-manager
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -13,7 +13,7 @@ Url: https://virt-manager.org/
 BuildArch: noarch
 AutoReqProv: nopython
 
-# https://github.com/virt-manager/virt-manager
+Vcs: https://github.com/virt-manager/virt-manager.git
 Source: %name-%version.tar
 
 Requires: virt-manager-common = %EVR
@@ -131,6 +131,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Sun Oct 26 2025 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
+- New version 5.1.0.
+
 * Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
 - New version 5.0.0.
 
