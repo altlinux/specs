@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.4
 
 Name: wireshark
-Version: 4.4.9
+Version: 4.4.10
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -17,7 +17,7 @@ Group: Monitoring
 License: GPLv2
 Url: https://www.wireshark.org/
 VCS: https://gitlab.com/wireshark/wireshark.git
-Source: http://www.wireshark.org/download/src/%name-%version.tar
+Source: %name-%version.tar
 Source2: %name.control
 Source3: %name.watch
 Patch0: %name-%version-%release.patch
@@ -229,6 +229,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Thu Oct 23 2025 Anton Farygin <rider@altlinux.com> 4.4.10-alt1
+- 4.4.10 (Fixes: CVE-2025-11626)
+
 * Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 4.4.9-alt1
 - 4.4.9 (Fixes: CVE-2025-9817)
 
