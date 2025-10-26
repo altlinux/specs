@@ -3,7 +3,7 @@
 %def_with check
 
 Name: atuin
-Version: 18.8.0
+Version: 18.10.0
 Release: alt1
 
 Summary: Magical shell history
@@ -19,6 +19,8 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+
+Requires: bash-preexec
 
 %if_with check
 BuildRequires: postgresql15
@@ -122,6 +124,10 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Sun Oct 26 2025 Boris Yumankulov <boria138@altlinux.org> 18.10.0-alt1
+- new version 18.10.0
+- add requires to bash-preexec (ALT bug: 56351)
+
 * Tue Sep 09 2025 Boris Yumankulov <boria138@altlinux.org> 18.8.0-alt1
 - new version 18.8.0
 
