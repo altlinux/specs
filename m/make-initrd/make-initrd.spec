@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.55.1
-Release: alt5
+Version: 2.55.2
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,9 +71,6 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch: 0001-feature-runtime-Check-and-create-the-necessary-devic.patch
-Patch1: 0002-guess-device-tree-fix-typo-in-the-variable-name-moda.patch
-Patch2: 0003-feature-modules-virtio-Fix-symbol-filter.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -406,6 +403,12 @@ fi
 %endif
 
 %changelog
+* Thu Oct 16 2025 Anton Midyukov <antohami@altlinux.org> 2.55.2-alt1
+- Feature add-modules:
+  + Make crc32-generic optional.
+  + Implicit dependencies should not be mandatory.
+- Feature pipeline: Allow to mount latest version of image.
+
 * Fri Sep 26 2025 Anton Midyukov <antohami@altlinux.org> 2.55.1-alt5
 - add upstream patch:
   + feature/modules-virtio: Fix symbol filter (Closes: 56149)
