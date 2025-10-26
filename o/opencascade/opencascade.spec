@@ -2,7 +2,7 @@
 %define soname 7.9
 
 Name: opencascade
-Version: 7.9.1
+Version: 7.9.2
 Release: alt1
 
 Summary: SDK for development applications dealing with 3D CAD data
@@ -1037,6 +1037,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/opencascade
 
 %changelog
+* Sun Oct 26 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.2-alt1
+- New version.
+
 * Thu Jul 24 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.1-alt1
 - Update license tag for correct parsing exception.
 - Split libraries on related subpackages.
