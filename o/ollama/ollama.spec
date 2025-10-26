@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.11.11
+Version: 0.12.3
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -145,6 +145,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sun Oct 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.3-alt1
+- Update to v0.12.3 (2025-09-25).
+
 * Mon Sep 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.11.11-alt1
 - Update to v0.11.11 (2025-09-12).
 
