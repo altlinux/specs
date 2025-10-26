@@ -8,16 +8,16 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        2.0.0
-Release:        alt3
+Version:        2.3.2
+Release:        alt1
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
 License:        GPLv2+ and CC-BY and CC-BY-SA and CC0
 URL:            http://cxong.github.io/cdogs-sdl/
 Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
-Patch0:         cdogs-sdl-0.5.8-cmake.patch
-Patch1:         cdogs-sdl-0.7.3-fcommon-fix.patch
+#Patch0:         cdogs-sdl-0.5.8-cmake.patch
+#Patch1:         cdogs-sdl-0.7.3-fcommon-fix.patch
 Patch2:			fix-build.patch
 BuildRequires:  gcc
 BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
@@ -40,8 +40,8 @@ like to thank Ronny for releasing the C-Dogs sources to the public.
 
 %prep
 %setup -q -n %{name}-%{version}%{?extra_version}
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 %patch2 -p1
 
 # We use the system enet
@@ -55,13 +55,16 @@ find graphics sounds -name "*.sh" -delete
 sed -i 's,-freg-struct-return,,' CMakeLists.txt
 %endif
 
-subst "s|VERSION 3.19|VERSION 3.5|" CMakeLists.txt
-subst "s|VERSION 3.0|VERSION 3.5|" src/tests/cbehave/CMakeLists.txt
+#fixed segmentation fault
+#https://github.com/cxong/cdogs-sdl/issues/888
+subst 's|Mix_CloseAudio();|//Mix_CloseAudio();|' src/cdogs/sounds.c
+subst 's|SoundReconfigure(s);|//SoundReconfigure(s);|' src/cdogs/sounds.c
 
 %build
 %{fedora_v2_cmake} \
 					-DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/\
-					-DUSE_SHARED_ENET=ON
+					-DUSE_SHARED_ENET=ON \
+					-DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
 %fedora_v2_cmake_build
 
@@ -77,18 +80,23 @@ desktop-file-validate \
 appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
 
-
 %files
 %doc doc/AUTHORS doc/CREDITS doc/original_readme.txt doc/README_DATA.md
 %doc --no-dereference doc/COPYING.BSD doc/COPYING.GPL doc/COPYING.MJSON.txt doc/COPYING.xgetopt.txt doc/COPYING.yajl.txt doc/LICENSE.nanopb.txt doc/license.rlutil.txt
 %{_bindir}/%{name}*
 %{_datadir}/%{name}
 %{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
+%{_datadir}/metainfo/io.github.cxong.%{name}.appdata.xml
 %{_datadir}/applications/io.github.cxong.%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/io.github.cxong.%{name}.png
 
 
 %changelog
+* Sun Oct 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.2-alt1
+- 2.0.0 -> 2.3.2
+- drop old patchs
+- fixed segmentation fault
+
 * Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.0.0-alt3
 - NMU: fixed FTBFS
 
