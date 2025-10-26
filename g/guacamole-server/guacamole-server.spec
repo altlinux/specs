@@ -1,17 +1,20 @@
 %define _unpackaged_files_terminate_build 1
+%define abiversion 25
+%define abiversion_terminal 2
+%define soname %abiversion.0.0
+%define soname_terminal %abiversion_terminal.0.0
 %define username guacd
 %def_with ffmpeg
-%ifarch %ix86 %arm
-%def_disable check
-%endif
 
 Name: guacamole-server
 Version: 1.6.0
-Release: alt1
+Release: alt2
+
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
-Url: http://guac-dev.org/
 Group: Networking/Remote access
+Url: https://guacamole.apache.org
+VCS: https://github.com/apache/guacamole-server.git
 
 Source0: %name-%version.tar
 Source1: %name.sysconfig
@@ -49,7 +52,7 @@ BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(vorbis)
-BuildRequires: pkgconfig(winpr2)
+BuildRequires: libwinpr3-devel
 # for test
 BuildRequires: CUnit-devel
 
@@ -78,22 +81,32 @@ This is virtual package with depends on:
 - libguac-client-rdp
 - libguac-client-vnc
 
-%package -n libguac
+%package -n libguac%abiversion
 Summary: The common library used by all C components of Guacamole
 Group: System/Libraries
 # monospace font for telnet, ssh, kubernetes
 Requires: fonts-ttf-liberation
+Obsoletes: libguac = 1.6.0
 
-%description -n libguac
+%description -n libguac%abiversion
 libguac is the core library for guacd (the Guacamole proxy) and any protocol
 support plugins for guacd. libguac provides efficient buffered I/O of text and
 base64 data, as well as somewhat abstracted functions for sending Guacamole
 instructions.
 
+%package -n libguac-terminal%abiversion_terminal
+Summary: Plugin for the Guacamole proxy which provides support for Terminal
+Group: System/Libraries
+Obsoletes: libguac = 1.6.0
+
+%description -n libguac-terminal%abiversion_terminal
+Is a protocol support plugin for the Guacamole proxy (guacd) which provides
+support for Terminal via the libterminal library.
+
 %package -n libguac-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-devel
 The libguac-devel package contains libraries and header files for
@@ -102,7 +115,7 @@ developing applications that use %name.
 %package -n libguac-client-kubernetes
 Summary: Kubernetes pods terminal support for guacd
 Group: System/Libraries
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-client-kubernetes
 libguac-client-kubernetes is a protocol support plugin for the Guacamole proxy
@@ -112,7 +125,7 @@ in Kubernetes pods.
 %package -n libguac-client-rdp
 Summary: RDP support for guacd
 Group: System/Libraries
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-client-rdp
 libguac-client-rdp is a protocol support plugin for the Guacamole proxy (guacd)
@@ -122,7 +135,7 @@ Windows Remote Deskop / Terminal Services, via the libfreerdp library.
 %package -n libguac-client-ssh
 Summary: SSH support for guacd
 Group: System/Libraries
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-client-ssh
 libguac-client-ssh is a protocol support plugin for the Guacamole proxy (guacd)
@@ -131,7 +144,7 @@ which provides support for SSH, the secure shell.
 %package -n libguac-client-vnc
 Summary: VNC support for guacd
 Group: System/Libraries
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-client-vnc
 libguac-client-vnc is a protocol support plugin for the Guacamole proxy (guacd)
@@ -141,7 +154,7 @@ libvncserver).
 %package -n libguac-client-telnet
 Summary: Telnet support for guacd
 Group: System/Libraries
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n libguac-client-telnet
 libguac-client-telnet is a protocol support plugin for the Guacamole proxy
@@ -150,7 +163,7 @@ libguac-client-telnet is a protocol support plugin for the Guacamole proxy
 %package -n guacd
 Summary: Proxy daemon for Guacamole
 Group: Networking/Remote access
-Requires: libguac = %EVR
+Requires: libguac%abiversion = %EVR
 
 %description -n guacd
 guacd is the Guacamole proxy daemon used by the Guacamole web application and
@@ -209,12 +222,17 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %preun_service guacd.service
 
 %files
+%nil
 
-%files -n libguac
+%files -n libguac%abiversion
 %doc LICENSE
 %doc README CONTRIBUTING
-%_libdir/libguac.so.*
-%_libdir/libguac-terminal.so.*
+%_libdir/libguac.so.%abiversion
+%_libdir/libguac.so.%soname
+
+%files -n libguac-terminal%abiversion_terminal
+%_libdir/libguac-terminal.so.%abiversion_terminal
+%_libdir/libguac-terminal.so.%soname_terminal
 
 %files -n libguac-devel
 %doc html
@@ -264,6 +282,10 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Sun Oct 26 2025 Constantin Sunzow <protvin@altlinux.org> 1.6.0-alt2
+- Split libguac with complience SharedLibsPolicy.
+- Fix FTBFS.
+
 * Tue Aug 05 2025 Constantin Sunzow <protvin@altlinux.org> 1.6.0-alt1
 - New version.
 
