@@ -2,7 +2,7 @@
 
 Name: ntp
 Version: 4.2.8p18
-Release: alt1
+Release: alt2
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -178,6 +178,9 @@ find -type f -print0 |
 
 # https://lists.altlinux.org/pipermail/devel/2024-November/218948.html
 sed -i "/test-realpath/d" tests/libntp/Makefile.am
+
+# https://bugzilla.altlinux.org/56509
+sed -i "/test-\(crypto\|packetHandling\|packetProcessing\)/d" sntp/tests/Makefile.am
 
 %build
 %add_optflags -D_GNU_SOURCE
@@ -358,6 +361,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Sun Oct 26 2025 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p18-alt2
+- disabled sntp's tests crypto,packetHandling,packetProcessing (ALT #56509)
+
 * Sun Nov 17 2024 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p18-alt1
 - 4.2.8p18
 - added build patch for gcc 14: https://bugs.ntp.org/show_bug.cgi?id=3926
