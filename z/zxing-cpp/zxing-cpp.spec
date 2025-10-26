@@ -3,7 +3,7 @@
 
 Name:     zxing-cpp
 Version:  2.3.0
-Release:  alt4
+Release:  alt5
 
 Summary:  C++ port of ZXing
 License:  Apache-2.0
@@ -65,8 +65,8 @@ Python3 module for %name.
 sed -i '/{PointI{/s/, {/, PointI{/g;/{PointF{/s/, {/, PointF{/g' \
 	core/src/ConcentricFinder.{h,cpp} \
 	core/src/{aztec/AZ,qrcode/QR,datamatrix/DM}Detector.cpp
-sed -E -i '/std::pair\(tl/s/\{(..), \{/std::pair{\1, PointI{/g' core/src/qrcode/QRDetector.cpp
-sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/ZXFilesystem.h
+sed -E -i '/std::pair\(t[rl],/s/\{(..), \{/std::pair{\1, PointI{/g' core/src/qrcode/QRDetector.cpp
+sed -i "s/ifndef __cpp_aggregate_paren_init/if 1/" core/src/WriteBarcode.cpp
 %endif
 
 # Removing broken links to files and adding a working submodule
@@ -106,6 +106,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %nameP}/
 
 %changelog
+* Sun Oct 26 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.0-alt5
+- Fixed build for Elbrus.
+
 * Mon Sep 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt4
 - NMU: python3-module-%name added (ALT #55702)
 
