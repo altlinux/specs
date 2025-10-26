@@ -2,13 +2,13 @@
 
 %define _name color-code
 %define __name ColorCode
-%define ver_major 0.1
+%define ver_major 0.2
 %define rdn_name com.oyajun.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Resistor Color Code Calculator
@@ -41,7 +41,7 @@ BuildRequires: pkgconfig(libadwaita-1)
 color code.
 
 %prep
-%setup %_name-%version
+%setup -n %_name-%version
 
 %build
 %meson
@@ -64,6 +64,9 @@ color code.
 %doc README*
 
 %changelog
+* Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - first build for Sisyphus
 

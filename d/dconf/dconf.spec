@@ -1,7 +1,6 @@
 %def_disable snapshot
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 0.40
+%define ver_major 0.49
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
@@ -9,28 +8,33 @@
 %def_enable vala
 %def_enable check
 
+%define gvdb_ver 4758f6fb
+
 Name: dconf
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: A simple configuration system
 Group: System/Servers
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/dconf
 
+Vcs: https://gitlab.gnome.org/GNOME/dconf.git
+
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
 Source: https://download.gnome.org/sources/dconf/%ver_major/%name-%version.tar.xz
 %endif
-Source1: update-dconf-database.filetrigger
+%{?_enable_snapshot:Source1: gvdb-%gvdb_ver.tar}
+Source2: update-dconf-database.filetrigger
 
 Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %EVR dbus
 Requires: %name-profile
 
-BuildRequires(pre): rpm-macros-meson pkgconfig(systemd)
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson libgio-devel >= 2.44.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.18.0}
@@ -111,14 +115,16 @@ This package provides Vala language bindings for the dconf library.
 %define _libexecdir %_prefix/libexec
 
 %prep
-%setup
+%setup %{?_enable_snapshot:-a1
+    mv gvdb-%gvdb_ver subprojects/gvdb}
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	-Dman=true \
-	%{?_enable_vala:-Dvapi=true} \
-	%{?_disable_bash_completion:-Dbash_completion=false}
+    -Dsystemduserunitdir=%_userunitdir \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    -Dman=true \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool bash_completion bash_completion}
 %meson_build
 
 %install
@@ -184,6 +190,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
+- 0.49.0
+
 * Thu Jul 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt3
 - removed /etc/dconf/profile/user provided by new dconf-profile package (ALT #47036)
 
