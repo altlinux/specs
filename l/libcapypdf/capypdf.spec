@@ -3,10 +3,12 @@
 %define _name capypdf
 %define api_ver 0
 
+%def_enable devtools
+# Rendered image is different
 %def_disable check
 
 Name: lib%_name
-Version: 0.12.0
+Version: 0.18.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -14,12 +16,15 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/jpakkane/capypdf
 
+Vcs: https://github.com/jpakkane/capypdf.git
+
 %if_disabled snapshot
 Source: %url/releases/download/%version/%_name-%version.tar.xz
 %else
-Vcs: https://github.com/jpakkane/capypdf.git
 Source: %_name-%version.tar
 %endif
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson gcc-c++
@@ -29,9 +34,9 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(libtiff-4)
-BuildRequires: pkgconfig(harfbuzz)
-BuildRequires: pkgconfig(gtk4)
-%{?_enable_check:BuildRequires: python3(PIL)
+%{?_enable_devtools:BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(gtk4)}
+%{?_enable_check:BuildRequires: python3(PIL) /usr/bin/clang-format
 BuildRequires:fonts-ttf-google-noto-serif fonts-ttf-google-noto-sans
 BuildRequires: ghostscript-common}
 
@@ -88,6 +93,9 @@ sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.04.
 
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
