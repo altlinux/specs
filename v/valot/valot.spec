@@ -3,9 +3,9 @@
 
 Name: valot
 Version: 0.8.4
-Release: alt1
+Release: alt2
 
-Summary: Internet Relay Chat client for GNOME
+Summary: A modern time tracking application built with GTK4 and Adwaita.
 License: MIT
 Group: Office
 Url: https://gitlab.com/Valo27/valot
@@ -51,5 +51,8 @@ It offers a modern interface that follows GNOME Human Interface Guidelines.
 %doc README*
 
 %changelog
+* Mon Oct 27 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.8.4-alt2
+- Changed summary to comply with upstream.
+
 * Thu Oct 16 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.8.4-alt1
 - Initial commit.
