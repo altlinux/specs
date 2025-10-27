@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: ANSI color formatting for output in terminal
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,6 +51,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.0 -> 3.2.0.
+
 * Wed May 21 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.1 -> 3.1.0.
 
