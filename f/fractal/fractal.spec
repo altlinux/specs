@@ -1,11 +1,11 @@
 Name: fractal
-Version: 10.1
+Version: 12.1
 Release: alt1
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPLv3
 Group: Networking/Instant messaging
 Url: https://gitlab.gnome.org/GNOME/fractal/
-Source: https://gitlab.gnome.org/World/fractal/-/archive/10.1/fractal-10.1.tar.gz
+Source: https://gitlab.gnome.org/World/fractal/-/archive/%version/fractal-%version.tar.gz
 Source1: vendor.tar
 ExcludeArch: i586 armh
 
@@ -16,6 +16,8 @@ BuildRequires: clang gst-plugins-bad1.0-devel grass-sass libadwaita-devel libapp
 
 BuildRequires: /proc
 BuildRequires: cmake xdg-desktop-portal-devel clang-devel
+BuildRequires: pkgconfig(gtk4) >= 4.16 pkgconfig(libadwaita-1) >= 1.7 pkgconfig(gstreamer-1.0) >= 1.20
+BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0 pkgconfig(lcms2) >= 2.12.0
 
 Requires: glycin-loaders gst-plugin-gtk4
 
@@ -34,17 +36,25 @@ Highlights:
 * Log into multiple accounts at once (with Single-Sign On support)
 
 %prep
-%setup
-tar xf %SOURCE1
+%setup -a1
 
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=a9ce1c6e5822b8eb8411c5bc257049d9a9d15884"]
+git = "https://github.com/matrix-org/matrix-rust-sdk.git"
+rev = "a9ce1c6e5822b8eb8411c5bc257049d9a9d15884"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/ruma/ruma.git?rev=a2fe858133ba932b4bda730dc7472c9c985739a0"]
+git = "https://github.com/ruma/ruma.git"
+rev = "a2fe858133ba932b4bda730dc7472c9c985739a0"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "vendor"
-
 EOF
 
 %build
@@ -71,6 +81,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Oct 19 2025 Ildar Mulyukov <ildar@altlinux.ru> 12.1-alt1
+- new version (ALT #54639)
+
 * Sat Mar 15 2025 Ildar Mulyukov <ildar@altlinux.ru> 10.1-alt1
 - new version
 
