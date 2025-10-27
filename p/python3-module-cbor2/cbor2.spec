@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.7.0
+Version: 5.7.1
 Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 License: MIT
@@ -54,6 +54,9 @@ fully compatible with the original RFC 7049.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 5.7.1-alt1
+- 5.7.0 -> 5.7.1.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1
 - 5.6.5 -> 5.7.0.
 
