@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.21
+Version: 7.1.22
 Release: alt1
 Summary: Python library for SNMP
 License: BSD-2-Clause
@@ -20,6 +20,8 @@ Patch: %name-%version-alt.patch
 # renamed from pysnmp4
 Provides: python3-module-pysnmp4 = %EVR
 Obsoletes: python3-module-pysnmp4 <= 4.4.12-alt1
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-pyproject
@@ -70,6 +72,9 @@ engine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 7.1.22-alt1
+- 7.1.21 -> 7.1.22.
+
 * Thu Jun 19 2025 Stanislav Levin <slev@altlinux.org> 7.1.21-alt1
 - 7.1.17 -> 7.1.21.
 
