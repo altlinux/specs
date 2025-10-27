@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 %define pypi_name audioread
-%def_enable check
+%def_disable check
 
 Name: python3-module-%pypi_name
-Version: 3.0.1
-Release: alt0.2
+Version: 3.1.0
+Release: alt1
 
 Summary: Cross-platform audio decoding python library
 Group: Development/Python3
@@ -12,21 +12,23 @@ License: MIT
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/sampsyo/audioread.git
+
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/a/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Source: %pypi_name-%version.tar
 %endif
-Patch: %pypi_name-3.0.1-fc-alt-remove-legacy-sound-modules-absent-in-Python-3.13.patch
 
 BuildArch: noarch
 
 Requires: ffmpeg
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-tox python3-module-pytest
-BuildRequires: python3-module-pygobject3 ffmpeg libgst-plugins1.0-gir}
+BuildRequires:  python3(wheel) python3(poetry-core)
+%{?_enable_check:BuildRequires: python3(tox) python3(pytest) python3(mad)
+BuildRequires: python3-module-pygobject3 ffmpeg libgst-plugins1.0-gir
+# for python >= 3.13
+BuildRequires: python3(aifc) python3(sunau)}
 
 %description
 Decode audio files using whichever backend is available.
@@ -38,7 +40,6 @@ The standard library wave, aifc, and sunau modules (for uncompressed audio forma
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -56,6 +57,9 @@ The standard library wave, aifc, and sunau modules (for uncompressed audio forma
 
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Thu Dec 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt0.2
 - prepared for python-3.13 (fc patch) (ALT #52544)
 
