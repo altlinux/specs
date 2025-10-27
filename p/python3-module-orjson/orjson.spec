@@ -1,30 +1,39 @@
 Name: python3-module-orjson
-Version: 3.11.3
+Version: 3.11.4
 Release: alt1
 
 Summary: Fast, correct JSON library for Python
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/orjson/
+Url: https://pypi.org/project/orjson
+VCS: https://github.com/ijl/orjson
 
 Source0: %name-%version.tar
-Source1: crates.tar
+Source1: pyproject_deps.json
+Source2: crates.tar
 
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(maturin)
-BuildRequires: python3(pytest)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter python-dateutil
+%add_pyproject_deps_check_filter pendulum
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
-%setup -a1
+%setup -a2
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 .cargo vendor
+tar cf %SOURCE2 .cargo vendor
 %endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile test/requirements.txt
 
 %build
 %pyproject_build
@@ -33,13 +42,16 @@ tar cf %SOURCE1 .cargo vendor
 %pyproject_install
 
 %check
-%pyproject_run_pytest test
+%pyproject_run_pytest -o addopts= test
 
 %files
 %python3_sitelibdir/orjson
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Mon Oct 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.4-alt1
+- 3.11.4 released
+
 * Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.3-alt1
 - 3.11.3 released
 
