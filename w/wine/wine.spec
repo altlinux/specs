@@ -146,7 +146,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -394,6 +394,11 @@ Requires: desktop-file-utils
 
 Requires: %name-common = %EVR
 
+# ALT bug #55444
+# wine will ask anyway
+Requires: wine-mono = %mono_version
+Requires: wine-gecko = %gecko_version
+
 %if_with buildwow64
 Conflicts: %wow64conflict
 %endif
@@ -458,8 +463,6 @@ Group: Emulators
 Requires: %name = %EVR
 Requires: %name-programs = %EVR
 
-Requires: wine-mono = %mono_version
-Requires: wine-gecko = %gecko_version
 Requires: winetricks >= %winetricks_version
 
 %add_conflict full
@@ -480,6 +483,8 @@ Conflicts: libwine <= 6.14.1
 Conflicts: i586-libwine <= 6.14.1
 Conflicts: wine <= 6.14.1
 Conflicts: i586-wine <= 6.14.1
+
+Requires: %name = %EVR
 
 %description common
 Common arch independent wine files and scripts.
@@ -686,7 +691,7 @@ mkdir -p %buildroot%_bindir/
 tar xvf %SOURCE6
 for i in bin-scripts/*.in ; do
     tbin=%buildroot%_bindir/$(basename $i .in)
-    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g"   $i > $tbin
+    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g" -e "s:@WINELIB32DIR@:%_lib32dir/%wineproduct:g"    $i > $tbin
     chmod +x $tbin
 done
 
@@ -844,6 +849,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_bindir/wineboot
 %_bindir/winepath
 
+%_bindir/notepad
+%_bindir/winefile
+
+%_man1dir/notepad.*
+%_man1dir/winefile.*
+
 %_iconsdir/*
 
 %_desktopdir/wine-mime-msi.desktop
@@ -881,11 +892,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %files full
 
 %files programs
-%_bindir/notepad
-%_bindir/winefile
 %_bindir/winemine
-%_man1dir/notepad.*
-%_man1dir/winefile.*
 %_man1dir/winemine.*
 %_desktopdir/wine-notepad.desktop
 %_desktopdir/wine-winefile.desktop
@@ -938,6 +945,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Oct 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17.1-alt2
+- wine-cap_net_raw: set capability for /usr/lib/wine path too (ALT bug 56551)
+- wine.spec: move wine-mono and wine-gecko requires to the main package wine (ALT bug 55444)
+- wine.spec: move notepad and winefile commands to the main package wine (ALT bug 55444)
+- wine-common: add require wine
+
 * Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17.1-alt1
 - new version 10.17.1 (with rpmrb script)
 - set strict require wine-mono 10.3.0

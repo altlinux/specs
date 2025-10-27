@@ -1,7 +1,7 @@
 %define commit e73c4d8f71801fe842c0276b603d9c8024d6d957
 Name: winetricks
 Version: 20250207
-Release: alt2
+Release: alt3
 
 Summary: Work around common problems in Wine
 
@@ -32,8 +32,9 @@ ExclusiveArch: %ix86 x86_64 %arm aarch64
 #BuildRequires: wine-common
 BuildRequires: desktop-file-utils
 
-# runtime dependencies
-#Requires: /usr/bin/wine
+# add wine dependency to remove winetricks with wine (ALT bug 36241)
+Requires: /usr/bin/wine
+
 Requires: cabextract gzip unzip wget which
 
 # skip optional deps
@@ -93,6 +94,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/bash-completion/completions/winetricks
 
 %changelog
+* Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 20250207-alt3
+- add wine dependency to remove winetricks with wine (ALT bug 36241)
+
 * Mon Apr 28 2025 Vitaly Lipatov <lav@altlinux.ru> 20250207-alt2
 - vcrun2019: Install correct version of msvcp140.dll into 64bit
 - ie8: removed dll that cannot be registered
