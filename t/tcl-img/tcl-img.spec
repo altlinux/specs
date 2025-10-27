@@ -4,7 +4,7 @@
 %define major 1.4
 
 Name: tcl-img
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Tcl Image Formats (Img)
@@ -16,9 +16,7 @@ Provides: %teaname = %version-%release
 Obsoletes: %teaname
 Conflicts: tcl < 8.6.7-alt2
 
-# repacked https://sourceforge.net/projects/tkimg/files/tkimg/1.4/ "tkimg %version" Img-%version-Sources.tar.gz
-Source0: tkimg-%version.tar
-Source1: tcl-img.watch
+Source0: %name-%version.tar
 Patch1: 0001-ALT-TEA.patch
 Patch2: 0002-DEBIAN-libz.patch
 Patch3: 0003-DEBIAN-libjpeg.patch
@@ -26,6 +24,7 @@ Patch4: 0004-DEBIAN-libpng.patch
 Patch5: 0005-DEBIAN-libtiff.patch
 Patch6: 0006-DEBIAN-pixmap.patch
 Patch7: 0007-DEBIAN-window.patch
+Patch8: tcl-img-2.0.1-alt-hack-for-jpeg.patch
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
@@ -39,7 +38,7 @@ BuildRequires: xvfb-run
 BMP, XBM, XPM, GIF, PNG, JPEG, postscript and others.
 
 %prep
-%setup -q -n tkimg-%version
+%setup
 %autopatch -p1
 find . -name config.cache -delete
 
@@ -93,6 +92,9 @@ make test 2>&1 |tee "$log"
 %_mandir/mann/*
 
 %changelog
+* Mon Oct 27 2025 Constantin Sunzow <protvin@altlinux.org> 2.1.0-alt1
+- New version.
+
 * Mon Apr 07 2025 Constantin Sunzow <protvin@altlinux.org> 2.0.1-alt1
 - New version.
 
