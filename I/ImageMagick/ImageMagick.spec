@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.2
-%define drelease	3
+%define drelease	8
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -272,6 +272,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Oct 27 2025 Anton Farygin <rider@altlinux.com> 7.1.2.8-alt1
+- 7.1.2.3 -> 7.1.2.8 (Fixes: CVE-2025-62171)
+
 * Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 7.1.2.3-alt1
 - 7.1.2.2 -> 7.1.2.3 (Fixes: CVE-2025-57807)
 
