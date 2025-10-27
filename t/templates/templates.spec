@@ -1,6 +1,6 @@
 Name: templates
-Version: 1.2
-Release: alt2
+Version: 1.3
+Release: alt1
 Summary: Standard templates for the user directory
 Summary(ru_RU.UTF-8): Стандартные шаблоны для каталога пользователя
 License: GPLv3
@@ -46,6 +46,9 @@ cp -R locale %buildroot/%_datadir
 %_sysconfdir/xdg/autostart/update_templates.desktop
 
 %changelog
+* Mon Oct 20 2025 Pavel Mitrofanov <cobalt@altlinux.org> 1.3-alt1
+- Renamed files to follow style guidelines (Closes: #56365, #56379).
+
 * Sun Mar 31 2024 Roman Alifanov <ximper@altlinux.org> 1.2-alt2
 - return to sisyphus
 
