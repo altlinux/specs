@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1
+Version: 8.1
 Release: alt1
 Summary: zope.interface extension for defining data schemas
 License: ZPL-2.1
@@ -16,11 +16,10 @@ Vcs: https://github.com/zopefoundation/zope.schema
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
-%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -61,10 +60,12 @@ such as its value being read-only or not required.
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 8.1-alt1
+- 7.1 -> 8.1.
+
 * Mon Aug 11 2025 Stanislav Levin <slev@altlinux.org> 7.1-alt1
 - 7.0.1 -> 7.1.
 
