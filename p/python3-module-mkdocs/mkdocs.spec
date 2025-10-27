@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Project documentation with Markdown
 License: BSD-2-Clause
@@ -64,6 +64,8 @@ done
 [ "$fonts_bundled" != "yes" ] && exit 1
 
 %check
+# https://github.com/mkdocs/mkdocs/issues/4014
+rm -rf mkdocs/tests/cli_tests.py
 # synced to pyproject.toml:tool.hatch.envs.test.scripts
 %pyproject_run_unittest discover -p '*tests.py' mkdocs --top-level-directory .
 
@@ -73,6 +75,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 27 2025 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt2
+- Fixed FTBFS.
+
 * Sat Aug 31 2024 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
 - New version 1.6.1.
 
