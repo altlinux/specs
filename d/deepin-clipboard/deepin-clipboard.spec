@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 6.1.11
+Version: 6.1.13
 Release: alt1
 
 Summary: Clipboard for DDE
@@ -12,7 +12,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-clipboard
 Vcs: https://github.com/linuxdeepin/dde-clipboard
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-clipboard/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
@@ -75,6 +76,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.13-alt1
+- New version 6.1.13.
+
 * Fri Aug 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.11-alt1
 - New version 6.1.11.
 
