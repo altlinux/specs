@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 4.15.0
+Version: 4.16.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -7,7 +7,7 @@ License: GPL-2.0-or-later
 Group: Development/Tools
 
 Url: https://git-cola.github.io
-Vcs: git://github.com/git-cola/git-cola.git
+Vcs: https://github.com/git-cola/git-cola
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -96,6 +96,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 4.16.0-alt1
+- New version 4.16.0.
+
 * Mon Sep 08 2025 Leontiy Volodin <lvol@altlinux.org> 4.15.0-alt1
 - New version 4.15.0.
 
