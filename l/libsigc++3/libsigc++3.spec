@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name libsigc++
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %def_disable docs
 %def_enable check
@@ -11,14 +11,16 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
-License: LGPL-3.0
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://libsigcplusplus.github.io/libsigcplusplus/
 
-%if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-%else
 Vcs: https://github.com/libsigcplusplus/libsigcplusplus.git
+
+%if_disabled snapshot
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://github.com/libsigcplusplus/libsigcplusplus/releases/download/%version/%_name-%version.tar.xz
+%else
 Source: %_name-%version.tar
 %endif
 
@@ -57,7 +59,7 @@ This package provides API documentation of libsigc++ library.
 
 %meson \
 %{?_enable_snapshot:-Dmaintainer-mode=true} \
-%{?_enable_docs:-Dbuild-documentation=true}
+%{?_disable_docs:-Dbuild-documentation=false}
 %nil
 %meson_build
 
@@ -88,6 +90,9 @@ install -pm644 NEWS README* %buildroot%docdir/
 
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+
 * Sun Oct 01 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
