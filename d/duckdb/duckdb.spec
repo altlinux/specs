@@ -7,7 +7,7 @@
 %def_without check
 
 Name: duckdb
-Version: 1.3.2
+Version: 1.4.1
 Release: alt1
 
 Summary: An analytical in-process SQL database management system
@@ -88,6 +88,9 @@ EOF
 %_cmakedir/DuckDB/
 
 %changelog
+* Fri Oct 24 2025 Artem Krasovskiy <aibure@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Tue Sep 02 2025 Artem Krasovskiy <aibure@altlinux.org> 1.3.2-alt1
 - New version 1.3.2.
 
