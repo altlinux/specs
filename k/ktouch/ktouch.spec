@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -10,7 +10,10 @@ Summary: A program for learning touch typing
 Url: http://www.kde.org
 License: GPL-2.0-or-later or LGPL-2.0-or-later
 
-Requires: kqtquickcharts
+# QtQuick, QtQuick.Layouts
+Requires: libqt6-quick libqt6-quicklayouts
+Requires: qml6(Qt5Compat.GraphicalEffects)
+Requires: qml6(org.kde.kquickcontrols) qml6(org.kde.charts)
 Provides:  kde5-ktouch = %EVR
 Obsoletes: kde5-ktouch < %EVR
 
@@ -58,6 +61,9 @@ to write. KTouch can also help you to remember what fingers to use.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt2
+- fix requires (closes: 56617)
+
 * Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
