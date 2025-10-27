@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name lptk
-%define ver_major 0.8
+%define ver_major 0.9
 %define rdn_name me.ogarcia.%_name
 %def_enable check
 
@@ -74,6 +74,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0-2-g7255f61
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
