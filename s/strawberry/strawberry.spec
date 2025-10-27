@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -15,7 +15,8 @@ VCS: https://github.com/strawberrymusicplayer/strawberry
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: gst-plugins-good1.0 vlc-mini
@@ -97,6 +98,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.14-alt1
+- New version 1.2.14.
+
 * Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.13-alt1
 - New version 1.2.13.
 
