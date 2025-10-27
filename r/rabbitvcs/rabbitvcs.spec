@@ -2,8 +2,8 @@
 %def_enable check
 
 Name:    rabbitvcs
-Version: 0.19.0.21.git6f2da1b
-Release: alt2.1
+Version: 0.19.0.30.git0b4e201
+Release: alt1
 
 Summary: Graphical user interface to version control systems
 License: GPLv2+
@@ -14,10 +14,10 @@ VCS:     https://github.com/rabbitvcs/rabbitvcs
 Source: %name-%version.tar
 # Fix broken tagging which appeares after some refactoring in dulwich module
 # upstream(c477828).
-Patch0: .gear/rabbitvcs-0.19-alt-fix-tagging.patch
-Patch1: .gear/rabbitvcs-0.19-alt-fix-unittest.patch
+Patch0: rabbitvcs-0.19-alt-fix-tagging.patch
+Patch1: rabbitvcs-0.19-alt-fix-unittest.patch
 # Python v3.12 requires raw strings in regexp to avoid SyntaxWarning
-Patch2: .gear/rabbitvcs-0.19-alt-regexp-raw-strings-py312.patch
+Patch2: rabbitvcs-0.19-alt-regexp-raw-strings-py312.patch
 
 # We are not pack extension for Thunar and skip deps
 # cause repository already contains native thunar-vcs-plugin
@@ -119,9 +119,9 @@ source control system.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0
+%patch1
+%patch2
 
 %build
 %pyproject_build
@@ -175,6 +175,10 @@ py.test-3 %name/tests/test_rabbitvcs.py::RabbitVCSTest
 %_datadir/nemo-python/extensions/*.py
 
 %changelog
+* Mon Oct 27 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.30.git0b4e201-alt1
+- Update to last upstream commit from ref 0b4e201d.
+- FTBFS: update nautilus-python requirement to v4.1.
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.19.0.21.git6f2da1b-alt2.1
 - NMU: fixed FTBFS.
 
