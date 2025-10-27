@@ -1,6 +1,6 @@
 Name: altemu-overlayfs
 Version: 0.2
-Release: alt5
+Release: alt6
 
 Summary: Merging several dirs with ROMS files into one dir
 
@@ -43,6 +43,9 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/95-%name.preset
 
 %changelog
+* Mon Oct 27 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt6
+- Add check if roms folder is exist
+
 * Sun Oct 26 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt5
 - Fix group who getting access to storage
 

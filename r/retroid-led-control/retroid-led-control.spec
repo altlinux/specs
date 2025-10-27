@@ -1,6 +1,6 @@
 Name: retroid-led-control
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Set light of analog sticks fot status of battery on Retroid Pocket 5
 
@@ -40,5 +40,8 @@ install -m 0644 20-%name.preset %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Mon Oct 27 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
+- Stop service after run script
+
 * Thu Sep  4 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
