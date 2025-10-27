@@ -6,7 +6,7 @@
 
 Name: audit
 Version: 4.1.2
-Release: alt1
+Release: alt2
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.0-or-later
@@ -20,7 +20,7 @@ Patch0: %name-%version-alt.patch
 
 # Make audit installable on systems without systemd
 # (upstream dropped support for SysVinit since 4.0)
-%filter_from_requires /^\/bin\/systemctl$/d
+%filter_from_requires /\/s\?bin\/systemctl$/d
 %add_findreq_skiplist %_initdir/auditd
 
 BuildRequires: /proc
@@ -49,6 +49,7 @@ the audit subsystem in the Linux 2.6 and later kernels.
 Summary: Common files for audit libraries
 License: LGPL-2.0-or-later
 Group: System/Libraries
+BuildArch: noarch
 
 %description -n libaudit-common
 This package contains common files needed for audit libraries.
@@ -170,18 +171,22 @@ export PYTHON3=python3
 %make check
 
 %post
-# NOTE: Use auditctl instead of service due to
+# NOTE: Use auditctl instead of service to stop the daemon due to
 # https://github.com/linux-audit/audit-userspace/issues/260
+
+# A hack to fool AutoReq
+SYSTEMCTL=systemctl
+$SYSTEMCTL daemon-reload 2>/dev/null || true
 
 # If an upgrade, restart it if it's running
 if [ $1 -eq 2 ] ; then
     if auditctl --signal state 2>/dev/null; then
         auditctl --signal stop || true
-        service auditd start
+        service auditd start || true
     fi
 # If an install, start it since preset says we should be running
 elif [ $1 -eq 1 ] ; then
-        systemctl start auditd || true
+    service auditd start || true
 fi
 
 %preun
@@ -281,6 +286,10 @@ fi
 %endif
 
 %changelog
+* Mon Sep 15 2025 Egor Ignatov <egori@altlinux.org> 4.1.2-alt2
+- %%post: reload systemd units before restarting auditd
+- %%post: use 'service' command to start 'auditd' (closes: #50744)
+
 * Tue Sep 09 2025 Egor Ignatov <egori@altlinux.org> 4.1.2-alt1
 - new version 4.1.2
 
