@@ -2,8 +2,8 @@
 %def_with jit
 
 Name: postgresql%pg_ver-pg_repack
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 
 Summary: pg_repack is a PostgreSQL extension which lets you remove bloat from tables and indexes
 License: BSD
@@ -46,6 +46,9 @@ CLUSTER directly.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Oct 27 2025 Alexei Takaseev <taf@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Fri Oct 17 2025 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt2
 - Add BR libnuma-devel
 - Enable JIT on LoongArch
