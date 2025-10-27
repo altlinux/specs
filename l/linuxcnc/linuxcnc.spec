@@ -3,8 +3,8 @@
 
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.9.5
-Release: alt3
+Version: 2.9.7
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -252,6 +252,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Oct 27 2025 Anton Midyukov <antohami@altlinux.org> 2.9.7-alt1
+- New version 2.9.7.
+
 * Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 2.9.5-alt3
 - filter runtime dependency on sudo.
 
