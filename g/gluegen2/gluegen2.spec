@@ -1,42 +1,61 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-%filter_from_requires /.opt-share.etc.profile.ant/d
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default java-1.8.0-openjdk-devel
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           gluegen2
-Version:        2.3.2
-Release:        alt4_11jpp8
+Name: gluegen2
+Version: 2.5.0
+Release: alt1
 %global src_name gluegen-v%{version}
-Summary:        Java/JNI glue code generator to call out to ANSI C
+Summary: Java/JNI glue code generator to call out to ANSI C
 
-License:        BSD
-URL:            http://jogamp.org/
-Source0:        http://jogamp.org/deployment/v%{version}/archive/Sources/%{src_name}.tar.xz
-Source1:        http://jogamp.org/deployment/v%{version}/archive/Sources/jcpp-v%{version}.tar.xz
-Patch1:         %{name}-0001-renamed-library.patch
-# gluegen2.spec: W: patch-not-applied Patch2: 0002-use-fedora-jni.patch
-#                Applied with %%{_libdir} and %%{name} resolved
-Patch2:         %{name}-0002-use-fedora-jni.patch
-Patch3:         %{name}-0003-disable-executable-tmp-tests.patch
-Patch4:         %{name}-0004-add-antlr-jar-to-all-targets.patch
-Patch5:         %{name}-0005-use-system-antlib.patch
-Patch6:         %{name}-0006-disable-static-libgcc.patch
-Patch7:         %{name}-0007-add-ppc64-aarch64.patch
-Patch8:         %{name}-0008-jcpp-remove-javax-api.patch
-Patch9:         %{name}-fix-gcc-10.patch
+License: BSD
+Group: Development/Java
+URL: http://jogamp.org/
 
-BuildRequires:  gcc
-BuildRequires:  ant-antlr
-BuildRequires:  ant-contrib
-BuildRequires:  ant-junit
-BuildRequires:  cpptasks
-BuildRequires:  maven-local
+Source0: gluegen-v%version.tar.xz
+Source1: http://jogamp.org/deployment/v%{version}/archive/Sources/jcpp-v%{version}.tar.xz
 
-Source44: import.info
+Patch01: ppc64el-support.diff
+Patch02: renamedLibrary.diff
+Patch03: disableArchive7z.diff
+Patch04: disable-test-zip-archive.diff
+Patch05: disable_git_call.diff
+Patch06: hideException.diff
+Patch07: armhf.diff
+Patch08: fix-alpha-build-config.patch
+Patch09: missing-arch-symbol.diff
+Patch10: fix-arm64-build-config.diff
+Patch11: tests.diff
+Patch12: disable-static-linking.diff
+Patch13: s390x-support.diff
+Patch14: non-linux-support.diff
+Patch15: disable-java-version-check.diff
+Patch16: rtjar.diff
+Patch17: add-mips64el-mipsn32-support.diff
+Patch18: java10-compatibility.patch
+Patch19: fix_gcc-10.patch
+Patch20: riscv64-support.diff
+Patch21: cc_attributes_in_build.patch
+Patch22: looking_for_native_lib_in_tests.patch
+Patch23: java_include_dir.patch
+Patch24: missing_shebangs.patch
+Patch26: cpptasks_jar_location.patch
+Patch28: add-support-for-loongarch.patch
+Patch29: spelling.patch
+Patch30: gcc14.patch
+Patch31: jcpp-remove-javax-api.patch
+Patch32: disable-build-tests.patch
+
+ExcludeArch: armh %ix86
+
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: jpackage-utils
+BuildRequires: ant-antlr
+BuildRequires: ant-contrib
+BuildRequires: ant-junit
+BuildRequires: cpptasks
+BuildRequires: maven-local
+
+Requires: jpackage-utils
+
+%filter_from_requires /profile.ant/d
 
 %description
 GlueGen is a tool which automatically generates the Java and JNI
@@ -50,7 +69,6 @@ generates interfaces.
 %package devel
 Group: Development/Other
 Summary:        GlueGen2 devel utilities required to build JOGL2
-BuildArch:      noarch
 
 Requires:       %{name} = %{version}-%{release}
 Requires:       ant-antlr
@@ -65,7 +83,6 @@ application.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for GlueGen2
-BuildArch:      noarch
 
 %description javadoc
 Javadoc for GlueGen2.
@@ -73,26 +90,26 @@ Javadoc for GlueGen2.
 %package doc
 Group: Development/Java
 Summary:        GlueGen's user manual
-BuildArch:      noarch
 
 %description doc
 GlueGen's user manual.
 
 %prep
-%setup -n %{src_name}
+%setup -n gluegen-v%version
 tar -xJf %{SOURCE1} -C jcpp --strip 1
+%autopatch -p1
 
-%patch1 -p1
-sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
-    >use-fedora-jni.patch
-/usr/bin/patch -s -p1 --fuzz=0 <use-fedora-jni.patch
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+#patch1 -p1
+#sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
+#    >use-fedora-jni.patch
+#/usr/bin/patch -s -p1 --fuzz=0 <use-fedora-jni.patch
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
+#patch6 -p1
+#patch7 -p1
+#patch8 -p1
+#patch9 -p1
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -127,16 +144,10 @@ sed -i 's/executable="7z"/executable="true"/' make/jogamp-archivetasks.xml
 # mvn executable should not be used, use true (to avoid install) instead
 sed -i 's/executable="mvn"/executable="true"/' make/build.xml
 
-# install in _javadir
-%mvn_file org.jogamp.gluegen:gluegen %{name}
-%mvn_file org.jogamp.gluegen:gluegen-rt %{name}-rt
-
 %build
 
 # Clean up some tests
 rm -f src/junit/com/jogamp/common/util/TestVersionSemantics.java src/junit/com/jogamp/junit/util/VersionSemanticsUtil.java
-
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 
 cd make
 xargs -t ant <<EOF
@@ -148,29 +159,19 @@ xargs -t ant <<EOF
 %else
  -Djavac.memorymax=256m
 %endif
-
+ -Dtarget.sourcelevel=1.8
+ -Dtarget.targetlevel=1.8
  -Dantlr.jar=%{_javadir}/antlr.jar
  -Djunit.jar=%{_javadir}/junit.jar
  -Dant.jar=%{_javadir}/ant.jar
  -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
-
  -Djavadoc.link=%{_javadocdir}/java
-
  all
  javadoc
  maven.install
 EOF
 
-cd ..
-
-export JAVA_HOME=/usr/lib/jvm/java
-%mvn_artifact build/pom-gluegen.xml build/gluegen.jar
-%mvn_artifact build/pom-gluegen-rt.xml build/gluegen-rt.jar
-
 %install
-%mvn_install
-rm -f %{buildroot}%{_javadir}/%{name}-rt.jar
-rm -f %{buildroot}%{_jnidir}/%{name}.jar
 mkdir -p %{buildroot}%{_javadir}/%{name} \
     %{buildroot}%{_libdir}/%{name} \
     %{buildroot}%{_jnidir}
@@ -178,7 +179,12 @@ mkdir -p %{buildroot}%{_javadir}/%{name} \
 install build/gluegen.jar %{buildroot}%{_javadir}/%{name}.jar
 install build/gluegen-rt.jar %{buildroot}%{_jnidir}/%{name}-rt.jar
 ln -s ../../..%{_jnidir}/%{name}-rt.jar %{buildroot}%{_libdir}/%{name}/
-install build/obj/libgluegen-rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}-rt.so
+install build/obj/libgluegen2_rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}-rt.so
+
+# Provide JPP pom
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 build/pom-gluegen.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -pm 644 build/pom-gluegen-rt.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-rt.pom
 
 # Make the devel package. This package is needed to build JOGL2
 %global gluegen_devel_dir %{_datadir}/gluegen2
@@ -198,7 +204,6 @@ cp LICENSE.txt %{buildroot}%{_docdir}/%{name}/
 cp LICENSE.txt %{buildroot}%{_javadocdir}/%{name}/
 
 %check
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 cd make
 _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" xargs -t ant <<EOF
  -verbose
@@ -206,7 +211,8 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
  -Dc.compiler.debug=true
  -Djavacdebuglevel=lines,vars,source
  -Dcommon.gluegen.build.done=true
-
+ -Dtarget.sourcelevel=1.8
+ -Dtarget.targetlevel=1.8
  -Dantlr.jar=%{_javadir}/antlr.jar
  -Djunit.jar=%{_javadir}/junit.jar
  -Dant.jar=%{_javadir}/ant.jar
@@ -221,30 +227,29 @@ EOF
 rm -fr %{buildroot}%{_jnidir}/test
 
 %files
-%{_docdir}/%{name}/LICENSE.txt
+%doc LICENSE.txt
 %{_jnidir}/%{name}-rt.jar
 %{_libdir}/%{name}
-%{_mavenpomdir}/%{name}-rt.pom
+%{_mavenpomdir}/JPP-%{name}-rt.pom
 
 %files devel
-%{_docdir}/%{name}/LICENSE.txt
 %{_javadir}/%{name}.jar
-%{_mavenpomdir}/%{name}.pom
-%{_datadir}/maven-metadata/%{name}.xml
+%{_mavenpomdir}/JPP-%{name}.pom
 %{gluegen_devel_dir}
 
 %files javadoc
+%exclude %{_docdir}/%{name}/LICENSE.txt
 %{_javadocdir}/%{name}
 
 %files doc
 %{_docdir}/%{name}
 
 %changelog
-* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt4_11jpp8
-- support of xmvn 4
+* Sat Feb 22 2025 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- new version
 
-* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt3_11jpp8
-- migrated to %%mvn_artifact
+* Sat Nov 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt3_11jpp8.gitg0b441cfc
+- build from upstream/master
 
 * Tue Apr 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.3.2-alt2_11jpp8
 - fix build with gcc-10 (-fno-common)

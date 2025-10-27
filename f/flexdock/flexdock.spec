@@ -1,56 +1,42 @@
+Name: flexdock
+Version: 1.2.5
+Release: alt1
 Epoch: 1
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:		    flexdock
-Version:        1.2.4
-Release:	    alt1_14jpp11
-Summary:	    Docking framework for Java Swing GUI apps
-
+Summary: Docking framework for Java Swing GUI apps
 
 #Licence is MIT on their website
-License:	    MIT 
-URL:		    http://forge.scilab.org/index.php/p/flexdock/
+License: MIT 
+Group: Development/Java
+URL: http://forge.scilab.org/index.php/p/flexdock/
+VCS: https://gitlab.com/scilab/forge/flexdock
 
-Source0:	    http://forge.scilab.org/index.php/p/flexdock/downloads/get/%{name}-%{version}.tar.gz
+Source0: %name-master.tar.gz
+Patch0: flexdock-use-libraries.patch
 
-#Removes the java media framework from the demos to satisfy reqs
-Patch1:		    flexdock-0001-nojmf.patch
-#Modifies the build process  -- fedora specific
-Patch2:		    flexdock-0002-fedora-build.patch
-#Set javac source and target version to 1.8 to fix builds with Java 11
-Patch3:         flexdock-0003-java-1.8.patch
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc rpm-build-java
+BuildRequires: java-devel
+BuildRequires: ant
+BuildRequires: jpackage-utils
+BuildRequires: jgoodies-common
+BuildRequires: jgoodies-looks
+BuildRequires: skinlf
 
-BuildRequires:	ant
-BuildRequires:	jpackage-utils
-BuildRequires:	jgoodies-common
-BuildRequires:	jgoodies-looks
-BuildRequires:	skinlf
+Requires: java
+Requires: jpackage-utils
+Requires: jgoodies-common
+Requires: jgoodies-looks
+Requires: skinlf
 
-Requires:       java
-Requires:       jpackage-utils
-Requires:       jgoodies-common
-Requires:       jgoodies-looks
-Requires:       skinlf
-
-BuildArch:      noarch
-Source44: import.info
+BuildArch: noarch
 
 %description
 FlexDock is a Java docking framework for use in cross-platform
 Swing applications.
 
 %prep
-%setup -q
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%setup -n %name-master
+%patch0 -p1
 
 #Override the build file's default hard-coded paths
 echo "sdk.home=%{java_home}" > workingcopy.properties
@@ -69,8 +55,14 @@ do
     sed -i 's/\r//' $i
 done
 
+# Set minimal version
+subst 's|"1\.5"|"11"|g' build.xml
+
+# Fix package version
+subst 's|VERSION.*|VERSION = "%version";|' src/java/core/org/flexdock/util/Utilities.java
+
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar
+ant jar
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -81,6 +73,9 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Tue Apr 22 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.2.5-alt1
+- New version.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.4-alt1_14jpp11
 - update
 
