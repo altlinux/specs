@@ -5,11 +5,8 @@
 %def_disable bootstrap
 %def_enable check
 
-# https://bugzilla.altlinux.org/52839
-%def_enable alt_patches
-
 Name: impression
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Impression is a tool to create bootable drives
@@ -18,10 +15,8 @@ Group: System/Configuration/Other
 Url: https://gitlab.com/adhami3310/Impression
 
 Vcs: https://gitlab.com/adhami3310/Impression.git
-
-# https://gitlab.com/adhami3310/Impression/-/merge_requests/88 (merged)
-Patch1: %name-3.3.0-alt-collect-distro-information.patch
-# hardcode ALT
+# hardcode ALT (not usable for >= 3.5.2)
+# see gchema.override below
 Patch2: %name-3.3.0-alt-add-alt-to-list.patch
 
 %if_disabled snapshot
@@ -54,15 +49,18 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-%{?_enable_alt_patches:
-%patch2 -p1}
-
 %build
 %meson
 %meson_build
 
 %install
 %meson_install
+cat << _EOF_\
+> %buildroot/%_datadir/glib-2.0/schemas/%rdn_name.gschema.override
+[io.gitlab.adhami3310.Impression]
+downloadable-distros=[('altlinux.org', nothing, false)]
+_EOF_
+
 %find_lang %name
 
 %check
@@ -73,6 +71,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.override
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -80,6 +79,11 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
+- 3.5.3
+- removed useless add-alt-to-list.patch
+  and set "downloadable-distros" via dconf instead
+
 * Tue Sep 02 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
