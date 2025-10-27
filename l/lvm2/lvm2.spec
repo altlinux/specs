@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.33
-%define dmversion 1.02.207
+%define lvm2version 2.03.36
+%define dmversion 1.02.210
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -413,6 +413,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %dir %_sysconfdir/lvm/cache
 #%ghost %_lockdir/lvm
 %ghost %_sysconfdir/lvm/cache/.cache
+%dir %_sharedstatedir/lvm
 
 %if_enabled static
 %files static
@@ -491,6 +492,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Sun Oct 26 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.36-alt1
+- 2.03.36
+
 * Mon Jun 30 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.33-alt1
 - 2.03.33
 - avoid dependencies to btrfs-progs, xfsprogs (ALT#54697)
