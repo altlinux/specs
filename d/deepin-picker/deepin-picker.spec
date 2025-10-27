@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 6.0.10
+Version: 6.0.11
 Release: alt1
 
 Summary: Color picker tool for deepin
@@ -7,11 +7,12 @@ Summary: Color picker tool for deepin
 License: GPL-3.0+
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-picker
-Vcs: git://github.com/linuxdeepin/deepin-picker.git
+VCS: https://github.com/linuxdeepin/deepin-picker
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-picker/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): desktop-file-utils
@@ -58,6 +59,9 @@ export LC_ALL=C.UTF-8
 %_datadir/%name/translations/deepin-picker_es_419.qm
 
 %changelog
+* Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
+- New version 6.0.11.
+
 * Mon Aug 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
 - New version 6.0.10.
 
