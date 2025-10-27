@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.12
+Version: 6.0.13
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -7,9 +7,10 @@ Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-schemas
-Vcs: https://github.com/linuxdeepin/deepin-desktop-schemas.git
+VCS: https://github.com/linuxdeepin/deepin-desktop-schemas
 
-Source0: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-desktop-schemas/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: vendor.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-desktop-schemas-5.9.16-default-value-for-timeout-lockscreen.patch
@@ -67,6 +68,9 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.13-alt1
+- New version 6.0.13.
+
 * Thu Aug 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
 - New version 6.0.12.
 
