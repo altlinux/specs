@@ -1,26 +1,23 @@
 %define _unpackaged_files_terminate_build 1
-%define soname 4.13
+%define soname 4.15
 
 Name: gmsh
-Version: 4.13.1
+Version: 4.15.0
 Release: alt1
 
 Summary: 3D finite element mesh generator
-License: GPL-2.0-or-later
+License: GPL-2.0-or-later with Gmsh-exception
 Group: Sciences/Mathematics
-# upstream website looks like dead
-Url: https://dev.opencascade.org/project/gmsh
+Url: https://gmsh.info
+VCS: https://gitlab.onelab.info/gmsh/gmsh.git
 
-# https://deb.debian.org/debian/pool/main/g/gmsh/gmsh_4.13.1+ds1.orig.tar.xz
 Source: %name-%version.tar
-Source1: %name.watch
 Patch1: 0001-include-missing-cstdint.patch
-Patch3: gmsh-debian-ix86-gcc14-compat.patch
 Patch4: 30_delete_gl2ps_from_source.patch
 
 Requires: libgmsh%soname = %EVR
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: fontconfig-devel
@@ -73,11 +70,11 @@ Group: Sciences/Mathematics
 This package contains development files for libgmsh.
 
 
-%package -n python-module-gmsh
+%package -n python3-module-gmsh
 Summary: Python interface for libgmsh
 Group: Sciences/Mathematics
 BuildArch: noarch
-%description -n python-module-gmsh
+%description -n python3-module-gmsh
 This package contains python interface for libgmsh.
 
 
@@ -96,15 +93,36 @@ This package contains tutorial and example files for gmsh.
 sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
   contrib/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h
 %endif
-%patch3 -p1
 %patch4 -p1
+
+# cleanup contrib like fedora, but
+# mathex not packaged
+# WinslowUntangler is introduced in 4.15.0
+(
+cd contrib;
+ls -1 | \
+    grep -v ^DiscreteIntegration$ | \
+    grep -v ^HighOrderMeshOptimizer$ | \
+    grep -v ^MathEx$ | \
+    grep -v ^MeshOptimizer$ | \
+    grep -v ^QuadTri$ | \
+    grep -v ^WinslowUntangler$ | \
+    grep -v ^bamg$ | \
+    grep -v ^hxt$ | \
+    grep -v ^kbipack$ | \
+    grep -v ^onelab$ | \
+    grep -v ^tinyobjloader$ | \
+xargs rm -rf
+)
 
 %build
 # 1. Dynamic library and private API is needed for compiling getdb
 # 2. In Altlinux autodetection does not work correctly for
 #    libopenblas + liblapack, BLAS_LAPACK_LIBRARIES should be set.
+# blossoms is nonfree, see contrib/blossoms/README.txt
 %cmake_insource\
    -DCMAKE_BUILD_TYPE=Release\
+   -DENABLE_BLOSSOM=NO \
    -DENABLE_BUILD_DYNAMIC=1\
    -DENABLE_PRIVATE_API=1\
    -DBLAS_LAPACK_LIBRARIES="-lopenblas -llapack"
@@ -114,11 +132,11 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%python_sitelibdir_noarch
-mv %buildroot%_libdir/*.py %buildroot%python_sitelibdir_noarch
-mv %buildroot%_bindir/*.py %buildroot%python_sitelibdir_noarch
+mkdir -p %buildroot%python3_sitelibdir_noarch
+mv %buildroot%_libdir/*.py %buildroot%python3_sitelibdir_noarch
+mv %buildroot%_bindir/*.py %buildroot%python3_sitelibdir_noarch
 mv %buildroot%_libdir/gmsh-%version.dev1.dist-info \
-   %buildroot%python_sitelibdir_noarch/gmsh-%version.dist-info
+   %buildroot%python3_sitelibdir_noarch/gmsh-%version.dist-info
 
 rm -f %buildroot%_libdir/*.jl
 
@@ -129,14 +147,18 @@ rm -f %buildroot%_libdir/*.jl
 %doc %_docdir/gmsh/*.txt
 
 %files -n libgmsh%soname
-%_libdir/libgmsh.so.*
+%_libdir/libgmsh.so.%soname
+%_libdir/libgmsh.so.%version
 
 %files -n libgmsh-devel
 %_includedir/*
 %_libdir/libgmsh.so
+%_datadir/gmsh/gmshConfig.cmake
+%_datadir/gmsh/gmshTargets-release.cmake
+%_datadir/gmsh/gmshTargets.cmake
 
-%files -n python-module-gmsh
-%python_sitelibdir_noarch/*
+%files -n python3-module-gmsh
+%python3_sitelibdir_noarch/*
 
 %files demos
 %_docdir/gmsh/examples
@@ -144,6 +166,10 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Mon Oct 27 2025 Constantin Sunzow <protvin@altlinux.org> 4.15.0-alt1
+- Python module bump to 3 version.
+- New version.
+
 * Wed Mar 12 2025 Constantin Sunzow <protvin@altlinux.org> 4.13.1-alt1
 - New version.
 
