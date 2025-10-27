@@ -1,5 +1,5 @@
 %define _name Luminance
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name com.sidevesh.%_name
 
 Name: luminance
@@ -51,6 +51,9 @@ install -pD -m644 icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg %buildroot%
 %doc README*
 
 %changelog
+* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- updated to 1.2.0-1-g48380b5
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
