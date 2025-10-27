@@ -1,6 +1,6 @@
 Name: packagekit-background
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Script to update the system with PackageKit
 Group: System/Configuration/Packaging
@@ -8,6 +8,7 @@ License: GPL-2.0
 Url: https://build.opensuse.org/package/show/openSUSE:Factory/PackageKit
 
 BuildArch: noarch
+Conflicts: packagekit-cron
 
 Source0: PackageKit-systemd-timers.patch
 Source1: packagekit-background.conf
@@ -52,6 +53,9 @@ install -m 0644 %SOURCE1  %buildroot/%_sysconfdir/sysconfig/packagekit-backgroun
 
 
 %changelog
+* Mon Oct 27 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt2
+- add conflict with packagekit-cron
+
 * Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
 - don't use --background option because pkcon freeze
 
