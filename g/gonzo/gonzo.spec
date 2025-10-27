@@ -2,7 +2,7 @@
 %define import_path github.com/control-theory/gonzo
 
 Name: gonzo
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Gonzo! The Go based TUI log analysis tool
@@ -52,9 +52,11 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Oct 24 2025 Artem Krasovskiy <aibure@altlinux.org> 0.2.1-alt1
+- New version 0.2.1.
+
 * Wed Oct 01 2025 Artem Krasovskiy <aibure@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
 * Wed Sep 10 2025 Artem Krasovskiy <aibure@altlinux.org> 0.1.7-alt1
 - Initial build for Sisyphus.
-
