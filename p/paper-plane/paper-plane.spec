@@ -3,7 +3,7 @@
 
 Name: paper-plane
 Version: 0.1.0.beta.5
-Release: alt1.20.gab48a3e
+Release: alt2.20.gab48a3e
 
 Summary: Chat over Telegram on a modern and elegant client
 License: GPL-3.0
@@ -55,7 +55,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %install
 %meson_install
 %find_lang --with-gnome %name
-echo '%%lang(zh) %_datadir/locale/zh_Hans/LC_MESSAGES/paper-plane.mo' >> %name.lang
+
+# remove unsupported by glibc locale
+rm %buildroot%_datadir/locale/zh_Hans/LC_MESSAGES/paper-plane.mo
 
 %files -f %name.lang
 %_bindir/%name
@@ -67,9 +69,11 @@ echo '%%lang(zh) %_datadir/locale/zh_Hans/LC_MESSAGES/paper-plane.mo' >> %name.l
 %_datadir/%name/
 
 %changelog
+* Mon Oct 27 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1.0.beta.5-alt2.20.gab48a3e
+- Applied workaround to not patch gtk4 (ALT#48770).
+
 * Thu Oct 10 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.0.beta.5-alt1.20.gab48a3e
 - Updated to ab48a3e.
 
-%changelog
 * Mon Nov 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt0.5.beta5
 - first build for Sisyphus
