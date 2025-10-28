@@ -1,8 +1,8 @@
 %def_enable docs
 
 Name: fontforge
-Version: 20230101
-Release: alt2
+Version: 20251009
+Release: alt1
 
 Summary: FontForge -- font editor
 License: BSD
@@ -12,9 +12,9 @@ Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake 
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: libgtk+3-devel libgio-devel
+BuildRequires: libgtk+3-devel libgtkmm3-devel libgio-devel
 BuildRequires: python3-module-setuptools
 
 BuildRequires: libreadline-devel libspiro-devel libuninameslist-devel
@@ -121,6 +121,9 @@ sed -i "s|-Werror=int-conversion||" CMakeLists.txt
 
 
 %changelog
+* Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 20251009-alt1
+- new version 20251009 (with rpmrb script)
+
 * Sun Mar 31 2024 Vitaly Lipatov <lav@altlinux.ru> 20230101-alt2
 - add missed BR: python3-module-setuptools
 
