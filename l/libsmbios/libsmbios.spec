@@ -2,12 +2,14 @@
 
 Name: libsmbios
 Version: 2.4.3
-Release: alt1
+Release: alt2
 License: GPLv2+ or OSL-2.1
 Summary: Libsmbios C/C++ shared libraries
 Group: System/Libraries
 Source: %name-%version.tar
-Patch: %name-2.4.1-alt-man.patch
+Patch0: %name-2.4.1-alt-man.patch
+# https://github.com/dell/libsmbios/pull/149
+Patch1: 149.patch
 Url: https://github.com/dell/libsmbios
 
 BuildRequires(pre): rpm-build-python3
@@ -64,7 +66,8 @@ programs against libsmbios.
 
 %prep
 %setup
-%patch -p2
+%patch0 -p2
+%patch1 -p1
 find . -type d -exec chmod -f 755 {} \;
 find doc src -type f -exec chmod -f 644 {} \;
 chmod 755 src/cppunit/*.sh
@@ -117,6 +120,9 @@ rm -rf %buildroot%_libdir/*.a
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.3-alt2
+- Fix FTBFS with python 3.13 (Upstream PR #149).
+
 * Wed Feb 24 2021 L.A. Kostis <lakostis@altlinux.ru> 2.4.3-alt1
 - Updated to 2.4.3.
 - .spec: fix license.
