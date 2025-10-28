@@ -1,8 +1,8 @@
-%define ver_major 48
+%define ver_major 49
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: GPL-3.0-or-later
@@ -14,7 +14,7 @@ BuildArch: noarch
 # do not follow GNOME version numbers.
 ## Core components
 %define session_ver %ver_major
-%define keyring_ver %ver_major
+%define keyring_ver 48
 
 ## Applications
 %define nautilus_ver %ver_major
@@ -24,39 +24,39 @@ BuildArch: noarch
 %define games_ver 42
 %define weather_ver %ver_major
 %define pm_ver 43
-%define yelp_ver 42.2
+%define yelp_ver %ver_major
 %define dconf_editor_ver 43
-%define tweaks_ver 46.1
+%define tweaks_ver %ver_major
 %define contacts_ver %ver_major
 %define bijiben_ver 41
 %define cheese_ver 44.1
-%define roller_ver 44.3
+%define roller_ver 44.6
 %define eog_ver 47
 %define network_manager_ver 1.36.0
-%define terminal_ver 3.54.1
+%define terminal_ver 3.58
 %define console_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define evince_ver 46.3.1
+%define evince_ver 48.1
 %define papers_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver 46.1
-%define gedit_plugins_ver 46.0
+%define gedit_ver 48.2
+%define gedit_plugins_ver 48.2
 %define gdm_ver %ver_major
 %define gdu_ver 46.1
-%define evo_ver 3.54.1
-%define chatty_ver 0.8.5
-%define polari_ver 43
+%define evo_ver 3.58
+%define chatty_ver 0.8.8
+%define polari_ver 46
 %define brasero_ver 3.12.3
-%define accerciser_ver 3.40
+%define accerciser_ver 3.48
 %define recorder_ver 42.0
-%define logs_ver 43
+%define logs_ver %ver_major
 %define todo_ver 41.0
 %define characters_ver %ver_major
-%define music_ver 42.1
+%define music_ver %ver_major
 %define photos_ver 44.0
 %define nettool_ver 42.0
-%define gucharmap_ver 15.0.2
+%define gucharmap_ver 17.0.0
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -90,7 +90,7 @@ Requires: gnome-shell-extensions >= %ver_major
 Requires: gnome-shell-extensions-system-monitor
 Requires: gnome-browser-connector
 # user settings utility
-Requires: gnome-tweaks >= %tweaks_ver
+#Requires: gnome-tweaks >= %tweaks_ver
 Requires: dconf-editor >= %dconf_editor_ver
 
 # default font
@@ -174,10 +174,11 @@ Requires: libcanberra-gtk3
 #Requires: gnome-color-manager
 ## Password keeper
 Requires: gnome-keyring >= %keyring_ver
-Requires: gnome-keyring-ssh >= %keyring_ver
+#Requires: gnome-keyring-ssh >= %keyring_ver
+Requires: gcr4
 # Encryption keys management
 Requires: seahorse >= %seahorse_ver
-Requires: pinentry-gnome3
+#Requires: pinentry-gnome3
 
 # see ALT #31129
 Requires: xdg-utils
@@ -410,7 +411,7 @@ Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-dash-to-dock
 Requires: gnome-shell-extension-blur-my-shell
 Requires: gnome-shell-extension-caffeine
-Requires: gnome-shell-extension-openweather
+Requires: gnome-shell-extension-simple-weather
 
 ## CD-ripper
 Requires: goobox
@@ -436,7 +437,7 @@ Requires: gnome-calls
 Requires: callaudiod feedbackd
 Requires: gnome-connections
 Requires: gnome-user-share
-Requires: gradience
+#Requires: gradience
 
 # Additional LibreOffice packages
 # (sushi requires LibreOffice-integrated, gnome-documents requires libreofficekit)
@@ -478,6 +479,11 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- default: removed gnome-keyring-ssh in favor of gcr-ssh-agent
+- regular: openweather -> simple-weather
+           removed gradience
+
 * Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
 - minimal: removed xorg-drv-libinput
 

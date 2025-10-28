@@ -9,13 +9,13 @@
 %def_enable pam
 %def_enable selinux
 %def_enable systemd
-%def_enable ssh
+%def_disable ssh
 %def_enable man
 %def_disable check
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: %name is a password keeper for GNOME
 License: GPL-2.0 and LGPL-2.1
@@ -96,8 +96,6 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
     %{subst_enable_meson_bool man manpage}
 %nil
 
-#    --with-pam-dir=/%_lib/security
-
 %meson_build
 
 %install
@@ -144,8 +142,10 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_pam_modules_dir/pam_gnome_keyring.so
 %endif
 
-
 %changelog
+* Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
+- disabled obsolete ssh support
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0 (ported to Meson build system)
 
