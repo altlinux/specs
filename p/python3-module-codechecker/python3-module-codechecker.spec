@@ -3,17 +3,18 @@
 
 %def_with check
 
-Name: CodeChecker-alt-suite
+Name: python3-module-%pypi_name
 Version: 6.25.1
-Release: alt2.git36a6cf62
+Release: alt3.git36a6cf62
 
 Summary: CodeChecker static analysis tooling (without web server)
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/codechecker/6.25.1/
+Url: https://pypi.org/project/codechecker/
 Vcs: https://github.com/Ericsson/codechecker
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: fix-installation-paths.sh
 
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
@@ -36,15 +37,6 @@ ExclusiveArch: x86_64
 CodeChecker is a static analysis infrastructure built on the LLVM/Clang Static
 Analyzer toolchain, replacing scan-build in a Linux development environment.
 
-%package -n python3-module-%pypi_name
-Summary: CodeChecker static analysis tooling (without web server)
-License: Apache-2.0
-Group: Development/Python3
-
-%description -n python3-module-%pypi_name
-CodeChecker is a static analysis infrastructure built on the LLVM/Clang Static
-Analyzer toolchain, replacing scan-build in a Linux development environment.
-
 %package -n python3-module-%pypi_name-doc
 Summary: User documentation for %pypi_name
 Group: Documentation
@@ -53,16 +45,9 @@ BuildArch: noarch
 %description -n python3-module-%pypi_name-doc
 User documentation for %pypi_name.
 
-%package doc
-Summary: User documentation for %name
-Group: Documentation
-BuildArch: noarch
-
-%description doc
-User documentation for %name.
-
 %prep
 %setup
+%SOURCE1
 
 %build
 make mkdocs_build -B
@@ -72,10 +57,8 @@ BUILD_LOGGER_64_BIT_ONLY=YES make build -B
 %install
 make preinstall
 cp -ra build %buildroot
-mkdir -p %buildroot/%_sysconfdir/%name-%version
-cp -ra homework*.txt %buildroot/%_sysconfdir/%name-%version
 
-%files -n python3-module-%pypi_name
+%files
 %doc LICENSE.TXT CONTRIBUTING.md CODEOWNERS SECURITY.md
 %_bindir/%pypi_nname
 %_bindir/ldlogger
@@ -92,17 +75,6 @@ cp -ra homework*.txt %buildroot/%_sysconfdir/%name-%version
 %files -n python3-module-%pypi_name-doc
 %doc site
 
-%files doc
-%doc README_alt-static-analysis.md
-%doc mapping-checkers-alt.md
-%_sysconfdir/%name-%version/homework_clangsa_args.txt
-%_sysconfdir/%name-%version/homework_clang-tidy_args.txt
-%_sysconfdir/%name-%version/homework_cppcheck_args.txt
-%_sysconfdir/%name-%version/homework_gcc_args.txt
-
 %changelog
-* Wed Jun 25 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt2.git36a6cf62
-- Improved analysis methodology.
-
-* Tue Jun 24 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt1.git36a6cf62
+* Tue Oct 14 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt3.git36a6cf62
 - Initial build(without webserver) for ALT Sisyphus.
