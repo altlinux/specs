@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.28.0
-Release: alt1
+Release: alt2
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -47,6 +47,7 @@ Source18: nginx-zip-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
+Patch1: nginx-1.28.0-CVE-2025-53859.patch
 
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -175,6 +176,7 @@ cp -f %SOURCE11 conf/mime.types
 pushd cache_purge
 %patch0 -p1
 popd
+%patch1 -p1
 
 %build
 ./configure \
@@ -425,6 +427,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Oct 28 2025 Anton Farygin <rider@altlinux.com> 1.28.0-alt2
+- Applied upstream patch to fix memory over-read in ngx_mail_smtp_module
+  during SMTP auth (Fixes: CVE-2025-53859)
+
 * Fri Sep 05 2025 Anton Farygin <rider@altlinux.com> 1.28.0-alt1
 - 1.26.3 -> 1.28.0
 - added mod_zip (Closes: #53631)
