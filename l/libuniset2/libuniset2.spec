@@ -17,6 +17,7 @@
 %def_enable uwebsocket
 %def_enable clickhouse
 %def_enable opcua
+%def_enable js
 
 %ifarch %ix86
 %def_enable com485f
@@ -27,7 +28,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.39.1
+Version: 2.40.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -84,6 +85,9 @@ BuildRequires: libmosquitto-devel
 BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.15.0-alt1
 %endif
 
+%if_enabled js
+BuildRequires: quickjs-devel quickjs-devel-static
+%endif
 
 %if_enabled netdata
 BuildRequires: netdata
@@ -409,6 +413,16 @@ Requires: %name-extension-common-devel = %version-%release
 Libraries needed to develop for uniset OPC UA extension
 %endif
 
+%if_enabled js
+%package extension-js
+Group: Development/C++
+Summary: JavaScript support for %{name}
+Requires: %name-extension-common = %version-%release
+
+%description extension-js
+JavaScript runner for %{name}
+%endif
+
 %prep
 %setup
 
@@ -417,7 +431,13 @@ Libraries needed to develop for uniset OPC UA extension
 %if "%__gcc_version_major" < "12"
 %add_optflags -std=c++17
 %endif
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua}
+
+quickjs_with=
+%ifarch %ix86
+quickjs_with="--with-quickjs=/usr/lib/quickjs"
+%endif
+
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua} ${quickjs_with}
 %make_build
 
 %install
@@ -487,6 +507,7 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %if_enabled logdb
 %files extension-logdb
 %_bindir/%oname-logdb*
+%_datadir/%oname/logdb-websocket.html
 %endif
 %endif
 
@@ -616,12 +637,19 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %_bindir/%oname-opcua*
 %_libdir/libUniSet2OPCUA*.so.*
 
-
 %files extension-opcua-devel
 %_pkgconfigdir/libUniSet2OPCUA*.pc
 %_libdir/libUniSet2OPCUA*.so
 %_includedir/%oname/extensions/opcua/
 %endif
+
+%if_enabled js
+%files extension-js
+%_bindir/%oname-jscript*
+%_datadir/%oname/js/
+
+%endif
+
 
 %if_enabled api
 %if_enabled uresolver
@@ -671,6 +699,12 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Tue Oct 28 2025 Pavel Vainerman <pv@altlinux.ru> 2.40.1-alt1
+- (jscript): first version
+- (logdb): web interface refactoring
+- (modbus): supported simple HTTP API
+- (opcua): supported simple HTTP API
+
 * Mon Oct 13 2025 Pavel Vainerman <pv@altlinux.ru> 2.39.1-alt1
 - (logdb): supported "charset"
 - (logdb): supported db download API
