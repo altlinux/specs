@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyupgrade
-%define mod_name %pypi_name
+%define mod_name pyupgrade
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.20.0
+Version: 3.21.0
 Release: alt1
 
 Summary: A tool to automatically upgrade syntax for newer versions of the language
@@ -51,11 +51,14 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc LICENSE README.md
-%_bindir/%pypi_name
+%_bindir/pyupgrade
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 28 2025 Anton Zhukharev <ancieg@altlinux.org> 3.21.0-alt1
+- Updated to 3.21.0.
+
 * Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 3.20.0-alt1
 - Updated to 3.20.0.
 
