@@ -1,6 +1,6 @@
 Name: altemu-overlayfs
 Version: 0.2
-Release: alt6
+Release: alt7
 
 Summary: Merging several dirs with ROMS files into one dir
 
@@ -25,7 +25,7 @@ install -Dm0755 %name %buildroot%_bindir/%name
 install -Dm0644 %name.service %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_presetdir
-install -m 0644 95-%name.preset %buildroot%_presetdir/95-%name.preset
+install -m 0644 75-%name.preset %buildroot%_presetdir/75-%name.preset
 
 mkdir -p %buildroot%_datadir/altemu
 install -m 0644 dir-list %buildroot%_datadir/altemu/
@@ -40,9 +40,13 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_bindir/%name
 %_datadir/altemu/dir-list
 %_unitdir/%name.service
-%_presetdir/95-%name.preset
+%_presetdir/75-%name.preset
 
 %changelog
+* Tue Oct 28 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt7
+- Change number of preset
+- Fix mount in single storage case
+
 * Mon Oct 27 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt6
 - Add check if roms folder is exist
 
