@@ -15,8 +15,8 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.12.0
-Release: alt2
+Version: 3.13.1
+Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -30,6 +30,7 @@ Patch1: %name-alt-version.patch
 Patch2: %name-alt-dont-install-static-libs.patch
 Patch2000: %name-e2k-simd.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ doxygen
 %if_with doc
 # build dependencies of graphviz are insane
@@ -138,13 +139,14 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 
 %files -n %libname
 %doc LICENSE PATENTS README.md
-%_libdir/*.so.%{soname}
-%_libdir/*.so.%{soname}.*
+%_libdir/libaom.so.%soname
+%_libdir/libaom.so.%version
 
 %files devel
 %_includedir/%oname
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_cmakedir/AOM
 
 %files tools
 %_bindir/*
@@ -155,6 +157,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Tue Oct 28 2025 Constantin Sunzow <protvin@altlinux.org> 3.13.1-alt1
+- New version.
+
 * Fri Apr 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.12.0-alt2
 - e2k: simd patch update
 
