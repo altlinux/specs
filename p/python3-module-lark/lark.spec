@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 Summary: A modern parsing library
 License: MIT
@@ -68,6 +68,9 @@ Extra '%extra_name' for %pypi_name.
 
 %files -n %name+%extra_name
 %changelog
+* Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.2.2 -> 1.3.1.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 1.1.9 -> 1.2.2.
 
