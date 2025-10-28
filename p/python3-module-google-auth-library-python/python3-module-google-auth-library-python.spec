@@ -1,7 +1,7 @@
 %define  modulename google-auth-library-python
 
 Name:    python3-module-%modulename
-Version: 2.41.1
+Version: 2.42.0
 Release: alt1
 
 Summary: Google Auth Python Library
@@ -40,6 +40,9 @@ sed -i -e 's|cachetools>=2.0.0,<6.0|cachetools>=2.0.0|' setup.py
 %doc *.md
 
 %changelog
+* Wed Oct 29 2025 Andrey Cherepanov <cas@altlinux.org> 2.42.0-alt1
+- New version.
+
 * Fri Oct 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.41.1-alt1
 - New version.
 
