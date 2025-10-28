@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -61,6 +61,16 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Oct 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.3-alt1
+- Fix incorrect number of components after filtering for description,
+  status bar and section/tag item of tree.
+- Fix incorrect check state of category with filtered components.
+- Fix filtered components included in transaction when clicking on
+  a category.
+- Change option for filtering components that not included in the
+  edition in any view mode (instead "Other components" section in
+  "By sections" view mode).
+
 * Mon Oct 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.2-alt1
 - Fix crash via date of last update initialization.
 
