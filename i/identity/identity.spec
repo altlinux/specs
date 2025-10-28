@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define _name identity
-%define ver_major 25.03
+%define ver_major 25.10
 %define xdg_name org.gnome.gitlab.YaLTeR.Identity
 
 %def_enable check
@@ -22,16 +22,16 @@ Vcs: https://gitlab.gnome.org/YaLTeR/identity.git
 Source: %_name-%version.tar
 Source1: %_name-%version-cargo.tar
 
-%define gtk_ver 4.16
-%define adwaita_ver 1.6.0
+%define gtk_ver 4.20
+%define adwaita_ver 1.8.0
 %define gst_api_ver 1.0
 %define gst_ver 1.24
 %define dav1d_ver 1.0.0
 %define webp_ver 0.5
-%define lcms_ver 2.12.0
-%define seccomp_ver 2.5.0
+%define glycin_api_ver 2
+%define glycin_ver 2.0
 
-Requires: glycin-loaders
+Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver
 Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
@@ -42,8 +42,7 @@ BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-video-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(dav1d) >= %dav1d_ver
 BuildRequires: pkgconfig(libwebpdemux) >= %webp_ver
-BuildRequires: pkgconfig(lcms2) >= %lcms_ver
-BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -77,6 +76,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 25.10-alt1
+- 25.10
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
 - 25.03
 
