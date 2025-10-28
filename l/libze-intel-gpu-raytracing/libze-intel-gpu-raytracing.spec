@@ -1,6 +1,6 @@
 %define git %nil
 Name: libze-intel-gpu-raytracing
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: oneAPI Level Zero Ray Tracing Support
@@ -44,6 +44,9 @@ This library should not get used directly but only through Level Zero.
 %_libdir/libze_intel_gpu_raytracing.so
 
 %changelog
+* Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.2.1-alt1
+- 1.2.1.
+
 * Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1.0-alt1
 - 1.1.0.
 - build: do not set FORTIFY_SOURCE (already set).
