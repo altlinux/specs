@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.22
+Version: 1.0.23
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -77,6 +77,7 @@ altemu \
 zephyrus \
 alt-atomic-onyx \
 alt-atomic-core \
+alt-orchestra \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -88,6 +89,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Oct 27 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.0.23-alt1
+- Added alt-orchestra
+
 * Thu Sep 25 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.0.22-alt1
 - Added alt-atomic-core
 
