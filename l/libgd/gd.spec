@@ -8,7 +8,7 @@
 
 Name: libgd
 Version: 2.3.3
-Release: alt5
+Release: alt6
 Summary: A graphics library for drawing image files in various formats
 License: GD
 Group: Graphics
@@ -34,6 +34,7 @@ Group: System/Libraries
 Summary: Development library and header files for lib%name
 Group: Development/C
 Requires: %name%soname = %EVR
+Provides:  libgd2-devel = %EVR
 Provides:  libgd3-devel = %EVR
 Conflicts: libgd3-devel < %EVR
 Obsoletes: libgd3-devel
@@ -163,6 +164,9 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Tue Oct 28 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt6
+- added legacy libgd2-devel provides
+
 * Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt5
 - Renamed to libgd according upstream name.
 - fixed License tag.
