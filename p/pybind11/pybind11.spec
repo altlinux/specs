@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-#based on fedora spec
+
+%def_with check
+
 Name: pybind11
-Version: 2.13.6
+Version: 3.0.1
 Release: alt1
 
 Summary: Seamless operability between C++11 and Python
@@ -11,6 +13,8 @@ Group: Development/Other
 Url: https://github.com/pybind/pybind11
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel
@@ -19,16 +23,17 @@ BuildRequires: ccmake
 BuildRequires: cmake
 BuildRequires: eigen3
 BuildRequires: gcc-c++
-BuildRequires: python3-dev
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-scikit-build-core
 
 # These are only needed for the checks
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-scipy
 BuildRequires: eigen3-devel
 BuildRequires: ctest
+%endif
 
 %package devel
 Summary: %summary
@@ -65,43 +70,52 @@ sed -i 's/distutils.ccompiler/setuptools._distutils.ccompiler/' pybind11/setup_h
 sed -i 's/distutils.errors/setuptools._distutils.errors/' pybind11/setup_helpers.py
 
 %build
-%define _cmake__builddir python3/BUILD
-mkdir -p python3
-%cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=%_bindir/python3
+%pyproject_build
+%cmake \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DPYBIND11_TEST=ON \
+	-DPYTHON_EXECUTABLE=%_bindir/python3
 %cmake_build
 
-%python3_build_debug
-
 %install
-%define _cmake__builddir python3/BUILD
+%pyproject_install
 %cmake_install
-# Force install to arch-ful directories instead.
-PYBIND11_USE_CMAKE=true %python3_install "--install-purelib" "%python3_sitelibdir"
 
-rm -rf %buildroot%_includedir/python*
-
-mkdir -p %buildroot%_pkgconfigdir
-mv %buildroot%_datadir/pkgconfig/* %buildroot%_pkgconfigdir/
+# remove duplicated header files from sitelibs but link to common dirs as some
+# packages expect them to be in the sitelib where pybind11.get_include() reports them.
+rm -rf %buildroot%python3_sitelibdir/pybind11/include/pybind11
+ln -s %_includedir/pybind11 %buildroot%python3_sitelibdir/pybind11/include/pybind11
+# same for cmake files: pybind11.get_cmake_dir()
+rm -r %buildroot%python3_sitelibdir/pybind11/share/cmake/pybind11
+ln -s %_datadir/cmake/pybind11 %buildroot%python3_sitelibdir/pybind11/share/cmake/pybind11
+# same for pkgconfig
+rm %buildroot%python3_sitelibdir/pybind11/share/pkgconfig/pybind11.pc
+ln -s %_datadir/pkgconfig/pybind11.pc %buildroot%python3_sitelibdir/pybind11/share/pkgconfig/pybind11.pc
 
 %check
 %ifarch %e2k
 export SKIP_E2K=1
 %endif
-%define _cmake__builddir python3/BUILD/tests
-%cmake_build --target check
+export PYTHONPATH=$PWD/noarch-alt-linux/tests
+ignore_tests="--ignore tests/test_embed/test_interpreter.py --ignore tests/test_embed/test_trampoline.py"
+ignore_tests="$ignore_tests --ignore tests/extra_python_package/test_files.py"
+py.test-3 $ignore_tests
 
 %files devel
 %doc README.rst LICENSE docs/*
 %_includedir/%name
 %_datadir/cmake/%name
 %_bindir/%name-config
-%_pkgconfigdir/*
+%_datadir/pkgconfig/%name.pc
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/%name-%version-*.egg-info
+%python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Oct 28 2025 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Sat Sep 14 2024 Anton Vyatkin <toni@altlinux.org> 2.13.6-alt1
 - New version 2.13.6.
 
