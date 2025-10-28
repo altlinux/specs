@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.5.23
+Version: 6.5.27
 Release: alt1
 
 Summary: An easy to use calculator for ordinary users
@@ -11,9 +11,10 @@ License: GPL-2.0+ and GPL-3.0+
 # src: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-calculator
-Vcs: git://github.com/linuxdeepin/deepin-calculator.git
+VCS: https://github.com/linuxdeepin/deepin-calculator
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-calculator/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %if_enabled clang
@@ -55,6 +56,7 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %files -f %name.lang
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -69,6 +71,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.27-alt1
+- New version 6.5.27.
+
 * Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.23-alt1
 - New version 6.5.23.
 
