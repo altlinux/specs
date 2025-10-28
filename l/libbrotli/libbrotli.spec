@@ -2,13 +2,15 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Library implementing the Brotli compression algorithm
 Group: Development/C++
 License: Apache-2.0 and MIT
-Url: http://daniel.haxx.se/blog/2015/09/30/libbrotli-is-brotli-in-lib-form/
+Url: https://daniel.haxx.se/blog/2015/09/30/libbrotli-is-brotli-in-lib-form/
+
+Vcs: https://github.com/google/brotli.git
 
 # Source-url: https://github.com/google/brotli/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -38,7 +40,7 @@ Summary: Library implementing the Brotli common functions
 License: Apache-2.0
 Group: System/Libraries
 Obsoletes: %{name}common0 <= 1.0.4
-Provides: %{name}common0 = %version-%release
+Provides: %{name}common0 = %EVR
 
 %description -n %{name}common
 Brotli is a generic-purpose lossless compression algorithm that
@@ -50,9 +52,9 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli decompressor
 License: Apache-2.0
 Group: System/Libraries
-Requires: %{name}common = %version-%release
+Requires: %{name}common = %EVR
 Obsoletes: %{name}dec0 <= 1.0.4
-Provides: %{name}dec0 = %version-%release
+Provides: %{name}dec0 = %EVR
 
 %description -n %{name}dec
 Brotli is a generic-purpose lossless compression algorithm that
@@ -64,9 +66,9 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli compressor
 License: Apache-2.0
 Group: System/Libraries
-Requires: %{name}common = %version-%release
+Requires: %{name}common = %EVR
 Obsoletes: %{name}enc0 <= 1.0.4
-Provides: %{name}enc0 = %version-%release
+Provides: %{name}enc0 = %EVR
 
 %description -n %{name}enc
 Brotli is a generic-purpose lossless compression algorithm that
@@ -78,9 +80,9 @@ similar in speed with "DEFLATE" but offers more dense compression.
 Summary: Library implementing the Brotli compression algorithm
 License: Apache-2.0
 Group: Development/C++
-Requires: %{name}dec = %version-%release
-Requires: %{name}enc = %version-%release
-Requires: %{name}common = %version-%release
+Requires: %{name}dec = %EVR
+Requires: %{name}enc = %EVR
+Requires: %{name}common = %EVR
 
 %description devel
 Brotli is a generic-purpose lossless compression algorithm that
@@ -97,19 +99,20 @@ sed  -i "s|\-R\${libdir} ||" scripts/*.pc.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%cmake_insource -DCMAKE_BUILD_TYPE="Release"
-%make_build
+%cmake -DCMAKE_BUILD_TYPE="Release" \
+    -DBUILD_STATIC_LIBS=OFF
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
-# ignore static libs
-rm -f %buildroot%_libdir/*.a
+%cmake_install
 
 %check
-%make test
+%cmake_build -t test
 
 %files -n brotli
-%_bindir/brotli
+%_bindir/%_name
+%_man1dir/%_name.1*
 
 %files -n %{name}common
 %_libdir/%{name}common.so.1
@@ -124,12 +127,16 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%{name}enc.so.%version
 
 %files devel
-%_includedir/brotli/
+%_includedir/%_name/
 %_libdir/%{name}*.so
 %_pkgconfigdir/*.pc
+%_man3dir/*
 %doc README.md LICENSE CONTRIBUTING.md
 
 %changelog
+* Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
