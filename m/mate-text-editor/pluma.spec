@@ -5,7 +5,7 @@
 
 Name: mate-text-editor
 Version: 1.28.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -96,6 +96,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Tue Oct 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt3
+- rebuild for libpeas changes
+
 * Thu Aug 07 2025 Anton Midyukov <antohami@altlinux.org> 1:1.28.0-alt2
 - NMU: exclude python plugins (closes: #53657).
 
