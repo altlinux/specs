@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 6397
+Version: 6869
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -38,6 +38,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libgomp-devel
+BuildRequires: libssl-devel
 BuildRequires: libstdc++-devel-static
 %if_with cuda
 BuildRequires: gcc12-c++
@@ -155,7 +156,7 @@ EOF
 sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' ggml/src/CMakeLists.txt src/CMakeLists.txt
 sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' ggml/cmake/ggml-config.cmake.in tools/mtmd/CMakeLists.txt
 # We do not have Internet access (issues/13371).
-sed -i 's/common_has_curl()/0/' tests/test-arg-parser.cpp
+perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
 # This test requires GPU.
 sed /test-thread-safety/d -i tests/CMakeLists.txt
 
@@ -172,6 +173,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DGGML_BACKEND_DIR=%_libexecdir/llama \
 	-DGGML_CPU=ON \
 	-DGGML_RPC=ON \
+	-DLLAMA_OPENSSL=ON \
 %ifarch x86_64
 	-DGGML_CPU_ALL_VARIANTS=ON \
 %endif
@@ -194,7 +196,6 @@ LD_LIBRARY_PATH=%_cmake__builddir/bin %_cmake__builddir/bin/llama-cli --completi
 install -Dpm644 requirements.txt -t %buildroot%_datadir/%name
 cp -a requirements -t %buildroot%_datadir/%name
 # Additional data.
-cp -rp prompts -t %buildroot%_datadir/%name
 cp -rp grammars -t %buildroot%_datadir/%name
 # Not all examples.
 install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
@@ -250,7 +251,6 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %dir %_datadir/%name/examples
 %_datadir/%name/examples/*.sh
 %_datadir/%name/grammars
-%_datadir/%name/prompts
 %dir %_libexecdir/llama
 %_libexecdir/llama/libggml-cpu*.so
 %_libexecdir/llama/libggml-rpc.so
@@ -276,6 +276,9 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_datadir/%name/requirements*
 
 %changelog
+* Tue Oct 28 2025 Vitaly Chikunov <vt@altlinux.org> 1:6869-alt1
+- Update to b6869 (2025-10-28).
+
 * Sat Sep 06 2025 Vitaly Chikunov <vt@altlinux.org> 1:6397-alt1
 - Update to b6397 (2025-09-06).
 - Python-based model conversion scripts are sub-packaged. Note that they are
