@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.33
+Version: 6.0.34
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -15,7 +15,8 @@ Vcs: https://github.com/linuxdeepin/dde-session-ui
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-session-ui/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 # %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
@@ -99,6 +100,9 @@ export READELF="llvm-readelf"
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.34-alt1
+- New version 6.0.34.
+
 * Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.33-alt1
 - New version 6.0.33.
 
