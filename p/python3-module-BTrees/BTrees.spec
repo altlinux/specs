@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name BTrees
-%define oname %pypi_name
+%define mod_name %pypi_name
 
 %define dynamic_mods %(echo `cat %SOURCE2 2>/dev/null || echo unknown`)
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 6.1
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 6.2
+Release: alt1
 Summary: Scalable persistent object containers
 License: ZPL-2.1
 Group: Development/Python3
@@ -18,9 +17,9 @@ Vcs: https://github.com/zopefoundation/BTrees.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: dynamic_mods.list
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-# dynamic names
-%add_python3_req_skip %dynamic_mods
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -37,14 +36,6 @@ This package contains a set of persistent object containers built around
 a modified BTree data structure. The trees are optimized for use inside ZODB's
 "optimistic concurrency" paradigm, and include explicit resolution of
 conflicts detected by that mechanism.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -83,15 +74,15 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
-%doc LICENSE.txt *.rst
-%python3_sitelibdir/%oname
+%doc README.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 6.2-alt1
+- 6.1 -> 6.2.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
