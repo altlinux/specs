@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.15
+Version: 1.0.16
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -15,7 +15,8 @@ Vcs: https://github.com/linuxdeepin/deepin-service-manager
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-service-manager/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libsystemd-devel dtk6-common-devel libdtk6core-devel
@@ -97,6 +98,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.16-alt1
+- New version 1.0.16.
+
 * Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.15-alt1
 - New version 1.0.15.
 
