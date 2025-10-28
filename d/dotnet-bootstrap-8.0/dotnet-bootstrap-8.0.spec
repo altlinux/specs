@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.13
+%define _dotnet_corerelease 8.0.21
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.113
+%define _dotnet_sdkrelease 8.0.121
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -18,7 +18,7 @@
 %define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.13
+Version: 8.0.21
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -27,15 +27,15 @@ License: MIT
 Url: https://github.com/dotnet
 Group: Development/Other
 
-# To check we manually update download url
+# To check updates see
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
+# Source-url: https://builds.dotnet.microsoft.com/dotnet/Sdk/%{_dotnet_sdkrelease}/dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
+# Source2-url: https://builds.dotnet.microsoft.com/dotnet/Sdk/%{_dotnet_sdkrelease}/dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -131,6 +131,17 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Oct 24 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
+- The .NET 8.0.21 and .NET SDK 8.0.121 release
+- update sources' URLs
+- fixed CVEs:
+ + CVE-2025-55248: .NET Information Disclosure Vulnerability
+ + CVE-2025-55315: .NET Security Feature Bypass Vulnerability
+ + CVE-2025-55247: .NET Denial of Service Vulnerability
+ + CVE-2025-26646: .NET and Visual Studio Spoofing Vulnerability
+ + CVE-2025-26682: .NET Denial of Service Vulnerability
+ + CVE-2025-24070: .NET Elevation of Privilege Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.13-alt1
 - The .NET 8.0.13 and .NET SDK 8.0.113 release
 

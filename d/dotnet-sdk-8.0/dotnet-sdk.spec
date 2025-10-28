@@ -4,21 +4,24 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.13
+%define preview %nil
+%define _dotnet_coreversion 8.0.21
+%define _dotnet_sdkversion 8.0.121%preview
+
+%define _dotnet_corerelease 8.0.21
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.113
+%define _dotnet_sdkrelease 8.0.121
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
-%define preview %nil
-%define _dotnet_coreshortrelease 8.0.13%preview
-%define _dotnet_sdkshortrelease 8.0.113%preview
+%define _dotnet_coreshortrelease 8.0.21%preview
+%define _dotnet_sdkshortrelease 8.0.121%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 8.0.113%preview
+Version: %_dotnet_sdkversion
 Release: alt1
 
 Summary: SDK for the .NET 8
@@ -162,6 +165,12 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.121-alt1
+- .NET SDK 8.0.121 release
+- fixed CVEs:
+ + CVE-2025-26646: .NET and Visual Studio Spoofing Vulnerability
+ + CVE-2025-30399: .NET Remote Code Execution Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.113-alt1
 - .NET SDK 8.0.113 release
 

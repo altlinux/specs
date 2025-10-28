@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.13
-%define _dotnet_aspnetcorerelease 8.0.13
-%define _dotnet_aspnetcoreapprefrelease 8.0.13
 %define preview %nil
+%define _dotnet_coreversion 8.0.21%preview
+%define _dotnet_corerelease 8.0.21
+%define _dotnet_aspnetcorerelease 8.0.21
+%define _dotnet_aspnetcoreapprefrelease 8.0.21
 %define _dotnet_coreshortrelease %_dotnet_corerelease%preview
 
 # FIXME: build from sources
 %def_with bootstrap
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: 8.0.13%preview
+Version: %_dotnet_coreversion
 Release: alt1
 
 Summary: ASP.NET is a cross-platform .NET framework for building modern cloud-based web application
@@ -130,6 +131,13 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
+- ASP.NET 8.0.21 release
+- fixed CVEs:
+ + CVE-2025-24070: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-26682: .NET Denial of Service Vulnerability
+ + CVE-2025-55315: .NET Security Feature Bypass Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.13-alt1
 - ASP.NET 8.0.13 release
 

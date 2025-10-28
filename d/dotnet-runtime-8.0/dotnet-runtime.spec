@@ -2,10 +2,11 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.13
+%define _dotnet_corerelease 8.0.21
 # used for build
-%define _dotnet_sdkrelease 8.0.113
+%define _dotnet_sdkrelease 8.0.121
 %define preview %nil
+%define _dotnet_coreversion 8.0.21%preview
 %define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
 %define upstream_tag v%_dotnet_corerelease
@@ -26,7 +27,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 8.0.13%preview
+Version: %_dotnet_coreversion
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -396,6 +397,11 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Oct 24 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
+- .NET 8.0.21 release
+- fixed CVEs:
+  + CVE-2025-55248: .NET Information Disclosure Vulnerability
+
 * Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.13-alt1
 - .NET 8.0.13 release
 - fixed CVEs:
