@@ -3,10 +3,10 @@
 %define module_version	1.0.0
 %define module_release	alt5.g%{git}
 
-%define flavour		6.12
+%define flavour		6.17
 %define karch %ix86 x86_64 aarch64 ppc64le armh
 
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.17
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name

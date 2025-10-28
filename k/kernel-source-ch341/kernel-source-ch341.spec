@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	ch341
 %define module_version  1.0.0
-%define git b80a9c3
+%define git bf0a27c
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt5.g%{git}
+Release: alt7.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: CH341 linux drivers for I2C / SPI and GPIO mode
 License: GPLv2
@@ -33,6 +33,12 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt7.gbf0a27c
+- Added fixes for 6.17+ kernels.
+
+* Tue Oct 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt6.gbf0a27c
+- GIT bf0a27c.
+
 * Tue Jun 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt5.gb80a9c3
 - GIT b80a9c3 (with kernel 6.12+ fixes).
 
