@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.18
+Version: 6.5.26
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -10,9 +10,10 @@ License: LGPL-3.0-or-later
 # ./3rdparty/kcalendarcore/src/ contains license(s) LGPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-calendar
-Vcs: git://github.com/linuxdeepin/dde-calendar.git
+VCS: https://github.com/linuxdeepin/dde-calendar
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-calendar/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
 
@@ -72,8 +73,15 @@ export LC_ALL=C.UTF-8
 %_userunitdir/com.dde.calendarserver.calendar.service
 %_userunitdir/com.dde.calendarserver.calendar.timer
 %_userunitdir/%repo.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde-calendar/
+%_datadir/dsg/configs/org.deepin.dde-calendar/org.deepin.dde-calendar.json
 
 %changelog
+* Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.26-alt1
+- New version 6.5.26.
+
 * Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.18-alt1
 - New version 6.5.18.
 
