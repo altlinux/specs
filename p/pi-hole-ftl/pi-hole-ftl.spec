@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:    pi-hole-ftl
-Version: 6.2.3
-Release: alt2
+Version: 6.3.2
+Release: alt1
 
 Summary: The Pi-hole FTL engine
 License: EUPL-1.2
@@ -43,7 +43,7 @@ FTLDNS (pihole-FTL) provides an interactive API and also generates statistics fo
 
 %build
 export GIT_BRANCH="master"
-export GIT_HASH="88737f6248cd3df3202eed72aeec89b9fb572631"
+export GIT_HASH="bc5e8b22a3e55db256a634743ebf4855e5e149e6"
 export GIT_VERSION="%version"
 export GIT_DATE=""
 export GIT_TAG="v%version"
@@ -84,6 +84,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Tue Oct 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.3.2-alt1
+- v6.3.2
+
 * Sat Oct 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.3-alt2
 - fix FTBFS with libmbedtls
 

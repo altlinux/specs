@@ -7,7 +7,7 @@
 %define _servicename pi-hole
 
 Name:    pi-hole
-Version: 6.1.4
+Version: 6.2.1
 Release: alt1
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
@@ -63,7 +63,7 @@ sed -i 's!/usr/local/!/usr/!g' pihole gravity.sh advanced/Scripts/*.sh
   install -Dm755 advanced/Scripts/utils.sh %buildroot%_datadir/%_name/utils.sh
 # install -Dm755 advanced/Scripts/wildcard_regex_converter.sh %buildroot%_datadir/%_name/wildcard_regex_converter.sh
   install -Dm755 advanced/Scripts/query.sh %buildroot%_datadir/%_name/query.sh
-  install -Dm755 advanced/Scripts/piholeARPTable.sh %buildroot%_datadir/%_name/piholeARPTable.sh
+  install -Dm755 advanced/Scripts/piholeNetworkFlush.sh %buildroot%_datadir/%_name/piholeNetworkFlush.sh
 
   install -Dm755 advanced/Scripts/piholeDebug.sh %buildroot%_datadir/%_name/piholeDebug.sh
 
@@ -111,15 +111,15 @@ EOF
 
 cat >%buildroot%_sysconfdir/%_name/versions <<EOF
 CORE_BRANCH=master
-CORE_HASH=cef7fd4b02
+CORE_HASH=66a3c73d
 CORE_VERSION=v%version
 GITHUB_CORE_VERSION=v%version
-GITHUB_CORE_HASH=cef7fd4b02
-FTL_VERSION=v6.2.3
+GITHUB_CORE_HASH=66a3c73d
+FTL_VERSION=v6.3.2
 FTL_BRANCH=master
-FTL_HASH=044ef46d
-GITHUB_FTL_VERSION=v6.2.3
-GITHUB_FTL_HASH=88737f62
+FTL_HASH=bc5e8b22a
+GITHUB_FTL_VERSION=v6.3.2
+GITHUB_FTL_HASH=bc5e8b22a
 EOF
 
 cat >%buildroot%_datadir/%_name/update.sh <<EOF
@@ -153,6 +153,9 @@ chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/unins
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Tue Oct 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.1-alt1
+- v6.2.1
+
 * Tue Aug 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.1.4-alt1
 - v6.1.4
 
