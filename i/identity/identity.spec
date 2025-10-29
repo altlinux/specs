@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Compare images and videos
@@ -76,6 +76,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 25.10.1-alt1
+- 25.10.1
+
 * Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 25.10-alt1
 - 25.10
 
