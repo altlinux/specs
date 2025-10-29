@@ -1,5 +1,5 @@
 Name: kde-theme-alt
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: ALT KDE theme
@@ -34,6 +34,9 @@ cp -ar desktoptheme/altos-* %buildroot/%_datadir/plasma/desktoptheme/
 %_datadir/plasma/desktoptheme/altos-*/
 
 %changelog
+* Tue Oct 28 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.2-alt1
+- update previews
+
 * Sun Jun 22 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt1
 - update colors from breeze (closes: 54868)
 
