@@ -1,7 +1,8 @@
 %define oname libcloud
+%def_without pkgtests
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -16,10 +17,19 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildPreReq: python3-module-requests
 BuildPreReq: python3-module-urllib3
 
 %py3_provides libcloud.compute.drivers.vsphere
+%py3_provides libcloud.backup.providers
+%py3_provides libcloud.compute.providers
+%py3_provides libcloud.container.providers
+%py3_provides libcloud.dns.providers
+%py3_provides libcloud.loadbalancer.providers
+%py3_provides libcloud.storage.providers
+%py3_provides libcloud.utils.py3
+%py3_provides libcloud.dns.providers
 
 # for docs
 BuildPreReq: python3-module-sphinx
@@ -27,29 +37,31 @@ BuildPreReq: python3-module-sphinx
 %py3_requires mock requests requests_mock pytest
 
 %description
-Apache Libcloud is a Python library which hides differences between 
-different cloud provider APIs and allows you to manage different 
+Apache Libcloud is a Python library which hides differences between
+different cloud provider APIs and allows you to manage different
 cloud resources through a unified and easy to use API.
 
+%if_with pkgtests
 %package tests
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-Apache Libcloud is a Python library which hides differences between 
-different cloud provider APIs and allows you to manage different 
+Apache Libcloud is a Python library which hides differences between
+different cloud provider APIs and allows you to manage different
 cloud resources through a unified and easy to use API.
 
 This package contains tests for %oname
+%endif
 
 %package docs
 Summary: Documentation for %name
 Group: Development/Documentation
 
 %description docs
-Apache Libcloud is a Python library which hides differences between 
-different cloud provider APIs and allows you to manage different 
+Apache Libcloud is a Python library which hides differences between
+different cloud provider APIs and allows you to manage different
 cloud resources through a unified and easy to use API.
 
 This package contains documentation for %oname
@@ -60,27 +72,32 @@ sed -i 's/requests.packages.//' %oname/http.py
 cp libcloud/test/secrets.py-dist libcloud/test/secrets.py
 
 %build
-%python3_build
+%pyproject_build
 
 export PYTHONPATH=$PWD
 %make SPHINXBUILD="sphinx-build-3" -C docs man
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst LICENSE example_*.py
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
 
+%if_with pkgtests
 %files tests
 %python3_sitelibdir/libcloud/test/*
+%endif
 
 %files docs
 %doc docs/_build/*
 
 
 %changelog
+* Wed Oct 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.8.0-alt1
+- NMU: New version.
+- tests package removed by upstream.
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 
