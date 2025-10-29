@@ -30,8 +30,8 @@
 %else
 %global libomp_arch %_arch
 %endif
-# According libc/src/string/memory_utils/inline_memcpy.h
-%global libc_arches x86_64 aarch64
+# According to llvm-project/libc/cmake/modules/LLVMLibCArchitectures.cmake
+%global libc_arches x86_64 aarch64 loongarch64 riscv64
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -136,6 +136,7 @@ Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.p
 Patch103: clang-alt-nvvm-libdevice.patch
 Patch104: openmp-alt-soname.patch
 Patch107: offload-amdgpu-rocm-path.patch
+Patch108: llvm-alt-libc-loongarch64-support.patch
 
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
@@ -163,6 +164,8 @@ BuildRequires: python3-module-myst-parser graphviz
 # see https://bugs.altlinux.org/show_bug.cgi?id=52353
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: ninja-build
+# libxml2 is required for both lldb and llvm-mt
+BuildRequires: pkgconfig(libxml-2.0)
 %if_with lldb
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: swig-devel
@@ -171,7 +174,6 @@ BuildRequires: python3-module-sphinx_basic_ng python3-module-furo
 %if_with lldb_full
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(ncursesw)
-BuildRequires: pkgconfig(libxml-2.0)
 %endif
 %if_with lldb_lua
 BuildRequires: lua5.3-devel
@@ -751,6 +753,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch103 -p1
 %patch104 -p2
 %patch107 -p2 -b .offload-rocm-path
+%patch108 -p2
 
 # RH patches
 %patch111 -p1
@@ -1183,7 +1186,9 @@ emit_filelist >%_tmppath/dyn-files-lib%omp_name-devel <<EOExecutableList
 bin	offload-arch
 %ifarch %libomptarget_arches
 bin	llvm-offload-device-info
+%ifarch %libc_arches
 bin	llvm-gpu-loader
+%endif
 bin	llvm-omp-kernel-replay
 %endif
 EOExecutableList
@@ -1498,6 +1503,11 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Oct 29 2025 Ivan A. Melnikov <iv@altlinux.org> 21.1.4-alt0.2
+- Fix FTBFS on loongarch64 and riscv64:
+  + require libxml2 on all architectures;
+  + add loongarch64 and riscv64 to libc_arches.
+
 * Wed Oct 22 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.4-alt0.1
 - Update to 21.1.4.
 
