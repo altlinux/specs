@@ -15,7 +15,7 @@
 
 Name: avidemux-qt
 Version: 2.8.2
-Release: alt0.1
+Release: alt0.2
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -237,6 +237,9 @@ ln -s avidemux3_qt6 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Wed Oct 29 2025 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt0.2
+- temporary using Qt xcb platform plugin by default (closes: 56600)
+
 * Tue Oct 14 2025 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt0.1
 - update to git master 376c146
 
