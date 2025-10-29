@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A GObject to SQLite object mapper
@@ -117,6 +117,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
+- 0.5.5
+
 * Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
