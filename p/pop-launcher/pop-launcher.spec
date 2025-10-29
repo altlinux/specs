@@ -1,5 +1,5 @@
 Name:     pop-launcher
-Version:  1.2.4
+Version:  1.2.7
 Release:  alt1
 
 Summary:  Modular IPC-based desktop launcher service
@@ -39,8 +39,8 @@ cat <<EOF >> .cargo/config.toml
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/cosmic-protocols"]
-git = "https://github.com/pop-os/cosmic-protocols"
+[source."git+https://github.com/pop-os//cosmic-protocols"]
+git = "https://github.com/pop-os//cosmic-protocols"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/dbus-settings-bindings"]
@@ -68,6 +68,9 @@ just rootdir=%buildroot bin-path=%_bindir/%name install-plugins
 %_libexecdir/%name/
 
 %changelog
+* Wed Oct 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.7-alt1
+- new version 1.2.7 (with rpmrb script) (ALT bug 51925)
+
 * Fri Dec 06 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.2.4-alt1
 - new version 1.2.4 (with rpmrb script) (ALT bug 51925)
 
