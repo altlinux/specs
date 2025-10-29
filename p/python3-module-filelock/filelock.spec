@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name filelock
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.19.1
+Version: 3.20.0
 Release: alt1
 Summary: A platform independent file lock for Python
 License: Unlicense
@@ -53,10 +54,13 @@ the same lock object twice, it will not block.
 
 %files
 %doc README.md
-%python3_sitelibdir/filelock/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 3.20.0-alt1
+- 3.19.1 -> 3.20.0.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 3.19.1-alt1
 - 3.18.0 -> 3.19.1.
 
