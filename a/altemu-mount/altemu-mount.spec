@@ -1,6 +1,6 @@
 Name: altemu-mount
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: mount storage with roms
 
@@ -43,5 +43,8 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/75-%name.preset
 
 %changelog
+* Wed Oct 29 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
+- Fix access rights for user
+
 * Tue Oct 28 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
