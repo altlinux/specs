@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name stdlibs
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2025.5.10
+Version: 2025.10.28
 Release: alt1
 Summary: List of packages in the stdlib
 License: MIT
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -45,17 +48,20 @@ those for most useful Python versions.
 %pyproject_install
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %check
-%pyproject_run -- python -m %pypi_name.tests -v
+%pyproject_run -- python -m %mod_name.tests -v
 
 %files
 %doc README.md
-%python3_sitelibdir/stdlibs/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 2025.10.28-alt1
+- 2025.5.10 -> 2025.10.28.
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 2025.5.10-alt1
 - 2025.4.4 -> 2025.5.10.
 
