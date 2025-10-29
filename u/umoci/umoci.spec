@@ -1,6 +1,6 @@
 %global import_path github.com/opencontainers/umoci
 Name:    umoci
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: umoci modifies Open Container images
@@ -59,6 +59,9 @@ done
 %_bindir/*
 
 %changelog
+* Wed Oct 29 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
 * Mon Sep 08 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.1-alt1
 - new version 0.5.1
 
