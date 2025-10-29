@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        141.0.7390.122
+Version:        142.0.7444.52
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -85,6 +85,7 @@ Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-disable-font-tests.patch
+Patch017: 0017-DEBIAN-rust-sanitize.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
@@ -94,7 +95,6 @@ Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-Patch029: 0029-DEBIAN-constexpr3.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch037: 0037-ALT-clang-path.patch
@@ -106,13 +106,15 @@ Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
 Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
 Patch046: 0046-DEBIAN-libcpp-headers.patch
+Patch047: 0047-DEBIAN-chromium-142-iwyu-field-form-data.patch
+Patch048: 0048-DEBIAN-clang19.patch
+Patch049: 0049-DEBIAN-dawn-commit-hash.patch
 
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 
-Patch062: 0062-DEBIAN-android.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
@@ -122,7 +124,6 @@ Patch068: 0068-DEBIAN-adler1.patch
 
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
-Patch074: 0074-FEDORA-chromium-138-clang++-unknown-argument.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -654,6 +655,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Oct 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.52-alt1
+- New version (142.0.7444.52).
+
 * Wed Oct 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 141.0.7390.122-alt1
 - New version (141.0.7390.122).
 - Fixes:
