@@ -12,23 +12,17 @@
 %define clamconfdir /etc
 %endif
 
-%define rctag %nil
-
 Name: clamav
-Version: 0.103.12
+Version: 1.4.3
 Release: alt1
-%define abiversion 9
+%define abiversion 12
 
 Summary: Clam Antivirus scanner
 License: GPL-2.0-only with exeptions
 Group: File tools
 
-URL: http://www.clamav.net/
-%ifdef snap
-Source0: http://www.clamav.net/snapshot/clamav-devel-%snap.tar.gz
-%else
-Source0: http://downloads.sourceforge.net/clamav/clamav-%{version}%{rctag}.tar.gz
-%endif
+URL: https://github.com/Cisco-Talos/clamav.git
+Source0: %name-%version.tar
 
 Source1: clamav.init
 Source2: clamonacc.init
@@ -51,12 +45,15 @@ Source21: virusstat-perIP-PrevHour
 Source22: virusstat-total
 Source23: virusstat.cron.example
 
+Source24: vendor.tar
+
 Patch1: clamav-config.patch
 Patch2: freshclam-config.patch
 Patch3: clamav-config-systemd.patch
 
 Patch20: clamav-0.99-pkgconfig.patch
 Patch21: clamav-AC_SYS_LARGEFILE.patch
+Patch22: clamav-clamscan-test-disable.patch
 
 # Package with clamd should require libclamav, not vice versa.
 # Corresponding libclamav version need to be updated before, or clamd restart may fail!
@@ -68,14 +65,15 @@ Requires: clamav-freshclam = %version-%release
 # postinstall uses subst utility
 Requires(post): sed >= 1:3.02-alt1
 
+BuildRequires(pre): cmake ctest
 # sed used by configure script
 BuildRequires: sed
 
 # is needed since 0.101 even without llvm
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ rpm-build-rust rpm-macros-rust
 
 BuildRequires: bzlib-devel libcheck-devel libncurses-devel zlib-devel libssl-devel libxml2-devel libpcre2-devel
-BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
+BuildRequires: git-core graphviz groff-extra gv zip doxygen flex python3
 
 # for clamsubmit
 BuildRequires: libcurl-devel libjson-c-devel
@@ -85,9 +83,6 @@ BuildRequires: libcurl-devel libjson-c-devel
 %{?_with_milter:BuildRequires: sendmail-devel}
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
-
-# for snapshots
-%{?snap: BuildRequires: automake}
 
 %description
 Clam AntiVirus is an anti-virus toolkit for Unix. The main purpose of this
@@ -156,61 +151,52 @@ This package contains Clam On-Access Scanner daemon. Look to clamonacc(8)
 for details.
 
 %prep
-%setup %{?snap: -n clamav-devel-%snap} %{?rctag: -n clamav-%{version}%{rctag}}
+%setup
+
+tar -xf %SOURCE24
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %patch20 -p1
-%patch21 -p0
+%patch21 -p1
+%patch22 -p1
 
 %build
-# fixed RPATH issue (0.97.3 tarball built with wrong libtool)
-%{!?snap: aclocal --force -I m4}
-%{!?snap: %autoreconf}
 
-%add_optflags -std=gnu++11
-
-# gcc 14.2.1
-%add_optflags -Wno-error=incompatible-pointer-types
-
-# --disable-clamav: Disable test for clamav user/group
-%configure \
-	--sysconfdir=%clamconfdir \
-	--enable-experimental \
-	--enable-clamdtop \
-	--disable-clamav \
-	--with-user=mail \
-	--with-group=mail \
-	--with-dbdir=/var/lib/%name \
-	%{?_without_llvm: --disable-llvm} \
-	%{?_with_milter: --enable-milter} \
-#
+%cmake \
+	-DCONFDIR=%clamconfdir \
+	-DENABLE_EXPERIMENTAL=ON \
+	-DENABLE_APP=ON \
+	-DCLAMAV_USER=mail \
+	-DCLAMAV_GROUP=mail \
+	-DDBDIR=/var/lib/%name \
+	-DENABLE_TESTS=ON \
+	%{?_without_llvm: -DBYTECODE_RUNTIME="none"} \
+	%{?_with_milter: -DENABLE_MILTER=ON}
 
 # Safety belt for IPv6 enabling. We want to build clamav with IPv6 support,
 # but can not rely on configure check as it can fail if build host set up
 # as IPv4 only system.
+pushd %_cmake__builddir
 echo >> clamav-config.h
 echo "#ifndef SUPPORT_IPv6" >> clamav-config.h
 echo "#define SUPPORT_IPv6 1" >> clamav-config.h
 echo "#endif" >> clamav-config.h
+popd
 
-# needed for 0.99.1
-sed "s|pcre\.h|pcre/pcre.h|" -i libclamav/regex_pcre.h  # include <pcre.h>
-
-%make_build
-
+%cmake_build
 install -m644 %_sourcedir/virusstat* .
 
 %check
-
-%make check
+%ctest
 
 %install
-%makeinstall_std
+%cmake_install
 
-mv %buildroot%clamconfdir/clamd.conf.sample %buildroot%clamconfdir/clamd.conf
-mv %buildroot%clamconfdir/freshclam.conf.sample %buildroot%clamconfdir/freshclam.conf
+install -pD -m 644  etc/clamd.conf.sample %buildroot%clamconfdir/clamd.conf
+install -pD -m 644  etc/freshclam.conf.sample %buildroot%clamconfdir/freshclam.conf
 
 %{!?_with_milter:rm -f %buildroot%_man1dir/clamav-milter*}
 
@@ -240,7 +226,7 @@ install -pD -m644 %_sourcedir/freshclam.logrotate %buildroot%_sysconfdir/logrota
 install -m644 %_sourcedir/clamav.logrotate %buildroot%_sysconfdir/logrotate.d/clamav
 
 # pid file dir
-install -d %buildroot/var/run/clamav
+install -d %buildroot/run/clamav
 
 # install docs (Markdown and HTML)
 mkdir -p %buildroot%_defaultdocdir/clamav-manual/UserManual-html
@@ -249,13 +235,13 @@ cp -R docs/html/*       %buildroot%_defaultdocdir/clamav-manual/UserManual-html
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%_libdir/*.a
+rm -fr %buildroot/usr/etc
 # databases is not installing in 0.97.5
 if [ -d %buildroot/var/lib/clamav ] ; then
     rm -f %buildroot/var/lib/clamav/*.cvd
 else
     mkdir -p %buildroot/var/lib/clamav
 fi
-
 
 install -d %buildroot%_sysconfdir/cron.d
 cat <<EOF >%buildroot%_sysconfdir/cron.d/clamav-freshclam
@@ -329,7 +315,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %_man5dir/*
 %_man8dir/clamd*
 %attr(3775,root,mail) %dir /var/lib/clamav
-%attr(3775,root,mail) %ghost %dir /var/run/clamav
+%attr(3775,root,mail) %ghost %dir /run/clamav
 %attr(3771,root,mail) %dir %_logdir/clamav
 %attr(640,mail,root) %ghost %_logdir/clamav/clamd.log
 
@@ -347,7 +333,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %files freshclam
 %{?_with_ownconfdir: %dir %clamconfdir}
 %attr(3775,root,mail) %dir /var/lib/clamav
-%attr(3775,root,mail) %ghost %dir /var/run/clamav
+%attr(3775,root,mail) %ghost %dir /run/clamav
 %attr(3771,root,mail) %dir %_logdir/clamav
 %_bindir/freshclam
 %_man1dir/freshclam*
@@ -362,6 +348,8 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 # If %_sysconfdir/cron.d/clamav-freshclam packaged, then the clamav-freshclam.service not started
 %exclude %_unitdir/clamav-freshclam.service
 %_unitdir/clamav-freshclam-update.service
+%_unitdir/clamav-freshclam-once.service
+%_unitdir/clamav-freshclam-once.timer
 %endif
 
 %files clamonacc
@@ -400,6 +388,16 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Wed Oct 29 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt1
+- 1.4.3 (Fixes CVE-2025-20260)
+- Add vendoring for rust
+- Update patches
+- Change /var/run/clamav -> /run/clamav
+- Disable slamscan test
+- Change soname 9 -> 12
+- Use cmake for build
+- Use PrivateMirror's by default
+
 * Thu Nov 14 2024 Sergey Y. Afonin <asy@altlinux.org> 0.103.12-alt1
 - 0.103.12 (CVE-2024-20506, CVE-2024-20505)
 - built with -std=gnu++11
