@@ -1,5 +1,5 @@
 Name: edfbrowser
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: EDF+ and BDF+ viewer and toolbox
@@ -38,6 +38,9 @@ rm -v %buildroot%_datadir/*/edf.png
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Oct 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14-alt1
+- 2.14 released
+
 * Fri Jul 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.13-alt1
 - 2.13 released
 
