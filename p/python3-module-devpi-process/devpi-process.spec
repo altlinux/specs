@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: Programmatic API to create and use a devpi server process
 License: MIT
 Group: Development/Python3
@@ -51,6 +51,9 @@ that programmatically.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.2 -> 1.1.0.
+
 * Sun May 25 2025 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
 - Fixed extra name used for pulling tests dependencies.
 
