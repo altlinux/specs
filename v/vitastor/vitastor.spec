@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -20,7 +20,7 @@ Patch2000: %name-e2k.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
 
-BuildRequires: pkgconfig(liburing)
+BuildRequires: pkgconfig(liburing) >= 2.11
 BuildRequires: pkgconfig(libnl-3.0) pkgconfig(libnl-genl-3.0)
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
@@ -179,6 +179,7 @@ sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 %cmake \
         -DWITH_QEMU=OFF \
         -DWITH_FIO=OFF \
+	-DWITH_SYSTEM_LIBURING=ON \
         -GNinja
 %cmake_build
 
@@ -292,6 +293,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 29 2025 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
+- 2.4.1
+- Build with system liburing
+
 * Sat Sep 27 2025 Sergey Konev <darisishe@altlinux.org> 2.4.0-alt1
 - 2.4.0 (closes: #56150)
 
