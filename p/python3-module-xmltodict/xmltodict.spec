@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.0.2
 Release: alt1
 
 Summary: Makes working with XML feel like you are working with JSON
@@ -21,6 +21,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -38,13 +41,16 @@ are working with JSON.
 %pyproject_install
 
 %check
-%pyproject_run_unittest discover -v tests/
+%pyproject_run_pytest -v
 
 %files
 %doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 02 2025 Nikita Panov <nexxy@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Mon Sep 15 2025 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt1
 - New version 1.0.0.
 
