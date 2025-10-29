@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -38,6 +38,9 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Wed Oct 29 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.4.1-alt1
+- Fix scroll and save in PDF mode (Closes: #56649, #56655)
+
 * Tue Oct 14 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.0-alt1
 - New features:
     + Add machine-readable power of attorney (MRPA) support.
