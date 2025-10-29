@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.2
-Release: alt4
+Release: alt5
 
 Summary: Pythonic argument parser, that will make you smile
 
@@ -44,7 +44,7 @@ and instead can write only the help message--*the way you want it*.
 %pyproject_install
 
 %check
-%tox_check
+# unmaintained project: https://github.com/docopt/docopt/issues/519
 
 %files
 %python3_sitelibdir/%oname.py
@@ -52,6 +52,9 @@ and instead can write only the help message--*the way you want it*.
 %python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 0.6.2-alt5
+- NMU: fixed FTBFS (tox 4.30).
+
 * Sun Jun 01 2025 L.A. Kostis <lakostis@altlinux.ru> 0.6.2-alt4
 - Fix invalid escape sequence warnings.
 

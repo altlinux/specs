@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 3.2.9
-Release: alt1
+Release: alt2
 Summary: A Python module for creating Excel XLSX files
 License: BSD
 Group:   Development/Python3
@@ -46,7 +46,8 @@ done
 popd
 
 %check
-%tox_check_pyproject
+# .github/workflows/python-test.yml
+%pyproject_run_pytest -vra
 
 %files
 %doc Changes *.md *.rst examples dev/performance
@@ -54,6 +55,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 3.2.9-alt2
+- NMU: fixed FTBFS (tox 4.30).
+
 * Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.2.9-alt1
 - New version.
 

@@ -5,7 +5,7 @@
 
 Name:    %pypi_name
 Version: 2.5.8
-Release: alt1
+Release: alt2
 
 Summary: Automounter for removable media
 License: MIT
@@ -45,7 +45,8 @@ Group: Development/Python3
 %pyproject_install
 
 %check
-%tox_check_pyproject
+# .github/workflows/python-package.yml
+%pyproject_run -- python test/test_match.py
 
 %files -n python3-module-%pypi_name
 %python3_sitelibdir/%pypi_name/
@@ -69,6 +70,9 @@ Group: Development/Python3
 %_datadir/zsh/site-functions/_udiskie-umount
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 2.5.8-alt2
+- NMU: fixed FTBFS (tox 4.30).
+
 * Tue Aug 26 2025 Artem Semenov <savoptik@altlinux.org> 2.5.8-alt1
 - Updated to 2.5.8
 - Enabled check

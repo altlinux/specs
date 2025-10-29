@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tox
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.29.0
+Version: 4.32.0
 Release: alt1
 
 Summary: Generic virtualenv management and test command line tool
@@ -25,8 +26,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /proc
 # required by test_local_execute_terminal_size
 BuildRequires: /dev/pts
-# run coverage and linting reports on diffs
-%add_pyproject_deps_check_filter diff-cover
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -72,10 +71,13 @@ export PIP_NO_BUILD_ISOLATION=NO
 
 %files
 %_bindir/tox.py3
-%python3_sitelibdir/tox/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 4.32.0-alt1
+- 4.29.0 -> 4.32.0.
+
 * Wed Sep 03 2025 Stanislav Levin <slev@altlinux.org> 4.29.0-alt1
 - 4.28.4 -> 4.29.0.
 
