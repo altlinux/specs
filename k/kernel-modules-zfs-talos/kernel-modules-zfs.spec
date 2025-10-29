@@ -1,6 +1,6 @@
 %define module_name zfs
 %define module_version 2.3.3
-%define module_release alt1
+%define module_release alt2
 
 %define flavour talos
 %define karch x86_64 aarch64
@@ -41,7 +41,6 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
 Provides: kernel-modules-spl-%flavour = %version-%release
 Provides: kernel-modules-spl-%kversion-%flavour-%krelease = %version-%release
-Provides: zfs-kernel-module = %EVR
 
 ExclusiveArch: %karch
 
@@ -75,6 +74,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Oct 29 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.3.3-alt2
+- Remove provides zfs-kernel-module
 
 * Wed Aug 06 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt1
 - 2.3.2 -> 2.3.3
