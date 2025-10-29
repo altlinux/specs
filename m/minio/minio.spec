@@ -1,14 +1,14 @@
 %global import_path github.com/minio/minio
-%global commit 7ced9663e6a791fef9dc6be798ff24cda9c730ac
+%global commit 9e49d5e7a648f00e26f2246f4dc28e6b07f8c84a
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2025-07-23T15-54-02Z
-%define version 2025.07.23
+%global tag RELEASE.2025-10-15T17-29-55Z
+%define version 2025.10.15
 
 %global _unpackaged_files_terminate_build 1
 
 Name: minio
 Version: %version
-Release: alt2
+Release: alt1
 Summary: Cloud Storage Server
 Group: System/Servers
 License: AGPL-3.0
@@ -23,7 +23,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.2
+BuildRequires: rpm-build-golang golang >= 1.24.8
 
 %description
 MinIO is an object storage server released under Apache License v2.0.
@@ -97,11 +97,14 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Oct 29 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt1
+- Update to RELEASE.2025-10-15T17-29-55Z (Fixed: CVE-2025-62506)
+
 * Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 2025.07.23-alt2
 - Update web console to v2.0.3 (ALT#55707)
 
 * Fri Aug 01 2025 Alexey Shabalin <shaba@altlinux.org> 2025.07.23-alt1
-- Update to RELEASE.2025-07-23T15-54-02Z
+- Update to RELEASE.2025-07-23T15-54-02Z (Fixed: CVE-2025-31489, CVE-2025-27414)
 
 * Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 2025.02.07-alt1
 - Update to RELEASE.2025-02-07T23-21-09Z
