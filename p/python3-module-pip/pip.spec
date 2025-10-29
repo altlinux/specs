@@ -1,18 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pip
+%define mod_name %pypi_name
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 %define bash_completions_dir %_datadir/bash-completion/completions
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 25.2
+Version: 25.3
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
 Group: Development/Python3
-Url: https://pip.pypa.io
+Url: https://pypi.org/project/pip
 VCS: https://github.com/pypa/pip.git
 
 Source0: %name-%version.tar
@@ -21,7 +22,7 @@ Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-%add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/%mod_name/_vendor/*
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -68,7 +69,7 @@ BuildArch: noarch
 %autopatch -p1
 
 # remove bundled exes
-rm -f ./src/pip/_vendor/distlib/*.exe
+rm -f ./src/%mod_name/_vendor/distlib/*.exe
 
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
@@ -92,20 +93,20 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 # drop deprecated ntlm support
-rm -v %buildroot%python3_sitelibdir/pip/_vendor/urllib3/contrib/ntlmpool.py
+rm -v %buildroot%python3_sitelibdir/%mod_name/_vendor/urllib3/contrib/ntlmpool.py
 
 # package a built wheel (will be used within venv created by virtualenv)
 built_wheel=$(cat ./dist/.wheeltracker) || \
         { echo Make sure you built a pyproject ; exit 1 ; }
 mkdir -p "%buildroot%system_wheels_path"
-cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
+install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 # install bash completion
 # https://pip.pypa.io/en/stable/user_guide/#command-completion
 mkdir -p %buildroot%bash_completions_dir
 # use system interpreter because
 # completion generator resolves python as venv's one otherwise
-PYTHONPATH=%buildroot%python3_sitelibdir python3 -m pip \
+PYTHONPATH=%buildroot%python3_sitelibdir python3 -m %mod_name \
     completion --bash > %buildroot%bash_completions_dir/pip3
 ln -sr %buildroot%bash_completions_dir/{pip3,pip}
 
@@ -121,13 +122,16 @@ export NO_LATEST_WHEELS=YES
 %doc README.*
 %_bindir/pip3
 %bash_completions_dir/pip3
-%python3_sitelibdir/pip/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files wheel
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 25.3-alt1
+- 25.2 -> 25.3.
+
 * Thu Jul 31 2025 Stanislav Levin <slev@altlinux.org> 25.2-alt1
 - 25.1.1 -> 25.2.
 - Packaged bash completion (closes: #49430).

@@ -4,7 +4,7 @@
 
 Name: python3-module-argcomplete
 Version: 3.6.3
-Release: alt1
+Release: alt2
 
 Summary: Bash tab completion for argparse
 
@@ -26,6 +26,7 @@ BuildRequires: python3-module-hatch-vcs
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-setuptools
 BuildRequires: zsh
 BuildRequires: /dev/pts
 %endif
@@ -56,6 +57,8 @@ sed -i -e "1s|#!.*python.*|#!%__python3|" test/prog test/*.py argcomplete/script
 sed -i -e "s|python |python3 |" test/test.py
 export PYTHONPATH=%buildroot%python3_sitelibdir
 export PATH=$PATH:%buildroot%_bindir
+# disable build isolation
+export PIP_NO_BUILD_ISOLATION=NO
 %pyproject_run -- python3 ./test/test.py -v
 
 %files
@@ -67,6 +70,9 @@ export PATH=$PATH:%buildroot%_bindir
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 3.6.3-alt2
+- NMU: fixed FTBFS (pip 25.3).
+
 * Mon Oct 20 2025 Anton Vyatkin <toni@altlinux.org> 3.6.3-alt1
 - New version 3.6.3.
 

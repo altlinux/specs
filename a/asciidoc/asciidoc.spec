@@ -3,7 +3,7 @@
 
 Name: asciidoc
 Version: 10.2.1
-Release: alt1
+Release: alt2
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
@@ -79,6 +79,8 @@ This package contains AsciiDoc documentation and examples.
 %configure docdir=%docdir
 
 %install
+# disable build isolation
+export PIP_NO_BUILD_ISOLATION=NO
 %make_install DESTDIR=%buildroot install docs manpages
 mkdir -p %buildroot%_man1dir
 mv %buildroot%docdir/doc/{asciidoc.1,a2x.1,testasciidoc.1} %buildroot%_man1dir/
@@ -119,6 +121,9 @@ install -pD -m644 COPYRIGHT  %buildroot%docdir/
 %exclude %docdir/README.md
 
 %changelog
+* Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 10.2.1-alt2
+- NMU: fixed FTBFS (pip 25.3).
+
 * Fri Sep 26 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 10.2.1-alt1
 - 10.2.1 
 

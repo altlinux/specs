@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 20.33.1
-Release: alt1
+Release: alt2
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
@@ -80,6 +80,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 20.33.1-alt2
+- Fixed FTBFS (pip 25.3).
+
 * Wed Aug 06 2025 Stanislav Levin <slev@altlinux.org> 20.33.1-alt1
 - 20.33.0 -> 20.33.1.
 
