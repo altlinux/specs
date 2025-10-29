@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: deepin-pdfium
-Version: 1.5.3.0.3.1518
+Version: 1.5.7
 Release: alt1
 
 Summary: Development library for pdf on Deepin
@@ -13,7 +13,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pdfium
 Vcs: https://github.com/linuxdeepin/deepin-pdfium
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-pdfium/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: dqt6-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
@@ -42,6 +43,14 @@ Group: Development/Other
 %description -n lib%name-devel
 This package provides development files for %name.
 
+%package -n lib%name-common
+Summary: Common files for %name
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+%description -n lib%name-common
+This package provides common files %name.
+
 %prep
 %setup
 %autopatch -p1
@@ -55,7 +64,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %DQ6build \
-  -DVERSION=1.5.3 \
+  -DVERSION=%version \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
 #
 
@@ -63,7 +72,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %DQ6install
 
 %files -n lib%name%sover
-%doc LICENSE
 %_libdir/lib%name.so.%{sover}*
 
 %files -n lib%name-devel
@@ -73,7 +81,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/%name/
 
+%files -n lib%name-common
+%doc LICENSE debian/changelog
+
 %changelog
+* Wed Oct 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.7-alt1
+- New version 1.5.7.
+- Packaged a common files separately.
+
 * Tue Sep 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.3.0.3.1518-alt1
 - New version 1.5.3-3-g1518dd6.
 - Fixed build with gcc15.
