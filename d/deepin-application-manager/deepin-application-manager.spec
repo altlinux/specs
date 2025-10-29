@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.35
+Version: 1.2.36
 Release: alt1
 
 Summary: App manager for Deepin
@@ -61,6 +61,7 @@ export READELF="llvm-readelf"
 rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 
 %files
+%doc LICENSE README*.md debian/changelog
 %_bindir/%repo
 %_bindir/dde-am
 %_bindir/app-identifier
@@ -96,6 +97,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Wed Oct 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.36-alt1
+- New version 1.2.36.
+
 * Fri Oct 03 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.35-alt1
 - New version 1.2.35.
 
