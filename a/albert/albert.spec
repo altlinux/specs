@@ -1,8 +1,8 @@
 %def_with check
-%define abiver 0
+%define abiver 33
 
 Name:    albert
-Version: 0.32.1
+Version: %abiver.0.1
 Release: alt1
 
 Summary: A fast and flexible keyboard launcher
@@ -127,6 +127,7 @@ Shared libraries for running Albert launcher application
 %dir %_iconsdir/hicolor/scalable/
 %dir %_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name-tray.svg
 
 %files -n lib%name-devel
 %dir %_includedir/%name
@@ -138,6 +139,9 @@ Shared libraries for running Albert launcher application
 %_libdir/lib%name.so.%abiver.*
 
 %changelog
+* Tue Oct 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 33.0.1-alt1
+- New version.
+
 * Fri Sep 26 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.32.1-alt1
 - New version.
 - Added huge amount of new submodules.
