@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-# build without man pages: no mandoc in Sisyphus
-%def_without man
+%define _runtimedir /run
 
 Name: pesign
 Version: 116
-Release: alt3
+Release: alt5
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -18,10 +17,7 @@ BuildRequires: libnss-devel
 BuildRequires: libpopt-devel
 BuildRequires: libefivar-devel
 BuildRequires: libuuid-devel
-
-%if_with man
-#BuildRequires: mandoc
-%endif
+BuildRequires: mandoc
 
 %description
 This package contains the pesign utility for signing UEFI binaries
@@ -29,11 +25,6 @@ as well as other associated tools.
 
 %prep
 %setup -n %name-%version-%release
-
-%if_without man
-# disable mandoc
-sed -i 's/mandoc/true/' Make.rules
-%endif
 
 # fix error: "_FORTIFY_SOURCE" redefined
 sed -i -e 's/-D_FORTIFY_SOURCE=2//' Make.defaults
@@ -78,7 +69,12 @@ mv %buildroot%_rpmmacrosdir/{macros.,}pesign
 
 mkdir -pv %buildroot%_runtimedir/pesign/socketdir/
 mksock -m666 %buildroot%_runtimedir/pesign/socketdir/socket
-touch %buildroot%_runtimedir/pesign.pid
+touch %buildroot%_runtimedir/pesign/pesign.pid
+
+mkdir -pv %buildroot%_sysconfdir/pki/pesign
+touch %buildroot%_sysconfdir/pki/pesign/cert8.db
+touch %buildroot%_sysconfdir/pki/pesign/key3.db
+touch %buildroot%_sysconfdir/pki/pesign/secmod.db
 
 mkdir -pv %buildroot%_sysconfdir/sysconfig
 cat > %buildroot%_sysconfdir/sysconfig/pesign <<EOF
@@ -115,26 +111,32 @@ fi
 %_bindir/authvar
 %_bindir/pesigcheck
 %dir %_libexecdir/pesign
-%_libexecdir/pesign/pesign-authorize
 %_libexecdir/pesign/pesign-rpmbuild-helper
 %dir %_sysconfdir/pesign
 %config(noreplace) %_sysconfdir/popt.d/pesign.popt
-%config(noreplace) %_sysconfdir/pesign/groups
-%config(noreplace) %_sysconfdir/pesign/users
 %config(noreplace) %_sysconfdir/sysconfig/pesign
 %_rpmmacrosdir/pesign
-%if_with man
 %_mandir/man?/*
-%endif
 %_tmpfilesdir/pesign.conf
 %_initdir/pesign
 %_unitdir/pesign.service
-%dir %attr(750,root,pesign) %_runtimedir/pesign/
-%dir %_runtimedir/pesign/socketdir/
-%ghost %_runtimedir/pesign/socketdir/socket
-%ghost %_runtimedir/pesign.pid
+%dir %attr(750,pesign,pesign) %_runtimedir/pesign/
+%dir %attr(755,pesign,pesign) %_runtimedir/pesign/socketdir/
+%ghost %attr(666,pesign,pesign) %_runtimedir/pesign/socketdir/socket
+%ghost %_runtimedir/pesign/pesign.pid
+%dir %attr(570,pesign,root) %_sysconfdir/pki/pesign
+%ghost %attr(570,pesign,root) %_sysconfdir/pki/pesign/cert8.db
+%ghost %attr(570,pesign,root) %_sysconfdir/pki/pesign/key3.db
+%ghost %attr(570,pesign,root) %_sysconfdir/pki/pesign/secmod.db
 
 %changelog
+* Mon Sep 29 2025 Egor Ignatov <egori@altlinux.org> 116-alt5
+- run pesignd as unprivileged user
+- drop deprecated pesign-authorize
+
+* Mon Jul 28 2025 Egor Ignatov <egori@altlinux.org> 116-alt4
+- enable man pages
+
 * Wed May 08 2024 Egor Ignatov <egori@altlinux.org> 116-alt3
 - pesign-client: fix 'could not access socket' error
 
