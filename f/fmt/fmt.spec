@@ -1,7 +1,7 @@
 %define sover 12
 
 Name: fmt
-Version: 12.0.0
+Version: 12.1.0
 Release: alt1
 Epoch: 1
 
@@ -69,6 +69,9 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 29 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.1.0-alt1
+- New version 12.1.0.
+
 * Wed Sep 17 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.0.0-alt1
 - New version 12.0.0.
 
