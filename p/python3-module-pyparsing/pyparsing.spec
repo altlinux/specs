@@ -5,8 +5,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 3.2.3
+Version: 3.2.5
 Release: alt1
 Summary: Python parsing module
 License: MIT
@@ -16,12 +27,16 @@ Vcs: https://github.com/pyparsing/pyparsing
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra diagrams
 %pyproject_builddeps_check
+# to generate deps
+BuildRequires: python3-module-tox
 %endif
 
 %description
@@ -30,12 +45,15 @@ simple grammars, vs. the traditional lex/yacc approach, or the use of
 regular expressions.  The parsing module provides a library of classes
 that client code uses to construct the grammar directly in Python code.
 
+%add_python_extra diagrams
+
 %prep
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%_tox_bin config -e unit -k deps > tox_.ini
 %if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
+%pyproject_deps_resync_check_tox tox_.ini 'testenv:unit'
 %endif
 
 %build
@@ -53,6 +71,9 @@ that client code uses to construct the grammar directly in Python code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 3.2.5-alt1
+- 3.2.3 -> 3.2.5.
+
 * Tue Mar 25 2025 Stanislav Levin <slev@altlinux.org> 3.2.3-alt1
 - 3.2.2 -> 3.2.3.
 
