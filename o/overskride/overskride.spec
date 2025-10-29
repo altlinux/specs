@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: overskride
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A simple but powerful bluetooth app
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
