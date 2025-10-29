@@ -7,7 +7,7 @@
 %define _servicename pi-hole
 
 Name:    pi-hole
-Version: 6.2.1
+Version: 6.2.2
 Release: alt1
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
@@ -153,6 +153,9 @@ chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/unins
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Wed Oct 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.2-alt1
+- v6.2.2
+
 * Tue Oct 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.2.1-alt1
 - v6.2.1
 
