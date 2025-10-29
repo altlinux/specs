@@ -2,7 +2,7 @@ Name: kernel-image-6.17
 Release: alt1
 %define kernel_src_version	6.17
 %define kernel_base_version	6.17
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.6-alt1
+- v6.17.6 (2025-10-29).
+
 * Thu Oct 23 2025 Kernel Bot <kernelbot@altlinux.org> 6.17.5-alt1
 - v6.17.5 (2025-10-23).
 
