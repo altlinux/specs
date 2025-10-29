@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -36,6 +36,7 @@ Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 Patch13: alt-is-live.patch
 Patch14: alt-revert.patch
+Patch15: alt-def-sys-conns.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -217,6 +218,7 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 %build
 %K6build \
@@ -278,6 +280,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Wed Oct 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt2
+- create system connections by default
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 
