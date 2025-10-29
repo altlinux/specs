@@ -4,7 +4,7 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
@@ -224,6 +224,9 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Thu Oct 30 2025 Ilya Mashkin <oddity@altlinux.ru> 5.14.0-alt1
+- 5.14.0
+
 * Sat Aug 23 2025 Ilya Mashkin <oddity@altlinux.ru> 5.13.0-alt1
 - 5.13.0
 
