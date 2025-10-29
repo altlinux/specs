@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name words
-%define ver_major 0.6
+%define ver_major 0.7
 %define rdn_name page.codeberg.petsoi.%_name
 
 %def_enable check
@@ -9,7 +9,7 @@
 
 # conflicts with words-2-alt1
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Words!
@@ -73,6 +73,12 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
+* Wed Aug 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu Jul 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
