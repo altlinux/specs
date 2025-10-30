@@ -1,6 +1,6 @@
 Name: xorg-xcbproto-devel
 Version: 1.17.0
-Release: alt1
+Release: alt2
 
 Summary: XML-XCB protocol descriptions
 License: MIT/X11
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: python-devel xml-utils xorg-util-macros
+BuildRequires: python3-devel xml-utils xorg-util-macros
 
 %description
 XML-XCB protocol descriptions.
@@ -33,11 +33,14 @@ XML-XCB protocol descriptions.
 
 %files
 %doc NEWS README.md TODO
-%python_sitelibdir/xcbgen
+%python3_sitelibdir/xcbgen
 %_datadir/xcb
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Oct 21 2025 Fr. Br. George <george@altlinux.org> 1.17.0-alt2
+- Switch to python3
+
 * Wed Apr 17 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.17.0-alt1
 - 1.17.0
 
