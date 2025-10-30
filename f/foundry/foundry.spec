@@ -5,7 +5,7 @@
 %define soname %name-%{apiver}_%soversion
 
 Name: foundry
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: A tool that brings core features of GNOME Builder into a library and CLI tool
@@ -126,5 +126,8 @@ Requires: lib%name-devel = %EVR
 %_girdir/FoundryGtk-%apiver.gir
 
 %changelog
+* Thu Oct 30 2025 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt1
+- new version 1.0.1
+
 * Wed Oct 01 2025 Alexey Volkov <qualimock@altlinux.org> 1.0.0-alt1
 - initial build for ALT
