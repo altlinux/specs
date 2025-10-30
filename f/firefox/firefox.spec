@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 144.0
+Version: 144.0.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0.2-alt1
+- New version (144.0.2).
+- Fixes:
+  + CVE-2025-12380: Use-after-free in WebGPU internals triggered from a compromised child process
+
 * Wed Oct 15 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0-alt1
 - New version (144.0).
 - Fixes:
