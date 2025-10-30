@@ -1,5 +1,5 @@
 Name:    moodle-qtype_coderunner
-Version: 5.7.2
+Version: 5.8.0
 Release: alt1
 
 Summary: A moodle quiz question type that runs student-submitted program code in a sandbox to check if it satisfies a given set of tests
@@ -60,6 +60,9 @@ cp -a * %buildroot%moodle_questiondir/type/coderunner
 %moodle_questiondir/type/coderunner
 
 %changelog
+* Thu Oct 30 2025 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt1
+- New version.
+
 * Mon Oct 20 2025 Andrey Cherepanov <cas@altlinux.org> 5.7.2-alt1
 - New version.
 
