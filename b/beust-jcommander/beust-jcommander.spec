@@ -1,41 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: beust-jcommander
+Version: 3.0
+Release: alt1
+
+Summary: Java framework for parsing command line parameters
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+Url: http://jcommander.org
+Vcs: https://github.com/cbeust/jcommander.git
+BuildArch: noarch
 
-Name:           beust-jcommander
-Version:        1.78
-Release:        alt2
-Summary:        Java framework for parsing command line parameters
-License:        ASL 2.0
-URL:            http://jcommander.org/
-BuildArch:      noarch
+Source0: %name-%version.tar
+Patch0: 0001-Unicode-fix-for-tests-with-java-17.patch
+Patch1: 0002-Disable-signing-with-key.patch
 
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-# Adapted from earlier version that still shipped poms. It uses kobalt for building now
-Source1:        %{name}.pom
-# Cleaned up bundled jars whose licensing cannot be easily verified
-Source2:        generate-tarball.sh
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: /proc
+BuildRequires: jpackage-17-compat
+BuildRequires: xgradle
+BuildRequires: rpm-build-java-osgi
+BuildRequires: biz-aQute-bnd-gradle-plugins
+BuildRequires: jackson-core
+BuildRequires: jackson-annotations
+BuildRequires: testng
 
-Patch0:         0001-ParseValues-NullPointerException-patch.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.testng:testng)
-%endif
-Source44: import.info
+Provides: mvn(com.beust:jcommander) = %EVR
+Provides: mvn(org.jcommander:jcommander) = %EVR
 
 %description
 JCommander is a very small Java framework that makes it trivial to
@@ -43,26 +34,30 @@ parse command line parameters (with annotations).
 
 %package javadoc
 Group: Development/Java
-Summary:        API documentation for %{name}
+Summary: API documentation for %name
 BuildArch: noarch
 
 %description javadoc
-This package contains the %{summary}.
+This package contains the %summary.
 
 %prep
-%setup -q
-%patch0 -p1
-
-chmod -x license.txt
-cp -p %SOURCE1 pom.xml
-sed -i 's/@VERSION@/%{version}/g' pom.xml
+%setup
+%autopatch -p1
 
 %build
-%mvn_file : %{name} jcommander
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%gradle_publish
 
 %install
-%mvn_install
+# Alias for backward compatibility (changed groupId).
+%mvn_alias org.jcommander:jcommander com.beust:jcommander
+
+%gradle_register
+%gradle_register_javadoc
+
+%gradle_install
+
+%check
+%gradle_check
 
 %files -f .mfiles
 %doc license.txt notice.md README.markdown
@@ -71,6 +66,9 @@ sed -i 's/@VERSION@/%{version}/g' pom.xml
 %doc license.txt notice.md
 
 %changelog
+* Mon Oct 27 2025 Ivan Khanas <xeno@altlinux.org> 3.0-alt1
+- New version.
+
 * Thu Oct 23 2025 Ivan Khanas <xeno@altlinux.org> 1.78-alt2
 - Create symlink to maintain the naming of artifacts.
 
