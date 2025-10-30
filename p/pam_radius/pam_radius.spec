@@ -2,7 +2,7 @@
 
 Name: pam_radius
 Summary: PAM Module for RADIUS Authentication
-Version: 2.0.1
+Version: 3.0.0
 Release: alt1
 Group: System/Base
 License: GPLv2+
@@ -42,6 +42,9 @@ install -m 600 pam_radius_auth.conf %buildroot%_sysconfdir/pam_radius_auth.conf
 %_pam_modules_dir/pam_radius_auth.so
 
 %changelog
+* Thu Oct 30 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Tue Feb 15 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.1-alt1
 - Initial build upstream master snapshot.
 
