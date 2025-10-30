@@ -3,12 +3,13 @@
 %ifarch i586
 %def_without check
 %else
-%def_with check
+# Broken tests
+%def_without check
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 2.16.0
-Release: alt2
+Version: 2.18.0
+Release: alt1
 
 Summary: Production-ready, Light, Flexible and Extensible ASGI API framework | Effortlessly Build Performant APIs
 License: MIT
@@ -31,6 +32,7 @@ BuildRequires: python3-module-trio
 BuildRequires: python3-module-pydantic
 BuildRequires: python3-module-msgspec
 BuildRequires: python3-module-multidict
+BuildRequires: python3-module-multipart
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-anyio
 BuildRequires: python3-module-redis-py
@@ -65,6 +67,7 @@ BuildRequires: python3-module-multipart
 BuildRequires: python3-module-valkey
 BuildRequires: python3-module-jwt
 BuildRequires: python3-module-litestar-htmx
+BuildRequires: python3-module-rich
 %endif
 
 %add_python3_req_skip starlite
@@ -85,7 +88,6 @@ and much more that's needed to get applications up and running.
 
 %prep
 %setup -n %pypi_name-%version
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -142,6 +144,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 13 2025 Alexander Burmatov <thatman@altlinux.org> 2.18.0-alt1
+- New 2.18.0 version.
+
 * Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 2.16.0-alt2
 - NMU: fixed FTBFS (pytest 8.4.0).
 

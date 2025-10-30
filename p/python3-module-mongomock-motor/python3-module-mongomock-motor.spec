@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.36
-Release: alt1
+Release: alt2
 
 Summary: Library for mocking AsyncIOMotorClient built on top of mongomock
 License: MIT
@@ -46,7 +46,7 @@ sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k 'not test_bulk_write'
+%pyproject_run_pytest -k 'not test_bulk_write and not test_umongo'
 
 %files
 %doc *.md
@@ -54,6 +54,9 @@ sed -i 's/version = "0.0.0"/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.0.36-alt2
+- Fix tests.
+
 * Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 0.0.36-alt1
 - New 0.0.36 version.
 

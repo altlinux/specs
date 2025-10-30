@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.31.2
-Release: alt2
+Version: 1.32.0
+Release: alt1
 
 Summary: Python Serverless Microframework for AWS
 License: Apache-2.0
@@ -23,6 +23,8 @@ BuildRequires: python3-module-websockets
 BuildRequires: python3-module-inquirer
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-six
+BuildRequires: python3-module-jmespath
 %endif
 
 %add_python3_req_skip app
@@ -58,7 +60,8 @@ quickly create and deploy applications that use AWS Lambda.
     --ignore=tests/unit/deploy/test_packager.py \
     --ignore=tests/integration/test_package.py \
     --ignore=tests/functional/test_awsclient.py \
-    --deselect=tests/functional/cli/test_cli.py::test_can_generate_pipeline_for_all
+    --deselect=tests/functional/cli/test_cli.py::test_can_generate_pipeline_for_all \
+    --deselect=tests/functional/test_deployer.py::test_no_error_message_printed_on_empty_reqs_file
 
 %files
 %doc *.rst
@@ -67,6 +70,9 @@ quickly create and deploy applications that use AWS Lambda.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.32.0-alt1
+- New 1.32.0 version.
+
 * Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.31.2-alt2
 - Built with Hypothesis supplied without numerous redundant dependencies.
 

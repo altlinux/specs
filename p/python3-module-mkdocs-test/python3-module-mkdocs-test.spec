@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.5.3
+Version: 0.5.6
 Release: alt1
 
 Summary: A framework for testing MkDocs projects
@@ -24,6 +24,7 @@ BuildRequires: python3-module-markdown
 BuildRequires: python3-module-pandas
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-mkdocs
+BuildRequires: python3-module-lxml
 %endif
 
 BuildArch: noarch
@@ -49,7 +50,11 @@ Source: %pypi_name-%version.tar
 %doc *.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/test
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.5.6-alt1
+- New 0.5.6 version.
+
 * Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 0.5.3-alt1
 - Initial build for Sisyphus.

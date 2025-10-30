@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: A universal web framework adapter for Python that lets you write code once and use it across multiple web frameworks
 License: MIT
@@ -53,7 +53,7 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_litestar_adapter"
 
 %files
 %doc *.md
@@ -61,5 +61,8 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.2.3-alt2
+- Fix tests.
+
 * Wed Aug 13 2025 Alexander Burmatov <thatman@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus.

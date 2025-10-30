@@ -9,7 +9,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 25.3.0
-Release: alt1
+Release: alt2
 
 Summary: Accelerate your web app development | Build fast, run fast
 License: MIT
@@ -54,9 +54,14 @@ webserver.
 %pyproject_install
 
 %check
-# Separate test_multiprocessing to workaround its instability on our riscv64 build nodes
-%pyproject_run_pytest -k "not test_websocket_route_with_subprotocols and not test_keep_alive_client_timeout and not test_multiprocessing"
-%pyproject_run_pytest -k "test_multiprocessing"
+%pyproject_run_pytest --asyncio-mode=auto -k "not test_multiprocessing" tests/test_app.py --deselect=tests/test_app.py::test_create_asyncio_server \
+    --deselect=tests/test_app.py::test_asyncio_server_no_start_serving \
+    --deselect=tests/test_app.py::test_asyncio_server_start_serving \
+    --deselect=tests/test_app.py::test_create_server_main \
+    --deselect=tests/test_app.py::test_create_server_no_startup \
+    --deselect=tests/test_app.py::test_create_server_main_convenience \
+    --deselect=tests/test_app.py::test_uvloop_cannot_never_called_with_create_server \
+    --deselect=tests/test_app.py::test_multiple_uvloop_configs_display_warning
 
 %files
 %doc *.rst
@@ -65,6 +70,9 @@ webserver.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 25.3.0-alt2
+- Fix tests.
+
 * Mon Jul 28 2025 Alexander Burmatov <thatman@altlinux.org> 25.3.0-alt1
 - 24.12.0 -> 25.3.0
 

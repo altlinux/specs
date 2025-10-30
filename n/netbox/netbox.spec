@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.4.4
+Version: 4.4.5
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -51,16 +51,16 @@ Requires: python3-module-jsonschema >= 4.25.1
 Requires: python3-module-markdown >= 3.9
 Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.1
-Requires: python3-module-Pillow >= 11.3.0
-Requires: python3-module-psycopg >= 3.2.10
+Requires: python3-module-pillow >= 12.0.0
+Requires: python3-module-psycopg >= 3.2.12
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-requests >= 2.32.5
 Requires: python3-module-rq >= 2.6.0
 Requires: python3-module-social-app-django >= 5.6.0
 Requires: python3-module-social-core >= 4.8.1
 Requires: python3-module-sorl-thumbnail >= 12.11.0
-Requires: python3-module-strawberry-graphql >= 0.283.3
-Requires: python3-module-strawberry-django >= 0.66.2
+Requires: python3-module-strawberry-graphql >= 0.284.1
+Requires: python3-module-strawberry-django >= 0.67.0
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2025.2
@@ -208,6 +208,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.5-alt1
+- New 4.4.5 version.
+
 * Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.4-alt1
 - New 4.4.4 version.
 
