@@ -4,8 +4,8 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.4.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 %K6init
 
 Group: Video
@@ -24,7 +24,7 @@ Patch1: alt-smb.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-5compat-devel
-BuildRequires: mpvqt6-devel
+BuildRequires: mpvqt6-devel libkdsingleapplication-qt6-devel
 BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libavfilter-devel libswscale-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kdoctools-devel kf6-kfilemetadata-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kirigami-devel kf6-kxmlgui-devel
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Thu Oct 30 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
+- new version
+
 * Mon Jul 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
 - update russian translation
 
