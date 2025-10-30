@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt2
+Release: alt3
 #Epoch: 1
 %K6init
 
@@ -37,6 +37,7 @@ Patch12: alt-def-allow-all.patch
 Patch13: alt-is-live.patch
 Patch14: alt-revert.patch
 Patch15: alt-def-sys-conns.patch
+Patch16: alt-data-cifers.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -219,6 +220,7 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 %K6build \
@@ -280,6 +282,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Thu Oct 30 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt3
+- add patch against kdebug#461055
+
 * Wed Oct 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt2
 - create system connections by default
 
