@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name virtualenv
+%define mod_name %pypi_name
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.33.1
-Release: alt2
+Version: 20.35.4
+Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
@@ -57,7 +58,7 @@ in newly created environment by invoking /your/dir/bin/python
 %patch -p1
 
 # remove all bundled seed wheels
-rm src/virtualenv/seed/wheels/embed/*.whl
+rm src/%mod_name/seed/wheels/embed/*.whl
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -76,10 +77,13 @@ export PIP_FIND_LINKS=%system_wheels_path
 %files
 %doc README.md
 %_bindir/virtualenv3
-%python3_sitelibdir/virtualenv/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 20.35.4-alt1
+- 20.33.1 -> 20.35.4.
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 20.33.1-alt2
 - Fixed FTBFS (pip 25.3).
 
