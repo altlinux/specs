@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.47
+Version: 7.0.48
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -14,7 +14,8 @@ Group: Sound
 Url: https://github.com/linuxdeepin/deepin-music
 VCS: https://github.com/linuxdeepin/deepin-music
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-music/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
@@ -101,6 +102,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Oct 30 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.48-alt1
+- New version 7.0.48.
+
 * Thu Sep 25 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.47-alt1
 - New version 7.0.47.
 
