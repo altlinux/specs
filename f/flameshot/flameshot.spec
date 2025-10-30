@@ -1,8 +1,10 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %def_with wayland
 
 Name: flameshot
-Version: 12.1.0
-Release: alt2.1
+Version: 13.3.0
+Release: alt1
 
 Summary: Powerful yet simple to use screenshot software
 
@@ -12,20 +14,29 @@ URL: https://flameshot.org
 VCS: https://github.com/flameshot-org/flameshot
 
 Source: %name-%version.tar
+Source1: Qt-Color-Widgets-3.0.0.tar.gz
+Source2: kdsingleapplication-1.2.0.tar.gz
 
 Packager: Anton Shevtsov <x09@altlinux.org>
 
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel cmake
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel cmake
 %if_with wayland
-BuildRequires: kf5-kguiaddons-devel
+BuildRequires: kf6-kguiaddons-devel
 %endif
+BuildRequires: /proc
 
 %description
 Powerful and simple to use screenshot software with built-in
 editor with advanced features.
 
 %prep
-%setup
+%setup -a1 -a2
+
+# Move dependencies to external folder
+mkdir external
+mv Qt-Color-Widgets-3.0.0 external/Qt-Color-Widgets
+mv KDSingleApplication-1.2.0 external/KDSingleApplication
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -63,6 +74,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Thu Oct 30 2025 Grigory Ustinov <grenka@altlinux.org> 13.3.0-alt1
+- Automatically updated to 13.3.0.
+
 * Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt2.1
 - Fixed URL.
 
