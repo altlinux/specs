@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Python tools for geographic data
 License: BSD-3-Clause
@@ -41,6 +41,7 @@ BuildRequires: proj
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-psycopg2
 BuildRequires: python3-module-pyarrow
+BuildRequires: python3-module-mapclassify
 %endif
 
 %description
@@ -92,6 +93,9 @@ and not test_predicates_vector_vector[geom_almost_equals-args10]"
 %python3_sitelibdir/%pypi_name/conftest.py
 
 %changelog
+* Thu Oct 30 2025 Nikita Panov <nexxy@altlinux.org> 1.1.1-alt3
+- Improve tests (Closes: #54183).
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt2
 - Fixed FTBFS.
 
