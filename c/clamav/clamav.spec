@@ -14,7 +14,7 @@
 
 Name: clamav
 Version: 1.4.3
-Release: alt1
+Release: alt2
 %define abiversion 12
 
 Summary: Clam Antivirus scanner
@@ -100,7 +100,8 @@ Group: System/Libraries
 Provides: lib%name = %version-%release
 
 # https://lists.clamav.net/pipermail/clamav-devel/2019-January/000443.html
-Conflicts: libclamav7 < 0.100.2-alt3
+Conflicts: libclamav < %version-%release
+Obsoletes: libclamav < %version-%release
 
 %description -n lib%{name}%{abiversion}
 Shared libraries for clamav.
@@ -388,6 +389,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Oct 30 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt2
+- Set Conflicts and Obsolete to "< %%version-%%release" (ALT #56685)
+
 * Wed Oct 29 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt1
 - 1.4.3 (Fixes CVE-2025-20260)
 - Add vendoring for rust
