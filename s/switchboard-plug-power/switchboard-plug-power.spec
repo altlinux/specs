@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: switchboard-plug-power
-Version: 8.0.1
+Version: 8.1.0
 Release: alt1
 
 Summary: Switchboard Power Plug
@@ -57,5 +57,8 @@ This plug configures system power consumption.
 %_datadir/polkit-1/actions/%{appname}.policy
 
 %changelog
+* Thu Oct 30 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - Initial build for Sisyphus

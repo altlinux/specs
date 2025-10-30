@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: numix-icon-theme
-Version: 25.10.17.2
+Version: 25.10.26
 Release: alt1
 
 Summary: Official base icon theme from the Numix project
@@ -37,6 +37,9 @@ cp -pr Numix-Light %{buildroot}%{_datadir}/icons/Numix-Light
 %{_datadir}/icons/Numix-Light
 
 %changelog
+* Thu Oct 30 2025 Nikolay Strelkov <snk@altlinux.org> 25.10.26-alt1
+- New version 25.10.26.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 25.10.17.2-alt1
 - New version 25.10.17.2.
 
