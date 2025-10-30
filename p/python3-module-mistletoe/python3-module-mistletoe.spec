@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: A fast, extensible and spec-compliant Markdown parser in pure Python
@@ -26,8 +26,6 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-BuildRequires: python3-module-parameterized
-BuildRequires: python3-module-pygments
 %endif
 
 %description
@@ -47,6 +45,10 @@ Remember to spell mistletoe in lowercase!
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+cat requirements.txt test-requirements.txt > full-requirements.txt
+%pyproject_deps_resync_check_pipreqfile full-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -55,7 +57,7 @@ Remember to spell mistletoe in lowercase!
 %pyproject_install
 
 %check
-%pyproject_run_unittest
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md
@@ -64,6 +66,9 @@ Remember to spell mistletoe in lowercase!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 30 2025 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
