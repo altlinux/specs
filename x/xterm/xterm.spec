@@ -29,8 +29,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 401
-Release: alt2
+Version: 403
+Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -167,6 +167,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Oct 30 2025 Fr. Br. George <george@altlinux.org> 403-alt1
+- Autobuild version bump to 403
+
 * Fri Jul 11 2025 Fr. Br. George <george@altlinux.org> 401-alt2
 - Add x-terminal-emulator alternative (Closes: #45560)
 
