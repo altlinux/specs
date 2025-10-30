@@ -143,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -167,7 +167,7 @@ Source6: %name-%version-bin-scripts.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
-Patch3: 0001-configure-Correctly-override-DLLEXT-for-ARM-builds.patch
+Patch3: 0017-configure-Work-around-install-sh-requirement-in-auto.patch
 
 AutoReq: yes, noperl, nomingw32, nocpp
 
@@ -387,6 +387,11 @@ Requires: desktop-file-utils
 
 Requires: %name-common = %EVR
 
+# ALT bug #55444
+# wine will ask anyway
+Requires: wine-mono = %mono_version
+Requires: wine-gecko = %gecko_version
+
 %if_with buildwow64
 Conflicts: %wow64conflict
 %endif
@@ -450,8 +455,6 @@ Group: Emulators
 Requires: %name = %EVR
 Requires: %name-programs = %EVR
 
-Requires: wine-mono = %mono_version
-Requires: wine-gecko = %gecko_version
 Requires: winetricks >= %winetricks_version
 
 %add_conflict full
@@ -477,6 +480,8 @@ Conflicts: libwine-vanilla <= 6.14.1
 Conflicts: i586-libwine-vanilla <= 6.14.1
 Conflicts: wine-vanilla <= 6.14.1
 Conflicts: i586-wine-vanilla <= 6.14.1
+
+Requires: %name = %EVR
 
 %description common
 Common arch independent wine files and scripts.
@@ -582,7 +587,7 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
-#patch3 -p1
+%patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -683,7 +688,7 @@ mkdir -p %buildroot%_bindir/
 tar xvf %SOURCE6
 for i in bin-scripts/*.in ; do
     tbin=%buildroot%_bindir/$(basename $i .in)
-    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g"   $i > $tbin
+    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g" -e "s:@WINELIB32DIR@:%_lib32dir/%wineproduct:g"    $i > $tbin
     chmod +x $tbin
 done
 
@@ -841,6 +846,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_bindir/wineboot
 %_bindir/winepath
 
+%_bindir/notepad
+%_bindir/winefile
+
+%_man1dir/notepad.*
+%_man1dir/winefile.*
+
 %_iconsdir/*
 
 %_desktopdir/wine-mime-msi.desktop
@@ -877,11 +888,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %files full
 
 %files programs
-%_bindir/notepad
-%_bindir/winefile
 %_bindir/winemine
-%_man1dir/notepad.*
-%_man1dir/winefile.*
 %_man1dir/winemine.*
 %_desktopdir/wine-notepad.desktop
 %_desktopdir/wine-winefile.desktop
@@ -934,6 +941,13 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Oct 27 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17-alt2
+- wine-cap_net_raw: set capability for /usr/lib/wine path too (ALT bug 56551)
+- wine.spec: move wine-mono and wine-gecko requires to the main package wine (ALT bug 55444)
+- wine.spec: move notepad and winefile commands to the main package wine (ALT bug 55444)
+- wine-vanilla-common: add require wine-vanilla
+- add patch: configure: Work around install-sh requirement in autoconf <= 2.69
+
 * Thu Oct 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17-alt1
 - new version 10.17 (with rpmrb script)
 - set strict require wine-mono 10.3.0
