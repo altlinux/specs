@@ -1,24 +1,28 @@
 %define modname anytree
 %def_disable check
-# broken script
-%def_disable tools
 
 Name: python-module-%modname
-Version: 3.0.0
+Version: 2.13.0
 Release: alt1
+Epoch: 1
 
 Summary: Python Tree Data Structure Library
 Group: Development/Python
 License: Apache-2.0
-Url: https://pypi.org/project/%modname
-# https://github.com/c0fec0de/anytree
+Url: https://pypi.org/project/anytree
+VCS: https://github.com/c0fec0de/anytree
 
-Source: https://pypi.io/packages/source/a/%modname/%modname-%version.tar.gz
+# Source-url: https://pypi.io/packages/source/a/%modname/%modname-%version.tar.gz
+Source: %modname-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires: python3-devel rpm-build-python3 python3-module-wheel
-BuildRequires: python3-module-distribute python3-module-poetry
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-module-pdm-backend
+%if_enabled check
+BuildRequires: python3-module-pytest-cov python3-module-test2ref
+%endif
 
 %description
 Python module to manipulate tree data structures
@@ -30,27 +34,15 @@ Group: Development/Python3
 %description -n python3-module-%modname
 Python3 module to manipulate tree data structures
 
-%if_enabled tools
-%package -n %modname-tools
-Summary: Tools for %name
-Group: Development/Tools
-
-%description -n %modname-tools
-Tools for %name.
-%endif
-
 %prep
 %setup -n %modname-%version
+%patch -p1
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-
-%if_disabled tools
-rm -rf %buildroot%_bindir/ebt
-%endif
 
 %if_enabled check
 %check
@@ -61,12 +53,11 @@ rm -rf %buildroot%_bindir/ebt
 %doc README.rst LICENSE
 %python3_sitelibdir_noarch/%{modname}*/
 
-%if_enabled tools
-%files -n %modname-tools
-%_bindir/ebt
-%endif
-
 %changelog
+* Thu Oct 30 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.13.0-alt1
+- New version 2.13.0.
+- Added VCS tag.
+
 * Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
 - 3.0.0.
 - Disabled python2 build again (by upstream) (ALT #44959).
