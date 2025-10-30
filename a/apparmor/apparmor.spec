@@ -11,7 +11,7 @@
 
 Name: apparmor
 Version: 3.0.9
-Release: alt2
+Release: alt3
 
 Summary: Name-based Mandatory Access Control
 
@@ -100,6 +100,7 @@ BuildRequires: libpam-devel
 %setup
 %patch -p1
 cp -a %SOURCE1 .
+sed -i "s/telinit 1/#telinit 1/" parser/rc.apparmor.functions
 
 %build
 pushd libraries/libapparmor
@@ -275,6 +276,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 30 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.9-alt3
+- NMU: removed dependency on /sbin/telinit (closes #56684)
+
 * Tue Jul 15 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.9-alt2
 - NMU: added missed build-dependies - rpm-macros-systemd and pod2html.
 - NMU: moved the systemd unitfile to the correct location.
