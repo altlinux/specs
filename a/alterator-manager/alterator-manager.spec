@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.31
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,9 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Thu Oct 30 2025 Ivan Savin <svn17@altlinux.org> 0.1.31-alt2
+- Update docs/modules/backend3(-ru).md.
+
 * Thu Oct 09 2025 Ivan Savin <svn17@altlinux.org> 0.1.31-alt1
 - Update documentation architecture (alxvmr@).
 - Move source files to the src folder (alxvmr@).
