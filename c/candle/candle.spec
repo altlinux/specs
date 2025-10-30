@@ -1,76 +1,76 @@
 %define _unpackaged_files_terminate_build 1
-%define candle_prefix %_libdir/%name
 
 Name: candle
-Release: alt4
-Version: 1.2
+Release: alt1
+Version: 10.10.4
 
 Summary: %name application with G-Code visualizer written in Qt
 Group: Engineering
 License: GPL-3.0-only
 Url: https://github.com/Denvi/Candle
-VCS: https://github.com/Denvi/Candle/archive/refs/tags/v1.2b.tar.gz
+VCS: https://github.com/Denvi/Candle
 
+# Source-url: https://github.com/Denvi/Candle/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.desktop
-# Fixes build errors
-Patch0: alt-build-fixes.patch
-Patch1: alt-fix-translation.patch
-Patch2: alt-capitalize-title.patch
-Patch3: alt-invert-icons-if-the-theme-is-dark.patch
 
-ExcludeArch: armh
+Patch0: alt-fix-app-resource-paths.patch
+Patch1: alt-prepare-cmakefile.patch
+Patch2: alt-fix-camera-plugin-segmfault.patch
+Patch3: alt-fix-openGL-context-restore-error.patch
 
-BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
+BuildRequires: cmake
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-script-devel
 BuildRequires: qt5-serialport-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-websockets-devel
 
 %description
-A simple and reliable program for controlling a CNC machine on GRBL firmware,
-sending commands and G-codes. 
+A simple and reliable program for controlling a CNC machine on GRBL
+firmware, sending commands and G-codes. 
 
 Supported functions:
-
-  * Controlling GRBL-based cnc-machine via console commands, buttons on form,
-  numpad.
-  * Monitoring cnc-machine state.
-  * Loading, editing, saving and sending of G-code files to cnc-machine.
-  * Visualizing G-code files.
+* Controlling GRBL-based cnc-machine via console commands, buttons
+on form, numpad.
+* Monitoring cnc-machine state.
+* Loading, editing, saving and sending of G-code files to cnc-machine.
+* Visualizing G-code files.
 
 %prep
 %setup
-%autopatch -p2
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-%qmake_qt5 -o Makefile src/candle.pro
-%make_build
+%cmake
+%cmake_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_pixmapsdir,%_desktopdir,%candle_prefix}
-install -m755 %name %buildroot%candle_prefix/%name-bin
-install -Dpm 0644 src/images/%{name}_256.png %buildroot%_iconsdir/hicolor/256x256/apps/%name.png
-install -Dpm 0644 %SOURCE1 %buildroot%_desktopdir/
+%cmake_install
 
-mkdir -p %buildroot%_datadir/%name/translations
-install -m644 src/translations/*.qm %buildroot%_datadir/%name/translations
-
-cat>%buildroot%_bindir/%name<<-EOF
-#!/bin/sh
-
-export QT_QPA_PLATFORM=xcb
-%candle_prefix/%{name}-bin \${1:+"\$@"}
-EOF
-%__chmod +x %buildroot%_bindir/%name
+%__cp -a deploy/linux/usr %buildroot/
+find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
 
 %files
 %doc readme.md
+%dir %_libdir/%name
+%dir %_defaultdocdir/%name
+%doc %_defaultdocdir/%name/LICENSE
+%doc %_defaultdocdir/%name/help
 %_bindir/%name
-%candle_prefix
-%_datadir/%name/translations/*.qm
+%_libdir/*.so
+%_libdir/%name/*
+%_datadir/%name
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/256x256/apps/%name.png
+%_pixmapsdir/%name.ico
 
 %changelog
+* Thu Oct 30 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.10.4-alt1
+- new version
+
 * Wed Dec 25 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2-alt4
 - change the display of the translation file search application
 
