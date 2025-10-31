@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.13
+Version: 2.0.15
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -18,7 +18,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel kf6-networkmanager-qt-devel
+BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel libgio-devel
 BuildRequires: dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel
 
 Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
@@ -168,6 +168,9 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
 
 %changelog
+* Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.15-alt1
+- New version 2.0.15.
+
 * Thu Oct 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.13-alt1
 - New version 2.0.13.
 
