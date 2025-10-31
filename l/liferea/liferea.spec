@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: liferea
-Version: 1.16.4
+Version: 1.16.6
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -111,6 +111,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Fri Oct 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.6-alt1
+- 1.16.6
+
 * Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
 - 1.16.4
 
