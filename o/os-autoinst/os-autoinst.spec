@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt22.gite7438f71
+Release: alt23.git2b88807a
 
 Summary: OS-level test automation
 License: GPLv2+
@@ -154,6 +154,10 @@ export TESSDATA_PREFIX="%_datadir/tessdata/"
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Fri Oct 31 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt23.git2b88807a
+- update to current version
+- Commit hash: git2b88807a
+
 * Thu Oct 16 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt22.gite7438f71
 - update to current version
 - Commit hash: gite7438f71

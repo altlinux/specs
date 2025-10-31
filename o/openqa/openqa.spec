@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt22.gita802d1dd2
+Release: alt23.gitfaa0e5c47
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -532,6 +532,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Fri Oct 31 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt23.gitfaa0e5c47
+- update to current version
+- Commit hash: faa0e5c47
+
 * Tue Oct 17 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt22.gita802d1dd2
 - update to current version
 - Commit hash: a802d1dd2
