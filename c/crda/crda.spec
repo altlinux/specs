@@ -1,12 +1,12 @@
 %define crda_lib %_libexecdir/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2025.07.10
+%define _db_date 2025.10.07
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.15
-Release: alt6.%_db_date
+Release: alt7.%_db_date
 License: copyleft-next-0.3.0
 Group: Networking/Other
 # wireless-regdb git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git
@@ -134,6 +134,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Fri Oct 31 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt7.2025.10.07
+- wireless-regdb: update to 2025-10-07.
+
 * Mon Aug 04 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2025.07.10
 - wireless-regdb: update to 2025-07-10.
 - BR: remove python3-module-future.
