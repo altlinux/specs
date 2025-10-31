@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.22.1
+Version: 0.22.2
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -124,6 +124,18 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Oct 29 2025 Semyon Knyazev <samael@altlinux.org> 0.22.2-alt1
+- Fixed "Telephones" tab Russian translations spelling. (closes: 54430)
+- Fixed computer account reset confirmation Russian translations spelling.
+  (closes: 54429)
+- Fixed modal dialogs appearing behind main window on start. (closes: 54939)
+- Changed selection behaviour in security permissions table. (closes: 54504)
+- Added sAMAccountName filter to simple object search: the search will take
+  the sAMAccountName into account.
+- Added spaces check (required fields) for objects creation. (closes: 54372)
+- Added FSMO capture table to domain info widget. Role can be captured by
+  current domain controller with corresponding button in the table.
+
 * Fri Oct 17 2025 Semyon Knyazev <samael@altlinux.org> 0.22.1-alt1
 - Fixed frozen permission checkboxes in security tab.
 - Fixed mixing of log message and principal in the status bar
