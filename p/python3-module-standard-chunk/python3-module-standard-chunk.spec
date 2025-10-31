@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define __name aifc
+%define __name chunk
 %define _name standard-%__name
 %define pypi_name standard_%__name
 
@@ -7,12 +7,12 @@
 
 Name: python3-module-%_name
 Version: 3.13.0
-Release: alt1.1
+Release: alt1
 
-Summary: Standard library aifc redistribution
+Summary: Standard library chunk redistribution
 License: Python
 Group: Development/Python3
-Url: https://pypi.org/project/standard-sunau/
+Url: https://pypi.org/project/standard-chunk/
 
 Vcs: https://github.com/youknowone/python-deadlib.git
 
@@ -24,12 +24,8 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-%set_python3_req_method strict
-Requires: python3-module-audioop-lts
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(wheel) python3(setuptools)
-%{?_enable_check:BuildRequires: python3(tests.audiotests)}
 
 %description
 %summary
@@ -44,7 +40,6 @@ BuildRequires: python3(wheel) python3(setuptools)
 %pyproject_install
 
 %check
-%__python3 tests/test_sunau.py
 
 %files
 %python3_sitelibdir/%__name/
@@ -52,10 +47,7 @@ BuildRequires: python3(wheel) python3(setuptools)
 %doc README*
 
 %changelog
-* Fri Oct 31 2025 Yuri N. Sedunov <aris@altlinux.org> 3.13.0-alt1.1
-- found python dependencies strictly (ALT #56701)
-
-* Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.13.0-alt1
+* Fri Oct 31 2025 Yuri N. Sedunov <aris@altlinux.org> 3.13.0-alt1
 - first build for Sisyphus
 
 
