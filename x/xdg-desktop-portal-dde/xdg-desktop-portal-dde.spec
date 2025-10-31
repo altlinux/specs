@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-dde
-Version: 1.0.15
+Version: 1.1.0
 Release: alt1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
@@ -66,6 +66,9 @@ export READELF="llvm-readelf"
 %_libexecdir/xdg-desktop-portal-dde
 %_userunitdir/xdg-desktop-portal-dde.service
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.dde.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/icons/
+%_datadir/dsg/icons/portal-screencast.dci
 %dir %_datadir/xdg-desktop-portal/
 %dir %_datadir/xdg-desktop-portal/portals/
 %_datadir/xdg-desktop-portal/portals/dde.portal
@@ -77,6 +80,9 @@ export READELF="llvm-readelf"
 %_libdir/libxdg-desktop-portal-dde-wayland.so
 
 %changelog
+* Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.15-alt1
 - New version 1.0.15.
 
