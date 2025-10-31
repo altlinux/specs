@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.31
+Version: 1.0.32
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -82,6 +82,9 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.32-alt1
+- New version 1.0.32.
+
 * Wed Oct 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.31-alt1
 - New version 1.0.31.
 
