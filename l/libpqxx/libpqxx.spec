@@ -3,7 +3,7 @@ Name: libpqxx
 Summary: C++ client API for PostgreSQL
 License: BSD
 Epoch: 1
-Version: 7.10.1
+Version: 7.10.3
 Release: alt1
 Group: System/Libraries
 BuildRequires(pre): rpm-macros-cmake
@@ -97,6 +97,9 @@ sed -i '/Args, Args/{N;s/\.\.\./ /g}' include/pqxx/internal/conversions.hxx
 %endif
 
 %changelog
+* Fri Oct 31 2025 Anton Farygin <rider@altlinux.com> 1:7.10.3-alt1
+- 7.10.1 -> 7.10.3
+
 * Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1:7.10.1-alt1
 - 7.10.0 -> 7.10.1
 
