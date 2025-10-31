@@ -1,5 +1,5 @@
 Name: img-build
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -23,6 +23,9 @@ cp img-build -t %buildroot%_bindir
 %_bindir/img-build
 
 %changelog
+* Fri Oct 31 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.2-alt1
+- Fix parsing of BuildRequires tags (thx antohami@).
+
 * Sat May 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.2.1-alt1
 - Fixed getopt for license mode.
 
