@@ -1,32 +1,36 @@
-Name: python3-module-sqlalchemy
+%define _unpackaged_files_terminate_build 1
+%define pypi_name sqlalchemy
+%define mod_name %pypi_name
+
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 2.0.44
-Release: alt1
+Release: alt2
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
 Group: Development/Python
-Url: http://www.sqlalchemy.org/
-
-Source: SQLAlchemy-%version.tar
-
+Url: https://pypi.org/project/sqlalchemy
+Vcs: https://github.com/sqlalchemy/sqlalchemy
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%py3_provides SQLAlchemy
 Provides: python3-module-SQLAlchemy = %EVR
 Obsoletes: python3-module-SQLAlchemy
-
-%py3_provides SQLAlchemy
-
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(cython)
-BuildRequires: python3(pytest)
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(greenlet)
-BuildRequires: python3(xdist)
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
 # in various tests, like in the tests for sphinx).
 Requires: python3-modules-sqlite3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra asyncio
+%pyproject_builddeps_check
+%endif
 
 %description
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -39,6 +43,8 @@ simple and Pythonic domain language.
 %package tests
 Summary: Tests for SQLAlchemy (Python 3)
 Group: Development/Python3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: %name = %EVR
 
 %description tests
@@ -52,28 +58,35 @@ simple and Pythonic domain language.
 This package contains tests for SQLAlchemy.
 
 %prep
-%setup -n SQLAlchemy-%version
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%pyproject_build
+# https://setuptools.pypa.io/en/latest/deprecated/commands.html#release-tagging-options
+%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
 
 %install
 %pyproject_install
 
-%add_python3_req_skip sqlalchemy.testing
-%add_python3_req_skip sqlalchemy.testing.provision
-
 %check
-%pyproject_run_pytest -m "not memory_intensive and not mypy" test
+%pyproject_run_pytest -m "not memory_intensive and not mypy and not timing_intensive" test -n4
 
 %files
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/testing
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%mod_name/testing/
 
 %files tests
-%python3_sitelibdir/*/testing
+%python3_sitelibdir/%mod_name/testing/
 
 %changelog
+* Fri Oct 31 2025 Stanislav Levin <slev@altlinux.org> 2.0.44-alt2
+- NMU: added missing conditional runtime dependency on greenlet.
+
 * Thu Oct 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.44-alt1
 - 2.0.44 released
 

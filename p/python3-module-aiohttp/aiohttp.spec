@@ -3,8 +3,19 @@
 %define mod_name %pypi_name
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 3.12.15
+Version: 3.13.2
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -16,6 +27,8 @@ Vcs: https://github.com/aio-libs/aiohttp
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -28,12 +41,18 @@ BuildRequires: libllhttp-devel
 %add_pyproject_deps_check_filter wait-for-it
 %pyproject_builddeps_metadata_extra speedups
 %pyproject_builddeps_check
+# remove when fixed: https://github.com/aio-libs/aiohttp/pull/11638
+BuildRequires: python3-module-packaging
 %endif
 
 %package tests
 Summary: Tests for aiohttp
 Group: Development/Python
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: python3-module-aiohttp = %EVR
+
+%add_python_extra speedups
 
 %description
 http client/server for asyncio (PEP-3156).
@@ -49,7 +68,7 @@ This package contains tests for aiohttp
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-cat requirements/base.in >> requirements/test.in
+cat requirements/base.in requirements/test-common.in >> requirements/test.in
 %pyproject_deps_resync_check_pipreqfile requirements/test.in
 %endif
 
@@ -87,6 +106,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 3.13.2-alt1
+- 3.12.15 -> 3.13.2.
+
 * Tue Jul 29 2025 Stanislav Levin <slev@altlinux.org> 3.12.15-alt1
 - 3.12.14 -> 3.12.15.
 

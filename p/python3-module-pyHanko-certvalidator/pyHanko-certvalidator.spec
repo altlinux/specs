@@ -5,7 +5,7 @@
 
 Name:    python3-module-%oname
 Version: 0.26.8
-Release: alt1
+Release: alt2
 
 Summary: Python library for validating X.509 certificates and paths
 
@@ -26,6 +26,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-asn1crypto
 BuildRequires: python3-module-oscrypto
+BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-uritools
@@ -67,6 +68,9 @@ not test_basic_certificate_validator_tls_aia"
 %python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Thu Oct 30 2025 Stanislav Levin <slev@altlinux.org> 0.26.8-alt2
+- NMU: fixed FTBFS (aiohttp 3.13.2).
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.26.8-alt1
 - Automatically updated to 0.26.8.
 

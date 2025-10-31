@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 3.14.0
-Release: alt1
+Release: alt2
 
 Summary: Python socket mock framework
 
@@ -36,6 +36,7 @@ BuildRequires: python3-module-httptools
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-asgiref
 BuildRequires: python3-module-puremagic
+BuildRequires: python3-module-gevent
 %endif
 
 BuildArch: noarch
@@ -76,6 +77,9 @@ py.test-3 -k "not test_file_object and \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 30 2025 Stanislav Levin <slev@altlinux.org> 3.14.0-alt2
+- NMU: fixed FTBFS (aiohttp 3.13.2).
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.14.0-alt1
 - Automatically updated to 3.14.0.
 
