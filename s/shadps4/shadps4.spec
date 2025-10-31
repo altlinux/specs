@@ -3,13 +3,14 @@
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
 %define dear_imgui_commit f4d9359095eff3eb03f685921edc1cf0e37b1687
 %define discord_rpc_commit 19f66e6dcabb2268965f453db9e5774ede43238f
+%define vulkan_headers_version 1.4.329
 %define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
 %define libusb_commit c4d237a5803900b78dcc2961d057fcc8a678d3fd
 %define hwinfo_commit 351c59828a79958f74f3ccab5e7773ffd724f6f7
 
 Name: shadps4
-Version: 0.11.0
-Release: alt1.2
+Version: 0.12.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -33,15 +34,16 @@ Source3: zydis-%zydis_commit.tar
 Source4: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/%name-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source5: ext-discord-rpc-%discord_rpc_commit.tar
+# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
+Source6: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/%name-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
-Source6: ext-LibAtrac9-%libatrac9_commit.tar
+Source7: ext-LibAtrac9-%libatrac9_commit.tar
 # https://github.com/%name-emu/ext-libusb/archive/%libusb_commit/ext-libusb-%libusb_commit.tar.gz
-Source7: ext-libusb-%libusb_commit.tar
+Source8: ext-libusb-%libusb_commit.tar
 # https://github.com/%name-emu/ext-hwinfo/archive/%hwinfo_commit/ext-hwinfo-%hwinfo_commit.tar.gz
-Source8: ext-hwinfo-%hwinfo_commit.tar
+Source9: ext-hwinfo-%hwinfo_commit.tar
 
-Patch0: %name-0.11.0-fmt-12-alt.patch
-Patch1: %name-0.11.0-glslang-16-alt.patch
+Patch0: %name-0.11.0-glslang-16-alt.patch
 
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
@@ -80,15 +82,15 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
 %patch0 -p1
-%patch1 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
 %__mv -Tf ../ext-imgui-%dear_imgui_commit externals/dear_imgui
 %__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
+%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/vulkan-headers
 %__mv -Tf ../ext-LibAtrac9-%libatrac9_commit externals/LibAtrac9
 %__mv -Tf ../ext-libusb-%libusb_commit externals/ext-libusb
 %__mv -Tf ../ext-hwinfo-%hwinfo_commit externals/hwinfo
@@ -129,6 +131,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libexecdir/%name
 
 %changelog
+* Fri Oct 31 2025 Nazarov Denis <nenderus@altlinux.org> 0.12.0-alt1
+- Version 0.12.0
+
 * Thu Oct 23 2025 Nazarov Denis <nenderus@altlinux.org> 0.11.0-alt1.2
 - Fix build with Glslang 16
 
