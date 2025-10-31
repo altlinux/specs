@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: candle
-Release: alt1
+Release: alt2
 Version: 10.10.4
 
 Summary: %name application with G-Code visualizer written in Qt
@@ -51,6 +51,7 @@ on form, numpad.
 %install
 %cmake_install
 
+sed -i 's;^\(Categories=\)\(.*\)$;\1Graphics\;\2;' deploy/linux%_desktopdir/%name.desktop
 %__cp -a deploy/linux/usr %buildroot/
 find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
 
@@ -68,6 +69,9 @@ find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
 %_pixmapsdir/%name.ico
 
 %changelog
+* Fri Oct 31 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.10.4-alt2
+- update the application's category list
+
 * Thu Oct 30 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.10.4-alt1
 - new version
 
