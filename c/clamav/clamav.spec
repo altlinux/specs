@@ -14,7 +14,7 @@
 
 Name: clamav
 Version: 1.4.3
-Release: alt2
+Release: alt3
 %define abiversion 12
 
 Summary: Clam Antivirus scanner
@@ -167,12 +167,13 @@ tar -xf %SOURCE24
 %build
 
 %cmake \
-	-DCONFDIR=%clamconfdir \
+	-DAPP_CONFIG_DIRECTORY=%clamconfdir \
 	-DENABLE_EXPERIMENTAL=ON \
 	-DENABLE_APP=ON \
 	-DCLAMAV_USER=mail \
 	-DCLAMAV_GROUP=mail \
 	-DDBDIR=/var/lib/%name \
+	-DDATABASE_DIRECTORY=/var/lib/%name \
 	-DENABLE_TESTS=ON \
 	%{?_without_llvm: -DBYTECODE_RUNTIME="none"} \
 	%{?_with_milter: -DENABLE_MILTER=ON}
@@ -236,7 +237,7 @@ cp -R docs/html/*       %buildroot%_defaultdocdir/clamav-manual/UserManual-html
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
 rm -f %buildroot%_libdir/*.a
-rm -fr %buildroot/usr/etc
+rm -f %buildroot%clamconfdir/*.sample
 # databases is not installing in 0.97.5
 if [ -d %buildroot/var/lib/clamav ] ; then
     rm -f %buildroot/var/lib/clamav/*.cvd
@@ -389,6 +390,9 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Fri Oct 31 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt3
+- Fix Can't open/parse the config file /usr/etc/freshclam.conf (ALT #56693)
+
 * Thu Oct 30 2025 Alexei Takaseev <taf@altlinux.org> 1.4.3-alt2
 - Set Conflicts and Obsolete to "< %%version-%%release" (ALT #56685)
 
