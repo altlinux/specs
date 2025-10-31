@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Abstraction layer for SKOS vocabularies
@@ -11,13 +11,15 @@ Summary: Abstraction layer for SKOS vocabularies
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/skosprovider/
-Vcs: https://github.com/koenedaele/skosprovider.git
+Vcs: https://github.com/OnroerendErfgoed/skosprovider
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-fancy-pypi-readme
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-rfc3987
@@ -35,21 +37,24 @@ where deemed useful.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Oct 31 2025 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+- New upstream url.
+
 * Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 
