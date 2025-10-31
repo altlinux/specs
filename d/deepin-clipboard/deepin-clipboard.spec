@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 6.1.13
+Version: 6.1.15
 Release: alt1
 
 Summary: Clipboard for DDE
@@ -76,6 +76,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.15-alt1
+- New version 6.1.15.
+
 * Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.13-alt1
 - New version 6.1.13.
 
