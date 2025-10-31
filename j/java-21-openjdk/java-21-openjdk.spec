@@ -290,9 +290,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 8
+%global updatever 9
 %global patchver 0
-%global buildver 9
+%global buildver 10
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -352,7 +352,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1990,6 +1990,9 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Fri Oct 31 2025 Andrey Cherepanov <cas@altlinux.org> 0:21.0.9.0.10-alt1
+- New version (fixes: CVE-2025-53057, CVE-2025-53066, CVE-2025-61748).
+
 * Mon Jul 21 2025 Ivan A. Melnikov <iv@altlinux.org> 0:21.0.8.0.9-alt2
 - Update loongarch64 patch.
 
