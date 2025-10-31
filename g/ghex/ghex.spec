@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 48
@@ -13,7 +14,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -23,7 +24,11 @@ Url: https://wiki.gnome.org/Apps/Ghex
 
 Vcs: https://gitlab.gnome.org/GNOME/ghex.git
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %define glib_ver 2.68
 %define gtk4_ver 4.4.0
@@ -129,6 +134,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Fri Oct 31 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
 * Sat Aug 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
