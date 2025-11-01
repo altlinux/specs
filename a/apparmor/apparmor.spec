@@ -10,27 +10,42 @@
 %def_with python
 
 Name: apparmor
-Version: 3.0.9
-Release: alt3
+Version: 4.1.2
+Release: alt1
 
 Summary: Name-based Mandatory Access Control
 
 License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: System/Base
 Url: https://apparmor.net
+Vcs: https://gitlab.com/apparmor/apparmor.git
 
-Source: %name-%version.tar
-Source1: README.ALT
-Patch: %name-%version-%release.patch
-
+BuildRequires(pre): rpm-macros-pam0
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-build-python3
-BuildRequires: flex gcc-c++ perl-Pod-Checker python3-module-setuptools swig
-BuildRequires: libstdc++-devel
-%{?_with_check:BuildRequires: dejagnu perl-Locale-gettext}
-BuildRequires: /usr/bin/pod2html
 
-%filter_from_requires /^.usr.etc.rc.d.init.d.apparmor/d
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: /usr/bin/podchecker
+BuildRequires: /usr/bin/swig
+BuildRequires: /usr/bin/pod2html
+BuildRequires: autoconf-archive
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: libstdc++-devel
+BuildRequires: libstdc++-devel-static
+
+%if_with check
+BuildRequires: dejagnu
+BuildRequires: perl-Locale-gettext
+BuildRequires: python3(notify2)
+BuildRequires: python3(psutil)
+BuildRequires: python3(tkinter)
+BuildRequires: python3(gi)
+%endif
+
+Source: %name-%version.tar
 
 %description
 AppArmor is a Mandatory Access Control (MAC) mechanism which uses the
@@ -98,9 +113,6 @@ BuildRequires: libpam-devel
 
 %prep
 %setup
-%patch -p1
-cp -a %SOURCE1 .
-sed -i "s/telinit 1/#telinit 1/" parser/rc.apparmor.functions
 
 %build
 pushd libraries/libapparmor
@@ -127,7 +139,7 @@ make -C profiles
 %makeinstall_std -C binutils
 %makeinstall_std -C profiles
 %{?_with_pam: %makeinstall_std -C changehat/pam_apparmor SECDIR=%buildroot%_pam_modules_dir}
-%makeinstall_std SBIN="%buildroot/sbin" APPARMOR_BIN_PREFIX="%buildroot/lib/apparmor" -C parser
+%makeinstall_std SBIN="%buildroot/sbin" APPARMOR_BIN_PREFIX="%buildroot/lib/apparmor" install-systemd -C parser
 
 rm %buildroot%_libdir/libapparmor.a
 
@@ -141,46 +153,50 @@ mv %buildroot%_libdir/libapparmor.so.* %buildroot/%_lib
 
 %find_lang apparmor --all-name
 
-mkdir -p %buildroot%_unitdir/
-mv -fv %buildroot/lib/systemd/system/apparmor.service %buildroot%_unitdir/
-
-mv -fv %buildroot/lib/apparmor %buildroot/usr/lib/
+#mkdir -p %buildroot%_unitdir/
+#mv -fv %buildroot/lib/systemd/system/apparmor.service %buildroot%_unitdir/
+#
+#mv -fv %buildroot/lib/apparmor %buildroot/usr/lib/
 
 %check
 export LD_LIBRARY_PATH="%buildroot%_lib:%buildroot%_libdir"
-make check -C libraries/libapparmor
-#make check -C parser
-make check -C binutils
+# thanks, Arch
+echo "INFO: Running check: libraries/libapparmor"
+make -C libraries/libapparmor check
+echo "INFO: Running check binutils"
+make -C binutils check
+# echo "INFO: Running check parser"
+# make -C parser check
+# NOTE: the profiles checks are notoriously broken, so run each separately
+echo "INFO: Running check-abstractions.d profiles"
+make -C profiles check-abstractions.d
+#  # many hardcoded paths are not accounted for:
+#  # https://gitlab.com/apparmor/apparmor/-/issues/137
+#  echo "INFO: Running check-logprof profiles"
+#  make -C profiles check-logprof
+echo "INFO: Running check-parser profiles"
+make -C profiles check-parser
+# echo "INFO: Running check utils"
+# we do not care about linting when running tests
+# https://gitlab.com/apparmor/apparmor/-/issues/121
+# make PYFLAKES='/usr/bin/true' -C utils check
 
-#make -C profiles check-parser
-
-#make check -o check_lint -C utils PYFLAKES=pyflakes-py3
-
-%post
-if [ $1 -ge 2 ]; then
-	/sbin/service apparmor condrestart ||:
-else
-	/sbin/chkconfig --add apparmor ||:
-fi
-
-%preun
-if [ $1 = 0 ]; then
-	/sbin/chkconfig --del apparmor ||:
-fi
 
 %files -f apparmor.lang
-%doc README.ALT
+%doc LICENSE README.md
 %config(noreplace) %_sysconfdir/apparmor
 %dir %_sysconfdir/apparmor.d
-%dir %_sysconfdir/apparmor.d/disable
-%dir %_sysconfdir/apparmor.d/local
-%_sysconfdir/apparmor.d/abi
-%_sysconfdir/apparmor.d/abstractions
-%_sysconfdir/apparmor.d/tunables
+%_sysconfdir/apparmor.d/*
 
-/usr/lib/apparmor
+%_bindir/aa-easyprof
+%_bindir/aa-enabled
+%_bindir/aa-exec
+%_bindir/aa-features-abi
 
-/sbin/apparmor_parser
+/lib/apparmor/apparmor.systemd
+/lib/apparmor/profile-load
+/lib/apparmor/rc.apparmor.functions
+
 /usr/sbin/aa-audit
 /usr/sbin/aa-autodep
 /usr/sbin/aa-cleanprof
@@ -189,6 +205,7 @@ fi
 /usr/sbin/aa-disable
 /usr/sbin/aa-enforce
 /usr/sbin/aa-genprof
+/usr/sbin/aa-load
 /usr/sbin/aa-logprof
 /usr/sbin/aa-mergeprof
 /usr/sbin/aa-notify
@@ -197,12 +214,11 @@ fi
 /usr/sbin/aa-teardown
 /usr/sbin/aa-unconfined
 /usr/sbin/apparmor_status
-%_bindir/aa-easyprof
-%_bindir/aa-enabled
-%_bindir/aa-exec
-%_bindir/aa-features-abi
 
-%_datadir/apparmor
+%dir %_datadir/apparmor
+%_datadir/apparmor/*
+%_datadir/polkit-1/actions/net.apparmor.pkexec.aa-notify.policy
+
 %_man1dir/aa-enabled.1*
 %_man1dir/aa-exec.1*
 %_man1dir/aa-features-abi.1*
@@ -220,6 +236,7 @@ fi
 %_man8dir/aa-easyprof.8*
 %_man8dir/aa-enforce.8*
 %_man8dir/aa-genprof.8*
+%_man8dir/aa-load.8*
 %_man8dir/aa-logprof.8*
 %_man8dir/aa-mergeprof.8*
 %_man8dir/aa-notify.8*
@@ -230,7 +247,8 @@ fi
 %_man8dir/apparmor_parser.8*
 %_man8dir/apparmor_status.8*
 
-%_initdir/apparmor
+/sbin/apparmor_parser
+
 %_unitdir/apparmor.service
 
 %files -n libapparmor%sover
@@ -276,6 +294,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 31 2025 Nikolay Strelkov <snk@altlinux.org> 4.1.2-alt1
+- NMU: major version upgrade (4.1.2) with rpmgs script (closes #56684)
+
 * Thu Oct 30 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.9-alt3
 - NMU: removed dependency on /sbin/telinit (closes #56684)
 
@@ -284,7 +305,7 @@ fi
 - NMU: moved the systemd unitfile to the correct location.
 - NMU: built with localization.
 - NMU: moved /lib/apparmor to /usr/lib/apparmor.
-- NMU: filtered out strange /usr/etc/rc.d/init.d/apparmor from Requires 
+- NMU: filtered out strange /usr/etc/rc.d/init.d/apparmor from Requires
 
 * Thu Mar 09 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.9-alt1
 - Updated to v3.0.9.
