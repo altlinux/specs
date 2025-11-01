@@ -3,7 +3,7 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 9.0.5
+Version: 9.0.6
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -205,6 +205,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Fri Oct 31 2025 Polina Poidenko <polipoki@altlinux.org> 1:9.0.6-alt1
+- new version (9.0.6)
+
 * Sat Oct 04 2025 Polina Poidenko <polipoki@altlinux.org> 1:9.0.5-alt1
 - new version (9.0.5)
 

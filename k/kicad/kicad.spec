@@ -4,7 +4,7 @@
 %define majver 9.0
 
 Name: kicad
-Version: 9.0.5
+Version: 9.0.6
 Release: alt1
 Epoch: 1
 
@@ -195,6 +195,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Oct 31 2025 Polina Poidenko <polipoki@altlinux.org> 1:9.0.6-alt1
+- New version 9.0.6.
+
 * Mon Oct 20 2025 Polina Poidenko <polipoki@altlinux.org> 1:9.0.5-alt1
 - New version 9.0.5.
 
