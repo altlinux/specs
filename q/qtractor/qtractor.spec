@@ -1,5 +1,5 @@
 Name: qtractor
-Version: 1.5.8
+Version: 1.5.9
 Release: alt1
 
 Summary: Audio/MIDI multi-track sequencer
@@ -72,6 +72,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Sat Nov 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.9-alt1
+- 1.5.9 released
+
 * Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.8-alt1
 - 1.5.8 released
 
