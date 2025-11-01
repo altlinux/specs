@@ -9,8 +9,6 @@
 %global optflags_lto %nil
 #%endif
 
-%def_disable edk2_cross
-
 %def_enable user_static
 
 %def_enable sdl
@@ -138,13 +136,20 @@
 
 %def_enable have_kvm
 
+%ifarch %ix86 armh %mips32
+%def_disable have_64bit
+%else
+%def_enable have_64bit
+%endif
+
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_pipewire:pipewire} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh} %{?_enable_blkio:blkio} %{?_enable_vitastor:vitastor}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
+%define device_uefi_list vars
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
-%define qemu_arches aarch64 alpha arm avr hppa loongarch m68k microblaze mips or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
+%define qemu_arches arm avr m68k mips or1k ppc riscv rx sh4 sparc tricore x86 xtensa %{?_enable_have_64bit:aarch64 alpha loongarch hppa s390x}
 
 %global _group vmusers
 %global rulenum 90
@@ -155,7 +160,7 @@
 # }}}
 
 Name: qemu
-Version: 9.2.4
+Version: 10.0.3
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -240,6 +245,7 @@ BuildRequires: libuuid-devel
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.8.0}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_qpl:BuildRequires: libqpl-devel >= 1.5.0}
+BuildRequires: libcbor-devel >= 0.7.0
 BuildRequires: libpam-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libslirp-devel >= 4.1.0
@@ -294,6 +300,7 @@ Requires: %name-device-display-virtio-vga        \
 %{?_enable_spice:Requires: %name-char-spice} \
 Requires: %name-device-usb-host \
 Requires: %name-device-usb-redirect \
+Requires: %name-device-uefi-vars \
 %{?_enable_smartcard:Requires: %name-device-usb-smartcard}
 
 ##%%{?_enable_opengl:Requires: %%name-ui-opengl} \
@@ -333,7 +340,7 @@ This package contains common files for qemu.
 %package system
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
-BuildArch: noarch
+# BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
 %{?_enable_mpath:Requires: %name-pr-helper = %EVR}
@@ -436,12 +443,12 @@ User mode emulation.  In this mode, QEMU can launch Linux processes \
 compiled for one CPU on another CPU. \
 %%files %%{1}-%%{2} -f %%{1}-%%{2}.list
 
-%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user $i Requires: qemu-common; done)}
-%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-binfmt $i Requires: qemu-user-$i Conflicts: qemu-user-static-binfmt-$i; done)}
+%{expand:%(for i in %qemu_arches hexagon microblaze; do echo %%do_package_user user $i Requires: qemu-common; done)}
+%{expand:%(for i in %qemu_arches hexagon microblaze; do echo %%do_package_user user-binfmt $i Requires: qemu-user-$i Conflicts: qemu-user-static-binfmt-$i; done)}
 
 %if_enabled user_static
-%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-static $i; done)}
-%{expand:%(for i in %qemu_arches hexagon; do echo %%do_package_user user-static-binfmt $i Requires: qemu-user-static-$i Conflicts: qemu-user-binfmt-$i; done)}
+%{expand:%(for i in %qemu_arches hexagon microblaze; do echo %%do_package_user user-static $i; done)}
+%{expand:%(for i in %qemu_arches hexagon microblaze; do echo %%do_package_user user-static-binfmt $i Requires: qemu-user-static-$i Conflicts: qemu-user-binfmt-$i; done)}
 %endif
 
 %package img
@@ -627,6 +634,20 @@ This package provides the additional device usb-%%{1} for QEMU. \
 
 %{expand:%(for i in %device_usb_list; do echo %%do_package_device_usb $i; done)}
 
+%global do_package_device_uefi() \
+%%package device-uefi-%%{1} \
+Summary: QEMU uefi-%%{1} device \
+Group: Emulators \
+Requires: %%name-common = %%EVR \
+\
+%%description device-uefi-%%{1} \
+This package provides the additional device usb-%%{1} for QEMU. \
+\
+%%files device-uefi-%%{1} \
+%%_libdir/qemu/hw-uefi-%%{1}.so
+
+%{expand:%(for i in %device_uefi_list; do echo %%do_package_device_uefi $i; done)}
+
 %package char-baum
 Summary: QEMU Baum chardev driver
 Group: Emulators
@@ -713,65 +734,9 @@ Requires: seavgabios \
 \
 %%description system-%%{1}-core \
 This package provides the system emulator for %%{1}. \
-%%files system-%%{1}-core \
-\
-%%if "%%{1}" == "x86" \
-%%_bindir/qemu-system-i386 \
-%%_man1dir/qemu-system-i386.1* \
-%%_libdir/%%name/accel-tcg-i386.so \
-%%_libdir/%%name/accel-tcg-x86_64.so \
-%%_datadir/%%name/bios* \
-%%_datadir/%%name/linuxboot* \
-%%_datadir/%%name/multiboot.bin \
-%%_datadir/%%name/multiboot_dma.bin \
-%%_datadir/%%name/kvmvapic.bin \
-%%_datadir/%%name/pvh.bin \
-%%endif \
-\
-%%if "%%{1}" == "alpha" \
-%%_datadir/%%name/palcode-clipper \
-%%endif \
-\
-%%if "%%{1}" == "arm" \
-%%_datadir/%%name/npcm7xx_bootrom.bin \
-%%endif \
-\
-%%if "%%{1}" == "hppa" \
-%%_datadir/%%name/hppa-firmware*.img \
-%%endif \
-\
-%%if "%%{1}" == "microblaze" \
-%%_datadir/%%name/petalogix*.dtb \
-%%endif \
-\
-%%if "%%{1}" == "s390x" \
-%%_datadir/%%name/s390-*.img \
-%%endif \
-\
-%%if "%%{1}" == "sparc" \
-%%_datadir/%%name/QEMU* \
-%%_datadir/%%name/openbios-sparc* \
-%%endif \
-\
-%%if "%%{1}" == "ppc" \
-%%_datadir/%%name/bamboo.dtb \
-%%_datadir/%%name/canyonlands.dtb \
-%%_datadir/%%name/qemu_vga.ndrv \
-%%_datadir/%%name/skiboot.lid \
-%%_datadir/%%name/u-boot* \
-%%_datadir/%%name/openbios-ppc \
-%%_datadir/%%name/slof.bin \
-%%_datadir/%%name/vof*.bin \
-%%endif \
-\
-%%if "%%{1}" == "riscv" \
-%%_datadir/%%name/opensbi* \
-%%endif \
-\
-%%_bindir/qemu-system-%%{1}* \
-%%_man1dir/qemu-system-%%{1}*
+%%files system-%%{1}-core -f system-%%{1}-core.list
 
-%{expand:%(for i in %qemu_arches; do echo %%do_package_system $i; done)}
+%{expand:%(for i in %qemu_arches %{?_enable_have_64bit:microblaze}; do echo %%do_package_system $i; done)}
 
 %prep
 %setup
@@ -1189,6 +1154,17 @@ rm -rf %buildroot%_includedir
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
 
+#Cleanup 64-bit firmware for 32-bit packages
+%if_disabled have_64bit
+rm -f \
+    %buildroot%_datadir/%name/hppa-firmware.img \
+    %buildroot%_datadir/%name/hppa-firmware64.img \
+    %buildroot%_datadir/%name/palcode-clipper \
+    %buildroot%_datadir/%name/petalogix-ml605.dtb \
+    %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb \
+    %buildroot%_datadir/%name/s390-ccw.img
+%endif
+
 for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100 e1000e vmxnet3 ; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%name/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
@@ -1202,7 +1178,20 @@ ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k,bios-microvm}.bin %buildroo
 ln -r -s %buildroot%_datadir/qboot/bios.bin %buildroot%_datadir/%name/qboot.rom
 
 mkdir -p %buildroot%_binfmtdir
-./scripts/qemu-binfmt-conf.sh --systemd ALL --exportdir %buildroot%_binfmtdir --qemu-path %_bindir
+# Most riscv64 CPUs can't natively run riscv32 binaries; moreover, we
+# don't enable the kernel feature needed for that to work or build the
+# necessary 32-bit libraries. This option tells the script
+# to generate the qemu-riscv32-static configuration even on riscv64
+%ifarch riscv64
+%define ignore_family --ignore-family yes
+%endif
+./scripts/qemu-binfmt-conf.sh %{?ignore_family} --systemd ALL --exportdir %buildroot%_binfmtdir --qemu-path %_bindir
+
+%if_disabled have_64bit
+for f in aarch64 aarch64_be alpha hppa loongarch64 s390x; do
+    rm -f %buildroot%_binfmtdir/qemu-${f}.conf
+done
+%endif
 
 # Drop qemu-mipsn32*.conf -- see https://bugzilla.altlinux.org/39619
 rm -rf %buildroot%_binfmtdir/*mipsn32*
@@ -1218,7 +1207,7 @@ for f in %buildroot%_binfmtdir/*.conf; do
 done
 
 # files list
-for i in %qemu_arches hexagon; do
+for i in %qemu_arches hexagon microblaze; do
     find %buildroot%_bindir/qemu-$i* \
         -type f \( ! -name "*static" ! -name "*-system-*" \) |
         sed -e 's#%{buildroot}##' |
@@ -1243,6 +1232,74 @@ for i in %qemu_arches hexagon; do
 %endif
 done
 
+for i in %qemu_arches hexagon %{?_enable_have_64bit:microblaze}; do
+    if [ "$i" != "x86" ]; then
+        echo "%_bindir/qemu-system-$i*" >> system-$i-core.list
+        echo "%_man1dir/qemu-system-$i*" >> system-$i-core.list
+    fi
+done
+
+%if_enabled have_64bit
+(
+    echo "%_bindir/qemu-system-x86_64"
+    echo "%_man1dir/qemu-system-x86_64.1*"
+) >> system-x86-core.list
+
+(
+    echo "%_datadir/%name/petalogix*.dtb"
+) >> system-microblaze-core.list
+
+%endif
+
+(
+    echo "%_bindir/qemu-system-i386"
+    echo "%_man1dir/qemu-system-i386.1*"
+    echo "%_datadir/%name/bios*"
+    echo "%_datadir/%name/linuxboot*"
+    echo "%_datadir/%name/multiboot.bin"
+    echo "%_datadir/%name/multiboot_dma.bin"
+    echo "%_datadir/%name/kvmvapic.bin"
+    echo "%_datadir/%name/pvh.bin"
+) >> system-x86-core.list
+
+(
+    echo "%_datadir/%name/palcode-clipper"
+) >> system-alpha-core.list
+
+(
+    echo "%_datadir/%name/npcm7xx_bootrom.bin"
+    echo "%_datadir/%name/npcm8xx_bootrom.bin"
+) >> system-arm-core.list
+
+(
+    echo "%_datadir/%name/hppa-firmware*.img"
+) >> system-hppa-core.list
+
+(
+    echo "%_datadir/%name/s390-*.img"
+) >> system-s390x-core.list
+
+(
+    echo "%_datadir/%name/QEMU*"
+    echo "%_datadir/%name/openbios-sparc*"
+) >> system-sparc-core.list
+
+(
+    echo "%_datadir/%name/bamboo.dtb"
+    echo "%_datadir/%name/canyonlands.dtb"
+    echo "%_datadir/%name/qemu_vga.ndrv"
+    echo "%_datadir/%name/pnv-pnor.bin"
+    echo "%_datadir/%name/skiboot.lid"
+    echo "%_datadir/%name/u-boot*"
+    echo "%_datadir/%name/openbios-ppc"
+    echo "%_datadir/%name/slof.bin"
+    echo "%_datadir/%name/vof*.bin"
+) >> system-ppc-core.list
+
+(
+    echo "%_datadir/%name/opensbi*"
+) >> system-riscv-core.list
+
 echo "%_bindir/qemu-i386" >> user-x86.list
 echo "%_bindir/qemu-i386.static" >> user-static-x86.list
 echo "%_bindir/qemu-i386-static" >> user-static-x86.list
@@ -1255,6 +1312,14 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 %endif
 
 %check
+# Disable iotests.
+export MTESTARGS="--no-suite block"
+
+%ifarch riscv64
+%define timeout_multiplier 3
+%else
+%define timeout_multiplier 1
+%endif
 
 %define archs_skip_tests ppc64le %ix86 riscv64
 #%%define archs_skip_tests ""
@@ -1270,7 +1335,33 @@ popd
 %endif
 
 pushd build-dynamic
-%make_build V=1 check
+#%%make_build V=1 check
+echo "######## unit tests ########"
+%make_build check-unit
+
+echo "######## QAPI schema tests ########"
+%make_build check-qapi-schema
+
+echo "######## DecodeTree tests ########"
+%make_build check-decodetree
+
+echo "######## Soft Float tests ########"
+%make_build check-softfloat
+
+echo "######## QTest tests ########"
+
+%ifnarch ppc64le
+%make_build check-qtest TIMEOUT_MULTIPLIER=%{timeout_multiplier}
+%endif
+
+echo "######## Block I/O tests ########"
+%make_build check-block TIMEOUT_MULTIPLIER=%{timeout_multiplier}
+
+echo "######## Functional tests ########"
+%ifnarch ppc64le
+# 'check-func-quick' instead of 'check-functional' to avoid asset download
+%make_build check-func-quick TIMEOUT_MULTIPLIER=%{timeout_multiplier}
+%endif
 popd
 
 %pre common
@@ -1402,6 +1493,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Aug 07 2025 Alexey Shabalin <shaba@altlinux.org> 10.0.3-alt1
+- 10.0.3.
+
 * Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.4-alt1
 - 9.2.4.
 - Disabled LTO for all arches.

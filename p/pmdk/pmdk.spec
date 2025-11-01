@@ -5,13 +5,14 @@
 
 Name: pmdk
 Version: 2.1.1
-Release: alt2
+Release: alt3
 Summary: Persistent Memory Development Kit (formerly NVML)
 Group: System/Base
 License: BSD-3-Clause
 Url: https://github.com/pmem/pmdk
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: python3
 BuildRequires: pandoc
@@ -242,6 +243,7 @@ provided in the command line options to check whether files are in a consistent 
 %setup
 rm -f GIT_VERSION
 echo %version > VERSION
+%patch -p1
 
 %build
 # This package calls binutils components directly and would need to pass
@@ -379,6 +381,9 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 %endif
 
 %changelog
+* Fri Oct 31 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt3
+- Print basic lib info for DEBUG only (ALT#55315).
+
 * Mon Jul 28 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt2
 - Add packages with debug library.
 
