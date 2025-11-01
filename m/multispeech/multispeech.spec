@@ -2,8 +2,8 @@
 %define sover 5
 
 Name:    multispeech
-Version: 4.6.2
-Release: alt7
+Version: 4.6.3
+Release: alt1
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -55,7 +55,6 @@ Summary: Lib files for %name
 %setup
 
 %build
-%add_optflags --std=c++26
 %autoreconf -if
 %configure
 %make_build
@@ -84,6 +83,9 @@ mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Sat Nov 01 2025 Artem Semenov <savoptik@altlinux.org> 4.6.3-alt1
+- Updated to new version 4.6.3
+
 * Mon Oct 13 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt7
 - Fixed install spd module
 
