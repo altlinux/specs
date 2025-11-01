@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.6
-Release: alt3
+Release: alt3.1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -952,6 +952,7 @@ install -pD -m644 %{buildroot}%{_datadir}/hplip/data/images/32x32/hp_logo.png \
    %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/hplip.png
 install -pD -m644 %{buildroot}%{_datadir}/hplip/data/images/64x64/hp_logo.png \
    %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/hplip.png
+rm -v -r %buildroot%_datadir/icons/hicolor/48x48
 
 # Remove the installed /etc/sane.d/dll.conf
 # because this is provided by the sane package:
@@ -1320,6 +1321,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Nov 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.6-alt3.1
+- NMU: fix: icon not displayed (ALT #56320)
+
 * Wed Sep 10 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.6-alt3
 - Disabled resize to scan area (ALT #55386).
 
