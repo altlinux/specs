@@ -2,7 +2,7 @@
 %define oname veusz
 
 Name: python3-module-%oname
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: A Scientific Plotting Package
@@ -23,6 +23,7 @@ BuildRequires: qt6-base-devel python3-module-PyQt6-devel
 BuildRequires: python3-module-sip6
 BuildRequires: python3(tomli)
 BuildRequires: desktop-file-utils
+BuildRequires: qt6-designer
 
 %add_python3_req_skip pyemf3 pyemf3.emr
 %py3_requires numpy.testing
@@ -93,6 +94,9 @@ find ./ -type f -name '*.py' -exec \
 %pyproject_build
 %make_build -C Documents/ man
 
+# make translations
+lrelease-qt6 translation/*.ts
+
 %install
 %pyproject_install
 
@@ -118,6 +122,11 @@ ln -s %python3_sitelibdir/veusz/icons/veusz.svg $odir/veusz.svg
 mkdir -p %buildroot%_man1dir
 install -p Documents/man-page/veusz.1 -m 0644 %buildroot%_man1dir
 
+# install translations
+mkdir -p %buildroot/%_datadir/%oname/translation
+cp translation/*.qm %buildroot/%_datadir/%oname/translation/
+%find_lang --with-qt %oname
+
 %files
 %python3_sitelibdir/veusz-%version.dist-info
 %python3_sitelibdir/veusz
@@ -126,7 +135,7 @@ install -p Documents/man-page/veusz.1 -m 0644 %buildroot%_man1dir
 %files examples
 %python3_sitelibdir/veusz/examples
 
-%files -n %oname
+%files -n %oname -f %oname.lang
 %doc AUTHORS ChangeLog COPYING README.md
 %_bindir/veusz
 %_datadir/applications/veusz.desktop
@@ -134,8 +143,13 @@ install -p Documents/man-page/veusz.1 -m 0644 %buildroot%_man1dir
 %_iconsdir/hicolor/*/apps/veusz.*
 %_datadir/mime/packages/veusz.xml
 %_man1dir/*
+%dir %_datadir/%oname
+%dir %_datadir/%oname/translation
 
 %changelog
+* Sat Nov 01 2025 Anton Midyukov <antohami@altlinux.org> 4.2-alt1
+- New version 4.2.
+
 * Tue Jun 24 2025 Anton Midyukov <antohami@altlinux.org> 4.1-alt1
 - new version 4.1
 - disable feedback and version check by default
