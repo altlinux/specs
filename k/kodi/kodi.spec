@@ -1,15 +1,15 @@
 Name: kodi
-Version: 21.2
-Release: alt6
+Version: 21.3
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
 Group: Video
 Url: https://kodi.tv/
 
-Requires: kodi-bin = %version-%release
 Requires: kodi-data = %version-%release
-Requires: kodi-x11 = %version-%release
+Provides: kodi-bin = %version-%release
+Obsoletes: kodi-bin
 
 Source0: %name-%version-%release.tar
 Source1: groovy.tar
@@ -93,17 +93,12 @@ BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(zlib)
 
-%package bin
-Summary: Kodi binaries
-Group: Video
-Requires: kodi-data = %version-%release
-
 %package data
 Summary: Kodi architecture-independent data
 Group: Video
 BuildArch: noarch
 Requires: python3(sqlite3)
-AutoReqProv: yes,nopython
+AutoReqProv: yes,nopython, nopython3
 
 %package devel
 Summary: Kodi development part
@@ -117,10 +112,6 @@ Requires: kodi-bin = %version-%release
 
 %description
 Kodi is an media-player and entertainment hub for all your digital media.
-
-%description bin
-Kodi is an media-player and entertainment hub for all your digital media.
-This package contains Kodi binaries.
 
 %description data
 Kodi is an media-player and entertainment hub for all your digital media.
@@ -175,18 +166,9 @@ sed -i -e '/Exec=kodi/ s,=,=%_bindir/,' %buildroot%_datadir/xsessions/kodi.deskt
 install -pm0644 -D kodi.wmsession %buildroot%_sysconfdir/X11/wmsession.d/20KODI
 mkdir %buildroot%_libdir/kodi/addons
 
-%add_python3_req_skip xbmc
-%add_python3_req_skip xbmcgui
-%add_python3_req_skip xbmcaddon
-%add_python3_req_skip xbmcvfs
-
 %files
 %docdir
-%_desktopdir/kodi.desktop
-%_iconsdir/hicolor/*/apps/kodi.*
-%_datadir/metainfo/*.xml
 
-%files bin
 %_bindir/kodi
 %_bindir/kodi-standalone
 
@@ -195,6 +177,10 @@ mkdir %buildroot%_libdir/kodi/addons
 %_libdir/kodi/system
 %_libdir/kodi/kodi.bin
 %_libdir/kodi/kodi-xrandr
+
+%_desktopdir/kodi.desktop
+%_iconsdir/hicolor/*/apps/kodi.*
+%_datadir/metainfo/*.xml
 
 %files data
 %dir %_datadir/kodi
@@ -215,6 +201,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Sat Nov 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt1
+- 21.3 released
+
 * Thu Sep 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt6
 - fixed build with curl >= 8.16
 
