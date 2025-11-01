@@ -2,7 +2,7 @@
 %def_with check
 
 Name: reuse
-Version: 6.1.2
+Version: 6.2.0
 Release: alt1
 
 Summary: tool for REUSE copyright and license recommendations
@@ -51,14 +51,19 @@ with the REUSE recommendations.
 
 %prep
 %setup -n %name-%version
+sed -e 's/poetry run //g' -i docs/Makefile
 
 %build
 %pyproject_build
-make -C docs man
+make -C docs
+pushd docs
+PBR_VERSION=%{version} sphinx-build-3.12 -b man . manpages
+rm -rfv man/.{doctrees,buildinfo}
+popd
 
 %install
 %pyproject_install
-install -D -m 0644 docs/_build/man/*.1 -t "%{buildroot}%{_man1dir}/"
+install -D -m 0644 docs/manpages/*.1 -t "%{buildroot}%{_man1dir}/"
 
 %check
 #%%tox_create_default_config
@@ -71,8 +76,10 @@ install -D -m 0644 docs/_build/man/*.1 -t "%{buildroot}%{_man1dir}/"
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
-
 %changelog
+* Sat Nov 01 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
+- New version 6.2.0.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 6.1.2-alt1
 - New version 6.1.2.
 
