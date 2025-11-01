@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 6.2.0
-Release: alt2
+Version: 7.0.0
+Release: alt1
 Summary: A python wrapper for the GitLab API
 License: LGPL-3.0
 Group: Development/Python3
@@ -57,6 +57,9 @@ rm -rv tests/{install,functional,smoke}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 7.0.0-alt1
+- Updated to version 7.0.0.
+
 * Thu Oct 30 2025 Stanislav Levin <slev@altlinux.org> 6.2.0-alt2
 - NMU: fixed FTBFS (aiohttp 3.13.2).
 
