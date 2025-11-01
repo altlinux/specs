@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.2
-Release: alt1
+Release: alt2
 Summary: High level SSH command execution
 License: BSD-2-Clause
 Group: Development/Python3
@@ -68,7 +68,8 @@ This package contains tests for %oname.
 %pyproject_install
 
 %check
-%pyproject_run -- inv test
+# Fixtures called directly
+%pyproject_run_pytest -k 'not fake and not fake_agent and not no_stdin'
 
 %files
 %doc README.rst
@@ -81,6 +82,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/%mod_name/testing/
 
 %changelog
+* Sat Nov 01 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.2-alt2
+- Fixed FTBFS.
+
 * Wed Feb 14 2024 Stanislav Levin <slev@altlinux.org> 3.2.2-alt1
 - 3.2.1 -> 3.2.2.
 
