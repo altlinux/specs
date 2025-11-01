@@ -9,7 +9,7 @@
 
 Name: choqok
 Version: 1.7.0
-Release: alt4
+Release: alt5
 %K5init no_altplace appdata
 
 Group: Networking/Instant messaging
@@ -30,7 +30,8 @@ Patch4: alt-fix-account-delete.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-networkauth-devel
 BuildRequires: qoauth-qt5-devel
-BuildRequires: libqca-qt5-devel telepathy-qt5-devel
+BuildRequires: libqca-qt5-devel
+#telepathy-qt5-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdelibs4support
 %if_enabled webkit
 BuildRequires: kf5-kdewebkit-devel
@@ -138,6 +139,9 @@ sed -i '/find_package.*KF5WebKit/d' plugins/CMakeLists.txt
 
 
 %changelog
+* Sat Nov 01 2025 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt5
+- build without telepathy-qt5
+
 * Tue Jan 23 2024 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt4
 - fix crash on account delete (closes: 48773) (thanks krf10@alt)
 
