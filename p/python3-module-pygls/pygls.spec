@@ -9,14 +9,13 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.3.1
+Version: 2.0.0
 Release: alt1
 Summary: A pythonic generic language server
 License: Apache-2.0
@@ -25,16 +24,15 @@ Url: https://pypi.org/project/pygls
 Vcs: https://github.com/openlawlibrary/pygls
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-# manually manage extra dependencies with metadata
-AutoReq: yes, nopython3
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry-core
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-cattrs
+BuildRequires: python3-module-lsprotocol
 %endif
 
 %add_python_extra ws
@@ -47,11 +45,6 @@ Language Servers in just a few lines of code.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry test
-%endif
 
 %build
 %pyproject_build
@@ -68,5 +61,8 @@ Language Servers in just a few lines of code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 01 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Mon Jun 17 2024 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus.
