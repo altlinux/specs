@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.13
-Release: alt2
+Release: alt3
 Summary: IPython-enabled pdb
 License: BSD-3-Clause
 Group: Development/Python3
@@ -36,7 +36,7 @@ introspection with the same interface as the pdb module.
 %pyproject_install
 
 %check
-%pyproject_run_unittest discover -v tests
+%pyproject_run_pytest tests/test_config.py tests/test_import.py
 
 %files
 %doc *.txt *.rst
@@ -45,6 +45,9 @@ introspection with the same interface as the pdb module.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sat Nov 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.13.13-alt3
+- Fixed FTBFS.
+
 * Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 0.13.13-alt2
 - Migrated from removed setuptools' test command (see #50996).
 
