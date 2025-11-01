@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 Name: beust-jcommander
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Java framework for parsing command line parameters
 License: Apache-2.0
@@ -12,8 +13,13 @@ Vcs: https://github.com/cbeust/jcommander.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: 0001-Unicode-fix-for-tests-with-java-17.patch
+Patch0: 0001-Unicode-fix-for-tests-with-java-11.patch
 Patch1: 0002-Disable-signing-with-key.patch
+Patch2: 0003-Port-to-Java-11-alt-patch.patch
+# Banner templates are not allowed in Java 11.
+%if_with check
+Patch3: 0004-Port-to-Java-11-for-tests-alt-patch.patch
+%endif
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
@@ -44,6 +50,9 @@ This package contains the %summary.
 %setup
 %autopatch -p1
 
+# Change target compilation to Java 11 for compatibility with xmvn.
+sed -i 's/JavaVersion\.VERSION_17/JavaVersion.VERSION_11/g' build.gradle.kts
+
 %build
 %gradle_publish
 
@@ -66,6 +75,9 @@ This package contains the %summary.
 %doc license.txt notice.md
 
 %changelog
+* Sat Nov 01 2025 Ivan Khanas <xeno@altlinux.org> 3.0-alt2
+- Java-11 target compilation for compatibility with xmvn-install.
+
 * Mon Oct 27 2025 Ivan Khanas <xeno@altlinux.org> 3.0-alt1
 - New version.
 
