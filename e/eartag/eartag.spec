@@ -7,7 +7,7 @@
 
 Name: eartag
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Small and simple audio file tag editor
 License: MIT
@@ -44,13 +44,16 @@ BuildRequires: python3(acoustid)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: python3(aiofiles) python3(xxhash)
 BuildRequires: python3(filetype) python3(aiohttp)
-BuildRequires: python3(aiohttp_retry)}
+BuildRequires: python3(aiohttp_retry)
+BuildRequires: python3(pytest-asyncio)}
 
 %description
 %summary
 
 %prep
 %setup
+# ERROR: '"function"' is not a valid asyncio_default_fixture_loop_scope.
+sed -i 's|"function"|function|' pytest.ini
 
 %build
 %meson
@@ -74,6 +77,9 @@ BuildRequires: python3(aiohttp_retry)}
 %doc README*
 
 %changelog
+* Sat Nov 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1.1
+- fixed %%check
+
 * Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
