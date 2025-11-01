@@ -1,6 +1,6 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.2.17
+Version: 2.2.18
 Release: alt1
 Epoch: 2
 
@@ -26,7 +26,7 @@ Patch1: bluefish-2.2.17-shellbang.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
-Patch4: bluefish-2.2.17-russian-translation.patch
+Patch4: bluefish-2.2.18-russian-translation.patch
 
 Obsoletes: bluefish-common =< %EVR
 
@@ -57,7 +57,7 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1 -p2
 %patch3 -p2
-%patch4 -p1
+%patch4 -p2
 
 # Update russian translation
 #cp %SOURCE1 po/ru.po
@@ -105,6 +105,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Sat Nov 01 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.18-alt1
+- new version (2.2.18)
+
 * Fri Apr 04 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.17-alt1
 - new version (2.2.17)
 
