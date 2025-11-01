@@ -60,8 +60,8 @@
 %def_with jemalloc
 
 Name: %{project}4.5
-Version: 4.5.2
-Release: alt1.1
+Version: 4.5.4
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -70,13 +70,17 @@ Vcs: https://projects.blender.org/blender/blender.git
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
-ExcludeArch: %ix86 aarch64
+ExcludeArch: %ix86
 
 # https://projects.blender.org/blender/blender
 Source: %name-%version.tar
 # lfs assets needed for operation
 # See https://projects.blender.org/blender/blender/issues/140443
 Source1: lfs.tar
+
+# scripts/modules/_bpy_internal/freedesktop.py#L247
+# https://bugzilla.altlinux.org/55890
+Source2: blender.thumbnailer
 
 Patch21: blender-2.77-alt-enable-localization.patch
 Patch22: blender-4.5.0-alt-include-deduplication-check-skip.patch
@@ -100,6 +104,9 @@ Patch38: blender-4.4-alt-hiprt-optflags.patch
 Patch41: blender-4.5.0-oneapi-add-arl.patch
 Patch43: blender-4.5.0-alt-numpy-inc.patch
 Patch44: blender-alt-optix-inc.patch
+# https://gitlab.com/libeigen/eigen/-/issues/2850
+# https://libeigen.gitlab.io/eigen/docs-nightly/TopicPreprocessorDirectives.html#TopicPreprocessorDirectivesAssertions
+Patch45: blender-4.5.4-eigen-assert.patch
 
 # e2k and loongarch64 are broken now
 #Patch2000: blender-e2k-support.patch
@@ -318,18 +325,31 @@ This package contains binaries for AMD GPUs to use with HIPRT.
 %endif
 
 %if_with cuda
-%package cycles-nvidia-kernels
+%package cycles-cuda-kernels
 Summary: Cycles precompiled binaries for CUDA
 Group: System/Libraries
 Requires: %name = %EVR, libcuda
-Obsoletes: %{project}4.4-cycles-nvidia-kernels
+Obsoletes: %{project}4.4-cycles-nvidia-kernels, %{project}4.5-cycles-nvidia-kernels
 Conflicts: %project-cycles-cuda-kernels
 
-%description cycles-nvidia-kernels
+%description cycles-cuda-kernels
 Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
-This package contains binaries for Nvidia GPUs to use with CUDA/OptiX.
+This package contains binaries for Nvidia GPUs to use with CUDA.
+%endif
+
+%if_with optix
+%package cycles-optix-kernels
+Summary: Cycles precompiled binaries for OptiX
+Group: System/Libraries
+Requires: %name = %EVR, libnvoptix
+
+%description cycles-optix-kernels
+Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for Nvidia GPUs to use with OptiX.
 %endif
 
 %prep
@@ -362,6 +382,7 @@ EOF
 %patch41 -p1
 %patch43 -p1
 %patch44 -p1 -b .optix-inc
+%patch45 -p1 -b .eigen-assert
 
 %ifarch %e2k
 #%%patch2000 -p1
@@ -490,6 +511,7 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %else
 %cmake_install
 %endif
+install -pD -m644 %SOURCE2 %buildroot%_datadir/thumbnailers/%project.thumbnailer
 
 %files
 %_bindir/*
@@ -497,6 +519,7 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %_iconsdir/hicolor/scalable/apps/%project.svg
 %_iconsdir/hicolor/symbolic/apps/%project-symbolic.svg
 %_datadir/%project/
+%_datadir/thumbnailers/%project.thumbnailer
 %if_with hip
 %exclude %_datadir/%project/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
@@ -528,12 +551,14 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %if_with cuda
-%files cycles-nvidia-kernels
+%files cycles-cuda-kernels
 %_datadir/%project/*/%kern_dir/kernel_compute*.ptx*
 %_datadir/%project/*/%kern_dir/kernel_sm_*.cubin*
-%if_with optix
-%_datadir/%project/*/%kern_dir/kernel_optix*.ptx*
 %endif
+
+%if_with optix
+%files cycles-optix-kernels
+%_datadir/%project/*/%kern_dir/kernel_optix*.ptx*
 %endif
 
 %if_with docs
@@ -542,12 +567,21 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
-* Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 4.5.2-alt1.1
-- NMU: disabled aarch64 build.
+* Fri Oct 31 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.4-alt1
+- 4.5.4.
+- Fix FTBFS with new eigen.
+
+* Wed Sep 17 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.3-alt1
+- 4.5.3.
+
+* Wed Sep 10 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.2-alt2
+- Build with new rocm-6.4.3.
+- added thumbnailer support (closes #55890).
+- split nvidia kernels into cuda and optix packages.
 
 * Mon Aug 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.2-alt1
 - 4.5.2.
-- Remove redurant optix cmake switch (enabled by default).
+- Remove redudant optix cmake switch (enabled by default).
 
 * Sun Aug 03 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.1-alt1
 - 4.5.1.
