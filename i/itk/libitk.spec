@@ -5,12 +5,12 @@
 
 Name: itk
 Version: %itkver.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
 %if_with fftw
-License: GPL-2.0-or-later
+License: Apache-2.0 with AdditionRef-GPL-linking-fftw3
 %else
 License: Apache-2.0
 %endif
@@ -1038,6 +1038,7 @@ This package contains documentation for ITK.
 %setup -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127 -a128 -a129 -a130 -a131 -a132 -a133 -a134 -a135 -a136 -a137 -a138 -a139 -a140 -a141 -a142 -a143 -a144 -a145 -a146 -a147 -a148 -a149 -a150 -a151 -a152 -a153
 
 rm -rf \
+  Modules/ThirdParty/Eigen3/src/itkeigen/Eigen \
   Modules/ThirdParty/GDCM/src/gdcm \
   Modules/ThirdParty/VNL/src/vxl \
   #
@@ -1110,6 +1111,9 @@ rm -rf Modules/ThirdParty/VNL/src/
 rm -rf Modules/ThirdParty/DoubleConversion/src
 rm -rf Modules/ThirdParty/GoogleTest/src
 
+# Fix FTBFS eigen 5
+sed '/min_version/ s/3.3/5/' -i Modules/ThirdParty/Eigen3/CMakeLists.txt
+
 %build
 %ifarch aarch64
 # limit build jobs on aarch64 to prevent resources exhaustion
@@ -1147,6 +1151,7 @@ fi
        -DITK_USE_FFTWF=ON \
   %endif
        -DITK_USE_SYSTEM_DCMTK=ON \
+       -DITK_USE_SYSTEM_EIGEN:BOOL=ON \
        -DITK_USE_SYSTEM_EXPAT=ON \
   %if_with fftw
        -DITK_USE_SYSTEM_FFTW=ON \
@@ -1567,6 +1572,10 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %doc %_docdir/itk/
 
 %changelog
+* Sat Nov 01 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.4-alt2
+- Append AdditionRef GPL linking for license tag when build with fftw.
+- Fix FTBFS: eigen 5.
+
 * Mon Aug 04 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.4-alt1
 - Split libraries on related subpackages.
 - Build without FFTW (ALT 55452).
