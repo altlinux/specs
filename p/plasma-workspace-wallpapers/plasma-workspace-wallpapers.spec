@@ -1,7 +1,7 @@
 %define rname plasma-workspace-wallpapers
 
 Name: %rname
-Version: 6.4.3
+Version: 6.5.1
 Release: alt1
 %K6init
 
@@ -39,6 +39,9 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 %_datadir/wallpapers/*
 
 %changelog
+* Sat Nov 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.1-alt1
+- new version
+
 * Wed Jul 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.3-alt1
 - new version
 
