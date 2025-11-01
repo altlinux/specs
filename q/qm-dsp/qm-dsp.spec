@@ -11,7 +11,7 @@
 
 Name: qm-dsp
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: A C++ library for audio analysis
 License: GPLv2+
@@ -24,8 +24,7 @@ Patch:  %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: imake
-BuildRequires: libopenblas-devel
-BuildRequires: liblapack-devel
+BuildRequires: libflexiblas-devel
 
 %if_enabled check
 BuildRequires: boost-devel
@@ -88,15 +87,15 @@ rm -vf include/{cblas.h,clapack.h}
 %build
 %add_optflags  -DUSE_PTHREADS
 
-CFLAGS="%optflags $(pkg-config --cflags openblas lapack)" \
-CXXFLAGS="%optflags $(pkg-config --cflags openblas lapack)" \
+CFLAGS="%optflags $(pkg-config --cflags flexiblas)" \
+CXXFLAGS="%optflags $(pkg-config --cflags flexiblas)" \
 %make_build -f build/general/Makefile.inc
 
-g++ -shared %optflags \
+g++ -shared %optflags %optflags_shared \
         -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
         -Wl,-soname=lib%name.so.%sover \
         -o lib%name.so.%sover \
-        $(pkg-config --libs openblas lapack)
+        $(pkg-config --libs flexiblas)
 
 doxygen
 
@@ -130,6 +129,9 @@ sed -i 's/^VG.*$/VG :=/' tests/Makefile
 %doc doc/html/*
 
 %changelog
+* Sat Nov 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.1-alt2
+- fix FTBFS by using flexiblas for lapack
+
 * Tue Oct 10 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.1-alt1
 - 1.7.1, switch to official upstream github;
 - major build dependencies cleanup, spec cleanup;
