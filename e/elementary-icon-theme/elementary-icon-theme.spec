@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 8.1
+%define ver_major 8.2
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -47,6 +47,9 @@ and its desktop environment: Pantheon.
 %doc README*
 
 %changelog
+* Sat Nov 01 2025 Yuri N. Sedunov <aris@altlinux.org> 8.2.0-alt1
+- 8.2.0
+
 * Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
 - 8.1.0
 
