@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.14
-Release: alt1
+Release: alt2
 
 Summary: Application Framework for Python
 License: BSD-3-Clause
@@ -37,6 +37,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra mustache
 %pyproject_builddeps_metadata_extra tabulate
 %pyproject_builddeps_check
+BuildRequires: python3-module-requests
 %endif
 
 %description
@@ -80,6 +81,9 @@ development of CLI tools.
 %doc README.* LICENSE
 
 %changelog
+* Sat Nov 01 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.14-alt2
+- Fixed FTBFS.
+
 * Wed May 07 2025 Denis Sergeev <zeff@altlinux.org> 3.0.14-alt1
 - 3.0.12 -> 3.0.14.
 
