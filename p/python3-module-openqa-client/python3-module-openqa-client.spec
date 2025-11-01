@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 Summary: Python API to access openQA server
 License: GPL-2.0
@@ -50,6 +50,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.3.1-alt1
+- Updated to version 4.3.1.
+
 * Tue Jul 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.3.0-alt1
 - Updated to version 4.3.0.
 
