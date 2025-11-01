@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.19.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -164,6 +164,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Sat Nov 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt2
+- fix breeze-dark icons too dark
+
 * Fri Oct 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt1
 - new version
 
