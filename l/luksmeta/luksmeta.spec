@@ -3,7 +3,7 @@
 %def_enable tests
 
 Name: luksmeta
-Version: 9
+Version: 10
 Release: alt1
 
 Summary: Tools for storing metadata in a LUKSv1 header
@@ -11,10 +11,11 @@ Summary: Tools for storing metadata in a LUKSv1 header
 License: LGPL-2.1-or-later
 Group: Development/Tools
 Url: https://github.com/latchset/luksmeta
+VCS: https://github.com/latchset/luksmeta
 
-Source: %url/archive/v%version/%name-%version.tar.gz
-Patch0: luksmeta-9-upstream-relax-content-tests-in-test-suite.patch
-Patch1: luksmeta-9-upstream-force-creation-of-luks1-containers.patch
+# Source-url: https://github.com/latchset/luksmeta/archive/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: luksmeta-%version-%release.patch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: asciidoc-a2x libcryptsetup-devel
@@ -73,6 +74,10 @@ make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Nov 01 2025 Leontiy Volodin <lvol@altlinux.org> 10-alt1
+- New version 10 (Fixes: CVE-2025-11568).
+- Added VCS tag.
+
 * Tue Sep 12 2023 Leontiy Volodin <lvol@altlinux.org> 9-alt1
 - Initial build for ALT Sisyphus.
 - Needed for clevis 19.
