@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: esbuild
-Version: 0.25.9
+Version: 0.25.11
 Release: alt1
 Summary: An extremely fast JavaScript and CSS bundler and minifier
 Group: Development/Other
@@ -14,7 +14,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.1
+BuildRequires: rpm-build-golang golang >= 1.23.12
 BuildRequires: node
 
 %description
@@ -44,6 +44,9 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Nov 01 2025 Alexey Shabalin <shaba@altlinux.org> 0.25.11-alt1
+- New version 0.25.11.
+
 * Wed Aug 13 2025 Alexey Shabalin <shaba@altlinux.org> 0.25.9-alt1
 - New version 0.25.9.
 
