@@ -5,7 +5,7 @@
 
 
 Name: apache2-%module_name
-Version: 2.4.15.6
+Version: 2.4.18.1
 Release: alt1
 
 Summary: Apache 2.x OpenID Connect Relying Party authentication and authorization module
@@ -71,7 +71,7 @@ ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE.txt) LICENSE.
 %make_build
 
 %install
-/bin/install -pDm644 .libs/mod_auth_openidc.so %buildroot%apache2_libexecdir/mod_auth_openidc.so
+/bin/install -pDm644 src/.libs/mod_auth_openidc.so %buildroot%apache2_libexecdir/mod_auth_openidc.so
 
 /bin/install -pDm644 %SOURCE1 %buildroot%apache2_mods_available/auth_openidc.load
 /bin/install -pDm644 %SOURCE2 %buildroot%apache2_mods_available/auth_openidc.conf
@@ -90,6 +90,15 @@ ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE.txt) LICENSE.
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Sun Nov 02 2025 Nikolay A. Fetisov <naf@altlinux.org> 2.4.18.1-alt1
+- New version
+- Fixes:
+  + CVE-2025-31492: protected content leakage when using
+    OIDCProviderAuthRequestMethod POST
+
+* Mon Jul 15 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.4.15.7-alt1
+- New version
+
 * Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.4.15.6-alt1
 - New version
 
