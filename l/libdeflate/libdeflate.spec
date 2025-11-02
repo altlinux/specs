@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.24
+Version: 1.25
 Release: alt1
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
@@ -117,6 +117,10 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Sat Nov 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.25-alt1
+- Update to v1.25 (2025-10-31): no fixes or improvements, only the build
+  harness maintenance.
+
 * Wed May 14 2025 Vitaly Chikunov <vt@altlinux.org> 1.24-alt1
 - Update to v1.24 (2025-05-11).
 
