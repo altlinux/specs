@@ -1,7 +1,7 @@
 %define _qt6_qml %_lib/qt6/qml
 
 Name: quickshell
-Version: 0.1.0
+Version: 0.2.1
 Release: alt1
 License: GPL-3.0 and LGPL-3.0
 
@@ -10,7 +10,7 @@ Summary: Flexible toolkit for making desktop shells with QtQuick
 Group: Graphical desktop/Other
 
 Url: https://quickshell.outfoxxed.me/
-Vcs: https://git.outfoxxed.me/quickshell/quickshell.git
+Vcs: https://github.com/quickshell-mirror/quickshell.git
 
 Source: %name-%version.tar
 
@@ -62,7 +62,12 @@ to build a complete desktop environment.
 %_bindir/qs
 %_bindir/quickshell
 %_qt6_qmldir/Quickshell
+%_desktopdir/org.quickshell.desktop
+%_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sat Oct 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script)
+
 * Wed Jul 02 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.0-alt1
 - Initial build
