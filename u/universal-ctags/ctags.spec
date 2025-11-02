@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: 6.2.0
+Version: 6.2.1
 Release: alt1
 Epoch:   1
 
@@ -72,6 +72,9 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %_man7dir/ctags-*.7*
 
 %changelog
+* Sat Nov 01 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.2.1-alt1
+- Update to v6.2.1 (2025-10-25).
+
 * Sun Jun 01 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.2.0-alt1
 - Update to v6.2.0 (2025-06-01).
 
