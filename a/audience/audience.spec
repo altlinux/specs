@@ -1,28 +1,32 @@
 %def_enable snapshot
 
-%define ver_major 2.8
+%define ver_major 8.0
 %define gst_api_ver 1.0
 %define _name videos
 %define rdn_name io.elementary.%_name
 
 Name: audience
 %define xdg_name org.pantheon.%name
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
-Summary: A modern media player
+Summary: A modern media player for Elementary OS
 License: GPL-3.0
 Group: Video
 Url: https://launchpad.net/audience
 
+Vcs: https://github.com/elementary/videos.git
+
 %if_disabled snapshot
 Source: https://github.com/elementary/videos/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/videos.git
 Source: %_name-%version.tar
 %endif
 
-Provides: %rdn_name = %version-%release
+Provides: %rdn_name = %EVR
+Provides: elementary-%_name = %EVR
+
+%define granite_ver 7.3.0
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -30,11 +34,14 @@ Requires: gst-plugins-bad%gst_api_ver
 Requires: gst-plugins-ugly%gst_api_ver
 Requires: gst-libav
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ libgranite-devel libclutter-gtk3-devel
-BuildRequires: libclutter-gst3.0-devel gst-plugins%gst_api_ver-devel
-BuildRequires: vala-tools libgranite-vala
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ vala-tools
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
+BuildRequires: pkgconfig(gstreamer-video-1.0)
+BuildRequires: pkgconfig(gstreamer-tag-1.0)
+BuildRequires: pkgconfig(granite-7) >= %granite_ver
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: gobject-introspection-devel
 
 %description
@@ -57,11 +64,14 @@ hardware acceleration than most players out there.
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_iconsdir/hicolor/*x*/apps/%rdn_name.svg
 %doc README.md
 
 %changelog
+* Sun Nov 02 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.2-alt1
+- updated to 8.0.2-17-gf6baa2d0
+
 * Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
 - updated to 2.8.4-18-g6b019cb1
 

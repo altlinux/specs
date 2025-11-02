@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 8.0
+%define ver_major 8.1
 
 Name: noise
 %define _name music
@@ -26,6 +26,7 @@ Provides: elementary-%_name = %EVR
 
 %define gst_api_ver 1.0
 %define adw_ver 1.4
+%define granite_ver 7.6.0
 
 Requires: elementary-icon-theme
 # gstreamer
@@ -35,7 +36,7 @@ Requires: gst-plugins-bad%gst_api_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: pkgconfig(granite-7)
+BuildRequires: pkgconfig(granite-7) >= %granite_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-pbutils-%gst_api_ver)
@@ -69,6 +70,9 @@ in the system audio indicator.
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Sun Nov 02 2025 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0-24-gdf922010
+
 * Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - 8.0.0-52-gd7fbb4fc (ported to Granite-7/Libadwaita)
 
