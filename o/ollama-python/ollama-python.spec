@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.5.4
+Version: 0.6.0
 Release: alt1
 Summary: Ollama Python library
 License: MIT
@@ -76,6 +76,7 @@ wait
 rm -rf /root/.ollama
 
 %files -n python3-module-ollama
+%define _customdocdir %_docdir/%name
 %doc LICENSE *.md requirements.txt examples
 %python3_sitelibdir_noarch/ollama
 %python3_sitelibdir_noarch/ollama-%version.dist-info
@@ -83,6 +84,11 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Thu Sep 25 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt1
+- Update to v0.6.0 (2025-09-24).
+- Documentation with examples moved to static location at
+  /usr/share/doc/ollama-python.
+
 * Wed Sep 17 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.4-alt1
 - Update to v0.5.4 (2025-09-15).
 
