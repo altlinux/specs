@@ -1,6 +1,6 @@
 Name:    pgbackrest
 Version: 2.57.0
-Release: alt1
+Release: alt2
 
 Summary: Reliable PostgreSQL Backup & Restore
 License: MIT
@@ -8,6 +8,7 @@ Group:   Other
 
 Url:     https://github.com/pgbackrest/pgbackrest
 Source: %name-%version.tar
+Source1: %name.conf
 
 BuildRequires(pre): meson
 
@@ -52,12 +53,21 @@ The following features are available:
 
 %install
 %meson_install
+mkdir -p %buildroot/%_localstatedir/%name/log
+mkdir -p %buildroot/%_sysconfdir/%name
+cp %SOURCE1 %buildroot/%_sysconfdir/%name/
 
 %files
 %doc *.md
 %_bindir/*
+%dir %attr(700,postgres,postgres) %_localstatedir/%name
+%dir %attr(700,postgres,postgres) %_localstatedir/%name/log
+%config(noreplace) %_sysconfdir/%name/%name.conf
 
 %changelog
+* Thu Oct 23 2025 Kirill Izmestev <felixz@altlinux.org> 2.57.0-alt2
+- Add config and directories for backups (ALT#54317).
+
 * Wed Oct 22 2025 Alexei Takaseev <taf@altlinux.org> 2.57.0-alt1
 - 2.57.0
 - Add support PostgreSQL 18
