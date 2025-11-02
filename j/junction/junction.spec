@@ -2,13 +2,13 @@
 %def_enable snapshot
 
 %define _name Junction
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name re.sonny.Junction
 
 Name: junction
 Version: %ver_major
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: Application chooser for GNOME
 License: GPL-3.0
@@ -68,6 +68,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Sun Nov 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+
 * Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1.1
 - fixed start if XDG_DATA_DIRS is not set (ALT #55368)
 

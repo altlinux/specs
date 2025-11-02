@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name letterpress
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name io.gitlab.gregorni.Letterpress
 
 %def_enable check
@@ -27,7 +27,8 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
-Requires: jp2a
+Requires: python3-module-pygobject3
+Requires: artem
 Requires: typelib(Adw) = 1
 Requires: dconf
 
@@ -66,6 +67,9 @@ lowering the zoom factor.
 
 
 %changelog
+* Sun Nov 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- updated to 2.2-3-g97f40a0
+
 * Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 
