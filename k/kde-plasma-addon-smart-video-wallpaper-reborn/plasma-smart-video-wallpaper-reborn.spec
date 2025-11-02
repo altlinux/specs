@@ -3,7 +3,7 @@
 
 Name: kde-plasma-addon-smart-video-wallpaper-reborn
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
 License: GPL-2.0
@@ -31,9 +31,7 @@ Requires: ffmpeg
 
 %prep
 %setup
-
 cp -r -f %SOURCE1 package/translate/
-
 %patch -p0
 
 %build
@@ -48,16 +46,18 @@ for locale in el_GR es nl pt_BR ru; do
  install -Dm 0644 package/translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
-%find_lang %name --with-kde --all-name
+%find_lang %nameLC --with-kde --all-name
 
-%files -f %name.lang
+%files -f %nameLC.lang
 %_datadir/metainfo/%nameL.appdata.xml
 %exclude %_datadir/plasma/wallpapers/%nameL/translate
-%_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 %_datadir/plasma/wallpapers/%nameL/*
 %doc README.md
 
 %changelog
+* Sun Nov 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1.1
+- spec cleanup
+
 * Sat Nov 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1
 - 2.3.2 -> 2.4.0
 
