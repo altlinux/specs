@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 3.38
-Release: alt1
+Release: alt2
 
 Summary: Python CLI utility and library for manipulating SQLite databases
 License: Apache-2.0
@@ -55,6 +55,9 @@ BuildRequires: python3-modules-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Nov 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.38-alt2
+- Fixed FTBFS.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 3.38-alt1
 - Built for ALT Sisyphus.
 
