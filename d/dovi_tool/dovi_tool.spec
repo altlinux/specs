@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: dovi_tool
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Utilites for working with Dolby Vision
@@ -92,6 +92,9 @@ cargo test --bins --release
 %_libdir/libdovi.so
 
 %changelog
+* Sun Nov 02 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.1-alt1
+- 2.3.1.
+
 * Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.0-alt1
 - 2.3.0.
 
