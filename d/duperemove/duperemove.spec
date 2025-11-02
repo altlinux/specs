@@ -1,7 +1,7 @@
 # SPEC file for duperemove package
 
 Name:    duperemove
-Version: 0.14.1
+Version: 0.15.2
 Release: alt1
 
 Summary: tool for deduping file system extents
@@ -18,9 +18,9 @@ Patch0:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Nov 26 2023
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-setuptools sh5
-BuildRequires: glib2-devel libblkid-devel libmount-devel libsqlite3-devel libuuid-devel
+# Automatically added by buildreq on Sun Nov 02 2025
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error pkg-config python-modules python2-base python3 python3-base sh5
+BuildRequires: glib2-devel libblkid-devel libbsd-devel libmount-devel libsqlite3-devel libuuid-devel libxxhash-devel
 
 %description
 Duperemove  is a simple tool for finding duplicated extents
@@ -58,7 +58,7 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 install -m 0755 show-shared-extents %buildroot%_bindir/
 
 %files
-%doc README.md LICENSE.xxhash
+%doc README.md
 %doc --no-dereference LICENSE
 
 %_bindir/%name
@@ -66,12 +66,17 @@ install -m 0755 show-shared-extents %buildroot%_bindir/
 %_bindir/show-shared-extents
 %_bindir/hashstats
 
+%_datadir/zsh/site-functions/*
+
 %_man8dir/%{name}.*
 %_man8dir/btrfs-extent-same.*
 %_man8dir/show-shared-extents.*
 %_man8dir/hashstats.*
 
 %changelog
+* Sun Nov 02 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.15.2-alt1
+- New version
+
 * Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.14.1-alt1
 - New version
 
