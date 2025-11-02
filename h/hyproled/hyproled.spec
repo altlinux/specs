@@ -1,5 +1,5 @@
 Name: hyproled
-Version: 0.1.0
+Version: 0.1.3
 Release: alt1
 License: BSD-3-Clause
 
@@ -28,5 +28,8 @@ install %name %buildroot%_bindir/
 %_bindir/%name
 
 %changelog
+* Fri Oct 24 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt1
+- new version 0.1.3 (with rpmrb script)
+
 * Mon Oct 14 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.0-alt1
 - Initial build

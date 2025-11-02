@@ -1,7 +1,7 @@
-%define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprtrails hyprwinwrap xtra-dispatchers
+%define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprfocus hyprscrolling hyprtrails hyprwinwrap xtra-dispatchers
 
 Name: hyprland-plugins
-Version: 0.49.0
+Version: 0.51.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 ExcludeArch: %ix86
 
-BuildRequires: gcc-c++
+BuildRequires: clang-devel libstdc++-devel
 
 BuildRequires: hyprland-devel
 BuildRequires: pkgconfig(hyprlang)
@@ -67,6 +67,20 @@ Group: Graphical desktop/Other
 %description -n hyprland-plugin-hyprexpo
 %summary.
 
+%package -n hyprland-plugin-hyprfocus
+Summary: Flashfocus for hyprland
+Group: Graphical desktop/Other
+
+%description -n hyprland-plugin-hyprfocus
+%summary.
+
+%package -n hyprland-plugin-hyprscrolling
+Summary: Adds a scrolling layout to Hyprland
+Group: Graphical desktop/Other
+
+%description -n hyprland-plugin-hyprscrolling
+%summary.
+
 %package -n hyprland-plugin-hyprtrails
 Summary: A neat, but useless plugin to add trails behind windows
 Group: Graphical desktop/Other
@@ -93,7 +107,7 @@ Group: Graphical desktop/Other
 
 %build
 for i in %plugins; do
-%make_build -C $i all 
+%make_build CXX=clang++ -C $i all 
 done
 
 %install
@@ -115,6 +129,12 @@ done
 %files -n hyprland-plugin-hyprexpo
 %_libdir/hyprland/hyprexpo.so
 
+%files -n hyprland-plugin-hyprfocus
+%_libdir/hyprland/hyprfocus.so
+
+%files -n hyprland-plugin-hyprscrolling
+%_libdir/hyprland/hyprscrolling.so
+
 %files -n hyprland-plugin-hyprtrails
 %_libdir/hyprland/hyprtrails.so
 
@@ -125,6 +145,12 @@ done
 %_libdir/hyprland/xtra-dispatchers.so
 
 %changelog
+* Wed Oct 22 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.51.1-alt1
+- new version 0.51.1 (with rpmrb script)
+- build with clang
+- new plugin: hyprfocus
+- new plugin: hyprscrolling
+
 * Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.49.0-alt1
 - new version 0.49.0 (with rpmrb script)
 

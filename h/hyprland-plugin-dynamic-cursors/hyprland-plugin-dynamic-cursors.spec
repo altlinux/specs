@@ -1,7 +1,7 @@
 %define plugin dynamic-cursors
 
 Name: hyprland-plugin-%plugin
-Version: 0.49.0
+Version: 0.51.1
 Release: alt1
 License: MIT
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 ExcludeArch: %ix86
 
-BuildRequires: gcc-c++
+BuildRequires: clang-devel libstdc++-devel
 
 BuildRequires: hyprland-devel
 BuildRequires: pkgconfig(hyprlang)
@@ -23,6 +23,7 @@ BuildRequires: pkgconfig(hyprgraphics)
 BuildRequires: pkgconfig(aquamarine)
 BuildRequires: pkgconfig(hyprcursor)
 
+BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libinput)
@@ -40,9 +41,10 @@ you are moving or straight out rotate towards it.
 
 %prep
 %setup
+subst "s|--no-gnu-unique||" Makefile
 
 %build
-%make_build all 
+%make_build CXX=clang++ all 
 
 %install
 install -d %buildroot%_libdir/hyprland
@@ -53,6 +55,9 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Wed Oct 22 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.51.1-alt1
+- new version 0.51.1 (with rpmrb script)
+
 * Mon May 12 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.49.0-alt1
 - new version 0.49.0 (with rpmrb script)
 

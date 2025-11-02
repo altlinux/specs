@@ -1,7 +1,9 @@
+%def_with clang
+
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.49.0
+Version: 0.51.1
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -12,6 +14,9 @@ Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
 #Patch0: hyprland-0.40.0-native-udis86.patch
+Patch1: hyprland-0.50.1-clang.patch
+Patch2: hyprland-0.50.1-cm-inert-output.patch
+Patch3: hyprland-0.50.1-fix-workspace-persistence.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
@@ -21,6 +26,12 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson cmake
 BuildRequires: jq
 
+%if_with clang
+BuildRequires: clang libstdc++-devel
+%else
+BuildRequires: gcc-c++
+%endif
+
 BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
@@ -28,7 +39,7 @@ BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(hyprgraphics)
 BuildRequires: pkgconfig(aquamarine)
 
-BuildRequires: gcc-c++ >= 14
+BuildRequires: clang-devel libstdc++-devel
 BuildRequires: glslang-devel
 BuildRequires: libudis86-devel
 BuildRequires: glibc-devel
@@ -70,6 +81,13 @@ BuildRequires: glaze-devel
 BuildRequires: pkgconfig(hwdata)
 # systemd and uwsm
 BuildRequires: pkgconfig(systemd)
+
+# plugins
+%if_with clang
+Requires: llvm
+%else
+Requires: binutils
+%endif
 
 %description
 Hyprland is a dynamic tiling Wayland compositor based on wlroots
@@ -144,6 +162,12 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Fri Oct 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.51.1-alt1
+- new version 0.51.1 (with rpmrb script) (ALT bug 56486)
+- build with clang
+- add cm-inert-output patch
+- add fix-workspace-persistence patch
+
 * Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.49.0-alt1
 - new version 0.49.0 (with rpmrb script)
 
