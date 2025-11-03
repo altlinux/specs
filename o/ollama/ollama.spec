@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.12.3
+Version: 0.12.9
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -69,6 +69,7 @@ Requires: ollama-cpu = %EVR
 
 %prep
 %setup
+sed -i '/PRE_INCLUDE_REGEXES/d' CMakeLists.txt
 
 %build
 %add_optflags -Wno-unused-function
@@ -86,10 +87,6 @@ find -type f -perm -1 -ls
 
 %install
 %cmake_install
-%if_with cuda
-# Remove bundled shared libs.
-rm %buildroot%_libexecdir/ollama/libcu{blas{,Lt},dart}.so*
-%endif
 install -Dp ollama %buildroot%_bindir/ollama
 install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 # HTTP server on 127.0.0.1:11434
@@ -145,6 +142,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sun Nov 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.9-alt1
+- Update to v0.12.9 (2025-10-31).
+
 * Sun Oct 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.3-alt1
 - Update to v0.12.3 (2025-09-25).
 
