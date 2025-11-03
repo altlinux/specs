@@ -4,7 +4,7 @@
 %def_without aes_gcm
 
 Name: janus
-Version: 1.2.4
+Version: 1.3.3
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -193,6 +193,14 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.3.3-alt1
+- New version
+  - Refactored logging internals
+  - Fix multiple deadlocks and memory leaks in VideoRoom
+  - Fixed broken recordings when using remote publishers in the VideoRoom
+  - New programmatic API to ask for keyframes in SIP and NoSIP plugins
+  - Fixed broken session count in case of timeouts and disconnects
+
 * Sun Oct 20 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.2.4-alt1
 - New version
   - Fixed broken end-to-end encryption for subscribers in VideoRoom
