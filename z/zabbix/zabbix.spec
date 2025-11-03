@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		b9c6c020ebd
+%define svnrev		6542e21fe6a
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.20
+Version: 7.0.21
 Release: alt1
 Epoch: 1
 
@@ -865,6 +865,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Nov 03 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.21-alt1
+- 7.0.21
+
 * Thu Oct 30 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.20-alt1
 - 7.0.20 (Fixes: CVE-2025-49641)
 
