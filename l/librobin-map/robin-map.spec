@@ -3,7 +3,7 @@
 %define oname robin-map
 
 Name:    lib%oname
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: C++ implementation of a fast hash map and hash set using robin hood hashing 
 Group:   Development/C++
@@ -13,7 +13,10 @@ URL:     https://github.com/Tessil/robin-map
 # https://github.com/Tessil/robin-map.git
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
+
+BuildArch: noarch
 
 %description
 The robin-map library is a C++ implementation of a fast hash map and hash set
@@ -46,6 +49,9 @@ with backward shift deletion to resolve collisions.
 %_datadir/cmake/*
 
 %changelog
+* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.1-alt1
+- 1.4.1.
+
 * Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
 - Updated to upstream version 1.4.0.
 
