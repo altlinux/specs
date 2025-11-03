@@ -1,5 +1,5 @@
 Name: switcheroo-control
-Version: 2.6
+Version: 3.0
 Release: alt1
 
 Summary: D-Bus service to check the availability of dual-GPU
@@ -18,6 +18,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(libdrm)
 
 %description
 switcheroo-control is a D-Bus service to check the availability of dual-GPU.
@@ -60,15 +61,19 @@ This package contains the documentation for %name.
 %doc COPYING
 %doc NEWS README.md
 %_bindir/switcherooctl
-%_libexecdir/%name
+%_libexecdir/%{name}*
 %_mandir/man1/switcherooctl.1*
 %_unitdir/%name.service
 %_udevhwdbdir/30-pci-intel-gpu.hwdb
+%_udev_rulesdir/30-discrete-gpu.rules
 %_datadir/dbus-1/system.d/net.hadess.SwitcherooControl.conf
 
 %files doc
 %doc %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Nov 03 2025 Roman Alifanov <ximper@altlinux.org> 3.0-alt1
+- new version 3.0 (ALT bug 56258)
+
 * Fri May 12 2023 Roman Alifanov <ximper@altlinux.org> 2.6-alt1
 - Initial build for Sisyphus
