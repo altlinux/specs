@@ -4,31 +4,31 @@
 %set_verify_elf_method strict
 
 Name: libcpucycles
-Version: 20240318
+Version: 20250925
 Release: alt1
 Summary: Microlibrary for counting CPU cycles
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
-Group: Development/C
+Group: System/Libraries
 Url: https://cpucycles.cr.yp.to/
 
 Source: %name-%version.tar
 BuildRequires: python3
 
 %description
-libcpucycles is a public-domain microlibrary for counting CPU
-cycles. Cycle counts are not as detailed as Falk diagrams but are the
-most precise timers available to typical software; they are central
-tools used in understanding and improving software performance.
+libcpucycles is a microlibrary for counting CPU cycles. Cycle counts are
+not as detailed as Falk diagrams but are the most precise timers available
+to typical software; they are central tools used in understanding and
+improving software performance.
 
 The libcpucycles API is simple: include <cpucycles.h>, call cpucycles()
 to receive a long long whenever desired, and link with -lcpucycles.
 
-Internally, libcpucycles understands machine-level cycle counters for
-amd64 (both PMC and TSC), arm32, arm64 (both PMC and VCT), mips64,
-ppc32, ppc64, riscv32, riscv64, s390x, sparc64, and x86. libcpucycles
-also understands four OS-level mechanisms, which give varying levels
-of accuracy: mach_absolute_time, perf_event, CLOCK_MONOTONIC, and,
-as a fallback, microsecond-resolution gettimeofday.
+Internally, libcpucycles understands machine-level cycle counters
+for amd64 (both PMC and TSC), arm32, arm64 (both PMC and VCT),
+loong64, mips64, ppc32, ppc64, riscv32, riscv64, s390x, sparc64,
+and x86. libcpucycles also understands four OS-level mechanisms,
+which give varying levels of accuracy: mach_absolute_time, perf_event,
+CLOCK_MONOTONIC, and, as a fallback, microsecond-resolution gettimeofday.
 
 When the program first calls cpucycles(), libcpucycles automatically
 benchmarks the available mechanisms and selects the mechanism that
@@ -48,9 +48,8 @@ FFTW), but this creates per-package effort to keep up with the latest
 cycle counters. The goal of libcpucycles is to provide state-of-the-art
 cycle counting centrally for all packages to use.
 
-
 %package devel
-Summary: Develpment files for %name
+Summary: Development files for %name
 Group: Development/C
 
 %description devel
@@ -92,6 +91,9 @@ cpucycles-info
 %_man3dir/cpucycles.3*
 
 %changelog
+* Mon Nov 03 2025 Vitaly Chikunov <vt@altlinux.org> 20250925-alt1
+- Update to 20250925 (2025-09-25).
+
 * Sat Nov 16 2024 Vitaly Chikunov <vt@altlinux.org> 20240318-alt1
 - Update to 20240318 (2024-03-18).
 
