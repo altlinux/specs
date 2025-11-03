@@ -5,7 +5,7 @@
 %define dist_name RadiusPerl
 
 Name: perl-Authen-Radius
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: provide simple Radius client facilities
@@ -53,6 +53,9 @@ response.
 
 
 %changelog
+* Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.33-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.32-alt1
 - New version
 
