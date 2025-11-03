@@ -1,7 +1,7 @@
 %define llvmversion 15
 
 Name: libintel-opencl-clang%llvmversion
-Version: 15.0.1
+Version: 15.0.4
 Release: alt1
 
 Summary: Library to compile OpenCL C kernels to SPIR-V modules
@@ -63,5 +63,11 @@ developing against %name
 %_includedir/cclang/
 
 %changelog
+* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.4-alt1
+- 15.0.4.
+
+* Sat Sep 13 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.3-alt1
+- 15.0.3.
+
 * Tue May 13 2025 Andrey Kovalev <ded@altlinux.org> 15.0.1-alt1
 - initial build for ALT Sisyphus

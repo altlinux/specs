@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt10
+Release: alt11
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -135,6 +135,14 @@ Patch314: intel-IGC-no-extra-BBs-in-JumpThreading-pass.patch
 Patch315: intel-IGC-no-instcombine-code-sinking.patch
 Patch316: intel-IGC-Remove-too-strict-restrictions-in-LICM-pass.patch
 Patch317: intel-IGC-unify-max-alignment-with-generic-max.patch
+# https://github.com/intel/opencl-clang/releases
+Patch400: clang-D151339-add-cl_ext_image_raw10_raw12.patch
+Patch401: intel-clang-0001-Remove-__IMAGE_SUPPORT__-macro-for-SPIR.patch
+Patch402: intel-clang-0002-Remove-wrong-check-of-__opencl_c_images-feature-macr.patch
+Patch403: intel-clang-0003-Fix-checking-mechanism-for-read_write-Image-type.patch
+Patch404: intel-clang-0004-OpenCL-Allow-undefining-header-only-macros.patch
+Patch405: intel-clang-0005-Enable-use-of-GNU-C-extension.patch
+Patch406: intel-clang-0006-OpenCL-Add-cl_khr_kernel_clock-builtins-91950.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -677,6 +685,14 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch315 -p1
 %patch316 -p1
 %patch317 -p1
+# clang patches
+%patch400 -p2 -b .clang-add-cl_ext_image_raw10_raw12.patch
+%patch401 -p1
+%patch402 -p1
+%patch403 -p1
+%patch404 -p1
+%patch405 -p1
+%patch406 -p1
 %endif
 
 # LLVM 12 and onward deprecate Python 2:
@@ -1248,6 +1264,9 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt11
+- x86_64: apply patches from intel-opencl.
+
 * Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 15.0.7-alt10
 - NMU: fixed build with python3.13.
 
