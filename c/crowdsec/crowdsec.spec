@@ -1,10 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/crowdsecurity/crowdsec
 # git rev-parse --short v%version
-%global commit_hash c3036e21
+%global commit_hash c8aad699
+%define _libexecdir %_prefix/libexec
 
 Name: crowdsec
-Version: 1.7.0
+Version: 1.7.3
 Release: alt1
 Summary: Security solution offering crowdsourced protection against malicious IPs
 License: MIT
@@ -44,6 +45,8 @@ cd .gopath/src/%import_path
 ./cmd/%name-cli/cscli completion bash > cmd/cscli.bash
 ./cmd/%name-cli/cscli completion zsh > cmd/cscli.fish
 ./cmd/%name-cli/cscli completion fish > cmd/_cscli
+cd -
+sed -i 's/Environment=/Environment=GIN_MODE=release /' debian/%name.service
 
 %install
 %define cmd_path .gopath/src/%import_path/cmd
@@ -65,7 +68,9 @@ install -m 0644 %cmd_path/cscli.bash %buildroot%_datadir/bash-completion/complet
 install -m 0644 %cmd_path/cscli.fish %buildroot%_datadir/fish/vendor_completions.d
 install -m 0644 %cmd_path/_cscli %buildroot%_datadir/zsh/site-functions
 install -m 0644 debian/%name.service %buildroot%_unitdir
-install -m 0755 config/%name.cron.daily %buildroot%_sysconfdir/cron.daily/%name
+install -m 0644 debian/%name-hubupdate.service %buildroot%_unitdir
+install -m 0644 debian/%name-hubupdate.timer %buildroot%_unitdir
+install -m 0755 debian/hubupdate.sh %buildroot%_libexecdir/%name
 install -m 0644 config/acquis.yaml %buildroot%_sysconfdir/%name
 install -m 0644 config/config.yaml %buildroot%_sysconfdir/%name
 install -m 0644 config/console.yaml %buildroot%_sysconfdir/%name
@@ -100,7 +105,10 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %_logdir/%name
 %_localstatedir/%name
 %_unitdir/%name.service
+%_unitdir/%name-hubupdate.timer
+%_unitdir/%name-hubupdate.service
 %_sysconfdir/%name/patterns
+%_libexecdir/%name/hubupdate.sh
 %_libexecdir/%name/plugins/notification-dummy
 %_libexecdir/%name/plugins/notification-email
 %_libexecdir/%name/plugins/notification-file
@@ -134,11 +142,11 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %dir %_sysconfdir/%name/hub
 %dir %_sysconfdir/%name/notifications
 %doc LICENSE
-# systemd.timer should be coming soon
-# https://github.com/crowdsecurity/crowdsec/issues/3218
-%_sysconfdir/cron.daily/%name
 
 %changelog
+* Sun Nov 02 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.3-alt1
+- Updated to version 1.7.3.
+
 * Sun Sep 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.0-alt1
 - Updated to version 1.7.0.
 
