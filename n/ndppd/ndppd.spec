@@ -1,7 +1,7 @@
 # Spec file for ndppd - NDP Proxy Daemon
 
 Name: ndppd
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: IPv6 NDP Proxy Daemon
@@ -82,5 +82,8 @@ install -pD -m0755 %SOURCE2 %buildroot%_initdir/%name
 %_unitdir/%{name}*.service
 
 %changelog
+* Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.2.6-alt1
+- New version
+
 * Tue Jun 29 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.2.5-alt1
 - Initial build for ALT Linux Sisyphus
