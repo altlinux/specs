@@ -1,6 +1,6 @@
 Name: normcap
 Version: 0.6.0
-Release: alt4
+Release: alt5
 
 Summary: OCR powered screen-capture tool to capture information instead of images
 
@@ -21,6 +21,8 @@ BuildRequires: gettext-tools
 
 Patch: menu_button-0.6.0-alt-fixes.patch
 Patch1: tray-0.6.0-alt-fixes.patch
+#
+Patch2: do_not_try_gnome-screenshot_on_Gnome49.patch
 
 %description
 %summary.
@@ -34,6 +36,7 @@ Summary: OCR powered screen-capture tool to capture information instead of image
 %prep
 %setup
 cat >> %name.desktop <<EOF
+#!/usr/bin/python3
 [Desktop Entry]
 Categories=Utility;
 Name=Normcap
@@ -68,6 +71,10 @@ cp -f -r %name/resources/locales %buildroot%python3_sitelibdir/%name/resources
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Mon Nov 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt5
+- fix: launch via application shortcut in Gnome 49
+- feat(screenshot): do not try gnome-screenshot on Gnome 49+
+
 * Thu Sep 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt4
 - remove update check
 
