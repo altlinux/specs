@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-Git
 
 Name: perl-Dist-Zilla-Plugin-Git
-Version: 2.049
+Version: 2.052
 Release: alt1
 
 Summary: Dist:Zilla plugin to Update git repository after release
@@ -45,6 +45,9 @@ work.
 %perl_vendor_privlib/Dist/Zilla/*
 
 %changelog
+* Tue Nov 04 2025 Nikolay A. Fetisov <naf@altlinux.org> 2.052-alt1
+- New version
+
 * Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.049-alt1
 - New version
 
