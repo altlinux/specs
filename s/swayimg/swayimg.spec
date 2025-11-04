@@ -2,7 +2,7 @@
 
 Name: swayimg
 Version: 4.5
-Release: alt1
+Release: alt2
 Summary: Image viewer for Wayland.
 License: MIT
 Group: Graphical desktop/Other
@@ -16,7 +16,10 @@ BuildRequires: cmake
 BuildRequires: giflib-devel
 BuildRequires: hicolor-icon-theme
 BuildRequires: meson >= 0.60.0
+BuildRequires: scdoc
+BuildRequires: zsh
 BuildRequires: gcc-c++
+BuildRequires: libgomp-devel
 BuildRequires: pkgconfig
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
@@ -34,6 +37,14 @@ BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libwebpdemux)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libjxl)
+BuildRequires: pkgconfig(libheif)
+BuildRequires: pkgconfig(libavif)
+BuildRequires: pkgconfig(libsixel)
+BuildRequires: pkgconfig(libraw)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: openexr-devel
 
 %description
 Swayimg is a lightweight image viewer for Wayland display servers.
@@ -66,8 +77,12 @@ opening the image directly in a terminal window.
 %_datadir/bash-completion/completions/%name
 %_man1dir/%name.1*
 %_man5dir/swayimgrc.5*
+%_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Nov 04 2025 Pavel Shilov <zerospirit@altlinux.org> 4.5-alt2
+- add dependencies to fix (ALT #56719)
+
 * Sat Jul 26 2025 Pavel Shilov <zerospirit@altlinux.org> 4.5-alt1
 - 4.4 -> 4.5
 
