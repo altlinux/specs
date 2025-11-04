@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/garethgeorge/backrest
 # git rev-parse --short v%version
-%global commit_hash 9b73a0e3
+%global commit_hash b9181dc0
 
 Name: backrest
-Version: 1.9.1
+Version: 1.10.1
 Release: alt1
 Summary: Web UI and orchestrator for restic backup
 License: GPL-3.0
@@ -20,8 +20,8 @@ Source4: backrest.service
 
 ExclusiveArch: x86_64
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: npm
 
 Requires: restic
@@ -77,6 +77,12 @@ touch %buildroot%_sysconfdir/backrest/config.json
 %doc LICENSE
 
 %changelog
+* Sun Nov 02 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.10.1-alt1
+- Updated to version 1.10.1.
+
+* Fri Aug 29 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.9.2-alt1
+- Updated to version 1.9.2.
+
 * Sat Aug 09 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.9.1-alt1
 - Updated to version 1.9.1.
 
