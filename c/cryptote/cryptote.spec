@@ -2,7 +2,7 @@
 
 Name: cryptote
 Version: 0.6.0
-Release: alt3
+Release: alt4
 
 Summary: encrypting text editor
 
@@ -18,15 +18,16 @@ Patch0:  %name-%version-%release.patch
 
 Patch1: %name-0.6.0-alt-gcc11.2_fix.patch
 Patch2: %name-0.6.0-alt-wxGTK3.0_fix.patch
+Patch3: %name-0.6.0-alt-wxGTK3.2_fix.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
-# Automatically added by buildreq on Fri Aug 17 2018
-# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgdk-pixbuf libstdc++-devel libwayland-client libwayland-server python-base python-modules python3 python3-base python3-dev ruby sh3
-BuildRequires: bzlib-devel gcc-c++ libwxGTK3.0-devel zlib-devel
+# Automatically added by buildreq on Tue Nov 04 2025
+# optimized out: at-spi2-atk glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libp11-kit libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxGTK3.2-devel python-modules python2-base python3 python3-base sh5
+BuildRequires: bzlib-devel gcc-c++ libwxBase3.2-devel zlib-devel
 
 %description
 CryptoTE is a text editor with integrated strong cryptography.
@@ -43,6 +44,7 @@ Encryption is transparently performed using the Serpent cipher.
 
 %patch1
 %patch2
+%patch3
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -81,6 +83,9 @@ mv -- %buildroot%_pixmapsdir/%{name}* %buildroot%_liconsdir/
 %_liconsdir/%{name}*
 
 %changelog
+* Tue Nov 04 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt4
+- Rebuild with wxGTK 3.2 (Closes: 55410)
+
 * Fri Oct 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt3
 - Fix build with GCC 11.2
 - Rebuild with wxGTK 3.0
