@@ -3,7 +3,7 @@
 
 Name:    prometheus-smartctl_exporter
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Export smartctl statistics to prometheus
 License: Apache-2.0
@@ -18,6 +18,7 @@ Source3: %name.service
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
+Requires(pre): prometheus-common
 Requires: smartmontools
 
 %description
@@ -63,5 +64,8 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/smartctl-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Nov 01 2025 Andrey Cherepanov <cas@altlinux.org> 0.14.0-alt2
+- Require prometheus-common before service install (ALT #56700).
+
 * Fri Oct 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.14.0-alt1
 - Initial build for Sisyphus (ALT #56583).
