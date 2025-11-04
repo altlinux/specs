@@ -1,13 +1,11 @@
 Name:    python3-module-ansible-collections
-Version: 11.4.1
+Version: 12.0.0
 Release: alt1
 
 Summary: This repository contains the community.general and some other Ansible Collection
 License: GPL-3.0+ and Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT and MPL-2.0 and PSF-2.0
 Group:   Development/Python3
 URL:     https://github.com/ansible-collections/community.general
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: submodules.tar
@@ -73,6 +71,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Tue Nov 04 2025 Andrey Cherepanov <cas@altlinux.org> 12.0.0-alt1
+- New version.
+
 * Mon Nov 03 2025 Andrey Cherepanov <cas@altlinux.org> 11.4.1-alt1
 - New version.
 
