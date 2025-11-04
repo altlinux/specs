@@ -2,12 +2,12 @@
 
 Name: obs-studio-plugin-droidcam
 Summary: Droidcam plugin for OBS studio
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 License: GPL-2.0
 Group: Video
 Url: https://github.com/dev47apps/droidcam-obs-plugin
-VCS: https://github.com/dev47apps/droidcam-obs-plugin.git
+VCS: https://github.com/dev47apps/droidcam-obs-plugin
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -48,6 +48,9 @@ cp -ar data/locale %buildroot%_datadir/obs/obs-plugins/droidcam-obs/
 %_datadir/obs/obs-plugins/droidcam-obs/
 
 %changelog
+* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.2-alt1
+- 2.4.2.
+
 * Wed Aug 13 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt1
 - 2.4.0.
 - Update BR: added avcodec.
