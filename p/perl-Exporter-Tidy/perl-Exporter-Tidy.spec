@@ -1,7 +1,7 @@
 # Spec file for Perl module Exporter::Tidy
 
 Name: perl-Exporter-Tidy
-Version: 0.08
+Version: 0.09
 Release: alt1
 
 Summary: Perl module Exporter::Tidy
@@ -21,8 +21,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jun 21 2011
-BuildRequires: perl-devel perl-threads
+# Automatically added by buildreq on Tue Nov 04 2025
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-devel
 
 %description
 Perl module Exporter::Tidy provides an another way of exporting
@@ -48,6 +49,9 @@ symbols and serves as an easy, clean alternative to Exporter.
 %perl_vendor_privlib/Exporter/*
 
 %changelog
+* Tue Nov 04 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.09-alt1
+- New version
+
 * Sun Jun 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
 - New version
 
