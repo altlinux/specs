@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: blend2d
-Version: 0.21.0
+Version: 0.21.2
 Release: alt1
 
 Summary: 2D Vector Graphics Engine
@@ -62,10 +62,12 @@ developing applications that use %name.
 %files devel
 %_libdir/lib%name.so
 %_includedir/%name
-%_includedir/*.h
 %_libdir/cmake/%name
 
 %changelog
+* Tue Nov 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.21.2-alt1
+- 0.21.0 -> 0.21.2
+
 * Mon Oct 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.21.0-alt1
 - 0.20.0 -> 0.21.0
 

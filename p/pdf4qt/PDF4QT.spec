@@ -1,6 +1,6 @@
 Name: pdf4qt
 Version: 1.5.2.0
-Release: alt1
+Release: alt2
 
 Summary: Open source PDF editor
 
@@ -57,6 +57,8 @@ subst 's|QString("./%1")|QString("/usr/bin/%1")|' Pdf4QtLaunchPad/launchdialog.c
 subst 's|"lib"|"lib64"|' Pdf4QtLibGui/pdfprogramcontroller.cpp
 #fix load translations
 subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
+#fix: build with new blend2d 0.21.2
+subst 's|<blend2d.h>|<blend2d/blend2d.h>|' Pdf4QtLibCore/sources/pdfblpainter.cpp
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -88,5 +90,8 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' 
 %_libdir/libPdf4QtLibWidgets.so.%version
 
 %changelog
+* Tue Nov 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.5.2.0-alt2
+- fix: build with new blend2d 0.21.2
+
 * Wed Oct 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.5.2.0-alt1
 - Initial build for ALT Linux.
