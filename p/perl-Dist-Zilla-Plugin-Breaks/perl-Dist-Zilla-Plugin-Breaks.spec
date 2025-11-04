@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-Breaks
 
 Name: perl-Dist-Zilla-Plugin-Breaks
-Version: 0.004
-Release: alt3
+Version: 0.005
+Release: alt1
 
 Summary: Add metadata about potential breakages caused by your distribution
 
@@ -47,6 +47,9 @@ likely not work once your distribution is installed.
 %perl_vendor_privlib/Dist/Zilla/Plugin/Breaks*
 
 %changelog
+* Tue Nov 04 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.005-alt1
+- New version
+
 * Mon Sep 20 2021 Vitaly Lipatov <lav@altlinux.ru> 0.004-alt3
 - update BuildRequires with buildreq
 
