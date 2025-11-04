@@ -2,7 +2,7 @@
 
 Name: fonts-bitmap-%cname
 Version: 5.637
-Release: alt1
+Release: alt2
 Summary: XTermG fonts - a fixed width English/Cyrillic fonts with some additional characters
 License: MIT
 Group: System/Fonts/X11 bitmap
@@ -37,6 +37,9 @@ cp %SOURCE1 .
 %doc TODO
 
 %changelog
+* Tue Nov 04 2025 Fr. Br. George <george@altlinux.org> 5.637-alt2
+- Fix Braile
+
 * Sat Oct 18 2025 Fr. Br. George <george@altlinux.org> 5.637-alt1
 - +Braile characters
 
