@@ -1,5 +1,5 @@
 Name:    rsnapshot
-Version: 1.4.5
+Version: 1.5.1
 Release: alt1
 
 Summary: local and remote filesystem snapshot utility
@@ -23,8 +23,9 @@ BuildRequires(pre): rpm-build-licenses
 Requires: %_bindir/rsync, %_bindir/ssh, %_bindir/logger
 Requires: perl(Lchown.pm)
 
-# Automatically added by buildreq on Sun Nov 28 2010
-BuildRequires: openssh-clients perl-Pod-Parser rsync
+# Automatically added by buildreq on Mon Nov 03 2025
+# optimized out: libgpg-error perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3 python3-base sh5
+BuildRequires: git-core perl-Pod-Usage openssh-clients rsync
 
 %description
 rsnapshot is an rsync-based filesystem snapshot utility. It can take
@@ -133,7 +134,7 @@ exit 0
 %files
 %doc AUTHORS ChangeLog README.md INSTALL.md
 %doc --no-dereference COPYING
-%doc docs/Upgrading_from_1.1 docs/HOWTOs/rsnapshot-HOWTO.en.html
+%doc docs/Upgrading_from_1.1 docs/HOWTOs/rsnapshot-HOWTO.en.md
 %doc utils
 
 %dir %attr(0770,root,_%name) %_sysconfdir/%name
@@ -151,6 +152,13 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.5.1-alt1
+- New version
+  * rotate only if there will be a new <interval>.0 folder
+  * add new backup script for sqlite3 databases
+  * fix validation of rsync_numtries = 0
+  * documentation updates and fixes
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.4.5-alt1
 - New version
   * documentation updates and fixes
