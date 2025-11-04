@@ -4,12 +4,12 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 20.1
+%global llvm_version 21.1
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.90.0
-Release: alt2
+Version: 1.91.0
+Release: alt1
 Epoch: 1
 
 Summary: The Rust Programming Language
@@ -25,6 +25,11 @@ Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
 # Replace shipped rust-lld with system's lld.
 # https://github.com/rust-lang/rust/issues/140473
 Patch002: rust-1.89.0-fedora-use_system_lld.patch
+# https://github.com/rust-lang/rust/issues/114940
+Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
+# https://bugzilla.altlinux.org/56652
+# https://github.com/stanislav-tkach/os_info/pull/428
+Patch004: rust-1.91.0-alt-altlinux_output_support.patch
 
 Requires: /proc
 Requires: gcc
@@ -45,7 +50,7 @@ BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(zlib)
-#BuildRequires: pkgconfig(libgit2)
+BuildRequires: pkgconfig(libgit2)
 BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
@@ -55,7 +60,7 @@ BuildRequires: clang%{llvm_version}
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: clang%{llvm_version}-support
 BuildRequires: llvm%{llvm_version}-devel
-BuildRequires:  lld%{llvm_version}-devel
+BuildRequires: lld%{llvm_version}-devel
 %else
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -228,11 +233,6 @@ patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/rustc
 # This only affects the transient rust-installer, but let it use our dynamic xz-libs
 sed -i -e '/LZMA_API_STATIC/d' src/bootstrap/src/core/build_steps/tool.rs
 
-%if_without bundled_llvm
-rm -rf -- src/llvm-project
-mkdir -p -- src/llvm-project/libunwind/
-%endif
-
 # The configure macro will modify some autoconf-related files, which upsets
 # cargo when it tries to verify checksums in those files.  If we just truncate
 # that file list, cargo won't have anything to complain about.
@@ -243,11 +243,12 @@ find vendor \
 # Environment.
 cat >env.sh <<EOF
 export RUST_BACKTRACE=1
-export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2"
+export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC"
 %ifarch loongarch64
 export RUSTFLAGS="$RUSTFLAGS -Ccode-model=medium"
 %endif
 export LIBSSH2_SYS_USE_PKG_CONFIG=1
+export LIBGIT2_SYS_USE_PKG_CONFIG=1
 export DESTDIR="%buildroot"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
@@ -259,7 +260,11 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 # Build configuration.
 cat > bootstrap.toml <<EOF
-change-id = 144675
+change-id = 146435
+include = [
+        ".rpm/bootstrap.toml.d/llvm-fork-build.toml"
+    ]
+
 [build]
 target = ["%rust_triple", "wasm32-unknown-unknown"]
 cargo = "%cargo"
@@ -270,11 +275,12 @@ docs = true
 verbose = 2
 vendor = true
 extended = true
+# Not every target has builtins support.
 optimized-compiler-builtins = false
-tools = ["cargo", "rust-analyzer", "clippy", "rustfmt", "src"]
-build-stage = 2
-test-stage = 2
-doc-stage = 2
+tools = ["cargo", "rustdoc", "rust-analyzer", "clippy", "rustfmt", "src"]
+build-stage = 3
+test-stage = 3
+doc-stage = 3
 
 [install]
 prefix = "%prefix"
@@ -288,19 +294,15 @@ jemalloc = false
 rpath = false
 debug = false
 deny-warnings = false
+codegen-units = 1
 %if_without debuginfo
 debuginfo-level = 0
-codegen-units = 2
 %else
 debuginfo-level = 1
-codegen-units = 0
 %endif
 lld = false
 
 [llvm]
-ninja = true
-use-libcxx = false
-download-ci-llvm = false
 %if_without bundled_llvm
 link-shared = true
 
@@ -311,6 +313,12 @@ ar = "llvm-ar"
 ranlib = "llvm-ranlib"
 llvm-config = "%_bindir/llvm-config"
 profiler = "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
+%ifarch %ix86
+optimized-compiler-builtins = false
+%else
+optimized-compiler-builtins = "$CLANG_RUNTIME_DIR/libclang_rt.builtins.a"
+%endif
+llvm-libunwind = "no"
 %endif
 EOF
 
@@ -319,7 +327,6 @@ EOF
 
 python3 x.py build
 python3 x.py doc
-
 
 %install
 . ./env.sh
@@ -358,6 +365,7 @@ popd
 
 %check
 . ./env.sh
+
 %if_without bundled_llvm
 # ensure that rustc_driver is actually dynamically linked to libLLVM
 find %buildroot/%_libdir \
@@ -370,17 +378,28 @@ export LD_LIBRARY_PATH="%buildroot/%_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 # https://rustc-dev-guide.rust-lang.org/tests/intro.html
 failed=
 for i in \
+	assembly-llvm \
 	codegen-llvm \
 	codegen-units \
 	incremental \
+	mir-opt \
 	debuginfo \
+	crashes \
 	coverage \
 ; do
 	: "### rust_src_test: running $i"
 	status='done'
 	# Temporarily run individual tests just for linux target.
 	# Tests for wasm32-unknown-unknown are not supported.
-	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_triple "tests/$i"; then
+
+	# "crashes/93237.rs" and "crashes/108499.rs" fail on i586
+	# For more info see https://github.com/rust-lang/rust/issues/148482.
+	if ! python3 ./x.py test --no-doc --no-fail-fast --target %rust_triple "tests/$i" \
+        %ifarch %ix86
+            --skip tests/crashes/93237.rs --skip tests/crashes/108499.rs \
+        %endif
+            %nil
+	then
 		status='failed'
 		failed="$failed $i"
 	fi
@@ -404,10 +423,10 @@ rm -rf %rustdir
 %_bindir/rustdoc
 %_libdir/lib*.so
 %_libexecdir/rust-analyzer-proc-macro-srv
+%_sysconfdir/target-spec-json-schema.json
 %dir %rustlibdir
 %dir %rustlibdir/etc
-%dir %rustlibdir/%rust_triple
-%rustlibdir/%rust_triple/*
+%rustlibdir/%rust_triple/
 %exclude %rustlibdir/etc/*
 %_man1dir/rustc.*
 %_man1dir/rustdoc.*
@@ -450,6 +469,15 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Tue Nov 04 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.91.0-alt1
+- New version (1.91.0).
+- Raise the llvm version to 21.1.
+- Enable system's llvm optimized compiler builtins.
+- Enable system's libgit2.
+- Improve performance a bit.
+- Use strict codegen testing.
+- Add ALT Linux output message support (Closes: 56652).
+
 * Wed Sep 24 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.90.0-alt2
 - Use CLANG_RUNTIME_DIR from the specified clang, instead
   of the default one (fixes FTBFS on loongarch64).
