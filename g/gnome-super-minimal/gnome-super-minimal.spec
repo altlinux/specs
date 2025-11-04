@@ -1,7 +1,7 @@
-%define ver_major 45
+%define ver_major 49
 
 Name: gnome-super-minimal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME 3 Desktop very minimal installer
@@ -14,7 +14,6 @@ BuildArch: noarch
 
 # GNOME Desktop Core
 Requires: gnome-session-wayland
-Requires: gnome-session-xsession
 
 Requires: pipewire wireplumber
 Requires: gnome-control-center
@@ -27,6 +26,7 @@ Requires: gnome-browser-connector
 Requires: fonts-otf-abattis-cantarell
 # backgrounds
 Requires: gnome-backgrounds
+Requires: glycin-2-loaders
 
 # Help browser
 Requires: yelp
@@ -56,6 +56,10 @@ and to allow the removal of applications that the user does not need.
 %files
 
 %changelog
+* Tue Nov 04 2025 Kirill Unitsaev <fiersik@altlinux.org> 49.1-alt1
+- drop gnome-session-xsession
+- add glycin-2-loaders
+
 * Thu Oct 12 2023 Roman Alifanov <ximper@altlinux.org> 45.0-alt1
 - replace gnome-session to gnome-session-wayland and gnome-session-xsession
 
