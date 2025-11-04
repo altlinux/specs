@@ -3,8 +3,8 @@
 %define real_name Promises
 
 Name: perl-Promises
-Version: 1.04
-Release: alt2
+Version: 1.05
+Release: alt1
 
 Summary: An implementation of Promises in Perl
 
@@ -21,11 +21,11 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Aug 04 2019
-# optimized out: gem-power-assert perl perl-AnyEvent perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Data-OptList perl-Digest-SHA perl-EV perl-Encode perl-Future perl-Guard perl-IO-Compress perl-IO-Socket-IP perl-IO-Socket-SSL perl-JSON-PP perl-Net-SSLeay perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Sereal-Decoder perl-Sereal-Encoder perl-Sub-Install perl-Sub-Uplevel perl-Test-Fatal perl-Try-Tiny perl-URI perl-Unicode-Normalize perl-common-sense perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-BuildRequires: perl-CPAN-Meta perl-IO-Async perl-IO-Socket-Socks perl-Module-Runtime perl-Mojolicious perl-Role-Tiny perl-Sub-Attribute perl-Sub-Exporter perl-Test-Exception perl-Test-Pod perl-Test-Requires perl-Test-Warn
+# Automatically added by buildreq on Mon Nov 03 2025
+# optimized out: libgpg-error openssl-config perl perl-AnyEvent perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Data-OptList perl-Digest-SHA perl-EV perl-Encode perl-Future perl-Guard perl-IO-Compress perl-IO-Socket-IP perl-IO-Socket-SSL perl-JSON-PP perl-JSON-XS perl-Net-SSLeay perl-Params-Util perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Sub-Install perl-Sub-Uplevel perl-Try-Tiny perl-Types-Serialiser perl-URI perl-Unicode-Normalize perl-common-sense perl-devel perl-parent perl-podlators python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-Cpanel-JSON-XS perl-CryptX perl-Heap perl-IO-Async perl-IO-Socket-Socks perl-JSON perl-Metrics-Any perl-Module-Runtime perl-Mojolicious perl-Role-Tiny perl-Sub-Attribute perl-Sub-Exporter perl-Test-Exception perl-Test-Fatal perl-Test-Pod perl-Test-Requires perl-Test-Warn
 
-BuildRequires: perl-AnyEvent perl-Test-Fatal
+BuildRequires: perl-AnyEvent
 
 %description
 Perl module Promises provides an implementation of the "Promise/A+"
@@ -47,6 +47,9 @@ can often result in asynchronous programs.
 %perl_vendor_privlib/Promises*
 
 %changelog
+* Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.05-alt1
+- New version
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.04-alt2
 - add BR: perl-Test-Fatal (no more required by perl-IO-Async)
 
