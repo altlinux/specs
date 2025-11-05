@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -98,6 +98,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Wed Nov 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
+- New version 1.0.17.
+
 * Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.16-alt1
 - New version 1.0.16.
 
