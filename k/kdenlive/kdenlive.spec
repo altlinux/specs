@@ -6,7 +6,7 @@
 
 Name: kdenlive
 Version: 25.04.3
-Release: alt2
+Release: alt3
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -53,7 +53,7 @@ Source3: pybind11.tar
 Source4: rapidjson.tar
 Source5: Imath.tar
 Patch2: alt-find-lumas.patch
-Patch3: alt-ffmpegaudiothumbnails.patch
+Patch3: alt-defaults.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): libavformat-devel
@@ -91,10 +91,7 @@ tar xvf %SOURCE4
 tar xvf %SOURCE5
 popd
 #%patch2 -p1
-%if %is_ffmpeg
-%else
 %patch3 -p1
-%endif
 
 install -m 0644 %SOURCE1 .
 sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
@@ -129,6 +126,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/knsrcfiles/*.knsrc
 
 %changelog
+* Wed Nov 05 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt3
+- don't check for updates by default
+
 * Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt2
 - fix build requires
 
