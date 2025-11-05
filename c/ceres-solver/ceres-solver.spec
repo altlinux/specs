@@ -6,11 +6,12 @@
 %define ceres_soname 4
 Name: ceres-solver
 Version: 2.2.0
-Release: alt2
+Release: alt3
 Summary: A non-linear least squares minimizer
 Group: Development/Other
 License: BSD
 Url: https://ceres-solver.org/
+VCS: https://github.com/ceres-solver/ceres-solver
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: gcc-c++
@@ -112,6 +113,9 @@ rm -f %buildroot%_libdir/cmake/Ceres/FindGlog.cmake
 %_libdir/cmake/Ceres
 
 %changelog
+* Wed Nov 05 2025 Anton Farygin <rider@altlinux.com> 2.2.0-alt3
+- fixed the build aghaist eigen 5.0.0
+
 * Tue Jun 04 2024 Anton Farygin <rider@altlinux.ru> 2.2.0-alt2
 - fixed the build against glog 0.7.0
 
