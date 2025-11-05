@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %__name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An IP address information search utility for the GNOME Desktop
@@ -42,6 +42,8 @@ Look up details such as the internet provider and geographic location for an IP 
 %prep
 %setup -n %{?_enable_snapshot:%__name}%{?_disable_snapshot:IPLookup-gtk}-%version
 
+sed -i 's/фы/фи/' po/ru.po
+
 # with appstream-util "Validate appstream file" failed
 sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 
@@ -66,6 +68,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Thu May 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

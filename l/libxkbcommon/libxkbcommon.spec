@@ -11,7 +11,7 @@
 %def_disable python_tests
 
 Name: lib%_name
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -154,6 +154,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- 1.12.3
+
 * Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 

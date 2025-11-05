@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name markdown
 %define modname Markdown
-%define ver_major 3.9
+%define ver_major 3.10
 
 %def_enable check
 
@@ -81,6 +81,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* docs/changelog.md
 
 %changelog
+* Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
+- 3.10
+
 * Fri Sep 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.9-alt1
 - 3.9
 

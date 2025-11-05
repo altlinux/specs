@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.24
+Version: 1.2.25
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -91,8 +91,7 @@ export VERSION=%version
 %make PREFIX=%_prefix \
     LIBDIR=%_libdir \
     FEATURES="jack ladspa lv2 vst2 %{?_enable_vst3:vst3} %{?_enable_ui:ui} doc xdg" \
-    CXXFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
-    CFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
+    EXT_FLAGS="%optflags_default %(getconf LFS_CFLAGS)" \
     config
 %make_build VERBOSE=1
 
@@ -133,6 +132,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.25-alt1
+- 1.2.25
+
 * Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.24-alt1
 - 1.2.24
 

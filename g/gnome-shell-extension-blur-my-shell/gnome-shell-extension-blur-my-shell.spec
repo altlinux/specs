@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 69
+%define ver_major 70
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -73,6 +73,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 70-alt1
+- 70 (GNOME 49 supported)
+
 * Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 69-alt1
 - 69
 
