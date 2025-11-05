@@ -1,5 +1,5 @@
 Name: ifupdown2
-Version: 3.3.0.10
+Version: 3.3.0.11
 Release: alt1
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
@@ -170,6 +170,9 @@ fi
 %_sysconfdir/network/if-down.d/*
 
 %changelog
+* Wed Nov 05 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.0.11-alt1
+- 3.3.0-1+pmx11
+
 * Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.0.10-alt1
 - 3.3.0-1+pmx10
 
