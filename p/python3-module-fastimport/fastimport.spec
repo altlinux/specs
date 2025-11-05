@@ -4,17 +4,18 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.9.14
-Release: alt2
+Version: 0.9.16
+Release: alt1
 Summary: VCS fastimport/fastexport parser
 License: GPLv2+
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/fastimport/
 BuildArch: noarch
 
-Source0: %{oname}-%{version}.tar.gz
+Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %py3_provides %oname
 
@@ -28,42 +29,28 @@ bzr-fastimport, but extracted so it can be used by other projects.
 It is currently used by bzr-fastimport and dulwich. hg-fastimport and
 git-remote-hg use a slightly modified version of it.
 
-%package tests
-Summary: Tests for fastimport
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-This is the Python parser that was originally developed for
-bzr-fastimport, but extracted so it can be used by other projects.
-
-It is currently used by bzr-fastimport and dulwich. hg-fastimport and
-git-remote-hg use a slightly modified version of it.
-
-This package contains tests for fastimport.
-
 %prep
-%setup -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run_unittest discover
 
 %files
 %doc PKG-INFO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %_bindir/*
 
-%files tests
-%python3_sitelibdir/*/tests
-
 %changelog
+* Tue Nov 04 2025 Anton Vyatkin <toni@altlinux.org> 0.9.16-alt1
+- new version 0.9.16
+
 * Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.9.14-alt2
 - Fix BuildRequires.
 
