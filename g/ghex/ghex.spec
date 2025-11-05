@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 48
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -134,6 +134,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Wed Nov 05 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Fri Oct 31 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 
