@@ -1,7 +1,7 @@
 %define oname libressl
-%define libcrypto_sover 56
-%define libssl_sover 59
-%define libtls_sover 32
+%define libcrypto_sover 57
+%define libssl_sover 60
+%define libtls_sover 33
 
 %def_enable check
 
@@ -13,7 +13,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 4.1.1
+Version: 4.2.1
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -197,6 +197,9 @@ echo 'noinst_HEADERS += bn/bn_arch.h' >> crypto/Makefile.am
 echo 'noinst_HEADERS += crypto_arch.h' >> crypto/Makefile.am
 %endif
 
+# drop symlinks to non-existent manpage
+sed -i '/bn_dump[.]3/d' man/Makefile.*
+
 %build
 %autoreconf
 %configure \
@@ -318,6 +321,12 @@ done
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Nov 05 2025 Ivan A. Melnikov <iv@altlinux.org> 4.2.1-alt1
+- Updated to 4.2.1
+
+* Thu Oct 30 2025 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt1
+- Updated to 4.2.0.
+
 * Wed Oct 01 2025 Ivan A. Melnikov <iv@altlinux.org> 4.1.1-alt1
 - Updated to 4.1.1 (Fixes: CVE-2025-9230).
 
