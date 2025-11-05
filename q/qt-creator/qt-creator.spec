@@ -24,7 +24,7 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 17.0.2
+Version: 18.0.0
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -89,6 +89,8 @@ BuildRequires: python3-module-lxml
 BuildRequires: python3-module-beautifulsoup4
 BuildRequires: libedit-devel
 BuildRequires: terminfo
+BuildRequires: libsecret-devel
+BuildRequires: rpm-build-golang /proc
 
 Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
@@ -225,6 +227,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Nov 04 2025 Andrey Cherepanov <cas@altlinux.org> 18.0.0-alt1
+- New version.
+
 * Sun Oct 19 2025 Andrey Cherepanov <cas@altlinux.org> 17.0.2-alt1
 - New version.
 
