@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.38
+Version: 6.5.40
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -81,6 +81,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Wed Nov 05 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.40-alt1
+- New version 6.5.40.
+
 * Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.38-alt1
 - New version 6.5.38.
 
