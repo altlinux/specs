@@ -1,7 +1,7 @@
 %define sover 3
 
 Name: kddockwidgets
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Qt dock widget library, suitable for replacing QDockWidget
@@ -138,6 +138,9 @@ export PATH=%_qt6_libexecdir:$PATH
 %_defaultdocdir/KDDockWidgets-qt6
 
 %changelog
+* Wed Nov 05 2025 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Sun Sep 28 2025 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
