@@ -8,7 +8,7 @@
 
 %global v_major 21
 %global v_majmin %v_major.1
-%global v_full %v_majmin.4
+%global v_full %v_majmin.5
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1503,6 +1503,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Nov 05 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.5-alt0.1
+- Update to 21.1.5.
+
 * Wed Oct 29 2025 Ivan A. Melnikov <iv@altlinux.org> 21.1.4-alt0.2
 - Fix FTBFS on loongarch64 and riscv64:
   + require libxml2 on all architectures;
