@@ -1,4 +1,4 @@
-%define githash 74187fc01c6993b5ff40b797976c782d87c504d6
+%define githash 71c8bcff6ea77a022b272a7eba649a774251bac4
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -6,7 +6,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.32.0
+Version: 9.33.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -30,6 +30,7 @@ BuildRequires: docbook-style-xsl flex xsltproc
 BuildRequires: gcc-c++ po4a udev libudev-devel libsystemd-devel
 BuildRequires: asciidoctor resource-agents
 BuildRequires: libkeyutils-devel
+BuildRequires: jq
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc clitest}}
 
 Requires: linux-ha-common
@@ -166,6 +167,9 @@ make test
 %_man7dir/ocf_linbit_drbd-attr.*
 
 %changelog
+* Wed Nov 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.33.0-alt1
+- 9.33.0
+
 * Wed Aug 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.32.0-alt1
 - 9.32.0
 - drop rgmanager and heartbeat support
