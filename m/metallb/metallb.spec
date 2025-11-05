@@ -7,7 +7,7 @@
 
 Name: metallb
 Version: 0.15.2
-Release: alt1
+Release: alt2
 
 Summary: A network load-balancer implementation for Kubernetes using standard routing protocols
 License: Apache-2.0
@@ -65,7 +65,11 @@ cd .build/src/%import_path
     ./frr-tools/metrics \
     ./frr-tools/cp-tool \
 
-mv "$BUILDDIR/bin/metrics" "$BUILDDIR/bin/frr-metrics"
+mv "$BUILDDIR/bin/controller" "$BUILDDIR/bin/metallb-controller"
+mv "$BUILDDIR/bin/speaker" "$BUILDDIR/bin/metallb-speaker"
+mv "$BUILDDIR/bin/configmaptocrs" "$BUILDDIR/bin/metallb-configmaptocrs"
+mv "$BUILDDIR/bin/metrics" "$BUILDDIR/bin/metallb-frr-metrics"
+mv "$BUILDDIR/bin/cp-tool" "$BUILDDIR/bin/metallb-cp-tool"
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -73,17 +77,20 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
-install -pD -m0755 frr-tools/reloader/frr-reloader.sh %buildroot%_bindir/frr-reloader.sh
+install -pD -m0755 frr-tools/reloader/frr-reloader.sh %buildroot%_bindir/metallb-frr-reloader.sh
 
 %files
 %doc *.md
-%_bindir/controller
-%_bindir/speaker
-%_bindir/configmaptocrs
-%_bindir/cp-tool
-%_bindir/frr-metrics
-%_bindir/frr-reloader.sh
+%_bindir/metallb-controller
+%_bindir/metallb-speaker
+%_bindir/metallb-configmaptocrs
+%_bindir/metallb-cp-tool
+%_bindir/metallb-frr-metrics
+%_bindir/metallb-frr-reloader.sh
 
 %changelog
+* Sat Nov 01 2025 Alexander Stepchenko <geochip@altlinux.org> 0.15.2-alt2
+- Prefix all the executables with "metallb-".
+
 * Tue Oct 28 2025 Alexander Stepchenko <geochip@altlinux.org> 0.15.2-alt1
 - Initial build.
