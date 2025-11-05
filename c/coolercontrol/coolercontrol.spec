@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -149,6 +149,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Wed Nov 05 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.2-alt1
+- 3.0.2.
+
 * Sat Oct 11 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.1-alt1
 - 3.0.1.
 - merge -liquidctl modules into coolercontrold (by upstream).
