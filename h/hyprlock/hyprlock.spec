@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    hyprlock
-Version: 0.8.2
+Version: 0.9.2
 Release: alt1
 
 Summary: Hyprland's GPU-accelerated screen locking utility
@@ -61,6 +61,12 @@ echo 'auth            include         system-auth' > %buildroot%_sysconfdir/pam.
 %config(noreplace) %_sysconfdir/xdg/hypr/hyprlock.conf
 
 %changelog
+* Wed Nov 05 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
+- New version (ALT #56712).
+
+* Fri Jul 18 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1
+- New version.
+
 * Mon Jun 30 2025 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt1
 - New version.
 - Exclude i586 from build due to missing hyprwayland-scanner for this arch.
