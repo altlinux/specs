@@ -1,3 +1,5 @@
+%define java_home %_jvmdir/java-11-openjdk/
+
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
@@ -14,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:             jansi
 Version:          2.4.0
-Release:          alt1_7jpp11
+Release:          alt2
 Summary:          Generate and interpret ANSI escape sequences in Java
 License:          ASL 2.0
 URL:              http://fusesource.github.io/jansi/
@@ -110,15 +112,24 @@ cp -p src/main/native/libjansi.so %{buildroot}%{_prefix}/lib/%{name}
 # Install the Java artifacts
 %mvn_install
 
+mkdir -p %buildroot%_javadir/jansi
+ln -s %_libexecdir/java/jansi/jansi.jar \
+  -t %buildroot%_javadir/jansi
+
 %files -f .mfiles
 %doc --no-dereference license.txt
 %doc readme.md changelog.md
 %{_prefix}/lib/%{name}/
+%_javadir/jansi
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference license.txt
 
 %changelog
+* Sun Nov 02 2025 Ivan Khanas <xeno@altlinux.org> 0:2.4.0-alt2
+- Fix FTBFS: define java_home macro.
+- Create symlink to /usr/share/java.
+
 * Wed Mar 22 2023 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_7jpp11
 - update
 

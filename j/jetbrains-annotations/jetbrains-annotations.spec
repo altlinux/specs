@@ -1,71 +1,44 @@
-Epoch: 0
+Name: jetbrains-annotations
+Version: 24.1.0
+Release: alt1
+
+Summary: IntelliJ IDEA Annotations
+License: Apache-2.0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
+Url: http://www.jetbrains.org
+VCS: https://github.com/JetBrains/java-annotations.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+Patch0: 0001-Adapt-for-Gradle-8-alt-patch.patch
+
+BuildRequires(pre): rpm-macros-gradle
 BuildRequires: jpackage-generic-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global oname annotations
-Name:          jetbrains-annotations
-Version:       15.0
-Release:       alt1_8jpp8
-Summary:       IntelliJ IDEA Annotations
-License:       ASL 2.0
-URL:           http://www.jetbrains.org
-Source0:       http://central.maven.org/maven2/org/jetbrains/annotations/%{version}/annotations-%{version}-sources.jar
-Source1:       http://central.maven.org/maven2/org/jetbrains/annotations/%{version}/annotations-%{version}.pom
-Source2:       http://www.apache.org/licenses/LICENSE-2.0.txt
-
-BuildRequires: maven-local
-
-BuildArch:     noarch
-Source44: import.info
+BuildRequires: xgradle
 
 %description
 A set of annotations used for code inspection support and code documentation.
 
 %package javadoc
 Group: Development/Documentation
-Summary:       Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %name.
 
 %prep
-%setup -T -q -c
-
-mkdir -p src/main/{java,resources}
-
-(
-  cd src/main/java
-  %jar -xf %{SOURCE0}
-  rm -rf META-INF
-)
-
-cp -p %{SOURCE1} pom.xml
-
-%pom_remove_plugin :maven-antrun-plugin
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :maven-source-plugin
-
-%pom_xpath_inject pom:properties "<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>"
-
-cp -p %{SOURCE2} LICENSE.txt
-sed -i 's/\r//' LICENSE.txt
-
-%mvn_file org.jetbrains:%{oname} %{name}
-%mvn_alias org.jetbrains:%{oname} com.intellij:
+%setup
+%autopatch -p1
 
 %build
-
-%mvn_build
+%gradle_publish
 
 %install
-%mvn_install
+%gradle_register
+%gradle_register_javadoc
+
+%gradle_install
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt
@@ -74,6 +47,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Nov 01 2025 Ivan Khanas <xeno@altlinux.org> 24.1.0-alt1
+- New version.
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:15.0-alt1_8jpp8
 - new version
 
