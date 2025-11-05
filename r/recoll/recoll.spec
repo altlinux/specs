@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.43.6
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -52,7 +52,7 @@ BuildRequires: qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase
 #BuildRequires: qt5-webkit-devel
 %endif
 %endif
-
+Requires: python3-modules-sqlite3
 %add_findreq_skiplist %_datadir/%name/filters/*
 %add_findreq_skiplist %_datadir/%name/examples/*
 
@@ -114,7 +114,7 @@ Requires: perl-Image-ExifTool
 Requires: antiword unrtf wv
 Requires: python3-module-%name
 Requires: python3-module-pychm python3-module-lxml
-Requires: aspell aspell-ru-rk
+Requires: aspell aspell-ru-rk aspell-en aspell-ru
 Requires: xpdf-utils ghostscript-utils
 Requires: mutagen
 
@@ -224,6 +224,10 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Nov 06 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.6-alt2
+- added to full R: aspell-en aspell-ru 
+- added R: python3-modules-sqlite3
+
 * Wed Oct 08 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.6-alt1
 - 1.43.6
 
