@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.25.0
+Version: 3.26.0
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -15,15 +15,6 @@ Patch4: valgrind-rh-cachegrind-improvements.patch
 Patch5: valgrind-rh-ldso-supp.patch
 Patch6: valgrind-rh-alt-some-stack-protector.patch
 Patch7: valgrind-rh-some-Wl-z-now.patch
-
-# Patches from VALGRIND_3_25_BRANCH
-Patch102: valgrind-upstream-0002-Prepare-NEWS-for-branch-3.25-fixes.patch
-Patch104: valgrind-upstream-0004-Bug-503641-close_range-syscalls-started-failing-with.patch
-Patch105: valgrind-upstream-0005-mount-syscall-param-filesystemtype-may-be-NULL.patch
-Patch106: valgrind-upstream-0006-Add-workaround-for-missing-riscv_hwprobe-syscall-258.patch
-Patch107: valgrind-upstream-0007-Don-t-count-closed-inherited-file-descriptors.patch
-Patch108: valgrind-upstream-0008-regtest-use-bin-cat-in-none-tests-fdleak_cat.vgtest.patch
-Patch109: valgrind-upstream-0009-riscv64-Fix-nan-boxing-for-single-precision-calculat.patch
 
 # Apparently, nobody cares whether valgrind works on arm or not.
 # And of powerpc, nobody cares at all.
@@ -165,6 +156,9 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Fri Oct 31 2025 Ivan A. Melnikov <iv@altlinux.org> 3.26.0-alt1
+- 3.25.0 -> 3.26.0
+
 * Tue May 20 2025 Ivan A. Melnikov <iv@altlinux.org> 3.25.0-alt1
 - 3.24.0 -> 3.25.0
 - Add some patches from VALGRIND_3_25_BRANCH.
