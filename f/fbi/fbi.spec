@@ -2,11 +2,12 @@
 # viewers) into united project named "fbida". But we really not interested in
 # packaging ugly motif apps, so we will name our main package just "fbi".
 
+%define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
 Name: fbi
 Version: 2.14
-Release: alt3
+Release: alt4
 
 Summary: Image viewer for Linux framebuffer console
 License: GPL-2.0-or-later
@@ -19,6 +20,7 @@ Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
 %else
 Source: fbida-%version.tar
 %endif
+Source1: exiftran.1
 # according to changes in libxkbcommon-1.6
 Patch10: fbida-2.14-alt-libxkbcommon-1.6.patch
 Patch11: fbida-2.14-alt-tsm-draw-cb.patch
@@ -87,10 +89,15 @@ echo %version > VERSION
 
 %install
 %meson_install
+install -Dm 644 man/fr/fbi.1 -t %buildroot%_datadir/man/fr/man1/
+install -Dm 644 man/fr/exiftran.1 -t %buildroot%_datadir/man/fr/man1/
+# ALT bug #37428
+install -Dm 644 %SOURCE1 %buildroot%_datadir/man/ru/man1/exiftran.1
 
 %files
 %_bindir/fbi
 %_man1dir/fbi.1*
+%_mandir/fr/man1/fbi.1*
 
 %files -n fbpdf
 %_bindir/fbpdf
@@ -98,12 +105,18 @@ echo %version > VERSION
 %files -n exiftran
 %_bindir/exiftran
 %_man1dir/exiftran*
+%_mandir/ru/man1/exiftran*
+%_mandir/fr/man1/exiftran*
 
 %files -n fbcon
 %_bindir/fbcon
 %_datadir/wayland-sessions/fbcon.desktop
 
 %changelog
+* Wed Nov 5 2025 Pavel Petrykin <silverducks@altlinux.org> 2.14-alt4
+- Add russian translation (ALT 37428).
+- Package previously left out french translation.
+
 * Wed Mar 26 2025 Constantin Sunzow <protvin@altlinux.org> 2.14-alt3
 - Fix FTBFS: update fbcon_tsm_draw_cb function, changing type of id variable
   to uint64_t, because libtsm updated tsm_screen_draw type definition, now
