@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.4.5
-Release: alt4
+Release: alt5
 Epoch: 1
 %K6init
 
@@ -596,6 +596,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Nov 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt5
+- fix territorial affiliation in weather applet
+
 * Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.5-alt4
 - fix requires (closes: 56334)
 
