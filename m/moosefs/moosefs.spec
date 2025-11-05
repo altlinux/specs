@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 4.58.1
+Version: 4.58.2
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -334,6 +334,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Wed Nov 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.58.2-alt1
+- 4.58.2
+
 * Wed Oct 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.58.1-alt1
 - 4.58.1
 
