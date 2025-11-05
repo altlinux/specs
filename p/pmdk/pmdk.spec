@@ -5,7 +5,7 @@
 
 Name: pmdk
 Version: 2.1.1
-Release: alt3
+Release: alt4
 Summary: Persistent Memory Development Kit (formerly NVML)
 Group: System/Base
 License: BSD-3-Clause
@@ -381,6 +381,10 @@ make %{?_without_ndctl:NDCTL_ENABLE=n} check
 %endif
 
 %changelog
+* Wed Nov 05 2025 Ivan A. Melnikov <iv@altlinux.org> 2.1.1-alt4
+- Fix compilation on loongarch64
+  (see https://github.com/pmem/pmdk/pull/5957/).
+
 * Fri Oct 31 2025 Alexey Shabalin <shaba@altlinux.org> 2.1.1-alt3
 - Print basic lib info for DEBUG only (ALT#55315).
 
