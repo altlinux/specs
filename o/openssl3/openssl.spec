@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.3.3
+Version: 3.5.4
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd
 BuildRequires: perl-WWW-Curl
 %endif
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: perl-Module-Load-Conditional perl-devel perl-Math-BigInt}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: perl-devel perl-Math-BigInt perl-Time-Piece perl-IO-Socket-IP}}
 
 %package -n libcrypto%shlib_soversion
 Summary: OpenSSL libcrypto shared library
@@ -381,6 +381,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Wed Nov 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.4-alt1
+- Updated to openssl-3.5.4.
+
 * Tue Feb 11 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.3-alt1
 - Updated to openssl-3.3.3 (fixes CVE-2024-12797).
 

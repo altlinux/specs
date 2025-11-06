@@ -8,6 +8,7 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%define gdb_auto_load %_datadir/gdb/auto-load%_libdir/
 # Below the same shorthands as in Redhat's spec are definied,
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
@@ -93,7 +94,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3
-Version: %{pybasever}.0
+Version: %{pybasever}.9
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -131,6 +132,9 @@ BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %add_python3_path %pylibdir
 #Do not recompile .py files with old python3
 %add_python3_compile_exclude %pylibdir
+%filter_from_requires /gdb/d
+Obsoletes: %name-module-gdb_libpython
+Provides: %name-module-gdb_libpython
 
 Source: %name-%version.tar
 
@@ -200,6 +204,10 @@ Obsoletes: %name-libs < %EVR
 %py3_provides _frozen_importlib
 %py3_provides _frozen_importlib_external
 
+# Since 3.13.1 it's provided through collections/__init__.py
+# See cpython commit v3.13.1~236 (d46d291bd390027811937bbf5af2e2600b8398a9).
+%py3_provides collections.abc
+
 %filter_from_requires /^%name[[:space:]]/d
 %filter_from_requires /^\/usr\/bin\/%name/d
 
@@ -250,21 +258,6 @@ Requires: %name-modules-curses = %EVR
 
 %description tools
 This package contains several tools included with Python 3
-
-%package module-gdb_libpython
-Summary: Helper for gdb and libpython
-Group: Development/Python3
-BuildArch: noarch
-Requires: gdb
-
-%allow_python3_import_path %_datadir/gdb/python
-
-%description module-gdb_libpython
-This python module deals with the case when the process being debugged (the
-"inferior process" in gdb parlance) is itself python, or more specifically,
-linked against libpython.  In this situation, almost every item of data is a
-(PyObject*), and having the debugger merely print their addresses is not very
-enlightening.
 
 %package modules-tkinter
 Summary: A GUI toolkit for Python 3
@@ -487,17 +480,17 @@ cp -ar Tools/scripts %buildroot%tool_dir/
 install -m755 -d %buildroot%pylibdir/Doc
 cp -ar Doc/tools %buildroot%pylibdir/Doc/
 
-# libpython.py for gdb
-mkdir -p %buildroot/%_datadir/gdb/python
-cp -ar Tools/gdb/* %buildroot/%_datadir/gdb/python
+# python-gdb.py for gdb
+mkdir -p %buildroot%gdb_auto_load
+cp -a python-gdb.py %buildroot%gdb_auto_load/libpython%pybasever.so-gdb.py
+cp -a python-gdb.py %buildroot%gdb_auto_load/python%pybasever-gdb.py
 
 file_list='%tool_dir/freeze/bkfile.py
     %tool_dir/freeze/checkextensions.py
     %tool_dir/freeze/makeconfig.py
     %tool_dir/freeze/makefreeze.py
     %tool_dir/freeze/makemakefile.py
-    %tool_dir/freeze/parsesetup.py
-    %_datadir/gdb/python/libpython.py'
+    %tool_dir/freeze/parsesetup.py'
 
 for file_name in $file_list
 do
@@ -712,6 +705,8 @@ $(pwd)/python -m test.regrtest \
 %_bindir/python3
 %_bindir/python%pybasever
 %_mandir/*/*
+%gdb_auto_load/python*-gdb.py
+%gdb_auto_load/__pycache__/python*-gdb.*.pyc
 
 %files base
 %doc LICENSE README.rst
@@ -902,6 +897,7 @@ $(pwd)/python -m test.regrtest \
 %dir %pylibdir/tomllib/
 %dir %pylibdir/tomllib/__pycache__/
 %pylibdir/tomllib/*.py
+%pylibdir/tomllib/mypy.ini
 %pylibdir/tomllib/__pycache__/*%bytecode_suffixes
 
 %if_with tk
@@ -949,6 +945,8 @@ $(pwd)/python -m test.regrtest \
 
 %files -n libpython3
 %_libdir/libpython%pybasever%pyabi.so.*
+%gdb_auto_load/libpython*-gdb.py
+%gdb_auto_load/__pycache__/libpython*-gdb.*.pyc
 
 %files dev
 %pylibdir/config-%pybasever%pyabi-%pyarch/*
@@ -984,9 +982,6 @@ $(pwd)/python -m test.regrtest \
 
 %tool_dir
 %doc %pylibdir/Doc
-
-%files module-gdb_libpython
-%_datadir/gdb/python/
 
 %if_with tk
 %files modules-tkinter
@@ -1048,6 +1043,10 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Nov 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.13.9-alt1
+- Updated to upstream version 3.13.9.
+- Dropped useless gdb subpackage (thx kotopesutility@).
+
 * Mon Jul 14 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.0-alt1
 - Updated to upstream version 3.13.0.
 

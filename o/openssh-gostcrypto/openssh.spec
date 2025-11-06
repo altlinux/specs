@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 9.6p1
-Release: alt3.gost
+Release: alt6.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -19,7 +19,7 @@ Source: %name-%version-%release.tar
 %def_with kerberos5
 %def_with selinux
 %def_with openssl
-%def_without security_key_builtin
+%def_with security_key_builtin
 %def_with zlib
 %def_with ssl_engine
 
@@ -37,6 +37,7 @@ BuildRequires: libssl-devel pam_userpass-devel
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_kerberos5:BuildRequires: libkrb5-devel}
 %{?_with_selinux:BuildRequires: libselinux-devel}
+%{?_with_security_key_builtin:BuildRequires: libfido2-devel}
 
 %package -n %oname-common-gostcrypto
 Summary: OpenSSH common files
@@ -336,6 +337,20 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Nov 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt6.gost
+- Updated -gostcrypto version.
+
+* Wed Nov 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt6
+- Backported upstream commit to support build with openssl >= 3.4.
+
+* Mon Oct 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt5
+- ssh: enable KbdInteractiveAuthentication by default (ALT#55742).
+- sshd: backported upstream fix for DisableForwarding which did not disable X11
+  or agent forwarding as documented (fixes CVE-2025-32728).
+
+* Wed Aug 27 2025 Anton Zhukharev <ancieg@altlinux.org> 9.6p1-alt4
+- NMU: Enabled FIDO2 security key support (ALT#55694).
+
 * Tue Feb 18 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt3.gost
 - Updated -gostcrypto version. (fixes CVE-2025-26465, CVE-2025-26466).
 

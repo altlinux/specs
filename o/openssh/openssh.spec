@@ -1,6 +1,6 @@
 Name: openssh
 Version: 9.6p1
-Release: alt5
+Release: alt6
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -353,6 +353,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Nov 05 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt6
+- Backported upstream commit to support build with openssl >= 3.4.
+
 * Mon Oct 06 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt5
 - ssh: enable KbdInteractiveAuthentication by default (ALT#55742).
 - sshd: backported upstream fix for DisableForwarding which did not disable X11
