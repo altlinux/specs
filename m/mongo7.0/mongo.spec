@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.24
+Version: 7.0.26
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -119,7 +119,7 @@ MongoDB instance.
        --linker=gold \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-python3 src/third_party/scons-3.1.2/scons.py %build_opts
+python3 src/third_party/scons-4.9.1/scons.py %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -203,6 +203,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Oct 31 2025 Alexei Takaseev <taf@altlinux.org> 7.0.26-alt1
+- 7.0.26
+
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 7.0.24-alt1
 - 7.0.24
 
