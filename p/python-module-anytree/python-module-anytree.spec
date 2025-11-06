@@ -1,9 +1,9 @@
 %define modname anytree
-%def_disable check
+%def_enable check
 
 Name: python-module-%modname
 Version: 2.13.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Python Tree Data Structure Library
@@ -21,7 +21,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-pdm-backend
 %if_enabled check
-BuildRequires: python3-module-pytest-cov python3-module-test2ref
+BuildRequires: python3-module-pytest-cov python3-module-test2ref python3-module-yaml
 %endif
 
 %description
@@ -54,6 +54,9 @@ Python3 module to manipulate tree data structures
 %python3_sitelibdir_noarch/%{modname}*/
 
 %changelog
+* Thu Nov 06 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.13.0-alt2
+- Enabled check.
+
 * Thu Oct 30 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.13.0-alt1
 - New version 2.13.0.
 - Added VCS tag.
