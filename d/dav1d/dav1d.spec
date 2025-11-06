@@ -1,5 +1,5 @@
 Name: dav1d
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 %define soversion 7
 
@@ -65,6 +65,9 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 1.5.2-alt1
+- 1.5.2
+
 * Mon Feb 17 2025 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
