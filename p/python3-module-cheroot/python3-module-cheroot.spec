@@ -1,12 +1,12 @@
 %define modulename cheroot
 
-%def_enable check
+%def_with check
 # Nessesary for cherrypy
 %def_with tests
 
 Name:    python3-module-%modulename
-Version: 10.0.1
-Release: alt4
+Version: 11.1.1
+Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
 License: BSD-3-Clause
@@ -17,28 +17,15 @@ VCS:     https://github.com/cherrypy/cheroot
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools_scm
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-testmon
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-pytest-sugar
-BuildRequires: python3-module-pytest-watch
-BuildRequires: python3-module-jaraco.functools
-BuildRequires: python3-module-trustme
-BuildRequires: python3-module-requests-unixsocket
-BuildRequires: python3-module-urllib3
-BuildRequires: python3-module-OpenSSL
-%if_enabled check
-BuildRequires: python3-module-jaraco.text
-BuildRequires: python3-module-jaraco.context
-BuildRequires: python3-module-portend
-BuildRequires: python3-module-requests_toolbelt
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-rerunfailures
+BuildRequires(pre): rpm-build-pyproject
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: python3(pytest_cov)
+%add_pyproject_deps_check_filter pypytools pytest-clarity
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 BuildArch: noarch
 
@@ -56,6 +43,11 @@ This package contains tests for Cheroot
 %prep
 %setup
 %patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dependencies/tests.in
+%endif
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -88,6 +80,9 @@ export HTTP_REQUEST_TIMEOUT=3
 %endif
 
 %changelog
+* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 11.1.1-alt1
+- 10.0.1 -> 11.1.1
+
 * Wed May 28 2025 Stanislav Levin <slev@altlinux.org> 10.0.1-alt4
 - Fixed FTBFS (an attempt to workaround flaky tests).
 
