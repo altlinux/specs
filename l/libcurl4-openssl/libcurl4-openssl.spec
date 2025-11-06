@@ -13,7 +13,7 @@
 
 Name: libcurl4-openssl
 Version: 8.16.0
-Release: alt1
+Release: alt2
 
 Summary: libcurl library built with openssl
 
@@ -89,9 +89,13 @@ ln -s ../%libname.so.%soname %buildroot%_libdir/%name/libcurl.so.%soname
 %files
 %_libdir/%libname.so.%soname
 %_libdir/%libname.so.%soname.*
+%dir %_libdir/%name/
 %_libdir/%name/libcurl.so.%soname
 %doc CHANGES.md README* docs/{FAQ,FEATURES.md}
  
 %changelog
+* Mon Nov 03 2025 Vitaly Lipatov <lav@altlinux.ru> 8.16.0-alt2
+- spec: pack libdir/name dir
+
 * Fri Oct 31 2025 Vitaly Lipatov <lav@altlinux.ru> 8.16.0-alt1
 - initial build for ALT Sisyphus
