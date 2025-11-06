@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.47.1
-Release: alt2
+Version: 0.49.1
+Release: alt1
 
 Summary: The little ASGI framework that shines
 License: BSD-3-Clause
@@ -24,7 +24,11 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+# See: https://github.com/Kludex/starlette/pull/3054
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata_extra full
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
 
@@ -49,13 +53,10 @@ It is production-ready, and gives you the following:
 %prep
 %setup
 %autopatch -p1
-sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
-    tee test-requirements.txt
-cat alt-test-requirements.txt | tee -a test-requirements.txt
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -73,6 +74,9 @@ cat alt-test-requirements.txt | tee -a test-requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 06 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.49.1-alt1
+- Updated to 0.49.1.
+
 * Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 0.47.1-alt2
 - Fixed FTBFS (httpx 0.28.0).
 
