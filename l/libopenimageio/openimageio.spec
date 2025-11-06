@@ -12,7 +12,7 @@
 %def_without bootstrap
 
 Name:           lib%oname
-Version:        3.0.11.0
+Version:        3.0.12.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -224,6 +224,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 3.0.12.0-alt1
+- 3.0.11.0 -> 3.0.12.0
+
 * Sat Oct 11 2025 Anton Farygin <rider@altlinux.com> 3.0.11.0-alt1
 - 3.0.9.1 -> 3.0.11.0
 - disabled bootstrap
