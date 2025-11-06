@@ -13,7 +13,7 @@
 
 Name: openuds-server
 Version: 4.0.0
-Release: alt3
+Release: alt4
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -222,6 +222,9 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Thu Nov 06 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt4
+- Fix persistent sqlite DB.
+
 * Thu Oct 09 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt3
 - Small datetime fix.
 - Use hashers from PASSWORD_HASHERS instead of CryptoManager.
