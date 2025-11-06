@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.26
+Version: 10.27
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -8,7 +8,6 @@ Group: System/Configuration/Other
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildPreReq: alterator >= 4.10-alt5
 
@@ -52,6 +51,10 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Thu Nov 06 2025 Anton Midyukov <antohami@altlinux.org> 10.27-alt1
+- backend3/users: add "Real name" add when creating an account (ALT #55013)
+- remove Packager
+
 * Mon Jul 28 2025 Alexey Romanyuta <r9odt@altlinux.org> 10.26-alt1
 - backend3/users: add the ability to write SSH keys for users
 
