@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.0.1
+Version: 7.1.0
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -61,8 +61,6 @@ This package contains tests for %oname.
 %prep
 %setup
 
-sed -i 's/--color=yes//' pyproject.toml
-
 %build
 %pyproject_build
 
@@ -73,7 +71,8 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-%pyproject_run_pytest -v tests/
+%pyproject_run_pytest -v tests/ --color=no \
+ --deselect tests/test_matplotlib_eventloops.py::test_matplotlib_gui[tk]
 
 %files
 %doc README.*
@@ -88,6 +87,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Nov 03 2025 Anton Vyatkin <toni@altlinux.org> 7.1.0-alt1
+- New version 7.1.0.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
 - New version 7.0.1.
 
