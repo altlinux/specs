@@ -9,7 +9,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 80.9.0
-Release: alt1
+Release: alt2
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -97,9 +97,6 @@ Provides the seed package for virtualenv(packaged as wheel).
 # setuptools/_distutils/command/
 find -type f -name '*.exe' -delete
 
-# do not generate version like release.postdate, we need release one
-sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
-
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -107,7 +104,7 @@ sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 # build upstream version of a wheel (vendored dependencies),
 # that wheel is installed by virtualenv into venv,
 # otherwise dependencies of setuptools are not available in venv
-%pyproject_build
+%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
 
 mkdir ./dist_venv
 cp -a -t ./dist_venv ./dist/{setuptools-%version-*.whl,.wheeltracker}
@@ -118,7 +115,7 @@ rm -r ./build
 # build altlinux version of a wheel (unvendored dependencies),
 # setuptools 71.0.0 + prefer installed dependencies
 rm -r setuptools/_vendor
-%pyproject_build
+%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
 %endif
 
 %install
@@ -165,7 +162,7 @@ export PIP_IGNORE_INSTALLED=1
 # required for `setup.py develop` which uses pip internally since setuptools 80
 export PIP_NO_BUILD_ISOLATION=NO
 %endif
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -n4
 
 %files
 %doc *.rst
@@ -189,6 +186,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Sat Nov 01 2025 Stanislav Levin <slev@altlinux.org> 1:80.9.0-alt2
+- Added support for simplified configuration of build with Limited API.
+
 * Fri May 30 2025 Stanislav Levin <slev@altlinux.org> 1:80.9.0-alt1
 - 80.8.0 -> 80.9.0.
 
