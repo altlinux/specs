@@ -1,4 +1,4 @@
-%define ver_major 25.09
+%define ver_major 25.10
 
 %def_enable kde5
 
@@ -141,6 +141,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %endif
 
 %changelog
+* Thu Nov 06 2025 Yuri N. Sedunov <aris@altlinux.org> 25.10-alt1
+- 25.10
+
 * Wed Oct 01 2025 Yuri N. Sedunov <aris@altlinux.org> 25.09-alt1
 - 25.09
 
