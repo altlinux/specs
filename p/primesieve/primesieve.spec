@@ -1,15 +1,17 @@
 %define soname 12
 
 Name: primesieve
-Version: 12.9
+Version: 12.10
 Release: alt1
 Summary: A prime number generator
 License: BSD-2-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/kimwalisch/primesieve
-Vcs: git://github.com/kimwalisch/primesieve.git
+VCS: https://github.com/kimwalisch/primesieve
 
-Source: https://github.com/kimwalisch/primesieve/archive/v%version.tar.gz#/%name-%version.tar.gz
+# Source-url: https://github.com/kimwalisch/primesieve/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-ninja ctest
 BuildRequires: gcc-c++ cmake >= 3.7 doxygen texlive asciidoc-a2x graphviz
@@ -38,6 +40,7 @@ It also contains the API documentation of the library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -81,6 +84,9 @@ ctest
 %_pkgconfigdir/primesieve.pc
 
 %changelog
+* Thu Nov 06 2025 Leontiy Volodin <lvol@altlinux.org> 12.10-alt1
+- New version 12.10.
+
 * Mon May 26 2025 Leontiy Volodin <lvol@altlinux.org> 12.9-alt1
 - New version 12.9.
 

@@ -1,7 +1,7 @@
 %define soname 7
 
 Name: primecount
-Version: 7.19
+Version: 7.20
 Release: alt1
 
 Summary: Count the number of primes
@@ -9,9 +9,11 @@ Summary: Count the number of primes
 License: BSD-2-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/kimwalisch/primecount
-Vcs: https://github.com/kimwalisch/primecount.git
+VCS: https://github.com/kimwalisch/primecount
 
-Source: https://github.com/kimwalisch/primecount/archive/v%version.tar.gz#/%name-%version.tar.gz
+# Source-url: https://github.com/kimwalisch/primecount/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-ninja ctest
 BuildRequires: gcc-c++ libgomp-devel cmake asciidoc-a2x libprimesieve-devel
@@ -38,6 +40,7 @@ files for developing applications that use the primecount library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -85,6 +88,9 @@ ctest
 %_libdir/cmake/primecount/
 
 %changelog
+* Thu Nov 06 2025 Leontiy Volodin <lvol@altlinux.org> 7.20-alt1
+- New version 7.20.
+
 * Thu Jun 05 2025 Leontiy Volodin <lvol@altlinux.org> 7.19-alt1
 - New version 7.19.
 
