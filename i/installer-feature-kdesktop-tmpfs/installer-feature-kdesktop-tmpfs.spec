@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-tmpfs
-Version: 2.6
+Version: 2.7
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -30,6 +30,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 2.7-alt1
+- don't copy /tmp because already has tmpfiles service (closes: 55508)
+
 * Mon Oct 09 2023 Sergey V Turchin <zerg@altlinux.org> 2.6-alt1
 - fix to remove temporary file
 
