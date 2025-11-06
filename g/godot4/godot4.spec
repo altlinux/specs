@@ -10,7 +10,7 @@
 
 Name: godot4
 Version: 4.5.1
-Release: alt1
+Release: alt2
 
 Summary: Libre game engine
 License: MIT
@@ -47,6 +47,7 @@ BuildRequires: libicu-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libmbedtls-3.6-devel
 BuildRequires: libminiupnpc-devel
+BuildRequires: recastnavigation-devel
 BuildRequires: libogg-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libpng-devel
@@ -116,6 +117,7 @@ rm -rf \
   harfbuzz \
   icu4c \
   libjpeg-turbo \
+  librecastnavigation \
   libogg \
   libpng \
   libtheora \
@@ -150,6 +152,7 @@ export BUILD_NAME="%release"
   %{disable_builtin harfbuzz} \\\
   %{disable_builtin icu4c} \\\
   %{disable_builtin libjpeg_turbo} \\\
+  %{disable_builtin librecastnavigation} \\\
   %{disable_builtin libogg} \\\
   %{disable_builtin libpng} \\\
   %{disable_builtin libtheora} \\\
@@ -331,6 +334,9 @@ install -Dm 644 icon.svg \
 %endif
 
 %changelog
+* Thu Nov 06 2025 Pavel Petrykin <silverducks@altlinux.org> 4.5.1-alt2
+- Now using system recastnavigation.
+
 * Fri Oct 24 2025 Constantin Sunzow <protvin@altlinux.org> 4.5.1-alt1
 - New version.
 
