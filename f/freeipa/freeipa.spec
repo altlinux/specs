@@ -55,7 +55,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.12.5
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -635,9 +635,13 @@ touch %buildroot%etc_systemd_dir/httpd2.service.d/ipa.conf
 
 mkdir -p %buildroot%_sysconfdir/cron.d
 
+# bind configuration is bootstrapped by ipa installer
 mkdir -p %buildroot%_sysconfdir/bind
 touch %buildroot%_sysconfdir/bind/ipa-ext.conf
 touch %buildroot%_sysconfdir/bind/ipa-options-ext.conf
+mkdir -p %buildroot%_sharedstatedir/bind/zone/dyndb-ldap/ipa/
+mkdir -p %buildroot%_sharedstatedir/bind/data
+mkdir -p %buildroot%_sharedstatedir/bind/dynamic
 
 mkdir -p %buildroot%_sharedstatedir/ipa/backup
 mkdir -p %buildroot%_sharedstatedir/ipa/gssproxy
@@ -647,10 +651,6 @@ mkdir -p %buildroot%_sharedstatedir/ipa/pki-ca
 mkdir -p %buildroot%_sharedstatedir/ipa/certs
 mkdir -p %buildroot%_sharedstatedir/ipa/private
 mkdir -p %buildroot%_sharedstatedir/ipa/passwds
-mkdir -p %buildroot%_sharedstatedir/bind/zone/dyndb-ldap
-mkdir -p %buildroot%_sharedstatedir/bind/data
-mkdir -p %buildroot%_sharedstatedir/bind/dynamic
-touch %buildroot%_sharedstatedir/bind/zone/dyndb-ldap/ipa
 touch %buildroot%_sharedstatedir/ipa/pki-ca/publish
 touch %buildroot%_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 
@@ -1010,8 +1010,6 @@ fi
 %ghost %attr(0640,root,root) %config(noreplace) %apache2_extra_enabled/ipa-pki-proxy.conf
 %ghost %attr(0644,root,root) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,root) %config(noreplace) %_datadir/ipa/html/ca.crt
-%ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-ext.conf
-%ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-options-ext.conf
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krb.con
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krb5.ini
 %ghost %attr(0644,root,root) %_datadir/ipa/html/krbrealm.con
@@ -1026,10 +1024,7 @@ fi
 %attr(755,root,root) %dir %_sharedstatedir/ipa/certs
 %attr(700,root,root) %dir %_sharedstatedir/ipa/private
 %attr(700,root,root) %dir %_sharedstatedir/ipa/passwds
-%attr(770,root,named) %dir %_sharedstatedir/bind/data
-%attr(770,root,named) %dir %_sharedstatedir/bind/dynamic
 %ghost %attr(775,root,pkiuser) %_sharedstatedir/ipa/pki-ca/publish
-%ghost %attr(770,named,named) %_sharedstatedir/bind/zone/dyndb-ldap/ipa
 
 %dir %attr(0700,root,root) %_sysconfdir/ipa/custodia
 %dir %_datadir/ipa/schema.d
@@ -1038,6 +1033,11 @@ fi
 %_datadir/ipa/ipakrb5.aug
 
 %files server-dns
+%ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-ext.conf
+%ghost %attr(0640,root,named) %config(noreplace) %_sysconfdir/bind/ipa-options-ext.conf
+%attr(770,root,named) %dir %_sharedstatedir/bind/data/
+%attr(770,root,named) %dir %_sharedstatedir/bind/dynamic/
+%ghost %attr(770,named,named) %dir %_sharedstatedir/bind/zone/dyndb-ldap/ipa/
 %config(noreplace) %_sysconfdir/sysconfig/ipa-dnskeysyncd
 %config(noreplace) %_sysconfdir/sysconfig/ipa-ods-exporter
 %dir %attr(0755,root,root) %_sysconfdir/ipa/dnssec
@@ -1148,6 +1148,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Nov 05 2025 Stanislav Levin <slev@altlinux.org> 4.12.5-alt3
+- Moved dns-related configs to server-dns subpackage (closes: #56645).
+
 * Mon Oct 06 2025 Stanislav Levin <slev@altlinux.org> 4.12.5-alt2
 - Made xfailing nss dbm tests conditional (fixes tests against nss < 3.114).
 
