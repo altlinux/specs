@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.2
+Release: alt0.3
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Nov 07 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.3
+- Fix slides in slideshow.
+
 * Fri Oct 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.2
 - Fix LOGO in /etc/os-release.
 
