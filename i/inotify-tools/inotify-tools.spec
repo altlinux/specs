@@ -1,7 +1,7 @@
 %define soversion 0
 Name: inotify-tools
-Version: 4.23.9.0
-Release: alt2
+Version: 4.25.9.0
+Release: alt1
 
 Summary: Command line utilities for inotify
 Group: System/Kernel and hardware
@@ -73,6 +73,9 @@ rm -rf %buildroot%_datadir/doc/
 %_includedir/inotifytools/*.h
 
 %changelog
+* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 4.25.9.0-alt1
+- 4.23.9.0 -> 4.25.9.0
+
 * Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 4.23.9.0-alt2
 - fix license according SPDX
 
