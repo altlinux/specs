@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.0.4
+Version: 4.1.0
 Release: alt1
 
 Summary: ReactiveX for Python
@@ -47,5 +47,8 @@ subst 's/^version.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo reactivex}
 
 %changelog
+* Thu Nov 06 2025 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Sat Sep 30 2023 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt1
 - Initial build for Sisyphus
