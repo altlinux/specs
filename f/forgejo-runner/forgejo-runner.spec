@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 11.1.2
+Version: 11.3.0
 Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
 
 Summary: Forgejo Runner
-License: MIT
+License: GPLv3-or-later
 Group: Other
 Url: https://forgejo.org/docs/latest/admin/actions/#forgejo-runner
 Vcs: https://code.forgejo.org/forgejo/runner.git
@@ -100,6 +100,10 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Wed Nov 05 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.3.0-alt1
+- New version 11.3.0.
+- Corrected license tag.
+
 * Mon Oct 06 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.1.2-alt1
 - New version 11.1.2.
 
