@@ -6,8 +6,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.37.61
-Release: alt17.git9a05f528f
+Version: 1.37.63
+Release: alt12.git9fbca61ad
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -24,6 +24,7 @@ Source9: php-fpm-zoneminder.conf.in
 Source100: %name-%version-dep-RtspServer.tar
 Source101: %name-%version-web-api-app-Plugin-CakePHP-Enum-Behavior.tar
 Source102: %name-%version-web-api-app-Plugin-Crud.tar
+Source103: %name-%version-dep-CxxUrl.tar
 
 
 Conflicts: zm <= 1.22.3
@@ -76,7 +77,7 @@ BuildArch: noarch
 Zoneminder configuration file and requires for nginx
 
 %prep
-%setup -n %name-%version-alt -a100 -a101 -a102
+%setup -n %name-%version-alt -a100 -a101 -a102 -a103
 
 cp %SOURCE5 README.alt
 cp %SOURCE6 README-nginx-ru.alt
@@ -133,6 +134,8 @@ rm -f %buildroot%perl_vendor_archlib/perllocal.pod
 mkdir -p %buildroot%_datadir/%name/db
 cp db/*.sql %buildroot%_datadir/%name/db
 
+find %buildroot%_libdir -type f -name '*.a' -delete
+
 %pre
 %_sbindir/groupadd -r -f %zmgroup 2>/dev/null ||:
 %_sbindir/useradd -g %zmgroup -c 'WWW server' -d %webserver_datadir -s '/dev/null' \
@@ -181,6 +184,12 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 1.37.63-alt12.git9fbca61ad
+- update to upstream 9fbca61ad
+
+* Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 1.37.63-alt11.gitbf4e87307
+- update to upstream bf4e87307
+
 * Tue Jun 03 2025 Anton Farygin <rider@altlinux.com> 1.37.61-alt17.git9a05f528f
 - update to upstream 9a05f528f
 
