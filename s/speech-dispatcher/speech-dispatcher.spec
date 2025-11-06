@@ -8,7 +8,7 @@
 
 Name: speech-dispatcher
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: A speech output processing service
 License: GPL-2.0-or-later
@@ -18,6 +18,7 @@ VCS: https://github.com/brailcom/speechd
 
 Source: %name-%version.tar
 Source1: speech-dispatcher.filetrigger
+SOURCE2: speech-dispatcher.control
 Patch0: speech-dispatcher-0.8-alt-flite.patch
 Patch1: modules_order-fix.patch
 
@@ -128,6 +129,9 @@ This python module allows programmsaccess speech-dispatcher service.
 # install filetrigger
 install -D -m 755 %SOURCE1 %buildroot/%_rpmlibdir/speech-dispatcher.filetrigger
 
+# install controle
+install -Dpm 755 %SOURCE2 %buildroot%_controldir/%name
+
 # unpackaged files
 find %buildroot%_libdir -name '*.la' -delete
 
@@ -137,6 +141,7 @@ find %buildroot%_libdir -name '*.la' -delete
 %doc FAQ NEWS README.md README.overview.md
 %_bindir/speech-dispatcher
 %config %_sysconfdir/%name
+%_controldir/%name
 %dir %_libdir/%name
 %_libdir/%name/spd*.so
 %dir %_libdir/%name-modules
@@ -180,6 +185,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Oct 27 2025 Artem Semenov <savoptik@altlinux.org> 0.12.1-alt2
+- Added alsa/pulse switch control
+
 * Mon May 12 2025 Artem Semenov <savoptik@altlinux.org> 0.12.1-alt1
 - Updated to new version 0.12.1
 
