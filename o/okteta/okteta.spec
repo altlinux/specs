@@ -19,7 +19,7 @@
 
 
 Name: %rname
-Version: 0.26.22
+Version: 0.26.24
 Release: alt1
 Epoch: 1
 %K5init
@@ -29,10 +29,10 @@ Summary: Viewing and editing of data on the byte level
 Url: http://www.kde.org
 License: GFDL-1.2-only AND GPL-2.0-only
 
-#Provides:  kde5-okteta = 1:%version-%release
-#Obsoletes: kde5-okteta < 1:%version-%release
 Provides:  kde5-okteta = %EVR
 Obsoletes: kde5-okteta < %EVR
+
+Requires: kf5-kio
 
 Source: %rname-%version.tar
 
@@ -189,6 +189,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 1:0.26.24-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 1:0.26.22-alt1
 - new version
 
