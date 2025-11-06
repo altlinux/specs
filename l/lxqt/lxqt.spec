@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -85,6 +85,9 @@ Requires: lxqt-wallet >= 4.0.0
 %files regular
 
 %changelog
+* Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - new version 2.2.0
 

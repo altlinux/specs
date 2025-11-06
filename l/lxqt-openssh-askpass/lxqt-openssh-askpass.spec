@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-openssh-askpass
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Used to ask for user/password with GUI for OpenSSH
@@ -44,6 +44,9 @@ Obsoletes: razorqt-openssh-askpass < 0.7.0
 %_man1dir/*
 
 %changelog
+* Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 

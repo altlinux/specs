@@ -4,7 +4,7 @@
 %define majver 2.2
 
 Name: qterminal
-Version: %majver.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -63,6 +63,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Tue May 06 2025 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 

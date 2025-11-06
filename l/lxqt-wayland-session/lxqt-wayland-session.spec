@@ -3,7 +3,7 @@
 
 Name: lxqt-wayland-session
 Summary: Files needed for the LXQt Wayland Session
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 License: LGPL-2.1 and MIT and BSD-3-Clause and GPL-3.0 and GPL-2.0
 Group: Graphical desktop/Other
@@ -56,6 +56,7 @@ This package contains the Openbox (labwc) theme engine named Vent.
 %files
 %doc LICENSE* README.md
 %_bindir/startlxqtwayland
+%_bindir/lxqt-qdbus
 %_datadir/lxqt/graphics/lxqt-labwc.png
 %_datadir/lxqt/wallpapers/origami-dark-labwc.png
 %_datadir/lxqt/wayland/
@@ -68,6 +69,9 @@ This package contains the Openbox (labwc) theme engine named Vent.
 %_datadir/themes/Vent-dark/
 
 %changelog
+* Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Wed Jul 30 2025 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt1
 - New version 0.2.1.
 

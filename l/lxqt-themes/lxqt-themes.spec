@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-themes
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Themes, graphics and icons for LXQt
@@ -41,6 +41,9 @@ Obsoletes: lxqt-common < 0.12.0
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 
