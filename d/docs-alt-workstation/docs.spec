@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Nov 06 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt5
+- update surguch, kopidel
+- minor improvements (ALT #56432)
+
 * Wed Oct 08 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt4
 - add etcnet
 - update loupe, foldy, surguch
