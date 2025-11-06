@@ -8,8 +8,8 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.5
+Release: alt1
 
 Summary: Keep your data safe
 License: GPL-3.0
@@ -17,13 +17,16 @@ Group: Archiving/Backup
 Url: https://apps.gnome.org/PikaBackup
 
 Vcs: https://gitlab.gnome.org/World/pika-backup.git
+
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.12.5
 %define adwaita_ver 1.4.0
+%define borg_ver 1.4
 
-Requires: borg fuse3 libsecret python3(pyfuse3) python3(llfuse)
+Requires: borg >= %borg_ver
+Requires: fuse3 libsecret python3(pyfuse3) python3(llfuse)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson rust-cargo yelp-tools git
@@ -78,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Nov 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
+- 0.7.5
+
 * Sun Sep 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1.1
 - python3(llfuse) required (ALT #51590)
 
