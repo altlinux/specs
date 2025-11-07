@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt6integration
-Version: 6.0.44
+Version: 6.0.46
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -66,6 +66,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_dqt6_plugindir/styles/libchameleon.so
 
 %changelog
+* Fri Nov 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.46-alt1
+- New version 6.0.46.
+
 * Fri Oct 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt1
 - New version 6.0.44.
 
