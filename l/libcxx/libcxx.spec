@@ -1,5 +1,5 @@
 %global maj_ver 20.1
-%global llvm_ver 20.1
+%global llvm_ver 21.1
 %global libcxx_version %maj_ver.7
 #global rc_ver 4
 %global libcxx_srcdir libcxx-%libcxx_version%{?rc_ver:-rc%rc_ver}.src
@@ -10,7 +10,7 @@
 
 Name: libcxx
 Version: %libcxx_version%{?rc_ver:~rc%rc_ver}
-Release: alt1
+Release: alt2
 Summary: C++ standard library targeting C++11
 Group: System/Libraries
 License: Apache-2.0 WITH LLVM-exception OR MIT OR NCSA
@@ -246,6 +246,9 @@ popd
 %_libdir/libunwind.a
 
 %changelog
+* Fri Nov 07 2025 Andrey Cherepanov <cas@altlinux.org> 20.1.7-alt2
+- FTBFS: rebuilt with llvm 21.1.
+
 * Tue Sep 16 2025 Andrey Cherepanov <cas@altlinux.org> 20.1.7-alt1
 - Update to new version 20.1.7 (thanks nash@).
 
