@@ -13,7 +13,7 @@
 
 Name: %rname
 Version: 25.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: File tools
@@ -112,13 +112,8 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
     --add-mime-type=x-scheme-handler/trash \
     --add-mime-type=x-scheme-handler/remote \
     --add-mime-type=x-scheme-handler/mtp \
+    --add-mime-type=x-scheme-handler/nfs \
     %buildroot/%_K6xdgapp/org.kde.dolphin.desktop
-# kf6-kio-extras
-#    --add-mime-type=x-scheme-handler/network \
-# kf6-plasma-workspace
-#    --add-mime-type=x-scheme-handler/desktop \
-#    --add-mime-type=x-scheme-handler/programs \
-#    --add-mime-type=x-scheme-handler/applications \
 
 %files common -f %name.lang
 %doc LICENSES/*
@@ -158,6 +153,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Fri Nov 07 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt2
+- add nfs:/ handler
+
 * Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
