@@ -50,7 +50,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.25.3
+Version: 1.25.4
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -378,6 +378,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.4-alt1
+- 1.25.4.
+
 * Wed Oct 15 2025 Alexey Shabalin <shaba@altlinux.org> 1.25.3-alt1
 - 1.25.3.
 
