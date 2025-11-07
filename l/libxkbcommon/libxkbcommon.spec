@@ -3,6 +3,13 @@
 
 %define _name xkbcommon
 
+# owned by xkeyboard-config
+#xkb_root=/usr/share/xkeyboard-config-2
+# should be owned by xkeyboard-config
+#xkb_extra_path=/etc/xkb
+#xkb_unversioned_extensions_path=/usr/share/xkeyboard-config.d
+#xkb_versioned_extensions_path=/usr/share/xkeyboard-config-2.d
+
 %def_enable x11
 %def_enable xkbregistry
 %def_enable docs
@@ -11,7 +18,7 @@
 %def_disable python_tests
 
 Name: lib%_name
-Version: 1.12.3
+Version: 1.13.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -154,6 +161,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Thu Nov 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3
 
