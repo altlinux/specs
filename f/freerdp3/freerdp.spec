@@ -11,8 +11,8 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.17.0
-Release: alt2
+Version: 3.17.2
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -546,6 +546,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Nov 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt1
+- New version.
+
 * Sun Sep 14 2025 Michael Shigorin <mike@altlinux.org> 3.17.0-alt2
 - E2K: drop chrpath as unneeded
 
