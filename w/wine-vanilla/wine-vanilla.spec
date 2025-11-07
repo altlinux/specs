@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.17
+%define major 10.18
 %define rel %nil
 
 # the packages will conflict with that
@@ -143,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -167,7 +167,6 @@ Source6: %name-%version-bin-scripts.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
-Patch3: 0017-configure-Work-around-install-sh-requirement-in-auto.patch
 
 AutoReq: yes, noperl, nomingw32, nocpp
 
@@ -587,7 +586,6 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -941,6 +939,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.18-alt1
+- new version 10.18 (with rpmrb script)
+
 * Mon Oct 27 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17-alt2
 - wine-cap_net_raw: set capability for /usr/lib/wine path too (ALT bug 56551)
 - wine.spec: move wine-mono and wine-gecko requires to the main package wine (ALT bug 55444)
