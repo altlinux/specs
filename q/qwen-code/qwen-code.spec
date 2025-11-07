@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 553a36302
+%global commit_hash 7a472e4fc
 
 Name: qwen-code
-Version: 0.1.4
+Version: 0.2.0
 Release: alt1
 Summary: AI-powered command-line workflow tool for developers
 License: Apache-2.0
@@ -57,5 +57,8 @@ install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 %doc LICENSE
 
 %changelog
+* Fri Nov 07 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.0-alt1
+- Updated to version 0.2.0.
+
 * Thu Nov 06 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.4-alt1
 - Initial build for ALT.
