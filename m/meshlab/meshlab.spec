@@ -1,27 +1,30 @@
-%global vcglibver 2021.10
+%global vcglibver 2025.07
+%define glew_version %(rpm -q --queryformat='%%{version}' glew-devel | sed -nr 's/([0-9.]+).*/\\1/p')
 
 Name: meshlab
-Version: 2021.10
-Release: alt3
+Version: 2025.07
+Release: alt1
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
-License: GPLv2+ and BSD and Public Domain
+License: BSD-3-Clause AND GPL-2.0-or-later
 Group: Graphics
-Url: https://github.com/cnr-isti-vclab/meshlab
+URL: https://www.meshlab.net
+VCS: https://github.com/cnr-isti-vclab/meshlab
 
 Provides: bundled(vcglib) = %vcglibver
 
-ExcludeArch: armh
-
-# Source0-url: https://github.com/cnr-isti-vclab/meshlab/archive/refs/tags/Meshlab-%version.tar.gz
+# Source0-url: https://github.com/cnr-isti-vclab/meshlab/archive/refs/tags/MeshLab-%version.tar.gz
 Source0: %name-%version.tar
 # Probably belongs in its own package, but nothing else seems to depend on it.
 # Source1-url: https://github.com/cnr-isti-vclab/vcglib/archive/refs/tags/%vcglibver.tar.gz
 Source1: vcglib-%vcglibver.tar
 
-Patch0: meshlab-2021.07-MESHLAB_LIB_INSTALL_DIR-fix.patch
-Patch1: meshlab-2021.07-system-levmar.patch
-Patch2: meshlab-2022.02-e57-gcc13.patch 
+Patch1: meshlab-2025.07-MESHLAB_LIB_INSTALL_DIR-fix.patch
+# adjust plugin and shader search path
+Patch2: 0001-Use-same-paths-for-shader-plugin-lookup-as-used-for-.patch
+# https://github.com/cnr-isti-vclab/vcglib/issues/210
+Patch3: 0001-Remove-unused-return-value-in-unused-function.patch
+Patch4: meshlab-2025.07-system-levmar.patch
 
 Requires: flexiblas-netlib
 
@@ -31,13 +34,16 @@ BuildRequires: cmake
 BuildRequires: libgomp-devel
 BuildRequires: bzlib-devel
 BuildRequires: pkgconfig(glew)
+BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(xerces-c)
+BuildRequires: pkgconfig(lib3ds)
 BuildRequires: levmar-devel
-BuildRequires: lib3ds-devel
 BuildRequires: libgmpxx-devel
-BuildRequires: libxerces-c-devel
-BuildRequires: qhull-devel qhull
+BuildRequires: qhull-devel
+BuildRequires: %_bindir/qhull
 BuildRequires: qt5-base-devel
-BuildRequires: eigen3
+BuildRequires: pkgconfig(eigen3)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(Qt5Script)
 BuildRequires: qt5-declarative-devel
@@ -65,9 +71,14 @@ these kinds of meshes.
 
 %prep
 %setup -a1
-%patch0 -p1 -b .MESHLAB_LIB_INSTALL_DIR-fix
-%patch1 -p1 -b .system-levmar
-%patch2 -p1 -b .e57-gcc13
+rmdir src/vcglib
+mv vcglib-%vcglibver src/vcglib
+
+%autopatch -p1
+
+# unbundle levmar
+sed -i 's/^#include "levmar.h"/#include <levmar.h>/' $(find . -name "*.h")
+
 %ifarch %e2k
 %define num_threads_fix() \
 	sed -i "/num_threads( %1 )/{s/ %1 /nthreads/;s/.*/int nthreads=%1; (void)nthreads;\\n&/}" \\\
@@ -79,45 +90,27 @@ sed -i "/pragma omp/{s/.*/int loop_count=mesh.vert.size();\n&/;:a;n;s/i < (int)m
 	vcglib-%vcglibver/vcg/complex/algorithms/point_outlier.h
 %endif
 
-rmdir src/vcglib
-mv vcglib-%vcglibver src/vcglib
+# Remove bundled library sources, since we use the packaged libraries
+rm -r src/external/glew*/*
 
-# plugin path
-sed -i -e 's|"lib"|"%{_lib}"|g' src/common/globals.cpp
+# Change defaults for MESHLAB_ALLOW_DOWNLOAD_*
+sed -i '/option/ s|\(MESHLAB_ALLOW_DOWNLOAD.*\) ON|\1 OFF|' src/external/*.cmake
+grep -E 'option.*MESHLAB_ALLOW_DOWNLOAD.*' src/external/*.cmake
+
+# set plugin and shader search path
+sed -i 's|PLUGIN_DIR|QString("%{_libdir}/meshlab/plugins")|g'  src/common/globals.cpp
+sed -i 's|SHADER_DIR|QString("%{_datadir}/meshlab/shaders")|g' src/common/globals.cpp
 
 %build
-%add_optflags -fopenmp -DSYSTEM_QHULL -I/usr/include/libqhull
+%add_optflags -fopenmp -DSYSTEM_QHULL -I%_includedir/libqhull
 
-%cmake src \
-	-DCMAKE_SKIP_RPATH=ON \
-	-DCMAKE_VERBOSE_MAKEFILE=OFF \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DALLOW_BUNDLED_EIGEN=OFF \
-	-DALLOW_BUNDLED_GLEW=OFF \
-	-DALLOW_BUNDLED_LEVMAR=OFF \
-	-DALLOW_BUNDLED_LIB3DS=OFF \
-	-DALLOW_BUNDLED_MUPARSER=OFF \
-	-DALLOW_BUNDLED_NEWUOA=ON \
-	-DALLOW_BUNDLED_OPENCTM=ON \
-	-DALLOW_BUNDLED_QHULL=OFF \
-	-DALLOW_BUNDLED_SSYNTH=ON \
-	-DALLOW_BUNDLED_XERCES=OFF \
-	-DALLOW_SYSTEM_EIGEN=ON \
-	-DALLOW_SYSTEM_GLEW=ON \
-	-DALLOW_SYSTEM_GMP=ON \
-	-DALLOW_SYSTEM_LIB3DS=ON \
-	-DALLOW_SYSTEM_MUPARSER=ON \
-	-DALLOW_SYSTEM_OPENCTM=ON \
-	-DALLOW_SYSTEM_QHULL=ON \
-	-DALLOW_SYSTEM_XERCES=ON \
-	-DEigen3_DIR=usr/include/eigen3 \
-	-DGlew_DIR=/usr/include/GL \
-	-DQhull_DIR=/usr/include/libqhull
-
+%cmake \
+	-DGLEW_VERSION=%glew_version \
+	%nil
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # create desktop file
 cat <<EOF >%buildroot%_desktopdir/meshlab.desktop
@@ -152,6 +145,13 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Oct 30 2025 Anton Midyukov <antohami@altlinux.org> 2025.07-alt1
+- New version 2025.07.
+- Update License tag.
+
+* Tue Oct 21 2025 Anton Midyukov <antohami@altlinux.org> 2021.10-alt4
+- fix BR for build with eigen 5.0.
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 2021.10-alt3
 - rebuild without mpir-devel
 
