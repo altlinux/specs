@@ -2,7 +2,7 @@
 
 Name: libgloox
 Version: 1.0.28
-Release: alt1
+Release: alt2
 
 Summary: A full-featured Jabber/XMPP client library
 License: GPLv3
@@ -41,6 +41,11 @@ integration of Jabber/XMPP functionality into existing applications.
 %prep
 %setup -n gloox-%version
 
+%ifarch %e2k
+# This is compiled with -ansi, but is a GNU extension!
+sed -i '/SSL_export_keying_material/s/{ 0 }/(unsigned char*)""/' src/tlsopensslclient.cpp
+%endif
+
 mv AUTHORS AUTHORS.old
 iconv -f iso8859-1 -t UTF-8 AUTHORS.old >AUTHORS
 
@@ -65,6 +70,9 @@ export PTHREAD_LIBS="-lpthread"
 %_libdir/libgloox.so
 
 %changelog
+* Fri Nov 07 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.28-alt2
+- e2k build fix
+
 * Thu Feb 13 2025 Constantin Sunzow <protvin@altlinux.org> 1.0.28-alt1
 - New version.
 
