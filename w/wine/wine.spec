@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.17
+%define major 10.18
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -146,7 +146,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -616,6 +616,9 @@ export LD=lld-%llvm_ver
 echo "Needed llvm %_llvm_version is not present on the build platform, build without wow64 support."
 %endif
 
+# configure.ac could be modified by patches
+autoconf -f
+
 %configure --with-x \
 	--disable-win16 \
 %if_with build64
@@ -945,6 +948,15 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.18.1-alt1
+- new version 10.18
+- update patches to staging wine-10.18
+  - configure: Work around install-sh requirement in autoconf <= 2.69
+
+* Sun Nov 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17.3-alt1
+- update patches to staging wine-10.17
+  + configure: Work around install-sh requirement in autoconf <= 2.69
+
 * Sat Oct 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.17.1-alt2
 - wine-cap_net_raw: set capability for /usr/lib/wine path too (ALT bug 56551)
 - wine.spec: move wine-mono and wine-gecko requires to the main package wine (ALT bug 55444)
