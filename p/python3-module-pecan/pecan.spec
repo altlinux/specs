@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: A lean WSGI object-dispatching web framework
 
@@ -11,6 +11,7 @@ License: BSD-3-Clause
 Url: http://github.com/pecan/pecan
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -21,7 +22,7 @@ BuildRequires: python3-module-webtest >= 1.3.1
 BuildRequires: python3-module-logutils >= 0.3
 
 Requires: python3-module-logutils >= 0.3
-Requires: python3-module-webob >= 1.2
+Requires: python3-module-webob >= 1.8
 Requires: python3-module-mako >= 0.4.0
 
 %description
@@ -38,6 +39,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -62,6 +64,11 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt2
+- Replace deprecated datetime.datetime.utcfromtimestamp.
+- Update supported python versions.
+- Use raw strings to avoid Python 3.12 warning.
+
 * Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Automatically updated to 1.7.0.
 
