@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayidle
-Version: 1.8.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 Summary: Idle management daemon for Wayland
 License: MIT
 Url: https://github.com/swaywm/swayidle
@@ -50,6 +50,9 @@ rm -rf -- \
 %_man1dir/*
 
 %changelog
+* Fri Nov 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.0-alt1
+- 1.9.0 released
+
 * Mon Mar 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt2
 - built with screensaver dbus api support
 
