@@ -8,7 +8,7 @@
 %endif
 %global max_jobs 96
 
-%global llvm_version 20.1
+%global llvm_version 21.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        142.0.7444.59
+Version:        142.0.7444.134
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -655,8 +655,37 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Nov 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.134-alt1
+- New version (142.0.7444.134).
+- Fixes:
+  + CVE-2025-12725: Out of bounds write in WebGPU
+  + CVE-2025-12726: Inappropriate implementation in Views
+  + CVE-2025-12727: Inappropriate implementation in V8
+  + CVE-2025-12728: Inappropriate implementation in Omnibox
+  + CVE-2025-12729: Inappropriate implementation in Omnibox
+
 * Wed Oct 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.59-alt1
 - New version (142.0.7444.59).
+- Fixes:
+  + CVE-2025-12428: Type Confusion in V8
+  + CVE-2025-12429: Inappropriate implementation in V8
+  + CVE-2025-12430: Object lifecycle issue in Media
+  + CVE-2025-12431: Inappropriate implementation in Extensions
+  + CVE-2025-12432: Race in V8
+  + CVE-2025-12433: Inappropriate implementation in V8
+  + CVE-2025-12434: Race in Storage
+  + CVE-2025-12435: Incorrect security UI in Omnibox
+  + CVE-2025-12436: Policy bypass in Extensions
+  + CVE-2025-12437: Use after free in PageInfo
+  + CVE-2025-12438: Use after free in Ozone
+  + CVE-2025-12439: Inappropriate implementation in App-Bound Encryption
+  + CVE-2025-12440: Inappropriate implementation in Autofill
+  + CVE-2025-12441: Out of bounds read in V8
+  + CVE-2025-12443: Out of bounds read in WebXR
+  + CVE-2025-12444: Incorrect security UI in Fullscreen UI
+  + CVE-2025-12445: Policy bypass in Extensions
+  + CVE-2025-12446: Incorrect security UI in SplitView
+  + CVE-2025-12447: Incorrect security UI in Omnibox
 
 * Tue Oct 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.52-alt1
 - New version (142.0.7444.52).
