@@ -1,5 +1,5 @@
 Name: distrobox
-Version: 1.8.1.2
+Version: 1.8.2.1
 Release: alt1
 
 Summary: Another tool for containerized command line environments on Linux
@@ -11,8 +11,6 @@ BuildArch: noarch
 Url: https://github.com/89luca89/distrobox
 # Source-url: https://github.com/89luca89/distrobox/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-Patch: distrobox-1.8.1.2-alt-add-alt-containers-support.patch
 
 BuildRequires: %_bindir/convert
 
@@ -27,7 +25,6 @@ external usb devices and graphical apps (X11/Wayland) and audio.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %install
@@ -62,6 +59,9 @@ done
 %_datadir/zsh/site-functions/_%{name}*
 
 %changelog
+* Fri Nov 07 2025 Boris Yumankulov <boria138@altlinux.org> 1.8.2.1-alt1
+- new version 1.8.2.1
+
 * Wed Feb 05 2025 Boris Yumankulov <boria138@altlinux.org> 1.8.1.2-alt1
 - new version 1.8.1.2
 - add patch for ALT Linux containers support (ALT bug: 52932)
