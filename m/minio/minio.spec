@@ -8,14 +8,13 @@
 
 Name: minio
 Version: %version
-Release: alt1
+Release: alt2
 Summary: Cloud Storage Server
 Group: System/Servers
 License: AGPL-3.0
 Url: https://www.min.io/
 
 Source: %name-%version.tar
-Source2: %name.config
 Source3: %name.sysconfig
 Source4: %name.service
 
@@ -46,7 +45,7 @@ export TAG=%tag
 export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
-export YEAR=2024
+export YEAR=2025
 export prefix=%import_path/cmd
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
@@ -66,13 +65,12 @@ export BUILDDIR="$PWD/.gopath"
 mkdir -p -- \
         %buildroot%_bindir \
         %buildroot%_unitdir \
-        %buildroot%_sysconfdir/%name \
+        %buildroot%_sysconfdir/%name/certs \
         %buildroot%_sharedstatedir/%name \
         %buildroot%_logdir/%name
 
 cd .gopath/src/%import_path
 install -p -m 755 %name %buildroot%_bindir/%name
-install -D -p -m 0644 %SOURCE2 %buildroot%_sysconfdir/%name/config.json
 install -D -p -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 install -D -p -m 0644 %SOURCE4 %buildroot%_unitdir/%name.service
 
@@ -90,13 +88,16 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %doc README.md
 %_bindir/minio
 %dir %attr(750,root,_%name) %_sysconfdir/%name
-%config(noreplace) %attr(640,_%name,_%name) %_sysconfdir/%name/config.json
+%dir %attr(750,root,_%name) %_sysconfdir/%name/certs
 %config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%name
 %dir %attr(750,_%name,_%name) %_sharedstatedir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 %_unitdir/%name.service
 
 %changelog
+* Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt2
+- UPdate systemd unit and default config. 
+
 * Wed Oct 29 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt1
 - Update to RELEASE.2025-10-15T17-29-55Z (Fixed: CVE-2025-62506)
 
