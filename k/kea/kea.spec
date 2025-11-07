@@ -6,8 +6,8 @@
 %define _runstatedir /run
 
 Name: kea
-Version: 3.0.1
-Release: alt2
+Version: 3.0.2
+Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
 License: MPL-2.0 and BSL-1.0
@@ -389,6 +389,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Fri Nov 07 2025 Anton Farygin <rider@altlinux.com> 3.0.2-alt1
+- 3.0.1 -> 3.0.2 (Fixes: CVE-2025-11232)
+
 * Tue Oct 07 2025 Anton Farygin <rider@altlinux.com> 3.0.1-alt2
 - fixed typo in changelog
 
