@@ -79,6 +79,7 @@
 %def_disable lzfse
 %def_disable xen
 %def_enable mpath
+%def_disable igvm
 %def_enable blkio
 %def_enable libudev
 %def_enable libdaxctl
@@ -160,7 +161,7 @@
 # }}}
 
 Name: qemu
-Version: 10.0.3
+Version: 10.1.2
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -208,7 +209,7 @@ BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: libkeyutils-devel
 %{?_enable_af_xdp:BuildRequires: libxdp-devel >= 1.4.0}
-BuildRequires: python3-devel >= 3.8
+BuildRequires: python3-devel >= 3.9
 BuildRequires: flex
 %{?_enable_sdl:BuildRequires: libSDL2-devel libSDL2_image-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
@@ -260,6 +261,7 @@ BuildRequires: libslirp-devel >= 4.1.0
 %{?_enable_lzfse:BuildRequires: liblzfse-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
+%{?_enable_igvm:BuildRequires: pkgconfig(igvm) >= 0.3.0}
 %{?_enable_blkio:BuildRequires: libblkio-devel}
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?_enable_libudev:BuildRequires: libudev-devel}
@@ -717,6 +719,7 @@ This package provides the system emulator for %%{1}. \
 Summary: QEMU system emulator for %%{1} \
 Group: Emulators \
 Requires: %%name-common \
+Requires: passt \
 Conflicts: %%name-system < 2.10.1-alt1 \
 \
 %%if "%%{1}" == "x86" \
@@ -736,7 +739,7 @@ Requires: seavgabios \
 This package provides the system emulator for %%{1}. \
 %%files system-%%{1}-core -f system-%%{1}-core.list
 
-%{expand:%(for i in %qemu_arches %{?_enable_have_64bit:microblaze}; do echo %%do_package_system $i; done)}
+%{expand:%(for i in %qemu_arches microblaze; do echo %%do_package_system $i; done)}
 
 %prep
 %setup
@@ -786,8 +789,6 @@ run_configure \
 	--disable-alsa \
 	--disable-fdt \
 	--disable-auth-pam \
-	--disable-avx2 \
-	--disable-avx512bw \
 	--disable-install-blobs \
 	--disable-blkio \
 	--disable-bochs \
@@ -849,6 +850,7 @@ run_configure \
 	--disable-membarrier \
 	--disable-modules \
 	--disable-mpath \
+	--disable-igvm \
 	--disable-netmap \
 	--disable-nettle \
 	--disable-numa \
@@ -878,6 +880,7 @@ run_configure \
 	--disable-selinux \
 	--disable-slirp \
 	--disable-slirp-smbd \
+	--disable-passt \
 	--disable-smartcard \
 	--disable-snappy \
 	--disable-sparse \
@@ -989,6 +992,7 @@ run_configure \
 	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
 	--enable-slirp \
+	--enable-passt \
 	%{subst_enable smartcard} \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
@@ -1160,8 +1164,8 @@ rm -f \
     %buildroot%_datadir/%name/hppa-firmware.img \
     %buildroot%_datadir/%name/hppa-firmware64.img \
     %buildroot%_datadir/%name/palcode-clipper \
-    %buildroot%_datadir/%name/petalogix-ml605.dtb \
-    %buildroot%_datadir/%name/petalogix-s3adsp1800.dtb \
+    %buildroot%_datadir/%name/dtb/petalogix-ml605.dtb \
+    %buildroot%_datadir/%name/dtb/petalogix-s3adsp1800.dtb \
     %buildroot%_datadir/%name/s390-ccw.img
 %endif
 
@@ -1232,7 +1236,7 @@ for i in %qemu_arches hexagon microblaze; do
 %endif
 done
 
-for i in %qemu_arches hexagon %{?_enable_have_64bit:microblaze}; do
+for i in %qemu_arches hexagon microblaze; do
     if [ "$i" != "x86" ]; then
         echo "%_bindir/qemu-system-$i*" >> system-$i-core.list
         echo "%_man1dir/qemu-system-$i*" >> system-$i-core.list
@@ -1246,7 +1250,7 @@ done
 ) >> system-x86-core.list
 
 (
-    echo "%_datadir/%name/petalogix*.dtb"
+    echo "%_datadir/%name/dtb/petalogix*.dtb"
 ) >> system-microblaze-core.list
 
 %endif
@@ -1267,6 +1271,7 @@ done
 ) >> system-alpha-core.list
 
 (
+    echo "%_datadir/%name/ast27x0_bootrom.bin"
     echo "%_datadir/%name/npcm7xx_bootrom.bin"
     echo "%_datadir/%name/npcm8xx_bootrom.bin"
 ) >> system-arm-core.list
@@ -1285,8 +1290,8 @@ done
 ) >> system-sparc-core.list
 
 (
-    echo "%_datadir/%name/bamboo.dtb"
-    echo "%_datadir/%name/canyonlands.dtb"
+    echo "%_datadir/%name/dtb/bamboo.dtb"
+    echo "%_datadir/%name/dtb/canyonlands.dtb"
     echo "%_datadir/%name/qemu_vga.ndrv"
     echo "%_datadir/%name/pnv-pnor.bin"
     echo "%_datadir/%name/skiboot.lid"
@@ -1375,6 +1380,7 @@ groupadd -r -f %_group
 
 %files common
 %dir %_datadir/%name
+%dir %_datadir/%name/dtb
 %_desktopdir/qemu.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/%name/keymaps
@@ -1493,6 +1499,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Wed Nov 05 2025 Alexey Shabalin <shaba@altlinux.org> 10.1.2-alt1
+- 10.1.2 (Fixes: CVE-2024-8354, CVE-2025-8860, CVE-2025-54566, CVE-2025-54567).
+
 * Thu Aug 07 2025 Alexey Shabalin <shaba@altlinux.org> 10.0.3-alt1
 - 10.0.3.
 
