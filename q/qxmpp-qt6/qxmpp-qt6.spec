@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: %_name-qt6
-Version: 1.10.4
+Version: 1.11.3
 Release: alt1
 
 Summary: Qt XMPP library
@@ -148,6 +148,9 @@ install -m644 AUTHORS CHANGELOG.md README.md %buildroot%_defaultdocdir/%_name/
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Fri Nov 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.11.3-alt1
+- 1.11.3
+
 * Sun Jun 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.4-alt1
 - 1.10.4
 
