@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-bitstruct
-Version: 8.19.0
+Version: 8.21.0
 Release: alt1
 Summary: Python bit pack/unpack package
 License: MIT
@@ -39,5 +39,8 @@ but working on bits instead of primitive data types (char, int, ...).
 %python3_sitelibdir/%{pyproject_distinfo bitstruct}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 8.21.0-alt1
+- Updated to version 8.21.0.
+
 * Sun Feb 11 2024 Alexander Makeenkov <amakeenk@altlinux.org> 8.19.0-alt1
 - Initial build for ALT.
