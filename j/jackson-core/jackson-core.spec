@@ -1,44 +1,45 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jackson-core
+Version: 2.20.1
+Release: alt1
+
+Summary: Core part of Jackson
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: https://github.com/FasterXML/jackson-core
+Vcs: https://github.com/FasterXML/jackson-core.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+Patch0: 0001-Remove-fastdoubleparser-dep-alt-patch.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jackson-core
-Version:        2.11.4
-Release:        alt1_7jpp11
-Summary:        Core part of Jackson
-License:        ASL 2.0
-
-URL:            https://github.com/FasterXML/jackson-core
-Source0:        https://github.com/FasterXML/jackson-core/archive/%{name}-%{version}.tar.gz
-Patch1:         0001-Change-compilation-source-target-to-Java-11.patch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
-BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-
-BuildArch:      noarch
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: maven-shade-plugin
+BuildRequires: jackson-bom
+BuildRequires: replacer
+BuildRequires: maven-plugin-bundle
 
 %description
 Core part of Jackson that defines Streaming API as well
 as basic shared abstractions.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%patch1 -p1
+%setup
+%autopatch -p1
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
 %pom_remove_plugin "org.moditect:moditect-maven-plugin"
 
-cp -p src/main/resources/META-INF/LICENSE .
-cp -p src/main/resources/META-INF/NOTICE .
-sed -i 's/\r//' LICENSE NOTICE
+%pom_remove_dep ch.randelshofer:fastdoubleparser
 
-%mvn_file : %{name}
+%mvn_file : %name
 
 %build
 %mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -48,9 +49,12 @@ sed -i 's/\r//' LICENSE NOTICE
 
 %files -f .mfiles
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %changelog
+* Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
+- New version.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_7jpp11
 - update
 

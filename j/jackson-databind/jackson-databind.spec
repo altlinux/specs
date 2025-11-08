@@ -1,27 +1,28 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jackson-databind
+Version: 2.20.1
+Release: alt1
+
+Summary: General data-binding package for Jackson (2.x)
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: https://github.com/FasterXML/jackson-databind
+Vcs: https://github.com/FasterXML/jackson-databind.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jackson-databind
-Version:        2.11.4
-Release:        alt1_4jpp11
-Summary:        General data-binding package for Jackson (2.x)
-License:        ASL 2.0 and LGPLv2+
-
-URL:            https://github.com/FasterXML/jackson-databind
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
-BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.mockito:mockito-core)
-
-BuildArch:      noarch
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: jackson-annotations
+BuildRequires: jackson-core
+BuildRequires: jackson-bom
+BuildRequires: replacer
+BuildRequires: maven-plugin-bundle
 
 %description
 The general-purpose data-binding functionality and tree-model for Jackson Data
@@ -29,7 +30,7 @@ Processor. It builds on core streaming parser/generator package, and uses
 Jackson Annotations for configuration.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
@@ -44,19 +45,10 @@ sed -i 's/\r//' LICENSE NOTICE
 rm src/test/java/com/fasterxml/jackson/databind/introspect/NoClassDefFoundWorkaroundTest.java
 %pom_xpath_remove pom:classpathDependencyExcludes
 
-# TestTypeFactoryWithClassLoader fails to compile
-# - it's the only test that uses powermock, so drop the powermock dependencies
-# - mockito is only transitively pulled in by powermock, so add it back
-%pom_remove_dep org.powermock:
-%pom_add_dep org.mockito:mockito-core::test
-rm src/test/java/com/fasterxml/jackson/databind/type/TestTypeFactoryWithClassLoader.java
-
 # Off test that require connection with the web
-rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest.java \
- src/test/java/com/fasterxml/jackson/databind/deser/jdk/JDKStringLikeTypesTest.java \
- src/test/java/com/fasterxml/jackson/databind/TestJDKSerialization.java
+rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest.java
 
-%mvn_file : %{name}
+%mvn_file : %name
 
 %build
 %mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
@@ -69,6 +61,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
+- New version.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
 - update
 

@@ -1,24 +1,27 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jackson-annotations
+Version: 2.19.4
+Release: alt1
+
+Summary: Core annotations for Jackson data processor
+License: ASL 2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: https://github.com/FasterXML/jackson-annotations
+Vcs: https://github.com/FasterXML/jackson-annotations.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+Patch1: 0001-Change-compilation-source-target-to-Java-11.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jackson-annotations
-Version:        2.11.4
-Release:        alt1_6jpp11
-Summary:        Core annotations for Jackson data processor
-License:        ASL 2.0
-
-URL:            https://github.com/FasterXML/jackson-annotations
-Source0:        https://github.com/FasterXML/jackson-annotations/archive/%{name}-%{version}.tar.gz
-Patch1:         0001-Change-compilation-source-target-to-Java-11.patch
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.11
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-
-BuildArch:      noarch
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: jackson-parent
+BuildRequires: junit5
+BuildRequires: maven-plugin-bundle
 
 %description
 Core annotations used for value types,
@@ -26,22 +29,21 @@ used by Jackson data-binding package.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
 %description javadoc
-This package contains API documentation for %{name}.
+This package contains API documentation for %name.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%patch1 -p1
+%setup
+%autopatch -p1
 
 %pom_remove_plugin "org.moditect:moditect-maven-plugin"
-%pom_remove_plugin "org.sonatype.plugins:nexus-staging-maven-plugin"
+%pom_remove_plugin "org.gradlex:gradle-module-metadata-maven-plugin"
+sed -i 's#${version.junit5}#5.10.2#g' pom.xml
 
-sed -i 's/\r//' LICENSE
-
-%mvn_file : %{name}
+%mvn_file : %name
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -57,6 +59,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.19.4-alt1
+- New version.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_6jpp11
 - update
 
