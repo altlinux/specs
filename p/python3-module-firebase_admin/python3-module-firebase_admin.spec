@@ -1,7 +1,7 @@
 %define oname firebase_admin
 
 Name: python3-module-firebase_admin
-Version: 6.5.0
+Version: 7.1.0
 Release: alt1
 
 Summary: Firebase Admin Python SDK
@@ -37,6 +37,9 @@ The Firebase Admin Python SDK enables server-side (backend) Python developers to
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 07 2025 Ivan Mazhukin <vanomj@altlinux.org> 7.1.0-alt1
+- new version 7.1.0 (with rpmrb script)
+
 * Wed Jun 05 2024 Ivan Mazhukin <vanomj@altlinux.org> 6.5.0-alt1
 - initial build for ALT Sisyphus
 
