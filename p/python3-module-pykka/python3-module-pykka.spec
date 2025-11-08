@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.1
+Version: 4.4.0
 Release: alt1
 Summary: Python implementation of the actor model
 License: Apache-2.0
@@ -16,13 +16,10 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(poetry.core)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-hatchling
 
 %if_with check
-BuildRequires: python3(pytest-mock)
-BuildRequires: python3(pydantic)
+BuildRequires: python3-module-pytest-mock
 %endif
 
 %description
@@ -48,6 +45,9 @@ which makes it easier to build concurrent applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.0-alt1
+- Updated to version 4.4.0.
+
 * Thu Nov 28 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.1.1-alt1
 - Updated to version 4.1.1.
 
