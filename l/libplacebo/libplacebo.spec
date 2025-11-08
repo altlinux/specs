@@ -2,7 +2,7 @@
 
 Name: libplacebo
 Version: 7.351.0
-Release: alt0.1
+Release: alt0.2
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 License: LGPL-2.1+
@@ -57,6 +57,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Nov 08 2025 L.A. Kostis <lakostis@altlinux.ru> 7.351.0-alt0.2
+- vulkan: fix for python 3.14.
+
 * Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 7.351.0-alt0.1
 - 7.351.0.
 
