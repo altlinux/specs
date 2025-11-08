@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: colorized-logs
-Version: 2.6
-Release: alt3
+Version: 2.7
+Release: alt1
 Summary: Tools for logs with ANSI color
 License: MIT
 Group: File tools
@@ -55,6 +55,9 @@ this package gives you:
 %doc LICENSE
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.7-alt1
+- Updated to version 2.7.
+
 * Wed Jan 10 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.6-alt3
 - Added conflict to perl-HTML-FromANSI.
 
