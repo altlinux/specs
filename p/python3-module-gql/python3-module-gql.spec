@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name gql
-%def_without check
+%def_with check
 
 Name: python3-module-%module_name
-Version: 3.5.0
-Release: alt2
+Version: 4.0.0
+Release: alt1
 Summary: A GraphQL client in Python
 License: MIT
 Group: Development/Python3
@@ -16,18 +16,25 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3(anyio)
-BuildRequires: python3(backoff)
-BuildRequires: python3(graphql)
-BuildRequires: python3(parse)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_asyncio)
-BuildRequires: python3(mock)
-BuildRequires: python3(yarl)
+BuildRequires: python3-module-aiofiles
+BuildRequires: python3-module-aiohttp-tests
+BuildRequires: python3-module-anyio
+BuildRequires: python3-module-backoff
+BuildRequires: python3-module-botocore
+BuildRequires: python3-module-graphql-core
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-parse
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-console-scripts
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-requests_toolbelt
+BuildRequires: python3-module-vcrpy
+BuildRequires: python3-module-websockets
+BuildRequires: python3-module-yarl
 %endif
 
 %description
@@ -54,6 +61,9 @@ compatible with the spec.
 %doc LICENSE
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt1
+- Updated to version 4.0.0.
+
 * Mon Dec 23 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.0-alt2
 - Fixed BuildRequires.
 
