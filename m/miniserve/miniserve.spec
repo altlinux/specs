@@ -1,7 +1,7 @@
 %def_without check
 
 Name: miniserve
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 Summary: A CLI tool to serve files and dirs over HTTP
 License: MIT
@@ -14,8 +14,8 @@ Source1: vendor.tar
 
 ExcludeArch: ppc64le
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: libssl-devel
 
 %description
@@ -25,18 +25,7 @@ via HTTP.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[profile.release]
-debug = true
-strip = false
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -56,6 +45,9 @@ install -m 0644 %name.1 %buildroot%_man1dir
 %doc LICENSE README.md
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.32.0-alt1
+- Updated to version 0.32.0.
+
 * Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.31.0-alt1
 - Updated to version 0.31.0.
 
