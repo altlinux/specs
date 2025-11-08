@@ -3,14 +3,15 @@
 
 Name: OpenBoard
 Version: 1.7.3
-Release: alt4
+Release: alt6
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
-License: GPL-3.0+
+License: GPL-3.0-or-later
 Group: Education
-Url: https://github.com/OpenBoard-org/OpenBoard
+URL: https://openboard.ch/index.en.html
+VCS: https://github.com/OpenBoard-org/OpenBoard
 
-ExcludeArch: ppc64le
+ExcludeArch: %not_qt6_qtwebengine_arches
 
 Source: %name-%version.tar
 
@@ -34,6 +35,7 @@ Patch6: 0006-polygon_line_styles.patch
 Patch8: 0008-background-grid-size-save.patch
 # https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch9: 0009-vector_tool.patch
+Patch10: 0010-alt-Fix-disappiearing-components-of-dashed-and-dotte.patch
 Patch11: 0011-fix-videoSize-saving.patch
 Patch13: 0013-Changes-for-dark-mode.patch
 Patch14: 0014-widgets-names-ru_translate.patch
@@ -57,29 +59,28 @@ Patch100: build-with-c++20.patch
 # disable update check and startup hints
 Patch101: 0100-alt-settings.patch
 
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libpaper-devel
 BuildRequires: libssl-devel
-BuildRequires: quazip-qt5-devel
+BuildRequires: quazip-qt6-devel
 BuildRequires: t1lib-devel
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libswresample-devel
 BuildRequires: libalsa-devel libvpx-devel libvorbis-devel libtheora-devel libogg-devel
 BuildRequires: libopus-devel liblame-devel libass-devel
 BuildRequires: liblzma-devel bzlib-devel
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Help)
-BuildRequires: pkgconfig(Qt5Multimedia)
-BuildRequires: pkgconfig(Qt5MultimediaWidgets)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5PrintSupport)
-BuildRequires: pkgconfig(Qt5Script)
-BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: pkgconfig(Qt5UiTools)
-BuildRequires: pkgconfig(Qt5WebEngineWidgets)
-BuildRequires: pkgconfig(Qt5Xml)
-BuildRequires: pkgconfig(Qt5XmlPatterns)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Help)
+BuildRequires: pkgconfig(Qt6Multimedia)
+BuildRequires: pkgconfig(Qt6MultimediaWidgets)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6PrintSupport)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6UiTools)
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+BuildRequires: pkgconfig(Qt6Xml)
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(hunspell)
@@ -107,8 +108,7 @@ sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
 sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 
 # drop quazip LIBS INCLUDEPATH
-sed -i  -e '/LIBS += -lquazip5/d' \
-	-e '/INCLUDEPATH += "\/usr\/include\/quazip5"/d' \
+sed -i  -e '/LIBS += -lquazip6/d' \
 	OpenBoard.pro
 
 # Removed some map widgets because of incorrect display of borders of Ukraine and Russia
@@ -122,12 +122,11 @@ mv GeoInfo.wgt resources/library/applications/GeoInfo.wgt
 rm -v resources/etc/OpenBoard.css
 
 %build
-%qmake_qt5 \
-    LIBS+="`pkg-config --libs quazip1-qt5`" \
-    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
+%qmake_qt6 \
+    LIBS+="`pkg-config --libs quazip1-qt6`" \
+    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt6 |
       sed 's/-I//g'`" \
     INCLUDEPATH+=%_includedir/poppler \
-    INCLUDEPATH+=%_includedir/qt5/QtSolutions \
     %name.pro
 %make_build
 
@@ -179,8 +178,6 @@ if pid="\$(/sbin/pidof OpenBoard)"; then
     exit 0
 fi
 
-[ -z "\$WAYLAND_DISPLAY" ] || export QT_QPA_PLATFORM=xcb
-
 env QT_PLUGIN_PATH=\$QT_PLUGIN_PATH:%_libdir/%name/plugins LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:%_libdir/%name/plugins/cffadaptor %_libdir/%name/OpenBoard "\$@"
 EOF
 
@@ -201,12 +198,15 @@ find %buildroot -executable -type f -name *.xml -exec chmod -x '{}' \+
 find %buildroot -executable -type f -name *.html -exec chmod -x '{}' \+
 
 # internalization
-lrelease-qt5 -removeidentical %name.pro
+lrelease-qt6 -removeidentical %name.pro
 mkdir -p %buildroot%_libdir/%name/i18n/
 cp -R resources/i18n/%{name}*.qm %buildroot%_libdir/%name/i18n/
 
 # customizations
 cp -R resources/customizations %buildroot%_libdir/%name/
+
+# remove broken search widgets
+rm -r %buildroot%_libdir/%name/library/search
 
 %files
 %doc COPYRIGHT LICENSE
@@ -217,6 +217,16 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Nov 08 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt6
+- Do not use xwayland always.
+- Remove broken search widgets.
+
+* Wed Aug 27 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7.3-alt5
+- Build with Qt6
+- Don't build on architectures that don't have qt6-webengine
+- Rewrite workaround for disappearing dotted and dashed line
+  components
+
 * Sat Aug 02 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt4
 - add Oblique Seyes Ruled Background
 

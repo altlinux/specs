@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.13
-Release: alt1
+Release: alt2
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -529,7 +529,7 @@ Requires: ansible
 Requires: semaphore
 %endif
 Requires: virt-viewer
-%ifnarch loongarch64 ppc64le
+%ifnarch %not_qt6_qtwebengine_arches
 Requires: OpenBoard
 %endif
 Requires: touchegg
@@ -662,6 +662,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sat Nov 08 2025 Anton Midyukov <antohami@altlinux.org> 1.7.13-alt2
+- teacher: depends on OpenBoard for %%qt6_qtwebengine_arches only.
+
 * Sun Oct 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.13-alt1
 - server-apps: Stop requiring alt-domain-server.
 
