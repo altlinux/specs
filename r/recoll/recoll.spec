@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.43.6
-Release: alt2
+Version: 1.43.7
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -224,6 +224,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Sat Nov 08 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.7-alt1
+- 1.43.7
+
 * Thu Nov 06 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.6-alt2
 - added to full R: aspell-en aspell-ru 
 - added R: python3-modules-sqlite3
