@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -23,7 +23,7 @@ Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
 Requires: pve-common >= 9.0.8 pve-guest-common >= 5.1.4
 Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
-Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
+Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
 Requires: pve-container >= 5.2.5 pve-firewall pve-ha-manager >= 5.0.3 pve-qemu-server >= 9.0.10 pve-i18n >= 3.2.0 pve-docs
 Requires: proxmox-widget-toolkit >= 5.0.2 proxmox-mini-journalreader >= 1.3.1 proxmox-rrd-migration-tool >= 1.0.0
 Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
@@ -178,6 +178,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Tue Sep 30 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt3
+- Add Requires: pve-yew-mobile-gui (closes: #56097)
+
 * Sun Sep 21 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt2
 - apl: use sqv instead of gpgv to verify signatures
 
