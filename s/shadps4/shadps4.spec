@@ -7,9 +7,10 @@
 %define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
 %define libusb_commit c4d237a5803900b78dcc2961d057fcc8a678d3fd
 %define hwinfo_commit 351c59828a79958f74f3ccab5e7773ffd724f6f7
+%define json_version 3.12.0
 
 Name: shadps4
-Version: 0.12.0
+Version: 0.12.5
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -42,16 +43,19 @@ Source7: ext-LibAtrac9-%libatrac9_commit.tar
 Source8: ext-libusb-%libusb_commit.tar
 # https://github.com/%name-emu/ext-hwinfo/archive/%hwinfo_commit/ext-hwinfo-%hwinfo_commit.tar.gz
 Source9: ext-hwinfo-%hwinfo_commit.tar
+# https://github.com/nlohmann/json/archive/v%json_version/json-%json_version.tar.gz
+Source10: json-%json_version.tar
 
 Patch0: %name-0.11.0-glslang-16-alt.patch
 
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
 BuildRequires: clang
+BuildRequires: cmake
 BuildRequires: glslang-devel
-BuildRequires: libGLU-devel
 BuildRequires: libSDL3-devel
 BuildRequires: libavfilter-devel
+BuildRequires: libavformat-devel
 BuildRequires: libfmt-devel
 BuildRequires: libhalf-devel
 BuildRequires: libmagic_enum-devel
@@ -59,7 +63,11 @@ BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: librobin-map-devel
 BuildRequires: libspirv-tools-devel
+BuildRequires: libssl-devel
 BuildRequires: libstb-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
 BuildRequires: libtoml11-devel
 BuildRequires: libudev-devel
 BuildRequires: libuuid-devel
@@ -69,20 +77,16 @@ BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
 BuildRequires: lld
 BuildRequires: llvm
-BuildRequires: qt6-multimedia-devel
-BuildRequires: qt6-tools-devel
+BuildRequires: ninja-build
 BuildRequires: rapidjson-devel
 BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 
-Provides: %name-qt = %EVR
-Obsoletes: %name-qt <= 0.2.0-alt1
-
 %description
-shadPS4 is an early PS4 emulator for Windows and Linux written in C++
+shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
 %patch0 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
@@ -94,6 +98,7 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %__mv -Tf ../ext-LibAtrac9-%libatrac9_commit externals/LibAtrac9
 %__mv -Tf ../ext-libusb-%libusb_commit externals/ext-libusb
 %__mv -Tf ../ext-hwinfo-%hwinfo_commit externals/hwinfo
+%__mv -Tf ../json-%json_version externals/json
 
 %build
 export CC="clang"
@@ -105,7 +110,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DENABLE_QT_GUI:BOOL=TRUE \
 	-DENABLE_UPDATER:BOOL=FALSE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
 	-GNinja \
@@ -115,22 +119,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %install
 %cmake_install
 
-%__mkdir_p %buildroot%_libexecdir/%name
-
-%__mv %buildroot%_bindir/%name %buildroot%_libexecdir/%name/
-%__ln_s %_libexecdir/%name/%name %buildroot%_bindir/%name
-%__cp -r %_target_platform/translations %buildroot%_libexecdir/%name
-
 %files
 %doc CONTRIBUTING.md README.md
 %_bindir/%name
-%_datadir/metainfo/net.%name.shadPS4.metainfo.xml
-%_desktopdir/net.%name.shadPS4.desktop
-%_iconsdir/hicolor/512x512/apps/net.%name.shadPS4.png
-%_iconsdir/hicolor/scalable/apps/net.%name.shadPS4.svg
-%_libexecdir/%name
 
 %changelog
+* Sat Nov 08 2025 Nazarov Denis <nenderus@altlinux.org> 0.12.5-alt1
+- Version 0.12.5
+
 * Fri Oct 31 2025 Nazarov Denis <nenderus@altlinux.org> 0.12.0-alt1
 - Version 0.12.0
 
