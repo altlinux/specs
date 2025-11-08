@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mackup
-Version: 0.9.6
+Version: 0.10.0
 Release: alt1
 Summary: Keep your application settings in sync
 License: GPL-3.0
@@ -64,6 +64,9 @@ This package contains python module for %name
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.0-alt1
+- Updated to version 0.10.0.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.6-alt1
 - Updated to version 0.9.6.
 
