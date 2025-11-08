@@ -1,10 +1,10 @@
 %define nameS pysidesix_frameless_window
 %define nameL qframelesswindow
 
-Name: python3-module-pyqt-frameless-window
+Name: python3-module-pysidesix-frameless-window
 
 Version: 0.7.4
-Release: alt1
+Release: alt1.1
 
 Summary: A cross-platform frameless window based on PySide6
 
@@ -18,6 +18,9 @@ ExcludeArch: i586
 Source: %name-%version.tar
 
 Patch: setup-0.7.4-alt-fixes.patch
+
+Provides: python3-module-pyqt-frameless-window = %EVR
+Obsoletes: python3-module-pyqt-frameless-window < %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -48,5 +51,8 @@ rm -r %buildroot%_prefix/lib
 %doc *.md LICENSE
 
 %changelog
+* Sat Nov 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.4-alt1.1
+- rename package
+
 * Thu Oct 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.4-alt1
 - Initial build for ALT Linux.
