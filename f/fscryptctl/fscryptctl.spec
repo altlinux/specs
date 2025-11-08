@@ -10,8 +10,8 @@
 %endif
 
 Name:		fscryptctl
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary:	A small C tool for Linux filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -74,6 +74,9 @@ vm-run --kvm=cond --sbin --user make test-all
 %doc *.md
 
 %changelog
+* Wed Nov 05 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
+- Update to v1.3.0 (2025-11-04).
+
 * Sat Jul 27 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt2
 - spec: Remove R:kernel. The kernel package does not need to be installed for
   this tool to work. Perhaps, if the tool is running, the kernel is already
