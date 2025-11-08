@@ -10,9 +10,9 @@
 %endif
 
 Name: sd-cpp
-Version: 20250925
+Version: 20251107
 Release: alt1
-Summary: Diffusion model (SD, Flux, Wan) inference in pure C/C++
+Summary: Diffusion model (SD, Flux, Wan, Qwen Image) inference in pure C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/leejet/stable-diffusion.cpp
@@ -42,9 +42,10 @@ BuildRequires: nvidia-cuda-devel-static
 Inference of Diffusion models in pure C/C++. Supports CPU and CUDA.
 
 Supported models:
-  Image Models: SD1.x, SD2.x, SD-Turbo, SDXL, SDXL-Turbo, SD3/SD3.5,
-    Flux-dev/Flux-schnell, Chroma
-  Image Edit Models: FLUX.1-Kontext-dev
+  Image Models: SD1.x, SD2.x, SD-Turbo, SDXL, SDXL-Turbo, some SD1.x and SDXL
+    distilled models, SD3/SD3.5, Flux-dev/Flux-schnell, Chroma,
+    Chroma1-Radiance, Qwen Image
+  Image Edit Models: FLUX.1-Kontext-dev, Qwen Image Edit/Qwen Image Edit 2509
   Video Models: Wan2.1/Wan2.2
   PhotoMaker support
   Control Net support with SD 1.5
@@ -78,8 +79,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DSD_CUDA=ON \
 	-DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
 %endif
-	-DGGML_BUILD_NUMBER=1 \
-	-DSD_BUILD_SHARED_LIBS=ON
+	-DGGML_BUILD_NUMBER=1
 %cmake_build
 
 %install
@@ -94,6 +94,10 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp
 
 %changelog
+* Sun Nov 09 2025 Vitaly Chikunov <vt@altlinux.org> 20251107-alt1
+- Update to master-350-c2d8ffc (2025-11-07).
+- Added Qwen-Image support.
+
 * Mon Oct 06 2025 Vitaly Chikunov <vt@altlinux.org> 20250925-alt1
 - Update to master-309-35843c7 (2025-09-25).
 
