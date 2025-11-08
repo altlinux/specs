@@ -2,7 +2,7 @@
 
 Name: SDL3
 Version: 3.2.26
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -36,7 +36,9 @@ BuildRequires: libsamplerate-devel
 BuildRequires: libslang2
 BuildRequires: libsoup3.0-devel
 BuildRequires: libudev-devel
+%ifnarch %e2k
 BuildRequires: libunwind-devel
+%endif
 BuildRequires: libusb-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
@@ -97,6 +99,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Sat Nov 08 2025 Michael Shigorin <mike@altlinux.org> 3.2.26-alt1.1
+- E2K: no standalone libunwind so far (cf. mcst#4895/6690).
+
 * Thu Oct 30 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.26-alt1
 - New version 3.2.26.
 
