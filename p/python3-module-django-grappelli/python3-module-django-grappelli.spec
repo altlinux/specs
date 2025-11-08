@@ -1,7 +1,7 @@
 %define oname django-grappelli
 
 Name: python3-module-django-grappelli
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: A jazzy skin for the Django Admin-Interface
@@ -36,5 +36,8 @@ BuildArch: noarch
 
 %python3_sitelibdir/*
 %changelog
+* Fri Nov 07 2025 Ivan Mazhukin <vanomj@altlinux.org> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
 * Tue May 28 2024 Ivan Mazhukin <vanomj@altlinux.org> 4.0.1-alt1
 - Initial build for Alt Sisyphus
