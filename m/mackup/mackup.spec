@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mackup
-Version: 0.8.41
+Version: 0.9.6
 Release: alt1
 Summary: Keep your application settings in sync
 License: GPL-3.0
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-hatchling
 Requires: python3-module-%name
 
 %if_with check
@@ -45,7 +45,6 @@ This package contains python module for %name
 
 %prep
 %setup
-sed -i '/version/s/0.8.40/%version/' pyproject.toml
 
 %build
 %pyproject_build
@@ -65,6 +64,9 @@ sed -i '/version/s/0.8.40/%version/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.6-alt1
+- Updated to version 0.9.6.
+
 * Mon Dec 30 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.41-alt1
 - Updated to version 0.8.41.
 - Enabled check.
