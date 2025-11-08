@@ -1,9 +1,9 @@
 %define nameL luisbocanegra.smart.video.wallpaper.reborn
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
-Name: kde-plasma-addon-smart-video-wallpaper-reborn
-Version: 2.4.0
-Release: alt1.1
+Name: plasma-addon-smart-video-wallpaper-reborn
+Version: 2.5.1
+Release: alt1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
 License: GPL-2.0
@@ -18,6 +18,9 @@ Source1: ru.po
 Patch: metadata-2.4.0-alt-fixes.patch
 
 BuildArch: noarch
+
+Provides: kde-plasma-addon-smart-video-wallpaper-reborn = %EVR
+Obsoletes: kde-plasma-addon-smart-video-wallpaper-reborn < %EVR
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules gcc-c++ pkgconfig(Qt6Qml)
@@ -43,18 +46,20 @@ cp -r -f %SOURCE1 package/translate/
 
 for locale in el_GR es nl pt_BR ru; do
  msgfmt package/translate/${locale}.po -o package/translate/${locale}.mo
- install -Dm 0644 package/translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
+ install -Dm 0644 package/translate/${locale}.mo \
+    %buildroot%_datadir/plasma/wallpapers/%nameL/contents/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
-%find_lang %nameLC --with-kde --all-name
-
-%files -f %nameLC.lang
+%files
 %_datadir/metainfo/%nameL.appdata.xml
 %exclude %_datadir/plasma/wallpapers/%nameL/translate
 %_datadir/plasma/wallpapers/%nameL/*
 %doc README.md
 
 %changelog
+* Sat Nov 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.5.1-alt1
+- 2.4.0 -> 2.5.1
+
 * Sun Nov 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1.1
 - spec cleanup
 
