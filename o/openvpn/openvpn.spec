@@ -16,13 +16,13 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.12
+Version: 2.6.15
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL
 
-License: %gpl2only with OpenSSL exception
+License: %gpl2only with openvpn-openssl-exception
 Group: System/Servers
 Url: http://www.openvpn.net
 
@@ -225,10 +225,12 @@ install -m 0640 -- %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 
 %if_with systemd
 rm -f -- %buildroot%_unitdir/*
+rm -rf -- %buildroot%_prefix/%_unitdir/ %buildroot%_prefix/%_tmpfilesdir/
 install -m 0644 -- %SOURCE11 %buildroot%_unitdir/%name.service
 install -m 0644 -- %SOURCE12 %buildroot%_unitdir/%name@.service
 install -m 0644 -- %SOURCE13 %buildroot%_unitdir/%name-server@.service
 install -m 0644 -- %SOURCE14 %buildroot%_unitdir/%name-client@.service
+install -m 0644 %SOURCE10  %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 
@@ -343,6 +345,17 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Wed Nov 05 2025 Nikolay A. Fetisov <naf@altlinux.org> 2.6.15-alt1
+- New version
+- Fixes:
+  + CVE-2025-2704: possible ASSERT() on OpenVPN servers using --tls-crypt-v2
+  + Improve server-side handling of clients sending too long usernames/passwords
+  + Bring back configuring of broadcast address on Linux tun/tap interface
+  + Linux DCO: repair source IP selection for --multihome
+  + Correctly handle case of "route installation fails" for an already-existing
+    routes
+- Fix format of the OpenSSL license exception in License tag
+
 * Thu Aug 01 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.6.12-alt1
 - New version
 - Fixes:
