@@ -1,7 +1,7 @@
 %def_with check
 
 Name: broot
-Version: 1.47.0
+Version: 1.52.0
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
@@ -15,10 +15,10 @@ Patch: alt-fix-build-nix-on-loongarch64.patch
 
 ExcludeArch: i586
 
-BuildRequires(pre): rpm-build-rust
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: cargo-vendor-checksum
 BuildRequires: diffstat
-BuildRequires: rust-cargo
 
 %description
 %summary.
@@ -27,18 +27,7 @@ BuildRequires: rust-cargo
 %setup -a 1
 %patch -p1
 diffstat -p1 -l < %PATCH0 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[profile.release]
-debug = true
-strip = false
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -55,6 +44,9 @@ install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.52.0-alt1
+- Updated to version 1.52.0.
+
 * Fri Jun 27 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.47.0-alt1
 - Updated to version 1.47.0.
 
