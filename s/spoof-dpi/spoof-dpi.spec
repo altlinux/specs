@@ -4,13 +4,13 @@
 # binary renamed in 0.11.0
 %define binary_name spoofdpi
 %define old_binary_name spoof-dpi
-%define ver_major 0.12
+%define ver_major 1.0
 %define import_path github.com/xvzc/%_name
 
 %def_disable bootstrap
 
 Name: %old_binary_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and fast software designed to bypass Deep Packet Inspection
@@ -28,7 +28,7 @@ Source: %_name-%version.tar
 %{?_disable_bootstrap:Source1: %_name-%version-vendor.tar}
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires: golang libpcap-devel
 
 %description
 %{summary}.
@@ -61,6 +61,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Sat Nov 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Thu Nov 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
 - 0.12.2
 
