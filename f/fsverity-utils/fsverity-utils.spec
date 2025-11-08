@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: fsverity-utils
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: Userspace utilities for fs-verity
 License: MIT
@@ -80,6 +80,9 @@ fi
 %_pkgconfigdir/libfsverity.pc
 
 %changelog
+* Wed Nov 05 2025 Vitaly Chikunov <vt@altlinux.org> 1.7-alt1
+- Update to v1.7 (2025-11-04).
+
 * Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
 - Update to v1.6 (2024-03-20).
 
