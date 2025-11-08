@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-otbr-api
-Version: 2.6.0
-Release: alt2
+Version: 2.7.0
+Release: alt1
 Summary: Python API for the Open Thread Border Router
 License: MIT
 Group: Development/Python3
@@ -46,6 +46,9 @@ Python package to interact with an OTBR via its REST API.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.7.0-alt1
+- Updated to version 2.7.0.
+
 * Thu Oct 30 2025 Stanislav Levin <slev@altlinux.org> 2.6.0-alt2
 - NMU: fixed FTBFS (aiohttp 3.13.2).
 
