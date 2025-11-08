@@ -1,10 +1,10 @@
-%define oname EbookLib
+%define oname ebooklib
 
 Name: python3-module-ebooklib
-Version: 0.18
+Version: 0.20
 Release: alt1
 
-Summary: A jazzy skin for the Django Admin-Interface
+Summary: A versatile Python library for EPUB2/EPUB3 manipulation and processing
 
 Url: https://github.com/aerkalov/ebooklib
 License: AGPL-3.0-or-later
@@ -21,7 +21,7 @@ BuildRequires: python3(wheel)
 BuildArch: noarch
 
 %description
-%summary
+EbookLib is a Python library for managing EPUB2/EPUB3. It's capable of reading and writing EPUB files programmatically.
 
 %prep
 %setup
@@ -36,6 +36,9 @@ BuildArch: noarch
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 07 2025 Ivan Mazhukin <vanomj@altlinux.org> 0.20-alt1
+- new version (0.20) with rpmgs script
+
 * Wed May 29 2024 Ivan Mazhukin <vanomj@altlinux.org> 0.18-alt1
 - initial build for ALT Sisyphus
 
