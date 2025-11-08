@@ -12,9 +12,9 @@
 
 Name:    ZLEqualizer
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
-Summary: Dynamic Equalizer Plugin from ZL Audio
+Summary: Dynamic Equalizer Plugin from ZL Audio (v1)
 License: AGPL-3.0
 Group:   Sound
 Url:     https://zl-audio.github.io/plugins/zlequalizer/
@@ -31,6 +31,8 @@ Source2: sub-merge.unpack.sh
 
 # Import sub-merge sources right here
 %(cat %SOURCE1)
+
+Patch: %name-%version-%release.patch
 
 BuildRequires: cmake
 BuildRequires: clang
@@ -63,12 +65,15 @@ BuildRequires: pkgconfig(xrender)
   and side-chain frequency, etc.\
 - Carefully Designed Interface: Interactive spectrum graph,\
   smart collision detection, and smooth animations.\
+\
+Note: ZL Equalizer is in the legacy state. Consider using \
+ZL Equalizer v2 for new projects.
 
 %description
 %common_description
 
 %package -n lv2-%name-plugin
-Summary: Dynamic Equalizer Plugin from ZL Audio -- LV2
+Summary: Dynamic Equalizer Plugin from ZL Audio (v1) -- LV2
 Group:   Sound
 
 %description -n lv2-%name-plugin
@@ -78,7 +83,7 @@ This package contains ZL Equalizer built as LV2 plugin.
 
 
 %package -n vst3-%name-plugin
-Summary: Dynamic Equalizer Plugin from ZL Audio -- VST3
+Summary: Dynamic Equalizer Plugin from ZL Audio (v1) -- VST3
 Group:   Sound
 
 %description -n vst3-%name-plugin
@@ -134,6 +139,10 @@ cp -a "VST3/ZL Equalizer.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Sat Nov 08 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.2-alt2
+- backport fixes from upstream/v1 bracnh
+- note that ZL Equalizer v1 is "in the legacy state"
+
 * Thu May 01 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.2-alt1
 - 0.6.2
 - build with clang
