@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name:		fscrypt
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary:	A tool for managing Linux filesystem encryption
 
@@ -62,6 +62,9 @@ vm-run --kvm=cond --sbin --user --udevd \
 %doc *.md
 
 %changelog
+* Wed Nov 05 2025 Vitaly Chikunov <vt@altlinux.org> 0.3.6-alt1
+- Update to v0.3.6 (2025-11-04).
+
 * Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.5-alt1
 - Update to v0.3.5 (2024-03-19). Including security updates.
 
