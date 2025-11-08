@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 
 Summary: A Django app for render a form field as a TinyMCE editor
@@ -56,6 +56,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 5.0.0-alt1
+- Updated to version 5.0.0.
+
 * Mon Apr 22 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt1
 - Updated to version 4.0.0.
 
