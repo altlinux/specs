@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 11.0.1
+Version: 11.0.2
 Release: alt1
 
 Summary: IT and asset management software
@@ -176,6 +176,9 @@ fi
 %files php8.4
 
 %changelog
+* Sat Nov 08 2025 Pavel Zilke <zidex@altlinux.org> 11.0.2-alt1
+- New version 11.0.2
+
 * Fri Oct 10 2025 Pavel Zilke <zidex@altlinux.org> 11.0.1-alt1
 - New version 11.0.1
 
