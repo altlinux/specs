@@ -15,10 +15,8 @@
 
 %global optflags_lto %nil
 
-%define langpack_ver 20230225
-
 Name: squid
-Version: 7.1
+Version: 7.3
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -27,7 +25,7 @@ Group: System/Servers
 Url: http://www.squid-cache.org/
 
 Source0: %name-%version.tar
-Source1: %name-langpack-%langpack_ver.tar
+Source1: %name-langpack.tar
 Source2: %name.init
 Source3: %name.logrotate
 Source4: wbinfo_group.sh
@@ -125,7 +123,7 @@ This package contains Squid helpers for different kinds of authentication.
 
 
 %prep
-%setup -q %{?langpack_ver:-a 1}
+%setup -q -a 1
 %patch -p1
 
 sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
@@ -324,6 +322,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Sat Nov 08 2025 Egor Ignatov <egori@altlinux.org> 7.3-alt1
+- 7.3 (fixes: CVE-2025-62168, CVE-2025-59362)
+
 * Tue Jul 15 2025 Egor Ignatov <egori@altlinux.org> 7.1-alt1
 - 7.1
 
