@@ -8,9 +8,10 @@
 %else
 %def_without cuda
 %endif
+%def_with vulkan
 
 Name: ollama
-Version: 0.12.9
+Version: 0.12.10
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -22,6 +23,9 @@ Vcs: https://github.com/ollama/ollama
 %filter_from_requires /(libcudart\.so\.12)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 Requires: ollama-cuda = %EVR
+%endif
+%if_with vulkan
+Requires: %name-vulkan = %EVR
 %endif
 Requires: ollama-cpu = %EVR
 
@@ -39,6 +43,10 @@ BuildRequires: patchelf
 %if_with cuda
 BuildRequires: gcc12-c++
 BuildRequires: nvidia-cuda-devel-static
+%endif
+%if_with vulkan
+BuildRequires: glslc
+BuildRequires: libvulkan-devel
 %endif
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: curl
@@ -65,6 +73,14 @@ Requires: libnvidia-ptxjitcompiler
 Requires: ollama-cpu = %EVR
 
 %description cuda
+%summary.
+
+%package vulkan
+Summary: Ollama runner for GPU
+Group: Sciences/Computer science
+Requires: ollama-cpu = %EVR
+
+%description vulkan
 %summary.
 
 %prep
@@ -95,7 +111,7 @@ mkdir -p %buildroot%_localstatedir/%name
 install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
 install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
 # Add a RPATH to bypass lib.req false positive error.
-find %buildroot%_libexecdir/ollama -name libggml-c*.so |
+find %buildroot%_libexecdir/ollama -name 'libggml-*.so' |
 	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
 
 %check
@@ -116,7 +132,11 @@ kill %%?ollama
 %sysusers_create_package %name %SOURCE3
 
 %post cpu
-%post_systemd %name.service
+# We need to restart the server after all backends are installed, not in the
+# middle of installs to avoid loading wrong DSO. But, just installing/removing
+# a GPU backend won't trigger server restart. Upgrading a GPU backend will
+# trigger the server restart via strict dependence on CPU backend.
+%post_systemd_postponed %name.service
 
 %preun cpu
 %preun_systemd %name.service
@@ -141,7 +161,16 @@ kill %%?ollama
 %_libexecdir/ollama/libggml-cuda.so
 %endif
 
+%if_with vulkan
+%files vulkan
+%_libexecdir/ollama/libggml-vulkan.so
+%endif
+
 %changelog
+* Sun Nov 09 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.10-alt1
+- Update to v0.12.10 (2025-11-05).
+- Enable Vulkan GPU runner (ollama-vulkan).
+
 * Sun Nov 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.9-alt1
 - Update to v0.12.9 (2025-10-31).
 
