@@ -3,10 +3,10 @@
 %def_enable check
 
 Name: crengine-ng
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 
-Summary: Cross-platform library designed to implement text viewers and e-book readers
+Summary: Library designed to implement text viewers and e-book readers
 License: GPL-2.0-or-later
 Group: Development/C++
 Url: https://gitlab.com/coolreader-ng/crengine-ng
@@ -33,21 +33,21 @@ BuildRequires: zlib-devel
 %description
 %summary.
 
-%package -n lib%name%abiversion
+%package -n libcrengine-ng%abiversion
 Summary: %summary
 Group: System/Libraries
 
-%description -n lib%name%abiversion
+%description -n libcrengine-ng%abiversion
 Crengine-ng is cross-platform library designed to implement
 text viewers and e-book readers.
 
-%package -n lib%name-devel
-Summary: Development package for %name
+%package -n libcrengine-ng-devel
+Summary: Development package for crengine-ng
 Group: Development/C++
-Requires: lib%name%abiversion = %EVR
+Requires: libcrengine-ng%abiversion = %EVR
 
-%description -n lib%name-devel
-Files for development with %name.
+%description -n libcrengine-ng-devel
+Files for development with crengine-ng.
 
 %prep
 %setup
@@ -63,12 +63,12 @@ Files for development with %name.
 %install
 %cmake_install
 
-%files -n lib%name%abiversion
+%files -n libcrengine-ng%abiversion
 %_datadir/crengine-ng
 %_libdir/libcrengine-ng.so.%abiversion
 %_libdir/libcrengine-ng.so.%version
 
-%files -n lib%name-devel
+%files -n libcrengine-ng-devel
 %doc AUTHORS ChangeLog crengine/docs/WolfFormat.txt README.md
 %_cmakedir/crengine-ng
 %_libdir/libcrengine-ng.so
@@ -76,5 +76,8 @@ Files for development with %name.
 %_pkgconfigdir/crengine-ng.pc
 
 %changelog
+* Sun Nov 09 2025 Constantin Sunzow <protvin@altlinux.org> 0.9.13-alt1
+- New version.
+
 * Mon Dec 16 2024 Constantin Sunzow <protvin@altlinux.org> 0.9.12-alt1
 - Initial build.
