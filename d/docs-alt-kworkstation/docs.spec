@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Sun Nov 09 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt4
+- update surguch, kopidel
+- update screenshots
+- small improvements
+
 * Sun Aug 17 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
 - add etcnet, TPM2.0
 - typo fixes
