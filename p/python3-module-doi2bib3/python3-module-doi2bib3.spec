@@ -1,0 +1,59 @@
+%define _unpackaged_files_terminate_build 1
+
+%define pypi_name doi2bib3
+
+Name: python3-module-%pypi_name
+Version: 0.3.1
+Release: alt1
+
+Summary: DOI/arXiv to BibTeX command line utility
+License: GPL-3.0-or-later
+Group: Publishing
+URL: https://github.com/archisman-panigrahi/doi2bib3
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+BuildArch: noarch
+
+Source: %pypi_name-%version.tar
+
+%description
+doi2bib3 is a small Python utility to fetch BibTeX metadata for a DOI
+or to resolve arXiv identifiers to DOIs and fetch their BibTeX entries.
+It accepts DOI inputs, DOI URLs, arXiv IDs/URLs (modern and legacy),
+publisher landing pages, and uses a sequence of resolution strategies
+to return a BibTeX string.
+This tool combines the features of doi2bib and doi2bib2.
+
+Key behaviors
+
+* Provides bibtex entry for DOI and arXiv links.
+* Automatically detects arXiv inputs (e.g. 2411.08091, arXiv:2411.08091,
+  or https://arxiv.org/abs/2411.08091) and queries the arXiv API for a DOI.
+* For non-arXiv inputs: attempts DOI normalization, content negotiation at
+  doi.org, Crossref transform, and as a last resort a Crossref bibliographic
+  search.
+
+A GUI frontend is available: Check out QuickBib.
+
+%prep
+%setup -n %pypi_name-%version
+
+%build
+%pyproject_build
+
+%install
+%pyproject_install
+
+%files
+%doc AUTHORS.md LICENSE README.md
+%_bindir/%pypi_name
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+
+%changelog
+* Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
+- Initial build for Sisyphus
