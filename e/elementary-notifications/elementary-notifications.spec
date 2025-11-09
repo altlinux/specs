@@ -4,7 +4,7 @@
 %define appname io.elementary.notifications
 
 Name: elementary-notifications
-Version: 8.1.0
+Version: 8.1.1
 Release: alt1
 
 Summary: Gtk Notifications Server
@@ -23,13 +23,14 @@ BuildRequires: cmake
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(libcanberra)
 BuildRequires: pkgconfig(libcanberra-gtk3)
-BuildRequires: pkgconfig(granite)
+BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: vapi(granite)
 BuildRequires: vapi(libcanberra)
 
 %description
-%summary
+Gtk notification server for Pantheon
 
 %prep
 %setup
@@ -55,5 +56,8 @@ BuildRequires: vapi(libcanberra)
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.1-alt1
+- New version 8.1.1.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
 - Initial build for Sisyphus
