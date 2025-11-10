@@ -27,7 +27,7 @@ shortest-path algorithms.
 
 Name: openfst
 Version: 1.8.4
-Release: alt1
+Release: alt2
 
 Summary: Weighted finite-state transducer library
 License: Apache-2.0
@@ -134,7 +134,6 @@ sed -e '2s/"1" "[[:alpha:]]* [[:digit:]]*"/"1" %release_date/' \
 
 %files -n libopenfst%soversion
 %_libdir/fst-%soversion
-%_libdir/libfst.so
 %_libdir/libfst.so.%{soversion}*
 %_libdir/libfstcompressscript.so.%{soversion}*
 %_libdir/libfstconst.so.%{soversion}*
@@ -150,6 +149,7 @@ sed -e '2s/"1" "[[:alpha:]]* [[:digit:]]*"/"1" %release_date/' \
 %_libdir/libfstspecial.so.%{soversion}*
 
 %files -n libopenfst-devel
+%_libdir/libfst.so
 %_libdir/libfstcompressscript.so
 %_libdir/libfstcompact.so
 %_libdir/libfstconst.so
@@ -329,5 +329,8 @@ sed -e '2s/"1" "[[:alpha:]]* [[:digit:]]*"/"1" %release_date/' \
 %_man1dir/pdtshortestpath.1.xz
 
 %changelog
+* Mon Nov 10 2025 Ulysses Apokin <ulysses@altlinux.org> 1.8.4-alt2
+- Symlink libfst.so moved to -devel package
+
 * Wed Oct 22 2025 Ulysses Apokin <ulysses@altlinux.org> 1.8.4-alt1
 - Initial build for Sisyphus.
