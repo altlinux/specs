@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.28
+Version: 0.1.29
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,10 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.29-alt1
+- Form provs/reqs with python3 submajor suffix according to PYTHON3_STANDALONE (thx Ivan Zakharyaschev)
+- Make python3.{req,prov}.file compatible with any python3 version
+
 * Tue Feb 25 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.28-alt1
 - Implement %%pytest_buildrequires.
 

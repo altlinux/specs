@@ -13,14 +13,14 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global submajor 13
+%global submajor 14
 %global pybasever 3.%submajor
 # pybasever without the dot:
 %global pyshortver 3%submajor
 
 # Controls if this version of python3 is standalone
 # Grenka, unset this macro (remove the line bellow) if you build the main one python3
-#define _python3_standalone .%submajor
+%define _python3_standalone .%submajor
 
 
 %global pyabi %nil
@@ -100,8 +100,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.9
-Release: alt2
+Version: %{pybasever}.0
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -118,7 +118,7 @@ BuildRequires(pre): rpm-macros-valgrind
 BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
-BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel
+BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel libzstd-devel
 BuildRequires: libffi-devel libncursesw-devel mpdecimal-devel libb2-devel
 BuildRequires: libssl-devel libreadline-devel libsqlite3-devel
 BuildRequires: autoconf-archive
@@ -495,6 +495,7 @@ cp -av ../build-shared/Makefile %buildroot%pylibdir/config-%pybasever%pyabi-%pya
 cp -av ../build-shared/python-config %buildroot%_bindir/python3-config
 cp -av ../build-shared/pyconfig.h %buildroot%include_dir
 cp -av ../build-shared/build/lib.linux-*-%pybasever/_sysconfigdata__linux_%pyarch.py %buildroot%pylibdir
+cp -av ../build-shared/build/lib.linux-*-%pybasever/_sysconfig_vars__linux_%pyarch.json %buildroot%pylibdir
 
 # Development tools
 install -m755 -d %buildroot%tool_dir
@@ -584,6 +585,7 @@ sed -i -e "s/'pyconfig.h'/'%_pyconfig_h'/" \
 %else
 %global _pyconfig_h pyconfig.h
 %endif
+
 
 # Remove shebang lines from .py files that aren't executable, and
 # remove executability from .py files that don't have a shebang line:
@@ -746,13 +748,12 @@ export LANG=C
 # Show some info, helpful for debugging test failures
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
+ignore="-i test_freeze_simple_script testPeek" # We are too fast
+unsupported="-x test_urllib2 test_urllibnet test_socket" # No net in hasher
 # -l (--findleaks) is not compatible with -j
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
-$(pwd)/python -m test.regrtest \
-    -x test_socket -x test_signal \
-    -i test_freeze_simple_script \
-    -vwW --timeout=1800 %_smp_mflags
+%make_build test TESTOPTS="${ignore} ${unsupported} -vwW --timeout=1800"
 
 %files
 %doc LICENSE README.rst
@@ -793,10 +794,8 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_codecs_jp.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_kr.cpython-%pyshortver%pyabi.so
 %dynload_dir/_codecs_tw.cpython-%pyshortver%pyabi.so
-%dynload_dir/_contextvars.cpython-%pyshortver%pyabi.so
 %dynload_dir/_csv.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ctypes.cpython-%pyshortver%pyabi.so
-%dynload_dir/_datetime.cpython-%pyshortver%pyabi.so
 %dynload_dir/_dbm.cpython-%pyshortver%pyabi.so
 %dynload_dir/_decimal.cpython-%pyshortver%pyabi.so
 %dynload_dir/_elementtree.cpython-%pyshortver%pyabi.so
@@ -805,6 +804,7 @@ $(pwd)/python -m test.regrtest \
 %endif
 %dynload_dir/_hashlib.cpython-%pyshortver%pyabi.so
 %dynload_dir/_heapq.cpython-%pyshortver%pyabi.so
+%dynload_dir/_hmac.cpython-%pyshortver%pyabi.so
 %dynload_dir/_interpchannels.cpython-%pyshortver%pyabi.so
 %dynload_dir/_interpqueues.cpython-%pyshortver%pyabi.so
 %dynload_dir/_interpreters.cpython-%pyshortver%pyabi.so
@@ -814,12 +814,12 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_md5.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multibytecodec.cpython-%pyshortver%pyabi.so
 %dynload_dir/_multiprocessing.cpython-%pyshortver%pyabi.so
-%dynload_dir/_opcode.cpython-%pyshortver%pyabi.so
 %dynload_dir/_pickle.cpython-%pyshortver%pyabi.so
 %dynload_dir/_posixshmem.cpython-%pyshortver%pyabi.so
 %dynload_dir/_posixsubprocess.cpython-%pyshortver%pyabi.so
 %dynload_dir/_queue.cpython-%pyshortver%pyabi.so
 %dynload_dir/_random.cpython-%pyshortver%pyabi.so
+%dynload_dir/_remote_debugging.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha1.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha2.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha3.cpython-%pyshortver%pyabi.so
@@ -829,6 +829,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_struct.cpython-%pyshortver%pyabi.so
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
 %dynload_dir/_zoneinfo.cpython-%pyshortver%pyabi.so
+%dynload_dir/_zstd.cpython-%pyshortver%pyabi.so
 %dynload_dir/array.cpython-%pyshortver%pyabi.so
 %dynload_dir/binascii.cpython-%pyshortver%pyabi.so
 %dynload_dir/cmath.cpython-%pyshortver%pyabi.so
@@ -869,9 +870,14 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/collections/*.py
 %pylibdir/collections/__pycache__/*%bytecode_suffixes
 
+%dir %pylibdir/compression/
+%dir %pylibdir/compression/__pycache__/
+%pylibdir/compression/*
+
 %dir %pylibdir/concurrent/
 %dir %pylibdir/concurrent/__pycache__/
 %pylibdir/concurrent/*.py
+%pylibdir/concurrent/interpreters/
 %pylibdir/concurrent/__pycache__/*%bytecode_suffixes
 
 %dir %pylibdir/concurrent/futures/
@@ -944,6 +950,11 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/re/*.py
 %pylibdir/re/__pycache__/*%bytecode_suffixes
 
+%dir %pylibdir/string/
+%dir %pylibdir/string/__pycache__/
+%pylibdir/string/*.py
+%pylibdir/string/__pycache__/*%bytecode_suffixes
+
 %dir %pylibdir/sysconfig/
 %dir %pylibdir/sysconfig/__pycache__/
 %pylibdir/sysconfig/*.py
@@ -998,6 +1009,10 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
 %dir %include_dir/
 %include_dir/%_pyconfig_h
+# These files also appear to contain config vars
+%pylibdir/build-details.json
+%pylibdir/_sysconfig_vars*.json
+
 
 %files -n libpython3%{?_python3_standalone}
 %_libdir/libpython%pybasever%pyabi.so.*
@@ -1079,7 +1094,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testclinic.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testclinic_limited.cpython-%pyshortver%pyabi.so
-%dynload_dir/_testexternalinspection.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testimportmultiple.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testlimitedcapi.cpython-%pyshortver%pyabi.so
@@ -1099,6 +1113,11 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.0-alt1
+- Updated python3 to upstream 3.14.0.
+- Build as standalone (thx to Ivan Zakharyaschev,
+  thx to Gleb F-Malinovskiy)
+
 * Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.9-alt2
 - Preparing for %%_python3_standalone (thx to Ivan Zakharyaschev)
 - Update the wheel garbage-stripping helper (thx to Gleb F-Malinovskiy).
