@@ -3,8 +3,9 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.38.0
-Release: alt2
+Version: 5.19.0
+Release: alt1
+Epoch: 1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
 License: Apache-2.0 and GPL-2.0
@@ -152,6 +153,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Mon Nov 10 2025 Andrey Cherepanov <cas@altlinux.org> 1:5.19.0-alt1
+- Switch to official stable versions.
+
 * Wed Sep 03 2025 Andrey Cherepanov <cas@altlinux.org> 5.38.0-alt2
 - FTBFS: removed set_aumessage_mode().
 
