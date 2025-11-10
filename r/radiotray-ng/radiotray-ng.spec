@@ -1,6 +1,6 @@
 Name: radiotray-ng
-Version: 0.2.9
-Release: alt1.dd6b7911.1
+Version: 0.2.10.1
+Release: alt1
 Summary: Internet radio player
 
 License: GPL-3.0-or-later
@@ -126,6 +126,9 @@ desktop-file-validate %buildroot%_desktopdir/rtng-bookmark-editor.desktop
 %_datadir/%name
 
 %changelog
+* Mon Nov 10 2025 Anton Midyukov <antohami@altlinux.org> 0.2.10.1-alt1
+- New version 0.2.10.1.
+
 * Tue Jul 29 2025 Anton Midyukov <antohami@altlinux.org> 0.2.9-alt1.dd6b7911.1
 - new snapshot
 - build with wxGTK3.2
