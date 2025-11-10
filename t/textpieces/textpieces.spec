@@ -1,5 +1,5 @@
 %define _name textpieces
-%define ver_major 4.2
+%define ver_major 4.3
 %define rdn_name io.gitlab.liferooter.TextPieces
 
 %def_enable check
@@ -19,7 +19,7 @@ Vcs: https://gitlab.com/liferooter/textpieces.git
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
-%define adw_ver 1.5
+%define adw_ver 1.8
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -66,10 +66,14 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README.*
 
 %changelog
+* Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
+- 4.3.0
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
