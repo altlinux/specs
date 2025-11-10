@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 46
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.Polari
 
@@ -8,7 +8,7 @@
 
 Name: polari
 Version: %ver_major.0
-Release: alt3%beta
+Release: alt1%beta
 
 Summary: Internet Relay Chat client for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -24,9 +24,7 @@ Source: https://github.com/GNOME/polari/archive/%version/%name-%version%beta.tar
 Source: %name-%version.tar
 %endif
 
-%define gtk4_ver 4.10.0
-%define gjs_ver 1.73.1
-%define adw_ver 1.5
+%define gjs_ver 1.86
 
 Requires: libgjs >= %gjs_ver
 Requires: telepathy-mission-control
@@ -35,14 +33,13 @@ Requires: tinysparql localsearch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-Requires: typelib(Adw) = 1
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
-Requires: typelib(Gtk) = 4.0
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
@@ -50,11 +47,12 @@ Requires: typelib(Secret)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(Tracker) = 3.0
 Requires: typelib(Soup) = 3.0
+Requires: typelib(WebKit2) = 4.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: libgjs-devel >= %gjs_ver
-BuildRequires: libgtk4-devel >= %gtk4_ver libtelepathy-glib-devel
+BuildRequires: libtelepathy-glib-devel
 BuildRequires: pkgconfig(tracker-sparql-3.0)
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup3.0-gir-devel
 BuildRequires: libsecret-gir-devel gir(Tracker) = 3.0
@@ -95,6 +93,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt3
 - updated to 46.0-37-gbd6e3c95
 - fixed BR
