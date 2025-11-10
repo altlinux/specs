@@ -3,7 +3,7 @@
 %define incususer incusadm
 
 Name:		incus
-Version:	6.16.0
+Version:	6.18.0
 Release:	alt1
 Summary:	Incus is a system container and virtual machine manager
 
@@ -227,6 +227,9 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_man1dir/%name-agent.*
 
 %changelog
+* Fri Oct 31 2025 Mikhail Gordeev <obirvalger@altlinux.org> 6.18.0-alt1
+- Updated to 6.18.0.
+
 * Fri Aug 29 2025 Mikhail Gordeev <obirvalger@altlinux.org> 6.16.0-alt1
 - Updated to 6.16.0.
 
