@@ -1,5 +1,5 @@
 Name: xfce4-screenshooter
-Version: 1.11.2
+Version: 1.11.3
 Release: alt1
 
 Summary: Screenshot Xfce4 panel plugin
@@ -19,10 +19,11 @@ Patch: %name-%version-%release.patch
 %def_disable wayland
 %endif
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
 BuildRequires: libX11-devel libXi-devel libXext-devel libXfixes-devel libXtst-devel
-%{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel wlr-protocols}
+%{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel wlr-protocols wayland-protocols libgtk-layer-shell-devel}
 BuildRequires: libpango-devel >= 1.44.0
 
 BuildRequires: help2man
@@ -53,15 +54,14 @@ A plugin for the Xfce panel is also available.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-x11 \
-	%{subst_enable wayland} \
-    --enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	%{subst_enable_meson_feature wayland wayland}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -75,9 +75,11 @@ A plugin for the Xfce panel is also available.
 %_bindir/xfce4-screenshoot*
 %_mandir/man1/xfce4-screenshooter*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Mon Nov 10 2025 Mikhail Efremov <sem@altlinux.org> 1.11.3-alt1
+- Switched to meson build.
+- Updated to 1.11.3.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1.11.2-alt1
 - Updated to 1.11.2.
 
