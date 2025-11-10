@@ -3,7 +3,7 @@
 
 Name: reactive-streams-jvm
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: Standard for asynchronous stream processing with non-blocking backpressure
 License: Apache-2.0
@@ -56,12 +56,18 @@ This package contains the %summary.
 %gradle_install
 
 %check
+%ifarch riscv64
+export DEFAULT_TIMEOUT_MILLIS=200
 %gradle_check
+%endif
 
 %files -f .mfiles
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Nov 10 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.4-alt2
+- NMU: Increase test timeouts on riscv64 to fix FTBFS.
+
 * Mon Nov 05 2025 Ivan Khanas <xeno@altlinux.org> 1.0.4-alt1
 - First build for ALT.
