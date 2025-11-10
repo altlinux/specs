@@ -3,7 +3,7 @@
 %define service_name deepcool-digital
 
 Name: deepcool-digital-linux
-Version: 0.7.5
+Version: 0.9.0
 Release: alt1
 Summary: Utility to control DeepCool digital devices on Linux
 License: GPL-3.0
@@ -24,21 +24,13 @@ DeepCool digital devices on Linux.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat > .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
 
 %install
-install -d %buildroot%_sbindir
-install -Dm 755 "target/release/%bin_name" "%buildroot%_sbindir/%bin_name"
+%rust_install -t %_sbindir
 
 install -d %buildroot%_unitdir
 cat > %buildroot%_unitdir/%service_name.service <<EOF
@@ -64,5 +56,8 @@ EOF
 %doc README.md
 
 %changelog
+* Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.9.0-alt1
+- 0.7.5 -> 0.9.0
+
 * Mon Apr 07 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.7.5-alt1
 - Initial build
