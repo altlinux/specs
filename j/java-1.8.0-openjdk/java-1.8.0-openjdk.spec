@@ -232,6 +232,10 @@ BuildRequires: /proc rpm-build-java
 %global archinstall sparcv9
 %global stapinstall %{_target_cpu}
 %endif
+%ifarch %e2k
+%global archinstall e2k
+%global stapinstall %{_target_cpu}
+%endif
 # Need to support noarch for srpm build
 %ifarch noarch
 %global archinstall %{nil}
@@ -381,7 +385,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.b08
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -448,10 +452,6 @@ Source13: TestCryptoLevel.java
 Source14: TestECDSA.java
 
 Source20: repackReproduciblePolycies.sh
-
-# New versions of config files with aarch64 support. This is not upstream yet.
-Source100: config.guess
-Source101: config.sub
 
 Source110: openjdk8.watch
 
@@ -557,6 +557,9 @@ Patch209: 0001-8162545-Mac-build-failure.patch
 #############################################
 # 8043805: Allow using a system-installed libjpeg
 Patch201: jdk8043805-allow_using_system_installed_libjpeg.patch
+
+# minimalistic E2K support by Ilya Kurdyukov
+Patch2000: java-1.8.0-openjdk-e2k.patch
 
 #############################################
 #
@@ -1032,11 +1035,8 @@ ln -s %{top_level_dir_name} jdk8
 cp %{SOURCE2} .
 
 # replace outdated configure guess script
-#
-# the configure macro will do this too, but it also passes a few flags not
-# supported by openjdk configure script
-cp %{SOURCE100} %{top_level_dir_name}/common/autoconf/build-aux/
-cp %{SOURCE101} %{top_level_dir_name}/common/autoconf/build-aux/
+cp -aLt %{top_level_dir_name}/common/autoconf/build-aux/ -- \
+	/usr/share/automake/config.{guess,sub}
 
 # OpenJDK patches
 
@@ -1083,6 +1083,10 @@ sh %{SOURCE12}
 # RHEL-only patches
 %if ! 0%{?fedora} && 0%{?rhel} <= 7
 %patch534
+%endif
+
+%ifarch %e2k
+%patch2000 -p2 -d jdk8
 %endif
 
 # Shenandoah patches
@@ -2138,6 +2142,11 @@ fi
 %endif
 
 %changelog
+* Sun Nov 09 2025 Michael Shigorin <mike@altlinux.org> 0:1.8.0.472.b08-alt2
+- E2K: add minimal part of Unipro patches for interpreted mode JVM
+  (ilyakurdyukov@)
+- replace outdated config.{guess,sub} update files with a generic method
+
 * Fri Oct 31 2025 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.472.b08-alt1
 - New version (fixes: CVE-2025-53057, CVE-2025-53066).
 
