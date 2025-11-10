@@ -1,7 +1,7 @@
 %global srcname qutebrowser
 
 Name: %srcname
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 Summary: A keyboard-driven, vim-like browser based on PyQt6 and QtWebEngine
 License: GPLv3
@@ -9,16 +9,16 @@ Group: Networking/WWW
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.qutebrowser.org
 Source0: %srcname-%version.tar
-BuildArch: noarch
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-qt6-webengine
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
 BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3 rpm-macros-qt6 qt6-base-devel
 BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt6-devel python3-module-PyQt6
-#BuildRequires: python3-module-PyQt6-WebEngine
+BuildRequires: python3-module-PyQt6-WebEngine
 #Requires: libqt6-webenginecore
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+ExclusiveArch: %qt6_qtwebengine_arches
 
 Requires: qt6-base-common
 Requires: qt6-declarative
@@ -81,16 +81,35 @@ for i in 16 24 32 48 64 128 256 512; do
 done
 
 # Set __main__.py as executable
-chmod 755 %buildroot%python3_sitelibdir/%srcname/__main__.py
+#chmod 755 %buildroot%python3_sitelibdir/%srcname/__main__.py
+chmod 755 %buildroot%python3_sitelibdir_noarch/%srcname/__main__.py
 
 # Remove zero-length files:
 # https://fedoraproject.org/wiki/Packaging_tricks#Zero_length_files
 find %buildroot -size 0 -delete
 
+# Dirty? hack to skip check-python error on x86_64
+%ifarch x86_64
+mkdir -p %buildroot%python3_sitelibdir/%srcname-%version.dist-info
+#mkdir -p %buildroot%python3_sitelibdir/%srcname
+%__mv %buildroot%python3_sitelibdir_noarch/%srcname-%version.dist-info/* %buildroot%python3_sitelibdir/%srcname-%version.dist-info
+%__mv %buildroot%python3_sitelibdir_noarch/%srcname %buildroot%python3_sitelibdir
+
+%endif
+
+
 %files
 %doc README.asciidoc doc/changelog.asciidoc doc/img/* 
+#python3_sitelibdir/%srcname-%version.dist-info
+#python3_sitelibdir/%srcname
+%ifarch x86_64
 %python3_sitelibdir/%srcname-%version.dist-info
 %python3_sitelibdir/%srcname
+%else
+%python3_sitelibdir_noarch/%srcname-%version.dist-info
+%python3_sitelibdir_noarch/%srcname
+%endif
+
 %_bindir/%srcname
 %_datadir/applications/org.%srcname.%srcname.desktop
 %_man1dir/%srcname.1*
@@ -105,6 +124,10 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Tue Nov 11 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.1-alt1
+- 3.6.1
+- ExclusiveArch: %%qt6_qtwebengine_arches (Closes: #53975)
+
 * Sun Oct 26 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
