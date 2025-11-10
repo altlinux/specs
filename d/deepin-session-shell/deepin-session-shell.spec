@@ -3,7 +3,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.6.4.0.433.86a0
+Version: 5.6.12.0.316.e888
 Release: alt2
 Epoch: 1
 
@@ -14,7 +14,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-shell
 VCS: https://github.com/linuxdeepin/dde-session-shell
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-session-shell/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 # Requires: chkpwd-pam
@@ -36,6 +37,16 @@ Group: Development/Other
 
 %description devel
 %summary.
+
+%package -n lightdm-deepin-greeter-enable
+Summary: Enable config for own lightdm theme
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: deepin-session-shell
+
+%description -n lightdm-deepin-greeter-enable
+The package provides the configuration file
+for enabling the deepin theme for lightdm.
 
 %prep
 %setup -n %repo-%version
@@ -105,6 +116,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_datadir/deepin-log-viewer/
 %dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.session-shell.json
+
+%files -n lightdm-deepin-greeter-enable
 %_datadir/lightdm/lightdm.conf.d/50-deepin.conf
 
 %files devel
@@ -114,6 +127,13 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Mon Nov 10 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.12.0.316.e888-alt2
+- Restored the option to use the system lightdm
+  (moved the config to lightdm-deepin-greeter-enable).
+
+* Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.12.0.316.e888-alt1
+- New version 5.6.12-316-ge88849d6.
+
 * Thu Oct 09 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.4.0.433.86a0-alt2
 - Built with another liblightdm-qt6 (use Qt for DDE only).
 
