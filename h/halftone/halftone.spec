@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name halftone
 %define __name Halftone
@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Dither your images
@@ -21,17 +21,20 @@ Vcs: https://github.com/tfuxu/halftone.git
 %if_disabled snapshot
 Source: https://github.com/tfuxu/halftone/archive/%version/%_name-%version.tar.gz
 %else
-Source: %_name-%version.tar
+Source: %__name-%version.tar
 %endif
 
 BuildArch: noarch
 
 %define bp_ver 0.14
 %define pygobject_ver 3.48
-%define adw_ver 1.5
+%define adw_ver 1.8
+%define glycin_api_ver 2
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
+Requires: typelib(GlyGtk4) = %glycin_api_ver
+Requires: glycin-%glycin_api_ver-loaders
 Requires: libadwaita-gir >= %adw_ver
 Requires: dconf
 
@@ -72,6 +75,9 @@ technique.
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- updated to 0.7.2-9-g6450098
+
 * Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
