@@ -1,6 +1,6 @@
 Name: wiki-js
-Version: 2.5.305
-Release: alt2
+Version: 2.5.308
+Release: alt1
 Summary: A modern and powerful wiki app built on Node.js
 License: AGPL-3.0
 Group: System/Servers
@@ -68,6 +68,9 @@ cp -r server assets node_modules package.json %buildroot%_libexecdir/%name
 %doc LICENSE
 
 %changelog
+* Sun Nov 09 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.308-alt1
+- Updated to version 2.5.308.
+
 * Fri Jan 24 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.305-alt2
 - Fixed OS information (closes: #52813).
 
