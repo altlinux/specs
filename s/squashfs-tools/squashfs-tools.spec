@@ -1,5 +1,5 @@
 Name: squashfs-tools
-Version: 4.7
+Version: 4.7.4
 Release: alt1
 
 Summary: squashfs support
@@ -7,13 +7,12 @@ License: GPLv2
 Group: System/Kernel and hardware
 Url: https://github.com/plougher/squashfs-tools
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
 BuildRequires: zlib-devel
 BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libzstd-devel
 BuildRequires: liblz4-devel
-Provides: squashfsprogs = %version-%release
+Provides: squashfsprogs = %EVR
 Obsoletes: squashfsprogs
 
 %description
@@ -27,7 +26,6 @@ This package contains the utilities to (un)compress squashfs images.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 export CFLAGS="%optflags"
@@ -59,6 +57,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 4.7.4-alt1
+- 4.7 -> 4.7.4
+
 * Fri Jun 06 2025 Anton Midyukov <antohami@altlinux.org> 4.7-alt1
 - 4.7
 - replace mksquashfs from /sbin to %%_sbindir
