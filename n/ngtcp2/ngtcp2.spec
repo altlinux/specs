@@ -8,7 +8,7 @@
 %endif
 
 Name: ngtcp2
-Version: 1.15.1
+Version: 1.17.0
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -28,7 +28,7 @@ BuildRequires: gcc-c++ CUnit-devel
 # need openssl-quic branch
 #BuildRequires: pkgconfig(openssl) >= 1.1.1
 BuildRequires: pkgconfig(gnutls) >= 3.7.2
-BuildRequires: pkgconfig(libnghttp3) >= 0.2.0
+BuildRequires: pkgconfig(libnghttp3) >= 1.12.0
 BuildRequires: libev-devel
 
 %description
@@ -91,6 +91,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 1.17.0-alt1
+- 1.15.1 -> 1.17.0
+
 * Thu Sep 11 2025 Anton Farygin <rider@altlinux.com> 1.15.1-alt1
 - 1.13.0 -> 1.15.1
 
