@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: horizon
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: Horizon is a free EDA package
@@ -69,6 +69,9 @@ BuildRequires: libspnav-devel
 %doc *.md
 
 %changelog
+* Mon Nov 10 2025 Anton Midyukov <antohami@altlinux.org> 2.7.1-alt1
+- New version 2.7.1.
+
 * Sun Jun 08 2025 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 
