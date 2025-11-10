@@ -5,7 +5,7 @@
 %def_with tests
 
 Name:    python3-module-%modulename
-Version: 11.1.1
+Version: 11.1.2
 Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
@@ -80,6 +80,9 @@ export HTTP_REQUEST_TIMEOUT=3
 %endif
 
 %changelog
+* Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 11.1.2-alt1
+- 11.1.1 -> 11.1.2
+
 * Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 11.1.1-alt1
 - 10.0.1 -> 11.1.1
 
