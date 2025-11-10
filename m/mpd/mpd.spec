@@ -69,7 +69,7 @@
 
 Name:    mpd
 Version: 0.24.6
-Release: alt1
+Release: alt2
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -165,6 +165,9 @@ This package contains %Name documentation.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+sed -i 's/Buffer buffer{nullptr};/Buffer buffer;/' src/util/HugeAllocator.hxx
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -279,6 +282,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Mon Nov 10 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.24.6-alt2
+- e2k build fix
+
 * Sun Nov 02 2025 L.A. Kostis <lakostis@altlinux.ru> 0.24.6-alt1
 - 0.24.6.
 
