@@ -2,7 +2,7 @@
 
 Name: %srcname
 Version: 3.6.1
-Release: alt1
+Release: alt2
 Summary: A keyboard-driven, vim-like browser based on PyQt6 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
@@ -23,6 +23,7 @@ ExclusiveArch: %qt6_qtwebengine_arches
 Requires: qt6-base-common
 Requires: qt6-declarative
 Requires: python3-module-PyQt6
+Requires: python3-module-PyQt6-WebEngine
 #Requires: python3-module-setuptools
 #Requires: python3-qt5
 #Requires: python3-qt5-webengine
@@ -124,6 +125,9 @@ mkdir -p %buildroot%python3_sitelibdir/%srcname-%version.dist-info
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Tue Nov 11 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.1-alt2
+- Requires: python3-module-PyQt6-WebEngine
+
 * Tue Nov 11 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.1-alt1
 - 3.6.1
 - ExclusiveArch: %%qt6_qtwebengine_arches (Closes: #53975)
