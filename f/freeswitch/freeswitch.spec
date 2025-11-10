@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.12
-Release: alt4
+Release: alt5
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -544,6 +544,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 1:1.10.12-alt5
+- fixed build with ffmpeg 8.0
+
 * Mon Jun 16 2025 Anton Farygin <rider@altlinux.com> 1:1.10.12-alt4
 - fixed buuld with curl 8.14.1
 
