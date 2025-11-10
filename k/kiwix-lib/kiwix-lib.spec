@@ -1,6 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define soname 14
+
 Name:     kiwix-lib
-Version:  14.0.0
-Release:  alt2
+Version:  14.1.0
+Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
 License:  GPL-3.0-or-later
@@ -25,11 +28,12 @@ BuildRequires: zlib-devel
 %description
 %summary
 
-%package -n libkiwix
+%package -n libkiwix%soname
 Summary: Common code base for all Kiwix ports
 Group: System/Libraries
+Obsoletes: libkiwix = 14.0.0
 
-%description -n libkiwix
+%description -n libkiwix%soname
 %summary
 
 %package -n libkiwix-devel
@@ -45,9 +49,6 @@ Group: Development/C++
 sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %endif
 
-# compat with icu 76
-sed -i "/icu/ s/'icu/'icu-uc, icu/" meson.build
-
 %build
 %meson
 %meson_build
@@ -55,19 +56,23 @@ sed -i "/icu/ s/'icu/'icu-uc, icu/" meson.build
 %install
 %meson_install
 
-%files -n libkiwix
+%files -n libkiwix%soname
 %doc AUTHORS README.md
-%_libdir/*.so.*
+%_libdir/libkiwix.so.%soname
+%_libdir/libkiwix.so.%version
 
 %files -n libkiwix-devel
 %_bindir/kiwix-compile-i18n
 %_bindir/kiwix-compile-resources
 %_includedir/*
-%_libdir/*.so
+%_libdir/libkiwix.so
 %_libdir/pkgconfig/libkiwix.pc
 %_man1dir/*.1*
 
 %changelog
+* Mon Nov 10 2025 Constantin Sunzow <protvin@altlinux.org> 14.1.0-alt1
+- New version.
+
 * Tue Feb 25 2025 Constantin Sunzow <protvin@altlinux.org> 14.0.0-alt2
 - Rebuild with icu 76.
 
