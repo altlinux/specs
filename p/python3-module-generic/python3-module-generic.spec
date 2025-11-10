@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: Generic programming library for Python
 License: BSD-3-Clause
@@ -53,5 +53,8 @@ supporting multiple-dispatch and event-driven architectures out of the box.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1.1.5-alt1
+- 1.1.4 -> 1.1.5
+
 * Thu Apr 17 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1.1.4-alt1
 - Initial build
