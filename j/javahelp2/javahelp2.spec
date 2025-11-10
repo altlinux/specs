@@ -41,7 +41,7 @@ BuildRequires: jpackage-default
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt5_31jpp11
+Release:	alt6
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -105,7 +105,6 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f javahelp_nbpro
 
 %install
 # see https://svn.java.net/svn/javahelp~svn/trunk/jhMaster/jhall.pom
-%mvn_file javax.help:javahelp %{name}
 %mvn_artifact javax.help:javahelp:%{version} javahelp_nbproject/dist/lib/jhall.jar
 %mvn_install -J javahelp_nbproject/dist/lib/javadoc
 
@@ -131,6 +130,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Nov 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0:2.0.05-alt6
+- Stop renaming the jar file.
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:2.0.05-alt5_31jpp11
 - update
 
