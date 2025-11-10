@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 Summary: Rule your architecture like a real developer
 License: Apache-2.0
@@ -50,5 +50,8 @@ architectural dependency rules in Python code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.0.7-alt1
+- 0.0.6 -> 0.0.7
+
 * Thu Apr 17 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.0.6-alt1
 - Initial build
