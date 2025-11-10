@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt7
+Release:   alt8
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -121,7 +121,7 @@ BuildArch: noarch
 %patch1 -p1
 %ifarch %e2k
 # workaround for EDG frontend
-sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/apt/apt-{utils,job}.cpp
+sed -i -E 's|g_autofree (gchar \**)\*|g_autofree_edg(\1) |' backends/apt/*.cpp
 
 # Explanation: The workaround is needed only for C++:
 #
@@ -321,6 +321,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Nov 10 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt8
+- e2k build fix
+
 * Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt7
 - Add package maintainer information.
 - Implement license fetching from an rpm file.
