@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.37.63
-Release: alt12.git9fbca61ad
+Release: alt13.git7329fa583
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -26,8 +26,6 @@ Source101: %name-%version-web-api-app-Plugin-CakePHP-Enum-Behavior.tar
 Source102: %name-%version-web-api-app-Plugin-Crud.tar
 Source103: %name-%version-dep-CxxUrl.tar
 
-
-Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
 Requires: libgnutls libgnutls-openssl zlib ffmpeg
 Requires: php%phpver-pdo_mysql php%phpver-openssl php%phpver-gd php%phpver-apcu php%phpver-intl
@@ -40,7 +38,6 @@ Requires: perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable
 AutoReq: noperl
 BuildRequires: bzlib-devel ffmpeg gcc-c++ libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel
 BuildRequires: libavfilter-devel
-BuildRequires: libpostproc-devel
 BuildRequires: libidn2-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libuuid-devel
@@ -184,6 +181,10 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Mon Nov 10 2025 Anton Farygin <rider@altlinux.com> 1.37.63-alt13.git7329fa583
+- update to upstream 7329fa583
+- fixed build with ffmpeg 8.0
+
 * Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 1.37.63-alt12.git9fbca61ad
 - update to upstream 9fbca61ad
 
