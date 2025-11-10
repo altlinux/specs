@@ -22,7 +22,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
@@ -34,9 +34,6 @@ Source1: %pyproject_deps_config_name
 Source2: modules.tar
 Source9: mesonpy.py
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
-# NOTE: The issue addressed by this patch is fixed in NumPy upstream (PR #29435).
-#       Remove this patch when building future NumPy releases containing the fix.
-Patch1: numpy-2.3.2-fix-test-configtool-pkgconfigdir-path.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
 
 # E2K patchset with MCST numbering scheme
@@ -211,6 +208,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.4-alt1
+- 2.3.2 -> 2.3.4
+
 * Fri Jul 25 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.2-alt1
 - 2.2.6 -> 2.3.2
 
