@@ -1,15 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.24.1
+Version:    1.25.0
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
 Group:      Databases
 Url:        https://github.com/pgbouncer/pgbouncer
 Source:     %name-%version.tar
-Source100:  libusual.tar
-Source101:  uthash.tar
 Source1:    pgbouncer.init
 Source2:    pgbouncer.ini
 Source3:    users.txt
@@ -19,14 +17,17 @@ Source6:    pgbouncer.logrotate
 Source7:    pgbouncer.pam
 Source8:    pgbouncer.sysconfig
 
+Patch0:     pgbouncer-1.25.0-Fix-build-on-i586.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
 BuildRequires: pkgconfig(libevent)
 BuildRequires: pkgconfig(libcares) >= 1.9.0
 BuildRequires: libpam-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libldap-devel
 %ifnarch %e2k
-#BuildRequires: pandoc
+BuildRequires: pandoc
 %endif
 # That was a pkg with an ugly temporary name:
 Obsoletes: pgbouncer17 < %EVR
@@ -53,8 +54,7 @@ for PL/Proxy.
 
 %prep
 %setup -q
-tar -xf %SOURCE100 -C lib
-tar -xf %SOURCE101 -C uthash
+%patch0 -p1
 
 %build
 export PYTHON=%__python3
@@ -63,11 +63,12 @@ touch lib/mk/install-sh
 %configure \
     --with-systemd \
     --with-pam \
+    --with-ldap \
     --with-root-ca-file=/etc/pki/tls/certs/ca-bundle.crt
 
-#%%ifarch %%e2k
+%ifarch %e2k
 sed -i 's,\$(PANDOC).*,touch $@,' doc/Makefile
-#%%endif
+%endif
 
 %make_build
 
@@ -103,8 +104,8 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %doc NEWS.md README.md doc/*.md
 %_bindir/%name
 %ifnarch %e2k
-#%%_man1dir/*
-#%%_man5dir/*
+%_man1dir/*
+%_man5dir/*
 %endif
 %attr(750,root,%name) %dir %_sysconfdir/%name
 %config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.ini
@@ -118,6 +119,12 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Mon Nov 10 2025 Alexei Takaseev <taf@altlinux.org> 1.25.0-alt1
+- 1.25.0
+- Enable manpages
+- Add pgbouncer-1.25.0-Fix-build-on-i586.patch
+- Add LDAP authentication
+
 * Wed Apr 30 2025 Alexei Takaseev <taf@altlinux.org> 1.24.1-alt1
 - 1.24.1 (Fixes: CVE-2025-2291).
 - Disable manpages (pandoc while broken)
