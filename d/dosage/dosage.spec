@@ -3,7 +3,7 @@
 %def_with check
 
 Name:       dosage
-Version:    3.1
+Version:    3.2
 Release:    alt1
 
 Summary:    dosage is a comic strip downloader and archiver
@@ -62,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Sun Nov 09 2025 Anton Vyatkin <toni@altlinux.org> 3.2-alt1
+- New version 3.2.
+
 * Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
 - New version 3.1.
 
