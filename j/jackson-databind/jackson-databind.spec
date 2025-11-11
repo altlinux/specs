@@ -2,7 +2,7 @@
 
 Name: jackson-databind
 Version: 2.20.1
-Release: alt1
+Release: alt2
 
 Summary: General data-binding package for Jackson (2.x)
 License: Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires: jackson-core
 BuildRequires: jackson-bom
 BuildRequires: replacer
 BuildRequires: maven-plugin-bundle
+BuildRequires: moditect-maven-plugin
 
 %description
 The general-purpose data-binding functionality and tree-model for Jackson Data
@@ -35,7 +36,6 @@ Jackson Annotations for configuration.
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
-%pom_remove_plugin "org.moditect:moditect-maven-plugin"
 
 cp -p src/main/resources/META-INF/NOTICE .
 sed -i 's/\r//' LICENSE NOTICE
@@ -61,6 +61,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt2
+- Add JPMS support.
+
 * Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
 - New version.
 

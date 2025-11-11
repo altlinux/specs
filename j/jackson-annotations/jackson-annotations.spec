@@ -2,7 +2,7 @@
 
 Name: jackson-annotations
 Version: 2.19.4
-Release: alt1
+Release: alt2
 
 Summary: Core annotations for Jackson data processor
 License: ASL 2.0
@@ -22,6 +22,7 @@ BuildRequires: maven-local
 BuildRequires: jackson-parent
 BuildRequires: junit5
 BuildRequires: maven-plugin-bundle
+BuildRequires: moditect-maven-plugin
 
 %description
 Core annotations used for value types,
@@ -39,7 +40,6 @@ This package contains API documentation for %name.
 %setup
 %autopatch -p1
 
-%pom_remove_plugin "org.moditect:moditect-maven-plugin"
 %pom_remove_plugin "org.gradlex:gradle-module-metadata-maven-plugin"
 sed -i 's#${version.junit5}#5.10.2#g' pom.xml
 
@@ -59,6 +59,9 @@ sed -i 's#${version.junit5}#5.10.2#g' pom.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.19.4-alt2
+- Add JPMS support.
+
 * Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.19.4-alt1
 - New version.
 

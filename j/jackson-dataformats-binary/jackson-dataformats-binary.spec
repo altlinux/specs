@@ -1,46 +1,42 @@
+%define _unpackaged_files_terminate_build 1
+%def_without extra_dataformats
+
+Name: jackson-dataformats-binary
+Version: 2.20.1
+Release: alt1
+Summary: Jackson standard binary data format backends
+
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# Allow conditionally building extra data format modules
-# that require additional external dependencies
-%bcond_with extra_dataformats
-# Extra formats are disabled for now because deps in
-# Fedora are not uptodate enough
+Url: https://github.com/FasterXML/jackson-dataformats-binary
+Vcs: https://github.com/FasterXML/jackson-dataformats-binary.git
+BuildArch: noarch
 
-Name:          jackson-dataformats-binary
-Version:       2.9.8
-Release:       alt1_9jpp11
-Summary:       Jackson standard binary data format backends
-# One file is BSD licensed: protobuf/src/main/resources/descriptor.proto
-License:       ASL 2.0 and BSD
-URL:           https://github.com/FasterXML/jackson-dataformats-binary
-Source0:       https://github.com/FasterXML/jackson-dataformats-binary/archive/%{name}-%{version}.tar.gz
+Source0: %name-%version.tar
+Patch0: 0001-Fix-HashMap-incompareble-types-cast-alt-patch.patch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
-BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: jpackage-17-compat
+BuildRequires: maven-local
+BuildRequires: jackson-annotations
+BuildRequires: jackson-core
+BuildRequires: jackson-databind
+BuildRequires: jackson-bom
+BuildRequires: replacer
+BuildRequires: junit
+BuildRequires: maven-plugin-bundle
+BuildRequires: jacoco-maven-plugin
+BuildRequires: apiguardian
+BuildRequires: moditect-maven-plugin
 %if %{with extra_dataformats}
-BuildRequires:  mvn(ch.qos.logback:logback-classic)
-BuildRequires:  mvn(com.squareup:protoparser)
-BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.apache.avro:avro)
+BuildRequires: logback-classic
+BuildRequires: protoparser
+BuildRequires: assertj-core
+BuildRequires: avro
 %endif
 
-BuildArch:      noarch
-Source44: import.info
 
 %description
 Parent pom for Jackson binary dataformats.
@@ -89,71 +85,55 @@ data format ("binary JSON"). It extends standard Jackson streaming API
 all the higher level data abstractions (data binding, tree model, and
 pluggable extensions).
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-# Obsoletes standalone jackson-dataformat-* packages since F28
-Obsoletes: jackson-dataformat-cbor-javadoc < %{version}-%{release}
-Provides:  jackson-dataformat-cbor-javadoc = %{version}-%{release}
-Obsoletes: jackson-dataformat-smile-javadoc < %{version}-%{release}
-Provides:  jackson-dataformat-smile-javadoc = %{version}-%{release}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
-
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-cp -p ion/LICENSE .
-cp -p ion/NOTICE .
-sed -i 's/\r//' LICENSE NOTICE
+%setup
+%autopatch -p1
 
 %if %{without extra_dataformats}
 %pom_disable_module avro
 %pom_disable_module protobuf
 %endif
 
-# Test dep lombok is not in Fedora
-%pom_remove_dep org.projectlombok:lombok avro
-
-# Deps are not available in Fedora for this module
 %pom_disable_module ion
 
-%mvn_file ":{*}" jackson-dataformats/@1
+%pom_add_dep -r org.apiguardian:apiguardian-api:test
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -j -- -Dmaven.compiler.source=1.8 \
+  -Dmaven.compiler.target=1.8 \
+  -Dmaven.javadoc.source=1.8 \
+  -Dmaven.compiler.release=9 \
+  #
 
 %install
 %mvn_install
 
 %files -f .mfiles-jackson-dataformats-binary
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %if %{with extra_dataformats}
 %files -n jackson-dataformat-avro -f .mfiles-jackson-dataformat-avro
 %doc avro/README.md avro/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %files -n jackson-dataformat-protobuf -f .mfiles-jackson-dataformat-protobuf
 %doc protobuf/README.md protobuf/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 %endif
 
 %files -n jackson-dataformat-cbor -f .mfiles-jackson-dataformat-cbor
 %doc cbor/README.md cbor/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %files -n jackson-dataformat-smile -f .mfiles-jackson-dataformat-smile
 %doc smile/README.md smile/release-notes/*
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %changelog
+* Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
+- New version.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.9.8-alt1_9jpp11
 - java11 build
 

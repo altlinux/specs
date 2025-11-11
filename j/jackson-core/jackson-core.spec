@@ -2,7 +2,7 @@
 
 Name: jackson-core
 Version: 2.20.1
-Release: alt1
+Release: alt2
 
 Summary: Core part of Jackson
 License: Apache-2.0
@@ -19,10 +19,10 @@ BuildRequires: /proc
 BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
 BuildRequires: maven-local
-BuildRequires: maven-shade-plugin
 BuildRequires: jackson-bom
 BuildRequires: replacer
 BuildRequires: maven-plugin-bundle
+BuildRequires: moditect-maven-plugin
 
 %description
 Core part of Jackson that defines Streaming API as well
@@ -35,7 +35,9 @@ as basic shared abstractions.
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
 %pom_remove_plugin "org.jacoco:jacoco-maven-plugin"
-%pom_remove_plugin "org.moditect:moditect-maven-plugin"
+
+# Remove shade plugin to get a jar with JPMS support.
+%pom_remove_plugin ":maven-shade-plugin"
 
 %pom_remove_dep ch.randelshofer:fastdoubleparser
 
@@ -52,6 +54,9 @@ as basic shared abstractions.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Nov 10 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt2
+- Add JPMS support.
+
 * Fri Nov 08 2025 Ivan Khanas <xeno@altlinux.org> 2.20.1-alt1
 - New version.
 
