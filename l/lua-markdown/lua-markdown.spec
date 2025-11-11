@@ -4,7 +4,7 @@ Group: Development/Other
 
 Name:		lua-markdown
 Version:	0.32
-Release:	alt1_8
+Release:	alt1_9
 BuildArch:	noarch
 Summary:	Markdown module for Lua
 License:	MIT
@@ -15,6 +15,8 @@ Patch0:		lua-markdown-0.32-lua-5.2.patch
 BuildRequires:	lua >= %{luaver}
 Requires:	lua >= %{luaver}
 Source44: import.info
+
+%filter_from_requires /^\/usr\/bin\/lua/d
 
 %description
 This is an implementation of the popular text markup language Markdown
@@ -57,6 +59,9 @@ lua markdown.lua -t
 
 
 %changelog
+* Tue Nov 11 2025 Alexander Danilov <admsasha@altlinux.org> 0.32-alt1_9
+- Adding filter_from_requires.
+
 * Wed Oct 05 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.32-alt1_8
 - converted for ALT Linux by srpmconvert tools
 
