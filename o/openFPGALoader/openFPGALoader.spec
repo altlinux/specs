@@ -4,13 +4,14 @@
 %def_with doc
 
 Name:     openFPGALoader
-Version:  0.13.1
+Version:  1.0.0
 Release:  alt1
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
 Group:    Engineering
-Url:      https://github.com/trabucayre/openFPGALoader
+URL:      https://github.com/trabucayre/openFPGALoader
+VCS:      https://github.com/trabucayre/openFPGALoader
 
 Source:   %name-%version.tar
 # ALT patches
@@ -86,6 +87,9 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 0.13.1-alt1
 - new version (0.13.1) with rpmgs script
 
