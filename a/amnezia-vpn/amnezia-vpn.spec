@@ -4,7 +4,7 @@
 
 Name: amnezia-vpn
 Version: 4.8.10.0
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -49,6 +49,7 @@ Group: System/Servers
 Requires: %name-service = %EVR
 Requires: amneziawg-go
 Requires: cloak-client
+Requires: libnss-resolve
 Requires: openvpn
 Requires: qt6-5compat
 Requires: qt6-declarative
@@ -123,6 +124,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Nov 11 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.10.0-alt2
+- Fix DNS resolve (ALT #52679, #56803)
+
 * Tue Sep 09 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.10.0-alt1
 - Version 4.8.10.0
 
