@@ -5,7 +5,7 @@
 %define oname alaya
 
 Name:    Alaya
-Version: 5.3
+Version: 5.5
 Release: alt1
 
 Summary: Webdav enabled webserver mostly focused on file storage
@@ -88,6 +88,9 @@ cp --preserve=all %lib_name/*.md %buildroot%_defaultdocdir/%lib_name-%version
 %endif
 
 %changelog
+* Tue Nov 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.5-alt1
+- New version.
+
 * Wed Oct 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.3-alt1
 - New version.
 
