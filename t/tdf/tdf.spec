@@ -2,7 +2,7 @@
 
 Name: tdf
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: A tui-based PDF viewer
 License: AGPL-3.0-only
@@ -59,14 +59,20 @@ EOF
 cargo-vendor-checksum --vendor vendor --all --ignore-missing
 
 %build
-%rust_build --no-default-features
+export CARGO_PROFILE_RELEASE_LTO=thin
+%rust_build --no-default-features --features cbz,epub
 
 %install
 %rust_install
 
 %files
+%doc README.md CHANGELOG.md
 %_bindir/%name
 
 %changelog
+* Tue Nov 11 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.4.3-alt2
+- reduced memory usage
+- enabled cbz and epub format support
+
 * Mon Nov 10 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.4.3-alt1
 - initial build for ALT Linux
