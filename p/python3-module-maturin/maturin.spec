@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.9.6
+Version: 1.10.0
 Release: alt1
 
 Summary: Rust within Python
@@ -11,11 +11,15 @@ Source0: %name-%version.tar
 Source1: crates.tar
 Source2: pyproject_deps.json
 
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(bzip2)
 BuildRequires: python3(semantic_version)
 %pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 Requires: rust-cargo /proc
 Provides: maturin = %version-%release
@@ -36,6 +40,7 @@ tar cf %SOURCE1 .cargo vendor
 # zstd-sys three levels down doesn't like lto
 %define optflags_lto %nil
 %pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 %pyproject_build
 
 %install
@@ -47,6 +52,9 @@ tar cf %SOURCE1 .cargo vendor
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Tue Nov 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.0-alt1
+- 1.10.0 released
+
 * Thu Oct 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.6-alt1
 - 1.9.6 released
 
