@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 4.0.2
+Version: 4.2.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -21,8 +21,9 @@ Patch0: %name-%version-%release.patch
 Patch1: fish-4.0.0-alt_apt_adapter.patch
 
 Requires: man
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-ninja-build
-BuildRequires: rust-cargo cargo-license gcc
+BuildRequires(pre): rpm-build-rust rpm-build-python3 rpm-macros-cmake rpm-macros-ninja-build
+BuildRequires: rust-cargo >= 1.85
+BuildRequires: cargo-license gcc
 BuildRequires: terminfo
 BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
@@ -42,9 +43,18 @@ is simple but incompatible with other shell languages.
 
 %prep
 %setup
+%rust_prep
+cat >> .cargo/config.toml <<EOF
+[source."git+https://github.com/fish-shell/rust-pcre2?tag=0.2.9-utf32"]
+git = "https://github.com/fish-shell/rust-pcre2"
+tag = "0.2.9-utf32"
+replace-with = "vendored-sources"
+EOF
+
 %patch0 -p1
 %patch1 -p1
 echo "%version" > version
+
 
 # Change the bundled scripts to invoke the python binary directly.
 for f in $(find share/tools -type f -name '*.py'); do
@@ -94,6 +104,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Tue Nov 11 2025 Artyom Sinyugin <writers@altlinux.org> 4.2.0-alt1
+- New version 4.2.0 (ALT#56212).
+
 * Fri May 23 2025 Artyom Sinyugin <writers@altlinux.org> 4.0.2-alt1
 - New version 4.0.2.
 
