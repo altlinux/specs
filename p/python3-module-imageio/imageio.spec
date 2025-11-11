@@ -3,7 +3,7 @@
 %define oname imageio
 
 Name: python3-module-%oname
-Version: 2.37.1
+Version: 2.37.2
 Release: alt1
 Summary: Python library for reading and writing image data
 License: BSD-2-Clause
@@ -34,6 +34,8 @@ It is cross-platform, runs on Python 3.9+, and is easy to install.
 
 %install
 %pyproject_install
+# remove testing.py (ALT bug 54111)
+# https://bugzilla.altlinux.org/54111
 rm -rv %buildroot%python3_sitelibdir/%oname/testing.py
 
 %files
@@ -45,6 +47,9 @@ rm -rv %buildroot%python3_sitelibdir/%oname/testing.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Nov 11 2025 Alexander Kovalev <alexvk@altlinux.org> 2.37.2-alt1
+- New version 2.37.2.
+
 * Sat Oct 25 2025 Alexander Kovalev <alexvk@altlinux.org> 2.37.1-alt1
 - New version 2.37.1.
 
