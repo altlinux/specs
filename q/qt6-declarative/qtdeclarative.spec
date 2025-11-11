@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.9.2
+Version: 6.9.3
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -450,7 +450,7 @@ mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
 # don't make  module static
-sed -i '/STATIC/d' src/assets/downloader/CMakeLists.txt
+sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
 %build
 %if_enabled bootstrap
@@ -529,8 +529,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_qmldir/builtins.qmltypes
 %_qt6_qmldir/jsroot.qmltypes
 %files -n libqt6-assetsdownloader
-%_qt6_libdir//libQt6QmlAssetDownloader.so.*
-%_qt6_qmldir/Assets/Downloader/
+%_qt6_libdir/libQt6QmlAssetDownloader.so.*
+%_qt6_qmldir/Qt/labs/assetdownloader/
 %files -n libqt6-labsplatform
 %_qt6_libdir//libQt6LabsPlatform.so.*
 %files -n libqt6-qmlmeta
@@ -682,6 +682,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
 * Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
 - new version
 

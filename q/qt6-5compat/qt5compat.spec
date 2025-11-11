@@ -3,7 +3,7 @@
 %global qt_module qt5compat
 
 Name: qt6-5compat
-Version: 6.9.2
+Version: 6.9.3
 Release: alt1
 
 Group: System/Libraries
@@ -112,6 +112,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
 * Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
 - new version
 

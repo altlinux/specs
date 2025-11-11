@@ -25,8 +25,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.9.2
-Release: alt3
+Version: 6.9.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -429,6 +429,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
 * Tue Sep 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt3
 - add fix against rendering issue (closes: 55903)
 
