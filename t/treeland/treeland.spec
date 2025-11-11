@@ -5,7 +5,7 @@
 
 Name: treeland
 Version: 0.7.7
-Release: alt1
+Release: alt2
 
 Summary: Wayland compositor for DDE
 
@@ -29,7 +29,6 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++ 
 %endif
 
-Requires: %name-data = %EVR
 %add_findprov_lib_path %_dqt6_libdir
 
 %description
@@ -218,6 +217,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Tue Nov 11 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.7-alt2
+- Enabled wayland session only.
+
 * Mon Nov 10 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.7-alt1
 - New version 0.7.7.
 
