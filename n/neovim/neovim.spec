@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.11.4
+Version: 0.11.5
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -68,6 +68,7 @@ Group: Editors
 License: Apache-2.0 and MIT
 Requires: tree-sitter-lua
 Requires: tree-sitter-vimdoc
+Requires: tree-sitter-markdown
 
 %description ts-parsers
 Minimum set of TS parsers for Neovim for languages that don't have corresponding
@@ -99,6 +100,8 @@ ln -s %neovim_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
 
 ln -s %_libdir/libtree-sitter-lua.so %buildroot/%neovim_ts_parsers_dir/lua.so
 ln -s %_libdir/libtree-sitter-vimdoc.so %buildroot/%neovim_ts_parsers_dir/vimdoc.so
+ln -s %_libdir/libtree-sitter-markdown.so %buildroot/%neovim_ts_parsers_dir/markdown.so
+ln -s %_libdir/libtree-sitter-markdown_inline.so %buildroot/%neovim_ts_parsers_dir/markdown_inline.so
 
 # dependency is handled manually since the lua5.1-module-lpeg doesn't provide "Provides: lpeg.so"
 %filter_from_requires /lpeg.so/d
@@ -124,6 +127,10 @@ ln -s %_libdir/libtree-sitter-vimdoc.so %buildroot/%neovim_ts_parsers_dir/vimdoc
 %neovim_ts_parsers_dir/*
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 0.11.5-alt1
+- new version
+- vendor markdown TS parser (closes: #56721)
+
 * Wed Sep 10 2025 Vladimir Didenko <cow@altlinux.org> 0.11.4-alt1
 - new version
 
