@@ -6,7 +6,7 @@
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.1.6
+Version: 0.1.10
 Release: alt1
 
 Summary: Atomic Package Manager 
@@ -20,6 +20,7 @@ ExclusiveArch: %go_arches
 Source: %name-%version.tar
 Source1: vendor.tar
 Source11: %name.tmpfiles
+Patch: %name-%version-%release.patch
 
 # From v0.1.3 distrobox in optional requires
 # Requires: distrobox
@@ -42,6 +43,12 @@ optional support for atomic images based on ALT Linux.
 
 %prep
 %setup -a1
+%autopatch -p1
+
+# Fix go vendoring build
+for file in $(find -name "*\[generated\]*"); do
+  mv -v "$file" "${file//\[generated\]/}"
+done
 
 %build
 %meson -Dprofile=prod
@@ -80,6 +87,9 @@ mkdir -p %buildroot%tmpfiles_config_dir
 %doc README.ru.md
 
 %changelog
+* Tue Nov 11 2025 Vladimir Romanov <rirusha@altlinux.org> 0.1.10-alt1
+- v0.1.10
+
 * Tue Sep 23 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.6-alt1
 - v0.1.6
 
@@ -88,4 +98,3 @@ mkdir -p %buildroot%tmpfiles_config_dir
 
 * Mon Jun 02 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1.1-alt1
 - Initial build.
-
