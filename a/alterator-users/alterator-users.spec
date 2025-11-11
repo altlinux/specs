@@ -1,6 +1,6 @@
 Name: alterator-users
 Version: 10.27
-Release: alt1
+Release: alt2
 
 Summary: alterator module for system users administration
 License: GPL
@@ -14,7 +14,10 @@ BuildPreReq: alterator >= 4.10-alt5
 Requires: alterator >= 4.10-alt5
 Requires: alterator-sh-functions >= 0.12
 Requires: autologin-sh-functions >= 0.2.1
-Requires: shadow-groups, coreutils, passwdqc-utils
+Requires: shadow-groups
+Requires: shadow-change
+Requires: coreutils
+Requires: passwdqc-utils
 Requires: alterator-l10n >= 2.9.107-alt1
 Requires: libnss-role >= 0.5.6-alt1
 Conflicts: alterator-fbi < 5.16-alt1
@@ -51,8 +54,12 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 10.27-alt2
+- Add runtime dependency on shadow-change.
+- Correct previous changelog entrie.
+
 * Thu Nov 06 2025 Anton Midyukov <antohami@altlinux.org> 10.27-alt1
-- backend3/users: add "Real name" add when creating an account (ALT #55013)
+- backend3/users: add "Real name" when creating an account (ALT #55013)
 - remove Packager
 
 * Mon Jul 28 2025 Alexey Romanyuta <r9odt@altlinux.org> 10.26-alt1
