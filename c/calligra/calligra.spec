@@ -1,4 +1,6 @@
 
+%define rname calligra
+
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.py
 %add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.rb
 
@@ -7,8 +9,8 @@
 %define libkookulargenerator_odp libkookulargenerator_odp%sover_gen
 %define libkookulargenerator_odt libkookulargenerator_odt%sover_gen
 
-Name: calligra
-Version: 25.04.3
+Name: %rname
+Version: 25.08.3
 Release: alt1
 #Epoch: 0
 %K6init no_altplace
@@ -427,6 +429,12 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Tue Nov 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Wed Sep 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version (closes: 55858)
 
