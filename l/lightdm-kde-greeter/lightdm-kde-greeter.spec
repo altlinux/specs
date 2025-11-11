@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.0.3
-Release: alt2
+Version: 6.0.4
+Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -12,11 +12,12 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 Source: %name-%version.tar
 
 Patch1: add-russian-translations-to-desktop-files.patch
-Patch2: fix-the-focus-on-the-userlist-at-startup.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
 %endif
+
+%define greeter_user_home_dir %_var/lib/ldm/%name
 
 %K6init
 
@@ -50,14 +51,13 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %K6build \
 %_K6if_ver_gteq %ubt_id M110
         -DGREETER_WAYLAND_SESSIONS_FIRST=ON \
 %endif
-        -DGREETER_IMAGES_DIR=%_var/lib/ldm/%name/images
+        -DGREETER_IMAGES_DIR=%greeter_user_home_dir/images
 
 %install
 %K6install
@@ -71,6 +71,14 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 # Add alternatives for xgreeters
 mkdir -p %buildroot%_altdir
 printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-kde-greeter.desktop\t300\n' > %buildroot%_altdir/lightdm-kde-greeter
+
+%triggerin -- lightdm-kde-greeter < 6.0.4
+# previous versions could create files owned by root
+if [ -e "%greeter_user_home_dir" ]; then
+    # and this is in case there are any symlinks
+    find %greeter_user_home_dir ! -type f,d -delete
+    chown --recursive _ldm:_ldm %greeter_user_home_dir
+fi
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/lightdm/lightdm-kde-greeter.conf
@@ -90,6 +98,12 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Nov 05 2025 Anton Golubev <golubevan@altlinux.org> 6.0.4-alt1
+- security fixes:
+  + CVE-2025-62876: The KAuth helper program insecurely created files in
+  /var/lib/lightdm, which is controlled by the lightdm service user, allowing
+  for privilege escalation from lightdm to root.
+
 * Fri May 23 2025 Anton Golubev <golubevan@altlinux.org> 6.0.3-alt2
 - fix the focus on the userlist at startup
 
