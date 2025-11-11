@@ -1,7 +1,7 @@
 %define oname Sunflower
 Name:    sunflower
 Version: 0.5.63
-Release: alt3.1
+Release: alt4
 
 Summary: Small and highly customizable twin-panel file manager for Linux with support for plugins
 License: GPL-3.0
@@ -26,6 +26,7 @@ Source:  %name-%version.tar
 
 Patch1:  update-path-for-icon.patch
 Patch2:  add-locale.patch
+Patch3:  0001-fix-useless-shebang.patch
 
 %description
 Sunflower is a small and highly customizable twin-panel file manager for Linux
@@ -49,6 +50,7 @@ rm -fr ./translations/tr
 rm -fr ./translations/zh_TW
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %pyproject_build
@@ -65,6 +67,9 @@ rm -fr ./translations/zh_TW
 %_datadir/applications/%oname.desktop
 
 %changelog
+* Tue Nov 11 2025 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt4
+- Fix useless shebang.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5.63-alt3.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
