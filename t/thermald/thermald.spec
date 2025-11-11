@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.5.8
+Version: 2.5.10
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -14,12 +14,13 @@ Summary: Thermal daemon for IA
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 
-Url: https://github.com/intel/thermal_daemon
-# Git: https://github.com/intel/thermal_daemon.git
+URL: https://github.com/intel/thermal_daemon
+VCS: https://github.com/intel/thermal_daemon.git
 
 Source: %name-%version.tar
 Source1: thermald.init
 Source2: %name-monitor.svg
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: x86_64
 
@@ -183,6 +184,9 @@ exit 0
 %endif
 
 %changelog
+* Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 2.5.10-alt1
+- New version 2.5.10.
+
 * Mon Aug 19 2024 Anton Midyukov <antohami@altlinux.org> 2.5.8-alt1
 - new version 2.5.8
 
