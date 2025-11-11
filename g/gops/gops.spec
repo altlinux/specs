@@ -3,7 +3,7 @@
 
 Name:    gops
 Version: 0.3.28
-Release: alt1
+Release: alt2
 
 Summary: gops is a command to list and diagnose Go processes currently running on your system
 License: BSD-3-Clause
@@ -13,7 +13,6 @@ Url:     https://github.com/google/gops
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-macros-branding
 BuildRequires: rpm-build-golang
 BuildRequires: golang
 BuildRequires: /proc
@@ -56,5 +55,8 @@ install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Nov 11 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.3.28-alt2
+- Delete wrong require.
+
 * Wed Oct 22 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.3.28-alt1
 - Initial build for ALTLinux.
