@@ -2,7 +2,7 @@
 
 Name: osmscout-server
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: Maps server providing tiles, geocoder, and route
 License: GPL-3.0-or-later
@@ -30,7 +30,6 @@ BuildRequires: libkyotocabinet-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libvalhalla-devel
 BuildRequires: boost-geometry-devel
-Requires: libprocps
 
 %description
 OSM Scout server can be used as a drop-in replacement for online map services
@@ -88,5 +87,8 @@ user interface.
 %_datadir/osmscout-server/styles/
 
 %changelog
+* Tue Nov 11 2025 Ivan Khanas <xeno@altlinux.org> 3.1.5-alt2
+- Remove requires on libprocps(closes: 55994).
+
 * Sun Jun 08 2025 Ivan Khanas <xeno@altlinux.org> 3.1.5-alt1
 - First build for ALT.
