@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.6
+%define ver_major 2.7
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -77,6 +77,9 @@ cp -r target/locale %buildroot/%_datadir/
 %doc CHANGELOG*  README*
 
 %changelog
+* Tue Nov 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- 2.7.1
+
 * Wed Nov 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
 - 2.6.3
 
