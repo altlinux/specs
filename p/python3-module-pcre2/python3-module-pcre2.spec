@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pcre2
+%define mod_name pcre2
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
@@ -53,10 +54,13 @@ install -v %SOURCE2 setup.py
 
 %files
 %doc LICENSE README.md
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 11 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Thu Feb 06 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
