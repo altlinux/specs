@@ -1,20 +1,17 @@
-%global multilib_arches %ix86 x86_64 ppc ppc64 ppc64le s390 s390x sparcv9 sparc64
-%global soname 44
+%global soname 45
 
 Name: ntl
-Version: 11.5.1
-Release: alt1.2
+Version: 11.6.0
+Release: alt1
 Summary: High-performance algorithms for vectors, matrices, and polynomials
-License: LGPL-2.0+
+License: LGPL-2.1-or-later
 Group: Sciences/Mathematics
 Url: https://libntl.org/
+VCS: https://github.com/libntl/ntl
 
-Source: https://libntl.org/%name-%version.tar.gz
-Source1: multilib_template.h
-# Detect CPU at load time, optionally use PCLMUL, AVX, FMA, and AVX2 features.
-# This patch was sent upstream, but upstream prefers that the entire library
-# be built for a specific CPU, which we cannot do in Fedora.
-Patch: %name-loadtime-cpu.patch
+# Source-url: https://libntl.org/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgf2x-devel
@@ -71,11 +68,10 @@ Group: Development/Other
 
 %prep
 %setup
-%patch -p0
+%patch -p1
 cp /usr/share/gnu-config/config.{guess,sub} src/libtool-origin/
 
 %build
-# TODO: Once we can assume z15, add TUNE=linux-s390x to the flags for s390x
 pushd src
 ./configure \
   CXX="${CXX-g++}" \
@@ -85,16 +81,11 @@ pushd src
   DOCDIR=%_docdir \
   INCLUDEDIR=%_includedir \
   LIBDIR=%_libdir \
+  PKGDIR=%_pkgconfigdir \
   LDLIBS="-lpthread -lm" \
   NATIVE=off \
   NTL_GF2X_LIB=on \
   NTL_STD_CXX14=on \
-%ifarch x86_64
-  NTL_LOADTIME_CPU=on \
-  TUNE=x86 \
-%else
-  TUNE=generic \
-%endif
 %ifarch %e2k
   NTL_SAFE_VECTORS=off \
 %endif
@@ -112,7 +103,8 @@ make -C src install \
   PREFIX=%buildroot%prefix \
   DOCDIR=%buildroot%_docdir \
   INCLUDEDIR=%buildroot%_includedir \
-  LIBDIR=%buildroot%_libdir
+  LIBDIR=%buildroot%_libdir \
+  PKGDIR=%buildroot%_pkgconfigdir
 
 # Fix permissions
 chmod 0755 %buildroot%_libdir/libntl.so.*
@@ -121,19 +113,6 @@ chmod 0755 %buildroot%_libdir/libntl.so.*
 rm -rfv %buildroot%_docdir/NTL
 rm -fv  %buildroot%_libdir/libntl.la
 rm -fv  %buildroot%_libdir/libntl.a
-
-#%ifarch %multilib_arches
-## hack to allow parallel installation of multilib factory-devel
-#for header in NTL/config NTL/gmp_aux NTL/mach_desc  ; do
-#mv  %buildroot%_includedir/${header}.h \
-#%buildroot%_includedir/${header}-%{__isa_bits}.h
-#install -p -m644 %SOURCE1 %buildroot%_includedir/${header}.h
-#sed \
-#  -e "s|@@INCLUDE@@|${header}|" \
-#  -e "s|@@INCLUDE_MACRO@@|$(echo ${header} | tr '/.' '_')|" \
-#%buildroot%_includedir/${header}.h
-#done
-#%endif
 
 %files -n lib%name%soname
 %doc README
@@ -144,8 +123,13 @@ rm -fv  %buildroot%_libdir/libntl.a
 %doc doc/*
 %_includedir/NTL/
 %_libdir/libntl.so
+%_pkgconfigdir/ntl.pc
 
 %changelog
+* Tue Nov 11 2025 Leontiy Volodin <lvol@altlinux.org> 11.6.0-alt1
+- New version 11.6.0.
+- Added VCS tag.
+
 * Fri Nov 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 11.5.1-alt1.2
 - NMU: fixed FTBFS on LoongArch (use fresh config.{sub,guess}).
 
