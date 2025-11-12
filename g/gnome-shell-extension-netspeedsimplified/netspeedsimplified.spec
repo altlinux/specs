@@ -3,8 +3,8 @@
 %define nameS org.gnome.shell.extensions.netspeedsimplified
 
 Name: gnome-shell-extension-netspeedsimplified
-Version: 44
-Release: alt3
+Version: 45
+Release: alt1
 
 Summary: Net speed Simplified
 
@@ -41,6 +41,9 @@ cp -a *.js *.json *.css LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID
 %doc *.md LICENSE 
 
 %changelog
+* Wed Nov 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 45-alt1
+- 44 -> 45
+
 * Fri Oct 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 44-alt3
 - update to git.2aae2ac
 
