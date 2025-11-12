@@ -8,7 +8,7 @@
 
 Name: minio
 Version: %version
-Release: alt2
+Release: alt3
 Summary: Cloud Storage Server
 Group: System/Servers
 License: AGPL-3.0
@@ -95,8 +95,11 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Nov 12 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt3
+- default allow access to console from localhost only.
+
 * Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt2
-- UPdate systemd unit and default config. 
+- Update systemd unit and default config.
 
 * Wed Oct 29 2025 Alexey Shabalin <shaba@altlinux.org> 2025.10.15-alt1
 - Update to RELEASE.2025-10-15T17-29-55Z (Fixed: CVE-2025-62506)
