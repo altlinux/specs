@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Pass-OTP
-Version: 1.702
+Version: 1.801
 Release: alt1
 
 Summary: Perl implementation of HOTP / TOTP algorithms
@@ -23,9 +23,11 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Jan 15 2023
-# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Digest-SHA perl-Encode perl-JSON-PP perl-Math-BigInt perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3-base sh4
-BuildRequires: perl-CPAN-Meta perl-Convert-Base32 perl-Digest-HMAC perl-devel perl-podlators
+# Automatically added by buildreq on Wed Nov 12 2025
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Digest-SHA perl-Encode perl-JSON-PP perl-Math-BigInt perl-Parse-CPAN-Meta perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-Digest-HMAC perl-MIME-Base32 perl-devel
+
+BuildRequires: perl-podlators
 
 %description
 Perl module Pass::OTP provides implementation of HOTP and TOTP
@@ -57,6 +59,9 @@ sed -e 's/otptool /otptool.pl /g'   -i %buildroot%_man1dir/otptool.pl.1
 %_man1dir/otptool.pl.*
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.801-alt1
+- New version
+
 * Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.702-alt1
 - New version
 
