@@ -31,14 +31,15 @@
 # RDMA used only by remote for HPC-like performance
 %def_without rdma
 # risc-v/loongarch64 might not supported
-%def_with openmp
+# FIXME disable if LLVM built without openmp
+%def_without openmp
 
 # pocl detects LTO automatically
 %define optflags_lto %nil
 
 Name: pocl
 Version: 7.0
-Release: alt1
+Release: alt2
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -270,6 +271,7 @@ export VULKAN_SDK=%_libdir
 %endif
 %ifarch %ix86 %arm
     -DENABLE_EXAMPLES:BOOL=OFF \
+    -DENABLE_SIGFPE_HANDLER:BOOL=OFF \
 %else
     -DENABLE_EXAMPLES:BOOL=ON \
 %endif
@@ -383,6 +385,11 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Fri Oct 17 2025 L.A. Kostis <lakostis@altlinux.ru> 7.0-alt2
+- openmp: disable for now.
+- %%ix86: explicitly disable ENABLE_SIGFPE_HANDLER
+  (to avoid unresolved symbols).
+
 * Mon May 26 2025 L.A. Kostis <lakostis@altlinux.ru> 7.0-alt1
 - 7.0.
 - Switch to llvm20.1.
