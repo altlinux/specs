@@ -1,19 +1,24 @@
 Name: python3-module-uvicorn
-Version: 0.35.0
-Release: alt2
+Version: 0.38.0
+Release: alt1
 
 Summary: An ASGI web server, for Python
 License: BSD-3-Clause
 Group: Development/Python
-Url: https://pypi.org/project/uvicorn/
+Url: https://pypi.org/project/uvicorn
+VCS: https://github.com/encode/uvicorn
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra standard
 %pyproject_builddeps_check
 
 %description
@@ -30,7 +35,7 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_pipreqfile requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 
 %build
 %pyproject_build
@@ -39,7 +44,7 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -W ignore::DeprecationWarning tests
+%pyproject_run_pytest tests
 
 %files
 %_bindir/uvicorn
@@ -47,6 +52,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed Nov 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.38.0-alt1
+- 0.38.0 released
+
 * Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 0.35.0-alt2
 - Fixed FTBFS (httpx 0.28.0).
 
