@@ -4,7 +4,7 @@
 
 Name: toxcore
 Version: 0.2.21
-Release: alt1
+Release: alt2
 
 Summary: Peer to peer (serverless) instant messenger
 License: GPL-3.0-or-later
@@ -14,6 +14,7 @@ VCS: https://github.com/TokTok/c-toxcore.git
 
 Source: %name-%version.tar
 Source1: %name-%version-cmp.tar
+Patch: toxcore-0.2.21-alt-fix-missing-header.patch
 
 BuildRequires: libcheck-devel
 BuildRequires: libconfig-devel
@@ -76,6 +77,7 @@ required for compiling and linking against `libtoxcore`, `libtoxav`, and
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -129,6 +131,9 @@ sed -i "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
 %_pkgconfigdir/libtoxcore.pc
 
 %changelog
+* Wed Nov 12 2025 Constantin Sunzow <protvin@altlinux.org> 0.2.21-alt2
+- Fix FTBFS (qTox): add to packaging lost header tox_log_level.h.
+
 * Tue Aug 05 2025 Constantin Sunzow <protvin@altlinux.org> 0.2.21-alt1
 - New version.
 
