@@ -21,7 +21,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     18
-%define postgresql_minor     0
+%define postgresql_minor     1
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -68,7 +68,7 @@ BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm19.1-devel clang19.1-devel gcc-c++
+BuildRequires: llvm20.1-devel clang20.1-devel gcc-c++
 %endif
 %if_without devel
 BuildRequires: libpq5
@@ -327,7 +327,7 @@ Group: Development/Databases
 Requires: %libpq_name-%postgresql_major-devel
 Requires: %libecpg_name-%postgresql_major-devel
 %if_with jit
-Requires: llvm19.1-devel clang19.1-devel gcc-c++
+Requires: llvm20.1-devel clang20.1-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -439,7 +439,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm19.1
+Requires: llvm20.1
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -464,8 +464,8 @@ export CC=%__cc
 export CXX=%__cxx
 
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-19
-export CLANG=/usr/bin/clang-19
+export LLVM_CONFIG=/usr/bin/llvm-config-20
+export CLANG=/usr/bin/clang-20
 %endif
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -1122,6 +1122,12 @@ fi
 %endif
 
 %changelog
+* Wed Nov 12 2025 Alexei Takaseev <taf@altlinux.org> 18.1-alt1
+- 18.1 (Fixes CVE-2025-12817, CVE-2025-12818)
+
+* Mon Oct 27 2025 Alexei Takaseev <taf@altlinux.org> 18.0-alt2
+- Use LLVM 20.1
+
 * Wed Sep 24 2025 Alexei Takaseev <taf@altlinux.org> 18.0-alt1
 - 18.0
 - Enable NUMA support
