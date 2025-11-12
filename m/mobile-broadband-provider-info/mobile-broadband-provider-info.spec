@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: mobile-broadband-provider-info
-Version: 20250613
+Version: 20251101
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -31,8 +31,8 @@ associated network and plan information.
 
 %prep
 %setup
-# subst date as version for git snapshot
-#%{?_enable_snapshot:sed -i -e 's|, [0-9]*,|, %version,|' configure.ac}
+# subst current version
+sed -i -E 's|[0-9]{8}|%version|' meson.build
 
 %build
 %meson
@@ -50,6 +50,9 @@ associated network and plan information.
 %doc COPYING README NEWS
 
 %changelog
+* Wed Nov 12 2025 Yuri N. Sedunov <aris@altlinux.org> 20251101-alt1
+- 20251101
+
 * Sun Jun 22 2025 Yuri N. Sedunov <aris@altlinux.org> 20250613-alt1
 - 20250613
 

@@ -1,10 +1,14 @@
 %def_disable snapshot
+
+# since 1.29.0
+# Disable X11 surface support (Xlib and XCB) even if cairo has it enabled
+%def_disable no_x11
 %def_with doc
 %def_enable check
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.28
+%define ver_major 1.29
 
 Name: python3-module-%oname
 Version: %ver_major.0
@@ -82,7 +86,8 @@ Pickles for pycairo.
 %{?_with_doc:%prepare_sphinx3 docs}
 
 %build
-%meson
+%meson %{subst_enable_meson_bool no_x11 no-x11}
+%nil
 %meson_build
 %{?_with_doc:%make_build -C docs}
 
@@ -92,7 +97,7 @@ Pickles for pycairo.
 # docs
 install -d %buildroot%_docdir/%name-%version
 install -p -m644 NEWS README* \
-	%buildroot%_docdir/%name-%version
+    %buildroot%_docdir/%name-%version
 
 %if_with doc
 cp -fR docs/_build/reference %buildroot%_docdir/%name-%version/
@@ -105,7 +110,7 @@ cp -fR docs/_build/.doctrees/* %buildroot%python3_sitelibdir/%oname/pickle/
 cp -fR examples tests %buildroot%python3_sitelibdir/%modname/
 for i in $(find %buildroot%python3_sitelibdir/%modname/examples -type d)
 do
-	touch $i/__init__.py
+    touch $i/__init__.py
 done
 
 %pre pickles
@@ -150,6 +155,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Wed Nov 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.0-alt1
+- 1.29.0
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 
