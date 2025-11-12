@@ -7,7 +7,7 @@
 %define libver 1
 
 Name: dwarves
-Version: 1.30
+Version: 1.31
 Release: alt1
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
@@ -113,6 +113,9 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Tue Nov 11 2025 Vitaly Chikunov <vt@altlinux.org> 1.31-alt1
+- Update to v1.31 (2025-11-07).
+
 * Wed Apr 16 2025 Vitaly Chikunov <vt@altlinux.org> 1.30-alt1
 - Update to v1.30 (2025-04-10).
 - spec: Disable LTO and improve smoke tests that was not very good since v1.26.
