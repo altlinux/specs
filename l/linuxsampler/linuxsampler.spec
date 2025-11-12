@@ -1,5 +1,5 @@
 Name: linuxsampler
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: A modular, streaming capable sampler
@@ -86,5 +86,8 @@ mkdir -p %buildroot%_libdir/linuxsampler/plugins
 %_pkgconfigdir/linuxsampler.pc
 
 %changelog
+* Wed Nov 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.1-alt1
+- 2.4.1 released
+
 * Fri Jul 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.0-alt1
 - 2.4.0 released

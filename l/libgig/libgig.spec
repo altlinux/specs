@@ -1,7 +1,7 @@
-%define sover_gig  12
+%define sover_gig  13
 %define sover_akai 0
 Name: libgig
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 Summary: Library for loading Gigasampler and DLS Level 1/2 files
 License: GPLv2 and LGPLv2+
@@ -101,6 +101,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %_man1dir/*.1*
 
 %changelog
+* Wed Nov 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.5.1-alt1
+- 4.5.1
+
 * Fri Jun 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.5.0-alt1
 - 4.5.0
 - place libraries to %%_libdir
