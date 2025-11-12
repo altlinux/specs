@@ -5,8 +5,8 @@
 %define current_ver_mlt %{get_version mlt-utils}
 
 Name: kdenlive
-Version: 25.04.3
-Release: alt3
+Version: 25.08.3
+Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -114,6 +114,7 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %doc AUTHORS LICENSES/*
 %_K6bin/*
 %_K6plug/kf6/thumbcreator/*mlt*.so
+%_K6qml/org/kde/kdenlive/
 %_K6xdgapp/*.desktop
 %_datadir/%name
 %_K6cfg/*kdenlive*
@@ -124,8 +125,12 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/metainfo/org.kde.kdenlive.appdata.xml
 %_datadir/qlogging-categories6/*.categories
 %_datadir/knsrcfiles/*.knsrc
+%_datadir/qlogging-categories?/*.*categories
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
 * Wed Nov 05 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt3
 - don't check for updates by default
 
