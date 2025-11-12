@@ -7,18 +7,19 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      f8215cc266744ef195a50a70d427c345da2acdbb
+%global commit      d105562beff448ae44d6e3a2f7738b235fd197b5
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 28.5.1
-Release: alt1
+Version: 29.0.0
+Release: alt1.1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
 
 Url: https://github.com/moby/moby
 ExclusiveArch: %go_arches
+ExcludeArch: %ix86
 Conflicts: docker
 
 Source0: %name-%version.tar
@@ -29,7 +30,7 @@ Source4: %servicename-storage.sysconf
 Source5: daemon.json
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
+BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libseccomp-devel libnftables-devel
 Requires: tar xz
 Provides: docker-io = %version-%release
 Provides: docker-ce = %version-%release
@@ -76,7 +77,7 @@ This package provides docker-proxy util.
 %build
 # Temporary workaround to build with golang 1.16. Waiting for upstream to
 # add go modules support.
-export GO111MODULE=off
+#export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="%go_path:$BUILDDIR"
@@ -93,10 +94,6 @@ hack/make.sh dynbinary
 install -d %{buildroot}%{_bindir}
 install -p -m 755 bundles/dynbinary-daemon/dockerd %{buildroot}%{_bindir}/dockerd
 install -p -m 755 bundles/dynbinary-daemon/docker-proxy %{buildroot}%{_bindir}/docker-proxy
-
-# install udev rules
-install -d %{buildroot}%{_udevrulesdir}
-install -m 644 -p contrib/udev/80-docker.rules %{buildroot}%{_udevrulesdir}
 
 # install storage dir
 install -d %{buildroot}%{_sharedstatedir}/%{servicename}
@@ -146,9 +143,14 @@ exit 0
 %{_unitdir}/docker.socket
 %_initdir/docker
 %dir %{_sharedstatedir}/docker
-%_udevrulesdir/80-docker.rules
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 29.0.0-alt1.1
+- exclude ix86 arches
+
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 29.0.0-alt1
+- 29.0.0
+
 * Tue Oct 14 2025 Vladimir Didenko <cow@altlinux.org> 28.5.1-alt1
 - 28.5.1
 

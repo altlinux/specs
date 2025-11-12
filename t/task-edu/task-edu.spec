@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.13
-Release: alt2
+Release: alt3
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -596,7 +596,7 @@ Requires: xauth
 # Terminal services
 Requires: xrdp
 Requires: pulseaudio-module-xrdp
-%ifarch %ix86 x86_64
+%ifarch x86_64
 Requires: docker-ce
 Requires: lsb
 %endif
@@ -662,6 +662,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 1.7.13-alt3
+- don't require docker on ix86 platform
+
 * Sat Nov 08 2025 Anton Midyukov <antohami@altlinux.org> 1.7.13-alt2
 - teacher: depends on OpenBoard for %%qt6_qtwebengine_arches only.
 

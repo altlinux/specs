@@ -10,8 +10,8 @@
 %define binname docker-compose
 
 Name:		docker-compose-v2
-Version:	2.40.0
-Release:	alt1
+Version:	2.40.3
+Release:	alt1.1
 Summary:	Multi-container orchestration for Docker
 
 Group:		Development/Tools
@@ -23,6 +23,7 @@ Packager:	Vladimir Didenko <cow@altlinux.org>
 Source0: %name-%version.tar
 
 ExclusiveArch: %go_arches
+ExcludeArch: %ix86
 
 Requires: /usr/bin/docker
 
@@ -58,6 +59,12 @@ install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 2.40.3-alt1.1
+- exclude ix86 arches
+
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 2.40.3-alt1
+- New version
+
 * Wed Oct 15 2025 Vladimir Didenko <cow@altlinux.org> 2.40.0-alt1
 - New version
 

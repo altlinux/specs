@@ -5,18 +5,21 @@
 
 Name: whaler
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Docker Container Management
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/sdv43/whaler
+ExclusiveArch: %go_arches
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-vala
+BuildRequires(pre): rpm-build-golang
 
 BuildRequires: meson
 BuildRequires: cmake
@@ -65,5 +68,8 @@ sed -i "s|^Categories=.*|Categories=GTK;System;Monitor;|" data/com.github.sdv43.
 %_datadir/metainfo/com.github.sdv43.whaler.appdata.xml
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 1.2.4-alt2
+- NMU: exclude ix86 arches from the build (docker doesn't support it anymore)
+
 * Sun Nov 02 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt1
 - Initial build for Sisyphus

@@ -6,18 +6,19 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      e180ab8ab82d22b7895a3e6e110cf6dd5c45f1d7
+%global commit      3d4129b9ea4fa263e57984428ad908f6a7d4b94f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    28.5.1
-Release: alt1
+Version:    29.0.0
+Release: alt1.1
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
 
 Url: https://github.com/docker/cli
 ExclusiveArch: %go_arches
+ExcludeArch: %ix86
 Conflicts: docker
 
 Source0: %name-%version.tar
@@ -93,6 +94,12 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 29.0.0-alt1.1
+- exclude ix86 arches
+
+* Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 29.0.0-alt1
+- new release
+
 * Tue Oct 14 2025 Vladimir Didenko <cow@altlinux.org> 28.5.1-alt1
 - new release
 
