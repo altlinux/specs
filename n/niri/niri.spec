@@ -1,6 +1,6 @@
 Name: niri
 Version: 25.08
-Release: alt1
+Release: alt2
 License: GPL-3.0
 
 Summary: A scrollable-tiling Wayland compositor
@@ -37,6 +37,8 @@ BuildRequires: pkgconfig(xkbcommon)
 
 BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(libpipewire-0.3)
+
+Requires: libwayland-server
 
 %description
 Windows are arranged in columns on an infinite strip going to the right.
@@ -82,6 +84,9 @@ install -pD resources/niri-shutdown.target %buildroot%_userunitdir/niri-shutdown
 %_userunitdir/niri-shutdown.target
 
 %changelog
+* Wed Nov 12 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.08-alt2
+- add requires to libwayland-server (ALT bug 56830)
+
 * Sun Aug 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.08-alt1
 - new version 25.08 (with rpmrb script)
 
