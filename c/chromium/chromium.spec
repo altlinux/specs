@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        142.0.7444.134
+Version:        142.0.7444.162
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -655,6 +655,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Nov 12 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.162-alt1
+- New version (142.0.7444.162).
+- Fixes:
+  + CVE-2025-13042: Inappropriate implementation in V8
+
 * Thu Nov 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.134-alt1
 - New version (142.0.7444.134).
 - Fixes:
