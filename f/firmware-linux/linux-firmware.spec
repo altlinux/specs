@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20251021
+Version: 20251111
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
 
 Group: System/Kernel and hardware
 Url: https://gitlab.com/kernel-firmware/linux-firmware
+# https://lore.kernel.org/linux-firmware/
 
 Source: %name-%version.tar
 
@@ -140,6 +141,9 @@ end
 /lib/firmware/mellanox
 
 %changelog
+* Wed Nov 12 2025 Vitaly Chikunov <vt@altlinux.org> 20251111-alt1
+- Update to 20251111 (2025-11-11).
+
 * Wed Oct 22 2025 Vitaly Chikunov <vt@altlinux.org> 20251021-alt1
 - Update to 20251021 (2025-10-20).
 
