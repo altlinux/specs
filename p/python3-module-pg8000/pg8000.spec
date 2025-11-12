@@ -3,14 +3,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.31.4
+Version: 1.31.5
 Release: alt1
 
 Summary: PostgreSQL interface library
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pg8000/
-Vcs: https://github.com/tlocke/pg8000
+Vcs: https://codeberg.org/tlocke/pg8000
 
 Source: %name-%version.tar
 
@@ -58,6 +58,10 @@ sed -i '9a version = "%version"' pyproject.toml
 
 
 %changelog
+* Wed Nov 12 2025 Anton Vyatkin <toni@altlinux.org> 1.31.5-alt1
+- New version 1.31.5.
+- New upstream url.
+
 * Tue Jul 22 2025 Anton Vyatkin <toni@altlinux.org> 1.31.4-alt1
 - New version 1.31.4.
 
