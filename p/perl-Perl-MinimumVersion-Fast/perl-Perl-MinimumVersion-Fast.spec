@@ -3,7 +3,7 @@
 %define real_name Perl-MinimumVersion-Fast
 
 Name: perl-Perl-MinimumVersion-Fast
-Version: 0.20
+Version: 0.22
 Release: alt1
 
 Summary: find a minimum required version of perl for Perl code
@@ -11,9 +11,9 @@ Summary: find a minimum required version of perl for Perl code
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Perl-MinimumVersion-Fast/
+URL: https://metacpan.org/release/Perl-MinimumVersion-Fast
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -51,6 +51,10 @@ implementation of Perl::MinimumVersion.
 %_man1dir/perlver-fast*
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.22-alt1
+- New version
+- Update package URL
+
 * Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.20-alt1
 - New version
 
