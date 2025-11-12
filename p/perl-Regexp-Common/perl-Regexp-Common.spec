@@ -15,19 +15,21 @@
 %define maketest 1
 
 Name: perl-Regexp-Common
-Version: 2017060201
-Release: alt2
+Version: 2024080801
+Release: alt1
 
 Summary: Regexp-Common - Provide commonly requested regular expressions
 
-License: Artistic
+License: %perl_license
 Group: Development/Perl
-Url: http://www.cpan.org
+Url:  https://metacpan.org/release/Regexp-Common
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AB/ABIGAIL/Regexp-Common-%{version}.tar.gz
+Source: Regexp-Common-%{version}.tar
+
+BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Wed Mar 27 2024
 # optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-devel perl-parent perl-unicore python-modules python2-base python3 python3-base python3-dev sh5
@@ -58,6 +60,9 @@ There is an alternative, subroutine-based syntax described in
 %perl_vendor_privlib/Regexp/
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 2024080801-alt1
+- New version
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 2017060201-alt2
 - Fix build with Perl 5.38.2
 
