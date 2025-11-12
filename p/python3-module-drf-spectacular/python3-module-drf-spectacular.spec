@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.28.0
-Release: alt2
+Version: 0.29.0
+Release: alt1
 
 Summary: Sane and flexible OpenAPI 3 schema generation for Django REST framework
 License: BSD-3-Clause
@@ -26,6 +26,8 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-djangorestframework-simplejwt
 BuildRequires: python3-module-django-filter
 BuildRequires: python3-module-django-oauth-toolkit
+BuildRequires: python3-module-tzdata
+BuildRequires: python3-module-yaml
 %endif
 
 BuildArch: noarch
@@ -47,7 +49,6 @@ Source: %pypi_name-%version.tar
 %check
 # Remove tests with broken imports
 rm -fr tests/contrib
-sed -i 's|A unique integer value identifying this Internätiönalisierung.|Ein eindeutiger Ganzzahl-Wert, der Internätiönalisierung identifiziert.|' tests/test_i18n.yml
 python3 runtests.py --fast
 
 %files
@@ -56,6 +57,12 @@ python3 runtests.py --fast
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 12 2025 Alexander Burmatov <thatman@altlinux.org> 0.29.0-alt1
+- New version 0.29.0.
+
+* Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.28.0-alt3
+- Fix tests.
+
 * Wed Aug 13 2025 Alexander Burmatov <thatman@altlinux.org> 0.28.0-alt2
 - Fix tests.
 

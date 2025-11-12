@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.18.2
-Release: alt2
+Version: 1.19.0
+Release: alt1
 
 Summary: A Python handler for mkdocstrings
 License: ISC
@@ -75,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 12 2025 Alexander Burmatov <thatman@altlinux.org> 1.19.0-alt1
+- Updated to 1.19.0.
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.18.2-alt2
 - Merge p11.
 
