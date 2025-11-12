@@ -2,8 +2,8 @@
 %def_with check
 
 Name: sbctl
-Version: 0.17
-Release: alt2
+Version: 0.18
+Release: alt1
 
 Summary: Secure Boot key manager
 License: MIT
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: asciidoc-a2x
+BuildRequires: libpcsclite-devel
 
 %description
 sbctl intends to be a user-friendly secure boot key manager capable of
@@ -45,6 +46,7 @@ rm %buildroot%_datadir/licenses/sbctl/LICENSE
 %doc README.md LICENSE
 %_bindir/sbctl
 %_kernel_installdir/91-sbctl.install
+%_libexecdir/kernel/postinst.d/91-sbctl.install
 %_man5dir/sbctl.conf.5.xz
 %_man8dir/sbctl.8.xz
 %_datadir/bash-completion/completions/sbctl
@@ -52,6 +54,9 @@ rm %buildroot%_datadir/licenses/sbctl/LICENSE
 %_datadir/fish/vendor_completions.d/sbctl.fish
 
 %changelog
+* Wed Nov 12 2025 Egor Ignatov <egori@altlinux.org> 0.18-alt1
+- New version 0.18.
+
 * Wed Jun 11 2025 Egor Ignatov <egori@altlinux.org> 0.17-alt2
 - Fix 'invalid pe header' errors (closes: #54781).
 
