@@ -1,6 +1,6 @@
 Name:    dnsperf
 Version: 2.14.0
-Release: alt1
+Release: alt2
 
 Summary: DNS Performance Testing Tools
 License: Apache-2.0
@@ -14,6 +14,8 @@ BuildRequires: ck-devel
 BuildRequires: libldns-devel
 BuildRequires: libnghttp2-devel
 BuildRequires: openssl-devel
+
+Requires: gnuplot
 
 %description
 dnsperf and resperf are free tools developed by Nominum/Akamai (2006-2018) and
@@ -52,5 +54,8 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/*
 
 %changelog
+* Wed Nov 12 2025 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt2
+- Required gnuplot for resperf-report (ALT #56823).
+
 * Thu Oct 30 2025 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
 - Initial build for Sisyphus.
