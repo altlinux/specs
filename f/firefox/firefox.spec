@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 144.0.2
+Version: 145.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,26 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Nov 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 145.0-alt1
+- New version (145.0).
+- Fixes:
+  + CVE-2025-13021: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13022: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13012: Race condition in the Graphics component
+  + CVE-2025-13023: Sandbox escape due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13016: Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2025-13024: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-13025: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13026: Sandbox escape due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13017: Same-origin policy bypass in the DOM: Notifications component
+  + CVE-2025-13018: Mitigation bypass in the DOM: Security component
+  + CVE-2025-13019: Same-origin policy bypass in the DOM: Workers component
+  + CVE-2025-13013: Mitigation bypass in the DOM: Core & HTML component
+  + CVE-2025-13020: Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2025-13014: Use-after-free in the Audio/Video component
+  + CVE-2025-13015: Spoofing issue in Firefox
+  + CVE-2025-13027: Memory safety bugs fixed in Firefox 145 and Thunderbird 145
+
 * Wed Oct 29 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0.2-alt1
 - New version (144.0.2).
 - Fixes:
