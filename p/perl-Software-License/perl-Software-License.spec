@@ -3,7 +3,7 @@
 %define real_name Software-License
 
 Name: perl-Software-License
-Version: 0.104006
+Version: 0.104007
 Release: alt1
 
 Summary: Perl module that provide templated software licenses
@@ -20,9 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Data-OptList perl-MRO-Compat perl-Params-Util perl-Sub-Exporter perl-Sub-Install
-BuildRequires: perl-Data-Section perl-Module-Load perl-Sub-Name perl-Text-Template perl-Try-Tiny perl-devel perl-parent
+# Automatically added by buildreq on Wed Nov 12 2025
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Data-OptList perl-Encode perl-JSON-PP perl-MRO-Compat perl-Params-Util perl-Parse-CPAN-Meta perl-Sub-Exporter perl-Sub-Install perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-Data-Section perl-Module-Load perl-Text-Template perl-Try-Tiny
 
 %description
 Perl module Software::License provides templated software licenses.
@@ -41,6 +41,9 @@ Perl module Software::License provides templated software licenses.
 %perl_vendor_privlib/Software/License*
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.104007-alt1
+- New version
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.104006-alt1
 - New version
 
