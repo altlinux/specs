@@ -1,6 +1,6 @@
 Name: pandoc
 Version: 3.8.2.1
-Release: alt1
+Release: alt2
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -13,6 +13,8 @@ Source1: vendor.tar
 Patch1: vendored_basement-github-fix_i586.patch
 Patch2: vendored_cborg-github-fix_i586.patch
 Patch3: vendored_memory-github-fix_i586.patch
+
+Patch4: vendored_x509-crypton-system_update-default-CA.patch
 
 BuildRequires: ghc-devel
 BuildRequires: rpm-build-haskell-vendored
@@ -38,6 +40,11 @@ Slidy HTML slide shows.
 %patch3 -p1
 %endif
 
+# Set the correct path to the system CA
+# This will no longer be necessary once the following PR is merged:
+# https://github.com/kazu-yamamoto/crypton-certificate/pull/19
+%patch4 -p0
+
 %build
 %cabal_vendor_build --constraint="pandoc +embed_data_files"
 
@@ -57,6 +64,9 @@ install -pm 644 -D -t %buildroot%_man1dir \
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Mon Nov 10 2025 Leonid Znamenok <respublica@altlinux.org> 3.8.2.1-alt2
+- Set the correct path to the system CA (ALT#56775)
+
 * Mon Oct 20 2025 Leonid Znamenok <respublica@altlinux.org> 3.8.2.1-alt1
 - 3.8.2.1
 
