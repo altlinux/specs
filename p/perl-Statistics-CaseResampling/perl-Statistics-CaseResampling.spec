@@ -3,8 +3,8 @@
 %define real_name Statistics-CaseResampling
 
 Name: perl-Statistics-CaseResampling
-Version: 0.15
-Release: alt5.1
+Version: 0.17
+Release: alt1
 
 Summary: Perl module for resampling and calculation of medians with confidence intervals
 
@@ -54,6 +54,9 @@ implementation that requires O(n*log(n)).
 %perl_vendor_autolib/Statistics/CaseResampling*
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.17-alt1
+- New version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt5.1
 - rebuild with new perl 5.28.1
 
