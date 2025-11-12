@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt1
+Release: alt1.1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -217,6 +217,7 @@ Summary: MATE settings for %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
+Requires: alt-gnome-desktop-wallpapers >= 1.0.1-alt1
 # Specified themes
 Requires: icon-theme-Papirus
 Requires: icon-theme-Papirus-Dark
@@ -370,6 +371,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Nov 12 2025 Michael Shigorin <mike@altlinux.org> 11.1-alt1.1
+- mate-settings: fix desktop background by adding R: a-g-d-w
+
 * Fri Jul 14 2025 Semen Fomchenkov <armatik@altlinux.org> 11.1-alt1
 - spec: bump version to 11.1
 
