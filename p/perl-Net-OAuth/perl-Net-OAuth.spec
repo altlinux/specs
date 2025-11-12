@@ -3,28 +3,26 @@
 %define real_name  Net-OAuth
 
 Name: perl-Net-OAuth
-Version: 0.28
-Release: alt2
+Version: 0.31
+Release: alt1
 
 Summary: Perl module that provides OAuth protocol support
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/~kgrennan/Net-OAuth/
+URL: https://metacpan.org/release/Net-OAuth/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: http://search.cpan.org/CPAN/authors/id/K/GR/KGRENNAN/%real_name-%version.tar
 BuildArch: noarch
 
-Patch0: crypt-optenssl-rsa-0.30_sha1.patch
-
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses perl-Test-Warn
 
-# Automatically added by buildreq on Sun Oct 14 2012
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Crypt-OpenSSL-Bignum perl-Digest-SHA perl-Encode perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Sub-Name perl-Sub-Uplevel perl-Tree-DAG_Node perl-URI perl-devel perl-podlators
-BuildRequires: perl-Class-Accessor perl-Class-Data-Inheritable perl-Crypt-OpenSSL-RSA perl-Digest-HMAC perl-Digest-SHA1 perl-Module-Build perl-Test-Warn perl-libwww
+# Automatically added by buildreq on Sat Nov 08 2025
+# optimized out: libgpg-error openssl-config perl perl-CPAN-Meta-Requirements perl-Crypt-OpenSSL-Bignum perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-Sub-Name perl-Sub-Uplevel perl-URI perl-devel perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-Class-Accessor perl-Class-Data-Inheritable perl-Crypt-OpenSSL-RSA perl-Crypt-URandom perl-Digest-SHA perl-Test-Warn perl-libwww
 
 %description
 Perl module Net::OAuth is an implementation of the OAuth protocol.
@@ -35,8 +33,6 @@ http://oauth.net/ for details.
 
 %prep
 %setup  -n %real_name-%version
-
-%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -49,6 +45,10 @@ http://oauth.net/ for details.
 %perl_vendor_privlib/Net/OAuth*
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.31-alt1
+- New version
+- Update package URL
+
 * Sat May 12 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.28-alt2
 - Fix build with Crypt::OpenSSL::RSA >= 0.30
 
