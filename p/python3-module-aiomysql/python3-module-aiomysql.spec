@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiomysql
+%define mod_name aiomysql
 
 # tests require running mysql on 127.0.0.1, so they are disabled
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.2
 Release: alt1
 
 Summary: A library for accessing a MySQL database from the asyncio
@@ -18,12 +19,12 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_build_filter setuptools-scm-git-archive
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -41,10 +42,10 @@ sqlalchemy support ported from aiopg.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile requirements-dev.txt
 %endif
@@ -55,15 +56,21 @@ sqlalchemy support ported from aiopg.
 %install
 %pyproject_install
 
+# remove docs from python site-packages
+rm -rv %buildroot%python3_sitelibdir/{docs,examples}
+
 %check
 %pyproject_run_pytest -vra
 
 %files
 %doc README.rst LICENSE CHANGES.txt
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 12 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.2-alt1
+- Updated to 0.3.2.
+
 * Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt1
 - Updated to 0.2.0.
 
