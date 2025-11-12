@@ -1,16 +1,16 @@
 ## SPEC file for Perl module Log::Dispatchouli
 
 Name: perl-Log-Dispatchouli
-Version: 3.007
+Version: 3.013
 Release: alt1
 
 Summary: a simple wrapper around Log::Dispatch
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/dist/Log-Dispatchouli/
+URL:  https://metacpan.org/release/Log-Dispatchouli
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 %define real_name Log-Dispatchouli
@@ -51,6 +51,10 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Fmt.pm
 
 %changelog
+* Wed Nov 12 2025 Nikolay A. Fetisov <naf@altlinux.org> 3.013-alt1
+- New version
+- Update package URL
+
 * Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.007-alt1
 - New version
 
