@@ -6,33 +6,33 @@
 
 Name:          gem-glu
 Version:       8.3.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation
 License:       MIT
 Group:         Development/Ruby
 Url:           https://rubygems.org/gems/glu
 Vcs:           https://git.altlinux.org/gears/g/gem-glu.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libGLEW-devel
 %if_enabled check
-BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(hoe) >= 4.2
 BuildRequires: gem(rake-compiler) >= 1.0
 BuildRequires: gem(rake-compiler-dock) >= 0.6.0
-BuildRequires: gem(hoe) >= 3.16
+BuildRequires: gem(rdoc) >= 4.0
+BuildConflicts: gem(hoe) >= 5
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
-BuildConflicts: gem(hoe) >= 5
+BuildConflicts: gem(rdoc) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
-%ruby_use_gem_dependency hoe >= 4.0,hoe < 5
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
+Requires:      ruby >= 1.9.2
 Provides:      gem(glu) = 8.3.0
-
 
 %description
 Glu bindings for the opengl gem, split into a separate gem because of Glu
@@ -42,7 +42,7 @@ deprecation.
 %if_enabled    doc
 %package       -n gem-glu-doc
 Version:       8.3.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета glu
 Group:         Development/Documentation
@@ -62,7 +62,7 @@ deprecation documentation files.
 %if_enabled    devel
 %package       -n gem-glu-devel
 Version:       8.3.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета glu
 Group:         Development/Ruby
@@ -70,13 +70,14 @@ BuildArch:     noarch
 
 Requires:      libGLEW-devel
 Requires:      gem(glu) = 8.3.0
-Requires:      gem(rdoc) >= 4.0
+Requires:      gem(hoe) >= 4.2
 Requires:      gem(rake-compiler) >= 1.0
 Requires:      gem(rake-compiler-dock) >= 0.6.0
-Requires:      gem(hoe) >= 3.16
+Requires:      gem(rdoc) >= 4.0
+Conflicts:     gem(hoe) >= 5
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
-Conflicts:     gem(hoe) >= 5
+Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-glu-devel
 Glu bindings for the opengl gem, split into a separate gem because of Glu
@@ -119,6 +120,9 @@ deprecation development package.
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 8.3.0-alt3.1
+- ! fixed spec deps
+
 * Wed Oct 23 2024 Pavel Skrylev <majioa@altlinux.org> 8.3.0-alt3
 - ! fixed dep to hoe gem
 - ! fixed README format
