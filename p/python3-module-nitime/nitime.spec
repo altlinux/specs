@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.11
+Version: 0.12.1
 Release: alt1
 
 Summary: Nitime: timeseries analysis for neuroscience data
@@ -13,8 +13,6 @@ Group: Development/Python3
 URL: https://pypi.org/project/nitime
 VCS: https://github.com/nipy/nitime
 
-BuildArch: noarch
-
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -22,12 +20,16 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-Cython
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-nibabel
+BuildRequires: python3-module-networkx
 %endif
 
 %description
@@ -70,7 +72,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_run_pytest -k'not test_timeseries'
 
 %files
-%doc LICENSE README.txt THANKS
+%doc LICENSE README.rst THANKS
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
@@ -81,6 +83,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Thu Nov 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Automatically updated to 0.12.1.
+
 * Fri Jun 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.11-alt1
 - Automatically updated to 0.11.
 - Built with check.
