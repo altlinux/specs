@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.4.5
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -22,10 +22,10 @@ Patch2: keycloak-alt-ssl-certificates.patch
 Patch3: 0001-Exclude-base-theme-from-settings.patch
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires: jpackage-17-compat
+BuildRequires: java-devel
 BuildRequires: maven-local
 
-Requires: java >= 17.0.0
+Requires: java >= 21.0.0
 
 AutoReqProv: yes, noosgi-fc
 
@@ -77,6 +77,9 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Thu Nov 13 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.5-alt2
+- Rebuilt with Java 21.x.
+
 * Wed Nov 12 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.5-alt1
 - New version.
 
