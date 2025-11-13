@@ -1,9 +1,9 @@
 %define rname plasma-wayland-protocols
 
 Name: kde5-%rname
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
-%K5init altplace no_appdata
+%K6init altplace no_appdata
 
 Group: Development/KDE and QT
 Summary: XML files of non-standard wayland protocols used in Plasma
@@ -15,8 +15,8 @@ Provides: %rname = %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-base-devel
 
 %description
 XML files of non-standard wayland protocols used in Plasma.
@@ -25,16 +25,20 @@ XML files of non-standard wayland protocols used in Plasma.
 %setup -n %rname-%version
 
 %build
-%K5build
-
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
+    #
 %install
-%K5install
+%K6install
 
 %files
 %_libdir/cmake/PlasmaWaylandProtocols/
 %_datadir/plasma-wayland-protocols/
 
 %changelog
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 1.19.0-alt1
+- new version
+
 * Tue Jul 08 2025 Sergey V Turchin <zerg@altlinux.org> 1.18.0-alt1
 - new version
 
