@@ -6,7 +6,7 @@
 
 Name:          gem-em-mongo
 Version:       0.6.1
-Release:       alt1
+Release:       alt2
 Summary:       EventMachine MongoDB Driver (based off of RMongo)
 License:       MIT
 Group:         Development/Ruby
@@ -18,26 +18,25 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(bson) >= 1.9.2
 BuildRequires: gem(em-spec) >= 0
 BuildRequires: gem(eventmachine) >= 0.12.10
-BuildRequires: gem(bson) >= 1.9.2
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(eventmachine) >= 2.0
 BuildConflicts: gem(bson) >= 6
+BuildConflicts: gem(eventmachine) >= 2.0
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency bson >= 5.0.1,bson < 6
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency bson >= 5.0,bson < 6
-Requires:      gem(eventmachine) >= 0.12.10
 Requires:      gem(bson) >= 1.9.2
-Conflicts:     gem(eventmachine) >= 2.0
+Requires:      gem(eventmachine) >= 0.12.10
 Conflicts:     gem(bson) >= 6
-Obsoletes:     ruby-em-mongo
-Provides:      ruby-em-mongo
+Conflicts:     gem(eventmachine) >= 2.0
+Obsoletes:     ruby-em-mongo < %EVR
+Provides:      ruby-em-mongo = %EVR
 Provides:      gem(em-mongo) = 0.6.1
-
 
 %description
 An EventMachine client for MongoDB. Originally based on RMongo, this client aims
@@ -55,7 +54,7 @@ deferrable.
 %if_enabled    doc
 %package       -n gem-em-mongo-doc
 Version:       0.6.1
-Release:       alt1
+Release:       alt2
 Summary:       EventMachine MongoDB Driver (based off of RMongo) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета em-mongo
 Group:         Development/Documentation
@@ -85,14 +84,13 @@ deferrable.
 %if_enabled    devel
 %package       -n gem-em-mongo-devel
 Version:       0.6.1
-Release:       alt1
+Release:       alt2
 Summary:       EventMachine MongoDB Driver (based off of RMongo) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета em-mongo
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(em-mongo) = 0.6.1
-Requires:      gem(em-spec) >= 0
 Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-em-mongo-devel
@@ -127,28 +125,32 @@ deferrable.
 %ruby_test
 
 %files
-%doc README.rdoc examples/readme.rb
+%doc CHANGELOG README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-em-mongo-doc
-%doc README.rdoc examples/readme.rb
+%doc CHANGELOG README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-em-mongo-devel
-%doc README.rdoc examples/readme.rb
+%doc CHANGELOG README.rdoc
 %endif
 
 
 %changelog
+* Tue May 20 2025 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt2
+- * rebased to upstream with plainrow tagging
+- ! fixed spec and deps to newest bson 6x (ALT #53517)
+
 * Mon Jul 29 2024 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt1
-- ^ 0.6.0.1 -> 0.6.1
+- ^ 0.6.0[1] -> 0.6.1
 
 * Mon Apr 18 2022 Pavel Skrylev <majioa@altlinux.org> 0.6.0.1-alt1
-- ^ 0.6.0 -> 0.6.0.1
+- ^ 0.6.0 -> 0.6.0[1]
 
 * Wed Mar 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt2.3
 - fixed (!) spec
