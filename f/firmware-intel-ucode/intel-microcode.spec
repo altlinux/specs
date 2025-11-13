@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20250812
+%define orig_timestamp 20251111
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 32
+Version: 33
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -60,6 +60,53 @@ fi
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Nov 13 2025 L.A. Kostis <lakostis@altlinux.ru> 2:33-alt1.20251111
+- New upstream microcode datafile 20251111:
+  + Update functional issues for Gen12th/13th/14th Core Processors
+  + Update functional issues for 4th/5th Xeon Processors
+  + Update functional issues for Core Ultra (Series 2)/Ultra 200 V Processors
+  + Update functional issues for Core i3 N-Series Processors
+  + Update functional issues for Xeon 6500/6700/6900 Processors
+  + Update functional issues for Xeon 6700P-B/6500P-B Series SoC with P-Cores
+  + Updated microcodes:
+    sig 0x000806f4, pf_mask 0x87, rev 0x2b000650
+    sig 0x000806f4, pf_mask 0x10, rev 0x2c000410
+    sig 0x000806f5, pf_mask 0x87, rev 0x2b000650
+    sig 0x000806f5, pf_mask 0x10, rev 0x2c000410
+    sig 0x000806f6, pf_mask 0x87, rev 0x2b000650
+    sig 0x000806f6, pf_mask 0x10, rev 0x2c000410
+    sig 0x000806f7, pf_mask 0x87, rev 0x2b000650
+    sig 0x000806f8, pf_mask 0x87, rev 0x2b000650
+    sig 0x000806f8, pf_mask 0x10, rev 0x2c000410
+    sig 0x00090672, pf_mask 0x07, rev 0x003d
+    sig 0x00090675, pf_mask 0x07, rev 0x003d
+    sig 0x000906a3, pf_mask 0x80, rev 0x043a
+    sig 0x000906a4, pf_mask 0x80, rev 0x043a
+    sig 0x000906a4, pf_mask 0x40, rev 0x000b
+    sig 0x000a06d1, pf_mask 0x95, rev 0x10003f0
+    sig 0x000a06d1, pf_mask 0x20, rev 0xa000124
+    sig 0x000a06f3, pf_mask 0x01, rev 0x3000382
+    sig 0x000b0650, pf_mask 0x80, rev 0x000a
+    sig 0x000b0671, pf_mask 0x32, rev 0x0132
+    sig 0x000b0674, pf_mask 0x32, rev 0x0132
+    sig 0x000b06a2, pf_mask 0xe0, rev 0x6133
+    sig 0x000b06a3, pf_mask 0xe0, rev 0x6133
+    sig 0x000b06a8, pf_mask 0xe0, rev 0x6133
+    sig 0x000b06d1, pf_mask 0x80, rev 0x0125
+    sig 0x000b06e0, pf_mask 0x19, rev 0x001e
+    sig 0x000b06f2, pf_mask 0x07, rev 0x003d
+    sig 0x000b06f5, pf_mask 0x07, rev 0x003d
+    sig 0x000b06f6, pf_mask 0x07, rev 0x003d
+    sig 0x000b06f7, pf_mask 0x07, rev 0x003d
+    sig 0x000c0652, pf_mask 0x82, rev 0x011a
+    sig 0x000c0662, pf_mask 0x82, rev 0x011a
+    sig 0x000c0664, pf_mask 0x82, rev 0x011a
+    sig 0x000c06a2, pf_mask 0x82, rev 0x011a
+    sig 0x000c06f1, pf_mask 0x87, rev 0x210002c0
+    sig 0x000c06f2, pf_mask 0x87, rev 0x210002c0
+  + New microcode:
+    sig 0x000a06e1, pf_mask 0x97, rev 0x1000273
+
 * Tue Aug 12 2025 L.A. Kostis <lakostis@altlinux.ru> 2:32-alt1.20250812
 - New upstream microcode datafile 20250812:
   + Mitigations for (INTEL-SA-01249):
