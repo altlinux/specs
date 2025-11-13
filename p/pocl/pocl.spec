@@ -17,14 +17,10 @@
 # remote client/server
 # http://portablecl.org/docs/html/remote.html
 %def_enable remote
-%def_with vsock
-%def_with traffic_monitor
 # still buggy
 %def_without avahi
 %def_with dht
 %else
-%def_without vsock
-%def_without traffic_monitor
 %def_without vulkan
 %def_disable remote
 %endif
@@ -38,8 +34,8 @@
 %define optflags_lto %nil
 
 Name: pocl
-Version: 7.0
-Release: alt2
+Version: 7.1
+Release: alt0.1
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -109,7 +105,7 @@ Requires: glibc-devel
 
 %description
 Pocl's goal is to become an efficient open source (MIT-licensed) implementation
-of the OpenCL 1.2 (and soon OpenCL 2.0) standard.
+of the OpenCL 3.0 standard.
 
 In addition to producing an easily portable open-source OpenCL implementation,
 another major goal of this project is improving performance portability of
@@ -257,8 +253,8 @@ export VULKAN_SDK=%_libdir
 %endif
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=/usr/bin/clang \
+    -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
     -DENABLE_ICD:BOOL=ON \
     -DENABLE_TESTS:BOOL=ON \
     -DPOCL_INSTALL_ICD_VENDORDIR=%_sysconfdir/OpenCL/vendors \
@@ -286,12 +282,6 @@ export VULKAN_SDK=%_libdir
     -DENABLE_REMOTE_CLIENT=1 \
     -DENABLE_REMOTE_SERVER=1 \
     -DVISIBILITY_HIDDEN:BOOL=OFF \
-%if_with vsock
-    -DENABLE_VSOCK:BOOL=ON \
-%endif #vsock
-%if_with traffic_monitor
-    -DENABLE_TRAFFIC_MONITOR:BOOL=ON \
-%endif #traffic_monitor
 %if_with avahi
     -DENABLE_REMOTE_DISCOVERY_AVAHI:BOOL=ON \
     -DENABLE_REMOTE_ADVERTISEMENT_AVAHI:BOOL=ON \
@@ -385,6 +375,10 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Wed Nov 12 2025 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt0.1
+- 7.1.
+- remote: remove obsoleted vsock/traffic monitor options.
+
 * Fri Oct 17 2025 L.A. Kostis <lakostis@altlinux.ru> 7.0-alt2
 - openmp: disable for now.
 - %%ix86: explicitly disable ENABLE_SIGFPE_HANDLER

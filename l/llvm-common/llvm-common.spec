@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 20.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -388,6 +388,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link verify-uselistorder
 %install_tool_link wasm-ld
 %install_tool_link yaml2obj
+%install_tool_link FileCheck
 
 # Wrap the CMake configs useful to external users to respect %%_llvm_version.
 %define wrap_cmake_script() RPM_LLVM_VERSION=%_llvm_version %_sourcedir/alt-packaging-wrap-cmake-script %*
@@ -519,6 +520,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Wed Nov 12 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.0-alt1.1
+- llvm: Added FileCheck link.
+
 * Wed Oct 15 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.0-alt1
 - Bump llvm_version to 20.1.
 
