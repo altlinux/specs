@@ -3,13 +3,12 @@
 
 Name:          gem-bundler-unload
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Allow unloading bundler after Bundler.load
 License:       Apache 2.0
 Group:         Development/Ruby
-Url:           https://github.com/mpapis/bundler-unload
-Vcs:           https://github.com/mpapis/bundler-unload.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Url:           https://github.com/rvm/bundler-unload
+Vcs:           https://github.com/rvm/bundler-unload.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -29,7 +28,7 @@ Allow unloading bundler after Bundler.load
 
 %package       -n gem-bundler-unload-doc
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Allow unloading bundler after Bundler.load documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bundler-unload
 Group:         Development/Documentation
@@ -46,7 +45,7 @@ Allow unloading bundler after Bundler.load documentation files.
 
 %package       -n gem-bundler-unload-devel
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Allow unloading bundler after Bundler.load development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bundler-unload
 Group:         Development/Ruby
@@ -88,5 +87,8 @@ Allow unloading bundler after Bundler.load development package.
 
 
 %changelog
+* Fri Oct 17 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1.1
+- ! fixed spec urls (closes ALT#49819)
+
 * Wed Nov 22 2023 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1
 - + packaged gem with Ruby Policy 2.0
