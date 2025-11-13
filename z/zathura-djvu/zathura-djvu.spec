@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-djvu
-Version: 0.2.10
+Version: 0.2.11
 Release: alt1
 
 Summary: DjVU support for zathura
@@ -16,9 +16,9 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
-BuildRequires: intltool libcairo-devel libdjvu-devel
+BuildRequires: libcairo-devel libdjvu-devel
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils libappstream-glib}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils appstream}}
 
 Requires: zathura
 
@@ -48,6 +48,10 @@ the djvulibre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.2.11-alt1
+- Updated BR.
+- Updated to 0.2.11.
+
 * Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.2.10-alt1
 - Enabled tests.
 - Updated Vcs tag.

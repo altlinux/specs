@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-pdf-poppler
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
@@ -16,9 +16,9 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel >= 0.5.3
-BuildRequires: intltool libpoppler-glib-devel libcairo-devel
+BuildRequires: libpoppler-glib-devel libcairo-devel
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils libappstream-glib}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils appstream}}
 
 Requires: zathura
 
@@ -48,6 +48,10 @@ the poppler rendering engine.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt1
+- Updated BR.
+- Updated to 0.3.4.
+
 * Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt1
 - Enabled tests.
 - Updated Vcs tag.

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-ps
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: PostScript support for zathura
@@ -16,9 +16,9 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
-BuildRequires: intltool libcairo-devel libspectre-devel
+BuildRequires: libcairo-devel libspectre-devel
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils libappstream-glib}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils appstream}}
 
 Requires: zathura
 
@@ -48,6 +48,10 @@ the libspectre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.2.9-alt1
+- Updated BR.
+- Updated to 0.2.9.
+
 * Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
 - Updated Vcs tag.
 - Enabled tests.

@@ -7,8 +7,8 @@
 %endif
 
 Name: zathura
-Version: 0.5.13
-Release: alt1
+Version: 0.5.14
+Release: alt2
 
 Summary: A lightweight document viewer
 License: Zlib
@@ -67,12 +67,12 @@ developing applications that use %name.
 %meson_install
 #  Create directory for plugins
 mkdir -p %buildroot%_libdir/zathura
-%find_lang %name
+%find_lang org.pwmt.zathura
 
 %check
 %meson_test
 
-%files -f %name.lang
+%files -f org.pwmt.zathura.lang
 %doc LICENSE AUTHORS README.md
 %_bindir/%{name}*
 %dir %_libdir/%name
@@ -91,6 +91,13 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Thu Nov 13 2025 Mikhail Efremov <sem@altlinux.org> 0.5.14-alt2
+- Disabled weston tests.
+- Made weston tests optional.
+
+* Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.5.14-alt1
+- Updated to 0.5.14.
+
 * Wed Oct 08 2025 Mikhail Efremov <sem@altlinux.org> 0.5.13-alt1
 - Updated to 0.5.13.
 

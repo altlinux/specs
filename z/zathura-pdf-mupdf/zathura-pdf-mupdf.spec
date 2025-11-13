@@ -1,5 +1,5 @@
 Name: zathura-pdf-mupdf
-Version: 0.4.4
+Version: 0.4.6
 Release: alt1
 
 Summary: PDF support for zathura (mupdf)
@@ -17,7 +17,7 @@ BuildRequires: libgirara-devel zathura-devel >= 0.5.2
 BuildRequires: libcairo-devel
 BuildRequires: libmupdf-devel >= 1.24
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils libappstream-glib}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils appstream}}
 
 Requires: zathura
 
@@ -32,7 +32,9 @@ the mupdf rendering library.
 %patch -p1
 
 %build
-%meson
+%meson \
+	-Dpdf=enabled
+
 %meson_build -v
 
 %install
@@ -49,6 +51,10 @@ the mupdf rendering library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.4.6-alt1
+- Updated BR.
+- Updated to 0.4.6.
+
 * Sun Jan 12 2025 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
 - Fixed build with mupdf >= 1.18.
 - Enabled tests.
