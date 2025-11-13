@@ -1,6 +1,6 @@
 Name: altemu-mount
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: mount storage with roms
 
@@ -43,6 +43,10 @@ install -m 0644 dir-list %buildroot%_datadir/altemu/
 %_presetdir/75-%name.preset
 
 %changelog
+* Thu Nov 13 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Add overlayfs support
+- Fix issue with unmountig NTFS partition
+
 * Wed Oct 29 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
 - Fix access rights for user
 
