@@ -1,8 +1,10 @@
 %def_enable snapshot
 
 %define _name lptk
-%define ver_major 0.9
-%define rdn_name me.ogarcia.%_name
+# since 0.10 0 renamed as rotor
+%define __name rotor
+%define ver_major 0.10
+%define rdn_name me.ogarcia.%__name
 %def_enable check
 
 %def_disable bootstrap
@@ -26,6 +28,9 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define adw_ver 1.8
+
+Provides: %__name = %EVR
+Provides: %rdn_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-rust
 BuildRequires: meson rust-cargo
@@ -65,15 +70,18 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %__meson_test
 
 %files
-%_bindir/%_name
+%_bindir/%__name
 %_desktopdir/%rdn_name.desktop
-%_datadir/%_name/
+%_datadir/%__name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu Nov 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0-2-g7255f61
 
