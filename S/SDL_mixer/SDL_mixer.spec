@@ -1,17 +1,18 @@
 Name: SDL_mixer
-Version: 1.2.12.0.173.ed76
+Version: 1.2.12.0.181.cc47
 Release: alt1
 Summary: Simple DirectMedia Layer - mixer
 Group: System/Libraries
 License: LGPL-2.0+
 Url: https://github.com/libsdl-org/SDL_mixer
-Vcs: git://github.com/libsdl-org/SDL_mixer.git
+VCS: https://github.com/libsdl-org/SDL_mixer
 # https://github.com/libsdl-org/SDL_mixer/tree/SDL-1.2
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-1.2.11-alt5.patch
+Patch0: %name-%version-%release.patch
+Patch1: %name-1.2.11-alt5.patch
 
 BuildRequires: gcc-c++ libSDL-devel libvorbis-devel libflac-devel libmikmod-devel
 BuildRequires: libmad-devel
@@ -54,7 +55,8 @@ types of sound files using %name.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 cat acinclude/* > aclocal.m4
 
@@ -88,6 +90,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 13 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.12.0.181.cc47-alt1
+- New version release-1.2.12-181-gcc472404.
+
 * Tue Nov 26 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.12.0.173.ed76-alt1
 - New version release-1.2.12-173-ged76d39c (latest commit from SDL-1.2).
 - Added vcs tag.
