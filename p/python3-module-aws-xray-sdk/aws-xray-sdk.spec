@@ -7,7 +7,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 Summary: AWS X-Ray SDK for the Python programming language
 Group: Development/Python3
@@ -71,6 +71,9 @@ export AWS_ACCESS_KEY_ID=fake_id
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Thu Nov 13 2025 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1
+- Automatically updated to 2.15.0.
+
 * Wed Jun 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.14.0-alt1
 - Automatically updated to 2.14.0.
 
