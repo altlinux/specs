@@ -1,5 +1,5 @@
 Name: lilv
-Version: 0.24.26
+Version: 0.26.0
 Release: alt1
 
 Summary: An LV2 Resource Description Framework Library
@@ -29,7 +29,7 @@ Obsoletes: lilv-devel
 
 %package -n python3-module-lilv
 Summary: Python bindings for lilv
-Group: Development/Python3
+Group: Development/Python
 Requires: liblilv == %EVR
 BuildArch: noarch
 
@@ -82,6 +82,9 @@ This package contains the python bindings for lilv.
 %python3_sitelibdir_noarch/*/lilv.*
 
 %changelog
+* Thu Nov 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.0-alt1
+- 0.26.0 released
+
 * Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.26-alt1
 - 0.24.26 released
 

@@ -1,5 +1,5 @@
 Name: libserd
-Version: 0.32.4
+Version: 0.32.6
 Release: alt1
 
 Summary: Lightweight C library for working with RDF data.
@@ -43,6 +43,9 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.32.6-alt1
+- 0.32.6 released
+
 * Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.32.4-alt1
 - 0.32.4 released
 
