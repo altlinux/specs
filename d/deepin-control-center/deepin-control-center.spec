@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.47
+Version: 6.1.56
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -16,7 +16,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
 Vcs: https://github.com/linuxdeepin/dde-control-center
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-control-center/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-control-center-6.1.4-alt-qch.patch
 Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
@@ -26,12 +27,14 @@ Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-qt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
 %description
 New control center for Linux Deepin.
@@ -39,6 +42,7 @@ New control center for Linux Deepin.
 %package -n lib%repo%sover
 Summary: Library for %name
 Group: System/Libraries
+Requires: libdqt6-qmlmodels = %_dqt6_version
 
 %description -n lib%repo%sover
 This package provides library for %name.
@@ -147,6 +151,10 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Thu Nov 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.56-alt1
+- New version 6.1.56.
+- Built with polkit-qt6 for DDE instead system.
+
 * Mon Sep 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.47-alt1
 - New version 6.1.47.
 
