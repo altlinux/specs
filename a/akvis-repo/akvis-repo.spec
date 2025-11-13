@@ -1,4 +1,4 @@
-%define akvis_repos http://akvis-alt.sfo2.cdn.digitaloceanspaces.com
+%define akvis_repos https://s3.regru.cloud/akvis-alt
 %define _unpackaged_files_terminate_build 1
 
 %ifdef _priority_distbranch
@@ -11,7 +11,7 @@
 %endif
 
 Name: akvis-repo
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Link to the AKVIS repository
@@ -47,6 +47,9 @@ mv -f etc %buildroot/
 %config(noreplace) /etc/apt/sources.list.d/akvis.list
 
 %changelog
+* Thu Nov 13 2025 Leonid Krivoshein <klark@altlinux.org> 1.0.4-alt1
+- Change URL of the AKVIS repository to the russian mirror.
+
 * Tue Jun 17 2025 Leonid Krivoshein <klark@altlinux.org> 1.0.3-alt1
 - Fix build for stable branches p11/c10f2.
 
