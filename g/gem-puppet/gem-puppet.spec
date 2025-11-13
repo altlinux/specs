@@ -6,7 +6,7 @@
 
 Name:          gem-puppet
 Version:       8.10.0.39
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -66,7 +66,7 @@ BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-i18n) >= 4
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(rubocop-rspec) >= 4
 BuildConflicts: gem(scanf) >= 2
 BuildConflicts: gem(semantic_puppet) >= 2
 BuildConflicts: gem(vcr) >= 7
@@ -76,6 +76,7 @@ BuildConflicts: gem(webrick) >= 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
 %ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
@@ -114,7 +115,7 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       8.10.0.39
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -147,7 +148,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    doc
 %package       -n gem-puppet-doc
 Version:       8.10.0.39
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -171,7 +172,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    devel
 %package       -n gem-puppet-devel
 Version:       8.10.0.39
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
@@ -183,7 +184,7 @@ Requires:      gem(rubocop-rake) >= 0.6
 Requires:      gem(rubocop-rspec) >= 2.0
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rubocop-rspec) >= 4
 
 %description   -n gem-puppet-devel
 A network tool for managing many disparate systems development package.
@@ -339,6 +340,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.2
+- ! fixed dep to rubocop-rspec gem
+
 * Wed Sep 10 2025 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.1
 - ^ 8.4.0 -> 8.10.0p39
 - ! fixed fault exception when no provider as user/group was defined
