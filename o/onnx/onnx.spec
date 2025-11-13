@@ -7,7 +7,7 @@
 %define abiversion 1
 Name: onnx
 Version: 1.18.0
-Release: alt2
+Release: alt3
 
 Summary: Open standard for machine learning interoperability
 License: Apache-2.0
@@ -17,7 +17,8 @@ Vcs: https://github.com/onnx/onnx
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
+Patch1: 0001-Disable-symbol-visibility-hiding.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -118,6 +119,9 @@ python3 -m pytest -vra -p no:cacheprovider -o=addopts=-Wignore
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 13 2025 Nikita Shmatko <nash@altlinux.org> 1.18.0-alt3
+- NMU: Disabled symbol visibility hiding (Closes: #55423).
+
 * Mon Jul 21 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt2
 - Fixed RPM-packages summaries and descriptions.
 
