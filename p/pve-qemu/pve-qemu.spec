@@ -13,7 +13,7 @@
 %endif
 
 Name: pve-%rname
-Version: 10.0.2
+Version: 10.1.2
 Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
@@ -32,7 +32,7 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 Source13: vitastor.c
 
-Patch: pve-qemu-9.1-vitastor.patch
+Patch: pve-qemu-10.1-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -97,6 +97,7 @@ This package contains common files for qemu.
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
 Requires: %name-common = %EVR pve-backup-client pve-backup-file-restore numactl
+#Requires: passt
 Conflicts: %rname-system %rname-ivshmem-tools %rname-tools %rname-kvm-core %rname-pr-helper %rname-img
 Conflicts: %rname-system-x86-core %rname-system-aarch64-core
 
@@ -173,6 +174,7 @@ export CFLAGS="%optflags"
         --enable-vitastor \
         --enable-seccomp \
         --enable-slirp \
+        --disable-passt \
         --enable-spice \
         --enable-usb-redir \
         --enable-virglrenderer \
@@ -329,6 +331,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 1:10.1.2-alt1
+- 10.1.2-1 (Fixes: CVE-2024-8354, CVE-2025-8860, CVE-2025-54566, CVE-2025-54567).
+
 * Fri Aug 08 2025 Alexey Shabalin <shaba@altlinux.org> 1:10.0.2-alt1
 - 10.0.2-4
 - Drop support for accessing Gluster based storage
