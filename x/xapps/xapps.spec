@@ -4,10 +4,9 @@
 %define translations_name xapp
 
 %define libxappsdir /usr/lib/xapps
-%define dataxappdir %_datadir/xapp
 
 Name: xapps
-Version: 3.0.1
+Version: 3.2.0
 Release: alt1
 
 Summary: Libraries and common resources for XApps
@@ -139,14 +138,6 @@ BuildArch: noarch
 %description -n mate-xapp-status-applet
 XAppStatusIcon applet for mate panel.
 
-%package -n xapp-scan-code-for-adwaita-symbolic-icons
-Summary: XApp scan code for adwaita symbolic icons
-Group: Graphical desktop/GNOME
-Requires: %name-applet-constants
-
-%description -n xapp-scan-code-for-adwaita-symbolic-icons
-XApp scan code for adwaita symbolic icons.
-
 %prep
 %setup
 %patch -p1
@@ -186,7 +177,6 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_libdir/gtk-3.0/modules/*.so
 %_x11sysconfdir/profile.d/*
 %dir %libxappsdir
-%dir %dataxappdir
 
 %files -n lib%name-devel
 %_includedir/*
@@ -224,11 +214,10 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
-%files -n xapp-scan-code-for-adwaita-symbolic-icons
-%_bindir/xapp-scan-code-for-adwaita-symbolic-icons
-%dataxappdir/adwaita-symbolic-icons.info
-
 %changelog
+* Thu Nov 13 2025 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 

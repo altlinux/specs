@@ -4,14 +4,15 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 2.4.2
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: Python Xapp Library
 
 License: LGPL-2.0
 Group: Development/Python
-Url: https://github.com/linuxmint/python-xapp
+URL: https://github.com/linuxmint/python-xapp
+VCS: https://github.com/linuxmint/python-xapp
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -35,11 +36,15 @@ BuildRequires: meson
 
 %install
 %meson_install
+%find_lang python-xapp
 
-%files
+%files -f python-xapp.lang
 %python3_sitelibdir/%oname/
 
 %changelog
+* Thu Nov 13 2025 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 2.4.2-alt2
 - build from git tag
 
