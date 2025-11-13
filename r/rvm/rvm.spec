@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12.126
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -66,6 +66,7 @@ Summary:       Ruby enVironment Manager (RVM) pure development package with RVM 
 Group:         Development/Ruby
 
 Requires:      %name
+Requires:      /proc
 Requires:      gem(gem-wrappers)
 Requires:      gem(rubygems-bundler)
 Requires:      gem(rake)
@@ -141,6 +142,9 @@ ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 
 %changelog
+* Wed Nov 12 2025 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.2
+- + added explicit dep to /proc for %%name-devel to make ruby compilable on e2k
+
 * Wed Jun 04 2025 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.1
 - * swapped functions of rvm and rvm-devel packages
 - > use version passed as arg for rubygem installation procedure instrad of
