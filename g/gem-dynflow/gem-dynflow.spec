@@ -5,14 +5,14 @@
 %define        gemname dynflow
 
 Name:          gem-dynflow
-Version:       1.9.0
+Version:       1.9.3
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/Dynflow/dynflow
 Vcs:           https://github.com/dynflow/dynflow.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source3:       dynflow.service
@@ -23,65 +23,53 @@ BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(activejob) >= 0
 BuildRequires: gem(activerecord) >= 0
+BuildRequires: gem(algebrick) >= 0.7.0
+BuildRequires: gem(concurrent-ruby) >= 1.1.3
+BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0
+BuildRequires: gem(csv) >= 3.1
+BuildRequires: gem(drb) >= 0
 BuildRequires: gem(minitest-reporters) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
 BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(rack-test) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(sinatra) >= 0
-BuildRequires: gem(sqlite3) >= 0
-BuildRequires: gem(concurrent-ruby-ext) >= 1.1.3
-BuildRequires: gem(pry) >= 0
-BuildRequires: gem(pry-byebug) >= 0
-BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
-BuildRequires: gem(sidekiq) >= 0
-BuildRequires: gem(pg) >= 0
-BuildRequires: gem(mysql2) >= 0
-BuildRequires: gem(theforeman-rubocop) >= 0.0.4
-BuildRequires: gem(get_process_mem) >= 0
-BuildRequires: gem(daemons) >= 0
-BuildRequires: gem(logging) >= 0
-BuildRequires: gem(rails) >= 4.2.9
-BuildRequires: gem(statsd-instrument) >= 0
-BuildRequires: gem(algebrick) >= 0.7.0
-BuildRequires: gem(apipie-params) >= 0
-BuildRequires: gem(concurrent-ruby) >= 1.1.3
-BuildRequires: gem(concurrent-ruby-edge) >= 0.6.0
 BuildRequires: gem(msgpack) >= 1.3
 BuildRequires: gem(multi_json) >= 0
+BuildRequires: gem(mutex_m) >= 0
+BuildRequires: gem(ostruct) >= 0
+BuildRequires: gem(rack-test) >= 0
+BuildRequires: gem(rake) >= 0
 BuildRequires: gem(sequel) >= 4.0.0
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(concurrent-ruby-ext) >= 2
-BuildConflicts: gem(theforeman-rubocop) >= 1
-BuildConflicts: gem(rails) >= 8
+BuildRequires: gem(sinatra) >= 0
+BuildRequires: gem(sqlite3) >= 0
+BuildRequires: gem(syslog) >= 0
 BuildConflicts: gem(algebrick) >= 0.8
 BuildConflicts: gem(concurrent-ruby) >= 2
 BuildConflicts: gem(concurrent-ruby-edge) >= 1
+BuildConflicts: gem(csv) >= 4
+BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency concurrent-ruby >= 1.2.3,concurrent-ruby < 2
-%ruby_use_gem_dependency concurrent-ruby-ext >= 1.2.3,concurrent-ruby-ext < 2
 %ruby_use_gem_dependency concurrent-ruby-edge >= 0.7,concurrent-ruby-edge < 1
-%ruby_use_gem_dependency theforeman-rubocop >= 0.1,theforeman-rubocop < 1
 %ruby_use_gem_dependency msgpack >= 1.7.2,msgpack < 2
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency rails >= 7.0,rails < 8
+%ruby_use_gem_dependency rails >= 7.1,rails < 8
+Requires:      ruby >= 2.7.0
 Requires:      gem(algebrick) >= 0.7.0
-Requires:      gem(apipie-params) >= 0
 Requires:      gem(concurrent-ruby) >= 1.1.3
 Requires:      gem(concurrent-ruby-edge) >= 0.6.0
+Requires:      gem(csv) >= 3.1
 Requires:      gem(msgpack) >= 1.3
 Requires:      gem(multi_json) >= 0
 Requires:      gem(sequel) >= 4.0.0
 Conflicts:     gem(algebrick) >= 0.8
 Conflicts:     gem(concurrent-ruby) >= 2
 Conflicts:     gem(concurrent-ruby-edge) >= 1
+Conflicts:     gem(csv) >= 4
 Obsoletes:     ruby-dynflow < %EVR
 Provides:      ruby-dynflow = %EVR
-Provides:      gem(dynflow) = 1.9.0
-
+Provides:      gem(dynflow) = 1.9.3
 
 %description
 Dynflow [DYN(amic work)FLOW] is a workflow engine written in Ruby that allows
@@ -108,14 +96,14 @@ choosing the right one (providing default implementations as well).
 
 %if_enabled    doc
 %package       -n gem-dynflow-doc
-Version:       1.9.0
+Version:       1.9.3
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dynflow
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.0
+Requires:      gem(dynflow) = 1.9.3
 
 %description   -n gem-dynflow-doc
 DYNamic workFLOW orchestration engine documentation files.
@@ -148,40 +136,28 @@ choosing the right one (providing default implementations as well).
 
 %if_enabled    devel
 %package       -n gem-dynflow-devel
-Version:       1.9.0
+Version:       1.9.3
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dynflow
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.0
+Requires:      gem(dynflow) = 1.9.3
 Requires:      gem(activejob) >= 0
 Requires:      gem(activerecord) >= 0
+Requires:      gem(drb) >= 0
 Requires:      gem(minitest-reporters) >= 0
 Requires:      gem(minitest-stub-const) >= 0
 Requires:      gem(mocha) >= 0
+Requires:      gem(mutex_m) >= 0
+Requires:      gem(ostruct) >= 0
 Requires:      gem(rack-test) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(sinatra) >= 0
 Requires:      gem(sqlite3) >= 0
-Requires:      gem(concurrent-ruby-ext) >= 1.1.3
-Requires:      gem(pry) >= 0
-Requires:      gem(pry-byebug) >= 0
-Requires:      gem(gitlab-sidekiq-fetcher) >= 0
-Requires:      gem(sidekiq) >= 0
-Requires:      gem(pg) >= 0
-Requires:      gem(mysql2) >= 0
-Requires:      gem(theforeman-rubocop) >= 0.0.4
-Requires:      gem(get_process_mem) >= 0
-Requires:      gem(daemons) >= 0
-Requires:      gem(logging) >= 0
-Requires:      gem(rails) >= 4.2.9
-Requires:      gem(statsd-instrument) >= 0
+Requires:      gem(syslog) >= 0
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(concurrent-ruby-ext) >= 2
-Conflicts:     gem(theforeman-rubocop) >= 1
-Conflicts:     gem(rails) >= 8
 
 %description   -n gem-dynflow-devel
 DYNamic workFLOW orchestration engine development package.
@@ -213,14 +189,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n dynflow
-Version:       1.9.0
+Version:       1.9.3
 Release:       alt1
 Summary:       DYNamic workFLOW engine executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета dynflow
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.9.0
+Requires:      gem(dynflow) = 1.9.3
 Requires:      gem-dynflow = %EVR
 
 %description   -n dynflow
@@ -235,31 +211,58 @@ Ruby workflow/orchestration engine
 
 %install
 %ruby_install
+install -Dm0755 %SOURCE1 %buildroot%_sbindir/dynflow
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/dynflow
+install -Dm0644 %SOURCE3 %buildroot%_unitdir/dynflow.service
+mkdir -p %buildroot%_sharedstatedir/dynflow %buildroot%_logdir/dynflow %buildroot/run/dynflow
+
+%pre           -n dynflow
+# Add the "dynflow" user and group
+getent group dynflow >/dev/null || %_sbindir/groupadd -r dynflow
+getent passwd _dynflow >/dev/null || \
+   %_sbindir/useradd -r -g dynflow -d %_sharedstatedir/dynflow -s /bin/bash -c "Dynflow service" _dynflow
+exit 0
+
+%post          -n dynflow
+%post_service dynflow
+
+%preun         -n dynflow
+%preun_service dynflow
 
 %check
 %ruby_test
 
 %files
-%doc README.md
+%doc MIT-LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-dynflow-doc
-%doc README.md
+%doc MIT-LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-dynflow-devel
-%doc README.md
+%doc MIT-LICENSE README.md
 %endif
 
 %files         -n dynflow
-%doc README.md
+%doc MIT-LICENSE README.md
+%_sbindir/dynflow
+%_unitdir/dynflow.service
+%config(noreplace) %_sysconfdir/sysconfig/dynflow
+%attr(770,_dynflow,dynflow) %_sharedstatedir/dynflow
+%attr(770,_dynflow,dynflow) %_logdir/dynflow
+%attr(770,_dynflow,dynflow) /run/dynflow
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 1.9.3-alt1
+- ^ 1.9.0 -> 1.9.3
+- ! fixed lost files by their restoration
+
 * Thu Oct 03 2024 Pavel Skrylev <majioa@altlinux.org> 1.9.0-alt1
 - ^ 1.6.10 -> 1.9.0
 
