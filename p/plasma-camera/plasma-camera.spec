@@ -4,7 +4,7 @@
 %define libplasma_camera libplasma-camera%sover
 
 Name: %rname
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 %K6init
 
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel qt6-multimedia-devel qt6-sensors-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kconfig-devel kf6-kirigami-devel
-BuildRequires: libcamera-devel
+BuildRequires: libcamera-devel libexiv2-devel
 
 %description
 Simple camera application for mobile devices.
@@ -46,6 +46,9 @@ Simple camera application for mobile devices.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
+- new version
+
 * Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt1
 - new version
 - rename package
