@@ -13,8 +13,8 @@
 %endif
 
 Name: %rname
-Version: 6.4.5
-Release: alt3
+Version: 6.4.6
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Thu Oct 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt3
 - fix start baloo from settings
 

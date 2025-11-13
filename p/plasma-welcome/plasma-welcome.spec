@@ -3,8 +3,8 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.4.5
-Release: alt2
+Version: 6.4.6
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -68,6 +68,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Wed Oct 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt2
 - don't change default Discover apps suggestions
 

@@ -5,7 +5,7 @@
 
 
 Name: %rname
-Version: 6.4.5
+Version: 6.4.6
 Release: alt1
 %K6init
 
@@ -99,6 +99,9 @@ Compatibility package.
 %_K6lib/libplasma-volume.so.*
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 

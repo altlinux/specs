@@ -1,11 +1,11 @@
 %define rname drkonqi
-%define _sysd_unitdir /usr/lib/systemd/user
-%define _sysd_userunitdir /usr/lib/systemd/system
+%define _sysd_unitdir /usr/lib/systemd/system
+%define _sysd_userunitdir /usr/lib/systemd/user
 %add_python3_path %_K6data/drkonqi/gdb/python/gdb_preamble/
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.4.5
+Version: 6.4.6
 Release: alt1
 #Epoch: 1
 %K6init
@@ -81,6 +81,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname flatpak-kcm
 
 Name: %rname
-Version: 6.4.5
+Version: 6.4.6
 Release: alt1
 %K6init
 
@@ -44,6 +44,9 @@ The KCM allows changing what permissions have been granted to installed Flatpak 
 %_K6xdgapp/*flatpak*.desktop
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Tue Sep 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt1
 - new version
 

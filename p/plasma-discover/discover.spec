@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.4.5
-Release: alt2
+Version: 6.4.6
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -354,6 +354,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.4.5-alt2
 - added display of the package maintainer when installing from a file
 - fixed and improved the package details displayed when installing from a file

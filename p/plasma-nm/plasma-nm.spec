@@ -8,8 +8,8 @@
 %endif
 
 Name: %rname
-Version: 6.4.5
-Release: alt3
+Version: 6.4.6
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -282,6 +282,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
+- new version
+
 * Thu Oct 30 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.5-alt3
 - add patch against kdebug#461055
 
