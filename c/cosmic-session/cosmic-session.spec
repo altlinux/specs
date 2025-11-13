@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .beta.1
+%define beta .beta.6
 %define rdn_name com.system76.CosmicSession
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-session
 Version: %ver_major.0
-Release: alt0.80%beta
+Release: alt0.81%beta
 
 Summary: COSMIC Session Manager
 License: GPL-3.0
@@ -90,6 +90,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Thu Nov 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.81.beta.6
+- 1.0.0-beta.6
+
 * Sun Sep 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.80.beta.1
 - 1.0.0-beta.1
 
