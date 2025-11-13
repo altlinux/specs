@@ -9,12 +9,12 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.10.7
+Version: 3.10.8
 Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
-License: see LICENSE
+License: PSF-2.0 and MIT and CC0-1.0
 Group: Development/Python3
 URL: https://pypi.org/project/matplotlib
 # https://matplotlib.sourceforge.net
@@ -391,6 +391,9 @@ py.test-3 --pyargs matplotlib.tests \
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Thu Nov 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.8-alt1
+- Automatically updated to 3.10.8 (Closes: #55762).
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.7-alt1
 - Automatically updated to 3.10.7.
 
