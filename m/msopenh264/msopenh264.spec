@@ -1,6 +1,6 @@
 Name:    msopenh264
-Version: 5.2.0
-Release: alt1.git041b07a
+Version: 5.4.58
+Release: alt1
 
 Summary: MsOpenH264 is an H.264 encoder/decoder plugin for mediastreamer2 based on the openh264 library
 License: GPL-2.0
@@ -47,5 +47,8 @@ export CMAKE_PREFIX_PATH=%_datadir/bctoolbox/cmake:$CMAKE_PREFIX_PATH
 %_libdir/mediastreamer/plugins/libmsopenh264.so
 
 %changelog
+* Thu Nov 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.58-alt1
+- New version 5.4.58.
+
 * Mon Aug 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.2.0-alt1.git041b07a
 - Initial build for Sisyphus.
