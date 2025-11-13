@@ -8,7 +8,7 @@ BuildRequires(pre): rpm-macros-alternatives
 
 Name:           environment-modules
 Version:        5.3.1
-Release:        alt1_2
+Release:        alt1_2.1
 Summary:        Provides dynamic modification of a user's environment
 
 License:        GPL-2.0-or-later
@@ -20,14 +20,14 @@ BuildRequires:  dejagnu
 BuildRequires:  sed
 BuildRequires:  less
 BuildRequires:  coreutils
-BuildRequires:  libprocps procps
+BuildRequires:  procps
 # specific requirements to build extension library
 BuildRequires:  gcc
 BuildRequires:  tcl-devel
 Requires:       libtcl tcl
 Requires:       sed
 Requires:       less
-Requires:       libprocps procps
+Requires:       procps
 Requires:       man-db
 Requires(post): coreutils
 Provides:       environment(modules)
@@ -196,6 +196,9 @@ fi
 
 
 %changelog
+* Thu Nov 13 2025 Mikhail Efremov <sem@altlinux.org> 5.3.1-alt1_2.1
+- NMU: Dropped unneeded dependencies.
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 5.3.1-alt1_2
 - update to new release by fcimport
 

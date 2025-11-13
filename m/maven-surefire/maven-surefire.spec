@@ -14,7 +14,7 @@ BuildRequires: jpackage-11
 
 Name:           maven-surefire
 Version:        3.2.2
-Release:        alt1
+Release:        alt2
 Summary:        Test framework project
 License:        Apache-2.0 and CPL-1.0
 URL:            https://maven.apache.org/surefire/
@@ -58,7 +58,7 @@ BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 %endif
 
 # PpidChecker relies on /usr/bin/ps to check process uptime
-Requires:       libprocps procps
+Requires:       procps
 Source44: import.info
 
 %description
@@ -190,6 +190,9 @@ find -name *.java -exec sed -i -e s/org.apache.maven.surefire.shared.utils/org.a
 %doc --no-dereference cpl-v10.html
 
 %changelog
+* Thu Nov 13 2025 Mikhail Efremov <sem@altlinux.org> 0:3.2.2-alt2
+- Dropped unneeded dependencies.
+
 * Tue May 06 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.2.2-alt1
 - New version 3.2.2 (thanks CentOS for the spec).
 
