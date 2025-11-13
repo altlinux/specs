@@ -2,37 +2,24 @@
 %def_disable 	debug
 
 %def_enable 	svg
-%ifnarch %e2k
 %def_enable 	networkmanager
-%else
-%def_disable 	networkmanager
-%endif
 
 %def_enable		manual
 
 # pligins
 %def_enable 	archive
 %def_disable	bsfilter
-%ifnarch %e2k
 %def_disable 	dillo
 %def_enable 	fancy
-%else
-%def_enable 	dillo
-%def_disable 	fancy
-%endif
 %def_enable 	litehtmlviewer
-%ifnarch %e2k
 %def_enable 	python
-%else
-%def_disable 	python
-%endif
 %def_enable 	tnef
 
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
 Version:	4.3.1
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -829,6 +816,11 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Nov 13 2025 Michael Shigorin <mike@altlinux.org> 4.3.1-alt2
+- E2K: the repository includes all packages to build
+  fancy, networkmanager and python plugins, so these
+  are now built for Elbrus too.
+
 * Wed Feb 26 2025 Mikhail Efremov <sem@altlinux.org> 4.3.1-alt1
 - Enabled Ayatana indicator support in the notification plugin.
 - Updated to 4.3.1.
