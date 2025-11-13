@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 3.9.1
-Release: alt1
+Release: alt2
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -20,12 +20,12 @@ Source7: zookeeper.service
 Patch0: kafka-pathes.patch
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires: java-17-openjdk-devel
+BuildRequires: java-devel
 BuildRequires: maven-local
 BuildRequires: gradle
 
 AutoReqProv: yes, noosgi-fc
-Requires: java >= 17
+Requires: java >= 21.0.0
 # Require native library and override bad library from vendoring jar
 Requires: libzstd-jni
 
@@ -90,6 +90,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu Nov 13 2025 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt2
+- Rebuilt with Java 21.x.
+
 * Wed Nov 12 2025 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt1
 - New version (fixes: CVE-2025-27819, CVE-2025-27818, CVE-2025-27817).
 
