@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.6
-Release: alt3.1
+Release: alt3.2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -1321,6 +1321,11 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Nov 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.6-alt3.2
+- NMU: fix:
+  + launch HP Device Manager via *.desktop while hp-systray is running in Gnome (ALT #54987)
+  + launch HP Device Manager via *.desktop while hp-systray is running in other DE (ALT #54478)
+
 * Sat Nov 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.6-alt3.1
 - NMU: fix: icon not displayed (ALT #56320)
 
