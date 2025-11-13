@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -35,9 +35,15 @@ A gui application for verification and creation of digitally signed pdf document
 %_datadir/applications/surguch.desktop
 %_datadir/icons/hicolor/scalable/apps/SealWax-1_32.svg
 %_datadir/pixmaps/SealWax-1_32.png
+%_datadir/metainfo/surguch.metainfo.xml
 
 
 %changelog
+* Wed Nov 12 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.2-alt1
+- Minor fixes (Closes #56761, #56749):
+  * Add meta info XML file.
+  * Fix the error message typo.
+
 * Wed Oct 29 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.4.1-alt1
 - Fix scroll and save in PDF mode (Closes: #56649, #56655)
 
