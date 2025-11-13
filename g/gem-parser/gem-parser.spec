@@ -7,7 +7,7 @@
 Name:          gem-parser
 Epoch:         1
 Version:       3.3.9.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
@@ -51,6 +51,7 @@ Conflicts:     gem(ast) >= 2.5
 Provides:      gem(parser) = 3.3.9.0.2
 
 %ruby_use_gem_version parser:3.3.9.0.2
+%ruby_on_build_rake_tasks generate_release
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -62,7 +63,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %package       -n ruby-parse
 Version:       3.3.9.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A Ruby parser executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
 Group:         Other
@@ -89,7 +90,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 %if_enabled    doc
 %package       -n gem-parser-doc
 Version:       3.3.9.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
@@ -114,7 +115,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 %if_enabled    devel
 %package       -n gem-parser-devel
 Version:       3.3.9.0.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
 Group:         Development/Ruby
@@ -187,6 +188,9 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %changelog
+* Sat Oct 18 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.3.9.0.2-alt0.2
+- ! fixed lost code generation procedure
+
 * Thu Oct 02 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.3.9.0.2-alt0.1
 - ^ 3.3.4.0 -> 3.3.9.0p2
 
