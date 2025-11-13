@@ -1,49 +1,47 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname mysql2
 
 Name:          gem-mysql2
-Version:       0.5.5
+Version:       0.5.7
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/brianmario/mysql2
 Vcs:           https://github.com/brianmario/mysql2.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libmysqlclient-devel
-%if_with check
-BuildRequires: gem(rake) >= 13.0.1
-BuildRequires: gem(rake-compiler) >= 1.1.0
-BuildRequires: gem(irb) >= 0
+%if_enabled check
+BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(eventmachine) >= 0
-BuildRequires: gem(rspec) >= 3.2
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(activerecord) >= 3.0
-BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(do_mysql) >= 0
-BuildRequires: gem(faker) >= 0
-BuildRequires: gem(sequel) >= 0
+BuildRequires: gem(irb) >= 0
 BuildRequires: gem(pry) >= 0
+BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rake-compiler-dock) >= 0.7.0
+BuildRequires: gem(rspec) >= 3.2
+BuildRequires: gem(rubocop) >= 0
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rake-compiler-dock) >= 2
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
+Requires:      ruby >= 2.0.0
+Requires:      gem(bigdecimal) >= 0
 Obsoletes:     ruby-mysql2 < %EVR
 Provides:      ruby-mysql2 = %EVR
-Provides:      gem(mysql2) = 0.5.5
-
+Provides:      gem(mysql2) = 0.5.7
 
 %description
 The Mysql2 gem is meant to serve the extremely common use-case of connecting,
@@ -56,15 +54,16 @@ in 1.9, unless Encoding.default_internal is set then it will convert from UTF-8
 to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 
+%if_enabled    doc
 %package       -n gem-mysql2-doc
-Version:       0.5.5
+Version:       0.5.7
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mysql2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mysql2) = 0.5.5
+Requires:      gem(mysql2) = 0.5.7
 
 %description   -n gem-mysql2-doc
 A modern, simple and very fast Mysql library for Ruby - binding to libmysql
@@ -81,35 +80,33 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 %description   -n gem-mysql2-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета mysql2.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-mysql2-devel
-Version:       0.5.5
+Version:       0.5.7
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mysql2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mysql2) = 0.5.5
-Requires:      gem(rake) >= 13.0.1
-Requires:      gem(rake-compiler) >= 1.1.0
-Requires:      gem(irb) >= 0
-Requires:      gem(eventmachine) >= 0
-Requires:      gem(rspec) >= 3.2
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(activerecord) >= 3.0
-Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(do_mysql) >= 0
-Requires:      gem(faker) >= 0
-Requires:      gem(sequel) >= 0
-Requires:      gem(pry) >= 0
-Requires:      gem(rake-compiler-dock) >= 0.7.0
 Requires:      libmysqlclient-devel
+Requires:      gem(mysql2) = 0.5.7
+Requires:      gem(bigdecimal) >= 0
+Requires:      gem(eventmachine) >= 0
+Requires:      gem(irb) >= 0
+Requires:      gem(pry) >= 0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(rake-compiler) >= 1.1.2
+Requires:      gem(rake-compiler-dock) >= 0.7.0
+Requires:      gem(rspec) >= 3.2
+Requires:      gem(rubocop) >= 0
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rake-compiler-dock) >= 2
+Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-mysql2-devel
 A modern, simple and very fast Mysql library for Ruby - binding to libmysql
@@ -126,6 +123,7 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 %description   -n gem-mysql2-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета mysql2.
+%endif
 
 
 %prep
@@ -141,21 +139,28 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-mysql2-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-mysql2-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 0.5.7-alt1
+- ^ 0.5.5 -> 0.5.7
+
 * Fri Dec 01 2023 Pavel Skrylev <majioa@altlinux.org> 0.5.5-alt1
 - ^ 0.5.4[2] -> 0.5.5
 
