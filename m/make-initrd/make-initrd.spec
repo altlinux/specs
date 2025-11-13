@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.55.2
-Release: alt2
+Version: 2.56.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -71,8 +71,6 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-feature-mdadm-Guess-modules-for-raid-components.patch   
-Patch1: 0002-feature-guess-nvme-New-feature-to-add-nvme-modules.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -405,6 +403,15 @@ fi
 %endif
 
 %changelog
+* Thu Nov 13 2025 Anton Midyukov <antohami@altlinux.org> 2.56.0-alt1
+- - Feature mdadm:
+  + Workaround for the error in determining the RAID device in use.
+  + Added another mechanism for determining dependencies in raid devices.
+- Feature guess-nvme:
+  + The feature adds the ability to search and add nvme devices.
+- Feature fsck:
+  + Add fsck arguments support.
+
 * Sun Nov 09 2025 Anton Midyukov <antohami@altlinux.org> 2.55.2-alt2
 - add upstream fixes:
   + feature/mdadm: Guess modules for raid components
