@@ -5,28 +5,28 @@
 %define        gemname ldap_fluff
 
 Name:          gem-ldap-fluff
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style
 License:       GPL-2.0-only
 Group:         Other
 Url:           https://github.com/theforeman/ldap_fluff
 Vcs:           https://github.com/theforeman/ldap_fluff.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake) >= 13.1.0
-BuildConflicts: gem(rake) >= 14
 %if_enabled check
 BuildRequires: gem(activesupport) >= 5
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(net-ldap) >= 0.11
+BuildRequires: gem(rake) >= 13.1
 BuildRequires: gem(theforeman-rubocop) >= 0.0.6
 BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(net-ldap) >= 1
+BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(theforeman-rubocop) >= 1
 %endif
 
@@ -40,7 +40,7 @@ Requires:      gem(net-ldap) >= 0.11
 Conflicts:     ruby >= 4
 Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(net-ldap) >= 1
-Provides:      gem(ldap_fluff) = 0.8.0
+Provides:      gem(ldap_fluff) = 0.9.0
 
 %description
 Simple library for binding & group querying on top of various LDAP
@@ -49,14 +49,14 @@ implementations
 
 %if_enabled    doc
 %package       -n gem-ldap-fluff-doc
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ldap_fluff
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ldap_fluff) = 0.8.0
+Requires:      gem(ldap_fluff) = 0.9.0
 
 %description   -n gem-ldap-fluff-doc
 LDAP querying tools for Active Directory, FreeIPA and POSIX-style documentation
@@ -72,20 +72,18 @@ implementations
 
 %if_enabled    devel
 %package       -n gem-ldap-fluff-devel
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       LDAP querying tools for Active Directory, FreeIPA and POSIX-style development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ldap_fluff
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ldap_fluff) = 0.8.0
+Requires:      gem(ldap_fluff) = 0.9.0
 Requires:      gem(minitest) >= 5.0
-Requires:      gem(rake) >= 13.1.0
-Requires:      gem(theforeman-rubocop) >= 0.0.6
+Requires:      gem(rake) >= 13.1
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rake) >= 14
-Conflicts:     gem(theforeman-rubocop) >= 1
 
 %description   -n gem-ldap-fluff-devel
 LDAP querying tools for Active Directory, FreeIPA and POSIX-style development
@@ -129,6 +127,9 @@ implementations
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1
+- ^ 0.8.0 -> 0.9.0
+
 * Mon Dec 09 2024 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - ^ 0.6.0 -> 0.8.0
 - * define explicit dependencies
