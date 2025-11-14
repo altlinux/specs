@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-chksum
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: ALT distro checksum downloader
@@ -12,6 +12,7 @@ Packager: Paul Wolneykien <manowar@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires: shellcheck
 BuildArch: noarch
 
 Requires: verify-checksums >= 1.0.11
@@ -29,11 +30,18 @@ verification procedure.
 %install
 install -D -m0755 %name %buildroot/%_bindir/%name
 
+%check
+shellcheck %name
+
 %files
 %doc README
 %_bindir/%name
 
 %changelog
+* Fri Nov 14 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt1
+- Updated expired GPG keys (Fixes: OVE-20251114-0001).
+- Updated README.
+
 * Fri Feb 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt1
 - Fix: Don't pull extra branches when update.
 
