@@ -1,16 +1,16 @@
 %define oname hawkmoth
 
 Name:    python3-module-%oname
-Version: 0.19.0
+Version: 0.22.0
 Release: alt1
 
 Summary: Hawkmoth - Sphinx Autodoc for C
 
 Group:   Development/Python3
-License: BSD
+License: BSD-2-Clause
 URL:     https://pypi.org/project/hawkmoth/
+Vcs:     https://github.com/jnikula/hawkmoth
 
-# https://files.pythonhosted.org/packages/11/0b/f019c272d1cabc588e9d238250b006ae0227fe3dde1f93d3591ed29f2efd/hawkmoth-0.18.0.tar.gz
 Source0: %oname-%version.tar
 
 BuildArch: noarch
@@ -45,6 +45,10 @@ using Sphinx, mainly through its simplicity of design, implementation and use.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 0.22.0-alt1
+- 0.22.0.
+- Update SPDX License type.
+
 * Tue Oct 29 2024 L.A. Kostis <lakostis@altlinux.ru> 0.19.0-alt1
 - 0.19.0.
 - BR: added hatchling module.
