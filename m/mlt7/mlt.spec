@@ -18,7 +18,7 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.32.0
+Version: 7.34.1
 Release: alt1
 %K5init no_altplace
 
@@ -51,6 +51,7 @@ BuildRequires: libvidstab-devel
 %if_enabled opencv
 BuildRequires: libopencv-devel
 %endif
+BuildRequires: movit-devel
 BuildRequires: python3-devel
 BuildRequires: libgdk-pixbuf-devel libpango-devel
 
@@ -63,9 +64,24 @@ Group: Video
 %description -n %nam-utils
 %Name utils.
 
+%package -n %nam-qt5
+Summary: %Name Qt plugins
+Group: Video
+Conflicts: libmlt7 < 7.34.1
+%description -n %nam-qt5
+%Name Qt plugins.
+
+%package -n %nam-qt6
+Summary: %Name Qt plugins
+Group: Video
+Conflicts: libmlt7 < 7.34.1
+%description -n %nam-qt6
+%Name Qt plugins.
+
 %package -n %libmlt
 Summary: %Name framework library
 Group: System/Libraries
+Requires: %nam-qt6 >= %version
 %description -n %libmlt
 %Name is a multimedia framework designed for television broadcasting.
 
@@ -137,7 +153,17 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_libdir/libmlt-%mlt_major.so.%mlt_sover
 %_libdir/libmlt-%mlt_major.so.*
 %_libdir/mlt-%mlt_major/
+%exclude %_libdir/mlt-%mlt_major/libmltglaxnimate*.so
+%exclude %_libdir/mlt-%mlt_major/libmltqt*.so
 %_datadir/mlt-%mlt_major/
+
+%files -n %nam-qt5
+%exclude %_libdir/mlt-%mlt_major/libmltglaxnimate.so
+%exclude %_libdir/mlt-%mlt_major/libmltqt.so
+
+%files -n %nam-qt6
+%exclude %_libdir/mlt-%mlt_major/libmltglaxnimate-qt6.so
+%exclude %_libdir/mlt-%mlt_major/libmltqt6.so
 
 %files -n %libmltxx
 %_libdir/libmlt++-%mlt_major.so.%mltxx_sover
@@ -160,6 +186,10 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 7.34.1-alt1
+- new version
+- split Qt plugins to separate packages
+
 * Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 7.32.0-alt1
 - new version
 
