@@ -6,17 +6,18 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: Relaxed test discovery/organization for pytest
 License: BSD-2-Clause
 Group: Development/Python
-BuildArch: noarch
 Url: https://pypi.org/project/pytest-relaxed/
 Vcs: https://github.com/bitprophet/pytest-relaxed
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -57,6 +58,9 @@ it with an underscore.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 2.0.2-alt2
+- Fixed FTBFS (Pytest 8.4).
+
 * Mon Apr 01 2024 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 2.0.1 -> 2.0.2.
 
