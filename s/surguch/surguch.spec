@@ -1,5 +1,5 @@
 Name: surguch
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 License: GPL-3.0-or-later
 
@@ -39,6 +39,9 @@ A gui application for verification and creation of digitally signed pdf document
 
 
 %changelog
+* Fri Nov 14 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.3-alt1
+- Update application metadata (thanks to @sirius)
+
 * Wed Nov 12 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.2-alt1
 - Minor fixes (Closes #56761, #56749):
   * Add meta info XML file.
