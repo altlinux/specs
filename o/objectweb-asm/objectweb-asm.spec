@@ -1,48 +1,36 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
+Name: objectweb-asm
+Version: 9.9
+Release: alt1
+
+Summary: Java bytecode manipulation and analysis framework
+License: BSD
 Group: Development/Java
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires(pre): /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+Url: https://asm.ow2.org
+Vcs: https://gitlab.ow2.org/asm/asm.git
+BuildArch: noarch
 
-Name:           objectweb-asm
-Version:        9.7.1
-Release:        alt1
-Summary:        Java bytecode manipulation and analysis framework
-License:        BSD
-URL:            https://asm.ow2.org/
-BuildArch:      noarch
-
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-Source1:        parent.pom
-Source2:        https://repo1.maven.org/maven2/org/ow2/asm/asm/%{version}/asm-%{version}.pom
-Source3:        https://repo1.maven.org/maven2/org/ow2/asm/asm-analysis/%{version}/asm-analysis-%{version}.pom
-Source4:        https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/%{version}/asm-commons-%{version}.pom
-Source5:        https://repo1.maven.org/maven2/org/ow2/asm/asm-test/%{version}/asm-test-%{version}.pom
-Source6:        https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/%{version}/asm-tree-%{version}.pom
-Source7:        https://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/asm-util-%{version}.pom
-# The source contains binary jars that cannot be verified for licensing and could be proprietary
-Source9:        generate-tarball.sh
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
+Source0: %name-%version.tar
+Patch0: 0001-Remove-all-external-gradle-plugins-alt-patch.patch
+Patch1: 0002-Janino-3.1.7-compatibility-for-tests-alt-patch.patch
+%if_with check
+# Fix warnings "unknown enum constant Status.STABLE".
+Patch2: 0003-Add-an-explicit-dependency-on-apiguardian-alt-patch.patch
 %endif
 
-# Explicit javapackages-tools requires since asm-processor script uses
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: rpm-build-java-osgi
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: xgradle
+%if_with check
+BuildRequires: junit5
+BuildRequires: janino
+BuildRequires: apiguardian
+%endif
 
 %description
 ASM is an all purpose Java bytecode manipulation and analysis
@@ -51,47 +39,46 @@ generate classes, directly in binary form.  Provided common
 transformations and analysis algorithms allow to easily assemble
 custom complex transformations and code analysis tools.
 
-%package        javadoc
+%package javadoc
 Group: Development/Java
-Summary:        API documentation for %{name}
+Summary: API documentation for %name
 BuildArch: noarch
 
-%description    javadoc
-This package provides %{summary}.
+%description javadoc
+This package provides %summary.
 
 %prep
-%setup -q
-
-# A custom parent pom to aggregate the build
-cp -p %{SOURCE1} pom.xml
-
-# Insert poms into modules
-for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util; do
-  cp -p $RPM_SOURCE_DIR/${pom}-%{version}.pom $pom/pom.xml
-  %pom_remove_parent $pom
-done
-
-# No need to ship the custom parent pom
-%mvn_package :asm-aggregator __noinstall
-# Don't ship the test framework to avoid runtime dep on junit
-%mvn_package :asm-test __noinstall
+%setup
+%autopatch -p1
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%gradle_publish -Prelease
 
 %install
-%mvn_install
+%gradle_register_bom --remove-parent=all
+%gradle_register --exclude-artifacts=asm-test --remove-parent=all
+%gradle_register_javadoc --exclude-artifacts=asm-test
 
-%jpackage_script org.objectweb.asm.xml.Processor "" "" %{name}/asm:%{name}/asm-attrs:%{name}/asm-util %{name}-processor true
+%gradle_install
+
+%check
+# We must explicitly specify the encoding when building in hasher
+# if it is not explicitly specified by upstream in the build file.
+%gradle_check -Dfile.encoding=UTF-8
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt
-%{_bindir}/%{name}-processor
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Nov 13 2025 Ivan Khanas <xeno@altlinux.org> 9.9-alt1
+- New version.
+- Switch to xgradle.
+- Add JPMS support by compiling module-info.java.
+- Add asm-bom installation to include as a platform in Gradle.
+
 * Sun Feb 23 2025 Andrey Cherepanov <cas@altlinux.org> 0:9.7.1-alt1
 - new version
 
