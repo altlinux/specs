@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	6.17
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.17
-%define kernel_sublevel .7
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 14 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.17.8-alt1
+- 6.17.8
+
 * Wed Nov 05 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.17.7-alt1
 - 6.17.7
 
