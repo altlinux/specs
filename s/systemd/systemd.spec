@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -1416,10 +1416,15 @@ if [ -f /etc/nsswitch.conf ] ; then
                 s/^(shadow|gshadow):.*/& systemd/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
     # Fix: add [SUCCESS=merge] before systemd to group
-            grep -E -q '^group:.*[SUCCESS=merge] systemd' /etc/nsswitch.conf ||
+            grep -E -q '^group:.*\[SUCCESS=merge\] systemd' /etc/nsswitch.conf ||
             sed -i.rpmorig -r -e '
-		s/^(group:.*)(systemd)/\1[SUCCESS=merge] \2/
+                s/^(group:.*)(systemd)/\1[SUCCESS=merge] \2/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
+    # Fix: delete duplicates [SUCCESS=merge]
+            # grep -E -q '^group:.*( \[SUCCESS=merge\]){2,}' /etc/nsswitch.conf &&
+            sed -i.rpmorig -r -e '
+                 s/( \[SUCCESS=merge\])+/ \[SUCCESS=merge\]/
+                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
 
@@ -2643,6 +2648,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Nov 14 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.2-alt1
+- 258.2.
+- Fix add [SUCCESS=merge] to /etc/nsswitch.conf.
+
 * Wed Oct 15 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.1-alt1
 - 258.1.
 - Fix update nsswitch.conf.
