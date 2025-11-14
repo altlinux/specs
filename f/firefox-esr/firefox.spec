@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.4.0
+Version: 140.5.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -148,6 +148,8 @@ Group:		System/Configuration/Networking
 Requires: %name
 Conflicts: firefox-config-privacy
 
+Provides: x-www-browser
+
 %description config-privacy
 Settings disable:
 * obsolete ssl protocols;
@@ -159,6 +161,7 @@ Settings disable:
 * and some more...
 
 Most likely you don't need to use this package.
+
 
 %prep
 %setup -q -n firefox-%version -c
@@ -434,6 +437,20 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Nov 14 2025 Pavel Vasenkov <pav@altlinux.org> 140.5.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-13012 Race condition in the Graphics component
+  + CVE-2025-13016 Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2025-13017 Same-origin policy bypass in the DOM: Notifications component
+  + CVE-2025-13018 Mitigation bypass in the DOM: Security component
+  + CVE-2025-13019 Same-origin policy bypass in the DOM: Workers component
+  + CVE-2025-13013 Mitigation bypass in the DOM: Core & HTML component
+  + CVE-2025-13020 Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2025-13014 Use-after-free in the Audio/Video component
+  + CVE-2025-13015 Spoofing issue in Firefox
+- provides x-www-browser (Closes: #44717).
+
 * Wed Oct 15 2025 Pavel Vasenkov <pav@altlinux.org> 140.4.0-alt1
 - New ESR version.
 - Security fixes:
