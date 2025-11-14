@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.9.5
+Version: 1.9.7
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -121,6 +121,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Fri Nov 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.7-alt1
+- 1.9.7 released
+
 * Mon May 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.5-alt1
 - 1.9.5 released
 
