@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.57
+%define kernel_sublevel	.58
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -316,6 +316,7 @@ CONFIGS="config config-rk3588"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
+%{?kconfig_hook}
 make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 %make_build %make_target || {
 	%make %make_target V=1
@@ -511,6 +512,14 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Nov 14 2025 Alexei Takaseev <taf@altlinux.org> 6.12.58-alt1
+- v6.12.58 (2025-11-13).
+- In order to support rk3588j, CONFIG_NVMEM_ROCKCHIP_OTP has to be set to Y
+- config: CONFIG_SOUNDWIRE_AMD=m
+- config: CONFIG_SND_SOC_AMD_ACP_COMMON=m
+- config: Unset CONFIG_BASE_SMALL
+- spec: Add %kconfig_hook macro invocation just after oldconfig
+
 * Mon Nov 03 2025 Alexei Takaseev <taf@altlinux.org> 6.12.57-alt1
 - v6.12.57 (2025-11-02).
 
