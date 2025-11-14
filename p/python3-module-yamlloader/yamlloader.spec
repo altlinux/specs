@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name yamlloader
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 Summary: Ordered YAML loader and dumper for PyYAML
 License: MIT
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -47,10 +50,13 @@ preservation of insertion order is a language feature of regular dicts.).
 
 %files
 %doc README.rst
-%python3_sitelibdir/yamlloader/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
+- 1.5.2 -> 1.6.0.
+
 * Wed Aug 06 2025 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2.
 
