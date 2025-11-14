@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.0.4
+Version: 6.0.5
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -98,6 +98,9 @@ fi
 
 
 %changelog
+* Fri Nov 14 2025 Anton Golubev <golubevan@altlinux.org> 6.0.5-alt1
+- implement image removal in helper (Closes: 56840)
+
 * Wed Nov 05 2025 Anton Golubev <golubevan@altlinux.org> 6.0.4-alt1
 - security fixes:
   + CVE-2025-62876: The KAuth helper program insecurely created files in
