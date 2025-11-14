@@ -2,7 +2,7 @@
 
 Name: unbound
 Version: 1.24.1
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -17,7 +17,7 @@ Requires(pre): lib%name = %version-%release
 
 Provides: %name-chroot(%_chrootdir)
 
-BuildRequires: /proc flex gcc-c++ libssl-devel libexpat-devel libevent-devel
+BuildRequires: /proc flex gcc-c++ libssl-devel libexpat-devel libevent-devel libprotobuf-c-devel protobuf-c-compiler
 BuildRequires: pkgconfig(libsystemd)
 %if %with_python == 2
 BuildRequires: python-devel swig
@@ -121,7 +121,8 @@ Python3 modules and extensions for unbound
 	    PYTHON_VERSION=%with_python \
 	    --with-pythonmodule --with-pyunbound \
 %endif
-	    --enable-sha2
+	    --enable-sha2 \
+	    --enable-dnstap
 %make_build
 
 subst 's|# auto-trust-anchor-file:|auto-trust-anchor-file:|g' doc/example.conf
@@ -237,6 +238,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri Nov 14 2025 Alexei Takaseev <taf@altlinux.org> 1.24.1-alt2
+- Enable dnstap feature (ALT #56847)
+
 * Thu Oct 23 2025 Alexei Takaseev <taf@altlinux.org> 1.24.1-alt1
 - 1.24.1 (Fixes: CVE-2025-11411)
 
