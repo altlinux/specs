@@ -4,18 +4,18 @@
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 1.0
+%define ver_major 1.1
 %define rdn_name io.missioncenter.MissionCenter
 # nvtop for magpie
 # subprojects/magpie/platform-linux/3rdparty/nvtop/nvtop.json
-%define nvtop_ver 73291884d926445e499d6b9b71cb7a9bdbc7c393
+%define nvtop_ver 339ee0b10a64ec51f43d27357b0068a40f16e9e4
 
 %def_disable bootstrap
 
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mission Center
@@ -36,9 +36,9 @@ Source2: https://github.com/Syllo/nvtop/archive/%nvtop_ver.tar.gz
 
 ExcludeArch: %ix86 armh ppc64le
 
-%define glib_ver 2.76
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define glib_ver 2.86
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 
 Requires: dconf
 # no dmidecode required since 1.0.0
@@ -102,6 +102,9 @@ mv nvtop-%nvtop_ver %__builddir/subprojects/magpie/src/debug/build/native/nvtop-
 
 
 %changelog
+* Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
