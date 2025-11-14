@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.57
+%define kernel_sublevel	.58
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -17,12 +17,6 @@ Version: %kversion
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
-
-%ifarch %ix86 x86_64
-%def_enable domU
-%else
-%def_disable domU
-%endif
 
 #Remove oss
 %def_disable oss
@@ -148,17 +142,6 @@ your system.
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
-
-%package -n kernel-image-domU-%flavour
-Summary: Uncompressed linux kernel for XEN domU boot
-Group: System/Kernel and hardware
-Requires(pre,postun): kmod
-
-%description -n kernel-image-domU-%flavour
-Most XEN virtualization system versions can not boot lzma-compressed
-kernel images. This is an optional package with uncompressed linux
-kernel image for this special case. If you do not know what is it XEN
-it seems that you do not need this package.
 
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
@@ -332,6 +315,7 @@ CONFIGS="$CONFIGS config-kasan"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
+%{?kconfig_hook}
 make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 %make_build %make_target || {
 	%make %make_target V=1
@@ -358,9 +342,6 @@ KernelVer=%kversion-%flavour-%krelease
 install -Dp -m644 System.map %buildroot/boot/System.map-$KernelVer
 install -Dp -m644 %image_path \
 	%buildroot/boot/vmlinuz-$KernelVer
-%if_enabled domU
-install -Dp -m644 vmlinux %buildroot/boot/vmlinux-$KernelVer
-%endif
 install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 %make_build modules_install INSTALL_MOD_PATH=%buildroot
@@ -567,11 +548,6 @@ check-pesign-helper
 /boot/devicetree/%kversion-%flavour-%krelease
 %endif
 
-%if_enabled domU
-%files -n kernel-image-domU-%flavour
-/boot/vmlinux-%kversion-%flavour-%krelease
-%endif
-
 %files -n kernel-headers-%flavour
 %kheaders_dir
 
@@ -612,6 +588,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 14 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.58-alt1
+- v6.12.58 (2025-11-13).
+- spec: Do not package -domU kernels.
+- config-rt: SCHED_AUTOGROUP=n, SLUB_CPU_PARTIAL=n, etc.
+- arm64: dts: rockchip: Add NMS-SM-EVM v1 Board support.
+- config: CONFIG_SND_SOC_AMD_ACP_COMMON=m.
+- config: CONFIG_SOUNDWIRE_AMD=m.
+
 * Sun Nov 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.57-alt1
 - v6.12.57 (2025-11-02).
 
