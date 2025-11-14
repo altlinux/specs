@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.14.3
+Version: 0.14.4
 Release: alt1
 
 Summary: CacheControl is a port of the caching algorithms in httplib2
@@ -25,8 +25,8 @@ Source: %pypi_name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel) python3(flit_core)
-
+BuildRequires: python3(wheel) python3(uv_build)
+BuildRequires: python3-module-uv-build >= 0.9.6
 %{?_enable_check:BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
@@ -61,6 +61,9 @@ CacheControl is a port of the caching algorithms in "httplib2" for use with
 %doc README*
 
 %changelog
+* Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1
+- 0.14.4
+
 * Thu May 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
 - 0.14.3
 
