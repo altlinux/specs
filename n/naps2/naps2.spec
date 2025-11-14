@@ -5,7 +5,7 @@
 
 Name:    naps2
 Version: 8.2.0
-Release: alt1
+Release: alt2
 
 Summary: Scan documents to PDF and more, as simply as possible.
 License: GPL-2.0+
@@ -70,6 +70,9 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Fri Nov 14 2025 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt2
+- fix ftbfs
+
 * Tue Aug 12 2025 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt1
 - Initial build for Sisyphus (Closes: #51167)
 
