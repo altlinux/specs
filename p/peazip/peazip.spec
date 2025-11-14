@@ -4,7 +4,7 @@
 
 Name: peazip
 Version: 10.7.0
-Release: alt1
+Release: alt2
 
 Summary: File and archive manager
 License: LGPL-3.0-only
@@ -102,7 +102,7 @@ install %_peasrc/res/share/batch/freedesktop_integration/peazip.desktop %buildro
 
 #help & res
 install %_peasrc/res/share/peazip_help.pdf %buildroot%_peainstalldir/res/share/peazip_help.pdf
-cp -rv %_peasrc/res/share/{icons,lang,themes} %buildroot%_peainstalldir/res/share/
+cp -rv %_peasrc/res/share/{icons,lang,themes,presets} %buildroot%_peainstalldir/res/share/
 
 #kde-servicemenus
 mkdir -p %buildroot%_datadir/kio/servicemenus
@@ -119,6 +119,9 @@ install %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenus/KDE6-d
 %_datadir/kio/servicemenus/*.desktop
 
 %changelog
+* Fri Nov 14 2025 Anton Kurachenko <srebrov@altlinux.org> 10.7.0-alt2
+- Fixed the drop-down menus (Closes: #56862).
+
 * Sat Nov 08 2025 Anton Kurachenko <srebrov@altlinux.org> 10.7.0-alt1
 - New version 10.7.0.
 
