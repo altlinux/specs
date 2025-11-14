@@ -16,8 +16,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.8.0
-Release: alt2
+Version: 2.9.0
+Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
 Group: Development/Python3
@@ -85,6 +85,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
+- 2.8.0 -> 2.9.0.
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 2.8.0-alt2
 - Fixed FTBFS (click 8.2.0).
 
