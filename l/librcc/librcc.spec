@@ -1,12 +1,12 @@
 Name: librcc
 Version: 0.2.13
-Release: alt1
+Release: alt1.1
 
 Summary: RusXMMS Charset Conversion Library
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
 Url: http://rusxmms.sourceforge.net
-Packager: Nick S. Grechukh <gns@altlinux.org>
+Vcs: https://github.com/RusXMMS/librcc
 
 Source: %name-%version.tar
 Patch: librcc-0.2.12-alt-gtk3_build.patch
@@ -83,6 +83,10 @@ find %buildroot%_libdir/rcc/engines -depth -name \*.la -delete
 %_libdir/lib*.so
 
 %changelog
+* Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 0.2.13-alt1.1
+- Added Vcs link.
+- license: use SPDX tag.
+
 * Tue Apr 18 2023 L.A. Kostis <lakostis@altlinux.ru> 0.2.13-alt1
 - 0.2.13.
 - Update License tag.
