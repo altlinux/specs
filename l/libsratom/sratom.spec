@@ -1,5 +1,5 @@
 Name: libsratom
-Version: 0.6.18
+Version: 0.6.20
 Release: alt1
 
 Summary: A C library for serializing LV2 plugins
@@ -52,6 +52,9 @@ This package contains the headers and development libraries for sratom.
 %_pkgconfigdir/sratom-0.pc
 
 %changelog
+* Fri Nov 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.20-alt1
+- 0.6.20 released
+
 * Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.18-alt1
 - 0.16.18 released
 
