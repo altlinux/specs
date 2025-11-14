@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.3.1
+Version:  0.4.0
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -14,12 +14,19 @@ Source:   %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: bats /proc apt-repo-tools rpmpeek fakeroot gostsum
+BuildRequires: bats /proc apt-repo-tools rpmpeek fakeroot gostsum shellcheck
 
 Requires: apt-repo-tools rpmpeek fakeroot gostsum
 
 %description
 Generates checksum file for an RPM repo slice.
+
+%package -n checksumbot
+Summary: A script for RPM checksum repository maintenance
+Group:    Monitoring
+
+%description -n checksumbot
+A script to update and commit RPM checksum files.
 
 %prep
 %setup
@@ -31,16 +38,34 @@ Generates checksum file for an RPM repo slice.
 %makeinstall_std sysconfdir=%_sysconfdir unitdir=%_unitdir logrotatedir=%_logrotatedir bindir=%_bindir libexecdir=%_prefix/libexec mandir=%_mandir
 
 %check
+%make_build syntax
 %make_build check
 
 %files
-%doc README
+%doc checksumgen/README
 %dir %_prefix/libexec/%name
 %_prefix/libexec/%name/*.sh
 %_bindir/%name
+%_bindir/checksumdiff
+%_bindir/checksummerge
 %_man1dir/%name.1.*
+%_man1dir/checksumdiff.1.*
+%_man1dir/checksummerge.1.*
+
+%files -n checksumbot
+%_bindir/checksumbot
+%_man1dir/checksumbot.1.*
 
 %changelog
+* Fri Nov 14 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.0-alt1
+- Added setup script for checksumbot (setup.sh).
+- Added manual pages for 'checksumbot' and all new utils.
+- Fixed -p, --prev option description in 'checksumgen'.
+- Added the 'checksummerge' utility.
+- Added new 'checksumdiff' utility.
+- Reworked version of checksumbot (0.2.0): Rely on mkimage-profiles
+  and 'alt-sp-common-update.tar' profile).
+
 * Tue Aug 12 2025 Paul Wolneykien <manowar@altlinux.org> 0.3.1-alt1
 - Updated the README file.
 - Switch license to GNU GPL v2.
