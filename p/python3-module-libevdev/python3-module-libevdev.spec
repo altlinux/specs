@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Python wrapper around the libevdev C library
@@ -17,7 +17,7 @@ Source: https://pypi.io/packages/source/l/%pypi_name/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel) python3(setuptools)
+BuildRequires: python3(wheel) python3(hatchling)
 %{?_enable_check:BuildRequires: python3(pytest) libevdev}
 
 %description
@@ -46,6 +46,9 @@ py.test3
 %doc README*
 
 %changelog
+* Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13-alt1
+- 0.13
+
 * Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
 - 0.12
 
