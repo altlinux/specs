@@ -4,8 +4,8 @@
 %define appname io.elementary.mail
 
 Name: elementary-mail
-Version: 8.0.0
-Release: alt2
+Version: 8.0.1
+Release: alt1
 
 Summary: Mail app designed for elementary OS
 License: GPL-3.0-or-later
@@ -66,6 +66,9 @@ modern interface.
 %_libdir/io.elementary.mail/webkit2/libio.elementary.mail-webkit-extension.so
 
 %changelog
+* Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
+- New version 8.0.1.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt2
 - Fixed build with modern libcamel
 

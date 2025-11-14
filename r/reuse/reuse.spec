@@ -3,7 +3,7 @@
 
 Name: reuse
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: tool for REUSE copyright and license recommendations
 License: Apache-2.0 AND CC0-1.0 AND CC-BY-SA-4.0 AND GPL-3.0-or-later
@@ -31,9 +31,6 @@ BuildRequires: python3(debian)
 BuildRequires: python3(magic)
 %endif
 
-# FIXME?
-#BuildArch: noarch
-
 Source: %name-%version.tar
 
 %description
@@ -57,7 +54,7 @@ sed -e 's/poetry run //g' -i docs/Makefile
 %pyproject_build
 make -C docs
 pushd docs
-PBR_VERSION=%{version} sphinx-build-3.12 -b man . manpages
+PBR_VERSION=%{version} sphinx-build -b man . manpages
 rm -rfv man/.{doctrees,buildinfo}
 popd
 
@@ -77,6 +74,9 @@ install -D -m 0644 docs/manpages/*.1 -t "%{buildroot}%{_man1dir}/"
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
+- Fixed FTBFS by using sphinx-build instead of sphinx-build-3.12.
+
 * Sat Nov 01 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
 - New version 6.2.0.
 

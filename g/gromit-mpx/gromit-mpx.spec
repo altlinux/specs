@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gromit-mpx
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: GTK+ based tool to make annotations on screen with multiple pointers
 License: GPL-2.0
@@ -59,6 +59,9 @@ rm -rv %{buildroot}%{_datadir}/doc/
 %_datadir/pixmaps/*
 
 %changelog
+* Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt2
 - Applied repocop fix for freedesktop-categories
 

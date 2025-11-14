@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.sound
 
 Name: switchboard-plug-sound
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Switchboard Sound Plug
@@ -53,5 +53,8 @@ sound-related settings.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
+- New version 8.0.2.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - Initial build for Sisyphus
