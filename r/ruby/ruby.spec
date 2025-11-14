@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt3
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -34,10 +34,8 @@ Patch2000:     %name-e2k.patch
 BuildRequires(pre): rpm-macros-valgrind
 #NOTE enabled or a while
 BuildRequires: ruby
-BuildRequires: rvm-devel
+BuildRequires: rvm-devel >= 1.29.12.126-alt0.2
 BuildRequires: autoconf >= 2.71
-# at least while bootstrapping on %%e2k
-BuildRequires: /proc
 %if_with check
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(benchmark_driver) >= 0
@@ -263,9 +261,7 @@ DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
    --enable-rubygems \
    --enable-use-system-dirs \
    --enable-single-instantiating \
-   --enable-install-doc \
    --enable-install-rdoc \
-   --enable-install-capi \
    --disable-rpath \
    --mandir=%_mandir \
    --libdir=%_libdir \
@@ -374,6 +370,11 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt3
+- + regard path token feature for ruby env and macros
+- * move compilation require dep to rvm
+- - removed compilation of capi documentation
+
 * Wed Oct 01 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt2
 - ! fixed invalid home gemie binary path usage (closes ALT#56231)
 - - removed mentioning of the emdedded racc for the ruby build

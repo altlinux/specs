@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt21
+Release:       alt22
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,13 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt22
+- + regard path tokens
+- * changed style of cheking whither a source is valid to use in target list
+- * changed behaviour of gem searcher allowing to regard disabled gem
+- ! fixed disabled validation by usage allowed version format
+- - cleanup data tree for fake source
+
 * Thu Oct 02 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt21
 - + added levitate gemspc parser module
 - ! fixed inner require to load embedded extension before original
