@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 0.8.1
-Release: alt12
+Release: alt13
 Summary: A Python client to use the TestLink API
 License: Apache-2.0
 Group: Development/Python3
@@ -45,6 +45,9 @@ cp -r example %buildroot%python3_sitelibdir/%module_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 14 2025 Mikhail Chernonog <snowmix@altlinux.org> 0.8.1-alt13
+- Add a new function updateTestCaseCustomFieldTestPlanDesignValue to API.
+
 * Mon Aug 25 2025 Mikhail Chernonog <snowmix@altlinux.org> 0.8.1-alt12
 - Add a new function updateExecOrder to API.
 
