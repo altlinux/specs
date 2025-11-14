@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 BuildArch: noarch
 
@@ -46,5 +46,8 @@ BuildRequires: python3-module-flake8
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Nov 14 2025 Timofei Fedotov <sovtouch@altlinux.org> 1.7.0-alt1
+- Updated to 1.7.0.
+
 * Tue Aug 26 2025 Timofei Fedotov <sovtouch@altlinux.org> 1.6.0-alt1
 - Initial build for ALT Sisyphus.

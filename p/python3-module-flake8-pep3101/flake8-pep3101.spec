@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Checks for old string formatting
@@ -47,5 +47,8 @@ BuildRequires: python3-module-flake8
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Wed Nov 12 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0.
+
 * Mon Aug 25 2025 Timofei Fedotov <sovtouch@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Sisyphus.

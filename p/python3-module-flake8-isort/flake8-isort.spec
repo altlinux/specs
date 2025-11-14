@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1.2
+Version: 7.0.0
 Release: alt1
 
-Summary: Flake8 plugin that integrates isort.
+Summary: Flake8 plugin that integrates isort
 
 License: GPL-2.0
 Group: Development/Python3
@@ -49,5 +49,8 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Fri Nov 14 2025 Timofei Fedotov <sovtouch@altlinux.org> 7.0.0-alt1
+- Updated to 7.0.0.
+
 * Thu Apr 19 2025 Timofei Fedotov <sovtouch@altlinux.org> 6.1.2-alt1
 - Initial build for ALT Sisyphus.
