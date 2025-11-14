@@ -2,17 +2,19 @@
 
 %global _unpackaged_files_terminate_build 1
 
-%define git_commit   f20bbad
+%define git_commit e72f3c2
 
-Name:    etcd-for-kubernetes1.32
-Version: 3.5.16
-Release: alt4
+Name: etcd-for-kubernetes1.32
+Version: 3.5.24
+Release: alt1
+
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
-Group:   System/Servers
+Group: System/Servers
+Url: https://etcd.io
+Vcs: https://github.com/etcd-io/etcd
 
-URL:     https://etcd.io
-VCS:     https://github.com/etcd-io/etcd
+ExclusiveArch: %go_arches
 
 Source0: %name-%version.tar
 
@@ -20,9 +22,8 @@ Provides: etcd-for-kubernetes = %EVR
 Conflicts: etcd-for-kubernetes
 Conflicts: etcd
 
-ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.24
 
 %description
 Etcd is a distributed key value store that provides a reliable way to store data
@@ -30,7 +31,7 @@ across a cluster of machines.
 This package contains etcd version needed for kubernetes container image.
 
 %prep
-%setup -q
+%setup
 
 %build
 export CGO_ENABLED=0
@@ -49,29 +50,30 @@ cd .build/src/%import_path
 
 %install
 export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
 
 %golang_install
 
 mkdir -p -- %buildroot%_sbindir
-
 mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/etcd
-
-# remove unused files
-rm -rf -- %buildroot/%go_root
 
 %files
 %_bindir/etcdctl
 %_sbindir/etcd
 
 %changelog
+* Thu Nov 13 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.24-alt1
+- 3.5.16 -> 3.5.24 (as required by Kubernetes v1.32.10).
+
 * Wed May 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 3.5.16-alt4
 - Fixes:
-    + CVE-2025-30204
-    + CVE-2024-51744
-    + CVE-2024-45337
-    + CVE-2025-22869
-    + CVE-2025-22870
-    + CVE-2025-22872
+  + CVE-2024-45337: Misuse of connection.serverAuthenticate may cause authorization bypass in golang.org/x/crypto
+  + CVE-2024-45338: Non-linear parsing of case-insensitive content in golang.org/x/net/html
+  + CVE-2024-51744: Bad documentation of error handling in ParseWithClaims can lead to potentially dangerous situations in golang-jwt
+  + CVE-2025-22869: Potential denial of service in golang.org/x/crypto
+  + CVE-2025-22870: HTTP Proxy bypass using IPv6 Zone IDs in golang.org/x/net
+  + CVE-2025-22872: Incorrect Neutralization of Input During Web Page Generation in x/net in golang.org/x/net
+  + CVE-2025-30204: jwt-go allows excessive memory allocation during header parsing
 
 * Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt3
 - Make separate etcd packages for kubernetes container images
