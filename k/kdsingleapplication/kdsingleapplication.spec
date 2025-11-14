@@ -4,7 +4,7 @@
 
 Name: kdsingleapplication
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: KDAB's helper class for single-instance policy applications
 
@@ -25,16 +25,17 @@ BuildRequires: qt5-base-devel
 %description
 %summary.
 
-%if_enabled qt5
-
 %package -n lib%name-common
 Group: Development/Other
 Summary: Common files for lib%name
 BuildArch: noarch
-Conflicts: lib%{name}1
+Provides: lib%name-qt6-common = %EVR
+Obsoletes: lib%name-qt6-common < %EVR
 
 %description -n lib%name-common
 This package provides common files for lib%name.
+
+%if_enabled qt5
 
 %package -n lib%name%ver_major
 Group: System/Libraries
@@ -55,15 +56,6 @@ This package contains libraries and header files for developing applications
 that use KDSingleApplication with Qt5.
 
 %endif
-
-%package -n lib%name-qt6-common
-Group: Development/Other
-Summary: Common files for lib%name-qt6
-BuildArch: noarch
-Conflicts: lib%name-qt6-1
-
-%description -n lib%name-qt6-common
-This package provides common files for lib%name-qt6.
 
 %package -n lib%name-qt6_%ver_major
 Group: System/Libraries
@@ -104,6 +96,7 @@ cmake --build "build5" -j%__nprocs
  -GNinja \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
  -DKDSingleApplication_QT6=ON \
+ -DINSTALL_DOC_DIR=%_docdir/%name-%version \
 #
 cmake --build "build6" -j%__nprocs
 
@@ -111,17 +104,19 @@ cmake --build "build6" -j%__nprocs
 export DESTDIR="%buildroot"
 %if_enabled qt5
 cmake --install "build5" --verbose
+rm -rf %buildroot%_docdir/KDSingleApplication/
 %endif
 cmake --install "build6" --verbose
 
-%if_enabled qt5
-
 %files -n lib%name-common
-%doc %_docdir/KDSingleApplication/LICENSE.txt
-%doc %_docdir/KDSingleApplication/README.md
-%dir %_docdir/KDSingleApplication/LICENSES/
-%doc %_docdir/KDSingleApplication/LICENSES/MIT.txt
-%doc %_docdir/KDSingleApplication/LICENSES/BSD-3-Clause.txt
+%dir %_docdir/%name-%version/
+%_docdir/%name-%version/LICENSE.txt
+%_docdir/%name-%version/README.md
+%_docdir/%name-%version/LICENSES/
+%_docdir/%name-%version/LICENSES/MIT.txt
+%_docdir/%name-%version/LICENSES/BSD-3-Clause.txt
+
+%if_enabled qt5
 
 %files -n lib%name%ver_major
 %_libdir/lib%name.so.%{ver_major}*
@@ -138,13 +133,6 @@ cmake --install "build6" --verbose
 
 %endif
 
-%files -n lib%{name}-qt6-common
-%doc %_docdir/KDSingleApplication-qt6/LICENSE.txt
-%doc %_docdir/KDSingleApplication-qt6/README.md
-%dir %_docdir/KDSingleApplication-qt6/LICENSES/
-%doc %_docdir/KDSingleApplication-qt6/LICENSES/MIT.txt
-%doc %_docdir/KDSingleApplication-qt6/LICENSES/BSD-3-Clause.txt
-
 %files -n lib%name-qt6_%ver_major
 %_libdir/lib%name-qt6.so.%{ver_major}*
 
@@ -160,6 +148,9 @@ cmake --install "build6" --verbose
 %_libdir/qt6/mkspecs/modules/qt_KDSingleApplication.pri
 
 %changelog
+* Fri Nov 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt3
+- Fixed file conflicts when installing common subpackage.
+
 * Fri Nov 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt2
 - Fixed file conflicts between common and library subpackages.
 
