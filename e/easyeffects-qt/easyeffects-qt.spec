@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
 
 %define _name easyeffects
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.0.0
-Release: alt0.1
+Version: 8.0.1
+Release: alt0.9
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -97,9 +97,11 @@ BuildRequires: kf6-kirigami-addons-devel kf6-kirigami-addons
 BuildRequires: kf6-qqc2-desktop-style-devel
 
 %description
-This application used to be called PulseEffects but it was renamed to
-EasyEffects after we started to use GTK4 and replaced GStreamer by native
-PipeWire filters.
+This application was formerly known as PulseEffects, but it was
+renamed to EasyEffects after it started to use GTK4 and GStreamer
+usage was replaced by native PipeWire filters. And eventually the whole
+application was ported from GTK4 to a combination of Qt, QML and
+KDE/Kirigami frameworks.
 
 %prep
 %setup -n %_name-%version
@@ -131,6 +133,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.1-alt0.9
+- 8.0.1
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt0.1
 - v8.0.0-22-g337f6066d (ported to Qt/KDE)
 
