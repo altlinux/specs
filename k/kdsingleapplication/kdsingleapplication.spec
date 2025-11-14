@@ -4,7 +4,7 @@
 
 Name: kdsingleapplication
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: KDAB's helper class for single-instance policy applications
 
@@ -31,6 +31,7 @@ BuildRequires: qt5-base-devel
 Group: Development/Other
 Summary: Common files for lib%name
 BuildArch: noarch
+Conflicts: lib%{name}1
 
 %description -n lib%name-common
 This package provides common files for lib%name.
@@ -59,6 +60,7 @@ that use KDSingleApplication with Qt5.
 Group: Development/Other
 Summary: Common files for lib%name-qt6
 BuildArch: noarch
+Conflicts: lib%name-qt6-1
 
 %description -n lib%name-qt6-common
 This package provides common files for lib%name-qt6.
@@ -158,6 +160,9 @@ cmake --install "build6" --verbose
 %_libdir/qt6/mkspecs/modules/qt_KDSingleApplication.pri
 
 %changelog
+* Fri Nov 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt2
+- Fixed file conflicts between common and library subpackages.
+
 * Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 - Built with vulkan support and qt5 library.
