@@ -18,7 +18,7 @@
 %define soname 5
 
 Name: ddcutil
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -121,6 +121,9 @@ installed_modulesdir=%_modulesloaddir
 # TODO: python subpackage?
 
 %changelog
+* Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Thu Jul 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
