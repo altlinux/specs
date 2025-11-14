@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name cachetools
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2.0
+Version: 6.2.2
 Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
@@ -46,10 +47,13 @@ decorator.
 
 %files
 %doc README.*
-%python3_sitelibdir/cachetools/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 6.2.2-alt1
+- 6.2.0 -> 6.2.2.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 6.2.0-alt1
 - 6.1.0 -> 6.2.0.
 
