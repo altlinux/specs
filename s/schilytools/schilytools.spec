@@ -5,7 +5,7 @@
 %define btcflash_major 1.1
 %define cdr_name cdrtools
 %define minor %nil
-%define alt_rel alt2
+%define alt_rel alt3
 %def_with bootstrap
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -29,6 +29,10 @@ Patch3: cdrtools-2.01-alt-rcmdrsh.patch
 Patch4: schily-2021.09.18-natspec.patch
 Patch5: cdrtools-2.01.01a50-alt-rscsi-man.patch
 Patch6: schily-alt-ved.help.patch
+# https://codeberg.org/schilytools/schilytools/issues/121
+Patch7: cdda2wav-gnudb-cddb.patch
+# https://codeberg.org/schilytools/schilytools/pulls/122
+Patch8: isoinfo-pvd-122.patch
 
 # alternatives
 BuildRequires(pre): alternatives
@@ -191,6 +195,8 @@ Flash tool for BTC CD drives.
 %patch4 -p2 -b .natspec
 %patch5 -p2
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -EZl '/etc/default/(cdrecord|rscsi|cdda2ogg|cdda2mp3)' -- |
@@ -657,6 +663,12 @@ __EOF__
 %_man1dir/readcd-classic.*
 
 %changelog
+* Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 7:2024.03.21-alt3
+- Added patches:
+  + cdda2wav: fix CDDB lookups via gnudb.org (upstream issue #121)
+  + isoinfo: Properly detect Joliet Supplementary Volume
+    Descriptors (upstream MR #122)
+
 * Sat Sep 14 2024 L.A. Kostis <lakostis@altlinux.ru> 7:2024.03.21-alt2
 - Added boostrap knob.
 - cdda2wav: build with pulseaudio.
@@ -717,7 +729,7 @@ __EOF__
 * Wed Jan 05 2005 LAKostis <lakostis at altlinux.ru> 5:2.01-alt4a37
 - reworked skipcheck_priv patch.
 
-* Sun Dec 13 2004 LAKostis <lakostis at altlinux.ru> 5:2.01-alt3a37
+* Mon Dec 13 2004 LAKostis <lakostis at altlinux.ru> 5:2.01-alt3a37
 - move rscsi to separate package (as ns@ suggest in #5240)
 - add rscsi docs
 - update skipcheck_priv patch
