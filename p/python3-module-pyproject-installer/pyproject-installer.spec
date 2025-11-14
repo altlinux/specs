@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyproject-installer
-%define pep503_name pyproject_installer
+%define mod_name pyproject_installer
 
-%define pyproject_installer export PYTHONPATH=$(pwd)/src; %__python3 -m %pep503_name -v
+%define pyproject_installer export PYTHONPATH=$(pwd)/src; %__python3 -m %mod_name -v
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.5
-Release: alt2
+Version: 0.5.6
+Release: alt1
 Summary: Builder and installer of Python project
 License: MIT
 Group: Development/Python3
@@ -21,7 +21,7 @@ Patch: %name-%version-alt.patch
 AutoReq: yes, nopython3
 %py3_provides %pypi_name
 # hide vendored distributions
-%add_findprov_skiplist %python3_sitelibdir/%pep503_name/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/%mod_name/_vendor/*
 
 BuildRequires(pre): rpm-build-python3
 
@@ -48,10 +48,13 @@ This tool is intended to build wheel from Python source tree and install it.
 
 %files
 %doc README.md
-%python3_sitelibdir/%pep503_name/
-%python3_sitelibdir/%pep503_name-%version.dist-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 13 2025 Stanislav Levin <slev@altlinux.org> 0.5.6-alt1
+- 0.5.5 -> 0.5.6.
+
 * Tue Dec 24 2024 Stanislav Levin <slev@altlinux.org> 0.5.5-alt2
 - Fixed FTBFS (Python 3.12.8/3.13.1).
 
