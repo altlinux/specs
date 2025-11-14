@@ -18,8 +18,8 @@
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 smbk5pwd trace usn variant vc
 
 Name: openldap
-Version: 2.6.9
-Release: alt2
+Version: 2.6.10
+Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
 
@@ -85,6 +85,7 @@ Patch19: %name-2.6.3-rh-add-export-symbols-LDAP_CONNECTIONLESS.patch
 Patch20: %name-2.6.1-system-mdb.patch
 Patch21: %name-2.6.8-alt-smbk5pwd.patch
 Patch22: %name-2.6.1-cloak.patch
+Patch23: %name-ITS-10297-Defer-hostname-resolution-til-first-use.patch
 
 ### REQUIRE Section
 
@@ -105,7 +106,7 @@ BuildRequires: perl-devel
 %if_enabled slp
 BuildRequires: libopenslp-devel
 %endif
-%{?_enable_argon2:BuildRequires: libargon2-devel}
+%{?_enable_argon2:BuildRequires: libsodium-devel}
 
 BuildRequires: chrooted groff-base libltdl-devel libssl-devel shtool
 BuildRequires: libsystemd-devel
@@ -285,6 +286,7 @@ Various overlays found in contrib/:
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 rm -r libraries/liblmdb
 
 # Add some more schema for the sake of migration scripts and others
@@ -723,6 +725,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Nov 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.10-alt1
+- 2.6.10.
+- use libsodium for support argon2.
+
 * Thu Jan 02 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.9-alt2
 - Fixed start service.
 
