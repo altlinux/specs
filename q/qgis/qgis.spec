@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 3.44.4
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -115,10 +115,11 @@ BuildRequires: pdal
 BuildRequires: libdraco-devel
 BuildRequires: libtiff-devel
 
-#Requires: libqt4-sql-sqlite
 Requires: qca-qt5-ossl
 Requires: gpsbabel
 Requires: libqwt6-qt5
+Requires: python3-module-pyopengl
+Requires: qt5-3d
 
 Provides: qgis3 = %EVR
 Obsoletes: qgis3 < %EVR
@@ -400,6 +401,10 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Fri Nov 14 2025 Andrey Cherepanov <cas@altlinux.org> 3.44.4-alt2
+- Fixed 3D Maps View segfault (ALT #54230).
+- Removed image formats from qgis.xml (ALT #33803).
+
 * Sun Oct 26 2025 Andrey Cherepanov <cas@altlinux.org> 3.44.4-alt1
 - New version.
 
