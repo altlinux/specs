@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
+Version: 5.2.3
 Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -60,6 +62,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 5.2.3-alt1
+- 5.1.0 -> 5.2.3.
+
 * Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 
