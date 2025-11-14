@@ -7,7 +7,7 @@
 %define _optlevel 3
 
 Name:    ZLEqualizer2
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Dynamic Equalizer Plugin from ZL Audio (v2)
@@ -135,5 +135,8 @@ cp -a "VST3/ZL Equalizer 2.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Fri Nov 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sun Nov 09 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.0-alt1
 - Build for Sisyphus (based on ZLEqualizer.spec).
