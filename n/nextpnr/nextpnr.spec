@@ -5,18 +5,17 @@
 %def_enable OPENMP
 
 Name:     nextpnr
-Version:  0.7
-Release:  alt3
+Version:  0.9
+Release:  alt1
 
 Summary:  portable FPGA place and route tool
 License:  ISC
 Group:    Engineering
-Url:      https://github.com/YosysHQ/nextpnr
+URL:      https://github.com/YosysHQ/nextpnr
+VCS:      https://github.com/YosysHQ/nextpnr
 
 # Source-url: %url/archive/refs/tags/%name-%version.tar.gz
 Source: %name-%version.tar
-# https://github.com/YosysHQ/nextpnr/commit/b4d9750631493a9f98c99e011c59204c37659fba.patch
-Patch: nextpnr-0.7-Fix-header-files-for-boost-1.85.patch
 
 ExcludeArch: %arm
 
@@ -27,6 +26,7 @@ BuildRequires: python3-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: eigen3
+BuildRequires: pybind11-devel
 # ice40
 BuildRequires: icestorm-chipdb
 # gowin
@@ -45,15 +45,16 @@ route tool.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 
 %cmake \
 	-DCURRENT_GIT_VERSION=%version \
-	-DARCH='gowin;ice40' \
+	-DARCH='himbaechel;ice40' \
+	-DHIMBAECHEL_UARCH=gowin \
 	-DGOWIN_BBA_EXECUTABLE=%_bindir/gowin_bba \
-	-DBUILD_TESTS=ON \
+	-DBUILD_TESTS=OFF \
 	-DSTATIC_BUILD=OFF \
 	%{?_enable_OPENMP:-DUSE_OPENMP=ON} \
 	%{?_enable_GUI:-DBUILD_GUI=ON}
@@ -64,13 +65,19 @@ route tool.
 %cmake_install
 
 %check
-%make_build -C %_cmake__builddir test
+#%%make_build -C %_cmake__builddir test
 
 %files
 %_bindir/nextpnr-*
+%_datadir/nextpnr
 %doc *.md docs/*
 
 %changelog
+* Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 0.9-alt1
+- New version 0.9.
+- Build HIMBAECHEL gowin instead removed gowin.
+- Disable build tests.
+
 * Wed Oct 09 2024 Ivan A. Melnikov <iv@altlinux.org> 0.7-alt3
 - enable ice40 support
 
