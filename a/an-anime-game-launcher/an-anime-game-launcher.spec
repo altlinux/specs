@@ -1,5 +1,5 @@
 Name: an-anime-game-launcher
-Version: 3.17.0
+Version: 3.18.0
 Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
@@ -88,6 +88,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Sat Nov 15 2025 Anton Kurachenko <srebrov@altlinux.org> 3.18.0-alt1
+- New version 3.18.0.
+
 * Sun Sep 21 2025 Anton Kurachenko <srebrov@altlinux.org> 3.17.0-alt1
 - New version 3.17.0.
 
