@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -121,6 +121,9 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 
 
 %changelog
+* Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.32.14-alt1
+- shotwell-0.32.14-1-g0aa5a3f4
+
 * Mon Jun 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.32.13-alt1
 - updated to 0.32.13-3-g3edaf433
 

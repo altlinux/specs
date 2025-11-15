@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.13
+Version: 0.13.1
 Release: alt1
 
 Summary: Python wrapper around the libevdev C library
@@ -46,6 +46,9 @@ py.test3
 %doc README*
 
 %changelog
+* Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Fri Nov 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13-alt1
 - 0.13
 
