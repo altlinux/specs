@@ -5,54 +5,57 @@
 %define        gemname bson
 
 Name:          gem-bson
-Version:       5.0.2
+Version:       5.2.0
 Release:       alt1
 Summary:       Ruby Implementation of the BSON Specification (2.0.0+)
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://bsonspec.org
 Vcs:           https://github.com/mongodb/bson-ruby.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(base64) >= 0
 BuildRequires: gem(bigdecimal) >= 0
+BuildRequires: gem(concurrent-ruby) >= 1.3.4
 BuildRequires: gem(fuubar) >= 0
 BuildRequires: gem(json) >= 0
+BuildRequires: gem(ostruct) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(rfc) >= 0
 BuildRequires: gem(rspec) >= 3
+BuildRequires: gem(rspec_junit_formatter) >= 0
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
+BuildRequires: gem(rubocop-rspec) >= 3.6.0
 BuildRequires: gem(yard) >= 0
-BuildConflicts: gem(activesupport) >= 8
+BuildConflicts: gem(activesupport) >= 8.1
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(rubocop-rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency concurrent-ruby >= 1.3.5,concurrent-ruby < 2
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
-%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 Requires:      ruby >= 2.6
 Requires:      rubygems >= 1.3.6
 Requires:      gem(base64) >= 0
 Requires:      gem(bigdecimal) >= 0
+Requires:      gem(ostruct) >= 0
 Obsoletes:     ruby-bson < %EVR
 Provides:      ruby-bson = %EVR
-Provides:      bson = %EVR
-Provides:      gem(bson) = 5.0.2
+Provides:      gem(bson) = 5.2.0
 
 %description
 An implementation of the BSON specification in Ruby.
@@ -60,14 +63,14 @@ An implementation of the BSON specification in Ruby.
 
 %if_enabled    doc
 %package       -n gem-bson-doc
-Version:       5.0.2
+Version:       5.2.0
 Release:       alt1
 Summary:       Ruby Implementation of the BSON Specification (2.0.0+) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bson
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bson) = 5.0.2
+Requires:      gem(bson) = 5.2.0
 
 %description   -n gem-bson-doc
 Ruby Implementation of the BSON Specification (2.0.0+) documentation files.
@@ -81,31 +84,33 @@ An implementation of the BSON specification in Ruby.
 
 %if_enabled    devel
 %package       -n gem-bson-devel
-Version:       5.0.2
+Version:       5.2.0
 Release:       alt1
 Summary:       Ruby Implementation of the BSON Specification (2.0.0+) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bson
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bson) = 5.0.2
+Requires:      gem(bson) = 5.2.0
+Requires:      gem(concurrent-ruby) >= 1.3.4
 Requires:      gem(fuubar) >= 0
 Requires:      gem(json) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(rfc) >= 0
 Requires:      gem(rspec) >= 3
+Requires:      gem(rspec_junit_formatter) >= 0
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rubocop-rspec) >= 2.4.0
+Requires:      gem(rubocop-rspec) >= 3.6.0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(activesupport) >= 8
+Conflicts:     gem(activesupport) >= 8.1
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rubocop-rspec) >= 4
 
 %description   -n gem-bson-devel
 Ruby Implementation of the BSON Specification (2.0.0+) development package.
@@ -149,6 +154,9 @@ An implementation of the BSON specification in Ruby.
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 5.2.0-alt1
+- ^ 5.0.2 -> 5.2.0
+
 * Tue Jan 21 2025 Pavel Skrylev <majioa@altlinux.org> 5.0.2-alt1
 - ^ 5.0.1 -> 5.0.2
 
