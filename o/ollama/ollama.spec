@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.12.10
+Version: 0.12.11
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -167,6 +167,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sat Nov 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.11-alt1
+- Update to v0.12.11 (2025-11-13).
+
 * Sun Nov 09 2025 Vitaly Chikunov <vt@altlinux.org> 0.12.10-alt1
 - Update to v0.12.10 (2025-11-05).
 - Enable Vulkan GPU runner (ollama-vulkan).
