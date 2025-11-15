@@ -4,7 +4,7 @@
 %def_enable    devel
 
 Name:          trilogy
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible client library
 License:       MIT
@@ -32,7 +32,8 @@ BuildConflicts: gem(minitest) >= 6
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
-%ruby_use_gem_version trilogy:2.9.0.10
+%ruby_use_gem_version trilogy:2.9.0.36
+%ruby_regard_path_tokens contrib
 
 %description
 A friendly MySQL-compatible library.
@@ -55,7 +56,7 @@ Features:
 
 
 %package       -n libtrilogy
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible library
 Group:         Development/C
@@ -81,15 +82,14 @@ Features:
 
 
 %package       -n gem-trilogy
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy
 Group:         Development/Ruby
-#BuildArch:     noarch
 
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(trilogy) >= 0
-Provides:      gem(trilogy) = 2.9.0.10
+Provides:      gem(trilogy) = 2.9.0.36
 
 %description   -n gem-trilogy
 A friendly MySQL-compatible library for Ruby, binding to libtrilogy.
@@ -113,14 +113,14 @@ Features:
 
 %if_enabled    doc
 %package       -n gem-trilogy-doc
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета trilogy
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(trilogy) = 2.9.0.10
+Requires:      gem(trilogy) = 2.9.0.36
 
 %description   -n gem-trilogy-doc
 A friendly MySQL-compatible library for Ruby, binding to libtrilogy
@@ -149,14 +149,14 @@ Features:
 
 %if_enabled    devel
 %package       -n gem-trilogy-devel
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета trilogy
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(trilogy) = 2.9.0.10
+Requires:      gem(trilogy) = 2.9.0.36
 Requires:      gem(benchmark-ips) >= 0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(minitest) >= 5.5
@@ -193,7 +193,7 @@ Features:
 
 %if_enabled    devel
 %package       -n libtrilogy-devel
-Version:       2.9.0.10
+Version:       2.9.0.36
 Release:       alt0.1
 Summary:       A friendly MySQL-compatible library development package
 Summary(ru_RU.UTF-8): Файлы для разработки буковины trilogy
@@ -225,7 +225,6 @@ Features:
 
 %prep
 %setup
-mv contrib gem
 
 %build
 %cmake -DARCH:STRING=%_arch \
@@ -236,6 +235,7 @@ mv contrib gem
 %install
 %cmakeinstall_std
 %ruby_install
+rm -rf %buildroot/usr/lib/trilogy/tmp
 
 %check
 %ruby_test
@@ -251,14 +251,14 @@ mv contrib gem
 
 %files         -n gem-trilogy
 %doc LICENSE README.md
-%ruby_gemspecdir/trilogy-2.9.0.10.gemspec
-%ruby_gemslibdir/trilogy-2.9.0.10
-%ruby_gemsextdir/trilogy-2.9.0.10
+%ruby_gemspecdir/trilogy-2.9.0.36.gemspec
+%ruby_gemslibdir/trilogy-2.9.0.36
+%ruby_gemsextdir/trilogy-2.9.0.36
 
 %if_enabled    doc
 %files         -n gem-trilogy-doc
 %doc LICENSE README.md
-%ruby_gemsdocdir/trilogy-2.9.0.10
+%ruby_gemsdocdir/trilogy-2.9.0.36
 %endif
 
 %if_enabled    devel
@@ -273,10 +273,14 @@ mv contrib gem
 %_includedir/%{name}
 %_cmakedir/*
 %_libdir/lib%{name}*.*so
+%_libexecdir/%name
 %endif
 
 
 %changelog
+* Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 2.9.0.36-alt0.1
+- ^ 2.9.0p10 -> 2.9.0p36
+
 * Wed Feb 05 2025 Pavel Skrylev <majioa@altlinux.org> 2.9.0.10-alt0.1
 - ^ 2.9.0 -> 2.9.0p10
 - * enabled cmake build
