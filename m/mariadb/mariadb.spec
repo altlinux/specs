@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.4
+Version: 11.8.5
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -1119,8 +1119,11 @@ fi
 %endif
 
 %changelog
+* Sat Nov 15 2025 Alexei Takaseev <taf@altlinux.org> 11.8.5-alt1
+- 11.8.5
+
 * Fri Nov 07 2025 Alexei Takaseev <taf@altlinux.org> 11.8.4-alt1
-- 11.8.3
+- 11.8.4
 - Update mariadb-11.8.4-disable-download-fmt.patch
 - Update columnstore to 25.10.1-1
 - Update fmt to 12.0.0
