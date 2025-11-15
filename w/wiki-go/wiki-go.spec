@@ -2,7 +2,7 @@
 %global import_path github.com/leomoon-studios/wiki-go
 
 Name: wiki-go
-Version: 1.4.5
+Version: 1.7.5
 Release: alt1
 Summary: A modern, feature-rich, databaseless flat-file wiki platform built with Go
 License: GPL-3.0
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 Source1: wiki-go.service
 Patch: alt-fix-config-path.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 
 %description
 LeoMoon Wiki-Go is a modern, feature-rich, databaseless flat-file
@@ -65,5 +65,8 @@ touch %buildroot%_sysconfdir/wiki-go/config.yaml
 %doc LICENSE README.md SECURITY.md
 
 %changelog
+* Mon Nov 10 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.5-alt1
+- Updated to version 1.7.5.
+
 * Sat May 17 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.4.5-alt1
 - Initial build for ALT.
