@@ -7,7 +7,7 @@
 
 Name: lomiri-location-service
 Version: 3.3.0
-Release: alt1
+Release: alt2
 
 Summary: Lomiri Location Service
 License: GPL-3.0-only and LGPL-3.0-only
@@ -61,6 +61,7 @@ This package contains the service executable and man pages.
 %package doc
 Summary: Lomiri Location Service documentation
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Aggregates position/velocity/heading updates and exports them over DBus.
@@ -161,5 +162,8 @@ mv -vf %buildroot/etc/dbus-1/system.d/ %buildroot/usr/share/dbus-1/
 %_datadir/doc/lomiri-location-service/*
 
 %changelog
+* Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 3.3.0-alt2
+- Applied repocop fix for arch-dep-package-consists-of-usr-share
+
 * Sun Jul 27 2025 Nikolay Strelkov <snk@altlinux.org> 3.3.0-alt1
 - Initial build for Sisyphus

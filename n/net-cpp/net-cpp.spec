@@ -6,7 +6,7 @@
 
 Name: net-cpp
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: A simple yet beautiful networking API for C++14
 License: LGPL-3.0-only
@@ -46,6 +46,7 @@ This package includes the net-cpp runtime libraries.
 %package -n lib%{name}-doc
 Summary: Documentation files for libnet-cpp-devel
 Group: Documentation
+BuildArch: noarch
 
 %description -n lib%{name}-doc
 Net-Cpp is a simple and straightforward networking library for C++14.
@@ -108,6 +109,9 @@ sed -i "s/-std=c++17/-std=c++14/" CMakeLists.txt
 %_datadir/doc/net-cpp/*
 
 %changelog
+* Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt2
+- Applied repocop fix for arch-dep-package-consists-of-usr-share
+
 * Sat Sep 13 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
