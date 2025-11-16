@@ -3,7 +3,7 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 2.0.20
+Version: 2.0.22
 Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
@@ -109,6 +109,9 @@ install -pDm644 service/systemd/%name.service.simple \
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Nov 16 2025 Pavel Vainerman <pv@altlinux.ru> 2.0.22-alt1
+- new version (2.0.22) with rpmgs script
+
 * Fri Dec 27 2024 Alexander Danilov <admsasha@altlinux.org> 2.0.20-alt1
 - new version (2.0.20) with rpmgs script
 
