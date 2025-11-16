@@ -1,6 +1,6 @@
 Name: tinyemu
 Version: 20191221
-Release: alt1
+Release: alt1.1
 License: MIT
 Url: http://bellard.org/tinyemu/
 Group: Emulators
@@ -40,6 +40,7 @@ sed -i 's/-Werror //' Makefile
 %ifnarch x86_64
 sed -i '/^CONFIG_INT128=y/s/^/#/' Makefile
 %endif
+subst 's|<curl/multi.h>|<curl/curl.h>|' fs_wget.c
 
 %build
 %make_build STRIP=true
@@ -53,6 +54,9 @@ install -d %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 20191221-alt1.1
+- NMU:FTBFS:fix: expected identifier or '(' before ')' token
+
 * Mon Jul 27 2020 Fr. Br. George <george@altlinux.ru> 20191221-alt1
 - Autobuild version bump to 20191221
 

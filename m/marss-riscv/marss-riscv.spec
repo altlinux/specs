@@ -1,6 +1,6 @@
 Name: marss-riscv
 Version: 4.1a
-Release: alt2
+Release: alt2.1
 
 Summary: Open source simulator for the RISC-V ISA built upon TinyEMU
 
@@ -45,6 +45,8 @@ cd ..
 marss-riscv-x64-f64 riscv64_inorder_soc.cfg
 @@@
 
+subst 's|<curl/multi.h>|<curl/curl.h>|' src/fs_wget.c
+
 %build
 %make_build -C src splitimg build_filelist all
 # Build simulator with XLEN=32,64 FLEN=0,32,64
@@ -84,6 +86,9 @@ chrpath -d %buildroot/%_bindir/*
 %doc *.md
 
 %changelog
+* Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.1a-alt2.1
+- NMU:FTBFS:fix: expected identifier or '(' before ')' token
+
 * Tue Jul 18 2023 Artyom Bystrov <arbars@altlinux.org> 4.1a-alt2
 - Fix build on GCC13
 

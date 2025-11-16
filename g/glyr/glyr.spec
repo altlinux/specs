@@ -1,6 +1,6 @@
 Name: glyr
 Version: 1.0.10
-Release: alt1
+Release: alt1.1
 Summary: Music related metadata searchengine
 License: GPLv3
 Group: System/Libraries
@@ -59,6 +59,8 @@ Glyr development files.
 %patch1 -p1
 %patch2
 
+subst 's|<curl/multi.h>|<curl/curl.h>|' lib/core.c
+
 %build
 %cmake_insource
 %make_build VERBOSE=1
@@ -80,6 +82,9 @@ Glyr development files.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.10-alt1.1
+- NMU:FTBFS:fix: expected identifier or '(' before ')' token
+
 * Thu Mar 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1.0.10-alt1
 - 1.0.10
 
