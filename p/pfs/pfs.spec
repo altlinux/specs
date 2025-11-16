@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name pfs
 %define libname lib%_name
@@ -21,7 +21,7 @@
 
 Name: %_name
 Version: %ver_major.5
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Phosh File Selector Library
 Group: System/Libraries
@@ -157,6 +157,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.5-alt2
+- updated to v0.0.5-4-gd007e73 for 0.51.0
+
 * Mon Sep 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.5-alt1
 - 0.0.5
 

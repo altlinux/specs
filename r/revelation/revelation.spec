@@ -3,8 +3,10 @@
 %define ver_major 0.5
 %define rdn_name info.olasagasti.revelation
 
+%def_enable check
+
 Name: revelation
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Password manager for the GNOME desktop
@@ -12,28 +14,31 @@ License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://revelation.olasagasti.info/
 
+Vcs: https://github.com/mikelolasagasti/revelation.git
+
 %if_disabled snapshot
 Source: https://github.com/mikelolasagasti/%name/archive/%name-%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/mikelolasagasti/revelation.git
 Source: %name-%version.tar
 %endif
 
 BuildArch: noarch
 
-%define python_ver 3.7
+%define python_ver 3.10
 %define gtk_ver 3.22
 
+Requires: python3-module-pygobject3
 Requires: dconf
 Requires: libgtk+3-gir >= %gtk_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson shared-mime-info desktop-file-utils %_bindir/appstream-util
+BuildRequires: meson shared-mime-info-devel
 BuildRequires: libgtk+3-gir-devel >= %gtk_ver
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: python3-module-pycryptodomex
 BuildRequires: python3-module-pwquality
 BuildRequires: python3-module-defusedxml
+%{?_enable_check:BuildRequires: desktop-file-utils %_bindir/appstreamcli}
 
 %description
 Revelation is a password manager for the GNOME desktop. It stores all
@@ -52,11 +57,14 @@ access to it through a user-friendly graphical interface.
 %find_lang --with-gnome %name
 
 desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--add-category=Settings \
-	--add-category=X-PersonalSettings \
-	--add-category=GTK \
-	%buildroot%_desktopdir/%rdn_name.desktop
+    --remove-category=Utility \
+    --add-category=Settings \
+    --add-category=X-PersonalSettings \
+    --add-category=GTK \
+    %buildroot%_desktopdir/%rdn_name.desktop
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -70,6 +78,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
+- 0.5.6
+
 * Mon Apr 25 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 

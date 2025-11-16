@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.50
+%define ver_major 0.51
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -12,7 +12,7 @@
 
 # since 0.41 gvc & libcallui subprojects use wrap-files
 %define gvc_ver 5f9768a
-%define callui_ver 0.1.4
+%define callui_ver 0.1.5
 
 # shared libs disabled by default
 %def_enable shared_libs
@@ -28,7 +28,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -87,7 +87,10 @@ Requires: gnome-software
 Requires: xdg-desktop-portal-phosh >= %ver_major
 
 # squeekboard provides osk-wayland
-Requires: /usr/bin/osk-wayland
+#Requires: /usr/bin/osk-wayland
+# since 0.50.1 (ALT #56838)
+# stevia provides mobi.phosh.OSK.service
+Requires: %_userunitdir/mobi.phosh.OSK.service
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
@@ -110,12 +113,12 @@ BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libnm) >= 1.14
-BuildRequires: pkgconfig(mm-glib)
+BuildRequires: pkgconfig(mm-glib) >= 1.24
 BuildRequires: pkgconfig(libpulse) >= 2.0
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(polkit-agent-1) >= 0.105
-BuildRequires: pkgconfig(upower-glib) >= 0.99.1
+BuildRequires: pkgconfig(upower-glib) >= 1.90
 BuildRequires: pkgconfig(wayland-client) >= 1.14
 BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(fribidi)
@@ -247,8 +250,11 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-upcoming-events.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-pomodoro-quick-setting.so
+%_libdir/%name/plugins/prefs/lib%name-plugin-prefs-caffeine-quick-setting.so
 %_libdir/%name/plugins/caffeine-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-caffeine-quick-setting.so
+%_libdir/%name/plugins/lib%name-plugin-location-quick-setting.so
+%_libdir/%name/plugins/location-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
 %_libdir/%name/plugins/simple-custom-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-night-light-quick-setting.so
@@ -276,6 +282,7 @@ xvfb-run %__meson_test
 %_desktopdir/sm.puri.OSK0.desktop
 %_datadir/glib-2.0/schemas/mobi.phosh.shell.gschema.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.shell.enums.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.caffeine-quick-setting.gschema.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.plugins.pomodoro.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
@@ -317,6 +324,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
+- 0.51.0
+
 * Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
 - 0.50.1
 

@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.50
+%define ver_major 0.51
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Stevia is an alternative keyboard for Phosh
@@ -30,7 +30,9 @@ Source: %name-%version%beta.tar
 %endif
 Patch1: stevia-0.49.0-alt-meson.patch
 
-Provides: osk-wayland
+#Provides: osk-wayland
+# required by Phosh >= 0.50 (ALT #56838)
+Provides: %_userunitdir/mobi.phosh.OSK.service
 Provides: %binary_name = %EVR
 Conflicts: phosh-osk-stub
 Obsoletes: phosh-osk-stub < 0.48
@@ -115,7 +117,7 @@ Features:
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
-%_bindir/osk-wayland	%_bindir/%binary_name 80
+%_userunitdir/mobi.phosh.OSK.service	%_userunitdir/%rdn_name.service 80
 EOF
 
 %find_lang --output=%name.lang %binary_name
@@ -141,6 +143,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
+- 0.51.0
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
 - 0.50.1
 

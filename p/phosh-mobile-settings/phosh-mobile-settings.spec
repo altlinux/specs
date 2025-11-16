@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.50
+%define ver_major 0.51
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -13,7 +13,7 @@
 %define gvc_ver 5f9768a
 
 Name: phosh-mobile-settings
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Mobile Settings App for phosh and related components
@@ -44,7 +44,7 @@ Requires: cellbroadcastd
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
-BuildRequires: pkgconfig(gio-2.0) >= 2.74
+BuildRequires: pkgconfig(gio-2.0) >= 2.84
 BuildRequires: pkgconfig(gtk4) >= 4.12.5
 BuildRequires: pkgconfig(gtk4-wayland) >= 4.4
 BuildRequires: pkgconfig(libadwaita-1) >= 1.5
@@ -109,6 +109,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
+- 0.51.0
+
 * Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.1-alt1
 - 0.50.1
 

@@ -2,8 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.50
+%define ver_major 0.51
 %define beta %nil
+%define pfs_ver d007e739
 
 %define _name phosh
 # phrosh portal
@@ -21,26 +22,27 @@ Release: alt1%beta
 Summary: Phosh Desktop Portal
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
-Url: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh
+Url: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh
 
-Vcs: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh.git
+Vcs: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh.git
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/archive/v%version/%name-v%version%beta.tar.gz
+Source: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
-Source1: %name-%version%beta-cargo.tar
+Source1: pfs-%pfs_ver.tar
+Source2: %name-%version%beta-cargo.tar
 
 %define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
 %define gsds_ver 47
-%define pfs_ver 0.0.5
+#%%define pfs_ver 0.0.5
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson rust-cargo
+BuildRequires: meson rust-cargo /usr/bin/rst2man
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libpfs-0)
 BuildRequires: pkgconfig(gnome-desktop-4)
@@ -53,7 +55,8 @@ GTK/GNOME/Phosh to provide interfaces that aren't provided by the GTK
 portal.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %name-%{?_disable_snapshot:v}%version%beta -a1 %{?_disable_bootstrap:-a2}
+cp -r pfs-%pfs_ver subprojects/pfs
 %{?_enable_bootstrap:
 [ -d .cargo ] || mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -71,11 +74,18 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %__meson_test
 
 %files -f %name.lang
+%_bindir/ptcli
 %_libexecdir/%name
+%_libexecdir/%_name-thumbnailer
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.%_name.service
 %_datadir/xdg-desktop-portal/portals/%_name.portal
 %_userunitdir/%name.service
+%_userunitdir/%_name-thumbnailer.service
+%_datadir/dbus-1/interfaces/mobi.%_name.Thumbnailer.xml
+%_datadir/dbus-1/services/mobi.%_name.Thumbnailer.service
+%_man1dir/ptcli.1*
+%_man8dir/%_name-thumbnailer.8*
 
 %_libexecdir/%name1
 %_desktopdir/%name1.desktop
@@ -87,6 +97,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
+- 0.51.0
+
 * Sun Oct 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
 - 0.50.0
 

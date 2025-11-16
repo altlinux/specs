@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -113,6 +113,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - updated to v0.5.0-3-g5af1b2cd
 
