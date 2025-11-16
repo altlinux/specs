@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.64.38
+Version: 3.64.39
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -24,6 +24,8 @@ Provides: epm = %EVR
 
 # FIXHERE: Replace with target platform package manager
 Requires: apt rpm
+
+Conflicts: rpmbasefix
 
 %endif
 
@@ -94,6 +96,11 @@ make -C po
 %make_install -C po install DESTDIR=%buildroot \
 	datadir=%_datadir
 %find_lang %name
+cat >%buildroot/%_bindir/rpmbasefix <<EOF
+#!/bin/sh -x
+exec epm --verbose fix
+EOF
+chmod 0755 %buildroot/%_bindir/rpmbasefix
 
 %files -f %name.lang
 %doc README.md TODO LICENSE
@@ -115,6 +122,9 @@ make -C po
 %_bindir/serv
 %_bindir/distr_info
 %_bindir/esu
+%if "%_vendor" == "alt"
+%_bindir/rpmbasefix
+%endif
 %dir /var/lib/eepm/
 %dir /var/cache/eepm/
 %_man1dir/*
@@ -142,6 +152,39 @@ make -C po
 %endif
 
 %changelog
+* Mon Nov 17 2025 Vitaly Lipatov <lav@altlinux.ru> 3.64.39-alt1
+- epm whatprovides: allow work with path
+- epm repack.d/common-chromium-browser.sh: add provides /usr/bin/x-www-browser for browsers
+- epm desktop: update DE json's (eterbug #17617)
+- epm-repack-deb: make symlink if possible, fix repack
+- epm-repack: fix repack .Appimage and .snap on deb platforms
+- epm-play: fix to support low case package names on deb based systems
+- epm status: fix --thirdparty and --repacked status on deb systems
+- epm play: count thirdparty packages on deb systems for --list
+- epm-play: package list refactoring
+- epm play: add unreal-engine-stub (download and unpack Unreal Engine manually)
+- add stplr support
+- epm: add alias refresh for update command
+- epm: add apm support
+- epm repack: EPM_REPACK_SCRIPT will override repack rule (eterbug #18445)
+- epm install: install task package using task:package (eterbug #18647)
+- epm play popcorn time: added openssl3 check
+- epm repack spravki-bk: fixes
+- epm play max: replace appimage to deb and rpm (eterbug #18399)
+- epm install: allow short form for target backends
+- epm: add ALT Atomic support
+- epm repack max: add conflict to MAX, add MAX alias
+- epm check: add rpm --rebuilddb
+- epm: add repo support for stplr
+- epm download: fix EPM_BACKEND handling for alt
+- epm repack lunacy: fixes
+- epm: add function name to missed handles
+- epm play minecraft-launcher: libcurl-openssl already in the repo
+- epm play wps-office-cn: update configuration scripts and fix desktop file categories
+- epm play wps-office-cn: small cleanup
+- epm set_sudo: use sudo if sudo and doas installed (eterbug #17987)
+- epm status: fixes for --original and --thirdparty (trueconf issue)
+
 * Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 3.64.38-alt1
 - epm: load configs from /etc/eepm/conf.d/*.conf too
 - epm pack/repack: add sha256sum output for input files
