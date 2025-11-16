@@ -14,9 +14,9 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
-Summary: Stevia is an alternative keyboard for Phosh
+Summary: Stevia is a default keyboard for Phosh
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/World/Phosh/stevia
@@ -115,10 +115,15 @@ Features:
 %install
 %meson_install
 
+%{?_disable_default_osk:
+mv %buildroot%_userunitdir/%rdn_name.service \
+    %buildroot%_datadir/%binary_name/
+
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
-%_userunitdir/mobi.phosh.OSK.service	%_userunitdir/%rdn_name.service 80
+%_userunitdir/mobi.phosh.OSK.service	%_datadir/%binary_name/%rdn_name.service 80
 EOF
+}
 
 %find_lang --output=%name.lang %binary_name
 
@@ -127,22 +132,26 @@ xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%binary_name
-%_altdir/%_name
-%{?_enable_default_osk:%_desktopdir/sm.puri.OSK0.desktop}
-%{?_disable_default_osk:%_desktopdir/%rdn_name.desktop}
+%{?_enable_default_osk:%_desktopdir/sm.puri.OSK0.desktop
+%_userunitdir/mobi.phosh.OSK.service}
+%{?_disable_default_osk:%_desktopdir/%rdn_name.desktop
+%_datadir/%binary_name/%rdn_name.service
+%_altdir/%_name}
 %dir %_datadir/%binary_name
 %_datadir/%binary_name/layouts.json
 %dir %_datadir/%binary_name/completers
 %_datadir/%binary_name/completers/hunspell.completer
 %_datadir/glib-2.0/schemas/mobi.phosh.osk.enums.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.osk.gschema.xml
-%_userunitdir/%rdn_name.service
 %{?_enable_man:%_man1dir/%binary_name.1*}
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* NEWS
 
 
 %changelog
+* Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1.1
+- tried to fix mobi.phosh.OSK alternative to avoid duplicate names
+
 * Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - 0.51.0
 
