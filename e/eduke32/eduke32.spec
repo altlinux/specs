@@ -1,6 +1,6 @@
 Name: eduke32
 Version: 20230123.10167
-Release: alt1
+Release: alt2
 Summary: Source port of Duke Nukem 3D
 License: GPL-2.0-only
 Group: Games/Arcade
@@ -15,6 +15,7 @@ Source4: %{name}_128x128.png
 Source5: %name.desktop
 Source6: %name-demo-install.sh
 Source7: %name-demo-install.1
+Patch2000: %name-e2k.patch
 BuildRequires: dos2unix
 BuildRequires: gcc-c++
 BuildRequires: help2man
@@ -61,6 +62,11 @@ cp %SOURCE4 .
 cp %SOURCE5 .
 cp %SOURCE6 .
 cp %SOURCE7 .
+%ifarch %e2k
+%patch2000 -p2
+# ld: read in flex scanner failed
+sed -i 's/-dumpdir $$(obj)\/$$($1_$2)\/ //' GNUmakefile
+%endif
 
 sed -i 's/ -save-temps=obj / /g' GNUmakefile
 
@@ -108,6 +114,9 @@ install -Dm 0644 %{name}_128x128.png %buildroot%_iconsdir/hicolor/128x128/apps/%
 %_bindir/mapster32
 
 %changelog
+* Sun Nov 16 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20230123.10167-alt2
+- e2k build fix
+
 * Tue Apr 25 2023 Artyom Bystrov <arbars@altlinux.org> 20230123.10167-alt1
 - update to new version
 
