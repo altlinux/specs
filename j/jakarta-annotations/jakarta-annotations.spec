@@ -1,36 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jakarta-annotations
+Version: 3.0.0
+Release: alt1
+
+Summary: Jakarta Annotations
+License: EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: https://github.com/jakartaee/common-annotations-api
+Vcs: https://github.com/jakartaee/common-annotations-api.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+# Jakarta v3+ does not provide javax imports required by xmvn.
+Patch0: 0001-Add-maven-antrun-plugin-for-providing-javax-alt-patch.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           jakarta-annotations
-Version:        1.3.5
-Release:        alt1_11jpp11
-Summary:        Jakarta Annotations
-License:        EPL-2.0 or GPLv2 with exceptions
-URL:            https://github.com/eclipse-ee4j/common-annotations-api
-BuildArch:      noarch
-
-Source0:        https://github.com/eclipse-ee4j/common-annotations-api/archive/%{version}/common-annotations-api-%{version}.tar.gz
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-%endif
-
-Provides:       glassfish-annotation-api = %{version}-%{release}
-Source44: import.info
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-enforcer-plugin
+BuildRequires: spec-version-maven-plugin
+BuildRequires: maven-antrun-plugin
+BuildRequires: objectweb-asm
+BuildRequires: jarjar
 
 %description
 Jakarta Annotations defines a collection of annotations representing
@@ -40,28 +36,16 @@ that applies across a variety of Java technologies.
 %{?javadoc_package}
 
 %prep
-%setup -q -n common-annotations-api-%{version}
+%setup
+%autopatch -p1
 
 # remove unnecessary dependency on parent POM
 # org.eclipse.ee4j:project is not packaged and isn't needed
-%pom_remove_parent
-
-# disable spec submodule: it's not needed, and
-# it has missing dependencies (jruby, asciidoctor-maven-plugin, ...)
-%pom_disable_module spec
+%pom_remove_parent api
 
 # remove plugins not needed for RPM builds
 %pom_remove_plugin :maven-javadoc-plugin api
 %pom_remove_plugin :maven-source-plugin api
-%pom_remove_plugin :findbugs-maven-plugin api
-
-# Remove use of spec-version-maven-plugin
-%pom_remove_plugin :spec-version-maven-plugin api
-%pom_xpath_set pom:Bundle-Version '${project.version}' api
-%pom_xpath_set pom:Bundle-SymbolicName '${project.artifactId}' api
-%pom_xpath_set pom:Extension-Name '${extension.name}' api
-%pom_xpath_set pom:Implementation-Version '${project.version}' api
-%pom_xpath_set pom:Specification-Version '${spec.version}' api
 
 # provide aliases for the old artifact coordinates
 %mvn_alias jakarta.annotation:jakarta.annotation-api \
@@ -69,7 +53,12 @@ that applies across a variety of Java technologies.
   javax.annotation:jsr250-api
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- --file=api/pom.xml \
+  -Dmaven.compiler.source=9 \
+  -Dmaven.compiler.target=9 \
+  -Dmaven.javadoc.source=9 \
+  -Dmaven.compiler.release=9 \
+  #
 
 %install
 %mvn_install
@@ -79,9 +68,11 @@ that applies across a variety of Java technologies.
 %doc README.md
 
 %changelog
+* Tue Nov 12 2025 Ivan Khanas <xeno@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.3.5-alt1_11jpp11
 - update
 
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1.3.5-alt1_6jpp11
 - new version
-

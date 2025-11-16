@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           jsr-305
 Version:        3.0.2
-Release:        alt1_3jpp11
+Release:        alt2
 Summary:        Correctness annotations for Java code
 
 # The majority of code is BSD-licensed, but some Java sources
@@ -47,13 +47,10 @@ Detection.
 %setup -q
 cp %{SOURCE1} NOTICE-CC-BY
 
+%mvn_alias com.google.code.findbugs:jsr305 org.jsr-305:ri
+
 %pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
 
-sed -i 's|<groupId>com\.google\.code\.findbugs</groupId>|<groupId>org.jsr-305</groupId>|' ri/pom.xml
-sed -i 's|<artifactId>jsr305</artifactId>|<artifactId>ri</artifactId>|' ri/pom.xml
-
-%mvn_file :ri %{name}
-%mvn_alias :ri com.google.code.findbugs:jsr305
 %mvn_package ":{proposedAnnotations,tcl}" __noinstall
 
 # do not build sampleUses module - it causes Javadoc generation to fail
@@ -78,6 +75,9 @@ sed -i 's|<artifactId>jsr305</artifactId>|<artifactId>ri</artifactId>|' ri/pom.x
 %doc sampleUses
 
 %changelog
+* Wed Nov 12 2025 Ivan Khanas <xeno@altlinux.org> 1:3.0.2-alt2
+- Rename the artifact according to its actual coordinates(closes: 56833).
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1:3.0.2-alt1_3jpp11
 - new version
 
