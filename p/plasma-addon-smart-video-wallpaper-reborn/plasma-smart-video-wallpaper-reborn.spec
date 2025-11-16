@@ -2,7 +2,7 @@
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
 Name: plasma-addon-smart-video-wallpaper-reborn
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
@@ -15,7 +15,10 @@ Vcs: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn
 Source0: %name-%version.tar
 Source1: ru.po
 
-Patch: metadata-2.4.0-alt-fixes.patch
+Patch: Header-2.1.0-alt-fixes.patch
+Patch1: config-2.6.0-alt-fixes.patch
+Patch2: main-2.3.1-alt-fixes.patch
+Patch3: metadata-2.4.0-alt-fixes.patch
 
 BuildArch: noarch
 
@@ -35,7 +38,7 @@ Requires: ffmpeg
 %prep
 %setup
 cp -r -f %SOURCE1 package/translate/
-%patch -p0
+%autopatch -p0
 
 %build
 %K6cmake
@@ -46,17 +49,21 @@ cp -r -f %SOURCE1 package/translate/
 
 for locale in el_GR es nl pt_BR ru; do
  msgfmt package/translate/${locale}.po -o package/translate/${locale}.mo
- install -Dm 0644 package/translate/${locale}.mo \
-    %buildroot%_datadir/plasma/wallpapers/%nameL/contents/locale/${locale}/LC_MESSAGES/%nameLC.mo
+ install -Dm 0644 package/translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
 %files
 %_datadir/metainfo/%nameL.appdata.xml
 %exclude %_datadir/plasma/wallpapers/%nameL/translate
+%_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 %_datadir/plasma/wallpapers/%nameL/*
 %doc README.md
 
 %changelog
+* Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.6.0-alt1
+- 2.5.1 -> 2.6.0
+- fix: restore *.patch for localizations to work
+
 * Sat Nov 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.5.1-alt1
 - 2.4.0 -> 2.5.1
 
