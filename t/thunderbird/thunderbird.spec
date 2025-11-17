@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 144.0.1
+Version: 145.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -33,12 +33,11 @@ Source6: l10n.tar
 
 ### Start Patches
 Patch001: 0001-thunderbird-115-add-loongarch-support.patch
-Patch002: 0002-Fix-the-botan-build-for-loongarch64.patch
-Patch003: 0003-Disable-browser-option.patch
-Patch004: 0004-Fix-types-defination.patch
-Patch005: 0005-Fix-wrong-redefinition-of-double_t-on-i586.patch
-Patch006: 0006-Correction-of-the-Russian-translation.patch
-Patch007: 0007-ALT-stop-putting-commonDialogs.properties-into-share.patch
+Patch002: 0002-Disable-browser-option.patch
+Patch003: 0003-Fix-types-defination.patch
+Patch004: 0004-Fix-wrong-redefinition-of-double_t-on-i586.patch
+Patch005: 0005-Correction-of-the-Russian-translation.patch
+Patch006: 0006-ALT-stop-putting-commonDialogs.properties-into-share.patch
 ### End Patches
 
 Provides: mailclient
@@ -175,9 +174,8 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
-%patch5 -p2
-%patch6 -p1
-%patch7 -p2
+%patch5 -p1
+%patch6 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -384,6 +382,26 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Mon Nov 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 145.0-alt1
+- New version.
+- Fixes:
+  + CVE-2025-13021: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13022: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13012: Race condition in the Graphics component
+  + CVE-2025-13023: Sandbox escape due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13016: Incorrect boundary conditions in the JavaScript: WebAssembly component
+  + CVE-2025-13024: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-13025: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13026: Sandbox escape due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2025-13017: Same-origin policy bypass in the DOM: Notifications component
+  + CVE-2025-13018: Mitigation bypass in the DOM: Security component
+  + CVE-2025-13019: Same-origin policy bypass in the DOM: Workers component
+  + CVE-2025-13013: Mitigation bypass in the DOM: Core & HTML component
+  + CVE-2025-13020: Use-after-free in the WebRTC: Audio/Video component
+  + CVE-2025-13014: Use-after-free in the Audio/Video component
+  + CVE-2025-13015: Spoofing issue in Thunderbird
+  + CVE-2025-13027: Memory safety bugs fixed in Firefox 145 and Thunderbird 145
+
 * Fri Oct 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 144.0.1-alt1
 - New version.
 - Fix the new_argv to match the standard argv format in the wrapper.
