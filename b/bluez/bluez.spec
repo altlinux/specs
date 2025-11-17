@@ -10,10 +10,15 @@
 # hciattach hciconfig hcitool hcidump rfcomm sdptool ciptool gatttool
 %def_enable deprecated
 %def_enable experimental
+%ifarch %e2k %ix86 %arm mipsel
+%def_disable testing
+%else
+%def_enable testing
+%endif
 
 Name: bluez
 Version: 5.84
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -114,6 +119,7 @@ export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 	--enable-hid2hci \
 	--localstatedir=%_var \
 	--with-systemdsystemunitdir=%_unitdir \
+	%{subst_enable testing} \
 	%{subst_enable deprecated} \
 	%{subst_enable experimental}
 %make_build
@@ -222,6 +228,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Mon Nov 17 2025 Sergey V Turchin <zerg@altlinux.org> 5.84-alt2
+- enable testing at build on basic arches (closes: 56368)
+
 * Wed Sep 24 2025 L.A. Kostis <lakostis@altlinux.ru> 5.84-alt1
 - 5.84.
 - re-enable LTO.
