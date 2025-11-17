@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define candle_prefix %_libdir/%name
 
 Name: candle
-Release: alt2
-Version: 10.10.4
+Release: alt1
+Version: 10.11.1
 
 Summary: %name application with G-Code visualizer written in Qt
 Group: Engineering
@@ -15,9 +16,8 @@ Source: %name-%version.tar
 Source1: %name.desktop
 
 Patch0: alt-fix-app-resource-paths.patch
-Patch1: alt-prepare-cmakefile.patch
-Patch2: alt-fix-camera-plugin-segmfault.patch
-Patch3: alt-fix-openGL-context-restore-error.patch
+Patch1: alt-dont-use-rpath.patch
+Patch2: alt-start-with-system-locale.patch
 
 BuildRequires: cmake
 BuildRequires: qt5-multimedia-devel
@@ -28,7 +28,7 @@ BuildRequires: qt5-websockets-devel
 
 %description
 A simple and reliable program for controlling a CNC machine on GRBL
-firmware, sending commands and G-codes. 
+firmware, sending commands and G-codes.
 
 Supported functions:
 * Controlling GRBL-based cnc-machine via console commands, buttons
@@ -39,21 +39,30 @@ on form, numpad.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
-%cmake
+%cmake \
+    -DCMAKE_INSTALL_BINDIR=%candle_prefix \
+    #
 %cmake_build
 
 %install
 %cmake_install
 
+%__mv %buildroot%candle_prefix/%name %buildroot%candle_prefix/%{name}-bin
+%__mkdir %buildroot%_bindir
+cat>%buildroot%_bindir/%name<<-EOF
+#!/bin/sh
+
+export QT_QPA_PLATFORM=xcb
+%candle_prefix/%{name}-bin \${1:+"\$@"}
+EOF
+%__chmod +x %buildroot%_bindir/%name
+
 sed -i 's;^\(Categories=\)\(.*\)$;\1Graphics\;\2;' deploy/linux%_desktopdir/%name.desktop
 %__cp -a deploy/linux/usr %buildroot/
-find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
+find %buildroot%_datadir/%name -type f -name '*.ts' -exec rm -f {} \;
 
 %files
 %doc readme.md
@@ -62,6 +71,7 @@ find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
 %doc %_defaultdocdir/%name/LICENSE
 %doc %_defaultdocdir/%name/help
 %_bindir/%name
+%candle_prefix
 %_libdir/*.so
 %_libdir/%name/*
 %_datadir/%name
@@ -69,6 +79,12 @@ find %buildroot{%_datadir,%_libdir}/%name -type f -name '*.ts' -exec rm -f {} \;
 %_pixmapsdir/%name.ico
 
 %changelog
+* Mon Nov 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.11.1-alt1
+- use the current system locale upon application launch (closes: 56815)
+- fix the visibility of the float button that docks the window back to the
+  main window (closes: 56821)
+- new verson
+
 * Fri Oct 31 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.10.4-alt2
 - update the application's category list
 
