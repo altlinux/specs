@@ -5,8 +5,8 @@
 %def_with check
 
 Name: eyeD3
-Version: 0.9.8
-Release: alt2
+Version: 0.9.9
+Release: alt1
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
 License: GPL-3.0
@@ -74,6 +74,9 @@ mv tests/eyeD3-test-data tests/data
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 17 2025 Anton Vyatkin <toni@altlinux.org> 0.9.9-alt1
+- New version 0.9.9.
+
 * Fri May 09 2025 Anton Vyatkin <toni@altlinux.org> 0.9.8-alt2
 - Fixed FTBFS.
 
