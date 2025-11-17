@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.22.2
+Version: 0.22.3
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -124,6 +124,12 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Thu Nov 13 2025 Semyon Knyazev <samael@altlinux.org> 0.22.3-alt1
+- Changed lockoutTime attribute from datetime to integer format. (closes: 49829)
+- Disabled critical domain GPO deletion, remove warning dialog in favor
+  of message logging, and update multi-policy deletion confirmation. (closes: 42235)
+- Fixed blocked computer icon. (closes: 56740)
+
 * Wed Oct 29 2025 Semyon Knyazev <samael@altlinux.org> 0.22.2-alt1
 - Fixed "Telephones" tab Russian translations spelling. (closes: 54430)
 - Fixed computer account reset confirmation Russian translations spelling.
