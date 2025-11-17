@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.12.0
-Release: alt7
+Release: alt8
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
@@ -11,7 +11,14 @@ Requires: libjaylink >= 0.4.0
 
 Source: %name-%version-%release.tar
 
-BuildRequires: capstone-devel jimtcl-devel libftdi1-devel libhidapi-devel libjaylink-devel libusb-devel texinfo
+BuildRequires: texinfo
+BuildRequires: pkgconfig(capstone)
+BuildRequires: pkgconfig(hidapi-hidraw)
+BuildRequires: pkgconfig(jimtcl)
+BuildRequires: pkgconfig(libftdi1)
+BuildRequires: pkgconfig(libgpiod)
+BuildRequires: pkgconfig(libjaylink)
+BuildRequires: pkgconfig(libusb-1.0)
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -27,62 +34,33 @@ hardware debugging.
 
 %build
 %autoreconf
-%configure \
-  --disable-werror \
-  --disable-doxygen-html \
-  --disable-internal-jimtcl \
-  --disable-internal-libjaylink \
-  --enable-internal-libgpiod \
-  --enable-amtjtagaccel \
-  --enable-at91rm9200 \
-  --enable-bcm2835gpio \
-  --enable-ch347 \
-  --enable-cmsis-dap \
-  --enable-dummy \
-  --enable-ep93xx \
-  --enable-ft2232_libftdi \
-  --enable-ftdi \
-  --enable-gw16012 \
-  --enable-jlink \
-  --enable-jtag_vpi \
-  --enable-linuxgpiod \
-  --enable-opendous \
-  --enable-openjtag \
-  --enable-osbdm \
-  --enable-parport \
-  --enable-parport_ppdev \
-  --enable-presto \
-  --enable-remote-bitbang \
-  --enable-stlink \
-  --enable-sysfsgpio \
-  --enable-ti-icdi \
-  --enable-ulink \
-  --enable-usb-blaster \
-  --enable-usb-blaster-2 \
-  --enable-usb_blaster_libftdi \
-  --enable-vsllink \
-  CROSS=
+%configure  --disable-werror \
+            --disable-doxygen-html \
+            --disable-internal-jimtcl \
+            --disable-internal-libjaylink \
+            #
 %make_build
 
 %install
 %makeinstall_std
 install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.rules
+rm -rf %buildroot%_datadir/openocd/contrib
 
 %pre
 /usr/sbin/groupadd -r -f plugdev &>/dev/null ||:
 
 %files
-%doc AUTHORS BUGS ChangeLog HACKING NEWS* NEWTAPS
-%doc README TODO
-%doc %_datadir/%name/contrib/libdcc
+%doc COPYING README
 %_udevrulesdir/*.rules
 %_bindir/openocd
 %_datadir/openocd
-%exclude %_datadir/openocd/contrib
 %_infodir/openocd.info*
-%_mandir/man1/*
+%_man1dir/*
 
 %changelog
+* Fri Nov 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt8
+- v0.12.0-1283-g4e78563a0
+
 * Mon Jul 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt7
 - added support for ch347-based JTAG adapters
 - added support for k1921vk028, k1921vk035 and k1912vg015 MCUs
