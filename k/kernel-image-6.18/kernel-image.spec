@@ -1,5 +1,5 @@
 Name: kernel-image-6.18
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.17
 %define kernel_base_version	6.18
 %define kernel_sublevel	.0
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Nov 16 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc6
+- Update to v6.18-rc6 (2025-11-16).
+- config-aarch64: add CONFIG_ROCKCHIP_DW_DP=y.
+
 * Sun Nov 09 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc5
 - Update to v6.18-rc5 (2025-11-09).
 - spec: Do not package -domU kernels.
