@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
@@ -33,9 +33,12 @@ applications quantum-safe cryptography to facilitate deployment and
 testing in real world contexts.
 
 Supported key encapsulation mechanisms (KEMs): BIKE, Classic McEliece,
-  FrodoKEM, HQC, CRYSTALS-Kyber, NTRU-Prime.
+  FrodoKEM, HQC, Kyber, ML-KEM, NTRU, NTRU-Prime.
 
-Supported signature schemes: CRYSTALS-Dilithium, Falcon, SPHINCS+.
+Supported signature schemes: CROSS, MAYO, ML-DSA, SLH-DSA, SNOVA,
+   SPHINCS+, UOV.
+
+Supported stateful signature schemes: LMS, XMSS.
 
 Warning: WE DO NOT CURRENTLY RECOMMEND RELYING ON THIS LIBRARY IN A
 PRODUCTION ENVIRONMENT OR TO PROTECT ANY SENSITIVE DATA. This library is
@@ -109,7 +112,7 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 # https://github.com/open-quantum-safe/liboqs/wiki/Minimal-example-of-a-post-quantum-KEM
   cc -Ibuild/include -Lbuild/lib tests/example_kem.c -o example_kem -loqs
   ./example_kem
-time timeout --kill-after=400 300 %ninja_build -C build run_tests
+time timeout --kill-after=999 900 %ninja_build -C build run_tests
 
 %files
 %doc LICENSE.txt README.md RELEASE.md SECURITY.md
@@ -127,6 +130,9 @@ time timeout --kill-after=400 300 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Sat Nov 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
+- Update to 0.15.0 (2025-11-14).
+
 * Fri Jul 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.14.0-alt1
 - Update to 0.14.0 (2025-07-10).
 
