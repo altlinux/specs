@@ -1,155 +1,198 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname googleauth
 
 Name:          gem-googleauth
 Epoch:         1
-Version:       1.4.0
+Version:       1.15.1
 Release:       alt1
 Summary:       Google Auth Library for Ruby
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/googleapis/google-auth-library-ruby
 Vcs:           https://github.com/googleapis/google-auth-library-ruby.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
+%if_enabled check
 BuildRequires: gem(fakefs) >= 1.0
 BuildRequires: gem(fakeredis) >= 0.5
+BuildRequires: gem(faraday) >= 1.0
 BuildRequires: gem(gems) >= 1.2
-BuildRequires: gem(google-style) >= 1.26.1
+BuildRequires: gem(google-cloud-env) >= 2.2
+BuildRequires: gem(google-logging-utils) >= 0.1
+BuildRequires: gem(google-style) >= 1.30.1
+BuildRequires: gem(jwt) >= 1.4
 BuildRequires: gem(logging) >= 2.0
 BuildRequires: gem(minitest) >= 5.14
 BuildRequires: gem(minitest-focus) >= 1.1
-BuildRequires: gem(rack-test) >= 1.1.0
+BuildRequires: gem(multi_json) >= 1.11
+BuildRequires: gem(os) >= 0.9
+BuildRequires: gem(rack-test) >= 2.0
 BuildRequires: gem(redcarpet) >= 3.0
 BuildRequires: gem(redis) >= 4.0
 BuildRequires: gem(rspec) >= 3.0
-BuildRequires: gem(sinatra) >= 0
+BuildRequires: gem(signet) >= 0.16
 BuildRequires: gem(webmock) >= 3.8
 BuildRequires: gem(yard) >= 0.9
-BuildRequires: gem(faraday) >= 0.17.3
-BuildRequires: gem(jwt) >= 1.4
-BuildRequires: gem(memoist) >= 0.16
-BuildRequires: gem(multi_json) >= 1.11
-BuildRequires: gem(os) >= 0.9
-BuildRequires: gem(signet) >= 0.16
-BuildConflicts: gem(fakefs) >= 2
+BuildConflicts: gem(fakefs) >= 4
 BuildConflicts: gem(fakeredis) >= 1
+BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(gems) >= 2
-BuildConflicts: gem(google-style) >= 1.27
+BuildConflicts: gem(google-cloud-env) >= 3
+BuildConflicts: gem(google-logging-utils) >= 1
+BuildConflicts: gem(google-style) >= 2
+BuildConflicts: gem(jwt) >= 4.0
 BuildConflicts: gem(logging) >= 3
 BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-focus) >= 2
+BuildConflicts: gem(multi_json) >= 2
+BuildConflicts: gem(os) >= 2.0
 BuildConflicts: gem(rack-test) >= 3
 BuildConflicts: gem(redcarpet) >= 4
 BuildConflicts: gem(redis) >= 6
 BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(signet) >= 2
 BuildConflicts: gem(webmock) >= 4
 BuildConflicts: gem(yard) >= 1
-BuildConflicts: gem(faraday) >= 3
-BuildConflicts: gem(jwt) >= 3
-BuildConflicts: gem(memoist) >= 1
-BuildConflicts: gem(multi_json) >= 2
-BuildConflicts: gem(os) >= 2.0
-BuildConflicts: gem(signet) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rack-test >= 1.1.0,rack-test < 3
-%ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
-Requires:      gem(faraday) >= 0.17.3
+%ruby_use_gem_dependency google-style >= 1.31,google-style < 2
+Requires:      ruby >= 3.0
+Requires:      gem(fakefs) >= 1.0
+Requires:      gem(fakeredis) >= 0.5
+Requires:      gem(faraday) >= 1.0
+Requires:      gem(gems) >= 1.2
+Requires:      gem(google-cloud-env) >= 2.2
+Requires:      gem(google-logging-utils) >= 0.1
+Requires:      gem(google-style) >= 1.30.1
 Requires:      gem(jwt) >= 1.4
-Requires:      gem(memoist) >= 0.16
+Requires:      gem(logging) >= 2.0
+Requires:      gem(minitest) >= 5.14
+Requires:      gem(minitest-focus) >= 1.1
 Requires:      gem(multi_json) >= 1.11
 Requires:      gem(os) >= 0.9
+Requires:      gem(rack-test) >= 2.0
+Requires:      gem(redcarpet) >= 3.0
+Requires:      gem(redis) >= 4.0
+Requires:      gem(rspec) >= 3.0
 Requires:      gem(signet) >= 0.16
+Requires:      gem(webmock) >= 3.8
+Requires:      gem(yard) >= 0.9
+Conflicts:     gem(fakefs) >= 4
+Conflicts:     gem(fakeredis) >= 1
 Conflicts:     gem(faraday) >= 3
-Conflicts:     gem(jwt) >= 3
-Conflicts:     gem(memoist) >= 1
+Conflicts:     gem(gems) >= 2
+Conflicts:     gem(google-cloud-env) >= 3
+Conflicts:     gem(google-logging-utils) >= 1
+Conflicts:     gem(google-style) >= 2
+Conflicts:     gem(jwt) >= 4.0
+Conflicts:     gem(logging) >= 3
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest-focus) >= 2
 Conflicts:     gem(multi_json) >= 2
 Conflicts:     gem(os) >= 2.0
+Conflicts:     gem(rack-test) >= 3
+Conflicts:     gem(redcarpet) >= 4
+Conflicts:     gem(redis) >= 6
+Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(signet) >= 2
-Obsoletes:     ruby-google-auth < %EVR
-Provides:      ruby-google-auth = %EVR
-Provides:      gem(googleauth) = 1.4.0
-
+Conflicts:     gem(webmock) >= 4
+Conflicts:     gem(yard) >= 1
+Provides:      gem(googleauth) = 1.15.1
 
 %description
-Allows simple authorization for accessing Google APIs. Provide support for
-Application Default Credentials, as described at
-https://developers.google.com/accounts/docs/application-default-credentials
+Implements simple authorization for accessing Google APIs, and provides support
+for Application Default Credentials.
 
 
+%if_enabled    doc
 %package       -n gem-googleauth-doc
-Version:       1.4.0
+Version:       1.15.1
 Release:       alt1
 Summary:       Google Auth Library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета googleauth
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(googleauth) = 1.4.0
+Requires:      gem(googleauth) = 1.15.1
 
 %description   -n gem-googleauth-doc
 Google Auth Library for Ruby documentation files.
 
-Allows simple authorization for accessing Google APIs. Provide support for
-Application Default Credentials, as described at
-https://developers.google.com/accounts/docs/application-default-credentials
+Implements simple authorization for accessing Google APIs, and provides support
+for Application Default Credentials.
 
 %description   -n gem-googleauth-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета googleauth.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-googleauth-devel
-Version:       1.4.0
+Version:       1.15.1
 Release:       alt1
 Summary:       Google Auth Library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета googleauth
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(googleauth) = 1.4.0
+Requires:      gem(googleauth) = 1.15.1
 Requires:      gem(fakefs) >= 1.0
 Requires:      gem(fakeredis) >= 0.5
+Requires:      gem(faraday) >= 1.0
 Requires:      gem(gems) >= 1.2
-Requires:      gem(google-style) >= 1.26.1
+Requires:      gem(google-cloud-env) >= 2.2
+Requires:      gem(google-logging-utils) >= 0.1
+Requires:      gem(google-style) >= 1.30.1
+Requires:      gem(jwt) >= 1.4
 Requires:      gem(logging) >= 2.0
 Requires:      gem(minitest) >= 5.14
 Requires:      gem(minitest-focus) >= 1.1
-Requires:      gem(rack-test) >= 1.1.0
+Requires:      gem(multi_json) >= 1.11
+Requires:      gem(os) >= 0.9
+Requires:      gem(rack-test) >= 2.0
 Requires:      gem(redcarpet) >= 3.0
 Requires:      gem(redis) >= 4.0
 Requires:      gem(rspec) >= 3.0
-Requires:      gem(sinatra) >= 0
+Requires:      gem(signet) >= 0.16
 Requires:      gem(webmock) >= 3.8
 Requires:      gem(yard) >= 0.9
-Conflicts:     gem(fakefs) >= 2
+Conflicts:     gem(fakefs) >= 4
 Conflicts:     gem(fakeredis) >= 1
+Conflicts:     gem(faraday) >= 3
 Conflicts:     gem(gems) >= 2
-Conflicts:     gem(google-style) >= 1.27
+Conflicts:     gem(google-cloud-env) >= 3
+Conflicts:     gem(google-logging-utils) >= 1
+Conflicts:     gem(google-style) >= 2
+Conflicts:     gem(jwt) >= 4.0
 Conflicts:     gem(logging) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-focus) >= 2
+Conflicts:     gem(multi_json) >= 2
+Conflicts:     gem(os) >= 2.0
 Conflicts:     gem(rack-test) >= 3
 Conflicts:     gem(redcarpet) >= 4
 Conflicts:     gem(redis) >= 6
 Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(signet) >= 2
 Conflicts:     gem(webmock) >= 4
 Conflicts:     gem(yard) >= 1
 
 %description   -n gem-googleauth-devel
 Google Auth Library for Ruby development package.
 
-Allows simple authorization for accessing Google APIs. Provide support for
-Application Default Credentials, as described at
-https://developers.google.com/accounts/docs/application-default-credentials
+Implements simple authorization for accessing Google APIs, and provides support
+for Application Default Credentials.
 
 %description   -n gem-googleauth-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета googleauth.
+%endif
 
 
 %prep
@@ -165,19 +208,26 @@ https://developers.google.com/accounts/docs/application-default-credentials
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-googleauth-doc
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-googleauth-devel
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE README.md
+%endif
 
 
 %changelog
+* Sat Nov 01 2025 Pavel Skrylev <majioa@altlinux.org> 1:1.15.1-alt1
+- ^ 1.4.0 -> 1.15.1
+
 * Sun Jan 29 2023 Pavel Skrylev <majioa@altlinux.org> 1:1.4.0-alt1
 - ^ 1.2.0 -> 1.4.0
 

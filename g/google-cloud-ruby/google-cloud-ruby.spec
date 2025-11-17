@@ -1,12 +1,11 @@
 Name:          google-cloud-ruby
 Version:       20210531
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Google Cloud Client Library for Ruby
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/googleapis/google-cloud-ruby
 Vcs:           https://github.com/googleapis/google-cloud-ruby.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
 Patch:         version.patch
@@ -17,6 +16,7 @@ BuildRequires(pre): rpm-build-ruby
 %ruby_use_gem_dependency binding_of_caller >= 0.7,binding_of_caller < 2
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency googleauth >= 1.2.0,googleauth < 2
+%ruby_use_gem_dependency gapic-common >= 1.2,gapic-common < 2
 
 %description
 Idiomatic Ruby client for Google Cloud Platform services.
@@ -24,12 +24,12 @@ Idiomatic Ruby client for Google Cloud Platform services.
 
 %package       -n gem-google-cloud-channel-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Channel V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-channel-v1) = 0.6.0
 
@@ -44,7 +44,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-channel-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Channel V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-channel-v1
 Group:         Development/Documentation
@@ -68,12 +68,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigquery-data-transfer-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data Transfer Service V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-bigquery-data_transfer-v1) = 0.4.0
 
@@ -87,7 +87,7 @@ for more details.
 
 %package       -n gem-google-cloud-bigquery-data-transfer-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data Transfer Service V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-data_transfer-v1
 Group:         Development/Documentation
@@ -111,12 +111,12 @@ for more details.
 
 %package       -n gem-google-cloud-core
 Version:       1.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Internal shared library for google-cloud-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(google-cloud-env) >= 1.0 gem(google-cloud-env) < 2
+Requires:      gem(google-cloud-env) >= 1.0
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-core) = 1.6.0
 
@@ -126,7 +126,7 @@ google-cloud-core is the internal shared library for google-cloud-ruby.
 
 %package       -n gem-google-cloud-core-doc
 Version:       1.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Internal shared library for google-cloud-ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-core
 Group:         Development/Documentation
@@ -146,12 +146,12 @@ google-cloud-core is the internal shared library for google-cloud-ruby.
 
 %package       -n gem-google-cloud-workflows-v1beta
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-workflows-v1beta) = 0.3.0
 
@@ -168,7 +168,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-workflows-v1beta-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-workflows-v1beta
 Group:         Development/Documentation
@@ -194,12 +194,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-scheduler-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-scheduler-v1beta1) = 0.4.0
 
@@ -216,7 +216,7 @@ client library google-cloud-scheduler instead. See the readme for more details.
 
 %package       -n gem-google-cloud-scheduler-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-scheduler-v1beta1
 Group:         Development/Documentation
@@ -243,12 +243,12 @@ client library google-cloud-scheduler instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigquery-connection-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Connection V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-bigquery-connection-v1) = 0.4.0
@@ -263,7 +263,7 @@ details.
 
 %package       -n gem-google-cloud-bigquery-connection-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Connection V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-connection-v1
 Group:         Development/Documentation
@@ -286,12 +286,12 @@ details.
 
 %package       -n gem-google-cloud-tasks-v2beta3
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2beta3 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-tasks-v2beta3) = 0.6.0
@@ -308,7 +308,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-tasks-v2beta3-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2beta3 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-tasks-v2beta3
 Group:         Development/Documentation
@@ -333,12 +333,12 @@ the readme for more details.
 
 %package       -n gem-google-area120-tables-v1alpha1
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Area 120 Tables V1alpha1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-area120-tables-v1alpha1) = 0.2.0
 
@@ -352,7 +352,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-area120-tables-v1alpha1-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Area 120 Tables V1alpha1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-area120-tables-v1alpha1
 Group:         Development/Documentation
@@ -376,7 +376,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-speech
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -397,7 +397,7 @@ learning technology.
 
 %package       -n gem-google-cloud-speech-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-speech
 Group:         Development/Documentation
@@ -421,12 +421,12 @@ learning technology.
 
 %package       -n gem-google-cloud-trace-v2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Trace V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-trace-v2) = 0.3.0
 
@@ -442,7 +442,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-trace-v2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Trace V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-trace-v2
 Group:         Development/Documentation
@@ -467,7 +467,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-service-directory
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -484,7 +484,7 @@ application services.
 
 %package       -n gem-google-cloud-service-directory-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_directory
 Group:         Development/Documentation
@@ -504,12 +504,12 @@ application services.
 
 %package       -n gem-google-cloud-vision-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-vision-v1) = 0.6.0
 
@@ -524,7 +524,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-vision-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-vision-v1
 Group:         Development/Documentation
@@ -548,12 +548,12 @@ the readme for more details.
 
 %package       -n gem-google-cloud-workflows-executions-v1beta
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows Executions V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-workflows-executions-v1beta) = 0.3.0
 
@@ -570,7 +570,7 @@ google-cloud-workflows-executions instead. See the readme for more details.
 
 %package       -n gem-google-cloud-workflows-executions-v1beta-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows Executions V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-workflows-executions-v1beta
 Group:         Development/Documentation
@@ -597,12 +597,12 @@ google-cloud-workflows-executions instead. See the readme for more details.
 
 %package       -n gem-google-cloud-datastore-admin-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Firestore in Datastore mode Admin V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-datastore-admin-v1) = 0.4.0
 
@@ -616,7 +616,7 @@ google-cloud-datastore-admin instead. See the readme for more details.
 
 %package       -n gem-google-cloud-datastore-admin-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Firestore in Datastore mode Admin V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-datastore-admin-v1
 Group:         Development/Documentation
@@ -640,12 +640,12 @@ google-cloud-datastore-admin instead. See the readme for more details.
 
 %package       -n gem-google-cloud-org-policy-v2
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Organization Policy V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-org_policy-v2) = 0.2.0
 
@@ -659,7 +659,7 @@ google-cloud-org_policy instead. See the readme for more details.
 
 %package       -n gem-google-cloud-org-policy-v2-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Organization Policy V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-org_policy-v2
 Group:         Development/Documentation
@@ -682,7 +682,7 @@ google-cloud-org_policy instead. See the readme for more details.
 
 %package       -n gem-google-cloud-service-management
 Version:       1.0.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Management API API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -699,7 +699,7 @@ consumers.
 
 %package       -n gem-google-cloud-service-management-doc
 Version:       1.0.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Management API API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_management
 Group:         Development/Documentation
@@ -721,12 +721,12 @@ consumers.
 
 %package       -n gem-google-cloud-spanner-v1
 Version:       0.6.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-spanner-v1) = 0.6.1
 
@@ -739,7 +739,7 @@ client library google-cloud-spanner instead. See the readme for more details.
 
 %package       -n gem-google-cloud-spanner-v1-doc
 Version:       0.6.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-spanner-v1
 Group:         Development/Documentation
@@ -761,12 +761,12 @@ client library google-cloud-spanner instead. See the readme for more details.
 
 %package       -n gem-google-cloud-access-approval-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Access Approval V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-access_approval-v1) = 0.4.0
 
@@ -779,7 +779,7 @@ google-cloud-access_approval instead. See the readme for more details.
 
 %package       -n gem-google-cloud-access-approval-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Access Approval V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-access_approval-v1
 Group:         Development/Documentation
@@ -801,7 +801,7 @@ google-cloud-access_approval instead. See the readme for more details.
 
 %package       -n gem-google-cloud-firestore
 Version:       2.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Firestore API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -818,7 +818,7 @@ google-cloud-firestore is the official library for Google Cloud Firestore API.
 
 %package       -n gem-google-cloud-firestore-doc
 Version:       2.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Firestore API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-firestore
 Group:         Development/Documentation
@@ -838,12 +838,12 @@ google-cloud-firestore is the official library for Google Cloud Firestore API.
 
 %package       -n gem-google-cloud-talent-v4
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution V4 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-talent-v4) = 0.4.0
 
@@ -859,7 +859,7 @@ client library google-cloud-talent instead. See the readme for more details.
 
 %package       -n gem-google-cloud-talent-v4-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution V4 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-talent-v4
 Group:         Development/Documentation
@@ -885,12 +885,12 @@ client library google-cloud-talent instead. See the readme for more details.
 
 %package       -n gem-google-cloud-data-labeling-v1beta1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Data Labeling Service V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-data_labeling-v1beta1) = 0.3.0
 
@@ -905,7 +905,7 @@ details.
 
 %package       -n gem-google-cloud-data-labeling-v1beta1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Data Labeling Service V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-data_labeling-v1beta1
 Group:         Development/Documentation
@@ -930,12 +930,12 @@ details.
 
 %package       -n gem-google-cloud-bigquery-reservation-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Reservation V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-bigquery-reservation-v1) = 0.3.0
 
@@ -950,7 +950,7 @@ more details.
 
 %package       -n gem-google-cloud-bigquery-reservation-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Reservation V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-reservation-v1
 Group:         Development/Documentation
@@ -974,7 +974,7 @@ more details.
 
 %package       -n gem-google-cloud-artifact-registry
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Artifact Registry API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -990,7 +990,7 @@ integrated service built on Google infrastructure.
 
 %package       -n gem-google-cloud-artifact-registry-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Artifact Registry API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-artifact_registry
 Group:         Development/Documentation
@@ -1010,7 +1010,7 @@ integrated service built on Google infrastructure.
 
 %package       -n gem-google-cloud-kms
 Version:       2.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Key Management Service (KMS) API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1026,7 +1026,7 @@ for direct use by other cloud resources and applications.
 
 %package       -n gem-google-cloud-kms-doc
 Version:       2.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Key Management Service (KMS) API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-kms
 Group:         Development/Documentation
@@ -1047,7 +1047,7 @@ for direct use by other cloud resources and applications.
 
 %package       -n gem-google-cloud-container-analysis
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Container Analysis API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1064,7 +1064,7 @@ artifacts.
 
 %package       -n gem-google-cloud-container-analysis-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Container Analysis API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-container_analysis
 Group:         Development/Documentation
@@ -1085,7 +1085,7 @@ artifacts.
 
 %package       -n gem-google-iam-credentials
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Service Account Credentials API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1103,7 +1103,7 @@ of tokens.
 
 %package       -n gem-google-iam-credentials-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Service Account Credentials API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-iam-credentials
 Group:         Development/Documentation
@@ -1126,12 +1126,12 @@ of tokens.
 
 %package       -n gem-google-cloud-talent-v4beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution V4beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-talent-v4beta1) = 0.4.0
 
@@ -1147,7 +1147,7 @@ client library google-cloud-talent instead. See the readme for more details.
 
 %package       -n gem-google-cloud-talent-v4beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution V4beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-talent-v4beta1
 Group:         Development/Documentation
@@ -1173,7 +1173,7 @@ client library google-cloud-talent instead. See the readme for more details.
 
 %package       -n gem-google-cloud-vision
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1191,7 +1191,7 @@ optical character recognition (OCR), and tagging of explicit content.
 
 %package       -n gem-google-cloud-vision-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-vision
 Group:         Development/Documentation
@@ -1212,7 +1212,7 @@ optical character recognition (OCR), and tagging of explicit content.
 
 %package       -n gem-google-cloud-translate-v2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Cloud Translation V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1232,7 +1232,7 @@ the translation service.
 
 %package       -n gem-google-cloud-translate-v2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Cloud Translation V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-translate-v2
 Group:         Development/Documentation
@@ -1253,7 +1253,7 @@ the translation service.
 
 %package       -n gem-google-cloud-resource-manager
 Version:       0.36.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Resource Manager
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1270,7 +1270,7 @@ Manager.
 
 %package       -n gem-google-cloud-resource-manager-doc
 Version:       0.36.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Resource Manager documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-resource_manager
 Group:         Development/Documentation
@@ -1291,7 +1291,7 @@ Manager.
 
 %package       -n gem-google-cloud-data-labeling
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Data Labeling Service API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1308,7 +1308,7 @@ learning models.
 
 %package       -n gem-google-cloud-data-labeling-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Data Labeling Service API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-data_labeling
 Group:         Development/Documentation
@@ -1330,12 +1330,12 @@ learning models.
 
 %package       -n gem-google-cloud-bigquery-storage-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Storage V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-bigquery-storage-v1) = 0.6.0
 
@@ -1348,7 +1348,7 @@ google-cloud-bigquery-storage instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigquery-storage-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Storage V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-storage-v1
 Group:         Development/Documentation
@@ -1370,12 +1370,12 @@ google-cloud-bigquery-storage instead. See the readme for more details.
 
 %package       -n gem-google-cloud-policy-troubleshooter-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Policy Troubleshooter V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-policy_troubleshooter-v1) = 0.3.0
@@ -1393,7 +1393,7 @@ google-cloud-policy_troubleshooter instead. See the readme for more details.
 
 %package       -n gem-google-cloud-policy-troubleshooter-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Policy Troubleshooter V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-policy_troubleshooter-v1
 Group:         Development/Documentation
@@ -1420,12 +1420,12 @@ google-cloud-policy_troubleshooter instead. See the readme for more details.
 
 %package       -n gem-google-cloud-managed-identities-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Managed Service for Microsoft Active Directory API V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-managed_identities-v1) = 0.3.0
 
@@ -1439,7 +1439,7 @@ google-cloud-managed_identities instead. See the readme for more details.
 
 %package       -n gem-google-cloud-managed-identities-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Managed Service for Microsoft Active Directory API V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-managed_identities-v1
 Group:         Development/Documentation
@@ -1463,7 +1463,7 @@ google-cloud-managed_identities instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigquery-storage
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Storage API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1478,7 +1478,7 @@ The BigQuery Storage API provides fast access to BigQuery managed storage.
 
 %package       -n gem-google-cloud-bigquery-storage-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Storage API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-storage
 Group:         Development/Documentation
@@ -1497,12 +1497,12 @@ The BigQuery Storage API provides fast access to BigQuery managed storage.
 
 %package       -n gem-google-cloud-video-transcoder-v1beta1
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Transcoder V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-video-transcoder-v1beta1) = 0.2.0
 
@@ -1516,7 +1516,7 @@ google-cloud-video-transcoder instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-transcoder-v1beta1-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Transcoder V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video-transcoder-v1beta1
 Group:         Development/Documentation
@@ -1539,12 +1539,12 @@ google-cloud-video-transcoder instead. See the readme for more details.
 
 %package       -n gem-google-cloud-binary-authorization-v1beta1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Binary Authorization V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-binary_authorization-v1beta1) = 0.3.0
 
@@ -1559,7 +1559,7 @@ google-cloud-binary_authorization instead. See the readme for more details.
 
 %package       -n gem-google-cloud-binary-authorization-v1beta1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Binary Authorization V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-binary_authorization-v1beta1
 Group:         Development/Documentation
@@ -1584,12 +1584,12 @@ google-cloud-binary_authorization instead. See the readme for more details.
 
 %package       -n gem-google-cloud-recommender-v1
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommender V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-recommender-v1) = 0.8.0
 
@@ -1603,7 +1603,7 @@ details.
 
 %package       -n gem-google-cloud-recommender-v1-doc
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommender V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recommender-v1
 Group:         Development/Documentation
@@ -1626,7 +1626,7 @@ details.
 
 %package       -n gem-google-cloud-bigquery-reservation
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Reservation API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1643,7 +1643,7 @@ Engine memory allocations.
 
 %package       -n gem-google-cloud-bigquery-reservation-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Reservation API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-reservation
 Group:         Development/Documentation
@@ -1664,12 +1664,12 @@ Engine memory allocations.
 
 %package       -n gem-google-cloud-gaming-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Gaming V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-gaming-v1) = 0.3.0
 
@@ -1683,7 +1683,7 @@ client library google-cloud-gaming instead. See the readme for more details.
 
 %package       -n gem-google-cloud-gaming-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Gaming V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-gaming-v1
 Group:         Development/Documentation
@@ -1706,7 +1706,7 @@ client library google-cloud-gaming instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dialogflow
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dialogflow API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1725,7 +1725,7 @@ between your users and your business.
 
 %package       -n gem-google-cloud-dialogflow-doc
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dialogflow API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dialogflow
 Group:         Development/Documentation
@@ -1748,12 +1748,12 @@ between your users and your business.
 
 %package       -n gem-google-cloud-spanner-admin-instance-v1
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner Instance Admin V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-spanner-admin-instance-v1) = 0.3.1
@@ -1768,7 +1768,7 @@ for more details.
 
 %package       -n gem-google-cloud-spanner-admin-instance-v1-doc
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner Instance Admin V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-spanner-admin-instance-v1
 Group:         Development/Documentation
@@ -1792,7 +1792,7 @@ for more details.
 
 %package       -n gem-google-cloud-webrisk
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Obsolete API Client library for Web Risk API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1809,7 +1809,7 @@ google-cloud-web_risk instead.
 
 %package       -n gem-google-cloud-webrisk-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Obsolete API Client library for Web Risk API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-webrisk
 Group:         Development/Documentation
@@ -1829,12 +1829,12 @@ google-cloud-web_risk instead.
 
 %package       -n gem-google-cloud-monitoring-dashboard-v1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring Dashboards V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-monitoring-dashboard-v1) = 0.5.0
 
@@ -1849,7 +1849,7 @@ google-cloud-monitoring-dashboard instead. See the readme for more details.
 
 %package       -n gem-google-cloud-monitoring-dashboard-v1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring Dashboards V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-monitoring-dashboard-v1
 Group:         Development/Documentation
@@ -1874,12 +1874,12 @@ google-cloud-monitoring-dashboard instead. See the readme for more details.
 
 %package       -n gem-google-cloud-error-reporting-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Error Reporting V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-error_reporting-v1beta1) = 0.4.0
 
@@ -1893,7 +1893,7 @@ google-cloud-error_reporting instead. See the readme for more details.
 
 %package       -n gem-google-cloud-error-reporting-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Error Reporting V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-error_reporting-v1beta1
 Group:         Development/Documentation
@@ -1917,12 +1917,12 @@ google-cloud-error_reporting instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence-v1p2beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1p2beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-video_intelligence-v1p2beta1) = 0.4.0
 
@@ -1937,7 +1937,7 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence-v1p2beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1p2beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video_intelligence-v1p2beta1
 Group:         Development/Documentation
@@ -1962,12 +1962,12 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-analytics-admin-v1alpha
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Analytics Admin V1alpha API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-analytics-admin-v1alpha) = 0.7.0
 
@@ -1981,7 +1981,7 @@ client library google-analytics-admin instead. See the readme for more details.
 
 %package       -n gem-google-analytics-admin-v1alpha-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Analytics Admin V1alpha API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-analytics-admin-v1alpha
 Group:         Development/Documentation
@@ -2005,7 +2005,7 @@ client library google-analytics-admin instead. See the readme for more details.
 
 %package       -n gem-google-cloud-gaming
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Gaming API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2022,7 +2022,7 @@ through a single interface.
 
 %package       -n gem-google-cloud-gaming-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Gaming API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-gaming
 Group:         Development/Documentation
@@ -2043,12 +2043,12 @@ through a single interface.
 
 %package       -n gem-google-cloud-service-management-v1
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Management API V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-service_management-v1) = 0.3.1
 
@@ -2062,7 +2062,7 @@ google-cloud-service_management instead. See the readme for more details.
 
 %package       -n gem-google-cloud-service-management-v1-doc
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Management API V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_management-v1
 Group:         Development/Documentation
@@ -2086,7 +2086,7 @@ google-cloud-service_management instead. See the readme for more details.
 
 %package       -n gem-google-cloud-build
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Build API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2105,7 +2105,7 @@ archives.
 
 %package       -n gem-google-cloud-build-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Build API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-build
 Group:         Development/Documentation
@@ -2128,12 +2128,12 @@ archives.
 
 %package       -n gem-google-cloud-tasks-v2beta2
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2beta2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-tasks-v2beta2) = 0.5.0
@@ -2150,7 +2150,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-tasks-v2beta2-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2beta2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-tasks-v2beta2
 Group:         Development/Documentation
@@ -2175,12 +2175,12 @@ the readme for more details.
 
 %package       -n gem-google-cloud-retail-v2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Retail V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-retail-v2) = 0.3.0
 
@@ -2194,7 +2194,7 @@ client library google-cloud-retail instead. See the readme for more details.
 
 %package       -n gem-google-cloud-retail-v2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Retail V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-retail-v2
 Group:         Development/Documentation
@@ -2217,12 +2217,12 @@ client library google-cloud-retail instead. See the readme for more details.
 
 %package       -n gem-google-cloud-spanner-admin-database-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner Database Admin V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-spanner-admin-database-v1) = 0.6.0
@@ -2237,7 +2237,7 @@ for more details.
 
 %package       -n gem-google-cloud-spanner-admin-database-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Spanner Database Admin V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-spanner-admin-database-v1
 Group:         Development/Documentation
@@ -2261,7 +2261,7 @@ for more details.
 
 %package       -n gem-google-cloud-functions
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Functions API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2277,7 +2277,7 @@ response to events.
 
 %package       -n gem-google-cloud-functions-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Functions API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-functions
 Group:         Development/Documentation
@@ -2297,12 +2297,12 @@ response to events.
 
 %package       -n gem-google-cloud-dataproc-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-dataproc-v1) = 0.6.0
 
@@ -2315,7 +2315,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-dataproc-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dataproc-v1
 Group:         Development/Documentation
@@ -2337,12 +2337,12 @@ the readme for more details.
 
 %package       -n gem-google-cloud-security-center-v1
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Security Command Center V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-security_center-v1) = 0.7.0
@@ -2357,7 +2357,7 @@ details.
 
 %package       -n gem-google-cloud-security-center-v1-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Security Command Center V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-security_center-v1
 Group:         Development/Documentation
@@ -2381,12 +2381,12 @@ details.
 
 %package       -n gem-google-cloud-video-intelligence-v1p1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1p1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-video_intelligence-v1p1beta1) = 0.4.0
 
@@ -2401,7 +2401,7 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence-v1p1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1p1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video_intelligence-v1p1beta1
 Group:         Development/Documentation
@@ -2426,12 +2426,12 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-security-scanner-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-web_security_scanner-v1) = 0.3.0
 
@@ -2445,7 +2445,7 @@ more details.
 
 %package       -n gem-google-cloud-web-security-scanner-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_security_scanner-v1
 Group:         Development/Documentation
@@ -2468,7 +2468,7 @@ more details.
 
 %package       -n gem-google-cloud-error-reporting
 Version:       0.42.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Stackdriver Error Reporting
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2486,7 +2486,7 @@ Reporting.
 
 %package       -n gem-google-cloud-error-reporting-doc
 Version:       0.42.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Stackdriver Error Reporting documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-error_reporting
 Group:         Development/Documentation
@@ -2507,12 +2507,12 @@ Reporting.
 
 %package       -n gem-google-cloud-asset-v1
 Version:       0.11.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-asset-v1) = 0.11.0
@@ -2527,7 +2527,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-asset-v1-doc
 Version:       0.11.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-asset-v1
 Group:         Development/Documentation
@@ -2550,7 +2550,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-api-gateway
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the API Gateway API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2570,7 +2570,7 @@ endpoint.
 
 %package       -n gem-google-cloud-api-gateway-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the API Gateway API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-api_gateway
 Group:         Development/Documentation
@@ -2594,12 +2594,12 @@ endpoint.
 
 %package       -n gem-google-cloud-notebooks-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Notebooks V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-notebooks-v1beta1) = 0.4.0
 
@@ -2614,7 +2614,7 @@ client library google-cloud-notebooks instead. See the readme for more details.
 
 %package       -n gem-google-cloud-notebooks-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Notebooks V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-notebooks-v1beta1
 Group:         Development/Documentation
@@ -2639,7 +2639,7 @@ client library google-cloud-notebooks instead. See the readme for more details.
 
 %package       -n gem-google-cloud-tasks
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2659,7 +2659,7 @@ executed on App Engine or any arbitrary HTTP endpoint.
 
 %package       -n gem-google-cloud-tasks-doc
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-tasks
 Group:         Development/Documentation
@@ -2681,7 +2681,7 @@ executed on App Engine or any arbitrary HTTP endpoint.
 
 %package       -n gem-google-cloud-metastore
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2701,7 +2701,7 @@ between data processing applications in the open source data ecosystem.
 
 %package       -n gem-google-cloud-metastore-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-metastore
 Group:         Development/Documentation
@@ -2724,7 +2724,7 @@ between data processing applications in the open source data ecosystem.
 
 %package       -n gem-google-cloud-dlp
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Data Loss Prevention (DLP) API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2740,7 +2740,7 @@ and Google Cloud Platform storage repositories.
 
 %package       -n gem-google-cloud-dlp-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Data Loss Prevention (DLP) API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dlp
 Group:         Development/Documentation
@@ -2761,7 +2761,7 @@ and Google Cloud Platform storage repositories.
 
 %package       -n gem-grafeas-client
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2775,7 +2775,7 @@ grafeas-client is the official library for the Grafeas API.
 
 %package       -n grafeas-client-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grafeas-client
 Group:         Development/Documentation
@@ -2794,7 +2794,7 @@ grafeas-client is the official library for the Grafeas API.
 
 %package       -n gem-google-cloud-data-catalog
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Data Catalog API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2811,7 +2811,7 @@ its semantics, understand how to act on it, and help govern its usage.
 
 %package       -n gem-google-cloud-data-catalog-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Data Catalog API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-data_catalog
 Group:         Development/Documentation
@@ -2832,12 +2832,12 @@ its semantics, understand how to act on it, and help govern its usage.
 
 %package       -n gem-google-cloud-billing-budgets-v1beta1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing Budgets V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-billing-budgets-v1beta1) = 0.6.0
 
@@ -2851,7 +2851,7 @@ details.
 
 %package       -n gem-google-cloud-billing-budgets-v1beta1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing Budgets V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-billing-budgets-v1beta1
 Group:         Development/Documentation
@@ -2875,7 +2875,7 @@ details.
 
 %package       -n gem-google-cloud-profiler
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Profiler API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2894,7 +2894,7 @@ otherwise illuminating the performance characteristics of the code.
 
 %package       -n gem-google-cloud-profiler-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Profiler API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-profiler
 Group:         Development/Documentation
@@ -2917,12 +2917,12 @@ otherwise illuminating the performance characteristics of the code.
 
 %package       -n gem-google-cloud-functions-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Functions V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-functions-v1) = 0.3.0
@@ -2936,7 +2936,7 @@ google-cloud-functions instead. See the readme for more details.
 
 %package       -n gem-google-cloud-functions-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Functions V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-functions-v1
 Group:         Development/Documentation
@@ -2958,12 +2958,12 @@ google-cloud-functions instead. See the readme for more details.
 
 %package       -n gem-google-cloud-debugger-v2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Debugger V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-debugger-v2) = 0.3.0
 
@@ -2982,7 +2982,7 @@ client library google-cloud-debugger instead. See the readme for more details.
 
 %package       -n gem-google-cloud-debugger-v2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Debugger V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-debugger-v2
 Group:         Development/Documentation
@@ -3010,12 +3010,12 @@ client library google-cloud-debugger instead. See the readme for more details.
 
 %package       -n gem-google-cloud-domains-v1beta1
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Domains V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-domains-v1beta1) = 0.2.0
 
@@ -3028,7 +3028,7 @@ google-cloud-domains instead. See the readme for more details.
 
 %package       -n gem-google-cloud-domains-v1beta1-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Domains V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-domains-v1beta1
 Group:         Development/Documentation
@@ -3050,12 +3050,12 @@ google-cloud-domains instead. See the readme for more details.
 
 %package       -n gem-google-cloud-monitoring-v3
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring V3 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-monitoring-v3) = 0.4.0
 
@@ -3069,7 +3069,7 @@ google-cloud-monitoring instead. See the readme for more details.
 
 %package       -n gem-google-cloud-monitoring-v3-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring V3 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-monitoring-v3
 Group:         Development/Documentation
@@ -3092,7 +3092,7 @@ google-cloud-monitoring instead. See the readme for more details.
 
 %package       -n gem-google-cloud-monitoring
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3110,7 +3110,7 @@ instrumentation.
 
 %package       -n gem-google-cloud-monitoring-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Monitoring API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-monitoring
 Group:         Development/Documentation
@@ -3131,7 +3131,7 @@ instrumentation.
 
 %package       -n gem-google-cloud-recommender
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommender API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3147,7 +3147,7 @@ Cloud products and services.
 
 %package       -n gem-google-cloud-recommender-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommender API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recommender
 Group:         Development/Documentation
@@ -3167,12 +3167,12 @@ Cloud products and services.
 
 %package       -n gem-google-cloud-speech-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-speech-v1) = 0.4.0
 
@@ -3189,7 +3189,7 @@ google-cloud-speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-speech-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-speech-v1
 Group:         Development/Documentation
@@ -3216,12 +3216,12 @@ google-cloud-speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-metastore-v1beta
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-metastore-v1beta) = 0.1.0
 
@@ -3238,7 +3238,7 @@ google-cloud-metastore instead. See the readme for more details.
 
 %package       -n gem-google-cloud-metastore-v1beta-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-metastore-v1beta
 Group:         Development/Documentation
@@ -3265,12 +3265,12 @@ google-cloud-metastore instead. See the readme for more details.
 
 %package       -n gem-google-cloud-datastore-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Firestore in Datastore mode V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-datastore-v1) = 0.3.0
 
@@ -3284,7 +3284,7 @@ See the readme for more details.
 
 %package       -n gem-google-cloud-datastore-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Firestore in Datastore mode V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-datastore-v1
 Group:         Development/Documentation
@@ -3308,7 +3308,7 @@ See the readme for more details.
 
 %package       -n gem-google-cloud-secret-manager
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3327,7 +3327,7 @@ across Google Cloud.
 
 %package       -n gem-google-cloud-secret-manager-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-secret_manager
 Group:         Development/Documentation
@@ -3349,12 +3349,12 @@ across Google Cloud.
 
 %package       -n gem-google-cloud-network-connectivity-v1alpha1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Network Connectivity V1alpha1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-network_connectivity-v1alpha1) = 0.4.0
 
@@ -3369,7 +3369,7 @@ google-cloud-network_connectivity instead. See the readme for more details.
 
 %package       -n gem-google-cloud-network-connectivity-v1alpha1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Network Connectivity V1alpha1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-network_connectivity-v1alpha1
 Group:         Development/Documentation
@@ -3394,7 +3394,7 @@ google-cloud-network_connectivity instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigtable
 Version:       2.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Cloud Bigtable API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3410,7 +3410,7 @@ google-cloud-bigtable is the official library for Cloud Bigtable API.
 
 %package       -n gem-google-cloud-bigtable-doc
 Version:       2.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Cloud Bigtable API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigtable
 Group:         Development/Documentation
@@ -3430,7 +3430,7 @@ google-cloud-bigtable is the official library for Cloud Bigtable API.
 
 %package       -n gem-google-cloud-bigquery-data-transfer
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data Transfer Service API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3446,7 +3446,7 @@ BigQuery on a regular basis.
 
 %package       -n gem-google-cloud-bigquery-data-transfer-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data Transfer Service API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-data_transfer
 Group:         Development/Documentation
@@ -3467,12 +3467,12 @@ BigQuery on a regular basis.
 
 %package       -n gem-google-cloud-service-control-v1
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Control API V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-service_control-v1) = 0.3.1
 
@@ -3486,7 +3486,7 @@ google-cloud-service_control instead. See the readme for more details.
 
 %package       -n gem-google-cloud-service-control-v1-doc
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Control API V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_control-v1
 Group:         Development/Documentation
@@ -3509,7 +3509,7 @@ google-cloud-service_control instead. See the readme for more details.
 
 %package       -n gem-google-cloud-policy-troubleshooter
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Policy Troubleshooter API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3529,7 +3529,7 @@ roles.
 
 %package       -n gem-google-cloud-policy-troubleshooter-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Policy Troubleshooter API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-policy_troubleshooter
 Group:         Development/Documentation
@@ -3554,12 +3554,12 @@ roles.
 
 %package       -n gem-google-cloud-dataqna-v1alpha
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data QnA V1alpha API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-dataqna-v1alpha) = 0.2.0
 
@@ -3572,7 +3572,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dataqna-v1alpha-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data QnA V1alpha API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dataqna-v1alpha
 Group:         Development/Documentation
@@ -3595,12 +3595,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-analytics-data-v1alpha
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Analytics Data V1alpha API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-analytics-data-v1alpha) = 0.8.0
 
@@ -3616,7 +3616,7 @@ client library google-analytics-data instead. See the readme for more details.
 
 %package       -n gem-google-analytics-data-v1alpha-doc
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Analytics Data V1alpha API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-analytics-data-v1alpha
 Group:         Development/Documentation
@@ -3642,12 +3642,12 @@ client library google-analytics-data instead. See the readme for more details.
 
 %package       -n gem-google-cloud-text-to-speech-v1beta1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-text_to_speech-v1beta1) = 0.6.0
 
@@ -3661,7 +3661,7 @@ google-cloud-text_to_speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-text-to-speech-v1beta1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-text_to_speech-v1beta1
 Group:         Development/Documentation
@@ -3685,7 +3685,7 @@ google-cloud-text_to_speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence
 Version:       3.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3705,7 +3705,7 @@ both asynchronous API and streaming API.
 
 %package       -n gem-google-cloud-video-intelligence-doc
 Version:       3.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video_intelligence
 Group:         Development/Documentation
@@ -3727,12 +3727,12 @@ both asynchronous API and streaming API.
 
 %package       -n gem-google-cloud-build-v1
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Build V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-build-v1) = 0.7.0
 
@@ -3748,7 +3748,7 @@ google-cloud-build instead. See the readme for more details.
 
 %package       -n gem-google-cloud-build-v1-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Build V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-build-v1
 Group:         Development/Documentation
@@ -3773,7 +3773,7 @@ google-cloud-build instead. See the readme for more details.
 
 %package       -n gem-google-cloud-asset
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3789,7 +3789,7 @@ your GCP and Anthos assets across projects and services.
 
 %package       -n gem-google-cloud-asset-doc
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-asset
 Group:         Development/Documentation
@@ -3809,12 +3809,12 @@ your GCP and Anthos assets across projects and services.
 
 %package       -n gem-google-cloud-service-directory-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-service_directory-v1) = 0.3.0
@@ -3829,7 +3829,7 @@ details.
 
 %package       -n gem-google-cloud-service-directory-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_directory-v1
 Group:         Development/Documentation
@@ -3853,12 +3853,12 @@ details.
 
 %package       -n gem-google-cloud-app-engine-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the App Engine Admin V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-app_engine-v1) = 0.3.0
 
@@ -3871,7 +3871,7 @@ google-cloud-app_engine instead. See the readme for more details.
 
 %package       -n gem-google-cloud-app-engine-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the App Engine Admin V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-app_engine-v1
 Group:         Development/Documentation
@@ -3893,7 +3893,7 @@ google-cloud-app_engine instead. See the readme for more details.
 
 %package       -n gem-google-cloud-app-engine
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the App Engine Admin API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3908,7 +3908,7 @@ The App Engine Admin API provisions and manages your App Engine applications.
 
 %package       -n gem-google-cloud-app-engine-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the App Engine Admin API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-app_engine
 Group:         Development/Documentation
@@ -3927,12 +3927,12 @@ The App Engine Admin API provisions and manages your App Engine applications.
 
 %package       -n gem-google-cloud-bigtable-v2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Bigtable V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-bigtable-v2) = 0.3.0
 
@@ -3945,7 +3945,7 @@ client library google-cloud-bigtable instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigtable-v2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Bigtable V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigtable-v2
 Group:         Development/Documentation
@@ -3967,7 +3967,7 @@ client library google-cloud-bigtable instead. See the readme for more details.
 
 %package       -n gem-grafeas
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3983,7 +3983,7 @@ about all of your software artifacts.
 
 %package       -n grafeas-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grafeas
 Group:         Development/Documentation
@@ -4003,12 +4003,12 @@ about all of your software artifacts.
 
 %package       -n gem-google-cloud-scheduler-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-scheduler-v1) = 0.4.0
 
@@ -4025,7 +4025,7 @@ client library google-cloud-scheduler instead. See the readme for more details.
 
 %package       -n gem-google-cloud-scheduler-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-scheduler-v1
 Group:         Development/Documentation
@@ -4051,7 +4051,7 @@ client library google-cloud-scheduler instead. See the readme for more details.
 
 %package       -n gem-google-cloud-talent
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4071,7 +4071,7 @@ enhanced talent acquisition experience.
 
 %package       -n gem-google-cloud-talent-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Talent Solution API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-talent
 Group:         Development/Documentation
@@ -4095,7 +4095,7 @@ enhanced talent acquisition experience.
 
 %package       -n gem-google-cloud-channel
 Version:       1.0.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Channel API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4112,7 +4112,7 @@ provision links between distributors and resellers, customers and entitlements.
 
 %package       -n gem-google-cloud-channel-doc
 Version:       1.0.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Channel API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-channel
 Group:         Development/Documentation
@@ -4133,12 +4133,12 @@ provision links between distributors and resellers, customers and entitlements.
 
 %package       -n gem-google-cloud-dialogflow-v2
 Version:       0.8.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dialogflow V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-dialogflow-v2) = 0.8.1
 
@@ -4154,7 +4154,7 @@ client library google-cloud-dialogflow instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dialogflow-v2-doc
 Version:       0.8.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dialogflow V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dialogflow-v2
 Group:         Development/Documentation
@@ -4179,12 +4179,12 @@ client library google-cloud-dialogflow instead. See the readme for more details.
 
 %package       -n gem-google-cloud-iot-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud IoT V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-iot-v1) = 0.3.0
@@ -4198,7 +4198,7 @@ google-cloud-iot instead. See the readme for more details.
 
 %package       -n gem-google-cloud-iot-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud IoT V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-iot-v1
 Group:         Development/Documentation
@@ -4220,7 +4220,7 @@ google-cloud-iot instead. See the readme for more details.
 
 %package       -n gem-google-cloud-retail
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Retail API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4237,7 +4237,7 @@ in ML or recommendation systems.
 
 %package       -n gem-google-cloud-retail-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Retail API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-retail
 Group:         Development/Documentation
@@ -4258,12 +4258,12 @@ in ML or recommendation systems.
 
 %package       -n gem-google-cloud-firestore-v1
 Version:       0.4.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Firestore V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-firestore-v1) = 0.4.1
 
@@ -4277,7 +4277,7 @@ See the readme for more details.
 
 %package       -n gem-google-cloud-firestore-v1-doc
 Version:       0.4.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Firestore V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-firestore-v1
 Group:         Development/Documentation
@@ -4300,12 +4300,12 @@ See the readme for more details.
 
 %package       -n gem-google-cloud-redis-v1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-redis-v1) = 0.5.0
 
@@ -4318,7 +4318,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-redis-v1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-redis-v1
 Group:         Development/Documentation
@@ -4341,12 +4341,12 @@ readme for more details.
 
 %package       -n gem-google-cloud-text-to-speech-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-text_to_speech-v1) = 0.4.0
 
@@ -4360,7 +4360,7 @@ google-cloud-text_to_speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-text-to-speech-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-text_to_speech-v1
 Group:         Development/Documentation
@@ -4384,12 +4384,12 @@ google-cloud-text_to_speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-vision-v1p3beta1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision V1p3beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-vision-v1p3beta1) = 0.5.0
 
@@ -4404,7 +4404,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-vision-v1p3beta1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Vision V1p3beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-vision-v1p3beta1
 Group:         Development/Documentation
@@ -4429,12 +4429,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-language-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Natural Language V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-language-v1) = 0.4.0
 
@@ -4448,7 +4448,7 @@ google-cloud-language instead. See the readme for more details.
 
 %package       -n gem-google-cloud-language-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Natural Language V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-language-v1
 Group:         Development/Documentation
@@ -4472,12 +4472,12 @@ google-cloud-language instead. See the readme for more details.
 
 %package       -n gem-google-cloud-tasks-v2
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-tasks-v2) = 0.4.0
@@ -4494,7 +4494,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-tasks-v2-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Tasks V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-tasks-v2
 Group:         Development/Documentation
@@ -4519,7 +4519,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-video-transcoder
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Transcoder API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4535,7 +4535,7 @@ optimized delivery to web, mobile and connected TVs.
 
 %package       -n gem-google-cloud-video-transcoder-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Transcoder API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video-transcoder
 Group:         Development/Documentation
@@ -4555,7 +4555,7 @@ optimized delivery to web, mobile and connected TVs.
 
 %package       -n gem-google-cloud-storage
 Version:       1.31.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Storage
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4575,7 +4575,7 @@ google-cloud-storage is the official library for Google Cloud Storage.
 
 %package       -n gem-google-cloud-storage-doc
 Version:       1.31.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Storage documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-storage
 Group:         Development/Documentation
@@ -4595,7 +4595,7 @@ google-cloud-storage is the official library for Google Cloud Storage.
 
 %package       -n gem-gcloud
 Version:       0.24.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4609,7 +4609,7 @@ gcloud is the legacy support library for the new google-cloud library.
 
 %package       -n gem-gcloud-doc
 Version:       0.24.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gcloud
 Group:         Development/Documentation
@@ -4628,12 +4628,12 @@ gcloud is the legacy support library for the new google-cloud library.
 
 %package       -n gem-google-cloud-asset-v1beta1
 Version:       0.2.5
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.3 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.3
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-asset-v1beta1) = 0.2.5
@@ -4645,7 +4645,7 @@ your GCP and Anthos assets across projects and services.
 
 %package       -n gem-google-cloud-asset-v1beta1-doc
 Version:       0.2.5
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Asset V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-asset-v1beta1
 Group:         Development/Documentation
@@ -4665,12 +4665,12 @@ your GCP and Anthos assets across projects and services.
 
 %package       -n gem-google-cloud-video-intelligence-v1beta2
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1beta2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-video_intelligence-v1beta2) = 0.4.0
 
@@ -4685,7 +4685,7 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence-v1beta2-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1beta2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video_intelligence-v1beta2
 Group:         Development/Documentation
@@ -4710,7 +4710,7 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-translate
 Version:       3.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Translation API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4728,7 +4728,7 @@ the translation service.
 
 %package       -n gem-google-cloud-translate-doc
 Version:       3.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Translation API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-translate
 Group:         Development/Documentation
@@ -4749,12 +4749,12 @@ the translation service.
 
 %package       -n gem-google-cloud-web-security-scanner-v1beta
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-web_security_scanner-v1beta) = 0.3.0
 
@@ -4768,7 +4768,7 @@ more details.
 
 %package       -n gem-google-cloud-web-security-scanner-v1beta-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_security_scanner-v1beta
 Group:         Development/Documentation
@@ -4792,12 +4792,12 @@ more details.
 
 %package       -n gem-google-cloud-kms-v1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Key Management Service (KMS) V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-kms-v1) = 0.5.0
@@ -4812,7 +4812,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-kms-v1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Key Management Service (KMS) V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-kms-v1
 Group:         Development/Documentation
@@ -4836,7 +4836,7 @@ readme for more details.
 
 %package       -n gem-google-cloud-datastore
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Datastore
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4851,7 +4851,7 @@ google-cloud-datastore is the official library for Google Cloud Datastore.
 
 %package       -n gem-google-cloud-datastore-doc
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Datastore documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-datastore
 Group:         Development/Documentation
@@ -4871,12 +4871,12 @@ google-cloud-datastore is the official library for Google Cloud Datastore.
 
 %package       -n gem-google-cloud-recaptcha-enterprise-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-recaptcha_enterprise-v1beta1) = 0.4.0
 
@@ -4889,7 +4889,7 @@ google-cloud-recaptcha_enterprise instead. See the readme for more details.
 
 %package       -n gem-google-cloud-recaptcha-enterprise-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recaptcha_enterprise-v1beta1
 Group:         Development/Documentation
@@ -4912,12 +4912,12 @@ google-cloud-recaptcha_enterprise instead. See the readme for more details.
 
 %package       -n gem-google-cloud-api-gateway-v1
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the API Gateway V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-api_gateway-v1) = 0.1.0
 
@@ -4934,7 +4934,7 @@ google-cloud-api_gateway instead. See the readme for more details.
 
 %package       -n gem-google-cloud-api-gateway-v1-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the API Gateway V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-api_gateway-v1
 Group:         Development/Documentation
@@ -4960,7 +4960,7 @@ google-cloud-api_gateway instead. See the readme for more details.
 
 %package       -n gem-google-cloud-bigquery
 Version:       1.31.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google BigQuery
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4978,7 +4978,7 @@ google-cloud-bigquery is the official library for Google BigQuery.
 
 %package       -n gem-google-cloud-bigquery-doc
 Version:       1.31.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google BigQuery documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery
 Group:         Development/Documentation
@@ -4998,12 +4998,12 @@ google-cloud-bigquery is the official library for Google BigQuery.
 
 %package       -n gem-google-cloud-bigtable-admin-v2
 Version:       0.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Bigtable Admin V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-bigtable-admin-v2) = 0.5.1
@@ -5018,7 +5018,7 @@ details.
 
 %package       -n gem-google-cloud-bigtable-admin-v2-doc
 Version:       0.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Bigtable Admin V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigtable-admin-v2
 Group:         Development/Documentation
@@ -5042,7 +5042,7 @@ details.
 
 %package       -n gem-google-cloud-network-connectivity
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Network Connectivity API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5059,7 +5059,7 @@ your Virtual Private Cloud (VPC) network.
 
 %package       -n gem-google-cloud-network-connectivity-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Network Connectivity API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-network_connectivity
 Group:         Development/Documentation
@@ -5081,12 +5081,12 @@ your Virtual Private Cloud (VPC) network.
 
 %package       -n gem-google-cloud-media-translation-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Media Translation V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-media_translation-v1beta1) = 0.4.0
 
@@ -5104,7 +5104,7 @@ google-cloud-media_translation instead. See the readme for more details.
 
 %package       -n gem-google-cloud-media-translation-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Media Translation V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-media_translation-v1beta1
 Group:         Development/Documentation
@@ -5132,12 +5132,12 @@ google-cloud-media_translation instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-config-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Config V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-os_config-v1) = 0.4.0
 
@@ -5151,7 +5151,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-config-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Config V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-os_config-v1
 Group:         Development/Documentation
@@ -5174,12 +5174,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-risk-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-web_risk-v1) = 0.4.0
 
@@ -5193,7 +5193,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-risk-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_risk-v1
 Group:         Development/Documentation
@@ -5216,7 +5216,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-pubsub
 Version:       2.6.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Pub/Sub
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5232,7 +5232,7 @@ google-cloud-pubsub is the official library for Google Cloud Pub/Sub.
 
 %package       -n gem-google-cloud-pubsub-doc
 Version:       2.6.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Pub/Sub documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-pubsub
 Group:         Development/Documentation
@@ -5252,12 +5252,12 @@ google-cloud-pubsub is the official library for Google Cloud Pub/Sub.
 
 %package       -n gem-google-cloud-security-private-ca-v1beta1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Certificate Authority Service V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-security-private_ca-v1beta1) = 0.3.0
 
@@ -5272,7 +5272,7 @@ google-cloud-security-private_ca instead. See the readme for more details.
 
 %package       -n gem-google-cloud-security-private-ca-v1beta1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Certificate Authority Service V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-security-private_ca-v1beta1
 Group:         Development/Documentation
@@ -5297,7 +5297,7 @@ google-cloud-security-private_ca instead. See the readme for more details.
 
 %package       -n gem-google-cloud-service-control
 Version:       0.2.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Control API API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5313,7 +5313,7 @@ services, such as logging, monitoring, and status checks.
 
 %package       -n gem-google-cloud-service-control-doc
 Version:       0.2.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Control API API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_control
 Group:         Development/Documentation
@@ -5333,7 +5333,7 @@ services, such as logging, monitoring, and status checks.
 
 %package       -n gem-google-cloud-iot
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud IoT API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5349,7 +5349,7 @@ Google Cloud Platform.
 
 %package       -n gem-google-cloud-iot-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud IoT API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-iot
 Group:         Development/Documentation
@@ -5369,12 +5369,12 @@ Google Cloud Platform.
 
 %package       -n gem-google-cloud-service-directory-v1beta1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-service_directory-v1beta1) = 0.6.0
@@ -5389,7 +5389,7 @@ details.
 
 %package       -n gem-google-cloud-service-directory-v1beta1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Service Directory V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-service_directory-v1beta1
 Group:         Development/Documentation
@@ -5413,12 +5413,12 @@ details.
 
 %package       -n gem-google-iam-credentials-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Service Account Credentials V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-iam-credentials-v1) = 0.3.0
 
@@ -5433,7 +5433,7 @@ google-iam-credentials instead. See the readme for more details.
 
 %package       -n gem-google-iam-credentials-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the IAM Service Account Credentials V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-iam-credentials-v1
 Group:         Development/Documentation
@@ -5458,12 +5458,12 @@ google-iam-credentials instead. See the readme for more details.
 
 %package       -n gem-google-cloud-logging-v2
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Logging V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-logging-v2) = 0.5.0
 
@@ -5477,7 +5477,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-logging-v2-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Logging V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-logging-v2
 Group:         Development/Documentation
@@ -5500,7 +5500,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-access-approval
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Access Approval API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5515,7 +5515,7 @@ An API for controlling access to data by Google personnel.
 
 %package       -n gem-google-cloud-access-approval-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Access Approval API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-access_approval
 Group:         Development/Documentation
@@ -5534,12 +5534,12 @@ An API for controlling access to data by Google personnel.
 
 %package       -n gem-google-cloud-redis-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-redis-v1beta1) = 0.4.0
 
@@ -5552,7 +5552,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-redis-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-redis-v1beta1
 Group:         Development/Documentation
@@ -5575,12 +5575,12 @@ the readme for more details.
 
 %package       -n gem-google-cloud-os-login-v1beta
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-os_login-v1beta) = 0.4.0
 
@@ -5596,7 +5596,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-login-v1beta-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-os_login-v1beta
 Group:         Development/Documentation
@@ -5621,12 +5621,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-speech-v1p1beta1
 Version:       0.9.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text V1p1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-speech-v1p1beta1) = 0.9.0
 
@@ -5643,7 +5643,7 @@ client library google-cloud-speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-speech-v1p1beta1-doc
 Version:       0.9.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Speech-to-Text V1p1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-speech-v1p1beta1
 Group:         Development/Documentation
@@ -5670,7 +5670,7 @@ client library google-cloud-speech instead. See the readme for more details.
 
 %package       -n gem-google-cloud-notebooks
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Notebooks API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5688,7 +5688,7 @@ science libraries pre-installed.
 
 %package       -n gem-google-cloud-notebooks-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the AI Platform Notebooks API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-notebooks
 Group:         Development/Documentation
@@ -5710,7 +5710,7 @@ science libraries pre-installed.
 
 %package       -n gem-google-cloud-billing
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5726,7 +5726,7 @@ programmatically.
 
 %package       -n gem-google-cloud-billing-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-billing
 Group:         Development/Documentation
@@ -5746,12 +5746,12 @@ programmatically.
 
 %package       -n gem-google-cloud-gke-hub-v1beta1
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the GKE Hub V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-gke_hub-v1beta1) = 0.1.0
 
@@ -5766,7 +5766,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-gke-hub-v1beta1-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the GKE Hub V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-gke_hub-v1beta1
 Group:         Development/Documentation
@@ -5790,7 +5790,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-document-ai
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Document AI API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5807,7 +5807,7 @@ insights.
 
 %package       -n gem-google-cloud-document-ai-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Document AI API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-document_ai
 Group:         Development/Documentation
@@ -5828,12 +5828,12 @@ insights.
 
 %package       -n gem-google-cloud-data-catalog-v1
 Version:       0.7.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Data Catalog V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-data_catalog-v1) = 0.7.1
@@ -5849,7 +5849,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-data-catalog-v1-doc
 Version:       0.7.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Data Catalog V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-data_catalog-v1
 Group:         Development/Documentation
@@ -5873,7 +5873,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-area120-tables
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Area 120 Tables API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5889,7 +5889,7 @@ update/create/delete rows within tables programmatically.
 
 %package       -n gem-google-area120-tables-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Area 120 Tables API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-area120-tables
 Group:         Development/Documentation
@@ -5909,12 +5909,12 @@ update/create/delete rows within tables programmatically.
 
 %package       -n gem-google-cloud-trace-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Trace V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-trace-v1) = 0.3.0
 
@@ -5930,7 +5930,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-trace-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Trace V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-trace-v1
 Group:         Development/Documentation
@@ -5955,7 +5955,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-debugger
 Version:       0.42.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client and instrumentation library for Stackdriver Debugger
 Group:         Development/Ruby
 
@@ -5973,7 +5973,7 @@ google-cloud-debugger is the official library for Stackdriver Debugger.
 
 %package       -n gem-google-cloud-debugger-doc
 Version:       0.42.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client and instrumentation library for Stackdriver Debugger documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-debugger
 Group:         Development/Documentation
@@ -5993,7 +5993,7 @@ google-cloud-debugger is the official library for Stackdriver Debugger.
 
 %package       -n gem-google-cloud
 Version:       0.64.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6040,7 +6040,7 @@ google-cloud is the official library for Google Cloud Platform APIs.
 
 %package       -n gem-google-cloud-doc
 Version:       0.64.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud
 Group:         Development/Documentation
@@ -6059,7 +6059,7 @@ google-cloud is the official library for Google Cloud Platform APIs.
 
 %package       -n gem-google-cloud-recommendation-engine
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommendations AI API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6076,7 +6076,7 @@ a need for expertise in ML or recommendation systems.
 
 %package       -n gem-google-cloud-recommendation-engine-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommendations AI API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recommendation_engine
 Group:         Development/Documentation
@@ -6098,12 +6098,12 @@ a need for expertise in ML or recommendation systems.
 
 %package       -n gem-google-cloud-container-analysis-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Container Analysis V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grafeas-v1) >= 0.0 gem(grafeas-v1) < 1
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
@@ -6119,7 +6119,7 @@ google-cloud-container_analysis instead. See the readme for more details.
 
 %package       -n gem-google-cloud-container-analysis-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Container Analysis V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-container_analysis-v1
 Group:         Development/Documentation
@@ -6142,12 +6142,12 @@ google-cloud-container_analysis instead. See the readme for more details.
 
 %package       -n gem-google-cloud-phishing-protection-v1beta1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Phishing Protection V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-phishing_protection-v1beta1) = 0.3.0
 
@@ -6163,7 +6163,7 @@ google-cloud-phishing_protection instead. See the readme for more details.
 
 %package       -n gem-google-cloud-phishing-protection-v1beta1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Phishing Protection V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-phishing_protection-v1beta1
 Group:         Development/Documentation
@@ -6189,7 +6189,7 @@ google-cloud-phishing_protection instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-config
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Config API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6205,7 +6205,7 @@ management, patch compliance, and configuration management on VM instances.
 
 %package       -n gem-google-cloud-os-config-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Config API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-os_config
 Group:         Development/Documentation
@@ -6225,7 +6225,7 @@ management, patch compliance, and configuration management on VM instances.
 
 %package       -n gem-google-cloud-redis
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6241,7 +6241,7 @@ Creates and manages Redis instances on the Google Cloud Platform.
 
 %package       -n gem-google-cloud-redis-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Redis API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-redis
 Group:         Development/Documentation
@@ -6261,7 +6261,7 @@ Creates and manages Redis instances on the Google Cloud Platform.
 
 %package       -n gem-google-cloud-spanner
 Version:       2.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Spanner API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6279,7 +6279,7 @@ google-cloud-spanner is the official library for Google Cloud Spanner API.
 
 %package       -n gem-google-cloud-spanner-doc
 Version:       2.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud Spanner API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-spanner
 Group:         Development/Documentation
@@ -6299,12 +6299,12 @@ google-cloud-spanner is the official library for Google Cloud Spanner API.
 
 %package       -n gem-google-cloud-translate-v3
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Translation V3 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-translate-v3) = 0.3.0
 
@@ -6318,7 +6318,7 @@ client library google-cloud-translate instead. See the readme for more details.
 
 %package       -n gem-google-cloud-translate-v3-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Translation V3 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-translate-v3
 Group:         Development/Documentation
@@ -6341,12 +6341,12 @@ client library google-cloud-translate instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-login-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-os_login-v1) = 0.4.0
 
@@ -6362,7 +6362,7 @@ details.
 
 %package       -n gem-google-cloud-os-login-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-os_login-v1
 Group:         Development/Documentation
@@ -6387,12 +6387,12 @@ details.
 
 %package       -n gem-google-cloud-metastore-v1
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-metastore-v1) = 0.1.0
 
@@ -6409,7 +6409,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-metastore-v1-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Dataproc Metastore V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-metastore-v1
 Group:         Development/Documentation
@@ -6436,7 +6436,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dataproc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6452,7 +6452,7 @@ Manages Hadoop-based clusters and jobs on Google Cloud Platform.
 
 %package       -n gem-google-cloud-dataproc-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dataproc
 Group:         Development/Documentation
@@ -6471,7 +6471,7 @@ Manages Hadoop-based clusters and jobs on Google Cloud Platform.
 
 %package       -n gem-google-cloud-memcache
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6488,7 +6488,7 @@ Memcached instances in GCP.
 
 %package       -n gem-google-cloud-memcache-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-memcache
 Group:         Development/Documentation
@@ -6509,12 +6509,12 @@ Memcached instances in GCP.
 
 %package       -n gem-google-cloud-secret-manager-v1
 Version:       0.10.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-secret_manager-v1) = 0.10.0
@@ -6531,7 +6531,7 @@ details.
 
 %package       -n gem-google-cloud-secret-manager-v1-doc
 Version:       0.10.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-secret_manager-v1
 Group:         Development/Documentation
@@ -6556,7 +6556,7 @@ details.
 
 %package       -n gem-google-cloud-recaptcha-enterprise
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6572,7 +6572,7 @@ reCAPTCHA Enterprise is a service that protects your site from spam and abuse.
 
 %package       -n gem-google-cloud-recaptcha-enterprise-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recaptcha_enterprise
 Group:         Development/Documentation
@@ -6592,7 +6592,7 @@ reCAPTCHA Enterprise is a service that protects your site from spam and abuse.
 
 %package       -n gem-stackdriver
 Version:       0.21.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Stackdriver
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6608,7 +6608,7 @@ stackdriver is the official library for Google Stackdriver APIs.
 
 %package       -n stackdriver-doc
 Version:       0.21.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Stackdriver documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета stackdriver
 Group:         Development/Documentation
@@ -6627,7 +6627,7 @@ stackdriver is the official library for Google Stackdriver APIs.
 
 %package       -n gem-google-cloud-bigquery-connection
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Connection API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6643,7 +6643,7 @@ external data sources.
 
 %package       -n gem-google-cloud-bigquery-connection-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Connection API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-bigquery-connection
 Group:         Development/Documentation
@@ -6663,7 +6663,7 @@ external data sources.
 
 %package       -n gem-google-cloud-dataqna
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data QnA API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6678,7 +6678,7 @@ Data QnA is a natural language question and answer service for BigQuery data.
 
 %package       -n gem-google-cloud-dataqna-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the BigQuery Data QnA API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dataqna
 Group:         Development/Documentation
@@ -6697,7 +6697,7 @@ Data QnA is a natural language question and answer service for BigQuery data.
 
 %package       -n gem-google-cloud-media-translation
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Media Translation API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6717,7 +6717,7 @@ translation and scale quickly with straightforward internationalization.
 
 %package       -n gem-google-cloud-media-translation-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Media Translation API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-media_translation
 Group:         Development/Documentation
@@ -6741,7 +6741,7 @@ translation and scale quickly with straightforward internationalization.
 
 %package       -n gem-google-cloud-phishing-protection
 Version:       0.11.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Phishing Protection API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6759,7 +6759,7 @@ reporting the unsafe URLs to Google Safe Browsing.
 
 %package       -n gem-google-cloud-phishing-protection-doc
 Version:       0.11.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Phishing Protection API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-phishing_protection
 Group:         Development/Documentation
@@ -6782,12 +6782,12 @@ reporting the unsafe URLs to Google Safe Browsing.
 
 %package       -n gem-google-cloud-memcache-v1
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-memcache-v1) = 0.2.0
 
@@ -6800,7 +6800,7 @@ client library google-cloud-memcache instead. See the readme for more details.
 
 %package       -n gem-google-cloud-memcache-v1-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-memcache-v1
 Group:         Development/Documentation
@@ -6823,12 +6823,12 @@ client library google-cloud-memcache instead. See the readme for more details.
 
 %package       -n gem-google-cloud-memcache-v1beta2
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-memcache-v1beta2) = 0.2.0
 
@@ -6841,7 +6841,7 @@ client library google-cloud-memcache instead. See the readme for more details.
 
 %package       -n gem-google-cloud-memcache-v1beta2-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google Cloud Memorystore for Memcached API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-memcache-v1beta2
 Group:         Development/Documentation
@@ -6864,7 +6864,7 @@ client library google-cloud-memcache instead. See the readme for more details.
 
 %package       -n gem-google-cloud-binary-authorization
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Binary Authorization API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6881,7 +6881,7 @@ Engine (GKE) and GKE on-prem.
 
 %package       -n gem-google-cloud-binary-authorization-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Binary Authorization API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-binary_authorization
 Group:         Development/Documentation
@@ -6902,7 +6902,7 @@ Engine (GKE) and GKE on-prem.
 
 %package       -n gem-stackdriver-core
 Version:       1.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Internal shared library for Ruby Stackdriver integration
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6917,7 +6917,7 @@ integration libraries.
 
 %package       -n stackdriver-core-doc
 Version:       1.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Internal shared library for Ruby Stackdriver integration documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета stackdriver-core
 Group:         Development/Documentation
@@ -6938,12 +6938,12 @@ integration libraries.
 
 %package       -n gem-google-cloud-profiler-v2
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Profiler V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-profiler-v2) = 0.2.0
 
@@ -6960,7 +6960,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-profiler-v2-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Profiler V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-profiler-v2
 Group:         Development/Documentation
@@ -6986,12 +6986,12 @@ the readme for more details.
 
 %package       -n gem-google-iam-v1beta
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google IAM V1beta API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-iam-v1beta) = 0.3.0
 
@@ -7004,7 +7004,7 @@ for more details.
 
 %package       -n gem-google-iam-v1beta-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Google IAM V1beta API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-iam-v1beta
 Group:         Development/Documentation
@@ -7027,12 +7027,12 @@ for more details.
 
 %package       -n gem-google-cloud-automl-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-automl-v1) = 0.4.0
 
@@ -7048,7 +7048,7 @@ client library google-cloud-automl instead. See the readme for more details.
 
 %package       -n gem-google-cloud-automl-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-automl-v1
 Group:         Development/Documentation
@@ -7073,12 +7073,12 @@ client library google-cloud-automl instead. See the readme for more details.
 
 %package       -n gem-google-cloud-billing-v1
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-billing-v1) = 0.7.0
@@ -7092,7 +7092,7 @@ google-cloud-billing instead. See the readme for more details.
 
 %package       -n gem-google-cloud-billing-v1-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-billing-v1
 Group:         Development/Documentation
@@ -7114,7 +7114,7 @@ google-cloud-billing instead. See the readme for more details.
 
 %package       -n gem-google-cloud-os-login
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7133,7 +7133,7 @@ users across multiple instances or projects.
 
 %package       -n gem-google-cloud-os-login-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud OS Login API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-os_login
 Group:         Development/Documentation
@@ -7155,7 +7155,7 @@ users across multiple instances or projects.
 
 %package       -n gem-google-cloud-gke-hub
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the GKE Hub API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7172,7 +7172,7 @@ premises in customer datacenters, or other third party clouds.
 
 %package       -n gem-google-cloud-gke-hub-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the GKE Hub API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-gke_hub
 Group:         Development/Documentation
@@ -7193,12 +7193,12 @@ premises in customer datacenters, or other third party clouds.
 
 %package       -n gem-google-cloud-language-v1beta2
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Natural Language V1beta2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-language-v1beta2) = 0.4.0
 
@@ -7212,7 +7212,7 @@ google-cloud-language instead. See the readme for more details.
 
 %package       -n gem-google-cloud-language-v1beta2-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Natural Language V1beta2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-language-v1beta2
 Group:         Development/Documentation
@@ -7236,7 +7236,7 @@ google-cloud-language instead. See the readme for more details.
 
 %package       -n gem-google-cloud-scheduler
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7257,7 +7257,7 @@ automation tasks from one place.
 
 %package       -n gem-google-cloud-scheduler-doc
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Scheduler API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-scheduler
 Group:         Development/Documentation
@@ -7281,12 +7281,12 @@ automation tasks from one place.
 
 %package       -n gem-google-cloud-recaptcha-enterprise-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-recaptcha_enterprise-v1) = 0.4.0
 
@@ -7299,7 +7299,7 @@ google-cloud-recaptcha_enterprise instead. See the readme for more details.
 
 %package       -n gem-google-cloud-recaptcha-enterprise-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the reCAPTCHA Enterprise V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recaptcha_enterprise-v1
 Group:         Development/Documentation
@@ -7322,7 +7322,7 @@ google-cloud-recaptcha_enterprise instead. See the readme for more details.
 
 %package       -n gem-google-cloud-errors
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Error classes for google-cloud-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7335,7 +7335,7 @@ google-cloud-errors defines error classes for google-cloud-ruby.
 
 %package       -n gem-google-cloud-errors-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Error classes for google-cloud-ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-errors
 Group:         Development/Documentation
@@ -7354,7 +7354,7 @@ google-cloud-errors defines error classes for google-cloud-ruby.
 
 %package       -n gem-google-cloud-workflows
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7374,7 +7374,7 @@ scales seamlessly with demand, including scaling down to zero..
 
 %package       -n gem-google-cloud-workflows-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Workflows API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-workflows
 Group:         Development/Documentation
@@ -7397,7 +7397,7 @@ scales seamlessly with demand, including scaling down to zero..
 
 %package       -n gem-google-cloud-trace
 Version:       0.41.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Application Instrumentation and API Client library for Stackdriver Trace
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7415,7 +7415,7 @@ google-cloud-trace is the official library for Stackdriver Trace.
 
 %package       -n gem-google-cloud-trace-doc
 Version:       0.41.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Application Instrumentation and API Client library for Stackdriver Trace documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-trace
 Group:         Development/Documentation
@@ -7435,12 +7435,12 @@ google-cloud-trace is the official library for Stackdriver Trace.
 
 %package       -n gem-google-cloud-container-v1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-container-v1) = 0.5.0
 
@@ -7453,7 +7453,7 @@ google-cloud-container instead. See the readme for more details.
 
 %package       -n gem-google-cloud-container-v1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-container-v1
 Group:         Development/Documentation
@@ -7475,7 +7475,7 @@ google-cloud-container instead. See the readme for more details.
 
 %package       -n gem-google-cloud-security-center
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Security Command Center API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7492,7 +7492,7 @@ findings within an organization.
 
 %package       -n gem-google-cloud-security-center-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Security Command Center API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-security_center
 Group:         Development/Documentation
@@ -7513,12 +7513,12 @@ findings within an organization.
 
 %package       -n gem-google-cloud-recommendation-engine-v1beta1
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommendations AI V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-recommendation_engine-v1beta1) = 0.3.1
 
@@ -7533,7 +7533,7 @@ google-cloud-recommendation_engine instead. See the readme for more details.
 
 %package       -n gem-google-cloud-recommendation-engine-v1beta1-doc
 Version:       0.3.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Recommendations AI V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-recommendation_engine-v1beta1
 Group:         Development/Documentation
@@ -7558,7 +7558,7 @@ google-cloud-recommendation_engine instead. See the readme for more details.
 
 %package       -n gem-google-cloud-assured-workloads
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Assured Workloads for Government API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7574,7 +7574,7 @@ the path to running compliant workloads on Google Cloud.
 
 %package       -n gem-google-cloud-assured-workloads-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Assured Workloads for Government API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-assured_workloads
 Group:         Development/Documentation
@@ -7595,7 +7595,7 @@ the path to running compliant workloads on Google Cloud.
 
 %package       -n gem-google-cloud-web-security-scanner
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7612,7 +7612,7 @@ vulnerabilities.
 
 %package       -n gem-google-cloud-web-security-scanner-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Security Scanner API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_security_scanner
 Group:         Development/Documentation
@@ -7632,7 +7632,7 @@ vulnerabilities.
 
 %package       -n gem-google-cloud-text-to-speech
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7649,7 +7649,7 @@ into audio data of natural human speech.
 
 %package       -n gem-google-cloud-text-to-speech-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Text-to-Speech API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-text_to_speech
 Group:         Development/Documentation
@@ -7670,7 +7670,7 @@ into audio data of natural human speech.
 
 %package       -n gem-google-cloud-org-policy
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Organization Policy API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7687,7 +7687,7 @@ hierarchy.
 
 %package       -n gem-google-cloud-org-policy-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Organization Policy API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-org_policy
 Group:         Development/Documentation
@@ -7708,12 +7708,12 @@ hierarchy.
 
 %package       -n gem-google-cloud-firestore-admin-v1
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Firestore Admin V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-firestore-admin-v1) = 0.3.0
 
@@ -7727,7 +7727,7 @@ google-cloud-firestore-admin instead. See the readme for more details.
 
 %package       -n gem-google-cloud-firestore-admin-v1-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Firestore Admin V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-firestore-admin-v1
 Group:         Development/Documentation
@@ -7751,7 +7751,7 @@ google-cloud-firestore-admin instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dns
 Version:       0.35.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud DNS
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7768,7 +7768,7 @@ google-cloud-dns is the official library for Google Cloud DNS.
 
 %package       -n gem-google-cloud-dns-doc
 Version:       0.35.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Google Cloud DNS documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dns
 Group:         Development/Documentation
@@ -7787,12 +7787,12 @@ google-cloud-dns is the official library for Google Cloud DNS.
 
 %package       -n gem-google-cloud-video-intelligence-v1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-video_intelligence-v1) = 0.6.0
 
@@ -7807,7 +7807,7 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-video-intelligence-v1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Video Intelligence V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-video_intelligence-v1
 Group:         Development/Documentation
@@ -7832,12 +7832,12 @@ google-cloud-video_intelligence instead. See the readme for more details.
 
 %package       -n gem-google-cloud-assured-workloads-v1beta1
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Assured Workloads for Government V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-assured_workloads-v1beta1) = 0.6.0
 
@@ -7851,7 +7851,7 @@ google-cloud-assured_workloads instead. See the readme for more details.
 
 %package       -n gem-google-cloud-assured-workloads-v1beta1-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Assured Workloads for Government V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-assured_workloads-v1beta1
 Group:         Development/Documentation
@@ -7875,7 +7875,7 @@ google-cloud-assured_workloads instead. See the readme for more details.
 
 %package       -n gem-google-cloud-language
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Natural Language API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7893,7 +7893,7 @@ annotations.
 
 %package       -n gem-google-cloud-language-doc
 Version:       1.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Natural Language API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-language
 Group:         Development/Documentation
@@ -7915,7 +7915,7 @@ annotations.
 
 %package       -n gem-google-cloud-container
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7932,7 +7932,7 @@ Kubernetes technology.
 
 %package       -n gem-google-cloud-container-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-container
 Group:         Development/Documentation
@@ -7952,12 +7952,12 @@ Kubernetes technology.
 
 %package       -n gem-google-cloud-compute-v1
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library (ALPHA) for the Google Cloud Compute V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4.1 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4.1
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-compute-v1) = 0.1.0
 
@@ -7970,7 +7970,7 @@ backwards-incompatible changes at any time.
 
 %package       -n gem-google-cloud-compute-v1-doc
 Version:       0.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library (ALPHA) for the Google Cloud Compute V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-compute-v1
 Group:         Development/Documentation
@@ -7993,12 +7993,12 @@ backwards-incompatible changes at any time.
 
 %package       -n gem-google-cloud-artifact-registry-v1beta2
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Artifact Registry V1beta2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-artifact_registry-v1beta2) = 0.3.0
@@ -8013,7 +8013,7 @@ google-cloud-artifact_registry instead. See the readme for more details.
 
 %package       -n gem-google-cloud-artifact-registry-v1beta2-doc
 Version:       0.3.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Artifact Registry V1beta2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-artifact_registry-v1beta2
 Group:         Development/Documentation
@@ -8037,12 +8037,12 @@ google-cloud-artifact_registry instead. See the readme for more details.
 
 %package       -n gem-google-cloud-container-v1beta1
 Version:       0.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-container-v1beta1) = 0.5.1
 
@@ -8055,7 +8055,7 @@ client library google-cloud-container instead. See the readme for more details.
 
 %package       -n gem-google-cloud-container-v1beta1-doc
 Version:       0.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Kubernetes Engine V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-container-v1beta1
 Group:         Development/Documentation
@@ -8078,7 +8078,7 @@ client library google-cloud-container instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-risk
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8095,7 +8095,7 @@ check URLs against Google's constantly updated lists of unsafe web resources.
 
 %package       -n gem-google-cloud-web-risk-doc
 Version:       1.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_risk
 Group:         Development/Documentation
@@ -8115,7 +8115,7 @@ check URLs against Google's constantly updated lists of unsafe web resources.
 
 %package       -n gem-google-cloud-logging
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Stackdriver Logging
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8132,7 +8132,7 @@ google-cloud-logging is the official library for Stackdriver Logging.
 
 %package       -n gem-google-cloud-logging-doc
 Version:       2.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for Stackdriver Logging documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-logging
 Group:         Development/Documentation
@@ -8152,7 +8152,7 @@ google-cloud-logging is the official library for Stackdriver Logging.
 
 %package       -n gem-google-cloud-security-private-ca
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Certificate Authority Service API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8169,7 +8169,7 @@ management, and security of private certificate authorities (CA).
 
 %package       -n gem-google-cloud-security-private-ca-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Certificate Authority Service API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-security-private_ca
 Group:         Development/Documentation
@@ -8191,7 +8191,7 @@ management, and security of private certificate authorities (CA).
 
 %package       -n gem-google-cloud-domains
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Domains API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8207,7 +8207,7 @@ domain names.
 
 %package       -n gem-google-cloud-domains-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Domains API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-domains
 Group:         Development/Documentation
@@ -8227,12 +8227,12 @@ domain names.
 
 %package       -n gem-google-cloud-pubsub-v1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Pub/Sub V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-pubsub-v1) = 0.4.0
@@ -8247,7 +8247,7 @@ the readme for more details.
 
 %package       -n gem-google-cloud-pubsub-v1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Pub/Sub V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-pubsub-v1
 Group:         Development/Documentation
@@ -8270,12 +8270,12 @@ the readme for more details.
 
 %package       -n gem-google-cloud-dlp-v2
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Data Loss Prevention (DLP) V2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-dlp-v2) = 0.7.0
 
@@ -8288,7 +8288,7 @@ main client library google-cloud-dlp instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dlp-v2-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Data Loss Prevention (DLP) V2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dlp-v2
 Group:         Development/Documentation
@@ -8311,12 +8311,12 @@ main client library google-cloud-dlp instead. See the readme for more details.
 
 %package       -n gem-google-cloud-security-center-v1p1beta1
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Security Command Center V1p1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-security_center-v1p1beta1) = 0.7.0
@@ -8331,7 +8331,7 @@ google-cloud-security_center instead. See the readme for more details.
 
 %package       -n gem-google-cloud-security-center-v1p1beta1-doc
 Version:       0.7.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Security Command Center V1p1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-security_center-v1p1beta1
 Group:         Development/Documentation
@@ -8355,12 +8355,12 @@ google-cloud-security_center instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dataproc-v1beta2
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc V1beta2 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-dataproc-v1beta2) = 0.6.0
 
@@ -8373,7 +8373,7 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-dataproc-v1beta2-doc
 Version:       0.6.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud Dataproc V1beta2 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-dataproc-v1beta2
 Group:         Development/Documentation
@@ -8396,12 +8396,12 @@ instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-risk-v1beta1
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-web_risk-v1beta1) = 0.4.0
 
@@ -8415,7 +8415,7 @@ google-cloud-web_risk instead. See the readme for more details.
 
 %package       -n gem-google-cloud-web-risk-v1beta1-doc
 Version:       0.4.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Web Risk V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-web_risk-v1beta1
 Group:         Development/Documentation
@@ -8438,12 +8438,12 @@ google-cloud-web_risk instead. See the readme for more details.
 
 %package       -n gem-grafeas-v1
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas V1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(grafeas-v1) = 0.2.0
 
@@ -8456,7 +8456,7 @@ grafeas instead. See the readme for more details.
 
 %package       -n grafeas-v1-doc
 Version:       0.2.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Grafeas V1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grafeas-v1
 Group:         Development/Documentation
@@ -8478,12 +8478,12 @@ grafeas instead. See the readme for more details.
 
 %package       -n gem-google-cloud-automl-v1beta1
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-automl-v1beta1) = 0.5.0
 
@@ -8499,7 +8499,7 @@ client library google-cloud-automl instead. See the readme for more details.
 
 %package       -n gem-google-cloud-automl-v1beta1-doc
 Version:       0.5.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-automl-v1beta1
 Group:         Development/Documentation
@@ -8524,12 +8524,12 @@ client library google-cloud-automl instead. See the readme for more details.
 
 %package       -n gem-google-cloud-secret-manager-v1beta1
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager V1beta1 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Requires:      gem(grpc-google-iam-v1) >= 0.6.10 gem(grpc-google-iam-v1) < 2.0
 Provides:      gem(google-cloud-secret_manager-v1beta1) = 0.8.0
@@ -8546,7 +8546,7 @@ details.
 
 %package       -n gem-google-cloud-secret-manager-v1beta1-doc
 Version:       0.8.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Secret Manager V1beta1 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-secret_manager-v1beta1
 Group:         Development/Documentation
@@ -8572,7 +8572,7 @@ details.
 
 %package       -n gem-google-cloud-managed-identities
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Managed Service for Microsoft Active Directory API API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8588,7 +8588,7 @@ highly available, hardened service running Microsoft Active Directory.
 
 %package       -n gem-google-cloud-managed-identities-doc
 Version:       1.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Managed Service for Microsoft Active Directory API API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-managed_identities
 Group:         Development/Documentation
@@ -8609,7 +8609,7 @@ highly available, hardened service running Microsoft Active Directory.
 
 %package       -n gem-google-cloud-billing-budgets
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing Budgets API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8625,7 +8625,7 @@ programmatically at scale.
 
 %package       -n gem-google-cloud-billing-budgets-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Billing Budgets API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-billing-budgets
 Group:         Development/Documentation
@@ -8645,7 +8645,7 @@ programmatically at scale.
 
 %package       -n gem-google-cloud-automl
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML API
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -8665,7 +8665,7 @@ your applications and web sites.
 
 %package       -n gem-google-cloud-automl-doc
 Version:       1.1.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Cloud AutoML API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-automl
 Group:         Development/Documentation
@@ -8688,12 +8688,12 @@ your applications and web sites.
 
 %package       -n gem-google-cloud-document-ai-v1beta3
 Version:       0.9.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Document AI V1beta3 API
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gapic-common) >= 0.4 gem(gapic-common) < 1
+Requires:      gem(gapic-common) >= 0.4
 Requires:      gem(google-cloud-errors) >= 1.0 gem(google-cloud-errors) < 2
 Provides:      gem(google-cloud-document_ai-v1beta3) = 0.9.0
 
@@ -8707,7 +8707,7 @@ google-cloud-document_ai instead. See the readme for more details.
 
 %package       -n gem-google-cloud-document-ai-v1beta3-doc
 Version:       0.9.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       API Client library for the Document AI V1beta3 API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-cloud-document_ai-v1beta3
 Group:         Development/Documentation
@@ -10606,6 +10606,9 @@ google-cloud-document_ai instead. See the readme for more details.
 %ruby_gemsdocdir/google-cloud-document_ai-v1beta3-0.9.0
 
 %changelog
+* Sat Nov 15 2025 Pavel Skrylev <majioa@altlinux.org> 20210531-alt1.3
+-  fixed dep to gapic-common and google-cloud-env gems
+
 * Thu Oct 20 2022 Pavel Skrylev <majioa@altlinux.org> 20210531-alt1.2
 - ! fix gem build requires to novel gems
 

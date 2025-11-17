@@ -1,45 +1,41 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
-%def_disable   devel
+%def_enable    devel
 %define        gemname highline
 
 Name:          gem-highline
 Epoch:         1
-Version:       3.1.1
+Version:       3.1.2
 Release:       alt1
 Summary:       HighLine is a high-level command-line IO Ruby library
 License:       Ruby
 Group:         Development/Ruby
 Url:           https://github.com/JEG2/highline
 Vcs:           https://github.com/jeg2/highline.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(dry-types) >= 0
-BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(flog) >= 0
-BuildRequires: gem(pronto) >= 0
-BuildRequires: gem(pronto-flay) >= 0
-BuildRequires: gem(path_expander) = 1.1.1
-BuildRequires: gem(pronto-reek) >= 0
-BuildRequires: gem(pronto-rubocop) >= 0
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(rake) >= 0
 BuildRequires: gem(reline) >= 0
+BuildRequires: gem(simplecov) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 3.0
 Requires:      gem(reline) >= 0
 Obsoletes:     ruby-highline < %EVR
 Provides:      ruby-highline = %EVR
-Provides:      gem(highline) = 3.1.1
-
+Provides:      gem(highline) = 3.1.2
 
 %description
 A high-level IO library that provides validation, type conversion, and more for
@@ -50,14 +46,16 @@ minutes of work.
 
 %if_enabled    doc
 %package       -n gem-highline-doc
-Version:       3.1.1
+Version:       3.1.2
 Release:       alt1
 Summary:       HighLine is a high-level command-line IO Ruby library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета highline
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(highline) = 3.1.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(highline) = 3.1.2
 
 %description   -n gem-highline-doc
 HighLine is a high-level command-line IO Ruby library documentation files.
@@ -74,25 +72,21 @@ minutes of work.
 
 %if_enabled    devel
 %package       -n gem-highline-devel
-Version:       3.1.1
+Version:       3.1.2
 Release:       alt1
 Summary:       HighLine is a high-level command-line IO Ruby library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета highline
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(highline) = 3.1.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(highline) = 3.1.2
 Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(minitest) >= 0
 Requires:      gem(dry-types) >= 0
+Requires:      gem(minitest) >= 0
+Requires:      gem(rake) >= 0
 Requires:      gem(simplecov) >= 0
-Requires:      gem(flog) >= 0
-Requires:      gem(pronto) >= 0
-Requires:      gem(pronto-flay) >= 0
-Requires:      gem(path_expander) = 1.1.1
-Requires:      gem(pronto-reek) >= 0
-Requires:      gem(pronto-rubocop) >= 0
 
 %description   -n gem-highline-devel
 HighLine is a high-level command-line IO Ruby library development package.
@@ -120,23 +114,26 @@ minutes of work.
 %ruby_test
 
 %files
-%doc README.md
+%doc COPYING Changelog.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-highline-doc
-%doc README.md
+%doc COPYING Changelog.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-highline-devel
-%doc README.md
+%doc COPYING Changelog.md LICENSE README.md
 %endif
 
 
 %changelog
+* Wed Nov 05 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.1.2-alt1
+- ^ 3.1.1 -> 3.1.2
+
 * Fri Oct 18 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.1.1-alt1
 - ^ 2.0.3 -> 3.1.1
 

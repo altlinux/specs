@@ -5,43 +5,43 @@
 %define        gemname foreman_ansible
 
 Name:          gem-foreman-ansible
-Version:       15.0.1
+Version:       17.0.2
 Release:       alt1
 Summary:       Ansible integration in Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
 Url:           https://github.com/theforeman/foreman_ansible
 Vcs:           https://github.com/theforeman/foreman_ansible.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 Source1:       .public.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(theforeman-rubocop) >= 0.1.0
-BuildRequires: gem(acts_as_list) >= 1.0.3
-BuildRequires: gem(foreman_remote_execution) >= 14.0
+BuildRequires: gem(acts_as_list) >= 1.2
 BuildRequires: gem(foreman-tasks) >= 10.0
-BuildConflicts: gem(theforeman-rubocop) >= 0.2
-BuildConflicts: gem(acts_as_list) >= 1.1
+BuildRequires: gem(foreman_remote_execution) >= 14.0
+BuildRequires: gem(theforeman-rubocop) >= 0.1.0
+BuildConflicts: gem(acts_as_list) >= 2
 BuildConflicts: gem(deface) >= 2.0
-BuildConflicts: gem(foreman_remote_execution) >= 15
-BuildConflicts: gem(foreman-tasks) >= 11
+BuildConflicts: gem(foreman-tasks) >= 12
+BuildConflicts: gem(foreman_remote_execution) >= 17
+BuildConflicts: gem(theforeman-rubocop) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency theforeman-rubocop >= 0.1.2,theforeman-rubocop < 1
 %ruby_alias_names foreman_ansible,foreman-ansible
-Requires:      gem(acts_as_list) >= 1.0.3
-Requires:      gem(foreman_remote_execution) >= 14.0
+Requires:      gem(acts_as_list) >= 1.2
 Requires:      gem(foreman-tasks) >= 10.0
-Conflicts:     gem(acts_as_list) >= 1.1
+Requires:      gem(foreman_remote_execution) >= 14.0
+Conflicts:     gem(acts_as_list) >= 2
 Conflicts:     gem(deface) >= 2.0
-Conflicts:     gem(foreman_remote_execution) >= 15
-Conflicts:     gem(foreman-tasks) >= 11
-Provides:      gem(foreman_ansible) = 15.0.1
-
+Conflicts:     gem(foreman-tasks) >= 12
+Conflicts:     gem(foreman_remote_execution) >= 17
+Provides:      gem(foreman_ansible) = 17.0.2
 
 %description
 Reporting and facts import from Ansible to Foreman.
@@ -49,22 +49,22 @@ Reporting and facts import from Ansible to Foreman.
 * Import facts
 * Monitor playbook and Ansible runs runtime
 * Sends Ansible reports to Foreman that contain what changed on your system
-after an ansible run.
+  after an ansible run.
 * Stores a list of roles applicable to your hosts and 'plays' them
 * Looking for an Ansible dynamic inventory for Foreman? Use
-foreman_ansible_inventory
+  foreman_ansible_inventory
 
 
 %if_enabled    doc
 %package       -n gem-foreman-ansible-doc
-Version:       15.0.1
+Version:       17.0.2
 Release:       alt1
 Summary:       Ansible integration in Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_ansible
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_ansible) = 15.0.1
+Requires:      gem(foreman_ansible) = 17.0.2
 
 %description   -n gem-foreman-ansible-doc
 Ansible integration in Foreman documentation files.
@@ -74,10 +74,10 @@ Reporting and facts import from Ansible to Foreman.
 * Import facts
 * Monitor playbook and Ansible runs runtime
 * Sends Ansible reports to Foreman that contain what changed on your system
-after an ansible run.
+  after an ansible run.
 * Stores a list of roles applicable to your hosts and 'plays' them
 * Looking for an Ansible dynamic inventory for Foreman? Use
-foreman_ansible_inventory
+  foreman_ansible_inventory
 
 %description   -n gem-foreman-ansible-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета foreman_ansible.
@@ -86,16 +86,16 @@ foreman_ansible_inventory
 
 %if_enabled    devel
 %package       -n gem-foreman-ansible-devel
-Version:       15.0.1
+Version:       17.0.2
 Release:       alt1
 Summary:       Ansible integration in Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_ansible
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_ansible) = 15.0.1
+Requires:      gem(foreman_ansible) = 17.0.2
 Requires:      gem(theforeman-rubocop) >= 0.1.0
-Conflicts:     gem(theforeman-rubocop) >= 0.2
+Conflicts:     gem(theforeman-rubocop) >= 1
 
 %description   -n gem-foreman-ansible-devel
 Ansible integration in Foreman development package.
@@ -105,10 +105,10 @@ Reporting and facts import from Ansible to Foreman.
 * Import facts
 * Monitor playbook and Ansible runs runtime
 * Sends Ansible reports to Foreman that contain what changed on your system
-after an ansible run.
+  after an ansible run.
 * Stores a list of roles applicable to your hosts and 'plays' them
 * Looking for an Ansible dynamic inventory for Foreman? Use
-foreman_ansible_inventory
+  foreman_ansible_inventory
 
 %description   -n gem-foreman-ansible-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета foreman_ansible.
@@ -130,24 +130,27 @@ cp -rp .public %buildroot%_datadir/foreman/public
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md CHANGELOG Contributors
 %ruby_gemspec
 %ruby_gemlibdir
 %_datadir/foreman/public
 
 %if_enabled    doc
 %files         -n gem-foreman-ansible-doc
-%doc README.md
+%doc LICENSE README.md CHANGELOG Contributors
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-foreman-ansible-devel
-%doc README.md
+%doc LICENSE README.md CHANGELOG Contributors
 %endif
 
 
 %changelog
+* Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 17.0.2-alt1
+- ^ 15.0.1 -> 17.0.2
+
 * Fri Oct 04 2024 Pavel Skrylev <majioa@altlinux.org> 15.0.1-alt1
 - ^ 10.0.1 -> 15.0.1
 

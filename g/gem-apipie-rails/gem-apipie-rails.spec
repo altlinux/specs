@@ -1,61 +1,62 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
-%def_disable   devel
+%def_enable    devel
 %define        gemname apipie-rails
 
 Name:          gem-apipie-rails
-Version:       1.4.2.5
-Release:       alt0.1
+Version:       1.5.0
+Release:       alt1
 Summary:       Ruby on Rails API documentation tool
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/Apipie/apipie-rails
 Vcs:           https://github.com/apipie/apipie-rails.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(RedCloth) >= 0
-BuildRequires: gem(actionpack) >= 5.0
-BuildRequires: gem(activesupport) >= 5.0
+BuildRequires: gem(actionpack) >= 7.1.0
+BuildRequires: gem(activesupport) >= 7.1
 BuildRequires: gem(json-schema) >= 2.8
 BuildRequires: gem(maruku) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rspec-rails) >= 3.0
-BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(sqlite3) >= 0
-BuildConflicts: gem(actionpack) >= 7.2
-BuildConflicts: gem(activesupport) >= 7.2
-BuildConflicts: gem(json-schema) >= 3
-BuildConflicts: gem(rspec-rails) >= 6
-%if_enabled check
 BuildRequires: gem(mime-types) >= 0
 BuildRequires: gem(net-smtp) >= 0
 BuildRequires: gem(rails-controller-testing) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec-rails) >= 3.0
 BuildRequires: gem(rubocop-performance) >= 0
 BuildRequires: gem(rubocop-rails) >= 0
 BuildRequires: gem(rubocop-rspec) >= 0
 BuildRequires: gem(rubocop-rspec_rails) >= 0
-BuildRequires: gem(rubocop_challenger) >= 0
-BuildRequires: gem(test_engine) >= 0
+#BuildRequires: gem(rubocop_challenger) >= 0
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(sqlite3) >= 0
+BuildConflicts: gem(actionpack) >= 7.2
+BuildConflicts: gem(activesupport) >= 8
+BuildConflicts: gem(json-schema) >= 3
+BuildConflicts: gem(rspec-rails) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rspec-rails >= 5.0.1,rspec-rails < 6
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 Requires:      ruby >= 2.6.0
-Requires:      gem(actionpack) >= 5.0
-Requires:      gem(activesupport) >= 5.0
+Requires:      gem(actionpack) >= 7.1.0
+Requires:      gem(activesupport) >= 7.1
+Requires:      gem(rspec-rails) >= 3.0
 Conflicts:     gem(actionpack) >= 7.2
-Conflicts:     gem(activesupport) >= 7.2
+Conflicts:     gem(activesupport) >= 8
+Conflicts:     gem(rspec-rails) >= 6
 Obsoletes:     ruby-apipie-rails < %EVR
 Provides:      ruby-apipie-rails = %EVR
-Provides:      apipie-rails = %EVR
-Provides:      gem(apipie-rails) = 1.4.2.5
-
-%ruby_use_gem_version apipie-rails:1.4.2.5
+Provides:      gem(apipie-rails) = 1.5.0
 
 %description
 Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
@@ -66,7 +67,36 @@ code. This brings advantages like:
 * Possibility of reusing the docs for other purposes (such as validation)
 * Easier to extend and maintain (no string parsing involved)
 * Possibility of reusing other sources for documentation purposes (such as
-  routes etc.)
+routes etc.)
+
+The documentation is available from within your app (by default under the
+/apipie path.) In development mode, you can see the changes as you go. It's
+markup language agnostic, and even provides an API for reusing the documentation
+data in JSON.
+
+
+%package       -n gem-test-engine
+Version:       0.0.1
+Release:       alt1
+Summary:       Test Engine
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(test_engine) >= 0
+Provides:      gem(test_engine) = 0.0.1
+
+%description   -n gem-test-engine
+Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
+of traditional use of #comments, Apipie lets you describe the code, through the
+code. This brings advantages like:
+
+* No need to learn yet another syntax, you already know Ruby, right?
+* Possibility of reusing the docs for other purposes (such as validation)
+* Easier to extend and maintain (no string parsing involved)
+* Possibility of reusing other sources for documentation purposes (such as
+routes etc.)
 
 The documentation is available from within your app (by default under the
 /apipie path.) In development mode, you can see the changes as you go. It's
@@ -75,15 +105,53 @@ data in JSON.
 
 
 %if_enabled    doc
+%package       -n gem-test-engine-doc
+Version:       0.0.1
+Release:       alt1
+Summary:       Test Engine documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test_engine
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(test_engine) = 0.0.1
+
+%description   -n gem-test-engine-doc
+Test Engine documentation files.
+
+Apipie-rails is a DSL and Rails engine for documenting your RESTful API. Instead
+of traditional use of #comments, Apipie lets you describe the code, through the
+code. This brings advantages like:
+
+* No need to learn yet another syntax, you already know Ruby, right?
+* Possibility of reusing the docs for other purposes (such as validation)
+* Easier to extend and maintain (no string parsing involved)
+* Possibility of reusing other sources for documentation purposes (such as
+routes etc.)
+
+The documentation is available from within your app (by default under the
+/apipie path.) In development mode, you can see the changes as you go. It's
+markup language agnostic, and even provides an API for reusing the documentation
+data in JSON.
+
+%description   -n gem-test-engine-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета test_engine.
+%endif
+
+
+%if_enabled    doc
 %package       -n gem-apipie-rails-doc
-Version:       1.4.2.5
-Release:       alt0.1
+Version:       1.5.0
+Release:       alt1
 Summary:       Ruby on Rails API documentation tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета apipie-rails
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(apipie-rails) = 1.4.2.5
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(apipie-rails) = 1.5.0
 
 %description   -n gem-apipie-rails-doc
 Ruby on Rails API documentation tool documentation files.
@@ -96,7 +164,7 @@ code. This brings advantages like:
 * Possibility of reusing the docs for other purposes (such as validation)
 * Easier to extend and maintain (no string parsing involved)
 * Possibility of reusing other sources for documentation purposes (such as
-  routes etc.)
+routes etc.)
 
 The documentation is available from within your app (by default under the
 /apipie path.) In development mode, you can see the changes as you go. It's
@@ -110,19 +178,20 @@ data in JSON.
 
 %if_enabled    devel
 %package       -n gem-apipie-rails-devel
-Version:       1.4.2.5
-Release:       alt0.1
+Version:       1.5.0
+Release:       alt1
 Summary:       Ruby on Rails API documentation tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета apipie-rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(apipie-rails) = 1.4.2.5
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(apipie-rails) = 1.5.0
 Requires:      gem(RedCloth) >= 0
 Requires:      gem(json-schema) >= 2.8
 Requires:      gem(maruku) >= 0
 Requires:      gem(rake) >= 0
-Requires:      gem(rspec-rails) >= 3.0
 Requires:      gem(rubocop-performance) >= 0
 Requires:      gem(rubocop-rails) >= 0
 Requires:      gem(rubocop-rspec) >= 0
@@ -130,13 +199,7 @@ Requires:      gem(rubocop-rspec_rails) >= 0
 Requires:      gem(rubocop_challenger) >= 0
 Requires:      gem(simplecov) >= 0
 Requires:      gem(sqlite3) >= 0
-Requires:      gem(test_engine) >= 0
-Requires:      gem(mime-types) >= 0
-Requires:      gem(net-smtp) >= 0
-Requires:      gem(rails-controller-testing) >= 0
-Requires:      gem(rspec-rails) >= 0
 Conflicts:     gem(json-schema) >= 3
-Conflicts:     gem(rspec-rails) >= 6
 
 %description   -n gem-apipie-rails-devel
 Ruby on Rails API documentation tool development package.
@@ -149,7 +212,7 @@ code. This brings advantages like:
 * Possibility of reusing the docs for other purposes (such as validation)
 * Easier to extend and maintain (no string parsing involved)
 * Possibility of reusing other sources for documentation purposes (such as
-  routes etc.)
+routes etc.)
 
 The documentation is available from within your app (by default under the
 /apipie path.) In development mode, you can see the changes as you go. It's
@@ -178,6 +241,15 @@ data in JSON.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%files         -n gem-test-engine
+%ruby_gemspecdir/test_engine-0.0.1.gemspec
+%ruby_gemslibdir/test_engine-0.0.1
+
+%if_enabled    doc
+%files         -n gem-test-engine-doc
+%ruby_gemsdocdir/test_engine-0.0.1
+%endif
+
 %if_enabled    doc
 %files         -n gem-apipie-rails-doc
 %doc APACHE-LICENSE-2.0 CHANGELOG.md MIT-LICENSE README.md
@@ -191,6 +263,9 @@ data in JSON.
 
 
 %changelog
+* Wed Nov 05 2025 Pavel Skrylev <majioa@altlinux.org> 1.5.0-alt1
+- ^ 1.4.2p5 -> 1.5.0
+
 * Tue Jan 14 2025 Pavel Skrylev <majioa@altlinux.org> 1.4.2.5-alt0.1
 - ^ 0.8.2 -> 1.4.2p5
 

@@ -3,7 +3,7 @@
 Name:          gem-fog-google
 Epoch:         1
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for Google Cloud Platform
 Summary(ru_RU.UTF-8): Туман для Гугловой облачной платформы
 License:       MIT
@@ -26,7 +26,7 @@ BuildRequires: gem(google-apis-monitoring_v3) >= 0.12 gem(google-apis-monitoring
 BuildRequires: gem(google-apis-dns_v1) >= 0.12 gem(google-apis-dns_v1) < 1
 BuildRequires: gem(google-apis-pubsub_v1) >= 0.7 gem(google-apis-pubsub_v1) < 1
 BuildRequires: gem(google-apis-sqladmin_v1beta4) >= 0.13 gem(google-apis-sqladmin_v1beta4) < 1
-BuildRequires: gem(google-cloud-env) >= 1.2 gem(google-cloud-env) < 2
+BuildRequires: gem(google-cloud-env) >= 1.2
 BuildRequires: gem(pry) >= 0.13.0 gem(pry) < 1
 BuildRequires: gem(retriable) >= 0
 BuildRequires: gem(rake) >= 0
@@ -41,6 +41,7 @@ BuildRequires: gem(webmock) >= 0
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
 %ruby_use_gem_dependency fog-core >= 2.2.4,fog-core < 3
+%ruby_use_gem_dependency google-cloud-env >= 2.0,google-cloud-env < 3
 Requires:      gem(fog-core) < 3
 Requires:      gem(fog-json) >= 1.2 gem(fog-json) < 2
 Requires:      gem(fog-xml) >= 0.1.0 gem(fog-xml) < 0.2
@@ -51,7 +52,7 @@ Requires:      gem(google-apis-monitoring_v3) >= 0.12 gem(google-apis-monitoring
 Requires:      gem(google-apis-dns_v1) >= 0.12 gem(google-apis-dns_v1) < 1
 Requires:      gem(google-apis-pubsub_v1) >= 0.7 gem(google-apis-pubsub_v1) < 1
 Requires:      gem(google-apis-sqladmin_v1beta4) >= 0.13 gem(google-apis-sqladmin_v1beta4) < 1
-Requires:      gem(google-cloud-env) >= 1.2 gem(google-cloud-env) < 2
+Requires:      gem(google-cloud-env) >= 1.2
 Obsoletes:     ruby-fog-google < %EVR
 Provides:      ruby-fog-google = %EVR
 Provides:      gem(fog-google) = 1.19.0
@@ -70,7 +71,7 @@ Cloud APIs using a service account private key.
 
 %package       -n gem-fog-google-doc
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for Google Cloud Platform documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-google
 Group:         Development/Documentation
@@ -96,7 +97,7 @@ Cloud APIs using a service account private key.
 
 %package       -n gem-fog-google-devel
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for Google Cloud Platform development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-google
 Group:         Development/Ruby
@@ -154,6 +155,9 @@ Cloud APIs using a service account private key.
 
 
 %changelog
+* Sat Nov 15 2025 Pavel Skrylev <majioa@altlinux.org> 1:1.19.0-alt1.1
+- ! fixed dep to google-cloud-env gem
+
 * Fri Oct 07 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.19.0-alt1
 - ^ 1.13.0 -> 1.19.0
 
