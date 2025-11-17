@@ -2,7 +2,7 @@
 
 Name: corectrl
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: Core control application
 Group: System/Configuration/Hardware
 License: GPLv3
@@ -30,6 +30,12 @@ be flexible, comfortable and accessible to regular users.
 %patch -p1
 # stdc++fs is a part of libstdc++ on linux
 find . -name CMakeLists.txt -exec sed -i -e 's/stdc++fs/stdc++/g' {} \;
+%ifarch %e2k
+# workaround for outdated std without <format>
+find src -name '*.cpp' -type f -exec \
+  sed -i 's|<format>|<fmt/format.h>|;s/std::format/fmt::format/;' {} \;
+sed -i '/target_link_libraries(corectrl_lib /a fmt::fmt' src/CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -78,6 +84,9 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.2-alt2
+- e2k build fix
+
 * Thu Sep 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
 - 1.5.2.
 
