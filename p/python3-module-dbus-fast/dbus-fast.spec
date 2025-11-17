@@ -1,5 +1,5 @@
 Name: python3-module-dbus-fast
-Version: 2.45.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Python library for DBus
@@ -45,6 +45,9 @@ dbus-launch sh -c '
 %python3_sitelibdir/dbus_fast-%version.dist-info
 
 %changelog
+* Mon Nov 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.2-alt1
+- 3.1.2 released
+
 * Mon Nov 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.45.1-alt1
 - 2.45.1 released
 
