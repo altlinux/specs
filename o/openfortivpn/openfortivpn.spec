@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: openfortivpn
-Version: 1.22.1
+Version: 1.23.1
 Release: alt1
 
 Summary: Client for PPP+SSL VPN tunnel services
@@ -43,6 +43,9 @@ It is compatible with Fortinet VPNs.
 %doc CHANGELOG.md README.md LICENSE
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 1.23.1-alt1
+- 1.23.1.
+
 * Mon Jul 29 2024 L.A. Kostis <lakostis@altlinux.ru> 1.22.1-alt1
 - 1.22.1.
 - escape shell symbols in route cmd (closes #50987).
