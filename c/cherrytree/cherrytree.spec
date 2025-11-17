@@ -1,6 +1,6 @@
 Name: cherrytree
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8): Записная книжка иерархической структуры для заметок
@@ -45,7 +45,7 @@ file with extension ".ctd".
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,Glib::ustring) |" src/ct/ct_{misc_utils,storage_xml}.cc
 sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,std::string) |" src/ct/ct_*.cc
-sed -i "s|pConverted+|(gchar*)&|" src/ct/ct_misc_utils.cc
+sed -i -E "s/p(Converted|Text)\+3/(gchar*)&/" src/ct/ct_misc_utils.cc
 sed -i "s|save_to_buffer(|&(gchar*\&)|" src/ct/ct_{imports,image,parser_html}.cc
 sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 %endif
@@ -79,6 +79,9 @@ rm -r src/spdlog
 
 
 %changelog
+* Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0-alt2
+- e2k build fix
+
 * Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 
