@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtorrent
-Version: 0.15.6
+Version: 0.16.2
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -12,10 +12,10 @@ Url: https://github.com/rakshasa/rtorrent/wiki
 # https://github.com/rakshasa/rtorrent.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
+BuildRequires: gcc-c++ libcurl-devel libncursesw-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
 BuildRequires: cppunit-devel
-BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
-BuildRequires: libtorrent-devel = %version
+BuildRequires: libxmlrpc-devel >= 0.12.2 tinyxml-devel
+BuildRequires: libtorrent-devel = %version, liblua-devel
 
 %description
 rTorrent is a ncurses based client and is therefor ideal to use with
@@ -29,6 +29,14 @@ screen. rTorrent features:
 * Safe fast resume support.
 * Shows lots of information about peers and the torrent.
 * Only one torrent at a time is checked.
+
+%package lua
+Summary: Lua bindings for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description lua
+Lua bindings for %name
 
 %prep
 %setup
@@ -44,10 +52,21 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %makeinstall_std
 
 %files
-%doc AUTHORS doc/rtorrent.rc
+%doc AUTHORS doc/rtorrent.rc doc/rtorrent.rc-example doc/manual
 %_bindir/%name
+%dir %_datadir/%name
+
+%files lua
+%doc doc/rtorrent.rc.lua-example
+%_datadir/%name/lua
 
 %changelog
+* Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 0.16.2-alt1
+- 0.16.2.
+- BR: simplify according upstream.
+- libxml->tinyxml.
+- Added lua bindings.
+
 * Tue Sep 02 2025 L.A. Kostis <lakostis@altlinux.ru> 0.15.6-alt1
 - 0.15.6.
 

@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 26
+%define soname 32
 
 Name: libtorrent
 Epoch: 3
-Version: 0.15.6
+Version: 0.16.2
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -20,9 +20,7 @@ Source: %name-%version.tar
 Patch0: %name-alt-skip-tests.patch
 Patch1: %name-utils-add-missing-inc.patch
 
-BuildRequires: gcc-c++ libsigc++2.0-devel libssl-devel
-BuildRequires: cppunit-devel
-BuildRequires: zlib-devel
+BuildRequires: gcc-c++ cppunit-devel zlib-devel libcurl-devel libssl-devel
 
 %def_disable static
 
@@ -109,7 +107,7 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %endif
 
 %files -n %name%soname
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS README.md
 %doc --no-dereference COPYING
 %_libdir/*.so.%soname
 %_libdir/*.so.%soname.*
@@ -120,6 +118,10 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.2-alt1
+- 0.16.2.
+- BR: simplify according current upstream requirements.
+
 * Tue Sep 02 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.15.6-alt1
 - 0.15.6.
 
