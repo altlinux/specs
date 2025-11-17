@@ -23,7 +23,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2.3.4
-Release: alt1
+Release: alt2
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -70,6 +70,11 @@ BuildRequires: /usr/bin/meson
 %add_findprov_skiplist %python3_sitelibdir/%oname/random/_examples/*
 
 Conflicts: python-module-numpy < 1:1.15.4-alt6
+# Obsolete separate tests subpackage
+Provides: %name-tests = %EVR
+Obsoletes: %name-tests <= 1:2.3.4-alt1
+Provides: %name-testing = %EVR
+Obsoletes: %name-testing <= 1:2.3.4-alt1
 
 %description
 NumPy is the fundamental package for scientific computing in Python. It is a
@@ -78,17 +83,6 @@ objects (such as masked arrays and matrices), and an assortment of routines for
 fast operations on arrays, including mathematical, logical, shape manipulation,
 sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra,
 basic statistical operations, random simulation and much more.
-
-%package tests
-Summary: Tests for NumPy (Python 3)
-Group: Development/Python3
-AutoReq: yes, nopython3
-Provides: %name-testing = %EVR
-Obsoletes: %name-testing <= 1:1.26.5-alt1
-Requires: %name = %EVR
-
-%description tests
-This package contains tests and testing part of NumPy.
 
 %package -n lib%oname-py3-devel
 Summary: Development files of NumPy (Python 3)
@@ -156,18 +150,10 @@ ln -s %_includedir/python%_python3_version/%oname \
 %_bindir/f2py*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/%oname/conftest.py
-%exclude %python3_sitelibdir/%oname/_pytesttester.py
-%exclude %python3_sitelibdir/%oname/_pytesttester.pyi
-%exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
-%exclude %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
-%exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests/
 %exclude %python3_sitelibdir/%oname/*/test_*
-%exclude %python3_sitelibdir/%oname/*/testutils.py
 %exclude %python3_sitelibdir/%oname/*/__pycache__/test_*.*
-%exclude %python3_sitelibdir/%oname/*/__pycache__/testutils.*
 %exclude %python3_sitelibdir/%oname/f2py/src/fortranobject.h
 %exclude %python3_sitelibdir/%oname/_core/lib/npy-pkg-config
 %exclude %python3_sitelibdir/%oname/doc
@@ -175,28 +161,6 @@ ln -s %_includedir/python%_python3_version/%oname \
 %exclude %python3_sitelibdir/%oname/f2py/src
 %exclude %python3_sitelibdir/%oname/_core/lib/libnpymath.a
 %exclude %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
-
-%files tests
-%python3_sitelibdir/%oname/testing
-%python3_sitelibdir/%oname/conftest.py
-%python3_sitelibdir/%oname/_pytesttester.py
-%python3_sitelibdir/%oname/_pytesttester.pyi
-%python3_sitelibdir/%oname/__pycache__/conftest.*
-%python3_sitelibdir/%oname/__pycache__/_pytesttester.*
-%python3_sitelibdir/%oname/tests/
-%python3_sitelibdir/%oname/typing/tests/
-%python3_sitelibdir/%oname/random/tests/
-%python3_sitelibdir/%oname/polynomial/tests/
-%python3_sitelibdir/%oname/matrixlib/tests/
-%python3_sitelibdir/%oname/ma/tests/
-%python3_sitelibdir/%oname/linalg/tests/
-%python3_sitelibdir/%oname/lib/tests/
-%python3_sitelibdir/%oname/fft/tests/
-%python3_sitelibdir/%oname/f2py/tests/
-%python3_sitelibdir/%oname/_core/tests/
-%python3_sitelibdir/%oname/ma/testutils.py
-%python3_sitelibdir/%oname/ma/__pycache__/testutils.*
-%python3_sitelibdir/%oname/_pyinstaller/tests
 
 %files -n lib%oname-py3-devel
 %_bindir/numpy-config
@@ -208,6 +172,11 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Tue Nov 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.4-alt2
+- Moved numpy.testing module and related testing utilities to main package.
+- Obsoleted python3-module-numpy-tests subpackage (closes: #56559).
+- NumPy internal tests are no longer packaged.
+
 * Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.4-alt1
 - 2.3.2 -> 2.3.4
 
