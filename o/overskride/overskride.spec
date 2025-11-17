@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: overskride
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A simple but powerful bluetooth app
@@ -23,8 +23,8 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.10
-%define adw_ver 1.4
+%define gtk_ver 4.20
+%define adw_ver 1.8
 
 Requires: bluez obexd
 
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Nov 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 

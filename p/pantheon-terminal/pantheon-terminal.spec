@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 7.1
+%define ver_major 7.2
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: pantheon-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -30,6 +30,7 @@ Source: %_name-%version.tar
 
 Requires: elementary-icon-theme
 Provides: %rdn_name = %EVR
+Provides: elementary-%_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson appstream desktop-file-utils xvfb-run
@@ -86,6 +87,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Mon Nov 17 2025 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
+- 7.2.0
+
 * Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 7.1.2-alt1
 - 7.1.2
 
