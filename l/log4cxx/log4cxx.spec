@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/zip qt5-base-devel
 
 Name: log4cxx
 Version: 1.1.0
-Release: alt1_3
+Release: alt1_4
 Summary: A port to C++ of the Log4j project
 
 License: Apache-2.0
@@ -25,6 +25,11 @@ BuildRequires: ctest cmake
 BuildRequires: doxygen
 BuildRequires: gcc-c++
 Source44: import.info
+
+Patch1: CVE-2025-54812_1.patch
+Patch2: CVE-2025-54812_2.patch
+Patch3: CVE-2025-54813.patch
+
 
 %description
 Log4cxx is a popular logging package written in C++. One of its distinctive
@@ -52,7 +57,9 @@ Documentation for %{name}.
 
 %prep
 %setup -q -n apache-%{name}-%{version}
-
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{fedora_v2_cmake} -DBUILD_SITE=ON
@@ -84,6 +91,9 @@ Documentation for %{name}.
 %endif
 
 %changelog
+* Mon Nov 17 2025 Alexander Danilov <admsasha@altlinux.org> 1.1.0-alt1_4
+- Applied upstream patch (fixes: CVE-2025-54812_1, CVE-2025-54813).
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt1_3
 - new version
 
