@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9.174
-Release: alt1
+Release: alt2
 
 Summary: translations for all alterator modules
 License: GPL
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Mon Nov 17 2025 Elena Mishina <lepata@altlinux.org> 2.9.174-alt2
+- alterator-kopidel: minor help update (Closes: 56856)
+
 * Thu Nov 13 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.9.174-alt1
 - alterator-kopidel: update help for 1.0.6
 
