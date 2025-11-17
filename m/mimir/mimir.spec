@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: mimir
-Version: 2.17.2
+Version: 3.0.0
 Release: alt1
 
 Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
@@ -38,13 +38,6 @@ Group: Other
 %description -n mimirtool
 Mimirtool is a command-line tool that operators and tenants can use to execute a number of common tasks that involve Grafana Mimir or Grafana Cloud Metrics.
 
-%package -n mimir-continuous-test
-Summary: Tool for run smoke tests on live Grafana Mimir clusters
-Group: Other
-
-%description -n mimir-continuous-test
-Tool for run smoke tests on live Grafana Mimir clusters. This tool identifies a class of bugs that could be difficult to spot during development.
-
 %package metaconvert
 Summary: metaconvert
 Group: Other
@@ -69,7 +62,6 @@ export GOFLAGS="-ldflags=-X=github.com/grafana/mimir/pkg/util/version.Version=%v
 
 %golang_build ./cmd/query-tee
 %golang_build ./cmd/mimirtool
-%golang_build ./cmd/mimir-continuous-test
 %golang_build ./cmd/mimir
 %golang_build ./cmd/metaconvert
 
@@ -118,15 +110,14 @@ usermod -a -G proc %name ||:
 %doc README.md SECURITY.md CONTRIBUTING.md
 %_bindir/mimirtool
 
-%files -n mimir-continuous-test
-%doc README.md SECURITY.md CONTRIBUTING.md
-%_bindir/mimir-continuous-test
-
 %files metaconvert
 %doc README.md SECURITY.md CONTRIBUTING.md
 %_bindir/metaconvert
 
 %changelog
+* Mon Nov 17 2025 Anton Meleshnikov <alton@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Wed Nov 12 2025 Anton Meleshnikov <alton@altlinux.org> 2.17.2-alt1
 - New version 2.17.2.
 
