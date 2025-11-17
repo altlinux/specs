@@ -2,7 +2,7 @@
 
 Name: qtox
 Version: 1.18.3
-Release: alt1
+Release: alt2
 
 Summary: Powerful Tox client that follows the Tox design guidelines
 
@@ -36,6 +36,10 @@ Powerful Tox Qt6 client that follows the Tox design guidelines.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc: error: option "-ftrapv" is not supported
+sed -i '/^ *-ftrapv;/d' cmake/warnings/CMakeLists.txt
+%endif
 
 %build
 %add_optflags -fpermissive
@@ -55,6 +59,9 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.18.3-alt2
+- e2k build fix
+
 * Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 1.18.3-alt1
 - New version.
 
