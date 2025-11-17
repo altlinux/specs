@@ -1,8 +1,8 @@
-%define libnvme_ver 1.15
+%define libnvme_ver 1.16
 
 Name: nvme
-Version: 2.15
-Release: alt2
+Version: 2.16
+Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -77,8 +77,11 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2.16-alt1
+- 2.16.
+
 * Wed Aug 27 2025 Alexey Shabalin <shaba@altlinux.org> 2.15-alt2
-- Fixed runfir path (/usr/run -> /run).
+- /usr/run -> /run.
 
 * Mon Aug 11 2025 L.A. Kostis <lakostis@altlinux.ru> 2.15-alt1
 - 2.15.
