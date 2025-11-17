@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           string-template-maven-plugin
 Version:        1.1
-Release:        alt1_7jpp11
+Release:        alt2
 Summary:        Execute StringTemplate files during a maven build
 
 License:        MIT
@@ -20,10 +20,11 @@ Patch0:         %{name}-aether.patch
 # Tell javadoc about maven mojo tags
 # https://github.com/kevinbirch/string-template-maven-plugin/pull/13
 Patch1:         %{name}-javadoc.patch
+# Skiped error if descriptors not found
+Patch2:         %{name}-descriptor.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.antlr:ST4)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.twdata.maven:mojo-executor-maven-plugin)
@@ -46,6 +47,7 @@ This package contains %{summary}.
 %setup -q -n %{name}-%{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 cp -p %{SOURCE1} .
 
@@ -64,6 +66,9 @@ cp -p %{SOURCE1} .
 # We use xmvn-javadoc instead of maven-javadoc-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
+# This only enforces use of ancient maven and java versions
+%pom_remove_plugin :maven-enforcer-plugin
+
 # sonatype-oss-parent is deprecated in Fedora
 %pom_remove_parent
 
@@ -72,7 +77,7 @@ sed -i 's/1\.6/1.8/g' pom.xml tests/pom.xml \
   src/main/java/com/webguys/maven/plugin/st/Controller.java
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s
 
 %install
 %mvn_install
@@ -84,6 +89,9 @@ sed -i 's/1\.6/1.8/g' pom.xml tests/pom.xml \
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Nov 17 2025 Anton Meleshnikov <alton@altlinux.org> 1.1-alt2
+- FTBFS fix (thanks fedora for the patch)
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1.1-alt1_7jpp11
 - java11 build
 
