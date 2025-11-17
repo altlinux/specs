@@ -18,7 +18,7 @@
 
 Name: bluez
 Version: 5.84
-Release: alt2
+Release: alt3
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -90,6 +90,14 @@ Bluetooth mpris-player implements some features of MPRIS[1] specification.
 
 1. https://specifications.freedesktop.org/mpris-spec/latest/
 
+%package test-tools
+Summary: BlueZ test tools
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description test-tools
+This package contains test tools for using BlueZ.
+
 %package -n zsh-completion-%name
 Summary: Zsh completion for %name
 Group: Shells
@@ -133,6 +141,13 @@ install -m755 tools/bneptest %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
+%if_enabled testing
+# install test tools
+install -m 0755 tools/*-tester %buildroot/%_bindir/
+install -m 0755 emulator/b1ee %buildroot/%_bindir/
+install -m 0755 emulator/btvirt %buildroot/%_bindir/
+install -m 0755 emulator/hfp %buildroot/%_bindir/
+%endif
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -227,7 +242,18 @@ fi
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/_bluetoothctl
 
+%if_enabled testing
+%files test-tools
+%_bindir/*-tester
+%_bindir/b1ee
+%_bindir/btvirt
+%_bindir/hfp
+%endif
+
 %changelog
+* Mon Nov 17 2025 Sergey V Turchin <zerg@altlinux.org> 5.84-alt3
+- package test-tools
+
 * Mon Nov 17 2025 Sergey V Turchin <zerg@altlinux.org> 5.84-alt2
 - enable testing at build on basic arches (closes: 56368)
 
