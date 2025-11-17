@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-chksum
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: ALT distro checksum downloader
@@ -38,6 +38,10 @@ shellcheck %name
 %_bindir/%name
 
 %changelog
+* Mon Nov 17 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
+- Notify the users about new security updates (Fixes: OVE-20251117-0001).
+- Display EOL.txt on validate if it exists.
+
 * Fri Nov 14 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.6-alt1
 - Updated expired GPG keys (Fixes: OVE-20251114-0001).
 - Updated README.
