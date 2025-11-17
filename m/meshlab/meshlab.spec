@@ -3,7 +3,7 @@
 
 Name: meshlab
 Version: 2025.07
-Release: alt1
+Release: alt2
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: BSD-3-Clause AND GPL-2.0-or-later
@@ -87,7 +87,7 @@ sed -i 's/^#include "levmar.h"/#include <levmar.h>/' $(find . -name "*.h")
 %num_threads_fix Threads.value Src/PoissonRecon.cpp
 %num_threads_fix pp.ThreadsVal poisson_utils.h
 sed -i "/pragma omp/{s/.*/int loop_count=mesh.vert.size();\n&/;:a;n;s/i < (int)mesh.vert.size()/i < loop_count/;ba}" \
-	vcglib-%vcglibver/vcg/complex/algorithms/point_outlier.h
+	src/vcglib/vcg/complex/algorithms/point_outlier.h
 %endif
 
 # Remove bundled library sources, since we use the packaged libraries
@@ -145,6 +145,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2025.07-alt2
+- e2k build fix
+
 * Thu Oct 30 2025 Anton Midyukov <antohami@altlinux.org> 2025.07-alt1
 - New version 2025.07.
 - Update License tag.
