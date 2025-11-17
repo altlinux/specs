@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.3
+Version: 6.4
 Release: alt1
 
 Summary: Translucent persistent objects
@@ -23,7 +23,8 @@ BuildRequires: python3-module-wheel
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-objects.inv
 BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-furo
+BuildRequires: python3-module-sphinx_basic_ng
 %endif
 %if_with check
 BuildRequires: python3-module-zope.testrunner
@@ -120,6 +121,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Mon Nov 17 2025 Anton Vyatkin <toni@altlinux.org> 6.4-alt1
+- New version 6.4.
+
 * Sat Oct 18 2025 Anton Vyatkin <toni@altlinux.org> 6.3-alt1
 - New version 6.3.
 
