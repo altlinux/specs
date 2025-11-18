@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's scratchpad
@@ -71,6 +71,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.1-alt1
+- 4.3.1
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
 - 4.3.0
 

@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: %_name
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Hyprland configuration library
@@ -69,6 +69,9 @@ Development files for the Hyprlang library.
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.6-alt1
+- 0.6.6
+
 * Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
 - 0.6.5
 

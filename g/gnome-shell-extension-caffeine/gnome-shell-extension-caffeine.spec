@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name caffeine
-%define ver_major 58
+%define ver_major 59
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -63,6 +63,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 59-alt1
+- 59
+
 * Tue Sep 23 2025 Yuri N. Sedunov <aris@altlinux.org> 58-alt1
 - 58
 

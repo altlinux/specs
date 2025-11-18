@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name Switcheroo
-%define ver_major 2.4
+%define ver_major 2.5
 %define xdg_name io.gitlab.adhami3310.Converter
 
 %def_enable check
@@ -20,10 +20,14 @@ Vcs: https://gitlab.com/adhami3310/Switcheroo.git
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.16
-%define adwaita_ver 1.6.0
+%define gtk_ver 4.20
+%define adwaita_ver 1.8.0
 
 Requires: ImageMagick-tools
+Requires: /usr/bin/gs
+Requires: zip
+Requires: libjxl-pixbuf-loader
+Requires: libwebp-pixbuf-loader
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -56,6 +60,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
@@ -63,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

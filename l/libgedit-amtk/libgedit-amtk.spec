@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-amtk
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Gedit Technology - Actions, Menus and Toolbars Kit for GTK applications
@@ -160,6 +160,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.2-alt1
+- 5.9.2
+
 * Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9.1-alt1
 - 5.9.1
 
