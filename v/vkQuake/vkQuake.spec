@@ -1,6 +1,6 @@
 Name: vkQuake
 Version: 1.30.1
-Release: alt1.1
+Release: alt2
 
 Summary: Quake I engine
 License: GPL
@@ -29,6 +29,10 @@ vkQuake - современный движок для игры Quake, базир�
 %prep
 %setup -n %name-%version-%release
 %patch0 -p1
+%ifarch %e2k
+# error: unknown attribute "alloc_align"
+sed -i 's/__INTEL_COMPILER/__EDG__/' Quake/mimalloc/mimalloc.h
+%endif
 
 %build
 meson setup build && ninja -C build
@@ -50,6 +54,9 @@ install -pm644 readme.md %buildroot%docdir/
 %docdir/readme.md
 
 %changelog
+* Tue Nov 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.30.1-alt2
+- e2k build fix
+
 * Tue Nov 18 2025 Nazarov Denis <nenderus@altlinux.org> 1.30.1-alt1.1
 - Fix build with glslang >= 16.0
 
