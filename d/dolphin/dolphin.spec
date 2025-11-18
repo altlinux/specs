@@ -12,8 +12,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: %rname
-Version: 25.08.2
-Release: alt2
+Version: 25.08.3
+Release: alt1
 %K6init
 
 Group: File tools
@@ -153,6 +153,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
 * Fri Nov 07 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt2
 - add nfs:/ handler
 

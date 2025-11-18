@@ -2,7 +2,7 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: %rname
-Version: 25.08.2
+Version: 25.08.3
 Release: alt1
 %K6init
 
@@ -16,6 +16,7 @@ Obsoletes: kde5-network-filesharing < %EVR
 
 #Requires: %req_samba_pkgs
 Requires: /usr/bin/testparm
+Requires: /usr/bin/pdbedit
 
 Source: %rname-%version.tar
 Source10: ru-add.po
@@ -72,6 +73,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
 * Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
