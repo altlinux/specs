@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt14
+Release: alt15
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -515,6 +515,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Nov 14 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt15
+- grub-install: Embed SBAT metadata by default (closes: #41959)
+
 * Mon Jun 16 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt14
 - add new ALT-specific translations (closes: #54493)
 
