@@ -60,7 +60,7 @@
 %def_with jemalloc
 
 Name: %{project}4.5
-Version: 4.5.4
+Version: 4.5.5
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -567,6 +567,9 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/thumbnailers/%project.thumbnailer
 %endif
 
 %changelog
+* Tue Nov 18 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.5-alt1
+- 4.5.5.
+
 * Fri Oct 31 2025 L.A. Kostis <lakostis@altlinux.ru> 4.5.4-alt1
 - 4.5.4.
 - Fix FTBFS with new eigen.
