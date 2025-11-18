@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cargo-auditable
-Version: 0.7.0
+Version: 0.7.2
 Release: alt1
 
 Summary: Make production Rust binaries auditable
@@ -15,6 +15,7 @@ Source1: vendor.tar
 Source2: rust-audit-info-vendor.tar
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires: rust-wasm32-unknown-unknown-target
 
 %description
 Know the exact crate versions used to build your Rust executable. Audit
@@ -69,9 +70,7 @@ cd rust-audit-info
 %rust_install rust-audit-info
 
 %check
-# "test_proc_macro" and "test_self_hosting" contain broken dependency resolution.
-# "test_wasm" requires wasm32-unknown-unknown triple, which isn't supported yet.
-%rust_test --all-features -p cargo-auditable -- --skip test_wasm --skip test_proc_macro --skip test_self_hosting
+%rust_test --all-features -p cargo-auditable
 
 %files -n cargo-auditable
 %doc LICENSE-*
@@ -84,5 +83,8 @@ cd rust-audit-info
 %_bindir/rust-audit-info
 
 %changelog
+* Tue Nov 18 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.7.2-alt1
+- New version (0.7.2).
+
 * Tue Aug 05 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.7.0-alt1
 - Initial build.
