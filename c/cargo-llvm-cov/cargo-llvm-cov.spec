@@ -2,7 +2,7 @@
 %def_with check
 
 Name: cargo-llvm-cov
-Version: 0.6.19
+Version: 0.6.21
 Release: alt1
 
 Summary: Cargo subcommand to easily use LLVM source-based code coverage
@@ -88,5 +88,8 @@ export LLVM_PROFDATA_PATH=%_bindir/llvm-profdata
 %_bindir/cargo-llvm-cov
 
 %changelog
+* Fri Oct 24 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.6.21-alt1
+- New version (0.6.21).
+
 * Tue Sep 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.6.19-alt1
 - Initial build.
