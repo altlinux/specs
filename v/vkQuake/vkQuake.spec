@@ -1,18 +1,16 @@
 Name: vkQuake
-Version: 1.30.1
-Release: alt2
+Version: 1.32.3.1
+Release: alt1
 
 Summary: Quake I engine
-License: GPL
+License: GPL-2.0
 Group: Games/Arcade
 Url: https://github.com/Novum/vkQuake
 
-BuildRequires: glslang libSDL2-devel libmad-devel libvorbis-devel libvulkan-devel meson spirv-tools
+BuildRequires: glslang libSDL2-devel libvulkan-devel meson spirv-tools
+BuildRequires: libflac-devel libvorbis-devel libopusfile-devel libmpg123-devel libstb-devel
 
-
-Packager: %packager
-Source: %name-%version-%release.tar
-
+Source: %name-%version.tar
 # https://github.com/Novum/vkQuake/pull/809
 Patch0: fix-build-with-glslang-16.patch
 
@@ -27,33 +25,42 @@ vkQuake - современный движок для игры Quake, базир�
 В качестве Readme.maintainer см. аналогичный файл из пакета Quakespasm
 
 %prep
-%setup -n %name-%version-%release
+%setup -q
 %patch0 -p1
 %ifarch %e2k
 # error: unknown attribute "alloc_align"
 sed -i 's/__INTEL_COMPILER/__EDG__/' Quake/mimalloc/mimalloc.h
 %endif
+# unbundle stb libraries
+pushd Quake
+ln -svf %_includedir/stb/stb_image.h \
+	%_includedir/stb/stb_image_resize.h \
+	%_includedir/stb/stb_image_write.h ./
+popd
 
 %build
-meson setup build && ninja -C build
+%add_optflags -Wno-error=unused-function
+%meson -Dmp3_lib=mpg123
+%meson_build -v
 
 %install
-mkdir -p %buildroot/%_bindir/
-install -pm755 build/vkquake %buildroot/%_bindir/
-
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir
-
-install -pm644 LICENSE.txt %buildroot%docdir/
-install -pm644 readme.md %buildroot%docdir/
+install -pDm755 %__builddir/vkquake %buildroot%_bindir/vkquake
 
 %files
+%doc LICENSE.txt readme.md
 %_bindir/vkquake
-%dir %docdir
-%docdir/LICENSE.txt
-%docdir/readme.md
 
 %changelog
+* Tue Nov 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.32.3.1-alt1
+- 1.32.3.1.
+- spec updates:
+  + BR: update.
+  + unbundle stb libs.
+  + use mpg123 as mp3 decoder (upstream change).
+  + use meson macros.
+  + fix SPDX name of license.
+  + fix docs.
+
 * Tue Nov 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.30.1-alt2
 - e2k build fix
 
