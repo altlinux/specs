@@ -20,7 +20,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -36,8 +36,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %endif
 Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %{?_enable_snapshot:Source10: libgxdp-%gxdp_ver.tar}
-# merged for gnome-50 (f32559f)
-#Patch10: 
+
+# merged for gnome-50 (f32559f) (ALT #55640)
+Patch10: %name-50.x-up-Allow_changing_password_with_remote_user.patch
 
 %define glib_ver 2.76.6
 %define gtk4_ver 4.17.5
@@ -169,6 +170,8 @@ you'll want to install this package.
 %setup -n %name-%version%beta %{?_enable_snapshot:-a10
 mv libgxdp-%gxdp_ver subprojects/libgxdp}
 
+%patch10 -p1 -b .remote-user
+
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
 #sed -i 's|zone\.tab|zone1970.tab|' panels/system/datetime/tz.h
 sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/datetime/tz.h
@@ -230,6 +233,10 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
+- applied upstream fix:
+  "Allow changing password with remote user" (ALT #55640)
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
