@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2
+Version: 6.3
 Release: alt1
 Summary: Scalable persistent object containers
 License: ZPL-2.1
@@ -80,6 +80,9 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Mon Nov 17 2025 Stanislav Levin <slev@altlinux.org> 6.3-alt1
+- 6.2 -> 6.3.
+
 * Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 6.2-alt1
 - 6.1 -> 6.2.
 
