@@ -1,6 +1,6 @@
 %def_with postgresql
 Name: gnunet
-Version: 0.23.1
+Version: 0.25.2
 Release: alt1
 
 Summary: Peer-to-peer framework
@@ -16,7 +16,12 @@ Source3: gnunetd.sysusers
 
 Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
-BuildRequires: gcc-c++ libmysqlclient21-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
+BuildRequires(pre): rpm-macros-meson
+
+# FIXME: where is rpm-build-meson??
+BuildRequires: meson
+
+BuildRequires: gcc-c++ libmysqlclient21-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 #BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel
 BuildRequires: glib2-devel libglpk-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0)
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel libcurl-devel libsodium-devel libgmp-devel
@@ -58,40 +63,32 @@ applications which will use %name.
 
 %prep
 %setup
-#patch2 -p0
-
-# broken --disable-testing
-%__subst "s|ats-tests||" src/Makefile.*
 
 %build
-%autoreconf
-CFLAGS="%optflags -I%_includedir/mysql"
-CXXFLAGS="%optflags -I%_includedir/mysql"
-export CFLAGS CXXFLAGS
-
-%configure --disable-rpath --disable-documentation %{subst_with postgresql}
-%make_build V=1 || %make V=1
+%meson
+%meson_build
 
 %install
-# usr/bin/ld.default: warning: libgnunetblock.so.0, needed by /tmp/.private/lav/gnunet-buildroot/usr/lib64/libgnunetblockgroup.so, not found (try using -rpath or -rpath-link)
-# libtool:   error: error: relink 'libgnunet_plugin_block_test.la' with the above command before installing it
-#export LD_LIBRARY_PATH=$(pwd)/src/block/.libs:$(pwd)/src/ats/.libs:$(pwd)/src/statistics/.libs:$(pwd)/src/json/.libs:$(pwd)/src/gnsrecord/.libs
-%makeinstall_std
+%meson_install
+
 %find_lang %name
 
 #install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunetd.service
 install -D -m0644 %SOURCE3 %buildroot%_sysusersdir/gnunetd.conf
 
+rm -rv %buildroot%_infodir/
 # unpackaged files found
-rm -v %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
-rm -rv %buildroot%_datadir/gnunet/services/
+#rm -v %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
+#rm -rv %buildroot%_datadir/gnunet/services/
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
-#doc %_man1dir/gnunet*.1*
-#doc %_man5dir/gnunet*.5*
+%doc %_man1dir/gnunet*.1*
+%doc %_man5dir/gnunet*.5*
+%doc %_docdir/%name/
 %_bindir/gnunet-arm
 #_bindir/gnunet-ats
+%_bindir/gnunet-abd
 %_bindir/gnunet-auto-share
 %_bindir/gnunet-bugreport
 %_bindir/gnunet-cadet
@@ -151,6 +148,8 @@ rm -rv %buildroot%_datadir/gnunet/services/
 %_bindir/gnunet-messenger
 %_bindir/gnunet-namestore-dbtool
 %_bindir/gnunet-namestore-zonefile
+%_bindir/gnunet-pils
+%_bindir/gnunet-rps
 %_bindir/gnunet-scrypt
 %_bindir/gnunet-testbed
 %_bindir/gnunet-testing-netjail-launcher
@@ -168,6 +167,13 @@ rm -rv %buildroot%_datadir/gnunet/services/
 %_libdir/gnunet/
 %_libdir/libgnunetarm.so.*
 #_libdir/libgnunetats.so.*
+%_libdir/libgnunetabd.so.*
+%_libdir/libgnunetcoreunderlaydummy.so.0.0.0
+%_libdir/libgnunetmhd.so.*
+%_libdir/libgnunetnat.so.*
+%_libdir/libgnunetpils.so.*
+%_libdir/libgnunetrps.so.*
+%_libdir/libgnunettestingcore.so.*
 %_libdir/libgnunetblock.so.*
 %_libdir/libgnunetblockgroup.so.*
 %_libdir/libgnunetcadet.so.*
@@ -251,59 +257,13 @@ rm -rv %buildroot%_datadir/gnunet/services/
 %files -n lib%name-devel
 %_includedir/gnunet/
 %_libdir/*.so
-%_pkgconfigdir/gnunetarm.pc
-#_pkgconfigdir/gnunetats.pc
-%_pkgconfigdir/gnunetblock.pc
-%_pkgconfigdir/gnunetcadet.pc
-%_pkgconfigdir/gnunetcore.pc
-%_pkgconfigdir/gnunetdatacache.pc
-%_pkgconfigdir/gnunetdatastore.pc
-%_pkgconfigdir/gnunetdht.pc
-%_pkgconfigdir/gnunetdns.pc
-#%_pkgconfigdir/gnunetdnsparser.pc
-#%_pkgconfigdir/gnunetdv.pc
-#_pkgconfigdir/gnunetfragmentation.pc
-%_pkgconfigdir/gnunetfs.pc
-%_pkgconfigdir/gnunetgns.pc
-%_pkgconfigdir/gnunethello.pc
-#%_pkgconfigdir/gnunetlockmanager.pc
-#_pkgconfigdir/gnunetmesh.pc
-#_pkgconfigdir/gnunetmysql.pc
-%_pkgconfigdir/gnunetnamestore.pc
-%_pkgconfigdir/gnunetnat.pc
-%_pkgconfigdir/gnunetnse.pc
-#_pkgconfigdir/gnunetpeerinfo.pc
-#_pkgconfigdir/gnunetpostgres.pc
-%_pkgconfigdir/gnunetregex.pc
-%_pkgconfigdir/gnunetrps.pc
-%_pkgconfigdir/gnunetstatistics.pc
-#%_pkgconfigdir/gnunetstream.pc
-#_pkgconfigdir/gnunettestbed.pc
-%_pkgconfigdir/gnunettesting.pc
-%_pkgconfigdir/gnunettransport.pc
-#%_pkgconfigdir/gnunettun.pc
-%_pkgconfigdir/gnunetutil.pc
-%_pkgconfigdir/gnunetvpn.pc
-
-%_pkgconfigdir/gnunetconsensus.pc
-%_pkgconfigdir/gnunetconversation.pc
-#%_pkgconfigdir/gnunetdnsstub.pc
-#_libdir/pkgconfig/gnunetenv.pc
-%_pkgconfigdir/gnunetidentity.pc
-%_pkgconfigdir/gnunetmicrophone.pc
-#%_pkgconfigdir/gnunetmulticast.pc
-#%_pkgconfigdir/gnunetpsyc.pc
-#%_pkgconfigdir/gnunetpsycstore.pc
-%_pkgconfigdir/gnunetrevocation.pc
-%_pkgconfigdir/gnunetscalarproduct.pc
-%_pkgconfigdir/gnunetset.pc
-%_pkgconfigdir/gnunetspeaker.pc
-%_pkgconfigdir/gnunetjson.pc
-%_pkgconfigdir/gnunetmessenger.pc
-%_pkgconfigdir/gnunetreclaim.pc
-%_datadir/aclocal/gnunet.m4
+%_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 0.25.2-alt1
+- new version 0.25.2 (with rpmrb script)
+- switch to meson build
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
 - new version 0.23.1 (with rpmrb script)
 
