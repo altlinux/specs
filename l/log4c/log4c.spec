@@ -1,6 +1,6 @@
 Name: 		log4c
-Version: 	1.2.1
-Release: 	alt1.1.qa3
+Version: 	1.2.4
+Release: 	alt1
 
 Summary: 	Log for C
 License:	LGPLv2.1
@@ -59,6 +59,9 @@ rm -fv %buildroot%_libdir/*.a
 %doc  doc/html
 
 %changelog
+* Tue Nov 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.4-alt1
+- 1.2.1 -> 1.2.4
+
 * Tue Oct 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1.1.qa3
 - Fixed FTBFS.
 
