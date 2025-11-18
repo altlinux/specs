@@ -4,7 +4,7 @@
 
 Name: peazip
 Version: 10.7.0
-Release: alt2
+Release: alt3
 
 Summary: File and archive manager
 License: LGPL-3.0-only
@@ -12,18 +12,21 @@ Group: File tools
 Url: https://peazip.github.io/
 Vcs: https://github.com/peazip/PeaZip.git
 
+ExclusiveArch: x86_64 aarch64
+
 Source: %name-%version.tar
 Source1: altconf.txt
 Patch: %name-%version-alt-add-debuginfo.patch
 Patch1: %name-%version-alt-fix-folders-path-ru.patch
 Patch2: %name-%version-alt-fix-desktop-files-ru.patch
+Patch3: %name-%version-alt-add-PIE.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: dos2unix
 BuildRequires: lazarus
 BuildRequires: qt6pas-devel
 BuildRequires: brotli
-BuildRequires: p7zip
+BuildRequires: 7-zip
 BuildRequires: zstd
 BuildRequires: upx
 BuildRequires: /proc
@@ -78,7 +81,7 @@ cp -v %SOURCE1 %buildroot%_peainstalldir/res/
 
 #install helper apps
 mkdir -p %buildroot%_peainstalldir/res/bin/{7z,upx,brotli,zstd}
-ln -sf %_bindir/7z  %buildroot%_peainstalldir/res/bin/7z/7z
+ln -sf %_bindir/7zz  %buildroot%_peainstalldir/res/bin/7z/7z
 ln -sf %_bindir/upx  %buildroot%_peainstalldir/res/bin/upx/upx
 ln -sf %_bindir/brotli  %buildroot%_peainstalldir/res/bin/brotli/brotli
 ln -sf %_bindir/zstd  %buildroot%_peainstalldir/res/bin/zstd/zstd
@@ -119,6 +122,11 @@ install %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenus/KDE6-d
 %_datadir/kio/servicemenus/*.desktop
 
 %changelog
+* Tue Nov 18 2025 Anton Kurachenko <srebrov@altlinux.org> 10.7.0-alt3
+- BuildRequires: p7zip -> 7-zip.
+- PIE enabled.
+- Dropped i586 build.
+
 * Fri Nov 14 2025 Anton Kurachenko <srebrov@altlinux.org> 10.7.0-alt2
 - Fixed the drop-down menus (Closes: #56862).
 
