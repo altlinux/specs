@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 
-%define git_commit 7172b2d26684c7ef9d10e249bd43dc5bf73ae00c
+%define git_commit 3890e12c9e48c028c3f12aa58cb64bd9f8895e30
 %define git_commit_short %(c="%git_commit"; echo "${c:0:8}")
 
 Name: anki2
-Version: 25.07.5
+Version: 25.09.2
 Release: alt1
 
 Summary: Flashcard program for using space repetition learning
@@ -30,11 +30,10 @@ Source4: yarn-cache.tar
 Patch1: anki2-25.07.5-alt-disable-git-rev-parse.patch
 Patch2: anki2-25.07.5-arch-strip-formatter-deps.patch
 Patch3: anki-24.06.3-arch-strip-type-checking-deps.patch
-Patch4: anki2-24.11-arch-move-unicode-text-direction-allow-to-crate-root.patch
 # aqt wheel contains non-python files.
 # This puts files in %%python3_sitelibdir instead of %%python3_sitelibdir_noarch
 # and satisfies sisyphus_check
-Patch5: anki2-25.07.5-alt-mark-aqt-as-non-pure-python.patch
+Patch4: anki2-25.07.5-alt-mark-aqt-as-non-pure-python.patch
 
 # For playing sound.
 Requires: mpv
@@ -72,7 +71,6 @@ as possible. Anki is based on a theory called spaced repetition.
 %patch2 -p 1
 %patch3 -p 1
 %patch4 -p 1
-%patch5 -p 1
 
 # Replace git rev-parse hash with alt release
 sed -i 's/@BUILDHASH_STRING@/%git_commit_short/' build/runner/src/build.rs
@@ -141,7 +139,7 @@ install -Dm644 qt/launcher/lin/anki.xpm %buildroot%_pixmapsdir/anki.xpm
 install -Dm644 qt/launcher/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
 
 %files
-%doc README.md SECURITY.md
+%doc LICENSE README.md SECURITY.md
 %_bindir/anki
 %_bindir/ankiw
 %python3_sitelibdir/anki
@@ -158,6 +156,9 @@ install -Dm644 qt/launcher/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
 %_man1dir/anki.*
 
 %changelog
+* Tue Nov 18 2025 Alexander Stepchenko <geochip@altlinux.org> 25.09.2-alt1
+- 25.07.5 -> 25.09.2.
+
 * Thu Aug 28 2025 Alexander Stepchenko <geochip@altlinux.org> 25.07.5-alt1
 - Update to 25.07.5.
 
