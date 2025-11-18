@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.17
+Version: 2.0.19
 Release: alt1
 
 Summary: Plugins for DDE
@@ -109,6 +109,12 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_datadir/%repo/org.deepin.ds*/*.json
 %_datadir/%repo/org.deepin.ds*/*.qml
 %_datadir/%repo/org.deepin.ds*/icons/
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.shell.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.shell.json
 # the translations outside find_land
 %dir %_datadir/%repo/org.deepin.ds*/translations/
 %_datadir/%repo/org.deepin.ds.dock/translations/org.deepin.ds.dock.qm
@@ -148,6 +154,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.19-alt1
+- New version 2.0.19.
+
 * Fri Nov 07 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.17-alt1
 - New version 2.0.17.
 

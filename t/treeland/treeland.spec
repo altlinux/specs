@@ -4,8 +4,8 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.7.7
-Release: alt2
+Version: 0.7.8
+Release: alt1
 
 Summary: Wayland compositor for DDE
 
@@ -217,6 +217,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/cmake/Waylib/
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.8-alt1
+- New version 0.7.8.
+
 * Tue Nov 11 2025 Leontiy Volodin <lvol@altlinux.org> 0.7.7-alt2
 - Enabled wayland session only.
 

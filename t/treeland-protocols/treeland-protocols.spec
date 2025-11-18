@@ -1,5 +1,5 @@
 Name: treeland-protocols
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Wayland protocol extensions for treeland
@@ -9,7 +9,8 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/treeland-protocols
 Vcs: https://github.com/linuxdeepin/treeland-protocols
 
-Source: %url/archive/%version/%name-%version.tar.xz
+# Source-url: https://github.com/linuxdeepin/treeland-protocols/archive/%version/%name-%version.tar.xz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ cmake
@@ -42,6 +43,9 @@ sed -i 's|${pc_sysrootdir}||' \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.1-alt1
+- New version 0.5.1.
+
 * Tue Sep 02 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 - Updated license tag.

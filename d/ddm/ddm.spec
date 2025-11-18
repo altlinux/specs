@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -87,11 +87,11 @@ export LC_ALL=C.UTF-8
 %DQ6install
 
 %pre
-# DDM runs as its own user.
-getent group ddm >/dev/null || groupadd -r ddm
-getent passwd ddm >/dev/null || \
-    useradd -r -g ddm -d %_localstatedir/ddm -s /bin/false \
-    -c "ddm user" ddm
+# DDM runs as DDE user.
+getent group dde >/dev/null || groupadd -r dde
+getent passwd dde >/dev/null || \
+    useradd -r -g dde -d %_localstatedir/ddm -s /bin/false \
+    -c "Simple Wayland Display Manager for DDE" dde
 exit 0
 
 %files
@@ -149,6 +149,10 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.3-alt1
+- New version 0.2.3.
+- Fixed permissions.
+
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 0.2.2-alt1
 - New version 0.2.2.
 

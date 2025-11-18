@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-dde
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
@@ -80,6 +80,9 @@ export READELF="llvm-readelf"
 %_libdir/libxdg-desktop-portal-dde-wayland.so
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
