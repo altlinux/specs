@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: %rname
-Version: 25.08.2
+Version: 25.08.3
 Release: alt1
 %K6init
 
@@ -52,6 +52,9 @@ Akonadi Calendar Tools.
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
 * Fri Oct 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
