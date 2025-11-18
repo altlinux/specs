@@ -1,5 +1,5 @@
 Name:    fldigi
-Version: 4.2.09
+Version: 4.2.10
 Release: alt1
 Summary: Fldigi is a software modem for Amateur Radio use
 
@@ -59,6 +59,9 @@ ARQ data via fldigi.
 %doc %_man1dir/*
 
 %changelog
+* Tue Nov 18 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.10-alt1
+- New version.
+
 * Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.09-alt1
 - New version.
 
