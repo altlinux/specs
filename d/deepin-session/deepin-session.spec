@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -83,8 +83,12 @@ export READELF="llvm-readelf"
 %_userunitdir/dde-keyring-checker.service
 %_userunitdir/dde-version-checker.service
 %_userunitdir/dde-xsettings-checker.service
+%_userunitdir/dde-version-checker@quick-login.service
 
 %changelog
+* Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
+- New version 2.0.9.
+
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.8-alt1
 - New version 2.0.8.
 
