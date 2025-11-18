@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name trove-classifiers
+%define mod_name trove_classifiers
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2025.9.11.17
+Version: 2025.11.14.15
 Release: alt1
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
@@ -60,10 +61,13 @@ echo '%version' > ./calver_version
 %files
 %doc README.md
 %_bindir/trove-classifiers
-%python3_sitelibdir/trove_classifiers/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 17 2025 Stanislav Levin <slev@altlinux.org> 2025.11.14.15-alt1
+- 2025.9.11.17 -> 2025.11.14.15.
+
 * Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 2025.9.11.17-alt1
 - 2025.9.9.12 -> 2025.9.11.17.
 
