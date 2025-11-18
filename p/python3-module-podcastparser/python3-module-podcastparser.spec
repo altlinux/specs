@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 %define pypi_name podcastparser
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.6.10
-Release: alt2
+Version: 0.6.11
+Release: alt1
 
 Summary: Simple, fast and efficient podcast parser written in Python3.
 Group: Development/Python3
@@ -14,6 +14,7 @@ Url: http://gpodder.org/%pypi_name
 BuildArch: noarch
 
 Vcs: https://github.com/gpodder/podcastparser.git
+
 %if_disabled snapshot
 Source: https://github.com/gpodder/%pypi_name/archive/%version/%pypi_name-%version.tar.gz
 %else
@@ -48,6 +49,9 @@ py.test3
 
 
 %changelog
+* Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.11-alt1
+- 0.6.11
+
 * Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.10-alt2
 - updated to 0.6.10-4-g03e5477 (fixed build with python-3.12)
 
