@@ -14,7 +14,7 @@
 
 Name: ncnn
 Version: 20250916
-Release: alt1
+Release: alt2
 
 Summary: Mobile neural network inference framework
 
@@ -99,6 +99,11 @@ sed -i '/add_subdirectory(pybind11)/d' \
   python/CMakeLists.txt
 %endif
 
+%ifarch %e2k
+find -type f \( -name '*.cpp' -o -name '*.h' \) -exec \
+  sed -i -E 's/(^ *#pragma omp .* num_threads\()opt.num_threads\)/\1__n)/;T;i for(int __x=1,__n=opt.num_threads;__x;__x=0)' {} \;
+%endif
+
 %build
 %if_enabled clang
 %define optflags_lto -flto=thin
@@ -150,6 +155,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Tue Nov 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20250916-alt2
+- e2k build fix
+
 * Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 20250916-alt1
 - New version 20250916.
 
