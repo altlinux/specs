@@ -2,20 +2,17 @@
 
 %define realname eimp
 
-%set_verify_elf_method relaxed
-
-# https://github.com/processone/eimp/issues/5
-%def_disable check
+%def_with check
 
 Name: erlang-%realname
-Version: 1.0.21
+Version: 1.0.26
 Release: alt1
 Summary: Erlang Image Manipulation Process
 Group: Development/Erlang
 License: Apache-2.0
 Url: https://github.com/processone/eimp
+Vcs: https://github.com/processone/eimp.git
 
-# https://github.com/processone/eimp.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -43,6 +40,8 @@ using external C libraries. It supports WebP, JPEG, PNG and GIF.
 %rebar_install %realname
 
 %check
+mkdir -p .eunit/priv/bin
+cp priv/bin/eimp .eunit/priv/bin/
 %rebar_eunit
 
 %files
@@ -51,6 +50,12 @@ using external C libraries. It supports WebP, JPEG, PNG and GIF.
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Nov 17 2025 Ilya Sorochan <k0tran@altlinux.org> 1.0.26-alt1
+- Updated to upstream version 1.0.26.
+- Enabled tests.
+- Added Vcs tag.
+- Removed %%set_verify_elf_method relaxed.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.21-alt1
 - Updated to upstream version 1.0.21.
 
