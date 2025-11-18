@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        142.0.7444.162
+Version:        142.0.7444.175
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -108,7 +108,6 @@ Patch045: 0045-DEBIAN-node-version-ck.patch
 Patch046: 0046-DEBIAN-libcpp-headers.patch
 Patch047: 0047-DEBIAN-chromium-142-iwyu-field-form-data.patch
 Patch048: 0048-DEBIAN-clang19.patch
-Patch049: 0049-DEBIAN-dawn-commit-hash.patch
 
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
@@ -655,6 +654,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.175-alt1
+- New version (142.0.7444.175).
+- Fixes:
+  + CVE-2025-13223: Type Confusion in V8
+  + CVE-2025-13224: Type Confusion in V8
+
 * Wed Nov 12 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.162-alt1
 - New version (142.0.7444.162).
 - Fixes:
