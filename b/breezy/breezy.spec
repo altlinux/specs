@@ -5,22 +5,19 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.3.11
-Release: alt1.1
+Version: 3.3.13
+Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
 Group: Development/Other
 
 Url: https://github.com/breezy-team/breezy.git
-Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: %name-cargo.tar
 
 Patch1: drop-distutils.patch
-# Fix building with Cython 3.1
-Patch2: 187a57226de9491a350a59ea3f448b6364b136a3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -58,8 +55,9 @@ Requires: python3-module-tzlocal
 
 %description
 Breezy (or brz) is a fork of the Bazaar version control system.
-Breezy is a distributed version control system that is powerful, friendly, and scalable.
-By default, Breezy provides support for both the Bazaar and Git file formats.
+Breezy is a distributed version control system that is powerful, friendly, and
+scalable.  By default, Breezy provides support for both the Bazaar and Git file
+formats.
 
 %package -n python3-module-breezy-tests
 Summary: Tools for testing Breezy
@@ -101,7 +99,6 @@ This package contains 'bzr' alias for breezy 'brz' command.
 %prep
 %setup -a1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -175,6 +172,9 @@ install -m0644 man1/brz.1 %buildroot%_man1dir/
 %endif
 
 %changelog
+* Tue Nov 18 2025 L.A. Kostis <lakostis@altlinux.ru> 3.3.13-alt1
+- 3.3.13.
+
 * Sat Sep 27 2025 Grigory Ustinov <grenka@altlinux.org> 3.3.11-alt1.1
 - NMU: Fixed building with Cython 3.1.
 
