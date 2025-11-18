@@ -3,7 +3,7 @@
 %def_with check
 
 Name: ripgrep-all
-Version: 0.10.9
+Version: 0.10.10
 Release: alt1
 Summary: Extended ripgrep with support for archives and more
 
@@ -15,7 +15,6 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
 
 %if_with check
 BuildRequires: pandoc
@@ -36,14 +35,7 @@ file types, making it a versatile tool for advanced searches.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat > .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 %build
 %rust_build
@@ -62,5 +54,8 @@ EOF
 %_bindir/rga-fzf-open
 
 %changelog
+* Tue Nov 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.10.10-alt1
+- 0.10.9 -> 0.10.10
+
 * Mon May 26 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.10.9-alt1
 - Initial build.
