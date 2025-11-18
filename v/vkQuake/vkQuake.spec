@@ -1,6 +1,6 @@
 Name: vkQuake
 Version: 1.30.1
-Release: alt1
+Release: alt1.1
 
 Summary: Quake I engine
 License: GPL
@@ -12,6 +12,9 @@ BuildRequires: glslang libSDL2-devel libmad-devel libvorbis-devel libvulkan-deve
 
 Packager: %packager
 Source: %name-%version-%release.tar
+
+# https://github.com/Novum/vkQuake/pull/809
+Patch0: fix-build-with-glslang-16.patch
 
 %description
 Vulkan port of id software's Quake engine.
@@ -25,6 +28,7 @@ vkQuake - современный движок для игры Quake, базир�
 
 %prep
 %setup -n %name-%version-%release
+%patch0 -p1
 
 %build
 meson setup build && ninja -C build
@@ -46,6 +50,9 @@ install -pm644 readme.md %buildroot%docdir/
 %docdir/readme.md
 
 %changelog
+* Tue Nov 18 2025 Nazarov Denis <nenderus@altlinux.org> 1.30.1-alt1.1
+- Fix build with glslang >= 16.0
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 1.30.1-alt1
 - Update to new version
 
