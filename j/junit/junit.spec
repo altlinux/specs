@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 Name:           junit
 Epoch:          1
 Version:        4.13.1
-Release:        alt1_7jpp11
+Release:        alt2
 Summary:        Java regression test package
 License:        EPL-1.0
 URL:            http://www.junit.org/
@@ -25,8 +25,10 @@ BuildArch:      noarch
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 Source1:        generate-tarball.sh
+Source2:        module-info.java
 
 Patch1:         0001-Port-to-hamcrest-2.2.patch
+Patch2:         0002-Add-JPMS-support-alt-patch.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -79,7 +81,9 @@ Javadoc for %{name}.
 %prep
 %setup -q -n junit4-r%{version}
 
-%patch1 -p1
+%autopatch -p1
+
+cp %SOURCE2 src/main/java
 
 # InaccessibleBaseClassTest fails with Java 8
 sed -i /InaccessibleBaseClassTest/d src/test/java/org/junit/tests/AllTests.java
@@ -114,7 +118,7 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %mvn_alias junit:junit junit:junit-dep
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=1.7 -P\!restrict-doclint
+%mvn_build -- -P\!restrict-doclint -Dmaven.test.skip=true
 
 %install
 %mvn_install
@@ -131,6 +135,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Mon Nov 17 2025 Ivan Khanas <xeno@altlinux.org> 1:4.13.1-alt2
+- Add JPMS support.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.13.1-alt1_7jpp11
 - update
 

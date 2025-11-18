@@ -1,64 +1,48 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: byte-buddy
+Version: 1.18.0
+Release: alt1
+
+Summary: Runtime code generation for the Java virtual machine
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+Url: http://bytebuddy.net
+Vcs: https://github.com/raphw/byte-buddy.git
+BuildArch: noarch
+
+Source0: %name-%version.tar
+Patch0: 0001-Remove-annotations-SuppressWarnings-byte-buddy-dep-alt-patch.patch
+Patch1: 0002-Exclude-transitive-opentest4j-from-shade-jar-alt-patch.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: /proc
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           byte-buddy
-Version:        1.12.0
-Release:        alt1_3jpp11
-Summary:        Runtime code generation for the Java virtual machine
-License:        ASL 2.0
-URL:            http://bytebuddy.net/
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-
-# Patch the build to avoid bundling inside shaded jars
-Patch1:         0001-Avoid-bundling-asm.patch
-Patch2:         0002-Remove-dependencies.patch
-Patch3:         0003-Remove-Java-14-tests.patch
-Patch4:         0004-Remove-JDK-15-sealed-classes.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy-dep)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  mvn(org.ow2.asm:asm-analysis)
-BuildRequires:  mvn(org.ow2.asm:asm-util)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.eclipse.aether:aether-api)
-BuildRequires:  mvn(org.eclipse.aether:aether-util)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
-%endif
-
-BuildArch:      noarch
-Source44: import.info
+BuildRequires: junit
+BuildRequires: byte-buddy
+BuildRequires: maven-lib
+BuildRequires: maven-plugin-testing-harness
+BuildRequires: mockito
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-plugin-annotations
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-resolver
+BuildRequires: objectweb-asm
+BuildRequires: modulemaker-maven-plugin
+BuildRequires: maven-shade-plugin
+BuildRequires: jna
+BuildRequires: jna-contrib
+BuildRequires: asm-jdk-bridge
 
 %description
 Byte Buddy is a code generation library for creating Java classes during the
 runtime of a Java application and without the help of a compiler. Other than
 the code generation utilities that ship with the Java Class Library, Byte Buddy
 allows the creation of arbitrary classes and is not limited to implementing
-interfaces for the creation of runtime proxies. 
+interfaces for the creation of runtime proxies.
 
 %package agent
 Group: Development/Java
@@ -82,31 +66,14 @@ Summary: Byte Buddy parent POM
 The parent artifact contains configuration information that
 concern all modules.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup
+%autopatch -p1
 
 rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineAttachmentTest.java
 rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineForOpenJ9Test.java
-
-# Cause pre-compiled stuff to be re-compiled
-mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/build/*.java \
-  byte-buddy-dep/src/main/java/net/bytebuddy/build
-mkdir -p byte-buddy-dep/src/test/java/net/bytebuddy/test/precompiled/
-mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/*.java \
-  byte-buddy-dep/src/test/java/net/bytebuddy/test/precompiled/
 
 # Don't ship android or benchmark modules
 %pom_disable_module byte-buddy-android
@@ -123,63 +90,54 @@ mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/*.java \
 %pom_remove_plugin :coveralls-maven-plugin
 %pom_remove_plugin :spotbugs-maven-plugin
 %pom_remove_plugin :jitwatch-jarscan-maven-plugin
-%pom_remove_plugin :clirr-maven-plugin
+%pom_remove_plugin :versions-maven-plugin
 %pom_remove_plugin :maven-release-plugin
-%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :central-publishing-maven-plugin
 
 # Avoid circural dependency
 %pom_remove_plugin :byte-buddy-maven-plugin byte-buddy-dep
-
-# Not interested in shading sources (causes NPE on old versions of shade plugin)
-%pom_xpath_set "pom:createSourcesJar" "false" byte-buddy
 
 # Drop build dep on findbugs annotations, used only by the above check plugins
 %pom_remove_dep :findbugs-annotations
 sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 
-# Plugin for generating Java 9 module-info file is not in Fedora
-%pom_remove_plugin -r :modulemaker-maven-plugin
-
 %pom_remove_dep org.ow2.asm:asm-deprecated
-
-%pom_remove_plugin :maven-shade-plugin byte-buddy
-%pom_remove_plugin :maven-shade-plugin byte-buddy-benchmark
-
-%pom_remove_dep net.java.dev.jna:jna byte-buddy
-%pom_remove_dep net.java.dev.jna:jna byte-buddy-dep
-%pom_remove_dep net.java.dev.jna:jna byte-buddy-agent
-
-%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy
-%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy-dep
-%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy-agent
 
 %build
 # Ignore test failures, there seems to be something different about the
 # bytecode of our recompiled test resources, expect 6 test failures in
 # the byte-buddy-dep module
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P'java8,!checks' -Dsourcecode.test.version=1.8 -Dmaven.test.failure.ignore=true
+%mvn_build -s -- \
+  -Dmaven.compiler.source=11 \
+  -Dmaven.compiler.target=11 \
+  -Dmaven.javadoc.source=11 \
+  -Dmaven.compiler.release=11 \
+  -P'!checks' \
+  -Dsourcecode.test.version=11 \
+  -Dmaven.test.skip=true \
+  # Skip tests because of mockito regression.
 
 %install
 %mvn_install
-# multiple -f flags in %files for <main>: merging -f .mfiles-%{name}-dep into -f .mfiles-%{name}
-cat .mfiles-%{name}-dep >> .mfiles-%{name}
+# multiple -f flags in %files for <main>: merging -f .mfiles-%name-dep into -f .mfiles-%name
+cat .mfiles-%name-dep >> .mfiles-%name
 
-%files -f .mfiles-%{name} 
+%files -f .mfiles-%name
 %doc README.md release-notes.md
 %doc --no-dereference LICENSE NOTICE
 
-%files agent -f .mfiles-%{name}-agent
+%files agent -f .mfiles-%name-agent
 %doc --no-dereference LICENSE NOTICE
 
-%files maven-plugin -f .mfiles-%{name}-maven-plugin
+%files maven-plugin -f .mfiles-%name-maven-plugin
 
-%files parent -f .mfiles-%{name}-parent
-%doc --no-dereference LICENSE NOTICE
-
-%files javadoc -f .mfiles-javadoc
+%files parent -f .mfiles-%name-parent
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Nov 06 2025 Ivan Khanas <xeno@altlinux.org> 1.18.0-alt1
+- New version.
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.12.0-alt1_3jpp11
 - new version
 

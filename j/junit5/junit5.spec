@@ -7,7 +7,7 @@
 
 Name: junit5
 Version: 5.10.2
-Release: alt1
+Release: alt2
 Summary: Java regression testing framework
 License: EPL-2.0
 Group: Development/Java
@@ -40,7 +40,7 @@ Source400:      https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-e
 Source500:      https://repo1.maven.org/maven2/org/junit/junit-bom/%{version}/junit-bom-%{version}.pom
 
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-17-compat
 BuildRequires: asciidoc asciidoc-a2x
 BuildRequires: maven-local
 BuildRequires: mvn(com.univocity:univocity-parsers)
@@ -49,6 +49,8 @@ BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apiguardian:apiguardian-api)
 BuildRequires: mvn(org.assertj:assertj-core)
 BuildRequires: mvn(org.opentest4j:opentest4j)
+BuildRequires: maven-shade-plugin
+BuildRequires: maven-antrun-plugin
 
 %description
 JUnit is a popular regression testing framework for Java platform.
@@ -56,12 +58,9 @@ JUnit is a popular regression testing framework for Java platform.
 %package guide
 Group: Development/Java
 Summary: Documentation for %{name}
-Requires: %{name}-javadoc = %{version}-%{release}
 
 %description guide
 JUnit 5 User Guide.
-
-%{?javadoc_package}
 
 %prep
 %setup -n %{name}-r%{version}
@@ -102,7 +101,12 @@ done
 
 # Add deps which are shaded by upstream and therefore not present in POMs.
 %pom_add_dep net.sf.jopt-simple:jopt-simple:5.0.4 junit-platform-console
-%pom_add_dep com.univocity:univocity-parsers:2.5.4 junit-jupiter-params
+
+# Add apiguardian to compile classpath for compiling junit-jupiter module.
+%pom_add_dep org.apiguardian:apiguardian-api:compile junit-jupiter
+
+# Fix module-info.java for junit-jupiter-params to include univocity.parsers dependency
+rm junit-jupiter-params/src/module/org.junit.jupiter.params/module-info.java
 
 # Disable the console modules
 %pom_disable_module junit-platform-console
@@ -110,8 +114,10 @@ done
 
 %mvn_package :aggregator __noinstall
 
+#rm junit-platform-testkit/src/module/org.junit.platform.testkit/module-info.java
+
 %build
-%mvn_build -f
+%mvn_build -f -j
 ln -s ../../javadoc/junit5 documentation/src/docs/api
 
 %install
@@ -124,6 +130,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Mon Nov 17 2025 Ivan Khanas <xeno@altlinux.org> 5.10.2-alt2
+- Add JPMS support for all modules except platform-testkit and params.
+
 * Sat Jul 26 2025 Andrey Cherepanov <cas@altlinux.org> 5.10.2-alt1
 - New version.
 

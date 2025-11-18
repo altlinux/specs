@@ -1,36 +1,37 @@
-Name:    mockito
-Version: 5.17.0
+%define _unpackaged_files_terminate_build 1
+
+Name: mockito
+Version: 5.20.0
 Release: alt1
+
 Summary: Tasty mocking framework for unit tests in Java
 License: MIT
 Group: Development/Java
-URL: https://site.mockito.org/
-
+Url: https://site.mockito.org
+Vcs: https://github.com/mockito/mockito.git
 BuildArch: noarch
 
-# ./generate-tarball.sh
-Source0: %name-%version.tar.gz
-Source1: generate-tarball.sh
+Source0: %name-%version.tar
+Patch0: %name-%version-alt-patch.patch
 
-# A custom build script to allow building with maven instead of gradle
-Source2: mockito-core.pom
-
-BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-BuildRequires: maven-local
-BuildRequires: mvn(biz.aQute.bnd:biz.aQute.bnd)
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(net.bytebuddy:byte-buddy)
-BuildRequires: mvn(net.bytebuddy:byte-buddy-agent)
-BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.apiguardian:apiguardian-api)
-BuildRequires: mvn(org.assertj:assertj-core)
-BuildRequires: mvn(org.hamcrest:hamcrest)
-BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires: mvn(org.objenesis:objenesis)
-BuildRequires: mvn(org.opentest4j:opentest4j)
-BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: /proc
+BuildRequires: rpm-build-java-osgi
+BuildRequires: jpackage-17-compat
+BuildRequires: xgradle
+BuildRequires: biz-aQute-bnd-gradle-plugins
+BuildRequires: junit
+BuildRequires: byte-buddy
+BuildRequires: byte-buddy-agent
+BuildRequires: maven-plugin-bundle
+BuildRequires: apiguardian
+BuildRequires: assertj-core
+BuildRequires: hamcrest
+BuildRequires: junit5
+BuildRequires: objenesis
+BuildRequires: opentest4j
+BuildRequires: objectweb-asm
+Requires: mockito-core
 
 %description
 Mockito is a mocking framework that tastes really good. It lets you write
@@ -38,51 +39,101 @@ beautiful tests with clean & simple API. Mockito doesn't give you hangover
 because the tests are very readable and they produce clean verification
 errors.
 
+%package core
+Summary: Core classes of Mockito
+Group: Development/Java
+BuildArch: noarch
+
+%description core
+This package contains the core Mockito library with essential APIs and runtime
+required for creating and using mocks.
+
+%package junit-jupiter
+Summary: JUnit Jupiter integration for Mockito
+Group: Development/Java
+BuildArch: noarch
+Requires: mockito-core
+
+%description junit-jupiter
+This package provides integration helpers and extensions to use Mockito with
+JUnit Jupiter. It contains the Mockito-specific JUnit 5 extension and
+supporting classes that make it easy to use Mockito in JUnit Jupiter based
+tests.
+
+%package subclass
+Summary: Subclass mocking support for Mockito
+Group: Development/Java
+BuildArch: noarch
+Requires: mockito-core
+
+%description subclass
+This package provides the "subclass" mock maker for Mockito. It enables
+creation of mocks using subclassing mechanisms and contains the runtime
+components required for subclass based mock generation. This subpackage
+provides the implementation pieces that enable creating mocks by subclassing
+where proxy-based mocking is not suitable.
+
+%package proxy
+Summary: Proxy-based mocking utilities for Mockito
+Group: Development/Java
+BuildArch: noarch
+Requires: mockito-core
+
+%description proxy
+This package provides the "proxy" mock maker for Mockito. It offers proxy based
+mock implementations and includes the runtime infrastructure used to generate
+mocks through dynamic proxies. Useful on platforms or configurations that
+prefer proxying over subclassing.
+
 %prep
 %setup
+%autopatch -p1
 
-# Use our custom build script
-sed -e 's/@VERSION@/%{version}/' %{SOURCE2} > pom.xml
-
-# Workaround easymock incompatibility with Java 17 that should be fixed
-# in easymock 4.4: https://github.com/easymock/easymock/issues/274
-%pom_add_plugin :maven-surefire-plugin . "<configuration>
-    <argLine>--add-opens=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</argLine></configuration>"
-
-# OSGi metadata configuration
-cat > osgi.bnd <<EOF
-Automatic-Module-Name: org.mockito
-Bundle-SymbolicName: org.mockito
-Bundle-Name: Mockito Mock Library for Java.
-Import-Package: junit.*;resolution:=optional,org.junit.*;resolution:=optional,org.hamcrest;resolution:=optional,org.mockito*;version="%{version}",*
-Private-Package: org.mockito.*
--removeheaders: Bnd-LastModified,Include-Resource,Private-Package
-EOF
-
-# OSGi metadata configuration for the junit-jupiter jar
-cat > osgi-junit-jupiter.bnd <<EOF
-Automatic-Module-Name: org.mockito.junit.jupiter
-Bundle-SymbolicName: org.mockito.junit-jupiter
-Bundle-Name: Mockito Extension Library for JUnit 5.
-Import-Package: org.junit.jupiter.api.extension;version="[5.7,6)",org.junit.platform.commons.support;version="[1.7,2)",org.mockito*;version="%{version}",*
--removeheaders: Bnd-LastModified,Include-Resource
-Export-Package: org.mockito.junit.jupiter;version="%{version}";uses:="org.junit.jupiter.api.extension,org.mockito.quality"
-EOF
+# Remove unwanted directory for RPM build(requires kotlin-dsl).
+rm -rf buildSrc
 
 # Compatibility alias
-%mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
+%mvn_alias org.mockito:mokito-core org.mockito:mockito-all
 
 %build
-%mvn_build -f
+%gradle_publish
 
 %install
-%mvn_install
+%gradle_register
 
-%files -f .mfiles
+%gradle_install
+
+%files core
+%_mavenmetadatadir/mockito.xml
+%_javadir/mockito/mockito-core.jar
+%_mavenpomdir/mockito/mockito-core.pom
 %doc --no-dereference LICENSE
 %doc README.md doc/design-docs/custom-argument-matching.md
 
+%files junit-jupiter
+%_javadir/mockito/mockito-junit-jupiter.jar
+%_mavenpomdir/mockito/mockito-junit-jupiter.pom
+
+%files subclass
+%_javadir/mockito/mockito-subclass.jar
+%_mavenpomdir/mockito/mockito-subclass.pom
+
+%files proxy
+%_javadir/mockito/mockito-proxy.jar
+%_mavenpomdir/mockito/mockito-proxy.pom
+
 %changelog
+* Mon Nov 17 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt1
+- New version.
+- Fix regression: package org.mockito does not exist(closes: 56779).
+- Switch to xgradle.
+- Add mockito-core subpackage and make the main package meta.
+- Add mockito-junit-jupiter subpackage.
+- Add mockito-subclass subpackage.
+- Add mockito-proxy subpackage.
+- Java 11 target compilation.
+- Add JPMS support.
+
 * Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 5.17.0-alt1
 - new version
 
