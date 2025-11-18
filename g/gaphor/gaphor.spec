@@ -3,7 +3,7 @@
 %def_with check
 
 Name: gaphor
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: A powerful UML and SysML modeling tool in Python
 License: Apache-2.0
@@ -17,8 +17,6 @@ Source1: %pyproject_deps_config_name
 
 # Drop better-exceptions: replaced with traceback.TracebackException
 Patch1: drop-better-exceptions.patch
-# Upstream fixes
-Patch2: %name-%version-upstream-fixes.patch
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -31,6 +29,8 @@ BuildRequires: libgtksourceview5-gir-devel
 %add_pyproject_deps_check_filter better-exception
 # Filter babelgladeextractor from check deps (unused in tests)
 %add_pyproject_deps_check_filter babelgladeextractor
+# pygobject-stubs needed only for mypy pre-commit hook, not for pytest
+%add_pyproject_deps_check_filter pygobject-stubs
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: libgtk4-gir
@@ -69,7 +69,7 @@ Contains the Python modules of Gaphor, a UML and SysML modeling tool.
 %endif
 
 %build
-%__python3 po/build-babel.py
+%__python3 scripts/build_babel.py
 %pyproject_build
 
 %install
@@ -113,6 +113,9 @@ install -Dm644 data/logos/org.gaphor.Gaphor-symbolic.svg %buildroot%_iconsdir/hi
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Mon Nov 10 2025 Aleksandr A. Voyt <sobue@altlinux.org> 3.2.0-alt1
+- 3.1.0 -> 3.2.0
+
 * Wed Aug 13 2025 Aleksandr A. Voyt <sobue@altlinux.org> 3.1.0-alt1
 - 3.0.0 -> 3.1.0
 
