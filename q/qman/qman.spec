@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qman
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: A more modern man page viewer for our terminals
@@ -55,6 +55,9 @@ rm -vfr %{buildroot}%_datadir/doc/qman
 %_sysconfdir/xdg/%name/*
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
 - New version 1.5.0.
 

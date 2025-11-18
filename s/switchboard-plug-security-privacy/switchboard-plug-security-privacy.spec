@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.security-privacy
 
 Name: switchboard-plug-security-privacy
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Switchboard Security & Privacy Plug
@@ -53,5 +53,8 @@ Settings plugin for managing the security and privacy of your system.
 %_datadir/polkit-1/actions/%{appname}.policy
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
+- New version 8.0.2.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - Initial build for Sisyphus

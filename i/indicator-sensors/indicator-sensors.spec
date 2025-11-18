@@ -2,7 +2,7 @@
 
 Name: indicator-sensors
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Hardware sensors indicator
 License: GPL-3.0
@@ -29,7 +29,7 @@ BuildRequires: libxnvctrl-devel
 %description
 Application indicator to display and monitor the readings
 from various hardware sensors (temperature, fan speeds, voltages
-etc) in the desktop panel for GNOME or as an Ayatana Indicator
+etc) in the desktop panel for GNOME or as an Ayatana Indicator.
 
 %prep
 %setup
@@ -65,6 +65,9 @@ find %buildroot -name '*.a' -print -delete
 %_libdir/indicator-sensors/*
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.4-alt3
+- Fixed FTBFS.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.4-alt2
 - Applied repocop fix for freedesktop-categories
 

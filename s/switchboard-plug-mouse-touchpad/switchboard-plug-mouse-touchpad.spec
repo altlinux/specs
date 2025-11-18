@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.mouse-touchpad
 
 Name: switchboard-plug-mouse-touchpad
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: Switchboard Mouse & Touchpad Plug
@@ -49,5 +49,8 @@ This plug configures mouse and touchpad.
 %_datadir/metainfo/io.elementary.settings.mouse-touchpad.metainfo.xml
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
+- New version 8.0.3.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus

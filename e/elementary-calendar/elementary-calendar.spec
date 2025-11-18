@@ -6,7 +6,7 @@
 %def_without check
 
 Name: elementary-calendar
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 Summary: Desktop calendar app designed for elementary OS
@@ -88,6 +88,7 @@ This package contains the development files used for %name.
 %_bindir/%appname
 %_desktopdir/%{appname}.desktop
 %_iconsdir/hicolor/*/apps/%{appname}.svg
+%_iconsdir/hicolor/*/actions/%{appname}*.svg
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_datadir/metainfo/%{appname}.metainfo.xml
 %_libdir/io.elementary.calendar/plugins/CalDAV/libcaldav.so
@@ -107,5 +108,8 @@ This package contains the development files used for %name.
 %exclude %_vapidir/elementary-calendar.vapi
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
+- New version 8.0.1.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt1
 - Initial build for Sisyphus

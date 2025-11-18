@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.locale
 
 Name: switchboard-plug-locale
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: Switchboard Locale Plug
@@ -53,9 +53,12 @@ Change your region and language settings.
 %_libdir/switchboard-3/personal/pantheon-locale/languagelist
 %_libdir/switchboard-3/personal/pantheon-locale/packages_blocklist
 %_datadir/glib-2.0/schemas/io.elementary.settings.locale.gschema.xml
-%_datadir/metainfo/io.elementary.settings.locale.appdata.xml
+%_datadir/metainfo/io.elementary.settings.locale.metainfo.xml
 %_datadir/polkit-1/actions/io.elementary.settings.locale.policy
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
+- New version 8.0.3.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus

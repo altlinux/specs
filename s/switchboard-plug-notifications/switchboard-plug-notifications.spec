@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.notifications
 
 Name: switchboard-plug-notifications
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 Summary: Switchboard Notifications Plug
@@ -49,5 +49,8 @@ Switchboard plug for controlling Pantheon's notifications.
 %_datadir/metainfo/io.elementary.settings.notifications.metainfo.xml
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
+- New version 8.0.1.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt1
 - Initial build for Sisyphus

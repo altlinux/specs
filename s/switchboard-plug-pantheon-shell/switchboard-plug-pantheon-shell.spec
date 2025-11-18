@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.desktop
 
 Name: switchboard-plug-pantheon-shell
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: Switchboard Desktop Plug
@@ -51,5 +51,8 @@ Settings plugin for controlling Pantheon Shell.
 %_datadir/metainfo/io.elementary.settings.desktop.metainfo.xml
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 8.2.1-alt1
+- New version 8.2.1.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.2.0-alt1
 - Initial build for Sisyphus

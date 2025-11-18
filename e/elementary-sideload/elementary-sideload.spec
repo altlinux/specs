@@ -4,7 +4,7 @@
 %define appname io.elementary.sideload
 
 Name: elementary-sideload
-Version: 6.3.0
+Version: 6.3.1
 Release: alt1
 
 Summary: Sideload Flatpaks on elementary OS
@@ -50,8 +50,13 @@ sed -i 's|^Categories=.*|Categories=PackageManager;Settings;|' data/sideload.des
 %_desktopdir/%{appname}.desktop
 %_iconsdir/hicolor/*/apps/%{appname}.svg
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/%{appname}.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/%{appname}.mo
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 6.3.1-alt1
+- New version 6.3.1.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 6.3.0-alt1
 - Initial build for Sisyphus
