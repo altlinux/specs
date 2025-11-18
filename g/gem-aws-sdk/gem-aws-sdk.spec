@@ -7,7 +7,7 @@
 Name:          gem-aws-sdk
 Epoch:         1
 Version:       3.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -101,10 +101,12 @@ API clients for AWS services.
 
 %package       -n gem-aws-sigv4
 Version:       1.10.1
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-eventstream) >= 1.0.2
 Conflicts:     gem(aws-eventstream) >= 2
@@ -118,11 +120,13 @@ signature for HTTP requests.
 %if_enabled    doc
 %package       -n gem-aws-sigv4-doc
 Version:       1.10.1
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sigv4
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sigv4) = 1.10.1
 
@@ -140,11 +144,13 @@ signature for HTTP requests.
 %if_enabled    devel
 %package       -n gem-aws-sigv4-devel
 Version:       1.10.1
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sigv4
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sigv4) = 1.10.1
 
@@ -161,10 +167,12 @@ signature for HTTP requests.
 
 %package       -n gem-aws-sigv2
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Provides:      gem(aws-sigv2) = 1.2.0
 
@@ -176,11 +184,13 @@ signature for HTTP requests.
 %if_enabled    doc
 %package       -n gem-aws-sigv2-doc
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sigv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sigv2) = 1.2.0
 
@@ -198,11 +208,13 @@ signature for HTTP requests.
 %if_enabled    devel
 %package       -n gem-aws-sigv2-devel
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sigv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sigv2) = 1.2.0
 
@@ -219,10 +231,12 @@ signature for HTTP requests.
 
 %package       -n gem-aws-sdk-s3
 Version:       1.169.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kms) >= 1
 Requires:      gem(aws-sigv4) >= 1.5
@@ -240,11 +254,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-s3-doc
 Version:       1.169.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-s3
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3) = 1.169.0
 
@@ -262,11 +278,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-s3-devel
 Version:       1.169.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-s3
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3) = 1.169.0
 
@@ -283,10 +301,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-pi
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -302,11 +322,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pi-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pi
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pi) = 1.70.0
 
@@ -324,11 +346,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pi-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pi
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pi) = 1.70.0
 
@@ -345,10 +369,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mq
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -363,11 +389,13 @@ Official AWS Ruby gem for AmazonMQ. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mq-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mq
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mq) = 1.73.0
 
@@ -384,11 +412,13 @@ Official AWS Ruby gem for AmazonMQ. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mq-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mq
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mq) = 1.73.0
 
@@ -404,10 +434,12 @@ Official AWS Ruby gem for AmazonMQ. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ssm
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -423,11 +455,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssm-doc
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssm) = 1.183.0
 
@@ -445,11 +479,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssm-devel
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssm) = 1.183.0
 
@@ -466,10 +502,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ivs
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -485,11 +523,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ivs-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ivs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivs) = 1.63.0
 
@@ -507,11 +547,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ivs-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ivs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivs) = 1.63.0
 
@@ -528,10 +570,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ecr
 Version:       1.88.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -547,11 +591,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ecr-doc
 Version:       1.88.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ecr
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecr) = 1.88.0
 
@@ -569,11 +615,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ecr-devel
 Version:       1.88.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ecr
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecr) = 1.88.0
 
@@ -590,10 +638,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ecs
 Version:       1.166.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -609,11 +659,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ecs-doc
 Version:       1.166.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ecs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecs) = 1.166.0
 
@@ -631,11 +683,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ecs-devel
 Version:       1.166.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ecs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecs) = 1.166.0
 
@@ -652,10 +706,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sso
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.105.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -671,11 +727,13 @@ aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sso-doc
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sso
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sso) = 1.12.0
 
@@ -693,11 +751,13 @@ aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sso-devel
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sso
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sso) = 1.12.0
 
@@ -714,10 +774,12 @@ aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 
 %package       -n gem-aws-sdk-efs
 Version:       1.86.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -733,11 +795,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-efs-doc
 Version:       1.86.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-efs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-efs) = 1.86.0
 
@@ -755,11 +819,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-efs-devel
 Version:       1.86.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-efs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-efs) = 1.86.0
 
@@ -776,10 +842,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-eks
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -795,11 +863,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-eks-doc
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-eks
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eks) = 1.120.0
 
@@ -817,11 +887,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-eks-devel
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-eks
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eks) = 1.120.0
 
@@ -838,10 +910,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sts
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.110.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -857,11 +931,13 @@ part of aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sts-doc
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sts
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sts) = 1.11.0
 
@@ -879,11 +955,13 @@ part of aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sts-devel
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sts
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sts) = 1.11.0
 
@@ -900,10 +978,12 @@ part of aws-sdk-core - this gem is an alias for loading aws-sdk-core.
 
 %package       -n gem-aws-sdk-oam
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -919,11 +999,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-oam-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-oam
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-oam) = 1.27.0
 
@@ -941,11 +1023,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-oam-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-oam
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-oam) = 1.27.0
 
@@ -962,10 +1046,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-swf
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -981,11 +1067,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-swf-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-swf
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-swf) = 1.66.0
 
@@ -1003,11 +1091,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-swf-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-swf
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-swf) = 1.66.0
 
@@ -1024,10 +1114,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-kms
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1043,11 +1135,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kms-doc
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kms
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kms) = 1.95.0
 
@@ -1065,11 +1159,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kms-devel
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kms
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kms) = 1.95.0
 
@@ -1086,10 +1182,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-tnb
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Telco Network Builder
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1105,11 +1203,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-tnb-doc
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Telco Network Builder documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-tnb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-tnb) = 1.25.0
 
@@ -1124,11 +1224,13 @@ AWS SDK for Ruby - AWS Telco Network Builder documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-tnb-devel
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Telco Network Builder development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-tnb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-tnb) = 1.25.0
 
@@ -1142,10 +1244,12 @@ AWS SDK for Ruby - AWS Telco Network Builder development package.
 
 %package       -n gem-aws-sdk-lex
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1161,11 +1265,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lex-doc
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lex
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lex) = 1.72.0
 
@@ -1180,11 +1286,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lex-devel
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lex
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lex) = 1.72.0
 
@@ -1198,10 +1306,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-sqs
 Version:       1.87.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1217,11 +1327,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sqs-doc
 Version:       1.87.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sqs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sqs) = 1.87.0
 
@@ -1239,11 +1351,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sqs-devel
 Version:       1.87.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sqs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sqs) = 1.87.0
 
@@ -1260,10 +1374,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ec2
 Version:       1.486.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1279,11 +1395,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ec2-doc
 Version:       1.486.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ec2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ec2) = 1.486.0
 
@@ -1301,11 +1419,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ec2-devel
 Version:       1.486.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ec2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ec2) = 1.486.0
 
@@ -1322,10 +1442,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ebs
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1341,11 +1463,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ebs-doc
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ebs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ebs) = 1.53.0
 
@@ -1363,11 +1487,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ebs-devel
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ebs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ebs) = 1.53.0
 
@@ -1384,10 +1510,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-fsx
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1402,11 +1530,13 @@ Official AWS Ruby gem for Amazon FSx. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-fsx-doc
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-fsx
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fsx) = 1.102.0
 
@@ -1423,11 +1553,13 @@ Official AWS Ruby gem for Amazon FSx. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-fsx-devel
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-fsx
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fsx) = 1.102.0
 
@@ -1443,10 +1575,12 @@ Official AWS Ruby gem for Amazon FSx. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sns
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1462,11 +1596,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sns-doc
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sns
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sns) = 1.89.0
 
@@ -1484,11 +1620,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sns-devel
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sns
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sns) = 1.89.0
 
@@ -1505,10 +1643,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-pcs
 Version:       1.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Parallel Computing Service
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1524,11 +1664,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pcs-doc
 Version:       1.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Parallel Computing Service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pcs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcs) = 1.9.0
 
@@ -1546,11 +1688,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pcs-devel
 Version:       1.9.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Parallel Computing Service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pcs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcs) = 1.9.0
 
@@ -1567,10 +1711,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-drs
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -1586,11 +1732,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-drs-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-drs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-drs) = 1.43.0
 
@@ -1608,11 +1756,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-drs-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-drs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-drs) = 1.43.0
 
@@ -1629,10 +1779,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sms
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -1648,11 +1800,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sms-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sms
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sms) = 1.66.0
 
@@ -1670,11 +1824,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sms-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sms
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sms) = 1.66.0
 
@@ -1691,10 +1847,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iot
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1709,11 +1867,13 @@ Official AWS Ruby gem for AWS IoT. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iot-doc
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iot
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot) = 1.137.0
 
@@ -1730,11 +1890,13 @@ Official AWS Ruby gem for AWS IoT. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iot-devel
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iot
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot) = 1.137.0
 
@@ -1750,10 +1912,12 @@ Official AWS Ruby gem for AWS IoT. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ses
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1769,11 +1933,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ses-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ses
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ses) = 1.76.0
 
@@ -1791,11 +1957,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ses-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ses
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ses) = 1.76.0
 
@@ -1812,10 +1980,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-dlm
 Version:       1.82.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1831,11 +2001,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-dlm-doc
 Version:       1.82.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-dlm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dlm) = 1.82.0
 
@@ -1853,11 +2025,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-dlm-devel
 Version:       1.82.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-dlm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dlm) = 1.82.0
 
@@ -1874,10 +2048,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iam
 Version:       1.112.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1893,11 +2069,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iam-doc
 Version:       1.112.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iam
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iam) = 1.112.0
 
@@ -1915,11 +2093,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iam-devel
 Version:       1.112.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iam
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iam) = 1.112.0
 
@@ -1936,10 +2116,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-dax
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -1955,11 +2137,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-dax-doc
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-dax
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dax) = 1.65.0
 
@@ -1977,11 +2161,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-dax-devel
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-dax
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dax) = 1.65.0
 
@@ -1998,10 +2184,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-acm
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2017,11 +2205,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-acm-doc
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-acm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-acm) = 1.81.0
 
@@ -2036,11 +2226,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-acm-devel
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-acm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-acm) = 1.81.0
 
@@ -2054,10 +2246,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-fis
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2073,11 +2267,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-fis-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-fis
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fis) = 1.43.0
 
@@ -2095,11 +2291,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-fis-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-fis
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fis) = 1.43.0
 
@@ -2116,10 +2314,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-emr
 Version:       1.101.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2135,11 +2335,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-emr-doc
 Version:       1.101.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-emr
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emr) = 1.101.0
 
@@ -2157,11 +2359,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-emr-devel
 Version:       1.101.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-emr
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emr) = 1.101.0
 
@@ -2178,10 +2382,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-fms
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2197,11 +2403,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-fms-doc
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-fms
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fms) = 1.84.0
 
@@ -2219,11 +2427,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-fms-devel
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-fms
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-fms) = 1.84.0
 
@@ -2240,10 +2450,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-waf
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2259,11 +2471,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-waf-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-waf
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-waf) = 1.73.0
 
@@ -2278,11 +2492,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-waf-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-waf
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-waf) = 1.73.0
 
@@ -2296,10 +2512,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mgn
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -2315,11 +2533,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mgn-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mgn
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mgn) = 1.43.0
 
@@ -2337,11 +2557,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mgn-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mgn
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mgn) = 1.43.0
 
@@ -2358,10 +2580,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ram
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2377,11 +2601,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ram-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ram
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ram) = 1.67.0
 
@@ -2399,11 +2625,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ram-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ram
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ram) = 1.67.0
 
@@ -2420,10 +2648,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-rds
 Version:       1.256.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2439,11 +2669,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-rds-doc
 Version:       1.256.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-rds
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rds) = 1.256.0
 
@@ -2461,11 +2693,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-rds-devel
 Version:       1.256.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-rds
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rds) = 1.256.0
 
@@ -2482,10 +2716,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-glue
 Version:       1.200.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2500,11 +2736,13 @@ Official AWS Ruby gem for AWS Glue. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-glue-doc
 Version:       1.200.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-glue
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-glue) = 1.200.0
 
@@ -2521,11 +2759,13 @@ Official AWS Ruby gem for AWS Glue. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-glue-devel
 Version:       1.200.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-glue
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-glue) = 1.200.0
 
@@ -2541,10 +2781,12 @@ Official AWS Ruby gem for AWS Glue. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-core
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(jmespath) >= 1.6.1
 Requires:      gem(aws-partitions) >= 1.992.0
@@ -2567,11 +2809,13 @@ Provides API clients for AWS. This gem is part of the official AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-core-doc
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-core
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) = 3.211.0
 
@@ -2588,11 +2832,13 @@ Provides API clients for AWS. This gem is part of the official AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-core-devel
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-core
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) = 3.211.0
 
@@ -2608,10 +2854,12 @@ Provides API clients for AWS. This gem is part of the official AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-xray
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2626,11 +2874,13 @@ Official AWS Ruby gem for AWS X-Ray. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-xray-doc
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-xray
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-xray) = 1.77.0
 
@@ -2647,11 +2897,13 @@ Official AWS Ruby gem for AWS X-Ray. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-xray-devel
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-xray
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-xray) = 1.77.0
 
@@ -2667,10 +2919,12 @@ Official AWS Ruby gem for AWS X-Ray. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-qldb
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2686,11 +2940,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-qldb-doc
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-qldb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qldb) = 1.52.0
 
@@ -2705,11 +2961,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-qldb-devel
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-qldb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qldb) = 1.52.0
 
@@ -2723,10 +2981,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-osis
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon OpenSearch Ingestion
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2742,11 +3002,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-osis-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon OpenSearch Ingestion documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-osis
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-osis) = 1.27.0
 
@@ -2761,11 +3023,13 @@ AWS SDK for Ruby - Amazon OpenSearch Ingestion documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-osis-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon OpenSearch Ingestion development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-osis
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-osis) = 1.27.0
 
@@ -2779,10 +3043,12 @@ AWS SDK for Ruby - Amazon OpenSearch Ingestion development package.
 
 %package       -n gem-aws-sdk-b2bi
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS B2BI
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2798,11 +3064,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-b2bi-doc
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS B2BI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-b2bi
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-b2bi) = 1.22.0
 
@@ -2820,11 +3088,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-b2bi-devel
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS B2BI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-b2bi
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-b2bi) = 1.22.0
 
@@ -2841,10 +3111,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mwaa
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2859,11 +3131,13 @@ Official AWS Ruby gem for AmazonMWAA. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mwaa-doc
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mwaa
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mwaa) = 1.50.0
 
@@ -2880,11 +3154,13 @@ Official AWS Ruby gem for AmazonMWAA. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mwaa-devel
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mwaa
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mwaa) = 1.50.0
 
@@ -2900,10 +3176,12 @@ Official AWS Ruby gem for AmazonMWAA. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-qapps
 Version:       1.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QApps
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2918,11 +3196,13 @@ Official AWS Ruby gem for QApps. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-qapps-doc
 Version:       1.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QApps documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-qapps
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qapps) = 1.8.0
 
@@ -2939,11 +3219,13 @@ Official AWS Ruby gem for QApps. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-qapps-devel
 Version:       1.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QApps development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-qapps
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qapps) = 1.8.0
 
@@ -2959,10 +3241,12 @@ Official AWS Ruby gem for QApps. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-chime
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -2978,11 +3262,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chime-doc
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chime) = 1.96.0
 
@@ -2997,11 +3283,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chime-devel
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chime) = 1.96.0
 
@@ -3015,10 +3303,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mturk
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3034,11 +3324,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mturk-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mturk
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mturk) = 1.66.0
 
@@ -3056,11 +3348,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mturk-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mturk
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mturk) = 1.66.0
 
@@ -3077,10 +3371,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-polly
 Version:       1.98.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3096,11 +3392,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-polly-doc
 Version:       1.98.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-polly
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-polly) = 1.98.0
 
@@ -3115,11 +3413,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-polly-devel
 Version:       1.98.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-polly
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-polly) = 1.98.0
 
@@ -3133,10 +3433,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kafka
 Version:       1.85.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3152,11 +3454,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kafka-doc
 Version:       1.85.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kafka
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kafka) = 1.85.0
 
@@ -3174,11 +3478,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kafka-devel
 Version:       1.85.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kafka
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kafka) = 1.85.0
 
@@ -3195,10 +3501,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sesv2
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3214,11 +3522,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sesv2-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sesv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sesv2) = 1.66.0
 
@@ -3236,11 +3546,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sesv2-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sesv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sesv2) = 1.66.0
 
@@ -3257,10 +3569,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-omics
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3276,11 +3590,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-omics-doc
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-omics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-omics) = 1.39.0
 
@@ -3295,11 +3611,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-omics-devel
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-omics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-omics) = 1.39.0
 
@@ -3313,10 +3631,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pipes
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3332,11 +3652,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pipes-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pipes
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pipes) = 1.32.0
 
@@ -3351,11 +3673,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pipes-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pipes
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pipes) = 1.32.0
 
@@ -3369,10 +3693,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-wafv2
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3388,11 +3714,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-wafv2-doc
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-wafv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wafv2) = 1.97.0
 
@@ -3407,11 +3735,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-wafv2-devel
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-wafv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wafv2) = 1.97.0
 
@@ -3425,10 +3755,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-docdb
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3444,11 +3776,13 @@ DocDB). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-docdb-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-docdb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-docdb) = 1.78.0
 
@@ -3466,11 +3800,13 @@ DocDB). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-docdb-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-docdb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-docdb) = 1.78.0
 
@@ -3487,10 +3823,12 @@ DocDB). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-batch
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3505,11 +3843,13 @@ Official AWS Ruby gem for AWS Batch. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-batch-doc
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-batch
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-batch) = 1.103.0
 
@@ -3526,11 +3866,13 @@ Official AWS Ruby gem for AWS Batch. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-batch-devel
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-batch
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-batch) = 1.103.0
 
@@ -3546,10 +3888,12 @@ Official AWS Ruby gem for AWS Batch. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ssmsap
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3565,11 +3909,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssmsap-doc
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssmsap
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmsap) = 1.31.0
 
@@ -3587,11 +3933,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssmsap-devel
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssmsap
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmsap) = 1.31.0
 
@@ -3608,10 +3956,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-athena
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3627,11 +3977,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-athena-doc
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-athena
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-athena) = 1.96.0
 
@@ -3646,11 +3998,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-athena-devel
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-athena
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-athena) = 1.96.0
 
@@ -3664,10 +4018,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-acmpca
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3683,11 +4039,13 @@ Official AWS Ruby gem for AWS Certificate Manager Private Certificate Authority
 %if_enabled    doc
 %package       -n gem-aws-sdk-acmpca-doc
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-acmpca
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-acmpca) = 1.84.0
 
@@ -3705,11 +4063,13 @@ Official AWS Ruby gem for AWS Certificate Manager Private Certificate Authority
 %if_enabled    devel
 %package       -n gem-aws-sdk-acmpca-devel
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-acmpca
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-acmpca) = 1.84.0
 
@@ -3726,10 +4086,12 @@ Official AWS Ruby gem for AWS Certificate Manager Private Certificate Authority
 
 %package       -n gem-aws-sdk-backup
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3744,11 +4106,13 @@ Official AWS Ruby gem for AWS Backup. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-backup-doc
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-backup
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-backup) = 1.81.0
 
@@ -3765,11 +4129,13 @@ Official AWS Ruby gem for AWS Backup. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-backup-devel
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-backup
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-backup) = 1.81.0
 
@@ -3785,10 +4151,12 @@ Official AWS Ruby gem for AWS Backup. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-shield
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3803,11 +4171,13 @@ Official AWS Ruby gem for AWS Shield. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-shield-doc
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-shield
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-shield) = 1.75.0
 
@@ -3824,11 +4194,13 @@ Official AWS Ruby gem for AWS Shield. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-shield-devel
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-shield
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-shield) = 1.75.0
 
@@ -3844,10 +4216,12 @@ Official AWS Ruby gem for AWS Shield. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-signer
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3863,11 +4237,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-signer-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-signer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-signer) = 1.66.0
 
@@ -3882,11 +4258,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-signer-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-signer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-signer) = 1.66.0
 
@@ -3900,10 +4278,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-macie2
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -3919,11 +4299,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-macie2-doc
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-macie2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-macie2) = 1.80.0
 
@@ -3938,11 +4320,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-macie2-devel
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-macie2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-macie2) = 1.80.0
 
@@ -3956,10 +4340,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-braket
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -3974,11 +4360,13 @@ Official AWS Ruby gem for Braket. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-braket-doc
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-braket
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-braket) = 1.47.0
 
@@ -3995,11 +4383,13 @@ Official AWS Ruby gem for Braket. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-braket-devel
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-braket
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-braket) = 1.47.0
 
@@ -4015,10 +4405,12 @@ Official AWS Ruby gem for Braket. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-lambda
 Version:       1.138.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4033,11 +4425,13 @@ Official AWS Ruby gem for AWS Lambda. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lambda-doc
 Version:       1.138.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lambda
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lambda) = 1.138.0
 
@@ -4054,11 +4448,13 @@ Official AWS Ruby gem for AWS Lambda. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lambda-devel
 Version:       1.138.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lambda
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lambda) = 1.138.0
 
@@ -4074,10 +4470,12 @@ Official AWS Ruby gem for AWS Lambda. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloud9
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4092,11 +4490,13 @@ Official AWS Ruby gem for AWS Cloud9. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloud9-doc
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloud9
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloud9) = 1.81.0
 
@@ -4113,11 +4513,13 @@ Official AWS Ruby gem for AWS Cloud9. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloud9-devel
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloud9
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloud9) = 1.81.0
 
@@ -4133,10 +4535,12 @@ Official AWS Ruby gem for AWS Cloud9. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-states
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4152,11 +4556,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-states-doc
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-states
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-states) = 1.81.0
 
@@ -4171,11 +4577,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-states-devel
 Version:       1.81.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-states
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-states) = 1.81.0
 
@@ -4189,10 +4597,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-health
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4208,11 +4618,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-health-doc
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-health
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-health) = 1.74.0
 
@@ -4230,11 +4642,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-health-devel
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-health
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-health) = 1.74.0
 
@@ -4251,10 +4665,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-proton
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -4269,11 +4685,13 @@ Official AWS Ruby gem for AWS Proton. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-proton-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-proton
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-proton) = 1.48.0
 
@@ -4290,11 +4708,13 @@ Official AWS Ruby gem for AWS Proton. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-proton-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-proton
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-proton) = 1.48.0
 
@@ -4310,10 +4730,12 @@ Official AWS Ruby gem for AWS Proton. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-partitions
 Version:       1.1001.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Provides:      gem(aws-partitions) = 1.1001.0
 
@@ -4324,11 +4746,13 @@ Provides interfaces to enumerate AWS partitions, regions, and services.
 %if_enabled    doc
 %package       -n gem-aws-partitions-doc
 Version:       1.1001.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-partitions
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-partitions) = 1.1001.0
 
@@ -4345,11 +4769,13 @@ Provides interfaces to enumerate AWS partitions, regions, and services.
 %if_enabled    devel
 %package       -n gem-aws-partitions-devel
 Version:       1.1001.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-partitions
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-partitions) = 1.1001.0
 
@@ -4365,10 +4791,12 @@ Provides interfaces to enumerate AWS partitions, regions, and services.
 
 %package       -n gem-aws-sdk-kendra
 Version:       1.92.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4384,11 +4812,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kendra-doc
 Version:       1.92.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kendra
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kendra) = 1.92.0
 
@@ -4406,11 +4836,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kendra-devel
 Version:       1.92.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kendra
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kendra) = 1.92.0
 
@@ -4427,10 +4859,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-geomaps
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Maps V2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4446,11 +4880,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-geomaps-doc
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Maps V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-geomaps
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-geomaps) = 1.0.0
 
@@ -4469,11 +4905,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-geomaps-devel
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Maps V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-geomaps
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-geomaps) = 1.0.0
 
@@ -4491,10 +4929,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-account
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -4509,11 +4949,13 @@ Official AWS Ruby gem for AWS Account. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-account-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-account
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-account) = 1.35.0
 
@@ -4530,11 +4972,13 @@ Official AWS Ruby gem for AWS Account. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-account-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-account
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-account) = 1.35.0
 
@@ -4550,10 +4994,12 @@ Official AWS Ruby gem for AWS Account. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-connect
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4569,11 +5015,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connect-doc
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connect) = 1.183.0
 
@@ -4591,11 +5039,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connect-devel
 Version:       1.183.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connect) = 1.183.0
 
@@ -4612,10 +5062,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-amplify
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4631,11 +5083,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-amplify-doc
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-amplify
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplify) = 1.75.0
 
@@ -4650,11 +5104,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-amplify-devel
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-amplify
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplify) = 1.75.0
 
@@ -4668,10 +5124,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-schemas
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -4686,11 +5144,13 @@ Official AWS Ruby gem for Schemas. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-schemas-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-schemas
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-schemas) = 1.48.0
 
@@ -4707,11 +5167,13 @@ Official AWS Ruby gem for Schemas. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-schemas-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-schemas
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-schemas) = 1.48.0
 
@@ -4727,10 +5189,12 @@ Official AWS Ruby gem for Schemas. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-glacier
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4746,11 +5210,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-glacier-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-glacier
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-glacier) = 1.73.0
 
@@ -4765,11 +5231,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-glacier-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-glacier
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-glacier) = 1.73.0
 
@@ -4783,10 +5251,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-eventstream
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Provides:      gem(aws-eventstream) = 1.3.0
 
@@ -4798,11 +5268,13 @@ under `vnd.amazon.event-stream` content-type
 %if_enabled    doc
 %package       -n gem-aws-eventstream-doc
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-eventstream
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-eventstream) = 1.3.0
 
@@ -4820,11 +5292,13 @@ under `vnd.amazon.event-stream` content-type
 %if_enabled    devel
 %package       -n gem-aws-eventstream-devel
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-eventstream
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-eventstream) = 1.3.0
 
@@ -4841,10 +5315,12 @@ under `vnd.amazon.event-stream` content-type
 
 %package       -n gem-aws-sdk-route53
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4860,11 +5336,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53-doc
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53) = 1.104.0
 
@@ -4879,11 +5357,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53-devel
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53) = 1.104.0
 
@@ -4897,10 +5377,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-voiceid
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -4916,11 +5398,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-voiceid-doc
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-voiceid
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-voiceid) = 1.36.0
 
@@ -4935,11 +5419,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-voiceid-devel
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-voiceid
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-voiceid) = 1.36.0
 
@@ -4953,10 +5439,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-budgets
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -4972,11 +5460,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-budgets-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-budgets
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-budgets) = 1.78.0
 
@@ -4991,11 +5481,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-budgets-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-budgets
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-budgets) = 1.78.0
 
@@ -5009,10 +5501,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-chatbot
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Chatbot
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5027,11 +5521,13 @@ Official AWS Ruby gem for AWS Chatbot. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chatbot-doc
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Chatbot documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chatbot
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chatbot) = 1.18.0
 
@@ -5048,11 +5544,13 @@ Official AWS Ruby gem for AWS Chatbot. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chatbot-devel
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Chatbot development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chatbot
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chatbot) = 1.18.0
 
@@ -5068,10 +5566,12 @@ Official AWS Ruby gem for AWS Chatbot. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-apptest
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Mainframe Modernization Application Testing
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5087,11 +5587,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-apptest-doc
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Mainframe Modernization Application Testing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-apptest
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apptest) = 1.10.0
 
@@ -5110,11 +5612,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-apptest-devel
 Version:       1.10.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Mainframe Modernization Application Testing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-apptest
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apptest) = 1.10.0
 
@@ -5132,10 +5636,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-neptune
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5151,11 +5657,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-neptune-doc
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-neptune
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptune) = 1.77.0
 
@@ -5170,11 +5678,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-neptune-devel
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-neptune
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptune) = 1.77.0
 
@@ -5188,10 +5698,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-support
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5206,11 +5718,13 @@ Official AWS Ruby gem for AWS Support. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-support-doc
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-support
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-support) = 1.71.0
 
@@ -5227,11 +5741,13 @@ Official AWS Ruby gem for AWS Support. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-support-devel
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-support
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-support) = 1.71.0
 
@@ -5247,10 +5763,12 @@ Official AWS Ruby gem for AWS Support. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-appflow
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5266,11 +5784,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appflow-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appflow
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appflow) = 1.70.0
 
@@ -5285,11 +5805,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appflow-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appflow
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appflow) = 1.70.0
 
@@ -5303,10 +5825,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pricing
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5322,11 +5846,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pricing-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pricing
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pricing) = 1.70.0
 
@@ -5344,11 +5870,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pricing-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pricing
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pricing) = 1.70.0
 
@@ -5365,10 +5893,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-appsync
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5384,11 +5914,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appsync-doc
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appsync
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appsync) = 1.91.0
 
@@ -5403,11 +5935,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appsync-devel
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appsync
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appsync) = 1.91.0
 
@@ -5421,10 +5955,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-bedrock
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5440,11 +5976,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-bedrock-doc
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-bedrock
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrock) = 1.28.0
 
@@ -5459,11 +5997,13 @@ AWS SDK for Ruby - Amazon Bedrock documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-bedrock-devel
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-bedrock
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrock) = 1.28.0
 
@@ -5477,10 +6017,12 @@ AWS SDK for Ruby - Amazon Bedrock development package.
 
 %package       -n gem-aws-sdk-kinesis
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5496,11 +6038,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesis-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesis
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesis) = 1.70.0
 
@@ -5515,11 +6059,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesis-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesis
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesis) = 1.70.0
 
@@ -5533,10 +6079,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ivschat
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5552,11 +6100,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ivschat-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ivschat
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivschat) = 1.37.0
 
@@ -5574,11 +6124,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ivschat-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ivschat
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivschat) = 1.37.0
 
@@ -5595,10 +6147,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-appmesh
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -5614,11 +6168,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appmesh-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appmesh
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appmesh) = 1.73.0
 
@@ -5633,11 +6189,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appmesh-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appmesh
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appmesh) = 1.73.0
 
@@ -5651,10 +6209,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-eksauth
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon EKS Auth
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -5670,11 +6230,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-eksauth-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon EKS Auth documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-eksauth
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eksauth) = 1.15.0
 
@@ -5689,11 +6251,13 @@ AWS SDK for Ruby - Amazon EKS Auth documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-eksauth-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon EKS Auth development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-eksauth
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eksauth) = 1.15.0
 
@@ -5707,10 +6271,12 @@ AWS SDK for Ruby - Amazon EKS Auth development package.
 
 %package       -n gem-aws-sdk-ssooidc
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.131.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -5726,11 +6292,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssooidc-doc
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssooidc
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssooidc) = 1.24.0
 
@@ -5745,11 +6313,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssooidc-devel
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssooidc
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssooidc) = 1.24.0
 
@@ -5763,10 +6333,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-datasync
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5782,11 +6354,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-datasync-doc
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-datasync
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datasync) = 1.91.0
 
@@ -5801,11 +6375,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-datasync-devel
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-datasync
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datasync) = 1.91.0
 
@@ -5819,10 +6395,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-datazone
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon DataZone
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -5838,11 +6416,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-datazone-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon DataZone documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-datazone
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datazone) = 1.27.0
 
@@ -5857,11 +6437,13 @@ AWS SDK for Ruby - Amazon DataZone documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-datazone-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon DataZone development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-datazone
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datazone) = 1.27.0
 
@@ -5875,10 +6457,12 @@ AWS SDK for Ruby - Amazon DataZone development package.
 
 %package       -n gem-aws-sdk-deadline
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSDeadlineCloud
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -5894,11 +6478,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-deadline-doc
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSDeadlineCloud documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-deadline
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-deadline) = 1.16.0
 
@@ -5913,11 +6499,13 @@ AWS SDK for Ruby - AWSDeadlineCloud documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-deadline-devel
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSDeadlineCloud development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-deadline
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-deadline) = 1.16.0
 
@@ -5931,10 +6519,12 @@ AWS SDK for Ruby - AWSDeadlineCloud development package.
 
 %package       -n gem-aws-sdk-freetier
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Free Tier
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -5950,11 +6540,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-freetier-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Free Tier documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-freetier
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-freetier) = 1.15.0
 
@@ -5969,11 +6561,13 @@ AWS SDK for Ruby - AWS Free Tier documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-freetier-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Free Tier development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-freetier
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-freetier) = 1.15.0
 
@@ -5987,10 +6581,12 @@ AWS SDK for Ruby - AWS Free Tier development package.
 
 %package       -n gem-aws-sdk-redshift
 Version:       1.129.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6006,11 +6602,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-redshift-doc
 Version:       1.129.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-redshift
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshift) = 1.129.0
 
@@ -6025,11 +6623,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-redshift-devel
 Version:       1.129.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-redshift
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshift) = 1.129.0
 
@@ -6043,10 +6643,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-qconnect
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Q Connect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6062,11 +6664,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-qconnect-doc
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Q Connect documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-qconnect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qconnect) = 1.22.0
 
@@ -6081,11 +6685,13 @@ AWS SDK for Ruby - Amazon Q Connect documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-qconnect-devel
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Q Connect development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-qconnect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qconnect) = 1.22.0
 
@@ -6099,10 +6705,12 @@ AWS SDK for Ruby - Amazon Q Connect development package.
 
 %package       -n gem-aws-sdk-dynamodb
 Version:       1.127.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6118,11 +6726,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-dynamodb-doc
 Version:       1.127.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-dynamodb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dynamodb) = 1.127.0
 
@@ -6137,11 +6747,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-dynamodb-devel
 Version:       1.127.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-dynamodb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dynamodb) = 1.127.0
 
@@ -6155,10 +6767,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-finspace
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6174,11 +6788,13 @@ Official AWS Ruby gem for FinSpace User Environment Management service
 %if_enabled    doc
 %package       -n gem-aws-sdk-finspace-doc
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-finspace
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-finspace) = 1.46.0
 
@@ -6196,11 +6812,13 @@ Official AWS Ruby gem for FinSpace User Environment Management service
 %if_enabled    devel
 %package       -n gem-aws-sdk-finspace-devel
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-finspace
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-finspace) = 1.46.0
 
@@ -6217,10 +6835,12 @@ Official AWS Ruby gem for FinSpace User Environment Management service
 
 %package       -n gem-aws-sdk-firehose
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6236,11 +6856,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-firehose-doc
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-firehose
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-firehose) = 1.83.0
 
@@ -6258,11 +6880,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-firehose-devel
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-firehose
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-firehose) = 1.83.0
 
@@ -6279,10 +6903,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-gamelift
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6298,11 +6924,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-gamelift-doc
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-gamelift
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-gamelift) = 1.93.0
 
@@ -6317,11 +6945,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-gamelift-devel
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-gamelift
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-gamelift) = 1.93.0
 
@@ -6335,10 +6965,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-opsworks
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6354,11 +6986,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-opsworks-doc
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-opsworks
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opsworks) = 1.68.0
 
@@ -6373,11 +7007,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-opsworks-devel
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-opsworks
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opsworks) = 1.68.0
 
@@ -6391,10 +7027,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-outposts
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6410,11 +7048,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-outposts-doc
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-outposts
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-outposts) = 1.71.0
 
@@ -6429,11 +7069,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-outposts-devel
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-outposts
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-outposts) = 1.71.0
 
@@ -6447,10 +7089,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudhsm
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6466,11 +7110,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudhsm-doc
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudhsm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudhsm) = 1.65.0
 
@@ -6485,11 +7131,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudhsm-devel
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudhsm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudhsm) = 1.65.0
 
@@ -6503,10 +7151,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-panorama
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -6522,11 +7172,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-panorama-doc
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-panorama
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-panorama) = 1.36.0
 
@@ -6541,11 +7193,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-panorama-devel
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-panorama
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-panorama) = 1.36.0
 
@@ -6559,10 +7213,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-snowball
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6578,11 +7234,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-snowball-doc
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-snowball
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-snowball) = 1.80.0
 
@@ -6600,11 +7258,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-snowball-devel
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-snowball
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-snowball) = 1.80.0
 
@@ -6621,10 +7281,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-simpledb
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv2) >= 1.0
@@ -6640,11 +7302,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-simpledb-doc
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-simpledb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-simpledb) = 1.58.0
 
@@ -6659,11 +7323,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-simpledb-devel
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-simpledb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-simpledb) = 1.58.0
 
@@ -6677,10 +7343,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pinpoint
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6696,11 +7364,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pinpoint-doc
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pinpoint
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpoint) = 1.102.0
 
@@ -6715,11 +7385,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pinpoint-devel
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pinpoint
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpoint) = 1.102.0
 
@@ -6733,10 +7405,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ssoadmin
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -6752,11 +7426,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssoadmin-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssoadmin
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssoadmin) = 1.48.0
 
@@ -6774,11 +7450,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssoadmin-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssoadmin
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssoadmin) = 1.48.0
 
@@ -6795,10 +7473,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-textract
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6814,11 +7494,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-textract-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-textract
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-textract) = 1.70.0
 
@@ -6833,11 +7515,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-textract-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-textract
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-textract) = 1.70.0
 
@@ -6851,10 +7535,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-transfer
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6870,11 +7556,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-transfer-doc
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-transfer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transfer) = 1.106.0
 
@@ -6892,11 +7580,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-transfer-devel
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-transfer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transfer) = 1.106.0
 
@@ -6913,10 +7603,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-artifact
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Artifact
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6932,11 +7624,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-artifact-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Artifact documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-artifact
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-artifact) = 1.14.0
 
@@ -6951,11 +7645,13 @@ AWS SDK for Ruby - AWS Artifact documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-artifact-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Artifact development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-artifact
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-artifact) = 1.14.0
 
@@ -6969,10 +7665,12 @@ AWS SDK for Ruby - AWS Artifact development package.
 
 %package       -n gem-aws-sdk-memorydb
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -6988,11 +7686,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-memorydb-doc
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-memorydb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-memorydb) = 1.39.0
 
@@ -7007,11 +7707,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-memorydb-devel
 Version:       1.39.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-memorydb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-memorydb) = 1.39.0
 
@@ -7025,10 +7727,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-workdocs
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7044,11 +7748,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workdocs-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workdocs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workdocs) = 1.69.0
 
@@ -7063,11 +7769,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workdocs-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workdocs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workdocs) = 1.69.0
 
@@ -7081,10 +7789,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-workmail
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7100,11 +7810,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workmail-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workmail
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workmail) = 1.78.0
 
@@ -7119,11 +7831,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workmail-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workmail
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workmail) = 1.78.0
 
@@ -7137,10 +7851,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-translate
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7156,11 +7872,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-translate-doc
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-translate
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-translate) = 1.77.0
 
@@ -7175,11 +7893,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-translate-devel
 Version:       1.77.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-translate
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-translate) = 1.77.0
 
@@ -7193,10 +7913,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-keyspaces
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7212,11 +7934,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-keyspaces-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-keyspaces
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-keyspaces) = 1.32.0
 
@@ -7231,11 +7955,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-keyspaces-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-keyspaces
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-keyspaces) = 1.32.0
 
@@ -7249,10 +7975,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-appstream
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7268,11 +7996,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appstream-doc
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appstream
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appstream) = 1.102.0
 
@@ -7287,11 +8017,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appstream-devel
 Version:       1.102.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appstream
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appstream) = 1.102.0
 
@@ -7305,10 +8037,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-apprunner
 Version:       1.51.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7324,11 +8058,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-apprunner-doc
 Version:       1.51.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-apprunner
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apprunner) = 1.51.0
 
@@ -7343,11 +8079,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-apprunner-devel
 Version:       1.51.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-apprunner
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apprunner) = 1.51.0
 
@@ -7361,10 +8099,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ecrpublic
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7380,11 +8120,13 @@ Public). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ecrpublic-doc
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ecrpublic
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecrpublic) = 1.40.0
 
@@ -7402,11 +8144,13 @@ Public). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ecrpublic-devel
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ecrpublic
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ecrpublic) = 1.40.0
 
@@ -7423,10 +8167,12 @@ Public). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-lightsail
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7442,11 +8188,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lightsail-doc
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lightsail
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lightsail) = 1.103.0
 
@@ -7461,11 +8209,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lightsail-devel
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lightsail
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lightsail) = 1.103.0
 
@@ -7479,10 +8229,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-appfabric
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AppFabric
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -7497,11 +8249,13 @@ Official AWS Ruby gem for AppFabric. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appfabric-doc
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AppFabric documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appfabric
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appfabric) = 1.21.0
 
@@ -7518,11 +8272,13 @@ Official AWS Ruby gem for AppFabric. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appfabric-devel
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AppFabric development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appfabric
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appfabric) = 1.21.0
 
@@ -7538,10 +8294,12 @@ Official AWS Ruby gem for AppFabric. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-qbusiness
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QBusiness
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7556,11 +8314,13 @@ Official AWS Ruby gem for QBusiness. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-qbusiness-doc
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QBusiness documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-qbusiness
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qbusiness) = 1.21.0
 
@@ -7577,11 +8337,13 @@ Official AWS Ruby gem for QBusiness. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-qbusiness-devel
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - QBusiness development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-qbusiness
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qbusiness) = 1.21.0
 
@@ -7597,10 +8359,12 @@ Official AWS Ruby gem for QBusiness. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-codebuild
 Version:       1.135.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7616,11 +8380,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codebuild-doc
 Version:       1.135.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codebuild
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codebuild) = 1.135.0
 
@@ -7635,11 +8401,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codebuild-devel
 Version:       1.135.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codebuild
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codebuild) = 1.135.0
 
@@ -7653,10 +8421,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iotevents
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7672,11 +8442,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotevents-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotevents
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotevents) = 1.60.0
 
@@ -7691,11 +8463,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotevents-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotevents
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotevents) = 1.60.0
 
@@ -7709,10 +8483,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-inspector
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -7728,11 +8504,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-inspector-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-inspector
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspector) = 1.69.0
 
@@ -7747,11 +8525,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-inspector-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-inspector
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspector) = 1.69.0
 
@@ -7765,10 +8545,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-resources
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-acm) >= 1
 Requires:      gem(aws-sdk-acmpca) >= 1
@@ -8555,11 +9337,13 @@ many AWS services. This gem is part of the official AWS SDK for Ruby.
 
 %package       -n aws-v3-rb
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета aws-sdk-resources
 Group:         Other
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resources) = 3.211.0
 
@@ -8576,11 +9360,13 @@ many AWS services. This gem is part of the official AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-resources-doc
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-resources
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resources) = 3.211.0
 
@@ -8598,11 +9384,13 @@ many AWS services. This gem is part of the official AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-resources-devel
 Version:       3.211.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-resources
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resources) = 3.211.0
 
@@ -8619,10 +9407,12 @@ many AWS services. This gem is part of the official AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-robomaker
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8638,11 +9428,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-robomaker-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-robomaker
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-robomaker) = 1.78.0
 
@@ -8657,11 +9449,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-robomaker-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-robomaker
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-robomaker) = 1.78.0
 
@@ -8675,10 +9469,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-geoplaces
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Places V2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8694,11 +9490,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-geoplaces-doc
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Places V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-geoplaces
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-geoplaces) = 1.0.0
 
@@ -8717,11 +9515,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-geoplaces-devel
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Places V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-geoplaces
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-geoplaces) = 1.0.0
 
@@ -8739,10 +9539,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-georoutes
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Routes V2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8758,11 +9560,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-georoutes-doc
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Routes V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-georoutes
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-georoutes) = 1.0.0
 
@@ -8781,11 +9585,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-georoutes-devel
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Location Service Routes V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-georoutes
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-georoutes) = 1.0.0
 
@@ -8803,10 +9609,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-detective
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8822,11 +9630,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-detective-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-detective
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-detective) = 1.60.0
 
@@ -8841,11 +9651,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-detective-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-detective
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-detective) = 1.60.0
 
@@ -8859,10 +9671,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-appconfig
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8878,11 +9692,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appconfig-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appconfig
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appconfig) = 1.60.0
 
@@ -8897,11 +9713,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appconfig-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appconfig
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appconfig) = 1.60.0
 
@@ -8915,10 +9733,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-scheduler
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -8934,11 +9754,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-scheduler-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-scheduler
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-scheduler) = 1.26.0
 
@@ -8953,11 +9775,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-scheduler-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-scheduler
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-scheduler) = 1.26.0
 
@@ -8971,10 +9795,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-sagemaker
 Version:       1.272.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -8990,11 +9816,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemaker-doc
 Version:       1.272.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemaker
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemaker) = 1.272.0
 
@@ -9012,11 +9840,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemaker-devel
 Version:       1.272.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemaker
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemaker) = 1.272.0
 
@@ -9033,10 +9863,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-guardduty
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9052,11 +9884,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-guardduty-doc
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-guardduty
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-guardduty) = 1.105.0
 
@@ -9071,11 +9905,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-guardduty-devel
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-guardduty
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-guardduty) = 1.105.0
 
@@ -9089,10 +9925,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-s3control
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9108,11 +9946,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-s3control-doc
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-s3control
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3control) = 1.95.0
 
@@ -9127,11 +9967,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-s3control-devel
 Version:       1.95.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-s3control
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3control) = 1.95.0
 
@@ -9145,10 +9987,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-medialive
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9164,11 +10008,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-medialive-doc
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-medialive
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-medialive) = 1.137.0
 
@@ -9186,11 +10032,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-medialive-devel
 Version:       1.137.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-medialive
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-medialive) = 1.137.0
 
@@ -9207,10 +10055,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mediastore
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9226,11 +10076,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediastore-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediastore
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediastore) = 1.67.0
 
@@ -9248,11 +10100,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediastore-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediastore
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediastore) = 1.67.0
 
@@ -9269,10 +10123,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-opsworkscm
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9288,11 +10144,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-opsworkscm-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-opsworkscm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opsworkscm) = 1.78.0
 
@@ -9307,11 +10165,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-opsworkscm-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-opsworkscm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opsworkscm) = 1.78.0
 
@@ -9325,10 +10185,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-inspector2
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9343,11 +10205,13 @@ Official AWS Ruby gem for Inspector2. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-inspector2-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-inspector2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspector2) = 1.43.0
 
@@ -9364,11 +10228,13 @@ Official AWS Ruby gem for Inspector2. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-inspector2-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-inspector2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspector2) = 1.43.0
 
@@ -9384,10 +10250,12 @@ Official AWS Ruby gem for Inspector2. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-healthlake
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9403,11 +10271,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-healthlake-doc
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-healthlake
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-healthlake) = 1.40.0
 
@@ -9425,11 +10295,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-healthlake-devel
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-healthlake
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-healthlake) = 1.40.0
 
@@ -9446,10 +10318,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-greengrass
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -9465,11 +10339,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-greengrass-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-greengrass
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-greengrass) = 1.76.0
 
@@ -9484,11 +10360,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-greengrass-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-greengrass
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-greengrass) = 1.76.0
 
@@ -9502,10 +10380,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudwatch
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9521,11 +10401,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudwatch-doc
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudwatch
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatch) = 1.104.0
 
@@ -9543,11 +10425,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudwatch-devel
 Version:       1.104.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudwatch
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatch) = 1.104.0
 
@@ -9564,10 +10448,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-vpclattice
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon VPC Lattice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -9583,11 +10469,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-vpclattice-doc
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon VPC Lattice documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-vpclattice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-vpclattice) = 1.24.0
 
@@ -9602,11 +10490,13 @@ AWS SDK for Ruby - Amazon VPC Lattice documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-vpclattice-devel
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon VPC Lattice development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-vpclattice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-vpclattice) = 1.24.0
 
@@ -9620,10 +10510,12 @@ AWS SDK for Ruby - Amazon VPC Lattice development package.
 
 %package       -n gem-aws-sdk-comprehend
 Version:       1.94.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9639,11 +10531,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-comprehend-doc
 Version:       1.94.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-comprehend
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-comprehend) = 1.94.0
 
@@ -9658,11 +10552,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-comprehend-devel
 Version:       1.94.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-comprehend
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-comprehend) = 1.94.0
 
@@ -9676,10 +10572,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cleanrooms
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9695,11 +10593,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cleanrooms-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cleanrooms
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cleanrooms) = 1.35.0
 
@@ -9714,11 +10614,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cleanrooms-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cleanrooms
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cleanrooms) = 1.35.0
 
@@ -9732,10 +10634,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-s3outposts
 Version:       1.42.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9751,11 +10655,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-s3outposts-doc
 Version:       1.42.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-s3outposts
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3outposts) = 1.42.0
 
@@ -9773,11 +10679,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-s3outposts-devel
 Version:       1.42.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-s3outposts
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-s3outposts) = 1.42.0
 
@@ -9794,10 +10702,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-codedeploy
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9813,11 +10723,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codedeploy-doc
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codedeploy
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codedeploy) = 1.79.0
 
@@ -9832,11 +10744,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codedeploy-devel
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codedeploy
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codedeploy) = 1.79.0
 
@@ -9850,10 +10764,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-workspaces
 Version:       1.123.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9869,11 +10785,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workspaces-doc
 Version:       1.123.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workspaces
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspaces) = 1.123.0
 
@@ -9888,11 +10806,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workspaces-devel
 Version:       1.123.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workspaces
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspaces) = 1.123.0
 
@@ -9906,10 +10826,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-synthetics
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9924,11 +10846,13 @@ Official AWS Ruby gem for Synthetics. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-synthetics-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-synthetics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-synthetics) = 1.55.0
 
@@ -9945,11 +10869,13 @@ Official AWS Ruby gem for Synthetics. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-synthetics-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-synthetics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-synthetics) = 1.55.0
 
@@ -9965,10 +10891,12 @@ Official AWS Ruby gem for Synthetics. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloudtrail
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -9984,11 +10912,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudtrail-doc
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudtrail
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudtrail) = 1.93.0
 
@@ -10003,11 +10933,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudtrail-devel
 Version:       1.93.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudtrail
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudtrail) = 1.93.0
 
@@ -10021,10 +10953,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudfront
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10040,11 +10974,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudfront-doc
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudfront
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudfront) = 1.103.0
 
@@ -10062,11 +10998,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudfront-devel
 Version:       1.103.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudfront
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudfront) = 1.103.0
 
@@ -10083,10 +11021,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-codecommit
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10102,11 +11042,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codecommit-doc
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codecommit
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codecommit) = 1.79.0
 
@@ -10121,11 +11063,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codecommit-devel
 Version:       1.79.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codecommit
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codecommit) = 1.79.0
 
@@ -10139,10 +11083,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-devicefarm
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10158,11 +11104,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-devicefarm-doc
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-devicefarm
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-devicefarm) = 1.80.0
 
@@ -10177,11 +11125,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-devicefarm-devel
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-devicefarm
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-devicefarm) = 1.80.0
 
@@ -10195,10 +11145,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-devopsguru
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10214,11 +11166,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-devopsguru-doc
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-devopsguru
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-devopsguru) = 1.54.0
 
@@ -10233,11 +11187,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-devopsguru-devel
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-devopsguru
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-devopsguru) = 1.54.0
 
@@ -10251,10 +11207,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-apigateway
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10270,11 +11228,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-apigateway-doc
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-apigateway
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigateway) = 1.108.0
 
@@ -10289,11 +11249,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-apigateway-devel
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-apigateway
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigateway) = 1.108.0
 
@@ -10307,10 +11269,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-supportapp
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -10326,11 +11290,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-supportapp-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-supportapp
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-supportapp) = 1.27.0
 
@@ -10345,11 +11311,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-supportapp-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-supportapp
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-supportapp) = 1.27.0
 
@@ -10363,10 +11331,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-recyclebin
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10382,11 +11352,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-recyclebin-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-recyclebin
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-recyclebin) = 1.33.0
 
@@ -10401,11 +11373,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-recyclebin-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-recyclebin
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-recyclebin) = 1.33.0
 
@@ -10419,10 +11393,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-quicksight
 Version:       1.133.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10438,11 +11414,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-quicksight-doc
 Version:       1.133.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-quicksight
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-quicksight) = 1.133.0
 
@@ -10457,11 +11435,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-quicksight-devel
 Version:       1.133.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-quicksight
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-quicksight) = 1.133.0
 
@@ -10475,10 +11455,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudhsmv2
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10494,11 +11476,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudhsmv2-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudhsmv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudhsmv2) = 1.69.0
 
@@ -10513,11 +11497,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudhsmv2-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudhsmv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudhsmv2) = 1.69.0
 
@@ -10531,10 +11517,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-neptunedata
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon NeptuneData
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -10550,11 +11538,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-neptunedata-doc
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon NeptuneData documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-neptunedata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptunedata) = 1.21.0
 
@@ -10569,11 +11559,13 @@ AWS SDK for Ruby - Amazon NeptuneData documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-neptunedata-devel
 Version:       1.21.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon NeptuneData development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-neptunedata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptunedata) = 1.21.0
 
@@ -10587,10 +11579,12 @@ AWS SDK for Ruby - Amazon NeptuneData development package.
 
 %package       -n gem-aws-sdk-iotfleethub
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10606,11 +11600,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotfleethub-doc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotfleethub
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotfleethub) = 1.38.0
 
@@ -10625,11 +11621,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotfleethub-devel
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotfleethub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotfleethub) = 1.38.0
 
@@ -10643,10 +11641,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-taxsettings
 Version:       1.13.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Tax Settings
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10662,11 +11662,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-taxsettings-doc
 Version:       1.13.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Tax Settings documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-taxsettings
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-taxsettings) = 1.13.0
 
@@ -10681,11 +11683,13 @@ AWS SDK for Ruby - Tax Settings documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-taxsettings-devel
 Version:       1.13.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Tax Settings development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-taxsettings
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-taxsettings) = 1.13.0
 
@@ -10699,10 +11703,12 @@ AWS SDK for Ruby - Tax Settings development package.
 
 %package       -n gem-aws-sdk-supplychain
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Supply Chain
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10718,11 +11724,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-supplychain-doc
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Supply Chain documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-supplychain
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-supplychain) = 1.19.0
 
@@ -10737,11 +11745,13 @@ AWS SDK for Ruby - AWS Supply Chain documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-supplychain-devel
 Version:       1.19.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Supply Chain development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-supplychain
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-supplychain) = 1.19.0
 
@@ -10755,10 +11765,12 @@ AWS SDK for Ruby - AWS Supply Chain development package.
 
 %package       -n gem-aws-sdk-personalize
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10774,11 +11786,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-personalize-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-personalize
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalize) = 1.76.0
 
@@ -10793,11 +11807,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-personalize-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-personalize
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalize) = 1.76.0
 
@@ -10811,10 +11827,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cognitosync
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10830,11 +11848,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cognitosync-doc
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cognitosync
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitosync) = 1.62.0
 
@@ -10849,11 +11869,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cognitosync-devel
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cognitosync
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitosync) = 1.62.0
 
@@ -10867,10 +11889,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ssmcontacts
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10886,11 +11910,13 @@ Contacts). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssmcontacts-doc
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssmcontacts
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmcontacts) = 1.41.0
 
@@ -10908,11 +11934,13 @@ Contacts). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssmcontacts-devel
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssmcontacts
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmcontacts) = 1.41.0
 
@@ -10929,10 +11957,12 @@ Contacts). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iotsitewise
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -10948,11 +11978,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotsitewise-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotsitewise
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotsitewise) = 1.76.0
 
@@ -10967,11 +11999,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotsitewise-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotsitewise
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotsitewise) = 1.76.0
 
@@ -10985,10 +12019,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-autoscaling
 Version:       1.124.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11004,11 +12040,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-autoscaling-doc
 Version:       1.124.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-autoscaling
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-autoscaling) = 1.124.0
 
@@ -11023,11 +12061,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-autoscaling-devel
 Version:       1.124.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-autoscaling
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-autoscaling) = 1.124.0
 
@@ -11041,10 +12081,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iotwireless
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11060,11 +12102,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotwireless-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotwireless
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotwireless) = 1.60.0
 
@@ -11079,11 +12123,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotwireless-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotwireless
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotwireless) = 1.60.0
 
@@ -11097,10 +12143,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-lexmodelsv2
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11116,11 +12164,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lexmodelsv2-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lexmodelsv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexmodelsv2) = 1.64.0
 
@@ -11138,11 +12188,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lexmodelsv2-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lexmodelsv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexmodelsv2) = 1.64.0
 
@@ -11159,10 +12211,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-securityhub
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11178,11 +12232,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-securityhub-doc
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-securityhub
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-securityhub) = 1.122.0
 
@@ -11197,11 +12253,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-securityhub-devel
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-securityhub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-securityhub) = 1.122.0
 
@@ -11215,10 +12273,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ivsrealtime
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - ivsrealtime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -11234,11 +12294,13 @@ Official AWS Ruby gem for Amazon Interactive Video Service RealTime
 %if_enabled    doc
 %package       -n gem-aws-sdk-ivsrealtime-doc
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - ivsrealtime documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ivsrealtime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivsrealtime) = 1.34.0
 
@@ -11256,11 +12318,13 @@ Official AWS Ruby gem for Amazon Interactive Video Service RealTime
 %if_enabled    devel
 %package       -n gem-aws-sdk-ivsrealtime-devel
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - ivsrealtime development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ivsrealtime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ivsrealtime) = 1.34.0
 
@@ -11277,10 +12341,12 @@ Official AWS Ruby gem for Amazon Interactive Video Service RealTime
 
 %package       -n gem-aws-sdk-appregistry
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11296,11 +12362,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appregistry-doc
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appregistry
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appregistry) = 1.46.0
 
@@ -11318,11 +12386,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appregistry-devel
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appregistry
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appregistry) = 1.46.0
 
@@ -11339,10 +12409,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-wafregional
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11358,11 +12430,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-wafregional-doc
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-wafregional
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wafregional) = 1.75.0
 
@@ -11380,11 +12454,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-wafregional-devel
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-wafregional
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wafregional) = 1.75.0
 
@@ -11401,10 +12477,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mediatailor
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -11420,11 +12498,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediatailor-doc
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediatailor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediatailor) = 1.91.0
 
@@ -11439,11 +12519,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediatailor-devel
 Version:       1.91.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediatailor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediatailor) = 1.91.0
 
@@ -11457,10 +12539,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudsearch
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11476,11 +12560,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudsearch-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudsearch
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudsearch) = 1.67.0
 
@@ -11495,11 +12581,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudsearch-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudsearch
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudsearch) = 1.67.0
 
@@ -11513,10 +12601,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mailmanager
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - MailManager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11531,11 +12621,13 @@ Official AWS Ruby gem for MailManager. This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mailmanager-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - MailManager documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mailmanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mailmanager) = 1.14.0
 
@@ -11552,11 +12644,13 @@ Official AWS Ruby gem for MailManager. This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mailmanager-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - MailManager development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mailmanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mailmanager) = 1.14.0
 
@@ -11572,10 +12666,12 @@ Official AWS Ruby gem for MailManager. This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-repostspace
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS re:Post Private
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11591,11 +12687,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-repostspace-doc
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS re:Post Private documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-repostspace
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-repostspace) = 1.16.0
 
@@ -11610,11 +12708,13 @@ AWS SDK for Ruby - AWS re:Post Private documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-repostspace-devel
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS re:Post Private development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-repostspace
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-repostspace) = 1.16.0
 
@@ -11628,10 +12728,12 @@ AWS SDK for Ruby - AWS re:Post Private development package.
 
 %package       -n gem-aws-sdk-rekognition
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11647,11 +12749,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-rekognition-doc
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-rekognition
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rekognition) = 1.109.0
 
@@ -11666,11 +12770,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-rekognition-devel
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-rekognition
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rekognition) = 1.109.0
 
@@ -11684,10 +12790,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-elasticache
 Version:       1.117.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11703,11 +12811,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticache-doc
 Version:       1.117.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticache
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticache) = 1.117.0
 
@@ -11722,11 +12832,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticache-devel
 Version:       1.117.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticache
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticache) = 1.117.0
 
@@ -11740,10 +12852,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-qldbsession
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11759,11 +12873,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-qldbsession-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-qldbsession
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qldbsession) = 1.48.0
 
@@ -11781,11 +12897,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-qldbsession-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-qldbsession
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-qldbsession) = 1.48.0
 
@@ -11802,10 +12920,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-eventbridge
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11821,11 +12941,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-eventbridge-doc
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-eventbridge
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eventbridge) = 1.72.0
 
@@ -11840,11 +12962,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-eventbridge-devel
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-eventbridge
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-eventbridge) = 1.72.0
 
@@ -11858,10 +12982,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cleanroomsml
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Clean Rooms ML
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11877,11 +13003,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cleanroomsml-doc
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Clean Rooms ML documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cleanroomsml
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cleanroomsml) = 1.17.0
 
@@ -11896,11 +13024,13 @@ AWS SDK for Ruby - AWS Clean Rooms ML documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cleanroomsml-devel
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Clean Rooms ML development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cleanroomsml
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cleanroomsml) = 1.17.0
 
@@ -11914,10 +13044,12 @@ AWS SDK for Ruby - AWS Clean Rooms ML development package.
 
 %package       -n gem-aws-sdk-kinesisvideo
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11933,11 +13065,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisvideo-doc
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisvideo
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideo) = 1.74.0
 
@@ -11955,11 +13089,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisvideo-devel
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisvideo
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideo) = 1.74.0
 
@@ -11976,10 +13112,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-neptunegraph
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Neptune Graph
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -11995,11 +13133,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-neptunegraph-doc
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Neptune Graph documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-neptunegraph
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptunegraph) = 1.23.0
 
@@ -12017,11 +13157,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-neptunegraph-devel
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Neptune Graph development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-neptunegraph
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-neptunegraph) = 1.23.0
 
@@ -12038,10 +13180,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-bedrockagent
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12057,11 +13201,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-bedrockagent-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-bedrockagent
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockagent) = 1.32.0
 
@@ -12076,11 +13222,13 @@ AWS SDK for Ruby - Agents for Amazon Bedrock documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-bedrockagent-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-bedrockagent
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockagent) = 1.32.0
 
@@ -12094,10 +13242,12 @@ AWS SDK for Ruby - Agents for Amazon Bedrock development package.
 
 %package       -n gem-aws-sdk-launchwizard
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Launch Wizard
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -12113,11 +13263,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-launchwizard-doc
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Launch Wizard documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-launchwizard
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-launchwizard) = 1.17.0
 
@@ -12132,11 +13284,13 @@ AWS SDK for Ruby - AWS Launch Wizard documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-launchwizard-devel
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Launch Wizard development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-launchwizard
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-launchwizard) = 1.17.0
 
@@ -12150,10 +13304,12 @@ AWS SDK for Ruby - AWS Launch Wizard development package.
 
 %package       -n gem-aws-sdk-auditmanager
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12169,11 +13325,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-auditmanager-doc
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-auditmanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-auditmanager) = 1.58.0
 
@@ -12188,11 +13346,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-auditmanager-devel
 Version:       1.58.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-auditmanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-auditmanager) = 1.58.0
 
@@ -12206,10 +13366,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-lexruntimev2
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12225,11 +13387,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lexruntimev2-doc
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lexruntimev2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexruntimev2) = 1.45.0
 
@@ -12247,11 +13411,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lexruntimev2-devel
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lexruntimev2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexruntimev2) = 1.45.0
 
@@ -12268,10 +13434,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-migrationhub
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12287,11 +13455,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-migrationhub-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-migrationhub
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhub) = 1.66.0
 
@@ -12306,11 +13476,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-migrationhub-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-migrationhub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhub) = 1.66.0
 
@@ -12324,10 +13496,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mediapackage
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -12343,11 +13517,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediapackage-doc
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediapackage
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackage) = 1.83.0
 
@@ -12365,11 +13541,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediapackage-devel
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediapackage
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackage) = 1.83.0
 
@@ -12386,10 +13564,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-apigatewayv2
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -12405,11 +13585,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-apigatewayv2-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-apigatewayv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigatewayv2) = 1.67.0
 
@@ -12424,11 +13606,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-apigatewayv2-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-apigatewayv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigatewayv2) = 1.67.0
 
@@ -12442,10 +13626,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mediaconvert
 Version:       1.143.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12461,11 +13647,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediaconvert-doc
 Version:       1.143.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediaconvert
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediaconvert) = 1.143.0
 
@@ -12483,11 +13671,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediaconvert-devel
 Version:       1.143.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediaconvert
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediaconvert) = 1.143.0
 
@@ -12504,10 +13694,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mediaconnect
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12523,11 +13715,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediaconnect-doc
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediaconnect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediaconnect) = 1.72.0
 
@@ -12542,11 +13736,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediaconnect-devel
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediaconnect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediaconnect) = 1.72.0
 
@@ -12560,10 +13756,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-finspacedata
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12579,11 +13777,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-finspacedata-doc
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-finspacedata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-finspacedata) = 1.45.0
 
@@ -12601,11 +13801,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-finspacedata-devel
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-finspacedata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-finspacedata) = 1.45.0
 
@@ -12622,10 +13824,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-docdbelastic
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12641,11 +13845,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-docdbelastic-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-docdbelastic
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-docdbelastic) = 1.26.0
 
@@ -12663,11 +13869,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-docdbelastic-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-docdbelastic
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-docdbelastic) = 1.26.0
 
@@ -12684,10 +13892,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-datapipeline
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12703,11 +13913,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-datapipeline-doc
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-datapipeline
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datapipeline) = 1.62.0
 
@@ -12722,11 +13934,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-datapipeline-devel
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-datapipeline
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-datapipeline) = 1.62.0
 
@@ -12740,10 +13954,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-dataexchange
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12759,11 +13975,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-dataexchange-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-dataexchange
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dataexchange) = 1.60.0
 
@@ -12778,11 +13996,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-dataexchange-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-dataexchange
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dataexchange) = 1.60.0
 
@@ -12796,10 +14016,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-gluedatabrew
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12815,11 +14037,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-gluedatabrew-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-gluedatabrew
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-gluedatabrew) = 1.49.0
 
@@ -12834,11 +14058,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-gluedatabrew-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-gluedatabrew
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-gluedatabrew) = 1.49.0
 
@@ -12852,10 +14078,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-costexplorer
 Version:       1.113.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12871,11 +14099,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-costexplorer-doc
 Version:       1.113.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-costexplorer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costexplorer) = 1.113.0
 
@@ -12893,11 +14123,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-costexplorer-devel
 Version:       1.113.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-costexplorer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costexplorer) = 1.113.0
 
@@ -12914,10 +14146,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-greengrassv2
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12933,11 +14167,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-greengrassv2-doc
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-greengrassv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-greengrassv2) = 1.50.0
 
@@ -12955,11 +14191,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-greengrassv2-devel
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-greengrassv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-greengrassv2) = 1.50.0
 
@@ -12976,10 +14214,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-controltower
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -12995,11 +14235,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-controltower-doc
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-controltower
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-controltower) = 1.34.0
 
@@ -13014,11 +14256,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-controltower-devel
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-controltower
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-controltower) = 1.34.0
 
@@ -13032,10 +14276,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-savingsplans
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13051,11 +14297,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-savingsplans-doc
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-savingsplans
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-savingsplans) = 1.53.0
 
@@ -13073,11 +14321,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-savingsplans-devel
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-savingsplans
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-savingsplans) = 1.53.0
 
@@ -13094,10 +14344,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-connectcases
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -13113,11 +14365,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connectcases-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connectcases
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcases) = 1.35.0
 
@@ -13135,11 +14389,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connectcases-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connectcases
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcases) = 1.35.0
 
@@ -13156,10 +14412,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-imagebuilder
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13175,11 +14433,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-imagebuilder-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-imagebuilder
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-imagebuilder) = 1.73.0
 
@@ -13197,11 +14457,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-imagebuilder-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-imagebuilder
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-imagebuilder) = 1.73.0
 
@@ -13218,10 +14480,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-importexport
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv2) >= 1.0
@@ -13237,11 +14501,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-importexport-doc
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-importexport
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-importexport) = 1.56.0
 
@@ -13256,11 +14522,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-importexport-devel
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-importexport
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-importexport) = 1.56.0
 
@@ -13274,10 +14542,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kafkaconnect
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -13293,11 +14563,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kafkaconnect-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kafkaconnect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kafkaconnect) = 1.33.0
 
@@ -13315,11 +14587,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kafkaconnect-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kafkaconnect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kafkaconnect) = 1.33.0
 
@@ -13336,10 +14610,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iottwinmaker
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -13355,11 +14631,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iottwinmaker-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iottwinmaker
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iottwinmaker) = 1.35.0
 
@@ -13374,11 +14652,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iottwinmaker-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iottwinmaker
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iottwinmaker) = 1.35.0
 
@@ -13392,10 +14672,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ssmincidents
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -13411,11 +14693,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssmincidents-doc
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssmincidents
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmincidents) = 1.46.0
 
@@ -13433,11 +14717,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssmincidents-devel
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssmincidents
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmincidents) = 1.46.0
 
@@ -13454,10 +14740,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iotfleetwise
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -13473,11 +14761,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotfleetwise-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotfleetwise
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotfleetwise) = 1.37.0
 
@@ -13492,11 +14782,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotfleetwise-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotfleetwise
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotfleetwise) = 1.37.0
 
@@ -13510,10 +14802,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-codeartifact
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13529,11 +14823,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codeartifact-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codeartifact
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeartifact) = 1.55.0
 
@@ -13548,11 +14844,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codeartifact-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codeartifact
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeartifact) = 1.55.0
 
@@ -13566,10 +14864,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-codecatalyst
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Conflicts:     gem(aws-sdk-core) >= 4
@@ -13583,11 +14883,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codecatalyst-doc
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codecatalyst
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codecatalyst) = 1.30.0
 
@@ -13602,11 +14904,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codecatalyst-devel
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codecatalyst
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codecatalyst) = 1.30.0
 
@@ -13620,10 +14924,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iotdataplane
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13639,11 +14945,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotdataplane-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotdataplane
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotdataplane) = 1.69.0
 
@@ -13658,11 +14966,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotdataplane-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotdataplane
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotdataplane) = 1.69.0
 
@@ -13676,10 +14986,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iotanalytics
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13695,11 +15007,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotanalytics-doc
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotanalytics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotanalytics) = 1.75.0
 
@@ -13714,11 +15028,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotanalytics-devel
 Version:       1.75.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotanalytics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotanalytics) = 1.75.0
 
@@ -13732,10 +15048,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-codepipeline
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13751,11 +15069,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codepipeline-doc
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codepipeline
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codepipeline) = 1.89.0
 
@@ -13773,11 +15093,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codepipeline-devel
 Version:       1.89.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codepipeline
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codepipeline) = 1.89.0
 
@@ -13794,10 +15116,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-securitylake
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13813,11 +15137,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-securitylake-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-securitylake
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-securitylake) = 1.32.0
 
@@ -13832,11 +15158,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-securitylake-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-securitylake
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-securitylake) = 1.32.0
 
@@ -13850,10 +15178,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pinpointemail
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13869,11 +15199,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pinpointemail-doc
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pinpointemail
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointemail) = 1.61.0
 
@@ -13891,11 +15223,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pinpointemail-devel
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pinpointemail
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointemail) = 1.61.0
 
@@ -13912,10 +15246,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-organizations
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13931,11 +15267,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-organizations-doc
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-organizations
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-organizations) = 1.105.0
 
@@ -13953,11 +15291,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-organizations-devel
 Version:       1.105.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-organizations
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-organizations) = 1.105.0
 
@@ -13974,10 +15314,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-workspacesweb
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -13993,11 +15335,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workspacesweb-doc
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workspacesweb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspacesweb) = 1.34.0
 
@@ -14012,11 +15356,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workspacesweb-devel
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workspacesweb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspacesweb) = 1.34.0
 
@@ -14030,10 +15376,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-rolesanywhere
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14049,11 +15397,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-rolesanywhere-doc
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-rolesanywhere
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rolesanywhere) = 1.30.0
 
@@ -14068,11 +15418,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-rolesanywhere-devel
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-rolesanywhere
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rolesanywhere) = 1.30.0
 
@@ -14086,10 +15438,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-servicequotas
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14105,11 +15459,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-servicequotas-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-servicequotas
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicequotas) = 1.49.0
 
@@ -14124,11 +15480,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-servicequotas-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-servicequotas
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicequotas) = 1.49.0
 
@@ -14142,10 +15500,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-resiliencehub
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14161,11 +15521,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-resiliencehub-doc
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-resiliencehub
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resiliencehub) = 1.41.0
 
@@ -14180,11 +15542,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-resiliencehub-devel
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-resiliencehub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resiliencehub) = 1.41.0
 
@@ -14198,10 +15562,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ssmquicksetup
 Version:       1.7.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Systems Manager QuickSetup
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14217,11 +15583,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ssmquicksetup-doc
 Version:       1.7.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Systems Manager QuickSetup documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ssmquicksetup
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmquicksetup) = 1.7.0
 
@@ -14239,11 +15607,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ssmquicksetup-devel
 Version:       1.7.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Systems Manager QuickSetup development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ssmquicksetup
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ssmquicksetup) = 1.7.0
 
@@ -14260,10 +15630,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-inspectorscan
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - inspector-scan
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -14279,11 +15651,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-inspectorscan-doc
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - inspector-scan documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-inspectorscan
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspectorscan) = 1.16.0
 
@@ -14301,11 +15675,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-inspectorscan-devel
 Version:       1.16.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - inspector-scan development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-inspectorscan
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-inspectorscan) = 1.16.0
 
@@ -14322,10 +15698,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-identitystore
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -14341,11 +15719,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-identitystore-doc
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-identitystore
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-identitystore) = 1.47.0
 
@@ -14363,11 +15743,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-identitystore-devel
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-identitystore
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-identitystore) = 1.47.0
 
@@ -14384,10 +15766,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-groundstation
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14403,11 +15787,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-groundstation-doc
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-groundstation
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-groundstation) = 1.60.0
 
@@ -14422,11 +15808,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-groundstation-devel
 Version:       1.60.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-groundstation
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-groundstation) = 1.60.0
 
@@ -14440,10 +15828,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudwatchrum
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -14459,11 +15849,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudwatchrum-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudwatchrum
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchrum) = 1.33.0
 
@@ -14478,11 +15870,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudwatchrum-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudwatchrum
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchrum) = 1.33.0
 
@@ -14496,10 +15890,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-frauddetector
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14515,11 +15911,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-frauddetector-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-frauddetector
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-frauddetector) = 1.64.0
 
@@ -14534,11 +15932,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-frauddetector-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-frauddetector
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-frauddetector) = 1.64.0
 
@@ -14552,10 +15952,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-emrserverless
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14571,11 +15973,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-emrserverless-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-emrserverless
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emrserverless) = 1.37.0
 
@@ -14590,11 +15994,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-emrserverless-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-emrserverless
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emrserverless) = 1.37.0
 
@@ -14608,10 +16014,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-emrcontainers
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14627,11 +16035,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-emrcontainers-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-emrcontainers
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emrcontainers) = 1.49.0
 
@@ -14646,11 +16056,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-emrcontainers-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-emrcontainers
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-emrcontainers) = 1.49.0
 
@@ -14664,10 +16076,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kendraranking
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14683,11 +16097,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kendraranking-doc
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kendraranking
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kendraranking) = 1.25.0
 
@@ -14705,11 +16121,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kendraranking-devel
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kendraranking
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kendraranking) = 1.25.0
 
@@ -14726,10 +16144,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-backupgateway
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -14745,11 +16165,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-backupgateway-doc
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-backupgateway
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-backupgateway) = 1.31.0
 
@@ -14764,11 +16186,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-backupgateway-devel
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-backupgateway
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-backupgateway) = 1.31.0
 
@@ -14782,10 +16206,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-configservice
 Version:       1.121.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14801,11 +16227,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-configservice-doc
 Version:       1.121.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-configservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-configservice) = 1.121.0
 
@@ -14820,11 +16248,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-configservice-devel
 Version:       1.121.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-configservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-configservice) = 1.121.0
 
@@ -14838,10 +16268,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-arczonalshift
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14857,11 +16289,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-arczonalshift-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-arczonalshift
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-arczonalshift) = 1.26.0
 
@@ -14876,11 +16310,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-arczonalshift-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-arczonalshift
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-arczonalshift) = 1.26.0
 
@@ -14894,10 +16330,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-lakeformation
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -14913,11 +16351,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lakeformation-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lakeformation
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lakeformation) = 1.63.0
 
@@ -14932,11 +16372,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lakeformation-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lakeformation
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lakeformation) = 1.63.0
 
@@ -14950,10 +16392,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-appconfigdata
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -14969,11 +16413,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appconfigdata-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appconfigdata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appconfigdata) = 1.32.0
 
@@ -14988,11 +16434,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appconfigdata-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appconfigdata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appconfigdata) = 1.32.0
 
@@ -15006,10 +16454,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-ioteventsdata
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15025,11 +16475,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ioteventsdata-doc
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ioteventsdata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ioteventsdata) = 1.53.0
 
@@ -15044,11 +16496,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ioteventsdata-devel
 Version:       1.53.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ioteventsdata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ioteventsdata) = 1.53.0
 
@@ -15062,10 +16516,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-chimesdkvoice
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15081,11 +16537,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chimesdkvoice-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chimesdkvoice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkvoice) = 1.33.0
 
@@ -15100,11 +16558,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chimesdkvoice-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chimesdkvoice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkvoice) = 1.33.0
 
@@ -15118,10 +16578,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-directconnect
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15137,11 +16599,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-directconnect-doc
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-directconnect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directconnect) = 1.84.0
 
@@ -15156,11 +16620,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-directconnect-devel
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-directconnect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directconnect) = 1.84.0
 
@@ -15174,10 +16640,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iotthingsgraph
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15193,11 +16661,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotthingsgraph-doc
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotthingsgraph
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotthingsgraph) = 1.50.0
 
@@ -15212,11 +16682,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotthingsgraph-devel
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotthingsgraph
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotthingsgraph) = 1.50.0
 
@@ -15230,10 +16702,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudtraildata
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CloudTrail Data Service
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -15249,11 +16723,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudtraildata-doc
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CloudTrail Data Service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudtraildata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudtraildata) = 1.23.0
 
@@ -15268,11 +16744,13 @@ AWS SDK for Ruby - AWS CloudTrail Data Service documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudtraildata-devel
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CloudTrail Data Service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudtraildata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudtraildata) = 1.23.0
 
@@ -15286,10 +16764,12 @@ AWS SDK for Ruby - AWS CloudTrail Data Service development package.
 
 %package       -n gem-aws-sdk-cloudformation
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15305,11 +16785,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudformation-doc
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudformation
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudformation) = 1.122.0
 
@@ -15324,11 +16806,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudformation-devel
 Version:       1.122.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudformation
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudformation) = 1.122.0
 
@@ -15342,10 +16826,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-clouddirectory
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15361,11 +16847,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-clouddirectory-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-clouddirectory
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-clouddirectory) = 1.69.0
 
@@ -15380,11 +16868,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-clouddirectory-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-clouddirectory
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-clouddirectory) = 1.69.0
 
@@ -15398,10 +16888,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-networkmonitor
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Network Monitor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -15417,11 +16909,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-networkmonitor-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Network Monitor documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-networkmonitor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkmonitor) = 1.15.0
 
@@ -15440,11 +16934,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-networkmonitor-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Network Monitor development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-networkmonitor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkmonitor) = 1.15.0
 
@@ -15462,10 +16958,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-networkmanager
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15481,11 +16979,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-networkmanager-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-networkmanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkmanager) = 1.55.0
 
@@ -15503,11 +17003,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-networkmanager-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-networkmanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkmanager) = 1.55.0
 
@@ -15524,10 +17026,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-accessanalyzer
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -15543,11 +17047,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-accessanalyzer-doc
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-accessanalyzer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-accessanalyzer) = 1.61.0
 
@@ -15562,11 +17068,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-accessanalyzer-devel
 Version:       1.61.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-accessanalyzer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-accessanalyzer) = 1.61.0
 
@@ -15580,10 +17088,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cloudwatchlogs
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15599,11 +17109,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudwatchlogs-doc
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudwatchlogs
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchlogs) = 1.100.0
 
@@ -15618,11 +17130,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudwatchlogs-devel
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudwatchlogs
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchlogs) = 1.100.0
 
@@ -15636,10 +17150,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pcaconnectorad
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - PcaConnectorAd
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -15655,11 +17171,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pcaconnectorad-doc
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - PcaConnectorAd documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pcaconnectorad
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcaconnectorad) = 1.17.0
 
@@ -15674,11 +17192,13 @@ AWS SDK for Ruby - PcaConnectorAd documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pcaconnectorad-devel
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - PcaConnectorAd development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pcaconnectorad
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcaconnectorad) = 1.17.0
 
@@ -15692,10 +17212,12 @@ AWS SDK for Ruby - PcaConnectorAd development package.
 
 %package       -n gem-aws-sdk-simspaceweaver
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -15711,11 +17233,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-simspaceweaver-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-simspaceweaver
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-simspaceweaver) = 1.27.0
 
@@ -15730,11 +17254,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-simspaceweaver-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-simspaceweaver
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-simspaceweaver) = 1.27.0
 
@@ -15748,10 +17274,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-servicecatalog
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15767,11 +17295,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-servicecatalog-doc
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-servicecatalog
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicecatalog) = 1.106.0
 
@@ -15786,11 +17316,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-servicecatalog-devel
 Version:       1.106.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-servicecatalog
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicecatalog) = 1.106.0
 
@@ -15804,10 +17336,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-rdsdataservice
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15823,11 +17357,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-rdsdataservice-doc
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-rdsdataservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rdsdataservice) = 1.65.0
 
@@ -15842,11 +17378,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-rdsdataservice-devel
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-rdsdataservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-rdsdataservice) = 1.65.0
 
@@ -15860,10 +17398,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-secretsmanager
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15879,11 +17419,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-secretsmanager-doc
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-secretsmanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-secretsmanager) = 1.109.0
 
@@ -15898,11 +17440,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-secretsmanager-devel
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-secretsmanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-secretsmanager) = 1.109.0
 
@@ -15916,10 +17460,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-controlcatalog
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Control Catalog
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15935,11 +17481,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-controlcatalog-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Control Catalog documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-controlcatalog
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-controlcatalog) = 1.14.0
 
@@ -15954,11 +17502,13 @@ AWS SDK for Ruby - AWS Control Catalog documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-controlcatalog-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Control Catalog development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-controlcatalog
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-controlcatalog) = 1.14.0
 
@@ -15972,10 +17522,12 @@ AWS SDK for Ruby - AWS Control Catalog development package.
 
 %package       -n gem-aws-sdk-resourcegroups
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -15991,11 +17543,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-resourcegroups-doc
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-resourcegroups
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourcegroups) = 1.74.0
 
@@ -16013,11 +17567,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-resourcegroups-devel
 Version:       1.74.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-resourcegroups
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourcegroups) = 1.74.0
 
@@ -16034,10 +17590,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-route53domains
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16053,11 +17611,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53domains-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53domains
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53domains) = 1.70.0
 
@@ -16072,11 +17632,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53domains-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53domains
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53domains) = 1.70.0
 
@@ -16090,10 +17652,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-amplifybackend
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16109,11 +17673,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-amplifybackend-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-amplifybackend
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplifybackend) = 1.43.0
 
@@ -16128,11 +17694,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-amplifybackend-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-amplifybackend
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplifybackend) = 1.43.0
 
@@ -16146,10 +17714,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-managedgrafana
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16165,11 +17735,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-managedgrafana-doc
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-managedgrafana
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedgrafana) = 1.40.0
 
@@ -16184,11 +17756,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-managedgrafana-devel
 Version:       1.40.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-managedgrafana
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedgrafana) = 1.40.0
 
@@ -16202,10 +17776,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-trustedadvisor
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - TrustedAdvisor Public API
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16221,11 +17797,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-trustedadvisor-doc
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - TrustedAdvisor Public API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-trustedadvisor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-trustedadvisor) = 1.17.0
 
@@ -16240,11 +17818,13 @@ AWS SDK for Ruby - TrustedAdvisor Public API documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-trustedadvisor-devel
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - TrustedAdvisor Public API development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-trustedadvisor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-trustedadvisor) = 1.17.0
 
@@ -16258,10 +17838,12 @@ AWS SDK for Ruby - TrustedAdvisor Public API development package.
 
 %package       -n gem-aws-sdk-lookoutmetrics
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16277,11 +17859,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lookoutmetrics-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lookoutmetrics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutmetrics) = 1.48.0
 
@@ -16299,11 +17883,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lookoutmetrics-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lookoutmetrics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutmetrics) = 1.48.0
 
@@ -16320,10 +17906,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mediapackagev2
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - mediapackagev2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16339,11 +17927,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediapackagev2-doc
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - mediapackagev2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediapackagev2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackagev2) = 1.31.0
 
@@ -16361,11 +17951,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediapackagev2-devel
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - mediapackagev2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediapackagev2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackagev2) = 1.31.0
 
@@ -16382,10 +17974,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-mediastoredata
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16401,11 +17995,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediastoredata-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediastoredata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediastoredata) = 1.64.0
 
@@ -16423,11 +18019,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediastoredata-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediastoredata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediastoredata) = 1.64.0
 
@@ -16444,10 +18042,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-medicalimaging
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Health Imaging
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16463,11 +18063,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-medicalimaging-doc
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Health Imaging documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-medicalimaging
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-medicalimaging) = 1.22.0
 
@@ -16482,11 +18084,13 @@ AWS SDK for Ruby - AWS Health Imaging documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-medicalimaging-devel
 Version:       1.22.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Health Imaging development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-medicalimaging
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-medicalimaging) = 1.22.0
 
@@ -16500,10 +18104,12 @@ AWS SDK for Ruby - AWS Health Imaging development package.
 
 %package       -n gem-aws-sdk-bcmdataexports
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Billing and Cost Management Data Exports
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16519,11 +18125,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-bcmdataexports-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Billing and Cost Management Data Exports documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-bcmdataexports
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bcmdataexports) = 1.15.0
 
@@ -16542,11 +18150,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-bcmdataexports-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Billing and Cost Management Data Exports development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-bcmdataexports
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bcmdataexports) = 1.15.0
 
@@ -16564,10 +18174,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-licensemanager
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16583,11 +18195,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-licensemanager-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-licensemanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanager) = 1.67.0
 
@@ -16602,11 +18216,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-licensemanager-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-licensemanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanager) = 1.67.0
 
@@ -16620,10 +18236,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-storagegateway
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16639,11 +18257,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-storagegateway-doc
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-storagegateway
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-storagegateway) = 1.100.0
 
@@ -16658,11 +18278,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-storagegateway-devel
 Version:       1.100.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-storagegateway
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-storagegateway) = 1.100.0
 
@@ -16676,10 +18298,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-bedrockruntime
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock Runtime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16695,11 +18319,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-bedrockruntime-doc
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock Runtime documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-bedrockruntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockruntime) = 1.29.0
 
@@ -16714,11 +18340,13 @@ AWS SDK for Ruby - Amazon Bedrock Runtime documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-bedrockruntime-devel
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Bedrock Runtime development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-bedrockruntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockruntime) = 1.29.0
 
@@ -16732,10 +18360,12 @@ AWS SDK for Ruby - Amazon Bedrock Runtime development package.
 
 %package       -n gem-aws-sdk-route53profiles
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Route 53 Profiles
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16751,11 +18381,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53profiles-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Route 53 Profiles documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53profiles
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53profiles) = 1.14.0
 
@@ -16770,11 +18402,13 @@ AWS SDK for Ruby - Route 53 Profiles documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53profiles-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Route 53 Profiles development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53profiles
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53profiles) = 1.14.0
 
@@ -16788,10 +18422,12 @@ AWS SDK for Ruby - Route 53 Profiles development package.
 
 %package       -n gem-aws-sdk-cloudcontrolapi
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -16807,11 +18443,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudcontrolapi-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudcontrolapi
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudcontrolapi) = 1.33.0
 
@@ -16829,11 +18467,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudcontrolapi-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudcontrolapi
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudcontrolapi) = 1.33.0
 
@@ -16850,10 +18490,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-route53resolver
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16869,11 +18511,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53resolver-doc
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53resolver
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53resolver) = 1.72.0
 
@@ -16891,11 +18535,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53resolver-devel
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53resolver
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53resolver) = 1.72.0
 
@@ -16912,10 +18558,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-networkfirewall
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16931,11 +18579,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-networkfirewall-doc
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-networkfirewall
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkfirewall) = 1.56.0
 
@@ -16953,11 +18603,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-networkfirewall-devel
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-networkfirewall
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-networkfirewall) = 1.56.0
 
@@ -16974,10 +18626,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-dynamodbstreams
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -16993,11 +18647,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-dynamodbstreams-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-dynamodbstreams
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dynamodbstreams) = 1.69.0
 
@@ -17012,11 +18668,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-dynamodbstreams-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-dynamodbstreams
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-dynamodbstreams) = 1.69.0
 
@@ -17030,10 +18688,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-wellarchitected
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17049,11 +18709,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-wellarchitected-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-wellarchitected
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wellarchitected) = 1.48.0
 
@@ -17071,11 +18733,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-wellarchitected-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-wellarchitected
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-wellarchitected) = 1.48.0
 
@@ -17092,10 +18756,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-machinelearning
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17111,11 +18777,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-machinelearning-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-machinelearning
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-machinelearning) = 1.64.0
 
@@ -17130,11 +18798,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-machinelearning-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-machinelearning
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-machinelearning) = 1.64.0
 
@@ -17148,10 +18818,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-cognitoidentity
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17167,11 +18839,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cognitoidentity-doc
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cognitoidentity
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitoidentity) = 1.67.0
 
@@ -17186,11 +18860,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cognitoidentity-devel
 Version:       1.67.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cognitoidentity
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitoidentity) = 1.67.0
 
@@ -17204,10 +18880,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-forecastservice
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17223,11 +18901,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-forecastservice-doc
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-forecastservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-forecastservice) = 1.65.0
 
@@ -17242,11 +18922,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-forecastservice-devel
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-forecastservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-forecastservice) = 1.65.0
 
@@ -17260,10 +18942,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-privatenetworks
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -17279,11 +18963,13 @@ Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-privatenetworks-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-privatenetworks
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-privatenetworks) = 1.27.0
 
@@ -17298,11 +18984,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-privatenetworks-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-privatenetworks
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-privatenetworks) = 1.27.0
 
@@ -17316,10 +19004,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mediapackagevod
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -17335,11 +19025,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mediapackagevod-doc
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mediapackagevod
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackagevod) = 1.65.0
 
@@ -17357,11 +19049,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mediapackagevod-devel
 Version:       1.65.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mediapackagevod
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mediapackagevod) = 1.65.0
 
@@ -17378,10 +19072,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-timestreamquery
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17397,11 +19093,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-timestreamquery-doc
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-timestreamquery
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreamquery) = 1.46.0
 
@@ -17419,11 +19117,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-timestreamquery-devel
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-timestreamquery
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreamquery) = 1.46.0
 
@@ -17440,10 +19140,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-timestreamwrite
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -17459,11 +19161,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-timestreamwrite-doc
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-timestreamwrite
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreamwrite) = 1.41.0
 
@@ -17481,11 +19185,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-timestreamwrite-devel
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-timestreamwrite
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreamwrite) = 1.41.0
 
@@ -17502,10 +19208,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-locationservice
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -17521,11 +19229,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-locationservice-doc
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-locationservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-locationservice) = 1.62.0
 
@@ -17540,11 +19250,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-locationservice-devel
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-locationservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-locationservice) = 1.62.0
 
@@ -17558,10 +19270,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-socialmessaging
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS End User Messaging Social
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17577,11 +19291,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-socialmessaging-doc
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS End User Messaging Social documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-socialmessaging
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-socialmessaging) = 1.1.0
 
@@ -17596,11 +19312,13 @@ AWS SDK for Ruby - AWS End User Messaging Social documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-socialmessaging-devel
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS End User Messaging Social development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-socialmessaging
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-socialmessaging) = 1.1.0
 
@@ -17614,10 +19332,12 @@ AWS SDK for Ruby - AWS End User Messaging Social development package.
 
 %package       -n gem-aws-sdk-codeconnections
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CodeConnections
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17633,11 +19353,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codeconnections-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CodeConnections documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codeconnections
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeconnections) = 1.15.0
 
@@ -17652,11 +19374,13 @@ AWS SDK for Ruby - AWS CodeConnections documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codeconnections-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS CodeConnections development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codeconnections
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeconnections) = 1.15.0
 
@@ -17670,10 +19394,12 @@ AWS SDK for Ruby - AWS CodeConnections development package.
 
 %package       -n gem-aws-sdk-internetmonitor
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Internet Monitor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17689,11 +19415,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-internetmonitor-doc
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Internet Monitor documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-internetmonitor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-internetmonitor) = 1.31.0
 
@@ -17712,11 +19440,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-internetmonitor-devel
 Version:       1.31.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Internet Monitor development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-internetmonitor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-internetmonitor) = 1.31.0
 
@@ -17734,10 +19464,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-customerprofiles
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17753,11 +19485,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-customerprofiles-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-customerprofiles
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-customerprofiles) = 1.55.0
 
@@ -17775,11 +19509,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-customerprofiles-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-customerprofiles
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-customerprofiles) = 1.55.0
 
@@ -17796,10 +19532,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iotjobsdataplane
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17815,11 +19553,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotjobsdataplane-doc
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotjobsdataplane
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotjobsdataplane) = 1.62.0
 
@@ -17834,11 +19574,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotjobsdataplane-devel
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotjobsdataplane
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotjobsdataplane) = 1.62.0
 
@@ -17852,10 +19594,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kinesisanalytics
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17871,11 +19615,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisanalytics-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisanalytics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisanalytics) = 1.66.0
 
@@ -17893,11 +19639,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisanalytics-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisanalytics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisanalytics) = 1.66.0
 
@@ -17914,10 +19662,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-directoryservice
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17933,11 +19683,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-directoryservice-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-directoryservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directoryservice) = 1.78.0
 
@@ -17955,11 +19707,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-directoryservice-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-directoryservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directoryservice) = 1.78.0
 
@@ -17976,10 +19730,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iotdeviceadvisor
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -17995,11 +19751,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotdeviceadvisor-doc
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotdeviceadvisor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotdeviceadvisor) = 1.44.0
 
@@ -18017,11 +19775,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotdeviceadvisor-devel
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotdeviceadvisor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotdeviceadvisor) = 1.44.0
 
@@ -18038,10 +19798,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloudwatchevents
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18057,11 +19819,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudwatchevents-doc
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudwatchevents
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchevents) = 1.84.0
 
@@ -18076,11 +19840,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudwatchevents-devel
 Version:       1.84.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudwatchevents
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchevents) = 1.84.0
 
@@ -18094,10 +19860,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-amplifyuibuilder
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -18113,11 +19881,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-amplifyuibuilder-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-amplifyuibuilder
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplifyuibuilder) = 1.37.0
 
@@ -18132,11 +19902,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-amplifyuibuilder-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-amplifyuibuilder
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-amplifyuibuilder) = 1.37.0
 
@@ -18150,10 +19922,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-sagemakermetrics
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18169,11 +19943,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemakermetrics-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemakermetrics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakermetrics) = 1.26.0
 
@@ -18191,11 +19967,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemakermetrics-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemakermetrics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakermetrics) = 1.26.0
 
@@ -18212,10 +19990,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sagemakerruntime
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18231,11 +20011,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemakerruntime-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemakerruntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakerruntime) = 1.76.0
 
@@ -18250,11 +20032,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemakerruntime-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemakerruntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakerruntime) = 1.76.0
 
@@ -18268,10 +20052,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-billingconductor
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -18287,11 +20073,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-billingconductor-doc
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-billingconductor
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-billingconductor) = 1.34.0
 
@@ -18306,11 +20094,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-billingconductor-devel
 Version:       1.34.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-billingconductor
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-billingconductor) = 1.34.0
 
@@ -18324,10 +20114,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-elasticbeanstalk
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18343,11 +20135,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticbeanstalk-doc
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticbeanstalk
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticbeanstalk) = 1.80.0
 
@@ -18365,11 +20159,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticbeanstalk-devel
 Version:       1.80.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticbeanstalk
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticbeanstalk) = 1.80.0
 
@@ -18386,10 +20182,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-elasticinference
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18405,11 +20203,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticinference-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticinference
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticinference) = 1.49.0
 
@@ -18427,11 +20227,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticinference-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticinference
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticinference) = 1.49.0
 
@@ -18448,10 +20250,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-autoscalingplans
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18467,11 +20271,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-autoscalingplans-doc
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-autoscalingplans
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-autoscalingplans) = 1.66.0
 
@@ -18486,11 +20292,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-autoscalingplans-devel
 Version:       1.66.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-autoscalingplans
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-autoscalingplans) = 1.66.0
 
@@ -18504,10 +20312,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-computeoptimizer
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18523,11 +20333,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-computeoptimizer-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-computeoptimizer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-computeoptimizer) = 1.69.0
 
@@ -18542,11 +20354,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-computeoptimizer-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-computeoptimizer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-computeoptimizer) = 1.69.0
 
@@ -18560,10 +20374,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-servicediscovery
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18579,11 +20395,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-servicediscovery-doc
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-servicediscovery
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicediscovery) = 1.76.0
 
@@ -18601,11 +20419,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-servicediscovery-devel
 Version:       1.76.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-servicediscovery
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-servicediscovery) = 1.76.0
 
@@ -18622,10 +20442,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-pcaconnectorscep
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Private CA Connector for SCEP
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18641,11 +20463,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pcaconnectorscep-doc
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Private CA Connector for SCEP documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pcaconnectorscep
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcaconnectorscep) = 1.11.0
 
@@ -18660,11 +20484,13 @@ AWS SDK for Ruby - Private CA Connector for SCEP documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pcaconnectorscep-devel
 Version:       1.11.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Private CA Connector for SCEP development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pcaconnectorscep
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pcaconnectorscep) = 1.11.0
 
@@ -18678,10 +20504,12 @@ AWS SDK for Ruby - Private CA Connector for SCEP development package.
 
 %package       -n gem-aws-sdk-chimesdkmeetings
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18697,11 +20525,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chimesdkmeetings-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chimesdkmeetings
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmeetings) = 1.43.0
 
@@ -18716,11 +20546,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chimesdkmeetings-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chimesdkmeetings
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmeetings) = 1.43.0
 
@@ -18734,10 +20566,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-entityresolution
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSEntityResolution
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18753,11 +20587,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-entityresolution-doc
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSEntityResolution documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-entityresolution
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-entityresolution) = 1.23.0
 
@@ -18775,11 +20611,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-entityresolution-devel
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWSEntityResolution development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-entityresolution
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-entityresolution) = 1.23.0
 
@@ -18796,10 +20634,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-lookoutequipment
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18815,11 +20655,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lookoutequipment-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lookoutequipment
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutequipment) = 1.43.0
 
@@ -18837,11 +20679,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lookoutequipment-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lookoutequipment
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutequipment) = 1.43.0
 
@@ -18858,10 +20702,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-pinpointsmsvoice
 Version:       1.57.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -18877,11 +20723,13 @@ Voice). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pinpointsmsvoice-doc
 Version:       1.57.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pinpointsmsvoice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointsmsvoice) = 1.57.0
 
@@ -18899,11 +20747,13 @@ Voice). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pinpointsmsvoice-devel
 Version:       1.57.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pinpointsmsvoice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointsmsvoice) = 1.57.0
 
@@ -18920,10 +20770,12 @@ Voice). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-codegurusecurity
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CodeGuru Security
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -18939,11 +20791,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codegurusecurity-doc
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CodeGuru Security documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codegurusecurity
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codegurusecurity) = 1.24.0
 
@@ -18958,11 +20812,13 @@ AWS SDK for Ruby - Amazon CodeGuru Security documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codegurusecurity-devel
 Version:       1.24.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CodeGuru Security development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codegurusecurity
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codegurusecurity) = 1.24.0
 
@@ -18976,10 +20832,12 @@ AWS SDK for Ruby - Amazon CodeGuru Security development package.
 
 %package       -n gem-aws-sdk-codegurureviewer
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -18995,11 +20853,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codegurureviewer-doc
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codegurureviewer
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codegurureviewer) = 1.59.0
 
@@ -19017,11 +20877,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codegurureviewer-devel
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codegurureviewer
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codegurureviewer) = 1.59.0
 
@@ -19038,10 +20900,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-lookoutforvision
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19057,11 +20921,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lookoutforvision-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lookoutforvision
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutforvision) = 1.43.0
 
@@ -19076,11 +20942,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lookoutforvision-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lookoutforvision
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lookoutforvision) = 1.43.0
 
@@ -19094,10 +20962,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-chimesdkidentity
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19113,11 +20983,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chimesdkidentity-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chimesdkidentity
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkidentity) = 1.37.0
 
@@ -19132,11 +21004,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chimesdkidentity-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chimesdkidentity
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkidentity) = 1.37.0
 
@@ -19150,10 +21024,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-codeguruprofiler
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -19169,11 +21045,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codeguruprofiler-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codeguruprofiler
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeguruprofiler) = 1.49.0
 
@@ -19188,11 +21066,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codeguruprofiler-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codeguruprofiler
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codeguruprofiler) = 1.49.0
 
@@ -19206,10 +21086,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-transcribeservice
 Version:       1.110.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19225,11 +21107,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-transcribeservice-doc
 Version:       1.110.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-transcribeservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transcribeservice) = 1.110.0
 
@@ -19244,11 +21128,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-transcribeservice-devel
 Version:       1.110.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-transcribeservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transcribeservice) = 1.110.0
 
@@ -19262,10 +21148,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-chimesdkmessaging
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19281,11 +21169,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chimesdkmessaging-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chimesdkmessaging
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmessaging) = 1.43.0
 
@@ -19300,11 +21190,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chimesdkmessaging-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chimesdkmessaging
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmessaging) = 1.43.0
 
@@ -19318,10 +21210,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-comprehendmedical
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19337,11 +21231,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-comprehendmedical-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-comprehendmedical
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-comprehendmedical) = 1.64.0
 
@@ -19359,11 +21255,13 @@ is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-comprehendmedical-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-comprehendmedical
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-comprehendmedical) = 1.64.0
 
@@ -19380,10 +21278,12 @@ is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloudsearchdomain
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19399,11 +21299,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudsearchdomain-doc
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudsearchdomain
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudsearchdomain) = 1.54.0
 
@@ -19418,11 +21320,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudsearchdomain-devel
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudsearchdomain
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudsearchdomain) = 1.54.0
 
@@ -19436,10 +21340,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-personalizeevents
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19455,11 +21361,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-personalizeevents-doc
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-personalizeevents
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalizeevents) = 1.56.0
 
@@ -19474,11 +21382,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-personalizeevents-devel
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-personalizeevents
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalizeevents) = 1.56.0
 
@@ -19492,10 +21402,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-globalaccelerator
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19511,11 +21423,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-globalaccelerator-doc
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-globalaccelerator
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-globalaccelerator) = 1.71.0
 
@@ -19530,11 +21444,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-globalaccelerator-devel
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-globalaccelerator
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-globalaccelerator) = 1.71.0
 
@@ -19548,10 +21464,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-prometheusservice
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19567,11 +21485,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-prometheusservice-doc
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-prometheusservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-prometheusservice) = 1.44.0
 
@@ -19586,11 +21506,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-prometheusservice-devel
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-prometheusservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-prometheusservice) = 1.44.0
 
@@ -19604,10 +21526,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iot1clickprojects
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19623,11 +21547,13 @@ Projects). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iot1clickprojects-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iot1clickprojects
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot1clickprojects) = 1.63.0
 
@@ -19645,11 +21571,13 @@ Projects). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iot1clickprojects-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iot1clickprojects
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot1clickprojects) = 1.63.0
 
@@ -19666,10 +21594,12 @@ Projects). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-elastictranscoder
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19685,11 +21615,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elastictranscoder-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elastictranscoder
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elastictranscoder) = 1.64.0
 
@@ -19704,11 +21636,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elastictranscoder-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elastictranscoder
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elastictranscoder) = 1.64.0
 
@@ -19722,10 +21656,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-opensearchservice
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19741,11 +21677,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-opensearchservice-doc
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-opensearchservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opensearchservice) = 1.59.0
 
@@ -19760,11 +21698,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-opensearchservice-devel
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-opensearchservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opensearchservice) = 1.59.0
 
@@ -19778,10 +21718,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-resourceexplorer2
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19797,11 +21739,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-resourceexplorer2-doc
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-resourceexplorer2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourceexplorer2) = 1.29.0
 
@@ -19816,11 +21760,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-resourceexplorer2-devel
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-resourceexplorer2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourceexplorer2) = 1.29.0
 
@@ -19834,10 +21780,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kinesisvideomedia
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19853,11 +21801,13 @@ Media). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisvideomedia-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisvideomedia
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideomedia) = 1.63.0
 
@@ -19875,11 +21825,13 @@ Media). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisvideomedia-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisvideomedia
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideomedia) = 1.63.0
 
@@ -19896,10 +21848,12 @@ Media). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-managedblockchain
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19915,11 +21869,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-managedblockchain-doc
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-managedblockchain
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedblockchain) = 1.64.0
 
@@ -19937,11 +21893,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-managedblockchain-devel
 Version:       1.64.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-managedblockchain
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedblockchain) = 1.64.0
 
@@ -19958,10 +21916,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-personalizeruntime
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -19977,11 +21937,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-personalizeruntime-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-personalizeruntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalizeruntime) = 1.63.0
 
@@ -19996,11 +21958,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-personalizeruntime-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-personalizeruntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-personalizeruntime) = 1.63.0
 
@@ -20014,10 +21978,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-pinpointsmsvoicev2
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20033,11 +21999,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-pinpointsmsvoicev2-doc
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-pinpointsmsvoicev2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointsmsvoicev2) = 1.29.0
 
@@ -20052,11 +22020,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-pinpointsmsvoicev2-devel
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-pinpointsmsvoicev2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-pinpointsmsvoicev2) = 1.29.0
 
@@ -20070,10 +22040,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-kinesisanalyticsv2
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20089,11 +22061,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisanalyticsv2-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisanalyticsv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisanalyticsv2) = 1.70.0
 
@@ -20111,11 +22085,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisanalyticsv2-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisanalyticsv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisanalyticsv2) = 1.70.0
 
@@ -20132,10 +22108,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-migrationhubconfig
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20151,11 +22129,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-migrationhubconfig-doc
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-migrationhubconfig
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubconfig) = 1.47.0
 
@@ -20170,11 +22150,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-migrationhubconfig-devel
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-migrationhubconfig
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubconfig) = 1.47.0
 
@@ -20188,10 +22170,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-marketplacecatalog
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20207,11 +22191,13 @@ Catalog). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplacecatalog-doc
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplacecatalog
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacecatalog) = 1.54.0
 
@@ -20229,11 +22215,13 @@ Catalog). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplacecatalog-devel
 Version:       1.54.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplacecatalog
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacecatalog) = 1.54.0
 
@@ -20250,10 +22238,12 @@ Catalog). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-timestreaminfluxdb
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Timestream InfluxDB
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -20269,11 +22259,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-timestreaminfluxdb-doc
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Timestream InfluxDB documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-timestreaminfluxdb
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreaminfluxdb) = 1.15.0
 
@@ -20288,11 +22280,13 @@ AWS SDK for Ruby - Timestream InfluxDB documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-timestreaminfluxdb-devel
 Version:       1.15.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Timestream InfluxDB development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-timestreaminfluxdb
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-timestreaminfluxdb) = 1.15.0
 
@@ -20306,10 +22300,12 @@ AWS SDK for Ruby - Timestream InfluxDB development package.
 
 %package       -n gem-aws-sdk-augmentedairuntime
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20325,11 +22321,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-augmentedairuntime-doc
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-augmentedairuntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-augmentedairuntime) = 1.49.0
 
@@ -20344,11 +22342,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-augmentedairuntime-devel
 Version:       1.49.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-augmentedairuntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-augmentedairuntime) = 1.49.0
 
@@ -20362,10 +22362,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-redshiftserverless
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -20381,11 +22383,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-redshiftserverless-doc
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-redshiftserverless
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshiftserverless) = 1.41.0
 
@@ -20400,11 +22404,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-redshiftserverless-devel
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-redshiftserverless
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshiftserverless) = 1.41.0
 
@@ -20418,10 +22424,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-applicationsignals
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Application Signals
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20437,11 +22445,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-applicationsignals-doc
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Application Signals documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-applicationsignals
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationsignals) = 1.12.0
 
@@ -20460,11 +22470,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-applicationsignals-devel
 Version:       1.12.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudWatch Application Signals development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-applicationsignals
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationsignals) = 1.12.0
 
@@ -20482,10 +22494,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-connectcontactlens
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20501,11 +22515,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connectcontactlens-doc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connectcontactlens
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcontactlens) = 1.38.0
 
@@ -20520,11 +22536,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connectcontactlens-devel
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connectcontactlens
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcontactlens) = 1.38.0
 
@@ -20538,10 +22556,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-connectparticipant
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20557,11 +22577,13 @@ Participant). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connectparticipant-doc
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connectparticipant
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectparticipant) = 1.56.0
 
@@ -20579,11 +22601,13 @@ Participant). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connectparticipant-devel
 Version:       1.56.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connectparticipant
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectparticipant) = 1.56.0
 
@@ -20600,10 +22624,12 @@ Participant). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-ec2instanceconnect
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20619,11 +22645,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-ec2instanceconnect-doc
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-ec2instanceconnect
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ec2instanceconnect) = 1.52.0
 
@@ -20641,11 +22669,13 @@ gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-ec2instanceconnect-devel
 Version:       1.52.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-ec2instanceconnect
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-ec2instanceconnect) = 1.52.0
 
@@ -20662,10 +22692,12 @@ gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-iotsecuretunneling
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20681,11 +22713,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iotsecuretunneling-doc
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iotsecuretunneling
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotsecuretunneling) = 1.47.0
 
@@ -20700,11 +22734,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iotsecuretunneling-devel
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iotsecuretunneling
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iotsecuretunneling) = 1.47.0
 
@@ -20718,10 +22754,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-paymentcryptography
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Control Plane
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20737,11 +22775,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-paymentcryptography-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Control Plane documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-paymentcryptography
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-paymentcryptography) = 1.27.0
 
@@ -20760,11 +22800,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-paymentcryptography-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Control Plane development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-paymentcryptography
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-paymentcryptography) = 1.27.0
 
@@ -20782,10 +22824,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloudwatchevidently
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -20801,11 +22845,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudwatchevidently-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudwatchevidently
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchevidently) = 1.35.0
 
@@ -20820,11 +22866,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudwatchevidently-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudwatchevidently
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudwatchevidently) = 1.35.0
 
@@ -20838,10 +22886,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-verifiedpermissions
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Verified Permissions
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20857,11 +22907,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-verifiedpermissions-doc
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Verified Permissions documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-verifiedpermissions
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-verifiedpermissions) = 1.36.0
 
@@ -20876,11 +22928,13 @@ AWS SDK for Ruby - Amazon Verified Permissions documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-verifiedpermissions-devel
 Version:       1.36.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Verified Permissions development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-verifiedpermissions
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-verifiedpermissions) = 1.36.0
 
@@ -20894,10 +22948,12 @@ AWS SDK for Ruby - Amazon Verified Permissions development package.
 
 %package       -n gem-aws-sdk-marketplacemetering
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20913,11 +22969,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplacemetering-doc
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplacemetering
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacemetering) = 1.70.0
 
@@ -20932,11 +22990,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplacemetering-devel
 Version:       1.70.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplacemetering
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacemetering) = 1.70.0
 
@@ -20950,10 +23010,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-codestarconnections
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -20969,11 +23031,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codestarconnections-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codestarconnections
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codestarconnections) = 1.55.0
 
@@ -20988,11 +23052,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codestarconnections-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codestarconnections
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codestarconnections) = 1.55.0
 
@@ -21006,10 +23072,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-sagemakergeospatial
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21025,11 +23093,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemakergeospatial-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemakergeospatial
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakergeospatial) = 1.26.0
 
@@ -21047,11 +23117,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemakergeospatial-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemakergeospatial
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakergeospatial) = 1.26.0
 
@@ -21068,10 +23140,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-applicationinsights
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21087,11 +23161,13 @@ Insights). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-applicationinsights-doc
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-applicationinsights
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationinsights) = 1.59.0
 
@@ -21109,11 +23185,13 @@ Insights). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-applicationinsights-devel
 Version:       1.59.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-applicationinsights
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationinsights) = 1.59.0
 
@@ -21130,10 +23208,12 @@ Insights). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-costoptimizationhub
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Cost Optimization Hub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21149,11 +23229,13 @@ for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-costoptimizationhub-doc
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Cost Optimization Hub documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-costoptimizationhub
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costoptimizationhub) = 1.18.0
 
@@ -21168,11 +23250,13 @@ AWS SDK for Ruby - Cost Optimization Hub documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-costoptimizationhub-devel
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Cost Optimization Hub development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-costoptimizationhub
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costoptimizationhub) = 1.18.0
 
@@ -21186,10 +23270,12 @@ AWS SDK for Ruby - Cost Optimization Hub development package.
 
 %package       -n gem-aws-sdk-bedrockagentruntime
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock Runtime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21205,11 +23291,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-bedrockagentruntime-doc
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock Runtime documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-bedrockagentruntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockagentruntime) = 1.29.0
 
@@ -21228,11 +23316,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-bedrockagentruntime-devel
 Version:       1.29.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agents for Amazon Bedrock Runtime development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-bedrockagentruntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-bedrockagentruntime) = 1.29.0
 
@@ -21250,10 +23340,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-workmailmessageflow
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21269,11 +23361,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workmailmessageflow-doc
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workmailmessageflow
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workmailmessageflow) = 1.47.0
 
@@ -21288,11 +23382,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workmailmessageflow-devel
 Version:       1.47.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workmailmessageflow
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workmailmessageflow) = 1.47.0
 
@@ -21306,10 +23402,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-opensearchserverless
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21325,11 +23423,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-opensearchserverless-doc
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-opensearchserverless
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opensearchserverless) = 1.30.0
 
@@ -21344,11 +23444,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-opensearchserverless-devel
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-opensearchserverless
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-opensearchserverless) = 1.30.0
 
@@ -21362,10 +23464,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-snowdevicemanagement
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21381,11 +23485,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-snowdevicemanagement-doc
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-snowdevicemanagement
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-snowdevicemanagement) = 1.32.0
 
@@ -21400,11 +23506,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-snowdevicemanagement-devel
 Version:       1.32.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-snowdevicemanagement
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-snowdevicemanagement) = 1.32.0
 
@@ -21418,10 +23526,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-marketplacereporting
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Reporting Service
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21437,11 +23547,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplacereporting-doc
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Reporting Service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplacereporting
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacereporting) = 1.2.0
 
@@ -21460,11 +23572,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplacereporting-devel
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Reporting Service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplacereporting
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacereporting) = 1.2.0
 
@@ -21482,10 +23596,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-forecastqueryservice
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21501,11 +23617,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-forecastqueryservice-doc
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-forecastqueryservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-forecastqueryservice) = 1.48.0
 
@@ -21520,11 +23638,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-forecastqueryservice-devel
 Version:       1.48.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-forecastqueryservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-forecastqueryservice) = 1.48.0
 
@@ -21538,10 +23658,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-elasticsearchservice
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21557,11 +23679,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticsearchservice-doc
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticsearchservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticsearchservice) = 1.96.0
 
@@ -21576,11 +23700,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticsearchservice-devel
 Version:       1.96.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticsearchservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticsearchservice) = 1.96.0
 
@@ -21594,10 +23720,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-elasticloadbalancing
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21613,11 +23741,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticloadbalancing-doc
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticloadbalancing
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticloadbalancing) = 1.68.0
 
@@ -21632,11 +23762,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticloadbalancing-devel
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticloadbalancing
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticloadbalancing) = 1.68.0
 
@@ -21650,10 +23782,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-directoryservicedata
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Directory Service Data
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21669,11 +23803,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-directoryservicedata-doc
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Directory Service Data documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-directoryservicedata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directoryservicedata) = 1.4.0
 
@@ -21688,11 +23824,13 @@ AWS SDK for Ruby - AWS Directory Service Data documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-directoryservicedata-devel
 Version:       1.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Directory Service Data development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-directoryservicedata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-directoryservicedata) = 1.4.0
 
@@ -21706,10 +23844,12 @@ AWS SDK for Ruby - AWS Directory Service Data development package.
 
 %package       -n gem-aws-sdk-sagemakeredgemanager
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21725,11 +23865,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemakeredgemanager-doc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemakeredgemanager
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakeredgemanager) = 1.38.0
 
@@ -21744,11 +23886,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemakeredgemanager-devel
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemakeredgemanager
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakeredgemanager) = 1.38.0
 
@@ -21762,10 +23906,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-connectwisdomservice
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21781,11 +23927,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connectwisdomservice-doc
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connectwisdomservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectwisdomservice) = 1.41.0
 
@@ -21800,11 +23948,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connectwisdomservice-devel
 Version:       1.41.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connectwisdomservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectwisdomservice) = 1.41.0
 
@@ -21818,10 +23968,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-workspacesthinclient
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon WorkSpaces Thin Client
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -21837,11 +23989,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-workspacesthinclient-doc
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon WorkSpaces Thin Client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-workspacesthinclient
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspacesthinclient) = 1.18.0
 
@@ -21856,11 +24010,13 @@ AWS SDK for Ruby - Amazon WorkSpaces Thin Client documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-workspacesthinclient-devel
 Version:       1.18.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon WorkSpaces Thin Client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-workspacesthinclient
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-workspacesthinclient) = 1.18.0
 
@@ -21874,10 +24030,12 @@ AWS SDK for Ruby - Amazon WorkSpaces Thin Client development package.
 
 %package       -n gem-aws-sdk-marketplaceagreement
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agreement Service
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21893,11 +24051,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplaceagreement-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agreement Service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplaceagreement
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplaceagreement) = 1.14.0
 
@@ -21915,11 +24075,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplaceagreement-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Agreement Service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplaceagreement
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplaceagreement) = 1.14.0
 
@@ -21936,10 +24098,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-marketplacedeployment
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Deployment Service
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -21955,11 +24119,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplacedeployment-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Deployment Service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplacedeployment
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacedeployment) = 1.14.0
 
@@ -21978,11 +24144,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplacedeployment-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - AWS Marketplace Deployment Service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplacedeployment
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacedeployment) = 1.14.0
 
@@ -21998,69 +24166,14 @@ of the AWS SDK for Ruby.
 %endif
 
 
-%package       -n gem-aws-sdk-code-generator
-Version:       0.6.0.pre
-Release:       alt1
-Summary:       The official AWS SDK for Ruby
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Requires:      gem(kramdown) >= 0
-Requires:      gem(mustache) >= 0
-Provides:      gem(aws-sdk-code-generator) = 0.6.0
-
-%description   -n gem-aws-sdk-code-generator
-Generates the service code for the AWS SDK for Ruby
-
-
-%if_enabled    doc
-%package       -n gem-aws-sdk-code-generator-doc
-Version:       0.6.0.pre
-Release:       alt1
-Summary:       The official AWS SDK for Ruby documentation files
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-code-generator
-Group:         Development/Documentation
-BuildArch:     noarch
-
-Requires:      gem(aws-sdk-code-generator) = 0.6.0
-
-%description   -n gem-aws-sdk-code-generator-doc
-The official AWS SDK for Ruby documentation files.
-
-Generates the service code for the AWS SDK for Ruby
-
-%description   -n gem-aws-sdk-code-generator-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета aws-sdk-code-generator.
-%endif
-
-
-%if_enabled    devel
-%package       -n gem-aws-sdk-code-generator-devel
-Version:       0.6.0.pre
-Release:       alt1
-Summary:       The official AWS SDK for Ruby development package
-Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-code-generator
-Group:         Development/Ruby
-BuildArch:     noarch
-
-Requires:      gem(aws-sdk-code-generator) = 0.6.0
-
-%description   -n gem-aws-sdk-code-generator-devel
-The official AWS SDK for Ruby development package.
-
-Generates the service code for the AWS SDK for Ruby
-
-%description   -n gem-aws-sdk-code-generator-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета aws-sdk-code-generator.
-%endif
-
-
 %package       -n gem-aws-sdk-codestarnotifications
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22076,11 +24189,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-codestarnotifications-doc
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-codestarnotifications
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codestarnotifications) = 1.46.0
 
@@ -22095,11 +24210,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-codestarnotifications-devel
 Version:       1.46.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-codestarnotifications
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-codestarnotifications) = 1.46.0
 
@@ -22113,10 +24230,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-redshiftdataapiservice
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22132,11 +24251,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-redshiftdataapiservice-doc
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-redshiftdataapiservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshiftdataapiservice) = 1.50.0
 
@@ -22151,11 +24272,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-redshiftdataapiservice-devel
 Version:       1.50.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-redshiftdataapiservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-redshiftdataapiservice) = 1.50.0
 
@@ -22169,10 +24292,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-route53recoverycluster
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22188,11 +24313,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53recoverycluster-doc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53recoverycluster
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoverycluster) = 1.38.0
 
@@ -22207,11 +24334,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53recoverycluster-devel
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53recoverycluster
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoverycluster) = 1.38.0
 
@@ -22225,10 +24354,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-managedblockchainquery
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Managed Blockchain Query
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -22244,11 +24375,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-managedblockchainquery-doc
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Managed Blockchain Query documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-managedblockchainquery
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedblockchainquery) = 1.23.0
 
@@ -22267,11 +24400,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-managedblockchainquery-devel
 Version:       1.23.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon Managed Blockchain Query development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-managedblockchainquery
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-managedblockchainquery) = 1.23.0
 
@@ -22289,10 +24424,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-elasticloadbalancingv2
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22308,11 +24445,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-elasticloadbalancingv2-doc
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-elasticloadbalancingv2
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticloadbalancingv2) = 1.120.0
 
@@ -22330,11 +24469,13 @@ This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-elasticloadbalancingv2-devel
 Version:       1.120.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-elasticloadbalancingv2
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-elasticloadbalancingv2) = 1.120.0
 
@@ -22351,10 +24492,12 @@ This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-chimesdkmediapipelines
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22370,11 +24513,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-chimesdkmediapipelines-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-chimesdkmediapipelines
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmediapipelines) = 1.33.0
 
@@ -22392,11 +24537,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-chimesdkmediapipelines-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-chimesdkmediapipelines
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-chimesdkmediapipelines) = 1.33.0
 
@@ -22413,10 +24560,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-connectcampaignservice
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -22432,11 +24581,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-connectcampaignservice-doc
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-connectcampaignservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcampaignservice) = 1.28.0
 
@@ -22451,11 +24602,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-connectcampaignservice-devel
 Version:       1.28.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-connectcampaignservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-connectcampaignservice) = 1.28.0
 
@@ -22469,10 +24622,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-mainframemodernization
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22488,11 +24643,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-mainframemodernization-doc
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-mainframemodernization
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mainframemodernization) = 1.30.0
 
@@ -22507,11 +24664,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-mainframemodernization-devel
 Version:       1.30.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-mainframemodernization
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-mainframemodernization) = 1.30.0
 
@@ -22525,10 +24684,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-applicationautoscaling
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22544,11 +24705,13 @@ SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-applicationautoscaling-doc
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-applicationautoscaling
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationautoscaling) = 1.97.0
 
@@ -22563,11 +24726,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-applicationautoscaling-devel
 Version:       1.97.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-applicationautoscaling
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationautoscaling) = 1.97.0
 
@@ -22581,10 +24746,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-appintegrationsservice
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22600,11 +24767,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-appintegrationsservice-doc
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-appintegrationsservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appintegrationsservice) = 1.44.0
 
@@ -22622,11 +24791,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-appintegrationsservice-devel
 Version:       1.44.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-appintegrationsservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-appintegrationsservice) = 1.44.0
 
@@ -22643,10 +24814,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cognitoidentityprovider
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22662,11 +24835,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cognitoidentityprovider-doc
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cognitoidentityprovider
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitoidentityprovider) = 1.108.0
 
@@ -22684,11 +24859,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cognitoidentityprovider-devel
 Version:       1.108.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cognitoidentityprovider
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cognitoidentityprovider) = 1.108.0
 
@@ -22705,10 +24882,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-applicationcostprofiler
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22724,11 +24903,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-applicationcostprofiler-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-applicationcostprofiler
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationcostprofiler) = 1.35.0
 
@@ -22743,11 +24924,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-applicationcostprofiler-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-applicationcostprofiler
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationcostprofiler) = 1.35.0
 
@@ -22761,10 +24944,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-iot1clickdevicesservice
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -22780,11 +24965,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-iot1clickdevicesservice-doc
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-iot1clickdevicesservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot1clickdevicesservice) = 1.62.0
 
@@ -22802,11 +24989,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-iot1clickdevicesservice-devel
 Version:       1.62.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-iot1clickdevicesservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-iot1clickdevicesservice) = 1.62.0
 
@@ -22823,10 +25012,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-paymentcryptographydata
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Data Plane
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -22842,11 +25033,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-paymentcryptographydata-doc
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Data Plane documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-paymentcryptographydata
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-paymentcryptographydata) = 1.27.0
 
@@ -22865,11 +25058,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-paymentcryptographydata-devel
 Version:       1.27.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Payment Cryptography Data Plane development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-paymentcryptographydata
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-paymentcryptographydata) = 1.27.0
 
@@ -22887,10 +25082,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-cloudfrontkeyvaluestore
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudFront KeyValueStore
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -22906,11 +25103,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-cloudfrontkeyvaluestore-doc
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudFront KeyValueStore documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-cloudfrontkeyvaluestore
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudfrontkeyvaluestore) = 1.17.0
 
@@ -22929,11 +25128,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-cloudfrontkeyvaluestore-devel
 Version:       1.17.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby - Amazon CloudFront KeyValueStore development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-cloudfrontkeyvaluestore
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-cloudfrontkeyvaluestore) = 1.17.0
 
@@ -22951,10 +25152,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-apigatewaymanagementapi
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -22970,11 +25173,13 @@ AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-apigatewaymanagementapi-doc
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-apigatewaymanagementapi
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigatewaymanagementapi) = 1.55.0
 
@@ -22989,11 +25194,13 @@ The official AWS SDK for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-aws-sdk-apigatewaymanagementapi-devel
 Version:       1.55.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-apigatewaymanagementapi
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-apigatewaymanagementapi) = 1.55.0
 
@@ -23007,10 +25214,12 @@ The official AWS SDK for Ruby development package.
 
 %package       -n gem-aws-sdk-lexmodelbuildingservice
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23026,11 +25235,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-lexmodelbuildingservice-doc
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-lexmodelbuildingservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexmodelbuildingservice) = 1.83.0
 
@@ -23048,11 +25259,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-lexmodelbuildingservice-devel
 Version:       1.83.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-lexmodelbuildingservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-lexmodelbuildingservice) = 1.83.0
 
@@ -23069,10 +25282,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-resourcegroupstaggingapi
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23088,11 +25303,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-resourcegroupstaggingapi-doc
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-resourcegroupstaggingapi
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourcegroupstaggingapi) = 1.73.0
 
@@ -23110,11 +25327,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-resourcegroupstaggingapi-devel
 Version:       1.73.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-resourcegroupstaggingapi
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-resourcegroupstaggingapi) = 1.73.0
 
@@ -23131,10 +25350,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-route53recoveryreadiness
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -23150,11 +25371,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53recoveryreadiness-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53recoveryreadiness
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoveryreadiness) = 1.35.0
 
@@ -23172,11 +25395,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53recoveryreadiness-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53recoveryreadiness
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoveryreadiness) = 1.35.0
 
@@ -23193,10 +25418,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-databasemigrationservice
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23212,11 +25439,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-databasemigrationservice-doc
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-databasemigrationservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-databasemigrationservice) = 1.109.0
 
@@ -23234,11 +25463,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-databasemigrationservice-devel
 Version:       1.109.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-databasemigrationservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-databasemigrationservice) = 1.109.0
 
@@ -23255,10 +25486,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-migrationhuborchestrator
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -23274,11 +25507,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-migrationhuborchestrator-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-migrationhuborchestrator
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhuborchestrator) = 1.26.0
 
@@ -23296,11 +25531,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-migrationhuborchestrator-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-migrationhuborchestrator
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhuborchestrator) = 1.26.0
 
@@ -23317,10 +25554,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-costandusagereportservice
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23336,11 +25575,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-costandusagereportservice-doc
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-costandusagereportservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costandusagereportservice) = 1.68.0
 
@@ -23358,11 +25599,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-costandusagereportservice-devel
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-costandusagereportservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-costandusagereportservice) = 1.68.0
 
@@ -23379,10 +25622,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-kinesisvideowebrtcstorage
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -23398,11 +25643,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisvideowebrtcstorage-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisvideowebrtcstorage
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideowebrtcstorage) = 1.26.0
 
@@ -23420,11 +25667,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisvideowebrtcstorage-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisvideowebrtcstorage
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideowebrtcstorage) = 1.26.0
 
@@ -23441,10 +25690,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-kinesisvideoarchivedmedia
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23460,11 +25711,13 @@ Video Archived Media). This gem is part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisvideoarchivedmedia-doc
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisvideoarchivedmedia
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideoarchivedmedia) = 1.71.0
 
@@ -23482,11 +25735,13 @@ Video Archived Media). This gem is part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisvideoarchivedmedia-devel
 Version:       1.71.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisvideoarchivedmedia
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideoarchivedmedia) = 1.71.0
 
@@ -23503,10 +25758,12 @@ Video Archived Media). This gem is part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-transcribestreamingservice
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23522,11 +25779,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-transcribestreamingservice-doc
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-transcribestreamingservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transcribestreamingservice) = 1.72.0
 
@@ -23544,11 +25803,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-transcribestreamingservice-devel
 Version:       1.72.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-transcribestreamingservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-transcribestreamingservice) = 1.72.0
 
@@ -23565,10 +25826,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-migrationhubrefactorspaces
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -23584,11 +25847,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-migrationhubrefactorspaces-doc
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-migrationhubrefactorspaces
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubrefactorspaces) = 1.35.0
 
@@ -23606,11 +25871,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-migrationhubrefactorspaces-devel
 Version:       1.35.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-migrationhubrefactorspaces
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubrefactorspaces) = 1.35.0
 
@@ -23627,10 +25894,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-applicationdiscoveryservice
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23646,11 +25915,13 @@ the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-applicationdiscoveryservice-doc
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-applicationdiscoveryservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationdiscoveryservice) = 1.78.0
 
@@ -23668,11 +25939,13 @@ the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-applicationdiscoveryservice-devel
 Version:       1.78.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-applicationdiscoveryservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-applicationdiscoveryservice) = 1.78.0
 
@@ -23689,10 +25962,12 @@ the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-sagemakerfeaturestoreruntime
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23708,11 +25983,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-sagemakerfeaturestoreruntime-doc
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-sagemakerfeaturestoreruntime
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakerfeaturestoreruntime) = 1.43.0
 
@@ -23730,11 +26007,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-sagemakerfeaturestoreruntime-devel
 Version:       1.43.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-sagemakerfeaturestoreruntime
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-sagemakerfeaturestoreruntime) = 1.43.0
 
@@ -23751,10 +26030,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-marketplacecommerceanalytics
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23770,11 +26051,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplacecommerceanalytics-doc
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplacecommerceanalytics
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacecommerceanalytics) = 1.68.0
 
@@ -23792,11 +26075,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplacecommerceanalytics-devel
 Version:       1.68.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplacecommerceanalytics
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplacecommerceanalytics) = 1.68.0
 
@@ -23813,10 +26098,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-route53recoverycontrolconfig
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -23832,11 +26119,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-route53recoverycontrolconfig-doc
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-route53recoverycontrolconfig
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoverycontrolconfig) = 1.37.0
 
@@ -23854,11 +26143,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-route53recoverycontrolconfig-devel
 Version:       1.37.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-route53recoverycontrolconfig
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-route53recoverycontrolconfig) = 1.37.0
 
@@ -23875,10 +26166,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-marketplaceentitlementservice
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23894,11 +26187,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-marketplaceentitlementservice-doc
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-marketplaceentitlementservice
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplaceentitlementservice) = 1.63.0
 
@@ -23916,11 +26211,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-marketplaceentitlementservice-devel
 Version:       1.63.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-marketplaceentitlementservice
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-marketplaceentitlementservice) = 1.63.0
 
@@ -23937,10 +26234,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-kinesisvideosignalingchannels
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -23956,11 +26255,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-kinesisvideosignalingchannels-doc
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-kinesisvideosignalingchannels
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideosignalingchannels) = 1.45.0
 
@@ -23978,11 +26279,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-kinesisvideosignalingchannels-devel
 Version:       1.45.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-kinesisvideosignalingchannels
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-kinesisvideosignalingchannels) = 1.45.0
 
@@ -23999,10 +26302,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-serverlessapplicationrepository
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -24018,11 +26323,13 @@ of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-serverlessapplicationrepository-doc
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-serverlessapplicationrepository
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-serverlessapplicationrepository) = 1.69.0
 
@@ -24040,11 +26347,13 @@ of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-serverlessapplicationrepository-devel
 Version:       1.69.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-serverlessapplicationrepository
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-serverlessapplicationrepository) = 1.69.0
 
@@ -24061,10 +26370,12 @@ of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-licensemanagerusersubscriptions
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -24080,11 +26391,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-licensemanagerusersubscriptions-doc
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-licensemanagerusersubscriptions
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanagerusersubscriptions) = 1.26.0
 
@@ -24102,11 +26415,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-licensemanagerusersubscriptions-devel
 Version:       1.26.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-licensemanagerusersubscriptions
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanagerusersubscriptions) = 1.26.0
 
@@ -24123,10 +26438,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-licensemanagerlinuxsubscriptions
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.5
@@ -24142,11 +26459,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-licensemanagerlinuxsubscriptions-doc
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-licensemanagerlinuxsubscriptions
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanagerlinuxsubscriptions) = 1.25.0
 
@@ -24164,11 +26483,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-licensemanagerlinuxsubscriptions-devel
 Version:       1.25.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-licensemanagerlinuxsubscriptions
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-licensemanagerlinuxsubscriptions) = 1.25.0
 
@@ -24185,10 +26506,12 @@ part of the AWS SDK for Ruby.
 
 %package       -n gem-aws-sdk-migrationhubstrategyrecommendations
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-core) >= 3.210.0
 Requires:      gem(aws-sigv4) >= 1.1
@@ -24204,11 +26527,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-migrationhubstrategyrecommendations-doc
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk-migrationhubstrategyrecommendations
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubstrategyrecommendations) = 1.33.0
 
@@ -24226,11 +26551,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    devel
 %package       -n gem-aws-sdk-migrationhubstrategyrecommendations-devel
 Version:       1.33.0
-Release:       alt1
+Release:       alt1.1
 Summary:       The official AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk-migrationhubstrategyrecommendations
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk-migrationhubstrategyrecommendations) = 1.33.0
 
@@ -24248,11 +26575,13 @@ part of the AWS SDK for Ruby.
 %if_enabled    doc
 %package       -n gem-aws-sdk-doc
 Version:       3.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета aws-sdk
 Group:         Development/Documentation
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk) = 3.2.0
 
@@ -24270,11 +26599,13 @@ API clients for AWS services.
 %if_enabled    devel
 %package       -n gem-aws-sdk-devel
 Version:       3.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       AWS SDK for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета aws-sdk
 Group:         Development/Ruby
 BuildArch:     noarch
+Autoreq:       no
+Autoprov:      no
 
 Requires:      gem(aws-sdk) = 3.2.0
 
@@ -29010,19 +31341,6 @@ API clients for AWS services.
 %files         -n gem-aws-sdk-marketplacedeployment-devel
 %endif
 
-%files         -n gem-aws-sdk-code-generator
-%ruby_gemspecdir/aws-sdk-code-generator-0.6.0.pre.gemspec
-%ruby_gemslibdir/aws-sdk-code-generator-0.6.0.pre
-
-%if_enabled    doc
-%files         -n gem-aws-sdk-code-generator-doc
-%ruby_gemsdocdir/aws-sdk-code-generator-0.6.0.pre
-%endif
-
-%if_enabled    devel
-%files         -n gem-aws-sdk-code-generator-devel
-%endif
-
 %files         -n gem-aws-sdk-codestarnotifications
 %ruby_gemspecdir/aws-sdk-codestarnotifications-1.46.0.gemspec
 %ruby_gemslibdir/aws-sdk-codestarnotifications-1.46.0
@@ -29493,6 +31811,10 @@ API clients for AWS services.
 
 
 %changelog
+* Tue Nov 18 2025 Pavel Skrylev <majioa@altlinux.org> 1:3.2.0-alt1.1
+- ! fixed NTBFP: removed pre package
+- - disabled autoreq/prov for all the packages
+
 * Wed Nov 06 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.2.0-alt1
 - ^ 3.1.0 -> 3.2.0
 
