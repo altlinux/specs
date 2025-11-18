@@ -1,5 +1,5 @@
 Name: python3-module-av
-Version: 15.1.0
+Version: 16.0.1
 Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
@@ -7,12 +7,13 @@ License: BSD-3-Clause
 Group: Development/Python
 Url: https://pypi.org/project/av/
 
-Autoreq: yes, nocpp, nopython3
-
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-pyproject
+Autoreq: yes, nocpp, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 BuildRequires: pkgconfig(libavformat)
@@ -23,7 +24,7 @@ BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libswresample)
 
-%pyproject_runtimedeps_metadata
+%python3_set_limited_api 3.12
 
 %description
 %summary
@@ -39,15 +40,15 @@ BuildRequires: pkgconfig(libswresample)
 %install
 %pyproject_install
 
-# extensions built against stable API, drop versioned ABI reqi
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %_bindir/pyav
 %python3_sitelibdir/av
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Tue Nov 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 16.0.1-alt1
+- 16.0.1 released
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.1.0-alt1
 - 15.1.0 released
 
