@@ -2,13 +2,13 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 10.0
-%define preview .rc2
+%define preview .rel
 %define _dotnet_coreversion 10.0.0%preview
 %define _dotnet_sdkversion 10.0.100%preview
 
-%define _dotnet_corerelease 10.0.0-rc.2.25502.107
+%define _dotnet_corerelease 10.0.0
 # used for build
-%define _dotnet_sdkrelease 10.0.100-rc.2.25502.107
+%define _dotnet_sdkrelease 10.0.100
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
 
@@ -388,6 +388,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Nov 17 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0.rel-alt1
+- .NET 10.0.0 release
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0.rc2-alt1
-- .NET 1.0.0.rc2
+- .NET 10.0.0.rc2
 - initial build for ALT Sisyphus

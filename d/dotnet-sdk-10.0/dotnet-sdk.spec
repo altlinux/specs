@@ -4,17 +4,17 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define preview .rc2
+%define preview .rel
 %define _dotnet_coreversion 10.0.0%preview
 %define _dotnet_sdkversion 10.0.100%preview
 
-%define _dotnet_corerelease 10.0.0-rc.2.25502.107
-%define _dotnet_corerelease1 10.0.0-rc.2.25502.107
+%define _dotnet_corerelease 10.0.0
+%define _dotnet_corerelease1 10.0.0
 
-%define _dotnet_sdkmanifestsrelease0 10.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease0 10.0.100-rc.2
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.100-rc.2.25502.107
+%define _dotnet_sdkrelease 10.0.100
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -187,6 +187,9 @@ done
 %endif
 
 %changelog
+* Tue Nov 18 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.100.rel-alt1
+- .NET SDK 10.0.100 release
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.100.rc2-alt1
 - .NET SDK 10.0.100 rc 2
 - initial build for ALT Sisyphus

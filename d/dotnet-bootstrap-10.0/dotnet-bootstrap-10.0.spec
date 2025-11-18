@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 10.0
-%define preview .rc2
+%define preview .rel
 %define _dotnet_coreversion 10.0.0%preview
 %define _dotnet_sdkversion 10.0.100%preview
 
-%define _dotnet_corerelease 10.0.0-rc.2.25502.107
+%define _dotnet_corerelease 10.0.0
 %define _dotnet_corerelease1 %nil
 
-%define _dotnet_sdkmanifestsrelease0 10.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease0 10.0.100-rc.2
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.100-rc.2.25502.107
+%define _dotnet_sdkrelease 10.0.100
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -141,5 +141,8 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Mon Nov 17 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.100.rel-alt1
+- The .NET 10.0.0 and .NET SDK 10.0.100 releases
+
 * Wed Oct 15 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.100.rc2-alt1
 - The .NET 10.0.0-rc.2 and .NET SDK 10.0.100-rc.2 release

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 10.0
-%define preview .rc2
+%define preview .rel
 %define _dotnet_coreversion 10.0.0%preview
 
-%define _dotnet_corerelease 10.0.0-rc.2.25502.107
-%define _dotnet_corerelease1 10.0.0-rc.2.25502.107
+%define _dotnet_corerelease 10.0.0
+%define _dotnet_corerelease1 10.0.0
 
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
@@ -133,6 +133,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Tue Nov 18 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0.rel-alt1
+- ASP.NET 10.0.0 release
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0.rc2-alt1
 - ASP.NET 10 rc2
 - initial release for ALT Sisyphus
