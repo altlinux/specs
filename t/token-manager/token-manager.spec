@@ -8,7 +8,7 @@
 %endif
 
 Name:    token-manager
-Version: 5.2.3
+Version: 5.3
 Release: alt1
 
 Summary: Certificate manager for CryptoPro CSP
@@ -74,6 +74,9 @@ rm %buildroot%_sysconfdir/pam.d/cpconfig-%miss_arch \
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Wed Nov 19 2025 Andrey Cherepanov <cas@altlinux.org> 5.3-alt1
+- New version (fixes: OVE-20251119-0002 Support extra fields for cetificate check dates).
+
 * Fri Jun 27 2025 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
 - New version.
 - Change upstream to https://github.com/wolandius/token-manager.
