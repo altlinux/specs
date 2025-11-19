@@ -22,8 +22,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.3.4
-Release: alt2
+Version: 2.3.5
+Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -172,6 +172,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Mon Nov 17 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.5-alt1
+- 2.3.4 -> 2.3.5
+
 * Tue Nov 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.3.4-alt2
 - Moved numpy.testing module and related testing utilities to main package.
 - Obsoleted python3-module-numpy-tests subpackage (closes: #56559).
