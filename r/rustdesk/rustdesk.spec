@@ -1,5 +1,5 @@
 Name: rustdesk
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
@@ -30,6 +30,8 @@ BuildRequires: libXi-devel
 BuildRequires: libXtst-devel
 BuildRequires: clang-devel
 BuildRequires: glib2-devel
+BuildRequires: perl-IPC-Cmd
+BuildRequires: perl-Time-Piece
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: libpulseaudio-devel
@@ -39,6 +41,7 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel
 BuildRequires: libfuse3-devel
 BuildRequires: libpam0-devel
+BuildRequires: libssl-devel
 BuildRequires: libalsa-devel
 BuildRequires: libva-devel
 BuildRequires: libvdpau-devel
@@ -75,7 +78,7 @@ tar -xvf %SOURCE3 -C $HOME/
 rm -v vcpkg.json
 
 %build
-cargo-vendor-checksum --all
+cargo-vendor-checksum --all --ignore-missing
 #build static libs and headers via vcpkg
 export VCPKG_ROOT=$HOME/vcpkg-env
 export VCPKG_FORCE_SYSTEM_BINARIES=1
@@ -112,6 +115,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Wed Nov 19 2025 Anton Kurachenko <srebrov@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Tue Sep 23 2025 Anton Kurachenko <srebrov@altlinux.org> 1.4.2-alt1
 - New version 1.4.2.
 
