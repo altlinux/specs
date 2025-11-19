@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    mdbook
-Version: 0.4.52
+Version: 0.5.0
 Release: alt1
 
 Summary: Create modern online books from Markdown files
@@ -81,6 +81,9 @@ target/release/mdbook completions bash \
 %doc guide/book
 
 %changelog
+* Tue Nov 18 2025 Aleksandr Dovydenkov <asd@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Jul 15 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.52-alt1
 - 0.4.52
 
