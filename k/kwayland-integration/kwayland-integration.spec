@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K5init
 
@@ -12,7 +12,7 @@ License: GPL-2.0-or-later
 
 Provides: plasma5-kwayland-integration = %EVR
 Obsoletes: plasma5-kwayland-integration < %EVR
-Requires: xorg-xwayland qt5-wayland
+Requires: xorg-xwayland qt6-wayland
 
 Source: %rname-%version.tar
 
@@ -45,6 +45,12 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

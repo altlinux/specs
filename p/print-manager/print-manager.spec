@@ -3,10 +3,10 @@
 %def_disable installer
 
 %define sover 6
-%define libkcupslib libkcupslib%sover
+%define libkcups libkcups%sover
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K6init
 
@@ -30,6 +30,7 @@ Patch1: alt-lib-sover.patch
 Patch2: alt-queue-window.patch
 Patch3: alt-print-opts-i18n.patch
 
+# PackageKitQt6-for-system-config-printer
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: /usr/bin/msgcat
@@ -64,12 +65,13 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkcupslib
+%package -n %libkcups
 Group: System/Libraries
 Summary: KF6 library
 Requires: %name-common >= %EVR
 Obsoletes: libkcupslib0.2 < 1:%version-%release
-%description -n %libkcupslib
+Obsoletes: libkcupslib6 < %EVR
+%description -n %libkcups
 KF6 library
 
 
@@ -112,19 +114,24 @@ sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-co
 %_K6bin/kde-print-queue
 %_K6plug/plasma/kcms/systemsettings/*printer*.so
 %_K6plug/kf6/kded/*print*.so
+%_K6plug/plasma/applets/*print*.so
 %_K6xdgapp/*rint*.desktop
-%_K6data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K6qml/org/kde/plasma/printmanager/
 %_K6notif/printmanager.notifyrc
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*print*.xml
 
-%files -n %libkcupslib
-%_K6lib/libkcupslib.so.%sover
-%_K6lib/libkcupslib.so.*
-
+%files -n %libkcups
+%_K6lib/libkcups.so.%sover
+%_K6lib/libkcups.so.*
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

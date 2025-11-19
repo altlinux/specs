@@ -3,9 +3,11 @@
 %define sover 6
 %define libplasma5support libplasma5support%sover
 %define libplasma_geolocation_interface libplasma-geolocation-interface%sover
+%define weather_ion_sover 7
+%define libweather_ion libweather_ion%weather_ion_sover
 
 Name: plasma6-%rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K6init
 
@@ -16,12 +18,14 @@ License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-freespace-thread-timer.patch
+Patch2: alt-weather-fix-ua.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libvulkan-devel libXfixes-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-networkmanager-qt-devel
 BuildRequires: kf6-knotifications-devel kf6-solid-devel kf6-kio-devel kf6-kidletime-devel
+BuildRequires: kf6-kunitconversion-devel kf6-kholidays-devel
 BuildRequires: plasma6-libksysguard-devel plasma6-activities-devel
 
 %description
@@ -33,7 +37,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
 Conflicts: plasma5-workspace-common < 1:6
-Conflicts: plasma-workspace-common < 6.4
+Conflicts: plasma-workspace-common < 6.5
 %description common
 %name common package
 
@@ -60,10 +64,18 @@ Requires: %name-common >= %version-%release
 %description -n %libplasma_geolocation_interface
 KF6 library
 
+%package -n %libweather_ion
+Epoch: 1
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %version-%release
+%description -n %libweather_ion
+%name library
 
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build \
@@ -82,9 +94,10 @@ KF6 library
 %_K6plug/plasma5support/
 %_K6qml/org/kde/plasma/plasma5support/
 %_K6data/plasma5support/
+%_K6data/plasma/weather_legacy/
 
 %files devel
-%_K6inc/Plasma5Support/
+%_K6inc/?lasma5?upport/
 %_K6inc/plasma/geolocation/
 %_K6link/lib*.so
 %_K6lib/cmake/Plasma5Support/
@@ -92,12 +105,20 @@ KF6 library
 %files -n %libplasma5support
 %_K6lib/libPlasma5Support.so.*
 %_K6lib/libPlasma5Support.so.%sover
-
 %files -n %libplasma_geolocation_interface
 %_K6lib/libplasma-geolocation-interface.so.*
 %_K6lib/libplasma-geolocation-interface.so.%sover
+%files -n %libweather_ion
+%_K6lib/libweather_ion.so.*
+%_K6lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

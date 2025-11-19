@@ -5,7 +5,7 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -16,7 +16,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: kf6-kirigami
-#Requires: systemd-coredump
+Requires: /usr/bin/coredumpctl
 #Requires: python3(psutil) python3(pygdbmi) python3(sentry_sdk)
 
 Provides: plasam5-drkonqi = 1:%version-%release
@@ -81,6 +81,12 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

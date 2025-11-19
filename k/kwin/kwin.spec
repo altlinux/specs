@@ -16,7 +16,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K6init
 
@@ -71,7 +71,7 @@ BuildRequires: kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-deve
 BuildRequires: kf6-kxmlgui-devel  kf6-solid-devel kf6-sonnet-devel kf6-kidletime-devel
 BuildRequires: kf6-kirigami-devel kf6-krunner-devel kf6-kglobalaccel-devel kf6-ksvg-devel
 BuildRequires: kscreenlocker-devel plasma6-breeze-devel plasma6-kdecoration-devel plasma6-activities-devel
-BuildRequires: plasma6-kglobalacceld-devel plasma6-kwayland-devel
+BuildRequires: plasma6-kglobalacceld-devel plasma6-kwayland-devel knighttime-devel
 
 %description
 KDE Window Manager
@@ -201,6 +201,12 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

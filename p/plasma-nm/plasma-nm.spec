@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -239,15 +239,15 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %doc LICENSES/*
 %_K6lib/libplasmanm_*.so
 %_K6plug/kf6/kded/networkmanagement.so
+%_K6plug/plasma/applets/*networkmanagement*.so
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*networkmanagement*.so
 %_K6qml/org/kde/plasma/networkmanagement/
 %_K6xdgapp/*networkmanagement*.desktop
 %_K6xdgapp/*vpnimport*.desktop
 %_K6data/*networkmanagement/
-%_K6data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K6notif/networkmanagement.notifyrc
 %_datadir/qlogging-categories6/*.*categories
-%_datadir/metainfo/*.xml
+#%_datadir/metainfo/*.xml
 
 %files maxi
 %files connect-mobile
@@ -282,6 +282,12 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

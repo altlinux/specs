@@ -8,7 +8,7 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K6init
 
@@ -27,6 +27,7 @@ BuildRequires: libfreerdp3-devel libwinpr3-devel xfreerdp3
 BuildRequires: libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
 BuildRequires: libxkbcommon-devel
+BuildRequires: libpam0-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kcrash-devel kf6-kconfig-devel kf6-kdbusaddons-devel kf6-kcmutils-devel kf6-ki18n-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kstatusnotifieritem-devel kf6-kconfigwidgets-devel
@@ -66,12 +67,12 @@ Requires: %name-common >= %EVR
 
 %install
 %K6install
-#%buildroot/%_userunitdir/app-org.kde.krdpserver.service
-mkdir -p %buildroot/%_userunitdir/plasma-workspace@.target.d/
-ALIAS=`grep '^Alias=' %buildroot/%_userunitdir/app-org.kde.krdpserver.service | tail -n 1 | sed 's|Alias=||'`
-[ -n "$ALIAS" ] || exit 1
-ln -sr %buildroot/%_userunitdir/app-org.kde.krdpserver.service "%buildroot/%_userunitdir/plasma-workspace@.target.d/$ALIAS"
-ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
+# service should never be enabled by default
+#mkdir -p %buildroot/%_userunitdir/plasma-workspace@.target.d/
+#ALIAS=`grep '^Alias=' %buildroot/%_userunitdir/app-org.kde.krdpserver.service | tail -n 1 | sed 's|Alias=||'`
+#[ -n "$ALIAS" ] || exit 1
+#ln -sr %buildroot/%_userunitdir/app-org.kde.krdpserver.service "%buildroot/%_userunitdir/plasma-workspace@.target.d/$ALIAS"
+#ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
 
 %find_lang %name --with-kde --all-name
 
@@ -83,7 +84,8 @@ ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
 %_K6plug/plasma/kcms/systemsettings/*krdp*.so
 %_K6xdgapp/*krdp*.desktop
 %_userunitdir/*krdp*.service
-%_userunitdir/*/*krdp*.service
+#%_userunitdir/*/*krdp*.service
+%_user_presetdir/*krdp*.preset
 %_datadir/qlogging-categories6/*.*categories
 #%_datadir/metainfo/*.xml
 
@@ -96,6 +98,12 @@ ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
 %_K6link/lib*.so
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

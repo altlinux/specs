@@ -6,15 +6,15 @@
 %def_enable qtwebengine
 %endif
 
-%define plasmacomicprovidercore_sover 6
-%define libplasmacomicprovidercore libplasmacomicprovidercore%plasmacomicprovidercore_sover
-%define plasmaweatherprivate_sover 6
-%define libplasmaweatherprivate libplasmaweatherprivate%plasmaweatherprivate_sover
-%define plasmapotdprovidercore_sover 6
-%define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
+%define sover 6
+%define libplasmacomicprovidercore libplasmacomicprovidercore%sover
+%define libplasmapotdprovidercore libplasmapotdprovidercore%sover
+%define libplasmaweatherprivate libplasmaweatherprivate%sover
+%define libplasmaweatherdata libplasmaweatherdata%sover
+%define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -42,7 +42,7 @@ Patch1: alt-sover.patch
 Patch2: alt-def-dict.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
-BuildRequires: extra-cmake-modules gcc-c++ qt6-declarative-devel  qt6-declarative-devel qt6-5compat-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt6-declarative-devel  qt6-declarative-devel qt6-svg-devel qt6-5compat-devel
 %if_enabled qtwebengine
 BuildRequires: qt6-webengine-devel
 %endif
@@ -55,7 +55,7 @@ BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kparts-devel kf6-krunner-devel kf6-kservice-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel 
-BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-knewstuff-devel
+BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-knewstuff-devel kf6-ksvg-devel
 BuildRequires: kf6-kdeclarative-devel kf6-kholidays-devel kf6-networkmanager-qt-devel
 BuildRequires: plasma6-lib-devel plasma6-activities-devel plasma6-plasma5support-devel
 BuildRequires: plasma-workspace-devel plasma6-libksysguard-devel
@@ -75,7 +75,7 @@ Obsoletes: plasma5-addons-common < 1:%version-%release
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 Conflicts: plasma5-addons-devel < 1:%version-%release
 %description devel
 The %name-devel package contains libraries and header files for
@@ -83,24 +83,39 @@ developing applications that use %name.
 
 %package -n %libplasmacomicprovidercore
 Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common >= %EVR
 %description -n %libplasmacomicprovidercore
-KF6 library
+%name library.
 
 %package -n %libplasmaweatherprivate
 Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common >= %EVR
 %description -n %libplasmaweatherprivate
-KF6 library
+%name library.
+
+%name library.
+%package -n %libplasmaweatherion
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libplasmaweatherion
+%name library.
+
+%package -n %libplasmaweatherdata
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libplasmaweatherdata
+%name library.
 
 %package -n %libplasmapotdprovidercore
 Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common = %EVR
+Summary: %name library
+Requires: %name-common >= %EVR
 %description -n %libplasmapotdprovidercore
-KF6 library
+%name library.
 
 %prep
 %setup -n %rname-%version
@@ -108,7 +123,7 @@ KF6 library
 %patch2 -p1
 
 sed -i "s|@PROJECT_VERSION@|%version|" wallpapers/potd/plugins/CMakeLists.txt
-sed -i "s|@PROJECT_VERSION_MAJOR@|%plasmapotdprovidercore_sover|" wallpapers/potd/plugins/CMakeLists.txt
+sed -i "s|@PROJECT_VERSION_MAJOR@|%sover|" wallpapers/potd/plugins/CMakeLists.txt
 
 # exclude applet
 sed -i '/^add_subdirectory(comic)/d' applets/CMakeLists.txt
@@ -145,6 +160,8 @@ touch touch-%_arch
 %_K6plug/kf6/krunner/*.so
 %_K6plug/kf6/kded/*.so
 %_K6plug/kwin/effects/configs/*.so
+%dir %_K6plug/plasma/weather_ions/
+%_K6plug/plasma/weather_ions/*.so
 %_K6qml/org/kde/plasma/private/*/
 %_K6qml/org/kde/plasmacalendar/*/
 %_K6qml/org/kde/plasma/wallpapers/potd/
@@ -169,14 +186,25 @@ touch touch-%_arch
 
 #%files -n %libplasmacomicprovidercore
 #%_K6lib/libplasmacomicprovidercore.so.*
-#%_K6lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
+#%_K6lib/libplasmacomicprovidercore.so.%sover
+%files -n %libplasmaweatherdata
+%_K6lib/libplasmaweatherdata.so.*
+%_K6lib/libplasmaweatherdata.so.%sover
+%files -n %libplasmaweatherion
+%_K6lib/libplasmaweatherion.so.*
+%_K6lib/libplasmaweatherion.so.%sover
 %files -n %libplasmapotdprovidercore
 %_K6lib/libplasmapotdprovidercore.so.*
-%_K6lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
-
+%_K6lib/libplasmapotdprovidercore.so.%sover
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 

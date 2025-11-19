@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 Epoch: 1
 %K6init
@@ -69,6 +69,12 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.6-alt1
 - new version
 

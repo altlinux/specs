@@ -6,33 +6,25 @@
 
 %define x11confdir %_sysconfdir/X11
 
-%define kworkspace6_sover 6
-%define libkworkspace6 libkworkspace6_%kworkspace6_sover
-%define libbatterycontrol libbatterycontrol%kworkspace6_sover
-%define libkmpris libkmpris%kworkspace6_sover
-%define taskmanager_sover 6
-%define libtaskmanager libtaskmanager%taskmanager_sover
-%define weather_ion_sover 7
-%define libweather_ion libweather_ion%weather_ion_sover
-%define colorcorrect_sover 6
-%define libcolorcorrect libcolorcorrect%colorcorrect_sover
+%define sover 6
+%define libkworkspace6 libkworkspace6_%sover
+%define libbatterycontrol libbatterycontrol%sover
+%define libkmpris libkmpris%sover
+%define libtaskmanager libtaskmanager%sover
+%define libkfontinst libkfontinst%sover
+%define libkfontinstui libkfontinstui%sover
+%define libkrdb libkrdb%sover
+%define libklipper libklipper%sover
+%define libklookandfeel libklookandfeel%sover
 %define notificationmanager_sover 1
 %define libnotificationmanager libnotificationmanager%notificationmanager_sover
-%define kfontinst_sover 6
-%define libkfontinst libkfontinst%kfontinst_sover
-%define kfontinstui_sover 6
-%define libkfontinstui libkfontinstui%kfontinstui_sover
-%define krdb_sover 6
-%define libkrdb libkrdb%krdb_sover
-%define klipper_sover 6
-%define libklipper libklipper%klipper_sover
 
 %def_enable qalculate
 %def_enable appstream
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 Epoch: 1
 %K6init
@@ -64,7 +56,7 @@ Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
 Requires: kwin kwin-x11
 Requires: kf6-kirigami-addons
 #Requires: kio-fuse
-#Requires: appmenu-gtk-module
+#Requires: vala-panel-appmenu-gtk-module
 
 Source: %rname-%version.tar
 Source1: freememorynotifier.po
@@ -118,7 +110,6 @@ Patch137: alt-systemd-boot.patch
 Patch138: alt-digital-clock-tz.patch
 Patch139: alt-locales-list.patch
 Patch140: alt-watch-wallpaper.patch
-Patch141: alt-weather-fix-ua.patch
 #
 Patch143: alt-run-etc-profile.patch
 Patch144: alt-def-lookandfeel.patch
@@ -170,7 +161,7 @@ BuildRequires: kf6-kquickcharts-devel kf6-ksvg-devel kf6-kstatusnotifieritem-dev
 BuildRequires: plasma6-lib-devel plasma6-activities-devel plasma6-kwayland-devel
 BuildRequires: kscreenlocker-devel plasma6-breeze-devel plasma6-layer-shell-qt-devel
 BuildRequires: plasma6-kpipewire-devel kwin-devel plasma6-libkscreen-devel plasma6-libksysguard-devel
-BuildRequires: plasma6-plasma5support-devel plasma6-activities-stats-devel
+BuildRequires: plasma6-plasma5support-devel plasma6-activities-stats-devel knighttime-devel
 BuildRequires: kf6-kirigami-addons-devel
 #BuildRequires: kde6-libkexiv2-devel
 
@@ -237,20 +228,6 @@ Requires: %name-common >= %EVR
 %description -n %libtaskmanager
 %name library
 
-%package -n %libweather_ion
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %EVR
-%description -n %libweather_ion
-%name library
-
-%package -n %libcolorcorrect
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %EVR
-%description -n %libcolorcorrect
-%name library
-
 %package -n %libnotificationmanager
 Group: System/Libraries
 Summary: %name library
@@ -300,6 +277,13 @@ Requires: %name-common >= %EVR
 %description -n %libkmpris
 %name library
 
+%package -n %libklookandfeel
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libklookandfeel
+%name library
+
 
 %prep
 %setup -n %rname-%version
@@ -342,7 +326,6 @@ Requires: %name-common >= %EVR
 %patch138 -p1
 %patch139 -p1
 #%patch140 -p1 -b .watch_wallpaper
-%patch141 -p1
 #
 %patch143 -p1
 %patch144 -p1
@@ -500,7 +483,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6plug/plasma5support/
 %_K6plug/kcm_freememorynotifier.so
 %_K6qml/org/kde/taskmanager/
-%_K6qml/org/kde/colorcorrect/
 %_K6qml/org/kde/notificationmanager/
 %_K6data/knsrcfiles/*.knsrc
 %_K6data/plasma/
@@ -515,6 +497,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6data/konqsidebartng/
 %_K6data/desktop-directories/*
 %_K6data/kxmlgui?/kfontview/
+%_K6data/kxmlgui?/kfontviewpart/
 %_K6data/solid/actions/*.desktop
 %dir %_K6data/timezonefiles/
 %_K6data/timezonefiles/timezones.json
@@ -557,45 +540,49 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6lib/cmake/KRunnerAppDBusInterface/
 %_K6lib/cmake/KSMServerDBusInterface/
 %_K6lib/cmake/Lib*/
+%_K6lib/cmake/Krdb/
 %_K6dbus_iface/*.xml
 #%_K6data/kdevappwizard/templates/*
 
 %files -n %libkworkspace6
 %_K6lib/libkworkspace6.so.*
-%_K6lib/libkworkspace6.so.%kworkspace6_sover
+%_K6lib/libkworkspace6.so.%sover
 %files -n %libtaskmanager
 %_K6lib/libtaskmanager.so.*
-%_K6lib/libtaskmanager.so.%taskmanager_sover
-%files -n %libweather_ion
-%_K6lib/libweather_ion.so.*
-%_K6lib/libweather_ion.so.%weather_ion_sover
-%files -n %libcolorcorrect
-%_K6lib/libcolorcorrect.so.*
-%_K6lib/libcolorcorrect.so.%colorcorrect_sover
+%_K6lib/libtaskmanager.so.%sover
+%files -n %libklookandfeel
+%_K6lib/libklookandfeel.so.*
+%_K6lib/libklookandfeel.so.%sover
 %files -n %libnotificationmanager
 %_K6lib/libnotificationmanager.so.*
 %_K6lib/libnotificationmanager.so.%notificationmanager_sover
 %files -n %libkfontinst
 %_K6lib/libkfontinst.so.*
-%_K6lib/libkfontinst.so.%kfontinst_sover
+%_K6lib/libkfontinst.so.%sover
 %files -n %libkfontinstui
 %_K6lib/libkfontinstui.so.*
-%_K6lib/libkfontinstui.so.%kfontinstui_sover
+%_K6lib/libkfontinstui.so.%sover
 %files -n %libkrdb
 %_K6lib/libkrdb.so.*
-%_K6lib/libkrdb.so.%krdb_sover
+%_K6lib/libkrdb.so.%sover
 %files -n %libklipper
 %_K6lib/libklipper.so.*
-%_K6lib/libklipper.so.%klipper_sover
+%_K6lib/libklipper.so.%sover
 %files -n %libbatterycontrol
 %_K6lib/libbatterycontrol.so.*
-%_K6lib/libbatterycontrol.so.%kworkspace6_sover
+%_K6lib/libbatterycontrol.so.%sover
 %files -n %libkmpris
 %_K6lib/libkmpris.so.*
-%_K6lib/libkmpris.so.%kworkspace6_sover
+%_K6lib/libkmpris.so.%sover
 
 
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.4.6-alt1
 - new version
 

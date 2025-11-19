@@ -12,8 +12,11 @@
 %def_enable accounts
 %endif
 
+%define sover 6
+%define libkglobalaccelmodel libkglobalaccelmodel%sover
+
 Name: %rname
-Version: 6.4.6
+Version: 6.5.3
 Release: alt1
 %K6init
 
@@ -67,7 +70,7 @@ Patch24: alt-fix-resizing-pager-applet.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
 BuildRequires: boost-devel extra-cmake-modules
-BuildRequires: qt6-declarative-devel qt6-phonon-devel qt6-svg-devel qt6-5compat-devel
+BuildRequires: qt6-declarative-devel qt6-phonon-devel qt6-svg-devel qt6-shadertools-devel qt6-5compat-devel
 %if_enabled scim
 BuildRequires: scim-devel
 %endif
@@ -139,6 +142,15 @@ Requires: polkit-kde-plasma-workspace
 %description -n polkit-kde-plasma-desktop
 Common polkit files for %name
 
+%package -n %libkglobalaccelmodel
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkglobalaccelmodel
+%name library
+
+# Epoch change
+
 %package -n sddm-theme-breeze
 Epoch: 1
 Group: Graphical desktop/KDE
@@ -148,7 +160,6 @@ Requires: qt6-5compat kf6-kirigami plasma-workspace-qml
 Buildarch: noarch
 %description -n sddm-theme-breeze
 SDDM breeze theme
-
 
 %prep
 %setup -n %rname-%version
@@ -223,6 +234,7 @@ done
 %_K6plug/kf6/krunner/*.so
 %_K6plug/plasma/kcminit/
 %_K6plug/plasma/kcms/*/*.so
+%_K6plug/plasma/applets/org.kde.*.so
 %_K6qml/org/kde/plasma/private/*/
 %_K6qml/org/kde/private/*/
 %_K6qml/org/kde/plasma/activityswitcher/
@@ -259,7 +271,17 @@ done
 #%_K6link/lib*.so
 %_K6dbus_iface/*.xml
 
+%files -n %libkglobalaccelmodel
+%_K6lib/libkglobalaccelmodel.so.*
+%_K6lib/libkglobalaccelmodel.so.%sover
+
 %changelog
+* Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
+- new version
+
+* Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.2-alt1
+- new version
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.4.6-alt1
 - new version
 
