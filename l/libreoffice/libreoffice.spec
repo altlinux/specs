@@ -42,9 +42,9 @@
 # doesn't fit into 4Gb limit of the payload
 %define optflags_debug -g1
 
-Name: LibreOffice-still
-%define hversion 25.2
-%define urelease 6.2
+Name: libreoffice
+%define hversion 25.8
+%define urelease 2.2
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -52,35 +52,30 @@ Release: alt1
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
 
-Summary: LibreOffice Productivity Suite (Still version)
-License: LGPL-3.0+ and MPL-2.0
+Summary: LibreOffice Productivity Suite
+# default new files are: MPLv2
+# older files are typically: MPLv2 incorporating work under ASLv2
+# nlpsolver is: LGPLv3
+# icon-themes/karasa_jaga/COPYING: LGPLv3+
+# icon-themes/colibre/COPYING-ICONS: CC0
+# lotuswordpro is: Either LGPL 2.1 or SISSL 1.1
+# wizards/source/access2base: Either MPLv2 or LGPLv3+
+# writerperfect/source/common/DirectoryStream.cxx: MPLv2 or LGPLv2+
+# extras/source/autocorr/lang/hr/license.md: GPL 2.0 or LGPL2 or MPLv1.1
+# odk/examples/java/...: 3 clause BSD
+License: MPL-2.0 AND Apache-2.0 AND LGPL-3.0-only AND LGPL-3.0-or-later AND CC0-1.0 AND BSD-3-Clause AND (LGPL-2.1-only OR SISSL) AND (MPL-2.0 OR LGPL-3.0-or-later) AND (MPL-2.0 OR LGPL-2.1-or-later) AND (MPL-1.1 OR GPL-2.0-only OR LGPL-2.1-only) AND MIT
 Group: Office
 URL: http://www.libreoffice.org
 
 ExcludeArch: armh
 
-Requires: %name-integrated = %EVR
-Requires: %name-common = %EVR
-Requires: %name-mimetypes = %EVR
-Requires: %name-extensions = %EVR
-
-Provides: %name-full = %EVR
-Provides: libreoffice = %EVR
-Obsoletes: libreoffice < 3.99
-Obsoletes: %name-full < %EVR
-Obsoletes: LibreOffice4
-Conflicts: LibreOffice
-
 %define with_lang ru be de fr uk pt-BR es kk tr tt el uz ky
-#Requires: java xdg-utils hunspell-en hyphen-en mythes-en
-#Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
-Requires: gst-libav
 
 Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: libreoffice-ru-24.8.6.2.tar.gz
+Source4: libreoffice-25.8.2.2-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -102,14 +97,15 @@ Patch402: alt-002-tmpdir.patch
 Patch403: alt-003-shortint.patch
 Patch404: alt-004-unversioned-desktop-files.patch
 Patch405: alt-005-mkdir-for-external-project.patch
-Patch406: alt-006-fix-appdata.patch
 Patch407: alt-007-vnd.ms-word-mimetype.patch
 Patch410: alt-010-svg-icons-1.patch
 Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+%ifarch loongarch64
 Patch501: alt-012-fix-skia-build-on-loongarch64.patch
+%endif
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -129,7 +125,8 @@ Patch700: alt-700-external-project-concurrency.patch
 
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: mdds-devel >= 3.0.0
 BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
 %if_with openssl
 BuildRequires: libssl-devel
@@ -194,7 +191,7 @@ BuildRequires: fontforge
 # 6.4.5.2
 %if_with orcus
 # Build with system liborcus
-BuildRequires: liborcus-devel >= 0.15.0
+BuildRequires: liborcus-devel >= 0.20.2
 %else
 # Build with bundled liborcus
 BuildRequires: boost-devel-headers boost-interprocess-devel boost-program_options-devel gcc-c++ zlib-devel boost-filesystem-devel mdds-devel python3-devel
@@ -226,16 +223,57 @@ BuildRequires: frozen-devel
 BuildRequires: libargon2-devel
 # 24.8
 BuildRequires: rhino
+# 25.8
+BuildRequires: libzstd-devel
 
 %if_without python
 BuildRequires: python3-dev
 %endif
-
 %if_with dconf
 BuildRequires: libdconf-devel
 %endif
-
 BuildRequires: gnu-config
+
+AutoReqProv: yes, noshell, nopython
+
+Provides: %name-full = %EVR
+Obsoletes: %name-full < %EVR
+Obsoletes: LibreOffice4
+Provides: LibreOffice = %EVR
+Provides: LibreOffice-still = %EVR
+Obsoletes: LibreOffice < %EVR
+Obsoletes: LibreOffice-still < %EVR
+# common
+Obsoletes: LibreOffice4-common
+Provides: LibreOffice-common = %EVR
+Provides: LibreOffice-still-common = %EVR
+Obsoletes: LibreOffice-common < %EVR
+Obsoletes: LibreOffice-still-common < %EVR
+# Strict requirements
+%if_with java
+Requires: java-headless >= 9.0.0
+Requires: pentaho-reporting-flow-engine
+%endif
+# integrated
+Provides: LibreOffice-integrated = %EVR
+Provides: LibreOffice-still-integrated = %EVR
+Obsoletes: LibreOffice-integrated < %EVR
+Obsoletes: LibreOffice-still-integrated < %EVR
+Obsoletes: LibreOffice4-integrated
+# mimetypes
+Provides: LibreOffice-mimetypes = %EVR
+Provides: LibreOffice-still-mimetypes = %EVR
+Obsoletes: LibreOffice-mimetypes < %EVR
+Obsoletes: LibreOffice-still-mimetypes < %EVR
+Obsoletes: LibreOffice4-mimetypes
+# extensions
+Provides: LibreOffice-extensions = %EVR
+Provides: LibreOffice-still-extensions = %EVR
+Obsoletes: LibreOffice-extensions < %EVR
+Obsoletes: LibreOffice-still-extensions < %EVR
+Obsoletes: LibreOffice4-extensions
+# Other runtime requirements
+Requires: gst-libav
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -244,47 +282,30 @@ office suites.
 This package provides maximum possible installation of %name along winth
 other office packages, except of language packs and GNOME/KDE bindings.
 
-%package common
-Summary: Basic installation of %name
-Group: Office
-Obsoletes: LibreOffice4-common
-Conflicts: LibreOffice-common
-AutoReqProv: yes, noshell, nopython
-# Strict requirements
-%if_with java
-Requires: java-headless >= 9.0.0
-Requires: pentaho-reporting-flow-engine
-%endif
-
-%description common
-Common part of %name that does not interfere with other packages
-
-%package integrated
-Summary: Binaries, icons and desktop files for %name
-Group: Office
-Provides: %uname = %EVR
-Obsoletes: LibreOffice4-integrated
-Conflicts: LibreOffice-integrated
-Requires: %name-common = %EVR
-%description integrated
-Wrapper scripts, icons and desktop files for running %name
-
 %package gtk3
 Summary: GTK3 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
+Requires: %name = %EVR
+Provides: LibreOffice-gtk3 = %EVR
+Provides: LibreOffice-still-gtk3 = %EVR
+Obsoletes: LibreOffice-gtk3 < %EVR
+Obsoletes: LibreOffice-still-gtk3 < %EVR
+Requires: %name = %EVR
+Provides: LibreOffice-gnome = %EVR
 Provides: %name-gnome = %EVR
 Obsoletes: %name-gnome < %EVR
-Conflicts: LibreOffice-gtk3
 %description gtk3
 GTK3 extensions for %name
 
 %package gtk4
 Summary: GTK4 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
+Requires: %name = %EVR
+Provides: LibreOffice-gtk4 = %EVR
+Provides: LibreOffice-still-gtk4 = %EVR
+Obsoletes: LibreOffice-gtk4 < %EVR
+Obsoletes: LibreOffice-still-gtk4 < %EVR
+Requires: %name = %EVR
 %description gtk4
 GTK3 extensions for %name
 
@@ -292,9 +313,12 @@ GTK3 extensions for %name
 %package qt5
 Summary: Qt5 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
-Conflicts: LibreOffice-qt5
+Requires: %name = %EVR
+Provides: LibreOffice-qt5 = %EVR
+Provides: LibreOffice-still-qt5 = %EVR
+Obsoletes: LibreOffice-qt5 < %EVR
+Obsoletes: LibreOffice-still-qt5 < %EVR
+Requires: %name = %EVR
 %description qt5
 qt5 extensions for %name
 %endif
@@ -303,9 +327,12 @@ qt5 extensions for %name
 %package qt6
 Summary: Qt6 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
-Conflicts: LibreOffice-qt6
+Requires: %name = %EVR
+Provides: LibreOffice-qt6 = %EVR
+Provides: LibreOffice-still-qt6 = %EVR
+Obsoletes: LibreOffice-qt6 < %EVR
+Obsoletes: LibreOffice-still-qt6 < %EVR
+Requires: %name = %EVR
 Provides: LibreOffice-still-qt5 = %EVR
 Obsoletes: LibreOffice-still-qt5 < %EVR
 %description qt6
@@ -316,8 +343,12 @@ qt6 extensions for %name
 %package kde5
 Summary: KDE5 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
+Requires: %name = %EVR
+Provides: LibreOffice-kde5 = %EVR
+Provides: LibreOffice-still-kde5 = %EVR
+Obsoletes: LibreOffice-kde5 < %EVR
+Obsoletes: LibreOffice-still-kde5 < %EVR
+Requires: %name = %EVR
 Provides:  %name-kde4 = %EVR
 Obsoletes: %name-kde4 < %EVR
 Provides:  LibreOffice4-kde4 = %EVR
@@ -330,63 +361,49 @@ KDE5 extensions for %name
 %package kde6
 Summary: KDE5 Extensions for %name
 Group:  Office
-Requires: %uname = %EVR
-Requires: %name-common = %EVR
+Requires: %name = %EVR
+Provides: LibreOffice-kde6 = %EVR
+Provides: LibreOffice-still-kde6 = %EVR
+Obsoletes: LibreOffice-kde6 < %EVR
+Obsoletes: LibreOffice-still-kde6 < %EVR
+Requires: %name = %EVR
 Provides:  %name-kde4 = %EVR
 Obsoletes: %name-kde4 < %EVR
 Provides:  LibreOffice4-kde4 = %EVR
 Obsoletes: LibreOffice4-kde4 < %EVR
-Conflicts: %name-kde5
 Provides: LibreOffice-still-kde5 = %EVR
 Obsoletes: LibreOffice-still-kde5 < %EVR
 %description kde6
 KDE6 extensions for %name
 %endif
 
-%package -n libreofficekit-still
+%package -n libreofficekit
 Summary: A library providing access to LibreOffice functionality
 Group: Graphical desktop/GNOME
 License: MPL-2.0
-Conflicts: libreofficekit
-%description -n libreofficekit-still
+Provides: libreofficekit-still = %EVR
+Obsoletes: libreofficekit-still < %EVR
+%description -n libreofficekit
 LibreOfficeKit can be used to access LibreOffice functionality
 through C/C++, without any need to use UNO.
 
-%package -n libreofficekit-still-devel
+%package -n libreofficekit-devel
 Summary: Development files for libreofficekit
 Group: Development/GNOME and GTK+
-Conflicts: libreofficekit-devel
+Provides: libreofficekit-still-devel = %EVR
+Obsoletes: libreofficekit-still-devel < %EVR
 License: MPL-2.0
-%description -n libreofficekit-still-devel
+%description -n libreofficekit-devel
 The libreofficekit-devel package contains libraries and header files for
 developing applications that use libreofficekit.
 
-%package extensions
-Summary: Additional extensions for %name
-Group:  Office
-Requires: %uname = %EVR
-AutoReqProv: yes, noshell, nopython
-Obsoletes: LibreOffice4-extensions
-Conflicts: LibreOffice-extensions
-%description extensions
-Additional extensions for %name.
-One can choose either to install this package at once,
-or to download and install (possibly newer) extensions manually.
-
-%package mimetypes
-Summary: Mimetype keys support for %name
-Group: Office
-BuildArch: noarch
-Obsoletes: LibreOffice4-mimetypes
-Conflicts: LibreOffice-mimetypes
-%description mimetypes
-%name is distributed along with some mimetype settings and files.
-This package installs them.
-
 %package sdk
 Group: Development/Other
-Summary: Software Development Kit for LibreOffice (Still version)
-Conflicts: LibreOffice-sdk
+Summary: Software Development Kit for LibreOffice
+Provides: LibreOffice-sdk = %EVR
+Provides: LibreOffice-still-sdk = %EVR
+Obsoletes: LibreOffice-sdk < %EVR
+Obsoletes: LibreOffice-still-sdk < %EVR
 
 %description sdk
 The SDK is a development kit for LibreOffice 5.3, which
@@ -403,7 +420,6 @@ components, CalcAddin functions). It is compatible over several
 versions because the API remains unaffected and will only be extended
 with new functions.
 
-# TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
 %define langpack(l:n:s:mh) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
@@ -414,10 +430,14 @@ with new functions.
 %package %{pkgname} \
 Summary: %{langname} language pack for %name \
 Group:  Office \
-Requires: %uname = %EVR \
+Requires: %name = %EVR \
 %{-m:Requires: mythes-%lang} \
 %{-h:Requires: hyphen-%lang} \
 %{-s:Requires: hunspell-%spellname} \
+Provides: LibreOffice-%{pkgname} = %EVR \
+Provides: LibreOffice-still-%{pkgname} = %EVR \
+Obsoletes: LibreOffice-%{pkgname} < %EVR \
+Obsoletes: LibreOffice-still-%{pkgname} < %EVR \
 Obsoletes: LibreOffice4-%{pkgname} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
@@ -428,7 +448,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
+tar xf %SOURCE4 --strip-components=0 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -441,14 +461,15 @@ tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 %patch403 -p1
 %patch404 -p1
 %patch405 -p1
-%patch406 -p1
 %patch407 -p1
 #patch410 -p1
 #patch411 -p1
 #patch412 -p1
 
 %patch500 -p0
+%ifarch loongarch64
 %patch501 -p2
+%endif
 
 %patch700 -p1
 
@@ -593,7 +614,6 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-rhino-jar=%_datadir/java/rhino.jar \
         \
         --enable-ext-nlpsolver \
-        --enable-ext-numbertext \
         --enable-ext-wiki-publisher \
   \
         --enable-release-build \
@@ -780,30 +800,23 @@ install -Dpm0644 sysui/desktop/man/unopkg.1 %buildroot%_man1dir/unopkg.1
 mkdir -p %buildroot%_iconsdir/hicolor/symbolic/apps
 tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
-%files
-
-%files sdk
-%lodir/sdk
-
-%files common -f files.nolang
+%files -f files.nolang
 %exclude /gid_Module*
-%_bindir/libreoffice
-%_bindir/unopkg
+%_bindir/*
 %config %conffile
-#lodir/share/extensions/package.txt
 %_iconsdir/*/*/apps/libreoffice-*.*g
 %_datadir/metainfo/*.appdata.xml
-%_man1dir/libreoffice.1*
-%_man1dir/unopkg.1*
-
-%files integrated
-%_bindir/*
-%exclude %_bindir/libreoffice
-%exclude %_bindir/unopkg
 %_desktopdir/libreoffice-*.desktop
 %_iconsdir/*/*/mimetypes/*
 %_iconsdir/*/*/apps/*
-%exclude %_iconsdir/*/*/apps/libreoffice-*.*g
+%_datadir/mime/packages/libreoffice%hversion.xml
+%_datadir/mimelnk/application/*
+%lodir/share/extensions/*
+%_man1dir/libreoffice.1*
+%_man1dir/unopkg.1*
+
+%files sdk
+%lodir/sdk
 
 %files gtk3 -f files.gtk3
 
@@ -829,14 +842,6 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_datadir/metainfo/org.libreoffice.kde.metainfo.xml
 %endif
 
-%files extensions
-%lodir/share/extensions/*
-#exclude %lodir/share/extensions/package.txt
-
-%files mimetypes
-%_datadir/mime/packages/libreoffice%hversion.xml
-%_datadir/mimelnk/application/*
-
 %langpack -m -h -l ru -s ru-lebedev -n Russian
 %langpack    -h -l be -s be -n Belorussian
 %langpack -m -h -l de -s de -n German
@@ -851,15 +856,19 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %langpack       -l uz -s uz -n Uzbek
 %langpack       -l ky -s ky -n Kyrgyz
 
-%files -n libreofficekit-still
+%files -n libreofficekit
 #_typelibdir/LOKDocView-*.typelib
 %_libdir/liblibreofficekitgtk.so
 
-%files -n libreofficekit-still-devel
+%files -n libreofficekit-devel
 #_girdir/LOKDocView-*.gir
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.2.2-alt1
+- New version.
+- Renamed to libreoffice.
+
 * Thu Sep 11 2025 Andrey Cherepanov <cas@altlinux.org> 25.2.6.2-alt1
 - New version.
 - Replaced application name by its role in desktop files.

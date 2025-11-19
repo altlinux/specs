@@ -1,5 +1,5 @@
 Name: mdds
-Version: 2.1.1
+Version: 3.1.0
 Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
@@ -10,11 +10,21 @@ Url: https://gitlab.com/mdds/mdds
 Source0: %name-%version.tar.bz2
 Patch: mdds-1.5.0-python3.patch
 
-# Automatically added by buildreq on Thu Jan 13 2022
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libstdc++-devel perl python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: boost-devel-headers ctags doxygen gcc-c++ python3-module-breathe python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
-
 BuildRequires: boost-devel
+BuildRequires: boost-devel-headers
+BuildRequires: ctags
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+BuildRequires: python3-module-breathe
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinxcontrib-applehelp
+BuildRequires: python3-module-sphinxcontrib-devhelp
+BuildRequires: python3-module-sphinxcontrib-htmlhelp
+BuildRequires: python3-module-sphinxcontrib-jsmath
+BuildRequires: python3-module-sphinxcontrib-qthelp
+BuildRequires: python3-module-sphinxcontrib-serializinghtml
+BuildRequires: python3-module-sphinx_piccolo_theme
+
 %description
 A collection of multi-dimensional data structures and indexing algorithms.
 
@@ -84,6 +94,9 @@ cp -a ./example %buildroot/%_docdir/%name-%version/
 %_datadir/pkgconfig/*
 
 %changelog
+* Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- Updated to 3.1.0
+
 * Thu Aug 24 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.1-alt1
 - Updated to 2.1.1
 

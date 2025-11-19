@@ -1,6 +1,6 @@
 %define oname breathe
 Name: python3-module-breathe
-Version: 4.35.0
+Version: 4.36.0
 Release: alt1
 
 Summary: Make reStructuredText and Sphinx read and render Doxygen xml output
@@ -16,10 +16,10 @@ Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-sphinx
-
-#BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit-core
 Conflicts: python-module-breathe
 
 %description
@@ -29,10 +29,10 @@ Breathe is an extension to reStructuredText and Sphinx to be able to read and re
 %setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # for compatibility
 ln -s breathe-apidoc %buildroot/%_bindir/python3-breathe-apidoc
 
@@ -42,6 +42,10 @@ ln -s breathe-apidoc %buildroot/%_bindir/python3-breathe-apidoc
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 4.36.0-alt1
+- new version 4.36.0
+- use pyproject macros
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 4.35.0-alt1
 - new version 4.35.0 (with rpmrb script)
 

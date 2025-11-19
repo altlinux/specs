@@ -1,5 +1,5 @@
 Name: ixion
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 Url: https://gitlab.com/ixion/ixion
 License: MPL-2.0
@@ -7,11 +7,22 @@ Source: %name-%version.tar.gz
 Group: Sciences/Mathematics
 Summary: Threaded multi-target formula parser & interpreter
 
-# Automatically added by buildreq on Thu Jan 13 2022
-# optimized out: boost-devel boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libstdc++-devel perl pkg-config python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: boost-filesystem-devel boost-program_options-devel ctags doxygen gcc-c++ mdds-devel python3-dev python3-module-breathe python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml
-
-## BuildRequires: boost-filesystem-devel boost-program_options-devel gcc-c++ mdds-devel python3-dev
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: ctags
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+BuildRequires: mdds-devel
+BuildRequires: python3-dev
+BuildRequires: python3-module-breathe >= 4.36.0
+BuildRequires: python3-module-sphinx_piccolo_theme
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-sphinxcontrib-applehelp
+BuildRequires: python3-module-sphinxcontrib-devhelp
+BuildRequires: python3-module-sphinxcontrib-htmlhelp
+BuildRequires: python3-module-sphinxcontrib-jsmath
+BuildRequires: python3-module-sphinxcontrib-qthelp
+BuildRequires: python3-module-sphinxcontrib-serializinghtml
 
 %description
 Ixion is a general purpose formula parser, interpreter, formula cell
@@ -72,6 +83,9 @@ sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
+- Updated to 0.20.0
+
 * Fri Feb 02 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.19.0-alt1
 - Updated to 0.19.0
 
