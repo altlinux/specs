@@ -5,17 +5,19 @@
 %define        gemname mongo
 
 Name:          gem-mongo
-Version:       2.21.0
+Version:       2.21.3
 Release:       alt1
 Summary:       Ruby driver for MongoDB
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://mongodb.com/docs/ruby-driver/
 Vcs:           https://github.com/mongodb/mongo-ruby-driver.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(aws-sdk-cloudwatchlogs) >= 0
@@ -28,35 +30,33 @@ BuildRequires: gem(base64) >= 0
 BuildRequires: gem(bson) >= 4.14.1
 BuildRequires: gem(erubi) >= 0
 BuildRequires: gem(ffi) >= 0
-BuildRequires: gem(httparty) >= 0
-BuildRequires: gem(mocha) >= 0
 BuildRequires: gem(paint) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.10.0
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
-BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(rubocop-rspec) >= 2.18.1
 BuildRequires: gem(tilt) >= 0
 BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(yard) >= 0.9.34
-BuildConflicts: gem(activesupport) >= 7.1
+BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(aws-sdk-core) >= 4
 BuildConflicts: gem(bson) >= 6
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(rubocop-rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 %ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 Requires:      ruby >= 2.7
@@ -64,21 +64,23 @@ Requires:      gem(base64) >= 0
 Requires:      gem(bson) >= 4.14.1
 Conflicts:     gem(bson) >= 6
 Provides:      mongo = %EVR
-Provides:      gem(mongo) = 2.21.0
+Provides:      gem(mongo) = 2.21.3
 
 %description
 A Ruby driver for MongoDB
 
 
 %package       -n mongo-console
-Version:       2.21.0
+Version:       2.21.3
 Release:       alt1
 Summary:       Ruby driver for MongoDB executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета mongo
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(mongo) = 2.21.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(mongo) = 2.21.3
 
 %description   -n mongo-console
 Ruby driver for MongoDB executable(s).
@@ -91,14 +93,16 @@ A Ruby driver for MongoDB
 
 %if_enabled    doc
 %package       -n gem-mongo-doc
-Version:       2.21.0
+Version:       2.21.3
 Release:       alt1
 Summary:       Ruby driver for MongoDB documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mongo
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mongo) = 2.21.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(mongo) = 2.21.3
 
 %description   -n gem-mongo-doc
 Ruby driver for MongoDB documentation files.
@@ -112,37 +116,44 @@ A Ruby driver for MongoDB
 
 %if_enabled    devel
 %package       -n gem-mongo-devel
-Version:       2.21.0
+Version:       2.21.3
 Release:       alt1
 Summary:       Ruby driver for MongoDB development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mongo
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mongo) = 2.21.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(mongo) = 2.21.3
 Requires:      gem(aws-sdk-cloudwatchlogs) >= 0
 Requires:      gem(aws-sdk-core) >= 3
 Requires:      gem(aws-sdk-ec2) >= 0
 Requires:      gem(aws-sdk-ecs) >= 0
 Requires:      gem(aws-sdk-iam) >= 0
 Requires:      gem(aws-sdk-sts) >= 0
+Requires:      gem(base64) >= 0
+Requires:      gem(bson) >= 4.14.1
 Requires:      gem(erubi) >= 0
+Requires:      gem(ffi) >= 0
 Requires:      gem(paint) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rubocop-rspec) >= 2.4.0
+Requires:      gem(rubocop-rspec) >= 2.18.1
 Requires:      gem(tilt) >= 0
 Requires:      gem(webrick) >= 0
-Conflicts:     gem(activesupport) >= 7.1
+Requires:      gem(yard) >= 0.9.34
+Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(aws-sdk-core) >= 4
+Conflicts:     gem(bson) >= 6
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rubocop-rspec) >= 4
 
 %description   -n gem-mongo-devel
 Ruby driver for MongoDB development package.
@@ -188,6 +199,9 @@ A Ruby driver for MongoDB
 
 
 %changelog
+* Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 2.21.3-alt1
+- ^ 2.21.0 -> 2.21.3
+
 * Tue Jan 21 2025 Pavel Skrylev <majioa@altlinux.org> 2.21.0-alt1
 - ^ 2.20.1 -> 2.21.0
 
