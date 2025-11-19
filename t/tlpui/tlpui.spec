@@ -2,8 +2,8 @@
 %def_with check
 
 Name:    tlpui
-Version: 1.8.0
-Release: alt3
+Version: 1.8.1
+Release: alt1
 
 Summary: A GTK user interface for TLP written in Python
 License: GPL-2.0
@@ -74,6 +74,9 @@ install -Dm0644 tlpui/icons/themeable/hicolor/scalable/apps/%name.svg \
 %_iconsdir/hicolor/scalable/apps/tlpui.svg
 
 %changelog
+* Mon Nov 17 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Mon Sep 08 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt3
 - Drop action icons from %%_iconsdir.
 - Resolve file conflict with geary.
