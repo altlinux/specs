@@ -1,16 +1,17 @@
 %def_enable drm
 %def_enable glx
 %def_enable x11
+%def_enable wayland
 
 Name: libva
 Version: 2.22.0
-Release: alt1
+Release: alt1.2
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
 Group: System/Libraries
-Url: https://github.com/01org/libva
-
+Url: http://intel.github.io/libva
+Vcs: https://github.com/intel/libva
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -24,7 +25,10 @@ BuildRequires: libGL-devel
 %if_enabled x11
 BuildRequires: libXext-devel libXfixes-devel
 %endif
-BuildRequires: gcc-c++ libwayland-client-devel libwayland-server-devel
+%if_enabled wayland
+BuildRequires: libwayland-client-devel libwayland-server-devel
+%endif
+BuildRequires: gcc-c++
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -54,6 +58,9 @@ This package provides the development environment for libva
 	%{subst_enable drm} \
 	%{subst_enable glx} \
 	%{subst_enable x11} \
+	%if_enabled wayland
+	--with-wayland=yes \
+	%endif
 	--disable-static
 %make_build
 
@@ -69,6 +76,12 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 19 2025 L.A. Kostis <lakostis@altlinux.ru> 2.22.0-alt1.2
+- Update Url/Vcs links.
+
+* Sat Jun 29 2024 L.A. Kostis <lakostis@altlinux.ru> 2.22.0-alt1.1
+- Enable wayland explicitly.
+
 * Thu Jun 27 2024 Anton Farygin <rider@altlinux.ru> 2.22.0-alt1
 - 2.22.0
 
