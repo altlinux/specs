@@ -1,5 +1,5 @@
 Name: python3-module-abi3audit
-Version: 0.0.23
+Version: 0.0.24
 Release: alt1
 
 Summary: Python abi3 consistency scanner
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/abi3audit-%version.dist-info
 
 %changelog
+* Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.24-alt1
+- 0.0.24 released
+
 * Mon Nov 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.23-alt1
 - 0.0.23 released
 
