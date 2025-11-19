@@ -1,7 +1,7 @@
 %define rname dragon
 
 Name: %{rname}player
-Version: 25.08.2
+Version: 25.08.3
 Release: alt1
 %K6init
 
@@ -48,6 +48,9 @@ BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel kf6-kirigami-de
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
+- new version
+
 * Mon Oct 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
