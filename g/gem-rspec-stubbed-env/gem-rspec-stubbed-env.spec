@@ -1,67 +1,77 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
-%def_enable    devel
+%def_disable   devel
 %define        gemname rspec-stubbed_env
 
 Name:          gem-rspec-stubbed-env
-Version:       1.0.1
+Version:       1.0.4
 Release:       alt1
 Summary:       Unobtrusively stub ENV keys and values during testing
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/pboling/rspec-stubbed_env
-Vcs:           https://github.com/pboling/rspec-stubbed_env/tree/v1.0.1.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Vcs:           https://github.com/pboling/rspec-stubbed_env.git
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(simplecov) >= 0.17
-BuildRequires: gem(simplecov-cobertura) >= 2.1
-BuildRequires: gem(simplecov-json) >= 0.2
-BuildRequires: gem(simplecov-lcov) >= 0.8
-BuildRequires: gem(rubocop-gradual) >= 0.3
-BuildRequires: gem(rubocop-lts) >= 18.0
-BuildRequires: gem(rubocop-md) >= 1.2
-BuildRequires: gem(rubocop-packaging) >= 0.5
-BuildRequires: gem(rubocop-performance) >= 1.11.3
-BuildRequires: gem(rubocop-rake) >= 0.6
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
-BuildRequires: gem(rubocop-shopify) >= 2.12
-BuildRequires: gem(rubocop-thread_safety) >= 0.5
-BuildRequires: gem(standard) >= 1.25
-BuildRequires: gem(rspec) >= 3.8
-BuildRequires: gem(rspec-block_is_expected) >= 1.0
+BuildRequires: gem(appraisal2) >= 3.0
+BuildRequires: gem(benchmark) >= 0.4.1
+BuildRequires: gem(bundler-audit) >= 0.9.2
+BuildRequires: gem(kettle-soup-cover) >= 1.0.6
+BuildRequires: gem(kramdown) >= 2.3.1
+BuildRequires: gem(kramdown-parser-gfm) >= 1.1
 BuildRequires: gem(rake) >= 13.0
-BuildConflicts: gem(simplecov) >= 1
-BuildConflicts: gem(simplecov-cobertura) >= 3
-BuildConflicts: gem(simplecov-json) >= 1
-BuildConflicts: gem(simplecov-lcov) >= 1
-BuildConflicts: gem(rubocop-gradual) >= 1
-BuildConflicts: gem(rubocop-lts) >= 25
-BuildConflicts: gem(rubocop-md) >= 2
-BuildConflicts: gem(rubocop-packaging) >= 1
-BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
-BuildConflicts: gem(rubocop-shopify) >= 3
-BuildConflicts: gem(rubocop-thread_safety) >= 1
-BuildConflicts: gem(standard) >= 2
+BuildRequires: gem(rdoc) >= 6.1.1
+BuildRequires: gem(reek) >= 6.4
+BuildRequires: gem(rspec) >= 3.10.0
+BuildRequires: gem(rspec-block_is_expected) >= 1.0
+BuildRequires: gem(rspec_junit_formatter) >= 0.5.1
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-lts) >= 0.1.1
+BuildRequires: gem(rubocop-packaging) >= 0.5.2
+BuildRequires: gem(rubocop-rspec) >= 3.2
+BuildRequires: gem(standard) >= 1.50
+BuildRequires: gem(stone_checksums) >= 1.0
+BuildRequires: gem(yard) >= 0.9
+BuildRequires: gem(yard-junk) >= 0.0.10
+BuildRequires: gem(yard-relative_markdown_links) >= 0.5.0
+BuildConflicts: gem(appraisal2) >= 4
+BuildConflicts: gem(benchmark) >= 1
+BuildConflicts: gem(bundler-audit) >= 0.10
+BuildConflicts: gem(kettle-soup-cover) >= 2
+BuildConflicts: gem(kramdown-parser-gfm) >= 2
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(reek) >= 7
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec-block_is_expected) >= 2
-BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rspec_junit_formatter) >= 1
+BuildConflicts: gem(rubocop-lts) >= 1
+BuildConflicts: gem(rubocop-rspec) >= 4
+BuildConflicts: gem(stone_checksums) >= 2
+BuildConflicts: gem(yard-junk) >= 1
+BuildConflicts: gem(yard-relative_markdown_links) >= 0.6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency rubocop-lts < 25
-Provides:      gem(rspec-stubbed_env) = 1.0.1
-
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency kramdown >= 2.3.1,kramdown < 3
+%ruby_use_gem_dependency pry >= 0.13.1,pry < 1
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency rspec_junit_formatter >= 0.5.1,rspec_junit_formatter < 1
+%ruby_use_gem_dependency yard >= 0.9.34,yard < 1
+%ruby_use_gem_dependency rubocop-packaging >= 0.5.2,rubocop-packaging < 1
+%ruby_alias_names rspec-stubbed_env,rspec-stubbed-env
+Requires:      ruby >= 1.8.7
+Provides:      gem(rspec-stubbed_env) = 1.0.4
 
 %description
 Stub environment variables in a scoped context for testing stub_env(
@@ -70,14 +80,16 @@ Stub environment variables in a scoped context for testing stub_env(
 
 %if_enabled    doc
 %package       -n gem-rspec-stubbed-env-doc
-Version:       1.0.1
+Version:       1.0.4
 Release:       alt1
 Summary:       Unobtrusively stub ENV keys and values during testing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rspec-stubbed_env
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rspec-stubbed_env) = 1.0.1
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(rspec-stubbed_env) = 1.0.4
 
 %description   -n gem-rspec-stubbed-env-doc
 Unobtrusively stub ENV keys and values during testing documentation files.
@@ -92,48 +104,52 @@ Stub environment variables in a scoped context for testing stub_env(
 
 %if_enabled    devel
 %package       -n gem-rspec-stubbed-env-devel
-Version:       1.0.1
+Version:       1.0.4
 Release:       alt1
 Summary:       Unobtrusively stub ENV keys and values during testing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rspec-stubbed_env
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rspec-stubbed_env) = 1.0.1
-Requires:      gem(simplecov) >= 0.17
-Requires:      gem(simplecov-cobertura) >= 2.1
-Requires:      gem(simplecov-json) >= 0.2
-Requires:      gem(simplecov-lcov) >= 0.8
-Requires:      gem(rubocop-gradual) >= 0.3
-Requires:      gem(rubocop-lts) >= 18.0
-Requires:      gem(rubocop-md) >= 1.2
-Requires:      gem(rubocop-packaging) >= 0.5
-Requires:      gem(rubocop-performance) >= 1.11.3
-Requires:      gem(rubocop-rake) >= 0.6
-Requires:      gem(rubocop-rspec) >= 2.4.0
-Requires:      gem(rubocop-shopify) >= 2.12
-Requires:      gem(rubocop-thread_safety) >= 0.5
-Requires:      gem(standard) >= 1.25
-Requires:      gem(rspec) >= 3.8
-Requires:      gem(rspec-block_is_expected) >= 1.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(appraisal2) >= 3.0
+Requires:      gem(benchmark) >= 0.4.1
+Requires:      gem(bundler-audit) >= 0.9.2
+Requires:      gem(kettle-soup-cover) >= 1.0.6
+Requires:      gem(kramdown) >= 2.3.1
+Requires:      gem(kramdown-parser-gfm) >= 1.1
 Requires:      gem(rake) >= 13.0
-Conflicts:     gem(simplecov) >= 1
-Conflicts:     gem(simplecov-cobertura) >= 3
-Conflicts:     gem(simplecov-json) >= 1
-Conflicts:     gem(simplecov-lcov) >= 1
-Conflicts:     gem(rubocop-gradual) >= 1
-Conflicts:     gem(rubocop-lts) >= 25
-Conflicts:     gem(rubocop-md) >= 2
-Conflicts:     gem(rubocop-packaging) >= 1
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
-Conflicts:     gem(rubocop-shopify) >= 3
-Conflicts:     gem(rubocop-thread_safety) >= 1
-Conflicts:     gem(standard) >= 2
+Requires:      gem(rdoc) >= 6.1.1
+Requires:      gem(reek) >= 6.4
+Requires:      gem(rspec) >= 3.10.0
+Requires:      gem(rspec-block_is_expected) >= 1.0
+Requires:      gem(rspec_junit_formatter) >= 0.5.1
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(rubocop-lts) >= 0.1.1
+Requires:      gem(rubocop-packaging) >= 0.5.2
+Requires:      gem(rubocop-rspec) >= 3.2
+Requires:      gem(standard) >= 1.50
+Requires:      gem(stone_checksums) >= 1.0
+Requires:      gem(yard) >= 0.9
+Requires:      gem(yard-junk) >= 0.0.10
+Requires:      gem(yard-relative_markdown_links) >= 0.5.0
+Conflicts:     gem(appraisal2) >= 4
+Conflicts:     gem(benchmark) >= 1
+Conflicts:     gem(bundler-audit) >= 0.10
+Conflicts:     gem(kettle-soup-cover) >= 2
+Conflicts:     gem(kramdown-parser-gfm) >= 2
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(reek) >= 7
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rspec-block_is_expected) >= 2
-Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rspec_junit_formatter) >= 1
+Conflicts:     gem(rubocop-lts) >= 1
+Conflicts:     gem(rubocop-rspec) >= 4
+Conflicts:     gem(stone_checksums) >= 2
+Conflicts:     gem(yard-junk) >= 1
+Conflicts:     gem(yard-relative_markdown_links) >= 0.6
 
 %description   -n gem-rspec-stubbed-env-devel
 Unobtrusively stub ENV keys and values during testing development package.
@@ -159,22 +175,25 @@ Stub environment variables in a scoped context for testing stub_env(
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-rspec-stubbed-env-doc
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rspec-stubbed-env-devel
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
 %endif
 
 
 %changelog
+* Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.4-alt1
+- ^ 1.0.1 -> 1.0.4
+
 * Thu Apr 18 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
 - + packaged gem with Ruby Policy 2.0
