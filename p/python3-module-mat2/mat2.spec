@@ -1,19 +1,27 @@
 %define pypi_name mat2
+%def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.13.5
-Release: alt3
+Version: 0.14.0
+Release: alt1
 
 License: LGPL-3.0
 Group:   Development/Python3
 URL:	 https://pypi.org/project/mat2
-VCS:	 https://0xacab.org/jvoisin/mat2.git
+VCS:	 https://github.com/jvoisin/mat2
 
 Summary: Metadata and privacy
 Summary(ru_RU.UTF-8): Метаданные и конфиденциальность
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-setuptools python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pycairo ffmpeg
+BuildRequires: python3(gi) gir(GdkPixbuf)
+BuildRequires: gir(Poppler) gir(Rsvg) itstool
+BuildRequires: python3-module-mutagen perl-Image-ExifTool
+%endif
 
 BuildArch: noarch
 
@@ -35,6 +43,9 @@ metadata.
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest tests
+
 %files
 %_bindir/%pypi_name
 %_datadir/man/man1/%pypi_name.1.xz
@@ -43,6 +54,10 @@ metadata.
 %doc *.md LICENSE
 
 %changelog
+* Wed Nov 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.14.0-alt1
+- 0.13.5 -> 0.14.0
+- change: VCS
+
 * Sun Jan 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.5-alt3
 - fix %%description -l ru_RU.UTF-8
 
