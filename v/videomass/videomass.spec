@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: videomass
-Release: alt1
+Release: alt2
 Version: 6.1.20
 
 Summary: Videomass is a free, open source and cross-platform GUI for FFmpeg
@@ -12,11 +12,13 @@ VCS: https://github.com/jeanslack/Videomass
 
 Requires: ffmpeg
 Requires: ffplay
+Requires: ffprobe
 
 BuildArch: noarch
 
 # Source-url: https://github.com/jeanslack/Videomass/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-babel
@@ -28,6 +30,7 @@ BuildRequires: python3-module-hatchling
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -36,6 +39,7 @@ BuildRequires: python3-module-hatchling
 %pyproject_install
 
 %__mv %buildroot%_desktopdir/{io.github.jeanslack.videomass.desktop,%name.desktop}
+sed -i 's,\(Categories=.*\),\1AudioVideoEditing;,' %buildroot%_desktopdir/%name.desktop
 
 %check
 %pyproject_run_pytest -Wignore --ignore=tests/test_display_GUI.py
@@ -55,5 +59,8 @@ BuildRequires: python3-module-hatchling
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Tue Nov 18 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.1.20-alt2
+- fixed icon visibility when switching to dark theme (closes: 56892)
+
 * Sat Nov 01 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.1.20-alt1
 - initial build for ALT Linux
