@@ -2,7 +2,7 @@
 
 Name: mockito
 Version: 5.20.0
-Release: alt1
+Release: alt2
 
 Summary: Tasty mocking framework for unit tests in Java
 License: MIT
@@ -103,6 +103,9 @@ rm -rf buildSrc
 
 %gradle_install
 
+%files
+%nil
+
 %files core
 %_mavenmetadatadir/mockito.xml
 %_javadir/mockito/mockito-core.jar
@@ -123,6 +126,9 @@ rm -rf buildSrc
 %_mavenpomdir/mockito/mockito-proxy.pom
 
 %changelog
+* Wed Nov 19 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt2
+- Add files for mockito meta package.
+
 * Mon Nov 17 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt1
 - New version.
 - Fix regression: package org.mockito does not exist(closes: 56779).

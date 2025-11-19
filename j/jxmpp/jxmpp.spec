@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: jxmpp
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: An Open Source XMPP Java base-library
 License: Apache-2.0
@@ -36,6 +38,7 @@ JXMPP core components.
 %package jid
 Group: Development/Java
 Summary: JXMPP JID
+Requires: jxmpp-core
 
 %description jid
 JID classes from JXMPP.
@@ -43,6 +46,7 @@ JID classes from JXMPP.
 %package stringprep-libidn
 Group: Development/Java
 Summary: JXMPP Stringprep Libidn
+Requires: jxmpp-core
 
 %description stringprep-libidn
 JXMPP Stringprep with libidn.
@@ -50,6 +54,7 @@ JXMPP Stringprep with libidn.
 %package stringprep-icu4j
 Group: Development/Java
 Summary: JXMPP Stringprep icu4j
+Requires: jxmpp-core
 
 %description stringprep-icu4j
 JXMPP Stringprep with icu4j.
@@ -57,18 +62,13 @@ JXMPP Stringprep with icu4j.
 %package util-cache
 Group: Development/Java
 Summary: JXMPP Util Cache
+Requires: jxmpp-core
 
 %description util-cache
 A minimalistic and efficient bounded LRU Cache
 with optional expiration.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %name.
+%{?javadoc_package}
 
 %prep
 %setup
@@ -87,6 +87,7 @@ This package contains javadoc for %name.
 %gradle_check
 
 %files core
+%_mavenmetadatadir/jxmpp.xml
 %_mavenpomdir/jxmpp/jxmpp-core.pom
 %_javadir/jxmpp/jxmpp-core.jar
 %doc --no-dereference LICENSE
@@ -112,10 +113,10 @@ This package contains javadoc for %name.
 %doc README.md
 %doc --no-dereference LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Wed Nov 19 2025 Ivan Khanas <xeno@altlinux.org> 1.1.0-alt2
+- Add xmvn .xml file installation.
+
 * Wed Nov 05 2025 Ivan Khanas <xeno@altlinux.org> 1.1.0-alt1
 - New version.
 - Add jxmpp-stringprep-icu4j subpackage.
