@@ -2,14 +2,14 @@
 %define optflags_lto %nil
 
 %define _name news_flash_gtk
-%define ver_major 4.1
+%define ver_major 4.2
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
 %def_enable check
 
 Name: newsflash
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: NewsFlash is a RSS reader
@@ -81,6 +81,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Nov 19 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.4-alt1
 - 4.1.4
 
