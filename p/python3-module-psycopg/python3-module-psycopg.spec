@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       3.2.12
-Release:       alt1
+Release:       alt2
 Summary:       psycopg is a PostgreSQL database adapter for Python
 License:       LGPL-3.0
 Group:         Development/Python3
@@ -70,7 +70,7 @@ popd
 %doc *.rst
 %{?!_disable_doc:%doc docs/build/html/*}
 %python3_sitelibdir/%{distname}
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pyproject_distinfo %modname}
 
 
 %files         doc
@@ -78,6 +78,9 @@ popd
 
 
 %changelog
+* Tue Nov 18 2025 Alexander Burmatov <thatman@altlinux.org> 3.2.12-alt2
+- Fix distinfo path.
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 3.2.12-alt1
 - ^ 3.2.10 -> 3.2.12
 
