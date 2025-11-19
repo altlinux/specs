@@ -8,27 +8,28 @@
 
 Name: sassc
 Version: %ver_major.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Wrapper around libsass to compile CSS stylesheet
 Group: Text tools
 License: MIT
 Url: http://github.com/sass/sassc
 
+Vcs: https://github.com/sass/sassc.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/sass/sassc.git
 Source: %name-%version.tar
 %endif
-
 %if_disabled spec_snapshot
 Source1: https://github.com/sass/sass-spec/archive/libsass-%testspec_version/sass-spec-libsass-%testspec_version.tar.gz
 %else
-Vcs: https://github.com/sass/sass-spec.git
+# https://github.com/sass/sass-spec.git
 Source1: sass-spec-%testspec_version.tar
 %endif
 Patch1: sassc-3.6.2-alt-file_exists.patch
+Patch2: sassc-3.6.2-alt-minitest.patch
 
 BuildRequires: gcc-c++ libsass-devel >= %version
 %{?_enable_check:BuildRequires: ruby-minitest gem-hrx gem-file_exists}
@@ -43,6 +44,7 @@ mv sass-spec-%{?_disable_spec_snapshot:libsass-}%testspec_version sass-spec
 echo %version > VERSION
 
 %patch1 -b .file_exists
+%patch2 -b .minitest
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -61,6 +63,9 @@ ruby sass-spec/sass-spec.rb --impl libsass -c ./%name
 %doc LICENSE Readme.md
 
 %changelog
+* Wed Nov 19 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1.2
+- fixed %%check for gem-minitest-5.26.0
+
 * Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1.1
 - fixed %%check for Ruby >= 3.2
 
