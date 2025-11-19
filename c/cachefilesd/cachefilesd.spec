@@ -1,28 +1,45 @@
-Name: cachefilesd
-Version: 0.10.1
-Release: alt1.qa2
+%global _unpackaged_files_terminate_build 1
 
-Summary: caching backend for use with FS-Cache
-License: GPL
+Name: cachefilesd
+Version: 0.10.10
+Release: alt1
+
+Summary: CacheFiles user-space management daemon
+License: GPLv2+
 Group: Networking/Other
 Url: http://people.redhat.com/~dhowells/fscache/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 %description
-CacheFiles is a caching backend that's meant to use as a cache a directory on
-an already mounted filesystem of a local type (such as Ext3).
+The cachefilesd daemon manages the caching files and directory that are that
+are used by network file systems such a AFS and NFS to do persistent caching to
+the local disk.
 
 %prep
 %setup
+%patch -p1
 
 %build
-make
+make all \
+    ETCDIR=%_sysconfdir \
+    SBINDIR=%_sbindir \
+    MANDIR=%_mandir \
+    CFLAGS="-Wall -Werror $RPM_OPT_FLAGS"
 
 %install
-make install DESTDIR=%buildroot
-install -pD -m0755 cachefilesd.initd %buildroot%_initdir/cachefilesd
-mkdir -p %buildroot%_cachedir/fscache
+mkdir -p %buildroot{%_sbindir,%_unitdir,%_initdir,%_man5dir,%_man8dir,%_cachedir/fscache}
+make install \
+    DESTDIR=%buildroot \
+    ETCDIR=%_sysconfdir \
+    SBINDIR=%_sbindir \
+    MANDIR=%_mandir \
+    CFLAGS="-Wall -Werror $RPM_OPT_FLAGS"
+
+install -m 755 cachefilesd.initd %buildroot%_initdir/cachefilesd
+install -m 644 cachefilesd.conf %buildroot%_sysconfdir/cachefilesd.conf
+install -m 644 cachefilesd.service %buildroot%_unitdir/cachefilesd.service
 
 %post
 %post_service %name
@@ -33,17 +50,18 @@ mkdir -p %buildroot%_cachedir/fscache
 %files
 %doc README howto.txt
 %config(noreplace) %_sysconfdir/cachefilesd.conf
-
 %_initdir/%name
-
-/sbin/cachefilesd
-
+%_unitdir/%name.service
+%_sbindir/%name
 %_man5dir/*
 %_man8dir/*
 
 %dir %attr(700,root,root) %_cachedir/fscache
 
 %changelog
+* Wed Nov 19 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.10-alt1
+- 0.10.10.
+
 * Wed Mar 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1.qa2
 - NMU: added URL
 
