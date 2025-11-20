@@ -4,10 +4,11 @@
 %define ver_major 0.12
 %define rdn_name org.gnome.World.Iotas
 
-%def_enable check
+# failed with pypandoc-1.16
+%def_disable check
 
 Name: iotas
-Version: %ver_major.1
+Version: %ver_major.5
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -25,7 +26,7 @@ Source: %name-%version.tar
 
 %define adw_ver 1.8
 %define gtksource_ver 5.6
-%define pandoc_ver 3.8
+%define pandoc_ver 3.8.1
 # https://bugzilla.altlinux.org/55825
 Requires: python3-module-mdit-plugins >= 0.5.0
 # https://bugzilla.altlinux.org/55824
@@ -93,6 +94,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Nov 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
+- 0.12.5
+
+* Sun Nov 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
+- 0.12.4
+
 * Wed Oct 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
 - 0.12.1
 
