@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 32.0.0
+Version: 32.0.1
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -169,6 +169,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Thu Nov 20 2025 Andrey Cherepanov <cas@altlinux.org> 32.0.1-alt1
+- New version.
+
 * Wed Oct 01 2025 Andrey Cherepanov <cas@altlinux.org> 32.0.0-alt1
 - New version.
 
