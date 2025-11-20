@@ -13,9 +13,12 @@
 %define libtextautogenerateollama libtextautogenerateollama%sover
 %define libkf6textspeechtotext libkf6textspeechtotext%sover
 %define libkf6textautogeneratetext libkf6textautogeneratetext%sover
+%define libtextautogenerategenericnetwork libtextautogenerategenericnetwork
+%define rccopy_sover 0
+%define libtextautogenerate_cmark_rc_copy libtextautogenerate-cmark-rc-copy%rccopy_sover
 
 Name: kf6-%rname
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 %K6init no_altplace
 
@@ -134,6 +137,20 @@ Requires: %name-common
 %description -n %libtextautogenerateollama
 %name library
 
+%package -n %libtextautogenerate_cmark_rc_copy
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libtextautogenerate_cmark_rc_copy
+%name library
+
+%package -n %libtextautogenerategenericnetwork
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common
+%description -n %libtextautogenerategenericnetwork
+%name library
+
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
@@ -172,6 +189,12 @@ done
 %_K6plug/kf6/speechtotext/speechtotext_*.so
 %_K6plug/kf6/textautogeneratetext/autogeneratetext_*.so
 
+%files -n %libtextautogenerate_cmark_rc_copy
+%_K6lib/libtextautogenerate-cmark-rc-copy.so.*
+%_K6lib/libtextautogenerate-cmark-rc-copy.so.%rccopy_sover
+%files -n %libtextautogenerategenericnetwork
+%_K6lib/libtextautogenerategenericnetwork.so.*
+%_K6lib/libtextautogenerategenericnetwork.so.%sover
 %files -n %libkf6textaddonswidgets
 %_K6lib/libKF6TextAddonsWidgets.so.*
 %_K6lib/libKF6TextAddonsWidgets.so.%sover
@@ -216,10 +239,13 @@ done
 %_K6plug/designer/*text*.so
 %_K6inc/Text*/
 %_K6link/lib*.so
-%_libdir/cmake/KF6Text*/
+%_libdir/cmake/*ext*/
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt1
+- new version
+
 * Mon Jul 14 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
 - new version
 
