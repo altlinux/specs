@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%global import_path github.com/amir20/dtop
 
 Name: dtop
-Version: 0.2.0
+Version: 0.4.5
 Release: alt1
 Summary: Terminal dashboard for Docker monitoring across multiple hosts with Dozzle integration.
 License: MIT
@@ -13,8 +12,9 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
+BuildRequires: rust-cargo
 
 %description
 %summary
@@ -24,27 +24,27 @@ BuildRequires: golang
 %patch -p1
 
 %build
-export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
+mkdir -p .cargo
+cat > .cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
 
-%golang_prepare
-
-%golang_build .
+[source.vendored-sources]
+directory = "vendor"
+EOF
+%rust_build
 
 %install
-export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-export IGNORE_SOURCES=1
-%golang_install
+%rust_install
 
 %files
 %doc README.md
 %_bindir/%name
 
 %changelog
+* Thu Nov 20 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.5-alt1
+- 0.2.0 -> 0.4.5
+
 * Tue Oct 21 2025 Pavel Shilov <zerospirit@altlinux.org> 0.2.0-alt1
 - 0.2.0 -> 0.0.43
 
