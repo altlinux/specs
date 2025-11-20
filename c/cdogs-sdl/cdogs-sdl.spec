@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 
 Name:           cdogs-sdl
 Version:        2.3.2
-Release:        alt1
+Release:        alt2
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
@@ -43,6 +43,9 @@ like to thank Ronny for releasing the C-Dogs sources to the public.
 #%patch0 -p1
 #%patch1 -p1
 %patch2 -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+%endif
 
 # We use the system enet
 rm -r src/cdogs/enet
@@ -92,6 +95,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Thu Nov 20 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.2-alt2
+- e2k build fix
+
 * Sun Oct 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.2-alt1
 - 2.0.0 -> 2.3.2
 - drop old patchs
