@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-pyproject
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPLv2+
@@ -45,6 +45,9 @@ install -pD -m0755 scripts/pyproject.req.files -t %buildroot%_rpmlibdir/
 %_rpmlibdir/pyproject.req.files
 
 %changelog
+* Tue Nov 18 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.2.1-alt1
+- Extended typing stubs filter to include *-stubs pattern (closes: #56895).
+
 * Tue Oct 21 2025 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1
 - Added support for Python Stable ABI (closes: #56201).
 - Fixed support for extensions having multiple init functions.
