@@ -1,6 +1,3 @@
-# Get Source0-3 from http://download.documentfoundation.org/libreoffice/src/$ver/
-# Get Source10 (with selected components) from https://dev-www.libreoffice.org/src/
-# Security fixes from https://www.libreoffice.org/about-us/security/advisories/
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -44,7 +41,7 @@
 
 Name: libreoffice
 %define hversion 25.8
-%define urelease 2.2
+%define urelease 3.2
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -75,7 +72,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: libreoffice-25.8.2.2-ru.tar
+Source4: libreoffice-25.8.3.2-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -359,7 +356,7 @@ KDE5 extensions for %name
 
 %if_enabled kde6
 %package kde6
-Summary: KDE5 Extensions for %name
+Summary: KDE6 Extensions for %name
 Group:  Office
 Requires: %name = %EVR
 Provides: LibreOffice-kde6 = %EVR
@@ -865,6 +862,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 19 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.3.2-alt1
+- New version.
+- Fixed typo in libreoffice-kde6 summary (ALT #56930).
+
 * Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.2.2-alt1
 - New version.
 - Renamed to libreoffice.
