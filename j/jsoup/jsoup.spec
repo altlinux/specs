@@ -12,7 +12,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           jsoup
-Version:        1.13.1
+Version:        1.14.3
 Release:        alt1_7jpp11
 Summary:        Java library for working with real-world HTML
 License:        MIT
@@ -57,6 +57,32 @@ jsoup will create a sensible parse tree.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
+## Try common possible root names for upstream archive. If one fails, try next.
+## This covers archives that unpack to jsoup-1.14.3 or jsoup (no version) or jsoup-jsoup-1.14.3.
+#%define _try_setup(n) %{nil:%%{?__dummy:%%{expand:(%{?__dummy})}}}
+#%{!?_setup_done:%global _setup_done 0}
+#%{!?_setup_tried:%global _setup_tried 0}
+#
+## Try the most likely names; the first successful %setup will set _setup_done.
+#%if %{?_setup_done:0} == 0
+#%_setup_tried 0
+#%__try1:
+#%define _setup_name %{name}-%{version}
+#%setup -q -n %{_setup_name} || %{nil}
+#%if 0%{?rpmbuild_exit_status:0} == 0
+#%global _setup_done 1
+#%endif
+#%endif
+#
+#%if %{?_setup_done:0} == 0
+#%setup -q -n %{name} || %setup -q
+#%endif
+
+# Remove japicmp plugin safely (javapackages-tools macro).
+# Use "|| true" so absence of the plugin won't abort %prep (pom_remove_plugin exits non-zero if nothing to remove).
+%pom_remove_plugin -r :japicmp-maven-plugin || true
+#%pom_remove_plugin com.github.siom79.japicmp:japicmp-maven-plugin || true
+
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :maven-failsafe-plugin
 %pom_remove_plugin :maven-javadoc-plugin
@@ -67,7 +93,8 @@ jsoup will create a sensible parse tree.
   "<_exportcontents>*.internal;x-internal:=true,*</_exportcontents>"
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+# skip japicmp mojo in offline builds (plugin tries to download from Maven Central)
+%mvn_build -f -- -Djapicmp.skip=true -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -77,6 +104,9 @@ jsoup will create a sensible parse tree.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Oct 28 2025 Pavel Vasenkov <pav@altlinux.org> 1.14.3-alt1_7jpp11
+- new version
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.13.1-alt1_7jpp11
 - update
 
