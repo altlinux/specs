@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.16
+Version: 2.0.17
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -73,11 +73,20 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/configs/org.deepin.dde.shell/org.deepin.ds.launchpad.json
 %dir %_libdir/dde-shell/
 %_libdir/dde-shell/org.deepin.ds.dock.launcherapplet.so
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.launchpad.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.launchpad.json
 
 %files -n liblaunchpadcommon
 %_libdir/launchpadcommon.so
 
 %changelog
+* Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.17-alt1
+- New version 2.0.17.
+
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.16-alt1
 - New version 2.0.16.
 
