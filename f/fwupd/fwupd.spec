@@ -33,7 +33,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.12
+Version: 2.0.17
 Release: alt1
 
 Summary: Firmware update daemon
@@ -46,6 +46,7 @@ Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-ubt
 
 BuildRequires: bash-completion
@@ -117,7 +118,6 @@ BuildRequires: polkit
 %endif
 
 Requires: bubblewrap
-Requires: libgusb >= 0.3.5
 
 Obsoletes: fwupd-labels <= %EVR
 
@@ -143,7 +143,6 @@ Files for development with %name.
 %package -n libfwupd-devel-docs
 Summary: Documentation for libfwupd-devel
 Group: Documentation
-BuildArch: noarch
 
 %description -n libfwupd-devel-docs
 Documentation for libfwupd-devel.
@@ -201,12 +200,8 @@ rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
 
 mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 mv %buildroot%_docdir/fwupd %buildroot%_docdir/fwupd-devel-%version
-rm -f %buildroot%_docdir/%name-devel-%version/lib*
+rm -f %buildroot%_docdir/fwupd-devel-%version/lib*
 mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
-
-# Install docs/hsi.html to satisfy noarch check (non-identical noarch packages)
-[ -f %buildroot%_docdir/fwupd-devel-%version/hsi.html ] || \
-    install -Dpm0644 docs/hsi.html -t %buildroot%_docdir/fwupd-devel-%version/
 
 %find_lang %name
 
@@ -217,7 +212,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %doc README.md COPYING
 %_man1dir/fwupdtool.1*
 %_man1dir/fwupdmgr.1*
+%if_enabled uefi
 %_man1dir/dbxtool.1*
+%endif
 %_man5dir/*
 %_man8dir/*
 %config(noreplace)%_sysconfdir/fwupd/fwupd.conf
@@ -230,7 +227,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %_datadir/bash-completion/completions/*
 %_datadir/fish/vendor_completions.d/fwupdmgr.fish
 %_iconsdir/hicolor/*/apps/org.freedesktop.fwupd.*
+%if_enabled uefi
 %_bindir/dbxtool
+%endif
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
@@ -307,6 +306,12 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Fri Nov 14 2025 Egor Ignatov <egori@altlinux.org> 2.0.17-alt1
+- 2.0.17
+
+* Tue Sep 30 2025 Egor Ignatov <egori@altlinux.org> 2.0.16-alt1
+- 2.0.16
+
 * Thu Jun 19 2025 Egor Ignatov <egori@altlinux.org> 2.0.12-alt1
 - 2.0.12
 - add introspection data file to -devel package as well (closes: #49681)
