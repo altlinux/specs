@@ -4,18 +4,17 @@
 %define sover 1
 
 Name: cpr
-Version: 1.11.1
+Version: 1.13.0
 Release: alt1
 
 Summary: C++ Requests: Curl for People, a spiritual port of Python Requests
 License: MIT
 Group: System/Libraries
-Url: https://docs.libcpr.org
+Url: https://docs.libcpr.dev
 VCS: https://github.com/libcpr/cpr
 
 # Source-url: https://github.com/%libname/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-Patch1: alt-build-only-shared-lib.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -29,7 +28,7 @@ excellent Python Requests project.
 Despite its name, libcurl's easy interface is anything but, and making
 mistakes, misusing it is a common source of error and frustration.
 Using the more expressive language facilities of C++17 (or C++11 in
-case you use cpr < 1.10.0), this library captures the essence of making
+case you use cpr <= 1.9.x), this library captures the essence of making
 network calls into a few concise idioms.
 
 %package -n %libname%sover
@@ -37,14 +36,7 @@ Summary: %summary
 Group: System/Libraries
 
 %description -n %libname%sover
-C++ Requests is a simple wrapper around libcurl inspired by the
-excellent Python Requests project.
-
-Despite its name, libcurl's easy interface is anything but, and making
-mistakes, misusing it is a common source of error and frustration.
-Using the more expressive language facilities of C++17 (or C++11 in
-case you use cpr < 1.10.0), this library captures the essence of making
-network calls into a few concise idioms.
+%name library
 
 %package -n %libname-devel
 Summary: Development files for the %name
@@ -57,11 +49,12 @@ applications that use %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %cmake \
-    -DCPR_USE_SYSTEM_CURL=ON
+    -DCPR_USE_SYSTEM_CURL=ON \
+    -DBUILD_SHARED_LIBS=ON \
+    #
 %cmake_build
 
 %install
@@ -77,6 +70,9 @@ applications that use %name.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Thu Nov 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.13.0-alt1
+- new version
+
 * Tue Feb 18 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.11.1-alt1
 - new version
 
