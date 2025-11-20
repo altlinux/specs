@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.19.0
+Version: 6.20.0
 Release: alt1
 %K6init
 
@@ -141,6 +141,9 @@ __EOF__
 
 
 %changelog
+* Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
+- new version
+
 * Fri Oct 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt1
 - new version
 

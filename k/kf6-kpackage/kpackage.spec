@@ -1,8 +1,8 @@
 %define rname kpackage
 
 Name: kf6-%rname
-Version: 6.19.0
-Release: alt2
+Version: 6.20.0
+Release: alt1
 %K6init altplace
 
 Group: System/Libraries
@@ -74,6 +74,9 @@ KF6 library
 
 
 %changelog
+* Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
+- new version
+
 * Thu Oct 23 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt2
 - fix to build when package component unappropriate notation
 
