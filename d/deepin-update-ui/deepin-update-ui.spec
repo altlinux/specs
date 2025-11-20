@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-update-ui
-Version: 1.0.32
+Version: 1.0.34
 Release: alt1
 
 Summary: DDE UI collection for updating functions
@@ -23,7 +23,7 @@ ExcludeArch: i586
 # prevent hasher_priv error
 %filter_from_requires /\/usr\/bin\/kwin_wayland/d
 
-BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdde-control-center-devel
+BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6widget-devel libdde-control-center-devel dde-dock-devel
 
 %description
 %summary.
@@ -33,17 +33,22 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
+sed \
+ -e '/LIBRARY DESTINATION/s|lib/|${LIB_DESTINATION}/|' \
+ -i src/dock-update-plugin/CMakeLists.txt
+
 
 %build
 %DQ6build \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DLIB_DESTINATION=%_lib \
 #
 
 %install
 %DQ6install
-%find_lang --with-qt --output=%name.lang %name dde-control-center
+%find_lang --with-qt --output=%name.lang %name dde-control-center dock-update-plugin
 
 %files -f %name.lang
 %doc README*.md LICENSE debian/changelog
@@ -61,6 +66,13 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %dir %_libdir/dde-control-center/plugins_v1.0/
 %dir %_libdir/dde-control-center/plugins_v1.0/update/
 %_libdir/dde-control-center/plugins_v1.0/update/*
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
+%_libdir/dde-dock/plugins/libdock-update-plugin.so
+%dir %_datadir/dde-dock/
+%dir %_datadir/dde-dock/icons/
+%dir %_datadir/dde-dock/icons/dcc-setting/
+%_datadir/dde-dock/icons/dcc-setting/dcc-plugin-update.dci
 %_unitdir/deepin-update-log-copy@.service
 %_datadir/polkit-1/rules.d/52-deepin-update-ui.rules
 %dir %_datadir/dde-session-shell/
@@ -80,8 +92,14 @@ BuildRequires: cmake dqt6-base-devel libcups-devel dqt6-tools-devel dqt6-declara
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
 %dir %_datadir/dde-control-center/translations/v1.0/
+%dir %_datadir/dock-update-plugin/
+%dir %_datadir/dock-update-plugin/translations/
+%_datadir/dock-update-plugin/translations/dock-update-plugin_ky@Arab.qm
 
 %changelog
+* Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.34-alt1
+- New version 1.0.34.
+
 * Fri Oct 31 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.32-alt1
 - New version 1.0.32.
 
