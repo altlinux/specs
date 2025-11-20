@@ -2,8 +2,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-arcmenu
-Version: v67.1
-Release: alt1
+Epoch: 1
+Version: 67.2
+Release: alt2
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -17,7 +18,8 @@ BuildArch: noarch
 
 Requires: gnome-shell >= 47.0
 # https://bugzilla.altlinux.org/53075
-Requires: libgnome-menus-gir
+Requires: typelib(GMenu) = 3.0
+Requires: altlinux-freedesktop-menu-gnome3
 BuildRequires: %_bindir/glib-compile-schemas
 
 %description
@@ -47,6 +49,16 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Thu Nov 20 2025 Anton Midyukov <antohami@altlinux.org> 1:67.2-alt2
+- src/iconGrid.js: remove empty item.
+
+* Thu Nov 20 2025 Anton Midyukov <antohami@altlinux.org> 1:67.2-alt1
+- new version 67.2.
+
+* Sun Oct 19 2025 Anton Midyukov <antohami@altlinux.org> 1:67.1-alt2
+- Fix version to 67.1, bump epoch.
+- Add runtime dependency on altlinux-freedesktop-menu-gnome3.
+
 * Mon Sep 15 2025 Anton Midyukov <antohami@altlinux.org> v67.1-alt1
 - New version v67.1.
 
