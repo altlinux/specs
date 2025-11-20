@@ -7,8 +7,8 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2025.2
-Release: alt1.3
+Version: 2025.4
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -21,6 +21,7 @@ Patch1: gamepad.patch
 Patch2: alt-ftbfs.patch
 Patch3: fix-build-with-qt5-quazip1.patch
 Patch5: quazip.patch
+Patch6: Box2D.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel chrpath
 BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
@@ -86,6 +87,7 @@ Trik runtime development files for %name
 %prep
 %setup
 %patch -p1
+%patch6 -p1
 %ifarch %e2k
 # workaround of SIGILL in ecf_opt64 from LCC 1.25.23
 sed -i "s/QOverload<QObject\*>::of/(void(*)(QObject*))/" qrkernel/settingsListener.h
@@ -189,7 +191,7 @@ mkdir -p %buildroot%_datadir/%name/languages
 popd
 
 find %buildroot%_libdir/%name -name 'libtrikScriptRunner.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
-find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.13.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
+find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.*.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
 
 %files
 %_bindir/*
@@ -220,6 +222,9 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.13.so.*
 %endif
 
 %changelog
+* Mon Nov 17 2025 Valentin Sokolov <sova@altlinux.org> 2025.4-alt1
+- Update to 2025.4
+
 * Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 2025.2-alt1.3
 - NMU: fixed build for python3.13
 
