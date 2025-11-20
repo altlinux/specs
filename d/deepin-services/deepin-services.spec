@@ -1,14 +1,11 @@
 %def_disable clang
-# TODO:
-# libplugin-ipwatchd.so:
-# undefined symbol: sd_bus_read_dict
-%def_without ipwatchd
+%def_with ipwatchd
 
 %define repo dde-services
 
 Name: deepin-services
 Version: 1.0.12
-Release: alt1
+Release: alt2
 
 Summary: Manage DBus service on DDE
 
@@ -82,6 +79,9 @@ export AR="llvm-ar"
 %_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 
 %changelog
+* Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.12-alt2
+- Built with ipwatchd plugin.
+
 * Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.12-alt1
 - New version 1.0.12.
 
