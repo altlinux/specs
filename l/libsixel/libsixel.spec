@@ -2,7 +2,7 @@
 
 Name: libsixel
 Version: 1.10.5
-Release: alt1
+Release: alt2
 
 Summary: A SIXEL encoder/decoder implementation
 License: MIT
@@ -10,6 +10,9 @@ Group: System/Libraries
 URL: https://github.com/libsixel/libsixel
 
 Source0: %name-%version.tar
+# CVE-2025-9300
+# https://github.com/saitoha/libsixel/issues/200
+Patch: CVE-2025-9300.patch
 
 BuildRequires(pre): meson
 
@@ -64,6 +67,7 @@ Bash completion for %name.
 
 %prep
 %setup -q
+%patch -p1
 # Unbundle stb_image, stb_image_write:
 pushd src
 ln -svf %_includedir/stb/stb_image.h %_includedir/stb/stb_image_write.h ./
@@ -102,6 +106,9 @@ rm -fv %buildroot%_libdir/*.a ||:
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Nov 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.10.5-alt2
+- Security fix for CVE-2025-9300.
+
 * Mon Jan 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.10.5-alt1
 - 1.10.5.
 - Enforce stb requires due CVEs.
