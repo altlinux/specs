@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: command-not-found
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Console assistant for ALT Linux
@@ -39,5 +39,8 @@ BuildRequires: meson
 %config(noreplace) %_sysconfdir/command-not-found/config
 
 %changelog
+* Thu Nov 20 2025 Anton Osipov <radiolamp@altlinux.org> 0.3-alt1
+- New version: 0.3.
+
 * Tue Oct 21 2025 Anton Osipov <radiolamp@altlinux.org> 0.2-alt1
 - Initial build.
