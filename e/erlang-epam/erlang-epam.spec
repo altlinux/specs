@@ -5,14 +5,14 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.12
+Version: 1.0.14
 Release: alt1
 Summary: Library for ejabberd for PAM authentication support
 Group: Development/Erlang
 License: Apache-2.0
 Url: https://github.com/processone/epam
+Vcs: https://github.com/processone/epam.git
 
-# https://github.com/processone/epam.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -43,6 +43,9 @@ An Erlang library for ejabberd that helps with PAM authentication.
 %_erllibdir/%realname-%version
 
 %changelog
+* Thu Nov 20 2025 Ilya Sorochan <k0tran@altlinux.org> 1.0.14-alt1
+- Updated to upstream version 1.0.14.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.12-alt1
 - Updated to upstream version 1.0.12.
 
