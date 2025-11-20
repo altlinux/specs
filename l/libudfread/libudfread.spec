@@ -1,40 +1,50 @@
 Name: libudfread
-Version: 1.1.2
-Release: alt2
-Summary: library for reading UDF from raw devices and image file
+Version: 1.2.0
+Release: alt1
+
+Summary: Library for reading UDF from raw devices and image files
 License: LGPLv2.1
-Group: Development/C
+Group: System/Libraries
 Url: https://code.videolan.org/videolan/libudfread
+
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
+BuildRequires: meson
+
 %description
-library for reading UDF from raw devices and image file
+Library for reading UDF from raw devices and image files
+
+%package -n libudfread3
+Summary: Library for reading UDF from raw devices and image files
+Group: System/Libraries
 
 %package devel
-Summary: Development files for %name
+Summary: Development files for libudfread
 Group: Development/C
-Requires: %name = %EVR
+
+%description -n libudfread3
+Library for reading UDF from raw devices and image files
+This package contains libudfread shared library.
 
 %description devel
-The %name-devel package contains libraries and signature files for
-developing applications that use %name.
+This package contains libraries and signature files for
+developing applications that use libudfread.
 
 %prep
 %setup
 %patch0 -p1
 
 %build
-autoreconf -fisv
-%configure --disable-static
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 
-%files
-%_libdir/libudfread.so.*
+%files -n libudfread3
+%_libdir/libudfread.so.3*
 
 %files devel
 %_includedir/*
@@ -42,6 +52,9 @@ autoreconf -fisv
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.1.2-alt2
 - disabled static library build
 

@@ -1,59 +1,50 @@
-Name: libbluray
-Version: 1.4.0
-Release: alt1
+Name: libbluray2
+Version: 1.3.4
+Release: alt2
 
-Summary: Blu-Ray Discs handling library
+Summary: BD library
 License: LGPLv2.1
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
 
-BuildRequires: meson
-BuildRequires: pkgconfig(freetype2)
-BuildRequires: pkgconfig(fontconfig)
-BuildRequires: pkgconfig(libxml-2.0) >= 2.6
-BuildRequires: pkgconfig(libudfread) >= 1.2.0
+BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel libudfread-devel
 
 %description
 %summary
 
-%package -n libbluray3
-Summary: BD library
-Group: System/Libraries
-
 %package devel
 Summary: Development files for %name
 Group: Development/C
+Requires: %name = %version-%release
 
 %package utils
 Summary: Utilities using %name
 Group: File tools
-
-%description -n libbluray3
-Blu-Ray Discs handling library.
+Requires: %name = %version-%release
 
 %description devel
-Blu-Ray Discs handling library.
 This package contains the headers and libraries for libbluray development.
 
 %description utils
-Blu-Ray Discs handling library.
 This package contains various utilities using libbluray library.
 
 %prep
 %setup
 
 %build
-%meson
-%meson_build
+%autoreconf
+%configure --disable-bdjava-jar --disable-static
+%make_build
 
 %install
-%meson_install
+%makeinstall
 
-%files -n libbluray3
+%files
 %_libdir/*.so.*
 
+%if 0
 %files devel
 %_includedir/*
 %_libdir/*.so
@@ -61,11 +52,9 @@ This package contains various utilities using libbluray library.
 
 %files utils
 %_bindir/*
+%endif
 
 %changelog
-* Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
-- 1.4.0 released
-
 * Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.4-alt2
 - rebuilt as legacy library
 
