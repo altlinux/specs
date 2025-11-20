@@ -1,7 +1,7 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
 Version: 2.2.18
-Release: alt1
+Release: alt2	
 Epoch: 2
 
 Url: https://bluefish.openoffice.nl
@@ -105,6 +105,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Thu Nov 20 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.18-alt2
+- Update russian translation patch.
+
 * Sat Nov 01 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.18-alt1
 - new version (2.2.18)
 
