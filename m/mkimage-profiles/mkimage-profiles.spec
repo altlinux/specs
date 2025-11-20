@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed Nov 19 2025 Anton Midyukov <antohami@altlinux.org> 1.8.7-alt1
+- net: add use/net/networkd/live
+- live: do not enable cpufreq-simple by default
+- features.in: initial feature blacklist-pkgs
+- reports.mk: save .disk from iso
+- net-usershares: Remove unneeded backslash (fix target)
+- mixin.mk: remove smartcard support from regular mate
+- base+smartcard: add gnutls-utils and token libraries
+- e2k: lccrt is not blobs anymore (thanks mike@)
+
 * Tue Sep 09 2025 Anton Midyukov <antohami@altlinux.org> 1.8.6-alt1
 - firmware: make firmware-alsa-sof is available for all architectures
 - Revert "mixin.mk: remove unused target mixin/desktop-installer"
