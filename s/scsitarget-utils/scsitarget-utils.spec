@@ -11,7 +11,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.96
+Version: 1.0.97
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -32,7 +32,6 @@ Source6: tgt.init
 # fedora patches
 Patch1: 0002-remove-check-for-xsltproc.patch
 Patch2: 0003-default-config.patch
-Patch3: tgt-1.0.79-Adapt-to-glusterfs-api-7.6.3.patch
 
 BuildRequires: libxslt docbook-style-xsl xsltproc
 BuildRequires: glibc-devel
@@ -75,10 +74,7 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 
 %prep
 %setup
-# %%patch10 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 ### FIXME: aarch64 ftbfs workaround with gcc12-12.2.1-alt2 (#322140)
 %ifarch aarch64
@@ -166,6 +162,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Thu Nov 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.97-alt1
+- 1.0.97
+
 * Fri Apr 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.96-alt1
 - 1.0.96
 
