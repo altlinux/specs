@@ -10,7 +10,7 @@
 %endif
 
 Name: leancrypto
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Cryptographic library with stack-only support and PQC-safe algorithms
@@ -117,7 +117,7 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 	-Dx509_parser=disabled -Dx509_generator=disabled \
 	-Dpkcs7_parser=disabled -Dpkcs7_generator=disabled \
 	-Dsha2-256=disabled \
-	-Dchacha20=disabled -Dchacha20_drng=disabled \
+	-Dchacha20=disabled -Dchacha20_drng=disabled -Dchacha20poly1305=disabled \
 	-Ddrbg_hash=disabled -Ddrbg_hmac=disabled \
 	-Dhash_crypt=disabled \
 	-Dhmac=disabled -Dhkdf=disabled \
@@ -125,7 +125,7 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 	-Dpbkdf2=disabled \
 	-Dkmac_drng=disabled -Dcshake_drng=disabled \
 	-Dhotp=disabled -Dtotp=disabled \
-	-Daes_block=disabled -Daes_cbc=disabled -Daes_ctr=disabled \
+	-Daes_block=disabled -Daes_cbc=disabled -Daes_ctr=disabled -Daes_gcm=disabled -Daes_xts=disabled \
 	-Daes_kw=disabled \
 	%{subst_enable_meson_feature tools apps} \
 	%{subst_enable_meson_feature tests tests} \
@@ -170,6 +170,9 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 %endif
 
 %changelog
+* Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 

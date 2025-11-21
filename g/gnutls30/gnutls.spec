@@ -9,7 +9,7 @@
 %define libzstd_soname 1
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.10
+Version: 3.8.11
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -331,6 +331,9 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 3.8.11-alt1
+- Updated to 3.8.11 (fixes: CVE-2025-9820).
+
 * Wed Jul 09 2025 Mikhail Efremov <sem@altlinux.org> 3.8.10-alt1
 - Updated leancrypto static patch.
 - Dropped liboqs support.
