@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
@@ -8,7 +8,7 @@
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Fit falling blocks together
@@ -69,6 +69,9 @@ which will disappear.
 
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

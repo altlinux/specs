@@ -7,7 +7,7 @@
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The GNOME disk usage analyser.
@@ -66,6 +66,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Fri Sep 12 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 
