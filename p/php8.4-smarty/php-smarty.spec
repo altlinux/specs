@@ -2,7 +2,7 @@
 %define php_extension smarty
 
 Name: php%_php_suffix-%php_extension
-Version: 5.6.0
+Version: 5.7.0
 Release: alt%php_version.%php_release
 
 Summary: Template engine for PHP
@@ -42,6 +42,9 @@ cp -a src %buildroot%_smartydir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - rebuilt with php-devel = %php_version-%php_release
+
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.0-alt1
+- New version 5.7.0.
 
 * Tue Oct 21 2025 Leontiy Volodin <lvol@altlinux.org> 5.6.0-alt1
 - New version 5.6.0.
