@@ -6,7 +6,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -19,7 +19,7 @@ ExclusiveArch: %go_arches
 Provides: containernetworking-plugins = %EVR
 Provides: container-network-stack = 1
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23
+BuildRequires: rpm-build-golang golang >= 1.24.2
 BuildRequires: /proc
 
 %description
@@ -67,6 +67,9 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Thu Oct 30 2025 Alexander Stepchenko <geochip@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 

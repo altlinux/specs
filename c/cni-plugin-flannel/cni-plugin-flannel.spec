@@ -1,9 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/flannel-io/cni-plugin
 
+%define git_commit e38aaba71b9d0c4ae810585bae578e00c735dba0
+%define git_commit_short %(c="%git_commit"; echo "${c:0:8}")
+
 Name: cni-plugin-flannel
 Epoch: 1
-Version: 1.7.1.2
+Version: 1.8.0.2
 Release: alt1
 
 Summary: A CNI network plugin that is powered by flannel
@@ -39,9 +42,11 @@ such as bridge plugin.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export BUILD_DATE=$(date -u "+%%Y-%%m-%%dT%%H:%%M:%%SZ")
-export LDFLAGS="-X main.Version=%version -X main.Commit=%release -X main.Program=%name -X main.buildDate=$BUILD_DATE -w"
-export TAGS="netgo osusergo"
+
+# 1.8.0.2 -> v1.8.0
+version='%(v="%version"; echo "v${v%.*}")'
+export LDFLAGS="-X main.Version=$version -X main.Commit=%git_commit_short -X main.Program=flannel"
+export TAGS="netgo osusergo no_stage"
 export CGO_ENABLED=1
 
 %golang_prepare
@@ -63,6 +68,9 @@ rm %buildroot%_bindir/cni-plugin
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Thu Oct 30 2025 Alexander Stepchenko <geochip@altlinux.org> 1:1.8.0.2-alt1
+- 1.7.1.2 -> 1.8.0.2.
+
 * Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1:1.7.1.2-alt1
 - Update to 1.7.1.2.
 
