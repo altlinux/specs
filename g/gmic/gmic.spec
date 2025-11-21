@@ -1,9 +1,9 @@
 %def_disable snapshot
 # experimental
-%def_disable gimp_plugin
+%def_enable gimp_plugin
 %{?_enable_gimp_plugin:%define gimpplugindir %(gimptool-3.0 --gimpplugindir)}
 %define gimpplugindir %_libdir/gimp/3.0
-%def_disable zart
+%def_enable zart
 %ifarch %e2k
 # it's impossible to use such a bad OpenMP implementation for such complex code
 %def_disable openmp
@@ -17,10 +17,10 @@
 # https://github.com/GreycLab/gmic-qt
 %define gmic_qt_ver v.3.5.0-7-gb55b8ca
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-272-gc9960ae2
+%define gmic_comm_ver gmic-3.4.3-314-gea62768f
 
 Name: gmic
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -51,8 +51,8 @@ BuildRequires: libcurl-devel
 BuildRequires: bash-completion
 %{?_enable_gimp_plugin:BuildRequires: libgimp-devel}
 # for qt
-BuildRequires(pre): rpm-macros-qt6
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: qt5-base-devel qt5-tools-devel
 %if_enabled zart
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
@@ -146,10 +146,10 @@ popd
 
 pushd %name-qt
 %define opt_qt CONFIG+=release GMIC_PATH=../src NOSTRIP=1
-%{?_enable_gimp_plugin:%qmake_qt6 %opt_qt HOST=gimp3 gmic_qt.pro
-%make_build}
-%qmake_qt6 %opt_qt HOST=none gmic_qt.pro
+%qmake_qt5 %opt_qt HOST=none gmic_qt.pro
 %make_build
+%{?_enable_gimp_plugin:%qmake_qt5 %opt_qt HOST=gimp3 gmic_qt.pro
+%make_build}
 #%%cmake
 #%%cmake_build
 popd
@@ -222,12 +222,16 @@ popd
 %gimpplugindir/plug-ins/*}
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
+- gmic-qt: back to qt5, built experimental gimp3 plugin
+- enabled zart build again
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
 * Wed Sep 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
-- gmic-qt: build with QT6
+- gmic-qt: build with qt6
 - disabled zart build
 
 * Wed Aug 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
