@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uwsm
-Version: 0.24.2
+Version: 0.24.3
 Release: alt1
 
 Summary: Universal Wayland Session Manager
@@ -64,6 +64,9 @@ rm -rf %buildroot%_docdir/uwsm/
 %_man3dir/uwsm-plugins.3.*
 
 %changelog
+* Fri Nov 21 2025 Egor Ignatov <egori@altlinux.org> 0.24.3-alt1
+- New version 0.24.3.
+
 * Wed Nov 12 2025 Egor Ignatov <egori@altlinux.org> 0.24.2-alt1
 - New version 0.24.2.
 
