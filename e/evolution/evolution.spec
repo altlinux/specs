@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -72,6 +72,7 @@ Requires: highlight
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake ninja-build gcc-c++ flex gnome-common
 BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: pkgconfig(shared-mime-info)
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgail3-devel >= %gtk_ver
 BuildRequires: gnome-icon-theme >= %gnome_icon_ver
@@ -272,6 +273,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.2-alt1
+- 3.58.2
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.58.1-alt1
 - 3.58.1
 
