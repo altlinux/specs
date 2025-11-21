@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 11.0.7
+Version: 11.0.8
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -116,6 +116,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Nov 21 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.0.8-alt1
+- 11.0.8.
+
 * Sun Oct 26 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.0.7-alt1
 - 11.0.7.
 - Set minimum required Go version to 1.24.
