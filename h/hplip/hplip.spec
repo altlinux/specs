@@ -29,8 +29,8 @@
 %def_with new_systemd
 
 Name:    hplip
-Version: 3.25.6
-Release: alt3.2
+Version: 3.25.8
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -233,9 +233,6 @@ Patch128: hplip-use-binary-str.patch
 Patch129: hplip-error-print.patch
 Patch130: hplip-hpfax-importerror-print.patch
 Patch131: hplip-wifisetup.patch
-# pgp.mit.edu keyserver got bad connection, so we need to have pool of keyservers
-# to choose (Bz#1641100, launchpad#1799212)
-Patch132: hplip-keyserver.patch
 # QMessagebox call was copy-pasted from Qt4 version, but Qt5 has different arguments,
 # This patch solves most of them
 Patch133: 0026-Call-QMessageBox-constructors-of-PyQT5-with-the-corr.patch
@@ -687,7 +684,6 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch129 -p1 -b .error-print-fix
 %patch130 -p1 -b .hpfax-import-error-print
 %patch131 -p1 -b .wifisetup-bad-call-fix
-%patch132 -p1 -b .keyserver
 %patch133 -p1 -b .qmsgbox-typos-fix
 %patch134 -p1 -b .libimageprocessor-removal
 # Remove proprietary binary blobs
@@ -1321,6 +1317,26 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Tue Nov 18 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.8-alt1
+- New version.
+- Added support for the following new printers:
+  + HP LaserJet Enterprise 5501, 5501n, 5502, 5502dn
+  + HP LaserJet Enterprise 6500, 6500dn, 6500n, 6501, 6501dn
+  + HP LaserJet Enterprise Flow MFP 5602zfw
+  + HP LaserJet Enterprise Flow MFP 6600zfsw, 6600zfw
+  + HP LaserJet Enterprise Flow MFP 8601z
+  + HP LaserJet Enterprise Flow MFP X530
+  + HP LaserJet Enterprise Flow MFP X62757zs
+  + HP LaserJet Enterprise MFP 5601, 5601dn, 5602, 5602dn, 5602f
+  + HP LaserJet Enterprise MFP 6600, 6600dn
+  + HP LaserJet Enterprise MFP X53052, X53052dn
+  + HP LaserJet Enterprise MFP X62757, X62757dn
+  + HP LaserJet Enterprise X50452, X50452dn
+  + HP LaserJet Enterprise X60257, X60257dn
+  + HP LaserJet Enterprise X60357, X60357dn
+  + DEX D50452dn
+  + DEX MFP D53052dn
+
 * Thu Nov 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:3.25.6-alt3.2
 - NMU: fix:
   + launch HP Device Manager via *.desktop while hp-systray is running in Gnome (ALT #54987)
