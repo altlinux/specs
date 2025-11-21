@@ -5,11 +5,12 @@
 %def_with tbb
 %def_with assimp
 %def_with clipper2
+%def_with python
 
 %define soname 3
 
 Name: manifold
-Version: 3.2.1
+Version: 3.3.2
 Release: alt1
 Summary: Geometry library for topological robustness
 License: Apache-2.0
@@ -30,6 +31,12 @@ BuildRequires: libassimp-devel libpoly2tri-devel libminizip-devel
 %if_with clipper2
 BuildRequires: libClipper2-devel
 %endif
+%if_with python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-nanobind
+%endif
 
 %description
 Manifold is a geometry library dedicated to creating and operating on manifold
@@ -45,6 +52,10 @@ when only a single thread is available.
 Summary: %name library
 Group: System/Libraries
 Provides: lib%name = %EVR
+
+%package -n python3-module-%name
+Summary: Python3 module for %name
+Group: Development/Python3
 
 %description -n lib%name%{soname}
 Manifold is a geometry library dedicated to creating and operating on manifold
@@ -63,6 +74,9 @@ Group: Development/C++
 %description -n lib%name-devel
 %name development headers and libraries
 
+%description -n python3-module-%name
+Python3 module for %name
+
 %prep
 %setup
 
@@ -78,6 +92,12 @@ Group: Development/C++
 %endif
 %if_with clipper2
 	-DMANIFOLD_CROSS_SECTION=ON \
+%endif
+%if_with python
+	-DMANIFOLD_PYBIND=ON \
+%endif
+%ifarch %ix86
+	-DMANIFOLD_STRICT=OFF \
 %endif
 	-DMANIFOLD_DOWNLOADS=OFF \
 	-DMANIFOLD_OPTIMIZED=ON
@@ -95,7 +115,18 @@ Group: Development/C++
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/%name
 
+%if_with python
+%files -n python3-module-%name
+%python3_sitelibdir/*.so
+%python3_sitelibdir/*.pyi
+%endif
+
 %changelog
+* Thu Nov 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3.3.2-alt1
+- 3.3.2.
+- enable python bindings.
+- %%ix86: disable Werror.
+
 * Wed Aug 13 2025 L.A. Kostis <lakostis@altlinux.ru> 3.2.1-alt1
 - 3.2.1.
 
