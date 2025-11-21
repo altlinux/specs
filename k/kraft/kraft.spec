@@ -1,8 +1,8 @@
-%define rev 100ca9f323f4cb90eade1af9d7c6d5351f8c2783
+%define rev 403d516
 
 Name: kraft
-Version: 1.2.2
-Release: alt1
+Version: 2.0.0
+Release: alt0.git%rev
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -14,19 +14,22 @@ URL: http://www.volle-kraft-voraus.de/
 Requires: kde5-akonadi
 
 Source0: kraft-%version.tar
+Patch0: kraft-alt-fix-link.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kcontacts-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kcodecs-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kcontacts-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-ktexttemplate-devel
+BuildRequires: kf6-kxmlgui-devel
 BuildRequires: libctemplate-devel
 BuildRequires: grantlee5-devel
-BuildRequires: qt5-svg-devel
+BuildRequires: qt6-svg-devel
 
 %py3_requires reportlab
 
@@ -36,29 +39,34 @@ your small business.
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p1
 subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' src/CMakeLists.txt
 echo "%rev" > .tag
 
 %build
-%K5init no_altplace
-%K5build -DCMAKE_SKIP_RPATH=1
+%K6init no_altplace
+%K6build -DCMAKE_SKIP_RPATH=1 \
+         -DKDE_INSTALL_KXMLGUIDIR=%_datadir/kxmlgui6
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS README.md TODO Changes.txt
 %_bindir/*
 %_datadir/%name
-%_K5cfg/*
-%_K5xdgapp/*.desktop
+%_K6xdgapp/*.desktop
 %_iconsdir/*/*/*/*.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_K5xmlgui/%name
+%_K6xmlgui/%name
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Fri Nov 21 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt0.git403d516
+- New snapshot.
+- Built with KF6.
+
 * Wed Oct 02 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
 - New version.
 
