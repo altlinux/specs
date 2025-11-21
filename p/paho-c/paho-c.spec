@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define abiversion 1
-%def_disable static
 
 Name: paho-c
-Version: 1.3.14
+Version: 1.3.15
 Release: alt1
 
 Summary: Eclipse Paho C Client Library for the MQTT Protocol
@@ -62,15 +61,11 @@ Development documentation files for the the Paho MQTT C Client.
     -DPAHO_BUILD_SAMPLES=FALSE \
     -DPAHO_ENABLE_TESTING=FALSE \
     -DPAHO_ENABLE_CPACK=FALSE \
-%if_enabled static
-	-DPAHO_BUILD_STATIC=TRUE
-%else
-	-DPAHO_BUILD_STATIC=FALSE
-%endif
+    #
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files -n libpaho-mqtt%abiversion
 %doc README.md SECURITY.md NOTICE
@@ -88,6 +83,9 @@ Development documentation files for the the Paho MQTT C Client.
 %_defaultdocdir/*
 
 %changelog
+* Thu Nov 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.15-alt1
+- new version
+
 * Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.14-alt1
 - update the sources to v1.3.14
 

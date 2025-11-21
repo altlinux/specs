@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define sover 23
 
+%def_enable docs
+
 Name: openvas-scanner
-Version: 23.20.1
+Version: 23.31.5
 Release: alt1
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
@@ -17,8 +19,7 @@ ExcludeArch: armh
 Source: %name-%version.tar
 Patch0: fix-release-build.patch
 Patch1: fix-linking-shared-lib.patch
-Patch2: alt-fix-func-arg-type.patch
-Patch3: alt-fix-specifier-char-type.patch
+Patch2: alt-fix-specifier-char-type.patch
 
 BuildRequires: cmake
 BuildRequires: libbsd-devel
@@ -29,9 +30,13 @@ BuildRequires: libjson-glib-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libksba-devel
 BuildRequires: libssh-devel
-%ifarch %ix86
-BuildRequires: libgpgme-devel
+BuildRequires: libmagic-devel
+%if_enabled docs
+BuildRequires: doxygen
 %endif
+#%%ifarch %ix86
+#BuildRequires: libgpgme-devel
+#%%endif
 
 %description
 Scanner module for the Open Vulnerability Assessment System (OpenVAS).
@@ -64,13 +69,22 @@ Group: Development/C
 %description -n libopenvas_misc-devel
 Support library for %name.
 
+%if_enabled docs
+%package devel-doc
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+%summary
+%endif
+
 %prep
 %setup
 %patch0 -p2
 %patch1 -p1
-%patch2 -p1
 %ifarch %ix86
-%patch3 -p1
+%patch2 -p1
 %endif
 
 %build
@@ -84,8 +98,17 @@ Support library for %name.
     -DOPENVAS_RUN_DIR=%_runtimedir/ospd
 %cmake_build
 
+%if_enabled docs
+%cmake_build -t doxygen-full
+%endif
+
 %install
 %cmake_install
+
+%if_enabled docs
+%__mkdir_p %buildroot%_defaultdocdir/%name/html
+%__mv %_cmake__builddir/doc/generated/html %buildroot%_defaultdocdir/%name/
+%endif
 
 %files
 %doc CHANGELOG.md COPYING README.md
@@ -110,7 +133,16 @@ Support library for %name.
 %files -n libopenvas_misc-devel
 %_libdir/*misc.so
 
+%if_enabled docs
+%files devel-doc
+%dir %_defaultdocdir/%name
+%doc %_defaultdocdir/%name/html
+%endif
+
 %changelog
+* Fri Nov 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.31.5-alt1
+- new version
+
 * Tue Jun 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.20.1-alt1
 - new version
 
