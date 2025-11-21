@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Video
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Fri Nov 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt2
+- update russian translation
+
 * Thu Oct 30 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
 - new version
 
