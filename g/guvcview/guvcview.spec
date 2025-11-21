@@ -1,14 +1,16 @@
 %def_disable snapshot
 
-%def_enable pulse
-%define ver_major 2.1
+%define ver_major 2.2
 %define api_ver_major 2
 %define api_ver 2.2
 %define enc_api_ver 2.2
-%def_disable qt5
+
+%def_enable pulse
+%def_enable sfml
+%def_disable qt6
 
 Name: guvcview
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -16,24 +18,27 @@ License: GPL-2.0-or-later
 Group: Video
 Url: http://%name.sourceforge.net/
 
+Vcs: git://git.code.sf.net/p/guvcview/git-master.git
+
 %if_disabled snapshot
 Source: http://download.sourceforge.net/%name/%name-src-%version.tar.bz2
 %else
-Vcs: git://git.code.sf.net/p/guvcview/git-master.git
 Source: %name-%version.tar
 %endif
 
 Requires: lib%name = %EVR
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: libSDL2-devel >= 2.0.0
-BuildRequires: gcc-c++ glibc-kernheaders
-BuildRequires: desktop-file-utils intltool libappstream-glib-devel
-BuildRequires: libavutil-devel libavcodec-devel
+BuildRequires: glibc-kernheaders
+BuildRequires: libavutil-devel pkgconfig(libavcodec) >= 58
 BuildRequires: libgtk+3-devel libportaudio2-devel
 BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
 BuildRequires: libgsl-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
-%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools}
+%{?_enable_sfml:BuildRequires: libSFML-devel}
+%{?_enable_qt6:BuildRequires: qt6-base-devel qt6-tools}
 
 %description
 This project aims at providing a simple GTK interface for capturing and
@@ -66,52 +71,49 @@ This package contains files necessary to develop applications that use
 %setup -n %name%{?_disable_snapshot:-src}-%version
 
 %build
-%{?_enable_qt5: export ac_cv_prog_MOC=%_bindir/moc-qt5}
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-debian-menu \
-	%{?_disable_pulse:--enable-pulse=no} \
-	%{subst_enable qt5}
-%make_build
+%cmake \
+    %{?_enable_sfml:-DUSE_SFML=ON} \
+    %{?_enable_qt6:-DUSE_QT6=ON}
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 mkdir -p %buildroot%_niconsdir
-install -p -m644 %buildroot%_pixmapsdir/guvcview/guvcview.png %buildroot%_niconsdir/guvcview.png
-rm -f %buildroot%_pixmapsdir/guvcview/guvcview.png
-ln -s %_niconsdir/guvcview.png %buildroot%_pixmapsdir/guvcview/guvcview.png
+install -p -m644 %buildroot%_pixmapsdir/guvcview.png %buildroot%_niconsdir/guvcview.png
 
 desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Recorder \
-	--add-category=Video \
-	%buildroot%_desktopdir/guvcview.desktop
+    --add-category=Recorder \
+    --add-category=Video \
+    %buildroot%_desktopdir/guvcview.desktop
 
 %find_lang --output=%name.lang %name gview_v4l2core
 
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/*
-%_niconsdir/*
-%_man1dir/*
-%_datadir/metainfo/%name.appdata.xml
+%_pixmapsdir/%name.png
+%_niconsdir/%name.png
+%_man1dir/%name.1*
+%_datadir/appdata/%name.appdata.xml
 %doc AUTHORS ChangeLog README*
 
 %files -n lib%name
-%_libdir/libgviewaudio-%api_ver.so.*
-%_libdir/libgviewrender-%enc_api_ver.so.*
-%_libdir/libgviewv4l2core-%enc_api_ver.so.*
-%_libdir/libgviewencoder-%enc_api_ver.so.*
+%_libdir/libgviewaudio.so.*
+%_libdir/libgviewrender.so.*
+%_libdir/libgviewv4l2core.so.*
+%_libdir/libgviewencoder.so.*
 
-%files -n lib%name-devel
-%_includedir/%name-%api_ver_major/
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
-%exclude %_datadir/doc/%name
+#%files -n lib%name-devel
+%exclude %_libdir/*.so
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
+* Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1 (ported to CMake build system)
+
 * Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
