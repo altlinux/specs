@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: epiphany
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -34,6 +34,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %endif
 
 Provides: webclient
+Provides: /usr/bin/x-www-browser
 Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
@@ -107,6 +108,12 @@ cat << _EOF_\
 homepage-url='file:///usr/share/doc/HTML/index.html'
 _EOF_
 
+mkdir -p %buildroot/%_altdir
+cat << _EOF_ \
+> %buildroot/%_altdir/%name
+%_bindir/x-www-browser	%_bindir/%name 60
+_EOF_
+
 %find_lang --with-gnome --output=%name.lang %name
 
 %check
@@ -115,6 +122,7 @@ xvfb-run %__meson_test
 
 %files
 %_bindir/%name
+%_altdir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/ephy-profile-migrator
 %_libexecdir/%name-search-provider
@@ -138,6 +146,9 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 

@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -31,7 +31,7 @@ Source: %name-%version%beta.tar
 
 %define meson_ver 0.63
 %define glib_ver 2.80.0
-%define gtk_ver 4.17.5
+%define gtk_ver 4.20.3
 %define gi_ver 1.84
 
 BuildRequires(pre): rpm-macros-meson
@@ -146,6 +146,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.2-alt1
+- 1.8.2
+
 * Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.1-alt1
 - 1.8.1
 

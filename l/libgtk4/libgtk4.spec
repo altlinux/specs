@@ -41,7 +41,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -243,7 +243,9 @@ the functionality of the installed GTK+3 packages.
 %ifarch %e2k
 %add_optflags -mno-sse4.2
 %endif
-
+%ifarch %ix86
+%add_optflags -Wno-int-conversion
+%endif
 %meson \
     %{subst_enable_meson_bool x11 x11-backend} \
     %{subst_enable_meson_bool wayland wayland-backend} \
@@ -429,6 +431,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Nov 20 2025 Yuri N. Sedunov <aris@altlinux.org> 4.20.3-alt1
+- 4.20.3
+
 * Tue Sep 30 2025 Yuri N. Sedunov <aris@altlinux.org> 4.20.2-alt1
 - 4.20.2
 
