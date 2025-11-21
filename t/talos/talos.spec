@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      5e22f14bbdbf0916b0c7289066fc5fc7db447e5d
+%global commit      8137c0605054452dd001c04e231de399e86ae7cb
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global altkernel 6.12.45-talos
 %define _libexecdir %_prefix/libexec
@@ -13,8 +13,8 @@
 %endif
 
 Name: talos
-Version: 1.10.7
-Release: alt2
+Version: 1.10.8
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -197,6 +197,9 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %go_path/src/%import_path
 
 %changelog
+* Fri Nov 21 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.8-alt1
+- New version 1.10.8.
+
 * Wed Sep 10 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.7-alt2
 - Update DefaultKernelVersion.
 
