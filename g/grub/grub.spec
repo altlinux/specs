@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt15
+Release: alt16
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -515,6 +515,12 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Nov 20 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt16
+- Fix grub-install on i386-pc (closes: #56911)
+- add upstream security patch set 2025-11-18:
+  (fixes: CVE-2025-54770, CVE-2025-54771)
+  (fixes: CVE-2025-61661, CVE-2025-61662, CVE-2025-61663, CVE-2025-61664)
+
 * Fri Nov 14 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt15
 - grub-install: Embed SBAT metadata by default (closes: #41959)
 
