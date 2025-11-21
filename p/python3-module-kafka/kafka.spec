@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.2.15
+Version: 2.3.0
 Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
@@ -17,6 +17,11 @@ Source: %name-%version.tar
 Source1: debundler.py.in
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+Provides: python3-module-%pypi_name = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# vendored
+Requires: python3-module-six
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -26,12 +31,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_check
 BuildRequires: python3-module-six
 %endif
-
-%filter_from_requires /python3(kafka\.vendor\..*)/d
-%py3_requires six
-
-%py3_provides %pypi_name
-Provides: python3-module-%pypi_name
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -49,13 +48,13 @@ and Snappy compression is also supported for message sets.
 %pyproject_deps_resync_check_pipreqfile requirements-dev.txt
 %endif
 
-VENDORED_PATH='kafka/vendor'
+VENDORED_PATH='%mod_name/vendor'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
 rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
 cp "%SOURCE1" "$UNVENDORED_PATH"
 sed -i \
-    -e 's/@VENDORED_ROOT@/"kafka.vendor"/' \
+    -e 's/@VENDORED_ROOT@/"%mod_name.vendor"/' \
     -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
     "$UNVENDORED_PATH"
 
@@ -72,10 +71,13 @@ rm -r %buildroot%python3_sitelibdir/test/
 
 %files
 %doc README.*
-%python3_sitelibdir/kafka/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 21 2025 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.15 -> 2.3.0.
+
 * Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 2.2.15-alt1
 - 2.2.14 -> 2.2.15.
 
