@@ -6,12 +6,12 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      3d4129b9ea4fa263e57984428ad908f6a7d4b94f
+%global commit      8108357bcb4b5d746ccc44aa85e60995895b26b3
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    29.0.0
-Release: alt1.1
+Version:    29.0.2
+Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -94,6 +94,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Fri Nov 21 2025 Vladimir Didenko <cow@altlinux.org> 29.0.2-alt1
+- new version
+
 * Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 29.0.0-alt1.1
 - exclude ix86 arches
 
