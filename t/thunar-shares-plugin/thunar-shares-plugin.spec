@@ -1,6 +1,6 @@
 Name: thunar-shares-plugin
 Version: 0.5.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Thunar file manager extension to share files using Samba
 Summary(ru_RU.UTF8): Расширение файлового менеджера Thunar для предоставления доступа к папкам по сети.
@@ -10,6 +10,7 @@ License:   GPLv2+
 URL:      https://docs.xfce.org/xfce/thunar/thunar-shares-plugin
 Vcs:      https://gitlab.xfce.org/thunar-plugins/thunar-shares-plugin.git
 Source:   %name-%version.tar
+Source1:  ALT_ru.po
 Patch:    %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -37,6 +38,10 @@ is based on nautilus-share.
 %setup
 %patch -p1
 
+# Merge our own and upstream Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
+mv -f merged_ru.po po/ru.po
+
 %build
 %meson
 %meson_build -v
@@ -50,6 +55,9 @@ is based on nautilus-share.
 %_libdir/thunarx-*/%name.so
 
 %changelog
+* Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 1:0.5.0-alt3
+- Used our own Russian translation.
+
 * Wed Oct 01 2025 Mikhail Efremov <sem@altlinux.org> 1:0.5.0-alt2
 - Added Russian translation for a new string.
 - Setted executable permissons for shared folder path.
