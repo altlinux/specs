@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: kopia
-Version: 0.21.1
+Version: 0.22.0
 Release: alt1
 Summary: Backup tool with fast, incremental backups, client-side end-to-end encryption, compression and data deduplication (CLI)
 License: Apache-2.0
@@ -13,7 +13,6 @@ Url: https://kopia.io
 Vcs: https://github.com/kopia/kopia
 
 Source: %name-%version.tar
-Patch3500: %name-0.15.0-loongarch64.patch
 BuildRequires: golang
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: openssh-common
@@ -29,7 +28,8 @@ files/directories that you deem are important or critical.
 
 %prep
 %setup
-%patch3500 -p1
+# loongarch64 compatibility.
+sed -i -E 's/([|&]{2} !?)riscv64/& \1loong64/' fs/localfs/local_fs_{32,64}bit.go
 # Remove out-of-band auto-update functionality.
 # https://github.com/kopia/kopia/issues/3617
 for i in $(grep ^func cli/update_check.go | grep -Po '\b\S+(?=\()'); do
@@ -88,6 +88,9 @@ diff -qr $OLDPWD x
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Nov 18 2025 Vitaly Chikunov <vt@altlinux.org> 0.22.0-alt1
+- Update to v0.22.0 (2025-11-17).
+
 * Tue Jul 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.21.1-alt1
 - Update to v0.21.1 (2025-07-22).
 
