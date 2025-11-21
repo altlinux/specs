@@ -1,8 +1,8 @@
 %define sover 44
 
 Name: wolfssl
-Version: 5.8.2
-Release: alt2
+Version: 5.8.4
+Release: alt1
 
 Summary: Embedded SSL/TLS Library
 License: GPL-3.0
@@ -62,6 +62,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Nov 22 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.4-alt1
+- New version 5.8.4.
+
 * Thu Aug 07 2025 Nazarov Denis <nenderus@altlinux.org> 5.8.2-alt2
 - Include options.h into devel subpackage (ALT #55533)
 - Enable JNI support (ALT #55534)
