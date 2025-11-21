@@ -1,6 +1,6 @@
 Name: libetonyek
-Version: 0.1.10
-Release: alt2
+Version: 0.1.13
+Release: alt1
 
 Summary: A library for import of Apple Keynote presentations
 License: MPL-2.0
@@ -9,7 +9,8 @@ Group: System/Libraries
 # https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
-Patch: libetonyek-0.1.9-ALT-C++11.patch
+Patch1: libetonyek-0.1.9-ALT-C++11.patch
+Patch2: libetonyek-alt-mdds-3.0.patch
 
 # Automatically added by buildreq on Mon Sep 21 2015
 # optimized out: boost-devel-headers gnu-config libstdc++-devel pkg-config xz
@@ -48,7 +49,8 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -56,7 +58,7 @@ Currently supported: XHTML, raw, text.
 	--disable-silent-rules \
 	--disable-static \
 	--disable-werror \
-	--with-mdds=2.1
+	--with-mdds=3.0
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -74,7 +76,7 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}
 make check
 
 %files
-%doc AUTHORS COPYING FEATURES NEWS README
+%doc AUTHORS COPYING FEATURES.md NEWS README.md
 %_libdir/*.so.*
 
 %files devel
@@ -91,6 +93,9 @@ make check
 %_bindir/*
 
 %changelog
+* Fri Nov 21 2025 Andrey Cherepanov <cas@altlinux.org> 0.1.13-alt1
+- FTBFS: build new version with mdds-3.1.0
+
 * Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 0.1.10-alt2
 - E2K: drop the old kudge (reverts 0.1.6-alt4 change)
 - Minor spec cleanup
