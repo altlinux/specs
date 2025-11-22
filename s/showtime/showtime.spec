@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: showtime
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Movie player for GNOME
@@ -83,6 +83,9 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - 49.0
 

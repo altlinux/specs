@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name warpinator
-%define ver_major 1.8
+%define ver_major 2.0
 %define rdn_name org.x.Warpinator
 
 %def_enable bundle_zeroconf
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: Warpinator - send and receive files across a local network
@@ -83,6 +83,9 @@ Warpinator is a GTK+3 app to send and receive files across a local network.
 %doc README*
 
 %changelog
+* Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Fri Aug 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.10-alt1
 - 1.8.10
 

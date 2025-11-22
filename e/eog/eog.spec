@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
 %define ver_major 47
@@ -15,14 +17,19 @@
 
 Name: eog
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Eye Of Gnome
 License: GPL-2.0-or-later
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
+Patch10: %name-47.0-fc-pygobject-3.52.patch
 
 Provides: %oldname = %EVR
 Obsoletes: %oldname < 2.14.2-alt1
@@ -48,7 +55,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel >= 3.0
 BuildRequires: gnome-icon-theme >= 2.19.1
-BuildRequires: shared-mime-info >= 0.60
+BuildRequires: shared-mime-info-devel >= 0.60
 BuildRequires: libexempi-devel >= %exempi_ver
 BuildRequires: libexif-devel >= 0.6.14
 %{?_enable_color_management:BuildRequires: liblcms2-devel}
@@ -113,6 +120,7 @@ the functionality of the EOG GUI.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
 
 %build
 %meson \
@@ -151,7 +159,7 @@ ln -sf %name/lib%name.so \
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/GConf/gsettings/eog.convert
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS HACKING MAINTAINERS NEWS
 %doc README* THANKS TODO
 
@@ -181,6 +189,10 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt2
+- updated to 47.0-33-gf3a82fb5
+- fixed for pygobject-3.52
+
 * Sun Sep 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
