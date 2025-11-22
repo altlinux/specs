@@ -1,5 +1,5 @@
 Name: drawpile
-Version: 2.2.2
+Version: 2.3.0
 Release: alt1
 
 Summary: A collaborative drawing program
@@ -22,11 +22,13 @@ BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: git-core
 BuildRequires: libavfilter-devel
+BuildRequires: libavformat-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: libsodium-devel
+BuildRequires: libswscale-devel
 BuildRequires: libwebp-devel
 BuildRequires: libzip-devel
-BuildRequires: qt6-multimedia-devel
+BuildRequires: libzstd-devel
 BuildRequires: qt6-sql-interbase
 BuildRequires: qt6-sql-mysql
 BuildRequires: qt6-sql-odbc
@@ -34,6 +36,7 @@ BuildRequires: qt6-sql-postgresql
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-translations
+BuildRequires: qt6-websockets-devel
 BuildRequires: rust-cargo
 BuildRequires: zlib-devel
 
@@ -78,10 +81,14 @@ export CARGO_HOME=${PWD}/cargo
 %_iconsdir/hicolor/*/apps/%name.*
 %_iconsdir/hicolor/*/mimetypes/*
 %_datadir/metainfo/net.%name.%name.appdata.xml
+%_datadir/mime/application/vnd.%name.canvas.xml
 %_datadir/mime/application/vnd.%name.recording.xml
 %_datadir/mime/text/vnd.%name.recording.xml
 
 %changelog
+* Sat Nov 22 2025 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Thu Oct 09 2025 Nazarov Denis <nenderus@altlinux.org> 2.2.2-alt1
 - New version 2.2.2.
 
