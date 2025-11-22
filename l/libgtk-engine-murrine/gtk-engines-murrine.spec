@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.98.1.1
-Release: alt0.1.1.1
+Release: alt0.2
 
 Summary: Murrine GTK2 engine
 License: LGPLv2+
@@ -13,7 +13,7 @@ Url: http://cimi.netsons.org/pages/murrine.php
 Source: %name-%version.tar
 Patch0: %name-%version-cppflags-alt.patch
 Patch1: gtk-engines-murrine-0.98.1.1-alt-glib2.patch
-Packager: Denis Koryavov <dkoryavov@altlinux.org>
+Patch2: debian-add-missing-function-declarations.patch
 
 %define gtk_ver 2.10.0
 %define gtk_binary_ver 2.10.0
@@ -38,6 +38,7 @@ Murrine - использующий cairo быстрый модуль прори�
 %setup
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %build
 %autoreconf
@@ -55,6 +56,10 @@ export CPPFLAGS+="-I %_includedir/pixman-1/"
 %_datadir/gtk-engines/*.xml
 
 %changelog
+* Sat Nov 22 2025 Mikhail Efremov <sem@altlinux.org> 0.98.1.1-alt0.2
+- NMU: Dropped packager tag.
+- NMU: Fixed FTBFS.
+
 * Mon Jun 27 2022 Michael Shigorin <mike@altlinux.org> 0.98.1.1-alt0.1.1.1
 - minor spec cleanup
 
