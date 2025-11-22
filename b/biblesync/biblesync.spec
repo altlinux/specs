@@ -1,15 +1,18 @@
-%global __soversion 1.1
+%define __cmake_in_source_build 1
+%global __soversion 2.0
 
 Name: biblesync
-Version: 1.2.0
-Release: alt2.1
+Version: 2.1.0
+Release: alt2
 Summary: A Cross-platform library for sharing Bible navigation
 Group: System/Libraries
 License: Public Domain
 Url: http://www.xiphos.org
 Source: https://github.com/karlkleinpaste/biblesync/releases/download/%version/biblesync-%version.tar.gz
 Source44: %name.watch
+Patch0: 4b00f9fd3d0c858947eee18206ef44f9f6bd2283.patch
 
+BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Wed Sep 13 2017
 # optimized out: cmake-modules libstdc++-devel python-base python-modules
 BuildRequires: cmake gcc-c++ libuuid-devel
@@ -36,17 +39,25 @@ that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%cmake \
-	-DBUILD_SHARED_LIBS=TRUE \
-	-DLIBDIR=%_libdir \
-	-DBIBLESYNC_SOVERSION=%__soversion \
-
+export CFLAGS="$RPM_OPT_FLAGS -fPIC"
+export CXXFLAGS="$RPM_OPT_FLAGS -fPIC"
+mkdir build
+pushd build
+%cmake -DLIBDIR=%{_libdir} .. -DBUILD_SHARED_LIBS=TRUE -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--as-needed" -DBIBLESYNC_SOVERSION=%{__soversion}
 %cmake_build
+popd
+
 
 %install
+
+pushd build
 %cmake_install
+popd
+
+
 
 %files
 %doc AUTHORS COPYING ChangeLog* README* WIRESHARK
@@ -59,6 +70,12 @@ that use %name.
 %_man7dir/*
 
 %changelog
+* Sun Nov 23 2025 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt2
+- Add patch
+
+* Sun Nov 23 2025 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2.0-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
