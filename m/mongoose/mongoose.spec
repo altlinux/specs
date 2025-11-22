@@ -10,7 +10,7 @@
 
 Name: mongoose
 Version: 7.20
-Release: alt1
+Release: alt2
 
 Summary: An easy-to-use self-sufficient web server
 License: MIT
@@ -69,6 +69,9 @@ are using %name's embeddable API to provide web services.
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' test/Makefile
+%endif
 
 %build
 export ASAN=
@@ -109,6 +112,9 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Sat Nov 22 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.20-alt2
+- e2k build fix
+
 * Thu Nov 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 7.20-alt1
 - new version
 
