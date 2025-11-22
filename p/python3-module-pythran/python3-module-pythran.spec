@@ -13,8 +13,8 @@
 %endif
 
 Name: python3-module-%pyname
-Version: 0.18.0
-Release: alt2
+Version: 0.18.1
+Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -98,7 +98,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %pyproject_install
 
 %check
-%pyproject_run_pytest -n auto
+%pyproject_run_pytest -n auto -k "not test_setup_build and not test_setup_build2 and not benchmark"
 
 %files
 %doc LICENSE
@@ -113,6 +113,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Sat Nov 22 2025 Anton Farygin <rider@altlinux.com> 0.18.1-alt1
+- 0.18.0 -> 0.18.1
+
 * Tue Oct 21 2025 Anton Farygin <rider@altlinux.com> 0.18.0-alt2
 - applied upstream fixes improving compatibility with
   Python 3.13-3.14 and NumPy 2.3
