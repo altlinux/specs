@@ -1,10 +1,10 @@
 # requires pandoc
 %def_enable docs
-%global llvm_version 19.1
+%global llvm_version 20.1
 
 Name: android-tools
 Version: 34.0.5
-Release: alt3
+Release: alt4
 
 Summary: Android Debug CLI tools
 License: APL
@@ -52,6 +52,7 @@ Patch100: Add-new-Arch-ia64-riscv64-sh4-x32.patch
 Patch101: sources-mk.patch
 Patch102: Disable-failing-test.patch
 Patch103: Revert-Remove-support-for-ppc64le.patch
+Patch104: loong64.patch
 
 # ALT fixes
 Patch200: alt-libziparchive-compile-fix.patch
@@ -154,6 +155,8 @@ pushd external/boringssl
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+# replaced by boringssl-loongarch64.patch
+#%patch104 -p1
 popd
 %patch200 -p1
 %patch201 -p1
@@ -362,6 +365,10 @@ done
 %aprefix
 
 %changelog
+* Sat Nov 22 2025 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt4
+- Build with Clang 20.1, this also fixes boringssl build failure
+- Makefiles are refreshed from the upstream
+
 * Mon Mar 03 2025 Paul Wolneykien <manowar@altlinux.org> 34.0.5-alt3
 - NMU: Fixed build with libprotobuf25.
 
