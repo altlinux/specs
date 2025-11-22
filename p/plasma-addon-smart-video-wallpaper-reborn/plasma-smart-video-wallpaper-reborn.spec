@@ -2,7 +2,7 @@
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
 Name: plasma-addon-smart-video-wallpaper-reborn
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
@@ -16,7 +16,7 @@ Source0: %name-%version.tar
 Source1: ru.po
 
 Patch: Header-2.1.0-alt-fixes.patch
-Patch1: config-2.6.0-alt-fixes.patch
+Patch1: config-2.7.0-alt-fixes.patch
 Patch2: main-2.3.1-alt-fixes.patch
 Patch3: metadata-2.4.0-alt-fixes.patch
 
@@ -60,6 +60,9 @@ done
 %doc README.md
 
 %changelog
+* Sat Nov 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.7.0-alt1
+- 2.6.0 -> 2.7.0
+
 * Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.6.0-alt1
 - 2.5.1 -> 2.6.0
 - fix: restore *.patch for localizations to work
