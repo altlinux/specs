@@ -6,9 +6,9 @@
 %endif
 
 Name:		coccinelle
-Version: 1.3.0
-Release: alt3
-Summary:	Semantic patching for Linux (spatch)
+Version: 1.3.1
+Release: alt1
+Summary:	Match and transform C code using semantic patches
 Group:		Development/C
 License:	GPL-2.0-only
 Url:		https://coccinelle.gitlabpages.inria.fr/website/
@@ -43,25 +43,16 @@ Provides: ocaml-cmx(Coccilib) = %version-%release
 %add_findreq_skiplist %python3_sitelibdir/coccilib/trac.py
 
 %description
-Coccinelle (French for "ladybug") is a utility for matching and
-transforming the source code of programs written in the C programming
-language.
-
-The source code to be matched or replaced is specified using
-a "semantic patch" syntax based on the patch syntax.
-The Semantic Patch Language (SmPL) pattern resembles a unified diff
-with C-like declarations.
-
-Coccinelle was initially used to aid the evolution of the Linux kernel
-(and ease the maintenance of device drivers), providing support for
-changes to APIs such as renaming a function, adding a function
-argument whose value is somehow context-dependent, and reorganizing a
-data structure.
-
-It can also be used to find bad programming patterns in code (i.e.,
-pieces of code that are erroneous with high probability such as
-possible NULL pointer dereference) without transforming them.
-(Then coccinelle's role is close to that of static analysis tools.)
+Coccinelle is a program matching and transformation engine which provides
+the language SmPL (Semantic Patch Language) for specifying desired matches
+and transformations in C code. Coccinelle was initially targeted towards
+performing collateral evolutions in Linux. Such evolutions comprise
+the changes that are needed in client code in response to evolutions in
+library APIs, and may include modifications such as renaming a function,
+adding a function argument whose value is somehow context-dependent, and
+reorganizing a data structure. Beyond collateral evolutions, Coccinelle
+is successfully used (by us and others) for finding and fixing bugs in
+systems code.
 
 %package demos
 %global demos_summary Demos of coccinelle semantic patches with C code examples
@@ -106,8 +97,11 @@ find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
 %build
 ./autogen
 %configure \
+	--enable-pcre-syntax \
+	--enable-python \
 	--with-python=%__python3 \
 	--disable-opt \
+	--enable-ocaml \
 	%nil
 
 make VERBOSE=yes OCAMLCCFLAGS=-g
@@ -166,6 +160,7 @@ cd %_docdir/%name-demos-%version
 %_man1dir/*.1*
 %_man3dir/Coccilib.3cocci*
 /usr/share/bash-completion/completions/spatch
+%_datadir/metainfo/io.github.%name.%name.metainfo.xml
 
 %files demos
 %doc demos tests
@@ -173,6 +168,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
+- Update to 1.3.1 (2025-11-18).
+
 * Tue Oct 14 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt3
 - Apply pyml fix for Python 3.13 (_PyObject_NextNotImplemented.)
 - Fix debuginfo on aarch64.
