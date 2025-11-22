@@ -1,6 +1,6 @@
 Name: dos2unix
-Version: 7.5.2
-Release: alt2
+Version: 7.5.3
+Release: alt1
 
 Summary: Text file format converter
 License: BSD
@@ -43,6 +43,9 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Sun Nov 23 2025 Ilya Mashkin <oddity@altlinux.ru> 7.5.3-alt1
+- 7.5.3
+
 * Wed Sep 25 2024 Ivan A. Melnikov <iv@altlinux.org> 7.5.2-alt2
 - reduce BR to fix FTBFS;
 - add %%check section.
