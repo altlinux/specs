@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.4.4
+Version: 0.4.4.1
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -20,8 +20,27 @@ BuildRequires(pre): rpm-build-python3
 %description
 %summary.
 
+%package lists-sisyphus
+Summary: Additional mirrors for %name
+Group: Other
+BuildArch: noarch
+Requires: %name = %EVR
+Conflicts: %name-lists-branch
+%description lists-sisyphus
+Additional mirrors for %name.
+
+%package lists-branch
+Summary: Additional mirrors for %name
+Group: Other
+BuildArch: noarch
+Requires: %name = %EVR
+Conflicts: %name-lists-sisyphus
+%description lists-branch
+Additional mirrors for %name.
+
 %prep
 %setup
+rm -v mirrors/ams.sh
 
 %build
 %install
@@ -29,6 +48,11 @@ install -d %buildroot
 %make_install \
     SHAREDIR=%buildroot%_datadir \
     PREFIXBIN=%buildroot%_bindir
+
+install -d %buildroot%_sysconfdir/apt/sources.list.d
+mv %buildroot%_datadir/%name/mirrors/*.list \
+  %buildroot%_sysconfdir/apt/sources.list.d/
+rm -r %buildroot%_datadir/%name/mirrors
 
 %find_lang %name --all-name
 
@@ -38,17 +62,20 @@ install -d %buildroot
 %_desktopdir/%name.desktop
 %doc README.md
 
-%post
-pushd %_datadir/%name/mirrors
-sh ams.sh -i
-popd
+%files lists-sisyphus
+%_sysconfdir/apt/sources.list.d/ams_*_sisyphus.list
 
-%preun
-pushd %_datadir/%name/mirrors
-sh ams.sh -r
-popd
+%files lists-branch
+%_sysconfdir/apt/sources.list.d/ams_*_branch.list
 
 %changelog
+* Sat Nov 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4.1-alt1
+- Splitting additional mirrors into sub-packages.
+- Added mirrors:
+  + download.etersoft.ru
+  + mirror.datacenter.by (p11)
+  + mirror.mephi.ru
+
 * Wed Nov 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4-alt1
 - added mirror: download.basealt.ru
 
