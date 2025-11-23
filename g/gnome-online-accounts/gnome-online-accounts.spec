@@ -17,7 +17,7 @@
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Provide online accounts information
@@ -180,6 +180,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sun Nov 23 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.2-alt1
+- 3.56.2
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.1-alt1
 - 3.56.1
 

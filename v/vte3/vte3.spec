@@ -9,8 +9,8 @@
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 %def_disable static
 %def_enable gtk3
@@ -242,6 +242,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Nov 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.82.2-alt1
+- 0.82.2
+
 * Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.82.1-alt1.1
 - new vte3-gtk4 subpackage (ALT #56524)
 
