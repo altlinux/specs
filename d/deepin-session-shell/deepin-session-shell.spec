@@ -3,7 +3,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.6.12.0.316.e888
+Version: 5.6.12.0.318.1fab
 Release: alt2
 Epoch: 1
 
@@ -127,6 +127,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.12.0.318.1fab-alt2
+- New version 5.6.12-318-g1fab1fab.
+
 * Mon Nov 10 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.12.0.316.e888-alt2
 - Restored the option to use the system lightdm
   (moved the config to lightdm-deepin-greeter-enable).
