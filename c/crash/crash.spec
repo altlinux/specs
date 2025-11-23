@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 9.0.0
-Release: alt2
+Version: 9.0.1
+Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -113,6 +113,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.1-alt1
+- Update to 9.0.1 (2025-11-20).
+
 * Tue Jun 10 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.0-alt2
 - Fix 'stack smashing detected' termination on i586.
 
