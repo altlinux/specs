@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.36.0
+Version: 0.63.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -36,19 +36,8 @@ as a showcase and proof-of-concept, without upstream support.
 
 %prep
 %setup
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/nornagon/ratatui?branch=nornagon-v0.29.0-patch"]
-git = "https://github.com/nornagon/ratatui"
-branch = "nornagon-v0.29.0-patch"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
+set -C
+cat > .cargo/config.toml <<EOF
 [term]
 verbose = true
 quiet = false
@@ -59,9 +48,15 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 [profile.release]
 strip = false
 EOF
+# Disable OOB updates.
+perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
+	END { die unless $x }' codex-rs/tui/src/updates.rs
 
 %build
-cargo build --manifest-path=codex-rs/Cargo.toml %_smp_mflags --offline --release
+cargo build \
+	--config=.cargo/vendor-config.toml \
+	--manifest-path=codex-rs/Cargo.toml \
+	%_smp_mflags --offline --release
 
 %install
 install -Dp %name-rs/target/release/%name -t %buildroot%_bindir
@@ -94,6 +89,13 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sun Nov 23 2025 Vitaly Chikunov <vt@altlinux.org> 0.63.0-alt1
+- Experimental update to rust-v0.63.0 (2025-11-21).
+- The behavior of the --oss option is restored, and by default it's turned
+  off. This is because --oss is Ollama-API-centric, and to use other OSS
+  engines (such as llama.cpp) we need OpenAI-API mode. Also, this will allow
+  users to follow how-tos more closely.
+
 * Tue Sep 16 2025 Vitaly Chikunov <vt@altlinux.org> 0.36.0-alt1
 - Experimental update to rust-v0.36.0 (2025-09-15).
 - Disabled unsolicited remote version check and upgrade banner.
