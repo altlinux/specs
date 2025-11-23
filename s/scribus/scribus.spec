@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.7.0
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -144,6 +144,10 @@ BuildArch: noarch
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
 %build
+%ifarch %e2k
+# error: cpio archive too big - 4849M
+%define optflags_debug -g0
+%endif
 %cmake \
 %if "%_lib" == "lib64"
 	-DWANT_LIB64=true \
@@ -210,6 +214,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sun Nov 23 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.7.0-alt5
+- e2k build fix (cpio archive too big)
+
 * Sun Sep 21 2025 Grigory Ustinov <grenka@altlinux.org> 1:1.7.0-alt4
 - NMU: fixed building with 25.07.0.
 
