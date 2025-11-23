@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: deskflow
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 
 Summary: Share a single keyboard and mouse between multiple computers
@@ -31,6 +31,7 @@ BuildRequires: help2man
 BuildRequires: libtomlplusplus-devel
 BuildRequires: cli11-devel
 BuildRequires: libgtest-devel
+BuildRequires: qt6-tools-devel
 
 %description
 Deskflow is a free and open source keyboard and mouse sharing app. Use
@@ -53,7 +54,9 @@ is supported. Clipboard sharing is supported.
 %install
 %cmake_install
 
-%files
+%find_lang %name --with-qt
+
+%files -f %{name}.lang
 %doc README.md LICENSE SECURITY.md
 %_bindir/%name
 %_bindir/%{name}-core
@@ -65,6 +68,9 @@ is supported. Clipboard sharing is supported.
 %exclude %_datadir/licenses/deskflow
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.25.0-alt1
+- New version 1.25.0.
+
 * Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.24.0-alt1
 - New version 1.24.0.
 

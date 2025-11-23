@@ -6,7 +6,7 @@
 %def_with check
 
 Name: ofono
-Version: 2.18
+Version: 2.19
 Release: alt1
 
 Summary: Mobile telephony stack
@@ -106,6 +106,9 @@ install -D -m 0644 plugins/ofono-speedup.rules %buildroot%_udevrulesdir/97-ofono
 %_pkgconfigdir/ofono.pc
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 2.19-alt1
+- New version 2.19.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 2.18-alt1
 - New version 2.18.
 

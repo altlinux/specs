@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bulky
-Version: 3.9
+Version: 4.0
 Release: alt1
 
 Summary: Bulk Renamer
@@ -53,5 +53,8 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/bulky/*
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Fri Oct 17 2025 Nikolay Strelkov <snk@altlinux.org> 3.9-alt1
 - Initial build for Sisyphus

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qspeakers
-Version: 1.8
+Version: 1.8.5
 Release: alt1
 
 Summary: Loudspeaker design software
@@ -53,5 +53,8 @@ qmake-qt6 \
 %_datadir/mime/packages/*%{name}.xml
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.5-alt1
+- New version 1.8.5.
+
 * Thu Jul 03 2025 Nikolay Strelkov <snk@altlinux.org> 1.8-alt1
 - Initial build for Sisyphus

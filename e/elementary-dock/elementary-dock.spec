@@ -4,7 +4,7 @@
 %define appname io.elementary.dock
 
 Name: elementary-dock
-Version: 8.2.0
+Version: 8.3.0
 Release: alt1
 
 Summary: A quick app launcher and window switcher for Pantheon and elementary OS
@@ -49,9 +49,12 @@ CFLAGS="%{optflags} -Wno-error=int-conversion"
 %_bindir/%appname
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_datadir/metainfo/%{appname}.metainfo.xml
-%exclude %_datadir/locale/zh_Hans/LC_MESSAGES/%{appname}.mo
-%exclude %_datadir/locale/zh_Hant/LC_MESSAGES/%{appname}.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/io.elementary.dock.mo
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/io.elementary.dock.mo
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 8.3.0-alt1
+- New version 8.3.0.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.2.0-alt1
 - Initial build for Sisyphus

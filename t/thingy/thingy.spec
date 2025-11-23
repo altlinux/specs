@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thingy
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Document Manager
@@ -51,5 +51,8 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+
 * Fri Oct 17 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
 - Initial build for Sisyphus
