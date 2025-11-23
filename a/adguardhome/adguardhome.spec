@@ -3,7 +3,7 @@
 
 Name: adguardhome
 Version: 0.108.0
-Release: alt1.beta78
+Release: alt1.beta79
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
@@ -80,6 +80,9 @@ touch %buildroot%_sysconfdir/%name.yaml
 %ghost %config(noreplace) %_sysconfdir/%name.yaml
 
 %changelog
+* Sun Nov 23 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta79
+- Updated to version 0.108.0-b.79.
+
 * Sun Nov 02 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta78
 - Updated to version 0.108.0-b.78.
 

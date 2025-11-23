@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 0.7.0
+Version: 0.8.1
 Release: alt1
 Summary: Asynchronous Python client for the AdGuard Home API
 License: MIT
@@ -49,6 +49,9 @@ sed -i '/version/s/0.0.0/%version/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sun Nov 23 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt1
+- Updated to version 0.8.1.
+
 * Mon Nov 18 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
 - Updated to version 0.7.0.
 
