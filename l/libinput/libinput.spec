@@ -4,6 +4,10 @@
 %def_enable libwacom
 %def_enable debug_gui
 %def_enable documentation
+%def_enable lua_plugins
+# Always load plugins from default plugin paths (only if the caller does not do so)
+# default=false
+%def_disable autoload_plugins
 %ifarch %ix86
 %def_disable tests
 %def_disable install_tests
@@ -12,8 +16,12 @@
 %def_enable install_tests
 %endif
 
+# default plugin paths
+# More paths may be added to the default lookup paths in future releases
+%define plugins_paths %_sysconfdir/%name/plugins/ %_libdir/%name/plugins/
+
 Name: libinput
-Version: 1.29.2
+Version: 1.29.902
 Release: alt1
 
 Summary: Input devices library
@@ -33,6 +41,7 @@ Source: %name-%version.tar
 
 %define mtdev_ver 1.1.0
 %define evdev_ver 1.10
+%define lua_api_ver 5.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 pkgconfig(udev)
 # for %%valgrind_arches
@@ -41,6 +50,8 @@ BuildRequires: meson gcc-c++
 BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel pkgconfig(systemd)
 BuildRequires: libcheck-devel
+# since 1.30 for plugin system
+%{?_enable_lua_plugins:BuildRequires: lua%lua_api_ver-devel}
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_debug_gui:BuildRequires: wayland-protocols
 %ifarch %e2k
@@ -112,20 +123,31 @@ the functionality of the installed libinput library.
 %build
 %meson %{subst_enable_meson_bool libwacom libwacom} \
        %{subst_enable_meson_bool debug_gui debug-gui} \
+       %{subst_enable_meson_feature lua_plugins lua-plugins} \
+       %{subst_enable_meson_bool autoload_plugins autoload-plugins} \
        %{subst_enable_meson_bool documentation documentation} \
        %{subst_enable_meson_bool tests tests} \
        %{subst_enable_meson_bool install_tests install-tests} \
        -Dudev-dir=%_udevdir
+%nil
 %meson_build
 
 %install
 %meson_install
+
+# default plugins paths
+for d in %plugins_paths; do
+    mkdir -p %buildroot$d; done
 
 %check
 %__meson_test -t 4 --no-suite hardware --no-suite root
 
 %files
 %dir %_sysconfdir/%name
+# plugins paths
+%dir %_sysconfdir/%name/plugins
+%dir %_libdir/%name
+%dir %_libdir/%name/plugins
 %_libdir/%name.so.*
 %_udevdir/%name-device-group
 %_udevdir/%name-fuzz-extract
@@ -133,6 +155,7 @@ the functionality of the installed libinput library.
 %_datadir/%name/
 %_udevrulesdir/80-%name-device-groups.rules
 %_udevrulesdir/90-%name-fuzz-override.rules
+
 %doc COPYING README*
 
 %files devel
@@ -202,6 +225,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Thu Nov 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.902-alt1
+- 1.29.902
+
 * Tue Oct 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.29.2-alt1
 - 1.29.2
 
