@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 8.4.1
+%define grass_version 8.4.2
 %def_enable grass
 %def_enable python
 %def_enable devel
@@ -14,8 +14,8 @@
 %endif
 
 Name:    qgis
-Version: 3.44.4
-Release: alt2
+Version: 3.44.5
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -401,6 +401,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Sat Nov 22 2025 Andrey Cherepanov <cas@altlinux.org> 3.44.5-alt1
+- New version.
+
 * Fri Nov 14 2025 Andrey Cherepanov <cas@altlinux.org> 3.44.4-alt2
 - Fixed 3D Maps View segfault (ALT #54230).
 - Removed image formats from qgis.xml (ALT #33803).

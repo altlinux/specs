@@ -2,7 +2,7 @@
 %define libver 8.4
 
 Name:    grass
-Version: 8.4.1
+Version: 8.4.2
 Release: alt1
 
 %def_with mysql
@@ -326,6 +326,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat Nov 22 2025 Andrey Cherepanov <cas@altlinux.org> 8.4.2-alt1
+- New version.
+
 * Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 8.4.1-alt1
 - New version.
 - Package database drivers (ALT #52888).
