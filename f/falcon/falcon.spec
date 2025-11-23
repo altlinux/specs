@@ -3,7 +3,7 @@
 %def_with check
 
 Name: falcon
-Version: 4.0.2
+Version: 4.2.0
 Release: alt1
 
 Summary: Fast ASGI+WSGI framework for building data plane APIs at scale
@@ -73,6 +73,9 @@ This package contain python modules for %name.
 
 
 %changelog
+* Sun Nov 23 2025 Anton Vyatkin <toni@altlinux.org> 4.2.0-alt1
+- New version 4.2.0.
+
 * Fri Dec 13 2024 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
 - New version 4.0.2.
 
