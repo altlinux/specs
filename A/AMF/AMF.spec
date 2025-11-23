@@ -1,5 +1,5 @@
 Name: AMF
-Version: 1.4.36
+Version: 1.5.0
 Release: alt1
 Summary: Advanced Media Framework (AMF) SDK
 License: MIT
@@ -51,5 +51,8 @@ mv amf/doc/*pdf docs/
 %doc docs/*
 
 %changelog
+* Sun Nov 23 2025 Anton Farygin <rider@altlinux.com> 1.5.0-alt1
+- 1.4.26 -> 1.5.0
+
 * Thu Jun 26 2025 Anton Farygin <rider@altlinux.com> 1.4.36-alt1
 - initial build for ALT Linux
