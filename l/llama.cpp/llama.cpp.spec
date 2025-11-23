@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 6869
+Version: 7127
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -20,7 +20,6 @@ Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
 ExcludeArch: %ix86
 Requires: %name-cpu = %EVR
-Requires: %name-convert = %EVR
 %if_with cuda
 Requires: %name-cuda = %EVR
 %filter_from_requires /(libcudart\.so\.12)/d
@@ -98,6 +97,7 @@ Group: System/Libraries
 Summary: Development files for llama.cpp
 Group: Development/C
 Requires: libllama = %EVR
+Conflicts: libwhisper-cpp-devel
 
 %description -n libllama-devel
 %summary.
@@ -106,6 +106,8 @@ Requires: libllama = %EVR
 Summary: %name tools including backend for CPU
 Group: Sciences/Computer science
 Requires: libllama = %EVR
+Conflicts: %name-convert < %EVR
+AutoReqProv: nopython3
 %add_findreq_skiplist %_datadir/%name/examples/*
 
 %description cpu
@@ -128,22 +130,6 @@ Requires: %name-cpu = %EVR
 %description vulkan
 %summary.
 
-%package convert
-Summary: %name model converters to GGUF
-Group: Sciences/Computer science
-AutoReqProv: nopython3
-Requires: python3(pip)
-
-%description convert
-The main model format conversion script is unsupported and provided AS IS.
-Other scripts are legacy and unmaintained.
-
-For the scripts to work you will need to:
-
-  pip3 install -r /usr/share/llama.cpp/requirements.txt
-
-or install individually from the separate requirements files.
-
 %prep
 %setup
 %autopatch -p1
@@ -153,8 +139,8 @@ cat <<-EOF >> cmake/build-info.cmake
 	set(GGML_BUILD_NUMBER %version)
 	set(BUILD_COMMIT "${commit::8} [%release]")
 EOF
-sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' ggml/src/CMakeLists.txt src/CMakeLists.txt
-sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' ggml/cmake/ggml-config.cmake.in tools/mtmd/CMakeLists.txt
+sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' src/CMakeLists.txt
+sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' tools/mtmd/CMakeLists.txt
 # We do not have Internet access (issues/13371).
 perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
 # This test requires GPU.
@@ -206,7 +192,7 @@ rm %buildroot%_bindir/test-*
 install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-cli
 printf '%%s\n' llama-server llama-simple llama-run llama-mtmd-cli |
 	xargs -ti ln -s llama-cli %buildroot%_datadir/bash-completion/completions/{}
-install -Dp %_cmake__builddir/bin/rpc-server %buildroot%_bindir/llama-rpc-server
+mv %buildroot%_bindir/rpc-server %buildroot%_bindir/llama-rpc-server
 
 %check
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
@@ -221,13 +207,17 @@ llama-cli --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
 llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
+# We do not provide convert tools.
+mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 
 %files
 
 %files -n libllama
 %_libdir/libllama.so.0.0.%version
-%_libdir/libggml.so.0.0.%version
-%_libdir/libggml-base.so.0.0.%version
+%_libdir/libggml.so.0
+%_libdir/libggml.so.0.*
+%_libdir/libggml-base.so.0
+%_libdir/libggml-base.so.0.*
 %_libdir/libmtmd.so.0.0.%version
 
 %files -n libllama-devel
@@ -250,6 +240,8 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %dir %_datadir/%name
 %dir %_datadir/%name/examples
 %_datadir/%name/examples/*.sh
+%_datadir/%name/examples/*.py
+%_datadir/%name/requirements*
 %_datadir/%name/grammars
 %dir %_libexecdir/llama
 %_libexecdir/llama/libggml-cpu*.so
@@ -268,14 +260,12 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_libexecdir/llama/libggml-vulkan.so
 %endif
 
-%files convert
-%_bindir/convert*.py
-%dir %_datadir/%name
-%dir %_datadir/%name/examples
-%_datadir/%name/examples/*.py
-%_datadir/%name/requirements*
-
 %changelog
+* Fri Nov 21 2025 Vitaly Chikunov <vt@altlinux.org> 1:7127-alt1
+- Update to b7127 (2025-11-21).
+- spec: Remove llama.cpp-convert package.
+- model: detect GigaChat3-10-A1.8B as deepseek lite.
+
 * Tue Oct 28 2025 Vitaly Chikunov <vt@altlinux.org> 1:6869-alt1
 - Update to b6869 (2025-10-28).
 
