@@ -1,4 +1,4 @@
-%define ver_major 1.2
+%define ver_major 1.3
 
 Name: wayland-utils
 Version: %ver_major.0
@@ -10,6 +10,7 @@ Group: System/X11
 Url: https://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/wayland-utils.git
+
 Source: https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/%version/%name-%version.tar.gz
 
 %define wayland_ver 1.17
@@ -41,6 +42,9 @@ protocols supported by a Wayland compositor.
 %doc README.md
 
 %changelog
+* Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Fri Jun 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
