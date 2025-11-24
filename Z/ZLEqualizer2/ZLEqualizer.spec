@@ -7,7 +7,7 @@
 %define _optlevel 3
 
 Name:    ZLEqualizer2
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Dynamic Equalizer Plugin from ZL Audio (v2)
@@ -111,7 +111,7 @@ grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
   -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
   -DKFR_ENABLE_MULTIARCH:BOOL=ON \
   -DZL_JUCE_FORMATS="VST3;LV2" \
-  -DDZL_JUCE_COPY_PLUGIN=FALSE \
+  -DZL_JUCE_COPY_PLUGIN=FALSE \
   %nil
 
 %cmake_build
@@ -135,6 +135,9 @@ cp -a "VST3/ZL Equalizer 2.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Mon Nov 24 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Sat Nov 15 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
