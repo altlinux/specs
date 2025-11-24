@@ -4,7 +4,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:     libredwg
-Version:  0.13.3.7835
+Version:  0.13.3.7849
 Release:  alt1
 
 Summary:  GNU LibreDWG is a free C library to handle DWG files
@@ -86,6 +86,9 @@ rm -rf %buildroot%_datadir/%name
 %_man5dir/*.5*
 
 %changelog
+* Mon Nov 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.13.3.7849-alt1
+- New version.
+
 * Mon Sep 08 2025 Andrey Cherepanov <cas@altlinux.org> 0.13.3.7835-alt1
 - New version.
 
