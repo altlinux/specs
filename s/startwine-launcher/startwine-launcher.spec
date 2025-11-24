@@ -1,11 +1,11 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v411
+%define nameVR _v412
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 411
+Version: 412
 Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
@@ -56,6 +56,15 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Mon Nov 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 412-alt1
+- 411 -> 412:
+  + Updated list of Wine versions.
+  + Updated list of dxvk and vkd3d versions.
+  + Fixed helper functions in sw_runlib.
+  + Fixed EA Launcher autoinstall.
+  + Added older versions of Wine staging and Proton Ge, maybe someone will need it.
+  + Other improvements and fixes.
+
 * Wed Sep 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 411-alt1
 - 410 -> 411:
   + Updated default prefix backup.
