@@ -19,8 +19,8 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -233,6 +233,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
 - applied upstream fix:
   "Allow changing password with remote user" (ALT #55640)
