@@ -4,7 +4,7 @@
 %def_with doc
 Name: beremiz
 Version: 1.4
-Release: alt0.1.20250821.1
+Release: alt0.1.20250821.2
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -20,7 +20,7 @@ Source1: %name-256x256.png
 Patch: %name-%version-%release.patch
 
 Buildarch: noarch
-BuildPreReq: rpm-build-python3 dos2unix desktop-file-utils
+BuildPreReq: rpm-build-python3 desktop-file-utils
 
 %if_with doc
 BuildRequires(pre): python3-module-sphinx
@@ -69,8 +69,6 @@ Beremiz опирается на открытые стандарты, котор�
 %prep
 %setup -n %name-%version
 %autopatch -p1
-
-find . -type f -print0 | xargs -0 dos2unix
 
 %build
 %if_with doc
@@ -171,6 +169,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 %exclude %_datadir/%name/etherlab
 
 %changelog
+* Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.2
+- do not use dos2unix
+
 * Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.1
 - new snapshot
 
