@@ -1,18 +1,20 @@
 %define repo deepin-gtk-theme
 
 Name: gtk-theme-deepin
-Version: 2020.06.10
-Release: alt2
+Version: 25.3.7
+Release: alt1
+Epoch: 1
 
 Summary: Deepin GTK Theme
 
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-gtk-theme
+VCS: https://github.com/linuxdeepin/deepin-gtk-theme
 
-Source: %url/archive/%version/%repo-%version.tar.gz
-Patch1: 0001-fix-error-gtk-none-is-not-a-valid-color-name.patch
-Patch2: 0002-fix-firefox-ultra-small-button.patch
+# Source-url: https://github.com/linuxdeepin/deepin-gtk-theme/archive/%version/%repo-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -20,7 +22,7 @@ BuildArch: noarch
 %summary.
 
 %prep
-%setup -n %repo-%version
+%setup
 %autopatch -p1
 
 %build
@@ -28,11 +30,15 @@ BuildArch: noarch
 %makeinstall_std
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md debian/changelog
 %_datadir/themes/deepin/
 %_datadir/themes/deepin-dark/
 
 %changelog
+* Mon Nov 24 2025 Leontiy Volodin <lvol@altlinux.org> 1:25.3.7-alt1
+- New version 25.3.7.
+- Added VCS tag.
+
 * Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 2020.06.10-alt2
 - Applied some fixes by upstream.
 
