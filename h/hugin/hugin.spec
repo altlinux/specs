@@ -8,7 +8,7 @@
 %def_enable epoxy
 
 Name: hugin
-Version: 2024.0.1
+Version: 2025.0.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -98,9 +98,14 @@ done
 %_man1dir/*
 %_datadir/metainfo/PTBatcherGUI.appdata.xml
 %_datadir/metainfo/calibrate_lens_gui.appdata.xml
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/hugin.appdata.xml
+%_datadir/metainfo/hugin_toolbox.appdata.xml
+
 
 %changelog
+* Wed Nov 19 2025 Leonid Znamenok <respublica@altlinux.org> 2025.0.0-alt1
+- 2025.0.0
+
 * Thu Jul 17 2025 Leonid Znamenok <respublica@altlinux.org> 2024.0.1-alt1
 - 2024.0.1
 
