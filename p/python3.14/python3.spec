@@ -101,7 +101,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3%{?_python3_standalone}
 Version: %{pybasever}.0
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -250,7 +250,6 @@ Group: Development/Python3
 Requires: %name = %EVR
 Requires: lib%name = %EVR
 Conflicts: %name < %EVR
-Provides: %name-devel = %pybasever
 Provides: lib%name-devel = %EVR
 
 # ALT Sisyphus RPM Macros Packaging Policy
@@ -258,6 +257,12 @@ Provides: lib%name-devel = %EVR
 # the language-specific modules comes together with
 # the compiler/-devel pkgs:
 %{?!_python3_standalone:Requires: rpm-build-python3}
+
+Provides: python3%{?_python3_standalone:-standalone}-devel = %pybasever
+%if 0%{?_python3_standalone:1}
+Conflicts: python3-devel
+Conflicts: python3-standalone-devel <= %pybasever
+%endif
 
 %description dev
 This package contains libraries and header files used to build applications
@@ -1113,6 +1118,10 @@ LD_LIBRARY_PATH="$(pwd)" \
 %endif
 
 %changelog
+* Mon Nov 24 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.0-alt2
+- Add conflict between python3-devel and all standalone python3-devel
+  (Closes: #56948).
+
 * Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.14.0-alt1
 - Updated python3 to upstream 3.14.0.
 - Build as standalone (thx to Ivan Zakharyaschev,
