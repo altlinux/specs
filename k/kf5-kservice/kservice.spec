@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -50,7 +50,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-Requires: altlinux-freedesktop-menu-generic
+Requires: wm-common-freedesktop menu-icons
 %description -n libkf5service
 KF5 library
 
@@ -88,6 +88,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Nov 24 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- clean requires
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
