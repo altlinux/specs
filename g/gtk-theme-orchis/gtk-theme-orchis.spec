@@ -4,7 +4,7 @@
 
 Name: gtk-theme-%theme_name
 Version: 20250405
-Release: alt1
+Release: alt2
 
 Summary: Orchis is a Material Design theme for GNOME/GTK based desktop environments
 License: GPL-3.0-only
@@ -13,6 +13,7 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/vinceliuice/Orchis-theme/
 Vcs: https://github.com/vinceliuice/Orchis-theme/
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: sassc
 
@@ -103,6 +104,7 @@ Requires: %name-common
 
 %prep
 %setup
+%patch -p 1
 
 %install
 mkdir -p %buildroot%_datadir/themes
@@ -140,5 +142,9 @@ mkdir -p %buildroot%_datadir/themes
 %_datadir/themes/%{original_theme_name}*/xfwm4
 
 %changelog
+* Mon Nov 24 2025 David Sultaniiazov <x1z53@altlinux.org> 20250405-alt2
+- Changing the transparency of the panel.
+- Fix rules (patch name) and changelog (period at the end of sentence)
+
 * Tue Jul 08 2025 David Sultaniiazov <x1z53@altlinux.org> 20250405-alt1
-- Initial build
+- Initial build.
