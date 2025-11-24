@@ -1,5 +1,5 @@
 Name: memtest86+
-Version: 7.20
+Version: 8.00
 Release: alt1
 
 Summary: Memory test for x86 architecture
@@ -14,13 +14,13 @@ ExclusiveArch: %ix86 x86_64 loongarch64
 Requires(post,preun): bootloader-utils >= 0.3
 
 %ifarch %ix86
-%define builddir build32
+%define builddir build/i586
 %endif
 %ifarch x86_64
-%define builddir build64
+%define builddir build/x86_64
 %endif
 %ifarch loongarch64
-%define builddir build64/la64
+%define builddir build/loongarch64
 %endif
 
 %description
@@ -71,11 +71,12 @@ cd %builddir
 
 %install
 cd %builddir
+install -pDm644 mt86plus %buildroot/boot/mt86plus-%version
 %ifarch %ix86 x86_64
-install -pDm644 memtest.bin %buildroot/boot/memtest-%version.bin
+ln -s mt86plus-%version %buildroot/boot/memtest-%version.bin
 %endif
 %ifnarch %ix86
-install -pDm644 memtest.efi %buildroot/boot/memtest-%version.efi
+ln -s mt86plus-%version %buildroot/boot/memtest-%version.efi
 %endif
 mkdir -p %buildroot%_sbindir
 ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
@@ -88,6 +89,7 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %_sbindir/installmemtest86+ --remove %version
 
 %files
+/boot/mt86plus-%version
 %ifarch %ix86 x86_64
 /boot/memtest-%version.bin
 %endif
@@ -98,6 +100,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 8.00-alt1
+- New version 8.00.
+
 * Tue Nov 12 2024 Ivan A. Melnikov <iv@altlinux.org> 7.20-alt1
 - new version (7.20)
 - enable loongarch64 support
