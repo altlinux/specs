@@ -1,7 +1,7 @@
 %define _check_contents_method relaxed
 
 Name:    trivy-db
-Version: 20250904
+Version: 20251124
 Release: alt1
 
 Summary: Database for Trivy
@@ -41,6 +41,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Mon Nov 24 2025 Cronbuild Service <cronbuild@altlinux.org> 20251124-alt1
+- repocop cronbuild 20251124. At your service.
+
 * Thu Sep 04 2025 Aleksandr Gamzin <gamzin@altlinux.org> 20250904-alt1
 - fix: change user home directory name in sharestatedir to trivy
 - 20250904-alt1
