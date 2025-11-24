@@ -1,5 +1,4 @@
 %def_disable snapshot
-
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
 %define ver_major 49
@@ -16,7 +15,7 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -33,9 +32,6 @@ Source: %name-%version%beta.tar
 
 Patch3: %name-48.1-alt-invalid_user_shell.patch
 Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
-# https://bugzilla.altlinux.org/54831
-# https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3252
-#Patch10: XXX
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -317,6 +313,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
