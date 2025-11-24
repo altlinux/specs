@@ -16,7 +16,7 @@
 
 Name: MySQL
 Version: 8.0.43
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -918,6 +918,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Sep 11 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.43-alt2
+- fix default charset name for init-connect variable (closes: #55936)
+
 * Tue Sep 02 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.43-alt1
 - new version
   + (fixes: CVE-2025-50076, CVE-2025-50077, CVE-2025-50078, CVE-2025-50079)
