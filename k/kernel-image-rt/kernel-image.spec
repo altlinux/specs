@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.58
+%define kernel_sublevel	.59
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 24 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.59-alt1
+- v6.12.59 (2025-11-24).
+- input: serio: add an alias to the sersev-serio driver.
+- sound: hda: enable jack detection in polling mode on Baikal-M.
+- config-rt: CONFIG_DRM_MGAG200_DISABLE_WRITECOMBINE=y.
+- config: CONFIG_DRM_MGAG200=m.
+- sound: hda: add driver for HDA controller on Baikal-M.
+
 * Fri Nov 14 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.58-alt1
 - v6.12.58 (2025-11-13).
 - spec: Do not package -domU kernels.
