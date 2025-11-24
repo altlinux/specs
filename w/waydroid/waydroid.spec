@@ -2,7 +2,7 @@
 %define appname id.waydro.Container
 
 Name: waydroid
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
@@ -16,7 +16,8 @@ Source: %name-%version.tar
 # https://bugzilla.altlinux.org/51147
 Patch: %name-alt-disable-apparmor.patch
 
-BuildRequires: rpm-build-python3 python3-module-gbinder-python rpm-build-xdg
+BuildRequires(pre): rpm-build-python3 rpm-build-xdg
+BuildRequires: python3-module-gbinder-python
 
 BuildArch: noarch
 
@@ -46,7 +47,7 @@ hardware.
 make install DESTDIR=%buildroot USE_NFTABLES=1
 rm -rf %buildroot%_libexecdir/systemd && mkdir -p %buildroot%_unitdir
 install -m644 systemd/%name-container.service %buildroot%_unitdir/
-mkdir -p %buildroot%_sysconfdir && touch %buildroot%_sysconfdir/gbinder.conf
+mkdir -p %buildroot{%_sysconfdir,%_localstatedir/%name} && touch %buildroot%_sysconfdir/gbinder.conf
 
 %files
 %ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %_sysconfdir/gbinder.conf
@@ -61,8 +62,13 @@ mkdir -p %buildroot%_sysconfdir && touch %buildroot%_sysconfdir/gbinder.conf
 %_datadir/polkit-1/actions/%{appname}.policy
 %_xdgmenusdir/applications-merged/%name.menu
 %_datadir/desktop-directories/%name.directory
+%dir %_localstatedir/%name
 
 %changelog
+* Mon Nov 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
+- 1.6.0.
+- fix unowned dir (closes #56970).
+
 * Fri Jun 27 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt1
 - 1.5.4.
 
