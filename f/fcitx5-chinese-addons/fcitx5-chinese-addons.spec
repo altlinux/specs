@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/gettext boost-devel qt5-base-devel
 
 Name:           fcitx5-chinese-addons
 Version:        5.1.1
-Release:        alt2_1
+Release:        alt2_1.1
 Summary:        Chinese related addon for fcitx5
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5-chinese-addons
@@ -44,6 +44,7 @@ Requires:       fcitx5-data
 Source44: import.info
 
 Patch1: fcitx-upstream-use-isAndroid-functions.patch
+Patch2: fcitx5-chinese-addons-fmt-12.patch
 
 %description
 This provides pinyin and table input method
@@ -127,6 +128,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_libdir}/cmake/Fcitx5Module*
 
 %changelog
+* Mon Nov 24 2025 Nazarov Denis <nenderus@altlinux.org> 5.1.1-alt2_1.1
+- NMU: fix build with fmt 12
+
 * Tue May 28 2024 Ivan A. Melnikov <iv@altlinux.org> 5.1.1-alt2_1
 - NMU: fix FTBFS (ALT#49537)
 
