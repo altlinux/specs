@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-macros-alterator
 
 Requires: alterator-module-executor
 Requires: alterator-interface-service
-Requires: alterator-entry
+Requires: alterator-entry >= 0.4.5
 Requires: diag-domain-controller
 Requires: samba-dc
 
@@ -33,24 +33,46 @@ mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad
 
 install -p -D -m755 %service %buildroot%_bindir/%service
 install -p -D -m755 %service-bind %buildroot%_bindir/%service-bind
+install -p -D -m755 %service-status %buildroot%_bindir/%service-status
 install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
 install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
 install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/samba-ad/provision-parameters.schema.json
 install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/samba-ad/join-parameters.schema.json
 install -pDm 644 %service.bash-completion \
      %buildroot%_datadir/bash-completion/completions/%service
+install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samba-ad/status.json
 
 %files
 %_bindir/%service
 %_bindir/%service-bind
+%_bindir/%service-status
 %_alterator_datadir/backends/%service.backend
 %_alterator_datadir/services/%service.service
 %_datadir/bash-completion/completions/%service
 %_datadir/%name/samba-ad/provision-parameters.schema.json
 %_datadir/%name/samba-ad/join-parameters.schema.json
 %_localstatedir/alterator/service/samba-ad/
+%_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Tue Sep 30 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.5-alt1
+- Add signals for start and stop methods
+- Fix parsing of enum parameters
+- Add internal parameters. Fix status function
+- Fix starting service when bind not installed
+- Remove unused function
+- Add dynamic status
+- Edit name in .service file
+- fix: improve help text for NetBIOS name and backend store
+  parameters (thx Oleg Chagaev)
+- fix: add help comments for realm and site name parameters in
+  Samba AD service (thx Oleg Chagaev)
+- fix: update admin login description to use DC abbreviation
+  consistently (thx Oleg Chagaev)
+- fix: capitalize RFC 2307 in display names for consistency (thx Oleg Chagaev)
+- Change exit code from 1 to 0 in status function
+- Fix undeploy
+
 * Fri Jul 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.4-alt1
 - Add samba dc to requires
 - Fix demote mode

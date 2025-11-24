@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.1.15
+Version: 0.2.0
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -22,9 +22,13 @@ Requires: alterator-backend-component >= 0.3.0
 Requires: alterator-interface-edition >= 0.2.0
 Requires: alterator-interface-diag >= 0.1.4
 Requires: alterator-backend-systeminfo >= 0.4.0
+Requires: alterator-interface-service >= 0.2.1-alt2
 Requires: libtomlc99 polkit libjson-glib
 
 Source0: %name-%version.tar
+
+%filter_from_requires /fish/d
+%filter_from_requires /bash/d
 
 %description
 A command line tool for using alterator DBus objects.
@@ -44,12 +48,18 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_bindir/%name
 %_bindir/%short_name
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
+%_datadir/alteratorctl/scripts/completion_wrapper
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/bash-completion/completions/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Tue Nov 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.0-alt1
+- Services module implementation (thx Andrey Alekseev and Oleg Chagaev).
+- Fix completions (thx Kozyrev Yuri).
+- Fix components (thx Kirill Sharov).
+
 * Tue Sep 16 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.15-alt1
 - Fixed printing of components of selected editions.
 - Fix of confirmation message for packages apt operations.
@@ -68,7 +78,7 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 - Increased the version of a required dependency from alterator-backend-packages
 - Moved completions setup logic to completions/CMakeLists
 
-* Mon Jul 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.11-alt1
+* Fri Jul 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.11-alt1
 - Fix working bash-completions with actl symlink to alteratorctl.
 
 * Tue Jul 01 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.10-alt1
@@ -115,7 +125,7 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 - New version
 
 * Thu Mar 06 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.10-alt1
-- Adding dependencies on backends of alteratorctl modules 
+- Adding dependencies on backends of alteratorctl modules
 
 * Tue Feb 25 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.9-alt2
 - Adding html parser library libgumbo-devel to build requires

@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -69,6 +69,13 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Sep 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.4.5-alt1
+- Fix documentation (thx Alexey Saprunov)
+- Update service entitys (thx Andrey Alekseev):
+  + feat: array label
+  + feat: internal parameters
+  + change: replace 'exclusive' objects with enum subparameters
+
 * Tue Jul 22 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt1
 - Add short_display_name for components and categories (thx Michael Chernigin)
 
