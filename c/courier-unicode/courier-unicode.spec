@@ -1,9 +1,9 @@
 %def_disable static
-%define soname 8
+%define soname 10
 
 Summary: Courier Unicode Library
 Name: courier-unicode
-Version: 2.3.2
+Version: 2.4.0
 Release: alt0.1
 License: GPLv3
 Group: System/Libraries
@@ -78,6 +78,10 @@ linked against %name library.
 %endif # static
 
 %changelog
+* Mon Nov 24 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt0.1
+- 2.4.0.
+- Bump soname.
+
 * Thu Aug 21 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt0.1
 - 2.3.2.
 

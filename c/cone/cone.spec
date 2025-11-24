@@ -4,7 +4,7 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.14
+Version: 1.17
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar
@@ -18,7 +18,7 @@ Patch3: cone-1.6-alt-m4.patch
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 BuildRequires: libaspell-devel libxml2-devel
-BuildRequires: zlib-devel libgamin-devel perl libncursesw-devel
+BuildRequires: zlib-devel perl libncursesw-devel
 BuildRequires: libstdc++-devel gcc-c++
 BuildRequires: openldap-devel libidn2-devel courier-unicode-devel
 BuildRequires: gnupg2 libpcre2-devel
@@ -107,6 +107,10 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Mon Nov 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.17-alt0.1
+- 1.17.
+- BR: remove gamin.
+
 * Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.14-alt0.1
 - 0.14.
 

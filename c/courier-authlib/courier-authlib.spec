@@ -8,7 +8,7 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.72.4
+Version: 0.72.6
 Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
@@ -166,7 +166,7 @@ popd
 # src root docs
 mkdir -p %buildroot/%_docdir/%name-%version/html
 install -m 0644 %SOURCE2 %buildroot/%_docdir/%name-%version/README-ALT
-install -m 0644 authldap.schema %buildroot/%_docdir/%name-%version
+install -m 0644 authldap.ldif %buildroot/%_docdir/%name-%version
 install -m 0644 AUTHORS %buildroot/%_docdir/%name-%version
 install -m 0644 ChangeLog %buildroot/%_docdir/%name-%version
 install -m 0644 courier-authlib.sysvinit %buildroot/%_docdir/%name-%version
@@ -351,6 +351,9 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Mon Nov 24 2025 L.A. Kostis <lakostis@altlinux.ru> 0.72.6-alt1
+- 0.72.6.
+
 * Thu Aug 21 2025 L.A. Kostis <lakostis@altlinux.ru> 0.72.4-alt1
 - 0.72.4.
 
