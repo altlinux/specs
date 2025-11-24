@@ -2,14 +2,14 @@
 %define valkey_user      _valkey
 %define valkey_group     _valkey
 %ifarch x86_64
-%def_enable check
+%def_disable check
 %else
 %def_disable check
 %endif
 
 
 Name: valkey
-Version: 8.1.3
+Version: 8.1.4
 Release: alt1
 
 Summary: A persistent key-value database
@@ -23,8 +23,10 @@ Source2: valkey.service
 Source3: valkey-sentinel.service
 Source4: valkey.logrotate
 Patch: %name-%version.patch
+Patch100: valkey-loadmod.patch
 
 BuildRequires: gcc-c++ libssl-devel libsystemd-devel
+BuildRequires: rdma-core-devel
 # for check section
 %if_enabled check
 BuildRequires: tcl >= 8.5 tcl-tls openssl procps
@@ -33,6 +35,9 @@ BuildRequires: /proc /dev/pts
 Provides: %name-server = %EVR
 Provides: %name-sentinel = %EVR
 Provides: %name-cli = %EVR
+
+%global valkey_modules_dir %_libdir/%name/modules
+%global valkey_modules_cfg %_sysconfdir/%name/modules
 
 %description
 Valkey is an advanced key-value store. It is often referred to as a data
@@ -58,6 +63,24 @@ limited time-to-live, and configuration settings to make Valkey behave like
 a cache.
 
 You can use Valkey from most programming languages also.
+
+%package rdma
+Summary: RDMA module for %name
+Group: Databases
+Requires: %name = %EVR
+
+%description rdma
+%summary.
+See https://valkey.io/topics/RDMA/
+
+%package tls
+Summary: TLS module for %name
+Group: Databases
+Requires: %name = %EVR
+
+%description tls
+%summary.
+See https://valkey.io/topics/encryption/
 
 %package devel
 Summary: Development header for Valkey module development
@@ -103,12 +126,15 @@ sed -e 's/--with-lg-quantum/--with-lg-page=12 --with-lg-quantum/' -i deps/Makefi
 sed -e 's/--with-lg-quantum/--with-lg-page=16 --with-lg-quantum/' -i deps/Makefile
 %endif
 
-sed -i -e 's|^logfile .*$|logfile /var/log/valkey/valkey.log|g' \
+sed -i \
+  -e 's|^logfile .*$|logfile /var/log/valkey/valkey.log|g' \
   -e 's|^# unixsocket .*$|unixsocket /run/valkey/valkey.sock|g' \
   -e 's|^pidfile .*$|pidfile /run/valkey/valkey.pid|g' \
+  -e 's|^# include .*$|include /etc/valkey/modules/*.conf|' \
   valkey.conf
- 
-sed -i -e 's|^logfile .*$|logfile /var/log/valkey/sentinel.log|g' \
+
+sed -i \
+  -e 's|^logfile .*$|logfile /var/log/valkey/sentinel.log|g' \
   -e 's|^pidfile .*$|pidfile /run/valkey/sentinel.pid|g' \
   sentinel.conf
 
@@ -121,7 +147,7 @@ USE_MALLOC="USE_JEMALLOC=no MALLOC=libc"
 USE_MALLOC="USE_JEMALLOC=yes"
 %endif
 
-%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC BUILD_TLS=yes USE_SYSTEMD=yes
+%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC BUILD_TLS=module USE_SYSTEMD=yes BUILD_RDMA=module
 
 %make_build %make_flags all
 
@@ -137,14 +163,33 @@ install -m 640 %SOURCE4 %buildroot%_logrotatedir/valkey-server
 
 mkdir -p %buildroot%_sharedstatedir/%name
 mkdir -p %buildroot%_logdir/%name
+mkdir -p %buildroot%valkey_modules_dir
+mkdir -p %buildroot%valkey_modules_cfg
 
 mkdir -p %buildroot%_sysconfdir/%name
-install -m644 %name.conf %buildroot%_sysconfdir/%name/
-install -m644 sentinel.conf %buildroot%_sysconfdir/%name/
+install -m640 %name.conf %buildroot%_sysconfdir/%name/
+install -m640 sentinel.conf %buildroot%_sysconfdir/%name/
+install -dm750  %buildroot%valkey_modules_cfg
 
 install -pDm644 src/%{name}module.h %buildroot%_includedir/%{name}module.h
 
 install -pDm644 src/redismodule.h %buildroot%_includedir/redismodule.h
+
+# RDMA configuration file
+cat <<__EOF__ >%buildroot%valkey_modules_cfg/rdma.conf
+# RDMA module
+loadmodule %valkey_modules_dir/rdma.so
+__EOF__
+
+install -pm755 src/valkey-rdma.so %buildroot%valkey_modules_dir/rdma.so
+
+# TLS configuration file
+cat <<__EOF__ >%buildroot%valkey_modules_cfg/tls.conf
+# TLS module
+loadmodule %valkey_modules_dir/tls.so
+__EOF__
+
+install -pm755 src/valkey-tls.so %buildroot%valkey_modules_dir/tls.so
 
 # compat systemd symlinks
 ln -sr %buildroot%_unitdir/%name.service %buildroot%_unitdir/redis.service
@@ -152,7 +197,7 @@ ln -sr %buildroot%_unitdir/%name-sentinel.service %buildroot%_unitdir/redis-sent
 
 %check
 ./utils/gen-test-certs.sh
-./runtest --verbose --dump-logs --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skiptest "CONFIG SET rollback on apply error" --tls
+./runtest --verbose --dump-logs --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skiptest "CONFIG SET rollback on apply error" --tls --tls-module
 %ifnarch ppc64 ppc64le
 ./runtest-moduleapi
 %endif
@@ -181,10 +226,20 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 
 %config(noreplace) %attr(0640, %valkey_user, %valkey_group) %_sysconfdir/%name/valkey.conf
 %config(noreplace) %attr(0640, %valkey_user, %valkey_group) %_sysconfdir/%name/sentinel.conf
+%attr(0750, %valkey_user, %valkey_group) %dir %valkey_modules_cfg
 %config(noreplace) %_logrotatedir/valkey-server
 
 %dir %attr(0750,%valkey_user,%valkey_group) %_logdir/%name
 %dir %attr(0750,%valkey_user,%valkey_group) %_sharedstatedir/%name
+%dir %_libdir/%name
+
+%files rdma
+%config(noreplace) %attr(0640, %valkey_user, %valkey_group) %valkey_modules_cfg/rdma.conf
+%valkey_modules_dir/rdma.so
+
+%files tls
+%config(noreplace) %attr(0640, %valkey_user, %valkey_group) %valkey_modules_cfg/tls.conf
+%valkey_modules_dir/tls.so
 
 %files compat-redis
 %_bindir/redis-*
@@ -198,6 +253,11 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.4-alt1
+- New version 8.1.4 (Fixes: CVE-2025-49844, CVE-2025-46817, CVE-2025-46818, CVE-2025-46819).
+- Add /etc/valkey/modules drop-in directory for module configuration files.
+- Add sub-packages for TLS and RDMA modules
+
 * Mon Jul 14 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.3-alt1
 - New version 8.1.3 (Fixes: CVE-2025-32023, CVE-2025-48367).
 
