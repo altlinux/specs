@@ -5,24 +5,23 @@
 %define        gemname cookstyle
 
 Name:          gem-cookstyle
-Version:       7.32.11
+Version:       8.5.2
 Release:       alt1
 Summary:       Cookstyle is a code linting tool
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://docs.chef.io/workstation/cookstyle/
 Vcs:           https://github.com/chef/cookstyle.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(appbundler) >= 0
 BuildRequires: gem(pry) >= 0
-BuildRequires: gem(yard) >= 0
-BuildRequires: gem(memory_profiler) >= 0
-BuildRequires: gem(stackprof) >= 0
-BuildRequires: gem(rubocop-performance) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.4
 BuildRequires: gem(rubocop) >= 1.15.0
@@ -32,10 +31,11 @@ BuildConflicts: gem(rubocop) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+Requires:      ruby >= 2.7
+Requires:      gem(appbundler) >= 0
 Requires:      gem(rubocop) >= 1.15.0
 Conflicts:     gem(rubocop) >= 2
-Provides:      gem(cookstyle) = 7.32.11
-
+Provides:      gem(cookstyle) = 8.5.2
 
 %description
 Cookstyle is a code linting tool that helps you to write better Chef Infra
@@ -44,21 +44,24 @@ mistakes in your code.
 
 
 %package       -n cookstyle
-Version:       7.32.11
+Version:       8.5.2
 Release:       alt1
-Summary:       Cookstyle is a code linting tool code executable(s)
+Summary:       Cookstyle is a code linting tool executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета cookstyle
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(cookstyle) = 7.32.11
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(cookstyle) = 8.5.2
+Requires:      gem(appbundler) >= 0
 
 %description   -n cookstyle
-Cookstyle is a code linting tool code executable(s).
+Cookstyle is a code linting tool executable(s).
 
 Cookstyle is a code linting tool that helps you to write better Chef Infra
 cookbooks by detecting and automatically correcting style, syntax, and logic
-mistakes in your.
+mistakes in your code.
 
 %description   -n cookstyle -l ru_RU.UTF-8
 Исполнямка для самоцвета cookstyle.
@@ -66,14 +69,16 @@ mistakes in your.
 
 %if_enabled    doc
 %package       -n gem-cookstyle-doc
-Version:       7.32.11
+Version:       8.5.2
 Release:       alt1
 Summary:       Cookstyle is a code linting tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cookstyle
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(cookstyle) = 7.32.11
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(cookstyle) = 8.5.2
 
 %description   -n gem-cookstyle-doc
 Cookstyle is a code linting tool documentation files.
@@ -89,21 +94,22 @@ mistakes in your code.
 
 %if_enabled    devel
 %package       -n gem-cookstyle-devel
-Version:       7.32.11
+Version:       8.5.2
 Release:       alt1
 Summary:       Cookstyle is a code linting tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cookstyle
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(cookstyle) = 7.32.11
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(cookstyle) = 8.5.2
+Requires:      gem(appbundler) >= 0
 Requires:      gem(pry) >= 0
-Requires:      gem(yard) >= 0
-Requires:      gem(memory_profiler) >= 0
-Requires:      gem(stackprof) >= 0
-Requires:      gem(rubocop-performance) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.4
+Requires:      gem(rubocop) >= 1.15.0
+Conflicts:     gem(rubocop) >= 2
 
 %description   -n gem-cookstyle-devel
 Cookstyle is a code linting tool development package.
@@ -130,23 +136,30 @@ mistakes in your code.
 %ruby_test
 
 %files
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n cookstyle
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %_bindir/cookstyle
 
 %if_enabled    doc
 %files         -n gem-cookstyle-doc
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-cookstyle-devel
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %endif
 
 
 %changelog
+* Sat Nov 22 2025 Pavel Skrylev <majioa@altlinux.org> 8.5.2-alt1
+- ^ 7.32.11 -> 8.5.2
+
 * Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 7.32.11-alt1
 - ^ 7.32.1 -> 7.32.11
 

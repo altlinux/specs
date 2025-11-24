@@ -2,74 +2,73 @@
 %define        _unpackaged_files_terminate_build 1
 %def_enable    check
 %def_enable    doc
+%def_enable    devel
 
 Name:          selenium
-Version:       4.25.0
+Version:       4.38.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem
 License:       Apache-2.0
 Group:         Development/Tools
 Url:           https://www.seleniumhq.org
 Vcs:           https://github.com/seleniumhq/selenium.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(activesupport) >= 7.0
+BuildRequires: gem(base64) >= 0.2
+BuildRequires: gem(curb) >= 1.0.5
+BuildRequires: gem(debug) >= 1.7
 BuildRequires: gem(git) >= 1.19
+BuildRequires: gem(logger) >= 1.4
 BuildRequires: gem(rack) >= 2.0
 BuildRequires: gem(rake) >= 13.0
+BuildRequires: gem(rexml) >= 3.2.5
 BuildRequires: gem(rspec) >= 3.0
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
+BuildRequires: gem(rubocop-rspec) >= 3.5
+BuildRequires: gem(rubyzip) >= 1.2.2
+BuildRequires: gem(steep) >= 1.5.0
 BuildRequires: gem(webmock) >= 3.5
 BuildRequires: gem(webrick) >= 1.7
-BuildRequires: gem(yard) >= 0.9.11
-BuildRequires: gem(curb) >= 1.0.5
-BuildRequires: gem(debug) >= 1.7
-BuildRequires: gem(steep) >= 1.5.0
-BuildRequires: gem(base64) >= 0.2
-BuildRequires: gem(logger) >= 1.4
-BuildRequires: gem(rexml) >= 3.2.5
-BuildRequires: gem(rubyzip) >= 1.2.2
 BuildRequires: gem(websocket) >= 1.0
-BuildConflicts: gem(git) >= 3
-BuildConflicts: gem(rack) >= 4
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
-BuildConflicts: gem(webmock) >= 4
-BuildConflicts: gem(webrick) >= 2
+BuildConflicts: gem(activesupport) >= 8
+BuildConflicts: gem(base64) >= 1
 BuildConflicts: gem(curb) >= 1.1
 BuildConflicts: gem(debug) >= 2
-BuildConflicts: gem(steep) >= 2
-BuildConflicts: gem(base64) >= 1
+BuildConflicts: gem(git) >= 3
 BuildConflicts: gem(logger) >= 2
+BuildConflicts: gem(rack) >= 4
+BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rexml) >= 4
-BuildConflicts: gem(rubyzip) >= 3
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(rubocop-performance) >= 2
+BuildConflicts: gem(rubocop-rake) >= 1
+BuildConflicts: gem(rubocop-rspec) >= 4
+BuildConflicts: gem(rubyzip) >= 4.0
+BuildConflicts: gem(steep) >= 2
+BuildConflicts: gem(webmock) >= 4
+BuildConflicts: gem(webrick) >= 2
 BuildConflicts: gem(websocket) >= 2
+BuildConflicts: gem(yard) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rack >= 3.0.0,rack < 4
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
-%ruby_use_gem_dependency yard >= 0.9.34,yard < 1
-%ruby_use_gem_dependency steep >= 1.7.1,steep < 2
-%ruby_use_gem_dependency git >= 2.3.0,git < 3
-%ruby_ignore_names omnibus,kitchen-tests
-Requires:      gem-selenium-webdriver = 4.25.0
-Provides:      ruby-selenium
-
-%ruby_use_gem_version selenium-webdriver:4.25.0
+%ruby_use_gem_dependency git >= 2.3,git < 3
+%ruby_use_gem_dependency steep >= 1.10,steep < 2
+%ruby_use_gem_dependency rack >= 3.0,rack < 4
+Requires:      gem-selenium-webdriver = 4.38.0
+Requires:      gem(selenium-devtools) = 0.142.0
+Requires:      gem(selenium-webdriver) = 4.38.0
 
 %description
 Selenium is an umbrella project encapsulating a variety of tools and libraries
@@ -82,14 +81,20 @@ thousands of hours in code development and upkeep.
 
 
 %package       -n gem-selenium-devtools
-Version:       0.129.0
+Version:       0.142.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(selenium-webdriver) = 4.26.0
-Provides:      gem(selenium-devtools) = 0.129.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      ruby >= 3.2
+Requires:      rubygems > 1.3.1
+Requires:      gem(selenium-devtools) >= 0
+Requires:      gem(selenium-webdriver) >= 4.2
+Conflicts:     gem(selenium-webdriver) >= 5
+Provides:      gem(selenium-devtools) = 0.142.0
 
 %description   -n gem-selenium-devtools
 Selenium WebDriver now supports limited DevTools interactions. This project
@@ -98,14 +103,16 @@ allows users to specify desired versioning.
 
 %if_enabled    doc
 %package       -n gem-selenium-devtools-doc
-Version:       0.129.0
+Version:       0.142.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета selenium-devtools
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(selenium-devtools) = 0.129.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(selenium-devtools) = 0.142.0
 
 %description   -n gem-selenium-devtools-doc
 A browser automation framework and ecosystem documentation files.
@@ -120,14 +127,16 @@ allows users to specify desired versioning.
 
 %if_enabled    devel
 %package       -n gem-selenium-devtools-devel
-Version:       0.129.0
+Version:       0.142.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета selenium-devtools
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(selenium-devtools) = 0.129.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(selenium-devtools) = 0.142.0
 Requires:      gem(git) >= 1.19
 Requires:      gem(rack) >= 2.0
 Requires:      gem(rake) >= 13.0
@@ -135,25 +144,20 @@ Requires:      gem(rspec) >= 3.0
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rubocop-rspec) >= 2.4.0
+Requires:      gem(rubocop-rspec) >= 3.5
 Requires:      gem(webmock) >= 3.5
 Requires:      gem(webrick) >= 1.7
 Requires:      gem(yard) >= 0.9.11
-Requires:      gem(curb) >= 1.0.5
-Requires:      gem(debug) >= 1.7
-Requires:      gem(steep) >= 1.5.0
-Conflicts:     gem(git) >= 2
+Conflicts:     gem(git) >= 3
 Conflicts:     gem(rack) >= 4
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rubocop-rspec) >= 4
 Conflicts:     gem(webmock) >= 4
 Conflicts:     gem(webrick) >= 2
-Conflicts:     gem(curb) >= 1.1
-Conflicts:     gem(debug) >= 2
-Conflicts:     gem(steep) >= 1.6
 
 %description   -n gem-selenium-devtools-devel
 A browser automation framework and ecosystem development package.
@@ -167,25 +171,31 @@ allows users to specify desired versioning.
 
 
 %package       -n gem-selenium-webdriver
-Version:       4.25.0
+Version:       4.38.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      ruby >= 3.2
+Requires:      rubygems > 1.3.1
 Requires:      gem(base64) >= 0.2
 Requires:      gem(logger) >= 1.4
 Requires:      gem(rexml) >= 3.2.5
 Requires:      gem(rubyzip) >= 1.2.2
+Requires:      gem(selenium-devtools) >= 0
+Requires:      gem(selenium-webdriver) >= 0
 Requires:      gem(websocket) >= 1.0
 Conflicts:     gem(base64) >= 1
 Conflicts:     gem(logger) >= 2
 Conflicts:     gem(rexml) >= 4
-Conflicts:     gem(rubyzip) >= 3
+Conflicts:     gem(rubyzip) >= 4.0
 Conflicts:     gem(websocket) >= 2
 Obsoletes:     ruby-selenium-webdriver < %EVR
 Provides:      ruby-selenium-webdriver = %EVR
-Provides:      gem(selenium-webdriver) = 4.26.0
+Provides:      gem(selenium-webdriver) = 4.38.0
 
 %description   -n gem-selenium-webdriver
 Selenium implements the W3C WebDriver protocol to automate popular browsers. It
@@ -196,14 +206,16 @@ web-based task can automated.
 
 %if_enabled    doc
 %package       -n gem-selenium-webdriver-doc
-Version:       4.25.0
+Version:       4.38.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета selenium-webdriver
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(selenium-webdriver) = 4.26.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(selenium-webdriver) = 4.38.0
 
 %description   -n gem-selenium-webdriver-doc
 A browser automation framework and ecosystem documentation files.
@@ -220,14 +232,16 @@ web-based task can automated.
 
 %if_enabled    devel
 %package       -n gem-selenium-webdriver-devel
-Version:       4.25.0
+Version:       4.38.0
 Release:       alt1
 Summary:       A browser automation framework and ecosystem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета selenium-webdriver
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(selenium-webdriver) = 4.26.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(selenium-webdriver) = 4.38.0
 Requires:      gem(git) >= 1.19
 Requires:      gem(rack) >= 2.0
 Requires:      gem(rake) >= 13.0
@@ -235,26 +249,21 @@ Requires:      gem(rspec) >= 3.0
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rubocop-rspec) >= 2.4.0
+Requires:      gem(rubocop-rspec) >= 3.5
 Requires:      gem(webmock) >= 3.5
 Requires:      gem(webrick) >= 1.7
-Requires:      gem(yard) >= 0.9.11
-Requires:      gem(curb) >= 1.0.5
-Requires:      gem(debug) >= 1.7
-Requires:      gem(steep) >= 1.5.0
-Requires:      gem(selenium-devtools) = 0.129.0
+Requires:      gem(yard) >= 0.9.34
 Conflicts:     gem(git) >= 3
 Conflicts:     gem(rack) >= 4
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rubocop-rspec) >= 4
 Conflicts:     gem(webmock) >= 4
 Conflicts:     gem(webrick) >= 2
-Conflicts:     gem(curb) >= 1.1
-Conflicts:     gem(debug) >= 2
-Conflicts:     gem(steep) >= 2
+Conflicts:     gem(yard) >= 1
 
 %description   -n gem-selenium-webdriver-devel
 A browser automation framework and ecosystem development package.
@@ -271,16 +280,53 @@ web-based task can automated.
 
 %if_enabled    devel
 %package       -n selenium-devel
-Version:       4.25.0
+Version:       4.38.0
 Release:       alt1
-Summary:       A browser automation framework and ecosystem development package
+Summary:       A browser automation framework and ecosystem
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета selenium
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(selenium) >= 0
-Requires:      gem-selenium-webdriver-devel = %EVR
-Requires:      gem-selenium-devtools-devel
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem-selenium-webdriver-devel = 4.38.0-alt1
+Requires:      gem-selenium-devtools-devel = 0.142.0-alt1
+Requires:      selenium = 4.38.0-alt1
+Requires:      gem(base64) >= 0.2
+Requires:      gem(git) >= 1.19
+Requires:      gem(logger) >= 1.4
+Requires:      gem(rack) >= 2.0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(rexml) >= 3.2.5
+Requires:      gem(rspec) >= 3.0
+Requires:      gem(rubocop) >= 1.75
+Requires:      gem(rubocop-performance) >= 1.25
+Requires:      gem(rubocop-rake) >= 0.7
+Requires:      gem(rubocop-rspec) >= 3.5
+Requires:      gem(rubyzip) >= 1.2.2
+Requires:      gem(selenium-devtools) >= 0
+Requires:      gem(selenium-webdriver) >= 0
+Requires:      gem(webmock) >= 3.5
+Requires:      gem(webrick) >= 1.7
+Requires:      gem(websocket) >= 1.0
+Requires:      gem(yard) >= 0.9.36
+Conflicts:     gem(base64) >= 1
+Conflicts:     gem(git) >= 3
+Conflicts:     gem(logger) >= 2
+Conflicts:     gem(rack) >= 4
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rexml) >= 4
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rubocop-performance) >= 2
+Conflicts:     gem(rubocop-rake) >= 1
+Conflicts:     gem(rubocop-rspec) >= 4
+Conflicts:     gem(rubyzip) >= 4.0
+Conflicts:     gem(selenium-webdriver) >= 5
+Conflicts:     gem(webmock) >= 4
+Conflicts:     gem(webrick) >= 2
+Conflicts:     gem(websocket) >= 2
+Conflicts:     gem(yard) >= 0.10
 
 %description   -n selenium-devel
 A browser automation framework and ecosystem development package.
@@ -294,7 +340,7 @@ The project is made possible by volunteer contributors who've generously donated
 thousands of hours in code development and upkeep.
 
 %description   -n selenium-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета selenium.
+Файлы для разработки самоцвета selenium. %endif
 %endif
 
 
@@ -313,35 +359,35 @@ thousands of hours in code development and upkeep.
 %files
 
 %files         -n gem-selenium-devtools
-%doc rb/lib/selenium/devtools/README.md
-%ruby_gemspecdir/selenium-devtools-0.129.0.gemspec
-%ruby_gemslibdir/selenium-devtools-0.129.0
+%doc LICENSE README.md
+%ruby_gemspecdir/selenium-devtools-0.142.0.gemspec
+%ruby_gemslibdir/selenium-devtools-0.142.0
 
 %if_enabled    doc
 %files         -n gem-selenium-devtools-doc
-%doc rb/lib/selenium/devtools/README.md
-%ruby_gemsdocdir/selenium-devtools-0.129.0
+%doc LICENSE README.md
+%ruby_gemsdocdir/selenium-devtools-0.142.0
 %endif
 
 %if_enabled    devel
 %files         -n gem-selenium-devtools-devel
-%doc rb/lib/selenium/devtools/README.md
+%doc LICENSE README.md
 %endif
 
 %files         -n gem-selenium-webdriver
-%doc README.md
-%ruby_gemspecdir/selenium-webdriver-4.25.0.gemspec
-%ruby_gemslibdir/selenium-webdriver-4.25.0
+%doc LICENSE README.md
+%ruby_gemspecdir/selenium-webdriver-4.38.0.gemspec
+%ruby_gemslibdir/selenium-webdriver-4.38.0
 
 %if_enabled    doc
 %files         -n gem-selenium-webdriver-doc
-%doc README.md
-%ruby_gemsdocdir/selenium-webdriver-4.25.0
+%doc LICENSE README.md
+%ruby_gemsdocdir/selenium-webdriver-4.38.0
 %endif
 
 %if_enabled    devel
 %files         -n gem-selenium-webdriver-devel
-%doc README.md
+%doc LICENSE README.md
 %endif
 
 %if_enabled    devel
@@ -350,8 +396,11 @@ thousands of hours in code development and upkeep.
 
 
 %changelog
+* Sun Nov 23 2025 Pavel Skrylev <majioa@altlinux.org> 4.38.0-alt1
+- ^ 4.25.0 -> 4.38.0
+
 * Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 4.25.0-alt1
-- 4.19.0 -> 4.25.0
+- ^ 4.19.0 -> 4.25.0
 
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 4.19.0-alt1
 - ^ 3.142.7 -> 4.19.0

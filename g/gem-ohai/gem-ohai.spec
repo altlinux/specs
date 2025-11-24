@@ -5,49 +5,46 @@
 %define        gemname ohai
 
 Name:          gem-ohai
-Version:       19.0.4
+Version:       19.1.15
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/chef/ohai
 Vcs:           https://github.com/chef/ohai.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(cookstyle) >= 7.32.8
-BuildRequires: gem(ipaddr_extensions) >= 0
-BuildRequires: gem(rake) >= 10.1.0
-BuildRequires: gem(rspec-collection_matchers) >= 1.0
-BuildRequires: gem(rspec-core) >= 3.0
-BuildRequires: gem(rspec-expectations) >= 3.0
-BuildRequires: gem(rspec-mocks) >= 3.0
-BuildRequires: gem(rubocop-performance) >= 1.11.3
-BuildRequires: gem(rubocop-rspec) >= 0
-BuildRequires: gem(pry) >= 0
-BuildRequires: gem(pry-byebug) >= 0
-BuildRequires: gem(pry-stack_explorer) >= 0
-BuildRequires: gem(rb-readline) >= 0
+BuildRequires: gem(appbundler) >= 0
+BuildRequires: gem(base64) >= 0
 BuildRequires: gem(chef-config) >= 14.12
 BuildRequires: gem(chef-utils) >= 16.0
-BuildRequires: gem(ffi) >= 1.9
+BuildRequires: gem(cookstyle) >= 7.32.8
+BuildRequires: gem(ffi) >= 1.15.5
 BuildRequires: gem(ffi-yajl) >= 2.2
+BuildRequires: gem(ipaddr_extensions) >= 0
 BuildRequires: gem(ipaddress) >= 0
 BuildRequires: gem(mixlib-cli) >= 1.7.0
 BuildRequires: gem(mixlib-config) >= 2.0
 BuildRequires: gem(mixlib-log) >= 2.0.1
-BuildRequires: gem(mixlib-shellout) >= 3.2.5
+BuildRequires: gem(mixlib-shellout) >= 3.3.6
 BuildRequires: gem(plist) >= 3.1
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(pry-byebug) >= 0
+BuildRequires: gem(pry-stack_explorer) >= 0
+BuildRequires: gem(rake) >= 10.1.0
+BuildRequires: gem(rb-readline) >= 0
+BuildRequires: gem(rspec-collection_matchers) >= 1.0
+BuildRequires: gem(rspec-core) >= 3.0
+BuildRequires: gem(rspec-expectations) >= 3.0
+BuildRequires: gem(rspec-mocks) >= 3.0
 BuildRequires: gem(train-core) >= 0
 BuildRequires: gem(wmi-lite) >= 1.0
-BuildConflicts: gem(rspec-collection_matchers) >= 2
-BuildConflicts: gem(rspec-core) >= 4
-BuildConflicts: gem(rspec-expectations) >= 4
-BuildConflicts: gem(rspec-mocks) >= 4
-BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(chef-config) >= 20
 BuildConflicts: gem(chef-utils) >= 20
 BuildConflicts: gem(ffi) >= 2
@@ -56,21 +53,29 @@ BuildConflicts: gem(mixlib-config) >= 4.0
 BuildConflicts: gem(mixlib-log) >= 4.0
 BuildConflicts: gem(mixlib-shellout) >= 4
 BuildConflicts: gem(plist) >= 4
+BuildConflicts: gem(rspec-collection_matchers) >= 2
+BuildConflicts: gem(rspec-core) >= 4
+BuildConflicts: gem(rspec-expectations) >= 4
+BuildConflicts: gem(rspec-mocks) >= 4
 BuildConflicts: gem(wmi-lite) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
+%ruby_use_gem_dependency mixlib-shellout >= 3.4.9,mixlib-shellout < 4
+Requires:      ruby >= 3.1
+Requires:      gem(appbundler) >= 0
+Requires:      gem(base64) >= 0
 Requires:      gem(chef-config) >= 14.12
 Requires:      gem(chef-utils) >= 16.0
-Requires:      gem(ffi) >= 1.9
+Requires:      gem(ffi) >= 1.15.5
 Requires:      gem(ffi-yajl) >= 2.2
 Requires:      gem(ipaddress) >= 0
 Requires:      gem(mixlib-cli) >= 1.7.0
 Requires:      gem(mixlib-config) >= 2.0
 Requires:      gem(mixlib-log) >= 2.0.1
-Requires:      gem(mixlib-shellout) >= 3.2.5
+Requires:      gem(mixlib-shellout) >= 3.3.6
 Requires:      gem(plist) >= 3.1
 Requires:      gem(train-core) >= 0
 Requires:      gem(wmi-lite) >= 1.0
@@ -85,8 +90,7 @@ Conflicts:     gem(plist) >= 4
 Conflicts:     gem(wmi-lite) >= 2
 Obsoletes:     ohai < %EVR
 Provides:      ohai = %EVR
-Provides:      gem(ohai) = 19.0.4
-
+Provides:      gem(ohai) = 19.1.15
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then provide
@@ -95,14 +99,23 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n ohai
-Version:       19.0.4
+Version:       19.1.15
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 19.0.4
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(ohai) = 19.1.15
+Requires:      gem(appbundler) >= 0
+Requires:      gem(chef-config) >= 14.12
+Requires:      gem(chef-utils) >= 16.0
+Requires:      gem(ffi) >= 1.15.5
+Conflicts:     gem(chef-config) >= 20
+Conflicts:     gem(chef-utils) >= 20
+Conflicts:     gem(ffi) >= 2
 
 %description   -n ohai
 Ohai profiles your system and emits JSON executable(s).
@@ -117,14 +130,16 @@ is required by the chef-client and must be present on a node.
 
 %if_enabled    doc
 %package       -n gem-ohai-doc
-Version:       19.0.4
+Version:       19.1.15
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 19.0.4
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(ohai) = 19.1.15
 
 %description   -n gem-ohai-doc
 Ohai profiles your system and emits JSON documentation files.
@@ -140,32 +155,16 @@ is required by the chef-client and must be present on a node.
 
 %if_enabled    devel
 %package       -n gem-ohai-devel
-Version:       19.0.4
+Version:       19.1.15
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 19.0.4
-Requires:      gem(cookstyle) >= 7.32.8
-Requires:      gem(ipaddr_extensions) >= 0
-Requires:      gem(rake) >= 10.1.0
-Requires:      gem(rspec-collection_matchers) >= 1.0
-Requires:      gem(rspec-core) >= 3.0
-Requires:      gem(rspec-expectations) >= 3.0
-Requires:      gem(rspec-mocks) >= 3.0
-Requires:      gem(rubocop-performance) >= 1.11.3
-Requires:      gem(rubocop-rspec) >= 0
-Requires:      gem(pry) >= 0
-Requires:      gem(pry-byebug) >= 0
-Requires:      gem(pry-stack_explorer) >= 0
-Requires:      gem(rb-readline) >= 0
-Conflicts:     gem(rspec-collection_matchers) >= 2
-Conflicts:     gem(rspec-core) >= 4
-Conflicts:     gem(rspec-expectations) >= 4
-Conflicts:     gem(rspec-mocks) >= 4
-Conflicts:     gem(rubocop-performance) >= 2
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(ohai) = 19.1.15
 
 %description   -n gem-ohai-devel
 Ohai profiles your system and emits JSON development package.
@@ -192,23 +191,30 @@ is required by the chef-client and must be present on a node.
 %ruby_test
 
 %files
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n ohai
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %_bindir/ohai
 
 %if_enabled    doc
 %files         -n gem-ohai-doc
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-ohai-devel
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md README.md
 %endif
 
 
 %changelog
+* Sat Nov 22 2025 Pavel Skrylev <majioa@altlinux.org> 19.1.15-alt1
+- ^ 19.0.4 -> 19.1.15
+
 * Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 19.0.4-alt1
 - ^ 18.1.16 -> 19.0.4
 

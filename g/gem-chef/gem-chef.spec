@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
 %def_enable    devel
 %define        gemname chef
 
 Name:          gem-chef
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 License:       Apache-2.0
@@ -24,21 +24,24 @@ Autoprov:      yes,noruby
 Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(abbrev) >= 0
+BuildRequires: gem(activesupport) >= 7.1
 BuildRequires: gem(addressable) >= 0
 BuildRequires: gem(aws-sdk-s3) >= 1.91
 BuildRequires: gem(aws-sdk-secretsmanager) >= 1.46
 BuildRequires: gem(bcrypt_pbkdf) >= 1.1
 BuildRequires: gem(chef-licensing) >= 0.7.5
 BuildRequires: gem(chef-vault) >= 0
-BuildRequires: gem(chef-zero) >= 14.0.11
-BuildRequires: gem(cheffish) >= 17
-BuildRequires: gem(chefstyle) >= 0
+BuildRequires: gem(chef-zero) >= 15.0.21
+BuildRequires: gem(cheffish) >= 0
 BuildRequires: gem(concurrent-ruby) >= 0
+BuildRequires: gem(cookstyle) >= 7.32.8
 BuildRequires: gem(corefoundation) >= 0.3.4
+BuildRequires: gem(csv) >= 3.3.5
 BuildRequires: gem(diff-lcs) > 1.4.0
 BuildRequires: gem(erubis) >= 2.7
 BuildRequires: gem(fauxhai-ng) >= 0
-BuildRequires: gem(ffi) >= 1.15.5
+BuildRequires: gem(ffi) >= 1.15
 BuildRequires: gem(ffi-libarchive) >= 1.0
 BuildRequires: gem(ffi-yajl) >= 2.2
 BuildRequires: gem(fuzzyurl) >= 0
@@ -51,7 +54,6 @@ BuildRequires: gem(mixlib-authentication) >= 2.1
 BuildRequires: gem(mixlib-cli) >= 2.1.1
 BuildRequires: gem(mixlib-config) >= 2.2.12
 BuildRequires: gem(mixlib-log) >= 2.0.3
-BuildRequires: gem(mixlib-shellout) >= 2.0
 BuildRequires: gem(net-ftp) >= 0
 BuildRequires: gem(net-sftp) >= 2.1.2
 BuildRequires: gem(net-ssh) >= 5.1
@@ -61,40 +63,45 @@ BuildRequires: gem(openssl) >= 3.0.0
 BuildRequires: gem(pastel) >= 0
 BuildRequires: gem(plist) >= 3.2
 BuildRequires: gem(proxifier2) >= 1.1
+BuildRequires: gem(racc) >= 0
 BuildRequires: gem(rake) >= 12.3.3
-BuildRequires: gem(rdoc) >= 6.1.1
 BuildRequires: gem(rest-client) >= 0
 BuildRequires: gem(rspec) >= 0
+BuildRequires: gem(syslog) >= 0
 BuildRequires: gem(syslog-logger) >= 1.6
 BuildRequires: gem(tomlrb) >= 1.2
-BuildRequires: gem(train-core) >= 3.10
+BuildRequires: gem(train-core) >= 3.11.1
 BuildRequires: gem(train-rest) >= 0.4.1
-BuildRequires: gem(train-winrm) >= 0.2.5
+BuildRequires: gem(train-winrm) >= 0.2.13
 BuildRequires: gem(tty-prompt) >= 0.21
 BuildRequires: gem(tty-screen) >= 0.6
 BuildRequires: gem(tty-table) >= 0.11
 BuildRequires: gem(unf_ext) >= 0.0.8.2
-BuildRequires: gem(uuidtools) >= 2.1.5
+BuildRequires: gem(uri) >= 1.0.3
 BuildRequires: gem(vault) >= 0.18.2
 BuildRequires: gem(webmock) >= 0
+BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(aws-sdk-s3) >= 2
 BuildConflicts: gem(aws-sdk-secretsmanager) >= 2
 BuildConflicts: gem(bcrypt_pbkdf) >= 2
+BuildConflicts: gem(chef-zero) >= 15.1
 BuildConflicts: gem(corefoundation) >= 1
 BuildConflicts: gem(crack) >= 0.4.6
+BuildConflicts: gem(csv) >= 3.4
 BuildConflicts: gem(diff-lcs) >= 1.6.0
 BuildConflicts: gem(erubis) >= 3
+BuildConflicts: gem(ffi) >= 2
 BuildConflicts: gem(ffi-yajl) >= 3
 BuildConflicts: gem(highline) >= 4
 BuildConflicts: gem(iniparse) >= 2
-BuildConflicts: gem(inspec-core) >= 7
+BuildConflicts: gem(inspec-core) >= 7.1
 BuildConflicts: gem(license-acceptance) >= 3
 BuildConflicts: gem(mixlib-archive) >= 2.0
 BuildConflicts: gem(mixlib-authentication) >= 4
 BuildConflicts: gem(mixlib-cli) >= 3.0
 BuildConflicts: gem(mixlib-config) >= 4.0
 BuildConflicts: gem(mixlib-log) >= 4.0
-BuildConflicts: gem(mixlib-shellout) >= 4.0
+BuildConflicts: gem(mixlib-shellout) >= 4
 BuildConflicts: gem(net-sftp) >= 5.0
 BuildConflicts: gem(net-ssh) >= 8
 BuildConflicts: gem(net-ssh-multi) >= 2
@@ -102,7 +109,6 @@ BuildConflicts: gem(ohai) >= 20
 BuildConflicts: gem(openssl) >= 4
 BuildConflicts: gem(plist) >= 4
 BuildConflicts: gem(proxifier2) >= 2
-BuildConflicts: gem(rdoc) >= 7
 BuildConflicts: gem(syslog-logger) >= 2
 BuildConflicts: gem(tomlrb) >= 3
 BuildConflicts: gem(train-core) >= 4
@@ -110,33 +116,38 @@ BuildConflicts: gem(tty-prompt) >= 1
 BuildConflicts: gem(tty-screen) >= 1
 BuildConflicts: gem(tty-table) >= 1
 BuildConflicts: gem(unf_ext) >= 1
-BuildConflicts: gem(uuidtools) >= 3.0
+BuildConflicts: gem(uri) >= 2
 BuildConflicts: gem(vault) >= 0.19
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency tomlrb >= 2.0.1,tomlrb < 3
 %ruby_use_gem_dependency unf_ext >= 0.0.9.1,unf_ext < 1
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 %ruby_use_gem_dependency openssl >= 3.0.0,openssl < 4
+%ruby_use_gem_dependency train-winrm >= 0.2.13,train-winrm < 1
 %ruby_use_gem_dependency train-core >= 3.11.1,train-core < 4
 %ruby_use_gem_dependency ohai >= 18.1.16,ohai < 19
-%ruby_use_gem_dependency highline >= 3.1.2,highline < 4
 %ruby_use_gem_dependency inspec-core >= 6.2.9,inspec-core < 7
 %ruby_use_gem_dependency corefoundation >= 0.3.14,corefoundation < 1
 %ruby_use_gem_dependency ffi-libarchive >= 1.1.13,ffi-libarchive < 2
+%ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
+%ruby_use_gem_dependency uri >= 1.1,uri < 2
+%ruby_use_gem_dependency highline >= 3.1.2,highline < 4
+%ruby_use_gem_dependency mixlib-shellout >= 3.4.9,mixlib-shellout < 4
+%ruby_use_gem_dependency tomlrb >= 2.0.1,tomlrb < 3
 Requires:      ruby >= 3.1.0
+Requires:      gem(activesupport) >= 7.1
 Requires:      gem(addressable) >= 0
 Requires:      gem(aws-sdk-s3) >= 1.91
 Requires:      gem(aws-sdk-secretsmanager) >= 1.46
 Requires:      gem(chef-licensing) >= 0.7.5
 Requires:      gem(chef-vault) >= 0
-Requires:      gem(chef-zero) >= 14.0.11
-Requires:      gem(cheffish) >= 17
-Requires:      gem(chefstyle) >= 0
+Requires:      gem(chef-zero) >= 15.0.21
+Requires:      gem(cheffish) >= 0
 Requires:      gem(corefoundation) >= 0.3.4
+Requires:      gem(csv) >= 3.3.5
 Requires:      gem(diff-lcs) > 1.4.0
 Requires:      gem(erubis) >= 2.7
 Requires:      gem(ffi) >= 1.15.5
@@ -149,44 +160,49 @@ Requires:      gem(mixlib-archive) >= 0.4
 Requires:      gem(mixlib-authentication) >= 2.1
 Requires:      gem(mixlib-cli) >= 2.1.1
 Requires:      gem(mixlib-log) >= 2.0.3
-Requires:      gem(mixlib-shellout) >= 3.1.1
+Requires:      gem(mixlib-shellout) >= 3.3.8
 Requires:      gem(net-ftp) >= 0
 Requires:      gem(net-sftp) >= 2.1.2
 Requires:      gem(ohai) >= 18.1.16
 Requires:      gem(plist) >= 3.2
 Requires:      gem(proxifier2) >= 1.1
-Requires:      gem(rest-client) >= 0
+Requires:      gem(syslog) >= 0
 Requires:      gem(syslog-logger) >= 1.6
+Requires:      gem(train-core) >= 3.11.1
 Requires:      gem(train-rest) >= 0.4.1
-Requires:      gem(train-winrm) >= 0.2.5
+Requires:      gem(train-winrm) >= 0.2.13
 Requires:      gem(unf_ext) >= 0.0.8.2
-Requires:      gem(uuidtools) >= 2.1.5
+Requires:      gem(uri) >= 1.0.3
 Requires:      gem(vault) >= 0.18.2
+Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(aws-sdk-s3) >= 2
 Conflicts:     gem(aws-sdk-secretsmanager) >= 2
+Conflicts:     gem(chef-zero) >= 15.1
 Conflicts:     gem(corefoundation) >= 1
+Conflicts:     gem(csv) >= 3.4
 Conflicts:     gem(diff-lcs) >= 1.6.0
 Conflicts:     gem(erubis) >= 3
+Conflicts:     gem(ffi) >= 2
 Conflicts:     gem(ffi-yajl) >= 3
 Conflicts:     gem(iniparse) >= 2
-Conflicts:     gem(inspec-core) >= 7
+Conflicts:     gem(inspec-core) >= 7.1
 Conflicts:     gem(license-acceptance) >= 3
 Conflicts:     gem(mixlib-archive) >= 2.0
 Conflicts:     gem(mixlib-authentication) >= 4
 Conflicts:     gem(mixlib-cli) >= 3.0
 Conflicts:     gem(mixlib-log) >= 4.0
-Conflicts:     gem(mixlib-shellout) >= 4.0
+Conflicts:     gem(mixlib-shellout) >= 4
 Conflicts:     gem(net-sftp) >= 5.0
 Conflicts:     gem(ohai) >= 20
 Conflicts:     gem(plist) >= 4
 Conflicts:     gem(proxifier2) >= 2
 Conflicts:     gem(syslog-logger) >= 2
 Conflicts:     gem(unf_ext) >= 1
-Conflicts:     gem(uuidtools) >= 3.0
+Conflicts:     gem(uri) >= 2
 Conflicts:     gem(vault) >= 0.19
 Obsoletes:     chef-doc < %EVR
 Provides:      chef-doc = %EVR
-Provides:      gem(chef) = 19.0.85
+Provides:      gem(chef) = 19.1.116
 
 %description
 Chef is a systems integration framework and configuration management library
@@ -201,7 +217,7 @@ the chef library.
 
 
 %package       -n gem-knife
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
@@ -210,11 +226,13 @@ BuildArch:     noarch
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
 Requires:      ruby >= 3.1.0
+Requires:      gem(abbrev) >= 0
 Requires:      gem(bcrypt_pbkdf) >= 1.1
 Requires:      gem(chef) >= 19
 Requires:      gem(chef-config) >= 19
 Requires:      gem(chef-utils) >= 19
 Requires:      gem(chef-vault) >= 0
+Requires:      gem(cheffish) >= 0
 Requires:      gem(erubis) >= 2.7
 Requires:      gem(ffi) >= 1.15
 Requires:      gem(ffi-yajl) >= 2.2
@@ -228,13 +246,14 @@ Requires:      gem(net-ssh-multi) >= 1.2.1
 Requires:      gem(ohai) >= 19.0
 Requires:      gem(pastel) >= 0
 Requires:      gem(proxifier2) >= 1.1
-Requires:      gem(train-core) >= 3.10
-Requires:      gem(train-winrm) >= 0.2.5
+Requires:      gem(train-core) >= 3.11.5
+Requires:      gem(train-winrm) >= 0.2.17
 Requires:      gem(tty-prompt) >= 0.21
 Requires:      gem(tty-screen) >= 0.6
 Requires:      gem(tty-table) >= 0.11
 Conflicts:     gem(bcrypt_pbkdf) >= 2
 Conflicts:     gem(erubis) >= 3
+Conflicts:     gem(ffi) >= 1.18.0
 Conflicts:     gem(ffi-yajl) >= 3
 Conflicts:     gem(highline) >= 4
 Conflicts:     gem(license-acceptance) >= 3
@@ -248,14 +267,14 @@ Conflicts:     gem(train-core) >= 4
 Conflicts:     gem(tty-prompt) >= 1
 Conflicts:     gem(tty-screen) >= 1
 Conflicts:     gem(tty-table) >= 1
-Provides:      gem(knife) = 19.0.85
+Provides:      gem(knife) = 19.1.116
 
 %description   -n gem-knife
 The knife CLI for Chef Infra.
 
 
 %package       -n knife
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета knife
@@ -264,7 +283,8 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(knife) = 19.0.85
+Requires:      gem(knife) = 19.1.116
+Requires:      gem(cheffish) >= 0
 Requires:      gem(ohai) >= 18.1.16
 Conflicts:     gem(ohai) >= 20
 
@@ -279,7 +299,7 @@ The knife CLI for Chef Infra.
 
 %if_enabled    doc
 %package       -n gem-knife-doc
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета knife
@@ -288,7 +308,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(knife) = 19.0.85
+Requires:      gem(knife) = 19.1.116
 
 %description   -n gem-knife-doc
 Clients for the chef systems integration framework documentation files.
@@ -302,7 +322,7 @@ The knife CLI for Chef Infra.
 
 %if_enabled    devel
 %package       -n gem-knife-devel
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета knife
@@ -311,9 +331,8 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(knife) = 19.0.85
-Requires:      gem(cheffish) >= 14
-Requires:      gem(chefstyle) >= 0
+Requires:      gem(knife) = 19.1.116
+Requires:      gem(cookstyle) >= 7.32.8
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 0
 Requires:      gem(webmock) >= 0
@@ -330,7 +349,7 @@ The knife CLI for Chef Infra.
 
 
 %package       -n gem-chef-bin
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
@@ -338,16 +357,17 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef) = 19.0.85
+Requires:      gem(chef) = 19.1.116
 Requires:      gem(chef-bin) >= 0
-Provides:      gem(chef-bin) = 19.0.85
+Provides:      chef-bin = %EVR
+Provides:      gem(chef-bin) = 19.1.116
 
 %description   -n gem-chef-bin
 Chef-branded binstubs for chef-client.
 
 
 %package       -n chef
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-bin
@@ -356,7 +376,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-bin) = 19.0.85
+Requires:      gem(chef-bin) = 19.1.116
 
 %description   -n chef
 Clients for the chef systems integration framework executable(s).
@@ -369,7 +389,7 @@ Chef-branded binstubs for chef-client.
 
 %if_enabled    doc
 %package       -n gem-chef-bin-doc
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-bin
@@ -378,7 +398,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-bin) = 19.0.85
+Requires:      gem(chef-bin) = 19.1.116
 
 %description   -n gem-chef-bin-doc
 Clients for the chef systems integration framework documentation
@@ -393,7 +413,7 @@ Chef-branded binstubs for chef-client.
 
 %if_enabled    devel
 %package       -n gem-chef-bin-devel
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-bin
@@ -402,7 +422,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-bin) = 19.0.85
+Requires:      gem(chef-bin) = 19.1.116
 Requires:      gem(rake) >= 12.3.3
 
 %description   -n gem-chef-bin-devel
@@ -417,7 +437,7 @@ Chef-branded binstubs for chef-client.
 
 
 %package       -n gem-chef-utils
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
@@ -428,7 +448,8 @@ Autoreq:       yes,noruby
 Requires:      ruby >= 2.6
 Requires:      gem(chef-utils) >= 0
 Requires:      gem(concurrent-ruby) >= 0
-Provides:      gem(chef-utils) = 19.0.85
+Provides:      chef-utils = %EVR
+Provides:      gem(chef-utils) = 19.1.116
 
 %description   -n gem-chef-utils
 Basic utility functions for Core Chef Infra development
@@ -436,7 +457,7 @@ Basic utility functions for Core Chef Infra development
 
 %if_enabled    doc
 %package       -n gem-chef-utils-doc
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-utils
@@ -445,7 +466,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-utils) = 19.0.85
+Requires:      gem(chef-utils) = 19.1.116
 
 %description   -n gem-chef-utils-doc
 Clients for the chef systems integration framework documentation files.
@@ -459,7 +480,7 @@ Basic utility functions for Core Chef Infra development
 
 %if_enabled    devel
 %package       -n gem-chef-utils-devel
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-utils
@@ -468,7 +489,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-utils) = 19.0.85
+Requires:      gem(chef-utils) = 19.1.116
 Requires:      gem(fauxhai-ng) >= 0
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 0
@@ -484,7 +505,7 @@ Basic utility functions for Core Chef Infra development
 
 
 %package       -n gem-chef-config
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework
 Group:         Development/Ruby
@@ -495,15 +516,16 @@ Autoreq:       yes,noruby
 Requires:      ruby >= 2.6
 Requires:      gem(addressable) >= 0
 Requires:      gem(chef-config) >= 0
-Requires:      gem(chef-utils) = 19.0.85
+Requires:      gem(chef-utils) = 19.1.116
 Requires:      gem(fuzzyurl) >= 0
 Requires:      gem(mixlib-config) >= 2.2.12
 Requires:      gem(mixlib-shellout) >= 2.0
+Requires:      gem(racc) >= 0
 Requires:      gem(tomlrb) >= 1.2
 Conflicts:     gem(mixlib-config) >= 4.0
 Conflicts:     gem(mixlib-shellout) >= 4.0
 Conflicts:     gem(tomlrb) >= 3
-Provides:      gem(chef-config) = 19.0.85
+Provides:      gem(chef-config) = 19.1.116
 
 %description   -n gem-chef-config
 Chef's default configuration and config loading.
@@ -511,7 +533,7 @@ Chef's default configuration and config loading.
 
 %if_enabled    doc
 %package       -n gem-chef-config-doc
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-config
@@ -520,7 +542,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-config) = 19.0.85
+Requires:      gem(chef-config) = 19.1.116
 
 %description   -n gem-chef-config-doc
 Clients for the chef systems integration framework documentation files.
@@ -534,7 +556,7 @@ Chef's default configuration and config loading.
 
 %if_enabled    devel
 %package       -n gem-chef-config-devel
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-config
@@ -543,7 +565,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef-config) = 19.0.85
+Requires:      gem(chef-config) = 19.1.116
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 0
 
@@ -559,7 +581,7 @@ Chef's default configuration and config loading.
 
 %if_enabled    doc
 %package       -n gem-chef-doc
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef
@@ -568,7 +590,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef) = 19.0.85
+Requires:      gem(chef) = 19.1.116
 
 %description   -n gem-chef-doc
 Clients for the chef systems integration framework documentation files.
@@ -590,7 +612,7 @@ the chef library.
 
 %if_enabled    devel
 %package       -n gem-chef-devel
-Version:       19.0.85
+Version:       19.1.116
 Release:       alt1
 Summary:       Clients for the chef systems integration framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef
@@ -599,7 +621,7 @@ BuildArch:     noarch
 
 Autoprov:      yes,noruby
 Autoreq:       yes,noruby
-Requires:      gem(chef) = 19.0.85
+Requires:      gem(chef) = 19.1.116
 Requires:      gem(fauxhai-ng) >= 0
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 0
@@ -643,8 +665,8 @@ the chef library.
 
 %files         -n gem-knife
 %doc LICENSE
-%ruby_gemspecdir/knife-19.0.85.gemspec
-%ruby_gemslibdir/knife-19.0.85
+%ruby_gemspecdir/knife-19.1.116.gemspec
+%ruby_gemslibdir/knife-19.1.116
 
 %files         -n knife
 %doc LICENSE
@@ -653,7 +675,7 @@ the chef library.
 %if_enabled    doc
 %files         -n gem-knife-doc
 %doc LICENSE
-%ruby_gemsdocdir/knife-19.0.85
+%ruby_gemsdocdir/knife-19.1.116
 %endif
 
 %if_enabled    devel
@@ -663,8 +685,8 @@ the chef library.
 
 %files         -n gem-chef-bin
 %doc LICENSE
-%ruby_gemspecdir/chef-bin-19.0.85.gemspec
-%ruby_gemslibdir/chef-bin-19.0.85
+%ruby_gemspecdir/chef-bin-19.1.116.gemspec
+%ruby_gemslibdir/chef-bin-19.1.116
 
 %files         -n chef
 %doc LICENSE
@@ -679,7 +701,7 @@ the chef library.
 %if_enabled    doc
 %files         -n gem-chef-bin-doc
 %doc LICENSE
-%ruby_gemsdocdir/chef-bin-19.0.85
+%ruby_gemsdocdir/chef-bin-19.1.116
 %endif
 
 %if_enabled    devel
@@ -689,13 +711,13 @@ the chef library.
 
 %files         -n gem-chef-utils
 %doc LICENSE README.md
-%ruby_gemspecdir/chef-utils-19.0.85.gemspec
-%ruby_gemslibdir/chef-utils-19.0.85
+%ruby_gemspecdir/chef-utils-19.1.116.gemspec
+%ruby_gemslibdir/chef-utils-19.1.116
 
 %if_enabled    doc
 %files         -n gem-chef-utils-doc
 %doc LICENSE README.md
-%ruby_gemsdocdir/chef-utils-19.0.85
+%ruby_gemsdocdir/chef-utils-19.1.116
 %endif
 
 %if_enabled    devel
@@ -705,13 +727,13 @@ the chef library.
 
 %files         -n gem-chef-config
 %doc LICENSE
-%ruby_gemspecdir/chef-config-19.0.85.gemspec
-%ruby_gemslibdir/chef-config-19.0.85
+%ruby_gemspecdir/chef-config-19.1.116.gemspec
+%ruby_gemslibdir/chef-config-19.1.116
 
 %if_enabled    doc
 %files         -n gem-chef-config-doc
 %doc LICENSE
-%ruby_gemsdocdir/chef-config-19.0.85
+%ruby_gemsdocdir/chef-config-19.1.116
 %endif
 
 %if_enabled    devel
@@ -732,6 +754,10 @@ the chef library.
 
 
 %changelog
+* Thu Nov 20 2025 Pavel Skrylev <majioa@altlinux.org> 19.1.116-alt1
+- ^ 19.0.85 -> 19.1.116
+- * fixed cheatingly dep to train-core decreasing it to 3.11.5
+
 * Wed Nov 05 2025 Pavel Skrylev <majioa@altlinux.org> 19.0.85-alt1
 - ^ 19.0.43 -> 19.0.85
 

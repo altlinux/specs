@@ -1,28 +1,35 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rake
 
 Name:          gem-rake
-Version:       13.1.0
-Release:       alt1.1
+Version:       13.3.1
+Release:       alt1
 Summary:       Ruby based make-like utility
 License:       MIT
 Group:         Development/Ruby
 Url:           https://ruby.github.io/rake/
 Vcs:           https://github.com/ruby/rake.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(minitest) >= 0
+%if_enabled check
 BuildRequires: gem(coveralls) >= 0
+BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(rubocop) >= 0
+BuildRequires: gem(test-unit) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rake) = 13.1.0
+Requires:      ruby >= 2.3
+Provides:      gem(rake) = 13.3.1
 
 %description
 Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
@@ -34,14 +41,16 @@ Rake есть Make-подобная утилита и набор модулей,
 
 
 %package       -n rake
-Version:       13.1.0
-Release:       alt1.1
+Version:       13.3.1
+Release:       alt1
 Summary:       Ruby based make-like utility executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rake
-Group:         Development/Ruby
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rake) = 13.1.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(rake) = 13.3.1
 
 %description   -n rake
 Ruby based make-like utility executable(s).
@@ -53,15 +62,18 @@ specified in standard Ruby syntax.
 Исполнямка для самоцвета rake.
 
 
+%if_enabled    doc
 %package       -n gem-rake-doc
-Version:       13.1.0
-Release:       alt1.1
+Version:       13.3.1
+Release:       alt1
 Summary:       Ruby based make-like utility documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rake
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rake) = 13.1.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(rake) = 13.3.1
 
 %description   -n gem-rake-doc
 Ruby based make-like utility documentation files.
@@ -71,20 +83,23 @@ specified in standard Ruby syntax.
 
 %description   -n gem-rake-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rake.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rake-devel
-Version:       13.1.0
-Release:       alt1.1
+Version:       13.3.1
+Release:       alt1
 Summary:       Ruby based make-like utility development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rake
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rake) = 13.1.0
-Requires:      gem(minitest) >= 0
-Requires:      gem(coveralls) >= 0
-Requires:      gem(rubocop) >= 0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(rake) = 13.3.1
+Requires:      gem(rdoc) >= 0
+Requires:      gem(test-unit) >= 0
 
 %description   -n gem-rake-devel
 Ruby based make-like utility development package.
@@ -94,6 +109,7 @@ specified in standard Ruby syntax.
 
 %description   -n gem-rake-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rake.
+%endif
 
 
 %prep
@@ -109,24 +125,31 @@ specified in standard Ruby syntax.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.rdoc MIT-LICENSE README.rdoc CONTRIBUTING.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n rake
-%doc README.rdoc
+%doc History.rdoc MIT-LICENSE README.rdoc CONTRIBUTING.rdoc
 %_bindir/rake
-%ruby_mandir/rake.1.xz
+%_mandir/rake.*
 
+%if_enabled    doc
 %files         -n gem-rake-doc
-%doc README.rdoc
+%doc History.rdoc MIT-LICENSE README.rdoc CONTRIBUTING.rdoc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rake-devel
-%doc README.rdoc
+%doc History.rdoc MIT-LICENSE README.rdoc CONTRIBUTING.rdoc
+%endif
 
 
 %changelog
+* Sun Nov 23 2025 Pavel Skrylev <majioa@altlinux.org> 13.3.1-alt1
+- ^ 13.1.0 -> 13.3.1
+
 * Wed Mar 20 2024 Pavel Skrylev <majioa@altlinux.org> 13.1.0-alt1.1
 - * moved rake binary to %%_bindir
 

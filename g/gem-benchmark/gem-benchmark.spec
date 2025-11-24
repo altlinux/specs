@@ -5,27 +5,30 @@
 %define        gemname benchmark
 
 Name:          gem-benchmark
-Version:       0.4.0
+Version:       0.5.0
 Release:       alt1
 Summary:       a performance benchmarking library
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ruby/benchmark
 Vcs:           https://github.com/ruby/benchmark.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(test-unit) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.1.0
-Provides:      benchmark = %EVR
-Provides:      gem(benchmark) = 0.4.0
+Provides:      gem(benchmark) = 0.5.0
 
 %description
 a performance benchmarking library
@@ -33,14 +36,16 @@ a performance benchmarking library
 
 %if_enabled    doc
 %package       -n gem-benchmark-doc
-Version:       0.4.0
+Version:       0.5.0
 Release:       alt1
 Summary:       a performance benchmarking library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета benchmark
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(benchmark) = 0.4.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(benchmark) = 0.5.0
 
 %description   -n gem-benchmark-doc
 a performance benchmarking library documentation files.
@@ -52,17 +57,16 @@ a performance benchmarking library documentation files.
 
 %if_enabled    devel
 %package       -n gem-benchmark-devel
-Version:       0.4.0
+Version:       0.5.0
 Release:       alt1
 Summary:       a performance benchmarking library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета benchmark
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(benchmark) = 0.4.0
-Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(test-unit) >= 0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(benchmark) = 0.5.0
 
 %description   -n gem-benchmark-devel
 a performance benchmarking library development package.
@@ -102,6 +106,9 @@ a performance benchmarking library development package.
 
 
 %changelog
+* Sun Nov 23 2025 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1
+- ^ 0.4.0 -> 0.5.0
+
 * Sat Feb 15 2025 Pavel Skrylev <majioa@altlinux.org> 0.4.0-alt1
 - ^ 0.2.1 -> 0.4.0
 

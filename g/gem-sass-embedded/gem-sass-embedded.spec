@@ -5,40 +5,47 @@
 %define        gemname sass-embedded
 
 Name:          gem-sass-embedded
-Version:       1.62.1
+Version:       1.77.5
 Release:       alt1
 Summary:       Use dart-sass with Ruby!
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/sass-contrib/sass-embedded-host-ruby
 Vcs:           https://github.com/sass-contrib/sass-embedded-host-ruby.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(rake) >= 10.0.0
-BuildRequires: gem(rspec) >= 3.12.0
-BuildRequires: gem(rubocop) >= 1.50.0
-BuildRequires: gem(rubocop-performance) >= 1.17.1
+BuildRequires: gem(google-protobuf) >= 3.25
+BuildRequires: gem(rake) >= 13
+BuildRequires: gem(rspec) >= 3.10.0
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-rspec) >= 2.20.0
-BuildRequires: gem(google-protobuf) >= 3.21
+BuildRequires: gem(rubocop-rspec) >= 3.0.1
+BuildConflicts: gem(google-protobuf) >= 5.0
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 3
-BuildConflicts: gem(google-protobuf) >= 5.0
+BuildConflicts: gem(rubocop-rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(rake) >= 13.0.0
-Requires:      gem(google-protobuf) >= 3.21
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
+Requires:      ruby >= 3.1
+Requires:      gem(google-protobuf) >= 3.25
+Requires:      gem(rake) >= 13
 Conflicts:     gem(google-protobuf) >= 5.0
-Provides:      gem(sass-embedded) = 1.75.0
-
+Provides:      gem(sass-embedded) = 1.77.5
 
 %description
 A Ruby library that will communicate with Embedded Dart Sass using the Embedded
@@ -48,16 +55,44 @@ Embedded Sass protocol.
 It exposes a Ruby API for Sass that's backed by a native Dart Sass executable.
 
 
+%package       -n sass-embedded
+Version:       1.77.5
+Release:       alt1
+Summary:       Use dart-sass with Ruby! executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета sass-embedded
+Group:         Other
+BuildArch:     noarch
+
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(sass-embedded) = 1.77.5
+Conflicts:     sass
+
+%description   -n sass-embedded
+Use dart-sass with Ruby! executable(s).
+
+A Ruby library that will communicate with Embedded Dart Sass using the Embedded
+Sass protocol. This is a Ruby library that implements the host side of the
+Embedded Sass protocol.
+
+It exposes a Ruby API for Sass that's backed by a native Dart Sass executable.
+
+%description   -n sass-embedded -l ru_RU.UTF-8
+Исполнямка для самоцвета sass-embedded.
+
+
 %if_enabled    doc
 %package       -n gem-sass-embedded-doc
-Version:       1.62.1
+Version:       1.77.5
 Release:       alt1
 Summary:       Use dart-sass with Ruby! documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sass-embedded
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sass-embedded) = 1.75.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(sass-embedded) = 1.77.5
 
 %description   -n gem-sass-embedded-doc
 Use dart-sass with Ruby! documentation files.
@@ -75,24 +110,16 @@ It exposes a Ruby API for Sass that's backed by a native Dart Sass executable.
 
 %if_enabled    devel
 %package       -n gem-sass-embedded-devel
-Version:       1.62.1
+Version:       1.77.5
 Release:       alt1
 Summary:       Use dart-sass with Ruby! development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sass-embedded
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sass-embedded) = 1.75.0
-Requires:      gem(rspec) >= 3.12.0
-Requires:      gem(rubocop) >= 1.50.0
-Requires:      gem(rubocop-performance) >= 1.17.1
-Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rubocop-rspec) >= 2.20.0
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 3
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(sass-embedded) = 1.77.5
 
 %description   -n gem-sass-embedded-devel
 Use dart-sass with Ruby! development package.
@@ -121,23 +148,30 @@ It exposes a Ruby API for Sass that's backed by a native Dart Sass executable.
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%files         -n sass-embedded
+%doc LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
+%_bindir/sass
+
 %if_enabled    doc
 %files         -n gem-sass-embedded-doc
-%doc README.md
+%doc LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-sass-embedded-devel
-%doc README.md
+%doc LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %endif
 
 
 %changelog
+* Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 1.77.5-alt1
+- ^ 1.62.1 -> 1.77.5
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 1.62.1-alt1
 - + packaged gem with Ruby Policy 2.0
