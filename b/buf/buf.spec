@@ -2,7 +2,7 @@
 
 %define _name buf
 %define binary_name %_name
-%define ver_major 1.56
+%define ver_major 1.60
 %define import_path github.com/bufbuild/buf
 
 %def_disable bootstrap
@@ -95,6 +95,9 @@ install -vDm644 $BUILDDIR/manpages/* -t %buildroot/%_man1dir
 %doc *.md
 
 %changelog
+* Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.60.0-alt1
+- 1.60.0
+
 * Mon Aug 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
 - 1.56.0
 
