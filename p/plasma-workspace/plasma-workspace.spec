@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -456,6 +456,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 %files
 %config(noreplace) %x11confdir/wmsession.d/*PLASMA*
+%config(noreplace) %_xdgmenusdir/plasma-applications.menu
 %_menudir/session
 %dir %_K6plug/plasma/
 %dir %_K6plug/plasma/*/
@@ -577,6 +578,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Nov 24 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt2
+- package own plasma menu structure
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt1
 - new version
 
