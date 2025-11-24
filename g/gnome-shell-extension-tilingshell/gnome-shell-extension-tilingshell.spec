@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 16.4
+%define git_ver 17.1
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
@@ -10,8 +10,9 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ego_ver
-Release: alt4%beta
+Version: %git_ver
+Release: alt1%beta
+Epoch: 1
 
 %define gettext_domain %_name
 
@@ -77,6 +78,10 @@ popd
 %doc README.md
 
 %changelog
+* Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1:17.1-alt1
+- 17.1 (GNOME 49 supported)
+- switched build to git release numbering
+
 * Wed Jul 16 2025 Yuri N. Sedunov <aris@altlinux.org> 99-alt4
 - updated to 16.4
 
