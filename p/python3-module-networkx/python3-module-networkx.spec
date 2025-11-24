@@ -10,7 +10,7 @@
 
 Name:           python3-module-%pypi_name
 Epoch:          2
-Version:        3.5
+Version:        3.6
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -21,11 +21,9 @@ VCS:            https://github.com/networkx/networkx.git
 BuildArch:      noarch
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
-BuildRequires: python3-devel
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pandas-tests
 BuildRequires: python3-module-numpy
@@ -83,8 +81,6 @@ This package contains tests for NetworkX.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -123,6 +119,9 @@ and not test_graphviz_alias"
 %python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Mon Nov 24 2025 Anton Vyatkin <toni@altlinux.org> 2:3.6-alt1
+- New version 3.6.
+
 * Sat May 31 2025 Anton Vyatkin <toni@altlinux.org> 2:3.5-alt1
 - New version 3.5
 
