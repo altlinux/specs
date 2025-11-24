@@ -1,5 +1,5 @@
 Name: kernel-image-6.18
-Release: alt0.rc6
+Release: alt0.rc7
 %define kernel_src_version	6.17
 %define kernel_base_version	6.18
 %define kernel_sublevel	.0
@@ -588,6 +588,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 24 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc7
+- Update to v6.18-rc7 (2025-11-23).
+- config-rt: CONFIG_DRM_MGAG200_DISABLE_WRITECOMBINE=y.
+- config: CONFIG_DRM_MGAG200=m.
+
 * Sun Nov 16 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc6
 - Update to v6.18-rc6 (2025-11-16).
 - config-aarch64: add CONFIG_ROCKCHIP_DW_DP=y.
