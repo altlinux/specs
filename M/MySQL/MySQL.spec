@@ -15,8 +15,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.43
-Release: alt2
+Version: 8.0.44
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -918,6 +918,12 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon Nov 24 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.44-alt1
+- new version
+  + (fixes: CVE-2025-53040, CVE-2025-53042, CVE-2025-53044, CVE-2025-53045)
+  + (fixes: CVE-2025-53053, CVE-2025-53054, CVE-2025-53062, CVE-2025-53069)
+- update mysql-shell 8.0.43 -> 8.0.44
+
 * Thu Sep 11 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.43-alt2
 - fix default charset name for init-connect variable (closes: #55936)
 
