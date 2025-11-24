@@ -1,7 +1,7 @@
 %global qt_module dqtshadertools
 
 Name: dqt6-shadertools
-Version: 6.9.1
+Version: 6.9.3
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -118,6 +118,15 @@ Requires: libdqt6-core = %_dqt6_version
 #%_dqt6_examplesdir/*
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
 - merge with new version
 

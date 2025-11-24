@@ -33,7 +33,7 @@
 %define gname  dqt6
 Name: dqt6-base
 %define major  6
-Version: 6.9.1
+Version: 6.9.3
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -54,6 +54,7 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
+Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
@@ -381,6 +382,7 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -852,6 +854,15 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
 - merge with new version
 

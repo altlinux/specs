@@ -3,7 +3,7 @@
 %global qt_module dqtpositioning
 
 Name: dqt6-positioning
-Version: 6.9.1
+Version: 6.9.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -128,6 +128,15 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %_dqt6_examplesdir/*
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Aug 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 

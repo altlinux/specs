@@ -4,8 +4,8 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.9.1
-Release: alt1.dde.1
+Version: 6.9.3
+Release: alt0.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -162,7 +162,7 @@ Requires: libdqt6-core = %_dqt6_version
 %else
 %define qdoc_found 0
 %endif
-export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
+export LLVM_INSTALL_DIR=`llvm-config --prefix`
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -170,6 +170,9 @@ export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
 %DQ6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
     -DCMAKE_SKIP_RPATH:BOOL=OFF \
+    -DQT_FEATURE_clang:BOOL=ON \
+    -DQT_FEATURE_clang_rtti:BOOL=ON \
+    -DQT_FEATURE_clangcpp:BOOL=ON \
     #
 %if %qdoc_found
 %DQ6make --target docs
@@ -328,6 +331,18 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Thu Sep 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt2
+- fix find llvm install dir (closes: 55857)
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt1.dde.1
 - merge with new version
 

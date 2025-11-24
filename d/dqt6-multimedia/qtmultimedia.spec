@@ -5,7 +5,7 @@
 %def_enable pulse
 
 Name: dqt6-multimedia
-Version: 6.9.1
+Version: 6.9.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -181,7 +181,8 @@ done
 %_dqt6_libdir/lib*.prl
 %_dqt6_libdatadir/lib*.prl
 %_dqt6_libdir/cmake/Qt*/
-%_dqt6_archdatadir/mkspecs/modules/*.pri
+%_dqt6_archdatadir/mkspecs/modules/*.pr*
+%_dqt6_archdatadir/mkspecs/features/ios/*.pr*
 %_dqt6_archdatadir/metatypes/qt6*.json
 %_dqt6_archdatadir/modules/*.json
 %_dqt6_libdir/pkgconfig/Qt?*.pc
@@ -193,6 +194,15 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
 - merge with new version
 

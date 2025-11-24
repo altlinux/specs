@@ -25,7 +25,7 @@
 %endif
 
 Name: dqt6-webengine
-Version: 6.9.1
+Version: 6.9.3
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -42,6 +42,10 @@ Patch1: alt-ftbfs.patch
 Patch10: qtwebengine-link-pipewire.patch
 Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
+Patch13: qtwebengine-use-openh264.patch
+Patch14: qtwebengine-SIOCGSTAMP.patch
+Patch15: chromium-130-size-assertions.patch
+Patch16: qtwebengine-revert-create-eglimage.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -202,6 +206,12 @@ Obsoletes: %name < %EVR
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+pushd src/3rdparty/chromium
+%patch15 -p1
+popd
+%patch16 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
@@ -423,6 +433,21 @@ done
 %_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Sep 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt3
+- add fix against rendering issue (closes: 55903)
+
+* Mon Sep 08 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt2
+- add some fixes from Fedora
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Aug 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 

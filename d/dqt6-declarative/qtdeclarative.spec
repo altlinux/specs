@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.9.1
-Release: alt1.dde.1
+Version: 6.9.3
+Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -47,8 +47,6 @@ Source1: dqml6
 Source2: dqml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-Patch1: 0001-qmlcachegen-fix-crash-on-unresolved-type-with-requir.patch
-Patch2: 0001-qmlimportscanner-Include-module-versions-again.patch
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -445,8 +443,6 @@ Requires: libdqt6-core = %_dqt6_version
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
-%patch1 -p1
-%patch2 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -458,7 +454,7 @@ mv rpm-build-dqml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
 # don't make  module static
-sed -i '/STATIC/d' src/assets/downloader/CMakeLists.txt
+sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
 %build
 %if_enabled bootstrap
@@ -537,8 +533,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_dqt6_qmldir/builtins.qmltypes
 %_dqt6_qmldir/jsroot.qmltypes
 %files -n libdqt6-assetsdownloader
-%_dqt6_libdir//libQt6QmlAssetDownloader.so.*
-%_dqt6_qmldir/Assets/Downloader/
+%_dqt6_libdir/libQt6QmlAssetDownloader.so.*
+%_dqt6_qmldir/Qt/labs/assetdownloader/
 %files -n libdqt6-labsplatform
 %_dqt6_libdir//libQt6LabsPlatform.so.*
 %files -n libdqt6-qmlmeta
@@ -690,6 +686,15 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.3-alt0.dde.1
+- merge with new version
+
+* Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
+- new version
+
+* Tue Aug 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.2-alt1
+- new version
+
 * Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.9.1-alt1.dde.1
 - merge with new version
 

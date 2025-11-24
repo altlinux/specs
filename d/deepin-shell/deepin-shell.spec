@@ -5,7 +5,7 @@
 
 Name: deepin-shell
 Version: 2.0.19
-Release: alt1
+Release: alt2
 
 Summary: Plugins for DDE
 
@@ -22,9 +22,6 @@ Patch1: deepin-shell-2.0.3-alt-fixes-bad-symbols.patch
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel
 BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration
-%ifnarch i586
-BuildRequires: libdde-control-center-devel
-%endif
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -154,6 +151,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Mon Nov 24 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.19-alt2
+- Fixed circular dependencies.
+
 * Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.19-alt1
 - New version 2.0.19.
 
