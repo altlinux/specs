@@ -19,7 +19,7 @@
 %endif
 
 Name: os-upgrade
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: The Operation System Upgrade Tool
@@ -77,6 +77,8 @@ SU_VERSION="%version"
 SU_BUILD_DATE="$(date -u +'%%Y-%%m-%%d')"
 
 EOF
+mkdir -p -- ".%_logdir"
+:> ".%_logdir/%name-err.log"
 sed -i -e "s/@TTY_NUMBER@/%_tty_number/g" \
 	  "./usr/libexec/%name/units/%name.service" \
 	  "./usr/libexec/%name/defaults.sh" \
@@ -86,7 +88,7 @@ chmod 0755 check-scripts.sh
 
 %install
 mkdir -p -m 0755 -- "%buildroot"
-cp -aRf usr "%buildroot"/
+cp -aRf usr var "%buildroot"/
 
 %check
 ./check-scripts.sh
@@ -112,9 +114,14 @@ fi
 %files
 %_bindir/%name
 /usr/libexec/%name
+%ghost %_logdir/%name-err.log
 %doc CHANGELOG.md LICENSE doc/*.md
 
 %changelog
+* Sat Nov 22 2025 Leonid Krivoshein <klark@altlinux.org> 1.1-alt1
+- Fix scripts to update c10f1 -> c10f2.
+- Pack /var/log/os-upgrade-err.log.
+
 * Thu Nov 20 2025 Leonid Krivoshein <klark@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus, it works only in c10f1 for now.
 
