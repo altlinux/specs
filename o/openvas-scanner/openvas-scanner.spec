@@ -5,7 +5,7 @@
 
 Name: openvas-scanner
 Version: 23.31.5
-Release: alt1
+Release: alt2
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
 License: GPL-2.0-only
@@ -34,9 +34,9 @@ BuildRequires: libmagic-devel
 %if_enabled docs
 BuildRequires: doxygen
 %endif
-#%%ifarch %ix86
-#BuildRequires: libgpgme-devel
-#%%endif
+%ifarch %ix86
+BuildRequires: libgpgme-devel
+%endif
 
 %description
 Scanner module for the Open Vulnerability Assessment System (OpenVAS).
@@ -140,6 +140,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Tue Nov 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.31.5-alt2
+- update
+
 * Fri Nov 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.31.5-alt1
 - new version
 
