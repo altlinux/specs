@@ -2,7 +2,7 @@
 
 Name: fmt
 Version: 12.1.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -41,6 +41,8 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 
 %prep
 %setup
+# Remove illegal political lines
+sed -i '/If you like this project, please consider donating/,+2d' README.md
 
 %build
 %cmake \
@@ -69,6 +71,9 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 %_libdir/lib%name.so
 
 %changelog
+* Tue Nov 25 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.1.0-alt1.1
+- Remove illegal political lines from readme
+
 * Wed Oct 29 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.1.0-alt1
 - New version 12.1.0.
 
