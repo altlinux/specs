@@ -1,9 +1,5 @@
-%def_disable freerdp
-%def_enable firewire
-%def_enable visualization
-
 Name: vlc
-Version: 3.0.21
+Version: 3.0.22
 Release: alt1
 
 Summary: VLC media player
@@ -42,18 +38,15 @@ BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
 BuildRequires: libchromaprint-devel libvncserver-devel
 BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel libmpg123-devel qt5-svg-devel
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
-BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
+BuildRequires: libaom-devel libsamplerate-devel
 BuildRequires: libdav1d-devel libSDL_image-devel libsystemd-devel
 BuildRequires: libwayland-egl-devel wayland-protocols
-%{?_enable_freerdp:BuildRequires: libfreerdp-devel}
-%{?_enable_firewire:BuildRequires: libdc1394-devel libraw1394-devel libavc1394-devel}
-%{?_enable_visualization:BuildRequires: libprojectM-devel}
-BuildRequires: fortune-mod >= 1.0-ipl33mdk
+BuildRequires: libsrt-devel
 
-%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_visualization:projectm}
-%define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
+%define allplugins aa ass audiocd bluray chromaprint dbus dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml
+%define baseplugins ass bluray dbus dvdnav dvdread ffmpeg flac freetype live555 matroska mpeg2 ogg opus pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
-%define mergedplugins alsa dvb ts
+%define mergedplugins alsa dvb gnutls ts
 
 %define vlcrequires() %(for p in %{*}; do printf 'Requires: vlc-plugin-%%s = %%s\\n' $p %version-%release; done)
 %define vlcobsolete() %(for p in %{*}; do printf 'Provides: vlc-plugin-%%s = %%s\\nObsoletes: vlc-plugin-%%s\\n' $p %version-%release $p;done)
@@ -158,11 +151,6 @@ Summary: DBUS plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 
-%package plugin-dv
-Summary: DC1394/DV (firewire) plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-
 %package plugin-dvdnav
 Summary: DVDNav input plugin for VLC media player
 Group: Video
@@ -195,16 +183,6 @@ Requires: lib%name = %EVR
 
 %package plugin-freetype
 Summary: FreeType OSD plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-
-%package plugin-globalhotkeys
-Summary: Global Hotkeys control plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-
-%package plugin-gnutls
-Summary: GNU TLS plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 
@@ -295,13 +273,6 @@ Summary: PulseAudio output plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 
-%if_enabled freerdp
-%package plugin-rdp
-Summary: RDP and VNC access plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-%endif
-
 %package plugin-realrtsp
 Summary: REAL RTSP access plugin for VLC media player
 Group: Video
@@ -388,12 +359,6 @@ Summary: VIm syntax for VLC media player
 Group: Video
 BuildArch: noarch
 
-%package -n fortunes-vlc
-Summary: VLC fortunes
-Group: Video
-PreReq: fortune-mod >= 1.0-ipl33mdk
-BuildArch: noarch
-
 # {{{ descriptions
 
 %description
@@ -465,9 +430,6 @@ based on AcoustID project chromaprint library.
 %description plugin-dbus
 This package contains DBUS control plugin for VLC media player.
 
-%description plugin-dv
-This package contains DC1394/DV (firewire) access plugin for VLC media player.
-
 %description plugin-dvdnav
 This package adds capability of DVDNav (DVD w/ menu) input to VLC media player.
 
@@ -490,12 +452,6 @@ This package contains fluidsynth codec plugin for VLC media player.
 %description plugin-freetype
 This package contains freetype subtitles and OSD text output plugin 
 to VLC media player.
-
-%description plugin-globalhotkeys
-This package contains Global Hotkeys control plugin for VLC media player.
-
-%description plugin-gnutls
-This package contains GNU TLS plugin for VLC media player.
 
 %description plugin-h264
 This package contains h264 coder/packetizer plugin for VLC media player.
@@ -552,11 +508,6 @@ This package containts PulseAudio output plugin for VLC media player.
 %description plugin-realrtsp
 This package contains REAL RTSP access plugin for VLC media player.
 
-%if_enabled freerdp
-%description plugin-rdp
-This package contains RDP and VNC access plugins for VLC media player.
-%endif
-
 %description plugin-schroedinger
 This package contains dirac codec (via libschroedinger) plugin for VLC media
 player.
@@ -608,9 +559,6 @@ This package contains XML plugin to VLC media player.
 %description -n vim-plugin-vlc-syntax
 This package contains VIm syntax for VLC media player.
 
-%description -n fortunes-vlc
-This package contains fortunes from VLC media player.
-
 # }}}
 
 %define vlc_libdir %_libdir/%name
@@ -635,6 +583,8 @@ export BUILDCC=gcc
 	%{subst_enable debug} \
 	--disable-rpath \
 	--disable-static \
+	--disable-oss \
+	--disable-sid \
 	--enable-a52 \
 	--enable-aa \
 	--enable-alsa \
@@ -687,15 +637,6 @@ export BUILDCC=gcc
 	--enable-x264 \
 	--enable-xcb \
 	--enable-wayland \
-	%{subst_enable freerdp} \
-%if_enabled firewire
-	--enable-dc1394 \
-	--enable-dv1394 \
-%endif
-%if_enabled visualization
-	--enable-projectm \
-%endif
-	--disable-oss \
 	--with-kde-solid=%_datadir/kf5/solid/actions \
 	--without-contrib \
 	--with-default-font=/usr/share/fonts/ttf/dejavu/DejaVuSerif-Bold.ttf \
@@ -727,11 +668,6 @@ find %buildroot -type f -name "*.la" -print -delete
 mkdir -p %buildroot%vim_syntax_dir
 cp extras/analyser/vlc.vim %buildroot%vim_syntax_dir/
 
-# fortunes stuff
-mkdir -p %buildroot%_gamesdatadir/fortune
-cp doc/fortunes.txt %buildroot%_gamesdatadir/fortune/vlc
-strfile %buildroot%_gamesdatadir/fortune/vlc %buildroot%_gamesdatadir/fortune/vlc.dat
-
 # vlc filetrigger to regenerate cache
 mkdir -p %buildroot%_libexecdir/rpm
 
@@ -756,8 +692,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %dir %vlc_plugindir
 %exclude %_datadir/%name/skins2
 %_datadir/%name
-%dir %_datadir/metainfo
-%_datadir/metainfo/vlc.appdata.xml
+%_datadir/metainfo/*.appdata.xml
 %_man1dir/*
 
 %_iconsdir/hicolor/*/apps/vlc*.png
@@ -768,6 +703,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/libaccess_concat_plugin.so
 %vlc_plugindir/access/libaccess_imem_plugin.so
 %vlc_plugindir/access/libaccess_mms_plugin.so
+%vlc_plugindir/access/libaccess_srt_plugin.so
 %vlc_plugindir/access/libattachment_plugin.so
 %vlc_plugindir/access/libdtv_plugin.so
 %vlc_plugindir/access/libdvb_plugin.so
@@ -798,6 +734,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access_output/libaccess_output_rist_plugin.so
 %vlc_plugindir/access_output/libaccess_output_udp_plugin.so
 %vlc_plugindir/access_output/libaccess_output_livehttp_plugin.so
+%vlc_plugindir/access_output/libaccess_output_srt_plugin.so
 
 %dir %vlc_plugindir/audio_filter
 %vlc_plugindir/audio_filter/libscaletempo_pitch_plugin.so
@@ -897,6 +834,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/libdemuxdump_plugin.so
 %vlc_plugindir/demux/libdiracsys_plugin.so
 %vlc_plugindir/demux/libdirectory_demux_plugin.so
+%vlc_plugindir/demux/libdmxmus_plugin.so
 %vlc_plugindir/demux/libes_plugin.so
 %vlc_plugindir/demux/libh26x_plugin.so
 %vlc_plugindir/demux/libimage_plugin.so
@@ -915,7 +853,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/demux/librawvid_plugin.so
 %vlc_plugindir/demux/libreal_plugin.so
 %vlc_plugindir/demux/libsmf_plugin.so
-%vlc_plugindir/demux/libsid_plugin.so
 %vlc_plugindir/demux/libsubtitle_plugin.so
 %vlc_plugindir/demux/libts_plugin.so
 %vlc_plugindir/demux/libtta_plugin.so
@@ -950,6 +887,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/misc/libxdg_screensaver_plugin.so
 %vlc_plugindir/misc/libaddonsfsstorage_plugin.so
 %vlc_plugindir/misc/libaddonsvorepository_plugin.so
+%vlc_plugindir/misc/libgnutls_plugin.so
 
 %ifarch armh
 %dir %vlc_plugindir/arm_neon
@@ -1237,9 +1175,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files plugin-theora
 %vlc_plugindir/codec/libtheora_plugin.so
 
-%files plugin-globalhotkeys
-#vlc_plugindir/control/libglobalhotkeys_plugin.so
-
 %files plugin-ffmpeg
 %vlc_plugindir/access/libavio_plugin.so
 %vlc_plugindir/codec/libavcodec_plugin.so
@@ -1252,12 +1187,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %files plugin-shout
 %vlc_plugindir/access_output/libaccess_output_shout_plugin.so
-
-%if_enabled freerdp
-%files plugin-rdp
-%vlc_plugindir/access/libvnc_plugin.so
-%vlc_plugindir/access/librdp_plugin.so
-%endif
 
 %files plugin-xcb
 %dir %vlc_plugindir/vdpau
@@ -1309,12 +1238,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/control/libdbus_plugin.so
 %vlc_plugindir/misc/libdbus_screensaver_plugin.so
 
-%if_enabled firewire
-%files plugin-dv
-%vlc_plugindir/access/libdc1394_plugin.so
-%vlc_plugindir/access/libdv1394_plugin.so
-%endif
-
 %files plugin-twolame
 %vlc_plugindir/codec/libtwolame_plugin.so
 
@@ -1326,9 +1249,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %files plugin-freetype
 %vlc_plugindir/text_renderer/libfreetype_plugin.so
-
-%files plugin-gnutls
-%vlc_plugindir/misc/libgnutls_plugin.so
 
 %files plugin-smb
 %vlc_plugindir/access/libsmb_plugin.so
@@ -1346,11 +1266,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 
 %files plugin-ass
 %vlc_plugindir/codec/liblibass_plugin.so
-
-%if_enabled visualization
-%files plugin-projectm
-%vlc_plugindir/visualization/libprojectm_plugin.so
-%endif
 
 %files -n lib%name
 %dir %vlc_libdir
@@ -1370,9 +1285,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files -n vim-plugin-vlc-syntax
 %vim_syntax_dir/vlc.vim
 
-%files -n fortunes-vlc
-%_gamesdatadir/fortune/vlc*
-
 %files
 %_datadir/kf5/solid/actions/vlc-openbd.desktop
 %_datadir/kf5/solid/actions/vlc-opencda.desktop
@@ -1382,6 +1294,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Nov 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.22-alt1
+- 3.0.22 released
+
 * Thu Jun 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.21-alt1
 - 3.0.21 released
 
