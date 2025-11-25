@@ -10,15 +10,15 @@
 %define _localstatedir %_var
 
 Name: corosync
-Version: 3.1.9
-Release: alt2
+Version: 3.1.10
+Release: alt1
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
 
 Url: http://corosync.github.io/corosync/
 
-# https://github.com/corosync/corosync.git
+Vcs: https://github.com/corosync/corosync.git
 Source0: %name-%version.tar
 Source1: corosync-init
 Source2: corosync-notifyd-init
@@ -202,6 +202,9 @@ ln -r -s \
 %endif
 
 %changelog
+* Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 3.1.10-alt1
+- New version 3.1.10.
+
 * Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 3.1.9-alt2
 - Backport patches from upstream (Fixed: CVE-2025-30472)
 
