@@ -2,17 +2,15 @@
 
 %global realname fast_tls
 
-%set_verify_elf_method relaxed
-
 Name: erlang-%realname
-Version: 1.1.13
+Version: 1.1.25
 Release: alt1
 Summary: TLS / SSL OpenSSL-based native driver for Erlang / Elixir
 Group: Development/Erlang
 License: Apache-2.0
 Url: https://github.com/processone/fast_tls
+Vcs: https://github.com/processone/fast_tls.git
 
-# https://github.com/processone/fast_tls.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -47,6 +45,9 @@ It is designed for efficiency, speed and compliance.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Nov 25 2025 Ilya Sorochan <k0tran@altlinux.org> 1.1.25-alt1
+- Updated to upstream version 1.1.25.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.13-alt1
 - Updated to upstream version 1.1.13.
 

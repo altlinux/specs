@@ -7,14 +7,14 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.0.45
+Version: 1.0.59
 Release: alt1
 Summary: ProcessOne SIP server component in Erlang
 Group: Development/Erlang
 License: Apache-2.0
 Url: https://github.com/processone/esip
+Vcs: https://github.com/processone/esip.git
 
-# https://github.com/processone/esip.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -47,6 +47,9 @@ ProcessOne SIP server component in Erlang.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Nov 25 2025 Ilya Sorochan <k0tran@altlinux.org> 1.0.59-alt1
+- Updated to upstream version 1.0.59.
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.45-alt1
 - Updated to upstream version 1.0.45.
 
