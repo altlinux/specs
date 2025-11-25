@@ -2,7 +2,7 @@
 
 %define oname shapelib
 Name: libshape
-Version: 1.5.0
+Version: 1.6.2
 Release: alt1
 Summary: API in "C" for Shapefile handling
 Group: Development/C
@@ -40,7 +40,7 @@ This package contains libshp and the appropriate header files.
 %makeinstall_std
 
 %files
-%doc COPYING README README.tree ChangeLog web/*.html
+%doc README README.tree ChangeLog web/*.html
 %doc contrib/doc/
 %_bindir/*
 %_libdir/*.so.*
@@ -51,6 +51,9 @@ This package contains libshp and the appropriate header files.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Nov 24 2025 Alexander Danilov <admsasha@altlinux.org> 1.6.2-alt1
+- New version 1.6.2 (Fixes: CVE-2022-0699).
+
 * Wed Oct 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - NMU: New version.
 - Rebuilt with libproj 9.1.0.
