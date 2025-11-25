@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerPanel
 
 Name: tuner-panel
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Panel mode switcher
@@ -44,6 +44,12 @@ Plugin for Tuner that adds panel mode switcher to Tweaks appearance page.
 %doc README.md
 
 %changelog
+* Tue Nov 25 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.1-alt1
+- updated TunerPanel in regards with alt-panelmode update:
+- added Re-enable Extensions option
+- added Show Show Minimize and Maximize Buttons option
+- added Reset User Extensions option
+
 * Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.0-alt1
 - fixed warning if panel mode is selected (Closes: 55000)
 - added more info to plugin file
