@@ -2,7 +2,7 @@
 %define sover 1
 
 Name: qpl
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 Summary: Intel Query Processing Library (Intel QPL)
 License: MIT
@@ -85,6 +85,9 @@ applications that use lib%name.
 %_datadir/QPL
 
 %changelog
+* Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Tue Oct 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - Initial build.
 
