@@ -4,14 +4,17 @@
 %define build_type Release
 
 Name:    CloudReverb
-Version: 0.3.1
-Release: alt1
+Version: 0.4
+Release: alt2
 
 Summary: Algorithmic reverb plugin based on CloudSeed
 License: MIT
 Group:   Sound
 Url:     https://github.com/xunil-cloud/CloudReverb
 Vcs:     https://github.com/xunil-cloud/CloudReverb.git
+
+# VST3 plugin fails to build on i586
+ExcludeArch: %ix86
 
 Source: %name-%version%{?snapshot:-%snapshot}.tar
 
@@ -105,6 +108,12 @@ cp -a "VST3/CloudReverb.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Wed Nov 26 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt2
+- drop i586 support
+
+* Tue Nov 25 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt1
+- v0.4
+
 * Sat Sep 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.1-alt1
 - v0.3.1
 
