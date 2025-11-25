@@ -4,8 +4,8 @@
 %define mod_name alive_progress
 
 Name: python3-module-%pypi_name
-Version: 3.1.5
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: A new kind of Progress Bar
 License: MIT
@@ -43,7 +43,7 @@ I've started this new progress bar thinking about all that,
 behold the alive-progress!
 
 %prep
-%setup -q
+%setup
 
 %build
 %pyproject_build
@@ -62,6 +62,9 @@ rm %buildroot/%_usr/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Nov 25 2025 Denis Rastyogin <gerben@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Tue Mar 12 2024 Alexander Kuznetov <kuznetsovam@altlinux.org> 3.1.5-alt2
 - Add setuptools BR.
 
