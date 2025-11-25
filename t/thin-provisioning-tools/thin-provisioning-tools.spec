@@ -1,7 +1,7 @@
 
 Summary: A suite of tools for manipulating the metadata of the dm-thin device-mapper target.
 Name: thin-provisioning-tools
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 License: GPLv3+
 Group: System/Base
@@ -28,14 +28,8 @@ snapshot eras
 %prep
 %setup
 %patch -p1
-
 %rust_prep
-cat >> .cargo/config.toml <<EOF
-[source."git+https://github.com/jthornber/rio?branch=master"]
-git = "https://github.com/jthornber/rio"
-branch = "master"
-replace-with = "vendored-sources"
-EOF
+
 %build
 %rust_build
 
@@ -51,6 +45,9 @@ EOF
 %_sbindir/*
 
 %changelog
+* Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 1.3.1-alt1
+- New version 1.3.1.
+
 * Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
 - New version 1.2.2.
 
