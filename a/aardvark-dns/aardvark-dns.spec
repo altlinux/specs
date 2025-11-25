@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: aardvark-dns
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 License: Apache-2.0
 Summary: Authoritative DNS server for A/AAAA container records
@@ -26,24 +26,7 @@ Read more about configuration in `src/backend/mod.rs`.
 %prep
 %setup
 %patch -p1
-mkdir -p .cargo
-cat >.cargo/config.toml << EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep
 
 %build
 %make_build
@@ -56,6 +39,9 @@ EOF
 %_libexecdir/podman/%name
 
 %changelog
+* Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 1.17.0-alt1
+- New version 1.17.0.
+
 * Mon Aug 18 2025 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
 - New version 1.16.0.
 

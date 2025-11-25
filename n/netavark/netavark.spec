@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.16.1
+Version: 1.17.0
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -53,28 +53,7 @@ Its features include:
 %prep
 %setup
 %patch -p1
-mkdir -p .cargo
-cat >.cargo/config.toml << EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."https://github.com/containers/netavark-dhcp-proxy"]
-git = "https://github.com/containers/netavark-dhcp-proxy"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep
 
 %build
 NETAVARK_DEFAULT_FW=%{default_fw} %make_build
@@ -100,6 +79,9 @@ NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 %_unitdir/*
 
 %changelog
+* Tue Nov 25 2025 Alexey Shabalin <shaba@altlinux.org> 1.17.0-alt1
+- New version 1.17.0.
+
 * Tue Sep 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
 - New version 1.16.1.
 
