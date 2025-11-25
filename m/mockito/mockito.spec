@@ -2,7 +2,7 @@
 
 Name: mockito
 Version: 5.20.0
-Release: alt2
+Release: alt3
 
 Summary: Tasty mocking framework for unit tests in Java
 License: MIT
@@ -31,6 +31,10 @@ BuildRequires: junit5
 BuildRequires: objenesis
 BuildRequires: opentest4j
 BuildRequires: objectweb-asm
+BuildRequires: guava
+BuildRequires: google-error-prone-core
+BuildRequires: auto-common
+BuildRequires: auto-service
 Requires: mockito-core
 
 %description
@@ -85,6 +89,19 @@ mock implementations and includes the runtime infrastructure used to generate
 mocks through dynamic proxies. Useful on platforms or configurations that
 prefer proxying over subclassing.
 
+%package errorprone
+Summary: Integration between Mockito and Error Prone
+Group: Development/Java
+BuildArch: noarch
+Requires: mockito-core
+
+%description errorprone
+This package provides integration helpers and runtime components that enable
+Mockito to interoperate with Google's Error Prone static analysis tool.
+It contains the Mockito-specific error-prone plugin/extension artifacts (jar
+and pom) which help Error Prone perform additional compile-time checks and
+enhanced diagnostics for code that uses Mockito.
+
 %prep
 %setup
 %autopatch -p1
@@ -100,6 +117,7 @@ rm -rf buildSrc
 
 %install
 %gradle_register
+%gradle_register_bom
 
 %gradle_install
 
@@ -110,6 +128,7 @@ rm -rf buildSrc
 %_mavenmetadatadir/mockito.xml
 %_javadir/mockito/mockito-core.jar
 %_mavenpomdir/mockito/mockito-core.pom
+%_mavenpomdir/mockito/mockito-bom.pom
 %doc --no-dereference LICENSE
 %doc README.md doc/design-docs/custom-argument-matching.md
 
@@ -125,7 +144,17 @@ rm -rf buildSrc
 %_javadir/mockito/mockito-proxy.jar
 %_mavenpomdir/mockito/mockito-proxy.pom
 
+# Must be used with adding --enable-preview compiler argument because of error_prone_core.
+%files errorprone
+%_javadir/mockito/mockito-errorprone.jar
+%_mavenpomdir/mockito/mockito-errorprone.pom
+
 %changelog
+* Tue Nov 25 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt3
+- Add mockito-errorprone subpackage.
+- Add mockito-bom installation.
+- All modules are packaged except for android.
+
 * Wed Nov 19 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt2
 - Add files for mockito meta package.
 
