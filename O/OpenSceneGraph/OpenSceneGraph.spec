@@ -19,10 +19,10 @@
 
 Name: OpenSceneGraph
 Version: 3.6.5
-Release: alt3
+Release: alt4
 
 Summary: High performance real-time graphics toolkit
-License: OSGPL (wxWidgets, clarified LGPL)
+License: LGPL-2.1-only WITH WxWindows-exception-3.1
 Group: System/Libraries
 
 Url: http://www.openscenegraph.org
@@ -45,11 +45,11 @@ Patch5:         force-x11-backend.patch
 # https://github.com/openscenegraph/OpenSceneGraph/issues/1075
 Patch6:         OpenSceneGraph-openexr3.patch
 # Fix build against recent asio
-Patch7:         OpenSceneGraph_asio.patch
+#Patch7:         OpenSceneGraph_asio.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: asio-devel
+BuildRequires: boost-asio-devel
 BuildRequires: doxygen graphviz
 BuildRequires: gcc-c++
 BuildRequires: libgif-devel
@@ -209,6 +209,11 @@ Development files for OpenThreads
 %prep
 %setup
 %autopatch -p1
+# FTBFS: fix: asio has not been declared (build with boost-asio-devel)
+subst 's|#include <asio.hpp>|#include <boost/asio.hpp>|' src/osgPlugins/RestHttpDevice/connection.hpp
+subst 's|#include <asio.hpp>|#include <boost/asio.hpp>|' src/osgPlugins/RestHttpDevice/server.hpp
+subst 's|#include <asio.hpp>|#include <boost/asio.hpp>|' src/osgPlugins/RestHttpDevice/reply.hpp
+subst 's|#include <asio.hpp>|#include <boost/asio.hpp>|' src/osgPlugins/RestHttpDevice/io_service_pool.hpp
 
 # path to install examples (instead the patch)
 sed -i "s|share/OpenSceneGraph/bin|bin|" CMakeModules/OsgMacroUtils.cmake
@@ -477,6 +482,12 @@ rm -rf %buildroot/usr/doc/
 %_includedir/OpenThreads
 
 %changelog
+* Mon Nov 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.6.5-alt4
+- FTBFS: fix:
+  + build with boost-asio-devel
+  + drop OpenSceneGraph_asio.patch
+  + changed license tag
+
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 3.6.5-alt3
 - rebuild with wxGTK3.2
 
