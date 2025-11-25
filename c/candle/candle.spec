@@ -2,7 +2,7 @@
 %define candle_prefix %_libdir/%name
 
 Name: candle
-Release: alt1
+Release: alt2
 Version: 10.11.1
 
 Summary: %name application with G-Code visualizer written in Qt
@@ -18,6 +18,7 @@ Source1: %name.desktop
 Patch0: alt-fix-app-resource-paths.patch
 Patch1: alt-dont-use-rpath.patch
 Patch2: alt-start-with-system-locale.patch
+Patch3: alt-fix-freezing-opening-dialogs.patch
 
 BuildRequires: cmake
 BuildRequires: qt5-multimedia-devel
@@ -79,6 +80,9 @@ find %buildroot%_datadir/%name -type f -name '*.ts' -exec rm -f {} \;
 %_pixmapsdir/%name.ico
 
 %changelog
+* Tue Nov 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.11.1-alt2
+- fix freezing when opening dialogs (closes: 56912, 56913)
+
 * Mon Nov 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.11.1-alt1
 - use the current system locale upon application launch (closes: 56815)
 - fix the visibility of the float button that docks the window back to the
