@@ -1,6 +1,6 @@
 %define soversion 2
 Name: sdbus-cpp
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 License: LGPLv2.1
 Summary: High-level C++ D-Bus library for Linux
@@ -65,6 +65,9 @@ This package provides development files for %name library.
 %_libdir/cmake/sdbus-c++
 
 %changelog
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 2.2.1-alt1
+- 2.2.0 -> 2.2.1
+
 * Thu Nov 20 2025 Anton Farygin <rider@altlinux.com> 2.2.0-alt1
 - 2.1.0 -> 2.2.0
 
