@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.91.0
+Version: 1.91.1
 Release: alt1
 Epoch: 1
 
@@ -469,6 +469,9 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Tue Nov 25 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.91.1-alt1
+- New version (1.91.1).
+
 * Tue Nov 04 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.91.0-alt1
 - New version (1.91.0).
 - Raise the llvm version to 21.1.
