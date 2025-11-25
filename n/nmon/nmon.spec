@@ -1,5 +1,5 @@
 Name: nmon
-Version: 16p
+Version: 16s
 Release: alt1
 
 Summary: IBM nmon - system monitor
@@ -27,6 +27,7 @@ nmon - это программа мониторинга рабочей стан�
 
 %build
 %make
+mv nmon_* nmon
 
 %install
 # make DESTDIR=%buildroot install
@@ -37,6 +38,9 @@ install -pm755 nmon %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Tue Nov 25 2025 Andrey Bergman <vkni@altlinux.org> 16s-alt1
+- Version update.
+
 * Mon Sep 11 2023 Andrey Bergman <vkni@altlinux.org> 16p-alt1
 - Version update.
 
