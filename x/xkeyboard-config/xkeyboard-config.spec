@@ -1,7 +1,7 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
-Version: 2.45
-Release: alt3
+Version: 2.46
+Release: alt1
 Epoch: 1
 License: X11/MIT
 Group: System/X11
@@ -33,7 +33,6 @@ XML-based XKB configuration registry development package
 
 %build
 %meson \
-	-Dxkb-base=%_datadir/X11/xkb \
 	-Dcompat-rules=true \
 	-Dxorg-rules-symlinks=true
 %meson_build -v
@@ -67,6 +66,9 @@ cp -a %buildroot%_datadir/%name-2 %buildroot%_datadir/X11/xkb
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 25 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.46-alt1
+- 2.46
+
 * Tue Aug 19 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.45-alt3
 - fixed update from previous version (closes: #55646)
 
