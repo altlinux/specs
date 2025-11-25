@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.7.3
-Release: alt6
+Release: alt7
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0-or-later
@@ -217,6 +217,9 @@ rm -r %buildroot%_libdir/%name/library/search
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Nov 25 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7.3-alt7
+- Fix the fix for erasing of dashed and dotted lines (ALT#56884).
+
 * Sat Nov 08 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt6
 - Do not use xwayland always.
 - Remove broken search widgets.
