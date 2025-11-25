@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xmedcon
-Version: 0.25.1
+Version: 0.25.3
 Release: alt1
 Summary: A medical image conversion utility and library
 License: GPLv2 and LGPLv2.1
 Group: Graphics
 
-Url: http://xmedcon.sourceforge.net
+Url: https://xmedcon.sourceforge.io/
+VCS: https://git.code.sf.net/p/xmedcon/code
 
 Source0: %name-%version.tar
 Source1: %name.desktop
@@ -69,6 +70,9 @@ install -pD -m644 %SOURCE2 %buildroot%_liconsdir/%name.png
 %_datadir/aclocal/*
 
 %changelog
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 0.25.3-alt1
+- 0.25.1 -> 0.25.3
+
 * Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 0.25.1-alt1
 - 0.25.1
 
