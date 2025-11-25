@@ -1,16 +1,17 @@
 %define soname 8
 Name: libdvdread
-Version: 6.1.3
+Version: 7.0.1
 Release: alt1
 Summary: A library for reading DVD-Video images
 License: GPLv2
 Group: System/Libraries
 Url: https://www.videolan.org/developers/libdvdnav.html
+VCS: https://code.videolan.org/videolan/libdvdread.git
 
 Source: %name-%version.tar
-Patch1: alt-link-libdl.patch
 
 BuildRequires: libdvdcss-devel glibc-devel
+BuildRequires: rpm-macros-meson meson
 
 %description
 libdvdread provides a simple foundation for reading DVD-Video images.
@@ -32,29 +33,25 @@ features of the DVD format.
 %package devel
 Summary: Development environment for %name
 Group: Development/C
-Requires: %name%soname = %version-%release
+Requires: %name%soname = %EVR
 
 %description devel
 This package contains development files you can use to develop
 applications reading DVD-video images
 
 %prep
-%setup -q
-%patch1 -p1
+%setup
 
 %build
-%autoreconf
-
-%configure \
-	--disable-static
-%make_build
+%meson  -Ddefault_library=shared
+%meson_build -v
 
 %install
-%make DESTDIR=%buildroot install
-rm -rf %buildroot%_datadir/doc/libdvdread
+%meson_install
 
 %files -n %name%soname
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files devel
 %doc AUTHORS TODO README.md
@@ -63,6 +60,9 @@ rm -rf %buildroot%_datadir/doc/libdvdread
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 7.0.1-alt1
+- 6.1.3 -> 7.0.1
+
 * Sat Jun 25 2022 Anton Farygin <rider@altlinux.ru> 6.1.3-alt1
 - 6.1.3
 

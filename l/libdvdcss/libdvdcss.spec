@@ -1,17 +1,20 @@
+%define soname 2
 Name: libdvdcss
-Version: 1.3.0
+Version: 1.5.0
 Release: alt1
 Summary: A portable abstraction library for DVD decryption
-License: GPL
+License: GPLv2
 Group: System/Libraries
-Url: http://www.videolan.org/developers/libdvdcss.html
+Url: https://www.videolan.org/developers/libdvdcss.html
+VCS: https://code.videolan.org/videolan/libdvdcss.git
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen
+BuildRequires: rpm-macros-meson
+BuildRequires: meson
 
 %description
 This is a portable abstraction library for DVD decryption.
@@ -23,7 +26,7 @@ to play MPEG2 streams from a hard disk or a DVD.
 %package devel
 Summary: Development environment for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libdvdcss = %EVR
 
 %description devel
 This package contains development files required for building
@@ -34,25 +37,27 @@ This package contains development files required for building
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-    --disable-static
-%make_build
+%meson -Ddefault_library=shared -Denable_docs=true
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
-%doc AUTHORS NEWS README
-%_libdir/*.so.*
+%doc AUTHORS NEWS README.md
+%_libdir/libdvdcss.so.%soname
+%_libdir/libdvdcss.so.%soname.*
 
 %files devel
-%doc doc/html/*
+%doc %__builddir/doc/html
 %_includedir/*
-%_libdir/*.so
+%_libdir/libdvdcss.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 1.5.0-alt1
+- 1.3.0 -> 1.5.0
+
 * Sun Oct 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 

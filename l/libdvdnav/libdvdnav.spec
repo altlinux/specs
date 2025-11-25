@@ -1,15 +1,17 @@
 %define soname 4
 Name: libdvdnav
-Version: 6.1.1
+Version: 7.0.0
 Release: alt1
 Summary: DVD Navigation library
 License: GPLv2+
 Group: System/Libraries
 URL: https://www.videolan.org/developers/libdvdnav.html
+VCS: https://code.videolan.org/videolan/libdvdnav.git
 
 Source: %name-%version.tar
 
-BuildRequires: libdvdread-devel
+BuildRequires: libdvdread-devel >= 7.0.0
+BuildRequires: meson
 
 %description
 %name is a library that allows easy use of sophisticated DVD
@@ -20,7 +22,7 @@ interactive DVD games.
 Summary: Development environment for %name
 Group: Development/C
 Requires: %name = %EVR
-Requires: libdvdread-devel >= 6.1.0
+Requires: libdvdread-devel >= 7.0.0
 
 %description devel
 %name provides support to applications wishing to make use of DVD
@@ -32,26 +34,26 @@ applications.
 %setup -q
 
 %build
-%autoreconf
-%configure \
-	--disable-static
-
-%make_build
+%meson -Ddefault_library=shared
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
-rm -rf %buildroot%_docdir/%name
+%meson_install
 
 %files
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files devel
-%doc AUTHORS README TODO
+%doc AUTHORS README.md TODO
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 7.0.0-alt1
+- 6.1.1 -> 7.0.0
+
 * Thu Apr 22 2021 Anton Farygin <rider@altlinux.ru> 6.1.1-alt1
 - 6.1.1
 
