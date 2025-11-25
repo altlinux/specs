@@ -1,5 +1,5 @@
 Name: apt-gpgkeys-pki
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: APT PKI for external GnuPG keys
@@ -38,7 +38,7 @@ touch %buildroot%aptgpgdir/extracted/{gpg.conf,pubring.gpg,secring.gpg}
 mkdir -p %buildroot%aptgpgdatadir/{sources,blacklist}
 
 mkdir -p %buildroot%_rpmlibdir
-install -pm644 %filetrigger \
+install -pm755 %filetrigger \
 	%buildroot%_rpmlibdir/
 
 mkdir -p %buildroot%_bindir
@@ -62,6 +62,10 @@ install -pm755 %utilname \
 %_rpmlibdir/%filetrigger
 
 %changelog
+* Tue Nov 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2-alt1
+- Fix apt-gpgkeys utility (closes: 57005).
+- Fix filetrigger execution access (closes: 57006).
+
 * Fri Oct 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1-alt1
 - Initial APT PKI for external GnuPG keys.
 
