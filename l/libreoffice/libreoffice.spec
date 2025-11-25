@@ -43,7 +43,7 @@ Name: libreoffice
 %define hversion 25.8
 %define urelease 3.2
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -100,9 +100,6 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
-%ifarch loongarch64
-Patch501: alt-012-fix-skia-build-on-loongarch64.patch
-%endif
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -464,10 +461,6 @@ tar xf %SOURCE4 --strip-components=0 -C translations/source/ru
 #patch412 -p1
 
 %patch500 -p0
-%ifarch loongarch64
-%patch501 -p2
-%endif
-
 %patch700 -p1
 
 # TODO move officebeans to SDK or separate package
@@ -862,6 +855,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Nov 25 2025 Ivan A. Melnikov <iv@altlinux.org> 25.8.3.2-alt2
+- Drop loongarch64-specific patch 501 from spec, as upstream is
+  patching skia in the same way now (fixes building on loongarch64).
+
 * Wed Nov 19 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.3.2-alt1
 - New version.
 - Fixed typo in libreoffice-kde6 summary (ALT #56930).
