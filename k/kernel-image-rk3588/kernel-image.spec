@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.58
+%define kernel_sublevel	.59
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -512,6 +512,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Tue Nov 25 2025 Alexei Takaseev <taf@altlinux.org> 6.12.59-alt1
+- v6.12.59 (2025-11-24).
+
 * Fri Nov 14 2025 Alexei Takaseev <taf@altlinux.org> 6.12.58-alt1
 - v6.12.58 (2025-11-13).
 - In order to support rk3588j, CONFIG_NVMEM_ROCKCHIP_OTP has to be set to Y
