@@ -2,8 +2,8 @@
 %define app_id org.altlinux.Weather
 
 Name: alt-weather
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 # Missing alt-identify-client on i586
 ExcludeArch: i586
@@ -63,6 +63,9 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
+* Tue Nov 25 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.1-alt1
+- fixed location detection
+
 * Thu Nov 20 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.0-alt2
 - drop i586
 
