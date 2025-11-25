@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.31
-Release: alt2
+Version: 0.1.32
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,13 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Tue Nov 25 2025 Ivan Savin <svn17@altlinux.org> 0.1.32-alt1
+- Introduce helpers to simplify unit tests:
+  + backends: expose get_data(), add clear() to reset state, and
+    init_from_dirs() to load from given directory list for tests (the-nexi@).
+  + dbus: add alterator_manager_dbus_register_on_connection() to register
+    subtree on an existing GDBusConnection for GTestDBus (the-nexi@).
+
 * Thu Oct 30 2025 Ivan Savin <svn17@altlinux.org> 0.1.31-alt2
 - Update docs/modules/backend3(-ru).md.
 
