@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 3.0.12
+Version: 3.2.9
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -22,7 +22,7 @@ Source3: %name.logrotate
 Source4: %name.service
 Source5: %name.sysconfig
 
-BuildRequires: libpcre2-devel zlib-devel libssl-devel libsystemd-devel
+BuildRequires: libpcre2-devel zlib-devel libssl-devel
 %{?_enable_lua:BuildRequires: liblua5-devel >= 5.3}
 
 %description
@@ -48,13 +48,14 @@ risking the system's stability.
 export VERDATE="$(date '+%%+4Y/%%m/%%d')"
 export VERSION="%version"
 export SUBVERS="-%release"
-%make_build V=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1 \
+%make_build V=1 CPU="generic" TARGET="linux-glibc" \
+    USE_OPENSSL=1 USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1 USE_ENGINE=1 \
     USE_PCRE2=1 USE_PCRE2_JIT=1 \
     USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
 %ifarch mipsel
     USE_LIBATOMIC=1 \
 %endif
-    USE_SYSTEMD=1 USE_PROMEX=1 USE_LINUX_CAP=1 PREFIX="%_prefix"  DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags" \
+    USE_PROMEX=1 PREFIX="%_prefix"  DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags" \
     EXTRA=admin/halog/halog
 
 %install
@@ -86,7 +87,7 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %preun_service haproxy
 
 %files
-%doc CHANGELOG LICENSE README doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt examples/*.cfg
+%doc CHANGELOG LICENSE README.md doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt examples/*.cfg
 %dir %haproxy_confdir
 %dir %haproxy_confdir/conf.d
 %config(noreplace) %haproxy_confdir/%name.cfg
@@ -101,6 +102,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Wed Nov 26 2025 Alexey Shabalin <shaba@altlinux.org> 3.2.9-alt1
+- 3.2.9.
+
 * Mon Nov 17 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.12-alt1
 - 3.0.12 (Fixes: CVE-2025-11230).
 
