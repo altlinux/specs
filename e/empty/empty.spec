@@ -1,5 +1,5 @@
 Name:    empty
-Version: 0.6.23c
+Version: 0.6.23d
 Release: alt1
 
 Summary: Run interactive console applications in batch mode
@@ -60,6 +60,9 @@ Empty - это утилита, которая служит для организации автоматического выполнения
 %doc CHANGELOG examples
 
 %changelog
+* Wed Nov 26 2025 Ilya Mashkin <oddity@altlinux.ru> 0.6.23d-alt1
+- update to new version 0.6.23d
+
 * Tue Dec 19 2023 Ilya Mashkin <oddity@altlinux.ru> 0.6.23c-alt1
 - update to new version 0.6.23
 
