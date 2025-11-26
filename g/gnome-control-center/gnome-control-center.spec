@@ -8,7 +8,7 @@
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
 
-%define gxdp_ver e68375c
+%define gxdp_ver d45e1c5
 
 %def_disable debug
 %def_enable x11
@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.2.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -233,6 +233,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Wed Nov 26 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2.1-alt1
+- 49.2.1
+
 * Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
