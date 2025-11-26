@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Weather
 
 Name: alt-weather
-Version: 1.0.1
+Version: 1.0.3
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-macros-meson rpm-build-vala
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
-BuildRequires: pkgconfig(libgeoclue-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
@@ -63,6 +62,12 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
+* Wed Nov 26 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.3-alt1
+- added license file
+
+* Wed Nov 26 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.2-alt1
+- used a more accurate method to determine geolocation
+
 * Tue Nov 25 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.1-alt1
 - fixed location detection
 
