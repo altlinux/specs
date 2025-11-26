@@ -1,8 +1,8 @@
 %define module_name     drbd9
 %define module_version  9.2.16
 %define module_release  alt1
-%define flavour         6.12
-%define karch x86_64 aarch64 ppc64le
+%define flavour         6.17
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 
 %setup_kernel_module %flavour
 
@@ -21,7 +21,7 @@ Url: http://www.drbd.org/
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.17
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 BuildRequires: coccinelle >= 1.0.8

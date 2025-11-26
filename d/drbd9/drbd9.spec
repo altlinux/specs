@@ -1,9 +1,9 @@
-%def_with check
+%def_without check
 
 Name: drbd9
-Version: 9.2.15
+Version: 9.2.16
 Release: alt1
-%define githash 988c6ec892b40a3ef1b8e968ef277308753d7200
+%define githash 3a0f974085c481737e13fb39f03ccd85b63eb7df
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-kernel
 %if_with check
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
-BuildRequires: kernel-headers-modules-6.16
+BuildRequires: kernel-headers-modules-6.17
 %endif
 
 %description
@@ -60,6 +60,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build CONFIG_DRBD_COMPAT_84=y
 %doc README.md COPYING
 
 %changelog
+* Wed Nov 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.16-alt1
+- 9.2.16
+
 * Mon Sep 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.15-alt1
 - 9.2.15
 
