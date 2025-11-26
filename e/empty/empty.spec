@@ -1,6 +1,6 @@
 Name:    empty
 Version: 0.6.23d
-Release: alt1
+Release: alt2
 
 Summary: Run interactive console applications in batch mode
 License: Common Public License
@@ -8,9 +8,10 @@ Group:   System/Configuration/Other
 Url:     http://%name.sourceforge.net
 Source:  http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tgz
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-
+Requires: expect /dev/pts
 BuildPreReq: glibc-devel >= 2.0
-
+BuildRequires: expect
+BuildRequires: /dev/pts
 Summary(ru_RU.KOI8-R): Запуск интерактивных консольных приложений в автоматическом режиме
 
 %description
@@ -60,6 +61,9 @@ Empty - это утилита, которая служит для организации автоматического выполнения
 %doc CHANGELOG examples
 
 %changelog
+* Wed Nov 26 2025 Ilya Mashkin <oddity@altlinux.ru> 0.6.23d-alt2
+- Add R: expect /dev/pts (Closes: #41887)
+
 * Wed Nov 26 2025 Ilya Mashkin <oddity@altlinux.ru> 0.6.23d-alt1
 - update to new version 0.6.23d
 
