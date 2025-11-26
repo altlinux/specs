@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.1
+Version: 3.2.1
 Release: alt1
 
 Summary: A simple app that provides django integration for RQ (Redis Queue)
@@ -58,6 +58,9 @@ export DJANGO_SETTINGS_MODULE=django_rq.tests.settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 26 2025 Alexander Burmatov <thatman@altlinux.org> 3.2.1-alt1
+- Update version to 3.2.1.
+
 * Wed Aug 13 2025 Alexander Burmatov <thatman@altlinux.org> 3.1-alt1
 - Update version to 3.1.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.7.5
+Version: 2.8.0
 Release: alt1
 
 Summary: django-tables2 - An app for creating HTML tables
@@ -52,6 +52,9 @@ python3 manage.py test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 26 2025 Alexander Burmatov <thatman@altlinux.org> 2.8.0-alt1
+- Update to 2.8.0 version.
+
 * Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 2.7.5-alt1
 - Update to 2.7.5 version.
 
