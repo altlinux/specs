@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.4.0
+Version:  0.4.2
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -57,6 +57,28 @@ A script to update and commit RPM checksum files.
 %_man1dir/checksumbot.1.*
 
 %changelog
+* Wed Nov 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1
+- setup.sh: Fix: Verify the actually written configuration.
+- setup.sh: Fixed reading ${...} config values.
+- checksumbot: Use apt.$BRANCH.$ARCH.conf for update and
+  apt.$DISTROVER.$ARCH.conf for release.
+- Let `make setup` accept CONFIG=path-to-config.
+- Fix: Revert back to a non-override-values config.
+- setup.sh: Added `Dir::Etc::parts "/var/empty";` to the default
+  APT config.
+- setup.sh: Added `Dir::Etc::main "/dev/null";` to the default
+  APT config.
+
+* Mon Nov 24 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.1-alt1
+- checksumbot: Sync version with the main package.
+- Fixed license.
+- Make checksumdiff support packages with no dist-tags.
+- Fix checksumbot: Use FETCH_HEAD to checkout mkimage-profiles
+  (MKIPREF might be a branch now).
+- setup.sh: Fixed APT conf generation.
+- Fixed checksumbot: Add empty line before MKIPKEY in the default
+  config.
+
 * Fri Nov 14 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.0-alt1
 - Added setup script for checksumbot (setup.sh).
 - Added manual pages for 'checksumbot' and all new utils.
