@@ -1,6 +1,6 @@
 Name:    freeoffice
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: Free Office Application Suite
 License: Proprietary
@@ -11,15 +11,15 @@ Source:  %name-%version.tar
 
 ExcludeArch: %ix86 armh ppc64le
 
-Requires: LibreOffice-still
-Requires: LibreOffice-still-gtk3
-Requires: LibreOffice-still-kde6
-Requires: LibreOffice-still-langpack-be
-Requires: LibreOffice-still-langpack-kk
-Requires: LibreOffice-still-langpack-ky
-Requires: LibreOffice-still-langpack-ru
-Requires: LibreOffice-still-langpack-uk
-Requires: LibreOffice-still-langpack-uz
+Requires: libreoffice
+Requires: libreoffice-gtk3
+Requires: libreoffice-kde6
+Requires: libreoffice-langpack-be
+Requires: libreoffice-langpack-kk
+Requires: libreoffice-langpack-ky
+Requires: libreoffice-langpack-ru
+Requires: libreoffice-langpack-uk
+Requires: libreoffice-langpack-uz
 Requires: thunderbird
 Requires: davmail
 Requires: surguch
@@ -92,6 +92,9 @@ install -Dpm0644 com.Basealt.FreeOffice.desktop %buildroot%_desktopdir/com.Basea
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Nov 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt3
+- Required libreoffice instead of LibreOffice-still.
+
 * Thu Sep 18 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.0-alt2
 - Added information dialog to menu.
 
