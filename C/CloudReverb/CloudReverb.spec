@@ -5,7 +5,7 @@
 
 Name:    CloudReverb
 Version: 0.4
-Release: alt2
+Release: alt3
 
 Summary: Algorithmic reverb plugin based on CloudSeed
 License: MIT
@@ -86,6 +86,7 @@ grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
 
 %build
 %cmake \
+  -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
   -DCMAKE_BUILD_TYPE=%build_type \
   %nil
 
@@ -108,6 +109,10 @@ cp -a "VST3/CloudReverb.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Wed Nov 26 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt3
+- explicitly define JUCE_TARGET_ARCHITECTURE (fixes FTBFS
+  on loongarch64).
+
 * Wed Nov 26 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt2
 - drop i586 support
 
