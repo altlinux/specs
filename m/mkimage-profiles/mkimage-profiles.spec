@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.7
+Version: 1.8.8
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,12 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed Nov 26 2025 Anton Midyukov <antohami@altlinux.org> 1.8.8-alt1
+- initrd-bootchain: 'add' instead 'set' MAIN_PACKAGES
+- grub: add variable GRUB_GFXMODE (thanks fiersik@)
+- firmware, x11: add firmware-nouveau (Closes: 56994)
+- e2k: fix 20-initrd-e2k-kms on v6 (thanks mike@)
+
 * Wed Nov 19 2025 Anton Midyukov <antohami@altlinux.org> 1.8.7-alt1
 - net: add use/net/networkd/live
 - live: do not enable cpufreq-simple by default
