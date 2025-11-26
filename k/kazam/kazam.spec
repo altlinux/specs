@@ -2,7 +2,7 @@
 
 Name: kazam
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: Kazam - Linux Screen Recorder, Broadcaster, Capture and OCR with AI in mind
 License: GPL-3.0 and LGPL-3.0
@@ -22,7 +22,9 @@ Requires: /usr/bin/tesseract
 Requires: /usr/bin/xdotool
 Requires: /usr/bin/canberra-gtk-play
 Requires: /usr/bin/xdg-open
+Requires: python3-module-pygobject3
 
+# TODO
 %filter_from_requires /python3(rapidocr_onnxruntime)/d
 
 BuildArch: noarch
@@ -108,6 +110,11 @@ cp -rva build/mo/* %buildroot%_datadir/locale
 %_datadir/%name/*
 
 %changelog
+* Thu Nov 27 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt3
+- Added python3-module-pygobject3 run-time dependency.
+- Disabled PaddleOCR as it is not packaged (yet).
+- (closes #57014, #57015, #57016, #57018, #57019)
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt2
 - Applied repocop fix for freedesktop-desktop
 
