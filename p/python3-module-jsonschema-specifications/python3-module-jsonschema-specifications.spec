@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2024.10.1
-Release: alt2
+Version: 2025.9.1
+Release: alt1
 
 Summary: Support files exposing JSON from the JSON Schema specifications to Python
 License: MIT
@@ -65,6 +65,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%mod_name-*.dist-info
 
 %changelog
+* Wed Nov 26 2025 Anton Vyatkin <toni@altlinux.org> 2025.9.1-alt1
+- New version 2025.9.1.
+
 * Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2024.10.1-alt2
 - NMU: don't pack tests (skip pytest require)
 
