@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.45
+%define kernel_sublevel	.59
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -485,6 +485,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Nov 25 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.59-alt1
+- v6.12.59 (2025-11-24).
+- config: enable CONFIG_MEMCG_V1=y.
+- config-x86_64: enable CONFIG_MITIGATION_VMSCAPE=y.
+
 * Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.45-alt1
 - v6.12.45 (2025-09-04)
 - Introduce EFI-stub signature verification back

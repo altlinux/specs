@@ -1,6 +1,6 @@
 %define module_name zfs
-%define module_version 2.3.3
-%define module_release alt2
+%define module_version 2.3.5
+%define module_release alt1
 
 %define flavour talos
 %define karch x86_64 aarch64
@@ -74,6 +74,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 2.3.5-alt1
+- 2.3.3 -> 2.3.5
 
 * Wed Oct 29 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.3.3-alt2
 - Remove provides zfs-kernel-module
