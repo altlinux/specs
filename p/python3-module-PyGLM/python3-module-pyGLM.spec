@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 
 Summary: OpenGL Mathematics (GLM) library for Python
@@ -58,6 +58,9 @@ py.test-3 test/PyGLM_test.py -v
 
 
 %changelog
+* Wed Nov 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt1
+- 2.8.3
+
 * Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
