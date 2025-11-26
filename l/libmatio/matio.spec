@@ -1,5 +1,5 @@
 Name: libmatio
-Version: 1.5.28
+Version: 1.5.29
 Release: alt1
 Summary: Library for reading/writing Matlab MAT files
 
@@ -100,6 +100,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed Nov 26 2025 Alexander Danilov <admsasha@altlinux.org> 1.5.29-alt1
+- Version 1.5.29 (Fixes: CVE-2025-2337, CVE-2025-2338).
+
 * Mon Apr 28 2025 Alexander Danilov <admsasha@altlinux.org> 1.5.28-alt1
 - Version 1.5.28 (Fixes: CVE-2019-13107, CVE-2020-36428).
 
