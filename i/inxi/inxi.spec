@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.39.1
+Version: 3.3.40.1
 Release: alt1
 
 Summary: A full featured system information script
@@ -10,7 +10,7 @@ Group: Monitoring
 URL: https://smxi.org
 Vcs: https://codeberg.org/smxi/inxi
 # Source-url: https://codeberg.org/smxi/inxi/archive/%version/%name-%version-1.tar.gz
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-3.3.31.2-platform.patch
 
@@ -70,6 +70,9 @@ perl -c inxi
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Nov 26 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.40.1-alt1
+- New version 3.3.40.1.
+
 * Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.39.1-alt1
 - New version 3.3.39.1.
 - Packaged metainfo file.
