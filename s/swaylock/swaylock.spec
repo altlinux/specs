@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaylock
-Version: 1.8.2
+Version: 1.8.4
 Release: alt1
 
 Summary: Swaylock is a screen locking utility for Wayland compositors
@@ -22,7 +22,6 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: libxkbcommon-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: pkgconfig(scdoc)
-BuildRequires: pkgconfig(pam)
 
 %description
 Swaylock is a screen locking utility for Wayland compositors. It is
@@ -42,7 +41,7 @@ ext-session-lock-v1 Wayland protocol.
 %meson_install
 
 %files
-%config(noreplace) %_sysconfdir/pam.d/%name
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/%name
 %attr(2711,root,chkpwd) %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -50,6 +49,9 @@ ext-session-lock-v1 Wayland protocol.
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Nov 26 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.4-alt1
+- new version
+
 * Thu Mar 27 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.2-alt1
 - fixed inconsistent package changelog
 - new version
