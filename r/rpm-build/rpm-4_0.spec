@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.207
+Version: 4.0.4.208
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -451,6 +451,9 @@ fi
 %files checkinstall
 
 %changelog
+* Mon Nov 17 2025 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.208-alt1
+- Backport %%conf section.
+
 * Sun Jul 06 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.207-alt1
 - Backport %%caps files attribute.
 - Backport RemovePathPostfixes.
