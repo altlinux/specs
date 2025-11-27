@@ -1,12 +1,14 @@
 Name: atf-meson
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: ARM Trusted Firmware
 License: BSD
 Group: System/Kernel and hardware
 
+%ifndef crossbuild
 ExclusiveArch: aarch64
+%endif
 
 BuildRequires: aarch64-none-elf-gcc
 
@@ -42,6 +44,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14-alt1
+- 2.14 released
+
 * Fri Jun 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.13-alt1
 - 2.13 released
 
