@@ -1,5 +1,5 @@
 %define _name ascii-draw
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name io.github.nokse22.asciidraw
 
 # online screenshots
@@ -58,6 +58,9 @@ There are many stiles to choose from and multiple tools available to use.
 %doc README.*
 
 %changelog
+* Thu Nov 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon May 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
