@@ -4,7 +4,7 @@
 
 Name: qt6-location
 Version: 6.9.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtLocation component
@@ -17,11 +17,8 @@ BuildRequires(pre): rpm-macros-qt6
 BuildRequires: cmake qt6-declarative-devel qt6-positioning-devel qt6-shadertools-devel qt6-tools
 
 %description
-The Qt Positioning API gives developers the ability to determine a position
-by using a variety of possible sources, including satellite, or wifi, or
- text file, and so on. That information can then be used to for example
-determine a position on a map. In addition satellite information can be
-retrieved and area based monitoring can be performed.
+The Qt Location module helps you create mapping solutions using data available
+from popular location service providers, such as Open Street Map.
 
 %package common
 Summary: Common package for %name
@@ -108,6 +105,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Nov 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
+- fix package description
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 
