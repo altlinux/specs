@@ -5,7 +5,7 @@
 
 Name:          trilogy
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible client library
 License:       MIT
 Group:         Databases
@@ -57,7 +57,7 @@ Features:
 
 %package       -n libtrilogy
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible library
 Group:         Development/C
 
@@ -83,7 +83,7 @@ Features:
 
 %package       -n gem-trilogy
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy
 Group:         Development/Ruby
 
@@ -114,7 +114,7 @@ Features:
 %if_enabled    doc
 %package       -n gem-trilogy-doc
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета trilogy
 Group:         Development/Documentation
@@ -150,7 +150,7 @@ Features:
 %if_enabled    devel
 %package       -n gem-trilogy-devel
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible library for Ruby, binding to libtrilogy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета trilogy
 Group:         Development/Ruby
@@ -194,7 +194,7 @@ Features:
 %if_enabled    devel
 %package       -n libtrilogy-devel
 Version:       2.9.0.36
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A friendly MySQL-compatible library development package
 Summary(ru_RU.UTF-8): Файлы для разработки буковины trilogy
 Group:         Development/C
@@ -235,7 +235,6 @@ Features:
 %install
 %cmakeinstall_std
 %ruby_install
-rm -rf %buildroot/usr/lib/trilogy/tmp
 
 %check
 %ruby_test
@@ -273,11 +272,13 @@ rm -rf %buildroot/usr/lib/trilogy/tmp
 %_includedir/%{name}
 %_cmakedir/*
 %_libdir/lib%{name}*.*so
-%_libexecdir/%name
 %endif
 
 
 %changelog
+* Wed Nov 26 2025 Pavel Skrylev <majioa@altlinux.org> 2.9.0.36-alt0.2
+- ! fixed NTBFS removing lost path
+
 * Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 2.9.0.36-alt0.1
 - ^ 2.9.0p10 -> 2.9.0p36
 
