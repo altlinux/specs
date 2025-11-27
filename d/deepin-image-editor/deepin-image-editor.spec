@@ -7,7 +7,7 @@
 %def_without clang
 
 Name: deepin-image-editor
-Version: 6.5.1
+Version: 6.5.2
 Release: alt1
 
 Summary: Image editor libraries for Deepin
@@ -15,11 +15,12 @@ Summary: Image editor libraries for Deepin
 License: GPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/image-editor
-Vcs: https://github.com/linuxdeepin/image-editor.git
+VCS: https://github.com/linuxdeepin/image-editor
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/image-editor/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-image-editor-6.5.0-alt-fix-broken-pkgconfig.patch
 Patch2: deepin-image-editor-6.5.0-alt-fix-dqt6-pkgconfig.patch
@@ -143,6 +144,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Thu Nov 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
+- New version 6.5.2.
+
 * Fri Aug 01 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.1-alt1
 - New version 6.5.1.
 
