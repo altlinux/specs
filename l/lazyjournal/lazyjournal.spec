@@ -3,7 +3,7 @@
 
 Name: lazyjournal
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Terminal user interface for journalctl
 License: MIT
 Group: System/Configuration/Boot and Init
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Nov 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.8.1-alt2
+- Remove non-code file from vendor to meet RF legal constraints.
+
 * Mon Sep 29 2025 Pavel Shilov <zerospirit@altlinux.org> 0.8.1-alt1
 - 0.7.9 -> 0.8.1
 
