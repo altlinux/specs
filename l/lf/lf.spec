@@ -1,5 +1,5 @@
 %global import_path github.com/gokcehan/lf
-%define lf_ver 37
+%define lf_ver 38
 Name:     lf
 Version:  r%lf_ver
 Release:  alt1
@@ -55,6 +55,9 @@ install -D -m644 etc/lf.zsh \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Nov 27 2025 Ilya Demyanov <turbid@altlinux.org> r38-alt1
+- New upstream version r38
+
 * Thu Sep 11 2025 Ilya Demyanov <turbid@altlinux.org> r37-alt1
 - New upstream version r37
 
