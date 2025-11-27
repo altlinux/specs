@@ -2,7 +2,7 @@
 
 Name: xiphos
 Version: 4.3.2.14
-Release: alt1
+Release: alt2
 Summary: Bible study and research tool
 Url: http://xiphos.org/
 Group: Text tools
@@ -15,16 +15,19 @@ Patch2:         xiphos-glib.patch
 Patch3:         find_biblesync.patch
 
 Requires: sword yelp
+Requires: libgtk4-gir libgtksourceview4-gir
 Provides: gnomesword
 Obsoletes: gnomesword
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-gir
 BuildRequires: biblesync-devel >= 2.0.1
 BuildRequires: cmake desktop-file-utils intltool libGConf libdbus-glib-devel libdbus-devel 
 BuildRequires: libappstream-glib libdbus-glib-devel libminizip-devel libwebkit2gtk-devel  libdatrie-devel libjpeg-devel 
-BuildRequires: libsword-devel libwebkitgtk4-devel libxml2-devel yelp-tools zip bzip2-devel libbrotli-devel 
+BuildRequires: libsword-devel libwebkitgtk4-devel libxml2-devel yelp-tools 
 BuildRequires: gcc gcc-c++ 
-BuildRequires:  pkgconfig(dbus-glib-1)
+BuildRequires: libsoup-gir-devel libgtksourceview4-gir-devel
+
 
 %description
 Xiphos (formerly known as GnomeSword) is a Bible study application for GNOME,
@@ -82,6 +85,9 @@ desktop-file-install --delete-original         \
 %_man1dir/%{name}*
 
 %changelog
+* Thu Nov 27 2025 Ilya Mashkin <oddity@altlinux.ru> 4.3.2.14-alt2
+- Add R: libgtk4-gir libgtksourceview4-gir
+
 * Wed Nov 26 2025 Ilya Mashkin <oddity@altlinux.ru> 4.3.2.14-alt1
 - 4.3.2.14
 
