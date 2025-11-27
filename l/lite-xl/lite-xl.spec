@@ -2,10 +2,8 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define _product org.lite_xl.lite_xl
-
 Name: lite-xl
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
 
 Summary: A lightweight text editor written in Lua
@@ -24,7 +22,7 @@ BuildRequires: meson
 BuildRequires: liblua-devel
 BuildRequires: libpcre2-devel
 BuildRequires: freetype2-devel
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 
 %description
 A lightweight, simple, fast, feature-filled, and extremely
@@ -50,11 +48,15 @@ improve the quality of font rendering, and reduce CPU usage.
 %_bindir/%name
 %_datadir/%name/
 %_datadir/doc/%name/licenses.md
-%_datadir/metainfo/%_product.appdata.xml
-%_desktopdir/%_product.desktop
+%_datadir/metainfo/*.xml
+%_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Nov 17 2025 Ildar Mulyukov <ildar@altlinux.ru> 2.1.8-alt1
+- new version
+- switch to SDL3
+
 * Sat Dec 07 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.7-alt1
 - Updated to 2.1.7.
 
@@ -66,4 +68,3 @@ improve the quality of font rendering, and reduce CPU usage.
 
 * Fri Apr 12 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.3-alt1
 - Built for ALT Sisyphus (closes #50000).
-
