@@ -2,8 +2,8 @@
 %def_with check
 
 Name:       rexi
-Version:    1.2.0
-Release:    alt2
+Version:    1.2.1
+Release:    alt1
 BuildArch:  noarch
 
 License:    MIT
@@ -69,6 +69,9 @@ Package contains python module for %name.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 21 2025 Sergey Savelev <medovi@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+
 * Thu Sep 11 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
 - NMU: fixed FTBFS (pytest 8.4.0).
 
