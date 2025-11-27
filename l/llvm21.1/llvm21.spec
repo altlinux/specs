@@ -8,7 +8,7 @@
 
 %global v_major 21
 %global v_majmin %v_major.1
-%global v_full %v_majmin.5
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -1503,6 +1503,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Thu Nov 27 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.6-alt0.1
+- Update to 21.1.6.
+
 * Wed Nov 05 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.5-alt0.1
 - Update to 21.1.5.
 
