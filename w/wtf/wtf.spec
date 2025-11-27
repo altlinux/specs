@@ -4,7 +4,7 @@
 
 Name: wtf
 Version: 0.47.1
-Release: alt1
+Release: alt2
 Summary: The personal information dashboard for your terminal.
 License: MPL-2.0
 Group: Terminals
@@ -55,6 +55,9 @@ cp -pr _sample_configs %buildroot%_docdir/
 %_docdir/_sample_configs
 
 %changelog
+* Thu Nov 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.47.1-alt2
+- Update non-code file from vendor to meet RF legal constraints.
+
 * Thu Nov 27 2025 Pavel Shilov <zerospirit@altlinux.org> 0.47.1-alt1
 - 0.46.0 -> 0.47.1
 - Remove non-code file from vendor to meet RF legal constraints.
