@@ -3,7 +3,7 @@
 %global import_path github.com/Adembc/lazyssh
 Name: lazyssh
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: A terminal-based SSH manager inspired by lazydocker and k9s
 License: Apache-2.0
@@ -24,7 +24,7 @@ like lazydocker and k9s - but built for managing your fleet of servers
 directly from your terminal.
 
 With lazyssh, you can quickly navigate, connect, manage, and transfer
-files between your local machine and any server defined in your 
+files between your local machine and any server defined in your
 ~/.ssh/config. No more remembering IP addresses or running long scp
 commands - just a clean, keyboard-driven UI.
 
@@ -44,6 +44,9 @@ install -Dpm755 main %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Nov 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt2
+- Do not include unneccessary files into vendoring.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
