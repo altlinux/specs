@@ -10,7 +10,7 @@
 
 Name: gnutls%libgnutls_soname
 Version: 3.8.11
-Release: alt1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -199,6 +199,10 @@ This package contains the GnuTLS API Reference Manual.
 %patch11 -p2
 %patch12 -p1
 %patch13 -p2
+%ifarch %e2k
+# error: expression preceding parentheses of apparent call must have (pointer-to-) function type
+sed -i 's/__has_c_attribute (__maybe_unused__)/0/' lib/crau/crau.h
+%endif
 
 touch doc/*.texi
 rm doc/*.info*
@@ -331,6 +335,9 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Thu Nov 27 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.8.11-alt2
+- e2k build fix
+
 * Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 3.8.11-alt1
 - Updated to 3.8.11 (fixes: CVE-2025-9820).
 
