@@ -2,8 +2,8 @@
 %define spawn_fcgi_group _spawn_fcgi
 
 Name: spawn-fcgi
-Version: 1.6.5
-Release: alt2
+Version: 1.6.6
+Release: alt1
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -61,6 +61,9 @@ EOF
 %_initdir/spawn-fcgi
 
 %changelog
+* Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 1.6.6-alt1
+- 1.6.5 -> 1.6.6
+
 * Mon May 26 2025 Anton Farygin <rider@altlinux.com> 1.6.5-alt2
 - fixed pid file location in the startup service (closes: #53986)
 
