@@ -1,5 +1,5 @@
 Name: jalv
-Version: 1.6.8
+Version: 1.8.0
 Release: alt1
 
 Summary: Simple host for LV2 plugins
@@ -27,7 +27,7 @@ Group: Sound
 Requires: jalv = %version-%release
 
 %package qt5
-Summary: Qt5-based host for LV2 plugins
+Summary: Qt-based host for LV2 plugins
 Group: Sound
 Requires: jalv = %version-%release
 
@@ -43,7 +43,7 @@ http://drobilla.net/software/jalv.
 This package offers GTK3 based GUI for LV2 plugins.
 
 %description qt5 %desc
-This package offers Qt5 based GUI for LV2 plugins.
+This package offers Qt based GUI for LV2 plugins.
 
 %prep
 %setup
@@ -62,6 +62,8 @@ sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
 %doc AUTHORS COPYING INSTALL* NEWS README*
 %_bindir/jalv
 %_libdir/jack/jalv.so
+%_datadir/metainfo/*.metainfo.xml
+%_iconsdir/*/*/*/*.*
 %_man1dir/jalv.1*
 
 %files gtk3
@@ -70,10 +72,13 @@ sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
 %_man1dir/jalv.gtk3.1*
 
 %files qt5
-%_bindir/jalv.qt5
+%_bindir/jalv.qt*
 %_desktopdir/jalv-qt.desktop
-%_man1dir/jalv.qt5.1*
+%_man1dir/jalv.qt*.1*
 
 %changelog
+* Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt1
+- 1.8.0 released
+
 * Wed Mar  6 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.8-alt1
 - initial
