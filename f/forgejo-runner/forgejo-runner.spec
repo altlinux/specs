@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 11.3.1
+Version: 12.0.1
 Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
@@ -24,6 +24,9 @@ BuildRequires: rpm-build-golang golang >= 1.24.7
 
 #Requires: docker-engine
 Requires: sysctl-conf-userns podman systemd-container
+
+# https://code.forgejo.org/forgejo/runner/releases/tag/v12.0.0
+Requires: git
 
 %description
 A runner for Forgejo Actions.
@@ -100,6 +103,9 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Thu Nov 27 2025 Maxim Slipenko <maks1ms@altlinux.org> 12.0.1-alt1
+- New version 12.0.1.
+
 * Mon Nov 17 2025 Maxim Slipenko <maks1ms@altlinux.org> 11.3.1-alt1
 - New version 11.3.1.
 
