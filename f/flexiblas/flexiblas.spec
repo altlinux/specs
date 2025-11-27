@@ -2,8 +2,8 @@
 %global default_backend64 %{default_backend}64
 
 %global major_version 3
-%global minor_version 4
-%global patch_version 5
+%global minor_version 5
+%global patch_version 0
 
 %ifarch %ix86
 %define check_relax ||:
@@ -13,7 +13,7 @@
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
-Release: alt2
+Release: alt1
 Summary: A BLAS/LAPACK wrapper library with runtime exchangeable backends
 Group: Sciences/Mathematics
 # LGPL-3.0-or-later
@@ -240,6 +240,9 @@ make -C build64 test %check_relax
 %endif
 
 %changelog
+* Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 3.5.0-alt1
+- 3.4.5 -> 3.5.0
+
 * Fri Mar 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.5-alt2
 - fix e2k build
 
