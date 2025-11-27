@@ -36,7 +36,7 @@
 
 Name: nvidia_cuda_toolkit_%{cuda_version_full}_%name_arch
 Version: %cuda_version_full
-Release: alt1
+Release: alt2
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -195,7 +195,7 @@ NVIDIA cuSOLVERmg Library.
 %package -n libcusolver
 Group: System/Libraries
 Summary: NVIDIA cuSOLVER Library
-Provides: libcusolver.so.11(libcurand.so.11)(64bit)
+Provides: libcusolver.so.11(libcusolver.so.11)(64bit)
 %description -n libcusolver
 NVIDIA cuSOLVER Library.
 
@@ -820,5 +820,8 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_desktopdir/nvidia-nsight-systems.desktop
 
 %changelog
+* Thu Nov 27 2025 Mikhail Tergoev <fidel@altlinux.org> 12.9.1-alt2
+- fixed provides: libcusolver
+
 * Fri Nov 21 2025 Mikhail Tergoev <fidel@altlinux.org> 12.9.1-alt1
 - Initial build aarch64 for ALT Sisyphus (ALT bug: 48759)
