@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-one alt-virtualization-pve docs-alt-server
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-one docs-alt-virtualization-pve docs-alt-mobile docs-alt-platform
 
 Name: docs-%variant
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,12 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Nov 27 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt3
+- fix dhcp script (closes #56174)
+- fix sssd settings (closes #56177)
+- update: ADMC
+- add: gMSA, usershares, troubleshooting
+
 * Fri Sep 26 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
 - fix typos (closes #56055, #56054, #56053, #56052, #56051, #56162, #56179)
 - small improvements (closes #56164, #56165, #56166, #56167, #56176)
