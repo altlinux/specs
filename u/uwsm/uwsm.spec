@@ -2,7 +2,7 @@
 
 Name: uwsm
 Version: 0.24.3
-Release: alt1
+Release: alt2
 
 Summary: Universal Wayland Session Manager
 License: MIT
@@ -20,6 +20,10 @@ BuildRequires: scdoc
 BuildRequires: rpm-build-python3
 BuildRequires: python3-module-pyxdg
 BuildRequires: python3-module-dbus
+
+# Filter dmenu candidates:
+%filter_from_requires /^\(walker\|fuzzel\|wofi\|rofi\)$/d
+%filter_from_requires /^\(tofi\|bemenu\|wmenu\|dmenu\)$/d
 
 %add_python3_path %_datadir/uwsm
 %filter_from_provides /^python3(modules\.uwsm\(\..*\)\?)/d
@@ -64,6 +68,9 @@ rm -rf %buildroot%_docdir/uwsm/
 %_man3dir/uwsm-plugins.3.*
 
 %changelog
+* Thu Nov 27 2025 Egor Ignatov <egori@altlinux.org> 0.24.3-alt2
+- Remove optional runtime dependencies (closes: #57047)
+
 * Fri Nov 21 2025 Egor Ignatov <egori@altlinux.org> 0.24.3-alt1
 - New version 0.24.3.
 
