@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: opentofu
-Version: 1.10.6
+Version: 1.10.7
 Release: alt1
 Summary: OpenTofu lets you declaratively manage your cloud infrastructure
 
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Thu Nov 27 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.7-alt1
+- New version 1.10.7.
+
 * Mon Oct 06 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.6-alt1
 - New version 1.10.6.
 
