@@ -5,7 +5,7 @@
 %endif
 
 Name: unison
-Version: 2.53.7
+Version: 2.53.8
 Release: alt1
 
 Summary: File-synchronization tool
@@ -83,6 +83,9 @@ make test %unison_native
 %_iconsdir/hicolor/scalable/apps/unison.svg
 
 %changelog
+* Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 2.53.8-alt1
+- 2.53.7 -> 2.53.8
+
 * Sat Jan 18 2025 Anton Farygin <rider@altlinux.ru> 2.53.7-alt1
 - 2.53.2 -> 2.53.7
 
