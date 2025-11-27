@@ -1,5 +1,5 @@
 Name: bluetuith
-Version: 0.2.3
+Version: 0.2.5
 Release: alt1
 License: MIT
 
@@ -11,7 +11,6 @@ Url: https://github.com/bluetuith-org/bluetuith
 Vcs: https://github.com/bluetuith-org/bluetuith.git
 
 Source: %name-%version.tar
-Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -22,7 +21,7 @@ which can interact with bluetooth adapters and devices.
 It aims to be a replacement to most bluetooth managers.
 
 %prep
-%setup -a1
+%setup
 
 %build
 %gobuild -mod=vendor
@@ -34,5 +33,8 @@ install -D -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 27 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.5-alt1
+- new version (0.2.5) with rpmgs script
+
 * Sat Apr 12 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.3-alt1
 - Initial build
