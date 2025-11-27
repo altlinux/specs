@@ -17,7 +17,7 @@
 
 Name: %{_name}2
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
@@ -35,6 +35,9 @@ Source: %_name-%version.tar
 %define glib_ver 2.74
 %define mm_ver 1.12
 %define soup3_ver 3.0
+
+# if 3G or modem GPS sources enabled
+Requires: ModemManager
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson yelp-tools gtk-doc libgio-devel >= %glib_ver
@@ -208,6 +211,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Thu Nov 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1.1
+- require ModemManager if 3G or modem GPS sources enabled (ALT #57034)
+
 * Sun Aug 31 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 - removed separate config for beacondb.net

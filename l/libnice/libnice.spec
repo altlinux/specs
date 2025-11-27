@@ -4,19 +4,25 @@
 %define api_ver %ver_major
 %define gst_api_ver 1.0
 
-%def_enable gupnp
-%def_with gstreamer
+# old gupnp-igd-1.0 required
+%def_disable gupnp
+%def_enable gstreamer
 %def_enable gtk_doc
+# in hasher:
+#32/44 test-set-port-range           FAIL            0.02s   killed by signal 6 SIGABRT
+#33/44 test-slow-resolving           FAIL            0.01s   killed by signal 6 SIGABRT
 %def_disable check
 
 Name: libnice
-Version: %ver_major.22
+Version: %ver_major.23
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
 License: LGPL-2.0-or-later and MPL-1.1
 Url: https://nice.freedesktop.org
+
+Vcs: https://gitlab.freedesktop.org/libnice/libnice.git
 
 %if_disabled snapshot
 Source: https://nice.freedesktop.org/releases/%name-%version.tar.gz
@@ -28,13 +34,19 @@ Source: %name-%version.tar
 %define gi_ver 1.30
 %define tls_ver 2.12.0
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
 BuildRequires: meson glib2-devel >= %glib_ver
-%{?_enable_gtk_doc:BuildRequires: gtk-doc %_bindir/dot}
-%{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
-%{?_with_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgnutls-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc %_bindir/dot}
+%{?_enable_gupnp:BuildRequires: pkgconfig(gupnp-igd-1.0)}
+%{?_enable_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
+%{?_enable_check:
+%{?_enable_gstreamer:BuildRequires: gstreamer1.0-utils gst-plugins-base%gst_api_ver}
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+}
 
 %description
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -116,14 +128,26 @@ Establishment standard (ICE). It provides GLib-based library, libnice.
 This package provides Interactive UDP connectivity establishment plugin
 for Gstreamer (1.0 API version)
 
+%package tools
+Summary: libnice tools
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description tools
+Nice is an implementation of the IETF's draft Interactice Connectivity
+Establishment standard (ICE). It provides GLib-based library, libnice.
+
+This package provides tools from libnice package.
+
+
 %prep
 %setup
 
 %build
 %meson \
-	%{?_disable_gupnp:-Dgupnp=disabled} \
-	%{?_disable_gstreamer:-Dgstreamer=disabled} \
-	%{?_enable_gtk_doc:-Dgtk_doc=enabled}
+    %{subst_enable_meson_feature gupnp gupnp} \
+    %{subst_enable_meson_feature gstreamer gstreamer} \
+    %{subst_enable_meson_feature gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -158,16 +182,19 @@ for Gstreamer (1.0 API version)
 %files gir-devel
 %_girdir/Nice-%api_ver.gir
 
-%if_with gstreamer
+%if_enabled gstreamer
 %files -n gst-plugins-nice%gst_api_ver
 %_libdir/gstreamer-%gst_api_ver/libgstnice.so
 %endif
 
-# don't package tools
-%exclude %_bindir/stun*
+%files tools
+%_bindir/stun*
 
 
 %changelog
+* Thu Nov 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
+- 0.1.23
+
 * Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.22-alt1
 - 0.1.22
 
