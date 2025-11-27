@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 Summary: Fast, spec compliant Python 3.13+ tokenizer
 License: MIT
@@ -49,5 +49,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.2.0 -> 0.3.0.
+
 * Wed Oct 15 2025 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1
 - initial build for sisyphus (0.2.0).
