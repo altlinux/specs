@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-localserver
+%define mod_name pytest_localserver
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0.post0
+Version: 0.10.0
 Release: alt1
 Summary: pytest plugin to test server connections locally
 License: MIT
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -48,10 +51,13 @@ you to test server connections locally.
 
 %files
 %doc README.rst
-%python3_sitelibdir/pytest_localserver/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
+- 0.9.0.post0 -> 0.10.0.
+
 * Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 0.9.0.post0-alt1
 - 0.9.0 -> 0.9.0.post0.
 
