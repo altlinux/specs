@@ -1,22 +1,24 @@
+%define _unpackaged_files_terminate_build 1
 %def_without texmf
 %define ModeName auctex
+%define _aucstatedir %_localstatedir/%ModeName
 
-Name: emacs-mode-%ModeName
-Version: 13.3
-Release: alt2.2
+Name: emacs-mode-auctex
+Version: 14.1.0
+Release: alt1
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPLv3
 Group: Editors
 Url: http://www.gnu.org/software/auctex/index.html
-Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
+Vcs: git://git.git.savannah.gnu.org/auctex.git
 BuildArch: noarch
 
-#Source0: ftp://sunsite.auc.dk/packages/auctex/%ModeName-%version.tar.bz2
-Source0: ftp://ftp.gnu.org/pub/gnu/auctex/%ModeName-%version.tar.gz
+Source0: %name-%version.tar
 
-# Due to patches 1 and 2, the administrator of a system won't have to set
-# any site-specific variables for AUC TeX.
+Source10: %name-11.10-info.ALT
+
+Patch1: auctex-14.1.0-alt-path-for-install-info.patch
 
 Requires: common-licenses
 %if_with texmf
@@ -30,106 +32,156 @@ Provides: emacs-preview-latex = %version-%release
 Obsoletes: emacs-preview-latex < 11.82
 Obsoletes: auctex
 
-Requires: gnu-ghostscript /usr/bin/dvips /usr/bin/latex
+%define require_compiler %(rpm -qf "$(which %emacsbin)" \
+                               --queryformat=%%{NAME} 2> /dev/null)
 
 BuildRequires(pre): rpm-build-tex
+BuildRequires(pre): rpm-build-emacs
+BuildRequires: emacs-common
+BuildRequires: emacs-nox
+BuildRequires: makeinfo
 BuildRequires: texlive-dist
-BuildRequires: /usr/bin/emacs /usr/bin/dvips /usr/bin/latex
 
 %description
 AUC TeX is a comprehensive, customizable, integrated environment for
 writing, editing and processing input files for LaTeX using GNU Emacs.
 This mode also supports graphic preview for formulas and figures.
 
-(Emacs Lisp code is principally byte-compiled, install %name-el for sources.)
+(Emacs Lisp code is principally byte-compiled,
+install emacs-mode-auctex-el for sources.)
 
 %package el
-Summary: The Emacs Lisp sources for bytecode included in %name
+Summary: The Emacs Lisp sources for bytecode files in emacs-mode-auctex
 Group: Development/Other
 
-Requires: %name = %version-%release
+Requires: emacs-mode-auctex = %version-%release
 Provides: emacs-preview-latex-el = %version-%release
 
 %description el
-%name-el contains the Emacs Lisp sources for the bytecode included in the %name package,
-that extends the Emacs editor.
+emacs-mode-auctex-el contains the Emacs Lisp sources for the bytecode
+included in the emacs-mode-auctex package, that extends Emacs.
 
-You need to install %name-el only if you intend to modify any of the
-%name code or see some Lisp examples.
+You need to install emacs-mode-auctex-el only if you intend to modify
+any of the emacs-mode-auctex code or see some Lisp examples.
 
 #FIXME: fix install to texlive
 %package doc
-Summary: 	Documentation for %name
-Group: 		Editors
+Summary: Documentation for emacs-mode-auctex
+Group: Editors
 
-Requires: emacs-mode-auctex 
+Requires: emacs-mode-auctex
 Requires: /usr/share/texmf/doc
 
 %description -n emacs-mode-auctex-doc
 Does your neck hurt from turning between previewer windows and the
 source too often? This Elisp/LaTeX package will render your displayed
-LaTeX equations right into the editing window where they belong. 
+LaTeX equations right into the editing window where they belong.
 
 This package contains the documentation.
 
 %package -n texmf-latex-preview
-Summary: Preview style for TeX subsystems.
+Summary: Preview style for TeX subsystems
 Group: Development/Other
 BuildArch: noarch
 
 %description -n texmf-latex-preview
-%name-el contains the Emacs Lisp sources for the bytecode included in the %name package,
-that extends the Emacs editor.
+emacs-mode-auctex-el contains the Emacs Lisp sources for the bytecode
+included in the emacs-mode-auctex package, that extends Emacs.
 
-You need to install %name-el only if you intend to modify any of the
-%name code or see some Lisp examples.
+You need to install emacs-mode-auctex-el only if you intend to modify
+any of the emacs-mode-auctex code or see some Lisp examples.
 
 %prep
-%setup -q -n %ModeName-%version
+%setup
+%autopatch -p1
 
 %build
-%configure --with-tex-input-dirs=/usr/share/texmf/tex \
-           --with-auctexstartfile=%_datadir/emacs/site-lisp/auctex.el \
-           --with-previewstartfile=%_datadir/emacs/site-lisp/preview-latex.el
-%make_build 
+%make_build
+
+# Build documentation in various formats
+
+#pushd doc
+#make extradist
+#popd
 
 %install
-%makeinstall_std
+# create target directories
+install -d $RPM_BUILD_ROOT{%_emacslispdir/site-start.d,%_infodir}
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
+mkdir -p %buildroot%_texmfmain/tex/latex/preview/preview.sty
+mkdir -p %buildroot%_aucstatedir
 
+# copy byte-code files
+install -m 644 *.elc %buildroot/%_emacslispdir/auctex
+install -m 644 style/*.elc %buildroot%_emacslispdir/auctex/style/
+install -m 644 style/*.el %buildroot%_emacslispdir/auctex/style/
+#usr/share/emacs/site-lisp/auctex/style/*.el
+
+# copy lisp-code files
+mkdir -p %buildroot/%_emacslispdir/auctex
+mkdir -p %buildroot/%_emacs_sitestart_dir
+install -m 644 *.el %buildroot/%_emacslispdir/auctex/
+
+install -m 644 tex-site.el %buildroot%_emacslispdir/tex-site.el
+install -m 644 auctex.el %buildroot%_emacs_sitestart_dir/auctex.el
+install -m 644 auctex.el \
+        %buildroot/%_emacslispdir/site-start.d/auctex.el
+install -m 644 tests/japanese/preview-latex.el \
+        %buildroot%_emacslispdir/site-start.d/preview-latex.el
+install -m 644 latex/preview.sty \
+        %buildroot%_texmfmain/tex/latex/preview/preview.sty
+
+# documentation
+install -Dm 644 doc/*.info -t %buildroot/%_infodir
+
+# install ALT's info:
+install -m0644 %SOURCE10 ALT-packaging-info
+
+# The license:
 ln -s -f %_licensedir/GPL-2 COPYING
-rm -f %buildroot%_infodir/dir
 
-# Create these .nosearch files to keep the directories from the elisp search path
+mkdir -p $RPM_BUILD_ROOT/%_docdir/emacs-mode-auctex-%version/
+
+# Create these .nosearch files to keep the directories from the elisp
+# search path
+touch %buildroot%_emacslispdir/auctex/.nosearch
 touch %buildroot%_emacslispdir/auctex/style/.nosearch
 
 %global _customdocdir %_defaultdocdir/auctex
 
 %files
 %_infodir/*
+%_sysconfdir/emacs/site-start.d/auctex.el
 %_emacslispdir/*.el
-%_emacslispdir/auctex
-%_datadir/texmf/tex/latex/preview
-%exclude %_texmfmain/tex/latex/preview/preview.sty
-%exclude %_emacslispdir/auctex/*.el
-%exclude %_emacslispdir/auctex/style/*.el
+%_emacslispdir/auctex/*.elc
+%_emacslispdir/auctex/.nosearch
+%_emacslispdir/auctex/style/*.elc
 %_emacslispdir/auctex/style/.nosearch
+%_emacslispdir/site-start.d/auctex.el
+%_emacslispdir/site-start.d/preview-latex.el
+%exclude %_texmfmain/tex/latex/preview
 
-%files el 
+%files el
 %_emacslispdir/auctex/*.el
 %_emacslispdir/auctex/style/*.el
 
-%files -n %name-doc
-%_datadir/texmf/doc/latex/styles/*
-%_datadir/doc/auctex
+%files -n emacs-mode-auctex-doc
 %doc --no-dereference COPYING
 %doc ChangeLog*
+%doc ALT-packaging-info
 
 %if_with texmf
 %files -n texmf-latex-preview
-%_texmfmain/tex/latex/preview/preview.sty
+%_texmfmain/tex/latex/preview
 %endif
 
 %changelog
+* Thu Nov 27 2025 Pavel Petrykin <silverducks@altlinux.org> 14.1.0-alt1
+- New version.
+- Move preview files to texmf-latex-preview (ALT 28230).
+
 * Wed Apr 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 13.3-alt2.2
 - FTBFS fixed
 
@@ -194,7 +246,7 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 
 * Tue Sep 26 2006 Alexander Borovsky <partizan@altlinux.ru> 11.83-alt2
 - Fixed update from old auctex + latex-preview
- 
+
 * Thu Feb 16 2006 Alexander Borovsky <partizan@altlinux.ru> 11.83-alt1
 - New version
 
@@ -238,7 +290,7 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 * Thu Feb 28 2002 Ivan Zakharyaschev <imz@altlinux.ru> 11.11-alt1
 - new mainstream version (11.11);
 - spec-file: use el-pkgutils for generating filelists;
-- %name-el requires %name (strict %%release deps);
+- emacs-mode-auctex-el requires emacs-mode-auctex (strict %%release deps);
 
 * Thu Feb 28 2002 Ivan Zakharyaschev <imz@altlinux.ru> 11.10-alt4
 - Run the start-script only for GNUEmacs (XEmacs has its own AUCTeX).
@@ -257,7 +309,7 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 - "hand-generated" style descriptions should work: the path for them fixed
   (it was wrongly patched in previous pkg releases)
 - linked the license from common-licenses (GPL-2)
-- auto/ excluded from %_emacslispdir/%ModeName/ for it empty and not used
+- auto/ excluded from %%_emacslispdir/%%ModeName/ for it empty and not used
 - for packagers:
   + using global def %%_emacslispdir
 
@@ -274,7 +326,7 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
   (i.e. doesn't contain \docuemtnclass).
 
 * Sat Jul 21 2001 Ivan Zakharyaschev <imz@altlinux.ru> 9.9p-alt3
-- put generated data to %_aucstatedir
+- put generated data to %%_aucstatedir
 
 * Sat Jul 21 2001 Ivan Zakharyaschev <imz@altlinux.ru> 9.9p-alt2
 - add patches for setting variables with site-specific values
@@ -306,7 +358,7 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 - fixed url tag
 - added CHANGES and ChangeLog to doc files
 - now requires emacs >= 20
-- added \%clean
+- added %%clean
 - misc spec file cosmetic cleanups
 
 * Wed Mar 11 1998 Martin Schimschak <masch@theo-phys.uni-essen.de>
