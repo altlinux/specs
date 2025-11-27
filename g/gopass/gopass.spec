@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/gopasspw/gopass
 
-%define git_commit_short 56e4bad6
+%define git_commit_short 423333db
 
 %def_with check
 
 Name: gopass
-Version: 1.15.17
+Version: 1.16.0
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -20,6 +20,7 @@ Source1: vendor.tar
 
 # Fixes a unit test for the vendored build
 Patch0: gopass-1.15.5-alt-fix-tests-for-vendored-build.patch
+Patch1: gopass-1.16.0-alt-dont-print-update-message.patch
 
 BuildRequires: rpm-build-golang golang >= 1.24.1
 
@@ -39,6 +40,7 @@ Full autonomy - No network connectivity required, unless you want it.
 %prep
 %setup -a 1
 %patch0 -p0
+%patch1 -p1
 # -buildmode=pie requires external (cgo) linking
 sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/' Makefile
 # don't strip debuginfo
@@ -67,6 +69,9 @@ git config --global user.email "foo.bar@example.org"
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Nov 27 2025 Alexander Stepchenko <geochip@altlinux.org> 1.16.0-alt1
+- 1.15.17 -> 1.16.0
+
 * Thu Sep 18 2025 Alexander Stepchenko <geochip@altlinux.org> 1.15.17-alt1
 - 1.15.15 -> 1.15.17
 
