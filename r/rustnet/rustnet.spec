@@ -1,0 +1,57 @@
+%define _unpackaged_files_terminate_build 1
+
+Name:           rustnet
+Version:        0.16.1
+Release:        alt1
+
+Summary:        A cross-platform network monitoring terminal UI tool
+License:        Apache-2.0
+Group:          Monitoring
+URL:            https://github.com/domcyrus/rustnet
+
+Source:         %name-%version.tar
+Source1:        vendor.tar
+
+Patch:          %name-%version-%release.patch
+
+BuildRequires(pre): rpm-build-rust
+BuildRequires:      clang
+BuildRequires:      libelf-devel
+BuildRequires:      zlib-devel
+BuildRequires:      libpcap-devel
+
+%description
+A cross-platform network monitoring tool built with Rust.
+RustNet provides real-time visibility into network connections
+with detailed state information, connection lifecycle management,
+deep packet inspection, and a terminal user interface.
+
+%prep
+%setup -a 1 -q
+%patch -p1
+%rust_prep
+
+%build
+%rust_build
+
+%install
+%rust_install
+
+# The tests are disabled because their results are unstable
+# and depend on system time, and the build may crash due to them.
+# The test_get_all_stats and test_get_all_stats tests
+# do not work correctly in an isolated environment.
+%check
+%rust_test -- --skip test_rate_tracker_steady_traffic \
+    --skip test_rate_tracker_multiple_updates \
+    --skip test_rate_tracker_window_sliding \
+    --skip test_list_interfaces \
+    --skip test_get_all_stats
+
+%files
+%_bindir/*
+%doc README.md CHANGELOG.md
+
+%changelog
+* Tue Nov 25 2025 Sergey Savelev <medovi@altlinux.org> 0.16.1-alt1
+- Initial build for Sisyphus.
