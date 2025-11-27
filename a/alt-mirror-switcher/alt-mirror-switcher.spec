@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.4.4.1
+Version: 0.4.4.2
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -69,6 +69,9 @@ rm -r %buildroot%_datadir/%name/mirrors
 %_sysconfdir/apt/sources.list.d/ams_*_branch.list
 
 %changelog
+* Thu Nov 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4.2-alt1
+- added mirror: mirror.truenetwork.ru
+
 * Sat Nov 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4.1-alt1
 - Splitting additional mirrors into sub-packages.
 - Added mirrors:
