@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.2.15
+%define module_version  9.2.16
 %define module_release  alt1
 %define flavour         talos
 %define karch x86_64 aarch64
