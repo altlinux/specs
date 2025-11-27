@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.28
+Version: 6.5.29
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -69,16 +69,22 @@ export LC_ALL=C.UTF-8
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
 %dir %_datadir/deepin-log-viewer/
 %dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
-%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.calendar.json
+%_datadir/deepin-log-viewer/deepin-log.conf.d/dde-calendar.json
 %_userunitdir/com.dde.calendarserver.calendar.service
 %_userunitdir/com.dde.calendarserver.calendar.timer
 %_userunitdir/%repo.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.dde-calendar/
-%_datadir/dsg/configs/org.deepin.dde-calendar/org.deepin.dde-calendar.json
+%dir %_datadir/dsg/configs/org.deepin.dde.calendar/
+%_datadir/dsg/configs/org.deepin.dde.calendar/org.deepin.dde.calendar*.json
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.dde.calendar.json
 
 %changelog
+* Thu Nov 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.29-alt1
+- New version 6.5.29.
+
 * Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.28-alt1
 - New version 6.5.28.
 
