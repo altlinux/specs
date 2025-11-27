@@ -7,10 +7,12 @@
 %def_disable check
 %endif
 
+# tls as no,module,yes
+%define tls yes
 
 Name: valkey
 Version: 8.1.4
-Release: alt1
+Release: alt2
 
 Summary: A persistent key-value database
 License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
@@ -35,6 +37,10 @@ BuildRequires: /proc /dev/pts
 Provides: %name-server = %EVR
 Provides: %name-sentinel = %EVR
 Provides: %name-cli = %EVR
+%if "%tls" == "yes"
+Provides: %name-tls = %EVR
+Obsoletes: %name-tls < %EVR
+%endif
 
 %global valkey_modules_dir %_libdir/%name/modules
 %global valkey_modules_cfg %_sysconfdir/%name/modules
@@ -126,18 +132,6 @@ sed -e 's/--with-lg-quantum/--with-lg-page=12 --with-lg-quantum/' -i deps/Makefi
 sed -e 's/--with-lg-quantum/--with-lg-page=16 --with-lg-quantum/' -i deps/Makefile
 %endif
 
-sed -i \
-  -e 's|^logfile .*$|logfile /var/log/valkey/valkey.log|g' \
-  -e 's|^# unixsocket .*$|unixsocket /run/valkey/valkey.sock|g' \
-  -e 's|^pidfile .*$|pidfile /run/valkey/valkey.pid|g' \
-  -e 's|^# include .*$|include /etc/valkey/modules/*.conf|' \
-  valkey.conf
-
-sed -i \
-  -e 's|^logfile .*$|logfile /var/log/valkey/sentinel.log|g' \
-  -e 's|^pidfile .*$|pidfile /run/valkey/sentinel.pid|g' \
-  sentinel.conf
-
 %build
 # For e2k - force use libc malloc instead jemalloc (see #35473)
 USE_MALLOC=
@@ -146,8 +140,15 @@ USE_MALLOC="USE_JEMALLOC=no MALLOC=libc"
 %else
 USE_MALLOC="USE_JEMALLOC=yes"
 %endif
+%if "%tls" == "yes"
+BUILD_TLS="BUILD_TLS=yes"
+%elif "%tls" == "module"
+BUILD_TLS="BUILD_TLS=module"
+%else
+BUILD_TLS=""
+%endif
 
-%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC BUILD_TLS=module USE_SYSTEMD=yes BUILD_RDMA=module
+%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC $BUILD_TLS USE_SYSTEMD=yes BUILD_RDMA=module
 
 %make_build %make_flags all
 
@@ -183,6 +184,7 @@ __EOF__
 
 install -pm755 src/valkey-rdma.so %buildroot%valkey_modules_dir/rdma.so
 
+%if "%tls" == "module"
 # TLS configuration file
 cat <<__EOF__ >%buildroot%valkey_modules_cfg/tls.conf
 # TLS module
@@ -190,6 +192,7 @@ loadmodule %valkey_modules_dir/tls.so
 __EOF__
 
 install -pm755 src/valkey-tls.so %buildroot%valkey_modules_dir/tls.so
+%endif
 
 # compat systemd symlinks
 ln -sr %buildroot%_unitdir/%name.service %buildroot%_unitdir/redis.service
@@ -197,11 +200,23 @@ ln -sr %buildroot%_unitdir/%name-sentinel.service %buildroot%_unitdir/redis-sent
 
 %check
 ./utils/gen-test-certs.sh
-./runtest --verbose --dump-logs --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skiptest "CONFIG SET rollback on apply error" --tls --tls-module
+./runtest --verbose --dump-logs --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skiptest "CONFIG SET rollback on apply error" \
+%if "%tls" == "yes"
+--tls \
+%elif "%tls" == "module"
+--tls --tls-module \
+%endif
+%nil
+
 %ifnarch ppc64 ppc64le
 ./runtest-moduleapi
 %endif
-timeout 120m ./runtest-cluster --tls
+timeout 120m ./runtest-cluster \
+%if "%tls" == "yes"
+--tls \
+%endif
+%nil
+
 ./runtest-sentinel
 
 %pre
@@ -237,9 +252,11 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %config(noreplace) %attr(0640, %valkey_user, %valkey_group) %valkey_modules_cfg/rdma.conf
 %valkey_modules_dir/rdma.so
 
+%if "%tls" == "module"
 %files tls
 %config(noreplace) %attr(0640, %valkey_user, %valkey_group) %valkey_modules_cfg/tls.conf
 %valkey_modules_dir/tls.so
+%endif
 
 %files compat-redis
 %_bindir/redis-*
@@ -253,6 +270,10 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Wed Nov 26 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.4-alt2
+- Fixed load modules without execute permissions (ALT#57024).
+- Drop sub-package for TLS module: TLS as module not supported by sentinel.
+
 * Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.4-alt1
 - New version 8.1.4 (Fixes: CVE-2025-49844, CVE-2025-46817, CVE-2025-46818, CVE-2025-46819).
 - Add /etc/valkey/modules drop-in directory for module configuration files.
