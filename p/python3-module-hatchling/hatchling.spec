@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name hatchling
+%define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.27.0
+Version: 1.28.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -13,7 +14,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: pyproject_deps.json
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject
@@ -41,10 +43,13 @@ BuildRequires(pre): rpm-build-pyproject
 %files
 %doc README.md
 %_bindir/hatchling
-%python3_sitelibdir/hatchling/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 1.28.0-alt1
+- 1.27.0 -> 1.28.0.
+
 * Mon Dec 16 2024 Stanislav Levin <slev@altlinux.org> 1.27.0-alt1
 - 1.26.3 -> 1.27.0.
 
