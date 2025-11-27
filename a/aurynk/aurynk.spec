@@ -2,7 +2,7 @@
 
 Name: aurynk
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Wirelessly connect, manage and control your Android devices from Linux
 License: GPL-3.0-or-later
@@ -30,6 +30,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+Patch: %name-%version-%release.patch
+
 %description
 Aurynk is a modern Android device manager for Linux that allows you to
 wirelessly pair and manage your Android devices using ADB (Android Debug Bridge).
@@ -44,6 +46,7 @@ Features:
 
 %prep
 %setup
+%patch -p1
 sed -i "s|Categories=.*|Categories=Network;RemoteAccess;|" data/io.github.IshuSinghSE.aurynk.desktop.in
 sed -i "s|data/icons/io.github.IshuSinghSE.aurynk.png|%_iconsdir/hicolor/128x128/apps/io.github.IshuSinghSE.aurynk.png|" README.md
 sed -i "s|data/screenshots/|screenshots/|g" README.md
@@ -110,8 +113,10 @@ rm -v %buildroot/usr/lib/python3/site-packages/scripts/aurynk_tray.py
 %_datadir/%name/*
 %_datadir/metainfo/io.github.IshuSinghSE.aurynk.metainfo.xml
 %python3_sitelibdir/%name/
-#%%python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Thu Nov 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt2
+- Put aurynk_tray.py into correct location, and enabled tray icon.
+
 * Wed Nov 26 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
