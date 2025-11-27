@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Weather
 
 Name: alt-weather
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -62,6 +62,9 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
+* Thu Nov 27 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.5-alt1
+- fixed translations
+
 * Thu Nov 27 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.4-alt1
 - better location search
 - disabled location detection for gismeteo
