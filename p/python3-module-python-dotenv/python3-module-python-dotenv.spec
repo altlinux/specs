@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 
 Provides: python3-module-%oname = %EVR
@@ -63,6 +63,9 @@ rm -f src/dotenv/ipython.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 27 2025 Vladimir Didenko <cow@altlinux.org> 1.2.1-alt1
+- new version
+
 * Thu Jun 26 2025 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt1
 - new version
 
