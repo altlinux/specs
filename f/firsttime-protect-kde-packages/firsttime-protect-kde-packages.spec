@@ -1,5 +1,5 @@
 Name: firsttime-protect-kde-packages
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,5 +27,8 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Fri Nov 28 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
+- fix script startup
+
 * Fri Nov 28 2025 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
