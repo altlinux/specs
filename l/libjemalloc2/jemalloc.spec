@@ -5,7 +5,7 @@
 
 Name: libjemalloc2
 Version: 5.3.0
-Release: alt2
+Release: alt2.1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -109,6 +109,9 @@ rm -r %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 28 2025 Paul Wolneykien <manowar@altlinux.org> 5.3.0-alt2.1
+- Added a note about CWE-489 fixed in 5.3.0.
+
 * Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 5.3.0-alt2
 - Backported fix for delete.
 
@@ -117,6 +120,8 @@ rm -r %buildroot%_libdir/*.a
 
 * Wed Oct 12 2022 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
 - 5.2.1 -> 5.3.0.
+- Don't ship debug and profiling version of library (Fixes: OVE-20251128-0004:
+  exclude Active Debug Code (CWE-489)).
 
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt1
 - Updated to upstream version 5.2.1
