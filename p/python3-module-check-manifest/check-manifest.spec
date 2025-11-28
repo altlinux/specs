@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.50
+Version: 0.51
 Release: alt1
 Summary: Check MANIFEST.in in a Python source package for completeness
 License: MIT
@@ -58,6 +58,9 @@ If so, check-manifest is for you.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 28 2025 Stanislav Levin <slev@altlinux.org> 0.51-alt1
+- 0.50 -> 0.51.
+
 * Sat Dec 28 2024 Stanislav Levin <slev@altlinux.org> 0.50-alt1
 - 0.37 -> 0.50.
 
