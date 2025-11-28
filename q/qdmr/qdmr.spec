@@ -1,6 +1,6 @@
 
 Name: qdmr
-Version: 0.12.3
+Version: 0.13.1
 Release: alt1
 
 Summary: GUI application and command-line-tool to program DMR radios
@@ -11,16 +11,19 @@ Url: https://dm3mat.darc.de/qdmr
 Vcs: https://github.com/hmatuschek/qdmr.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
+
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libusb-devel
 BuildRequires: libyaml-cpp-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-location-devel
-BuildRequires: qt5-serialport-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: rpm-macros-cmake
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-location-devel
+BuildRequires: qt6-serialport-devel
+BuildRequires: qt6-tools-devel
+
 BuildRequires: findutils
+BuildRequires: librsvg-utils
 
 %description
 QDMR is a friendly code-plug programming software for DMR radios.
@@ -40,7 +43,7 @@ binary formats.
 %package -n libdmrconf-devel
 Summary: DMR radios programming library - development files
 Group: Development/KDE and QT
-Requires: qt5-base-devel
+Requires: qt6-base-devel
 Requires: libyaml-cpp-devel
 
 %description -n libdmrconf-devel
@@ -83,6 +86,9 @@ with libdmrconf. It is not required for QDMR users.
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Fri Nov 28 2025 Ivan A. Melnikov <iv@altlinux.org> 0.13.1-alt1
+- v0.13.1
+
 * Sun Jun 01 2025 Ivan A. Melnikov <iv@altlinux.org> 0.12.3-alt1
 - v0.12.3.
 
