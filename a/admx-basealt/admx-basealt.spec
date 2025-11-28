@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,12 @@ done
 %_destdir
 
 %changelog
+* Mon Nov 24 2025 Valentin Sokolov <sova@altlinux.org> 0.7.0-alt1
+- Added new policy: gpupdate_allow_trust_user_policy
+- Added a policy for enabling GPUpdate plugins
+- Added GPUpdate plugins list policy for machine and user
+- Added greeter background policy
+
 * Thu Aug 14 2025 Valentin Sokolov <sova@altlinux.org> 0.6.0-alt1
 - Added disable cifsacl policy for user
 - Improved name Gnome -> GNOME in all policies
