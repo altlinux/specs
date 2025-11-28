@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.28
+Version: 0.1.29
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -37,6 +37,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Nov 28 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt1
+- Add a new option - exit_status. Methods no longer return an exit_status by
+  default. To add the 'response' return value to a method, you need to add an
+  'exit_status = true' to the method definition in configuration file.
+
 * Thu Sep 11 2025 Ivan Savin <svn17@altlinux.org> 0.1.28-alt1
 - Add the ability to create return values of type array of strings in methods
   with multiple return values. The names of these values are specified in the

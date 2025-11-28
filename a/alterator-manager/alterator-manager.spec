@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.32
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,9 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Fri Nov 28 2025 Ivan Savin <svn17@altlinux.org> 0.1.32-alt2
+- Update docs/modules/executor(-ru).md.
+
 * Tue Nov 25 2025 Ivan Savin <svn17@altlinux.org> 0.1.32-alt1
 - Introduce helpers to simplify unit tests:
   + backends: expose get_data(), add clear() to reset state, and
