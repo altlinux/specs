@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      d842d7719497cc3b774fd71620278ac9e17710e0
+%global commit      8bd78a9977e604c4d5f67a7415d7b8b8c109cdc4
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.3.3
+Version:        1.4.0
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -24,10 +24,6 @@ URL:            https://%provider_prefix
 ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
-
-# Patches for loongarch64:
-Patch1:         seccomp-upstream-support-missing-arches.patch
-Patch2:         runc-alt-libcontainer-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -43,7 +39,6 @@ and to manage containers running under runc.
 
 %prep
 %setup -q
-%autopatch -p1
 sed -i 's/ -trimpath//g' Makefile
 sed -i '/\#\!\/bin\/bash/d' contrib/completions/bash/%name
 
@@ -75,6 +70,10 @@ install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Nov 28 2025 Vladimir Didenko <cow@altlinux.ru> 1.4.0-alt1
+- New version
+- Drop loongarch patches since it is already fixed by upstream
+
 * Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.ru> 1.3.3-alt1
 - New version (Fixes: CVE-2025-31133, CVE-2025-52565, CVE-2025-52881)
 
