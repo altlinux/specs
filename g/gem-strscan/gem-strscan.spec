@@ -6,8 +6,8 @@
 %define        gemname strscan
 
 Name:          gem-strscan
-Version:       3.1.1
-Release:       alt0.1
+Version:       3.1.5
+Release:       alt1
 Summary:       Provides lexical scanning operations on a String
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
@@ -26,7 +26,7 @@ BuildRequires: gem(test-unit-ruby-core) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(strscan) = 3.1.1
+Provides:      gem(strscan) = 3.1.5
 
 
 %description
@@ -35,14 +35,14 @@ Provides lexical scanning operations on a String.
 
 %if_enabled    devel
 %package       -n gem-strscan-devel
-Version:       3.1.1
-Release:       alt0.1
+Version:       3.1.5
+Release:       alt1
 Summary:       Provides lexical scanning operations on a String development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета strscan
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(strscan) = 3.1.1
+Requires:      gem(strscan) = 3.1.5
 Requires:      gem(benchmark-driver) >= 0
 Requires:      gem(rake-compiler) >= 0
 %{?_enable_java:Requires: gem(ruby-maven) >= 0}
@@ -73,6 +73,7 @@ Provides lexical scanning operations on a String development package.
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
+%ruby_gemdocdir
 
 %if_enabled    devel
 %files         -n gem-strscan-devel
@@ -80,5 +81,8 @@ Provides lexical scanning operations on a String development package.
 
 
 %changelog
+* Fri Nov 28 2025 Alexander Danilov <admsasha@altlinux.org> 3.1.5-alt1
+- ^ 3.1.1 -> 3.1.5
+
 * Fri May 24 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt0.1
 - + packaged gem with Ruby Policy 2.0
