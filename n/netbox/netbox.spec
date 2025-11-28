@@ -2,7 +2,7 @@
 
 Name:    netbox
 Version: 4.4.7
-Release: alt1
+Release: alt2
 
 Summary: The premier source of truth powering network automation
 License: Apache-2.0
@@ -157,6 +157,7 @@ install -p -D -m 755 %SOURCE5 %buildroot%_bindir/upgrade_netbox
 
 %pre
 groupadd -r -f netbox >/dev/null 2>&1 ||:
+groupadd -r -f _webserver >/dev/null 2>&1 ||:
 useradd -M -r -g netbox -G _webserver -c 'NetBox Broker Daemon' \
         -s /bin/false  -d %_sharedstatedir/netbox netbox >/dev/null 2>&1 ||:
 
@@ -208,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Fri Nov 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.7-alt2
+- Create _webserver group before useradd (ALT #55740).
+
 * Wed Nov 26 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.7-alt1
 - New 4.4.7 version.
 
