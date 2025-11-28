@@ -1,5 +1,5 @@
 Name: pi-hole-web
-Version: 6.3
+Version: 6.4
 Release: alt1
 
 Summary: Pi-hole Dashboard for stats and more
@@ -31,6 +31,9 @@ rm %buildroot/var/www/html/admin/package*.json
 /var/www/html/admin/
 
 %changelog
+* Fri Nov 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.4-alt1
+- 6.4
+
 * Wed Oct 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.3-alt1
 - 6.3
 
