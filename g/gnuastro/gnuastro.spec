@@ -4,7 +4,7 @@
 
 Name: gnuastro
 Version: 0.24
-Release: alt1
+Release: alt2
 Summary: GNU Astronomy Utilities
 License: GPLv3+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -107,6 +107,15 @@ mv -v %buildroot/%_datadir/%name/completion.bash %buildroot/%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Nov 28 2025 Ilya Mashkin <oddity@altlinux.ru> 0.24-alt2
+- Fixed "crush"/"segfault" of astwarp (Closes: #54560)
+- Fixed "crush"/"segfault" of astsegment (Closes: #54559)
+- Fixed "crush"/"segfault" of astnoisechisel (Closes: #54558)
+- Fixed "crush"/"segfault" of astmkprof (Closes: #54557)
+- Fixed "crush"/"segfault" of astconvolve (Closes: #54556)
+- Fixed "crush"/"segfault" of astconvertt (Closes: #54555)
+- Fixed "crush"/"segfault" of astarithmetic (Closes: #54554)
+
 * Fri Nov 28 2025 Ilya Mashkin <oddity@altlinux.ru> 0.24-alt1
 - 0.24
 
