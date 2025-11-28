@@ -22,8 +22,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-%target_arch
-Version: 20250808
-Release: alt2
+Version: 20251114
+Release: alt1
 Summary: UEFI firmware for %target_arch virtual machines
 
 License: BSD-2-Clause-Patent
@@ -134,6 +134,9 @@ install -pm 644 -t %buildroot%_datadir/qemu/firmware \
 %_datadir/qemu/firmware/*edk2-%{target_arch}*.json
 
 %changelog
+* Mon Nov 24 2025 Ivan A. Melnikov <iv@altlinux.org> 20251114-alt1
+- edk2-stable202511
+
 * Sat Oct 04 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt2
 - ship raw images on riscv64
 
