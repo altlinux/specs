@@ -6,7 +6,7 @@
 %define appname io.elementary.settings-daemon
 
 Name: elementary-settings-daemon
-Version: 8.3.1
+Version: 8.4.0
 Release: alt1
 
 Summary: Keep session settings in sync
@@ -61,6 +61,8 @@ components
 %_unitdir/%{appname}.check-for-firmware-updates.service
 %_unitdir/%{appname}.check-for-firmware-updates.timer
 %_userunitdir/%{appname}.xdg-desktop-portal.service
+%_userunitdir/%{appname}.system-update.service
+%_userunitdir/%{appname}.system-update.timer
 %_datadir/accountsservice/interfaces/io.elementary.SettingsDaemon.AccountsService.xml
 %_desktopdir/%{appname}.desktop
 %_datadir/dbus-1/interfaces/io.elementary.SettingsDaemon.AccountsService.xml
@@ -68,7 +70,12 @@ components
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_datadir/metainfo/%{appname}.metainfo.xml
 %_datadir/xdg-desktop-portal/portals/%{appname}.portal
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/io.elementary.settings-daemon.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/io.elementary.settings-daemon.mo
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.4.0-alt1
+- New version 8.4.0.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.3.1-alt1
 - Initial build for Sisyphus

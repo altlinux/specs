@@ -3,8 +3,10 @@
 
 %define appname io.elementary.monitor
 
+%def_with check
+
 Name: elementary-monitor
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 
 Summary: Manage processes and monitor system resources.
@@ -34,6 +36,10 @@ BuildRequires: pkgconfig(livechart-2)
 BuildRequires: pkgconfig(libpci)
 BuildRequires: libxnvctrl-devel
 
+%if_with check
+BuildRequires: /usr/bin/xvfb-run
+%endif
+
 %description
 Manage processes and monitor system resources on the Pantheon/Elementary.
 
@@ -53,7 +59,7 @@ sed -i 's|^Categories=.*|Categories=GTK;System;Monitor;|' data/monitor.desktop.i
 %find_lang %name --all-name
 
 %check
-%meson_test
+xvfb-run %meson_test
 
 %files -f %{name}.lang
 %doc AUTHORS LICENSE README.md
@@ -61,14 +67,17 @@ sed -i 's|^Categories=.*|Categories=GTK;System;Monitor;|' data/monitor.desktop.i
 %_desktopdir/%{appname}.desktop
 %_iconsdir/hicolor/*/apps/%{appname}.svg
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
-%_datadir/metainfo/%{appname}.appdata.xml
-%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/io.elementary.monitor.mo
-%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/io.elementary.monitor.mo
+%_datadir/metainfo/%{appname}.metainfo.xml
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/%{appname}.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/%{appname}.mo
 %dir %_datadir/%{appname}/
 %dir %_datadir/%{appname}/database/
 %_datadir/%{appname}/database/cpu_bugs.csv
 %_datadir/%{appname}/database/cpu_features.csv
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
+- New version 8.0.1.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt1
 - Initial build for Sisyphus

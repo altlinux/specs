@@ -4,7 +4,7 @@
 %define appname io.elementary.notifications
 
 Name: elementary-notifications
-Version: 8.1.1
+Version: 8.1.2
 Release: alt1
 
 Summary: Gtk Notifications Server
@@ -56,6 +56,9 @@ Gtk notification server for Pantheon
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.2-alt1
+- New version 8.1.2.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.1-alt1
 - New version 8.1.1.
 

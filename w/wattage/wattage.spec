@@ -3,7 +3,7 @@
 %define appname io.github.v81d.Wattage
 
 Name: wattage
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Application designed for monitoring the health and status of your power devices
@@ -58,5 +58,8 @@ sed -i "s|data/icons|/usr/share/icons|" README.md
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Tue Nov 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus

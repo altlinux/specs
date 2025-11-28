@@ -4,7 +4,7 @@
 %define appname io.elementary.onboarding
 
 Name: elementary-onboarding
-Version: 8.0.3
+Version: 8.0.4
 Release: alt1
 
 Summary: Onboarding app for new users
@@ -56,5 +56,8 @@ OS.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.4-alt1
+- New version 8.0.4.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
 - Initial build for Sisyphus

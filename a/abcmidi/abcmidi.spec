@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: abcmidi
-Version: 2025.06.27
+Version: 2025.11.26
 Release: alt1
 
 Summary: Converter from ABC to MIDI format and back
@@ -47,5 +47,8 @@ PostScript code together with the ABC parser from the abcmidi package.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 2025.11.26-alt1
+- New version 2025.11.26.
+
 * Thu Jul 03 2025 Nikolay Strelkov <snk@altlinux.org> 2025.06.27-alt1
 - Initial build for Sisyphus
