@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.3
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -84,7 +84,7 @@ Patch109: alt-def-start-empty-session.patch
 Patch110: alt-check-donat-auth.patch
 Patch111: alt-return-trash-desktop.patch
 Patch112: alt-desktopnames.patch
-#
+Patch113: alt-menueditor.patch
 Patch114: alt-menu-search-results-add-genericname.patch
 #
 Patch117: alt-klipper-help-url.patch
@@ -300,7 +300,7 @@ Requires: %name-common >= %EVR
 %patch110 -p1
 %patch111 -p1
 %patch112 -p1
-#
+%patch113 -p1
 %patch114 -p1
 #
 %patch117 -p1
@@ -578,6 +578,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Nov 28 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt3
+- fix using kmenuedit with new menu
+
 * Mon Nov 24 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt2
 - package own plasma menu structure
 
