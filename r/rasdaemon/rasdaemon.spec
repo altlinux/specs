@@ -5,8 +5,8 @@
 %set_verify_elf_method strict
 
 Name: rasdaemon
-Version: 0.8.3
-Release: alt3
+Version: 0.8.4
+Release: alt1
 Summary: Utility to receive RAS error tracings
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -15,6 +15,7 @@ Source0: %name-%version.tar.gz
 
 Source1: rasdaemon.init
 
+BuildRequires: libpci-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libtraceevent-devel
 BuildRequires: rpm-build-perl
@@ -106,8 +107,13 @@ fi
 %_unitdir/ras*.service
 %_man1dir/rasdaemon.1*
 %_man8dir/ras-mc-ctl.8*
+%_datadir/bash-completion/completions/ras-mc-ctl
+%_datadir/zsh/site-functions/_ras-mc-ctl
 
 %changelog
+* Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.8.4-alt1
+- Update to 0.8.4 (2025-11-20).
+
 * Tue May 06 2025 Sergey Y. Afonin <asy@altlinux.org> 0.8.3-alt3
 - Again fixed reading configuration for sysvinit script start action (ALT#53451)
 - More accurate check for mounted debugfs in sysvinit script
