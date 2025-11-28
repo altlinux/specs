@@ -3,7 +3,7 @@
 
 Name: nuclei
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: Nuclei is a modern vulnerability scanner built on a simple YAML-based DSL
 
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/nuclei
 
 %changelog
+* Fri Nov 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.5.1-alt2
+- vendor cleanup
+
 * Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.5.1-alt1
 - 3.4.7 -> 3.5.1
 
