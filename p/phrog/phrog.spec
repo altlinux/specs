@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 0.46
+%define ver_major 0.50
 %define xdg_name mobi.phosh.Phrog
 %define rdn_name mobi.phosh.phrog
 
@@ -11,7 +11,7 @@
 
 Name: phrog
 Version: %ver_major.0
-Release: alt0.6
+Release: alt1
 
 Summary: Mobile device greeter
 Group: Graphical desktop/GNOME
@@ -32,8 +32,9 @@ Source1: %name-%version-cargo.tar
 Provides: greetd-greeter
 
 Requires: greetd accountsservice
-Requires: dconf osk-wayland font(lato)
+Requires: dconf font(lato)
 Requires: /usr/bin/phoc /usr/bin/gnome-session
+Requires: %_userunitdir/mobi.phosh.OSK.service
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -93,6 +94,9 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %doc README*
 
 %changelog
+* Fri Nov 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.50.0-alt1
+- 0.50.0
+
 * Thu Oct 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt0.6
 - 0.46.0-16-g07ec9c2 (adapted to gnome-session-49)
 
