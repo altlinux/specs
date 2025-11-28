@@ -3,8 +3,8 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.6.12.0.318.1fab
-Release: alt2
+Version: 6.0.51
+Release: alt1
 Epoch: 1
 
 Summary: Deepin desktop-environment - Session shell module
@@ -80,8 +80,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %install
 %DQ6install
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
+%doc LICENSE README.md
 %dir %_sysconfdir/deepin/
 %dir %_sysconfdir/deepin/greeters.d/
 %config(noreplace) %_sysconfdir/deepin/greeters.d/00-xrandr
@@ -94,7 +96,13 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/deepin-greeter
 %_bindir/lightdm-deepin-greeter
 %_bindir/dde-lock
-%_datadir/%repo/
+%dir %_datadir/dde-session-shell/
+%_datadir/dde-session-shell/dde-session-shell.conf
+%dir %_datadir/dde-session-shell/greeters.d/
+%_datadir/dde-session-shell/greeters.d/pre-greeter
+%dir %_datadir/dde-session-shell/translations/
+%_datadir/dde-session-shell/translations/dde-session-shell.qm
+%_datadir/dde-session-shell/translations/dde-session-shell_ky@Arab.qm
 %_desktopdir/dde-lock.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/xgreeters/lightdm-deepin-greeter.desktop
@@ -127,6 +135,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Fri Nov 28 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.0.51-alt1
+- New version 6.0.51 (see dde-session-shell-snipe).
+- Use system-auth-common for dde-lock.
+
 * Fri Nov 21 2025 Leontiy Volodin <lvol@altlinux.org> 1:5.6.12.0.318.1fab-alt2
 - New version 5.6.12-318-g1fab1fab.
 
