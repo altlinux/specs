@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 #add_python3_self_prov_path %buildroot%python3_sitelibdir/gpoa
 
+%add_python3_req_skip applaer.systemd
 %add_python3_req_skip backend
 %add_python3_req_skip frontend.frontend_manager
 %add_python3_req_skip gpt.envvars
@@ -34,9 +35,11 @@
 %add_python3_req_skip util.windows
 %add_python3_req_skip util.xml
 %add_python3_req_skip util.gpoa_ini_parsing
+%add_python3_req_skip util.ipacreds
+%add_python3_req_skip frontend.appliers.ini_file
 
 Name: gpupdate
-Version: 0.13.4
+Version: 0.14.0
 Release: alt1
 
 Summary: GPT applier
@@ -63,10 +66,13 @@ Requires: dconf-profile
 Requires: packagekit
 Requires: dconf
 Requires: libgvdb-gir
+Requires: freeipa-client-samba
 # This is needed by shortcuts_applier
 Requires: desktop-file-utils
 # This is needed for smb file cache support
 Requires: python3-module-smbc >= 1.0.23-alt3
+# This is needed for laps
+Requires: python3-module-libcng_dpapi
 
 Source0: %name-%version.tar
 
@@ -87,6 +93,12 @@ cp -r gpoa \
 msgfmt \
 	-o %buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.mo \
 	%buildroot%python3_sitelibdir/gpoa/locale/ru_RU/LC_MESSAGES/gpoa.po
+
+# Generate plugin translations
+for po_file in %buildroot%python3_sitelibdir/gpoa/frontend_plugins/locale/*/LC_MESSAGES/*.po; do
+	mo_file="${po_file%.po}.mo"
+	msgfmt -o "$mo_file" "$po_file"
+done
 
 mkdir -p \
 	%buildroot%_bindir/ \
@@ -199,6 +211,25 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Nov 27 2025 Valery Sinelnikov <greh@altlinux.org> 0.14.0-alt1
+- Added:
+  Comprehensive plugin development documentation in English and Russian
+  GDM backup and restore functionality
+  FreeIPA backend configuration and authentication
+  libcng-dpapi dependency for LAPS support
+  systemd-logind dependency to gpupdate service
+  DMApplier plugin for display manager configuration
+- Changed:
+  Refactored plugin system infrastructure
+  Optimized FreeIPA backend and configuration
+- Fixed:
+  GPO downloading and error handling
+  Firewall reset command path safety check
+  LAPS applier encryption mechanism
+  Drive letters from GPO application instead of labels
+  GPO processing with trusted domain support
+  Shortcuts created via GPO are now marked as trusted (closes:56019)
+
 * Mon Aug 25 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.4-alt1
 - Added:
   Production-ready modules: CUPS, file management, INI config (default),
