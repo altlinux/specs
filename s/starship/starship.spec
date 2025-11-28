@@ -6,7 +6,7 @@
 
 Name: starship
 Version: 1.24.1
-Release: alt1
+Release: alt2
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
 Group: Shells
@@ -56,6 +56,9 @@ cargo test -- --skip expiration_date_set
 %doc LICENSE
 
 %changelog
+* Fri Nov 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.24.1-alt2
+- Removed illegal content from README files.
+
 * Sat Nov 22 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.24.1-alt1
 - Updated to version 1.24.1.
 
@@ -89,4 +92,3 @@ cargo test -- --skip expiration_date_set
 
 * Sun Nov 20 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.11.0-alt1
 - Initial build for ALT
-
