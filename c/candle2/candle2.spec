@@ -4,7 +4,7 @@
 
 Name: candle2
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Summary: GRBL control interface in Qt
 License: GPL-3.0-only
@@ -16,6 +16,7 @@ VCS: https://github.com/Schildkroet/Candle2
 Source: %name-%version.tar
 Patch0: alt-fix-app-startup-errors.patch
 Patch1: alt-fix-incorrect-window-scaling.patch
+Patch2: alt-add-external-qmake-vars.patch
 
 BuildRequires: qt5-serialport-devel
 
@@ -36,7 +37,12 @@ Supported functions:
 %autopatch -p1
 
 %build
-%qmake_qt5 -o Makefile src/candle2.pro
+%qmake_qt5 \
+    APP_VERSION=%version \
+    APP_DATADIR=%_datadir/%name \
+    APP_DOCDIR=%_defaultdocdir/%name-%version \
+    -o Makefile src/candle2.pro \
+    #
 %make_build
 
 %install
@@ -72,12 +78,19 @@ EOF
 %__install -Dpm 644 %name.desktop %buildroot%_desktopdir/
 
 %files
+%doc Readme.md LICENSE
 %_bindir/%name
 %candle2_prefix
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/**/apps/%name.png
 
 %changelog
+* Thu Nov 27 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4-alt3
+- renamed the application window title from "candle2-bin" to "Candle2"
+- fixed missing license text in the application help
+- fixed the version displayed in the application help (closes: 57038)
+- fixed application window scaling on 1024x768 displays
+
 * Mon Nov 24 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4-alt2
 - fixed errors on launch and the transparent window
   that appeared in place of the model (closes: 56510)
