@@ -3,7 +3,7 @@
 %define sover 17
 
 Name: libfm-qt6
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -72,6 +72,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 28 2025 Anton Midyukov <antohami@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
