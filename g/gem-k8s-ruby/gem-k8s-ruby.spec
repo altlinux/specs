@@ -5,68 +5,70 @@
 %define        gemname k8s-ruby
 
 Name:          gem-k8s-ruby
-Version:       0.16.0
+Version:       0.17.2
 Release:       alt1
 Summary:       Kubernetes client library for Ruby
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/k8s-ruby/k8s-ruby
 Vcs:           https://github.com/k8s-ruby/k8s-ruby.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(yaml-safe_load_stream3) >= 0
+BuildRequires: gem(base64) >= 0
 BuildRequires: gem(bundler) >= 1.17
-BuildRequires: gem(rake) >= 12.3.3
-BuildRequires: gem(rspec) >= 3.7
-BuildRequires: gem(webmock) >= 3.6.2
-BuildRequires: gem(rubocop) >= 0.82
 BuildRequires: gem(byebug) >= 11.1
-BuildRequires: gem(excon) >= 0.71
+BuildRequires: gem(dry-configurable) >= 0
 BuildRequires: gem(dry-struct) >= 0
 BuildRequires: gem(dry-types) >= 0
-BuildRequires: gem(dry-configurable) >= 0
-BuildRequires: gem(recursive-open-struct) >= 1.1.3
-BuildRequires: gem(hashdiff) >= 1.0.0
+BuildRequires: gem(excon) >= 0.71
+BuildRequires: gem(hashdiff) >= 1.0
 BuildRequires: gem(jsonpath) >= 1.1
-BuildRequires: gem(yajl-ruby) >= 1.4.0
-BuildConflicts: gem(yaml-safe_load_stream3) > 0.1.2
+BuildRequires: gem(rake) >= 12.3.3
+BuildRequires: gem(recursive-open-struct) >= 1.1.3
+BuildRequires: gem(rspec) >= 3.7
+BuildRequires: gem(rubocop) >= 0.82
+BuildRequires: gem(webmock) >= 3.6
+BuildRequires: gem(yajl-ruby) >= 1.4
+BuildRequires: gem(yaml-safe_load_stream3) >= 0
 BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(webmock) >= 4
-BuildConflicts: gem(rubocop) >= 2
-BuildConflicts: gem(byebug) >= 12
+BuildConflicts: gem(byebug) >= 13
 BuildConflicts: gem(excon) >= 1
-BuildConflicts: gem(recursive-open-struct) >= 1.2
-BuildConflicts: gem(hashdiff) >= 1.1
+BuildConflicts: gem(hashdiff) >= 2
 BuildConflicts: gem(jsonpath) >= 2
-BuildConflicts: gem(yajl-ruby) >= 1.5
+BuildConflicts: gem(recursive-open-struct) >= 2
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(webmock) >= 4
+BuildConflicts: gem(yajl-ruby) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency webmock >= 3.13.0,webmock < 4
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-Requires:      gem(yaml-safe_load_stream3) >= 0
-Requires:      gem(excon) >= 0.71
+%ruby_use_gem_dependency byebug >= 12.0,byebug < 13
+Requires:      ruby >= 2.4
+Requires:      gem(base64) >= 0
+Requires:      gem(dry-configurable) >= 0
 Requires:      gem(dry-struct) >= 0
 Requires:      gem(dry-types) >= 0
-Requires:      gem(dry-configurable) >= 0
-Requires:      gem(recursive-open-struct) >= 1.1.3
-Requires:      gem(hashdiff) >= 1.0.0
+Requires:      gem(excon) >= 0.71
+Requires:      gem(hashdiff) >= 1.0
 Requires:      gem(jsonpath) >= 1.1
-Requires:      gem(yajl-ruby) >= 1.4.0
-Conflicts:     gem(yaml-safe_load_stream3) > 0.1.2
+Requires:      gem(recursive-open-struct) >= 1.1.3
+Requires:      gem(yajl-ruby) >= 1.4
+Requires:      gem(yaml-safe_load_stream3) >= 0
 Conflicts:     gem(excon) >= 1
-Conflicts:     gem(recursive-open-struct) >= 1.2
-Conflicts:     gem(hashdiff) >= 1.1
+Conflicts:     gem(hashdiff) >= 2
 Conflicts:     gem(jsonpath) >= 2
-Conflicts:     gem(yajl-ruby) >= 1.5
-Provides:      gem(k8s-ruby) = 0.16.0
-
+Conflicts:     gem(recursive-open-struct) >= 2
+Conflicts:     gem(yajl-ruby) >= 2
+Provides:      gem(k8s-ruby) = 0.17.2
 
 %description
 Kubernetes client library for Ruby
@@ -74,14 +76,16 @@ Kubernetes client library for Ruby
 
 %if_enabled    doc
 %package       -n gem-k8s-ruby-doc
-Version:       0.16.0
+Version:       0.17.2
 Release:       alt1
 Summary:       Kubernetes client library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета k8s-ruby
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(k8s-ruby) = 0.16.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(k8s-ruby) = 0.17.2
 
 %description   -n gem-k8s-ruby-doc
 Kubernetes client library for Ruby documentation files.
@@ -93,25 +97,27 @@ Kubernetes client library for Ruby documentation files.
 
 %if_enabled    devel
 %package       -n gem-k8s-ruby-devel
-Version:       0.16.0
+Version:       0.17.2
 Release:       alt1
 Summary:       Kubernetes client library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета k8s-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(k8s-ruby) = 0.16.0
+Autoprov:      yes,noruby
+Autoreq:       yes,noruby
+Requires:      gem(k8s-ruby) = 0.17.2
 Requires:      gem(bundler) >= 1.17
+Requires:      gem(byebug) >= 11.1
 Requires:      gem(rake) >= 12.3.3
 Requires:      gem(rspec) >= 3.7
-Requires:      gem(webmock) >= 3.6.2
 Requires:      gem(rubocop) >= 0.82
-Requires:      gem(byebug) >= 11.1
+Requires:      gem(webmock) >= 3.6
 Conflicts:     gem(bundler) >= 3
+Conflicts:     gem(byebug) >= 13
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(webmock) >= 4
 Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(byebug) >= 12
+Conflicts:     gem(webmock) >= 4
 
 %description   -n gem-k8s-ruby-devel
 Kubernetes client library for Ruby development package.
@@ -134,22 +140,25 @@ Kubernetes client library for Ruby development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-k8s-ruby-doc
-%doc README.md
+%doc LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-k8s-ruby-devel
-%doc README.md
+%doc LICENSE README.md
 %endif
 
 
 %changelog
+* Fri Nov 28 2025 Pavel Skrylev <majioa@altlinux.org> 0.17.2-alt1
+- ^ 0.16.0 -> 0.17.2
+
 * Thu Apr 18 2024 Pavel Skrylev <majioa@altlinux.org> 0.16.0-alt1
 - + packaged gem with Ruby Policy 2.0
