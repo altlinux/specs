@@ -1,6 +1,6 @@
 Name: toru
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: Bittorrent streaming CLI tool. Stream anime torrents, real-time with no waiting for downloads.
 License: MIT
@@ -34,5 +34,8 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Nov 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.3-alt2
+- vendor cleanup
+
 * Mon May 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.3-alt1
 - Initial build for ALT Linux.
