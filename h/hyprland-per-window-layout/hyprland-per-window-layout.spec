@@ -1,6 +1,6 @@
 Name: hyprland-per-window-layout
 Version: 2.17
-Release: alt1
+Release: alt2
 Summary: Hyprland per window layout
 License: MIT
 Group: Graphical desktop/Other
@@ -30,6 +30,9 @@ Per window keyboard layout (language) for Hyprland wayland compositor.
 %doc LICENSE
 
 %changelog
+* Fri Nov 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.17-alt2
+- Removed illegal content from README file.
+
 * Sat Oct 25 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.17-alt1
 - Updated to version 2.17.
 
