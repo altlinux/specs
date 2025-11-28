@@ -1,67 +1,70 @@
+Name: libsuil
+Version: 0.10.24
+Release: alt1
+
+Summary: A lightweight C library for loading and wrapping LV2 plugin UIs
+License: ISC
 Group: System/Libraries
-%add_optflags %optflags_shared
-%define oldname suil
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%oldname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name suil
-%define version 0.10.18
-%define autorelease 1
+Url: https://gitlab.com/lv2/suil
 
-%global maj 0
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
+Source: %name-%version.tar
 
-Name:       libsuil
-Version:    0.10.18
-Release:    alt1_1
-Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
+BuildRequires: meson
+BuildRequires: pkgconfig(lv2)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-x11-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk+-x11-3.0)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: pkgconfig(Qt6Widgets)
 
-License:    ISC
-URL:        https://drobilla.net/software/%{oldname}
-Source0:    https://download.drobilla.net/%{oldname}-%{version}.tar.xz
-Patch0:     suil-0.10.18-no-gtk-quartz.patch
+%package gtk2
+Summary: suil gtk2 wrapper plugin
+Group: System/Libraries
+Requires: libsuil = %EVR
 
-BuildRequires:  doxygen
-BuildRequires:  graphviz libgraphviz
-BuildRequires:  lv2-devel >= 1.18.3
-BuildRequires:  meson >= 0.56
-# We need to track changes to these toolkits manually due to the
-# required filtering below.
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
-BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
-BuildRequires:  gcc-c++
-BuildRequires:  pkgconfig(Qt5Core) >= 5.1.0
-BuildRequires:  pkgconfig(Qt5Widgets) >= 5.1.0
-BuildRequires:  pkgconfig(Qt5X11Extras) >= 5.1.0
-#BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-#BuildRequires:  python3-module-sphinx_lv2_theme
+%package gtk3
+Summary: suil gtk3 wrapper plugin
+Group: System/Libraries
+Requires: libsuil = %EVR
 
-# Lets not necessarily pull in toolkits dependencies. They will be provided by
-# the host and/or the plugin.
-%define __requires_exclude ^lib.*$
-Source44: import.info
-Provides: suil = %{version}-%{release}
+%package qt5
+Summary: suil qt5 wrapper plugin
+Group: System/Libraries
+Requires: libsuil = %EVR
 
-%description
-%{oldname} makes it possible to load a UI of any toolkit in a host using any other
-toolkit (assuming the toolkits are both supported by %{oldname}). Hosts do not need
-to build against or link to foreign toolkit libraries to use UIs written with
-that toolkit (%{oldname} performs its magic at runtime using dynamically
-loaded modules).
+%package qt6
+Summary: suil qt6 wrapper plugin
+Group: System/Libraries
+Requires: libsuil = %EVR
 
 %package devel
-Group: Development/Other
-Summary:    Development libraries and headers for %{oldname}
-Requires:   %{name} = %{version}-%{release}
-Provides: suil-devel = %{version}-%{release}
+Summary: Development libraries and headers for suil
+Group: Development/C
 
-%description devel
-This package contains the headers and development libraries for %{oldname}.
+%define desc\
+suil makes it possible to load a UI of any toolkit in a host using any other\
+toolkit (assuming the toolkits are both supported by suil). Hosts do not need\
+to build against or link to foreign toolkit libraries to use UIs written with\
+that toolkit suil performs its magic at runtime using dynamically loaded modules.
+
+%description %desc
+
+%description gtk2 %desc
+
+%description gtk3 %desc
+
+%description qt5 %desc
+
+%description qt6 %desc
+
+%description devel %desc
+This package contains the headers and development libraries for suil.
 
 %prep
-%setup -n %{oldname}-%{version} -q
-%patch0 -p1
-
+%setup
 
 %build
 %meson
@@ -69,30 +72,34 @@ This package contains the headers and development libraries for %{oldname}.
 
 %install
 %meson_install
-#install -d "%{buildroot}%{_docdir}/%{oldname}"
-#mv -f "%{buildroot}%{_docdir}/%{oldname}-%{maj}" "%{buildroot}%{_docdir}/%{oldname}/"
 
 %files
-%doc AUTHORS NEWS README.md
-#exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}
-%doc --no-dereference COPYING
-%dir %{_libdir}/%{oldname}-%{maj}
-%{_libdir}/lib%{oldname}-*.so.%{maj}*
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_x11_in_gtk2.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_gtk2_in_qt5.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_x11_in_qt5.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_qt5_in_gtk2.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_x11.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_x11_in_gtk3.so
-%{_libdir}/%{oldname}-%{maj}/lib%{oldname}_qt5_in_gtk3.so
+%doc AUTHORS COPYING NEWS README.md
+%dir %_libdir/suil-0
+%_libdir/libsuil-0.so.*
+%_libdir/suil-0/libsuil_x11.so
+
+%files gtk2
+%_libdir/suil-0/libsuil_x11_in_gtk2.so
+
+%files gtk3
+%_libdir/suil-0/libsuil_x11_in_gtk3.so
+
+%files qt5
+%_libdir/suil-0/libsuil_x11_in_qt5.so
+
+%files qt6
+%_libdir/suil-0/libsuil_x11_in_qt6.so
 
 %files devel
-%{_libdir}/lib%{oldname}-%{maj}.so
-%{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
-%{_includedir}/%{oldname}-%{maj}/
-#%{_docdir}/%{oldname}/%{oldname}-%{maj}
+%_libdir/libsuil-0.so
+%_libdir/pkgconfig/suil-0.pc
+%_includedir/suil-0
 
 %changelog
+* Fri Nov 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.24-alt1
+- 0.10.24 released
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.10.18-alt1_1
 - update to new release by fcimport
 
