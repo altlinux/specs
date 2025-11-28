@@ -13,7 +13,7 @@
 
 Name: openuds-server
 Version: 4.0.0
-Release: alt5
+Release: alt6
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -179,6 +179,7 @@ python3 -m pytest
 
 %pre
 %_sbindir/groupadd -r -f openuds >/dev/null 2>&1 ||:
+%_sbindir/groupadd -r -f _webserver >/dev/null 2>&1 ||:
 %_sbindir/useradd -M -r -g openuds -G _webserver -c 'OpenUDS Brocker Daemon' \
         -s /bin/false  -d %_sharedstatedir/openuds openuds >/dev/null 2>&1 ||:
 
@@ -222,6 +223,10 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Fri Nov 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt6
+- Create _webserver group before useradd.
+- Add other PVE version compability.
+
 * Fri Nov 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt5
 - Fix deprecated request to PVE 9 (ALT #56944) (thx smasher@).
 
