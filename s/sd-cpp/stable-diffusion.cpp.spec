@@ -10,7 +10,7 @@
 %endif
 
 Name: sd-cpp
-Version: 20251107
+Version: 20251122
 Release: alt1
 Summary: Diffusion model (SD, Flux, Wan, Qwen Image) inference in pure C/C++
 License: MIT
@@ -94,6 +94,9 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp
 
 %changelog
+* Fri Nov 28 2025 Vitaly Chikunov <vt@altlinux.org> 20251122-alt1
+- Update to master-377-2034588 (2025-11-22).
+
 * Sun Nov 09 2025 Vitaly Chikunov <vt@altlinux.org> 20251107-alt1
 - Update to master-350-c2d8ffc (2025-11-07).
 - Added Qwen-Image support.
