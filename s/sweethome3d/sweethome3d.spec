@@ -1,4 +1,4 @@
-ExcludeArch: %arm
+ExcludeArch: %arm %ix86
 #ExclusiveArch: %{ix86} x86_64
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		sweethome3d
 Version:	7.5
-Release:	alt1
+Release:	alt1.1
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
 Group:		Graphics
@@ -42,8 +42,6 @@ Patch0:		sweethome3d-6.6.4-nomacosx.patch
 Patch1:		sweethome3d-6.0-build_xml.patch
 Patch2:		sweethome3d-6.1-javadoc.patch
 Patch3:		sweethome3d-6.0-disable_checkForUpdates.patch
-
-BuildArch:	noarch
 
 BuildRequires:	ant
 BuildRequires:	batik
@@ -92,7 +90,7 @@ your layout.
 %package 3dmodels
 Summary: Some extra 3DModels for %{pkgname}
 Group: 	Graphics
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %{name} >= %{version}-%{release}
 
 %description 3dmodels
@@ -113,7 +111,7 @@ This package contains:
 %package textures
 Summary: Some extra Textures for %{pkgname}
 Group: 	Graphics
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %{name} >= %{version}-%{release}
 
 %description	textures
@@ -410,6 +408,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 %changelog
+* Fri Nov 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 7.5-alt1.1
+- NMU: ExcludeArch: %%ix86.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 7.5-alt1
 - New version.
 - Requires java-1.8.0-openjdk (ALT #43813).

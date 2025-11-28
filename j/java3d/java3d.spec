@@ -15,10 +15,10 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		java3d
 Version:	1.5.2
-Release:	alt6_15jpp8
+Release:	alt7_15jpp8
 Summary:	The Java 3D API
 Group:		Development/Java
-License:	BSD, GPL
+License:	BSD and GPL
 URL:		https://java3d.java.net/
 # svn export https://svn.java.net/svn/j3d-core~svn/tags/rel-1_5_2-fcs j3d-core-1.5.2
 # tar czf j3d-core-1.5.2-src-svn.tar.gz j3d-core
@@ -42,12 +42,11 @@ Patch5:		05_pic_i586.patch
 Patch6:		06_java-compat.patch
 Patch7:		typedef.patch
 
+ExcludeArch: armh %ix86
+
 BuildRequires:	ant
 BuildRequires:	ant-junit
 BuildRequires:	glibc-devel
-%ifarch %{ix86} x86_64
-BuildRequires:	jogl
-%endif
 BuildRequires:	javapackages-local
 BuildRequires:	junit
 BuildRequires:	pkgconfig(gl)
@@ -228,6 +227,11 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Nov 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.5.2-alt7_15jpp8
+- FTBFS: fix:
+  + excludeArch: armh %%ix86
+  + changed license tag
+
 * Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5.2-alt6_15jpp8
 - stricter arch list for jogl dependency
 
