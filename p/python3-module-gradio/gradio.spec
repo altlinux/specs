@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.42.0
-Release: alt2
+Version: 5.49.1
+Release: alt1
 Summary: Build and share delightful machine learning apps, all in Python.
 License: Apache-2.0
 Group: Development/Python3
-Url: https://github.com/gradio-app/gradio
-Vcs: https://pypi.org/project/gradio/
+Url: https://pypi.org/project/gradio/
+Vcs: https://github.com/gradio-app/gradio
 
 BuildArch: noarch
 
@@ -50,7 +50,7 @@ BuildRequires: python3(pytest)
 %description
 %summary
 
-%add_python3_req_skip python_multipart.multipart 
+%add_python3_req_skip python_multipart.multipart
 
 %prep
 %setup
@@ -61,6 +61,8 @@ BuildRequires: python3(pytest)
 
 %install
 %pyproject_install
+mkdir -p %buildroot%python3_sitelibdir/%mod_name/templates/frontend/
+mv %buildroot%python3_sitelibdir/%pypi_name/_frontend_code/* %buildroot%python3_sitelibdir/%mod_name/templates/frontend/
 
 %check
 #pyproject_run_pytest
@@ -73,6 +75,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Nov 29 2025 Pavel Shilov <zerospirit@altlinux.org> 5.49.1-alt1
+- 5.42.0 -> 5.49.1
+
 * Fri Nov 07 2025 Pavel Shilov <zerospirit@altlinux.org> 5.42.0-alt2
 - Update requires.
 
