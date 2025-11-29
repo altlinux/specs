@@ -6,10 +6,11 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define java_home %_jvmdir/jre
 Summary:	Java Simple Serial Connector
 Name:		jssc
 Version:	2.8.0
-Release:	alt1_25jpp11
+Release:	alt2_25jpp11
 License:	GPLv3+
 URL:		http://jssc.scream3r.org
 Source:		https://github.com/scream3r/java-simple-serial-connector/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -100,6 +101,9 @@ ln -srf %{buildroot}%{jni}/%{jniFullSoName} %{buildroot}%{jni}/%{jniSoName}
 
 
 %changelog
+* Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.8.0-alt2_25jpp11
+- Fix FTBFS.
+
 * Wed Mar 22 2023 Igor Vlasenko <viy@altlinux.org> 2.8.0-alt1_25jpp11
 - update
 
