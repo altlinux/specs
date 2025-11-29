@@ -1,6 +1,6 @@
 Name: hyprsunset
 Version: 0.3.3
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Summary: An application to enable a blue-light filter on Hyprland
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc-c++ cmake
 
+BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(hyprland-protocols)
 BuildRequires: pkgconfig(hyprwayland-scanner)
@@ -45,6 +46,9 @@ BuildRequires: pkgconfig(libffi)
 %_userunitdir/%name.service
 
 %changelog
+* Sat Nov 08 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.3-alt2
+- Fix FTBFS: add hyprlang build requires
+
 * Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.3-alt1
 - new version 0.3.3 (with rpmrb script)
 
