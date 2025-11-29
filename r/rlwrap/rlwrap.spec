@@ -1,6 +1,6 @@
 Name: rlwrap
 Version: 0.48
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Line editor - readline wrapper
@@ -10,6 +10,7 @@ Url: https://github.com/hanslub42/rlwrap
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.gz
 Source1: rlwrap_cmucl_completions
+Source2: rlwrap_m4_completions
 
 BuildRequires: libreadline-devel libncurses-devel perl-podlators rpm-build-python3 rpm-build-perl perl-File-Slurp libptytty-devel
 %add_perl_lib_path %_datadir/%name/filters
@@ -34,6 +35,7 @@ command.
 #   cmucl & sbcl
 install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/lisp
 install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
+install -D -m644 %SOURCE2 %buildroot/%_datadir/%name/completions/m4
 
 %files
 %_bindir/*
@@ -42,6 +44,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Sat Nov 29 2025 Fr. Br. George <george@altlinux.org> 1:0.48-alt2
+- Add GNU M4 completions
+
 * Fri Nov 14 2025 Ilya Mashkin <oddity@altlinux.ru> 1:0.48-alt1
 - 0.48
 
