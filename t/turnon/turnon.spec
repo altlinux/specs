@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -70,6 +70,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Sat Nov 29 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
+- 2.9.4
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
 - 2.9.3
 
