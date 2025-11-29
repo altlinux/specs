@@ -1,7 +1,7 @@
 %define  modulename injector
 
 Name:    python3-module-%modulename
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Python dependency injection framework, inspired by Guice
@@ -42,6 +42,9 @@ benefit, Injector encourages nicely compartmentalised code through the use of
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Nov 29 2025 Andrey Cherepanov <cas@altlinux.org> 0.23.0-alt1
+- New version.
+
 * Wed Jul 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.22.0-alt1
 - New version.
 
