@@ -1,4 +1,8 @@
-%define _libexecdir %_prefix/libexec/upower
+%define _libexecdir %_prefix/libexec
+%define xdg_name org.freedesktop.UPower
+%define namespace UPowerGlib
+%define api_ver 1.0
+
 %def_enable gtk_doc
 %ifarch %ix86
 %def_disable check
@@ -6,13 +10,16 @@
 %def_disable check
 %endif
 
+%def_enable man
+%def_enable installed_tests
+
 Name: upower
-Version: 1.90.10
+Version: 1.91.0
 Release: alt1
 
 Summary: Power Management Service
 License: GPL-2.0-or-later
-Group: System/Libraries
+Group: System/Servers
 Url: http://cgit.freedesktop.org/upower/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -31,7 +38,7 @@ Patch: %name-%version-%release.patch
 %define plist_ver 2.2.0
 %define dbusmock_ver 0.23.1
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-build-systemd
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: gtk-doc libgudev-devel >= %gudev_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
@@ -74,14 +81,24 @@ GObject introspection data for the UPower library
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the UPower library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 Provides: libdevkit-power-gir-devel = 016
 Obsoletes: libdevkit-power-gir-devel < 016
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the UPower library
+
+%package tests
+Summary: UPower testing programms
+Group: System/Servers
+Requires: %name = %EVR
+Requires: lib%name-gir = %EVR
+
+%description tests
+This package provides UPower integration tests.
 
 %prep
 %setup
@@ -89,7 +106,9 @@ GObject introspection devel data for the UPower library
 
 %build
 %meson \
-    %{subst_enable_meson_bool gtk_doc gtk-doc}
+    %{subst_enable_meson_bool gtk_doc gtk-doc} \
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -103,21 +122,24 @@ GObject introspection devel data for the UPower library
 %files -f %name.lang
 %doc AUTHORS NEWS README*
 %dir %_sysconfdir/UPower
+%dir %_sysconfdir/UPower/UPower.conf.d
+%doc %_sysconfdir/UPower/UPower.conf.d/README.md
 %_sysconfdir/UPower/*.conf
-%_unitdir/*
+%_unitdir/%name.service
 %_udev_hwdbdir/60-%name-battery.hwdb
 %_udevhwdbdir/95-upower-hid.hwdb
 %_udevrulesdir/*.rules
-%_bindir/*
-%_libexecdir/*
-%_datadir/dbus-1/system.d/*.conf
-%_datadir/dbus-1/system-services/*.service
+%_bindir/%name
+%_libexecdir/%{name}d
+%_datadir/dbus-1/system.d/%xdg_name.conf
+%_datadir/dbus-1/system-services/%xdg_name.service
 %_datadir/polkit-1/actions/org.freedesktop.upower.policy
-%_mandir/man?/*
+%{?_enable_man:
+%_man1dir/%name.1*
+%_man7dir/UPower.7*
+%_man8dir/%{name}d.8*}
 %_datadir/zsh/site-functions/_upower
 %dir %_var/lib/%name
-
-%exclude %_datadir/installed-tests/%name/%name-integration.test
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -130,12 +152,24 @@ GObject introspection devel data for the UPower library
 %{?_enable_gtk_doc:%_datadir/gtk-doc/html/*}
 
 %files -n lib%name-gir
-%_typelibdir/*.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*.gir
+%_girdir/%namespace-%api_ver.gir
+
+%if_enabled installed_tests
+%files tests
+%_datadir/installed-tests/%name/%name-integration.test
+%_libexecdir/%name/integration-test.py
+%_libexecdir/%name/output_checker.py
+%_libexecdir/%name/tests/
+%endif
 
 %changelog
+* Sat Nov 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.91.0-alt1
+- updated to v1.91.0-1-gc5df437
+- new -tests subpackage
+
 * Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.90.10-alt1
 - 1.90.10
 
