@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt12.g%{git}
+Release: alt13.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Proprietary
@@ -69,6 +69,10 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Sun Nov 30 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt13.g6adc981
+- Apply patch from debian: wl: Fix memcpy() field-spanning write warning
+  (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1084853).
+
 * Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt12.g6adc981
 - Added fix for kernels 6.17+
   (https://bugs.launchpad.net/ubuntu/+source/broadcom-sta/+bug/2120508).
