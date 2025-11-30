@@ -1,5 +1,5 @@
 Name:    urdfdom-headers
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Headers for URDF parsers
@@ -39,6 +39,9 @@ For now, the details of the URDF specifications reside on http://ros.org/wiki/ur
 %_libdir/cmake/urdfdom_headers
 
 %changelog
+* Sat Nov 29 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+
 * Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
