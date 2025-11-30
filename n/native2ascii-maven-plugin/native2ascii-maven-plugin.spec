@@ -7,15 +7,16 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 1.0
-%global namedreltag -beta-1
-%global namedversion %{version}%{?namedreltag}
+%define version 2.1.1
+%def_disable docs
+%global namedversion %{version}
 Name:          native2ascii-maven-plugin
-Version:       1.0
-Release:       alt3_0.17.beta1jpp8
+Version:       2.1.1
+Release:       alt1
 Summary:       Native2Ascii Maven Plugin
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
+VCS:           https://github.com/mojohaus/native2ascii-maven-plugin
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
 
 BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
@@ -32,8 +33,9 @@ BuildRequires: maven-plugin-plugin
 # requires by javadoc-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: mvn(org.apache.commons:commons-text)
 
-BuildArch:     noarch
+BuildArch: noarch
 Source44: import.info
 
 %description
@@ -41,13 +43,14 @@ Converts files with characters in any
 supported character encoding to
 one with ASCII and/or Unicode escapes.
 
+%if_enabled docs
 %package javadoc
 Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
-
 %description javadoc
 This package contains javadoc for %{name}.
+%endif
 
 %prep
 %setup -q -n %{name}-%{namedversion}
@@ -63,12 +66,19 @@ This package contains javadoc for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE
 
+%if_enabled docs
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc --no-dereference LICENSE
+%endif
 
 %changelog
+* Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.1.1-alt1
+- 1.0.beta1 -> 2.1.1
+- added VCS
+- disable docs
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.17.beta1jpp8
 - new version
 
