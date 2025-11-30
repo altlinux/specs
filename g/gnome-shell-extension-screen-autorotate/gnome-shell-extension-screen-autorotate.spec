@@ -2,7 +2,7 @@
 
 %define _name screen-autorotate
 %define __name screen-rotate
-%define ver_major 26
+%define ver_major 27
 %define beta %nil
 %define uuid %__name@shyzus.github.io
 %define xdg_name org.gnome.shell.extensions.%__name
@@ -55,6 +55,9 @@ cp -a %uuid/schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
 %doc README.md
 
 %changelog
+* Sun Nov 30 2025 Yuri N. Sedunov <aris@altlinux.org> 27-alt1
+- 27
+
 * Mon Sep 22 2025 Yuri N. Sedunov <aris@altlinux.org> 26-alt1
 - 26 (GNOME 49 supported)
 

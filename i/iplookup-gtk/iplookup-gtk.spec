@@ -2,14 +2,14 @@
 
 %define _name iplookup
 %define __name %{_name}-gtk
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name io.github.bytezz.IPLookup
 
 # online screenshots
 %def_disable check
 
 Name: %__name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An IP address information search utility for the GNOME Desktop
@@ -28,6 +28,9 @@ Source: %__name-%version.tar
 %endif
 
 %add_python3_path %_datadir/%_name
+
+# since 0.5:
+# LibAdapta support (set environment variable `LIBADAPTA=1`)
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 dconf
@@ -68,6 +71,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Sun Nov 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
