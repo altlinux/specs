@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nix
-Version: 2.31.1
+Version: 2.31.2
 Release: alt1
 
 Summary: Nix software deployment system
@@ -18,6 +18,7 @@ Source2: sysusers.conf
 
 Patch: nix-2.29.0-alt-remove-unused-sh-files.patch
 Patch1: nix-2.30.2-alt-drop-broken-ssl-path.patch
+Patch2: nix-2.31.2-alt-fix-build-with-mdbook-0.5.0.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -90,7 +91,6 @@ developing applications that use %name.
 %package doc
 Summary: Documentation files for %name
 Group: Documentation
-BuildArch: noarch
 
 %description doc
 The %name-doc package contains documentation files for %name.
@@ -99,6 +99,7 @@ The %name-doc package contains documentation files for %name.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 # Test disabled because rapidcheck is not builded
@@ -158,6 +159,11 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_man8dir/nix*
 
 %changelog
+* Sat Nov 29 2025 Boris Yumankulov <boria138@altlinux.org> 2.31.2-alt1
+- new version 2.31.2
+- fix FTBS
+- drop noarch from nix-doc due to arch-dependent Sphinx searchindex file
+
 * Tue Sep 09 2025 Boris Yumankulov <boria138@altlinux.org> 2.31.1-alt1
 - new version 2.31.1
 
