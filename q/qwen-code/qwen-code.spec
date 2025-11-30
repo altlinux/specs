@@ -4,7 +4,7 @@
 
 Name: qwen-code
 Version: 0.2.2
-Release: alt1
+Release: alt2
 Summary: AI-powered command-line workflow tool for developers
 License: Apache-2.0
 Group: Development/Tools
@@ -17,8 +17,9 @@ Source2: node_modules_cli.tar
 Source3: node_modules_core.tar
 Source4: qwen.sh
 
-ExclusiveArch: x86_64
+BuildArch: noarch
 
+BuildRequires: esbuild
 BuildRequires: npm
 
 %description
@@ -37,8 +38,12 @@ tee packages/{core,cli}/src/generated/git-commit.{js,ts} <<EOF
 export const GIT_COMMIT_INFO = '%commit_hash';
 export const CLI_VERSION = '%version';
 EOF
+# use system esbuild
+ln -sv %_bindir/esbuild .
+sed -i "s/0.25.6/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
 
 %build
+export ESBUILD_BINARY_PATH=./esbuild
 cd packages/cli
 npm run build
 cd -
@@ -57,6 +62,9 @@ install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 %doc LICENSE
 
 %changelog
+* Sun Nov 30 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.2-alt2
+- Build for all architectures.
+
 * Wed Nov 19 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.2-alt1
 - Updated to version 0.2.2.
 
