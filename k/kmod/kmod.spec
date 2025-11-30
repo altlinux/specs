@@ -4,12 +4,12 @@
 
 Name: kmod
 Version: 34.2
-Release: alt1
-Summary: Linux kernel module management utilities
+Release: alt2
+Summary: Linux kernel module handling
 
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
-Url: http://modules.wiki.kernel.org/
+Url: https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/about/
 ExclusiveOS: Linux
 Requires: lib%name = %EVR
 
@@ -20,10 +20,11 @@ BuildRequires: glibc-devel-static
 BuildRequires: liblzma-devel
 BuildRequires: libssl-devel
 BuildRequires: libzstd-devel
-BuildRequires: zlib-devel
 BuildRequires: scdoc
-# for tests
+BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
 BuildRequires: kernel-headers-modules-latest
+}}
 
 Provides: module-init-tools = 3.17-alt1
 Obsoletes: module-init-tools
@@ -34,10 +35,8 @@ Provides: /sbin/depmod /sbin/insmod /sbin/lsmod /sbin/modinfo /sbin/modprobe /sb
 Obsoletes: bash-completion-%name
 
 %description
-The kmod package provides various programs needed for automatic
-loading and unloading of modules under 2.6, 3.x, and later kernels, as well
-as other module management programs. Device drivers and filesystems are two
-examples of loaded and unloaded modules.
+kmod is a set of tools to handle common tasks with Linux kernel modules like
+insert, remove, list, check properties, resolve dependencies and aliases.
 
 %package -n lib%name
 Summary: Libraries to handle kernel module loading and unloading
@@ -60,6 +59,15 @@ Provides: %name-devel = %EVR
 The libkmod-devel package provides header files used for development of
 applications that wish to load or unload Linux kernel modules.
 
+%package checkinstall
+Summary: Smoke test for %name
+Group: Development/Other
+Requires(post): %name = %EVR
+Requires(post): rpm-build-vm
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 
@@ -73,12 +81,12 @@ touch libkmod/docs/gtk-doc.make
     --with-zlib \
     --with-xz \
     --with-zstd \
-    #
+    %nil
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
-rm -rf %buildroot/%_libdir/*.la
+rm -r %buildroot%_libdir/*.la
 
 # New configuration files we ship (if any) should go into /usr/lib/modprobe.d
 # in order to allow the local sysadmin to customize /etc/modprobe.d
@@ -94,10 +102,7 @@ install -m644 -p rpm/modprobe.d/arch/i386.conf %buildroot%_modprobedir/arch.conf
 %endif
 
 # Make compatibility symlinks
-for n in lsmod; do
-    t=$(relative %_bindir/kmod %_bindir/$n)
-    ln -s "$t" "%buildroot%_bindir/$n"
-done
+ln -s kmod -T %buildroot%_bindir/lsmod
 
 # cleanup non-root access utils
 rm -f %buildroot%_bindir/{depmod,insmod,modinfo,modprobe,rmmod}
@@ -105,11 +110,23 @@ rm -f %buildroot%_bindir/{depmod,insmod,modinfo,modprobe,rmmod}
 %check
 %make check V=1 KDIR=/lib/modules/*/build
 
+%post checkinstall
+set -ex
+timeout 999 \
+vm-run --ext4 --sbin -ex --heredoc <<-EOF
+	depmod
+	/sbin/modprobe configs
+	modprobe dm-verity require_signatures=1
+	grep -x Y /sys/module/dm_verity/parameters/require_signatures
+	modprobe -a dm-verity
+EOF
+rm -f /tmp/initramfs-*.img /tmp/vm-ext4.img /tmp/vm.*
+
 %files
-%doc NEWS README.md COPYING
+%doc NEWS README.md tools/COPYING
 %dir %_sysconfdir/depmod.d
 %dir %_sysconfdir/modprobe.d
-%dir %_prefix/lib/depmod.d
+%dir %prefix/lib/depmod.d
 %dir %_modprobedir
 %_modprobedir/*.conf
 %_bindir/kmod
@@ -130,12 +147,18 @@ rm -f %buildroot%_bindir/{depmod,insmod,modinfo,modprobe,rmmod}
 %_libdir/libkmod.so.*
 
 %files -n lib%name-devel
+%doc libkmod/COPYING libkmod/README
 %_includedir/libkmod.h
 %_pkgconfigdir/libkmod.pc
 %_libdir/libkmod.so
 %_datadir/pkgconfig/%name.pc
 
+%files checkinstall
+
 %changelog
+* Sun Nov 30 2025 Vitaly Chikunov <vt@altlinux.org> 34.2-alt2
+- Update to v34.2-4-g6b93232c (2025-06-13).
+
 * Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 34.2-alt1
 - Version (34.2).
 - Obsoletes bash-completion-%name.
