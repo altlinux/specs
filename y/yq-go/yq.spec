@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: yq-go
-Version: 4.44.3
+Version: 4.49.2
 Release: alt1
 Summary: A portable command-line YAML, JSON, XML, CSV, TOML and properties processor
 License: MIT
@@ -51,5 +51,8 @@ go test ./...
 %_datadir/fish/vendor_completions.d/yq.fish
 
 %changelog
+* Fri Nov 28 2025 Vitaly Chikunov <vt@altlinux.org> 4.49.2-alt1
+- Update to v4.49.2 (2025-11-25).
+
 * Thu Nov 14 2024 Vitaly Chikunov <vt@altlinux.org> 4.44.3-alt1
 - First import v4.44.3-18-g39a81da1 (2024-10-10).
