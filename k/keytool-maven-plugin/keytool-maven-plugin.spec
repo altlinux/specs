@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat mojo-parent maven-plugin-plugin apache-commons
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt8_18jpp11
+Release:          alt9_18jpp11
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Other
@@ -19,6 +19,8 @@ URL:              http://mojo.codehaus.org/%{name}/
 # tar caf keytool-maven-plugin-1.0.tar.xz keytool-maven-plugin-1.0
 Source0:          %{name}-%{version}.tar.xz
 Source1:          LICENSE-ASL
+
+Patch: pom-1.0-alt-build.patch
 
 BuildArch:        noarch
 
@@ -42,7 +44,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-
+%patch -p1
 # fixing licenses
 mv LICENSE.txt LICENSE-MIT
 cp %{SOURCE1} LICENSE-ASL
@@ -63,6 +65,9 @@ cp %{SOURCE1} LICENSE-ASL
 %doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt9_18jpp11
+- Fix FTBFS.
+
 * Wed Jun 02 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt8_18jpp11
 - fixed build
 
