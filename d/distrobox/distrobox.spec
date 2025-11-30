@@ -1,5 +1,5 @@
 Name: distrobox
-Version: 1.8.2.1
+Version: 1.8.2.2
 Release: alt1
 
 Summary: Another tool for containerized command line environments on Linux
@@ -59,6 +59,9 @@ done
 %_datadir/zsh/site-functions/_%{name}*
 
 %changelog
+* Sat Nov 29 2025 Boris Yumankulov <boria138@altlinux.org> 1.8.2.2-alt1
+- new version 1.8.2.2
+
 * Fri Nov 07 2025 Boris Yumankulov <boria138@altlinux.org> 1.8.2.1-alt1
 - new version 1.8.2.1
 
