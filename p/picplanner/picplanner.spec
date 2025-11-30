@@ -3,7 +3,7 @@
 
 Name: picplanner
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Graphical application for photography planning
 License: GPL-3.0-or-later
@@ -11,6 +11,8 @@ Group: Graphics
 Url: https://gitlab.com/Zwarf/picplanner
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
@@ -35,6 +37,7 @@ in terms of azimuth and elevation.
 
 %prep
 %setup
+%patch -p1
 find -name "*.*~" -print -delete
 sed -i "s|https://gitlab.com/zwarf/picplanner/-/blob/main/||" README.md
 sed -i "s|https://gitlab.com/zwarf/picplanner/-/raw/main/||" README.md
@@ -72,5 +75,8 @@ sed -i "s|https://gitlab.com/zwarf/picplanner/-/raw/main/||" README.md
 %_datadir/metainfo/de.zwarf.picplanner.metainfo.xml
 
 %changelog
+* Sun Nov 30 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
+- Fix crash at startup.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
