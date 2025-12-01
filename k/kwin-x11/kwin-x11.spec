@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.5.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -41,6 +41,7 @@ Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
+Patch5: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -133,6 +134,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 for f in src/kcms/compositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
@@ -189,6 +191,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Mon Dec 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
 - new version
 
