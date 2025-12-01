@@ -4,11 +4,11 @@
 %def_enable docs
 
 Name: openvas-scanner
-Version: 23.31.5
-Release: alt2
+Version: 23.32.3
+Release: alt1
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
-License: GPL-2.0-only
+License: GPL-2.0-or-later
 Group: Security/Networking
 Url: http://www.openvas.org
 VCS: https://github.com/greenbone/openvas-scanner
@@ -140,6 +140,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Mon Dec 01 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.32.3-alt1
+- new version
+
 * Tue Nov 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.31.5-alt2
 - update
 

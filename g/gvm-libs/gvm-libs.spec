@@ -4,21 +4,18 @@
 %def_enable docs
 
 Name: gvm-libs
-Version: 22.31.1
-Release: alt2
+Version: 22.32.0
+Release: alt1
 
 Summary: Support libraries for Greenbone Vulnerability Management Solution and OpenVAS
-License: GPL-2.0-only
+License: GPL-2.0-or-later
 Group: System/Libraries
 Url: http://www.openvas.org
 VCS: https://github.com/greenbone/gvm-libs
 
 # Source-url: https://github.com/greenbone/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-%ifarch %ix86
-Patch0: fix-build-arch-x32.patch
-%endif
-Patch1: fix-release-build.patch
+Patch0: fix-release-build.patch
 
 BuildRequires: cmake
 BuildRequires: libcjson-devel
@@ -268,6 +265,9 @@ BuildArch: noarch
 %autopatch -p1
 
 %build
+%ifarch %ix86
+%add_optflags -DLARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
+%endif
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DSYSCONFDIR=%_sysconfdir \
@@ -398,6 +398,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Mon Dec 01 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.32.0-alt1
+- new version
+
 * Tue Nov 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.31.1-alt2
 - update
 
