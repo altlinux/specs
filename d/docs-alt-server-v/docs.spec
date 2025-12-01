@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-platform docs-alt-mobile docs-alt-virtualization-pve docs-alt-virtualization-one
 
 Name: docs-%variant
 Version: 10.4
-Release: alt7
+Release: alt8
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 01 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt8
+- fix typo (ALT 54466, 54464, 54412, 54197, 54062, 53991)
+
 * Mon Apr 14 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt7
 - fix typo (ALT 53810)
 - small improvements
