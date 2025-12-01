@@ -1,5 +1,5 @@
 Name:     ch57x-keyboard-tool
-Version:  1.5.4
+Version:  1.6.2
 Release:  alt1
 
 Summary:  This keyboard configuration utility is for programming small keyboards.
@@ -46,6 +46,9 @@ install -D -m 0644 %SOURCE1 -t %buildroot/%_docdir/%name
 %doc %_docdir/%name/*
 
 %changelog
+* Mon Dec 01 2025 Alexei Mezin <alexvm@altlinux.org> 1.6.2-alt1
+- New version
+
 * Fri Nov 07 2025 Alexei Mezin <alexvm@altlinux.org> 1.5.4-alt1
 - Initial build
 
