@@ -11,7 +11,7 @@
 
 Name: p11-kit
 Version: 0.25.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -168,7 +168,7 @@ certutil -L -d nssdb -h 'Builtin Object Token' | sed -r -n \
 	's|^Default Trust:(.+[^[:blank:]])[[:blank:]]+[^[:blank:]]+[[:blank:]]*$|\1|p' \
 	| sort >certutil.list
 trust list --filter=certificates \
-	| sed -n -r 's|^[[:blank:]]+label:[[:blank:]]+(.+)[[:blank:]]*$|\1|p' \
+	| sed -n -r 's|^[[:blank:]]+label:[[:blank:]](.+)[[:blank:]]*$|\1|p' \
 	| sort >trust.list
 if [ ! -s certutil.list ]; then
 	echo "certutil.list is empty" 1>&2
@@ -238,6 +238,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Sun Nov 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:0.25.10-alt2
+- Fix the verification in checkinstall with an extra space in label start.
+
 * Wed Oct 08 2025 Mikhail Efremov <sem@altlinux.org> 1:0.25.10-alt1
 - 0.25.10.
 

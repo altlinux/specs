@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.117
+Version:	3.118.1
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -275,6 +275,14 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Sun Nov 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.118.1-alt1
+- New version (3.118.1).
+- Certificate Authority Changes:
+  + Remove CN=CommScope Public Trust ECC Root-01
+  + Remove CN=CommScope Public Trust ECC Root-02
+  + Remove CN=CommScope Public Trust RSA Root-01
+  + Remove CN=CommScope Public Trust RSA Root-02
+
 * Sat Oct 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.117-alt1
 - New version (3.117).
 - Fix FTBFS in mozilla products.
