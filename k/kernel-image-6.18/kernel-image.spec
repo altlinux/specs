@@ -1,6 +1,6 @@
 Name: kernel-image-6.18
-Release: alt0.rc7
-%define kernel_src_version	6.17
+Release: alt1
+%define kernel_src_version	6.18
 %define kernel_base_version	6.18
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 01 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt1
+- Update to v6.18 (2025-11-30) release.
+
 * Mon Nov 24 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt0.rc7
 - Update to v6.18-rc7 (2025-11-23).
 - config-rt: CONFIG_DRM_MGAG200_DISABLE_WRITECOMBINE=y.
