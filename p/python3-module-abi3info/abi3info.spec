@@ -1,5 +1,5 @@
 Name: python3-module-abi3info
-Version: 2025.11.18
+Version: 2025.11.29
 Release: alt1
 
 Summary: Python abi3 info
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/abi3info-%version.dist-info
 
 %changelog
+* Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.11.29-alt1
+- 2025.11.29 released
+
 * Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.11.18-alt1
 - 2025.11.18 released
 
