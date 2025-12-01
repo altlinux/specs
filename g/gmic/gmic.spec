@@ -21,7 +21,7 @@
 
 Name: gmic
 Version: 3.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -148,7 +148,7 @@ pushd %name-qt
 %define opt_qt CONFIG+=release GMIC_PATH=../src NOSTRIP=1
 %qmake_qt5 %opt_qt HOST=none gmic_qt.pro
 %make_build
-%{?_enable_gimp_plugin:%qmake_qt5 %opt_qt HOST=gimp3 gmic_qt.pro
+%{?_enable_gimp_plugin:%qmake_qt5 %opt_qt HOST=gimp gmic_qt.pro
 %make_build}
 #%%cmake
 #%%cmake_build
@@ -219,9 +219,12 @@ popd
 
 %{?_enable_gimp_plugin:
 %files -n gimp-plugin-gmic
-%gimpplugindir/plug-ins/*}
+%gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1.1
+- fixed build of GIMP plugin
+
 * Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - gmic-qt: back to qt5, built experimental gimp3 plugin
 - enabled zart build again
