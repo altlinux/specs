@@ -2,14 +2,13 @@
 
 Name: python3-module-%oname
 BuildArch: noarch
-Version: 3.0.2
+Version: 3.1.4
 Release: alt1
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/mistune/
-
-# https://github.com/lepture/mistune.git
+VCS: https://github.com/lepture/mistune.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
@@ -50,6 +49,9 @@ Features:
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 01 2025 Anton Farygin <rider@altlinux.com> 3.1.4-alt1
+- 3.0.2 -> 3.1.4
+
 * Tue May 07 2024 Anton Farygin <rider@altlinux.ru> 3.0.2-alt1
 - 2.0.4 -> 3.0.2
 
