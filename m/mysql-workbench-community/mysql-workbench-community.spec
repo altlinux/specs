@@ -1,7 +1,7 @@
 %define gdal_version 37
 
 Name: mysql-workbench-community
-Version: 8.0.44
+Version: 8.0.45
 Release: alt1
 
 Summary: A MySQL visual database modeling tool
@@ -260,6 +260,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Mon Dec 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 8.0.45-alt1
+- New version.
+
 * Thu Oct 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 8.0.44-alt1
 - New version.
 
