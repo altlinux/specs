@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: deepin-pdfium
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 
 Summary: Development library for pdf on Deepin
@@ -85,6 +85,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %doc LICENSE debian/changelog
 
 %changelog
+* Mon Dec 01 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.8-alt1
+- New version 1.5.8.
+
 * Wed Oct 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.7-alt1
 - New version 1.5.7.
 - Packaged a common files separately.
