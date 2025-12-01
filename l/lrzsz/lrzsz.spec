@@ -1,19 +1,17 @@
 Name: lrzsz
 Version: 0.12.20
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Programs for communicating over Z-, Y- & X-modem protocols.
 License: GPL
 Group: Communications
-
 Url: http://www.ohse.de/uwe/software/%name.html
-Source: http://www.ohse.de/uwe/releases/%name-%version.tar.bz2
-Patch: %name-%version-glibc21.patch.bz2
-Patch2: lrzsz-0.12.20.patch.bz2
-Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Программы для передачи данных по протоколам Z-, Y- & X- modem.
+Source: http://www.ohse.de/uwe/releases/%name-%version.tar
+Patch0: %name-%version-glibc21.patch
+Patch1: lrzsz-0.12.20-misc.patch
+Patch2: lrzsz-0.12.20.patch
 
 %description
 Lrzsz (consisting of lrz and lsz) is a cosmetically modified
@@ -27,20 +25,10 @@ transfer files.
 You should install %name if you're also installing a Zmodem communications
 program that uses it. Minicom is an example of such a program.
 
-%description -l ru_RU.KOI8-R
-Пакет %name (состоящий из lrz и lsz) вносит косметические улучшения в пакет 
-zmodem/ymodem/xmodem, построенный на основе public-domain версии пакета 
-rzsz. 
-
-В некоторых условиях Zmodem становится основным протоколом, который 
-используется для передачи файлов.
-
-Стоит поставить %name, если Вы устанавливаете программу, которая его 
-использует. Minicom -- пример такой программы.
-
 %prep
 %setup
-%patch -p1 -b .glibc21
+%patch0 -p1 -b .glibc21
+%patch1 -p2
 %patch2 -p1
 
 %build
@@ -59,6 +47,9 @@ rzsz.
 %_man1dir/*
 
 %changelog
+* Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.12.20-alt3
+- fixed FTBFS
+
 * Wed Oct 12 2022 Alexander Danilov <admsasha@altlinux.org> 1:0.12.20-alt2
 - fixes CVE-2018-10195.
 
