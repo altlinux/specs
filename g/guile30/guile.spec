@@ -1,5 +1,5 @@
 Name: guile30
-Version: 3.0.10
+Version: 3.0.11
 Release: alt1
 
 Summary: A GNU implementation of Scheme
@@ -7,7 +7,7 @@ License: GPLv3
 Group: Development/Scheme
 Url: http://www.gnu.org/software/guile/ 
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: libltdl-devel libgmp-devel libunistring-devel
 BuildRequires: libffi-devel libgc-devel libreadline-devel
@@ -65,10 +65,7 @@ mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile30.1
 %add_findreq_skiplist %_bindir/guile30-config
 
 %check
-make check \
-%ifarch ppc64le
-||:
-%endif
+make check
 
 %files
 %_bindir/guile30
@@ -89,6 +86,9 @@ make check \
 %_infodir/*.info*
 
 %changelog
+* Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.11-alt1
+- 3.0.11 released
+
 * Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.10-alt1
 - 3.0.10 released
 
