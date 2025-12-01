@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,6 +19,7 @@ Obsoletes: kde5-kalarm < %EVR
 
 Source: %rname-%version.tar
 #Patch100: alt-kalarm-ignore-tz.patch
+Patch101: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel
@@ -70,6 +71,7 @@ Obsoletes: libkalarmplugin5 < %EVR
 
 %prep
 %setup -n %rname-%version
+%patch101 -p1
 
 %build
 %K6build \
@@ -115,6 +117,9 @@ Obsoletes: libkalarmplugin5 < %EVR
 
 
 %changelog
+* Mon Dec 01 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
