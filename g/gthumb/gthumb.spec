@@ -8,6 +8,7 @@
 
 %def_enable libbrasero
 %def_disable libchamplain
+# enabled by default
 %def_enable clutter
 %def_enable libraw
 %def_enable libheif
@@ -19,8 +20,10 @@
 %def_enable libjxl
 %endif
 
+%def_enable check
+
 Name: gthumb
-Version: %ver_major.8.1
+Version: %ver_major.8.2
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -38,8 +41,8 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-%define glib_ver 2.38.0
-%define gtk_ver 3.10.0
+%define glib_ver 2.54.0
+%define gtk_ver 3.16.0
 %define clutter_gtk_ver 1.0.0
 %define gst_ver 1.0
 %define exiv2_ver 0.20
@@ -57,10 +60,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson intltool yelp-tools
+BuildRequires: meson gcc-c++ yelp-tools
+BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libexiv2-devel >= %exiv2_ver gcc-c++
+BuildRequires: libexiv2-devel >= %exiv2_ver
 %{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver}
 %{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel librsvg-devel
@@ -73,14 +77,12 @@ BuildRequires: libsoup-devel >= %soup_ver  pkgconfig(webkit2gtk-4.0) >= %webkit_
 %{?_enable_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_colord:BuildRequires: libcolord-devel}
 %{?_enable_libjxl:BuildRequires: libjxl-devel}
-
-BuildRequires: libjpeg-devel libtiff-devel libXrender-devel libXext-devel libX11-devel
-BuildRequires: libXtst-devel libXxf86vm-devel libXi-devel
-BuildRequires: libSM-devel libICE-devel
+# while gtk supports x11
+BuildRequires: libX11-devel
 
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: gnome-common >= %gnome_common_ver
-BuildRequires: libappstream-devel >= %appstream_ver  %_bindir/appstreamcli
+%{?_enable_check:BuildRequires: %_bindir/appstreamcli desktop-file-utils}
 
 %description
 gThumb lets you browse your hard disk, showing thumbnails of image
@@ -135,6 +137,9 @@ sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
 %meson_install
 %find_lang --with-gnome %name
 
+%check
+%__meson_test
+
 %files
 %_bindir/*
 %dir %_libdir/%name/extensions
@@ -178,6 +183,9 @@ sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.8.2-alt1
+- 3.12.8.2
+
 * Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.8.1-alt1
 - 3.12.8.1
 
