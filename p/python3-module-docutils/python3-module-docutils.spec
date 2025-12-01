@@ -3,14 +3,14 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.21.2
+Version: 0.22.3
 Release: alt1
 Name: python3-module-%oname
 License: PDDL and Python and BSD and GPLv3
 Group: Development/Python3
 BuildArch: noarch
 
-URL: http://docutils.sourceforge.net/
+URL: https://docutils.sourceforge.io/
 # https://pypi.org/project/docutils/
 Source: %name-%version.tar
 BuildRequires(pre): rpm-build-pyproject
@@ -49,6 +49,9 @@ python3 test/alltests.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 01 2025 Anton Farygin <rider@altlinux.com> 0.22.3-alt1
+- 0.22.3
+
 * Mon Jun 09 2025 Anton Farygin <rider@altlinux.com> 0.21.2-alt1
 - 0.21.2
 

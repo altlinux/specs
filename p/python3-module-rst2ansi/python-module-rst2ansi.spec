@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: A rst converter to ansi-decorated console output
 
@@ -18,6 +18,7 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  %oname-%version.tar
+Patch0: python-module-rst2ansi-0.1.5-remove-unsused-imports.patch
 
 %description
 A python module dedicated to rendering RST (reStructuredText) documents to
@@ -25,6 +26,7 @@ ansi-escaped strings suitable for display in a terminal.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 
 %build
 %python3_build
@@ -38,5 +40,8 @@ ansi-escaped strings suitable for display in a terminal.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Dec 01 2025 Anton Farygin <rider@altlinux.com> 0.1.5-alt2
+- Added patch from Debian to fix build with docutils 0.22
+
 * Wed Apr 24 2019 Grigory Ustinov <grenka@altlinux.org> 0.1.5-alt1
 - Initial build for Sisyphus
