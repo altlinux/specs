@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.20.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -46,6 +47,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -71,6 +73,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K6lib/libKF6ColorScheme.so.*
 
 %changelog
+* Mon Dec 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
 - new version
 
