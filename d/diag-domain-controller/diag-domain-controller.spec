@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -11,6 +11,9 @@ Group: System/Configuration/Other
 URL: https://altlinux.space/alterator/diag-domain-controller
 BuildArch: noarch
 Source: %name-%version.tar
+
+Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-interface-diag
 
 BuildRequires(pre): rpm-macros-alterator
 
@@ -38,6 +41,9 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
+- NMU: added 'exit_status = true' for new version of executor
+
 * Sat May 31 2025 Andrey Limachko <liannnix@altlinux.org> 0.4-alt1
 - added the is_nslcd_service_disabled test (thx Sergey Savelev)
 - added the is_nscd_service_disabled test (thx Sergey Savelev)

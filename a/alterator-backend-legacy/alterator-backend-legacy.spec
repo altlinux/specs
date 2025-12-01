@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.6
-Release: alt2
+Version: 0.1.7
+Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
 License: GPLv2+
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 
 Requires: alterator-manager >= 0.1.28
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-legacy alterator-application-legacy
 Requires: alterator-standalone
 Requires: python3
@@ -101,6 +101,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.7-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.6-alt2
 - Actualize URL of repository.
 

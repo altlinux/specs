@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -69,6 +69,12 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Nov 27 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.6-alt1
+- Add more extensive .backend example (thx Ivan Savin)
+- Update json schema for .backend
+- Delete the chapter on format extension (closes #11) (thx Maria Alexeeva)
+- Fix the table of contents (thx Maria Alexeeva)
+
 * Tue Sep 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.4.5-alt1
 - Fix documentation (thx Alexey Saprunov)
 - Update service entitys (thx Andrey Alekseev):

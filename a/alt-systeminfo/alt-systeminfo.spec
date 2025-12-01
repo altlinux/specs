@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -35,7 +35,7 @@ Source: %name-%version.tar
 
 Requires: alterator-interface-application >= 0.1.1
 Requires: alterator-backend-systeminfo >= 0.3.2
-Requires: alterator-module-executor >= 0.1.19
+Requires: alterator-module-executor >= 0.1.29
 # Recommends: alterator-backend-edition >= 0.1.5
 # Recommends: alterator-backend-packages >= 0.1.4
 
@@ -90,6 +90,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.7-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Tue Oct 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.6-alt1
 - Fix crash after launch and after date of last update checking in some
   cases.

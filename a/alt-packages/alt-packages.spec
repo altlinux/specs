@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -21,7 +21,7 @@ BuildRequires: nlohmann-json-devel
 
 Requires: alterator-backend-packages >= 0.2.7
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.29
 
 Provides: alterator-application-packages = %version-%release
 Obsoletes: alterator-application-packages < 0.3.3
@@ -50,6 +50,9 @@ and package repositories through apt and rpm.
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.6-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Tue Aug 05 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.5-alt1
 - Add progress indicator while waiting (thx Oleg Chagaev).
 

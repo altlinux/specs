@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -28,6 +28,7 @@ BuildRequires: alterator-entry >= 0.3.1
 
 Requires: alterator-backend-packages >= 0.2.9-alt1
 Requires: alterator-backend-component >= 0.3.0-alt1
+Requires: alterator-module-executor >= 0.1.29-alt1
 Requires: alterator-backend-systeminfo
 Requires: libqbase
 Requires: alt-components-base >= 0.7.12-alt1
@@ -61,6 +62,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.4-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Tue Oct 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.3-alt1
 - Fix incorrect number of components after filtering for description,
   status bar and section/tag item of tree.

@@ -2,16 +2,19 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.5
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
 Group: System/Configuration/Other
 BuildArch: noarch
 
-Url: https://gitlab.basealt.space/alt/diag-domain-client
+Url: https://altlinux.space/alterator/diag-domain-client
 Source: %name-%version.tar
+
+Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-interface-diag
 
 BuildRequires(pre): rpm-macros-alterator
 %ifnarch %e2k
@@ -52,6 +55,9 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.1-alt1
+- NMU: add 'exit_status = true' for new version of executor
+
 * Fri Sep 12 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5-alt2
 - spec: exclude warnings SC2329 as error
 

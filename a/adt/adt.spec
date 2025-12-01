@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -26,7 +26,7 @@ BuildRequires: doxygen
 BuildRequires: desktop-file-utils ImageMagick-tools
 
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-diag >= 0.1.4
 Requires: libtomlplusplus
 Requires: icon-theme-adwaita-legacy
@@ -56,13 +56,18 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %doc INSTALL.md
 
 %_bindir/adt
-%_desktopdir/adt.desktop
+%_desktopdir/ru.basealt.adt.desktop
 %_datadir/alterator/applications/adt.application
 %_iconsdir/hicolor/scalable/apps/adt.svg
 %_datadir/alterator/backends/adt.backend
 %_man1dir/%name.1*
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.13-alt1
+- Add 'exit_status = true' for new version of executor.
+- Rename desktop entry to be properly displayed in Gnome (thx Andrey Alekseev).
+- Add report bus selection (thx Andrey Alekseev).
+
 * Wed Aug 27 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.12-alt1
 - fix size constraint of labels with tests on buses
 - fix translation by system locale

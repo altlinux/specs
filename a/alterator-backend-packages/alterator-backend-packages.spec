@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.11
+Version: 0.2.12
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.21
+Requires: alterator-module-executor >= 0.1.29
 Requires: apt >= 0.5.15lorg2-alt97
 Requires: logrotate
 
@@ -64,6 +64,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.12-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Tue Aug 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.11-alt1
 - Add translations
 

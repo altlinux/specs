@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-categories
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Backend for Alterator categories
@@ -17,7 +17,7 @@ BuildRequires: python3-devel
 
 Requires: alterator-interface-categories
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-entry >= 0.2.0
 Requires: python3
 
@@ -62,6 +62,9 @@ install -v -p -m 644 -D org.altlinux.alterator.categories.policy %buildroot%_dat
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.categories.xml
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Mon Jul 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.4-alt1
 - Fix order of categories (thx Andrey Alekseev).
 

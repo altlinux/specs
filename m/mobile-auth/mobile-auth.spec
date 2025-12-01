@@ -1,7 +1,7 @@
 %define app_id io.github.SokolovValy.MobileAuth
 
 Name: mobile-auth
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Alt Mobile domain input tool.
@@ -21,7 +21,7 @@ BuildRequires: libadwaita-devel
 BuildRequires: %_bindir/appstreamcli desktop-file-utils blueprint-compiler
 Requires: alterator-auth
 Requires: alterator-manager
-Requires: alterator-module-executor
+Requires: alterator-module-executor >= 0.1.29
 
 Source0: %name-%version.tar
 
@@ -52,6 +52,9 @@ Alt Mobile domain input tool.
 
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.1.1-alt1
+- NMU: Added 'exit_status = true' for new version of executor
+
 * Fri Mar 07 2025 Valentin Sokolov <sova@altlinux.org> 1.1-alt1
 - Added additional sections to .desktop file
 - Improver translation file

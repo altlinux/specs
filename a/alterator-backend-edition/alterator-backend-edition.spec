@@ -2,7 +2,7 @@
 %define shortname edition
 
 Name: alterator-backend-%{shortname}
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Alterator backend for edition
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 Requires: alterator-interface-%{shortname}
 Requires: alterator-backend-%{shortname}-utils = %EVR
-Requires: alterator-module-executor >= 0.1.19
+Requires: alterator-module-executor >= 0.1.29
 
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires: python3-devel
@@ -78,6 +78,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
+- Add 'exit_status = true' for new version of executor.
+
 * Wed Aug 13 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.0-alt1
 - Add edition recover command.
 - Add edition list command.

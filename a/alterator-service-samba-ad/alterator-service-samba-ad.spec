@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.5
+Version: 0.6.1
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
 
-Requires: alterator-module-executor
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-service
 Requires: alterator-entry >= 0.4.5
 Requires: diag-domain-controller
@@ -55,6 +55,15 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.1-alt1
+- NMU: Add 'exit_status = true' for new version of executor
+
+* Wed Nov 26 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.6-alt1
+- Fix start, stop and restart function
+- Fix status
+- Hide bind settings prototype
+- Set samba internal dns as default dns backend
+
 * Tue Sep 30 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.5-alt1
 - Add signals for start and stop methods
 - Fix parsing of enum parameters
