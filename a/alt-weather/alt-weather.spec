@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Weather
 
 Name: alt-weather
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -62,6 +62,9 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
+* Mon Dec 01 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.6-alt1
+- show previous forecast data if failed to reload data
+
 * Thu Nov 27 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.5-alt1
 - fixed translations
 
