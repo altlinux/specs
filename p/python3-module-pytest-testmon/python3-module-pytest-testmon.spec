@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %global pypi_name pytest-testmon
+%global mod_name testmon
 
 Name: python3-module-%pypi_name
-Version: 2.1.3
+Version: 2.2.0
 Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 License: AGPL-3.0
@@ -13,6 +14,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -38,10 +41,13 @@ executes only tests affected by recent changes.
 
 %files
 %doc README.md
-%python3_sitelibdir/testmon/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.3 -> 2.2.0.
+
 * Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 2.1.1 -> 2.1.3.
 
