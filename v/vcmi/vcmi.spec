@@ -3,7 +3,7 @@
 
 Name: vcmi
 Version: 1.6.8
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -12,6 +12,7 @@ Group: Games/Strategy
 Url: http://wiki.vcmi.eu/index.php?title=Main_Page
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch2000: %name-e2k.patch
 
 # Currently only luajit compiles with VCMI
 ExclusiveArch: %luajit_arches
@@ -88,8 +89,9 @@ VCMI - это фанатский проект с открытым исходны
 %patch -p1
 
 %ifarch %e2k
-# unsupported as of lcc 1.24.11
-%add_optflags -fno-error-always-inline
+# error: multiple definition of `typeinfo for
+# TeamState::serialize<BinaryDeserializer>(BinaryDeserializer&)::Helper*'
+%patch2000 -p1
 %endif
 
 %build
@@ -121,6 +123,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Tue Dec 02 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.8-alt2
+- e2k build fix
+
 * Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 1.6.8-alt1
 - New version 1.6.8.
 
