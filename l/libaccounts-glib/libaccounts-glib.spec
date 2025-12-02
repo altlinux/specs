@@ -5,7 +5,7 @@
 
 Name: libaccounts-glib
 Version: 1.27
-Release: alt1
+Release: alt2
 
 Summary: Accounts framework for Linux and POSIX based platforms
 License: LGPLv2
@@ -13,6 +13,7 @@ Group: System/Libraries
 Url: https://gitlab.com/accounts-sso/libaccounts-glib
 
 Source: %name-%version.tar
+Patch1: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc
@@ -30,7 +31,7 @@ BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3) >= 3.7.0
 # dependencies for building docs
-BuildRequires: gtk-doc gtk-doc-mkpdf
+BuildRequires: gtk-doc
 # dependencies for tests
 BuildRequires: pkgconfig(check)
 
@@ -56,6 +57,7 @@ The %name-docs package contains documentation for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %meson
@@ -105,6 +107,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
 %doc %_datadir/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 1.27-alt2
+- fix parse $XDG_CURRENT_DESKTOP (closes: 53179)
+- clean build requires
+
 * Sun Jun 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.27-alt1
 - New version (closes: 50602).
 
