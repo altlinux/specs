@@ -1,5 +1,5 @@
 Name: flux
-Version: 0.196.1
+Version: 0.198.0
 Release: alt1
 Summary: Influx data language
 Group: Development/Other
@@ -8,8 +8,6 @@ Url: https://github.com/influxdata/flux
 Source: %name-%version.tar
 Patch0: %name-%version.patch
 Patch1: disable-static-library.patch
-Patch2: fix-unsigned-char.patch
-Patch3: allow-missing-docs-for-tests-modules.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -45,10 +43,7 @@ programs using Influx data language.
 %prep
 %setup
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 patch -p1 <<EOF
 --- a/libflux/flux/build.rs
 +++ b/libflux/flux/build.rs
@@ -103,6 +98,9 @@ popd
 %_includedir/influxdata
 
 %changelog
+* Tue Dec 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.198.0-alt1
+- 0.196.1 -> 0.198.0 (git.40a30737)
+
 * Thu May 29 2025 Alexey Shabalin <shaba@altlinux.org> 0.196.1-alt1
 - Initial build.
 
