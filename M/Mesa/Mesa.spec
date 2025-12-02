@@ -22,8 +22,6 @@
 
 %define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
 
-#VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
-%define vdpau_arches %radeon_arches %nouveau_arches %virgl_arches
 # Mesa builds radeon and nouveau support as megadrivers
 %define dri_megadriver_arches %radeon_arches %nouveau_arches
 %define gallium_megadriver_arches %radeon_arches %nouveau_arches
@@ -67,6 +65,8 @@
 %endif
 %ifarch aarch64
 %gallium_drivers_add asahi
+%gallium_drivers_add ethosu
+%gallium_drivers_add rocket
 %endif
 %gallium_drivers_add zink
 %ifarch %vulkan_intel_arches
@@ -86,7 +86,7 @@
 %vulkan_drivers_add freedreno
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
-%vulkan_drivers_add imagination-experimental
+%vulkan_drivers_add imagination
 %endif
 %ifarch loongarch64
 # LS7A1000 and LS7A2000 chipsets, and Loongson SoCs have vivante GPU
@@ -94,8 +94,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 25.2
-%define ver_minor 7
+%define ver_major 25.3
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -114,8 +114,8 @@ Patch: %name-%version.patch
 BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
-BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
+BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libdisplay-info-devel
+BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
@@ -215,9 +215,6 @@ DRI driver for Intel i8xx, i9xx
 %package -n xorg-dri-radeon
 Summary: ATI RADEON DRI driver
 Group: System/X11
-%ifarch %vdpau_arches
-Requires: libvdpau
-%endif
 
 %description -n xorg-dri-radeon
 DRI driver for ATI R100, R200, R300, R400, R500
@@ -225,9 +222,6 @@ DRI driver for ATI R100, R200, R300, R400, R500
 %package -n xorg-dri-nouveau
 Summary: nVidia DRI driver
 Group: System/X11
-%ifarch %vdpau_arches
-Requires: libvdpau
-%endif
 
 %description -n xorg-dri-nouveau
 DRI driver for nVidia
@@ -260,9 +254,6 @@ Summary: Mesa-based DRI drivers
 Group: System/X11
 %ifarch %vulkan_radeon_arches
 Provides: mesa-vulkan-drivers = %epoch:%version-%release
-%endif
-%ifarch %vdpau_arches
-Provides: mesa-vdpau-drivers = %epoch:%version-%release
 %endif
 Requires: xorg-dri-swrast = %epoch:%version-%release
 %ifarch %radeon_arches
@@ -301,11 +292,8 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dplatforms=x11,wayland \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers='device-select, overlay' \
+	-Dvulkan-layers=device-select \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec' \
-%ifarch %vdpau_arches
-	-Dgallium-vdpau=enabled \
-%endif
 %ifarch %radeon_arches
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
@@ -327,7 +315,6 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dopengl=true \
 	-Dglvnd=enabled \
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
-	-Db_ndebug=true \
 %ifarch %gallium_opencl_arches
 	-Dgallium-rusticl=true \
 %endif
@@ -410,7 +397,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/zink_dri.so
 %_libdir/libvulkan_lvp.so
 %_datadir/vulkan/icd.d/lvp_icd*.json
-%_bindir/mesa-overlay-control.py
+#_bindir/mesa-overlay-control.py
 %_libdir/libVkLayer_MESA*.so
 %_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
 
@@ -418,7 +405,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n xorg-dri-virtio
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
 %_libdir/dri/virtio_gpu_drv_video.so
-%_libdir/vdpau/libvdpau_virtio_gpu.so*
 %ifarch %vulkan_virtio_arches
 %_libdir/libvulkan_virtio.so
 %_datadir/vulkan/icd.d/virtio_icd*.json
@@ -442,7 +428,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n xorg-dri-nouveau
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
-%_libdir/vdpau/libvdpau_nouveau.so*
 %ifarch %vulkan_nouveau_arches
 %_libdir/libvulkan_nouveau.so
 %_datadir/vulkan/icd.d/nouveau_icd*.json
@@ -453,7 +438,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n xorg-dri-radeon
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
-%_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
@@ -473,7 +457,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_broadcom.so
 %_libdir/libvulkan_panfrost.so
 %_libdir/libvulkan_powervr_mesa.so
-%_libdir/libpowervr_rogue.so
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
@@ -483,8 +466,11 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Nov 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.0-alt1
+- 25.3.0
+
 * Thu Nov 13 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.7-alt1
-- 25.6.7
+- 25.2.7
 
 * Thu Oct 30 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.2.6-alt1
 - 25.2.6
