@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
+Version: 7.0
 Release: alt1
 Summary: Zope Component Architecture
 License: ZPL-2.1
@@ -16,6 +16,10 @@ Vcs: https://github.com/zopefoundation/zope.component.git
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+# merged into main
+Provides: python3-module-zope.component-tests = %EVR
+Obsoletes: python3-module-zope.component-tests <= 6.1-alt1
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 # switched to native namespace
@@ -31,8 +35,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
-# zope.interface.tests is required but subpackaged
-BuildRequires: python3-module-zope.interface-tests
 %endif
 
 %description
@@ -43,18 +45,9 @@ This package represents the core of the Zope Component Architecture.
 Together with the 'zope.interface' package, it provides facilities for
 defining, registering and looking up components.
 
-%package tests
-Summary: Tests for zope.component (Python 3)
-Group: Development/Python3
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %pypi_name
-
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -71,31 +64,12 @@ This package contains tests for %pypi_name
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
-%exclude %python3_sitelibdir/%ns_name/%mod_name/testfiles/
-%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
-%exclude %python3_sitelibdir/%ns_name/%mod_name/testlayer.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testlayer.*
-%exclude %python3_sitelibdir/%ns_name/%mod_name/standalonetests.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/standalonetests.*
-%exclude %python3_sitelibdir/%ns_name/%mod_name/eventtesting.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
-
-%files tests
-%python3_sitelibdir/%ns_name/%mod_name/tests/
-%python3_sitelibdir/%ns_name/%mod_name/testfiles/
-%python3_sitelibdir/%ns_name/%mod_name/testing.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
-%python3_sitelibdir/%ns_name/%mod_name/testlayer.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testlayer.*
-%python3_sitelibdir/%ns_name/%mod_name/standalonetests.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/standalonetests.*
-%python3_sitelibdir/%ns_name/%mod_name/eventtesting.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
 
 %changelog
+* Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 7.0-alt1
+- 6.1 -> 7.0.
+
 * Tue Sep 09 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 6.0 -> 6.1.
 

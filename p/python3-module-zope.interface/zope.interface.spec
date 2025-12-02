@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2
-Release: alt2
+Version: 8.1.1
+Release: alt1
 
 Summary: Zope interfaces package
 License: ZPL-2.1
@@ -16,9 +16,10 @@ Url: https://pypi.org/project/zope.interface/
 Vcs: https://github.com/zopefoundation/zope.interface
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
-%add_pyproject_deps_runtime_filter setuptools
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -32,15 +33,6 @@ BuildRequires(pre): rpm-build-pyproject
 %description
 This is a separate distribution of the %pypi_name package used in
 Zope 3, along with the packages it depends on.
-
-%package tests
-Summary: Tests for %pypi_name
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.event
-
-%description tests
-This package contains tests for %pypi_name.
 
 %prep
 %setup
@@ -70,16 +62,14 @@ ENDTESTS
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/common/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
-%files tests
-%python3_sitelibdir/%ns_name/%mod_name/tests/
-%python3_sitelibdir/%ns_name/%mod_name/common/tests/
-
 %changelog
+* Fri Nov 28 2025 Stanislav Levin <slev@altlinux.org> 8.1.1-alt1
+- 7.2 -> 8.1.1.
+
 * Thu Aug 07 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt2
 - Dropped circular dependency on zope.testrunner.
 

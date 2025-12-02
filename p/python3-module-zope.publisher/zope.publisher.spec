@@ -6,19 +6,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3
-Release: alt1.1
+Version: 8.0
+Release: alt1
 Epoch: 1
 Summary: The Zope publisher publishes Python objects on the web
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.publisher/
 Vcs: https://github.com/zopefoundation/zope.publisher
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# this project depends on pkg_resources for legacy namespaces,
-# the root of which is shipped in its own package
+# merged into main
+Provides: python3-module-zope.publisher-tests = %EVR
+Obsoletes: python3-module-zope.publisher-tests <= 1:7.3-alt1.1
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 %add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
@@ -28,9 +34,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
-BuildRequires: python3-module-zope.security-tests
-BuildRequires: python3-module-zope.component-tests
-BuildRequires: python3-module-zope.interface-tests
 %endif
 
 %description
@@ -39,19 +42,6 @@ support for plain HTTP/WebDAV clients, web browsers as well as XML-RPC
 and FTP clients. Input and output streams are represented by request and
 response objects which allow for easy client interaction from Python.
 The behaviour of the publisher is geared towards WSGI compatibility.
-
-%package tests
-Summary: Tests for zope.publisher
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testrunner
-%py3_requires zope.testing
-Requires: python3-module-zope.security-tests
-Requires: python3-module-zope.component-tests
-Requires: python3-module-zope.interface-tests
-
-%description tests
-This package contains tests for %pypi_name.
 
 %prep
 %setup
@@ -64,11 +54,6 @@ This package contains tests for %pypi_name.
 
 %install
 %pyproject_install
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
 
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
@@ -77,17 +62,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
-%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
-
-%files tests
-%python3_sitelibdir/%ns_name/%mod_name/tests/
-%python3_sitelibdir/%ns_name/%mod_name/testing.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 1:8.0-alt1
+- 7.3 -> 8.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:7.3-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

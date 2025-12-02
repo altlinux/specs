@@ -3,11 +3,11 @@
 %define ns_name zope
 %define mod_name security
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3
-Release: alt1.2
+Version: 8.3
+Release: alt1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,9 +15,13 @@ Url: https://pypi.org/project/zope.security/
 Vcs: https://github.com/zopefoundation/zope.security
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
-%add_pyproject_deps_runtime_filter setuptools
+# merged into main
+Provides: python3-module-zope.security-tests = %EVR
+Obsoletes: python3-module-zope.security-tests <= 7.3-alt1.2
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -28,24 +32,11 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-zope.proxy-devel
 %if_with check
 %pyproject_builddeps_metadata_extra test
-BuildRequires: python3-module-zope.component-tests
 %endif
 
 %description
 The Security framework provides a generic mechanism to implement
 security policies on Python objects.
-
-%package tests
-Summary: Tests for Zope Security Framework
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing
-
-%description tests
-The Security framework provides a generic mechanism to implement
-security policies on Python objects.
-
-This package contains tests for Zope Security Framework.
 
 %prep
 %setup
@@ -63,22 +54,17 @@ This package contains tests for Zope Security Framework.
 %pyproject_run -- zope-testrunner --test-path=src
 
 %files
-%doc *.txt
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/examples/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
-%exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
-%exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
-%files tests
-%python3_sitelibdir/%ns_name/%mod_name/tests/
-%python3_sitelibdir/%ns_name/%mod_name/testing.py
-%python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
-
 %changelog
+* Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 8.3-alt1
+- 7.3 -> 8.3.
+
 * Tue Sep 09 2025 Grigory Ustinov <grenka@altlinux.org> 7.3-alt1.2
 - Bootstrap for python3.13.
 
