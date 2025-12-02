@@ -18,8 +18,8 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.1.0
-Release: alt1.1
+Version: %ver_major.14.0
+Release: alt1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -28,8 +28,8 @@ Url: https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Rele
 
 %if_disabled snapshot
 #Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}.tar.xz
-Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}gnome1.tar.xz
-#Source: https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
+#Source: https://ftp.gnome.org/pub/gnome/teams/releng/tarballs-needing-help/mozjs/mozjs-%{version}gnome1.tar.xz
+Source: https://ftp.mozilla.org/pub/firefox/releases/%{version}esr/source/firefox-%{version}esr.source.tar.xz
 %else
 Vcs: https://github.com/ptomato/mozjs.git
 Source: %name-%version.tar
@@ -83,8 +83,8 @@ This package provides standalone SpiderMonkey shell, a command line
 interface to the JavaScript engine.
 
 %prep
-#%%setup -n firefox-%{version}esr
-%setup -Dc -n mozjs-%version
+%setup -n firefox-%{version}
+#%setup -Dc -n mozjs-%version
 %ifarch %ix86
 %patch10 -p1
 %endif
@@ -178,6 +178,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Tue Dec 02 2025 Yuri N. Sedunov <aris@altlinux.org> 128.14.0-alt1
+- 128.14.0 (ALT #57099)
+
 * Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 128.1.0-alt1.1
 - fixed build with icu-76
 
