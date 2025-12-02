@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt10
+Release: alt11
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -45,6 +45,8 @@ Patch25: %name-1.32.0-testfix_alt.patch
 Patch26: %name-1.32.0-addrfix.patch
 Patch27: %name-1.32.0-qt6-library.patch
 Patch28: %name-1.32.0-wrapper-args.patch
+Patch29: %name-1.32.0-fallback-greeter.patch
+Patch30: %name-1.32.0-release-vt.patch
 
 Requires: dm-tool
 Requires: lightdm-greeter
@@ -289,6 +291,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Oct 17 2025 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt11
+- try to start fallback greeter if main one fails
+- release VT in advance when stopping display server
+
 * Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1.32.0-alt10
 - NMU: data/pam/lightdm: do'nt require pam_console.so (closes: 54212)
 
