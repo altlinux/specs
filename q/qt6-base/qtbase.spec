@@ -34,7 +34,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.9.3
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -67,6 +67,7 @@ Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 Patch1006: alt-singleclick.patch
+Patch1007: alt-xdg-current-desktop.patch
 #
 Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
@@ -393,6 +394,7 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1005 -p1
 %endif
 %patch1006 -p1
+%patch1007 -p1
 #
 #%patch2000 -p1
 
@@ -836,6 +838,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 
