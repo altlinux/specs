@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%set_autoconf_version 2.60
 
 Name: liblog4cpp
 Version: 1.1.5
-Release: alt0.rc1.1
+Release: alt1
 Summary: Log for C++
 Group: Development/C++
 
@@ -33,7 +34,6 @@ needed for development with %name.
 %setup
 
 %build
-%add_optflags -std=c++14
 %add_optflags -D_FILE_OFFSET_BITS=64
 ./autogen.sh
 %configure 	--enable-doxygen --disable-static
@@ -58,6 +58,10 @@ rm -rf %buildroot%_prefix/doc
 %_datadir/aclocal/*.m4
 
 %changelog
+* Tue Dec 02 2025 Alexei Takaseev <taf@altlinux.org> 1.1.5-alt1
+- 1.1.5
+- use autoconf 2.60
+
 * Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 1.1.5-alt0.rc1.1
 - 1.1.1 -> 1.1.5rc1
 
