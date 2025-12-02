@@ -6,7 +6,7 @@
 
 Name: kdenlive
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -35,7 +35,7 @@ AutoProv: yes, nopython nopython3
 %add_python3_req_skip sam2.sam2_video_predictor
 %add_python3_req_skip sam2.utils.misc
 
-Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
+Requires: mlt-utils >= %current_ver_mlt mlt-qt6 frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: mediainfo
 Requires: kf6-kirigami
@@ -54,6 +54,7 @@ Source4: rapidjson.tar
 Source5: Imath.tar
 Patch2: alt-find-lumas.patch
 Patch3: alt-defaults.patch
+Patch4: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): libavformat-devel
@@ -92,6 +93,7 @@ tar xvf %SOURCE5
 popd
 #%patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 install -m 0644 %SOURCE1 .
 sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
@@ -128,6 +130,10 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/qlogging-categories?/*.*categories
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+- update requires
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
