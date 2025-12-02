@@ -4,8 +4,8 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.12
-Release: alt2
+Version: 1.0.13
+Release: alt1
 
 Summary: Manage DBus service on DDE
 
@@ -79,6 +79,9 @@ export AR="llvm-ar"
 %_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 
 %changelog
+* Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.13-alt1
+- New version 1.0.13.
+
 * Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.12-alt2
 - Built with ipwatchd plugin.
 
