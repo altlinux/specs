@@ -7,20 +7,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
-Release: alt1.1
+Version: 6.0
+Release: alt1
 
 Summary: Zope contenttype
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.contenttype/
 Vcs: https://github.com/zopefoundation/zope.contenttype.git
+BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
+Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %add_pyproject_deps_runtime_filter setuptools
-Requires: python3-module-zope
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -37,6 +40,7 @@ A utility module for content-type handling.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -46,12 +50,6 @@ A utility module for content-type handling.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
@@ -60,10 +58,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.2 -> 6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
