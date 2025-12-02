@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -56,11 +56,13 @@ export READELF="llvm-readelf"
 
 %install
 %DQ6install
+chmod +x %buildroot%_sysconfdir/X11/Xsession.d/00deepin-dde-env
+chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 
 %files
-%_sysconfdir/X11/Xsession.d/00deepin-dde-env
-%_sysconfdir/X11/Xsession.d/01deepin-profile
-%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
+%config(noreplace) %_sysconfdir/X11/Xsession.d/00deepin-dde-env
+%config(noreplace) %_sysconfdir/X11/Xsession.d/01deepin-profile
+%config(noreplace) %_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %exclude %_sysconfdir/profile.d/deepin-xdg-dir.sh
 %_bindir/dde-session
 %_bindir/dde-login-reminder
@@ -86,6 +88,10 @@ export READELF="llvm-readelf"
 %_userunitdir/dde-version-checker@quick-login.service
 
 %changelog
+* Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.10-alt1
+- New version 2.0.10.
+- Fixed non-executable scripts.
+
 * Tue Nov 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
 - New version 2.0.9.
 

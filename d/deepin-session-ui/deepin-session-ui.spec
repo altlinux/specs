@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.34
+Version: 6.0.36
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -88,7 +88,6 @@ export READELF="llvm-readelf"
 %_libexecdir/deepin-daemon/dde-warning-dialog
 %_libexecdir/deepin-daemon/dde-touchscreen-dialog
 %_libexecdir/deepin-daemon/dde-welcome
-%_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %dir %_libexecdir/dde-control-center/
 %_libexecdir/dde-control-center/reset-password-dialog
 %_userunitdir/dde-blackwidget.service
@@ -100,6 +99,9 @@ export READELF="llvm-readelf"
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
+- New version 6.0.36.
+
 * Tue Oct 28 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.34-alt1
 - New version 6.0.34.
 

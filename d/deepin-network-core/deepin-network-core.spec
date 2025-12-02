@@ -5,15 +5,16 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.64
+Version: 2.0.74
 Release: alt1
 Summary: Deepin desktop-environment - network core files
-License: LGPL-3.0-or-later
+License: LGPL-3.0-or-later and GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-network-core
-Vcs: git://github.com/linuxdeepin/dde-network-core.git
+VCS: https://github.com/linuxdeepin/dde-network-core
 
-Source: %url/archive/%version/dde-network-core-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-network-core/archive/%version/dde-network-core-%version.tar.gz
+Source: dde-network-core-%version.tar
 Patch: %name-%version-%release.patch
 
 # deepin-control-center
@@ -27,7 +28,7 @@ BuildPreReq: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel
+BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-qt6-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -82,6 +83,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %find_lang --with-qt --output=%name.lang dde-control-center dss-network-plugin dde-network-core deepin-service-manager dock-network-plugin
 
 %files -f %name.lang
+%doc LICENSE README.md debian/changelog
+%config(noreplace) %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
+%dir %_prefix/lib/deepin-daemon/
+%_prefix/lib/deepin-daemon/dde-network-secret-dialog
 %dir %_libdir/dde-control-center/
 %dir %_libdir/dde-control-center/plugins_v1.0/
 %_libdir/dde-control-center/plugins_v1.0/network/
@@ -140,6 +145,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.74-alt1
+- New version 2.0.74.
+- Updated license tag.
+
 * Tue Aug 05 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.64-alt1
 - New version 2.0.64.
 - Updated position for dde-control-center plugins.
