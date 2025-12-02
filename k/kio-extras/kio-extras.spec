@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -30,6 +30,7 @@ Patch11: alt-smb-share.patch
 Patch12: alt-fix-permissions.patch
 Patch13: alt-find-samba.patch
 Patch14: alt-def-trash.patch
+Patch15: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-5compat-devel qt6-phonon-devel
@@ -87,6 +88,7 @@ Obsoletes: libkioarchive5 < %EVR
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 %build
 %K6build \
@@ -134,6 +136,9 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
