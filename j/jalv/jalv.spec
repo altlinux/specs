@@ -1,6 +1,6 @@
 Name: jalv
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Simple host for LV2 plugins
 License: 0BSD
@@ -25,11 +25,13 @@ BuildRequires: pkgconfig(Qt5Widgets)
 Summary: GTK-based host for LV2 plugins
 Group: Sound
 Requires: jalv = %version-%release
+Requires: libsuil-gtk3
 
 %package qt5
 Summary: Qt-based host for LV2 plugins
 Group: Sound
 Requires: jalv = %version-%release
+Requires: libsuil-qt5
 
 %define desc\
 Jalv (JAck LV2) is a simple host for LV2 plugins. It runs a plugin,\
@@ -77,6 +79,9 @@ sed -r -e '/^Name=/ s,$, (Qt),' -e '/^Exec=/ s,gtk3,qt5,' \
 %_man1dir/jalv.qt*.1*
 
 %changelog
+* Tue Dec 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt2
+- added explicit req on suil-gtk3/qt5
+
 * Thu Nov 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.0-alt1
 - 1.8.0 released
 
