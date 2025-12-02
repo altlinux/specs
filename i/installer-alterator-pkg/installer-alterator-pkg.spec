@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -11,7 +11,7 @@ BuildArch: noarch
 Source: alterator-pkg-%version.tar
 
 Summary: additional package installation
-License: GPL
+License: GPL-3.0-or-later
 Group: System/Configuration/Other
 
 Requires: alterator >= 4.6-alt3 alterator-sh-functions libshell alterator-l10n >= 2.4-alt11
@@ -58,6 +58,10 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Dec 02 2025 Fedor Moseichuck <phobos@altlinux.org> 3.2.4-alt1
+- license: add LICENSE file and copyright headers
+- ui: add pkg/radiogroups
+
 * Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 3.2.3-alt1
 - backend3/pkg-install: run pkg-preinstall scripts for autoinstall too
 

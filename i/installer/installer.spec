@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.29
+Version: 1.16.30
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Thu Nov 13 2025 Fedor Moseichuck <phobos@altlinux.org> 1.16.30-alt1
+- steps: add pkg-radiogroups
+
 * Thu Nov 06 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.16.29-alt1
 - 45-mdadm.sh: create mdadm.conf if RAID is created (Closes: 56699)
 
