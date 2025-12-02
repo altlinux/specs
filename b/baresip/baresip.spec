@@ -1,5 +1,5 @@
 Name: baresip
-Version: 4.0.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 4.0.0
+BuildRequires: libre-devel >= 4.3.0
 
 %add_verify_elf_skiplist %_libdir/%name/modules/*.so
 
@@ -187,17 +187,6 @@ Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the JACK Audio Connection Kit audio driver.
 
-%package mpa
-Summary: MPA speech and audio codec module for baresip
-Group: Communications
-BuildRequires: libmpg123-devel libtwolame-devel liblame-devel libspeexdsp-devel
-Requires: %name = %version-%release
-
-%description mpa
-Baresip is a portable and modular SIP User-Agent with audio and video support
-
-This module provides the MPA speech and audio codec.
-
 %package mqtt
 Summary: MQTT management module for baresip
 Group: Communications
@@ -368,7 +357,7 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.21*
+%_libdir/lib%name.so.23*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -459,9 +448,6 @@ This module provides the X11 video output driver.
 %files jack
 %_libdir/%name/modules/jack.so
 
-%files mpa
-%_libdir/%name/modules/mpa.so
-
 %files mqtt
 %_libdir/%name/modules/mqtt.so
 
@@ -506,6 +492,9 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Mon Dec 01 2025 Ilya Demyanov <turbid@altlinux.org> 4.3.0-alt1
+- new version 4.3.0
+
 * Mon Sep 08 2025 Ilya Demyanov <turbid@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 - migrate to libspandsp3-devel
