@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Doing dirty (but extremely useful) things with equals
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
@@ -39,6 +40,7 @@ checking the response to API calls and the contents of a database.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -61,6 +63,9 @@ touch pytest.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
