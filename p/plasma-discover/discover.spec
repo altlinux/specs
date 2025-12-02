@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.5.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -62,6 +62,7 @@ Patch18: alt-notify-small-amount-free-space.patch
 Patch19: alt-3dparty-warning.patch
 Patch20: alt-fix-displayed-local-details.patch
 Patch21: alt-add-maintainer-detail.patch
+Patch22: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -228,6 +229,7 @@ KF6 library
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -354,6 +356,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
 - new version
 
