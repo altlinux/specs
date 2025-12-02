@@ -1,5 +1,5 @@
 Name: yuki-iptv
-Version: 0.0.12
+Version: 0.0.19
 Release: alt1
 
 Summary: IPTV player with EPG support (Astroncia IPTV fork)
@@ -57,6 +57,9 @@ cp -r usr/ %buildroot/
 %_datadir/metainfo/*
 
 %changelog
+* Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.0.19-alt1
+- new version 0.0.19 (with rpmrb script)
+
 * Thu Jul 11 2024 Vitaly Lipatov <lav@altlinux.ru> 0.0.12-alt1
 - new version 0.0.12 (ALT bug 50864)
 
