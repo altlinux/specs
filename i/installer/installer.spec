@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.30
+Version: 1.16.31
 Release: alt1
 
 Summary: Installer common parts
@@ -146,6 +146,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Tue Dec 02 2025 Anton Midyukov <antohami@altlinux.org> 1.16.31-alt1
+- postinstall.d/00-remove-installer-pkgs.sh: fix for alterator-kopidel
+
 * Thu Nov 13 2025 Fedor Moseichuck <phobos@altlinux.org> 1.16.30-alt1
 - steps: add pkg-radiogroups
 
