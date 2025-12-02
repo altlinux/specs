@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.36
+Version: 1.2.38
 Release: alt1
 
 Summary: App manager for Deepin
@@ -70,12 +70,16 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libexecdir/deepin/application-manager/app-launch-helper
 %_libexecdir/deepin/application-manager/app-update-notifier
 %_libexecdir/deepin/application-manager/debFix.sh
+%_libexecdir/deepin/application-manager/dde-autostart
 %_unitdir/org.desktopspec.ApplicationUpdateNotifier1.service
 %_userunitdir/org.desktopspec.ApplicationManager1.service
+%_userunitdir/dde-autostart*.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/org.desktopspec.ApplicationManager1.service
 %dir %_userunitdir/app-DDE-.service.d/
 %_userunitdir/app-DDE-.service.d/override.conf
+%dir %_userunitdir/dde-session.target.wants/
+%_userunitdir/dde-session.target.wants/dde-autostart.service
 %_datadir/dbus-1/system-services/org.desktopspec.ApplicationUpdateNotifier1.service
 %_datadir/dbus-1/system.d/org.desktopspec.ApplicationUpdateNotifier1.conf
 %_datadir/dbus-1/services/org.desktopspec.ApplicationManager1.service
@@ -97,6 +101,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.38-alt1
+- New version 1.2.38.
+
 * Wed Oct 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.36-alt1
 - New version 1.2.36.
 
