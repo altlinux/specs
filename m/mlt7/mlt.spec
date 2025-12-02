@@ -19,7 +19,7 @@
 
 Name: %nam%mlt_major
 Version: 7.34.1
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -158,12 +158,12 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_datadir/mlt-%mlt_major/
 
 %files -n %nam-qt5
-%exclude %_libdir/mlt-%mlt_major/libmltglaxnimate.so
-%exclude %_libdir/mlt-%mlt_major/libmltqt.so
+%_libdir/mlt-%mlt_major/libmltglaxnimate.so
+%_libdir/mlt-%mlt_major/libmltqt.so
 
 %files -n %nam-qt6
-%exclude %_libdir/mlt-%mlt_major/libmltglaxnimate-qt6.so
-%exclude %_libdir/mlt-%mlt_major/libmltqt6.so
+%_libdir/mlt-%mlt_major/libmltglaxnimate-qt6.so
+%_libdir/mlt-%mlt_major/libmltqt6.so
 
 %files -n %libmltxx
 %_libdir/libmlt++-%mlt_major.so.%mltxx_sover
@@ -186,6 +186,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 7.34.1-alt2
+- fix package Qt plugins
+
 * Wed Nov 12 2025 Sergey V Turchin <zerg@altlinux.org> 7.34.1-alt1
 - new version
 - split Qt plugins to separate packages
