@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
-Release: alt2
+Version: 7.1
+Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
 Group: Development/Python3
@@ -15,14 +15,14 @@ Url: https://pypi.org/project/zope.proxy/
 Vcs: http://github.com/zopefoundation/zope.proxy
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-%py3_requires zope
-# setuptools(pkg_resources) is used by namespace root that is packaged
-# separately at python3-module-zope
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -65,7 +65,6 @@ This package contains development files for %pypi_name.
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %_includedir/python3*/%{pep427_name %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.h
@@ -77,6 +76,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 7.1-alt1
+- 6.1 -> 7.1.
+
 * Thu Aug 07 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt2
 - Dropped optional circular tests dependency on zope.security (Python bootstrap).
 
