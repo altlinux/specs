@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.23.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -86,6 +86,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Tue Dec 02 2025 Anton Midyukov <antohami@altlinux.org> 1:0.23.0-alt3
+- spice-vdagent.service: fix run in GNOME and KDE sessions on wayland.
+
 * Wed Oct 22 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 1:0.23.0-alt2
 - Fix spice-vdagent.service (ALT bug 56073).
 
