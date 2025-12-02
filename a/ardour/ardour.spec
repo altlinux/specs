@@ -1,11 +1,13 @@
 Name: ardour
 Version: 8.12
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
 Group:   Sound
 Url:     http://ardour.org/
+
+Requires: libsuil-gtk2
 
 Source:  %name-%version-%release.tar
 
@@ -133,6 +135,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Tue Dec 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 8.12-alt2
+- added explicit req on suil-gtk2
+
 * Mon Mar 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 8.12-alt1
 - 8.12 released
 
