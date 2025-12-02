@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.8.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -61,6 +61,7 @@ Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
 Patch102: fix-segfault-on-action-search.patch
 Patch103: alt-kf-deps.patch
+Patch104: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-ifver rpm-macros-qt6-webengine libopencv-devel
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
@@ -182,6 +183,7 @@ pushd core
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
+%patch104 -p1
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -287,6 +289,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 8.8.0-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Oct 21 2025 Sergey V Turchin <zerg@altlinux.org> 8.8.0-alt1
 - new version
 
