@@ -14,8 +14,8 @@ BuildRequires: jpackage-11-compat
 %bcond_without tests
 
 Name:           felix-gogo-runtime
-Version:        1.1.4
-Release:        alt1_1jpp11
+Version:        1.1.6
+Release:        alt1
 Summary:        Apache Felix Gogo command line shell for OSGi
 # One file is also MIT licensed:
 #  src/main/java/org/apache/felix/gogo/runtime/Expression.java
@@ -23,6 +23,8 @@ License:        ASL 2.0 and MIT
 URL:            http://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 
 Source0:        http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
+
+Patch: pom-1.1.6-alt-build.patch
 
 BuildArch:      noarch
 
@@ -52,7 +54,9 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
-
+#fix ftbfs
+%patch -p1
+subst 's|org.mockito.Matchers.eq|org.mockito.ArgumentMatchers.eq|' src/test/java/org/apache/felix/gogo/runtime/TestTokenizer.java
 # Use compendium dep
 %pom_remove_dep :org.osgi.namespace.service
 %pom_remove_dep :org.osgi.service.component.annotations
@@ -85,6 +89,10 @@ sed -i '/(echoout/ d' src/test/java/org/apache/felix/gogo/runtime/TestParser.jav
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Dec 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.6-alt1
+- 1.1.4 -> 1.1.6
+- Fix FTBFS.
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.4-alt1_1jpp11
 - new version
 
