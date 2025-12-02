@@ -2,8 +2,8 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.5.5
-Release: alt2
+Version: 3.6.0
+Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
 License: Apache-2.0
@@ -67,6 +67,9 @@ useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Oct 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.5.5-alt2
 - fix config file option (Closes: #56561) (thnx kolesnichenko@)
 
