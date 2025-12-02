@@ -170,12 +170,14 @@
 %endif
 
 Name: libvirt
-Version: 11.5.0
+Version: 11.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
 Url: https://libvirt.org/
+Vcs: https://gitlab.com/libvirt/libvirt.git
+
 Source0: %name-%version.tar
 Source2: keycodemapdb-%name-%version.tar
 
@@ -1364,7 +1366,6 @@ fi
 %files daemon-driver-qemu
 %config(noreplace) %_sysconfdir/libvirt/virtqemud.conf
 %config(noreplace) %_sysconfdir/libvirt/qemu-lockd.conf
-%_sysctldir/60-qemu-postcopy-migration.conf
 %_datadir/augeas/lenses/virtqemud.aug
 %_datadir/augeas/lenses/tests/test_virtqemud.aug
 %_unitdir/virtqemud*
@@ -1526,6 +1527,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Dec 02 2025 Sergey Zhidkih <rx1513@altlinux.org> 11.10.0-alt1
+- 11.10.0 (Fixes: CVE-2025-12748, CVE-2025-13193)
+
 * Fri Jul 04 2025 Alexey Shabalin <shaba@altlinux.org> 11.5.0-alt1
 - 11.5.0
 
