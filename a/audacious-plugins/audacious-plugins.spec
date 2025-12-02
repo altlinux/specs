@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.5
+Version: 4.5.1
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -25,7 +25,7 @@ BuildRequires: lib%oname-devel = %version
 
 BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-svg-devel
 
-BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel pipewire-libs-devel
+BuildRequires: libglade-devel projectm-devel libsidplayfp-devel libsoxr-devel libadplug-devel pipewire-libs-devel
 
 BuildRequires: libopus-devel libopusfile-devel libjson-glib-devel libopenmpt-devel
 
@@ -83,6 +83,10 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5.1-alt1
+- new version 4.5.1 (with rpmrb script)
+- fix BR: projectm-devel
+
 * Mon Jul 21 2025 Vitaly Lipatov <lav@altlinux.ru> 4.5-alt1
 - new version 4.5 (with rpmrb script)
 
