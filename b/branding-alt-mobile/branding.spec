@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1.2.beta2
+Release: alt1.3.beta2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -26,8 +26,8 @@ Summary: System/Base
 License: GPL-3.0-or-later
 
 %define Brand_ru Альт
-%define distro_name %Brand Mobile
-%define distro_name_ru %Brand_ru Мобильный
+%define distro_name %Brand Mobile %version
+%define distro_name_ru %Brand_ru Мобильный %version
 %define branding_data_dir %_datadir/branding-data-current
 
 %ifdef _priority_distbranch
@@ -245,6 +245,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Sun Nov 23 2025 David Sultaniiazov <x1z53@altlinux.org> 11.0-alt1.3.beta2
+- license: add version to distro name
+- indexhtml: update links
+- os-release: add fields
+
 * Sat Aug 23 2025 Andrew Savchenko <bircoph@altlinux.org> 11.0-alt1.2.beta2
 - update status to beta2
 
