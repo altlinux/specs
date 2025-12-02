@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -29,6 +29,7 @@ Patch2: alt-def-memory-level.patch
 Patch3: alt-print-truncate-title.patch
 Patch4: alt-add-indication-for-document-loading-process.patch
 Patch5: alt-cryptopro-verifying.patch
+Patch6: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel qt6-svg-devel
@@ -111,6 +112,7 @@ Summary: %name library
 %patch4 -p2
 %endif
 #%patch5 -p2 -b .csp
+%patch6 -p1
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 sed -i '/^find_package.*QMobipocket/d' CMakeLists.txt
 
@@ -190,6 +192,9 @@ fi
 
 
 %changelog
+* Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix parse $XDG_CURRENT_DESKTOP
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
