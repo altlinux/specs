@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: lsdvd
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: list contents of DVD disks
@@ -46,6 +46,9 @@ export LC_ALL=en_US.UTF-8
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Tue Dec 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21-alt1
+- 0.21
+
 * Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20-alt1
 - 0.20
 
