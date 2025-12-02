@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt5
+Release: alt6
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 Patch1: %name-%version-gcc-10-extern.patch
+Patch2: aclyacc-0.68.5-alt-build.patch
 
 Provides: flow-tools
 Conflicts: flow-tools
@@ -68,6 +69,7 @@ This package contains scripts to provide ASCII, HTML, RRD output
 %prep
 %setup
 %patch1 -p1
+%patch2 -p0
 # fix broken env path
 find -type f | xargs subst "s|#!/bin/env|#/!/usr/bin/env|g"
 
@@ -117,6 +119,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Tue Dec 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.68.5-alt6
+- NMU:FTBFS: Fix error of yyerror() (thnx FreeBSD fix)
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.68.5-alt5
 - NMU: drop obsolete checkstyle BR:
 
