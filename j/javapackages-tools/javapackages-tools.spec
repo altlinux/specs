@@ -1,3 +1,5 @@
+%define java_arches x86_64 %arm aarch64 mipsel ppc64le riscv64 loongarch64 e2k
+
 Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -42,7 +44,7 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.4.1
-Release:        alt1
+Release:        alt2
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -290,6 +292,7 @@ rm -rf %buildroot/usr/bin/xmvn-builddep
 
 pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
+echo "%%java_arches %java_arches" >> javapackages-fjava
 mv macros.javapackages-filesystem javapackages-filesystem
 mv macros.jpackage javapackages-jpackage
 #mv macros.scl-java-template javapackages-scl-java-template
@@ -352,6 +355,9 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun Nov 30 2025 Ivan Khanas <xeno@altlinux.org> 1:6.4.1-alt2
+- Add java_arches macro.
+
 * Fri Aug 01 2025 Ivan Khanas <xeno@altlinux.org> 1:6.4.1-alt1
 - New version.
 

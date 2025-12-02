@@ -1,12 +1,13 @@
 Name: google-error-prone
 Version: 2.44.0
-Release: alt1
+Release: alt2
 
 Summary: Catch common Java mistakes as compile-time errors
 License: Apache-2.0
 Group: Development/Java
 Url: https://errorprone.info
 Vcs: https://github.com/google/error-prone.git
+ExclusiveArch: %java_arches
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -16,8 +17,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: maven-local
 BuildRequires: rpm-build-java
-# Java-17 target compilation for noarch packaging.
-BuildRequires: jpackage-17-compat
+BuildRequires: java-21-openjdk-devel
 BuildRequires: truth
 BuildRequires: guava
 BuildRequires: jspecify
@@ -32,6 +32,7 @@ BuildRequires: jakarta-annotations
 BuildRequires: os-maven-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-source-plugin
+BuildRequires: maven-resources-plugin
 BuildRequires: bnd-maven-plugin
 BuildRequires: software-and-algorithms
 BuildRequires: auto-service
@@ -137,11 +138,6 @@ static analysis and verification.
 %pom_remove_dep com.google.auto.service:auto-service-annotations core
 %pom_remove_dep com.google.googlejavaformat:google-java-format core
 
-# getLast and getFirst are unavailable in java-17.
-find check_api -name "*.java" -type f -exec sed -i 's/\.getFirst()/.get(0)/g' {} \;
-find core -name "*.java" -type f -exec sed -i 's/\.getFirst()/.get(0)/g' {} \;
-find core -name "*.java" -type f -exec perl -i -pe 's/(\w+)\.getLast\(\)/$1.get($1.size() - 1)/g' {} \;
-
 %pom_remove_dep com.google.auto.service:auto-service-annotations refaster
 
 %build
@@ -160,10 +156,8 @@ find core -name "*.java" -type f -exec perl -i -pe 's/(\w+)\.getLast\(\)/$1.get(
 
 %files annotations -f .mfiles-error_prone_annotations
 
-# Must be used with adding --enable-preview compiler argument because of java-17 compilation.
 %files check-api -f .mfiles-error_prone_check_api
 
-# Must be used with adding --enable-preview compiler argument because of java-17 compilation.
 %files core -f .mfiles-error_prone_core
 
 %files refaster -f .mfiles-error_prone_refaster
@@ -171,5 +165,10 @@ find core -name "*.java" -type f -exec perl -i -pe 's/(\w+)\.getLast\(\)/$1.get(
 %files type-annotations -f .mfiles-error_prone_type_annotations
 
 %changelog
+* Sun Nov 30 2025 Ivan Khanas <xeno@altlinux.org> 2.44.0-alt2
+- Build fat jar with dependencies for core.
+- Fix services registration.
+- Java 21 compilation.
+
 * Tue Nov 25 2025 Ivan Khanas <xeno@altlinux.org> 2.44.0-alt1
 - First build for ALT.
