@@ -2,8 +2,8 @@
 %def_with qt6
 
 Name: gimagereader
-Version: 3.4.2
-Release: alt3
+Version: 3.4.3
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -18,10 +18,6 @@ Source: %name-%version.tar
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
-
-Patch1: gimagereader-fix-rescan-altbug-48017.patch
-Patch2: gimagereader-fix-gtk-rescan-altbug-48017.patch
-Patch3: e72d657a408dc6b77c48c086feede31e08700b4c.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
@@ -127,9 +123,6 @@ Common files for %name.
 
 %prep
 %setup
-#patch1 -p1
-#patch2 -p1
-%patch3 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -218,6 +211,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt1
+- new version 3.4.3 (with rpmrb script)
+
 * Wed Jun 04 2025 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt3
 - enable build with Qt6 (ALT bug 54208)
 
