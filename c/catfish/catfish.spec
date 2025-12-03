@@ -3,7 +3,7 @@
 
 Name: catfish
 Version: 4.20.1
-Release: alt1
+Release: alt2
 Summary: A handy file search tool
 
 Group: File tools
@@ -86,6 +86,10 @@ rm -vr %buildroot%_iconsdir/hicolor/*x*/
 %python3_sitelibdir_noarch/catfish_lib
 
 %changelog
+* Wed Dec 03 2025 Anton Midyukov <antohami@altlinux.org> 4.20.1-alt2
+- Fix a program crash when using the "Search file contents" option
+  (Closes: 57104)
+
 * Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 4.20.1-alt1
 - new version (4.20.1) with rpmgs script
 
