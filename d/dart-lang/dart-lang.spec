@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dart-lang
-Version: 3.8.1
-Release: alt2
+Version: 3.9.2
+Release: alt1
 
 Summary: Dart language
 License: BSD-3-Clause
@@ -28,11 +28,9 @@ BuildRequires: samurai
 BuildRequires: python3
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(icu-i18n)
-BuildRequires: dart-lang-bootstrap
+BuildRequires: dart-lang
 
 ExclusiveArch: x86_64 aarch64
-
-Conflicts: %name-bootstrap
 
 %ifarch x86_64
 %define dart_arch x64
@@ -46,6 +44,24 @@ Conflicts: %name-bootstrap
 %description
 %summary.
 
+%package -n dartaotruntime
+Summary: dartaotruntime
+Group: Development/Tools
+
+%description -n dartaotruntime
+%summary.
+
+%package sdk
+Summary: Dart lang SDK
+Group: Development/Tools
+
+Provides: dart-lang-bootstrap
+
+Requires: dart-lang dartaotruntime
+
+%description sdk
+%summary.
+
 %prep
 %setup
 %patch0 -p 1
@@ -57,13 +73,16 @@ Conflicts: %name-bootstrap
 %patch6 -p 1
 
 # SOURCE
-# 
+#
 # Requires: teapot-tools pax-utils
+#
+# mkdir snapshot
+# cd snapshot
 #
 # echo "
 # solutions = [{
 #   'name': 'sdk',
-#   'url': 'https://dart.googlesource.com/sdk.git@%version',
+#   'url': 'https://dart.googlesource.com/sdk.git@3.9.2',
 # }]
 # target_cpu = ['x64', 'arm64']
 # target_cpu_only = True
@@ -75,7 +94,7 @@ Conflicts: %name-bootstrap
 #   rm -f "$elf"
 # done
 #
-# tar -cf dart-sdk-%version.tar \
+# tar -cf dart-lang-3.9.2.tar \
 #   --exclude="ChangeLog*" \
 #   --exclude="sdk/buildtools/*/clang" \
 #   --exclude="third_party/fuchsia/sdk/linux/arch" \
@@ -142,11 +161,43 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 
 %files
 %_bindir/dart
-%_bindir/dartaotruntime
 %_includedir/dart
 %_libexecdir/dart
+%exclude %_libexecdir/dart/bin/dartaotruntime
+%exclude %_libexecdir/dart/bin/snapshots/analysis_server.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/dart2js_aot.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/dartdevc.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/gen_kernel_aot.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/kernel-service.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/kernel_worker_aot.dart.snapshot
+%exclude %_libexecdir/dart/bin/snapshots/dart2wasm_product.snapshot
+%exclude %_libexecdir/dart/bin/resources/dartdoc
+%exclude %_libexecdir/dart/bin/resources/devtools
+%exclude %_libexecdir/dart/bin/utils
+%exclude %_libexecdir/dart/lib
+
+%files -n dartaotruntime
+%_bindir/dartaotruntime
+%_libexecdir/dart/bin/dartaotruntime
+
+%files sdk
+%_libexecdir/dart/bin/snapshots/analysis_server.dart.snapshot
+%_libexecdir/dart/bin/snapshots/dart2js_aot.dart.snapshot
+%_libexecdir/dart/bin/snapshots/dartdevc.dart.snapshot
+%_libexecdir/dart/bin/snapshots/gen_kernel_aot.dart.snapshot
+%_libexecdir/dart/bin/snapshots/kernel-service.dart.snapshot
+%_libexecdir/dart/bin/snapshots/kernel_worker_aot.dart.snapshot
+%_libexecdir/dart/bin/snapshots/dart2wasm_product.snapshot
+%_libexecdir/dart/bin/resources/dartdoc
+%_libexecdir/dart/bin/resources/devtools
+%_libexecdir/dart/bin/utils
+%_libexecdir/dart/lib
 
 %changelog
+* Thu Nov 27 2025 David Sultaniiazov <x1z53@altlinux.org> 3.9.2-alt1
+- Update to 3.9.2
+- Splitting dart into dart, dartaotruntime and dart-bootstrap.
+
 * Fri Jun 13 2025 David Sultaniiazov <x1z53@altlinux.org> 3.8.1-alt2
 - Remove arm and riscv64 from source
 - Add build for aarch64
