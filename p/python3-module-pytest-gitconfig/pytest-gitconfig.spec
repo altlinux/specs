@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Provide a Git config sandbox for testing
 License: MIT
@@ -16,13 +16,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 # not packaged in sisyphus
 %add_pyproject_deps_check_filter pytest-mypy-testing
-%add_pyproject_deps_check_filter tox-pdm
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -37,7 +38,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pdm test
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -55,5 +56,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.0 -> 0.8.0.
+
 * Mon Apr 07 2025 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
