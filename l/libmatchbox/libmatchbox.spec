@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen libICE-devel libSM-devel libcheck-devel pkgconfi
 
 Name: libmatchbox
 Version: 1.9
-Release: alt4.1
+Release: alt5
 Summary: Libraries for the Matchbox Desktop
 License: LGPLv2+
 Group: System/Libraries
@@ -18,6 +18,7 @@ Source1: %name.watch
 Patch: libmatchbox-1.9-alt-DSO.patch
 Patch10:	libmatchbox-1.9-add-needed.patch
 Patch11:	libmatchbox-1.9-libpng.patch
+Patch12: mbpixbuf-1.9-alt-build.patch
 
 BuildRequires: pkg-config
 BuildRequires: libXft-devel
@@ -59,6 +60,7 @@ for which screen space, input mechanisms or system resources are limited.
 %patch -p2
 %patch10 -p1 -b .add-needed
 %patch11 -p1 -b .libpng
+%patch12 -p1
 
 %build
 autoreconf -fisv
@@ -89,6 +91,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.9-alt5
+- Fix FTBFS.
+
 * Tue Jun 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.9-alt4.1
 - updated watch file
 
