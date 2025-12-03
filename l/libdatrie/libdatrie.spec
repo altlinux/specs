@@ -1,14 +1,13 @@
 %define soname 1
 Group: System/Libraries
 Name: libdatrie
-Version: 0.2.13
-Release: alt2
+Version: 0.2.14
+Release: alt1
 Summary: Implementation of Double-Array structure for representing trie
 License: LGPL-2.1-or-later
 Url: https://linux.thai.net/projects/datrie
 VCS: https://github.com/tlwg/libdatrie
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 BuildRequires: autoconf, automake, libtool
 BuildRequires: autoconf-archive
 BuildRequires: doxygen, graphviz
@@ -34,7 +33,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 # fix VERSION in pkgconfig file
 sed -i 's/m4_esyscmd(build-aux\/git-version-gen)/%version/' configure.ac
 # enable png files creation via graphviz
@@ -66,6 +64,9 @@ LD_LIBRARY_PATH=../datrie/.libs %make_build check
 %_mandir/man1/trietool*
 
 %changelog
+* Wed Dec 03 2025 Anton Farygin <rider@altlinux.com> 0.2.14-alt1
+- 0.2.13 -> 0.2.14
+
 * Sat Nov 01 2025 Anton Farygin <rider@altlinux.com> 0.2.13-alt2
 - fixed build in new environment
 
