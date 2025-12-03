@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-asyncio
+%define mod_name pytest_asyncio
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -16,6 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
 BuildRequires(pre): rpm-build-pyproject
@@ -48,10 +51,13 @@ python 3.5+.
 
 %files
 %doc README.*
-%python3_sitelibdir/pytest_asyncio/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.0 -> 1.3.0.
+
 * Tue Oct 14 2025 Alexander Burmatov <thatman@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
