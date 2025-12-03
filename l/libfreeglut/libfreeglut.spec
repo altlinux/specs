@@ -1,15 +1,18 @@
 %def_disable snapshot
+%define _libexecdir %_prefix/libexec
+
 %define _name freeglut
 %define sover 3
 %def_enable replace_glut
 %def_disable wayland
+%def_enable man
 %def_disable check
 
 %define glut_version 5:8.0.1
 %define glut_release alt3
 
 Name: lib%_name
-Version: 3.6.0
+Version: 3.8.0
 Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
@@ -17,10 +20,11 @@ License: MIT
 Group: System/Libraries
 Url: http://%_name.sourceforge.net/
 
+Vcs: https://github.com/dcnieho/FreeGLUT.git
+
 %if_disabled snapshot
 Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/dcnieho/FreeGLUT.git
 Source: %_name-%version.tar
 %endif
 Patch1: libfreeglut-3.4.0-alt-fix-visibility-hidden.patch
@@ -38,6 +42,7 @@ BuildRequires: cmake ninja-build gcc-c++ ctest libGLU-devel libXcomposite-devel 
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel libxkbcommon-devel}
+BuildRequires: chrpath
 
 %description
 %_name is a completely open source alternative to the OpenGL Utility Toolkit
@@ -68,6 +73,14 @@ software which links to the freeglut library, which is an open source
 alternative to the popular GLUT library, with an OSI approved free software
 license.
 
+%package demos
+Summary: Freeglut demonstration programs
+Group: Development/Other
+Requires: %name = %EVR
+
+%description demos
+This package provides Freeglut demo programs.
+
 %prep
 %setup -n %_name-%version
 %patch1 -p3
@@ -81,7 +94,8 @@ license.
        -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
        %{?_enable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=ON} \
        %{?_disable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=OFF} \
-       %{?_enable_wayland:-DFREEGLUT_WAYLAND=ON}
+       %{?_enable_wayland:-DFREEGLUT_WAYLAND=ON} \
+       %{?_disable_man:-DFREEGLUT_INSTALL_MAN_PAGES=FALSE}
 %nil
 %cmake_build
 
@@ -95,6 +109,13 @@ ln -s glut.pc %buildroot%_pkgconfigdir/%_name.pc
 ln -s %_name.pc %buildroot%_pkgconfigdir/glut.pc
 ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %endif
+
+# demos 
+mkdir -p %buildroot%_libexecdir/FreeGLUT
+install -pD -m755  %_cmake__builddir/bin/* \
+    -t %buildroot%_libexecdir/FreeGLUT/
+
+chrpath -d %buildroot%_libexecdir/FreeGLUT/*
 
 %check
 %cmake_build -t test
@@ -119,8 +140,36 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_pkgconfigdir/glut.pc
 %endif
 %_libdir/cmake/FreeGLUT/
+%{?_enable_man:%_man3dir/*}
+
+%files demos
+%dir %_libexecdir/FreeGLUT
+%_libexecdir/FreeGLUT/3dview
+%_libexecdir/FreeGLUT/CallbackMaker
+%_libexecdir/FreeGLUT/Fractals
+%_libexecdir/FreeGLUT/Fractals_random
+%_libexecdir/FreeGLUT/Lorenz
+%_libexecdir/FreeGLUT/One
+%_libexecdir/FreeGLUT/accum
+%_libexecdir/FreeGLUT/indexed_color
+%_libexecdir/FreeGLUT/joystick
+%_libexecdir/FreeGLUT/keyboard
+%_libexecdir/FreeGLUT/multi-touch
+%_libexecdir/FreeGLUT/resizer
+%_libexecdir/FreeGLUT/shapes
+%_libexecdir/FreeGLUT/smooth_opengl3
+%_libexecdir/FreeGLUT/spaceball
+%_libexecdir/FreeGLUT/subwin
+%_libexecdir/FreeGLUT/timer
+%_libexecdir/FreeGLUT/timer_callback
+%_libexecdir/FreeGLUT/vsync
+%_libexecdir/FreeGLUT/windows
 
 %changelog
+* Wed Dec 03 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- new -demos subpackage
+
 * Wed Jun 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
