@@ -3,7 +3,7 @@
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
 Version: 1.8.9
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Kernel and hardware
 Source: %name-%version.tar
@@ -138,6 +138,9 @@ sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocf
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Wed Dec 03 2025 Anton Farygin <rider@altlinux.com> 1.8.9-alt2
+- dropped unnecessary Requires: network.service from systemd unit (closes: #55636)
+
 * Thu Nov 20 2025 Anton Farygin <rider@altlinux.com> 1.8.9-alt1
 - 1.8.8 -> 1.8.9
 
