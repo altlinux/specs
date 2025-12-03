@@ -5,13 +5,13 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %global srcname dirq
 Name:		java-dirq
-Version:	1.8
-Release:	alt1_15jpp11
+Version:	1.9
+Release:	alt1
 Summary:	Directory based queue
-License:	ASL 2.0
+License:	Apache-2.0
 URL:		https://github.com/cern-mig/%{name}
 Source0:	https://github.com/cern-mig/%{name}/archive/%{srcname}-%{version}.tar.gz
-Patch0:		java-dirq-1.8-updated-pom.patch
+Patch0:		java-dirq-1.9-updated-pom.patch
 BuildArch:	noarch
 BuildRequires:	maven-local
 BuildRequires:	mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -44,7 +44,7 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 
 # remove unnecessary plugins
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+#%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
 %mvn_file : %{name}
@@ -62,6 +62,10 @@ This package contains the API documentation for %{name}.
 %doc CHANGES readme.md todo.md
 
 %changelog
+* Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.9-alt1
+- 1.8 -> 1.9
+- changed license tag
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_15jpp11
 - update
 
