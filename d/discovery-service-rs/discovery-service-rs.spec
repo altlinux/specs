@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: discovery-service-rs
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: The alternative to original Talos Discovery Service
@@ -34,10 +34,11 @@ other without hardcoded IP addresses.
 %install
 %rust_install -- discovery-service-rs snapshot_reader
 
-mkdir -p %buildroot{%_unitdir,{%_sysconfdir,%_localstatedir}/%name}
+mkdir -p %buildroot{%_unitdir,{%_sysconfdir,%_localstatedir,%_datadir}/%name}
 
 install -m0644 config/%name.service.example %buildroot%_unitdir/%name.service
 install -m0644 config/%name.ini %buildroot%_sysconfdir/%name/%name.ini
+cp -r templates %buildroot%_datadir/%name/
 
 %check
 %rust_test
@@ -54,10 +55,14 @@ useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "discovery-servi
 %files
 %doc *.md
 %_bindir/*
+%_datadir/%name/*
 %_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name/*
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Tue Dec 03 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.2-alt1
+- Fix bug with missing html templates for systemd service.
+
 * Tue Oct 06 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.1-alt1
 - Initial build.
