@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-gast
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Summary: Python AST that abstracts the underlying Python version
 License: BSD
@@ -17,6 +17,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,6 +53,9 @@ as produced by ast.parse from the standard ast module.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
+- 0.6.0 -> 0.7.0.
+
 * Fri Jun 28 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.5 -> 0.6.0.
 

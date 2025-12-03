@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.2.post1
+Version: 0.5.0
 Release: alt1
 Summary: Extract semantic information about static Python code
 License: BSD-3-Clause
@@ -16,6 +16,8 @@ Vcs: https://github.com/serge-sans-paille/beniget/
 BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -40,7 +42,8 @@ each definition.
 %pyproject_install
 
 %check
-%pyproject_run_unittest discover tests
+# synced to .github/workflows/core.yml
+%pyproject_run_pytest -vra --doctest-modules %mod_name/ tests/
 
 %files
 %doc README.rst
@@ -48,6 +51,9 @@ each definition.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
+- 0.4.2.post1 -> 0.5.0.
+
 * Fri Jun 28 2024 Stanislav Levin <slev@altlinux.org> 0.4.2.post1-alt1
 - 0.4.1 -> 0.4.2.post1.
 
