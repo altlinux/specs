@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: File tools
@@ -12,6 +12,7 @@ License: GPL-2.0-or-later
 
 Provides: kde5-kgpg = %EVR
 Obsoletes: kde5-kgpg < %EVR
+Requires: xli
 
 Source: %rname-%version.tar
 Patch1: alt-gpg-bin.patch
@@ -62,6 +63,9 @@ Graphical GPG frontend.
 
 
 %changelog
+* Wed Dec 03 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix requires (closes: 57098)
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
