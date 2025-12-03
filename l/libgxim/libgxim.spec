@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(check) pkgc
 
 Name: libgxim
 Version: 0.5.0
-Release: alt3
+Release: alt4
 
 Summary: GObject-based XIM protocol library
 License: LGPLv2+
@@ -14,6 +14,7 @@ Url: http://tagoh.bitbucket.org/libgxim/
 Source0: http://bitbucket.org/tagoh/%name/downloads/%name-%version.tar.bz2
 Source44: import.info
 Packager: Ilya Mashkin <oddity@altlinux.ru>
+Patch: libgxim-0.5.0-gcc14.patch
 
 BuildRequires: intltool gettext ruby ruby-stdlibs
 BuildRequires: glib2-devel >= 2.26 gtk2-devel
@@ -42,6 +43,7 @@ libgxim.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure --disable-static --disable-rebuilds
@@ -64,6 +66,9 @@ rm %buildroot%_libdir/*.la
 %_datadir/gtk-doc/html/libgxim
 
 %changelog
+* Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.5.0-alt4
+- FTBFS:fix: build with gcc14 (thnx Gentoo)
+
 * Fri Aug 04 2017 Michael Shigorin <mike@altlinux.org> 0.5.0-alt3
 - spec cleanup
 
