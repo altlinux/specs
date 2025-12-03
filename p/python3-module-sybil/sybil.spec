@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.2.0
+Version: 9.3.0
 Release: alt1
 Summary: Automated testing for the examples in your documentation
 License: MIT
@@ -16,6 +16,8 @@ Vcs: https://github.com/simplistix/sybil
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,6 +48,9 @@ Automated testing for the examples in your documentation.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 9.3.0-alt1
+- 9.2.0 -> 9.3.0.
+
 * Fri Aug 08 2025 Stanislav Levin <slev@altlinux.org> 9.2.0-alt1
 - 9.1.0 -> 9.2.0.
 
