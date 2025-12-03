@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.5
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: py.test plugin that allows you to add environment variables
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,6 +51,9 @@ pytest.ini or pyproject.toml file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.5 -> 1.2.0.
+
 * Thu Apr 03 2025 Stanislav Levin <slev@altlinux.org> 1.1.5-alt2
 - fixed tests against pytest < 7.2.
 
