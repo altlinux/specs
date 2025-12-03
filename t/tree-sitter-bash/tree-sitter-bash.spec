@@ -1,5 +1,5 @@
 Name: tree-sitter-bash
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 
 Summary: Bash grammar for tree-sitter
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-bash
 %_libdir/tree-sitter-bash
 
 %changelog
+* Wed Dec 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.1-alt1
+- 0.25.1 released
+
 * Thu Jun 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.0-alt1
 - 0.25.0 released
 
