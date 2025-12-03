@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           cal10n
 Version:        0.8.1
-Release:        alt1_13jpp11
+Release:        alt2_13jpp11
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
@@ -17,6 +17,8 @@ URL:            http://cal10n.qos.ch
 Source0:        %{name}-%{version}.tar.gz
 # Remove bundled binaries which cannot be easily verified for licensing
 Source1:        generate-tarball.sh
+
+Patch: pom-0.8.1-alt-build.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
@@ -58,6 +60,7 @@ an enum type match those in the corresponding resource bundles.
 
 %prep
 %setup -q -n %{name}-v_%{version}
+%patch -p1
 
 find . -name \*.jar -delete
 
@@ -94,6 +97,9 @@ find . -name \*.jar -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0:0.8.1-alt2_13jpp11
+- Fix FTBFS.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:0.8.1-alt1_13jpp11
 - update
 
