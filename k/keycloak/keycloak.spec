@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.4.6
+Version: 26.4.7
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -77,6 +77,9 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Tue Dec 02 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.7-alt1
+- New version.
+
 * Wed Nov 26 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.6-alt1
 - New version.
 
