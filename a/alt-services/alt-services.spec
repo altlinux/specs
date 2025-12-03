@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -27,6 +27,7 @@ BuildRequires: kf6-kitemmodels-devel
 BuildRequires: libqtsingleapplication-qt6-devel
 
 Requires: alterator-interface-service >= 0.2.1
+Requires: alterator-interface-diag >= 0.1.4
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-entry >= 0.4.5
@@ -59,6 +60,13 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %doc *.md
 
 %changelog
+* Wed Nov 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.8-alt1
+- Fixed (thx Andrey Alekseev):
+  + segmentation fault while editing parameters in table mode
+  + "Copy"/"Select All" default actions not being displayed in Log Page context menu
+  + "table mode" parameter editor was losing its scroll position while adding/removing parameters
+  + optional parameter selection was only possible outside of table checkboxes
+
 * Wed Oct 01 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.7-alt1
 - Fixed (thx Andrey Alekseev):
   + editors being opened on disabled items

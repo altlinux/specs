@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,6 +55,11 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Wed Nov 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.1-alt1
+- Sorting the order of running tests for the selected diagnostic tool.
+- Optimizing the launch of diagnostic tests.
+- Show parameters description in services play (thx Oleg Chagaev).
+
 * Tue Nov 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.0-alt1
 - Services module implementation (thx Andrey Alekseev and Oleg Chagaev).
 - Fix completions (thx Kozyrev Yuri).
