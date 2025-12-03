@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -84,6 +84,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Wed Dec 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
+- 1.8.6
+
 * Wed Jul 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 
