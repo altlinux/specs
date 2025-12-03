@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-mock
+%define mod_name pytest_mock
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.15.0
+Version: 3.15.1
 Release: alt1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -54,10 +55,13 @@ to worry about undoing patches at the end of a test
 
 %files
 %doc CHANGELOG.rst README.rst
-%python3_sitelibdir/pytest_mock/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 3.15.1-alt1
+- 3.15.0 -> 3.15.1.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
 - 3.14.1 -> 3.15.0.
 
