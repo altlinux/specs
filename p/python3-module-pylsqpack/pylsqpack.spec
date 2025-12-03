@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.22
+Version: 0.3.23
 Release: alt1
 
 Summary: Python bindings for ls-qpack
@@ -50,6 +50,9 @@ with QPACK.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.3.23-alt1
+- Updated to 0.3.23.
+
 * Sat Jun 21 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.3.22-alt1
 - Updated to 0.3.22.
 

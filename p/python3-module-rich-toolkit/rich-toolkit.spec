@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
+Version: 0.17.0
 Release: alt1
 
 Summary: Opinionated components for Rich
@@ -56,6 +56,9 @@ applications. It is based on Rich.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.0-alt1
+- Updated to 0.17.0.
+
 * Tue Sep 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.15.1-alt1
 - Updated to 0.15.1.
 
