@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.19.0
+Version: 0.22.8
 Release: alt1
 
-Summary: Unbearably fast near-real-time hybrid runtime-static type-checking in pure Python.
+Summary: Unbearably fast near-real-time hybrid runtime-static type-checking in pure Python
 License: MIT
 Group: Development/Python3
 Url: https://github.com/beartype/beartype
@@ -22,7 +22,17 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%pyproject_builddeps_metadata_extra test
+# Not built in Sisyphus.
+%add_pyproject_deps_check_filter equinox
+%add_pyproject_deps_check_filter fastmcp
+%add_pyproject_deps_check_filter jax
+%add_pyproject_deps_check_filter nuitka
+%add_pyproject_deps_check_filter pandera
+%add_pyproject_deps_check_filter polars
+# Not built on %ix86 in Sisyphus. Task 395141.
+%add_pyproject_deps_check_filter torch
+
+%pyproject_builddeps_metadata_extra test-tox
 %endif
 
 %description
@@ -33,6 +43,7 @@ unsubstantiated jargon we just made up, and thrilling puns.
 %prep
 %setup
 %pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -41,13 +52,17 @@ unsubstantiated jargon we just made up, and thrilling puns.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -k 'not test_is_hint_pep593_beartype'
+# test_poetry uses the Internet
+%pyproject_run_pytest -vra -k 'not test_poetry'
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 03 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.22.8-alt1
+- 0.19.0 -> 0.22.8
+
 * Mon Feb 17 2025 Dmitry Lyalyaev <fruktime@altlinux.org> 0.19.0-alt1
 - 0.18.5 -> 0.19.0
 
