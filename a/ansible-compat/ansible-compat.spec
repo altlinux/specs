@@ -1,6 +1,6 @@
 
 Name: ansible-compat
-Version: 25.11.0
+Version: 25.12.0
 Release: alt1
 Summary: Ansible python helper functions
 
@@ -64,6 +64,9 @@ echo "ref-names: tag: v%version" >> .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 03 2025 Andrey Cherepanov <cas@altlinux.org> 25.12.0-alt1
+- New version.
+
 * Tue Nov 11 2025 Andrey Cherepanov <cas@altlinux.org> 25.11.0-alt1
 - New version.
 
