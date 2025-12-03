@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.26
-Release: alt1.1
+Version: 3.2.28
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -99,6 +99,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Wed Dec 03 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.28-alt1
+- New version 3.2.28.
+
 * Sat Nov 08 2025 Michael Shigorin <mike@altlinux.org> 3.2.26-alt1.1
 - E2K: no standalone libunwind so far (cf. mcst#4895/6690).
 
