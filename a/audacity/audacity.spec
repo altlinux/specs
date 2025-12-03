@@ -17,7 +17,7 @@
 
 Name: audacity
 Version: 3.7.5
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -112,6 +112,15 @@ BuildRequires: rpm-build >= 4.0.4-alt133
 Requires: libavformat.so.61%soname_suffix
 Requires: libavcodec.so.61%soname_suffix
 Requires: libavutil.so.59%soname_suffix
+
+
+# Since suil 0.10.24-alt1, toolkit-specific modules are packaged
+# separately, and the host needs a module for its toolkit
+# to display the LV2 plugin UI. Aduacity uses wxWidgets, which,
+# in tirn, use gtk3, so we need the gtk3 backend. See also:
+# https://bugzilla.altlinux.org/57087
+Requires: libsuil-gtk3
+
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -259,6 +268,9 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Wed Dec 03 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.5-alt2
+- require libsuil-gtk3 (see ALT#57087)
+
 * Wed Aug 06 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.5-alt1
 - 3.7.5
 
