@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1.3.beta2
+Release: alt2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -36,8 +36,8 @@ License: GPL-3.0-or-later
 %define altbranch sisyphus
 %endif
 
-%define status "бета2"
-%define status_en "-beta2"
+%define status ""
+%define status_en ""
 
 %description
 Distro-specific packages with design and texts
@@ -245,6 +245,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Tue Dec 02 2025 David Sultaniiazov <x1z53@altlinux.org> 11.0-alt2
+- update status to release
+
 * Sun Nov 23 2025 David Sultaniiazov <x1z53@altlinux.org> 11.0-alt1.3.beta2
 - license: add version to distro name
 - indexhtml: update links
