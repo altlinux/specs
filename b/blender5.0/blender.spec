@@ -61,7 +61,7 @@
 
 Name: %{project}5.0
 Version: 5.0.0
-Release: alt0.1
+Release: alt0.2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -107,6 +107,9 @@ Patch40: blender-alt-optix-inc.patch
 # https://libeigen.gitlab.io/eigen/docs-nightly/TopicPreprocessorDirectives.html#TopicPreprocessorDirectivesAssertions
 Patch41: blender-4.5.4-eigen-assert.patch
 Patch42: blender-5.0.0-oneapi-add-arl.patch
+
+# https://projects.blender.org/blender/blender/pulls/150086
+Patch43: blender-5.0-upsteam-fix-150070-Cycles-not-finding-integrator_state_write.patch
 
 # e2k is broken now
 #Patch2000: blender-e2k-support.patch
@@ -381,6 +384,7 @@ EOF
 %patch40 -p1 -b .optix-inc
 %patch41 -p1 -b .eigen-assert
 %patch42 -p1 -b .alt-oneapi-add-arl
+%patch43 -p1 -b .cycles-fix
 
 %ifarch %e2k
 #%%patch2000 -p1
@@ -561,6 +565,10 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/thumbnailers/%project.thumbnailer
 %endif
 
 %changelog
+* Tue Dec 02 2025 Ivan A. Melnikov <iv@altlinux.org> 5.0.0-alt0.2
+- NMU: backport upstream fix for building w/o embriee
+  (fixes FTBFS on loongarch64 and riscv64).
+
 * Thu Nov 27 2025 L.A. Kostis <lakostis@altlinux.ru> 5.0.0-alt0.1
 - 5.0.0.
 - BR: cleanup (remove openmp/lzo).
