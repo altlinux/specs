@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: %rname
-Version: 3.7.7
-Release: alt2
+Version: 3.8.0
+Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
 
@@ -24,6 +24,7 @@ Requires: indi
 Requires: xplanet
 
 Source: %rname-%version.tar
+Source1: docs-ru.tar
 Patch1: alt-ftbfs.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -50,8 +51,9 @@ time. The display includes 130,000 stars, 13,000 deep-sky objects,all 8
 planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version -a1
 %patch1 -p1
+mv docs-ru po/ru/docs
 sed -i 's|type="bool"|type="b"|' kstars/*.xml
 echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine'; COMMIT;" | sqlite3 kstars/data/citydb.sqlite
 
@@ -60,6 +62,7 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 %K6build \
     -DOpenGL_GL_PREFERENCE="GLVND" \
     -DBUILD_QT5:BOOL=OFF \
+    -DBUILD_WITH_QT6:BOOL=ON \
     #
 
 %install
@@ -87,6 +90,12 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 
 
 %changelog
+* Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.8.0-alt1
+- new version
+
+* Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.7.9-alt2
+- new version
+
 * Thu Jul 31 2025 Sergey V Turchin <zerg@altlinux.org> 1:3.7.7-alt2
 - cleanup citydb
 
