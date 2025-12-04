@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0.0
+Version: 8.0.0
 Release: alt1
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,6 +52,9 @@ export REQUESTS_CA_BUNDLE=`python3 -m pytest_httpbin.certs`
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 04 2025 Stanislav Levin <slev@altlinux.org> 8.0.0-alt1
+- 7.0.0 -> 8.0.0.
+
 * Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
 - 6.0.2 -> 7.0.0.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%module_name
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: A GraphQL client in Python
 License: MIT
 Group: Development/Python3
@@ -35,6 +35,7 @@ BuildRequires: python3-module-requests_toolbelt
 BuildRequires: python3-module-vcrpy
 BuildRequires: python3-module-websockets
 BuildRequires: python3-module-yarl
+BuildRequires: python3-module-httpx
 %endif
 
 %description
@@ -61,6 +62,9 @@ compatible with the spec.
 %doc LICENSE
 
 %changelog
+* Thu Dec 04 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt2
+- NMU: fixed FTBFS (vcrpy 8.0.0).
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt1
 - Updated to version 4.0.0.
 
