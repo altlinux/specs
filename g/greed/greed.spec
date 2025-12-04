@@ -1,8 +1,8 @@
 Name: greed
-Version: 4.2
+Version: 4.3
 Release: alt1
 Source: %name-%version.tar.gz
-License: BSD-like
+License: BSD-2-Clause
 Group: Games/Puzzles
 Summary: the board puzzle game of Greed
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -31,6 +31,12 @@ install /dev/null %buildroot%_localstatedir/games/%name.hs
 %attr(2711,root,games) %_gamesbindir/%name
 
 %changelog
+* Thu Dec 04 2025 Fr. Br. George <george@altlinux.org> 4.3-alt1
+- Autobuild version bump to 4.3
+
+* Sun Jul 16 2023 Fr. Br. George <george@altlinux.org> 4.2-alt2
+- Rebuild with libncurses6
+
 * Fri May 19 2017 Fr. Br. George <george@altlinux.ru> 4.2-alt1
 - Autobuild version bump to 4.2
 
