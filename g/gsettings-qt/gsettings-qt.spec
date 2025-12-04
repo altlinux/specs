@@ -3,18 +3,20 @@
 %define sover 1
 
 %def_disable clang
+%def_enable check
 
 Name: gsettings-qt
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: Qt/QML bindings for GSettings
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/core/gsettings-qt
-Vcs: https://gitlab.com/ubports/development/core/gsettings-qt.git
+VCS: https://gitlab.com/ubports/development/core/gsettings-qt
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %if_enabled clang
@@ -25,6 +27,9 @@ BuildRequires: gcc-c++
 BuildRequires: libgio-devel ayatana-cmake-modules
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt5-declarative-devel
+%if_enabled check
+BuildRequires: ctest
+%endif
 
 %description
 Qt/QML bindings for GSettings.
@@ -102,6 +107,12 @@ export DESTDIR=%buildroot
 cmake --install "build6" --verbose
 cmake --install "build5" --verbose
 
+%if_enabled check
+%check
+%ctest --test-dir "build6"
+%ctest --test-dir "build5"
+%endif
+
 %files -n lib%{name6}_%sover
 %doc COPYING
 %_libdir/lib%name6.so.%{sover}*
@@ -131,6 +142,10 @@ cmake --install "build5" --verbose
 %_libdir/lib%name.so
 
 %changelog
+* Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+- Enabled tests.
+
 * Mon Jun 16 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt2
 - Fixed build with Qt6.9.
 
