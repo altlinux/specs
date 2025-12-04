@@ -2,7 +2,7 @@
 
 Name: codechecker-alt-suite
 Version: 6.25.1
-Release: alt3.git36a6cf62
+Release: alt4.git36a6cf62
 
 Provides: CodeChecker-alt-suite = %EVR
 Obsoletes: CodeChecker-alt-suite < %EVR
@@ -47,5 +47,8 @@ cp -ra homework*.txt %buildroot/%_sysconfdir/%name-%version
 %files
 
 %changelog
+* Wed Dec 03 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt4.git36a6cf62
+- Ignored checkers that had been marked as out-of-scope during SA testing.
+
 * Tue Oct 14 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt3.git36a6cf62
 - Initial build for ALT Sisyphus.

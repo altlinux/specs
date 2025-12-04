@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.25.1
-Release: alt3.git36a6cf62
+Release: alt4.git36a6cf62
 
 Summary: CodeChecker static analysis tooling (without web server)
 License: Apache-2.0
@@ -76,5 +76,8 @@ cp -ra build %buildroot
 %doc site
 
 %changelog
+* Mon Dec 01 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt4.git36a6cf62
+- Fixed incorrect internal paths that disabled some analysis functions.
+
 * Tue Oct 14 2025 Denis Rastyogin <gerben@altlinux.org> 6.25.1-alt3.git36a6cf62
 - Initial build(without webserver) for ALT Sisyphus.
