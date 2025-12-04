@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.5.0
+Version: 11.5.1
 Release: alt1
 
 Summary: Installer common files
@@ -126,6 +126,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/livecd-fininstall.d/*
 
 %changelog
+* Thu Dec 04 2025 Mikhail Efremov <sem@altlinux.org> 11.5.1-alt1
+- postinstall: Drop 01-remove-installer-desktop-pkgs.sh.
+
 * Mon Oct 20 2025 Mikhail Efremov <sem@altlinux.org> 11.5.0-alt1
 - Add installer-feature-nvidia.
 - postinstall: Add 70-nvidia.
