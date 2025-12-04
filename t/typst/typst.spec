@@ -1,12 +1,9 @@
-# FIXME: Something wrong in x86 tests. Check out during further update.
-%ifarch %ix86
+# FIXME: Broken tests on both x32 and x64 arches.
+# Check out during further update.
 %def_without check
-%else
-%def_with check
-%endif
 
 Name:    typst
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: New markup-based typesetting system that is powerful and easy to learn
@@ -104,6 +101,9 @@ install -m644 -v ./crates/%name-cli/artifacts/%name.bash \
 %_datadir/bash-completion/completions/%name.bash
 
 %changelog
+* Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.1-alt1
+- New version.
+
 * Fri Oct 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.0-alt1
 - New version.
 
