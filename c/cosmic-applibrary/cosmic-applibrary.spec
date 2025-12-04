@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define binary_name cosmic-app-library
 %define ver_major 1.0
-%define beta .beta.6
+%define beta .beta.9
 %define rdn_name com.system76.CosmicAppLibrary
 
 %def_disable bootstrap
@@ -9,7 +9,7 @@
 
 Name: cosmic-applibrary
 Version: %ver_major.0
-Release: alt0.81%beta
+Release: alt0.82%beta
 
 Summary: COSMIC App Library
 License: GPL-3.0
@@ -64,6 +64,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.82.beta.9
+- 1.0.0-beta.9
+
 * Thu Nov 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.81.beta.6
 - 1.0.0-beta.6
 
