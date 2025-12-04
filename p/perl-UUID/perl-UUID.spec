@@ -4,16 +4,18 @@ BuildRequires: perl(CPAN/Meta.pm) perl(Text/Patch.pm) perl(Try/Tiny.pm)
 # END SourceDeps(oneline)
 Name: perl-UUID
 Version: 0.37
-Release: alt1
+Release: alt2
 Summary: DCE compatible Universally Unique Identifier library for Perl
 
 Group: Development/Perl
-License: GPL or Artistic
-Url: http://search.cpan.org/~jrm/UUID/UUID.pm
+License: Artistic-2.0 AND (GPL-1.0-or-later OR Artistic-1.0-Perl)
+Url: https://metacpan.org/release/UUID
 
 Source0: http://www.cpan.org/authors/id/J/JR/JRM/UUID-%{version}.tar.gz
 
-BuildRequires: libuuid-devel perl(Devel/CheckLib.pm) perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(Devel/CheckLib.pm) perl(ExtUtils/MakeMaker.pm)
+# Optional tests:
+BuildRequires:  perl(Digest/SHA1.pm)
 
 %description
 The UUID library is used to generate unique identifiers for objects that
@@ -27,6 +29,11 @@ Environment (DCE) utility uuidgen.
 
 %prep
 %setup -q -n UUID-%{version}
+# Remove always skipped tests
+for T in t/0gen.t t/9benchmark/*.t; do
+    rm -- "$T"
+    perl -i -ne 'print $_ unless m{^\Q'"$T"'\E}' MANIFEST
+done
 
 %build
 %perl_vendor_build
@@ -34,12 +41,20 @@ Environment (DCE) utility uuidgen.
 %install
 %perl_vendor_install
 
+%check
+export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print $1} else {print 1}' -- '%{?_smp_mflags}')
+make test
+
 %files
 %doc Changes README
 %perl_vendor_archlib/UUID.pm
 %perl_vendor_autolib/UUID
 
 %changelog
+* Thu Dec 04 2025 Alexey Shabalin <shaba@altlinux.org> 0.37-alt2
+- cleanup BR:
+- add %%check
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
 - automated CPAN update
 
