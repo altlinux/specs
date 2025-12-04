@@ -1,5 +1,5 @@
 Name: eepm-yum
-Version: 3.52.6
+Version: 3.52.7
 Release: alt1
 
 Summary: Yum like frontend via Etersoft EPM package manager
@@ -51,6 +51,10 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 %_bindir/yum
 
 %changelog
+* Thu Dec 04 2025 Vitaly Lipatov <lav@altlinux.ru> 3.52.7-alt1
+- yum: some sync with eepm code
+- yum: ignore unknown options
+
 * Mon Sep 22 2025 Vitaly Lipatov <lav@altlinux.ru> 3.52.6-alt1
 - yum: update env
 
