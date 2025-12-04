@@ -2,22 +2,25 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.0.5
+Version: 6.1.0
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
 Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
+%define greeter_user_home_dir %_var/lib/ldm/%name
+%define lightdm_config_dir %_sysconfdir/lightdm/lightdm.conf.d
+%define fallback_session_filename 90-lightdm-kde-greeter-fallback.conf
+
 Source: %name-%version.tar
+Source1: %fallback_session_filename
 
 Patch1: add-russian-translations-to-desktop-files.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
 %endif
-
-%define greeter_user_home_dir %_var/lib/ldm/%name
 
 %K6init
 
@@ -29,6 +32,7 @@ BuildRequires: gcc-c++
 BuildRequires: lightdm-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libXrandr-devel
+BuildRequires: libei-devel
 BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel qt6-shadertools-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-kdeclarative-devel kf6-kiconthemes-devel plasma6-lib-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kauth-devel kf6-kconfigwidgets-devel
@@ -70,7 +74,11 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 
 # Add alternatives for xgreeters
 mkdir -p %buildroot%_altdir
-printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-kde-greeter.desktop\t300\n' > %buildroot%_altdir/lightdm-kde-greeter
+printf '%_datadir/lightdm/greeters/lightdm-default-greeter.desktop\t%_datadir/lightdm/greeters/lightdm-kde-greeter.desktop\t300\n' > %buildroot%_altdir/lightdm-kde-greeter
+
+# fallback greeter session
+mkdir -p %buildroot%lightdm_config_dir
+cp %SOURCE1 %buildroot%lightdm_config_dir
 
 %triggerin -- lightdm-kde-greeter < 6.0.4
 # previous versions could create files owned by root
@@ -82,9 +90,11 @@ fi
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/lightdm/lightdm-kde-greeter.conf
+%lightdm_config_dir/%fallback_session_filename
 %_altdir/lightdm-kde-greeter
 %_sbindir/lightdm-kde-greeter
-%_datadir/xgreeters/lightdm-kde-greeter.desktop
+%_datadir/xgreeters/lightdm-kde-greeter-x11.desktop
+%_datadir/lightdm/greeters/lightdm-kde-greeter.desktop
 %_datadir/dbus-1/system.d/org.kde.kcontrol.kcmlightdm.conf
 %_K6libexecdir/kf6/kauth/kcmlightdmhelper
 %_K6libexecdir/lightdm-kde-greeter-rootimage
@@ -96,8 +106,11 @@ fi
 %_K6plug/plasma/kcms/systemsettings/kcm_lightdm.so
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
-
 %changelog
+* Tue Dec 02 2025 Anton Golubev <golubevan@altlinux.org> 6.1.0-alt1
+- launch on Wayland using KWin
+- launch fallback session on X11 if the main one on Wayland crashes
+
 * Fri Nov 14 2025 Anton Golubev <golubevan@altlinux.org> 6.0.5-alt1
 - implement image removal in helper (Closes: 56840)
 
