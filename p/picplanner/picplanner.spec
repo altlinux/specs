@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: picplanner
-Version: 0.5.0
-Release: alt2
+Version: 0.5.3
+Release: alt1
 
 Summary: Graphical application for photography planning
 License: GPL-3.0-or-later
@@ -75,6 +75,9 @@ sed -i "s|https://gitlab.com/zwarf/picplanner/-/raw/main/||" README.md
 %_datadir/metainfo/de.zwarf.picplanner.metainfo.xml
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.3-alt1
+- New version 0.5.3 from untagged commit.
+
 * Sun Nov 30 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
 - Fix crash at startup.
 
