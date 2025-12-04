@@ -29,7 +29,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 403
+Version: 404
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -167,6 +167,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Dec 04 2025 Fr. Br. George <george@altlinux.org> 404-alt1
+- Autobuild version bump to 404
+
 * Thu Oct 30 2025 Fr. Br. George <george@altlinux.org> 403-alt1
 - Autobuild version bump to 403
 
