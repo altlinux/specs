@@ -2,14 +2,14 @@
 
 %define binary_name sass
 %define _name dart-%binary_name
-%define ver_major 1.90
+%define ver_major 1.94
 %define import_path sass-sass
 %define sass_version 3.1.0
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The reference implementation of Sass, written in Dart.
@@ -31,7 +31,8 @@ Source2: sass-%sass_version.tar
 ExcludeArch: %ix86
 
 #BuildRequires(pre): rpm-build-dartlang
-BuildRequires: /proc dart-lang buf
+BuildRequires: /proc buf
+BuildRequires: dart-lang-sdk
 
 %description
 %{summary}.
@@ -70,6 +71,12 @@ install -vDm644 -t %buildroot/%_datadir/%_name build/language/spec/embedded_sass
 %doc *.md
 
 %changelog
+* Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.94.2-alt1
+- 1.94.2
+
+* Tue Aug 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.91.0-alt1
+- 1.91.0
+
 * Mon Aug 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.90.0-alt1
 - 1.90.0
 
