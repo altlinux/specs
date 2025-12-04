@@ -4,7 +4,7 @@
 %def_with tests
 
 Name:    python3-module-%pypi_name
-Version: 1.38.0
+Version: 1.39.0
 Release: alt1
 
 Summary: OpenTelemetry Python API and SDK
@@ -244,6 +244,9 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.39.0-alt1
+- New version.
+
 * Wed Oct 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.38.0-alt1
 - New version.
 
