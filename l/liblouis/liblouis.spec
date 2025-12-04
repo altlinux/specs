@@ -3,7 +3,7 @@
 %define sover 20
 
 Name: liblouis
-Version: 3.35.0
+Version: 3.36.0
 Release: alt1
 Summary: Braille translation and back-translation library
 
@@ -19,8 +19,6 @@ Url: http://liblouis.org
 VCS: https://github.com/liblouis/liblouis
 
 Source: %name-%version.tar
-
-Patch0: fix-version.patch
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -131,7 +129,6 @@ This package provides the documentation for liblouis.
 
 %prep
 %setup
-%patch0 -p1
 chmod 664 tables/*
 
 
@@ -193,6 +190,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %doc doc/%name.pdf
 
 %changelog
+* Thu Dec 04 2025 Artem Semenov <savoptik@altlinux.org> 3.36.0-alt1
+- Updated to new version 3.36.0
+
 * Thu Sep 04 2025 Artem Semenov <savoptik@altlinux.org> 3.35.0-alt1
 - Updated to new version 3.35.0
 
