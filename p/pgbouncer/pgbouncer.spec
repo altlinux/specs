@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.25.0
+Version:    1.25.1
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
@@ -16,8 +16,6 @@ Source5:    pgbouncer.service
 Source6:    pgbouncer.logrotate
 Source7:    pgbouncer.pam
 Source8:    pgbouncer.sysconfig
-
-Patch0:     pgbouncer-1.25.0-Fix-build-on-i586.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
@@ -54,7 +52,6 @@ for PL/Proxy.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 export PYTHON=%__python3
@@ -119,6 +116,10 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Thu Dec 04 2025 Alexei Takaseev <taf@altlinux.org> 1.25.1-alt1
+- 1.25.0 (Fixes: CVE-2025-12819)
+- Drop pgbouncer-1.25.0-Fix-build-on-i586.patch (Fix upstream)
+
 * Mon Nov 10 2025 Alexei Takaseev <taf@altlinux.org> 1.25.0-alt1
 - 1.25.0
 - Enable manpages
