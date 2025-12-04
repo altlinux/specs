@@ -1,5 +1,5 @@
 Name: icon-theme-deepin
-Version: 2025.9.11
+Version: 2025.12.04
 Release: alt1
 
 Summary: Icons for the Deepin Desktop Environment
@@ -9,7 +9,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-icon-theme
 VCS: https://github.com/linuxdeepin/deepin-icon-theme
 
-Source: %url/archive/%version/deepin-icon-theme-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-icon-theme/archive/%version/deepin-icon-theme-%version.tar.gz
+Source: deepin-icon-theme-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
@@ -26,6 +27,8 @@ BuildRequires: python3-devel gtk-update-icon-cache xcursorgen
 sed -i 's|python|python3|' Makefile
 sed -i 's|/usr/bin/env python|/usr/bin/env python3|' \
 	$(find ./ -name '*.py')
+# remove broken symlinks (deepin-license-activator)
+find ./ -name 'uos-activator*.svg' -delete
 
 %build
 %make -j1
@@ -49,6 +52,9 @@ cp -a bloom/status/16/arrow-*.svg %buildroot%_iconsdir/bloom/status/20/
 %_iconsdir/vintage/
 
 %changelog
+* Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 2025.12.04-alt1
+- New version 2025.12.04.
+
 * Fri Sep 12 2025 Leontiy Volodin <lvol@altlinux.org> 2025.9.11-alt1
 - New version 2025.9.11.
 
