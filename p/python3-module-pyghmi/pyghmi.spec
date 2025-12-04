@@ -5,7 +5,7 @@
 %def_with docs
 
 Name:           python3-module-pyghmi
-Version:        1.6.7
+Version:        1.6.8
 Release:        alt1
 
 Summary:        Python General Hardware Management Initiative (IPMI and others)
@@ -32,6 +32,8 @@ BuildRequires:  python3-module-dateutil
 BuildRequires: python3-module-stestr
 BuildRequires: python3-module-oslotest
 %endif
+
+%add_python3_req_skip pyghmi.redfish.oem.ami.main
 
 %description
 This is a pure python implementation of the IPMI protocol.
@@ -98,6 +100,9 @@ rm -rf html/.{doctrees,buildinfo}
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Dec 04 2025 Anton Vyatkin <toni@altlinux.org> 1.6.8-alt1
+- new version 1.6.8
+
 * Fri Nov 14 2025 Anton Vyatkin <toni@altlinux.org> 1.6.7-alt1
 - new version 1.6.7
 
