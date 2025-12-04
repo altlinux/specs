@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.26.0
+Version: 0.26.1
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -43,7 +43,7 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 
 %check
 # Test no_args_doesnt_break failed in hasher with error "Couldn't open pty"
-cargo test -- --skip no_args_doesnt_break
+%rust_test -- --skip no_args_doesnt_break
 
 %files
 %_bindir/%name
@@ -54,6 +54,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Thu Dec 04 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.1-alt1
+- Updated to version 0.26.1.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.0-alt1
 - Updated to version 0.26.0.
 
