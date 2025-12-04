@@ -1,5 +1,5 @@
 Name: rosegarden
-Version: 25.06
+Version: 25.12
 Release: alt1
 
 Summary: MIDI sequencer and musical notation editor
@@ -16,14 +16,12 @@ BuildRequires: pkgconfig(Qt6Linguist)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(dssi)
 BuildRequires: pkgconfig(fftw3f)
-BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(liblo)
 BuildRequires: pkgconfig(lilv-0)
 BuildRequires: pkgconfig(lrdf)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(sndfile)
-BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(zlib)
 
 %description
@@ -55,6 +53,9 @@ sed -i "s/UNSTABLE/STABLE/" CMakeLists.txt
 %_datadir/mime/packages/rosegarden.*
 
 %changelog
+* Thu Dec 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 25.12-alt1
+- 25.12 released
+
 * Thu Jun 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 25.06-alt1
 - 25.06 released
 
