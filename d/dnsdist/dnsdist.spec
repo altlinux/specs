@@ -11,7 +11,7 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -21,12 +21,13 @@ Group: Networking/DNS
 Url: https://dnsdist.org
 
 Source: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
+Patch: dnsdist-2.0.2-upstream-dolog.patch
 
 ExcludeArch: i586
 
 # Automatically added by buildreq on Fri Nov 08 2024
 # optimized out: boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libabseil-cpp-devel libabseil-cpp2407.0.0 libgpg-error libstdc++-devel node perl pkg-config sh5 systemd
-BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent python3-module-yaml
+BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent python3-module-yaml libgnutls-devel
 BuildRequires: systemd libbpf-devel
 %if_enabled xsk
 BuildRequires: libxdp-devel
@@ -44,6 +45,7 @@ legitimate users while shunting or blocking abusive traffic.
 
 %prep
 %setup
+%patch -p2
 
 # run as dnsdist user
 sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.in
@@ -66,6 +68,7 @@ sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.i
     --with-lmdb \
     --with-nghttp2 \
     --with-re2 \
+    --with-gnutls \
 %if_disabled xsk
     --with-ebpf=no \
     --with-xsk=no \
@@ -111,6 +114,10 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt1
+- New version (2.0.2) with rpmgs script.
+- Enabled gnutls support.
+
 * Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.1-alt1
 - New version (2.0.1) with rpmgs script.
 
