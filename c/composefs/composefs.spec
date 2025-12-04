@@ -2,17 +2,23 @@
 %define lname libcomposefs
 
 Name: composefs
-Version: 1.0.3
+Version: 1.0.8
 Release: alt1
 Summary: Tools to handle creating and mounting composefs images
 
-License: GPL-3.0-or-later AND LGPL-2.0-or-later AND Apache-2.0
-URL: https://github.com/containers/composefs
-Source: %name-%version.tar
-
+License: (GPL-2.0-or-later OR Apache-2.0) AND (GPL-2.0-only OR Apache-2.0) AND LGPL-2.1-or-later
 Group: System/Kernel and hardware
+URL: https://github.com/containers/composefs
+VCS: https://github.com/containers/composefs.git
 
-BuildRequires: go-md2man libfuse3-devel
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: go-md2man
+BuildRequires: pkgconfig(fuse3) >= 3.10.0
+BuildRequires: pkgconfig(libcrypto)
 
 %description
 Tools to handle creating and mounting composefs images. The composefs
@@ -23,6 +29,7 @@ stacking on top of an underlying "lower" Linux filesystem.
 %package -n lib%name-devel
 Summary: Devel files for %name
 Group: Development/C
+
 Requires: %name = %EVR
 Requires: lib%name = %EVR
 
@@ -32,35 +39,26 @@ Devel files for %name.
 %package -n lib%name
 Group: System/Libraries
 Summary: Libraries files for %name
-License: LGPL-2.1-or-later AND (GPL-2.0-only OR Apache-2.0)
 
 %description -n lib%name
 Library files for %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--enable-man \
-	--with-fuse
-
-%make_build DESTDIR=%buildroot
+%meson -Dfuse=enabled -Dman=enabled
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 mkdir -p %buildroot/sbin
 ln -sf %_sbindir/mount.composefs %buildroot/sbin/mount.composefs
-rm -rf %buildroot%_libdir/libcomposefs.la
-
-#%check
-#%make check
+rm -v %buildroot%_libdir/libcomposefs*.a
 
 %files -n %lname-devel
-%_includedir/%lname/*.h
+%_includedir/%lname
 %_libdir/%lname.so
 %_pkgconfigdir/%name.pc
 
@@ -68,15 +66,18 @@ rm -rf %buildroot%_libdir/libcomposefs.la
 %_libdir/%lname.so.*
 
 %files
-%doc COPYING COPYING.LIB COPYING.LESSERv3 COPYINGv3 LICENSE.Apache-2.0 BSD-2-Clause.txt
-%doc README.md
 /sbin/mount.composefs
 %_bindir/mkcomposefs
 %_bindir/composefs-info
 %_sbindir/mount.composefs
 %_mandir/man*/*
+%doc README.md
 
 %changelog
+* Tue Dec 02 2025 Vladimir Romanov <rirusha@altlinux.org> 1.0.8-alt1
+- New version: 1.0.8.
+- Fix package license.
+
 * Thu May 02 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt1
 - 1.0.2 -> 1.0.3 
 
