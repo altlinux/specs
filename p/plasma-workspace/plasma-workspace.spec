@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.3
-Release: alt3
+Release: alt4
 Epoch: 1
 %K6init
 
@@ -41,6 +41,7 @@ Obsoletes: plasma5-user-manager < %EVR
 Provides: kf5-plasma-workspace = %EVR
 Obsoletes: kf5-plasma-workspace < %EVR
 
+Requires(pre,postun): alternatives
 Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes icc-profiles
@@ -428,6 +429,15 @@ cat <<__EOF__ > %buildroot/%_menudir/session
 			icon="kwin.png"
 __EOF__
 
+# menu alternative
+mv %buildroot/%_K6xdgmenu/plasma-applications.menu{,.plasma}
+ln -sr %buildroot/%_K6xdgmenu/plasma-applications.menu{.plasma,}
+mkdir -p %buildroot/%_altdir
+cat >%buildroot/%_altdir/%name<<EOF
+%_K6xdgmenu/plasma-applications.menu %_K6xdgmenu/plasma-applications.menu.plasma 20
+%_K6xdgmenu/plasma-applications.menu %_xdgmenusdir/applications.menu 10
+EOF
+
 # systemd user service deps
 mkdir -p %buildroot/%_userunitdir/plasma-core.target.d/
 mkdir -p %buildroot/%_userunitdir/plasma-workspace@.target.d/
@@ -455,8 +465,10 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6icon/hicolor/*/apps/*.*
 
 %files
+%config(noreplace) %_altdir/%name
 %config(noreplace) %x11confdir/wmsession.d/*PLASMA*
-%config(noreplace) %_xdgmenusdir/plasma-applications.menu
+%config(noreplace) %_K6xdgmenu/plasma-applications.menu
+%config(noreplace) %_K6xdgmenu/plasma-applications.menu.plasma
 %_menudir/session
 %dir %_K6plug/plasma/
 %dir %_K6plug/plasma/*/
@@ -578,6 +590,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt4
+- set plasma menu as altertative for altlinux-menus
+
 * Fri Nov 28 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt3
 - fix using kmenuedit with new menu
 
