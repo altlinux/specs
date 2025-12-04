@@ -1,7 +1,7 @@
 Name: python3-module-roman_numerals
 Version: 3.1.0
-Release: alt1
-Source: roman_numerals_py-%version.tar.gz
+Release: alt2
+Source: roman-numerals-%version.tar.gz
 Url: https://github.com/AA-Turner/roman-numerals/
 
 Summary: Manipulate well-formed Roman numerals
@@ -18,12 +18,16 @@ BuildRequires: python3-module-flit-core python3-module-pyproject-installer pytes
 This project provides utilities manipulating well-formed Roman numerals
 
 %prep
-%setup -n roman_numerals_py-%version
+%setup -n roman-numerals-%version
+ln [^R]*.rst python/
+sed -i 's/roman-numerals-py/roman-numerals/' python/pyproject.toml
 
 %build
+cd python
 %pyproject_build
 
 %install
+cd python
 %pyproject_install
 
 %files
@@ -34,6 +38,9 @@ This project provides utilities manipulating well-formed Roman numerals
 pytest3
 
 %changelog
+* Thu Dec 04 2025 Fr. Br. George <george@altlinux.org> 3.1.0-alt2
+- Remove _py suffix from package name
+
 * Thu Feb 27 2025 Fr. Br. George <george@altlinux.org> 3.1.0-alt1
 - Autobuild version bump to 3.1.0
 
