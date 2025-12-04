@@ -3,7 +3,7 @@
 
 Name: qt6-webview
 Version: 6.9.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt Web View
@@ -35,7 +35,7 @@ Common package for %name
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common
-Requires: qt6-base-devel rpm-build-qml
+Requires: qt6-base-devel rpm-build-qml6
 %description devel
 %summary.
 
@@ -112,6 +112,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
+- fix requires
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 
