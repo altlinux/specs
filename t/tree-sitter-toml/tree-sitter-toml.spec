@@ -1,11 +1,11 @@
 Name: tree-sitter-toml
-Version: 0.5.1
+Version: 0.7.0
 Release: alt1
 
 Summary: TOML grammar for tree-sitter
 License: MIT
 Group: Development/Other
-Url: https://github.com/ikatyang/tree-sitter-toml
+Url: https://github.com/tree-sitter-grammars/tree-sitter-toml
 
 Source: %name-%version.tar
 
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-toml
 %_libdir/tree-sitter-toml
 
 %changelog
+* Thu Dec 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.0-alt1
+- 0.7.0 released
+
 * Wed Dec 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.1-alt1
 - 0.5.1 released
 
