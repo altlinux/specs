@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        142.0.7444.175
+Version:        143.0.7499.40
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -97,6 +97,8 @@ Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
+Patch032: 0032-FEDORA-chromium-142-Add-ExtractData-support-for-text-uri-list.patch
+Patch033: 0033-FEDORA-chromium-142-Update-pointer-position-during-draggin.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 
@@ -106,8 +108,9 @@ Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
 Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
 Patch046: 0046-DEBIAN-libcpp-headers.patch
-Patch047: 0047-DEBIAN-chromium-142-iwyu-field-form-data.patch
+Patch047: 0047-DEBIAN-libpng-testonly.patch
 Patch048: 0048-DEBIAN-clang19.patch
+Patch049: 0049-DEBIAN-clang19-cookie-string-view.patch
 
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
@@ -654,6 +657,23 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Dec 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.40-alt1
+- New version (143.0.7499.40).
+- Fixes:
+  + CVE-2025-13630: Type Confusion in V8
+  + CVE-2025-13631: Inappropriate implementation in Google Updater
+  + CVE-2025-13632: Inappropriate implementation in DevTools
+  + CVE-2025-13633: Use after free in Digital Credentials
+  + CVE-2025-13634: Inappropriate implementation in Downloads
+  + CVE-2025-13720: Bad cast in Loader
+  + CVE-2025-13721: Race in v8
+  + CVE-2025-13635: Inappropriate implementation in Downloads
+  + CVE-2025-13636: Inappropriate implementation in Split View
+  + CVE-2025-13637: Inappropriate implementation in Downloads
+  + CVE-2025-13638: Use after free in Media Stream
+  + CVE-2025-13639: Inappropriate implementation in WebRTC
+  + CVE-2025-13640: Inappropriate implementation in Passwords
+
 * Tue Nov 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 142.0.7444.175-alt1
 - New version (142.0.7444.175).
 - Fixes:
