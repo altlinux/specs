@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.17.2
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -241,6 +241,7 @@ the RDP protocol.
 %cmake \
   -GNinja \
   -DBUILD_TESTING=OFF \
+  -DPKG_CONFIG_RELOCATABLE=OFF \
   -DWINPR_HAVE_AIO_H=1 \
   -DWINPR_HAVE_EXECINFO_BACKTRACE=1 \
   -DWINPR_HAVE_EXECINFO_BACKTRACE_SYMBOLS=1 \
@@ -546,6 +547,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Dec 04 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt2
+- Use not-relocatible prefix (ALT #57066).
+
 * Fri Nov 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt1
 - New version.
 
