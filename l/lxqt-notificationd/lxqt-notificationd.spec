@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-notificationd
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Notification service
@@ -51,6 +51,9 @@ Conflicts: lxqt-common <= 0.11.0
 %_datadir/lxqt/translations/*
 
 %changelog
+* Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Wed Nov 05 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
