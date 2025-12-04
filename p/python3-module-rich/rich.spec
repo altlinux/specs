@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 14.1.0
+Version: 14.2.0
 Release: alt1
 Summary: Render rich text and beautiful formatting in the terminal
 License: MIT
@@ -16,13 +16,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
-# asv is not yet packaged
-%add_pyproject_deps_check_filter asv
 %pyproject_builddeps_check
 %endif
 
@@ -56,6 +56,9 @@ code, tracebacks, and more - out of the box.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 04 2025 Stanislav Levin <slev@altlinux.org> 14.2.0-alt1
+- 14.1.0 -> 14.2.0.
+
 * Mon Jul 28 2025 Stanislav Levin <slev@altlinux.org> 14.1.0-alt1
 - 14.0.0 -> 14.1.0.
 
