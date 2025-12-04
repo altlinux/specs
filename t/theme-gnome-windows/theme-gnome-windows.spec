@@ -2,7 +2,7 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt5
+Release:  alt6
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
@@ -12,7 +12,7 @@ VCS:	  https://altlinux.space/antohami/theme-gnome-windows.git
 
 Source:   %name-%version.tar
 
-BuildArch: noarch
+ExcludeArch: %ix86
 
 Requires: dconf
 Requires: gnome-shell >= %gnome_version
@@ -24,6 +24,8 @@ Requires: gnome-shell-extension-arcmenu
 Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-clipboard-indicator
 Requires: gnome-shell-extension-appindicator
+Requires: gnome-shell-extension-add-to-desktop
+Requires: gnome-shell-extension-session-keeper
 
 Conflicts: alt-panelmoded
 
@@ -42,6 +44,10 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt6
+- Enable extensions 'session-keeper', 'add-to-desktop'.
+- ExcludeArch: %%ix86.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt5
 - Remove 40-alt-specyfic.gschema.override
 
