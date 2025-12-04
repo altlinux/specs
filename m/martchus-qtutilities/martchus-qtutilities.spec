@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: martchus-qtutilities
-Version: 6.18.3
+Version: 6.18.4
 Release: alt1
 
 Summary: Common Qt related C++ classes and routines used by my applications such as dialogs, widgets and models
@@ -131,5 +131,8 @@ you intend to compile programs that use this library.
 %dir %_datadir/martchus-qtutilities/translations
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 6.18.4-alt1
+- New version 6.18.4.
+
 * Sat Nov 22 2025 Nikolay Strelkov <snk@altlinux.org> 6.18.3-alt1
 - Initial build for Sisyphus

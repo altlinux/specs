@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kupfer
-Version: 328
+Version: 329
 Release: alt1
 
 Summary: Smart and quick launcher
@@ -90,6 +90,9 @@ waf install --destdir=%{buildroot} --nopyc --nopyo
 %_datadir/help/sl/%name/*
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 329-alt1
+- New version 329.
+
 * Thu May 01 2025 Nikolay Strelkov <snk@altlinux.org> 328-alt1
 - New version 328.
 

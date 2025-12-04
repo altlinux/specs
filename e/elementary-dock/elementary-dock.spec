@@ -4,7 +4,7 @@
 %define appname io.elementary.dock
 
 Name: elementary-dock
-Version: 8.3.0
+Version: 8.3.1
 Release: alt1
 
 Summary: A quick app launcher and window switcher for Pantheon and elementary OS
@@ -53,6 +53,9 @@ CFLAGS="%{optflags} -Wno-error=int-conversion"
 %exclude %_datadir/locale/zh_HANS/LC_MESSAGES/io.elementary.dock.mo
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 8.3.1-alt1
+- New version 8.3.1.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 8.3.0-alt1
 - New version 8.3.0.
 

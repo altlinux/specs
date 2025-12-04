@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: martchus-cpp-utilities
-Version: 5.31.1
+Version: 5.32.0
 Release: alt1
 
 Summary: useful C++ classes and routines used by Martchus' applications
@@ -178,5 +178,8 @@ sed -i "s|https://github.com/Martchus/cpp-utilities/blob/master/doc/buildvariabl
 %_datadir/martchus-c++utilities/tests/calculateoverallcoverage.awk
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 5.32.0-alt1
+- New version 5.32.0.
+
 * Sat Nov 22 2025 Nikolay Strelkov <snk@altlinux.org> 5.31.1-alt1
 - Initial build for Sisyphus
