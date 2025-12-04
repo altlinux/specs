@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/pkg-config libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name: matchbox-window-manager
 Version: 1.2
-Release: alt5.1
+Release: alt6
 Summary: Window manager for the Matchbox Desktop
 License: GPLv2+
 Group: Graphical desktop/Other
@@ -15,6 +15,8 @@ Source0: http://ftp.de.debian.org/debian/pool/main/m/matchbox-window-manager/mat
 Source1: http://ftp.de.debian.org/debian/pool/main/m/matchbox-window-manager/matchbox-window-manager_1.2-osso21-1.debian.tar
 Source2: %name.watch
 Source3: kbdconfig
+
+Patch: misc-1.2-alt-build.patch
 
 BuildRequires: libmatchbox-devel >= %version
 BuildRequires: pkgconfig
@@ -48,6 +50,7 @@ sutable for installer or a minimal kiosk system.
 for patch in `cat debian/patches/series`; do
     patch -p1 < debian/patches/$patch
 done
+%patch -p1
 
 %build
 %add_optflags -fcommon
@@ -101,6 +104,9 @@ install -D -m 644 %{SOURCE3} %buildroot/%_sysconfdir/matchbox/kbdconfig
 %_bindir/matchbox-window-manager-light
 
 %changelog
+* Thu Dec 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2-alt6
+- Fix FTBFS.
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt5.1
 - fixed build with gcc10
 
