@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-ui-extras
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Lomiri UI Extra Components (Qt5)
@@ -73,5 +73,8 @@ This package contains the Qt5 QML module.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-ui-extras.mo
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Sun Jul 20 2025 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus

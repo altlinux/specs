@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-content-hub
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: content sharing/picking service for Lomiri
@@ -196,5 +196,8 @@ echo "Categories=Development;Debugger;" >> tests/peers/sharer/lomiri-content-hub
 %endif
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Wed Jul 16 2025 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus

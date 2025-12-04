@@ -5,7 +5,7 @@
 %def_without check
 
 Name: biometryd
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Mediates and multiplexes access to biometric devices
@@ -117,6 +117,9 @@ biometryd.
 %_pkgconfigdir/biometryd.pc
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
 - New version 0.3.2.
 

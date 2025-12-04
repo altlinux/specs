@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libusermetrics
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 
 Summary: library for retrieving anonymous metrics about users
@@ -31,14 +31,14 @@ BuildRequires: pkgconfig(qdjango-db)
 BuildRequires: ayatana-cmake-modules
 BuildRequires: doxygen
 BuildRequires: intltool
+BuildRequires: pkgconfig(libqtdbustest-1)
+BuildRequires: pkgconfig(gtest)
 
 %if_with check
 BuildRequires: ctest
 BuildRequires: dbus
 BuildRequires: /usr/bin/dbus-test-runner
 BuildRequires: /usr/bin/xvfb-run
-BuildRequires: pkgconfig(gtest)
-BuildRequires: pkgconfig(libqtdbustest-1)
 BuildRequires: python3(dbusmock)
 %endif
 
@@ -210,5 +210,8 @@ This package installs the libusermetrics API documentation.
 
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Tue Jul 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.3-alt1
 - Initial build for Sisyphus

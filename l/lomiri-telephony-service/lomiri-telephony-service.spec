@@ -4,7 +4,7 @@
 %def_without check
 
 Name: lomiri-telephony-service
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Telephony service components for Lomiri
@@ -134,5 +134,8 @@ telephony PhoneNumber to applications.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-telephony-service.mo
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.6.2-alt1
+- New version 0.6.2.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus

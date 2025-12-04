@@ -4,7 +4,7 @@
 %def_with check
 
 Name: process-cpp
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: C++11 library for handling processes
@@ -154,5 +154,8 @@ development.
 %_docdir/%name/*
 
 %changelog
+* Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+
 * Wed Jul 16 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.2-alt1
 - Initial build for Sisyphus
