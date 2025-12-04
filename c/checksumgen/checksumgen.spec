@@ -2,7 +2,7 @@
 
 Name:     checksumgen
 Version:  0.4.2
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Generates checksum file for an RPM repo slice
 License:  GPLv2
@@ -57,6 +57,10 @@ A script to update and commit RPM checksum files.
 %_man1dir/checksumbot.1.*
 
 %changelog
+* Wed Nov 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1.1
+- Note, that v0.3.0-alt1 fixes missing checksum data for *.ko.zst files
+  by including *.ko.zst by default (Fixes: OVE-20251204-0001).
+
 * Wed Nov 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1
 - setup.sh: Fix: Verify the actually written configuration.
 - setup.sh: Fixed reading ${...} config values.
