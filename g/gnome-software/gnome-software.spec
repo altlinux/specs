@@ -42,7 +42,7 @@
 
 Name: gnome-software
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -104,7 +104,7 @@ BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
-%{?_enable_check:BuildRequires: dbus /etc/machine-id python3(dbusmock) gcab epiphany fwupd packagekit flatpak}
+%{?_enable_check:BuildRequires: dbus /etc/machine-id python3(dbusmock) gcab epiphany fwupd packagekit %{?_enable_flatpak:flatpak}}
 
 %description
 GNOME Software is a software center for GNOME.
@@ -126,6 +126,15 @@ Requires: fwupd >= %fwupd_ver
 
 %description plugin-fwupd
 This package provides support for firmware upgrades via GNOME Software.
+
+%package plugin-flatpak
+Summary: Flatpak plugin for GNOME Software
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: flatpak
+
+%description plugin-flatpak
+This package provides Flatpak support for GNOME Software.
 
 %package devel-doc
 Summary: Development documentation for GNOME Software
@@ -186,9 +195,9 @@ _EOF_
 %_libdir/libgnomesoftware.so.%plugins_ver
 %_libdir/%name/plugins-%plugins_ver/
 %{?_enable_fwupd:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_fwupd.so}
+%{?_enable_flatpak:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_flatpak.so}
 %_userunitdir/%name.service
 %_desktopdir/%xdg_name.desktop
-%_desktopdir/%name-local-file-flatpak.desktop
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
 %_desktopdir/%name-local-file-packagekit.desktop
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
@@ -203,8 +212,6 @@ _EOF_
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/bash-completion/completions/%name
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
-%{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
-
 %{?_enable_snap:%_datadir/metainfo/%xdg_name.Plugin.Snap.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
@@ -215,6 +222,12 @@ _EOF_
 %_desktopdir/%name-local-file-fwupd.desktop
 %_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 
+%{?_enable_flatpak:
+%files plugin-flatpak
+%_libdir/%name/plugins-%plugins_ver/libgs_plugin_flatpak.so
+%_desktopdir/%name-local-file-flatpak.desktop
+%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
+
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
@@ -223,6 +236,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
+- new optional -plugin-flatpak subpackage (ALT #57140)
+
 * Fri Nov 21 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
