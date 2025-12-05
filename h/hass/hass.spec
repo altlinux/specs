@@ -1,5 +1,5 @@
 Name: hass
-Version: 2025.10.3
+Version: 2025.12.0
 Release: alt1
 
 Summary: Home automation platform
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 Summary: Home automation platform
 Group: System/Servers
 
-Autoreq: yes, nopython3
+Autoreqprov: yes, nopython3
 %pyproject_runtimedeps_metadata
 %pyproject_runtimedeps precious
 
@@ -29,21 +29,19 @@ Autoreq: yes, nopython3
 Summary: Home automation platform
 Group: Development/Python
 
-Autoreq: yes, nopython3
+Autoreqprov: yes, nopython3
 
-%define desc Home Assistant is a home automation platform running on Python 3.\
+%define desc \
+Home Assistant is a home automation platform running on Python 3.\
 It is able to track and control all devices at home and offer a platform \
 for automating control.
 
-%description
-%desc
+%description %desc
 
-%description core
-%desc
+%description core %desc
 This package contains core modules only.
 
-%description -n python3-module-hass
-%desc
+%description -n python3-module-hass %desc
 This package contains most of Home Assistant modules.
 
 %prep
@@ -69,7 +67,7 @@ find %buildroot%python3_sitelibdir/homeassistant -type f -name manifest.json |\
      sed -re 's,^%buildroot(/.+)/manifest.json,\1,' |sort > all.files
 sed -re 's,^,%python3_sitelibdir/homeassistant/components/,' < precious > core.files
 cat all.files core.files |sort |uniq -u > rest.files
-sed -re 's,^,%exclude ,' < rest.files > core.files
+sed -re 's,^,%%exclude ,' < rest.files > core.files
 
 %pre core
 %_sbindir/groupadd -r -f _hass &> /dev/null
@@ -89,6 +87,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Fri Dec 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.12.0-alt1
+- 2025.12.0 released
+
 * Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10.3-alt1
 - 2025.10.3 relesed
 

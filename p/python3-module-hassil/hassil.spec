@@ -1,5 +1,5 @@
 Name: python3-module-hassil
-Version: 3.2.1
+Version: 3.5.0
 Release: alt1
 
 Summary: The Home Assistant Intent Language parser
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/hassil-%version.dist-info
 
 %changelog
+* Fri Dec  5 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.0-alt1
+- 3.5.0 released
+
 * Thu Oct 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.1-alt1
 - 3.2.1 released
 
