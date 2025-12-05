@@ -1,7 +1,7 @@
 %define distro kworkstation
 Name: installer-distro-%distro
-Version: 11.1
-Release: alt2
+Version: 11.2
+Release: alt1
 
 Summary: Installer files for Workstation K distro
 License: GPL-2.0-only
@@ -41,7 +41,6 @@ Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
-Requires: installer-feature-nfs-server-stage3
 %ifarch %ix86 x86_64 aarch64 ppc64le
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
@@ -67,6 +66,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Dec 05 2025 Sergey V Turchin <zerg@altlinux.org> 11.2-alt1
+- don't require installer-feature-nfs-server-stage3 which require installer-common-stage3
+
 * Fri Jun 27 2025 Sergey V Turchin <zerg@altlinux.org> 11.1-alt2
 - fix package description (closes: 54951)
 
