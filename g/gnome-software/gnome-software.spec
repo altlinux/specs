@@ -42,7 +42,7 @@
 
 Name: gnome-software
 Version: %ver_major.2
-Release: alt1.1%beta
+Release: alt1.2%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -178,7 +178,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 cat << _EOF_ > \
 %buildroot%_datadir/glib-2.0/schemas/00_org.gnome.software.gschema.override
 [org.gnome.software]
-official-repos=['altlinux,']
+official-repos=['altlinux']
 _EOF_
 
 %check
@@ -236,6 +236,10 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Dec 06 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.2
+- 00_org.gnome.software.gschema.override:
+  fixed "official-repos" value (ALT #57076)
+
 * Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
 - new optional -plugin-flatpak subpackage (ALT #57140)
 
