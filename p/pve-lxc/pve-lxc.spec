@@ -5,7 +5,7 @@
 
 Name: pve-%rname
 Version: 6.0.5
-Release: alt1
+Release: alt2
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -21,7 +21,7 @@ Patch: %name-%version.patch
 Requires: lxcfs
 Requires: criu >= 3.15
 Requires: rsync wget
-Requires: iproute2 iptables iptables-ipv6
+Requires: iproute2 iptables nftables
 Conflicts: %rname %rname-libs liblxc1 %rname-core %rname-net %rname-runtime
 Provides: %rname-pve = %EVR
 
@@ -105,6 +105,13 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt2
+- 6.0.5-3
+- Avoid dependencies to nvidia-container-cli.
+- Add requires nftables.
+- Enable systemd to create /var/lib/lxc at runtime with StateDirectory.
+- Standardize log file create mode to 0640.
+
 * Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt1
 - 6.0.5-1
 
