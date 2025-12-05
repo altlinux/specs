@@ -7,7 +7,7 @@
 
 Name: octave
 Version: 10.3.0
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -21,6 +21,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 Source2: %name.watch
+Source3: ru_RU.ts
 
 Patch0: octave-alt-desktop-l10n.patch
 
@@ -152,6 +153,7 @@ GNU Octave является высокоуровневым языком, в пе
 %prep
 %setup
 %patch0 -p2
+/bin/cp -f %SOURCE3 libgui/languages/ru_RU.ts
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -229,6 +231,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Fri Dec 05 2025 Andrey Cherepanov <cas@altlinux.org> 10.3.0-alt2
+- Complete Russian translation (thanks Karashokova Alevtina).
+
 * Tue Oct 07 2025 Andrey Cherepanov <cas@altlinux.org> 10.3.0-alt1
 - New version.
 
