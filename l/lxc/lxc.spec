@@ -16,7 +16,7 @@
 
 Name: lxc
 Version: 6.0.5
-Release: alt1
+Release: alt2
 Summary: Linux Containers
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
@@ -64,7 +64,7 @@ Obsoletes: lxc-sysvinit < %EVR
 BuildArch: noarch
 Summary: Network interface for LXC with DHCP
 Group: System/Configuration/Networking
-Requires: iproute2 dnsmasq lxc-core iptables
+Requires: iproute2 dnsmasq lxc-core iptables nftables
 
 %package templates
 BuildArch: noarch
@@ -286,6 +286,12 @@ groupadd -r -f vmusers ||:
 %_mandir/ja/*/pam_cgfs*
 
 %changelog
+* Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt2
+- Avoid dependencies to nvidia-container-cli.
+- Add requires nftables.
+- Enable systemd to create /var/lib/lxc at runtime with StateDirectory.
+- Standardize log file create mode to 0640.
+
 * Thu Sep 11 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt1
 - 6.0.5.
 
