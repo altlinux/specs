@@ -2,7 +2,7 @@
 %def_with opencv
 
 Name: frei0r-plugins
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -90,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 03 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.5.1-alt1
+- New version.
+
 * Tue Oct 21 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.5.0-alt1
 - New version.
 
