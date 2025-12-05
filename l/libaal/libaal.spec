@@ -7,11 +7,12 @@
 %def_enable libminimal
 %def_disable memory_manager
 %def_enable largefile
+%set_autoconf_version 2.60
 
 %define bname aal
 Name: lib%bname
 Version: 1.0.7
-Release: alt2
+Release: alt3
 Summary: Abstraction library for ReiserFS utilities
 License: GPLv2
 Group: System/Libraries
@@ -141,6 +142,9 @@ install -m 0644 AUTHORS COPYING CREDITS ChangeLog THANKS %buildroot%_docdir/%nam
 %endif
 
 %changelog
+* Thu Dec 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.7-alt3
+- FTBFS: use autoconf 2.60
+
 * Mon Dec 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.7-alt2
 - Split static libraries from %name-minimal-devel into %name-minimal-devel-static.
 
