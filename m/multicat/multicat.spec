@@ -1,5 +1,5 @@
 Name: multicat
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: A set of tools designed to manipulate multicast streams
 License: GPLv2+
@@ -58,6 +58,9 @@ install -pm644 {multicat.1,ingests.1,aggregartp.1,reordertp.1,offsets.1,lasts.1}
 %_man1dir/*
 
 %changelog
+* Sat Dec 06 2025 Ilya Mashkin <oddity@altlinux.ru> 2.4-alt1
+- 2.4
+
 * Sun Mar 21 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3-alt1
 - 2.3
 
