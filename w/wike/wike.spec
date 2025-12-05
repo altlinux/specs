@@ -1,11 +1,11 @@
 %define _name wike
-%define ver_major 3.1
+%define ver_major 3.2
 %define rdn_name com.github.hugolabe.Wike
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Wikipedia reader for the GNOME Desktop
@@ -22,9 +22,12 @@ Patch0: wike-3.0.1-alt-data_dynamic_default_language.patch
 
 %add_python3_path %_datadir/%_name
 
+%define adw_ver 1.8
+
 Requires: python3-module-pygobject3
 Requires: dconf
 Requires: typelib(Adw) = 1 typelib(WebKit) = 6.0
+Requires: libadwaita-gir >= %adw_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson pkgconfig(gio-2.0)
@@ -59,11 +62,15 @@ articles.
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %doc README.*
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sat Oct 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.3-alt1
 - 3.1.3
 

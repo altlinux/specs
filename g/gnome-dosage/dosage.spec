@@ -2,13 +2,13 @@
 
 %define _name dosage
 %define __name Dosage
-%define ver_major 1.9
+%define ver_major 2.0
 %define rdn_name io.github.diegopvlk.Dosage
 
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.11
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Dosage
@@ -27,7 +27,7 @@ Source: %_name-%version.tar
 BuildArch: noarch
 
 %define bp_ver 0.14
-%define adw_ver 1.7
+%define adw_ver 1.8
 
 Requires: /usr/bin/gjs dconf
 Requires: libadwaita >= %adw_ver
@@ -76,6 +76,9 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %doc README*
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Mon Sep 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.11-alt1
 - 1.9.11
 

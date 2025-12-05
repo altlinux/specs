@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-wlr
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: xdg-desktop-portal backend for wlroots
@@ -13,10 +13,11 @@ Group: Graphical desktop/Other
 License: MIT
 Url: https://github.com/emersion/xdg-desktop-portal-wlr
 
+Vcs: https://github.com/emersion/xdg-desktop-portal-wlr.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/emersion/xdg-desktop-portal-wlr.git
 Source: %name-%version.tar
 %endif
 
@@ -62,6 +63,9 @@ mkdir -p %buildroot/%_xdgconfigdir/%name
 
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Wed Oct 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

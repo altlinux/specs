@@ -3,18 +3,19 @@
 %def_enable check
 
 Name: lib%_name
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: A library for working with sizes in bytes
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.0-or-later
 Url: https://github.com/storaged-project/%name
+
+Vcs: https://github.com/rhinstaller/libbytesize.git
 
 %if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/rhinstaller/libbytesize.git
 Source: %name-%version.tar
 %endif
 
@@ -35,7 +36,7 @@ account. It also provides support for sizes bigger than MAXUINT64.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains header files and pkg-config files needed for
@@ -44,7 +45,7 @@ development with the %name library.
 %package -n python3-module-%_name
 Summary: Python 3 bindings for %name
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Provides: %_bindir/bscalc
 
 %description -n python3-module-%_name
@@ -64,7 +65,7 @@ the library from Python 3 easier and more convenient.
 %find_lang %name
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_libdir/%name.so.*
@@ -84,6 +85,9 @@ the library from Python 3 easier and more convenient.
 
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt1
+- 2.12
+
 * Tue Aug 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11-alt1
 - 2.11
 
