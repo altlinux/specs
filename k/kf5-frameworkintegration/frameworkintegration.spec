@@ -4,7 +4,7 @@
 %define ubt_id %__ubt_branch_id
 
 %_K5if_ver_gteq %ubt_id M90
-%def_enable packagekit
+%def_disable packagekit
 %else
 %def_disable packagekit
 %endif
@@ -12,7 +12,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -103,6 +103,9 @@ mkdir -p %buildroot/%_K5exec/kpackagehandlers/
 %_K5notif/*.notifyrc
 
 %changelog
+* Fri Dec 05 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- disable packagekit support
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
