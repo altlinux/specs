@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.3
-Release: alt4
+Release: alt5
 Epoch: 1
 %K6init
 
@@ -87,6 +87,7 @@ Patch111: alt-return-trash-desktop.patch
 Patch112: alt-desktopnames.patch
 Patch113: alt-menueditor.patch
 Patch114: alt-menu-search-results-add-genericname.patch
+Patch115: alt-zone-map-hide.patch
 #
 Patch117: alt-klipper-help-url.patch
 Patch118: alt-session-exclude.patch
@@ -303,6 +304,7 @@ Requires: %name-common >= %EVR
 %patch112 -p1
 %patch113 -p1
 %patch114 -p1
+%patch115 -p1
 #
 %patch117 -p1
 %patch118 -p1
@@ -590,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Dec 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt5
+- hide timezone selector map
+
 * Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt4
 - set plasma menu as altertative for altlinux-menus
 
