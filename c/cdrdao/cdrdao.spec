@@ -2,31 +2,27 @@
 %def_enable gcdmaster
 
 Name: cdrdao
-Version: 1.2.5
-Release: alt4
+Version: 1.2.6
+Release: alt1
 
 Summary: Cdrdao - Write audio CD-Rs in disk-at-once mode
 Group: Archiving/Cd burning
-License: GPLv2
+License: GPL-2.0-or-later
 Url: http://cdrdao.sourceforge.net
+
+Vcs: https://github.com/cdrdao/cdrdao.git
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name.control
-# https://github.com/cdrdao/cdrdao/commit/251a40ab.patch
-Patch10: %name-1.2.5-up-Fix-uninitialized-TOC-data-file-name.patch
-# https://github.com/cdrdao/cdrdao/pull/25
-# https://github.com/cdrdao/cdrdao/commit/ada9f82dbab5b07da49ca47e0b799b456d696b1a.patch
-# otherwise brasero will fail to detect it
-Patch11: %name-1.2.5-up-fix-version-command.patch
-
 Patch2000: %name-e2k.patch
+
 Requires(pre,postun): control
+Requires: dconf
 
 %define lame_ver 3.100
 
 BuildRequires: gcc-c++ libacl-devel libao-devel liblame-devel >= %lame_ver
 BuildRequires: libmad-devel libvorbis-devel
-BuildRequires: libGConf-devel
 %{?_enable_gcdmaster:BuildRequires: libgtkmm3-devel}
 
 %description
@@ -50,14 +46,10 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 
 %prep
 %setup
-%patch10 -p1
-%patch11 -p1
 %ifarch %e2k
 # mcst#7806: EDG archdep deficiency
 %patch2000 -p2
 %endif
-# AC_CHECK_INCLUDES_DEFAULT available in 2.70 as compatibility macro
-sed -i 's|\(AC_\)CHECK_\(INCLUDES_DEFAULT\)|\1\2|' configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -76,6 +68,9 @@ sed -i 's|\(AC_\)CHECK_\(INCLUDES_DEFAULT\)|\1\2|' configure.ac
 # control support
 install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
 chmod 700 %buildroot%_bindir/%name
+
+%check
+%make -k check VERBOSE=1
 
 %pre
 %pre_control %name
@@ -110,6 +105,10 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+- dropped upstreamed patches
+
 * Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt4
 - dao/main.cc: fixed "version" command (upstream PR#25)
 
