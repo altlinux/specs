@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: sslscan
-Version: 2.1.6
+Version: 2.2.1
 Release: alt1
 Summary: Discover supported cipher suites in SSL/TLS services
 License: GPL-3.0-or-later
@@ -12,7 +12,7 @@ Group: Security/Networking
 Url: https://github.com/rbsec/sslscan
 
 Source: %name-%version.tar
-BuildRequires: libssl-devel
+BuildRequires: libssl-devel >= 3.5
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: openssl
 }}
@@ -34,7 +34,7 @@ BuildRequires: openssl
 %makeinstall_std
 
 %check
-%buildroot%_bindir/sslscan --version | grep -Po "\s\Q%version-%release\E$"
+%buildroot%_bindir/sslscan --version | grep -P "\b\Q%version-%release\E\b"
 openssl req -x509 -newkey rsa -keyout server.pem -out server.pem -days 1 -nodes -subj /CN=qwerty
 openssl s_server &>/dev/null </dev/zero &
 trap "kill $!" EXIT
@@ -50,6 +50,9 @@ grep -F '<subject><![CDATA[qwerty]]></subject>' a.xml
 %_man1dir/sslscan.1.xz
 
 %changelog
+* Fri Dec 05 2025 Vitaly Chikunov <vt@altlinux.org> 2.2.1-alt1
+- Update to 2.2.1 (2025-11-30).
+
 * Wed Feb 26 2025 Vitaly Chikunov <vt@altlinux.org> 2.1.6-alt1
 - Update to 2.1.6 (2024-12-02).
 
