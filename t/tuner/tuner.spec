@@ -6,8 +6,8 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.4.1
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 
 Summary: Extensible control center
 License: GPL-3.0-or-later
@@ -132,6 +132,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Fri Dec 05 2025 Alexander Davydzik <paladindev@altlinux.org> 0.6.0-alt1
+- updated translations
+- new plugin api features
+
 * Tue Aug 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1.1
 - specified versions of gir() build dependencies
 
