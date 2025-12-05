@@ -1,5 +1,5 @@
 Name: python3-module-habluetooth
-Version: 5.7.0
+Version: 5.8.0
 Release: alt1
 
 Summary: High availability Bluetooth
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 
+%python3_set_limited_api 3.12
+
 %description
 %summary
 
@@ -37,14 +39,14 @@ BuildRequires(pre): rpm-build-pyproject
 %check
 %pyproject_run_pytest -o addopts= tests
 
-# extensions built against stable API, drop versioned ABI req
-%filter_from_requires /%python3_ABI_dep/d
-
 %files
 %python3_sitelibdir/habluetooth
 %python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Fri Dec 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.8.0-alt1
+- 5.8.0 released
+
 * Fri Oct 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.7.0-alt1
 - 5.7.0 released
 
