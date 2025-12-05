@@ -1,7 +1,7 @@
 %define mname update-kernel
 
 Name: alterator-update-kernel
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Url: http://altlinux.org/alterator
@@ -53,6 +53,11 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Fri Dec 05 2025 Ivan Savin <svn17@altlinux.org> 1.6-alt1
+- Fix bug with install modules. Now, when installing modules without
+  installing the kernel, the version of the marked modules is checked, and if
+  a newer version is available, it is installed. (Closes: 56946)
+
 * Fri Feb 14 2025 Ivan Savin <svn17@altlinux.org> 1.5-alt1
 - Fix a bug where some modules for kernels with flavour based on the kernel
   version were not removing. (Closes: 53019)
