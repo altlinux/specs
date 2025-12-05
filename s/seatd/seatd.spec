@@ -1,6 +1,6 @@
 Name: seatd
 Version: 0.9.1
-Release: alt1
+Release: alt2
 Summary: Minimal seat management daemon and universal library
 License: MIT
 Url: https://github.com/kennylevinsen/seatd
@@ -88,6 +88,9 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 03 2025 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt2
+- seatd.sysconfig: change group to users.
+
 * Fri Nov 01 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.9.1-alt1
 - new version 0.9.1 (with rpmrb script)
 
