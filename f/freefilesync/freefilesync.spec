@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.5
+Version: 14.6
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -52,12 +52,10 @@ author, as opposed to the "FreeFileSync Donation Edition".
 %prep
 %setup
 patch -p1 < %SOURCE1
+touch zen/warn_static.h
 # In-place patching from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync
-sed -i 's|-2|-3|' FreeFileSync/Source/{Makefile,RealTimeSync/Makefile}
-sed -i '/^#error/s|^|//|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
+sed -i 's|wxUSE_EXCEPTIONS|0|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
 sed -i '/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
-sed -i 's|const wxReadOnly|wx|' wx+/grid.{cpp,h} \
-       FreeFileSync/Source/ui/{cfg_grid.cpp,file_grid.cpp,log_panel.cpp,rename_dlg.cpp,tree_grid.cpp}
 sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
 
 %patch1 -p1
@@ -65,7 +63,7 @@ sed -i 's|const override|const|' FreeFileSync/Source/ui/small_dlgs.cpp
 %patch100 -p1
 
 %build
-export CXXFLAGS="%{optflags}  -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 -DwxInfoDC=wxClientDC"
+export CXXFLAGS="%{optflags}  -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 -DwxInfoDC=wxClientDC -DwxReadOnlyDC=wxDC"
 export LDFLAGS="$LDFLAGS `pkg-config --libs gtk+-3.0`"
 
 # FreeFileSync
@@ -121,6 +119,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Dec 05 2025 Nikolay Strelkov <snk@altlinux.org> 14.6-alt1
+- New version 14.6.
+
 * Sat Oct 18 2025 Nikolay Strelkov <snk@altlinux.org> 14.5-alt1
 - New version 14.5.
 
