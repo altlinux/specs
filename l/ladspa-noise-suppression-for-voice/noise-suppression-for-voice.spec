@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ladspa-noise-suppression-for-voice
-Version: 1.03
-Release: alt1.20230122.gc1cf430
+Version: 1.10
+Release: alt1
 
 Summary: Real-time noise suppression plugin
 Group: Sound
@@ -43,5 +43,8 @@ office, crowd, airplane, car, train, construction.
 %doc README.md
 
 %changelog
+* Thu Dec 04 2025 Ivan A. Melnikov <iv@altlinux.org> 1.10-alt1
+- 1.10
+
 * Sun Jan 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.03-alt1.20230122.gc1cf430
 - Initial build
