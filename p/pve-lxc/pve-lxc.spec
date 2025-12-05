@@ -5,7 +5,7 @@
 
 Name: pve-%rname
 Version: 6.0.5
-Release: alt2
+Release: alt3
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -105,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt3
+- Realy avoid dependencies to nvidia-container-cli.
+
 * Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt2
 - 6.0.5-3
 - Avoid dependencies to nvidia-container-cli.
