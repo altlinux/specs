@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: noblenote
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Qt program for taking notes
@@ -12,8 +12,8 @@ Url: https://github.com/hakaishi/nobleNote
 
 Source: %name-%version.tar
 
-BuildRequires: qt5-base-devel
-BuildRequires: /usr/bin/lrelease-qt5
+BuildRequires: qt6-base-devel
+BuildRequires: /usr/bin/lrelease-qt6
 
 %description
 nobleNote is a program to organize and create notes. It has an icon
@@ -28,8 +28,8 @@ sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' noblenote.desktop
 sed -i 's|Icon=noblenote|Icon=/usr/share/pixmaps/noblenote-icons/noblenote.png|' noblenote.desktop
 
 %build
-lrelease-qt5 nobleNote.pro
-qmake-qt5 \
+lrelease-qt6 nobleNote.pro
+qmake-qt6 \
           PREFIX=%_prefix \
           CONFIG+=nostrip \
           QMAKE_CXXFLAGS="%optflags" \
@@ -49,5 +49,8 @@ install -Dm644 noblenote.desktop %buildroot%_desktopdir/noblenote.desktop
 %_pixmapsdir/noblenote-icons/*
 
 %changelog
+* Fri Dec 05 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
+- New version 1.4.0 with Qt6 only support.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
