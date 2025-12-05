@@ -1,5 +1,5 @@
 Name: installer-feature-network-settings-copy
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Copying network settings from stage2 to installed system
@@ -10,6 +10,8 @@ Url: https://www.altlinux.org/Installer/beans
 
 Source: %name-%version.tar
 BuildArch: noarch
+
+Conflicts: installer-common-stage3
 
 %description
 %summary.
@@ -24,6 +26,9 @@ BuildArch: noarch
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri Dec 05 2025 Anton Midyukov <antohami@altlinux.org> 0.1.3-alt1
+- preinstall.d: add placeholders for network configuration scripts in chroot
+
 * Mon May 26 2025 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
 - rename {40,29}-network-settings-copy.sh
 
