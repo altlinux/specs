@@ -4,7 +4,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.13
+Version: 1.0.14
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -19,7 +19,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6gui-devel
+BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6gui-devel libX11-devel
 %if_with ipwatchd
 BuildRequires: libsystemd-devel glib2-devel libpcap-devel libnet2-devel
 %endif
@@ -60,6 +60,7 @@ export AR="llvm-ar"
 %_libdir/deepin-service-manager/libOOMScoreAdjust.so
 %_libdir/deepin-service-manager/libplugin-qt-thememanager.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpaperslideshow.so
+%_libdir/deepin-service-manager/libplugin-dde-xsettings.so
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/system/
 %if_with ipwatchd
@@ -69,16 +70,23 @@ export AR="llvm-ar"
 %endif
 %_datadir/dbus-1/system.d/org.deepin.service.OOMScoreAdjust.conf
 %_datadir/dbus-1/system-services/org.deepin.OOMScoreAdjust.service
+%_datadir/dbus-1/services/org.deepin.dde.XSettings.service
 %_datadir/deepin-service-manager/system/OOM-Score-Adjust.json
 %dir %_datadir/deepin-service-manager/user/
 %_datadir/deepin-service-manager/user/plugin-qt-thememanager.json
 %_datadir/deepin-service-manager/user/plugin-qt-wallpaperslideshow.json
+%_datadir/deepin-service-manager/user/plugin-dde-xsettings.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.service.manager/
 %_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
+%dir %_datadir/dsg/configs/org.deepin.dde.daemon/
+%_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 
 %changelog
+* Fri Dec 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.14-alt1
+- New version 1.0.14.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.13-alt1
 - New version 1.0.13.
 

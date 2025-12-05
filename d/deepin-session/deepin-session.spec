@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -29,7 +29,7 @@ Patch1: deepin-session-2.0.6-alt-uos-version.patch
 # Recommends: kwin
 
 BuildRequires(pre): rpm-build-ninja rpm-build-systemd rpm-macros-dqt6
-BuildRequires: cmake libXcursor-devel libXfixes-devel dtk6-common-devel libdtk6core-devel libsecret-devel libsystemd-devel dqt6-base-devel
+BuildRequires: cmake libXcursor-devel libXfixes-devel dtk6-common-devel libdtk6core-devel libsecret-devel libsystemd-devel dqt6-base-devel dqt6-tools-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -56,10 +56,16 @@ export READELF="llvm-readelf"
 
 %install
 %DQ6install
+# TODO: fix dtk_add_config_meta_files()
+mkdir -p %buildroot%_datadir/dsg/configs/org.deepin.dde.session/
+mv -f %buildroot/configs/org.deepin.dde.session/org.deepin.dde.session.json \
+  %buildroot%_datadir/dsg/configs/org.deepin.dde.session/
+# ---
 chmod +x %buildroot%_sysconfdir/X11/Xsession.d/00deepin-dde-env
 chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
+%find_lang --with-qt dde-login-reminder
 
-%files
+%files -f dde-login-reminder.lang
 %config(noreplace) %_sysconfdir/X11/Xsession.d/00deepin-dde-env
 %config(noreplace) %_sysconfdir/X11/Xsession.d/01deepin-profile
 %config(noreplace) %_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
@@ -79,15 +85,23 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_userunitdir/dde-quick-login@x11.service
 %_userunitdir/dde-lock.service
 %_userunitdir/dde-polkit-agent.service
-%_userunitdir/dde-login-reminder.service
-%dir %_userunitdir/dde-osd.target.wants/
-%_userunitdir/dde-osd.target.wants/dde-login-reminder.service
 %_userunitdir/dde-keyring-checker.service
 %_userunitdir/dde-version-checker.service
 %_userunitdir/dde-xsettings-checker.service
 %_userunitdir/dde-version-checker@quick-login.service
+%_sysconfdir/xdg/autostart/dde-login-reminder.desktop
+%dir %_datadir/dde-login-reminder/
+%dir %_datadir/dde-login-reminder/translations/
+%_datadir/dde-login-reminder/translations/dde-login-reminder.qm
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.session/
+%_datadir/dsg/configs/org.deepin.dde.session/org.deepin.dde.session.json
 
 %changelog
+* Fri Dec 05 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.11-alt1
+- New version 2.0.11.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.10-alt1
 - New version 2.0.10.
 - Fixed non-executable scripts.

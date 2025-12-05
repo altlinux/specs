@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.17
+Version: 1.0.18
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -83,6 +83,12 @@ export READELF="llvm-readelf"
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %_datadir/deepin-service-manager/other/manager.json
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.service.manager.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.service.manager.json
 
 %files -n libdeepin-qdbus-service%sover
 #%%_libdir/libdeepin-qdbus-service.so.%%{sover}*
@@ -98,6 +104,9 @@ export READELF="llvm-readelf"
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Fri Dec 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
+- New version 1.0.18.
+
 * Wed Nov 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
 - New version 1.0.17.
 
