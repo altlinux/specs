@@ -16,7 +16,7 @@
 
 Name: lxc
 Version: 6.0.5
-Release: alt2
+Release: alt3
 Summary: Linux Containers
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
@@ -286,6 +286,9 @@ groupadd -r -f vmusers ||:
 %_mandir/ja/*/pam_cgfs*
 
 %changelog
+* Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt3
+- Realy avoid dependencies to nvidia-container-cli.
+
 * Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt2
 - Avoid dependencies to nvidia-container-cli.
 - Add requires nftables.
@@ -609,14 +612,4 @@ groupadd -r -f vmusers ||:
 * Thu Jul 23 2009 Denis Pynkin <dans@altlinux.ru> 0.6.2-alt1
 - Initial spec for ALT Linux
 
-* Tue Mar 24 2009 Daniel Lezcano <daniel.lezcano@free.fr> - Version 0.6.1
-- Removed capability setting, let the user to do that through "lxc-setcap"
 
-* Mon Feb 16 2009 Daniel Lezcano <daniel.lezcano@free.fr> - Version 0.6.0
-- Added more capabilities to the executables
-
-* Sun Jan 25 2009 Daniel Lezcano <daniel.lezcano@free.fr> - Version 0.6.0
-- Reduced spec file
-
-* Sun Aug 3 2008 Daniel Lezcano <dlezcano@fr.ibm.com> - Version 0.1.0
-- Initial RPM release.
