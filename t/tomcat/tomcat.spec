@@ -16,7 +16,7 @@ BuildRequires: java-17-devel
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.109
+%define version %major_version.%minor_version.%micro_version
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: java-17-devel
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 109
+%global micro_version 112
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -80,7 +80,7 @@ Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{js
 
 License:       Apache-2.0
 URL:           http://tomcat.apache.org/
-Source0:       http://www.apache.org/dist/tomcat/tomcat-%{major_version}/v%{version}/src/%{packdname}.tar.gz
+Source0:       http://www.apache.org/dist/tomcat/tomcat-%{major_version}/v%{version}/src/%{packdname}.tar
 Source1:       %{name}-%{major_version}.%{minor_version}.conf
 Source3:       %{name}-%{major_version}.%{minor_version}.sysconfig
 Source4:       %{name}-%{major_version}.%{minor_version}.wrapper
@@ -93,9 +93,7 @@ Source30:      tomcat-preamble
 Source31:      tomcat-server
 Source32:      tomcat-named.service
 Source33:      java-9-start-up-parameters.conf
-#ExcludeArch: armh
-Source34:      %{name}-%{version}-armh.tar
-Source35:      %{name}-%{version}-mfiles.tar
+Source34:      %{name}-%{version}-mfiles.tar
 
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
@@ -105,8 +103,6 @@ Patch4:        rhbz-1857043.patch
 Patch6:        %{name}-%{major_version}.%{minor_version}-bnd-annotation.patch
 
 BuildArch:     noarch
-# Avoid non-identical noarch packages
-ExcludeArch:   armh
 
 BuildRequires: ant
 BuildRequires: ecj >= 1:4.10
@@ -168,7 +164,7 @@ Group: Development/Other
 Summary: Apache Tomcat JavaServer Pages v%{jspspec} API Implementation Classes
 Provides: jsp = %{jspspec}
 Obsoletes: %{name}-jsp-2.2-api
-Requires: tomcat-lib tomcat-servlet-4.0-api
+Requires: %name-servlet-%servletspec-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 Conflicts: %{name}10-jsp-3.1-api
 
@@ -178,8 +174,8 @@ Apache Tomcat JSP API Implementation Classes.
 %package lib
 Group: Development/Other
 Summary: Libraries needed to run the Tomcat Web container
-Requires: tomcat-jsp-2.3-api tomcat-lib
-Requires: tomcat-lib tomcat-servlet-4.0-api
+Requires: %name-jsp-%jspspec-api
+Requires: %name-servlet-%servletspec-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 Requires: ecj >= 1:4.10
 Requires(preun): coreutils
@@ -223,7 +219,7 @@ The ROOT web application for Apache Tomcat.
 %setup -q -n %{packdname}
 # remove pre-built binaries and windows files
 find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "*.gz" -o \
-   -name "*.jar" -o -name "*.war" -o -name "*.zip" \) -delete
+   -name "*.jar" -o -name "*.war" -o -name "*.zip" \) -delete -print
 
 %patch0 -p0
 %patch1 -p0
@@ -277,14 +273,6 @@ rm -rf output/build/webapps/examples
 
 
 %install
-# tmp hack not to break java repo on armh
-if [  -n "$(uname -m| grep arm)" ]; then
-mkdir -p %buildroot
-tar -C %buildroot -x -f %{SOURCE34}
-tar -x -f %{SOURCE35}
-exit 0
-fi
-
 # build initial path structure
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_bindir}
 install -d -m 0755 ${RPM_BUILD_ROOT}%{_sbindir}
@@ -583,6 +571,10 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.112-alt1
+- new version
+- removed precompiled armh-specific blobs
+
 * Thu Sep 25 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.109-alt1
 - new version
 
