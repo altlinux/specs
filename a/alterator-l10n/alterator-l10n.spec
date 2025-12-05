@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.174
-Release: alt2
+Version: 2.9.175
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Fri Dec 05 2025 Anton Midyukov <antohami@altlinux.org> 2.9.175-alt1
+- tzone-po: fix typo in russian translation (Closes: 56949)
+
 * Mon Nov 17 2025 Elena Mishina <lepata@altlinux.org> 2.9.174-alt2
 - alterator-kopidel: minor help update (Closes: 56856)
 
