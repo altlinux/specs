@@ -1,5 +1,5 @@
 Name: xlockmore
-Version: 5.69
+Version: 5.85
 Release: alt1
 
 Summary: An X terminal locking program
@@ -20,6 +20,8 @@ Patch0005: 0005-Provide-nologout-option-for-user-switching.patch
 Patch0006: 0006-Use-Droid-fonts-instead-of-legacy-ones.patch
 Patch0007: 0007-Switch-from-_BSD_SOURCE-to-_DEFAULT_SOURCE.patch
 Patch0008: 0008-Fix-freetype2-detection.patch
+Patch0009: 0009-Use-X11-scandir-instead-of-bundled-scan_dir-if-possi.patch
+Patch0010: 0010-Remove-rpath-R.patch
 
 PreReq: /etc/tcb
 Requires: fortune-mod
@@ -28,7 +30,7 @@ Requires: fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono fonts-ttf
 BuildPreReq: gcc-c++
 # Automatically added by buildreq on Sun Jun 29 2014
 # optimized out: gnu-config libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXt-devel libcloog-isl4 libfreetype-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ imake libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libftgl-devel libpam-devel xorg-cf-files autoconf-archive
+BuildRequires: gcc-c++ libXdmcp-devel libXext-devel libXinerama-devel libXmu-devel libXpm-devel libftgl-devel libpam-devel xorg-cf-files
 
 %description
 The %name utility is an enhanced version of the standard xlock
@@ -49,12 +51,13 @@ X sessions.
 %patch0006 -p2
 #patch0007 -p2
 %patch0008 -p2
+%patch0009 -p2
+%patch0010 -p2
 
 # XXX hack out boxed moide than hangs
 sed -i 's/#define MODE_boxed/#undef MODE_boxed/' xlock/mode.h
 
 %build
-cp /usr/share/aclocal/ax_pthread.m4 .
 autoconf
 ftgl_includes=%_includedir/FTGL %configure \
 	--without-motif \
@@ -113,6 +116,16 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Sun Nov 30 2025 Fr. Br. George <george@altlinux.org> 5.85-alt1
+- Autobuild version bump to 5.85
+
+* Thu Nov 14 2024 Fr. Br. George <george@altlinux.org> 5.80-alt1
+- Autobuild version bump to 5.80
+- Fix russian font patch
+
+* Thu Apr 18 2024 Fr. Br. George <george@altlinux.org> 5.77-alt1
+- Autobuild version bump to 5.77
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 5.69-alt1
 - Autobuild version bump to 5.69
 
