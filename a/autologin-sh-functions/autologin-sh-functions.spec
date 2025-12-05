@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -28,6 +28,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 # TODO: multiseat support (see autologin-sh-functions/TODO)?
 
 %changelog
+* Fri Dec 05 2025 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
+- Do not check for availability /usr/bin/X.
+
 * Thu May 29 2025 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
 - enable wayland sessions for new NVIDIA cards on lightdm
 
