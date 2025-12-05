@@ -1,5 +1,5 @@
 Name: python3-module-sensor-state-data
-Version: 2.19.0
+Version: 2.20.0
 Release: alt1
 
 Summary: Models for storing and converting Sensor Data state
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/sensor_state_data-%version.dist-info
 
 %changelog
+* Fri Dec 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.20.0-alt1
+- 2.20.0 released
+
 * Wed Oct 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.19.0-alt1
 - 2.19.0 reeased
 
