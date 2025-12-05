@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.19
+Release: alt0.20
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -45,6 +45,7 @@ Available plugins:
 - settings
 - useful
 - components
+- policies
 
 %prep
 %setup
@@ -60,6 +61,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Tue Dec 02 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.20
+- Components: transition to the new alterator API.
+- Added new plugin policies.
+
 * Mon Sep 29 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.19
 - Settings: used DE-specific application magazine (ALT #55289).
 

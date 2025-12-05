@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Python module for new Alterator
@@ -43,6 +43,9 @@ Supported modules:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 05 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.4-alt1
+- Components: added fetch_by_names().
+
 * Sun Sep 28 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.3-alt1
 - Supported new API of org.altlinux.alterator.batch_components1.
 
