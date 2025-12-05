@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%set_autoconf_version 2.60
 
 %def_enable minimal
 
 Name: reiser4progs
 Version: 1.2.1
-Release: alt3
+Release: alt4
 Summary: Utilities for reiser4 filesystems
 License: GPLv2
 Group: System/Kernel and hardware
@@ -134,6 +135,9 @@ mv %buildroot{/%_lib/*.so,%_libdir/}
 %endif
 
 %changelog
+* Thu Dec 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt4
+- FTBFS: use autoconf 2.60
+
 * Thu Sep 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.1-alt3
 - Disabled static libraries.
 
