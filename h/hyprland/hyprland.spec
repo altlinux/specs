@@ -3,7 +3,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.51.1
+Version: 0.52.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -13,10 +13,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
-#Patch0: hyprland-0.40.0-native-udis86.patch
 Patch1: hyprland-0.50.1-clang.patch
-Patch2: hyprland-0.50.1-cm-inert-output.patch
-Patch3: hyprland-0.50.1-fix-workspace-persistence.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
@@ -118,16 +115,16 @@ Group: Development/C++
 %setup
 %autopatch -p1
 
-subst '/generateVersion\.sh/d' meson.build
-
 %build
 %meson \
-    -Dsystemd=enabled \
+	-Dsystemd=enabled \
 	-Duwsm=enabled
 %meson_build
 
 %install
 %meson_install
+
+rm %buildroot%_includedir/src/version.h 
 
 %files
 %doc README.md LICENSE
@@ -162,6 +159,9 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.52.2-alt1
+- new version 0.52.2 (with rpmrb script)
+
 * Fri Oct 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.51.1-alt1
 - new version 0.51.1 (with rpmrb script) (ALT bug 56486)
 - build with clang

@@ -1,7 +1,7 @@
-%define soversion 2
+%define soversion 4
 
 Name: libhyprtoolkit
-Version: 0.2.0
+Version: 0.4.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -14,8 +14,6 @@ Vcs: https://github.com/hyprwm/hyprtoolkit.git
 
 ExcludeArch: %ix86
 Source: %name-%version.tar
-
-Patch1: clang.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -61,7 +59,6 @@ This package provides development files for %name library.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %cmake -DCMAKE_CXX_COMPILER=clang++
@@ -80,5 +77,8 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprtoolkit.pc
 
 %changelog
+* Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.1-alt1
+- new version 0.4.1 (with rpmrb script)
+
 * Tue Oct 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - Initial build

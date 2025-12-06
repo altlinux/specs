@@ -1,7 +1,7 @@
 %define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprfocus hyprscrolling hyprtrails hyprwinwrap xtra-dispatchers
 
 Name: hyprland-plugins
-Version: 0.51.1
+Version: 0.52.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -145,6 +145,12 @@ done
 %_libdir/hyprland/xtra-dispatchers.so
 
 %changelog
+* Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.52.2-alt1
+- new version 0.52.2 (with rpmrb script)
+
+* Sat Nov 15 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.52.1-alt1
+- new version 0.52.1 (with rpmrb script)
+
 * Wed Oct 22 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.51.1-alt1
 - new version 0.51.1 (with rpmrb script)
 - build with clang

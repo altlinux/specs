@@ -1,7 +1,7 @@
-%define soversion 1
+%define soversion 3
 
 Name: libhyprgraphics
-Version: 0.2.0
+Version: 0.4.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -77,6 +77,12 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprgraphics.pc
 
 %changelog
+* Fri Dec 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
+- new version 0.4.0 (with rpmrb script)
+
+* Sat Nov 08 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 
