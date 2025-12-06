@@ -2,7 +2,7 @@
 
 Name: vala-panel
 Version: 24.05
-Release: alt1
+Release: alt2.git82005703
 
 Summary: Desktop panel written in Vala and GTK+ 3
 License: LGPLv3
@@ -10,6 +10,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/vala-panel-project/vala-panel
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
@@ -42,10 +44,10 @@ managers with vala-panel support.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
-       -Dwnck=enabled \
        -Dplatforms='wayland,x11'
 %meson_build
 
@@ -87,5 +89,8 @@ rm -rfv %{buildroot}%{_datadir}/vala-panel/doc
 %_datadir/gir-1.0/ValaPanel-*.gir
 
 %changelog
+* Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 24.05-alt2.git82005703
+- Fixed FTBFS by using latest commits from upstream.
+
 * Sat Feb 15 2025 Nikolay Strelkov <snk@altlinux.org> 24.05-alt1
 - Initial build for Sisyphus

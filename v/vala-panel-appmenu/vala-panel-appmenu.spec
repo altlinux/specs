@@ -2,7 +2,7 @@
 
 Name: vala-panel-appmenu
 Version: 25.04
-Release: alt1
+Release: alt2
 
 Summary: AppMenu plugin for xfce4-panel, mate-panel and vala-panel
 License: LGPLv3
@@ -100,12 +100,8 @@ rm -rfv %{buildroot}%{_datadir}/doc/vala-panel-appmenu
 %_datadir/dbus-1/services/com.canonical.AppMenu.Registrar.service
 %_datadir/glib-2.0/schemas/org.valapanel.appmenu.gschema.xml
 %_datadir/vala-panel/applets/org.valapanel.appmenu.plugin
-%_datadir/vala/vapi/appmenu-glib-translator.*
-%_datadir/gir-1.0/AppmenuGLibTranslator-*.gir
-%dir %_includedir/appmenu-glib-translator
-%_includedir/appmenu-glib-translator/importer.h
 %_libdir/girepository-1.0/AppmenuGLibTranslator-*.typelib
-%_libdir/libappmenu-glib-translator.*
+%_libdir/libappmenu-glib-translator.so.*
 
 %files -n vala-panel-appmenu-gtk-module
 %doc README.md LICENSE
@@ -129,6 +125,11 @@ rm -rfv %{buildroot}%{_datadir}/doc/vala-panel-appmenu
 
 %files devel
 %doc README.md LICENSE
+%_datadir/vala/vapi/appmenu-glib-translator.*
+%_datadir/gir-1.0/AppmenuGLibTranslator-*.gir
+%dir %_includedir/appmenu-glib-translator
+%_includedir/appmenu-glib-translator/importer.h
+%_libdir/libappmenu-glib-translator.so
 %dir %_includedir/appmenu-gtk-parser
 %_includedir/appmenu-gtk-parser/*.h
 %_libdir/libappmenu-gtk2-parser.so
@@ -136,6 +137,14 @@ rm -rfv %{buildroot}%{_datadir}/doc/vala-panel-appmenu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Nov 28 2025 Aleksandr A. Voyt <sobue@altlinux.org> 25.04-alt2
+- NMU: Moved development files from runtime package to devel package to avoid
+  unnecessary dependencies on *-devel packages during installation:
+  + VAPI files (appmenu-glib-translator.vapi)
+  + GIR files (AppmenuGLibTranslator-*.gir)
+  + headers (appmenu-glib-translator/importer.h)
+  + unversioned library symlink (libappmenu-glib-translator.so)
+
 * Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 25.04-alt1
 - New version 25.04.
 
