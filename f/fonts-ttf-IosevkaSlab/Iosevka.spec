@@ -1,7 +1,7 @@
 
 %define family Iosevka
-%define variant Etoile
-%define descr   quasi-proportional, slab-serif
+%define variant Slab
+%define descr   monospace, slab-serif
 
 %define fname %family%variant
 %define dist_dir dist/%fname/TTF

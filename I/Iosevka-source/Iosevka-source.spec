@@ -1,0 +1,38 @@
+
+%define family Iosevka
+
+Name:    %family-source
+Version: 33.3.5
+Release: alt1
+
+Summary: Versatile typeface for code -- the sources
+License: OFL-1.1
+Group:   System/Fonts/True type
+Url:     https://github.com/be5invis/Iosevka
+
+Packager: Ivan A. Melnikov <iv@altlinux.org>
+
+Source0:  %family-%version.tar
+Source1:  node_modules.tar
+Source2:  %family-%version-%release.patch
+
+BuildArch: noarch
+
+%description
+Iosevka is an open-source multi-variant typeface family, designed
+for writing code, using in terminals, and preparing technical documents.
+
+Iosevka is completely generated from its source code. This package
+contains the source code and vendored node_modules that are used
+to build the actual packages with the font.
+
+%install
+mkdir -p %buildroot%_usrsrc/%family
+cp %SOURCE0 %SOURCE1 %SOURCE2 %buildroot%_usrsrc/%family/
+
+%files
+%_usrsrc/%family
+
+%changelog
+* Thu Dec 04 2025 Ivan A. Melnikov <iv@altlinux.org> 33.3.5-alt1
+- build a separate source package (inspired by kernel-source-*)
