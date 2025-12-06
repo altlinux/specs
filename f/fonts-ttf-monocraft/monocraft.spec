@@ -2,7 +2,7 @@
 %define fname monocraft
 
 Name: fonts-ttf-%fname
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Monocraft font
@@ -36,6 +36,9 @@ cd dist
 %doc LICENSE README.md
 
 %changelog
+* Sat Dec 06 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.2-alt1
+- New version.
+
 * Fri Aug 08 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.1-alt1
 - New version.
 
