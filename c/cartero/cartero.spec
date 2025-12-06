@@ -1,7 +1,7 @@
 %define xdg_name es.danirod.Cartero
 
 Name: cartero
-Version: 0.2.4
+Version: 25.0
 Release: alt1
 License: GPL-3.0
 
@@ -66,6 +66,9 @@ rm -rf %buildroot%_datadir/locale/zh_Hans
 %_iconsdir/hicolor/*/mimetypes/*.svg
 
 %changelog
+* Sat Dec 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.0-alt1
+- new version 25.0 (with rpmrb script)
+
 * Thu Aug 14 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.4-alt1
 - new version 0.2.4 (with rpmrb script)
 
