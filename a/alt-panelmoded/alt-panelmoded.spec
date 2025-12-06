@@ -2,15 +2,15 @@
 %define xdg_name org.altlinux.%_name
 
 Name: alt-panelmoded
-Version: 0.6.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://gitlab.gnome.org/Armatik/alt-panelmoded
-Vcs: https://gitlab.gnome.org/Armatik/alt-panelmoded
+Url: https://altlinux.space/alt-gnome/alt-panelmode.git
+Vcs: https://altlinux.space/alt-gnome/alt-panelmode.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -26,6 +26,7 @@ Requires: gnome-shell-extension-arcmenu
 Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-clipboard-indicator
+Requires: gnome-shell-extension-add-to-desktop
 
 %description
 Used for panelmode on operating systems of the Alt family
@@ -44,10 +45,23 @@ with GNOME desktop enviroment.
 
 %files -f %_name.lang
 %_bindir/%_name
+%_sysconfdir/xdg/autostart/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/glib-2.0/schemas/45_%xdg_name.gschema.override
 
 %changelog
+* Mon Dec 01 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.2-alt1
+- New version 0.7.2.
+
+* Wed Nov 26 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.1-alt1
+- New version 0.7.1.
+
+* Tue Nov 25 2025 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+- Change gear remotes.
+- Change tags.
+
 * Mon Mar 4 2025 Alexey Volkov <qualimock@altlinux.org> 0.6.1-alt1
 - new version 0.6.1
 
