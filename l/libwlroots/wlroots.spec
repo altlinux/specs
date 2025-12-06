@@ -1,7 +1,7 @@
 %define soversion 0.18
 
 Name: libwlroots
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -22,7 +22,6 @@ BuildRequires: glslang
 BuildRequires: pkgconfig(hwdata)
 
 BuildRequires: pkgconfig(egl)
-BuildRequires: pkgconfig(freerdp2)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(libavcodec)
@@ -105,6 +104,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots-%soversion.pc
 
 %changelog
+* Sat Dec 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
+- 0.18.3
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 0.18.2-alt1
 - new version (0.18.2) with rpmgs script
 

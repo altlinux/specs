@@ -10,7 +10,7 @@
 
 Name: gnome-remote-desktop
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Remote Desktop
 License: GPL-2.0-or-later
@@ -58,7 +58,7 @@ BuildRequires: libdbus-devel libpolkit-devel >= %polkit_ver
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
 BuildRequires: pipewire wireplumber mutter-gnome
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
-%{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver}
+%{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver pkgconfig(winpr3)}
 %{?_enable_man:BuildRequires: /usr/bin/a2x xmllint}
 
 %description
@@ -68,6 +68,7 @@ Remote desktop daemon for GNOME using pipewire.
 %setup -n %name-%version%beta
 
 %build
+%add_optflags %(pkg-config --cflags winpr3)
 %meson \
     %{subst_enable_meson_bool rdp rdp} \
     %{subst_enable_meson_bool vnc vnc} \
@@ -110,6 +111,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Sat Dec 06 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
+- fixed build
+
 * Tue Oct 14 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
