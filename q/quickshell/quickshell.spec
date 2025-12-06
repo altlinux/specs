@@ -2,7 +2,7 @@
 
 Name: quickshell
 Version: 0.2.1
-Release: alt1
+Release: alt2
 License: GPL-3.0 and LGPL-3.0
 
 Summary: Flexible toolkit for making desktop shells with QtQuick
@@ -33,6 +33,8 @@ BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(pam)
+
+Requires: qt6-declarative
 
 %description
 Quickshell is a toolkit for building status bars, widgets
@@ -66,6 +68,9 @@ to build a complete desktop environment.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sat Dec 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt2
+- add requires to qt6-declarative (ALT bug 56836)
+
 * Sat Oct 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
 - new version 0.2.1 (with rpmrb script)
 
