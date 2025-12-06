@@ -1,6 +1,6 @@
 %define soname 7
 Name: libva-intel-media-driver
-Version: 25.4.4
+Version: 25.4.5
 Release: alt1
 
 Summary: Intel(R) Media Driver for VAAPI
@@ -27,7 +27,7 @@ Group: System/Libraries
 Summary: C bindings for media runtime
 
 %description -n libigfxcmrt%soname
-cmrtlib is a runtime library needed when user wants to execute their own GPU 
+cmrtlib is a runtime library needed when user wants to execute their own GPU
 kernels on render engine. It calls iHD media driver to load the kernels and
 allocate the resources. It provides a set of APIs for user to call directly from application.
 
@@ -54,7 +54,7 @@ This package provides the development environment for libigfxcmrt
 
 %files
 %doc LICENSE.md README.md
-%_libdir/dri/*.so
+%_libdir/dri//iHD_drv_video.so
 
 %files -n libigfxcmrt%soname
 %_libdir/libigfxcmrt.so.%soname
@@ -66,6 +66,9 @@ This package provides the development environment for libigfxcmrt
 %_pkgconfigdir/igfxcmrt.pc
 
 %changelog
+* Sat Dec 06 2025 Anton Farygin <rider@altlinux.com> 25.4.5-alt1
+- 25.4.4 -> 25.4.5
+
 * Sun Nov 23 2025 Anton Farygin <rider@altlinux.com> 25.4.4-alt1
 - 25.4.3 -> 25.4.4
 
