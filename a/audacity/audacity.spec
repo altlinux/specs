@@ -16,7 +16,7 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.5
+Version: 3.7.6
 Release: alt2
 
 Summary: Cross-platform audio editor
@@ -41,6 +41,7 @@ Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
 Patch0007: 0007-Manual-document-session-path.patch
 Patch0008: 0008-Fix-release-build-warning.patch
+Patch0009: 0009-TrackPanel-Initialize-new-members.patch
 
 Source2000: audacity-e2k.patch
 
@@ -268,6 +269,13 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Sat Dec 06 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.6-alt2
+- Fix random scrolling on selection bug
+  (upstream PR: https://github.com/audacity/audacity/pull/10011)
+
+* Fri Dec 05 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.6-alt1
+- 3.7.6
+
 * Wed Dec 03 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.5-alt2
 - require libsuil-gtk3 (see ALT#57087)
 
