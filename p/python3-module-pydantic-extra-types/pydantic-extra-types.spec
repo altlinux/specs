@@ -5,7 +5,7 @@
 %define pypi_name pydantic-extra-types
 
 Name: python3-module-%pypi_name
-Version: 2.10.5
+Version: 2.10.6
 Release: alt1
 
 Summary: Extra Pydantic types
@@ -52,7 +52,7 @@ See https://github.com/pydantic/pydantic/issues/5012 for more info.
 %check
 # Skip tests/test_pendulum_dt.py because pytzdata is broken in Sisyphus.
 # See https://bugzilla.altlinux.org/50266
-%pyproject_run_pytest --ignore="tests/test_pendulum_dt.py"
+%pyproject_run_pytest --ignore="tests/test_pendulum_dt.py" -Wignore::DeprecationWarning
 
 %files
 %doc LICENSE README.*
@@ -60,6 +60,9 @@ See https://github.com/pydantic/pydantic/issues/5012 for more info.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Dec 06 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.6-alt1
+- Updated to 2.10.6.
+
 * Mon Jun 09 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.5-alt1
 - Updated to 2.10.5.
 
