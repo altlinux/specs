@@ -1,6 +1,6 @@
 Name: keepassxc
-Version:  2.7.10
-Release:  alt3
+Version:  2.7.11
+Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -113,6 +113,10 @@ export LANG=en_US.UTF-8; \
 %endif
 
 %changelog
+* Sat Dec 06 2025 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.11-alt1
+- updated to v2.7.11
+- update Russian translation to its current state (as of 24.11.2025)
+
 * Tue Aug 12 2025 Alexander Danilov <admsasha@altlinux.org> 2.7.10-alt3
 - fix russian translation.
 
