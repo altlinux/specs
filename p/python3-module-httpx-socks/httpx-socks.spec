@@ -1,7 +1,8 @@
 %define nameD httpx_socks
+%def_with check
 
 Name: python3-module-httpx-socks
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: Proxy (HTTP, SOCKS) transports for httpx
@@ -13,6 +14,14 @@ Vcs: https://github.com/romis2012/httpx-socks
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-trustme python3-module-python-socks
+BuildRequires: python3-module-hypercorn python3-module-starlette
+BuildRequires: python3-module-tiny-proxy python3-module-httpx
+BuildRequires: python3-module-yarl python3-module-anyio
+BuildRequires: python3-module-pytest-asyncio python3-module-pytest-trio
+%endif
 
 BuildArch: noarch
 
@@ -32,12 +41,18 @@ proxy functionality.
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest tests
+
 %files
 %doc LICENSE.txt README.md
 %python3_sitelibdir/%nameD/
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Sat Dec 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.11.0-alt1
+- 0.10.1 -> 0.11.0
+
 * Sun Jun 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.10.1-alt1
 - 0.10.0 -> 0.10.1
 
