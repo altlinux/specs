@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pantheon-wayland
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Wayland integration library to the Pantheon Desktop
@@ -61,7 +61,7 @@ This package contains the development files used for %name.
 %files -n lib%{name}
 %doc COPYING README.md
 %_libdir/libpantheon-wayland.so.1
-%_libdir/libpantheon-wayland.so.1.0.0
+%_libdir/libpantheon-wayland.so.1.1.0
 %_libdir/girepository-1.0/PantheonWayland-1.typelib
 
 %files -n lib%{name}-devel
@@ -74,5 +74,8 @@ This package contains the development files used for %name.
 %_vapidir/pantheon-wayland-1.vapi
 
 %changelog
+* Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

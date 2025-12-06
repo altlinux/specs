@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: pantheon-agent-polkit
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Pantheon Polkit Agent
@@ -52,8 +52,13 @@ BuildRequires: pkgconfig(pantheon-wayland-1)
 %dir %_libexecdir/policykit-1-pantheon
 %_libexecdir/policykit-1-pantheon/%{appname}
 %_desktopdir/%{appname}.desktop
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/io.elementary.desktop.agent-polkit.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/io.elementary.desktop.agent-polkit.mo
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
+- New version 8.0.2.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.1-alt1
 - Initial build for Sisyphus
