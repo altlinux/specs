@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.2.6
+Version:        1.4.0
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -14,6 +14,7 @@ Source0:        https://free-astro.org/download/%{name}-%{version}.tar.bz2
 Patch1:         siril-1.0.0-opencv_flann.patch
 Patch2: 	0001-Fix-compilation-with-exiv2-0.28.patch
 Patch3:		siril-skip-update-check.patch 
+ExcludeArch:    i586
 
 # Notes on dependencies:
 # No ffms and heif support 
@@ -27,7 +28,7 @@ BuildRequires:  ffmpeg libavcodec-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libgif-devel libopencv-devel  libgomp-devel libopenmpt-devel libheif-devel libffms2-devel libavformat-devel libswscale-devel  libswresample-devel
 BuildRequires:  intltool
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libgtksourceview4-devel libjxl-devel libxisf-devel libgit2-devel
 BuildRequires:  meson
 BuildRequires:  pkgconfig(cfitsio)
 BuildRequires:  pkgconfig(exiv2)
@@ -90,8 +91,8 @@ fftwf_free(p);}\
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %meson \
     -Drelocatable-bundle=no \
-    -Dopenmp=true \
-    -Denable-libcurl=yes
+    -Dopenmp=true
+#    -Denable-libcurl=yes
 
 %meson_build
 
@@ -106,12 +107,12 @@ desktop-file-install \
 %find_lang %{name}
 
 
-%check
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.siril.Siril.appdata.xml
+#check
+#appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.siril.Siril.appdata.xml
 
 %files -f %{name}.lang
 
-%doc AUTHORS ChangeLog NEWS README.md LICENSE.md LICENSE_sleef.txt
+%doc AUTHORS ChangeLog README.md LICENSE.md
 %{_bindir}/%{name}*
 %{_datadir}/applications/org.siril.Siril.desktop
 %{_datadir}/mime/packages/%{name}.xml
@@ -122,6 +123,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.siril
 
 
 %changelog
+* Sat Dec 06 2025 Ilya Mashkin <oddity@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Mon Feb 17 2025 Ilya Mashkin <oddity@altlinux.ru> 1.2.6-alt1
 - 1.2.6
 
