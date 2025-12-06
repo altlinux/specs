@@ -2,10 +2,11 @@
 
 %define aprver 1
 %define apudir %name-%version
+%define	libaprver 1.7.6
 
 Name: aprutil%aprver
 Version: 1.6.3
-Release: alt3
+Release: alt4
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -23,27 +24,28 @@ BuildPreReq: rpm-build-licenses
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires: libapr1-devel libexpat-devel zlib-devel libuuid-devel
+BuildRequires: libexpat-devel zlib-devel libuuid-devel
+BuildRequires: libapr1-devel >= %libaprver
 BuildRequires: libssl-devel
 BuildRequires: liblmdb-devel
 
 %package -n lib%name
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
-Requires: libapr1 > 1.3.0
+Requires: libapr1 >= %libaprver
 Conflicts: libaprutil
 
 %package -n lib%name-devel
 Summary: Apache Portable Runtime Utility development files
 Group: Development/C
-Requires: lib%name = %EVR, libapr%aprver-devel > 1.3.0
+Requires: lib%name = %EVR, libapr%aprver-devel >= %libaprver
 Requires: libldap-devel
 
 %if_enabled static
 %package -n lib%name-devel-static
 Summary: Apache Portable Runtime Utility static library
 Group: Development/C
-Requires: lib%name-devel = %EVR , libapr%aprver-devel-static > 1.3.0
+Requires: lib%name-devel = %EVR , libapr%aprver-devel-static >= %libaprver
 %endif
 
 %description
@@ -209,6 +211,10 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_crypto_openssl*.so
 
 %changelog
+* Fri Dec 05 2025 Anton Farygin <rider@altlinux.com> 1.6.3-alt4
+- bumped minimal APR requirements to 1.7.6 and updated BuildRequires/Requires
+  accordingly to ensure compatibility with the current APR build system
+
 * Thu Oct 02 2025 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt3
 - NMU: change BR libpq5-devel -> libpq-devel
 

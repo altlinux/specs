@@ -12,17 +12,16 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.65
+Version: 2.4.66
 Release: alt1
 Epoch: 1
 
 License: %asl
 Group: System/Servers
-Url: http://httpd.apache.org/
+Url: https://httpd.apache.org/
+VCS: https://github.com/apache/httpd
 
-Summary: The most widely used Web server on the Internet
-Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet
-Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet
+Summary: Apache HTTP Server (httpd), modular web server
 
 Source0: httpd-%version.tar
 Source1: apache2.watch
@@ -62,11 +61,8 @@ Source63: server-condstart-rpm.sh
 Source70: apache2-cert-sh-functions.sh
 Source71: apache2-cert-sh.sh
 
-# ALT patches:
-Patch1: apache2-2.4.28-alt-all-0.3.patch
-Patch2: apache2-2.4.25-alt-apachectl.patch
-Patch3: apache2-2.4.27-alt-httpd.conf.patch
-Patch4: apache2-2.4.35-tlv1.2-default.patch
+# ALT patch
+Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.13
 BuildRequires(pre): libssl-devel
@@ -88,15 +84,14 @@ Requires: webserver-icons
 Requires: %name-mod_cache_disk >= %EVR
 
 BuildRequires: webserver-common
-
-# Automatically added by buildreq on Fri Mar 31 2006
 BuildRequires: zlib-devel
+BuildRequires: libbrotli-devel
 
 BuildRequires: rpm-macros-alternatives
 BuildRequires: pkg-config
 BuildRequires: libgdbm-devel
 BuildRequires: libexpat-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel libsasl2-plugin-gssapi
 BuildRequires: openssl
@@ -122,9 +117,7 @@ Apache - мощный, функциональный, высокопроизво�
 свободно распространяемый веб-сервер.
 
 %package base
-Summary: The most widely used Web server on the Internet (base)
-Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet (база)
-Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet (база)
+Summary: Apache HTTP Server (httpd) base files
 Group: System/Servers
 
 Provides: webserver
@@ -168,13 +161,6 @@ Provides: %apache2_runtimedir
 Provides: %apache2_lockdir
 Provides: %docdir
 
-Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
-Conflicts: apache <= 1.3.42rusPL30.24-alt9
-Conflicts: apache-mod_perl < 1.3.42rusPL30.24-alt9
-Conflicts: apache2-htcacheclean <= 2.2.22-alt11
-
-Obsoletes: %name-init
-Obsoletes: %name-common < %EVR
 Requires(pre): webserver-common
 Requires: %name-mods >= %version-%release
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
@@ -198,9 +184,7 @@ Apache - мощный, функциональный, высокопроизво�
 webserver-icons.
 
 %package full
-Summary: The most widely used Web server on the Internet (full)
-Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet (full)
-Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet (full)
+Summary: Apache HTTP Server (httpd), full installation
 Group: System/Servers
 BuildArch: noarch
 
@@ -222,17 +206,13 @@ Apache - мощный, функциональный, высокопроизво�
 Данный пакет требует наличия %name-cgi-bin, %name-html и %name-icons.
 
 %package mods
-Summary: Modules for %name installations
-Summary(ru_RU.UTF-8): Модули для инсталляции %name
+Summary: Apache HTTP Server (httpd) modules
 Group: System/Servers
-Conflicts: apache2 < 2.2.4-alt17
-Conflicts: apache2-base <= 2.2.22-alt15
 Requires(pre): %name-base = %EVR
 Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
 Requires: %apache2_moduledir
-Obsoletes: apache2-mod_macro
 
 %description mods
 This package contains modules for %name.
@@ -254,24 +234,8 @@ BuildRequires: libxml2-devel
 The mod_proxy_html and mod_xml2enc modules provide filters which can
 transform and modify HTML and XML content.
 
-%package configs-A1PROXIED
-Summary: This is a hack to run proxified Apache2 in case Apache1 is running
-Summary(ru_RU.UTF-8): Хак для поддержки проксирования Apache2 через Apache1, при его запуске
-Group: System/Servers
-BuildArch: noarch
-Requires: %apache_configs_dirs_name >= %apache_configs_branch
-Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %name-base = %EVR
-
-%description configs-A1PROXIED
-This is a hack to run proxified Apache2 in case Apache1 is running.
-
-%description -l ru_RU.UTF-8 configs-A1PROXIED
-Хак для поддержки проксирования Apache2 через Apache1, при его запуске.
-
 %package httpd-worker
-Summary: High speed threaded model for Apache HTTPD 2.1
-Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
+Summary: Apache HTTP Server MPM worker (threaded)
 Group: System/Servers
 Requires(pre): %name-base = %EVR
 Requires(pre): alternatives >= 0.4
@@ -280,15 +244,14 @@ Provides: %_sbindir/%apache2_dname
 Provides: %name-httpd = %EVR
 
 %description httpd-worker
-The worker MPM provides a threaded implementation for Apache HTTPD 2.1. It is
+The worker MPM provides a threaded implementation for Apache HTTP Server. It is
 considerably faster than the traditional model, and is the recommended MPM.
 
 Worker generally is a good choice for high-traffic servers because it
 has a smaller memory footprint than the prefork MPM.
 
 %package httpd-prefork
-Summary: Traditional model for Apache HTTPD 2.1
-Summary(ru_RU.UTF-8): Традиционная модель для Apache HTTPD 2.1
+Summary: Apache HTTP Server MPM prefork (process-based)
 Group: System/Servers
 Requires(pre): %name-base = %EVR
 Requires(pre): alternatives >= 0.4
@@ -308,8 +271,7 @@ not affect any other.
 It is not as fast, but is considered to be more stable.
 
 %package httpd-event
-Summary: Event driven model for Apache HTTPD 2.1
-Summary(ru_RU.UTF-8): Событийная модель для Apache HTTPD 2.1
+Summary: Apache HTTP Server MPM event (event-driven)
 Group: System/Servers
 Requires(pre): %name-base = %EVR
 Requires(pre): alternatives >= 0.4
@@ -328,7 +290,6 @@ This MPM is especially suitable for sites that see extensive KeepAlive traffic
 
 %package -n rpm-build-%name
 Summary: RPM helper to rebuild Web servers and apps packages
-Summary(ru_RU.UTF-8): Набор утилит для автоматической Web серверов и приложений
 Group: Development/Other
 
 Requires: rpm-macros-apache2 >= %get_SVR rpm-macros-apache2
@@ -345,14 +306,12 @@ packages by some ALT Linux Web Packaging Policy.
 Summary: Module development tools for the Apache web server
 Summary(ru_RU.UTF-8): Средства разработки модулей для веб-сервера Apache
 Group: Development/C
-Obsoletes: secureweb-devel
 Requires(pre): %name-base = %EVR
 Requires: %name-httpd = %EVR
 
 Provides: %apache2_includedir
 Provides: %apache2_installbuilddir
 
-Obsoletes: %apache2_name-libapr %apache2_name-libapr-devel %apache2_name-libapr-devel %apache2_name-libaprutil %apache2_name-libaprutil-devel %apache2_name-libaprutil-devel
 Requires: %apache2_libaprutil_name-devel >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name-devel >= %apache2_libapr_evr
 Requires: rpm-build-%name = %EVR
@@ -532,7 +491,6 @@ Requires: %apache_config_tool_name >= %apache_config_tool_branch
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
 
-Conflicts: apache2-mod_ssl-compat <= 2.2.22-alt14
 
 Provides: %apache2_proxycachedir/mod_ssl
 
@@ -540,6 +498,25 @@ Provides: %apache2_proxycachedir/mod_ssl
 The mod_ssl module provides strong cryptography for the Apache Web
 server via the Secure Sockets Layer (SSL) and Transport Layer
 Security (TLS) protocols.
+
+%package mod_http2
+Summary: Apache HTTP Server - mod_http2 (HTTP/2)
+Group: Networking/WWW
+BuildRequires: libnghttp2-devel
+Requires: %name-base = %EVR
+Requires: %name-mod_ssl = %EVR
+
+%description mod_http2
+HTTP/2 module for Apache HTTP Server.
+
+%package mod_lua
+Summary: Apache HTTP Server - mod_lua
+Group: Networking/WWW
+BuildRequires: lua5.3-devel
+Requires: %name-base = %EVR
+
+%description mod_lua
+Lua module for Apache HTTP Server.
 
 %package mod_ldap
 Group: System/Servers
@@ -568,10 +545,6 @@ Requires: %apache2_libapr_name >= %apache2_libapr_evr
 Requires: %_sbindir/%apache2_htcacheclean_dname
 Provides: %apache2_htcacheclean_cachepath
 
-Conflicts: apache2-common < 2.2.19-alt1.1
-Obsoletes: apache2-mod_disk_cache
-
-
 %description mod_cache_disk
 This package contains the module mod_cache_disk (ex.mod_disk_cache)
 
@@ -599,8 +572,6 @@ a certain limit. This tool can run either manually or in daemon mode.
 %package ab
 Summary: Apache HTTP server benchmarking tool
 Group: System/Servers
-Conflicts: apache2-base < 2.2.22-alt9
-Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 
 %description ab
 Ab is a tool for benchmarking your Apache Hypertext Transfer Protocol
@@ -611,8 +582,6 @@ requests per second your Apache installation is capable of serving.
 %package htpasswd
 Summary: Manage user files for basic authentication
 Group: System/Servers
-Conflicts: apache2-base < 2.2.22-alt9
-Conflicts: apache-common <= 1.3.42rusPL30.24-alt9
 
 %description htpasswd
 Htpasswd is used to create and update the flat-files used to store
@@ -649,51 +618,11 @@ the same user who is running the web server.
 та SSI-програми під ідентифікаторами користувача, що відрізняються від
 UID веб-серверу.
 
-%package compat
-Summary: Set DocumentRoot in %apache2_serverdatadir
-Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir
-Group: System/Servers
-BuildArch: noarch
-Requires: %name-base = %EVR
-Requires: %apache_configs_dirs_name >= %apache_configs_branch
-Requires: %apache_config_tool_name >= 0.1.2
-
-Provides: %apache2_compat_htdocsdir
-Provides: %apache2_compat_cgibindir
-Provides: %apache2_compat_iconsdir
-Provides: %apache2_compat_iconssmalldir
-
-%description compat
-Set DocumentRoot in %apache2_serverdatadir to support the old configurations.
-
-%description -l ru_RU.UTF-8 compat
-Установка DocumentRoot в %apache2_serverdatadir для поддержки старых конфигураций.
-
-%package mod_ssl-compat
-Summary: Set DocumentRoot in %apache2_serverdatadir (for https)
-Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir (для https)
-Group: System/Servers
-BuildArch: noarch
-Requires: %name-compat = %EVR
-Requires: %name-mod_ssl = %EVR
-Requires: %apache_configs_dirs_name >= %apache_configs_branch
-Requires: %apache_config_tool_name >= %apache_config_tool_branch
-
-%description mod_ssl-compat
-Set DocumentRoot in %apache2_serverdatadir (for https) to support the old configurations.
-
-%description -l ru_RU.UTF-8 mod_ssl-compat
-Установка DocumentRoot в %apache2_serverdatadir для поддержки старых конфигураций (https).
-
-
 %add_findprov_lib_path %apache2_libdir
 
 %prep
 %setup -q -n httpd-%version
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1 -b .orig
-%patch4 -p2
 
 # generate ALTLinux Apache layout
 echo "
@@ -742,7 +671,7 @@ ac_cv_func_sem_open=no
 EOF
 ../configure -C \
 	--enable-layout=ALTLinux \
-	--with-pcre=%_usr/bin/pcre-config \
+	--with-pcre=%_usr/bin/pcre2-config \
 	--with-perl=/usr/bin/perl \
 	--with-apr=%apache2_apr_config \
 	--with-apr-util=%apache2_apu_config \
@@ -756,8 +685,10 @@ EOF
 	--enable-so \
 	--with-mpm=$mpm \
         --with-devrandom \
-        --with-ldap --enable-ldap --enable-auth-ldap --enable-authnz-ldap \
-        --enable-cache --enable-disk-cache --enable-mem-cache \
+        --with-ldap --enable-ldap --enable-authnz-ldap \
+        --enable-cache \
+        --enable-cache-disk=shared \
+        --enable-socache-shmcb=shared \
 	--enable-ssl --with-ssl \
 	--enable-deflate --enable-cgid \
 	--enable-proxy --enable-proxy-connect \
@@ -1002,9 +933,6 @@ echo '%apache2_logfiledir/*log {
 }
 '>%buildroot%_sysconfdir/logrotate.d/%apache2_name
 
-# install addon documentation old root
-mkdir -p %buildroot%apache2_compat_manualaddonsdir/
-
 ###
 ## now remove installed files we ain't gonna use
 #
@@ -1012,12 +940,6 @@ rm -f %buildroot%apache2_installbuilddir/config.nice \
 	%buildroot%apache2_moduledir/httpd.exp \
 	%buildroot%apache2_installbuilddir/mkdir.sh \
 	%buildroot%apache2_errordir/README
-
-# create old apache2 dirs
-mkdir -p %buildroot%apache2_compat_htdocsdir/
-mkdir -p %buildroot%apache2_compat_cgibindir/
-mkdir -p %buildroot%apache2_compat_iconsdir/
-mkdir -p %buildroot%apache2_compat_iconssmalldir/
 
 # Install scripts for control
 install -pD %SOURCE40 %buildroot%_controldir/cgi-bin_test-cgi
@@ -1096,10 +1018,6 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %apache2_htcacheclean_cachepath/	%name-mod_cache_disk
 %apache2_includedir/	%name-devel
 %apache2_installbuilddir/	%name-devel
-%apache2_compat_htdocsdir/	%name-compat
-%apache2_compat_cgibindir/	%name-compat
-%apache2_compat_iconsdir/	%name-compat
-%apache2_compat_iconssmalldir/	%name-compat
 EOF
 
 mkdir -p %buildroot%_rpmmacrosdir
@@ -1242,6 +1160,8 @@ exit 0
 %exclude %docdir/original/mods-available/xml2enc.load
 %exclude %docdir/original/mods-available/ssl.conf
 %exclude %docdir/original/mods-available/cache_disk.*
+%exclude %apache2_mods_available/http2.load
+%exclude %apache2_mods_available/lua.load
 
 # everything but mod_ssl.so:
 %apache2_moduledir/mod_*.so
@@ -1251,6 +1171,8 @@ exit 0
 %exclude %apache2_moduledir/mod_*ldap.so
 %exclude %apache2_moduledir/mod_suexec.so
 %exclude %apache2_moduledir/mod_cache_disk.so
+%exclude %apache2_moduledir/mod_http2.so
+%exclude %apache2_moduledir/mod_lua.so
 
 %files httpd-worker
 %_sbindir/%apache2_dname.worker
@@ -1321,30 +1243,16 @@ exit 0
 %config(noreplace) %apache2_ports_available/*.conf
 %ghost %apache2_ports_enabled/*.conf
 %config(noreplace) %apache2_ports_start/*.conf
-%exclude %apache2_ports_available/http-A1PROXIED.conf
-%exclude %apache2_ports_enabled/http-A1PROXIED.conf
-%exclude %apache2_ports_start/020-A1PROXIED.conf
 %config(noreplace) %apache2_sites_available/*.conf
 %config(noreplace) %apache2_sites_start/*.conf
-%exclude %apache2_sites_available/default-compat.conf
-%exclude %apache2_sites_available/default_https-compat.conf
 %exclude %apache2_sites_enabled/default_https.conf
 %exclude %apache2_sites_enabled/000-default_https.conf
-%exclude %apache2_sites_enabled/vhosts-A1PROXIED.conf
-%exclude %apache2_sites_enabled/default-compat.conf
-%exclude %apache2_sites_enabled/000-default-compat.conf
-%exclude %apache2_sites_enabled/default_https-compat.conf
-%exclude %apache2_sites_enabled/000-default_https-compat.conf
-%exclude %apache2_sites_start/020-A1PROXIED.conf
-%exclude %apache2_sites_start/*-default-compat.conf
 %config(noreplace) %apache2_extra_available/*.conf
 %ghost %apache2_extra_enabled/*.conf
 %exclude %apache2_extra_available/httpd-manual*.conf
 %exclude %apache2_extra_enabled/httpd-manual*.conf
-%exclude %apache2_extra_enabled/httpd-*-compat.conf
 %config(noreplace) %apache2_extra_start/*.conf
 %exclude %apache2_extra_start/*-manual*.conf
-%exclude %apache2_extra_start/*-default-compat.conf
 %dir %apache2_addonconfdir/
 %attr(0755,root,root) %apache2_sslcertsh
 %config %_initdir/%apache2_dname
@@ -1357,7 +1265,6 @@ exit 0
 
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
-%_bindir/ht*
 %exclude %apache2_sslcertshfunctions
 %exclude %_bindir/htpasswd*
 %_bindir/logresolve*
@@ -1368,8 +1275,9 @@ exit 0
 %_bindir/check_forensic*
 %_bindir/dbmmanage*
 %_sbindir/fcgistarter*
-
 %_bindir/httxt2dbm*
+%_bindir/htdbm*
+%_bindir/htdigest*
 
 %_rpmlibdir/*-%apache2_name-base-*.filetrigger
 
@@ -1394,13 +1302,6 @@ exit 0
 %exclude %_mandir/man8/suexec*
 
 %files full
-
-%files configs-A1PROXIED
-%config(noreplace) %apache2_ports_available/http-A1PROXIED.conf
-%ghost %apache2_ports_enabled/http-A1PROXIED.conf
-%config(noreplace) %apache2_ports_start/020-A1PROXIED.conf
-%ghost %apache2_sites_enabled/vhosts-A1PROXIED.conf
-%config(noreplace) %apache2_sites_start/020-A1PROXIED.conf
 
 %files docs
 %docdir/manual
@@ -1463,6 +1364,14 @@ exit 0
 %apache2_moduledir/mod_*ldap.so
 %config(noreplace) %apache2_mods_available/*ldap.load
 
+%files -n %name-mod_http2
+%apache2_moduledir/mod_http2.so
+%config(noreplace) %apache2_mods_available/http2.load
+
+%files -n %name-mod_lua
+%apache2_moduledir/mod_lua.so
+%config(noreplace) %apache2_mods_available/lua.load
+
 %files mod_cache_disk
 %apache2_moduledir/mod_cache_disk.so
 %config(noreplace) %apache2_mods_available/cache_disk.*
@@ -1524,23 +1433,22 @@ exit 0
 %attr(4510,root,%apache2_group) %_sbindir/suexec*
 %_mandir/man8/suexec*
 
-%files compat
-%config(noreplace) %apache2_sites_available/default-compat.conf
-%ghost %apache2_sites_enabled/default-compat.conf
-%ghost %apache2_sites_enabled/000-default-compat.conf
-%config(noreplace) %apache2_sites_start/*-default-compat.conf
-%ghost %apache2_extra_enabled/httpd-*-compat.conf
-%config(noreplace) %apache2_extra_start/*-default-compat.conf
-%dir %apache2_compat_htdocsdir/
-%dir %apache2_compat_cgibindir/
-%dir %apache2_compat_iconssmalldir/
-%dir %apache2_compat_manualaddonsdir/
-
-%files mod_ssl-compat
-%ghost %apache2_sites_enabled/default_https-compat.conf
-%ghost %apache2_sites_enabled/000-default_https-compat.conf
-
 %changelog
+* Sat Dec 06 2025 Anton Farygin <rider@altlinux.com> 1:2.4.66-alt1
+- 2.4.65 -> 2.4.66 (Fixes: CVE-2025-66200, CVE-2025-65082, CVE-2025-59775,
+			CVE-2025-58098, CVE-2025-55753)
+- tightened the default_https vhost by
+  adding explicit Directory defaults (closes: #51050)
+- updated Summary and Description
+- built with pcre2
+- enabled brotli support
+- added lua and http2 modules in separate subpackages
+- explicitly enabled cache_disk and socache_shmcb
+- folded the downstream patchset in-tree and consolidated packaging patches
+- removed apache1 legacy support
+- dropped legacy configs and obsolete build options
+- dropped Conflicts/Obsoletes from legacy 1.3/2.2 transitions
+
 * Mon Jul 28 2025 Anton Farygin <rider@altlinux.com> 1:2.4.65-alt1
 - 2.4.64 -> 2.4.65 (Fixes: CVE-2025-54090)
 

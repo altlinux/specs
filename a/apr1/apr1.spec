@@ -1,15 +1,16 @@
+%def_without check
 %define aprver 1
 %define aprdir %_builddir/%name-%version
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
 License: %asl
-Url: http://apr.apache.org/
+Url: https://apr.apache.org/
 
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
 Source: apr-%version.tar
@@ -94,6 +95,7 @@ LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
 %install
 %makeinstall_std
 install -m755 build/PrintPath %buildroot%_datadir/apr-%aprver/build/
+install -m755 build/apr_common.m4 %buildroot%_datadir/apr-%aprver/build/
 find %buildroot%_bindir -type f -print0 |
 	xargs -r0 grep -FZl "%aprdir" -- |
 	xargs -r0 sed -i "s,%aprdir,%_datadir/apr-%aprver," --
@@ -124,6 +126,11 @@ make check
 %endif
 
 %changelog
+* Fri Dec 05 2025 Anton Farygin <rider@altlinux.com> 1.7.6-alt1
+- 1.7.5 -> 1.7.6
+- install missing apr_common.m4 into %_datadir/apr-1/build/ to enable
+  building apache httpd directly from a Git checkout
+
 * Wed Oct 30 2024 Alexander Danilov <admsasha@altlinux.org> 1.7.5-alt1
 - New version 1.7.5.
 
