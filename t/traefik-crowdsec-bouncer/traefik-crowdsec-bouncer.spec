@@ -2,7 +2,7 @@
 
 Name: traefik-crowdsec-bouncer
 Version: 0.6.1
-Release: alt1
+Release: alt2.git9c39a03
 Summary: A service to verify request and bounce them according to decisions made by CrowdSec
 License: MIT
 Group: System/Servers
@@ -45,9 +45,12 @@ install -m 0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %files
 %_bindir/%name
 %_unitdir/%name.service
-%_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %doc LICENSE
 
 %changelog
+* Sat Dec 06 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.1-alt2.git9c39a03
+- Updated to latest upstream git.
+
 * Wed Oct 01 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.1-alt1
 - Initial build for ALT.
