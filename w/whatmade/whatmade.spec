@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: whatmade
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Linux daemon that monitors user-specified directories and records which process created each file
@@ -110,6 +110,9 @@ echo "      systemctl enable --now whatmade.service"
 %_datadir/caja-python/extensions/whatmade-extension.py*
 
 %changelog
+* Sat Dec 06 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.1-alt1
+- New version 0.2.1.
+
 * Fri Sep 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
