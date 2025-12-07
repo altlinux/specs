@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: inspectrum
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Tool for visualising captured radio signals
@@ -10,6 +10,8 @@ Group: Engineering
 Url: https://github.com/miek/inspectrum
 
 Source: %name-%version.tar
+
+ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -72,5 +74,8 @@ EOF
 %_desktopdir/inspectrum.desktop
 
 %changelog
+* Sun Dec 07 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Mon Jun 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus
