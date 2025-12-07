@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.5.48
+Version: 0.6.3
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -18,10 +18,15 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-retry
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-covdefaults
 BuildRequires: python3-module-fast-depends
 BuildRequires: python3-module-typer
 BuildRequires: python3-module-pydantic
@@ -33,7 +38,9 @@ BuildRequires: python3-module-fastapi
 BuildRequires: python3-module-watchfiles
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-httpx
+BuildRequires: python3-module-uvloop
 BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-psutil
 
 BuildRequires: python3-module-aio-pika
 BuildRequires: python3-module-kafka
@@ -61,7 +68,7 @@ automatically.
 %pyproject_install
 
 %check
-%pyproject_run -- pytest tests -m "(slow and (not nats and not kafka and not confluent and not rabbit and not redis)) or (not nats and not kafka and not confluent and not rabbit and not redis)"
+%pyproject_run_pytest -vv -m "(slow and not connected) or not connected"
 
 %files
 %doc LICENSE README.md
@@ -70,6 +77,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Thu Nov 06 2025 Egor Ignatov <egori@altlinux.org> 0.6.3-alt1
+- New version 0.6.3.
+
 * Thu Jul 24 2025 Egor Ignatov <egori@altlinux.org> 0.5.48-alt1
 - New version 0.5.48.
 
