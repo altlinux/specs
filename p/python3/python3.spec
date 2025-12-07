@@ -100,8 +100,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.9
-Release: alt2
+Version: %{pybasever}.11
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -1099,6 +1099,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Sun Dec 07 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.11-alt1
+- Updated to upstream 3.13.11.
+
 * Sun Nov 09 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.9-alt2
 - Preparing for %%_python3_standalone (thx to Ivan Zakharyaschev)
 - Update the wheel garbage-stripping helper (thx to Gleb F-Malinovskiy).
