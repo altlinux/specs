@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libgit2
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: linkable library for Git
@@ -73,6 +73,7 @@ sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
 %{?_enable_cli:%_bindir/git2}
 %_libdir/%name.so.*
 %doc README.md AUTHORS COPYING
+%doc docs/changelog.md
 
 %files devel
 %_includedir/git2
@@ -84,6 +85,9 @@ sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Dec 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
+- 1.9.2
+
 * Sat Jun 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
