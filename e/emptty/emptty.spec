@@ -2,7 +2,7 @@
 %def_with check
 
 Name: emptty
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Dead simple CLI Display Manager on TTY
@@ -47,5 +47,8 @@ export BUILD_VERSION="v%version-%release"
 %_man1dir/emptty.1.*
 
 %changelog
+* Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 0.15.0-alt1
+- New version 0.15.0.
+
 * Sun Jun 08 2025 Egor Ignatov <egori@altlinux.org> 0.14.0-alt1
 - First build for ALT.
