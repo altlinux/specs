@@ -2,7 +2,7 @@
 %global _libexecdir %prefix/libexec
 
 Name: icmake
-Version: 13.03.00
+Version: 13.05.01
 Release: alt1
 Summary: A make utility using a C-like syntax
 License: GPLv3
@@ -10,7 +10,6 @@ Group: Development/Tools
 Url: https://gitlab.com/fbb-git/icmake
 VCS: https://gitlab.com/fbb-git/icmake.git
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
 BuildRequires: gcc-c++
 
 %description
@@ -44,7 +43,6 @@ This package contains documentation for Icmake.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 echo "/* created during rpmbuild */" >  %name/INSTALL.im
@@ -78,6 +76,9 @@ popd
 %_docdir/%name-%version
 
 %changelog
+* Sat Dec 06 2025 Anton Farygin <rider@altlinux.com> 13.05.01-alt1
+- 13.03.00 -> 13.05.01
+
 * Tue May 06 2025 Anton Farygin <rider@altlinux.com> 13.03.00-alt1
 - 13.02.00 -> 13.03.00
 
