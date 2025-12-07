@@ -1,5 +1,9 @@
+%define dbus_sys_srv %_datadir/dbus-1/system-services
+%define dbus_sysd %_datadir/dbus-1/system.d
+%define polkit_actions %_datadir/polkit-1/actions/
+
 Name: tlp
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Optimize laptop battery life
@@ -8,6 +12,7 @@ License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://linrunner.de/tlp
 
+# Source-url: https://github.com/linrunner/TLP/archive/%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: rpm-build-perl
@@ -15,6 +20,13 @@ BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: systemd systemd-analyze systemd-homed systemd-networkd
 
 BuildRequires: libappstream-glib libappstream-glib-gir
+
+BuildRequires: rpm-build-python3
+
+%filter_from_requires /cinnamon/d
+%filter_from_requires /gnome-shell/d
+%filter_from_requires /lxqt-session/d
+%filter_from_requires /plasma-workspace/d
 
 #The following requires are not detected:
 Requires: ethtool
@@ -30,6 +42,7 @@ Requires: cpupower linux-tools
 #Note: Conflicts with laptop-mode-tools
 #Makes sure laptop_mode isn't being used:
 Conflicts: laptop-mode-tools
+Conflicts: power-profiles-daemon
 
 BuildArch: noarch
 
@@ -105,6 +118,11 @@ appstream-util validate-relax --nonet \
 %_unitdir/../system-sleep
 %_datadir/metainfo/*.metainfo.xml
 %_sharedstatedir/tlp
+%polkit_actions/tlp-pd.policy
+%dbus_sys_srv/net.hadess.PowerProfiles.service
+%dbus_sys_srv/org.freedesktop.UPower.PowerProfiles.service
+%dbus_sysd/net.hadess.PowerProfiles.conf
+%dbus_sysd/org.freedesktop.UPower.PowerProfiles.conf
 
 %files rdw
 %doc COPYING README.rst changelog
@@ -125,6 +143,10 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Fri Dec 05 2025 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0 (with rpmrb script) (ALT bug 57132)
+- add BuildRequires: rpm-build-python3
+
 * Thu Feb 27 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
