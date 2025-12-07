@@ -2,7 +2,7 @@
 %def_with check
 
 Name: chezmoi
-Version: 2.67.1
+Version: 2.68.0
 Release: alt1
 
 Summary: Manage your dotfiles across multiple diverse machines, securely
@@ -61,6 +61,9 @@ install -vDm 644 completions/chezmoi.fish \
 %_datadir/fish/vendor_completions.d/chezmoi.fish
 
 %changelog
+* Thu Dec 04 2025 Egor Ignatov <egori@altlinux.org> 2.68.0-alt1
+- New version 2.68.0.
+
 * Thu Nov 27 2025 Egor Ignatov <egori@altlinux.org> 2.67.1-alt1
 - New version 2.67.1.
 
