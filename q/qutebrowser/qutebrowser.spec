@@ -2,28 +2,38 @@
 
 Name: %srcname
 Version: 3.6.3
-Release: alt1
+Release: alt2
 Summary: A keyboard-driven, vim-like browser based on PyQt6 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Url: http://www.qutebrowser.org
 Source0: %srcname-%version.tar
-BuildRequires(pre): rpm-build-python3 rpm-macros-qt6-webengine
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
-BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3 rpm-macros-qt6 qt6-base-devel
-BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt6-devel python3-module-PyQt6
-BuildRequires: python3-module-PyQt6-WebEngine
+BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
+BuildRequires: pyproject-build rpm-macros-python3 
+
 #Requires: libqt6-webenginecore
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+%ifnarch %e2k
+BuildRequires(pre): rpm-macros-qt6-webengine
+BuildRequires: rpm-macros-qt6 qt6-base-devel
+BuildRequires: python3-module-PyQt6-devel python3-module-PyQt6
+BuildRequires: python3-module-PyQt6-WebEngine
 ExclusiveArch: %qt6_qtwebengine_arches
 
 Requires: qt6-base-common
 Requires: qt6-declarative
 Requires: python3-module-PyQt6
 Requires: python3-module-PyQt6-WebEngine
+%else
+BuildRequires: python3-module-PyQt5
+Requires: python3-module-PyQt5
+%endif
+
 #Requires: python3-module-setuptools
 #Requires: python3-qt5
 #Requires: python3-qt5-webengine
@@ -125,6 +135,9 @@ mkdir -p %buildroot%python3_sitelibdir/%srcname-%version.dist-info
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Sun Dec 07 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.3-alt2
+- Add build on e2k with Qt5
+
 * Tue Dec 02 2025 Ilya Mashkin <oddity@altlinux.ru> 3.6.3-alt1
 - 3.6.3
 
