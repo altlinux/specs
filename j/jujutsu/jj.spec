@@ -4,9 +4,9 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: jujutsu
-Version: 0.30.0
+Version: 0.36.0
 Release: alt1
-Summary: An experimental Git-compatible VCS that is both simple and powerful
+Summary: A Git-compatible VCS that is both simple and powerful
 License: Apache-2.0
 Group: Development/Other
 Url: https://jj-vcs.github.io/jj/
@@ -15,7 +15,6 @@ Provides: jj = %EVR
 
 Source: %name-%version.tar
 BuildRequires: rust-cargo
-BuildRequires: openssl-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: git-core
 BuildRequires: gnupg2
@@ -80,6 +79,7 @@ install -Dpm644 man1/*.1 -t %buildroot%_man1dir
 %buildroot%_bindir/jj -V | grep -Fx 'jj %version'
 # gpgsm tests require gnupg 2.4.4
 cargo test --release -- \
+	--test-threads=1 \
 	--skip test_gpg::gpgsm_signing_roundtrip \
 	--skip test_gpg::gpgsm_signing_roundtrip_explicit_key
 
@@ -93,5 +93,8 @@ cargo test --release -- \
 %_datadir/fish/vendor_completions.d/jj.fish
 
 %changelog
+* Sun Dec 07 2025 Vitaly Chikunov <vt@altlinux.org> 0.36.0-alt1
+- Update to v0.36.0 (2025-12-04).
+
 * Mon Jun 23 2025 Vitaly Chikunov <vt@altlinux.org> 0.30.0-alt1
 - First import v0.30.0 (2025-06-04).
