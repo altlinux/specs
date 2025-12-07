@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	nvidia-open
-%define module_version  580.95.05
+%define module_version  580.105.08
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -8,10 +8,10 @@ Version: %module_version
 Release: alt1
 Provides: kernel-source-%module_name-%module_version
 Summary: NVIDIA Linux open GPU kernel module source
-License: MIT/GPLv2
+License: MIT and GPLv2
 Group: Development/Kernel
 Url: https://github.com/NVIDIA/open-gpu-kernel-modules
-Vcs: https://github.com/NVIDIA/open-gpu-kernel-modules.git
+Vcs: https://github.com/NVIDIA/open-gpu-kernel-modules
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -34,6 +34,10 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sun Dec 07 2025 L.A. Kostis <lakostis@altlinux.ru> 580.105.08-alt1
+- 580.105.08.
+- Fix license tag.
+
 * Sat Oct 11 2025 L.A. Kostis <lakostis@altlinux.ru> 580.95.05-alt1
 - 580.95.05.
 
