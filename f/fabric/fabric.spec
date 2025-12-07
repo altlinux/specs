@@ -4,7 +4,7 @@
 %define import_path github.com/danielmiessler/fabric
 
 Name: fabric
-Version: 1.4.335
+Version: 1.4.338
 Release: alt1
 
 Summary: Fabric is an open-source framework for augmenting humans using AI
@@ -34,8 +34,9 @@ crowdsourced set of AI prompts that can be used anywhere.
 %setup -a1
 %patch0 -p1
 
-# Remove large gif to reduce package size
+# Remove large images to reduce package size
 rm -f docs/images/fabric-logo-gif.gif
+rm -f docs/images/svelte-preview.png
 
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -81,5 +82,8 @@ install -vDm 644 completions/fabric.fish \
 %_datadir/fish/vendor_completions.d/fabric.fish
 
 %changelog
+* Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 1.4.338-alt1
+- New version 1.4.338.
+
 * Fri Nov 28 2025 Egor Ignatov <egori@altlinux.org> 1.4.335-alt1
 - First build for ALT.
