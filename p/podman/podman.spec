@@ -2,10 +2,18 @@
 %global import_path github.com/containers/podman
 %define _libexecdir %_usr/libexec
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
+
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
 
 Name:     podman
-Version:  5.6.1
+Version:  5.7.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -22,10 +30,13 @@ BuildRequires: rpm-build-golang golang >= 1.23.3
 BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libselinux-devel libsqlite3-devel
-BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
+BuildRequires: libassuan-devel libsystemd-devel
 BuildRequires: /proc
 
+%if "%altbranch" == "p11" || "%altbranch" == "sisyphus"
+BuildRequires: libsubid-devel 
 Conflicts: filesystem < 3
+%endif
 
 Requires: catatonit
 Requires: conmon >= 2.1.7
@@ -184,6 +195,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 5.7.0-alt1
+- New version 5.7.0 (Fixes: CVE-2025-52881).
+
 * Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 5.6.1-alt1
 - New version 5.6.1 (Fixes: CVE-2025-9566).
 

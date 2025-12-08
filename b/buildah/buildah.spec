@@ -7,9 +7,17 @@
 %global import_path     %provider_prefix
 
 %global _unpackaged_files_terminate_build 1
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
 
 Name: buildah
-Version: 1.41.4
+Version: 1.42.2
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -20,16 +28,19 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.3
+BuildRequires: rpm-build-golang golang >= 1.24.2
 BuildRequires: go-md2man
 BuildRequires: libgpgme-devel
 BuildRequires: libbtrfs-devel
 BuildRequires: libassuan-devel
 BuildRequires: libseccomp-devel
 BuildRequires: glib2-devel
-BuildRequires: libsubid-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
+
+%if "%altbranch" == "p11" || "%altbranch" == "sisyphus"
+BuildRequires: libsubid-devel
+%endif
 
 Requires: tzdata
 Requires: containers-common-extra
@@ -89,6 +100,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 1.42.2-alt1
+- New version 1.42.2 (Fixes: CVE-2025-52881).
+
 * Wed Sep 10 2025 Alexey Shabalin <shaba@altlinux.org> 1.41.4-alt1
 - New version 1.41.4.
 
