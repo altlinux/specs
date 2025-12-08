@@ -1,5 +1,5 @@
 %define module_name i40e
-%define module_version 2.27.8
+%define module_version 2.28.13
 
 %define module_source %module_name.tar
 
@@ -9,9 +9,9 @@ Release: alt1
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
-License: GPL-2
+License: GPL-2.0-only
 URL: https://github.com/intel/ethernet-linux-i40e
-Vcs: https://github.com/intel/ethernet-linux-i40e
+Vcs: https://github.com/intel/ethernet-linux-i40e.git
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 BuildArch: noarch
@@ -34,6 +34,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 2.28.13-alt1
+- Updated to v2.28.13.
+
 * Fri Apr 04 2025 Paul Wolneykien <manowar@altlinux.org> 2.27.8-alt1
 - Updated to v2.27.8.
 - Set upstream to https://github.com/intel/ethernet-linux-i40e.

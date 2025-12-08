@@ -1,5 +1,5 @@
 %define module_name      i40e
-%define module_version   2.27.8
+%define module_version   2.28.13
 %define module_release   alt1
 
 %define flavour          6.12
@@ -14,8 +14,8 @@ Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 
-Summary: Intel(R) 10GbE PCI Express Linux Network Driver
-License: GPLv2
+Summary: i40e Linux Base Driver for the Intel(R) Ethernet 700 Series
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: http://www.intel.com/network/connectivity/products/server_adapters.htm
 
@@ -36,7 +36,7 @@ Requires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 %description
-This package contains the Intel(R) 40-10 Gigabit Ethernet Connection Network Driver.
+This package contains %summary.
 
 %prep
 rm -rf %module_name-%module_version
@@ -61,6 +61,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 2.28.13-alt1
+- 2.28.13
 
 * Mon Jun 26 2023 Anton Farygin <rider@altlinux.ru> 2.22.20-alt1
 - 2.22.20
