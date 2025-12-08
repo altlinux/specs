@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
+Version: 6.1
 Release: alt1
 Summary: Zope Page Templates
 License: ZPL-2.1
@@ -28,8 +28,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
-# zope.component.testing is required but subpackaged
-BuildRequires: python3-module-zope.component-tests
 %endif
 
 %description
@@ -57,9 +55,11 @@ GoLive, etc.).
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 5.2 -> 6.1.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - Initial build for Sisyphus.
