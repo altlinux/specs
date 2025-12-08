@@ -4,8 +4,8 @@
 %define alt_url https://lakostis.unsafe.ru/RPMS/ALTLinux
 
 Name: apt-repo-lakostis-kmodules
-Version: 0.0.1
-Release: alt13
+Version: 0.0.2
+Release: alt1
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -30,14 +30,17 @@ use at own risk!
 %install
 mkdir -p %buildroot%inst_dir
 for flavour in %kflavours; do
-    printf 'rpm %url/%s/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/alt-lakostis-kmodules-"$flavour".list
-    printf '#rpm %alt_url/%s/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/lakostis-unsafe-ru-kmodules-"$flavour".list
+    printf 'rpm %url/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/alt-lakostis-kmodules-"$flavour".list
+    printf '#rpm %alt_url/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/lakostis-unsafe-ru-kmodules-"$flavour".list
 done
 
 %files
 %inst_dir/*.list
 
 %changelog
+* Mon Dec 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.2-alt1
+- repo: have a flat repo for all flavours.
+
 * Sun Dec 07 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt13
 - add 6.18.
 
