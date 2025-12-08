@@ -5,7 +5,7 @@
 
 Name: apt-repo-lakostis-kmodules
 Version: 0.0.2
-Release: alt1
+Release: alt2
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -29,15 +29,16 @@ use at own risk!
 
 %install
 mkdir -p %buildroot%inst_dir
-for flavour in %kflavours; do
-    printf 'rpm %url/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/alt-lakostis-kmodules-"$flavour".list
-    printf '#rpm %alt_url/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/lakostis-unsafe-ru-kmodules-"$flavour".list
-done
+printf 'rpm %url/kmodules/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/alt-lakostis-kmodules.list
+printf '#rpm %alt_url/kmodules/repo x86_64 hasher\n' "$flavour" > %buildroot%inst_dir/lakostis-unsafe-ru-kmodules.list
 
 %files
 %inst_dir/*.list
 
 %changelog
+* Mon Dec 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.2-alt2
+- fix repo files generation.
+
 * Mon Dec 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.2-alt1
 - repo: have a flat repo for all flavours.
 
