@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Dec 08 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.2-alt1
+- fix find unknown icon
+
 * Fri Nov 21 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.1-alt1
 - allow to use pixmaps from icon theme
 - fix wizardface buttons layout
