@@ -2,7 +2,7 @@
 
 Name: keyd
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: A key remapping daemon for linux.
 License: MIT
@@ -33,6 +33,9 @@ using kernel level input primitives (evdev, uinput).
 
 install -Dm644 keyd.service -t %buildroot%_unitdir/
 
+# ghost
+install -Dm644 /dev/null %buildroot%_sysconfdir/keyd/default.conf
+
 %pre
 /usr/sbin/groupadd -r -f keyd ||:
 
@@ -40,11 +43,16 @@ install -Dm644 keyd.service -t %buildroot%_unitdir/
 %_bindir/keyd
 %_bindir/keyd-application-mapper
 %_datadir/keyd
+%dir %_sysconfdir/keyd
+%ghost %_sysconfdir/keyd/default.conf
 %_unitdir/keyd.service
 %_defaultdocdir/keyd
 %_man1dir/*
 
 %changelog
+* Mon Dec 08 2025 Egor Ignatov <egori@altlinux.org> 2.5.0-alt2
+- package /etc/keyd and /etc/keyd/default.conf (closes: #57138)
+
 * Wed Oct 09 2024 Andrey Kovalev <ded@altlinux.org> 2.5.0-alt1
 - new version 2.5.0
 
