@@ -1,7 +1,7 @@
 
 Name: corosync-qdevice
 Summary: The Corosync Cluster Engine Qdevice
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 Group: System/Base
 License: BSD
@@ -42,6 +42,7 @@ script for creating NSS certificates and an init script.
 
 %build
 %autoreconf
+export BASHPATH=/bin/bash
 %configure \
 	--enable-systemd \
 	--enable-qdevices \
@@ -112,6 +113,9 @@ sed -i -e 's/^#User=/User=/' \
 %_man8dir/*qnetd*
 
 %changelog
+* Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.4-alt1
+- New version 3.0.4.
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 3.0.3-alt1
 - New version 3.0.3.
 
