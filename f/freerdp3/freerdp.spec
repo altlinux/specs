@@ -11,8 +11,8 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.17.2
-Release: alt2
+Version: 3.19.0
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -547,6 +547,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sun Dec 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.19.0-alt1
+- New version.
+
 * Thu Dec 04 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt2
 - Use not-relocatible prefix (ALT #57066).
 
