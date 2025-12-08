@@ -5,12 +5,12 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %global build_javadoc 0
 
-Name:			mariadb-java-client
-Version:	3.0.7
-Release:	alt1_1jpp11
+Name:		mariadb-java-client
+Version:	3.5.0
+Release:	alt1
 Summary:	Connects applications developed in Java to MariaDB and MySQL databases
 # added BSD license because of https://bugzilla.redhat.com/show_bug.cgi?id=1291558#c13
-License:	BSD and LGPLv2+
+License:	LGPL-2.1-or-later
 URL:			https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/
 Source0:	https://github.com/mariadb-corporation/mariadb-connector-j/archive/refs/tags/%{version}.tar.gz#/mariadb-connector-j-%{version}.tar.gz
 # optional dependency not in Fedora
@@ -20,21 +20,10 @@ BuildArch:	noarch
 BuildRequires:	maven-local
 BuildRequires:	mvn(net.java.dev.jna:jna)
 BuildRequires:	mvn(net.java.dev.jna:jna-platform)
-BuildRequires:	mvn(com.google.code.maven-replacer-plugin:replacer)
-# fedora 25
-BuildRequires:	mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:	mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:	mvn(org.osgi:osgi.cmpn)
 BuildRequires:	mvn(org.osgi:osgi.core)
-# Since version 2.4.0
-# removing coverage test because of dependencies
-#BuildRequires:	mvn(org.jacoco:jacoco-maven-plugin)
-# since version 1.5.2 missing optional dependency (windows)
-#BuildRequires:	mvn(com.github.dblock.waffle:waffle-jna)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 
-%if %build_javadoc == 0
-Obsoletes:	%{name}-javadoc < 3.0.3
-%endif
 Source44: import.info
 
 %description
@@ -42,7 +31,6 @@ MariaDB Connector/J is a Type 4 JDBC driver, also known as the Direct to
 Database Pure Java Driver. It was developed specifically as a lightweight
 JDBC connector for use with MySQL and MariaDB database servers.
 
-%if %build_javadoc
 %package javadoc
 Group: Development/Java
 Summary:	Javadoc for %{name}
@@ -50,7 +38,6 @@ BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
-%endif
 
 %prep
 %setup -qn mariadb-connector-j-%{version}
@@ -95,16 +82,12 @@ rm -f src/main/java/org/mariadb/jdbc/plugin/authentication/addon/gssapi/WindowsN
 %pom_remove_plugin org.jacoco:jacoco-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 %pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
-%pom_remove_plugin com.coveo:fmt-maven-plugin
 %pom_remove_plugin -r :maven-gpg-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 
 %build
-%if %build_javadoc == 0
-opts="-j"
-%endif
 # tests are skipped, while they require running application server
-%mvn_build -f $opts
+%mvn_build -f
 
 %install
 %mvn_install
@@ -113,12 +96,13 @@ opts="-j"
 %doc README.md
 %doc --no-dereference LICENSE
 
-%if %build_javadoc
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
-%endif
 
 %changelog
+* Mon Dec 08 2025 Anton Meleshnikov <alton@altlinux.org> 3.5.0-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.0.7-alt1_1jpp11
 - new version
 
