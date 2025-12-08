@@ -21,7 +21,7 @@
 %define nv_version 580
 %define nv_release 95
 %define nv_minor   05
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %nv_version.%nv_release
 %if "%nv_minor" != "%nil"
 %define nv_version_full %nv_version.%nv_release.%nv_minor
@@ -35,6 +35,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 Source0: null
 Source201: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
 Source202: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
+Patch1: systemd-powerd-no-fail.patch
 
 BuildRequires: rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
@@ -189,6 +190,7 @@ sh %SOURCE202 -x
 sh %SOURCE201 -x
 %endif
 cd %tbname-%version%dirsuffix
+%patch1 -p1
 
 pushd kernel
 rm -rf precompiled
@@ -318,6 +320,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt2
+- don't fail nvidia-powerd service
+
 * Fri Oct 10 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt1
 - new version
 
