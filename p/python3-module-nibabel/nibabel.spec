@@ -13,7 +13,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 5.3.2
+Version: 5.3.3
 Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
@@ -25,7 +25,6 @@ Vcs: https://github.com/nipy/nibabel
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch1: nibabel-5.3.2-pr-1383-test-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -92,7 +91,6 @@ This package contains pickles for NiBabel.
 
 %prep
 %setup
-%autopatch -p1
 
 %if_enabled docs
 sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
@@ -156,6 +154,9 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Mon Dec 08 2025 Anton Vyatkin <toni@altlinux.org> 5.3.3-alt1
+- New version 5.3.3.
+
 * Fri Jun 13 2025 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt1
 - New version 5.3.2.
 
