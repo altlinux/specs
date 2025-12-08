@@ -15,8 +15,8 @@
 %endif
 
 Name: asterisk
-Version: 20.15.2
-Release: alt2
+Version: 20.17.0
+Release: alt1
 
 Summary: Open source PBX
 License: GPLv2
@@ -130,11 +130,6 @@ sed -i "s/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=0/" configure{,.ac}
 %build
 export EXTERNALS_CACHE_DIR=$(pwd)/.gear
 sh bootstrap.sh
-cp -a /usr/share/gnu-config/config.{sub,guess} .
-cp -a /usr/share/gnu-config/config.{sub,guess} menuselect/
-# XXX: config.{sub,guess} from the top level source directory
-# are automatically copied into third-party/pjproject/source directory
-# cp -a /usr/share/gnu-config/config.{sub,guess} 'third-party/pjproject/source/'
 
 %configure \
 %if_with clang
@@ -324,6 +319,11 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Mon Dec 08 2025 Ilya Demyanov <turbid@altlinux.org> 20.17.0-alt1
+- 20.17.0
+- don't copy config.{sub,guess} from gnu-config - already updated in upstream
+- remove outdated changelog files 
+
 * Mon Sep 08 2025 Ilya Demyanov <turbid@altlinux.org> 20.15.2-alt2
 - migrate to libspandsp3
 
