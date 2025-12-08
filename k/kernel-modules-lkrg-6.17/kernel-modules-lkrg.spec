@@ -2,7 +2,7 @@
 
 %define module_name	lkrg
 %define module_version	1.0.0
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		6.17
 %define karch		%ix86 x86_64
@@ -29,7 +29,7 @@ BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: kernel-image-%flavour = %kepoch%kversion-%krelease
-BuildRequires: rpm-build-vm
+BuildRequires: rpm-build-vm-run
 }}
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
@@ -96,6 +96,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Mon Dec 08 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt2.%kcode.%kbuildrelease
+- Only BR actual kernel for the test.
 
 * Sat Sep 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.0.0-alt1
 - Update to v1.0.0 (2025-09-02).
