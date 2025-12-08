@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt257
+%define pkg_rel alt258
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -94,6 +94,7 @@ Version: %nv_version_full
 Release: %pkg_rel
 
 Source0: null
+Source1: rpmfusion.tar
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-aarch64/%tbver/NVIDIA-Linux-aarch64-%tbver.run
 
@@ -106,11 +107,11 @@ Patch3: alt-enable-modeset.patch
 #
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
-Patch6: kernel-6.0.patch
-Patch7: gcc14.patch
-Patch8: nv-vtophys-explicit-void-cast.patch
-Patch9: kernel-6.10.patch
-Patch10: kernel-6.12.patch
+#
+Patch6: nvidia-470xx-fix-gcc-15.patch
+Patch7: kernel-6.0.patch
+Patch8: alt-conftest-output.patch
+#
 Patch11: disable_fstack-clash-protection_fcf-protection.patch
 
 BuildRequires(pre): rpm-build-ubt
@@ -183,6 +184,7 @@ sh %SOURCE202 -x
 sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
+tar xvf %SOURCE1
 
 pushd kernel
 #%patch1 -p1
@@ -193,12 +195,16 @@ pushd kernel
 %patch4 -p1
 %patch5 -p1
 %endif
+#
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
+#
 %patch11 -p1
+for p in ../rpmfusion/*.patch; do
+    echo $p
+    patch -sp1 <$p
+done
 rm -rf precompiled
 %ifarch aarch64
 fgrep -rl MT_DEVICE_GRE | \
@@ -423,6 +429,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt258
+- add rpmfusion patches
+
 * Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt257
 - disable kernel module stack-clash-protection
 
