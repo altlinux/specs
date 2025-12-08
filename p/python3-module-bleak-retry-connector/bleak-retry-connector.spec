@@ -1,30 +1,24 @@
-%define _unpackaged_files_terminate_build 1
-%define pypi_name bleak-retry-connector
-%define mod_name bleak_retry_connector
-
-%def_with check
-
-Name: python3-module-%pypi_name
-Version: 4.4.3
+Name: python3-module-bleak-retry-connector
+Version: 4.4.4
 Release: alt1
 
 Summary: A connector for Bleak Client
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bleak-retry-connector/
-Vcs: https://github.com/bluetooth-devices/bleak-retry-connector
+Url: https://pypi.org/project/bleak-retry-connector
+VCS: https://github.com/bluetooth-devices/bleak-retry-connector
+
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-BuildArch: noarch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
 %pyproject_runtimedeps_metadata
+
+BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-%endif
 
 %description
 Bleak is a GATT client software, capable of connecting to BLE devices
@@ -35,9 +29,7 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -46,13 +38,16 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=''
+%pyproject_run_pytest -o addopts= tests
 
 %files
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/bleak_retry_connector
+%python3_sitelibdir/bleak_retry_connector-%version.dist-info
 
 %changelog
+* Mon Dec 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.4-alt1
+- 4.4.4 released
+
 * Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 4.4.3-alt1
 - 3.6.0 -> 4.4.3.
 
