@@ -1,11 +1,15 @@
 Name:		f3
-Version:	7.2
+Version:	8.0
 Release:	alt1
+
 Summary:	Fight Flash Fraud / Fight Fake Flash
+
 License:	GPLv3
 Group:		System/Configuration/Hardware
 Url:		http://oss.digirati.com.br/f3/
-Source:		https://github.com/AltraMayor/f3/archive/v7.1.tar.gz#/f3-%version.tar.gz
+
+# Source-url: https://github.com/AltraMayor/f3/archive/v%version.tar.gz
+Source:		%name-%version.tar
 
 # Automatically added by buildreq on Sun Mar 06 2016 (-bi)
 # optimized out: elfutils python-base
@@ -46,6 +50,9 @@ install -m 0755 f3probe f3brew f3fix %buildroot%prefix/sbin
 %_man1dir/*
 
 %changelog
+* Sun Dec 07 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0-alt1
+- new version 8.0 (with rpmrb script)
+
 * Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 7.2-alt1
 - 7.2
 
