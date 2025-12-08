@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python3-module-libvirt
-Version: 11.5.0
+Version: 11.10.0
 Release: alt1
 Url: https://libvirt.org
 Vcs: https://gitlab.com/libvirt/libvirt-python.git
@@ -43,6 +43,9 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir/
 %doc README COPYING examples
 
 %changelog
+* Fri Dec 05 2025 Timofei Fedotov <sovtouch@altlinux.org> 11.10.0-alt1
+- New version 11.10.0.
+
 * Fri Jul 04 2025 Alexey Shabalin <shaba@altlinux.org> 11.5.0-alt1
 - New version 11.5.0.
 
