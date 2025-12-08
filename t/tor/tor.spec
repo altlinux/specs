@@ -10,13 +10,14 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.8.6
+Version: 0.4.8.21
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
 License: BSD-3-Clause
-Url: http://tor.eff.org/
+Url: https://tor.eff.org/
+VCS: https://gitlab.torproject.org/tpo/core/tor
 
 Source0: http://tor.eff.org/dist/%name-%version.tar
 Source1: %name.init
@@ -25,8 +26,6 @@ Source3: %name.tmpfiles
 
 Patch1:	 %name-0.4.8.4-source-date.patch
 
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: asciidoc docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl pkg-config python2-base python3 python3-base sh4 termutils tzdata xml-common xml-utils xsltproc xz
 BuildRequires: asciidoc-a2x libcap-devel libevent-devel liblzma-devel libseccomp-devel libssl-devel libsystemd-devel libzstd-devel zlib-devel
 
 %ifarch %ix86 x86_64 aarch64
@@ -152,6 +151,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 0.4.8.21-alt1
+- 0.4.8.6 -> 0.4.8.21
+
 * Tue Sep 19 2023 Vladimir Didenko <cow@altlinux.ru> 0.4.8.6-alt1
 - new version
 
