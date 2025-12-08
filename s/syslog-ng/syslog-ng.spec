@@ -22,7 +22,7 @@
 
 Name: syslog-ng
 Version: 4.8.1
-Release: alt2
+Release: alt3
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -291,7 +291,7 @@ skip_submodules=1 ./autogen.sh
  --enable-dynamic-linking \
  --enable-spoof-source \
  --with-embedded-crypto \
- --with-python-packages=system \
+ --with-python-packages=none \
  --enable-manpages \
  --enable-sql \
  --disable-example-modules \
@@ -576,6 +576,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 08 2025 Sergey Y. Afonin <asy@altlinux.org> 4.8.1-alt3
+- used "--with-python-packages=none" for build (ALT #57157#c1)
+
 * Tue Sep 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.8.1-alt2
 - NMU: fix FTBFS.
 
