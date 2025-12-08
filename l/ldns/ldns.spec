@@ -7,7 +7,7 @@
 %def_with dane_ta_usage
 
 Name: ldns
-Version: 1.8.4
+Version: 1.9.0
 Release: alt1
 
 Summary: Lowlevel DNS(SEC) library with API
@@ -161,6 +161,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 1.9.0-alt1
+- 1.8.4 -> 1.9.0
+
 * Mon Jul 22 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.4-alt1
 - Automatically updated to 1.8.4.
 
