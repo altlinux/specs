@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name ruffle
-%define ver_major 2025.06
+%define ver_major 2025.08
 %define rdn_name rs.ruffle.Ruffle
 
 %def_disable bootstrap
 %def_enable check
 
 Name: %_name
-Version: %ver_major.21
+Version: %ver_major.12
 Release: alt1
 
 Summary: A Flash Player emulator written in Rust
@@ -25,6 +25,8 @@ Source: https://github.com/ruffle-rs/ruffle/archive/%git_ver/%_name-%version.tar
 Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
+
+ExcludeArch: %ix86
 
 #WARN ruffle_desktop::dbus: Failed to unregister a game with gamemode:
 #Portal request failed: org.freedesktop.zbus.Error: Could not get pidns: Could not fstatat ns/pid: Это не каталог
@@ -103,6 +105,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Mon Dec 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.08.12-alt1
+- 2025.08.12
+
 * Sat Jun 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.06.21-alt1
 - 2025.06.21
 
