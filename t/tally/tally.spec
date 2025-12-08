@@ -2,14 +2,14 @@
 
 %define _name tally
 %define __name Tally
-%define ver_major 0.5
+%define ver_major 0.7
 %define rdn_name ca.vlacroix.%__name
 
 # no tests
 %def_disable check
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Counter
@@ -24,14 +24,15 @@ Source: https://github.com/vtrlx/tally/archive/%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-Patch1: %name-0.4.1-alt-makefile.patch
-Patch2: %name-0.4.1-alt-no_flatpak.patch
+Patch1: %name-0.7.2-alt-makefile.patch
+Patch2: %name-0.7.2-alt-no_flatpak.patch
 
 %define lua_ver 5.4
 
-Requires: lua5.4 lgi%lua_ver typelib(Adw) = 1
+Requires: lua5.4 LuaGObject%lua_ver typelib(Adw) = 1
 
 BuildRequires(pre): rpm-build-lua
+BuildRequires: clang
 BuildRequires: lua%lua_ver-devel
 
 %description
@@ -42,8 +43,12 @@ A counter for GNOME.
 %patch1 -b .no_flatpak
 %patch2 -b .no_flatpak
 
+# #embed support from C23 required but it not available in our gcc-14
+sed -i 's/cc/clang/' Makefile
+
 %build
-%make_build
+%add_optflags -std=c23
+%make_build PREFIX=%_prefix
 
 %install
 %makeinstall_std
@@ -58,6 +63,9 @@ A counter for GNOME.
 %doc README*
 
 %changelog
+* Mon Dec 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
 - 0.5
 
