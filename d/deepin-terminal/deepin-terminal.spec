@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.5.20
+Version: 6.5.22
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -141,6 +141,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Mon Dec 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.22-alt1
+- New version 6.5.22.
+
 * Wed Nov 19 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.20-alt1
 - New version 6.5.20.
 
