@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.6.1
+Version: 0.7
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -14,10 +14,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
 
-Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-module-executor
 Requires: alterator-interface-service
 Requires: alterator-entry >= 0.4.5
-Requires: diag-domain-controller
 Requires: samba-dc
 
 %description
@@ -34,6 +33,8 @@ mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad
 install -p -D -m755 %service %buildroot%_bindir/%service
 install -p -D -m755 %service-bind %buildroot%_bindir/%service-bind
 install -p -D -m755 %service-status %buildroot%_bindir/%service-status
+install -p -D -m755 %service-configure %buildroot%_bindir/%service-configure
+install -p -D -m755 %service-functions %buildroot%_bindir/%service-functions
 install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
 install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
 install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/samba-ad/provision-parameters.schema.json
@@ -46,6 +47,8 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_bindir/%service
 %_bindir/%service-bind
 %_bindir/%service-status
+%_bindir/%service-configure
+%_bindir/%service-functions
 %_alterator_datadir/backends/%service.backend
 %_alterator_datadir/services/%service.service
 %_datadir/bash-completion/completions/%service
@@ -55,6 +58,16 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Mon Dec 08 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7-alt1
+- Rename start and stop functions
+- Refactor main deploing function. Rename provision and join function
+- Add configure method to main script
+- Move utility functions to a separate file
+- Add the ability to configure DNS backend
+- Adapt .service for new enum subparameters
+- Adapt status for new enum subparameters
+- Fix for forwarders disappearing. Change path to bind settings.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.1-alt1
 - NMU: Add 'exit_status = true' for new version of executor
 
