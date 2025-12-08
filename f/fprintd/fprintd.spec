@@ -2,7 +2,7 @@
 
 Name: fprintd
 Version: 1.94.5
-Release: alt3
+Release: alt4
 
 Summary: D-Bus service for Fingerprint reader access
 License: GPLv2+
@@ -120,6 +120,9 @@ meson test -C %{__builddir} --num-processes 1 --no-rebuild --print-errorlogs
 %_bindir/%name-*
 
 %changelog
+* Tue Oct 28 2025 Aleksandr Dovydenkov <asd@altlinux.org> 1.94.5-alt4
+- fix FTBFS
+
 * Mon Jun 09 2025 Egor Ignatov <egori@altlinux.org> 1.94.5-alt3
 - fix package dependencies (closes: #49019)
 
