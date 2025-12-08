@@ -1,11 +1,11 @@
 Name: kernel-source-ipt_netflow
 Version: 2.6
-Release: alt2
+Release: alt3
 
 Summary: Netflow iptables module for Linux kernel
 License: GPL
 Group: Development/Kernel
-URL: http://sourceforge.net/projects/ipt-netflow/
+URL: https://github.com/nuclearcat/ipt-netflow
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source0: %name-%version.tar
@@ -30,6 +30,10 @@ tar -cjf %kernel_srcdir/ipt_netflow-%version.tar.bz2 ipt_netflow-%version
 %attr(0644,root,root) %kernel_src/ipt_netflow-%version.tar.bz2
 
 %changelog
+* Mon Dec 08 2025 Alexei Takaseev <taf@altlinux.org> 2.6-alt3
+- Update to git:13a2b84bccdafea3ff84dab341dc2a14615adada
+- Change URL
+
 * Mon Apr 14 2025 Alexei Takaseev <taf@altlinux.org> 2.6-alt2
 - Update to git:0eb2092e930c78fc726d5d05abbcc81aa6c41b89
 
