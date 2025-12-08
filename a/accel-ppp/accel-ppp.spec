@@ -1,10 +1,10 @@
 Name: accel-ppp
 Version: 1.13.0
-Release: alt3
+Release: alt4
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
-Url: http://sourceforge.net/projects/accel-ppp/
+Url: https://accel-ppp.org/
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 AutoProv: yes
@@ -105,6 +105,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Dec 08 2025 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt4
+- update upstream to git:0a89d44ce83738f3253709eb1d450cc25c80943e
+- Change URL
+
 * Tue May 20 2025 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt3
 - update upstream to git:8f072b6f193979becc27d9977eed7e97cb830f46
 - Revert unworked "Fix running with glibc >= 2.34 (ALT #52532)" in 1.13.0-alt2
