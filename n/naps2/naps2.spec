@@ -5,7 +5,7 @@
 
 Name:    naps2
 Version: 8.2.0
-Release: alt2
+Release: alt3
 
 Summary: Scan documents to PDF and more, as simply as possible.
 License: GPL-2.0+
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-dotnet
 BuildRequires: dotnet-sdk-%dotnetver
 BuildRequires: /proc
+Requires: libpdfium-devel
 
 ExclusiveArch: x86_64
 
@@ -70,6 +71,9 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Mon Dec 08 2025 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt3
+- added missing runtime dependency on libpdfium-devel (Closes: #57042)
+
 * Fri Nov 14 2025 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt2
 - fix ftbfs
 
