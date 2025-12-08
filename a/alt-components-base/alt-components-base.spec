@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,12 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Dec 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.9.5-alt1
+- editions: replace freeipa-server to main section from base (conflicts with
+  samba-dc) in edition_domain.
+- components: add dialog to base-utils component.
+- fix(check): verify category names are unique (thx Maria Alexeeva)
+
 * Sun Oct 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt1
 - components: remove alt-domain-server from education-server-apps
 
