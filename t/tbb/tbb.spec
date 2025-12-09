@@ -5,14 +5,15 @@
 %def_with python
 
 Name: tbb
-Version: 2022.1.0
-Release: alt2
+Version: 2022.2.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
-Url: https://github.com/oneapi-src/oneTBB
-VCS: https://github.com/oneapi-src/oneTBB.git
+Url: https://github.com/uxlfoundation/oneTBB
+VCS: https://github.com/uxlfoundation/oneTBB.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 # Elbrus support
 Patch2000: tbb-e2k.patch
 
@@ -101,13 +102,13 @@ This package contains python3 module for Threading Building Blocks.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
 export CFLAGS="${CFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
 export CXXFLAGS="${CXXFLAGS:-%optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
 export CPLUS_FLAGS="%{optflags} -DDO_ITT_NOTIFY -DUSE_PTHREAD"
@@ -178,6 +179,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 2022.2.0-alt1
+- 2022.1.0 -> 2022.2.0
+
 * Thu May 29 2025 Anton Farygin <rider@altlinux.com> 2022.1.0-alt2
 - fixed pkgconfig compatibility by renaming tbb32.pc to tbb.pc (closes: #54530)
 
