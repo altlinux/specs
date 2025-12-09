@@ -2,7 +2,7 @@
 %global import_path github.com/cert-manager/cmctl
 
 Name: cmctl
-Version: 2.1.1
+Version: 2.4.0
 Release: alt1
 
 Summary: 'cmctl' or 'kubectl cert-manager' is the command line utility that makes cert-manager'ing easier.
@@ -16,7 +16,7 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: golang >= 1.22
+BuildRequires: golang >= 1.25
 
 %description
 cmctl is a command line tool that can help you
@@ -66,5 +66,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Dec 09 2025 Aleksandr Gamzin <gamzin@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Thu Oct 17 2024 Alexander Stepchenko <geochip@altlinux.org> 2.1.1-alt1
 - 2.1.1
