@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.7.13
-Release: alt3
+Version: 1.7.14
+Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-dotnet
 
 # Education (base part)
 Requires: task-edu-lite = %EVR
@@ -28,7 +29,9 @@ Requires: dosbox
 Requires: freebasic
 Requires: fpc
 Requires: fpc-ide
+%ifarch %_dotnet_archlist
 Requires: pascalabcnet
+%endif
 Requires: kchmviewer
 %endif
 Requires: brasero
@@ -662,6 +665,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Dec 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.14-alt1
+- Adapted for pascalabcnet 3.11 using dotnet.
+
 * Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 1.7.13-alt3
 - don't require docker on ix86 platform
 

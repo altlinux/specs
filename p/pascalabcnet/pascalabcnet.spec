@@ -1,5 +1,5 @@
 Name:    pascalabcnet
-Version: 3.9.0.3430
+Version: 3.11.0.3705
 Release: alt1
 
 Summary: PascalABC.NET programming language  
@@ -8,18 +8,20 @@ Group:   Development/Other
 Url:     http://pascalabc.net/
 # VCS: https://github.com/pascalabcnet/pascalabcnet
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 Source: %name-%version.tar
 Source1: PascalABCNETLinux.desktop
 Source2: icons.tar
 Source3: PascalABCNETLinux.appdata.xml
+Source4: nuget_packages.tar
 
-ExcludeArch: ppc64le
+ExclusiveArch: %_dotnet_archlist
 
+BuildRequires(pre): rpm-macros-dotnet
 BuildRequires(pre): rpm-build-mono
 BuildRequires: mono-devel
 BuildRequires: mono-locale-extras
+BuildRequires: dotnet-sdk-9.0
+BuildRequires: pascalabcnet
 
 Requires: mono-devel
 Requires: mono-locale-extras
@@ -35,9 +37,7 @@ handling, generic classes and routines, garbage collection, lambda expressions,
 parallel programming tools.
 
 %prep
-%setup
-# Use xbuild insead of msbuild
-subst 's/msbuild/xbuild/;/^if/,$d' _RebuildReleaseAndRunTests.sh
+%setup -a 4
 # Remove proprietary part
 rm -rf bin/PT4
 # Remove all binaries
@@ -48,10 +48,15 @@ rm -f bin/*.dll
 tar xf %SOURCE2
 
 %build
-# Build compiler
-sh -x _RebuildReleaseAndRunTests.sh
-# Build IDE
-MONO_IOMAP=case xbuild /p:Configuration=release PascalABCNETLinux.sln
+# Make language
+pabcnetc Utils/DefaultLanguageResMaker/LanguageResMaker.pas
+export DOTNET_NUGET_SIGNATURE_VERIFICATION=false
+export NUGET_PACKAGES=${PWD}/nuget_packages
+dotnet build \
+	--source ${PWD}/nuget_packages \
+	PascalABCNETLinux.sln
+cd ReleaseGenerators
+mono ../bin/pabcnetc.exe RebuildStandartModulesMono.pas /rebuild
 
 %install
 # Install executables and modules
@@ -130,6 +135,10 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Dec 09 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.0.3705-alt1
+- New version (ALT #53475).
+- Built using dotnet.
+
 * Tue May 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0.3430-alt1
 - New version.
 
