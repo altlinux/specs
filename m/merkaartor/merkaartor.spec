@@ -1,34 +1,39 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%add_verify_elf_skiplist %_libdir/merkaartor/plugins/background/*.so
 
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
 %def_disable qtwebengine
 %endif
 
 Name: merkaartor
-Version: 0.19.0
-Release: alt2.1
+Version: 0.20.0
+Release: alt1
 
 Summary: an OpenStreetMap editor
-License: GPLv2
+License: GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-3.0-or-later AND (LGPL-2.1-only WITH Qt-LGPL-exception-1.1 OR GPL-3.0-only)
 Group: Sciences/Geosciences
 Url: https://github.com/openstreetmap/merkaartor
-
-# https://github.com/openstreetmap/merkaartor.git
+VCS: https://github.com/openstreetmap/merkaartor.git
 Source: %name-%version.tar
-Patch1: %name-0.18.3-fedora-no-git-version.patch
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: boost-devel gcc-c++ glibc-devel-static
 BuildRequires: libgdal-devel libproj-devel libexiv2-devel zlib-devel libsqlite3-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
+BuildRequires: qt6-networkauth-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: libgps-devel
+BuildRequires: /proc
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: libqtsingleapplication-qt5-devel
+BuildRequires: libqtsingleapplication-qt6-devel
 
 %description
 Merkaartor is an openstreetmap mapping program.
@@ -37,32 +42,23 @@ editing environment for free geographical data.
 
 %prep
 %setup
-%patch1 -p1
+%patch0 -p1
 
 # remove bundled libraries
 rm -rf 3rdparty
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%add_optflags -I%_includedir/qt5/QtSolutions
+%cmake -DZBAR=OFF \
+       -DGEOIMAGE=ON \
+       -DGPSD=ON \
+       -DWEBENGINE=OFF \
+       -DUSE_SYSTEM_QTSINGLEAPPLICATION=OM
 
-lrelease-qt5 Merkaartor.pro
-%qmake_qt5 \
-	CONFIG+=release CONFIG+=force_debug_info \
-	PREFIX=%_prefix \
-%if_enabled qtwebengine
-	USEWEBENGINE=1 \
-%endif
-	SYSTEM_QTSA=1 \
-	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
-	-after QMAKE_CFLAGS+='%optflags' \
-	-after QMAKE_CXXFLAGS+='%optflags' \
-	Merkaartor.pro
-
-%make_build
+%cmake_build
 
 %install
-%make_install INSTALL_ROOT=%buildroot LIB_SUFFIX=%_libsuff install
+%cmake_install
 
 %files
 %_bindir/merkaartor
@@ -73,6 +69,10 @@ lrelease-qt5 Merkaartor.pro
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 0.20.0-alt1
+- 0.19.0 -> 0.20.0
+- built with qt6
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 0.19.0-alt2.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
 
