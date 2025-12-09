@@ -25,7 +25,7 @@
 %define nv_version 580
 %define nv_release 95
 %define nv_minor   05
-%define pkg_rel alt285
+%define pkg_rel alt287
 %define nv_version_full %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
@@ -106,6 +106,9 @@ Source101: nvidia_create_xinf.pro
 Patch1: disable_fstack-clash-protection_fcf-protection.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: alt-enable-modeset.patch
+#
+Patch100: 0004-nvidia-uvm-Disable-SVA-support-for-6.16.patch
+Patch101: 0005-nvidia-uvm-Add-support-for-kernel-6.18-get_dev_pagem.patch
 
 BuildRequires(pre): rpm-build-ubt libgbm-devel
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -187,7 +190,7 @@ sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
 
-for kmsd in kernel kernel-open ; do
+for kmsd in kernel-open kernel ; do
 pushd $kmsd
 %patch1 -p1
 %patch2 -p1
@@ -197,6 +200,10 @@ sed -ri '/NV_ASM_SET_MEMORY_H_PRESENT/atypedef _Bool bool;' conftest.sh
 %endif
 popd
 done
+pushd kernel-open
+%patch100 -p1
+%patch101 -p1
+popd
 
 %build
 
@@ -440,6 +447,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt287
+- add fixes for 6.18 kernel
+
 * Fri Oct 10 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt285
 - new version
 - prefer open kernel module
