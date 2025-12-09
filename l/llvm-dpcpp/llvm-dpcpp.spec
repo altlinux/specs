@@ -51,7 +51,7 @@
 
 Name: %llvm_name
 Version: 6.2.0
-Release: alt0.1
+Release: alt0.2
 Epoch: 1
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
@@ -530,6 +530,7 @@ export PWD=$(pwd)
 %else
 	--cmake-opt="-DLLVM_USE_LINKER=gold" \
 %endif
+	--no-assertions \
 %if_without jit
 	--disable-jit \
 %endif
@@ -1005,6 +1006,9 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Tue Dec 09 2025 L.A. Kostis <lakostis@altlinux.ru> 1:6.2.0-alt0.2
+- build: disable assertions (were enabled by default).
+
 * Mon Aug 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1:6.2.0-alt0.1
 - Initial build of 6.2.0:
   + llvm-project: update to stable 6.2.0
