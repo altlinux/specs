@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -14,7 +14,7 @@ Url: https://altlinux.space/alterator/diag-domain-client
 Source: %name-%version.tar
 
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-interface-diag
+Requires: alterator-interface-diag = 0.1.4
 
 BuildRequires(pre): rpm-macros-alterator
 %ifnarch %e2k
@@ -37,13 +37,13 @@ sed -i 's/@VERSION@/%version/g' %name.man
 %install
 install -p -D -m755 %name %buildroot%_bindir/%name
 install -p -D %name.man %buildroot%_mandir/man1/%name.1
-install -p -D alterator/%name.backend %buildroot%_alterator_datadir/backends/%name.backend
-install -p -D alterator/%diagnostic_tool.diag %buildroot%_alterator_datadir/diagnostictools/%diagnostic_tool.diag
-install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -p -D -m644 alterator/%name.backend %buildroot%_alterator_datadir/backends/%name.backend
+install -p -D -m644 alterator/%diagnostic_tool.diag %buildroot%_alterator_datadir/diagnostictools/%diagnostic_tool.diag
+install -p -D -m644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %check
 %ifnarch %e2k
-shellcheck -e SC2329 %name
+shellcheck %name
 %endif
 find ./alterator/ -type f -exec alterator-entry validate {} \+
 
@@ -55,6 +55,13 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Dec 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.5.2-alt1
+- fix: adjust shellcheck directives for SC2329
+- docs: update copyright year and add GPL license header
+- fix: correct file permisions (thx Andrey Alekseev)
+- fix: replaced uid with pid in tmp file name (thx Kozyrev Yuri)
+- build: added dependency on interface (thx Kozyrev Yuri)
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.5.1-alt1
 - NMU: add 'exit_status = true' for new version of executor
 
