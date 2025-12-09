@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.76
+Version: 1.77
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -224,6 +224,11 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Dec 06 2025 Vitaly Chikunov <vt@altlinux.org> 1.77-alt1
+- Delete vm-run artifacts if no tty (for unattended runs). This will improve
+  post-install unowned files log messages.
+- x86_64: Fix boot on systems with 1T RAM (thanks to Gleb).
+
 * Fri May 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.76-alt1
 - Unprivilege ping, improve fixperms and depmod message.
 
