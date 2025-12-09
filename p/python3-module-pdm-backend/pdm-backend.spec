@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pdm-backend
+%define ns_name pdm
+%define mod_name backend
 %def_without vendored
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -32,7 +34,7 @@ AutoReq: yes, nopython3
 
 %if_with vendored
 # self-contained deps
-%add_findprov_skiplist %python3_sitelibdir/pdm/backend/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/%ns_name/%mod_name/_vendor/*
 %endif
 
 BuildRequires(pre): rpm-build-pyproject
@@ -63,16 +65,16 @@ coverts it to Core metadata.
 %autopatch -p1
 
 %if_without vendored
-%pyproject_deps_resync vendored pip_reqfile src/pdm/backend/_vendor/vendor.txt
+%pyproject_deps_resync vendored pip_reqfile src/%ns_name/%mod_name/_vendor/vendor.txt
 
 # unbundle packages
-VENDORED_PATH='src/pdm/backend/_vendor'
+VENDORED_PATH='src/%ns_name/%mod_name/_vendor'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
 rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
 cp "%SOURCE1" "$UNVENDORED_PATH"
 sed -i \
-    -e 's/@VENDORED_ROOT@/"pdm.backend._vendor"/' \
+    -e 's/@VENDORED_ROOT@/"%ns_name.%mod_name._vendor"/' \
     -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
     "$UNVENDORED_PATH"
 %endif
@@ -96,10 +98,13 @@ sed -i \
 
 %files
 %doc README.md
-%python3_sitelibdir/pdm/backend/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 2.4.6-alt1
+- 2.4.5 -> 2.4.6.
+
 * Fri Jul 04 2025 Stanislav Levin <slev@altlinux.org> 2.4.5-alt1
 - 2.4.4 -> 2.4.5.
 
