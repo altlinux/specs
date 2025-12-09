@@ -1,30 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name brotli
-%define old_name brotlipy
+%define mod_name %pypi_name
 
 %def_with check
 
-Name:    python3-module-%pypi_name
-Version: 1.1.0
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 1.2.0
+Release: alt1
 Summary: Brotli compression format
 License: MIT
-Group:   Development/Python3
-URL:     https://github.com/google/brotli
-
-BuildRequires(pre): rpm-build-pyproject
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
-
-Provides: python3-module-%old_name = %EVR
-Obsoletes: python3-module-%old_name < %EVR
-
-Source: %pypi_name-%version.tar
+Group: Development/Python3
+Url: https://pypi.org/project/brotli/
+Vcs: https://github.com/google/brotli
+Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-Patch: %pypi_name-%version-alt.patch
+Patch: %name-%version-alt.patch
+Provides: python3-module-brotlipy = %EVR
+Obsoletes: python3-module-brotlipy < %EVR
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 Brotli is a generic-purpose lossless compression algorithm that
@@ -37,8 +34,8 @@ but offers more dense compression.
 The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 
 %prep
-%setup -n %pypi_name-%version
-%patch -p1
+%setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -53,10 +50,16 @@ The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 %pyproject_run_unittest discover -v -p '*_test.py' -s python/
 
 %files
-%doc *.md
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/_%mod_name.*.so
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
