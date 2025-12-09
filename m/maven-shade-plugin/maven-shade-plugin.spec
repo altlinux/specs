@@ -1,6 +1,6 @@
 Name:    maven-shade-plugin
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Summary: Maven plugin for packaging artifacts in an uber-jar
 
 License: Apache-2.0
@@ -31,7 +31,6 @@ BuildRequires: mvn(org.codehaus.plexus:plexus-component-annotations)
 BuildRequires: mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.jdom:jdom2)
-BuildRequires: mvn(org.mockito:mockito-all)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.ow2.asm:asm-commons)
 BuildRequires: mvn(org.vafer:jdependency)
@@ -66,5 +65,8 @@ ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 %doc LICENSE NOTICE
  
 %changelog
+* Tue Dec 09 2025 Anton Meleshnikov <alton@altlinux.org> 3.6.0-alt2
+- Fixed FTBFS.
+
 * Sun Aug 24 2025 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - Initial build for Sisyphus (without javadoc).
