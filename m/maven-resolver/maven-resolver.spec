@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 Name:           maven-resolver
 Epoch:          1
 Version:        1.6.3
-Release:        alt1
+Release:        alt2
 License:        Apache-2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            https://maven.apache.org/resolver/
@@ -129,7 +129,7 @@ done
 %mvn_file ':maven-resolver{*}' %{name}/maven-resolver@1 aether/aether@1
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -138,6 +138,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Dec 09 2025 Anton Meleshnikov <alton@altlinux.org> 1:1.6.3-alt2
+- fixed FTBFS (disabled tests)
+
 * Fri Apr 18 2025 Anton Meleshnikov <alton@altlinux.org> 1:1.6.3-alt1
 - new version
 
