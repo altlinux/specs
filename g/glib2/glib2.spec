@@ -42,7 +42,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -245,7 +245,7 @@ the functionality of the installed glib2/libgio packages.
 %prep
 %setup -n glib-%version
 %patch -p1 -b .compat_map
-%patch1
+%patch1 -b .deprecated_paths_in_schemas
 %patch2 -p1 -b .xvt
 %patch3 -p1
 
@@ -501,6 +501,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.86.3-alt1
+- 2.86.3 (fixed CVE-2025-13601)
+
 * Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.86.2-alt1
 - 2.86.2
 
