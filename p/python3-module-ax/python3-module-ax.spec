@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -42,6 +42,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sun Dec 07 2025 Alexey Appolonov <alexey@altlinux.org> 0.23.0-alt1
+- New ability to continue a previously started page of a "Printer" object.
+
 * Fri Nov 08 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
 - The "num" module is removed:
   -- the "PrettyNum" function is moved to the "text" module,
