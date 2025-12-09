@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name Deprecated
-%define mod_name deprecated
+%define pypi_name deprecated
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.2.18
-Release: alt1.1
+Version: 1.3.1
+Release: alt1
 Summary: Decorators to deprecate old python classes, functions or methods
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -45,10 +47,13 @@ methods.
 
 %files
 %doc README.md CHANGELOG.rst
-%python3_sitelibdir/deprecated/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.2.18 -> 1.3.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.2.18-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
