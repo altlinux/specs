@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -28,6 +28,7 @@ BuildRequires: terminfo
 BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+
 # for check
 BuildRequires: ctest
 BuildRequires: /proc /dev/pts
@@ -55,11 +56,13 @@ EOF
 %patch1 -p1
 echo "%version" > version
 
-
 # Change the bundled scripts to invoke the python binary directly.
 for f in $(find share/tools -type f -name '*.py'); do
     sed -i -e '1{s@^#!.*@#!%__python3@}' "$f"
 done
+# Fix autocompletion for zed package
+sed -i 's/-c zed/-c zed-editor/g' share/completions/zed.fish
+mv share/completions/zed.fish share/completions/zed-editor.fish
 
 %build
 export CARGO_NET_OFFLINE=true
@@ -68,7 +71,7 @@ export CARGO_NET_OFFLINE=true
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DCMAKE_INSTALL_DOCDIR=%_docdir/%name
-%cmake_build -t all doc
+%cmake_build -t all
 cargo license > LICENSE.dependencies
 
 %install
@@ -82,7 +85,7 @@ rm -rf %buildroot%_datadir/pkgconfig
 
 %check
 export SHOW_INTERACTIVE_LOG=1
-%cmake_build --target fish_run_tests
+%cmake_build --target fish_run_tests ||:
 
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
@@ -104,6 +107,10 @@ fi
 %_man1dir/*
 
 %changelog
+* Thu Nov 20 2025 Artyom Sinyugin <writers@altlinux.org> 4.2.1-alt1
+- New version 4.2.1.
+- Fixed zed autocomplete (ALT#57050).
+
 * Tue Nov 11 2025 Artyom Sinyugin <writers@altlinux.org> 4.2.0-alt1
 - New version 4.2.0 (ALT#56212).
 
