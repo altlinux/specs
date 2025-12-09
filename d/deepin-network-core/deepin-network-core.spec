@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.74
+Version: 2.0.75
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -145,6 +145,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.75-alt1
+- New version 2.0.75.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.74-alt1
 - New version 2.0.74.
 - Updated license tag.
