@@ -7,7 +7,7 @@
 %endif
 
 Name: m4ri
-Version: 20250128
+Version: 20251207
 Release: alt1
 
 Summary: Linear Algebra over F_2
@@ -15,12 +15,14 @@ Summary: Linear Algebra over F_2
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://bitbucket.org/malb/m4ri
+VCS: https://github.com/malb/m4ri
 
-Source: %url/downloads/%name-%version.tar.gz
-Vcs: git://github.com/malb/m4ri.git
+# Source-url: https://bitbucket.org/malb/m4ri/downloads/%name-%version.tar.gz
+Source: %name-%version.tar
 
+Patch0: m4ri-%version-%release.patch
 # Fix a format specifier.
-Patch: m4ri-20240729-printf.patch
+Patch1: m4ri-20240729-printf.patch
 
 BuildRequires: doxygen
 BuildRequires: gcc
@@ -70,7 +72,8 @@ The %name-static package contains the static %name library.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 # Fix the version number in the documentation, and generate only HTML
 %__subst 's/20140914/%version/;/GENERATE_LATEX/s/YES/NO/' m4ri/Doxyfile
@@ -134,6 +137,9 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %endif
 
 %changelog
+* Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 20251207-alt1
+- New version 20251207.
+
 * Wed Jan 29 2025 Leontiy Volodin <lvol@altlinux.org> 20250128-alt1
 - New version 20250128.
 - Added vcs tag.
