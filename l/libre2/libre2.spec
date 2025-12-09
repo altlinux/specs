@@ -6,8 +6,8 @@
 %define oldname re2
 %define soname 11
 Name: libre2
-Version: 20240702
-Release: alt2
+Version: 20251105
+Release: alt1
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
 License: BSD-3-Clause
@@ -101,7 +101,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 
 %files -n %{name}_%soname
 %doc LICENSE
-%doc README
+%doc README.md
 %_libdir/%name.so.%soname
 %_libdir/%name.so.%soname.*
 
@@ -118,6 +118,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %python3_sitelibdir/%{pep427_name %pypi_name}-%{version python3-module-%pypi_name}.dist-info/
 
 %changelog
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 20251105-alt1
+- 20240702 -> 20251105
+
 * Thu Nov 28 2024 Anton Zhukharev <ancieg@altlinux.org> 20240702-alt2
 - Built python bindings (closes 52209).
 
