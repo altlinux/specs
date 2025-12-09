@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name invoke
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 Summary: Pythonic task execution
 License: BSD-2-Clause
@@ -15,14 +16,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 %pyproject_runtimedeps -- vendored
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-%add_pyproject_deps_check_filter alabaster types-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %pyproject_builddeps -- vendored
@@ -41,14 +42,14 @@ feature set.
 set -o pipefail
 %__python3 - <<-'EOF' | sort -u > _vendor.txt
 import pkgutil
-for mod in pkgutil.iter_modules(["invoke/vendor"]):
+for mod in pkgutil.iter_modules(["%mod_name/vendor"]):
     if not mod.name.startswith("_") and mod.name != "fluidity":
         print(mod.name)
 EOF
 
 %pyproject_deps_resync vendored pip_reqfile _vendor.txt
 # drop everything except fluidity (not packaged (unmaintained))
-find invoke/vendor/ \
+find %mod_name/vendor/ \
     -mindepth 1 -maxdepth 1 \
     \( ! \( -name '__init__.py' -type f \) -a ! \( -name 'fluidity' -type d \) \) \
     -exec rm -rfv '{}' +
@@ -72,10 +73,13 @@ find invoke/vendor/ \
 %doc README.*
 %_bindir/inv
 %_bindir/invoke
-%python3_sitelibdir/invoke/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+
 * Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.3 -> 2.2.0.
 
