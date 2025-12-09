@@ -4,7 +4,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -84,6 +84,9 @@ export AR="llvm-ar"
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 
 %changelog
+* Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.15-alt1
+- New version 1.0.15.
+
 * Fri Dec 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.14-alt1
 - New version 1.0.14.
 
