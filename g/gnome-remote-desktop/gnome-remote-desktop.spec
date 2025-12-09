@@ -9,8 +9,8 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: GNOME Remote Desktop
 License: GPL-2.0-or-later
@@ -111,6 +111,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Sat Dec 06 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
 - fixed build
 

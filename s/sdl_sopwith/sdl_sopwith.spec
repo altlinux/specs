@@ -1,13 +1,14 @@
 %define __name sopwith
 %define _name sdl-%__name
 %define rdn_name io.github.fragglet.sdl_sopwith
+%define hiscores_path /var/games/%_name
 
 Name: sdl_%__name
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Games/Arcade
 Url: https://github.com/fragglet/sdl-sopwith
 
@@ -28,7 +29,8 @@ This is a port of the classic computer game "Sopwith".
 %build
 export orig_CFLAGS="%(getconf LFS_CFLAGS)"
 %autoreconf
-%configure
+%configure --with-hiscores-path=%hiscores_path
+%nil
 %make_build
 
 %install
@@ -45,11 +47,16 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %_pixmapsdir/%__name.png
 %_iconsdir/hicolor/*x*/apps/%__name.png
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%dir %hiscores_path
+%hiscores_path/hiscores.txt
 %doc NEWS* README* doc/origdoc.txt
 
 %exclude %_docdir/%_name
 
 %changelog
+* Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

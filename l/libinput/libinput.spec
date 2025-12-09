@@ -21,7 +21,7 @@
 %define plugins_paths %_sysconfdir/%name/plugins/ %_libdir/%name/plugins/
 
 Name: libinput
-Version: 1.30.0
+Version: 1.30.1
 Release: alt1
 
 Summary: Input devices library
@@ -40,7 +40,7 @@ Source: %name-%version.tar
 %add_python3_path %_libexecdir/%name
 
 %define mtdev_ver 1.1.0
-%define evdev_ver 1.10
+%define evdev_ver 1.13.6
 %define lua_api_ver 5.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 pkgconfig(udev)
@@ -225,6 +225,9 @@ for d in %plugins_paths; do
 %endif
 
 %changelog
+* Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 1.30.1-alt1
+- 1.30.1
+
 * Tue Nov 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
 - 1.30.0
 
