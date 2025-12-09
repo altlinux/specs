@@ -6,7 +6,7 @@
 %define        gemname webrick
 
 Name:          gem-webrick
-Version:       1.8.1
+Version:       1.8.2
 Release:       alt1
 Summary:       WEBrick is an HTTP server toolkit that can be configured as an HTTPS server
 License:       Ruby or BSD-2-Clause
@@ -25,7 +25,7 @@ BuildRequires: gem(test-unit) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(webrick) = 1.8.1
+Provides:      gem(webrick) = 1.8.2
 
 
 %description
@@ -34,14 +34,14 @@ WEBrick is an HTTP server toolkit that can be configured as an HTTPS server.
 
 %if_enabled    doc
 %package       -n gem-webrick-doc
-Version:       1.8.1
+Version:       1.8.2
 Release:       alt1
 Summary:       WEBrick is an HTTP server toolkit that can be configured as an HTTPS server documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webrick
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(webrick) = 1.8.1
+Requires:      gem(webrick) = 1.8.2
 
 %description   -n gem-webrick-doc
 WEBrick is an HTTP server toolkit that can be configured as an HTTPS server
@@ -53,14 +53,14 @@ documentation files.
 
 %if_enabled    devel
 %package       -n gem-webrick-devel
-Version:       1.8.1
+Version:       1.8.2
 Release:       alt1
 Summary:       WEBrick is an HTTP server toolkit that can be configured as an HTTPS server development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webrick
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(webrick) = 1.8.1
+Requires:      gem(webrick) = 1.8.2
 Requires:      gem(rake) >= 0
 Requires:      gem(test-unit) >= 0
 
@@ -102,6 +102,9 @@ development package.
 
 
 %changelog
+* Tue Dec 09 2025 Alexander Danilov <admsasha@altlinux.org> 1.8.2-alt1
+- ^ 1.8.1 -> 1.8.2
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 1.8.1-alt1
 - ^ 1.7.0 -> 1.8.1
 
