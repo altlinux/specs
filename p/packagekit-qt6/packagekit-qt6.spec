@@ -1,10 +1,10 @@
 
-%define sover 1
+%define sover 2
 %define libpackagekitqt6 libpackagekitqt6_%sover
 
 Name: packagekit-qt6
-Version: 1.1.3
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt support library for PackageKit
@@ -66,10 +66,13 @@ Provides: PackageKit-Qt6-devel = %version-%release
 %files devel
 %_libdir/lib*.so
 %_libdir/pkgconfig/packagekitqt6.pc
-%_includedir/packagekitqt6/
+%_includedir/PackageKitQt/
 %_libdir/cmake/packagekitqt6/
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
+- new version
+
 * Mon Oct 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.3-alt2
 - maintainer information retrieval for installed packages
 
