@@ -4,12 +4,14 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: crush
-Version: 0.10.4
+Version: 0.22.1
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
 Group: Development/Other
 Url: https://github.com/charmbracelet/crush
+
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 BuildRequires: golang
@@ -32,6 +34,7 @@ Note: Automatic provider updates are disabled and could be enabled in config or
 
 %prep
 %setup
+sed -i '/TestCoderAgent/a t.Skip("noNetwork")' internal/agent/agent_test.go
 
 %build
 go build -v -buildmode=pie -ldflags="-X github.com/charmbracelet/crush/internal/version.Version=%version"
@@ -62,7 +65,7 @@ grep -q 'Providers auto-update is disabled' log
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE.md README.md
-%doc .gear/example-ollama-crush.json
+%doc .gear/example-*-crush.json
 %_bindir/crush
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -70,5 +73,11 @@ grep -q 'Providers auto-update is disabled' log
 %_man1dir/%name.1*
 
 %changelog
+* Tue Dec 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.22.1-alt1
+- Experimental update to v0.22.1 (2025-12-08).
+
+* Mon Nov 03 2025 Vitaly Chikunov <vt@altlinux.org> 0.13.7-alt1
+- Experimental update to v0.13.7 (2025-10-31).
+
 * Thu Oct 09 2025 Vitaly Chikunov <vt@altlinux.org> 0.10.4-alt1
 - Experimental import v0.10.4 (2025-09-30).
