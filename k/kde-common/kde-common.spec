@@ -1,5 +1,5 @@
 Name: kde-common
-Version: 24.1
+Version: 25.12
 Release: alt1
 
 Summary: The basic files for KDE
@@ -10,6 +10,8 @@ BuildArch: noarch
 
 Requires: kf6-filesystem
 #Requires: kde-filesystem
+Provides: kde5-profile = 2.0
+Obsoletes: kde5-profile < 2.0
 
 Source1: kdeglobals
 
@@ -27,6 +29,9 @@ install -m 0644 %SOURCE1 %buildroot/%_xdgconfigdir/
 %config(noreplace) %_xdgconfigdir/kdeglobals
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 25.12-alt1
+- obsolete kde5-profile
+
 * Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.1-alt1
 - redesign for KDE6
 
