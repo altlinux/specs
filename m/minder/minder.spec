@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Minder
-%define ver_major 1.17
+%define ver_major 2.0
 %define rdn_name com.github.phase1geo.minder
 
 %def_enable check
@@ -11,19 +11,20 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: Mind-mapping application
-License: GPL-3.0
+License: GPL-2.0-or-later
 Group: Office
 Url: https://github.com/phase1geo/Minder
+
+Vcs: https://github.com/phase1geo/Minder.git
 
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/phase1geo/Minder.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.68
-%define gtk_ver 3.22
+%define glib_ver 2.80
+%define gtk_ver 4.18
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
@@ -31,16 +32,16 @@ BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libarchive)
-BuildRequires: pkgconfig(gtksourceview-4)
-BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libmarkdown)
-BuildRequires: pkgconfig(granite)
-BuildRequires: vapi(granite)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+BuildRequires: pkgconfig(granite-7)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: vapi(granite-7)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Quickly create visual mind-maps using the keyboard and automatic layout.
@@ -71,6 +72,9 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 
 
 %changelog
+* Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0 (ported to GTK4/Granite-7)
+
 * Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
 - 1.17.0
 
