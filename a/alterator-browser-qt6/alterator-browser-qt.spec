@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.3
+Version: 3.7.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.4-alt1
+- fix wizardface menu button
+
 * Mon Dec 08 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.3-alt1
 - fix find unknown icon
 
