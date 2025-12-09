@@ -6,10 +6,10 @@
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
-%define _pluginsdir %_libdir/%name/plugins/4.4
+%define _pluginsdir %_libdir/%name/plugins/4.6
 
 Name: wireshark
-Version: 4.4.10
+Version: 4.6.2
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -162,6 +162,7 @@ _EOF_
 %config %_controldir/%name-capture
 %_bindir/capinfos
 %_bindir/captype
+%_bindir/dftest
 %attr(700,root,root) %verify(not mode,group) %_bindir/dumpcap
 %_bindir/editcap
 %_bindir/mergecap
@@ -195,14 +196,18 @@ _EOF_
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %dir %_pluginsdir
-%dir %_libdir/%name/extcap
-%_libdir/%name/extcap/*
+%dir %_prefix/libexec/wireshark
+%dir %_prefix/libexec/wireshark/extcap
+%_prefix/libexec/wireshark/extcap/*
 %_pluginsdir/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
 %_libdir/libwiretap.so.*
 %_man1dir/wireshark.*
 %_man1dir/falcodump.*
+%_man1dir/sshdig.1.*
+%_man1dir/strato.1.*
+%_man1dir/stratoshark.1.*
 %_iconsdir/hicolor/*/mimetypes/*.png
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
@@ -229,6 +234,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Tue Dec 09 2025 Anton Farygin <rider@altlinux.org> 4.6.2-alt1
+- 4.4.10 -> 4.6.2
+
 * Thu Oct 23 2025 Anton Farygin <rider@altlinux.com> 4.4.10-alt1
 - 4.4.10 (Fixes: CVE-2025-11626)
 
