@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt23.gitfaa0e5c47
+Release: alt24.gitd6e697fd7
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -326,6 +326,12 @@ fi
 
 %post worker
 %tmpfiles_create %_tmpfilesdir/openqa.conf
+if [ -f /etc/openqa/client.conf ]; then
+    mv -n /etc/openqa/client.conf /etc/openqa/client.conf.d/00-openqa.conf
+fi
+if [ -f /etc/openqa/workers.ini ]; then
+    mv -n /etc/openqa/workers.ini /etc/openqa/workers.ini.d/00-openqa.ini
+fi
 
 %post httpd
 if [ $1 -eq 1 ]; then
@@ -366,6 +372,8 @@ fi
 %_unitdir/openqa-minion-restart.path
 %_unitdir/openqa-enqueue-needle-ref-cleanup.service
 %_unitdir/openqa-enqueue-needle-ref-cleanup.timer
+%_unitdir/openqa-enqueue-scheduled-product-cleanup.service
+%_unitdir/openqa-enqueue-scheduled-product-cleanup.timer
 %_tmpfilesdir/openqa-webui.conf
 # web libs
 %dir %_datadir/openqa/lib
@@ -398,6 +406,7 @@ fi
 %_datadir/openqa/script/openqa-enqueue-audit-event-cleanup
 %_datadir/openqa/script/openqa-enqueue-bug-cleanup
 %_datadir/openqa/script/openqa-enqueue-result-cleanup
+%_datadir/openqa/script/openqa-enqueue-scheduled-product-cleanup
 %_datadir/openqa/script/openqa-gru
 %_datadir/openqa/script/openqa-rollback
 %_datadir/openqa/script/openqa-webui-daemon
@@ -532,6 +541,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue Dec 09 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt24.gitd6e697fd7
+- update to current version
+- Commit hash: d6e697fd7
+
 * Fri Oct 31 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt23.gitfaa0e5c47
 - update to current version
 - Commit hash: faa0e5c47
