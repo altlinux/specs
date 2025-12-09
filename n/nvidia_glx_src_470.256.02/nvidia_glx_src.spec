@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt258
+%define pkg_rel alt259
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -95,20 +95,21 @@ Release: %pkg_rel
 
 Source0: null
 Source1: rpmfusion.tar
+Source2: joanbm.tar
+Source3: joanbm-x86-64.tar
+Source4: joanbm-aarch64.tar
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-aarch64/%tbver/NVIDIA-Linux-aarch64-%tbver.run
 
-Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+Source101: nvidia.xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-Patch3: alt-enable-modeset.patch
 #
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 #
-Patch6: nvidia-470xx-fix-gcc-15.patch
 Patch7: kernel-6.0.patch
 Patch8: alt-conftest-output.patch
 #
@@ -185,18 +186,30 @@ sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
 tar xvf %SOURCE1
+tar xvf %SOURCE2
+pushd joanbm
+%ifarch x86_64 %ix86
+tar xvf %SOURCE3
+%endif
+%ifarch aarch64
+tar xvf %SOURCE4
+%endif
+mv joanbm-*/*.patch ./
+popd
 
 pushd kernel
+for p in ../joanbm/*.patch; do
+    echo $p
+    patch -sp1 <$p
+done
 #%patch1 -p1
 %patch2 -p1
-%patch3 -p1
 #
 %ifarch aarch64
 %patch4 -p1
 %patch5 -p1
 %endif
 #
-%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 #
@@ -262,7 +275,7 @@ soname()
 %endif
 #
 
-install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+install -m 0644 %SOURCE101 %buildroot/%nv_lib_dir/nvidia.xinf
 ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
 ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
 
@@ -429,6 +442,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt259
+- using joanbm patches by default
+
 * Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt258
 - add rpmfusion patches
 
