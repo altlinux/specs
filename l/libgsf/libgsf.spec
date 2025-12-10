@@ -11,7 +11,7 @@
 %endif
 
 Name: libgsf
-Version: %ver_major.53
+Version: %ver_major.54
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-gir
 
 # From configure.ac
 BuildRequires: gtk-doc >= 1.0
-BuildRequires: libgio-devel >= 2.26.0
+BuildRequires: libgio-devel >= 2.62.0
 BuildRequires: libxml2-devel >= 2.4.16
 BuildRequires: libgdk-pixbuf-devel bzlib-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -157,6 +157,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %endif
 
 %changelog
+* Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.14.54-alt1
+- 1.14.54
+
 * Tue Oct 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.53-alt1
 - 1.14.53
 
