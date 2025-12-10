@@ -2,11 +2,13 @@
 %define pypi_name sqlalchemy
 %define mod_name %pypi_name
 
+# %%python3_set_limited_api not supported yet
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.44
-Release: alt2
+Version: 2.0.45
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -18,6 +20,9 @@ Source1: %pyproject_deps_config_name
 %py3_provides SQLAlchemy
 Provides: python3-module-SQLAlchemy = %EVR
 Obsoletes: python3-module-SQLAlchemy
+# merged into main
+Provides: python3-module-sqlalchemy-tests = %EVR
+Obsoletes: python3-module-sqlalchemy-tests <= 2.0.44-alt1
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 # Make sure that at least the Python built-in sqlite driver
@@ -40,23 +45,6 @@ It provides a full suite of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database access, adapted into a
 simple and Pythonic domain language.
 
-%package tests
-Summary: Tests for SQLAlchemy (Python 3)
-Group: Development/Python3
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-Requires: %name = %EVR
-
-%description tests
-SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
-application developers the full power and flexibility of SQL.
-
-It provides a full suite of well known enterprise-level persistence patterns,
-designed for efficient and high-performing database access, adapted into a
-simple and Pythonic domain language.
-
-This package contains tests for SQLAlchemy.
-
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -78,12 +66,12 @@ This package contains tests for SQLAlchemy.
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/%mod_name/testing/
-
-%files tests
 %python3_sitelibdir/%mod_name/testing/
 
 %changelog
+* Wed Dec 10 2025 Stanislav Levin <slev@altlinux.org> 2.0.45-alt1
+- 2.0.44 -> 2.0.45.
+
 * Fri Oct 31 2025 Stanislav Levin <slev@altlinux.org> 2.0.44-alt2
 - NMU: added missing conditional runtime dependency on greenlet.
 
@@ -274,7 +262,7 @@ This package contains tests for SQLAlchemy.
 - 0.5.0rc1
 
 * Fri Aug 01 2008 Gennady Kovalev <gik@altlinux.ru> 0.4.7p1-alt1
-- 0.4.7p1 release 
+- 0.4.7p1 release
 
 * Sun May 04 2008 Gennady Kovalev <gik@altlinux.ru> 0.4.5-alt1
 - 0.4.5 release
