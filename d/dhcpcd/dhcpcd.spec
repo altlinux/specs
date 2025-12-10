@@ -8,7 +8,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 10.2.4
+Version: 10.3.0
 Release: alt1
 
 Summary: DHCP Client
@@ -102,6 +102,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Wed Dec 10 2025 Mikhail Efremov <sem@altlinux.org> 1:10.3.0-alt1
+- Updated to 10.3.0.
+
 * Wed Jun 25 2025 Mikhail Efremov <sem@altlinux.org> 1:10.2.4-alt1
 - Don't fork to background on timeout.
 - Updated to 10.2.4.
