@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.1.0
+Version: 6.1.1
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -107,6 +107,10 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Tue Dec 09 2025 Anton Golubev <golubevan@altlinux.org> 6.1.1-alt1
+- fix Russian translations for fallback greeter (Closes: 57147)
+- initialize pointer member in KWinKeyboardBackend (Closes: 57175)
+
 * Tue Dec 02 2025 Anton Golubev <golubevan@altlinux.org> 6.1.0-alt1
 - launch on Wayland using KWin
 - launch fallback session on X11 if the main one on Wayland crashes
