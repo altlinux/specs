@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.14
+Version: 7.15
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,17 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Tue Dec 09 2025 Vitaly Lipatov <lav@altlinux.ru> 7.15-alt1
+- eget: pass --no-glob to wget if used
+- eget: restore missed protocol in real url
+- eget: fix filename parsing
+- eget: don't hide errors on list
+- eget: drop extra spaces before and after URL
+- eget: add support --output-dir to wget
+- eget: add a few url support
+- eget: add aria2 backend support
+- eget: fix to support many args
+
 * Fri Apr 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.14-alt1
 - eget: fix bug with IPFS handling
 - eget: add support for EGET_OPTIONS
