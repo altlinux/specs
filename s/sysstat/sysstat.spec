@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.7.8
+Version: 12.7.9
 Release: alt1
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -182,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Mon Dec 08 2025 Vitaly Chikunov <vt@altlinux.org> 12.7.9-alt1
+- Update to v12.7.9 (2025-12-07).
+
 * Mon Jul 28 2025 Vitaly Chikunov <vt@altlinux.org> 12.7.8-alt1
 - Update to v12.7.8 (2025-07-28).
 
