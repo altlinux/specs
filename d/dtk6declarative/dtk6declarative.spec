@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtk6declarative
-Version: 6.0.46
+Version: 6.0.48
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -145,15 +145,7 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add
 %dir %_dqt6_qmldir/Chameleon/
 %_dqt6_qmldir/Chameleon/*
 %dir %_dqt6_qmldir/org/deepin/
-%dir %_dqt6_qmldir/org/deepin/dtk/
-%_dqt6_qmldir/org/deepin/dtk/%{name}*
-%_dqt6_qmldir/org/deepin/dtk/*.qml
-%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so
-%_dqt6_qmldir/org/deepin/dtk/qmldir
-%dir %_dqt6_qmldir/org/deepin/dtk/private/
-%_dqt6_qmldir/org/deepin/dtk/private/*
-%dir %_dqt6_qmldir/org/deepin/dtk/settings/
-%_dqt6_qmldir/org/deepin/dtk/settings/*
+%_dqt6_qmldir/org/deepin/dtk/
 %dir %_datadir/dtk6/
 %_datadir/dtk6/DDeclarative/
 
@@ -172,6 +164,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so --add
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.48-alt1
+- New version 6.0.48.
+
 * Fri Nov 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.46-alt1
 - New version 6.0.46.
 
