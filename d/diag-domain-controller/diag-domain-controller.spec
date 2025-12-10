@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -41,6 +41,18 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Dec 10 2025 Andrey Limachko <liannnix@altlinux.org> 0.4.2-alt1
+- fix: removed samba db check from prediag (thx Kozyrev Yuri)
+- fix: added env var to list metod (thx Kozyrev Yuri)
+- fix: added env var status check (thx Kozyrev Yuri)
+- fix: fixed deploy mode var name (thx Kozyrev Yuri)
+- feat: excluded some stuff from prediag (thx Kozyrev Yuri)
+- feat: added different prediag actions (thx Kozyrev Yuri)
+- feat: started using deploy_mode handler (thx Kozyrev Yuri)
+- feat: added implementation of deploy_mode env var handling (thx Kozyrev Yuri)
+- feat: added deploy_mode env var in alterator files (thx Kozyrev Yuri)
+- fix: fixed the logic of the __package_installed function (thx Sergey Savelev)
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
 - NMU: added 'exit_status = true' for new version of executor
 
