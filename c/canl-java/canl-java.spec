@@ -1,6 +1,6 @@
 Name: canl-java
 Version: 2.8.3
-Release: alt1
+Release: alt2
 Summary: EMI Common Authentication library - bindings for Java
 #		The main parts of the code are BSD
 #		Parts derived from glite security utils java are Apache 2.0
@@ -43,6 +43,7 @@ Javadoc documentation for EMI caNl.
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
 
+%pom_change_dep org.hamcrest:hamcrest-all org.hamcrest:hamcrest
 %pom_change_dep org.bouncycastle:bcprov-jdk18on org.bouncycastle:bcprov-jdk15on
 %pom_change_dep org.bouncycastle:bcpkix-jdk18on org.bouncycastle:bcpkix-jdk15on
 
@@ -77,6 +78,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Tue Dec 09 2025 Anton Meleshnikov <alton@altlinux.org> 2.8.3-alt2
+- fixed FTBFS
+
 * Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.3-alt1
 - new version
 
