@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: fq
-Version: 0.15.1
+Version: 0.16.0
 Release: alt1
 Summary: A tool, language and decoders for working with binary and text formats
 License: MIT
@@ -49,5 +49,8 @@ go test ./...
 %_bindir/fq
 
 %changelog
+* Mon Dec 08 2025 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt1
+- Update to v0.16.0 (2025-12-07).
+
 * Sun Aug 10 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.1-alt1
 - First import v0.15.1 (2025-07-12).
