@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.12
+Version: 6.5.17
 Release: alt1
 Epoch: 1
 
@@ -10,12 +10,13 @@ Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.0-or-later and BSD-2-Clause
 Group: Archiving/Compression
 Url: https://github.com/linuxdeepin/deepin-compressor
-Vcs: git://github.com/linuxdeepin/deepin-compressor.git
+VCS: https://github.com/linuxdeepin/deepin-compressor
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-compressor/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: p7zip
@@ -68,6 +69,7 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %files -f %name.lang
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/%name
 %_desktopdir/%name.desktop
 %dir %_datadir/%name/
@@ -80,6 +82,8 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
+%_datadir/dbus-1/interfaces/com.deepin.Compressor.xml
+%_datadir/dbus-1/services/com.deepin.Compressor.service
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -91,6 +95,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.17-alt1
+- New version 6.5.17.
+
 * Mon Jul 21 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.12-alt1
 - New version 6.5.12.
 
