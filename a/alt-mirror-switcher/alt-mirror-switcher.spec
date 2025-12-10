@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.4.4.3
+Version: 0.5.1
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -56,6 +56,9 @@ rm -r %buildroot%_datadir/%name/mirrors
 
 %find_lang %name --all-name
 
+%post
+python3 /usr/share/alt-mirror-switcher/ams_check.py
+
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name
@@ -69,6 +72,9 @@ rm -r %buildroot%_datadir/%name/mirrors
 %_sysconfdir/apt/sources.list.d/ams_*_branch.list
 
 %changelog
+* Wed Dec 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.5.1-alt1
+- 0.4.4.3 -> 0.5.1
+
 * Sat Dec 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4.3-alt1
 - 0.4.4.2 -> 0.4.4.3
 
