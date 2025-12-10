@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -58,6 +58,9 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Tue Dec 09 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7.1-alt1
+- Fix domain controller lookup error when joining a domain
+
 * Mon Dec 08 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7-alt1
 - Rename start and stop functions
 - Refactor main deploing function. Rename provision and join function
