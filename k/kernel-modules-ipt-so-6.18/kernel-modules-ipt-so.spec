@@ -1,7 +1,7 @@
 %define module_name     ipt-so
 %define module_version  1.0
 %define module_release  alt10
-%define flavour         6.12
+%define flavour         6.18
 
 %setup_kernel_module %flavour
 
@@ -17,7 +17,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Url: https://github.com/vt-alt/ipt-so/
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-6.12
+BuildRequires(pre): kernel-headers-modules-6.18
 %if 0%{?!_without_check:%{?!_disable_check:1}}
 BuildRequires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 BuildRequires: figlet
