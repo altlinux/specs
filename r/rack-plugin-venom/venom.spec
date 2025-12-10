@@ -1,5 +1,5 @@
 Name: rack-plugin-venom
-Version: 2.14.2
+Version: 2.14.3
 Release: alt1
 
 Summary: Venom modules for VCV Rack
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Wed Dec 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14.3-alt1
+- 2.14.3 released
+
 * Mon Dec 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.14.2-alt1
 - 2.14.2 released
 
