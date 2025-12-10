@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt234
+%define pkg_rel alt235
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -92,7 +92,6 @@ Version: %nv_version_full
 Release: %pkg_rel
 
 Source0: null
-Source1: rpmfusion.tar
 Source201: ftp://download.nvidia.com/XFree86/Linux-x86/%tbver/NVIDIA-Linux-x86-%tbver.run
 Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x86_64-%tbver-no-compat32.run
 
@@ -102,7 +101,26 @@ Source100: nvidia_create_xinf
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: disable_fstack-clash-protection_fcf-protection.patch
-Patch4: kernel-6.12.patch
+Patch4: gcc-14.patch
+Patch5: gcc-15.patch
+Patch6: kernel-4.16+-memory-encryption.patch
+Patch7: kernel-6.2.patch
+Patch8: kernel-6.3.patch
+Patch9: kernel-6.4.patch
+Patch10: kernel-6.5.patch
+Patch11: kernel-6.6.patch
+Patch12: kernel-6.8.patch
+Patch13: kernel-6.10.patch
+Patch14: kernel-6.12.patch
+Patch15: kernel-6.13.patch
+Patch16: kernel-6.14.patch
+Patch17: kernel-6.15.patch
+Patch18: kernel-6.17.patch
+#
+Patch100: kernel-6.15-32.patch
+#
+Patch200: kernel-6.3-64.patch
+Patch201: kernel-6.15-64.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -166,21 +184,33 @@ sh %SOURCE202 -x
 sh %SOURCE201 -x
 %endif
 cd %tbname-%tbver%dirsuffix
-tar xvf %SOURCE1
 
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-for p in ../rpmfusion/*.patch; do
-    echo $p
-%ifarch %ix86 armh
-    patch -f -sp1 <$p ||:
-%else
-    patch -sp1 <$p
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
+%patch8 -p2
+%patch9 -p2
+%patch10 -p2
+%patch11 -p2
+%patch12 -p2
+%patch13 -p2
+%patch14 -p2
+%patch15 -p2
+%patch16 -p2
+%patch17 -p2
+%patch18 -p2
+%ifarch %ix86
+%patch100 -p2
 %endif
-done
+%ifarch x86_64
+%patch200 -p2
+%patch201 -p2
+%endif
 rm -rf precompiled
 popd
 
@@ -368,6 +398,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 09 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt235
+- add fixes for kernel 6.17
+
 * Thu Sep 11 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt234
 - apply patches from rpmfusion
 
