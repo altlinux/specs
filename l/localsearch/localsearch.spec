@@ -9,10 +9,10 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
-Summary: Tracker is a powerfull desktop-oriented search tool and indexer
+Summary: LocalSearch is the file search framework of the GNOME desktop
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 Group: Databases
 Url: https://wiki.gnome.org/Projects/Tracker
@@ -111,10 +111,11 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 
 %description
-Tracker is a powerful desktop-neutral first class object
-database, tag/metadata database, search tool and indexer.
-
-This package provides miners for TRacker.
+LocalSearch is the file search framework of the GNOME desktop. It stores
+data about user files structured by the Nepomuk definitions
+(https://gnome.pages.gitlab.gnome.org/tinysparql/ontologies.html#nepomuk),
+features a tightly sandboxed metadata extractor, and provides facilities to alter
+file metadata.
 
 %prep
 %setup -n %_name-%version%beta
@@ -204,6 +205,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
