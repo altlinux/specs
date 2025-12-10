@@ -1,34 +1,50 @@
 Name: python3-module-huawei-lte-api
-Version: 1.6.1
-Release: alt1.1
+Version: 1.11.0
+Release: alt1
 
 Summary: Python API For huawei LAN/WAN LTE Modems
 License: LGPLv3
 Group: Development/Python
-Url: https://pypi.org/project/huawei-lte-api/
+Url: https://pypi.org/project/huawei-lte-api
+VCS: https://github.com/salamek/huawei-lte-api
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -o addopts= tests
 
 %files
 %python3_sitelibdir/huawei_lte_api
-%python3_sitelibdir/huawei_lte_api-%version-*-info
+%python3_sitelibdir/huawei_lte_api-%version.dist-info
 
 %changelog
+* Wed Dec 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.11.0-alt1
+- 1.11.0 released
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1.1
 - NMU: updated build dependencies
 
