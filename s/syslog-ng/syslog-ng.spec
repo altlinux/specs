@@ -21,8 +21,8 @@
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 4.8.1
-Release: alt3
+Version: 4.8.3
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -576,6 +576,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 10 2025 Sergey Y. Afonin <asy@altlinux.org> 4.8.3-alt1
+- 4.8.3 (CVE-2024-47619)
+
 * Mon Dec 08 2025 Sergey Y. Afonin <asy@altlinux.org> 4.8.1-alt3
 - used "--with-python-packages=none" for build (ALT #57157#c1)
 
