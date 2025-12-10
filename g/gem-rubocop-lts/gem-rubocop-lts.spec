@@ -6,7 +6,7 @@
 
 Name:          gem-rubocop-lts
 Version:       24.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Rubocop LTS - Semantically Versioned
 License:       MIT
 Group:         Development/Ruby
@@ -42,7 +42,7 @@ BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec-block_is_expected) >= 2
 BuildConflicts: gem(rubocop-gradual) >= 1
-BuildConflicts: gem(rubocop-md) >= 2
+BuildConflicts: gem(rubocop-md) >= 3
 BuildConflicts: gem(rubocop-packaging) >= 1
 BuildConflicts: gem(rubocop-rake) >= 1
 BuildConflicts: gem(rubocop-rspec) >= 4
@@ -59,6 +59,7 @@ BuildConflicts: gem(version_gem) >= 3
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
+%ruby_use_gem_dependency rubocop-md >= 2.0,rubocop-md < 3
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 Requires:      ruby >= 3.2
 Requires:      gem(rubocop-ruby3_2) >= 2.0.5
@@ -76,7 +77,7 @@ Rubocop LTS - Chaos Reduction In a Bottle.
 %if_enabled    doc
 %package       -n gem-rubocop-lts-doc
 Version:       24.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Rubocop LTS - Semantically Versioned documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-lts
 Group:         Development/Documentation
@@ -99,7 +100,7 @@ Rubocop LTS - Chaos Reduction In a Bottle.
 %if_enabled    devel
 %package       -n gem-rubocop-lts-devel
 Version:       24.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Rubocop LTS - Semantically Versioned development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-lts
 Group:         Development/Ruby
@@ -129,7 +130,7 @@ Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rspec-block_is_expected) >= 2
 Conflicts:     gem(rubocop-gradual) >= 1
-Conflicts:     gem(rubocop-md) >= 2
+Conflicts:     gem(rubocop-md) >= 3
 Conflicts:     gem(rubocop-packaging) >= 1
 Conflicts:     gem(rubocop-rake) >= 1
 Conflicts:     gem(rubocop-rspec) >= 4
@@ -181,6 +182,9 @@ Rubocop LTS - Chaos Reduction In a Bottle.
 
 
 %changelog
+* Tue Dec 09 2025 Pavel Skrylev <majioa@altlinux.org> 24.0.2-alt1.1
+- ! fixed dep to rubocop-md gem
+
 * Wed Nov 19 2025 Pavel Skrylev <majioa@altlinux.org> 24.0.2-alt1
 - ^ 24.0.1 -> 24.0.2
 
