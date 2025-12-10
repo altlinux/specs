@@ -1,8 +1,8 @@
 %define _metadir %_datadir/metainfo
 
 Name: glaxnimate
-Version: 0.5.4
-Release: alt3
+Version: 0.5.5
+Release: alt4
 
 Summary: A simple vector graphics animation program
 License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
@@ -11,8 +11,10 @@ Group: Graphics
 Url: https://glaxnimate.mattbas.org/
 Source: https://gitlab.com/mattbas/glaxnimate.git/%version/glaxnimate-%version.tar.bz2
 Patch: glaxnimate-0.5.1-qt6.patch
+Patch1: glaxnimate-0.5.5-fix-python-wheel-platform.patch
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: libarchive-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
@@ -24,18 +26,30 @@ BuildRequires: libstdc++-devel
 BuildRequires: libswscale-devel
 BuildRequires: zlib-devel
 BuildRequires: qt6-base-devel
-BuildRequires: qt6-svg-devel qt6-svg
+BuildRequires: qt6-svg-devel 
 BuildRequires: qt6-tools-devel
 BuildRequires: cmake rpm-macros-cmake
-Requires: icon-theme-breeze 
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+Requires: icon-theme-breeze qt6-svg
 
 %description
 A simple vector graphics animation program.
 
+%package -n python3-module-%name
+Summary:  Python bindings for Glaxnimate
+Group: Development/Python3
+
+%_python3_set_arch
+
+%description -n python3-module-%name
+Python bindings for Glaxnimate.
+Allows to create and modify vector animations. With support for Lottie, SVG, and other formats.
 
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %ifarch %e2k
 sed -i 's/ch\.unicode()/(ushort)&/' src/core/io/svg/path_parser.hpp
@@ -44,12 +58,24 @@ sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
 %endif
 
 %build
-%cmake
+%cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON 
 %cmake_build
 %make_build translations -C %_cmake__builddir
 
+# python3 binding
+%make_build glaxnimate_python -C %_cmake__builddir 
+%make_build glaxnimate_python_wheel -C %_cmake__builddir 
+
+pushd %_cmake__builddir/bin/python
+%pyproject_build
+popd
+
 %install
 %cmakeinstall_std
+
+pushd %_cmake__builddir/bin/python
+%pyproject_install
+popd
 
 %files
 %_bindir/glaxnimate
@@ -64,7 +90,16 @@ sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
 %_metadir/org.mattbas.Glaxnimate.metainfo.xml
 %doc *.md
 
+%files -n python3-module-%name
+%python3_sitelibdir/glaxnimate.cpython-*.so
+%python3_sitelibdir/%{pyproject_distinfo glaxnimate}
+
 %changelog
+* Wed Dec 03 2025 Ivan Mazhukin <vanomj@altlinux.org> 0.5.5-alt4
+- add subpackage for python3 binding
+- add patch to fix python3 binary wheel installation path
+- align package version with program version
+
 * Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 0.5.4-alt3
 - Fix FTBFS (https://invent.kde.org/graphics/glaxnimate/-/merge_requests/53/diffs)
 
