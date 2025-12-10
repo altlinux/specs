@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.5.1
+Version: 11.5.2
 Release: alt1
 
 Summary: Installer common files
@@ -41,7 +41,6 @@ Requires: installer-alterator-pkg >= 3.1.5-alt1
 Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 #features
-Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-slideshow
 Requires: installer-feature-xdg-user-dirs
@@ -62,7 +61,6 @@ Summary: Installer stage3
 Summary(ru_RU.UTF-8): Пакеты необходимые на третьем этапе установки Simply linux
 Group: System/Configuration/Other
 Requires: %name = %version-%release
-Requires: installer-stage3
 #modules
 # Only require alterator-grub for arches that have grub.
 %ifarch  %ix86 x86_64 aarch64 ppc64le
@@ -126,6 +124,10 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/livecd-fininstall.d/*
 
 %changelog
+* Wed Dec 10 2025 Mikhail Efremov <sem@altlinux.org> 11.5.2-alt1
+- Drop installer-common-stage3 dependence.
+- Drop installer-feature-autohostname-stage2 (closes: #57149).
+
 * Thu Dec 04 2025 Mikhail Efremov <sem@altlinux.org> 11.5.1-alt1
 - postinstall: Drop 01-remove-installer-desktop-pkgs.sh.
 
