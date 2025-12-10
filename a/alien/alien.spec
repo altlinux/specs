@@ -1,22 +1,19 @@
 Name: alien
-Version: 8.95.8
+Version: 8.95.9
 Release: alt1
 
 Summary: Install Debian and Slackware Packages with RPM
 
 Group: Archiving/Other
 License: GPL
-Url: https://sourceforge.net/projects/alien-pkg-convert/
+Url: https://github.com/Project-OSS-Revival/alien
+VCS: https://github.com/Project-OSS-Revival/alien.git
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-
-# Source-url: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.xz
 Source: %name-%version.tar
 
-Patch: %name-Makefile.PL.patch
-Patch1: alien-dpkg-tar.xz.patch
 Patch2: alien-alt-plaintext-scripts.patch
 Patch3: alien-alt-fix-missing-spaces-in-control.patch
 
@@ -37,8 +34,6 @@ It is recommended install dpkg package to full dpkg support.
 
 %prep
 %setup
-#patch -p2
-#%patch1 -p2
 %patch2 -p2
 %patch3 -p2
 
@@ -55,6 +50,9 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Wed Dec 10 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt1
+- 8.95.8 -> 8.95.9
+
 * Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 8.95.8-alt1
 - new version 8.95.8 (with rpmrb script)
 
