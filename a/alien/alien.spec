@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95.9
-Release: alt1
+Release: alt2
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -13,9 +13,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 Source: %name-%version.tar
-
+Patch1: alien-8.95.9-alt-fix-empty-description.patch
 Patch2: alien-alt-plaintext-scripts.patch
-Patch3: alien-alt-fix-missing-spaces-in-control.patch
+Patch3: alien-8.95.9-alt-fix-empty-version.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: perl-devel perl-podlators
@@ -34,11 +34,12 @@ It is recommended install dpkg package to full dpkg support.
 
 %prep
 %setup
+%patch1 -p1
 %patch2 -p2
-%patch3 -p2
+%patch3 -p1
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir INSTALLMAN3DIR=%_man3dir
+%perl_vendor_build INSTALLMAN1DIR=%_man1dir INSTALLMAN3DIR=%_man3dir VERSION=%version
 
 %install
 %perl_vendor_install VARPREFIX=%buildroot
@@ -50,6 +51,10 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Wed Dec 10 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt2
+- fixed VERSION not being set when building without debian/changelog
+- deb->rpm: fixed empty Summary when Description started on next line (Closes: #55264)
+
 * Wed Dec 10 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt1
 - 8.95.8 -> 8.95.9
 
