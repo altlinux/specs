@@ -1,11 +1,13 @@
 
 %define _unpackaged_files_terminate_build 1
 
-# Change this to RelWithDebInfo when the issue is resolverd
 %define zl_build_type RelWithDebInfo
 
+# see cmake-includes/SharedCodeDefaults.cmake
+%define _optlevel 3
+
 Name:    ZLCompressor
-Version: 0.2.1
+Version: 0.3.0
 Release: alt2
 
 Summary: A compressor plugin from ZL Audio
@@ -19,6 +21,7 @@ ExcludeArch: %ix86
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
 Source1: sub-merge.sources.txt
 Source2: sub-merge.unpack.sh
@@ -94,13 +97,12 @@ This package contains ZL Compressor built as a VST3 plugin.
 
 # unpack sub-merged sources
 sh -eux "%SOURCE2"
-
-# build juceaid on in parallel
-sed -i -r "s/(--config\s+Custom)/\1 --parallel %_smp_build_ncpus/" \
-    JUCE/extras/Build/juceaide/CMakeLists.txt
-grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
+%autopatch -p1
 
 %build
+# for the nested cmake that builds juceaid
+export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
+
 %cmake \
   -DCMAKE_BUILD_TYPE=%zl_build_type \
   -DCMAKE_C_COMPILER=clang \
@@ -136,6 +138,12 @@ cp -a "VST3/ZL Compressor.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Wed Dec 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt2
+- backport a couple of fixes from upstream
+
+* Tue Dec 09 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sat Sep 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.2.1-alt2
 - 0.2.1 was retagged (sic!) by upstream, udpate to that new tag
 
