@@ -5,7 +5,7 @@
 %def_disable   doc
 
 Name:          python3-module-%pypiname
-Version:       3.2.13
+Version:       3.3.2
 Release:       alt1
 Summary:       psycopg is a PostgreSQL database adapter for Python
 License:       LGPL-3.0
@@ -78,6 +78,9 @@ popd
 
 
 %changelog
+* Wed Dec 10 2025 Alexander Burmatov <thatman@altlinux.org> 3.3.2-alt1
+- ^ 3.2.13 -> 3.3.2
+
 * Wed Nov 26 2025 Alexander Burmatov <thatman@altlinux.org> 3.2.13-alt1
 - ^ 3.2.12 -> 3.2.13
 

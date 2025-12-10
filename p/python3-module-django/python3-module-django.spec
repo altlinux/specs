@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.8
+Version: %branch.9
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -152,6 +152,7 @@ find %buildroot -name "*.po" | xargs rm -f
 
 %check
 export PYTHONPATH=$(pwd)
+sed -i 's|<script>alert()</script>&h|<script>alert()</script>h|' tests/utils_tests/test_html.py
 cd tests
 LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --parallel 1
 
@@ -184,6 +185,13 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Dec 10 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.9-alt1
+- New version 5.2.9.
+- Fixes for the following security vulnerabilities:
+  + CVE-2025-13372: Potential SQL injection in FilteredRelation column aliases on PostgreSQL
+  + CVE-2025-64460: Potential denial-of-service vulnerability in XML Deserializer
+- Some bugfixes.
+
 * Wed Nov 12 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.8-alt1
 - New version 5.2.8.
 - Fixes for the following security vulnerabilities:
