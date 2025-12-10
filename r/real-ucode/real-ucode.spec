@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: real-ucode
-Version: 20251116
+Version: 20251207
 Release: alt1
 Summary: Actually provides the latest CPU microcode for AMD and Intel
 License: Redistributable, no modification permitted
@@ -116,6 +116,12 @@ rm ucode.cpio
 /lib/firmware/updates/intel-ucode
 
 %changelog
+* Mon Dec 08 2025 Vitaly Chikunov <vt@altlinux.org> 20251207-alt1
+- Update to a86da0a (2025-12-07).
+
+* Sun Dec 07 2025 Vitaly Chikunov <vt@altlinux.org> 20251205-alt1
+- Update to dec6830 (2025-12-05).
+
 * Sat Nov 22 2025 Vitaly Chikunov <vt@altlinux.org> 20251116-alt1
 - Update to ea1ed78 (2025-11-16).
 
