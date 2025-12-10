@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 %define libexecdir /usr/libexec
 
-%define kernel_base_version 6.17
+%define kernel_base_version 6.18
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -67,7 +67,6 @@ BuildRequires: libtracefs-devel >= 1.3.0
 BuildRequires: liburing-devel
 BuildRequires: libuuid-devel
 BuildRequires: libzstd-devel
-BuildRequires: perl-devel
 BuildRequires: rsync
 BuildRequires: systemtap-sdt-devel
 BuildRequires: xmlto
@@ -97,8 +96,6 @@ Source33: hypervfcopyd.rules
 
 Patch1: 0002-rtla-basic-loongarch-support.patch
 Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
-Patch5: 0001-ALT-Run-libslang-include-subdir-test.patch
-Patch617: 0001-perf-bpf-filter-Fix-opts-declaration-on-older-libbpf.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -334,6 +331,9 @@ sed -i '/#include/a typedef struct { __u32 u[4]; } __vector128;' include/uapi/li
 # Fix `trace/beauty/generated/fsconfig_arrays.c:2:3: error: expected expression before ']' token'.
 sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
 
+# Fix ALT-specific <slang.h> location
+[ -e /usr/include/slang.h ] || find -name '*libslang*' | xargs sed -Ei 's/(<)(slang.h>)/\1slang\/\2/'
+
 sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
@@ -343,6 +343,7 @@ sed -Ei 's/(-static-libasan|-fsanitize\S+)//g' testing/selftests/{openat2,fchmod
 grep -lrZ -e '-nostdlib' testing/selftests/arm64 | xargs -0 sed -i 's/-nostdlib/-g &/'
 sed -i 's/ -s //' testing/selftests/arm64/gcs/Makefile
 sed -i '/CFLAGS_NOLIBC_TEST/s/=/& -g/' testing/selftests/nolibc/Makefile.include
+sed -i /tcp.ao/d testing/selftests/Makefile
 
 # loongarch64 doesn't support 4K pages, change it to 16K
 %ifarch loongarch64
@@ -380,7 +381,6 @@ export EXTRA_CFLAGS="%optflags" V=1
 	JOBS=%__nprocs \\\
 	WERROR=0 \\\
 	NO_GTK2=1 \\\
-	NO_LIBUNWIND=1 \\\
 	PYTHON=python3 \\\
 	PYTHON_CONFIG=python3-config \\\
 	LIBPFM4=1 \\\
@@ -827,6 +827,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Thu Dec 11 2025 Vitaly Chikunov <vt@altlinux.org> 6.18-alt1
+- Update to v6.18 (2025-11-30).
+
 * Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 6.17-alt1
 - Update to v6.17 (2025-09-28).
 
