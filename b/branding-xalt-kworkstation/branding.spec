@@ -22,14 +22,14 @@
 %define fakebrand xalt
 
 %define major 11
-%define minor 1
+%define minor 2
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -305,7 +305,7 @@ VERSION_ID=%altversion
 PRETTY_NAME="%ProductName%status (%codename)"
 ANSI_COLOR="1;33"
 CPE_NAME="cpe:/o:%brand:%smalltheme:%altmajor"
-BUILD_ID="%Brand %altversion%status"
+BUILD_ID="%Brand %altversion%status %Theme"
 ALT_BRANCH_ID="%altbranch"
 HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
@@ -339,12 +339,16 @@ DefaultDarkLookAndFeel=org.basealt.altosdark.desktop
 __EOF__
 # disable annoing autostart
 mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
-for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store org.gnome.Software ; do
+for n in \
+    tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store \
+    org.gnome.Software ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot%_sysconfdir/skel/.config/autostart/$n.desktop
 done
 # disable annoing menus
 mkdir -p %buildroot/%_sysconfdir/skel/.local/share/applications/
-for n in gnome-mplayer mplayer gmplayer ; do
+for n in \
+    gnome-mplayer mplayer gmplayer \
+    wine-notepad wine-winefile wine-winemine ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_sysconfdir/skel/.local/share/applications/$n.desktop
 done
 
@@ -497,6 +501,18 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg at altlinux dot org> 11.2.0-alt1
+- clear status
+
+* Wed Nov 26 2025 Sergey V Turchin <zerg at altlinux dot org> 11.2.0-alt0.3
+- fix beta status
+
+* Thu Nov 20 2025 Sergey V Turchin <zerg at altlinux dot org> 11.2.0-alt0.2
+- hide wine programs
+
+* Mon Nov 17 2025 Sergey V Turchin <zerg at altlinux dot org> 11.2.0-alt0.1
+- new beta
+
 * Mon Sep 22 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt4
 - setup installer background for wide screens
 
