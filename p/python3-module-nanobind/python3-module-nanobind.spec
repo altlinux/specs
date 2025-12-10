@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.9.2
+Version: 2.10.2
 Release: alt1
 
 Summary: A small binding library that exposes C++ types in Python and vice versa
@@ -35,6 +35,7 @@ BuildRequires: cmake gcc-c++
 %setup -n %pypi_name-%version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake_insource \
     -DNB_INSTALL_DATADIR="%_datadir/%pypi_name" \
     -DNB_TEST_FREE_THREADED=OFF
@@ -55,6 +56,9 @@ py.test-3
 %doc README*
 
 %changelog
+* Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
+- 2.10.2
+
 * Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 2.9.2-alt1
 - 2.9.2
 
