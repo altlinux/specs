@@ -13,7 +13,7 @@
 
 Name: openuds-server
 Version: 4.0.0
-Release: alt6
+Release: alt7
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -37,8 +37,8 @@ Requires: python3-module-django-dbbackend-sqlite3 >= 5.0
 Requires: python3-module-pylibmc
 Requires: openssl
 Requires: logrotate
-Requires: libpango-devel
-Requires: libxmlsec1-openssl-devel
+Requires: libpango
+Requires: libxmlsec1-openssl
 Requires: openuds-installers
 
 Conflicts: openuds-tunnel openuds-guacamole-tunnel
@@ -95,8 +95,8 @@ BuildRequires: python3-module-uvloop
 BuildRequires: python3-module-argon2-cffi
 BuildRequires: python3-module-certifi
 BuildRequires: python3-module-aiosmtpd
-BuildRequires: libpango-devel
-BuildRequires: libxmlsec1-openssl-devel
+BuildRequires: libpango
+BuildRequires: libxmlsec1-openssl
 BuildRequires: fonts-ttf-roboto
 %endif
 
@@ -223,6 +223,9 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Fri Dec 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt7
+- Fix devel lib (ALT #57072).
+
 * Fri Nov 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.0.0-alt6
 - Create _webserver group before useradd.
 - Add other PVE version compability.
