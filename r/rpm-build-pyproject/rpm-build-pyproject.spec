@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-pyproject
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPLv2+
@@ -45,6 +45,9 @@ install -pD -m0755 scripts/pyproject.req.files -t %buildroot%_rpmlibdir/
 %_rpmlibdir/pyproject.req.files
 
 %changelog
+* Wed Dec 10 2025 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1
+- Added support for configuration of setuptools-rust (closes: #57197).
+
 * Tue Nov 18 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.2.1-alt1
 - Extended typing stubs filter to include *-stubs pattern (closes: #56895).
 

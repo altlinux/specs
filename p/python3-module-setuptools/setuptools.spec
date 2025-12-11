@@ -9,7 +9,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 80.9.0
-Release: alt2
+Release: alt3
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -186,6 +186,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1:80.9.0-alt3
+- Added support for simplified configuration of build with Limited API (part 2).
+
 * Sat Nov 01 2025 Stanislav Levin <slev@altlinux.org> 1:80.9.0-alt2
 - Added support for simplified configuration of build with Limited API.
 
