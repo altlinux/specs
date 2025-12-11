@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.4.7
-Release: alt2
+Release: alt3
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -25,7 +25,7 @@ BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-devel
 BuildRequires: maven-local
 
-Requires: java >= 21.0.0
+Requires: java-21-openjdk
 
 AutoReqProv: yes, noosgi-fc
 
@@ -77,6 +77,9 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Thu Dec 11 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.7-alt3
+- Required strictly java-21-openjdk.
+
 * Thu Dec 11 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.7-alt2
 - Mentioned https://github.com/advisories/GHSA-93vm-mqpw-8wh3 (fixes: CVE-2025-13467).
 
