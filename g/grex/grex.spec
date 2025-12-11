@@ -4,8 +4,8 @@
 %def_without python
 
 Name: grex
-Version: 1.4.5
-Release: alt1.1
+Version: 1.4.6
+Release: alt1
 
 Summary: A command-line tool and Rust library with Python bindings for generating regular expressions from user-provided test cases
 License: Apache-2.0
@@ -96,6 +96,9 @@ cargo test
 %endif
 
 %changelog
+* Mon Nov 17 2025 Timofei Fedotov <sovtouch@altlinux.org> 1.4.6-alt1
+- Updated to 1.4.6.
+
 * Mon Sep 15 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.5-alt1.1
 - Build without python.
 
