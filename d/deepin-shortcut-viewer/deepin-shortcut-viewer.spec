@@ -1,5 +1,5 @@
 Name: deepin-shortcut-viewer
-Version: 5.5.2
+Version: 5.5.3
 Release: alt1
 
 Summary: Deepin Shortcut Viewer
@@ -7,17 +7,20 @@ Summary: Deepin Shortcut Viewer
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-shortcut-viewer
-Vcs: git://github.com/linuxdeepin/deepin-shortcut-viewer.git
+VCS: https://github.com/linuxdeepin/deepin-shortcut-viewer
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-shortcut-viewer/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6widget-devel
+BuildRequires: cmake dqt6-base-devel libcups-devel dtk6-common-devel libdtk6widget-devel
 
 %description
 The program displays a shortcut key window when a JSON data is passed.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %DQ6build
@@ -28,9 +31,13 @@ The program displays a shortcut key window when a JSON data is passed.
 %files
 %doc README.md
 %doc LICENSE
+%doc debian/changelog
 %_bindir/%name
 
 %changelog
+* Thu Dec 11 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.3-alt1
+- New version 5.5.3.
+
 * Tue Feb 04 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.2-alt1
 - New version 5.5.2.
 - Added vcs tag.
