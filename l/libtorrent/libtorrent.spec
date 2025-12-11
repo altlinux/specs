@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 32
+%define soname 35
 
 Name: libtorrent
 Epoch: 3
-Version: 0.16.2
+Version: 0.16.5
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -25,52 +25,22 @@ BuildRequires: gcc-c++ cppunit-devel zlib-devel libcurl-devel libssl-devel
 %def_disable static
 
 %description
-libTorrent is designed to avoid redundant copying and storing of data
-that other clients and libraries suffer from. libTorrent features:
+High performance torrent library for multiple clients.
 
-* The client has full control over the polling of sockets.
-* Sigc++ signals makes it easy for the client to react to events.
-* Fast resume which checks the file modification time.
-* Direct reading and writing from network to mmap'ed files.
-* File hash check uses the same thread; client can control the rate;
-  non-blocking and preload to memory with the mincore and madvise.
-* File handler: fine-grained use of file read/write permissions, allows
-  seeding of read-only files; allows torrents with unlimited number of
-  files; opens closed files when mapping chunks to memory, with graceful
-  error handling; support for files larger than 2 GB; different download
-  priorities for files in the torrent.
-* Multi-tracker support.
-* No dependency on any specific HTTP library, the client implements a
-  wrapper class.
-* Dynamic request pipe size.
-* Upload and download throttle.
-* And much more...
+LibTorrent is a BitTorrent library written in C++ for *nix, with a focus on
+high performance and good code. The library differentiates itself from other
+implementations by transferring directly from file pages to the network stack.
 
 %package -n %name%soname
 Summary: Development libraries and header files for libTorrent
 Group: System/Libraries
 
 %description -n %name%soname
-libTorrent is designed to avoid redundant copying and storing of data
-that other clients and libraries suffer from. libTorrent features:
+High performance torrent library for multiple clients.
 
-* The client has full control over the polling of sockets.
-* Sigc++ signals makes it easy for the client to react to events.
-* Fast resume which checks the file modification time.
-* Direct reading and writing from network to mmap'ed files.
-* File hash check uses the same thread; client can control the rate;
-  non-blocking and preload to memory with the mincore and madvise.
-* File handler: fine-grained use of file read/write permissions, allows
-  seeding of read-only files; allows torrents with unlimited number of
-  files; opens closed files when mapping chunks to memory, with graceful
-  error handling; support for files larger than 2 GB; different download
-  priorities for files in the torrent.
-* Multi-tracker support.
-* No dependency on any specific HTTP library, the client implements a
-  wrapper class.
-* Dynamic request pipe size.
-* Upload and download throttle.
-* And much more...
+LibTorrent is a BitTorrent library written in C++ for *nix, with a focus on
+high performance and good code. The library differentiates itself from other
+implementations by transferring directly from file pages to the network stack.
 
 %package devel
 Summary: Development libraries and header files for libTorrent
@@ -118,6 +88,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 11 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.5-alt1
+- 0.16.5.
+
 * Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.2-alt1
 - 0.16.2.
 - BR: simplify according current upstream requirements.

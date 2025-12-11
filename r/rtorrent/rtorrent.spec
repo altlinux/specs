@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtorrent
-Version: 0.16.2
+Version: 0.16.5
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -34,6 +34,7 @@ screen. rTorrent features:
 Summary: Lua bindings for %name
 Group: Development/Other
 Requires: %name = %EVR
+BuildArch: noarch
 
 %description lua
 Lua bindings for %name
@@ -61,6 +62,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_datadir/%name/lua
 
 %changelog
+* Thu Dec 11 2025 L.A. Kostis <lakostis@altlinux.ru> 0.16.5-alt1
+- 0.16.5.
+
 * Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 0.16.2-alt1
 - 0.16.2.
 - BR: simplify according upstream.
