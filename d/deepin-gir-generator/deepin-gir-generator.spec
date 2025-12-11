@@ -8,19 +8,23 @@ BuildRequires: libgudev-gir
 %global repo go-gir-generator
 
 Name: deepin-gir-generator
-Version: 3.0.4
-Release: alt2
+Version: 3.0.6
+Release: alt1
 
 Summary: Generate static golang bindings for GObject
 
 License: GPL-3.0+
 Group: Other
 Url: https://github.com/linuxdeepin/go-gir-generator
+VCS: https://github.com/linuxdeepin/go-gir-generator
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/go-gir-generator/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+# Update golang modules via command:
+# cd go-gir-generator/ && go mod vendor -o ../vendor/ && cd ../
 Source1: vendor.tar
 Source44: import.info
-Patch: deepin-gir-generator-3.0.4-upstream-fixes-file-close.patch
+Patch: %repo-%version-%release.patch
 
 BuildArch: noarch
 
@@ -29,6 +33,8 @@ Provides: golang(gir/gio-2.0)
 Provides: golang(gir/glib-2.0)
 Provides: golang(gir/gudev-1.0)
 
+# make generate
+# BuildRequires(pre): /proc rpm-build-golang
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(gdk-3.0)
@@ -40,14 +46,13 @@ Generate static golang bindings for GObject
 %setup -n %repo-%version -a1
 %patch -p1
 sed -e 's|gopath|vendor|;' \
+    -e '/GO111MODULE=/s|off|on|;' \
     -e '/rm -rf/d;' \
     -i Makefile
 
 %build
-export GOPATH="$(pwd)/vendor:%go_path"
 export GOFLAGS="-mod=vendor"
-export GO111MODULE="on"
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -58,6 +63,10 @@ export GO111MODULE="on"
 %go_path/src/github.com/linuxdeepin/go-gir/
 
 %changelog
+* Thu Dec 11 2025 Leontiy Volodin <lvol@altlinux.org> 3.0.6-alt1
+- New version 3.0.6.
+- Added VCS tag.
+
 * Mon Feb 17 2025 Leontiy Volodin <lvol@altlinux.org> 3.0.4-alt2
 - Fixed build.
 
