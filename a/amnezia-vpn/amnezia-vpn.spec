@@ -3,8 +3,8 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.8.10.0
-Release: alt2
+Version: 4.8.11.4
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -29,7 +29,6 @@ Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
 Patch4: %name-tun2socks-exec-path.patch
 Patch5: %name-tun2-sudo.patch
-Patch6: %name-locale.patch
 
 BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
@@ -124,6 +123,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Thu Dec 11 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.11.4-alt1
+- Version 4.8.11.4
+
 * Tue Nov 11 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.10.0-alt2
 - Fix DNS resolve (ALT #52679, #56803)
 
