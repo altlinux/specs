@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.8
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -193,6 +193,7 @@ Patch18: hplip-alt-add-M125ra-model.patch
 Patch19: hplip-alt-ftbfs-fix-buit.patch
 Patch20: hplip-alt-add-debug-to-hp-plugin.patch
 Patch21: hplip-alt-disable-resize-to-scan-area.patch
+Patch22: hplip-alt-checksum-for-3.25.8.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -773,6 +774,7 @@ tar -xf %SOURCE6
 %patch19 -p2
 %patch20 -p2
 %patch21 -p2
+%patch22 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1317,6 +1319,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Dec 11 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.8-alt2
+- Fixed checksum for 3.25.8 (ALT #57084).
+
 * Tue Nov 18 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.8-alt1
 - New version.
 - Added support for the following new printers:
