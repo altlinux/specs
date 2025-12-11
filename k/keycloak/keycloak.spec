@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.4.7
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -77,6 +77,9 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Thu Dec 11 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.7-alt2
+- Mentioned https://github.com/advisories/GHSA-93vm-mqpw-8wh3 (fixes: CVE-2025-13467).
+
 * Tue Dec 02 2025 Andrey Cherepanov <cas@altlinux.org> 26.4.7-alt1
 - New version.
 
