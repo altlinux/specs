@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name isort
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
-Release: alt2
+Version: 7.0.0
+Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
@@ -15,7 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%add_python3_req_skip pylama.lint
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -30,7 +32,6 @@ BuildRequires: python3-module-black
 %add_pyproject_deps_check_filter pip-api
 %add_pyproject_deps_check_filter pipreqs
 %add_pyproject_deps_check_filter portray
-%add_pyproject_deps_check_filter requirementslib
 %add_pyproject_deps_check_filter hatch
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -51,7 +52,7 @@ rm -r \
     example_isort_formatting_plugin \
 
 # unvendor distributions
-rm -r isort/_vendored/*
+rm -r %mod_name/_vendored/*
 
 %pyproject_scm_init
 %pyproject_deps_resync_build
@@ -74,10 +75,13 @@ mv %buildroot%_bindir/isort{,.py3}
 %doc README.md
 %_bindir/isort.py3
 %_bindir/isort-identify-imports
-%python3_sitelibdir/isort/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
+- 6.0.1 -> 7.0.0.
+
 * Fri Aug 01 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.0.1-alt2
 - Built with Hypothesis supplied without numerous redundant dependencies.
 
