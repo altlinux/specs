@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        143.0.7499.40
+Version:        143.0.7499.109
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -99,6 +99,8 @@ Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-142-Add-ExtractData-support-for-text-uri-list.patch
 Patch033: 0033-FEDORA-chromium-142-Update-pointer-position-during-draggin.patch
+Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
+Patch035: 0035-FRDORA-chromium-143-omnibox-next-Improve-cutout-mouse-handling-for-Wayla.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 
@@ -120,6 +122,7 @@ Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
+Patch066: 0066-DEBIAN-fix-rk3588-v4l2-av1-decoder.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
@@ -657,6 +660,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Dec 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.109-alt1
+- New version (143.0.7499.109).
+- Fixes:
+  + CVE-2025-14372: Use after free in Password Manager
+  + CVE-2025-14373: Inappropriate implementation in Toolbar
+  + third issue with an exploit is known to exist in the wild
+
 * Thu Dec 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.40-alt1
 - New version (143.0.7499.40).
 - Fixes:
