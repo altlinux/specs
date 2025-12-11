@@ -4,8 +4,8 @@
 %define sover 1
 
 Name: itk
-Version: %itkver.4
-Release: alt2
+Version: %itkver.5
+Release: alt1
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
@@ -1572,6 +1572,9 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %doc %_docdir/itk/
 
 %changelog
+* Thu Dec 11 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.5-alt1
+- New version.
+
 * Sat Nov 01 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.4-alt2
 - Append AdditionRef GPL linking for license tag when build with fftw.
 - Fix FTBFS: eigen 5.
