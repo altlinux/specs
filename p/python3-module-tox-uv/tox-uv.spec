@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.28.0
+Version: 1.29.0
 Release: alt1
 Summary: Integration of uv with tox
 License: MIT
@@ -56,5 +56,8 @@ downsides (bugs) of uv.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1.29.0-alt1
+- 1.28.0 -> 1.29.0.
+
 * Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 1.28.0-alt1
 - Initial build for Sisyphus.
