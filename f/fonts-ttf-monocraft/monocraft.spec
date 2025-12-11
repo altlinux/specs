@@ -2,7 +2,7 @@
 %define fname monocraft
 
 Name: fonts-ttf-%fname
-Version: 4.2
+Version: 4.2.1
 Release: alt1
 
 Summary: Monocraft font
@@ -23,6 +23,7 @@ A monospaced programming font inspired by the Minecraft typeface.
 
 %prep
 %setup
+rm -rf dist/
 
 %build
 cd src
@@ -36,6 +37,9 @@ cd dist
 %doc LICENSE README.md
 
 %changelog
+* Thu Dec 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.2.1-alt1
+- New version.
+
 * Sat Dec 06 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.2-alt1
 - New version.
 
