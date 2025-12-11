@@ -19,11 +19,11 @@ BuildRequires: jpackage-default
 %endif
 
 Name:           aqute-bnd
-Version:        6.2.0
-Release:        alt1_2jpp11
+Version:        6.3.1
+Release:        alt1
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
-License:        ASL 2.0 or EPL-2.0
+License:        Apache-2.0 or EPL-2.0
 URL:            https://bnd.bndtools.org/
 BuildArch:      noarch
 
@@ -43,6 +43,7 @@ Source8:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.util/
 
 Patch1:         0001-Disable-removed-commands.patch
 Patch2:         0002-Port-to-OSGI-7.0.0.patch
+Patch3:         0003-Remove-unmet-dependencies.patch
 
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
@@ -117,6 +118,7 @@ API documentation for %{name}.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # the commands pull in more dependencies than we want (felix-resolver, jetty)
 rm biz.aQute.bnd/src/aQute/bnd/main/{ExportReportCommand,MbrCommand,RemoteCommand,ReporterLogger,ResolveCommand,Shell}.java
@@ -229,6 +231,8 @@ popd
 %mvn_package biz.aQute.bnd:bnd-maven-plugin maven
 %mvn_package biz.aQute.bnd:bnd-baseline-maven-plugin maven
 %endif
+find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "*.gz" -o \
+-name "*.jar" -o -name "*.war" -o -name "*.zip" \) -delete -print
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
@@ -261,6 +265,10 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Dec 10 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0:6.3.1-alt1
+- new version:
+  + unblobed for tomcat10 build
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:6.2.0-alt1_2jpp11
 - new version
 

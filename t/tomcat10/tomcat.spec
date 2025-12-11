@@ -75,7 +75,7 @@ BuildRequires: jpackage-17-compat
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt3_jvm17
+Release: alt4_jvm17
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -93,9 +93,6 @@ Source30: tomcat-preamble
 Source31: tomcat-server
 Source32: tomcat-named.service
 Source33: java-9-start-up-parameters.conf
-Source40: jakartaee-migration-1.0.6-shaded.jar
-Source41: geronimo-spec-jaxrpc-1.1-rc4.jar
-Source42: biz.aQute.bnd-6.3.1.jar
 
 Patch0: %tomcatname-%major_version.%minor_version-bootstrap-MANIFEST.MF.patch
 Patch1: %tomcatname-%major_version.%minor_version-tomcat-users-webapp.patch
@@ -110,10 +107,12 @@ BuildRequires: ant
 BuildRequires: ecj >= 1:4.10
 BuildRequires: findutils
 BuildRequires: javapackages-local
-#BuildRequires: aqute-bnd
-#BuildRequires: aqute-bndlib
+BuildRequires: mvn(biz.aQute:bnd)
+BuildRequires: mvn(biz.aQute:bndlib)
 BuildRequires: wsdl4j
 BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
+BuildRequires: mvn(org.apache.tomcat:jakartaee-migration)
+BuildRequires: mvn(commons-daemon:commons-daemon)
 
 Requires: javapackages-tools
 Requires: procps
@@ -243,7 +242,6 @@ rm -rf java/org/apache/naming/factory/webservices
 %patch33 -p0
 
 %build
-export OPT_JAR_LIST="xalan-j2-serializer"
 # we don't care about the tarballs and we're going to replace
 # tomcat-dbcp.jar with apache-commons-{collections,dbcp,pool}-tomcat5.jar
 # so just create a dummy file for later removal
@@ -252,7 +250,7 @@ touch HACK
 # who needs a build.properties file anyway
 %ant -Dant.build.javac.source=17 -Dant.build.javac.target=17  -Dbase.path="." \
   -Dbuild.compiler="modern" \
-  -Dcommons-daemon.jar="HACK" \
+  -Dcommons-daemon.jar="$(build-classpath commons-daemon)" \
   -Dcommons-daemon.native.src.tgz="HACK" \
   -Djdt.jar="$(build-classpath ecj/ecj)" \
   -Dtomcat-native.tar.gz="HACK" \
@@ -261,10 +259,10 @@ touch HACK
   -Dnsis.exe="HACK" \
   -Djaxrpc-lib.jar="HACK" \
   -Dwsdl4j-lib.jar="$(build-classpath wsdl4j)" \
-  -Dmigration-lib.jar="%SOURCE40" \
-  -Djaxrpc-lib.jar="%SOURCE41" \
-  -Dbnd.jar="%SOURCE42" \
-  -Dosgi-annotations.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
+  -Dmigration-lib.jar="$(build-classpath org.apache.tomcat:jakartaee-migration)" \
+  -Dbnd.jar="$(build-classpath biz.aQute:bnd)" \
+  -Dosgi-annotations.jar="$(build-classpath biz.aQute.bnd:biz.aQute.bnd.annotation)" \
+  -Dannotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
   -Dslf4j-api.jar="$(build-classpath slf4j/slf4j-api)" \
   -Dosgi-cmpn.jar="$(build-classpath osgi-compendium/osgi.cmpn)" \
   -Dversion="%version" \
@@ -516,6 +514,12 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Thu Dec 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:10.1.20-alt4_jvm17
+- pre-compiled JAR files were excluded from the source tree:
+  + aqute-bnd v6.3.1
+  + jakartaee-migration v1.0.9
+  + geronimo-spec-jaxrpc v1.1-rc4
+
 * Wed Mar 12 2025 Stanislav Levin <slev@altlinux.org> 1:10.1.20-alt3_jvm17
 - actualized conflicts with tomcat 9 (closes: #53331, #53333).
 
