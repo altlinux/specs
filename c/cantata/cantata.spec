@@ -2,7 +2,7 @@
 %define rdn_name dog.unix.cantata.Cantata
 
 Name: cantata
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 Summary: Qt Graphical MPD Client
 License: GPL-3.0
@@ -20,6 +20,7 @@ BuildRequires: cmake
 BuildRequires: gcc-common gcc-c++
 BuildRequires: qt6-base-devel qt6-svg-devel qt6-multimedia-devel qt6-tools-devel
 BuildRequires: zlib-devel
+BuildRequires: kf6-kitemviews-devel kf6-karchive-devel
 
 %description
 A client for the Music Player Daemon (MPD).
@@ -46,6 +47,9 @@ export PATH="%_qt6_bindir:$PATH"
 %doc README*
 
 %changelog
+* Thu Dec 11 2025 Andrey Kovalev <ded@altlinux.org> 3.4.0-alt1
+- Updated to upstream version 3.4.0.
+
 * Tue Apr 29 2025 Andrey Kovalev <ded@altlinux.org> 3.3.1-alt1
 - Updated to upstream version 3.3.1.
 
