@@ -2,10 +2,12 @@
 %define pypi_name libcst
 %define mod_name %pypi_name
 
+%python3_set_limited_api
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -92,6 +94,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 1.8.6-alt1
+- 1.8.5 -> 1.8.6.
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 1.8.5-alt1
 - 1.8.4 -> 1.8.5.
 
