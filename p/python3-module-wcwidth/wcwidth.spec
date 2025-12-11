@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.13
+Version: 0.2.14
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
@@ -16,12 +16,12 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter docformatter restructuredtext-lint
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -59,6 +59,9 @@ rm tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 0.2.14-alt1
+- 0.2.13 -> 0.2.14.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 0.2.13-alt1
 - 0.2.12 -> 0.2.13.
 
