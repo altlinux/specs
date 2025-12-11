@@ -6,7 +6,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -67,6 +67,11 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Thu Dec 11 2025 Alexander Stepchenko <geochip@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+- Fixes:
+  + CVE-2025-67499: CNI Plugins Portmap nftables backend intercepts non-local traffic
+
 * Thu Oct 30 2025 Alexander Stepchenko <geochip@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
