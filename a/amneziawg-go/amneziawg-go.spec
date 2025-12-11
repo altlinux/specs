@@ -1,5 +1,5 @@
 Name: amneziawg-go
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: Go Implementation of AmneziaWG
@@ -41,6 +41,9 @@ extra layer of stealth, making it a superb choice for those seeking a fast and d
 %_bindir/%name
 
 %changelog
+* Thu Dec 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.2.16-alt1
+- New version 0.2.16.
+
 * Mon Dec 08 2025 Artem Semenov <savoptik@altlinux.org> 0.2.15-alt1
 - New version 0.2.15.
 
