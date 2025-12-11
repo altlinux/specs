@@ -1,7 +1,7 @@
 
 Name: qmergeinifiles
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 
 Summary: Utility to merge INI-format files
@@ -35,6 +35,9 @@ Utility to merge INI-format files
 %_bindir/*
 
 %changelog
+* Thu Dec 11 2025 Oleg Solovyov <mcpain@altlinux.org> 3.1.0-alt2
+- fix regression: orphaned items should belong to [General]
+
 * Thu Dec 11 2025 Oleg Solovyov <mcpain@altlinux.org> 3.1.0-alt1
 - merge sections in .ini file (Closes: #57185)
 - fix usage (Closes: #57180)
