@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.16.0
+Version: 3.17.0
 Release: alt1
 
 Summary: A flake8 plugin to help you write better list/set/dict comprehensions
@@ -49,5 +49,8 @@ BuildRequires: python3-module-pytest-flake8-path
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Mon Nov 17 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.17.0-alt1
+- Updated to 3.17.0.
+
 * Mon Aug 25 2025 Timofei Fedotov <sovtouch@altlinux.org> 3.16.0-alt1
 - Initial build for ALT Sisyphus.
