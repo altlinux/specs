@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.2.4
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -194,6 +194,8 @@ software solution on the market.
 Summary: Full package of additions for VirtualBox OSE guest systems
 Group: Emulators
 Requires: %name-guest-utils
+Requires: libX11-devel
+Requires: libwayland-client-devel,
 Provides: %name-guest-additions-gl = %version-%release
 Obsoletes: %name-guest-additions-gl < %version-%release
 
@@ -931,6 +933,11 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Dec 11 2025 Valery Sinelnikov <greh@altlinux.org> 7.2.4-alt2
+- Fixed VBoxClient startup error in Wayland environment by adding
+  missing runtime dependencies:
+  libwayland-client and libX11 (closes:56974)
+
 * Tue Oct 28 2025 Valery Sinelnikov <greh@altlinux.org> 7.2.4-alt1
 - Update to newest version 7.2.4
 
