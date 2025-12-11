@@ -2,7 +2,7 @@
 
 Name: alt-components
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -24,12 +24,13 @@ BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
 BuildRequires: nlohmann-json-devel
 BuildRequires: libexpected-devel
-BuildRequires: alterator-entry >= 0.3.1
+BuildRequires: alterator-entry >= 0.4.6
 
-Requires: alterator-backend-packages >= 0.2.9-alt1
-Requires: alterator-backend-component >= 0.3.0-alt1
+Requires: alterator-backend-packages >= 0.2.12
+Requires: alterator-backend-component >= 0.3.1
 Requires: alterator-module-executor >= 0.1.29-alt1
-Requires: alterator-backend-systeminfo
+Requires: alterator-backend-systeminfo >= 0.4.2
+Requires: alterator-backend-edition >= 0.4.1
 Requires: libqbase
 Requires: alt-components-base >= 0.7.12-alt1
 
@@ -62,6 +63,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Dec 12 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.4-alt2
+- Fix required backend versions compatible with 'exit_status' feature.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.4-alt1
 - Add 'exit_status = true' for new version of executor.
 
@@ -216,7 +220,7 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 - Make links in descriptions clickable.
 - Add support for draft components and categories.
 
-* Thu Mar 08 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt1
+* Sat Mar 08 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt1
 - Switch to sync batch dbus calls which reduces model build time.
 - Enable window decorations for WaitDialog.
 - Fix translation warnings when using english.
@@ -280,7 +284,7 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 - Remove redundant buttons.
 - Improve logging.
 
-* Mon Jul 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
+* Tue Jul 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
 - Fix build on older gcc.
 
 * Thu Mar 21 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
