@@ -1,6 +1,6 @@
 
 Name: qmergeinifiles
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 
@@ -35,6 +35,10 @@ Utility to merge INI-format files
 %_bindir/*
 
 %changelog
+* Thu Dec 11 2025 Oleg Solovyov <mcpain@altlinux.org> 3.1.0-alt1
+- merge sections in .ini file (Closes: #57185)
+- fix usage (Closes: #57180)
+
 * Thu Dec 26 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 3.0.1-alt1
 - better comments handling(closes: 52533)
 
