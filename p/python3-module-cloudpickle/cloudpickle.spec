@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name cloudpickle
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 Summary: Extended pickling support for Python objects
 License: BSD
@@ -14,6 +15,8 @@ VCS: https://github.com/cloudpipe/cloudpickle
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -22,7 +25,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_check
 # for psutil
 BuildRequires: /proc
-BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -58,10 +60,13 @@ export PYTHONPATH=tests/cloudpickle_testpkg
 
 %files
 %doc README.md
-%python3_sitelibdir/cloudpickle/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 3.1.2-alt1
+- 3.1.1 -> 3.1.2.
+
 * Wed Jan 15 2025 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
 - 3.1.0 -> 3.1.1.
 
