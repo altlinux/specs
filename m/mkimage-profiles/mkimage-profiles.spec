@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 1.8.9-alt1
+- docs: fix links for docs/index.html
+- domain-client-i: remove installer-feature-nfs-client-stage3
+- mixin.mk: add mixin/nfs-clients-base, mixin/nfs-server-base
+- live: add use/live/rescue/default
+- live.mk: fix build grub.iso on aarch64, riscv64
+- kernel: set default KFLAVOURS to 6.18 for sisyphus
+- pkg.in/lists/Makefile: check kernel-image-$(KFLAVOURS) too
+
 * Wed Nov 26 2025 Anton Midyukov <antohami@altlinux.org> 1.8.8-alt1
 - initrd-bootchain: 'add' instead 'set' MAIN_PACKAGES
 - grub: add variable GRUB_GFXMODE (thanks fiersik@)
