@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.32.2
+Version: 1.33.0
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -20,7 +20,7 @@ Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
 ExclusiveArch: %{java_arches}
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
-BuildRequires: java-21-openjdk-headless java-21-openjdk-devel python3
+BuildRequires: java-21-openjdk-headless java-21-openjdk-devel
 BuildRequires: python3
 BuildRequires: unzip
 BuildRequires: gradle
@@ -161,6 +161,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Thu Dec 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.33.0-alt1
+- 1.33.0
+
 * Wed Oct 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.32.2-alt1
 - 1.32.2
 
