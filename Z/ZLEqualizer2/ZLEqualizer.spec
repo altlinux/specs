@@ -6,11 +6,29 @@
 # see cmake-includes/SharedCodeDefaults.cmake
 %define _optlevel 3
 
+
+%define common_summary Dynamic Equalizer Plugin from ZL Audio (v2)
+%define common_description ZL Equalizer 2 is a dynamic equalizer plugin with the following key features: \
+\
+* Unmatched Versatility: Sculpt your sound with 6 filter structures, \
+  8 filter types, 5 stereo modes, 7 variable slopes, and up to 24 \
+  frequency bands. \
+* Integrated Dynamic Control: Go beyond static EQ with adjustable \
+  threshold, attack, release, and side-chain filters for powerful \
+  dynamic equalization. \
+* Pristine Precision: 64-bit floating-point processing and advanced \
+  de-cramping technique deliver outstanding performance, ensuring \
+  exceptional clarity from the deepest lows to the highest highs. \
+* Intuitive Workflow: A carefully designed interface with \
+  an interactive spectrum graph, smart collision detection, and \
+  smooth animations makes equalization fast and fluid.
+
+
 Name:    ZLEqualizer2
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
-Summary: Dynamic Equalizer Plugin from ZL Audio (v2)
+Summary: %common_summary
 License: AGPL-3.0
 Group:   Sound
 Url:     https://zl-audio.github.io/plugins/zlequalizer2/
@@ -50,26 +68,11 @@ BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
 
-%define common_description ZL Equalizer 2 is a dynamic equalizer plugin with the following key features: \
-\
-* Unmatched Versatility: Sculpt your sound with 6 filter structures, \
-  8 filter types, 5 stereo modes, 7 variable slopes, and up to 24 \
-  frequency bands. \
-* Integrated Dynamic Control: Go beyond static EQ with adjustable \
-  threshold, attack, release, and side-chain filters for powerful \
-  dynamic equalization. \
-* Pristine Precision: 64-bit floating-point processing and advanced \
-  de-cramping technique deliver outstanding performance, ensuring \
-  exceptional clarity from the deepest lows to the highest highs. \
-* Intuitive Workflow: A carefully designed interface with \
-  an interactive spectrum graph, smart collision detection, and \
-  smooth animations makes equalization fast and fluid.
-
 %description
 %common_description
 
 %package -n lv2-%name-plugin
-Summary: Dynamic Equalizer Plugin from ZL Audio (v2) -- LV2
+Summary: %common_summary -- LV2
 Group:   Sound
 
 %description -n lv2-%name-plugin
@@ -79,7 +82,7 @@ This package contains ZL Equalizer 2 built as LV2 plugin.
 
 
 %package -n vst3-%name-plugin
-Summary: Dynamic Equalizer Plugin from ZL Audio (v2) -- VST3
+Summary: %common_summary -- VST3
 Group:   Sound
 
 %description -n vst3-%name-plugin
@@ -95,12 +98,9 @@ sh -eux "%SOURCE2"
 
 %autopatch -p1
 
-# build juceaid on in parallel
-sed -i -r "s/(--config\s+Custom)/\1 --parallel %_smp_build_ncpus/" \
-    JUCE/extras/Build/juceaide/CMakeLists.txt
-grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
-
 %build
+# for the nested cmake that builds juceaid
+export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
 
 %cmake \
   -DCMAKE_BUILD_TYPE=%zl_build_type \
@@ -110,6 +110,9 @@ grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
   -DGIT_EXECUTABLE:string='' \
   -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
   -DKFR_ENABLE_MULTIARCH:BOOL=ON \
+%ifarch x86_64
+  -DKFR_ARCHS="sse2;sse41;avx;avx2" \
+%endif
   -DZL_JUCE_FORMATS="VST3;LV2" \
   -DZL_JUCE_COPY_PLUGIN=FALSE \
   %nil
@@ -117,12 +120,12 @@ grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
 %cmake_build
 
 %install
-cd "%_cmake__builddir/ZLEqualizer_artefacts/%zl_build_type"
+cd %_cmake__builddir/*_artefacts/%zl_build_type
 
 mkdir -p %buildroot%_libdir/lv2
-cp -a "LV2/ZL Equalizer 2.lv2" %buildroot%_libdir/lv2
+cp -a LV2/*.lv2 %buildroot%_libdir/lv2
 mkdir -p %buildroot%_libdir/vst3
-cp -a "VST3/ZL Equalizer 2.vst3" %buildroot%_libdir/vst3
+cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %files -n lv2-%name-plugin
@@ -135,6 +138,9 @@ cp -a "VST3/ZL Equalizer 2.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Thu Dec 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Mon Nov 24 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
