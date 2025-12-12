@@ -4,8 +4,10 @@
 
 %def_with check
 
+# %%python3_set_limited_api is not supported yet
+
 Name: python3-module-%pypi_name
-Version: 0.6.4
+Version: 0.7.1
 Release: alt1
 Summary: A collection of framework independent HTTP protocol utils
 License: MIT
@@ -13,12 +15,17 @@ Group: Development/Python
 Url: https://pypi.org/project/httptools/
 Vcs: https://github.com/MagicStack/httptools
 Source0: %name-%version.tar
-Source1: modules.tar
-Source2: %pyproject_deps_config_name
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: libhttp-parser-devel
+BuildRequires: libllhttp-devel
+# marked as dependency only if it's not installed
+BuildRequires: python3-module-cython
 %if_with check
 %pyproject_builddeps_metadata
 %endif
@@ -27,14 +34,14 @@ BuildRequires: libhttp-parser-devel
 %summary
 
 %prep
-%setup -a1
-# use system http-parser and vendored llhttp (not packaged yet)
-rm -r vendor/http-parser
+%setup
+%autopatch -p1
+rm -r vendor
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
 %build
-%pyproject_build --backend-config-settings='{"--build-option": ["build_ext", "--cython-always", "--use-system-http-parser"]}'
+%pyproject_build --backend-config-settings='{"--build-option": ["build_ext", "--cython-always", "--use-system-http-parser", "--use-system-llhttp"]}'
 
 %install
 %pyproject_install
@@ -55,6 +62,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
+- 0.6.4 -> 0.7.1.
+
 * Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 0.6.4-alt1
 - 0.1.1 -> 0.6.4.
 
