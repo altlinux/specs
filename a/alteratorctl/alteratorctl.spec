@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,6 +55,17 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Fri Dec 12 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.2-alt1
+- Made params table more pretty.
+- Made services module help more detailed.
+- Add diagnostic test exit code for "SKIP" state
+- Fix parsing of diagnostic tests exit codes.
+- Refactor services diagnostic tools running messages.
+- Fix filling of default values to enums (thx Andrey Alekseev).
+- Support for nested enums in the services module.
+- Change deployed status marker (thx Oleg Chagaev).
+- Optimize and simplified rendering of service resouces info (thx Oleg Chagaev).
+
 * Wed Nov 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.1-alt1
 - Sorting the order of running tests for the selected diagnostic tool.
 - Optimizing the launch of diagnostic tests.
