@@ -3,7 +3,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
 Version: 20250808
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II Tools
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -20,7 +20,7 @@ License: BSD-2-Clause-Patent
 Group: Emulators
 Url: http://www.tianocore.org
 
-ExclusiveArch:  %ix86 x86_64 %arm aarch64 loongarch64
+ExclusiveArch:  %ix86 x86_64 %arm aarch64 loongarch64 riscv64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
@@ -182,6 +182,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 20250808-alt2
+- NMU: build on riscv64
+
 * Mon Aug 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250808-alt1
 - edk2-stable202508
 
