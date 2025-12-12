@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name testfixtures
+%define mod_name %pypi_name
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.1.0
+Version: 10.0.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -41,17 +44,20 @@ when writing unit tests or doc tests.
 %pyproject_install
 
 # don't ship tests
-rm -r %buildroot%python3_sitelibdir/testfixtures/tests/
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %check
-%pyproject_run_pytest -ra testfixtures/tests/
+%pyproject_run_pytest -ra %mod_name/tests/
 
 %files
 %doc README.rst
-%python3_sitelibdir/testfixtures/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 10.0.0-alt1
+- 9.1.0 -> 10.0.0.
+
 * Wed Jul 09 2025 Stanislav Levin <slev@altlinux.org> 9.1.0-alt1
 - 9.0.1 -> 9.1.0.
 
