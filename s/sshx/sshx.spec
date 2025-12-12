@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sshx
-Version: 0.2.5
+Version: 0.4.1
 Release: alt1
 Summary: Fast, collaborative live terminal sharing over the web.
 License: MIT 
@@ -46,5 +46,8 @@ EOF
 %_bindir/*
 
 %changelog
+* Fri Dec 12 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.1-alt1
+- update to new version to fix (ALT #57215)
+
 * Sat Nov 02 2024 Pavel Shilov <zerospirit@altlinux.org> 0.2.5-alt1
 - initial build for Sisyphus
