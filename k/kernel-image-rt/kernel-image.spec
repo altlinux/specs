@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.61
+%define kernel_sublevel	.62
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Dec 13 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.62-alt1
+- v6.12.62 (2025-12-12).
+- config: CONFIG_SND_SOC_AMD_RPL_ACP6x=m.
+
 * Sun Dec 07 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.61-alt1
 - v6.12.61 (2025-12-07).
 
