@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
 Summary: Never use print() to debug again
 License: MIT
@@ -16,7 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,6 +50,9 @@ execution with a single, simple function call.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 2.1.8-alt1
+- 2.1.7 -> 2.1.8.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 2.1.7-alt1
 - 2.1.5 -> 2.1.7.
 
