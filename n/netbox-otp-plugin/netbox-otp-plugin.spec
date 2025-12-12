@@ -1,5 +1,5 @@
 Name:    netbox-otp-plugin
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: This netbox plugin adds support for one-time password (OTP) to Netbox
@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 Requires: netbox >= 4.0.0
-Conflicts: netbox > 4.3.99
+Conflicts: netbox > 4.4.99
 Requires: python3-module-qrcode
 Requires: python3-module-django-otp
 Requires: python3-module-django-qr-code
@@ -43,6 +43,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-otp-plugin/README
 %_defaultdocdir/netbox-otp-plugin/README
 
 %changelog
+* Fri Dec 12 2025 Alexander Burmatov <thatman@altlinux.org> 1.3.4-alt1
+- New 1.3.4 version.
+
 * Mon Jun 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.3.3-alt1
 - New 1.3.3 version.
 

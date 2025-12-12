@@ -2,7 +2,7 @@
 %define mod_name django_otp
 
 Name:    python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.6.3
 Release: alt1
 
 Summary: A pluggable framework for adding two-factor authentication to Django using one-time passwords
@@ -38,5 +38,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 12 2025 Alexander Burmatov <thatman@altlinux.org> 1.6.3-alt1
+- New 1.6.3 version.
+
 * Fri Nov 10 2023 Alexander Burmatov <thatman@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus.
