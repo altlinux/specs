@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .beta.9
+%define beta %nil
 %define rdn_name com.system76.CosmicSettingsDaemon
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-settings-daemon
 Version: %ver_major.0
-Release: alt0.82%beta
+Release: alt1%beta
 
 Summary: COSMIC Settings Daemon
 License: GPL-2.0
@@ -65,6 +65,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/polkit-1/rules.d/%name.rules
 
 %changelog
+* Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.82.beta.9
 - 1.0.0-beta.9
 

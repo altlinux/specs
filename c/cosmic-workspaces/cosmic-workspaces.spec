@@ -3,7 +3,7 @@
 %define _name cosmic-workspaces
 %define git_name %_name-epoch
 %define ver_major 1.0
-%define beta .beta.9
+%define beta %nil
 %define rdn_name com.system76.CosmicWorkspaces
 
 %def_disable bootstrap
@@ -11,7 +11,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt0.82%beta
+Release: alt1%beta
 
 Summary: COSMIC Workspaces
 License: GPL-3.0
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%git_name-%version%beta-cargo.tar .cargo/ vendor/}
 #%doc README*
 
 %changelog
+* Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.82.beta.9
 - 1.0.0-beta.9
 

@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 1.0
-%define beta .beta.9
+%define beta %nil
 %define rdn_name com.system76.CosmicPortal
 %define dbus_name org.freedesktop.impl.portal.desktop.cosmic
 
@@ -11,7 +11,7 @@
 
 Name: xdg-desktop-portal-cosmic
 Version: %ver_major.0
-Release: alt0.82%beta
+Release: alt1%beta
 
 Summary: COSMIC Desktop Portal
 License: GPL-3.0
@@ -80,6 +80,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.82.beta.9
 - 1.0.0-beta.9
 
