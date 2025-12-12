@@ -3,10 +3,11 @@
 %define mod_name %pypi_name
 
 %def_with check
+%def_with system_libbrotli
 
 Name: python3-module-%pypi_name
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Brotli compression format
 License: MIT
 Group: Development/Python3
@@ -22,6 +23,11 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+
+%if_with system_libbrotli
+BuildRequires: libbrotli-devel
+BuildRequires: python3(pkgconfig)
+%endif
 
 %description
 Brotli is a generic-purpose lossless compression algorithm that
@@ -40,12 +46,15 @@ The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 %pyproject_deps_resync_metadata
 
 %build
+%{?_with_system_libbrotli:export USE_SYSTEM_BROTLI=1}
 %pyproject_build
 
 %install
+%{?_with_system_libbrotli:export USE_SYSTEM_BROTLI=1}
 %pyproject_install
 
 %check
+%{?_with_system_libbrotli:export USE_SYSTEM_BROTLI=1}
 # see .github/workflows/build_test.yml and setup.py
 %pyproject_run_unittest discover -v -p '*_test.py' -s python/
 
@@ -57,6 +66,9 @@ The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt2
+- NMU: Build with system libbrotli (fixes FTBFS on loongarch64).
+
 * Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
