@@ -1,10 +1,11 @@
 %def_without clang
+%def_enable check
 
 %define repo dde-application-manager
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.38
+Version: 1.2.39
 Release: alt1
 
 Summary: App manager for Deepin
@@ -19,6 +20,9 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+%if_enabled check
+BuildRequires(pre): ctest
+%endif
 BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dtk6-common-devel libdtk6core-devel
 %if_with clang
 BuildRequires: clang-devel
@@ -59,6 +63,11 @@ export READELF="llvm-readelf"
 
 # don't use dpkg
 rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
+
+%if_enabled check
+%check
+%ctest --test-dir BUILD
+%endif
 
 %files
 %doc LICENSE README*.md debian/changelog
@@ -101,6 +110,10 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Fri Dec 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.39-alt1
+- New version 1.2.39.
+- Enabled check.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.38-alt1
 - New version 1.2.38.
 
