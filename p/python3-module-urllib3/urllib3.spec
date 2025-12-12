@@ -22,7 +22,7 @@ Extra "%1" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
@@ -84,6 +84,9 @@ export NO_VENDORED_HYPERCORN=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 2:2.6.2-alt1
+- 2.6.1 -> 2.6.2.
+
 * Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 2:2.6.1-alt1
 - 2.6.0 -> 2.6.1.
 
