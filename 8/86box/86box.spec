@@ -1,7 +1,7 @@
 %define _metainfodir %_datadir/metainfo
 %set_verify_elf_method rpath=relaxed
 Name: 86box
-Version: 5.1
+Version: 5.2
 Release: alt1
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems
 Group: Emulators
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildPreReq: rpm-macros-cmake rpm-macros-qt5 qt5-declarative-devel libslirp-devel extra-cmake-modules
 BuildRequires: gcc-c++ libevdev-devel ecm wayland-devel libwayland-client-devel libffi-devel libappstream-glib libjack-devel libxkbcommon-devel liblash-devel pkgconfig(systemd) libdbus-devel libinstpatch-devel
 BuildRequires: cmake libpng-devel zlib-devel libopenal-devel librtmidi-devel libpcre-devel qt5-tools-devel libfluidsynth-devel libpcre2-devel bzlib-devel libbrotli-devel libpulseaudio-devel libsndfile-devel libXdmcp-devel
-BuildRequires: fontconfig-devel libxcb libSDL2_ttf-devel libXi-devel libalsa-devel qt5-base-devel libxkbcommon-x11-devel
+BuildRequires: fontconfig-devel libxcb libSDL2_ttf-devel libXi-devel libalsa-devel qt5-base-devel libxkbcommon-x11-devel libcap-devel libreadline-devel libserialport-devel libtinfo-devel
 
 ExcludeArch: ppc64le
 
@@ -42,7 +42,7 @@ Download release with the release number of emulator, and unzip in
 %ifarch aarch64
 	-DNEW_DYNAREC=on \
 %endif
-%ifarch %e2k armh loongarch64
+%ifarch %e2k armh loongarch64 %ix86
 	-DDYNAREC=off \
 %endif
 	%nil
@@ -77,6 +77,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/net.86box.86Box.me
 %_iconsdir/hicolor/*/apps/net.86box.86Box.png
 
 %changelog
+
+* Wed Dec 10 2025 Artyom Bystrov <arbars@altlinux.org> 5.2-alt1
+- update to new version
+
 * Mon Aug 15 2025 Artyom Bystrov <arbars@altlinux.org> 5.1-alt1
 - update to new version
 
