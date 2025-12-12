@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mypy
+%define mod_name %pypi_name
 %def_with check
 
 # mypyc doesn't work on 32bit arches
@@ -11,7 +12,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.18.1
+Version: 1.19.0
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -82,8 +83,8 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-mv %buildroot%python3_sitelibdir/mypy/{typeshed,mypy_typeshed}
-ln -sr %buildroot%python3_sitelibdir/mypy/{mypy_typeshed,typeshed}
+mv %buildroot%python3_sitelibdir/%mod_name/{typeshed,mypy_typeshed}
+ln -sr %buildroot%python3_sitelibdir/%mod_name/{mypy_typeshed,typeshed}
 
 # Generate man pages
 mkdir -p %buildroot%_man1dir
@@ -99,7 +100,7 @@ PYTHONPATH=%buildroot%python3_sitelibdir \
         %buildroot%_bindir/stubgen
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%pypi_name/test/
+rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 rm -r %buildroot%python3_sitelibdir/mypyc/test/
 
 %if_without mypyc
@@ -119,7 +120,7 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 
 %files
 %doc README.md
-%python3_sitelibdir/mypy/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_bindir/mypy
 %_bindir/dmypy
@@ -135,6 +136,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 1.19.0-alt1
+- 1.18.1 -> 1.19.0.
+
 * Fri Sep 12 2025 Stanislav Levin <slev@altlinux.org> 1.18.1-alt1
 - 1.17.1 -> 1.18.1.
 
