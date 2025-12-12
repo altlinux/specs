@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -16,6 +16,8 @@ Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-diag
 
 BuildRequires(pre): rpm-macros-alterator
+
+%filter_from_requires /\/bin\/samba-tool/d
 
 %description
 Domain Controller Diagnostic Tool.
@@ -41,6 +43,10 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Dec 12 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.3-alt1
+- build: removed /bin/samba-tool dependancy
+- fix: fixed false negative results on warnings
+
 * Wed Dec 10 2025 Andrey Limachko <liannnix@altlinux.org> 0.4.2-alt1
 - fix: removed samba db check from prediag (thx Kozyrev Yuri)
 - fix: added env var to list metod (thx Kozyrev Yuri)
