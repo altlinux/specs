@@ -7,7 +7,7 @@
 %define wxbranch 3.2
 
 Name: wxGTK3.2
-Version: 3.2.8.1
+Version: 3.2.9
 Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
@@ -196,6 +196,9 @@ sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
 
 rm -fR src/{expat,jpeg,tiff,zlib,png}
 
+# remove compiled translations
+find . -name *.mo -delete
+
 %build
 CONF_FLAG=" \
 	--enable-option-checking\
@@ -324,6 +327,12 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Fri Dec 12 2025 Anton Midyukov <antohami@altlinux.org> 3.2.9-alt1
+- New version 3.2.9.
+
+* Fri Nov 21 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8.1-alt2
+- Build traslations.
+
 * Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8.1-alt1
 - new version (3.2.8.1) with rpmgs script
 
