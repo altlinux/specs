@@ -3,15 +3,12 @@
 %define pypi_name statsmodels
 %define mod_name %pypi_name
 
-# quite a few tests fail on armh. disable it for now
-%ifnarch armh
 %def_with check
-%else
-%def_without check
-%endif
+
+%python3_set_limited_api
 
 Name: python3-module-%pypi_name
-Version: 0.14.5
+Version: 0.14.6
 Release: alt1
 Epoch: 1
 Summary: Statistical computations and models for Python
@@ -22,8 +19,9 @@ Vcs: https://github.com/statsmodels/statsmodels
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-%add_python3_req_skip models
 # rename scikits.statsmodels => statsmodels
 Provides: python3-module-scikits.statsmodels = %EVR
 Obsoletes: python3-module-scikits.statsmodels <= 0.11.1-alt2.1
@@ -35,7 +33,6 @@ BuildRequires: libnumpy-py3-devel
 %pyproject_builddeps_metadata_extra develop
 # compat.pandas => pandas.testing
 BuildRequires: python3-module-pandas-tests
-BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -72,6 +69,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 1:0.14.6-alt1
+- 0.14.5 -> 0.14.6.
+
 * Tue Jul 08 2025 Stanislav Levin <slev@altlinux.org> 1:0.14.5-alt1
 - 0.14.4 -> 0.14.5.
 
