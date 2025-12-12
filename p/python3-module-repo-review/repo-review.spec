@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.2
+Version: 0.12.3
 Release: alt1
 Summary: Framework that can run checks on repos
 License: BSD-3-Clause
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -57,6 +59,9 @@ to be installed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 0.12.3-alt1
+- 0.12.2 -> 0.12.3.
+
 * Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 0.12.2-alt1
 - 0.12.1 -> 0.12.2.
 
