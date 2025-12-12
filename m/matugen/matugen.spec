@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: matugen
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: A material you color generation tool
 License: GPL-2.0
@@ -34,6 +34,9 @@ echo >> .cargo/config.toml
 %doc LICENSE
 
 %changelog
+* Thu Dec 11 2025 Vladislav Eliseev <general@altlinux.org> 3.1.0-alt1
+- Updated to version 3.1.0.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.0-alt1
 - Updated to version 3.0.0.
 
