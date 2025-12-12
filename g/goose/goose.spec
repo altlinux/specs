@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: goose
-Version: 1.15.0
+Version: 1.16.1
 Release: alt1
 Summary: An open source, extensible AI agent
 License: Apache-2.0
@@ -47,6 +47,9 @@ EOF
 %doc LICENSE
 
 %changelog
+* Fri Dec 12 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.1-alt1
+- Updated to version 1.16.1.
+
 * Thu Nov 27 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.15.0-alt1
 - Initial build for ALT.
 
