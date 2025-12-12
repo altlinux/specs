@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 Epoch: 1
 
@@ -34,12 +34,12 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(sdl2)
-BuildRequires: pkgconfig(libyuv)
+BuildRequires: pkgconfig(libyuv) >= 0.0.1922
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
 %ifarch aarch64
-BuildRequires: pkgconfig(libpisp)
+BuildRequires: pkgconfig(libpisp) >= 1.3.0
 %endif
 %if_enabled qcam
 BuildRequires: qt6-tools-devel
@@ -168,6 +168,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
 
 %changelog
+* Fri Nov 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.6.0-alt1
+- 0.6.0
+
 * Sun Aug 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.2-alt1
 - updated to v0.5.2-9-gaf43c2f9
 
