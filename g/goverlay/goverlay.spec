@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -46,11 +46,14 @@ help manage Linux overlays. Currently supported:
 #_desktopdir/%name.desktop
 %_datadir/metainfo/*%name.metainfo.xml
 %{_datadir}/applications/*.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/*%name.png
 %_man1dir/%name.1*
 /usr/libexec/goverlay
 
 %changelog
+* Sat Dec 13 2025 Ilya Mashkin <oddity@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Wed Nov 19 2025 Ilya Mashkin <oddity@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
