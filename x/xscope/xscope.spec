@@ -1,12 +1,12 @@
 Name: xscope
-Version: 1.4.1
+Version: 1.4.5
 Release: alt1
 Summary: A program to monitor X11/Client conversations
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Sep 23 2010
 BuildRequires: xorg-xproto-devel xorg-xtrans-devel
@@ -36,11 +36,14 @@ the client and X11.
 %make DESTDIR=%buildroot install
 
 %files
-%doc README NEWS AUTHORS
+%doc README* NEWS AUTHORS
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.4.5-alt1
+- Autobuild version bump to 1.4.5
+
 * Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
 - Autobuild version bump to 1.4.1
 
