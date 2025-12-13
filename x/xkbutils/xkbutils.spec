@@ -1,10 +1,10 @@
 Name: xkbutils
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 Summary: XKB utilities: xkbbell, xkbvleds, and xkbwatch
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Patch: xkbutils-1.0.4-alt-xkbvleds.patch
 
 License: MIT
@@ -30,13 +30,16 @@ Xkbutils accumulates some XKB utilities such as xkbbell, xkbvleds, and xkbwatch.
 %makeinstall
 
 %files
-%doc README
+%doc README*
 %_bindir/xkbbell
 %_bindir/xkbvleds
 %_bindir/xkbwatch
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 - Fix patch
