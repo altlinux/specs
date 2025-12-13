@@ -1,5 +1,5 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt2
 
 Name: qbittorrent
 Version: 5.1.4
@@ -121,6 +121,7 @@ desktop-file-install \
 %files nox
 %_bindir/%name-nox
 %_man1dir/%name-nox.*
+%_mandir/ru/man1/qbittorrent-nox.1.*
 %_unitdir/qbittorrent-nox@.service
 
 %files
@@ -128,12 +129,14 @@ desktop-file-install \
 %_bindir/%name
 %_desktopdir/*
 %_man1dir/%name.*
-/usr/share/man/ru/man1/qbittorrent.1.*
-/usr/share/man/ru/man1/qbittorrent-nox.1.*
+%_mandir/ru/man1/qbittorrent.1.*
 %_datadir/icons/hicolor/*/*/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Dec 13 2025 Ilya Mashkin <oddity@altlinux.ru> 1:5.1.4-alt2
+- Mans packed with %%_mandir macros
+
 * Sun Nov 23 2025 Ilya Mashkin <oddity@altlinux.ru> 1:5.1.4-alt1
 - 5.1.4
 
