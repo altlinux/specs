@@ -1,14 +1,12 @@
 Name: xrandr
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 Summary: primitive command line interface to RandR extension
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: https://gitlab.freedesktop.org/xorg/app/xrandr
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXrandr-devel libXrender-devel xorg-util-macros
 
@@ -22,9 +20,16 @@ size  specified in the list.  The -o option is used to specify the ori-
 entation of the screen, and can be one of "normal inverted left right 0
 1 2 3".
 
+%package -n xkeystone
+Summary:        Nickel script for XRandr keystone manipulation
+Requires:       cairo-5c
+Group: System/X11
+
+%description -n xkeystone
+%summary
+
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -36,10 +41,18 @@ entation of the screen, and can be one of "normal inverted left right 0
 %make DESTDIR=%buildroot install
 
 %files
-%_bindir/*
+%doc README*
+%_bindir/*randr*
 %_man1dir/*.1*
 
+%files -n xkeystone
+%_bindir/xkeystone
+
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.5.3-alt1
+- Autobuild version bump to 1.5.3
+- Separate nickel script into xkeystone package
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
 - 1.5.1
 
