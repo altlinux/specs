@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -38,6 +38,13 @@ Conflicts: %name-lists-sisyphus
 %description lists-branch
 Additional mirrors for %name.
 
+%package cli
+Summary: A terminal simple local mirror switcher for ALT
+Group: Other
+BuildArch: noarch
+%description cli
+A terminal simple local mirror switcher for ALT.
+
 %prep
 %setup
 rm -v mirrors/ams.sh
@@ -54,10 +61,12 @@ mv %buildroot%_datadir/%name/mirrors/*.list \
   %buildroot%_sysconfdir/apt/sources.list.d/
 rm -r %buildroot%_datadir/%name/mirrors
 
+install -D ams %buildroot%_bindir/ams
+
 %find_lang %name --all-name
 
 %post
-python3 /usr/share/alt-mirror-switcher/ams_check.py
+%_bindir/python3 %_datadir/%name/ams_check.py
 
 %files -f %name.lang
 %_bindir/%name
@@ -71,7 +80,15 @@ python3 /usr/share/alt-mirror-switcher/ams_check.py
 %files lists-branch
 %_sysconfdir/apt/sources.list.d/ams_*_branch.list
 
+%files cli
+%_bindir/ams
+
 %changelog
+* Fri Dec 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt1
+- added: alt-mirror-switcher-cli sub package:
+  + ams mirror: show local mirrors
+  + ams mirror switch <mirror> <http|https|ftp|rsync>: switching local mirror with need protocol
+
 * Wed Dec 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.5.1-alt1
 - 0.4.4.3 -> 0.5.1
 
