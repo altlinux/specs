@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fingwit
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Fingerprint Configuration Tool
@@ -59,6 +59,9 @@ sed -i 's|^Categories=.*|Categories=GTK;Settings;HardwareSettings;|' data/fingwi
 %_datadir/pam-configs/fingwit
 
 %changelog
+* Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.7-alt1
+- New version 1.0.7.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt1
 - New version 1.0.6.
 

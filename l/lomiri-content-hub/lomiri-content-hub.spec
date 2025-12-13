@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-content-hub
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: content sharing/picking service for Lomiri
@@ -99,6 +99,8 @@ Files and utilities needed for automated testing of content-hub
 
 %prep
 %setup
+
+sed -i '/^Comment/d' tools/send/lomiri-content-hub-send.desktop
 
 %if_with check
 echo "Categories=Development;Debugger;" >> tests/peers/importer/lomiri-content-hub-test-importer.desktop
@@ -196,6 +198,9 @@ echo "Categories=Development;Debugger;" >> tests/peers/sharer/lomiri-content-hub
 %endif
 
 %changelog
+* Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.1-alt1
+- New version 2.2.1.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 

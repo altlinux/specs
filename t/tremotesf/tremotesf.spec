@@ -3,7 +3,7 @@
 %def_with check
 
 Name: tremotesf
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 
 Summary: Remote GUI for transmission-daemon
@@ -91,5 +91,8 @@ sed -i 's/"wikipedia.org"/"en.wikipedia.org"/' src/rpc/tracker_test.cpp
 %_datadir/metainfo/org.equeim.Tremotesf.appdata.xml
 
 %changelog
+* Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 2.9.1-alt1
+- New version 2.9.1.
+
 * Sun Dec 07 2025 Nikolay Strelkov <snk@altlinux.org> 2.9.0-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gnome-online-accounts-gtk
-Version: 3.50.8
+Version: 3.50.9
 Release: alt1
 
 Summary: A GTK Frontend for GNOME Online Accounts
@@ -50,5 +50,8 @@ sed -i "s|Categories=.*|Categories=Network;FileTransfer;InstantMessaging;News;|"
 %_iconsdir/hicolor/scalable/apps/gnome-online-accounts-gtk.svg
 
 %changelog
+* Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 3.50.9-alt1
+- New version 3.50.9.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 3.50.8-alt1
 - Initial build for Sisyphus
