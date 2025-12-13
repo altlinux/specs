@@ -1,10 +1,10 @@
 Name: oclock
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 Summary: Round X clock
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -29,12 +29,15 @@ Oclock simply displays the current time on an analog display.
 %make install DESTDIR=%buildroot
 
 %files
-%doc README
+%doc README*
 %_bindir/oclock
 %_x11appconfdir/Clock-color
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
