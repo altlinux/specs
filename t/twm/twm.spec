@@ -1,13 +1,13 @@
 Name: twm
-Version: 1.0.10
-Release: alt2
+Version: 1.0.13.1
+Release: alt1
 Epoch: 1
 Summary: Tab Window Manager for the X Window System
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Source3: system.twmrc
 Source4: twm.png
 
@@ -69,6 +69,9 @@ EOF
 %_x11x11dir/twm/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1:1.0.13.1-alt1
+- Autobuild version bump to 1.0.13.1
+
 * Tue Nov 16 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.10-alt2
 - NMU: WM packaging policy 2.0:
 - added pixmap
