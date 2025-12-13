@@ -10,7 +10,7 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: 6.4.1
+Version: 6.6.0
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -58,7 +58,6 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: cinnamon-settings-daemon-devel >= %sett_daemon_ver
 BuildRequires: meson
 BuildRequires: libxkbfile-devel
 %{?_enable_ibus:BuildPreReq: libibus-devel >= %ibus_ver}
@@ -121,7 +120,6 @@ you'll want to install this package.
 %_libdir/%name-1/panels/libcolor.so
 %_libdir/%name-1/panels/libdisplay.so
 %_libdir/%name-1/panels/libnetwork.so
-%_libdir/%name-1/panels/libregion.so
 %_libdir/%name-1/panels/libwacom-properties.so
 %_libdir/*.so.*
 %dir %_datadir/%name
@@ -139,6 +137,9 @@ you'll want to install this package.
 %_libdir/*.so
 
 %changelog
+* Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 6.4.1-alt1
 - New version 6.4.1.
 

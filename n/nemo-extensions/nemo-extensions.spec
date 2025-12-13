@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 6.4.0
+Version: 6.6.0
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -267,6 +267,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-image-converter/
 
 %changelog
+* Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+
 * Thu Dec 05 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
 - 6.4.0
 

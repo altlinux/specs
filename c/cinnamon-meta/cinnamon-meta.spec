@@ -1,8 +1,8 @@
-%define ver_major 6.4
+%define ver_major 6.6
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Cinnamon desktop meta package
 License: GPL-2.0-or-later
@@ -98,6 +98,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- bump version
+
 * Tue Mar 18 2025 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt2
 - cinnamon-default: add dependecy on fonts-ttf-adwaita (default fonts
   for gnome-terminal >= 3.56.0)

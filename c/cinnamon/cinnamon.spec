@@ -4,7 +4,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.4.13
+Version: 6.6.0
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -61,6 +61,7 @@ BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildRequires: meson
 BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel
+BuildRequires: libmuffin-devel
 BuildRequires: libstartup-notification-devel libcinnamon-desktop-gir-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libnm-devel libnm-gir-devel
 BuildRequires: libcanberra-gtk3-devel
@@ -116,6 +117,9 @@ Requires: python3-module-xapps-overrides
 Requires: xapp-sn-watcher
 # Required for cinnamon-settings info module
 Requires: python3(distro)
+# icons
+Requires: xapps-icons
+Requires: xapp-symbolic-icons
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -214,6 +218,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+
 * Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 6.4.13-alt1
 - New version 6.4.13.
 

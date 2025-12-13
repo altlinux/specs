@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.2
+Version: 6.6.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -76,15 +76,6 @@ settings. Other Cinnamon programs may interact with cinnamon-settings-daemon to
 obtain or change some settings. One of the most prominent examples of a c-s-d
 client is Cinnamon Control Center.
 
-%package devel
-Summary: Cinnamon Settings Daemon development files
-Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
 %prep
 %setup -q
 %patch0 -p1
@@ -96,14 +87,15 @@ developing applications that use %name.
 %install
 %meson_install
 
+# remove static libraries
+rm -v %buildroot%_libdir/cinnamon-settings-daemon-3.0/*.a
+
 %files
 %doc AUTHORS NEWS
 %dir %_libdir/%name-%api_ver
 %_bindir/csd-*
-%_libdir/%name-%api_ver/*.so
 %_libdir/%name/csd-*
 %_libexecdir/csd-*
-%_datadir/%name
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %config %_datadir/glib-2.0/schemas/*
@@ -117,11 +109,11 @@ developing applications that use %name.
 
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
-%files devel
-%_includedir/*
-%_pkgconfigdir/*
-
 %changelog
+* Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+- Remove shared libraries and devel subpackage.
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 6.4.2-alt1
 - New version 6.4.2.
 

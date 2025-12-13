@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: 6.4.5
+Version: 6.6.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -44,6 +44,10 @@ Requires: gnome-icon-theme >= %icon_theme_ver
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.9.1
+
+# icons
+Requires: xapps-icons
+Requires: xapp-symbolic-icons
 
 %add_python3_path %_datadir/nemo/actions %_datadir/nemo/layout-editor
 AutoProv: nopython3
@@ -189,6 +193,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+
 * Thu Feb 27 2025 Anton Midyukov <antohami@altlinux.org> 6.4.5-alt1
 - New version 6.4.5.
 

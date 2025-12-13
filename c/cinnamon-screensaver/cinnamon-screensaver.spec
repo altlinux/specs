@@ -1,7 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 6.4
+%define ver_major 6.6
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
@@ -88,6 +88,9 @@ rm -r %buildroot%_datadir/gir-1.0/*.gir
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- 6.6.0
+
 * Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
 - 6.4.0
 - build from git tag

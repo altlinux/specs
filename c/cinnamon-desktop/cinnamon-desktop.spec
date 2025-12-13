@@ -9,7 +9,7 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: 6.4.2
+Version: 6.6.0
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -45,6 +45,8 @@ BuildRequires: libsystemd-devel
 BuildRequires: libaccountsservice-devel
 BuildRequires: libudev-devel
 
+Obsoletes: %name-data < %EVR
+
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
 and a traditional user experience. The desktop layout is similar to Gnome 2.
@@ -61,18 +63,10 @@ BuildArch: noarch
 %description -n %name-schemas
 A collection of GSettings schemas for Cinnamon
 
-%package -n %name-data
-Summary: Data files for Cinnamon desktop libraries
-Group: Graphical desktop/GNOME
-
-%description -n %name-data
-Data files for Cinnamon desktop libraries
-
 %package -n lib%name
 Summary: Cinnamon desktop core libraries
 Group: Graphical desktop/GNOME
 Requires: %name-schemas
-Requires: %name-data
 
 %description -n lib%name
 Cinnamon desktop libraries.
@@ -130,9 +124,6 @@ GObject introspection devel data for the %name library
 %files -n %name-schemas
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
-%files -n %name-data
-%_datadir/lib%name/*
-
 %files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %doc AUTHORS README
@@ -157,6 +148,10 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
+- New version 6.6.0.
+- Remove data subpackage.
+
 * Sun Sep 07 2025 Anton Midyukov <antohami@altlinux.org> 6.4.2-alt1
 - New version 6.4.2.
 
