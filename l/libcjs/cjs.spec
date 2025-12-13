@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -39,7 +39,7 @@ BuildRequires: pkgconfig(sysprof-capture-4)
 %if_with valgrind
 BuildRequires: valgrind
 %endif
-%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
+%{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui}
 BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0}
 
 # for check
@@ -98,6 +98,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 128.1-alt1
+- New version 128.1.
+
 * Wed Sep 17 2025 Anton Midyukov <antohami@altlinux.org> 128.0-alt2
 - fix build with glib >= 2.86.0
 
