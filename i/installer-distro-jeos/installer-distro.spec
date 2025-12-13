@@ -1,6 +1,6 @@
 Name: installer-distro-jeos
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration for JeOS
 License: GPL-2.0-or-later
@@ -20,7 +20,6 @@ It is derived from installer-distro-altlinux-generic.
 Summary: Installer configuration and scripts (stage2 part)
 License: GPL
 Group: System/Configuration/Other
-Requires: installer-stage2
 # modules
 Requires: alterator-pkg
 Requires: alterator-vm
@@ -64,6 +63,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
+- stage2: remove dependency on installer-common-stage2
+
 * Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - installer-steps: reorder installer-network and user-root steps
 - changelog: correct previous entry

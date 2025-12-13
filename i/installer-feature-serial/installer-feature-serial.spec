@@ -1,6 +1,6 @@
 Name: installer-feature-serial
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: serial console support
 License: public domain
@@ -17,7 +17,6 @@ Setup %summary.
 %package stage2
 Summary: serial console support for installer
 Group: System/Configuration/Other
-Requires: installer-common-stage2
 Requires: agetty
 
 %description stage2
@@ -50,6 +49,9 @@ so that serial login is available.
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 0.6.4-alt2
+- stage2: remove dependency on installer-common-stage2
+
 * Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 0.6.4-alt1
 - renamed 65-serial.sh -> 95-serial.sh
 
