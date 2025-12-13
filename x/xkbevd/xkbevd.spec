@@ -1,13 +1,13 @@
 Name: xkbevd
-Version: 1.1.4
+Version: 1.1.6
 Release: alt1
 
 Summary: XKB event daemon
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXau-devel libXdmcp-devel libxkbfile-devel
 BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
@@ -36,6 +36,9 @@ an interesting idea.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.1.6-alt1
+- Autobuild version bump to 1.1.6
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
 - Autobuild version bump to 1.1.4
 
