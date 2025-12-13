@@ -1,5 +1,5 @@
 Name: iw
-Version: 6.9
+Version: 6.17
 Release: alt1
 
 Summary: nl80211 based CLI configuration utility for wireless devices
@@ -37,6 +37,9 @@ export CFLAGS="%optflags"
 %doc README COPYING
 
 %changelog
+* Fri Nov 21 2025 Anton Midyukov <antohami@altlinux.org> 6.17-alt1
+- New version 6.17.
+
 * Tue Dec 10 2024 Anton Midyukov <antohami@altlinux.org> 6.9-alt1
 - 6.9
 - Fix License
