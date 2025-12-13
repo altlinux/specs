@@ -1,13 +1,13 @@
 Name: xwud
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: image displayer for X
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel pkg-config xorg-proto-devel xorg-util-macros
 
@@ -33,6 +33,9 @@ dump file, such as produced by xwd(1).
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
