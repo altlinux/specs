@@ -3,7 +3,7 @@
 
 Name: rootfs-installer-features
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Run installer features during install via rootfs
 License: GPL
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 BuildRequires: rpm-macros-alterator
 #Requires: alterator-setup => 0.3.3
 Conflicts: installer-common-stage2 livecd-installer-features
+Conflicts: installer-common-base-stage2
 
 %description
 %summary
@@ -33,6 +34,9 @@ cp -a hooks %buildroot%_alterator_libdir/
 %_alterator_libdir/hooks/*/*
 
 %changelog
+* Sat Dec 06 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt2
+- Add conflict with installer-common-base-stage2.
+
 * Thu Dec 30 2021 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - install2-action-functions: do not require /etc/sysconfig/init (startup)
 

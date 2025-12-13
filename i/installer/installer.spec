@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.31
+Version: 1.16.32
 Release: alt1
 
 Summary: Installer common parts
@@ -14,11 +14,10 @@ BuildRequires: glibc-devel-static
 %description
 This package contains common installer parts.
 
-%package common-stage2
-Summary: Installer common stage2
+%package common-base-stage2
+Summary: Installer common stage2 without dependency on Xorg
 Group: System/Configuration/Other
-Provides: %name-stage2 = %version-%release
-Obsoletes: %name-stage2 < %version-%release
+
 # filter out unnecessary dependency
 %filter_from_requires /^alterator-wizardface-usermode/d
 # because of replace /var/run/alteratord -> /run/alteratord
@@ -26,7 +25,7 @@ Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
 Requires: alterator-preinstall >= 0.9-alt1
 # scripts/install2
-Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
+Requires: alterator-wizardface
 Requires: glibc-locales
 Requires: installer-scripts-remount-stage2 >= 0.6.8
 # scripts/postinstall
@@ -35,6 +34,15 @@ Requires: eject
 Requires: bash console-vt-tools
 # initinstall.d/25-setup-dhcp.sh
 Requires: alterator-hw-functions >= 0.7.8-alt1
+
+# needed for lvm binary, see 11-remount.sh
+Requires: libdevmapper-event
+
+Requires: hostinfo iproute2
+
+Conflicts: alterator-pkg < 1.2-alt1
+Conflicts: alterator-sysconfig < 0.6-alt1
+Conflicts: alterator-datetime < 4.3.0-alt1
 
 Provides: installer-feature-autohostname
 Obsoletes: installer-feature-autohostname
@@ -50,26 +58,49 @@ Obsoletes: installer-feature-services
 Provides: installer-feature-copy-udev-rules-stage3
 Obsoletes: installer-feature-copy-udev-rules-stage3
 
-
 Provides: installer-feature-systemd
 Obsoletes: installer-feature-systemd
 
 Provides: installer-feature-setup-network-stage2
 Obsoletes: installer-feature-setup-network-stage2
-Requires: hostinfo iproute2
 
 Provides: installer-feature-setup-bootloader-stage2
 Obsoletes: installer-feature-setup-bootloader-stage2
 
+%description common-base-stage2
+This package contains common installer stage2 files without dependency on Xorg.
+
+%package common-stage2
+Summary: Installer common stage2 with dependency on Xorg
+Group: System/Configuration/Other
+Provides: %name-stage2 = %version-%release
+Provides: %name-common-x11-stage2 = %EVR
+Obsoletes: %name-stage2 < %version-%release
+Requires: installer-common-base-stage2 = %EVR
+Requires: alterator-backend-x11 >= 0.21-alt2
+Requires: xinit
+Requires: xinitrc
+Requires: xorg-server
+Requires: xorg-drv-video
 Requires: xorg-xvfb
-
-# needed for lvm binary, see 11-remount.sh
-Requires: libdevmapper-event
-
-Conflicts: alterator-pkg < 1.2-alt1, alterator-sysconfig < 0.6-alt1, alterator-datetime < 4.3.0-alt1
+Requires: x11vnc
 
 %description common-stage2
-This package contains common installer stage2 files and dependencies.
+This package contains common installer stage2 files with dependency on Xorg.
+
+%package common-wayland-stage2
+Summary: Wayland support on installer
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: %name-common-base-stage2 = %EVR
+Requires: cage
+Requires: wayvnc
+# to run alterator-browser-qt in native wayland mode
+Requires: qt6-wayland
+
+%description common-wayland-stage2
+This package contains common installer stage2 files with dependency on  Wayland.
+Also this package add VNC support to Wayland via wayvnc.
 
 %package common-stage3
 Summary: Installer common stage3
@@ -93,7 +124,7 @@ This package contains common installer stage3 files and dependencies.
 Summary: Installer files for run on Desktop
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: installer-common-stage2 = %EVR
+Requires: installer-common-base-stage2 = %EVR
 Requires: polkit
 Requires: installer-alterator-livecd-stage2
 Conflicts: livecd-install
@@ -121,7 +152,7 @@ popd
 
 touch %buildroot%_datadir/installer-livecd-steps
 
-%files common-stage2
+%files common-base-stage2
 %_sbindir/*
 %exclude %_sbindir/install2
 %_datadir/install2
@@ -133,6 +164,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %exclude %_datadir/install2/livecd-fininstall.d/
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 %exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
+
+%files common-stage2
+%files common-wayland-stage2
 
 %files common-stage3
 %_datadir/install2/preinstall.d/30-setup-network.sh
@@ -146,6 +180,13 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 1.16.32-alt1
+- Add Wayland support (thx romenskiy@).
+- Add VNC of Wayland support (thx romenskiy@).
+- New subpackage installer-common-wayland-stage2, installer-common-base-stage2.
+- installer-common-stage2 provide installer-common-x11-stage2.
+- install2: start alteratord again when Wayland or Xorg is running.
+
 * Tue Dec 02 2025 Anton Midyukov <antohami@altlinux.org> 1.16.31-alt1
 - postinstall.d/00-remove-installer-pkgs.sh: fix for alterator-kopidel
 
