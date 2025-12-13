@@ -1,13 +1,13 @@
 %def_enable snapshot
 
 %define _name GstPipelineStudio
-%define ver_major 0.3
+%define ver_major 0.4
 %define rdn_name org.freedesktop.dabrain34.%_name
 
 %def_disable bootstrap
 
 Name: gst-pipeline-studio
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Draw your own GStreamer pipeline
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
-%define gtk_ver 4.0
-%define gst_ver 1.20
+%define gtk_ver 4.16
+%define gst_ver 1.26
 
 Requires: gstreamer1.0-utils gst-devtools
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 

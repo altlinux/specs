@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.0.6
+Version: 8.0.8
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -49,6 +49,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ extra-cmake-modules
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
+BuildRequires: pkgconfig(libmysofa)
 BuildRequires: nlohmann-json-devel
 BuildRequires: pkgconfig(gsl)
 BuildRequires: lv2-devel >= %lv2_ver
@@ -58,7 +59,7 @@ BuildRequires: libbs2b-devel
 BuildRequires: liblilv-devel >= %lilv_ver
 BuildRequires: libebur128-devel
 BuildRequires: pkgconfig(speexdsp)
-BuildRequires: pkgconfig(rnnoise)
+BuildRequires: pkgconfig(rnnoise) >= 0.2
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(soundtouch)
 BuildRequires: zita-convolver-devel
@@ -130,9 +131,12 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%doc README* CHANGELOG.*
+%doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.8-alt1
+- 8.0.8
+
 * Tue Dec 02 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.6-alt1
 - 8.0.6
 

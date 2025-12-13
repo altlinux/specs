@@ -1,27 +1,25 @@
-%global commit 7f449bf8bd3b933891d12c30112268c4090e4d59
-%global shortcommit %(c=%commit; echo ${c:0:7})
-%global date 20210312
+%define _name rnnoise
+%define sover 0
+# cat model_version
+%define model_version 0b50c45
+%def_disable doc
 
-Name: librnnoise
-Version: 0
-Release: alt0.3.%{date}git%{shortcommit}%{?dist}
+Name: lib%_name
+Version: 0.2
+Release: alt1.1
+
 Summary: Recurrent neural network for audio noise reduction
-
-# https://lists.fedoraproject.org/archives/list/legal@lists.fedoraproject.org/thread/HB2GPMVKMTNP5WDGIRNU5NZUO4JWQPII/
-License: BSD
+License: BSD-2-Clause
 Group: System/Libraries
 Url: https://gitlab.xiph.org/xiph/rnnoise
 
-# Source-url: %url/-/archive/%commit/%name-%version.%{date}git%shortcommit.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: %name-%version.tar
+# see autogen.sh & download_model.sh
+Source1: https://media.xiph.org/rnnoise/models/rnnoise_data-%model_version.tar.gz
+Patch: %name-%version-%release.patch
 
-BuildRequires: autoconf
-BuildRequires: automake
 BuildRequires: gcc-c++
-BuildRequires: libtool
-BuildRequires: make
+%{?_enable_doc:BuildRequires: doxygen graphviz}
 
 %description
 RNNoise is a noise suppression library based on a recurrent neural network.
@@ -37,33 +35,44 @@ The output is also a 16-bit raw PCM file.
 %package devel
 Group: Development/C
 Summary: Devel files for %name
-
 Requires: %name = %EVR
 
 %description devel
 Devel files for %name.
 
 %prep
-%setup
+%setup -a1
+%patch -p1
 
-cat > 'package_version' <<-EOF
-    PACKAGE_VERSION=%{date}git%shortcommit
-EOF
+cat > package_version << _EOF_
+    PACKAGE_VERSION=%version
+_EOF_
 
 %build
-./autogen.sh
+%ifarch %ix86
+%add_optflags -msse2
+%endif
+%autoreconf
 %configure \
-    --disable-static
+    --disable-static \
+    %{subst_enable doc} \
+%ifarch x86_64
+    --enable-x86-rtcd
+%endif
+%nil
 %make_build
 
 %install
 %makeinstall_std
 rm -rf %buildroot%_docdir/
 
+%check
+%make -k check VERBOSE=1
+
 %files
 %doc COPYING
 %doc TRAINING-README AUTHORS README
-%_libdir/%name.so.0*
+%_libdir/%name.so.%{sover}*
 
 %files devel
 %_includedir/*.h
@@ -71,6 +80,13 @@ rm -rf %buildroot%_docdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt1.1
+- fixed build for aarch64
+
+* Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt1
+- 0.2
+- switched build to upstream git
+
 * Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 0-alt0.3.20210312git7f449bf
 - initial build for ALT Sisyphus (thanks, Fedora!)
 
