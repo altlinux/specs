@@ -1,13 +1,13 @@
 Name: xlogo
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: display the X Window System logo
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: fontconfig fontconfig-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel pkg-config xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -37,6 +37,9 @@ The xlogo program displays the X Window System logo. That's all.
 %_x11appconfdir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
