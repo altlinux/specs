@@ -1,16 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: aurynk
-Version: 1.1.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Wirelessly connect, manage and control your Android devices from Linux
 License: GPL-3.0-or-later
 Group: Networking/Remote access
-URL: https://github.com/IshuSinghSE/aurynk
+URL: https://theishu.xyz/aurynk
+Vcs: https://github.com/IshuSinghSE/aurynk
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: meson
 BuildRequires: cmake
@@ -50,6 +52,7 @@ Features:
 sed -i "s|Categories=.*|Categories=Network;RemoteAccess;|" data/io.github.IshuSinghSE.aurynk.desktop.in
 sed -i "s|data/icons/io.github.IshuSinghSE.aurynk.png|%_iconsdir/hicolor/128x128/apps/io.github.IshuSinghSE.aurynk.png|" README.md
 sed -i "s|data/screenshots/|screenshots/|g" README.md
+sed -i 's|os.path.dirname(__file__), "..|"/usr/lib/python3/site-packages/aurynk|' aurynk/application.py
 
 %build
 %meson
@@ -99,13 +102,17 @@ mkdir -p %buildroot%python3_sitelibdir/%name/scripts/
 cp -v scripts/aurynk_tray.py %buildroot%python3_sitelibdir/%name/scripts/
 rm -v %buildroot/usr/lib/python3/site-packages/scripts/aurynk_tray.py
 
+%find_lang %name
+
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %doc CHANGELOG.md LICENSE README.md data/screenshots
 %_bindir/aurynk
+%_bindir/aurynk_udev_proxy.py
 %_desktopdir/io.github.IshuSinghSE.aurynk.desktop
+%_desktopdir/aurynk-udev-proxy.desktop
 %_iconsdir/hicolor/*/apps/io.github.IshuSinghSE.aurynk.png
 %_iconsdir/hicolor/*/apps/io.github.IshuSinghSE.aurynk.*.png
 %_iconsdir/hicolor/scalable/apps/io.github.IshuSinghSE.aurynk.svg
@@ -113,8 +120,13 @@ rm -v %buildroot/usr/lib/python3/site-packages/scripts/aurynk_tray.py
 %_datadir/%name/*
 %_datadir/metainfo/io.github.IshuSinghSE.aurynk.metainfo.xml
 %python3_sitelibdir/%name/
+%_userunitdir/aurynk-udev-proxy.service
+%_userunitdir/aurynk-udev-proxy.socket
 
 %changelog
+* Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Thu Nov 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt2
 - Put aurynk_tray.py into correct location, and enabled tray icon.
 
