@@ -6,7 +6,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.8.4
+Version: 3.8.6
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -25,6 +25,7 @@ Requires: %name-data = %version-%release
 Requires: dconf gnome-icon-theme gvfs zenity
 %{?_enable_zeitgeist:Requires: zeitgeist}
 Requires: xapps-icons
+Requires: xapp-symbolic-icons
 
 Obsoletes: xed-data < %EVR
 Provides: xed-data = %EVR
@@ -54,6 +55,7 @@ BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgtksourceview4-gir-devel
 BuildRequires: libgspell-devel
 BuildRequires: libxapps-devel
+BuildRequires: pkgconfig(pygobject-3.0)
 
 Requires: libpeas-python3-loader < 2.0
 Requires: typelib(Peas) = 1.0
@@ -147,6 +149,9 @@ rm -r %buildroot%_pkgconfigdir/*
 %doc README.md AUTHORS
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 3.8.6-alt1
+- New version 3.8.6.
+
 * Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.8.4-alt1
 - new version 3.8.4
 - switch to girepository-2.0 so it works with new pygobject3
