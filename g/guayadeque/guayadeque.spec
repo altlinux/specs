@@ -2,7 +2,7 @@
 %global wxversion 3.2
 
 Name: guayadeque
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 Summary: Music player
 License: GPL-3.0-or-later and BSD and LGPL-2.0-or-later and wxWidgets
@@ -64,6 +64,12 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %_datadir/metainfo/org.guayadeque.guayadeque.metainfo.xml
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
+- new version 0.7.4.
+
+* Thu Nov 27 2025 Anton Midyukov <antohami@altlinux.org> 0.7.3-alt1
+- new version 0.7.3.
+
 * Fri Jul 11 2025 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt1
 - new version (0.7.2) with rpmgs script
 
