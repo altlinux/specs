@@ -1,8 +1,8 @@
 Name: xbacklight
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: adjust backlight brightness using RandR extension
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
@@ -37,6 +37,9 @@ control and changes them all in the same way.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.2.4-alt1
+- Autobuild version bump to 1.2.4
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.2.3-alt1
 - Autobuild version bump to 1.2.3
 
