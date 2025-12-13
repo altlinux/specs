@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 145.0
+Version: 146.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -382,6 +382,23 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Dec 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 146.0-alt1
+- New version.
+- Fixes:
+  + CVE-2025-14321: Use-after-free in the WebRTC: Signaling component
+  + CVE-2025-14322: Sandbox escape due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2025-14323: Privilege escalation in the DOM: Notifications component
+  + CVE-2025-14324: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14325: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14326: Use-after-free in the Audio/Video: GMP component
+  + CVE-2025-14327: Spoofing issue in the Downloads Panel component
+  + CVE-2025-14328: Privilege escalation in the Netmonitor component
+  + CVE-2025-14329: Privilege escalation in the Netmonitor component
+  + CVE-2025-14330: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14331: Same-origin policy bypass in the Request Handling component
+  + CVE-2025-14332: Memory safety bugs fixed in Firefox 146 and Thunderbird 146
+  + CVE-2025-14333: Memory safety bugs fixed in Firefox ESR 140.6, Thunderbird ESR 140.6, Firefox 146 and Thunderbird 146
+
 * Mon Nov 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 145.0-alt1
 - New version.
 - Fixes:
