@@ -1,13 +1,13 @@
 Name: xwd
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: dump an image of an X window
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXmu-devel pkg-config xorg-proto-devel xorg-util-macros libxkbfile-devel
 
@@ -37,6 +37,9 @@ the dump is completed.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.9-alt1
+- Autobuild version bump to 1.0.9
+
 * Wed Nov 17 2021 Fr. Br. George <george@altlinux.ru> 1.0.8-alt1
 - Autobuild version bump to 1.0.8
 
