@@ -1,9 +1,9 @@
 Name: xauth
-Version: 1.1.2
+Version: 1.1.4
 Release: alt1
 Epoch: 1
 Summary: X authority file utility
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
@@ -45,6 +45,12 @@ does that.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1:1.1.4-alt1
+- Autobuild version bump to 1.1.4
+
+* Thu Apr 18 2024 Fr. Br. George <george@altlinux.org> 1:1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1:1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
