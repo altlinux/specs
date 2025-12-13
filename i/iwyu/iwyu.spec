@@ -1,5 +1,5 @@
 Name: iwyu
-Version: 0.23
+Version: 0.25
 Release: alt1
 
 Summary: C/C++ source files #include analyzer based on clang
@@ -9,7 +9,7 @@ Url: https://github.com/include-what-you-use/include-what-you-use
 
 Packager: %packager
 
-BuildRequires: clang19.1-devel llvm19.1-devel cmake gcc-c++ ninja-build rpm-build-python3
+BuildRequires: clang21.1-devel llvm21.1-devel cmake gcc-c++ ninja-build rpm-build-python3
 
 Source0: %name-%version-%release.tar
 
@@ -36,6 +36,7 @@ sed -e s@lib/@lib\${LLVM_LIBDIR_SUFFIX}/@g -i CMakeLists.txt
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+    -DCMAKE_PREFIX_PATH=/usr/lib/llvm-21.1 \
     -DIWYU_LLVM_ROOT_PATH=%{_libdir}
 %cmake_build
 
@@ -52,6 +53,12 @@ sed -e s@lib/@lib\${LLVM_LIBDIR_SUFFIX}/@g -i CMakeLists.txt
 %docdir *
 
 %changelog
+* Sat Dec 13 2025 Andrey Bergman <vkni@altlinux.org> 0.25-alt1
+- Update to version 0.25 (Clang 21).
+
+* Sun May 25 2025 Andrey Bergman <vkni@altlinux.org> 0.24-alt1
+- Update to version 0.24 (Clang 20).
+
 * Sat Mar 22 2025 Andrey Bergman <vkni@altlinux.org> 0.23-alt1
 - Update to version 0.23 (Clang 19).
 
