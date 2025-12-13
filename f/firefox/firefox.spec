@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 145.0.1
+Version: 146.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Dec 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 146.0-alt1
+- New version (146.0).
+- Fixes:
+  + CVE-2025-14321: Use-after-free in the WebRTC: Signaling component
+  + CVE-2025-14322: Sandbox escape due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2025-14323: Privilege escalation in the DOM: Notifications component
+  + CVE-2025-14324: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14325: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14326: Use-after-free in the Audio/Video: GMP component
+  + CVE-2025-14327: Spoofing issue in the Downloads Panel component
+  + CVE-2025-14328: Privilege escalation in the Netmonitor component
+  + CVE-2025-14329: Privilege escalation in the Netmonitor component
+  + CVE-2025-14330: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2025-14331: Same-origin policy bypass in the Request Handling component
+  + CVE-2025-14332: Memory safety bugs fixed in Firefox 146 and Thunderbird 146
+  + CVE-2025-14333: Memory safety bugs fixed in Firefox ESR 140.6, Thunderbird ESR 140.6, Firefox 146 and Thunderbird 146
+
 * Fri Nov 21 2025 Ajrat Makhmutov <rauty@altlinux.org> 145.0.1-alt1
 - New version (145.0.1).
 
