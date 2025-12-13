@@ -4,7 +4,7 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Python Xapp Library
@@ -42,6 +42,9 @@ BuildRequires: meson
 %python3_sitelibdir/%oname/
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Thu Nov 13 2025 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 
