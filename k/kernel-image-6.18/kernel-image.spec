@@ -1,11 +1,11 @@
 Name: kernel-image-6.18
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -290,14 +290,11 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
 
-%build
+%conf
 banner build
 export ARCH=%base_arch
-export NPROCS=%__nprocs
 KernelVer=%kversion-%flavour-%krelease
-
-echo "Building Kernel $KernelVer"
-
+echo "Configuring Kernel $KernelVer"
 %make_build mrproper
 make -s kernelversion | grep -Fx '%kversion-%flavour-%krelease'
 
@@ -315,7 +312,12 @@ CONFIGS="$CONFIGS config-kasan"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
-%{?kconfig_hook}
+
+%build
+export ARCH=%base_arch
+export NPROCS=%__nprocs
+KernelVer=%kversion-%flavour-%krelease
+echo "Building Kernel $KernelVer"
 make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 %make_build %make_target || {
 	%make %make_target V=1
@@ -588,6 +590,16 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Dec 13 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.1-alt2
+- spec: Fix usage of the newly introduced %conf section.
+
+* Sat Dec 13 2025 Kernel Bot <kernelbot@altlinux.org> 6.18.1-alt1
+- v6.18.1 (2025-12-12).
+- config: CONFIG_SND_SOC_AMD_RPL_ACP6x=m.
+- config-aarch64: CONFIG_DRM_ACCEL_ROCKET=m.
+- config: CONFIG_SYSFB_SIMPLEFB=n, CONFIG_DRM_VESADRM=y,
+  CONFIG_DRM_EFIDRM=y.
+
 * Mon Dec 01 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.0-alt1
 - Update to v6.18 (2025-11-30) release.
 
