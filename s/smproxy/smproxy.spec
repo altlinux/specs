@@ -1,13 +1,13 @@
 Name: smproxy
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 
 Summary: Session Manager Proxy
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel libXdmcp-devel
 BuildRequires: libXext-devel libXmu-devel libXt-devel pkg-config xorg-proto-devel
@@ -34,6 +34,9 @@ to participate in an X11R6 session.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.8-alt1
+- Autobuild version bump to 1.0.8
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
