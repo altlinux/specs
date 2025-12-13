@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.4.12
+Version: 3.4.15
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -31,6 +31,7 @@ BuildRequires: libxapps-devel
 BuildRequires: meson
 
 Requires: xapps-icons
+Requires: xapp-symbolic-icons
 Requires: libpeas-python3-loader < 2.0
 Requires: typelib(Peas) = 1.0
 Requires: typelib(PeasGtk) = 1.0
@@ -100,6 +101,9 @@ rm -r %buildroot%_pkgconfigdir/%name.pc
 %doc README.md THANKS
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 3.4.15-alt1
+- New version 3.4.15.
+
 * Sat Oct 18 2025 Anton Midyukov <antohami@altlinux.org> 3.4.12-alt1
 - new version 3.4.12
 - switch to girepository-2.0 so it works with new pygobject3
