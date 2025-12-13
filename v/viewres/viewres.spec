@@ -1,10 +1,10 @@
 Name: viewres
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 Summary: graphical class browser for Xt
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -36,6 +36,9 @@ of the Athena Widget Set.
 %_mandir/man1/viewres.*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.8-alt1
+- Autobuild version bump to 1.0.8
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
