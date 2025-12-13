@@ -1,6 +1,6 @@
 Name: installer-distro-regular
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration for ALT Regular
 License: GPL-2.0-or-later
@@ -19,7 +19,6 @@ It is derived from installer-distro-alt-workstation.
 %package stage2
 Summary: Installer configuration for ALT Regular (stage2 part)
 Group: System/Configuration/Other
-Requires: installer-stage2
 # modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
@@ -71,6 +70,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 0.4-alt2
+- stage2: remove dependency on installer-stage2.
+
 * Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
 - change order of steps, luks after preinstall
 
