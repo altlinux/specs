@@ -13,7 +13,7 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.4
+Version: 3.4.9
 Release: alt1
 
 Summary: An image viewer and browser utility.
@@ -45,6 +45,7 @@ Provides: pix-data = %EVR
 
 Requires: %name-data = %version-%release
 Requires: xapps-icons
+Requires: xapp-symbolic-icons
 
 # From configure.in
 BuildPreReq: glib2-devel >= %glib_ver
@@ -128,6 +129,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 3.4.9-alt1
+- New version 3.4.9.
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.4.4-alt1
 - new version 3.4.4
 
