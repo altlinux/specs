@@ -1,8 +1,8 @@
 Name: xcompmgr
-Version: 1.1.8
+Version: 1.1.10
 Release: alt1
 Summary: sample X compositing manager
-License: GPL
+License: MIT
 Epoch: 1
 Group: System/X11
 
@@ -37,6 +37,9 @@ effects.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1:1.1.10-alt1
+- Autobuild version bump to 1.1.10
+
 * Mon Sep 09 2019 Fr. Br. George <george@altlinux.ru> 1:1.1.8-alt1
 - Restore epoch for history reason
 
