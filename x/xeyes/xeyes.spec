@@ -1,8 +1,8 @@
 Name: xeyes
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
-Summary: display the X Window System logo
+Summary: A "follow the mouse" X demo
 License: X11
 Group: System/X11
 
@@ -16,7 +16,7 @@ BuildRequires: libXi-devel libXmu-devel libXrender-devel
 BuildRequires: xorg-proto-devel xorg-util-macros
 
 %description
-The xeyes program displays the X Window System logo. That's all.
+XEyes - a "follow the mouse" X demo, using the X SHAPE extension.
 
 %prep
 %setup
@@ -36,6 +36,12 @@ The xeyes program displays the X Window System logo. That's all.
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.3.1-alt1
+- Autobuild version bump to 1.3.1
+
+* Thu Apr 18 2024 Fr. Br. George <george@altlinux.org> 1.3.0-alt1
+- Autobuild version bump to 1.3.0
+
 * Wed Nov 17 2021 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
 - Autobuild version bump to 1.2.0
 
