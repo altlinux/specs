@@ -20,7 +20,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -346,6 +346,11 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Sat Dec 13 2025 Ilya Mashkin <oddity@altlinux.ru> 6.0.4-alt1
+- 6.0.4
+- Fixed Vulnerability in NetworkManager Plugin (Fixes: CVE-2025-9615)
+- Previously fixed Vulnerability in eap-mschapv2 Plugin (Fixes: CVE-2025-62291)
+
 * Thu Oct 30 2025 Ilya Mashkin <oddity@altlinux.ru> 6.0.3-alt1
 - 6.0.3
 
