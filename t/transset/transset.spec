@@ -1,5 +1,5 @@
 Name: transset
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 Group: System/X11
 Summary: Simple utility to set transparency on a window
@@ -35,11 +35,14 @@ Features:
 %makeinstall
 
 %files
-%doc README
+%doc README*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Autobuild version bump to 1.0.2
 
