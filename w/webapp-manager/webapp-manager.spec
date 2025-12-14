@@ -1,6 +1,6 @@
 Name:     webapp-manager
 Version:  1.4.5
-Release:  alt1
+Release:  alt2
 
 Summary:  Run websites as if they were apps
 License:  GPLv3
@@ -16,7 +16,9 @@ Patch: common-1.4.2-alt-fixes.patch
 
 AutoProv: no
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-build-kf5
+Requires: xapp-symbolic-icons
+
+BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-build-kf6
 BuildRequires: altlinux-menus
 
 %description
@@ -58,11 +60,14 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.x.webapp-manager.gschema.xml
-%_K5xdgdir/webapps-webapps.directory
+%_K6xdgdir/webapps-webapps.directory
 
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Sun Dec 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.5-alt2
+- fix: the app doesn't include the icons
+
 * Sat Dec 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.5-alt1
 - 1.4.4 -> 1.4.5
 
