@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 12
 %define pypi_name gsecrets
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: secrets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -18,7 +18,7 @@ Url: https://gitlab.gnome.org/World/secrets
 Vcs: https://gitlab.gnome.org/World/secrets.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -83,6 +83,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Sun Dec 14 2025 Yuri N. Sedunov <aris@altlinux.org> 12.1-alt1
+- 12.1
+
 * Tue Sep 16 2025 Yuri N. Sedunov <aris@altlinux.org> 12.0-alt1
 - 12.0
 
