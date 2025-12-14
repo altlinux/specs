@@ -1,10 +1,10 @@
 Name: xcalc
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 Summary: Scientific calculator for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -36,6 +36,9 @@ or an HP-10C.
 %_mandir/man1/xcalc.*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
 - Autobuild version bump to 1.1.0
 
