@@ -1,13 +1,13 @@
 Name: listres
-Version: 1.0.4
-Release: alt2
+Version: 1.0.6
+Release: alt1
 
 Summary: list resources in X widgets
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
@@ -16,7 +16,11 @@ BuildRequires: libXaw-devel
 BuildRequires: libX11-devel libXaw-devel pkg-config xorg-proto-devel xorg-util-macros
 
 %description
-The listres program generates a list of a widget's resource database. The class in which each resource is first defined, the instance and class name, and the type of each resource is listed. If no specific widgets or the -all switch are given, a two-column list of widget names and their class hierarchies is printed.
+The listres program generates a list of a widget's resource database.
+The class in which each resource is first defined, the instance and
+class name, and the type of each resource is listed. If no specific
+widgets or the -all switch are given, a two-column list of widget names
+and their class hierarchies is printed.
 
 %prep
 %setup
@@ -31,10 +35,14 @@ The listres program generates a list of a widget's resource database. The class 
 %make DESTDIR=%buildroot install
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Fri Mar 20 2020 Fr. Br. George <george@altlinux.ru> 1.0.4-alt2
 - Rebuild with new libXaw
 
