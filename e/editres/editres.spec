@@ -1,23 +1,29 @@
 Name: editres
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 
 Summary: a dynamic resource editor for X Toolkit applications
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://cgit.freedesktop.org/xorg/app/editres/
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 # Doesn't build withouth this
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
-BuildRequires: libXaw-devel
+BuildRequires: libXaw-devel libxkbfile-devel
 
 BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
 
 %description
-Editres is a tool that allows users and application developers to view the full widget hierarchy of any X Toolkit application that speaks the Editres protocol. In addition, editres will help the user construct resource specifications, allow the user to apply the resource to the application and view the results dynamically. Once the user is happy with a resource specification editres will append the resource string to the user's X Resources file.
+Editres is a tool that allows users and application developers to view
+the full widget hierarchy of any X Toolkit application that speaks the
+Editres protocol. In addition, editres will help the user construct
+resource specifications, allow the user to apply the resource to the
+application and view the results dynamically. Once the user is happy
+with a resource specification editres will append the resource string to
+the user's X Resources file.
 
 %prep
 %setup
@@ -32,12 +38,15 @@ Editres is a tool that allows users and application developers to view the full 
 %make DESTDIR=%buildroot install
 
 %files
-%doc ChangeLog AUTHORS README
+%doc *.md
 %_bindir/*
 %_man1dir/*
 %_x11appconfdir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.9-alt1
+- Autobuild version bump to 1.0.9
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.7-alt1
 - Autobuild version bump to 1.0.7
 
