@@ -1,5 +1,5 @@
 Name: iceauth
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: ICE authority file utility
 License: X11
@@ -36,6 +36,9 @@ on the iceauth command line, or in scripts.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.10-alt1
+- Autobuild version bump to 1.0.10
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.0.9-alt1
 - Autobuild version bump to 1.0.9
 
