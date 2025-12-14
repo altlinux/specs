@@ -1,9 +1,9 @@
 Name: xlsatoms
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Summary: List interned atoms defined on server
 Group: System/X11
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -36,6 +36,9 @@ undefined.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.4-alt1
+- Autobuild version bump to 1.1.4
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
