@@ -26,7 +26,7 @@
 
 Name:    ZLEqualizer2
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: %common_summary
 License: AGPL-3.0
@@ -138,6 +138,9 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Sun Dec 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt2
+- 1.1.0 retagged
+
 * Thu Dec 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
