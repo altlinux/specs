@@ -1,5 +1,5 @@
 Name: fonttosfnt
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1
 Summary: Wrap a bitmap font in a sfnt (TrueType) wrapper
 Group: System/X11
@@ -31,6 +31,9 @@ Fonttosfnt wraps a bitmap font in a sfnt (TrueType or OpenType) wrapper.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.2.4-alt1
+- Autobuild version bump to 1.2.4
+
 * Wed Nov 17 2021 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
 - Autobuild version bump to 1.2.2
 
