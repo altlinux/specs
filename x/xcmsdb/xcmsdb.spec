@@ -1,13 +1,13 @@
 Name: xcmsdb
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: Device Color Characterization utility for X Color Management System
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXau-devel libXdmcp-devel pkg-config xorg-proto-devel
 BuildRequires: xorg-util-macros
@@ -39,10 +39,14 @@ between  RGBi and RGB device (XcmsRGB, also referred to as device RGB).
 %make DESTDIR=%buildroot install
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
