@@ -1,9 +1,9 @@
 Name: xpr
-Version: 1.0.5
+Version: 1.2.0
 Release: alt1
 Summary: Dump an X window directly to a printer
 Group: System/X11
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Url: http://xorg.freedesktop.org/releases/individual/app/
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -28,10 +28,14 @@ printer, the HP LaserJet (or other PCL printers), or the HP PaintJet.
 %make install DESTDIR=%buildroot
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
