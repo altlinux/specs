@@ -1,10 +1,10 @@
 Name: xclock
-Version: 1.0.9
+Version: 1.1.1
 Release: alt1
 Summary: analog / digital clock for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -37,6 +37,9 @@ continuously updated at a frequency which may be specified by the user.
 %_mandir/man1/xclock.*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.1-alt1
+- Autobuild version bump to 1.1.1
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.0.9-alt1
 - Autobuild version bump to 1.0.9
 
