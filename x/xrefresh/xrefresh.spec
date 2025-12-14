@@ -1,13 +1,13 @@
 Name: xrefresh
-Version: 1.0.6
+Version: 1.1.0
 Release: alt1
 
 Summary: refresh all or part of an X screen
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXau-devel libXdmcp-devel pkg-config xorg-proto-devel
 BuildRequires: xorg-util-macros
@@ -39,6 +39,9 @@ color) or the root window background should be used instead.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.0-alt1
+- Autobuild version bump to 1.1.0
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
