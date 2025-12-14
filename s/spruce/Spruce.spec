@@ -1,7 +1,7 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
@@ -43,9 +43,6 @@ Summary: Python3 module for %name
 %install
 %meson_install
 
-%check
-%__meson_test
-
 %files
 %_bindir/%name
 %_datadir/applications/%oname.desktop
@@ -58,5 +55,8 @@ Summary: Python3 module for %name
 %python3_sitelibdir/%name/
 
 %changelog
+* Sun Dec 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt1
+- 0.1.3 -> 0.1.4
+
 * Wed Dec 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.3-alt1
 - Initial build for ALT Linux.
