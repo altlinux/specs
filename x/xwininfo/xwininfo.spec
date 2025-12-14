@@ -1,13 +1,13 @@
 Name: xwininfo
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: window information utility for X
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 # Automatically added by buildreq on Tue Dec 09 2008
 BuildRequires: libX11-devel libXext-devel
 
@@ -35,6 +35,9 @@ information is displayed depending on which options are selected.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.6-alt1
+- Autobuild version bump to 1.1.6
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.5-alt1
 - Autobuild version bump to 1.1.5
 
