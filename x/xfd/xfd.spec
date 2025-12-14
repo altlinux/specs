@@ -1,10 +1,10 @@
 Name: xfd
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Summary: Display all the characters in an X font
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Packager: Fr. Br. George <george@altlinux.ru>
 License: MIT
 
@@ -38,6 +38,9 @@ shown in increasing order from left to right, top to bottom.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.4-alt1
+- Autobuild version bump to 1.1.4
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
