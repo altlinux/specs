@@ -1,9 +1,9 @@
 Name: xman
-Version: 1.1.5
+Version: 1.2.0
 Release: alt1
 Summary: Manual page display program for the X Window System
 Group: System/X11
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Patch: 0001-Add-xz-compressed-man-pages.patch
 License: MIT
 Url: http://xorg.freedesktop.org
@@ -19,9 +19,9 @@ Xman is a manual page display program for the X Window System.
 
 %prep
 %setup -n %name-%version
-%patch -p2
+%patch -p1
 for f in `grep -rsl /usr/man .`; do
-	sed -i 's@/usr/man@/usr/share/man@g' $f
+        sed -i 's@/usr/man@/usr/share/man@g' $f
 done
 
 %build
@@ -40,6 +40,9 @@ done
 %_mandir/man1/xman.*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.1.5-alt1
 - Autobuild version bump to 1.1.5
 
