@@ -1,13 +1,13 @@
 Name: xkbprint
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: print an XKB keyboard description
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXau-devel libXdmcp-devel libxkbfile-devel
 BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
@@ -37,10 +37,14 @@ xkprint uses server-n where n is the number of the display.
 %make DESTDIR=%buildroot install
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
