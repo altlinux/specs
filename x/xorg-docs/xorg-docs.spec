@@ -7,15 +7,15 @@
 %def_disable ps
 
 Name: xorg-docs
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 Serial: 1
 Summary: Documentation on various X11 programming interfaces
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 Provides: %xf86-doc = 4.4 xorg-x11-doc = %xorgver
 Obsoletes: %xf86-doc xorg-x11-doc
@@ -55,6 +55,9 @@ the font server API, etc.
 %_man7dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1:1.7.3-alt1
+- Autobuild version bump to 1.7.3
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1:1.7.2-alt1
 - Autobuild version bump to 1.7.2
 
