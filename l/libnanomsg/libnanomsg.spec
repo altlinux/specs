@@ -1,18 +1,14 @@
-Name:           libnanomsg
-Version:        1.2.1
-Release: alt2
+Name:    libnanomsg
+Version: 1.2.2
+Release: alt1
 
-Summary:        nanomsg is a socket library that provides several common communication patterns
-Group:          System/Libraries
-License:        MIT/X11
-URL:            http://nanomsg.org/
-# VCS:		https://github.com/nanomsg/nanomsg
+Summary: nanomsg is a socket library that provides several common communication patterns
+Group:   System/Libraries
+License: MIT/X11
+URL: http://nanomsg.org/
+VCS: https://github.com/nanomsg/nanomsg
 
-Source0:        %name-%version.tar
-# https://github.com/nanomsg/nanomsg/issues/1111#issuecomment-2113151297
-Patch: libnanomsg-1.2.1-upstream-fix-chunkref.patch
-
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -39,18 +35,17 @@ PIPELINE - aggregates messages from multiple sources and load balances
 them among many destinations
 SURVEY - allows to query state of multiple applications in a single go
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %name = %version-%release
+%package devel
+Summary: Development files for %{name}
+Group: Development/C
+Requires: %name = %EVR
 
-%description    devel
+%description devel
 Development files for the %{name} library. nanomsg is a socket library
 that provides several common communication patterns.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %cmake
@@ -73,8 +68,12 @@ that provides several common communication patterns.
 %_includedir/nanomsg/*
 %_libdir/lib*.so
 %_pkgconfigdir/nanomsg.pc
+%_libdir/cmake/*
 
 %changelog
+* Mon Oct 06 2025 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
+- New version.
+
 * Tue Apr 29 2025 Constantin Sunzow <protvin@altlinux.org> 1.2.1-alt2
 - NMU: apply patch for fix bug.
 - Enable tests.
