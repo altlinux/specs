@@ -1,17 +1,18 @@
 Name: appres
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: list X application resource database
-License: MIT/X11
+License: X11
 Group: System/X11
 # git
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 Url: http://cgit.freedesktop.org/xorg/app/appres
 
-# Automatically added by buildreq on Tue May 18 2010
-BuildRequires: libXt-devel xorg-util-macros
+# Automatically added by buildreq on Sun Dec 14 2025
+# optimized out: libX11-devel libgpg-error ninja-build openssl-config pkg-config python3 python3-base sh5 xorg-proto-devel xz
+BuildRequires: libXt-devel meson
 
 %description
 The appres program prints the resources seen by an application (or
@@ -23,20 +24,21 @@ program will load.
 %setup
 
 %build
-%autoreconf
-%configure
-
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
-%doc README AUTHORS
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
+- Autobuild version bump to 1.0.7
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
