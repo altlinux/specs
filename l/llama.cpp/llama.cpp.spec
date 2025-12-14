@@ -11,12 +11,13 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 7127
+Version: 7388
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
 Group: Sciences/Computer science
+# https://ggml.ai/
 Url: https://github.com/ggerganov/llama.cpp
 ExcludeArch: %ix86
 Requires: %name-cpu = %EVR
@@ -35,6 +36,7 @@ Patch: %name-%version.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: help2man
 BuildRequires: libcurl-devel
 BuildRequires: libgomp-devel
 BuildRequires: libssl-devel
@@ -174,7 +176,8 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 grep -E 'LLAMA|GGML' %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
 %cmake_build
 find -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
-LD_LIBRARY_PATH=%_cmake__builddir/bin %_cmake__builddir/bin/llama-cli --completion-bash > llama.bash
+LD_LIBRARY_PATH=%_cmake__builddir/bin %_cmake__builddir/bin/llama-server --completion-bash > llama.bash
+LD_LIBRARY_PATH=%_cmake__builddir/bin .gear/gen-manpage %_cmake__builddir/bin/llama-server > llama-server.1
 
 %install
 %cmake_install
@@ -189,10 +192,11 @@ install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 # We need to run the tests, not install them.
 rm %buildroot%_bindir/test-*
 # Completions.
-install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-cli
-printf '%%s\n' llama-server llama-simple llama-run llama-mtmd-cli |
-	xargs -ti ln -s llama-cli %buildroot%_datadir/bash-completion/completions/{}
+install -Dpm644 llama.bash %buildroot%_datadir/bash-completion/completions/llama-server
+printf '%%s\n' llama-cli llama-simple llama-run llama-mtmd-cli |
+	xargs -ti ln -s llama-server %buildroot%_datadir/bash-completion/completions/{}
 mv %buildroot%_bindir/rpc-server %buildroot%_bindir/llama-rpc-server
+install -Dpm644 llama-server.1 -t %buildroot%_man1dir
 
 %check
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
@@ -200,12 +204,12 @@ mv %buildroot%_bindir/rpc-server %buildroot%_bindir/llama-rpc-server
 # Local path are more useful for debugging becasue they are not stripped by default.
 %dnl export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libexecdir/llama PATH+=:%buildroot%_bindir
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
-llama-cli --version
-llama-cli --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
+llama-server --version
+llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback wants network.
 %ctest -j1 -E test-eval-callback
-llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
-llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 |
+llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
+llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
 # We do not provide convert tools.
 mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
@@ -247,6 +251,7 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %_libexecdir/llama/libggml-cpu*.so
 %_libexecdir/llama/libggml-rpc.so
 %_datadir/bash-completion/completions/llama-*
+%_man1dir/llama-server.1*
 
 %if_with cuda
 %files cuda
@@ -261,6 +266,11 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Sun Dec 14 2025 Vitaly Chikunov <vt@altlinux.org> 1:7388-alt1
+- Update to b7388 (2025-12-13).
+- llama-cli: New CLI experience (with the old moved to llama-completion).
+- llama-server: Live model switching.
+
 * Fri Nov 21 2025 Vitaly Chikunov <vt@altlinux.org> 1:7127-alt1
 - Update to b7127 (2025-11-21).
 - spec: Remove llama.cpp-convert package.
