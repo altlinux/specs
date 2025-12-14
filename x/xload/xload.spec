@@ -1,10 +1,10 @@
 Name: xload
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 Summary: System load average display for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 # check setuid return value to make sure we drop user privilegies
 #Patch0: http://xorg.freedesktop.org/releases/X11R7.1/patches/xload-1.0.1-setuid.diff
 License: MIT
@@ -33,12 +33,15 @@ load average.
 %makeinstall appdefaultdir=%buildroot%_x11appconfdir
 
 %files
-%doc README
+%doc README*
 %_bindir/xload
 %_x11appconfdir/XLoad
 %_mandir/man1/xload.*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.2.0-alt1
+- Autobuild version bump to 1.2.0
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
