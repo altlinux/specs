@@ -1,13 +1,13 @@
 Name: xstdcmap
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: X standard colormap utility
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 
 BuildRequires: libICE-devel libSM-devel libX11-devel libXau-devel
 BuildRequires: libXdmcp-devel libXext-devel libXmu-devel libXt-devel
@@ -38,6 +38,9 @@ sible, colormaps are created with read-only allocations.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
 - Autobuild version bump to 1.0.4
 
