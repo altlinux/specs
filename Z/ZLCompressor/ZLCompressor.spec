@@ -7,8 +7,8 @@
 %define _optlevel 3
 
 Name:    ZLCompressor
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: A compressor plugin from ZL Audio
 License: AGPL-3.0
@@ -138,6 +138,9 @@ cp -a "VST3/ZL Compressor.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Sun Dec 14 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Wed Dec 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt2
 - backport a couple of fixes from upstream
 
