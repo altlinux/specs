@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     multimon-ng
-Version:  1.3.0
+Version:  1.4.1
 Release:  alt1
 
 Summary:  A fork of multimon that decodes multiple digital transmission modes
@@ -48,6 +48,9 @@ MultimonNG a fork of multimon. It decodes the following digital transmission mod
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
