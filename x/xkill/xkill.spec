@@ -1,15 +1,15 @@
 Name: xkill
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: kill a client by its X resource
-License: MIT/X11
+License: X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 Source1: %name.desktop
-Source2: %name-icons.tar.bz2
+Source2: %name-icons.tar.gz
 
 BuildRequires: libX11-devel libXau-devel libXdmcp-devel libXmu-devel pkg-config
 BuildRequires: xorg-proto-devel xorg-util-macros
@@ -35,11 +35,12 @@ its connection to the client that created the window.
 %install
 %make DESTDIR=%buildroot install
 
-%__install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-%__mkdir_p %buildroot%_iconsdir
-%__tar -xjf %SOURCE2 -C %buildroot%_iconsdir/
+install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+mkdir -p %buildroot%_iconsdir
+tar -xf %SOURCE2 -C %buildroot%_iconsdir/
 
 %files
+%doc *.md
 %_bindir/*
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
@@ -48,6 +49,9 @@ its connection to the client that created the window.
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
 - Autobuild version bump to 1.0.5
 
