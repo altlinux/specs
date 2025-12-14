@@ -2,7 +2,7 @@
 
 Name: flat-manager
 Version: 0.4.6
-Release: alt1
+Release: alt2
 
 Summary: Manager for flatpak repositories
 License: Apache-2.0 OR MIT
@@ -36,6 +36,8 @@ new builds and manage the repository.
 Summary: Client for %name
 Group: Other
 
+Requires: python3(packaging)
+
 %description client
 %summary.
 
@@ -48,7 +50,7 @@ Group: Other
 %rust_build
 
 %install
-%rust_install
+%rust_install %name gentoken delta-generator-client
 install -m755 -D %name-client %buildroot/%_bindir/%name-client
 install -m644 -D %SOURCE11 %buildroot/%_unitdir/%name.service
 install -m644 -D %SOURCE12 %buildroot/%_sysusersdir/%name.sysusers
@@ -62,6 +64,8 @@ install -m644 -D %SOURCE13 %buildroot/%_tmpfilesdir/%name.tmpfiles
 
 %files
 %_bindir/%name
+%_bindir/gentoken
+%_bindir/delta-generator-client
 %_unitdir/%name.service
 %_sysusersdir/%name.sysusers
 %_tmpfilesdir/%name.tmpfiles
@@ -71,5 +75,9 @@ install -m644 -D %SOURCE13 %buildroot/%_tmpfilesdir/%name.tmpfiles
 %_bindir/%name-client
 
 %changelog
+* Sat Dec 13 2025 Vladimir Romanov <rirusha@altlinux.org> 0.4.6-alt2
+- Added gentoken with delta-generator-client bins.
+- Fixed flat-manager-client python3(packaging) missing require.
+
 * Wed Dec 03 2025 Vladimir Romanov <rirusha@altlinux.org> 0.4.6-alt1
 - Initial build.
