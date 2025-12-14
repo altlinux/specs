@@ -1,10 +1,10 @@
 Name: xlsclients
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: List client applications running on a display
 Group: System/X11
 Url: http://cgit.freedesktop.org/xorg/app/xlsclients
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -14,7 +14,9 @@ BuildRequires: libxcbutil-devel
 BuildRequires: xorg-util-macros
 
 %description
-Xlsclients is a utility for listing information about the client appli- cations running on a display.  It may be used to generate scripts  representing a snapshot of the user's current session.
+Xlsclients is a utility for listing information about the client appli-
+cations running on a display.  It may be used to generate scripts
+representing a snapshot of the user's current session.
 
 %prep
 %setup -n %name-%version
@@ -28,10 +30,14 @@ Xlsclients is a utility for listing information about the client appli- cations 
 %makeinstall
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
 - Autobuild version bump to 1.1.4
 
