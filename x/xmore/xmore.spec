@@ -1,9 +1,9 @@
 Name: xmore
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: Plain text display program for the X Window System
 Group: System/X11
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 
 # Automatically added by buildreq on Thu Apr 14 2011
@@ -33,6 +33,9 @@ Xmore is a plain text display program for the X Window System.
 %_mandir/man1/xmore.*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
