@@ -1,10 +1,10 @@
 Name: xclipboard
-Version: 1.1.3
-Release: alt2
+Version: 1.1.5
+Release: alt1
 Summary: X clipboard client
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.gz
 License: MIT
 Packager: Fr. Br. George <george@altlinux.ru>
 
@@ -35,13 +35,16 @@ window.
 %make install DESTDIR=%buildroot
 
 %files
-%doc README
+%doc README*
 %_bindir/xclipboard
 %_bindir/xcutsel
 %_x11appconfdir/XClipboard
 %_man1dir/*
 
 %changelog
+* Sun Dec 14 2025 Fr. Br. George <george@altlinux.org> 1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.1.3-alt2
 - Fix build
 
