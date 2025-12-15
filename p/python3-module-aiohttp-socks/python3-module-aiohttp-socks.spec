@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 Summary: Proxy connector for aiohttp with SOCKS4, SOCKS5 and HTTP support
 License: Apache-2.0
@@ -56,6 +56,9 @@ It uses python-socks for core proxy functionality.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 10 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.11.0-alt1
+- 0.10.2 -> 0.11.0
+
 * Fri Nov 14 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.10.2-alt1
 - Initial build.
 
