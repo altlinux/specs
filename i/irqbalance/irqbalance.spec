@@ -1,5 +1,5 @@
 Name: irqbalance
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: Evenly distribute interrupt load across CPUs
@@ -27,12 +27,14 @@ will ever notice it's there or want to turn it off.
 
 %prep
 %setup
-sed -i "s|/path/to/irqbalance.env|%sysconfig|g" misc/%name.service
 
 %build
 mkdir -p m4
 %autoreconf
-%configure
+
+# irqbalance treats usrconfdir as the location for admin-maintained configs,
+# while pkgconfdir is used for package-provided default configuration data.
+%configure --with-usrconfdir=%_sysconfdir/sysconfig --with-pkgconfdir=%_datadir/%name
 %make_build
 
 %install
@@ -53,11 +55,15 @@ install -pDm644 misc/%name.service %buildroot%systemd_unitdir/%name.service
 %_sbindir/%name-ui
 %config(noreplace) %sysconfig
 %_initdir/%name
+%_datadir/%name
 %_man1dir/%name.1*
 %_man1dir/%name-ui.1*
 %systemd_unitdir/%name.service
 
 %changelog
+* Mon Dec 15 2025 Anton Farygin <rider@altlinux.org> 1.9.5-alt1
+- 1.9.4 -> 1.9.5
+
 * Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 1.9.4-alt1
 - 1.9.4
 
