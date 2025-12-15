@@ -1,8 +1,8 @@
 %define        oname fuse
 
 Name:          spectrum-fuse
-Version:       1.5.8
-Release:       alt0.3
+Version:       1.6.0
+Release:       alt1
 Summary:       The Free Unix Spectrum Emulator
 License:       GPLv2
 Group:         Emulators
@@ -30,7 +30,7 @@ BuildRequires: bzip2-devel
 # libaudiofile: support for loading from .wav files.
 BuildRequires: libaudiofile-devel
 BuildRequires: glib2-devel
-BuildRequires: pkgconfig(libspectrum) >= 1.4.5
+BuildRequires: pkgconfig(libspectrum) >= 1.5.0
 BuildRequires: xorg-cf-files
 BuildRequires: flex
 BuildRequires: gcc-c++
@@ -88,6 +88,9 @@ chmod +x %buildroot%_bindir/%name
 %_iconsdir/hicolor/*/mimetypes/application-x-spectrum.png
 
 %changelog
+* Sat Dec 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
+- New version (ALT #56122).
+
 * Mon May 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.8-alt0.3
 - Set executable bit to program (ALT #38352).
 

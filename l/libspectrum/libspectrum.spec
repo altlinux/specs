@@ -1,6 +1,6 @@
 Name:          libspectrum
-Version:       1.4.5
-Release:       alt0.1
+Version:       1.5.0
+Release:       alt1
 Summary:       ZX Spectrum emulation shared library
 License:       GPLv2
 Group:         Emulators
@@ -64,6 +64,9 @@ sed "s/1.4.4/1.4.5/" -i ./configure.ac
 %_includedir/%name.h
 
 %changelog
+* Sat Dec 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- New version.
+
 * Fri Dec 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.4.5-alt0.1
 - ^ 1.4.1 -> 1.4.5[gamma]
 - + support for bzlib, libaudiofile, and zlib
