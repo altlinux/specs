@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.24.1
+Version: 0.24.2
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -126,6 +126,9 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Mon Dec 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.2-alt1
+- Update to v0.24.2 (2025-12-12).
+
 * Fri Oct 10 2025 Vitaly Chikunov <vt@altlinux.org> 0.24.1-alt1
 - Update to v0.24.1 (2025-10-03).
 - spec: Build with gcc instead of clang.
