@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 25.4.0
+Version: 25.10.1
 Release: alt1
 
 Summary: This is pydoctor, an API documentation generator that works by static analysis
@@ -66,6 +66,9 @@ export PYTHONDEVMODE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 15 2025 Alexandr Shashkin <dutyrok@altlinux.org> 25.10.1-alt1
+- Updated to 25.10.1.
+
 * Mon Jun 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 25.4.0-alt1
 - Initial build for ALT Sisyphus.
 
