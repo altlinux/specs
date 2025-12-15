@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define app_id org.altlinux.Weather
+%define app_id ru.basealt.WeatherAdw
 
-Name: alt-weather
-Version: 1.0.8
+Name: alt-weather-adw
+Version: 1.0.9
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -12,8 +12,8 @@ Summary: Weather forecast
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://altlinux.space/ALTLinux/ALTWeather
-Vcs: https://altlinux.space/ALTLinux/ALTWeather
+Url: https://altlinux.space/Basealt/Alt-Weather-Adwaita
+Vcs: https://altlinux.space/Basealt/Alt-Weather-Adwaita
 Source: %name-%version.tar
 
 Requires: alt-identify-client
@@ -50,10 +50,10 @@ Works only on ALT Workstation.
 
 %install
 %meson_install
-%find_lang --with-gnome %name
+%find_lang --with-gnome alt-weather
 
-%files -f %name.lang
-%_bindir/%name
+%files -f alt-weather.lang
+%_bindir/alt-weather
 %_desktopdir/%app_id.desktop
 %_datadir/metainfo/%app_id.metainfo.xml
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
@@ -62,36 +62,5 @@ Works only on ALT Workstation.
 %doc README.md
 
 %changelog
-* Thu Dec 11 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.8-alt1
-- changed app name to ALT Weather
-
-* Thu Dec 04 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.7-alt1
-- dynamically show current last update time
-- added autoupdate interval
-- translation updates
-
-* Mon Dec 01 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.6-alt1
-- show previous forecast data if failed to reload data
-
-* Thu Nov 27 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.5-alt1
-- fixed translations
-
-* Thu Nov 27 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.4-alt1
-- better location search
-- disabled location detection for gismeteo
-- updating weather on unit change
-
-* Wed Nov 26 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.3-alt1
-- added license file
-
-* Wed Nov 26 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.2-alt1
-- used a more accurate method to determine geolocation
-
-* Tue Nov 25 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.1-alt1
-- fixed location detection
-
-* Thu Nov 20 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.0-alt2
-- drop i586
-
-* Thu Nov 20 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.0-alt1
+* Mon Dec 15 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0.9-alt1
 - initial build
