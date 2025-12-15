@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.4.5
+Version: 0.5.0
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -12,8 +12,30 @@ Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
 
 BuildArch: noarch
+
 BuildPreReq: alterator >= 4.10-alt6
 BuildRequires: rpm-macros-alterator
+
+Requires: %name-base = %EVR
+Requires: xinit
+
+Provides: alterator-setup-x11 = %EVR
+
+Obsoletes: alterator-setup-x11vnc < %EVR
+
+%description
+%summary.
+Depends for xorg support.
+
+WARNING: you really don't want to install this package
+into an already configured system as it may spoil the
+next boot!  Given that its sole purpose is the _initial_
+configuration of a new system (like setting root password)
+nobody should need that on an up-and-running host.
+
+%package base
+Summary: Perform initial setup of an OEM installation (warning!)
+Group: System/Configuration/Other
 
 Requires: libshell
 Requires: alterator-l10n >= 2.5-alt1
@@ -29,16 +51,21 @@ Requires: alterator-users
 Requires(post): chkconfig service
 Requires(preun): chkconfig service
 
-Obsoletes: alterator-setup-x11vnc < %EVR
+%description base
+%summary.
 
-%description
-%summary
+%package wayland
+Summary: Perform initial setup of an OEM installation (warning!)
+Group: System/Configuration/Other
 
-WARNING: you really don't want to install this package
-into an already configured system as it may spoil the
-next boot!  Given that its sole purpose is the _initial_
-configuration of a new system (like setting root password)
-nobody should need that on an up-and-running host.
+Requires: %name-base = %EVR
+Requires: cage
+Requires: wayvnc
+Requires: qt6-wayland
+
+%description wayland
+%summary.
+Depends for wayland support.
 
 %package -n installer-feature-%name-stage2
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -62,26 +89,35 @@ This postinstall script for installer.
 %install
 %makeinstall
 
+install -dm755 %buildroot%_unitdir
+install -m644 systemd/setup.* %buildroot%_unitdir/
+
 cat >> %buildroot%_sysconfdir/alterator-setup/config << EOF
 # erase %name and related packages
 REMOVE_SELF=1
 #ALTERATOR_SETUP_VNC=1
+#ALTERATOR_SETUP_WAYLAND=1
 EOF
 
 %files
+
+%files base
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/config
 %config(noreplace) %_sysconfdir/%name/steps
 %_initdir/setup
 %_sbindir/%name
 %_sbindir/%name-prep
+%_sbindir/%name-run
 %_alterator_datadir/steps/*
 %_alterator_datadir/ui/*
 %_alterator_libdir/hooks/*/*
 %_alterator_backend3dir/*
 %_datadir/alterator-setup/
-/lib/systemd/system/setup.service
-/lib/systemd/system/setup.target
+%_unitdir/setup.service
+%_unitdir/setup.target
+
+%files wayland
 
 %files -n installer-feature-%name-stage2
 %_datadir/install2/postinstall.d/91-alterator-setup
@@ -102,6 +138,11 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- Add experimental wayland support (thx romenskiy@).
+- Add vnc support via wayvnc (thx romenskiy@).
+- Separate base and wayland subpackages.
+
 * Thu Jun 19 2025 Anton Midyukov <antohami@altlinux.org> 0.4.5-alt1
 - postinstall.d/91-alterator-setup: use exec_chroot function
 
