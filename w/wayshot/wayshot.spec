@@ -1,5 +1,5 @@
 Name: wayshot
-Version: 1.3.1
+Version: 1.4.1
 Release: alt1
 License: BSD-2-Clause
 
@@ -17,6 +17,19 @@ Source2: config.toml
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: /proc
+
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(wayland-egl)
+
+BuildRequires: pkgconfig(cairo-gobject)
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(pango)
+
+BuildRequires: pkgconfig(libjxl)
+BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(egl)
 
 %description
 A native, blazing-fast screenshot tool for wlroots based compositors
@@ -36,5 +49,8 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Mon Dec 15 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 20 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.3.1-alt1
 - Initial build
