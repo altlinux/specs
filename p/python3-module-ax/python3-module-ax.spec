@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.23.0
+Version: 0.23.1
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -42,6 +42,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Dec 16 2025 Alexey Appolonov <alexey@altlinux.org> 0.23.1-alt1
+- The warning about a wrong escape sequence, that could appear while using the
+  "ReplaceNotAlfa" function, is done with.
+
 * Sun Dec 07 2025 Alexey Appolonov <alexey@altlinux.org> 0.23.0-alt1
 - New ability to continue a previously started page of a "Printer" object.
 
