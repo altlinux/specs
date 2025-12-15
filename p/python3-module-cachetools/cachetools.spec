@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.2.2
+Version: 6.2.3
 Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
@@ -15,6 +15,8 @@ VCS: https://github.com/tkem/cachetools
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -51,6 +53,9 @@ decorator.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 6.2.3-alt1
+- 6.2.2 -> 6.2.3.
+
 * Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 6.2.2-alt1
 - 6.2.0 -> 6.2.2.
 
