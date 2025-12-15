@@ -6,7 +6,8 @@
 %define brand simply
 
 %define gtk_theme Orchis-Light-Compact
-%define icon_theme Papirus
+%define ldm_gtk_theme Orchis-Light
+%define icon_theme Papirus-Light
 %define xfwm4_theme Orchis-Light-Compact
 
 # Enable compositing on x86_64 only
@@ -76,7 +77,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 11.0.900
+Version: 11.1
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -243,6 +244,8 @@ Requires: PolicyKit-gnome
 Requires: etcskel
 Requires: gtk2-theme-orchis gtk3-theme-orchis gtk4-theme-orchis xfwm4-theme-orchis
 Requires: icon-theme-Papirus
+Requires: icon-theme-Papirus-Light
+Requires: icon-theme-Papirus-Dark
 Requires: gnome-icon-theme
 Requires: branding-simply-linux-graphics
 Requires: branding-simply-linux-backgrounds11
@@ -341,7 +344,7 @@ sed -i 's,#alt-simply,&-e2k,' components/indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME='%codename' BUILD_BRANCH=%altbranch GTK_THEME=%gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
+THEME=%theme NAME='%Name' STATUS=%status VERSION=%version CODENAME='%codename' BUILD_BRANCH=%altbranch GTK_THEME=%gtk_theme LDM_GTK_THEME=%ldm_gtk_theme ICON_THEME=%icon_theme XFWM4_THEME=%xfwm4_theme XFWM4_COMPOSITING=%xfwm4_compositing DEFAULT_WEB_BROWSER=%web_browser DEFAULT_MAIL_READER=%mail_reader DEFAULT_FILE_MANAGER=%file_manager LO_ICON_THEME=%lo_icon_theme MEDIA_PLAYER=%media_player ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ./configure
 make
 
 %install
@@ -505,6 +508,27 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Wed Dec 10 2025 Mikhail Efremov <sem@altlinux.org> 11.1-alt1
+- system-settings: Set ligthdm gtk theme to Orchis-Light.
+- xfce-settings,system-settings: Change icon theme to Papirus-Light
+  (closes: #56792).
+- xfce-settings: Require icon-theme-Papirus-{Light,Dark}.
+- menu: Add 'PulseAudio' to pavucontrol GenericName (closes: #56591).
+- alterator: Use black font color.
+- notes: Update English release-notes.
+- notes: Clarification that reboot will occur automatically.
+- graphics,system-settings: Use slinux-margin.svg in lightdm.
+- xfce-settings: Set mugshot as command-profile in the menu.
+- alterator: Update installer background color.
+- graphics: Add distro-logo.
+- xfce-settings: Enable event sounds by default (closes: #56770).
+- xfce-settings: Set menu background opacity to 0.
+- xfce-settings: Use xfce4-popup-whiskermenu.
+- xfce-settings: Update xfce4-keyboard-shortcuts.xml from libxfce4ui.
+- os-release.in: Fix typo (closes: #56584).
+- xfce-settings: Enable show_frame_shadow by default (closes: #56791).
+- xfce-settings: Disable scroll_workspaces option by default.
+
 * Mon Oct 20 2025 Mikhail Efremov <sem@altlinux.org> 11.0.900-alt1
 - os-release.in: Add VARIANT and VARIANT_ID.
 - alterator: Use no_image.svg as installer step icons.
