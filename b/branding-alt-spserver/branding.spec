@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.09
+Release: alt0.10
 Epoch: 1
 Url: https://altsp.su
 
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.10
+- images: update product-logo.
+
 * Sat Nov 29 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.09
 - Add slideshow.
 - Update images.
