@@ -7,7 +7,7 @@
 %define liboxygenstyleconfig5 liboxygenstyleconfig5_%sover
 
 Name: plasma6-%rname
-Version: 6.5.3
+Version: 6.5.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -148,6 +148,9 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
 - new version
 

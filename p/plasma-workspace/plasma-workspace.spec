@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.5.3
-Release: alt5
+Version: 6.5.4
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.4-alt1
+- new version
+
 * Fri Dec 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.5.3-alt5
 - hide timezone selector map
 

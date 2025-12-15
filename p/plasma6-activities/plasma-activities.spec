@@ -4,7 +4,7 @@
 
 %define rname plasma-activities
 Name: plasma6-activities
-Version: 6.5.3
+Version: 6.5.4
 Release: alt1
 %K6init
 
@@ -82,6 +82,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
 - new version
 

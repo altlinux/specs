@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.5.3
-Release: alt2
+Version: 6.5.4
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -48,7 +48,7 @@ Patch4: alt-hide-reviews.patch
 Patch5: alt-soversion.patch
 Patch6: alt-fix-status-after-transaction.patch
 Patch7: alt-pk-disable-launch.patch
-Patch8: alt-dont-crash-if-flatpak-not-initialized.patch
+#
 Patch9: alt-show-reboot-avail.patch
 Patch10: alt-keep-focus.patch
 Patch11: alt-hide-autoreboot.patch
@@ -215,7 +215,7 @@ KF6 library
 %patch5 -p1
 %patch6 -p1
 #%patch7 -p1 -b .pk-disable-launch
-%patch8 -p2
+#
 #patch9 -p1 -b .show-reboot-checkbox
 %patch10 -p2
 #%patch11 -p1 -b .autoreboot
@@ -356,6 +356,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

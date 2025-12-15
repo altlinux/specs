@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.5.3
-Release: alt2
+Version: 6.5.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -191,6 +191,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
+- new version
+
 * Mon Dec 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

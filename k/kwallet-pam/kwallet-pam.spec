@@ -5,7 +5,7 @@
 %define rname kwallet-pam
 
 Name: %rname
-Version: 6.5.3
+Version: 6.5.4
 Release: alt1
 %K6init
 
@@ -54,6 +54,9 @@ KDE6 PAM KWallet integration.
 
 
 %changelog
+* Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.3-alt1
 - new version
 
