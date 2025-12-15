@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.8.post1
+Version: 1.1.0
 Release: alt1
 Summary: A small, safe import sorter
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -33,6 +35,8 @@ is left as an exercise for linters and formatters.
 %package -n %pypi_name
 Summary: Executable for %pypi_name
 Group: Development/Python3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 Requires: %name
 
 %description -n %pypi_name
@@ -64,6 +68,9 @@ Requires: %name
 %_bindir/%pypi_name
 
 %changelog
+* Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.8.post1 -> 1.1.0.
+
 * Wed Feb 19 2025 Stanislav Levin <slev@altlinux.org> 1.0.8.post1-alt1
 - 1.0.7 -> 1.0.8.post1.
 
