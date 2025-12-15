@@ -1,7 +1,8 @@
 %def_disable clang
+%def_disable check
 
 Name: deepin-ocr
-Version: 6.5.12
+Version: 6.5.15
 Release: alt1
 
 Summary: Base character recognition ability on DDE
@@ -25,6 +26,14 @@ BuildRequires: clang-devel lld-devel libomp%_llvm_version-devel
 %else
 BuildRequires: gcc-c++ libgomp-devel
 %endif
+%if_enabled check
+BuildRequires: ctest libgtest-devel
+%if_enabled clang
+BuildRequires: clang%_llvm_version-support
+%else
+BuildRequires: libasan-devel-static
+%endif
+%endif
 
 %description
 Deepin OCR provides the base character recognition ability on DDE.
@@ -44,14 +53,19 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export CPLUS_INCLUDE_PATH=%_includedir/deepin/opencv4:%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
-%DQ6build \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DLIB_INSTALL_DIR=%_libdir \
-#
+%if_enabled check
+export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtTest:$CPLUS_INCLUDE_PATH
+%endif
+%DQ6build
 
 %install
 %DQ6install
 %find_lang --with-qt %name
+
+%if_enabled check
+%check
+%ctest --test-dir BUILD
+%endif
 
 %files -f %name.lang
 %doc debian/changelog
@@ -60,12 +74,19 @@ export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/com.deepin.Ocr.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/%name/
+%_datadir/dsg/configs/%name/%name.common.json
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
 %_datadir/%name/translations/deepin-ocr_es_419.qm
 %_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Mon Dec 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.15-alt1
+- New version 6.5.15.
+
 * Thu Nov 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.12-alt1
 - New version 6.5.12.
 
