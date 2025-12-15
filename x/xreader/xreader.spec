@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 4.6.0
+Version: 4.6.1
 Release: alt1
 
 Summary: A document viewer
@@ -22,6 +22,7 @@ Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
 Requires: xapps-icons
+Requires: xapp-symbolic-icons
 
 %define poppler_ver 0.24.0
 %define gtk_ver 3.14.0
@@ -145,6 +146,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 4.6.1-alt1
+- new version 4.6.1
+
 * Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 4.6.0-alt1
 - new version 4.6.0
 
