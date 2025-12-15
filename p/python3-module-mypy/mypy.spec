@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.19.0
+Version: 1.19.1
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -136,6 +136,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 1.19.1-alt1
+- 1.19.0 -> 1.19.1.
+
 * Mon Dec 01 2025 Stanislav Levin <slev@altlinux.org> 1.19.0-alt1
 - 1.18.1 -> 1.19.0.
 
