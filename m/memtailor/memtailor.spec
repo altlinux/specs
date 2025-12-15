@@ -3,15 +3,16 @@
 %define soname 0
 
 Name: memtailor
-Version: 0.0.67.07c8
+Version: 1.1
 Release: alt1
 Summary: C++ library of special purpose memory allocators
 
 License: GPL-2.0+ and BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/Macaulay2/memtailor
+VCS: https://github.com/Macaulay2/memtailor
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %if_with cmake
@@ -113,6 +114,9 @@ rm -rf %buildroot%_prefix/licenses
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Dec 15 2025 Leontiy Volodin <lvol@altlinux.org> 1.1-alt1
+- New version 1.1.
+
 * Mon Aug 04 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.67.07c8-alt1
 - New version 0-67-g07c84a6.
 
