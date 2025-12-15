@@ -14,7 +14,7 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.1.0
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: Weather extension for the GNOME Shell
@@ -35,7 +35,7 @@ Source: %git_name-%version%beta.tar
 %endif
 Source1: %git_name-%version-npm.tar
 # fix install in Makefile
-Patch1: %__name-49.0.0-alt-makefile.patch
+Patch1: %__name-49.1.1-alt-makefile.patch
 
 Requires: gnome-shell >= 48
 Requires: typelib(Adw) = 1
@@ -59,7 +59,7 @@ mv %git_name-%version-npm.tar %_sourcedir/}
 %make VERSION=%version
 
 %install
-%makeinstall_std
+%makeinstall_std INSTALLTYPE=system
 %find_lang %gettext_domain
 
 %files -f %gettext_domain.lang
@@ -68,6 +68,9 @@ mv %git_name-%version-npm.tar %_sourcedir/}
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1.1-alt1
+- 49.1.1
+
 * Fri Dec 05 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1.0-alt1
 - 49.1.0
 

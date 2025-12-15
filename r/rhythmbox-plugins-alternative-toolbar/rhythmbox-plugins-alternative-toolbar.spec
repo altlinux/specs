@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name alternative-toolbar
-%define ver_major 0.20
+%define ver_major 0.21
 %define beta %nil
 %define xdg_name org.gnome.rhythmbox.plugins.alternative_toolbar
 
 Name: rhythmbox-plugins-%_name
-Version: %ver_major.4
-Release: alt3%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: An alternative toolbar for Rhythmbox
 Group: Sound
@@ -42,7 +42,7 @@ Compact toolbar which can be hidden.
 # With pygobject >= 3.52.0, importing GIRepository-2.0 is no longer
 # supported.
 
-sed -i 's/^AC_PYTHON.*Peas/#&/' configure.ac
+#sed -i 's/^AC_PYTHON.*Peas/#&/' configure.ac
 
 %build
 %autoreconf
@@ -62,6 +62,9 @@ sed -i 's/^AC_PYTHON.*Peas/#&/' configure.ac
 %doc ChangeLog README*
 
 %changelog
+* Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
+- 0.21.0
+
 * Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt3
 - fixed FTBFS with PyGobject-3.52
 
