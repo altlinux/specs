@@ -29,13 +29,13 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.08
+Release: alt0.10
 Epoch: 1
 Url: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 
@@ -341,10 +341,11 @@ fi
 %_datadir/glib-2.0/schemas/50_gnome-software-installation-priority.gschema.override
 %_datadir/glib-2.0/schemas/50_mutter-custom-settings.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-desktop-a11y.gschema.override
 
-#%%files slideshow
-#/etc/alterator/slideshow.conf
-#/usr/share/install2/slideshow
+%files slideshow
+%_sysconfdir/alterator/slideshow.conf
+%_datadir/install2/slideshow
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -357,6 +358,14 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.10
+- gnome-settings: enable a11y indicator on panel.
+
+* Sat Nov 29 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.09
+- Add slideshow.
+- Update images.
+- Build with qt6.
+
 * Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.08
 - Update images.
 
