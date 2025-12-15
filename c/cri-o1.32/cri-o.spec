@@ -13,7 +13,7 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          32
-%define cri_o_patch          10
+%define cri_o_patch          11
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -134,6 +134,11 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Dec 11 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.11-alt1
+- 1.32.10 -> 1.32.11.
+- Fixes:
+  + CVE-2025-58183: Unbounded allocation when parsing GNU sparse map in archive/tar
+
 * Thu Nov 13 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.10-alt1
 - 1.32.8 -> 1.32.10.
 
