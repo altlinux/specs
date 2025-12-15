@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -25,6 +25,7 @@ BuildRequires: boost-devel-headers
 BuildRequires: kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kitemmodels-devel
 BuildRequires: libqtsingleapplication-qt6-devel
+BuildRequires: librange-v3-devel
 
 Requires: alterator-interface-service >= 0.2.1
 Requires: alterator-interface-diag >= 0.1.4
@@ -60,6 +61,19 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %doc *.md
 
 %changelog
+* Thu Dec 04 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.9-alt1
+- Added (thx Andrey Alekseev):
+  + password confirmation
+  + an ability of selectively ignoring diagnostic test errors
+  + a text message, representing operation result, on the "Progress" page
+- Changed (thx Andrey Alekseev):
+  + improved wizard appearance and navigation
+  + text log entries on "Progress" page are now collapsed by default
+- Fixed (thx Andrey Alekseev):
+  + handling diagnostic "warning" result
+  + log entries on the "Progress" had their own scrollbars on gtk3
+  + tool/test names were not localized inside log on "Progress" page
+
 * Wed Nov 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.8-alt1
 - Fixed (thx Andrey Alekseev):
   + segmentation fault while editing parameters in table mode
