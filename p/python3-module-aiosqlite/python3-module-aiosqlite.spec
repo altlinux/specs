@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: asyncio bridge to the standard sqlite3 module
@@ -17,7 +17,10 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# sqlite3 support is subpackaged in alt
+Requires: python3-modules-sqlite3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -59,6 +62,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
+- 0.21.0 -> 0.22.0.
+
 * Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 0.21.0-alt1
 - 0.20.0 -> 0.21.0.
 
