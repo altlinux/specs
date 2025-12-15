@@ -1,17 +1,21 @@
-Name: waybar
-Version: 0.12.0
-Release: alt1
-License: MIT
-Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
-URL: https://github.com/Alexays/Waybar.git
-Group: Graphical desktop/Other
-
-Source: %name-%version.tar
-
-Patch0: waybar-config.patch
-
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+
+%define _libexecdir %_prefix/libexec
+%define helperdir %_libexecdir/%name
+
+Name: waybar
+Version: 0.14.0
+Release: alt1
+
+Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
+License: MIT
+Group: Graphical desktop/Other
+URL: https://github.com/Alexays/Waybar.git
+VCS: https://github.com/Alexays/Waybar.git
+
+Source: %name-%version.tar
+Patch0: 0001-Revert-hyprland-workspaces-range-find-lint-cleanup.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -29,6 +33,7 @@ BuildRequires: pkgconfig(spdlog)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(catch2)
 
 # language module
 BuildRequires: pkgconfig(xkbregistry)
@@ -54,27 +59,33 @@ BuildRequires: pkgconfig(upower-glib)
 BuildRequires: pkgconfig(libmpdclient)
 
 # wireplumber module
-BuildRequires: pkgconfig(wireplumber-0.4)
+BuildRequires: pkgconfig(wireplumber-0.5)
+BuildRequires: pkgconfig(libpipewire-0.3)
 
-# catch2 module
-BuildRequires: pkgconfig(catch2)
+# jack module
+BuildRequires: pkgconfig(jack)
+
+# mpris module
+BuildRequires: pkgconfig(playerctl)
+
+# sndio module
+BuildRequires: pkgconfig(sndio)
 
 BuildRequires: libgtk-layer-shell-devel
-
-%define _libexecdir %_prefix/libexec
-%define helperdir %_libexecdir/%name
+BuildRequires: libgps-devel
 
 %description
 %summary.
 
 %prep
 %setup
-#%%autopatch -p1
+%autopatch -p1
 
 %build
 %meson \
+	-Dcpp_std=c++20 \
 	-Drfkill=enabled \
-	-Dsystemd=disabled
+	-Dsystemd=enabled
 %meson_build
 
 %install
@@ -88,9 +99,15 @@ BuildRequires: libgtk-layer-shell-devel
 %dir %_xdgconfigdir/%name
 %config(noreplace) %_xdgconfigdir/%name/config.jsonc
 %config(noreplace) %_xdgconfigdir/%name/style.css
+%_userunitdir/%name.service
 %_man5dir/*
 
 %changelog
+* Mon Dec 15 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
+- New version (0.14.0)
+- Ship systemd user unit (ALT#54456)
+- Really build wireplumber module (ALT#57230)
+
 * Wed Mar 26 2025 Artyom Bystrov <arbars@altlinux.org> 0.12.0-alt1
 - New version (0.12.0)
 
