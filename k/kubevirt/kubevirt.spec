@@ -1,9 +1,9 @@
 %define import_path github.com/kubevirt/kubevirt
 %define _unpackaged_files_terminate_build 1
-%global commit 522b44c0ce8d1909618324cb083d69e5c7a0a234
+%global commit 50b9b4d0cf1caaf56147411a1e6765134e0e82b9
 
 Name:          	kubevirt
-Version:       	1.5.0
+Version:       	1.7.0
 Release:       	alt1
 Summary:       	KubeVirt is a virtual machine management add-on for Kubernetes
 
@@ -96,6 +96,7 @@ Requires: qemu-system-x86
 %ifarch aarch64
 Requires: qemu-system-aarch64, qemu-device-display-virtio-gpu, qemu-device-display-virtio-gpu-ccw
 %endif
+Conflicts: 	guestfs-tools
 
 %description    virt-launcher
 The virt-launcher package provides a launcher for kubevirt
@@ -123,6 +124,20 @@ Group:          Emulators
 This contains the built YAML manifests used to install kubevirt
 into a kubernetes installation with kubectl apply.
 
+%package        sidecar-shim
+Summary:        Entrypoint of the sidecar-shim container
+Group:          Emulators
+
+%description    sidecar-shim
+%summary
+
+%package        synchronization-controller
+Summary:       	Synchronization controller for kubevirt             
+Group:          Emulators                                                     
+                                                                              
+%description    synchronization-controller                                                 
+%summary
+
 %package        tests
 Summary:        Kubevirt functional tests
 Group:          Emulators
@@ -139,7 +154,7 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor -buildmode=pie"
 export GOBIN="$BUILDDIR/bin"
-reg_path="registry.altlinux.org/sisyphus"
+reg_path="registry.altlinux.org/%_priority_distbranch"
 
 %golang_prepare
 mkdir $GOBIN
@@ -166,6 +181,8 @@ build_tests="true" \
     cmd/virt-operator \
     cmd/virt-probe \
     cmd/virt-tail \
+    cmd/synchronization-controller \
+    cmd/sidecars \
     cmd/virtctl 
 
 env DOCKER_PREFIX=$reg_path DOCKER_TAG=%version KUBEVIRT_NO_BAZEL=true ./hack/build-manifests.sh
@@ -194,6 +211,8 @@ install -p -m 0755 $BUILDDIR/_out/cmd/virt-freezer/virt-freezer %buildroot%_bind
 install -p -m 0755 $BUILDDIR/_out/cmd/virt-probe/virt-probe %buildroot%_bindir/
 install -p -m 0755 $BUILDDIR/_out/cmd/virt-tail/virt-tail %buildroot%_bindir/
 install -p -m 0755 $BUILDDIR/_out/cmd/virt-operator/virt-operator %buildroot%_bindir/
+install -p -m 0755 $BUILDDIR/_out/cmd/synchronization-controller/synchronization-controller %buildroot%_bindir/virt-synchronization-controller
+install -p -m 0755 $BUILDDIR/_out/cmd/sidecars/sidecars %buildroot%_bindir/virt-sidecar-shim
 install -p -m 0755 $BUILDDIR/_out/tests/tests.test %buildroot%_bindir/virt-tests
 install -p -m 0755 $BUILDDIR/cmd/virt-launcher/node-labeller/node-labeller.sh %buildroot%_bindir/
 
@@ -287,6 +306,14 @@ install -m 0644 $BUILDDIR/tests/default-config.json %buildroot%_datadir/kube-vir
 %dir %_datadir/kube-virt/manifests
 %_datadir/kube-virt/manifests/release
 
+%files sidecar-shim
+%doc README.md LICENSE
+%_bindir/virt-sidecar-shim
+
+%files synchronization-controller
+%doc README.md LICENSE                          
+%_bindir/virt-synchronization-controller
+
 %files tests
 %doc README.md LICENSE
 %dir %_datadir/kube-virt
@@ -295,6 +322,11 @@ install -m 0644 $BUILDDIR/tests/default-config.json %buildroot%_datadir/kube-vir
 %_datadir/kube-virt/manifests/testing
 
 %changelog
+* Thu Dec 11 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.7.0-alt1
+- 1.5.0 -> 1.7.0
+- Add subpackages sidecar-shim, synchronization-controller.
+- Resolve packages conflict with guestfs-tools (Closes: #56257).
+
 * Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.5.0-alt1
 - 1.3.1 -> 1.5.0
 
