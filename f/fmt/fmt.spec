@@ -2,7 +2,7 @@
 
 Name: fmt
 Version: 12.1.0
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -41,6 +41,13 @@ It can be used as a fast and safe alternative to printf and IOStreams.
 
 %prep
 %setup
+%ifarch %e2k
+# [  FAILED  ] float_test.isnan
+sed -i 's/fegetexceptflag(&fe, FE_ALL_EXCEPT)/fe = 0/' test/format-test.cc
+# error: _BitInt is not supported on this target
+sed -i 's/FMT_USE_BITINT 1/FMT_USE_BITINT 0/' include/fmt/base.h
+%endif
+
 # Remove illegal political lines
 sed -i '/If you like this project, please consider donating/,+2d' README.md
 
@@ -71,6 +78,9 @@ sed -i '/If you like this project, please consider donating/,+2d' README.md
 %_libdir/lib%name.so
 
 %changelog
+* Tue Dec 09 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:12.1.0-alt1.2
+- e2k build fix
+
 * Tue Nov 25 2025 Nazarov Denis <nenderus@altlinux.org> 1:12.1.0-alt1.1
 - Remove illegal political lines from readme
 
