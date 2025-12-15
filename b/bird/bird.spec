@@ -1,13 +1,8 @@
-# define suffix for easy backporing bird-2.x to stable branches as bird2 package
-# for build as bird - use gear.specsubst.suffix %nil
-# for build as bird2 - use gear.specsubst.suffix 2
-# gear-create-tag -s suffix=%nil or gear-create-tag -s suffix=2
-%define _suffix %nil
 %define _localstatedir %_var
 %define protocols all
 
-Name: bird%_suffix
-Version: 3.1.4
+Name: bird
+Version: 3.1.5
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -20,12 +15,8 @@ Source: %name-%version.tar
 Source1: bird.init
 Source2: bird.service
 
-%if 0%_suffix != 0
-Conflicts: bird
-%else
 Obsoletes: bird2 < %EVR
 Provides: bird2 = %EVR
-%endif
 
 BuildRequires: libreadline-devel libncurses-devel flex glibc-kernheaders OpenSP linuxdoc-tools
 
@@ -65,7 +56,6 @@ freely distributed under the terms of the GNU General Public License.
 	    --with-protocols=%protocols \
 	    #
 %make_build all
-
 
 %install
 %makeinstall_std
@@ -111,6 +101,9 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Mon Dec 15 2025 Anton Farygin <rider@altlinux.org> 3.1.5-alt1
+- 3.1.4 -> 3.1.5
+
 * Thu Sep 25 2025 Anton Farygin <rider@altlinux.com> 3.1.4-alt1
 - 3.1.3 -> 3.1.4
 
