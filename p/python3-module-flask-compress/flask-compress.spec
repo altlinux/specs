@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.18
+Version: 1.23
 Release: alt1
 Summary: Compress responses in your Flask app with gzip, deflate or brotli
 License: MIT
@@ -15,6 +15,8 @@ VCS: https://github.com/colour-science/flask-compress
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -55,6 +57,9 @@ Flask-Compress will solve the problem for you.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 1.23-alt1
+- 1.18 -> 1.23.
+
 * Mon Jul 14 2025 Stanislav Levin <slev@altlinux.org> 1.18-alt1
 - 1.17 -> 1.18.
 
