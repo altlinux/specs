@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt6
+Release: alt7
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -91,13 +91,16 @@ mv %buildroot%install2dir/pkg-preinstall.d %buildroot%_prefix/lib/alterator/hook
 %install2dir/installer-steps
 %ghost %install2dir/services-*
 %install2dir/systemd-*
-%_prefix/lib/alterator/hooks/pkg-preinstall.d/00-not-pve.sh
+%_prefix/lib/alterator/hooks/pkg-preinstall.d/00-pve.sh
 
 %files stage3
 
 %files net-eth-stage3
 
 %changelog
+* Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt7
+- pkg-preinstall.d: fix help and translations for network step with PVE.
+
 * Wed Jul 02 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt6
 - add pkg-preinstall hook for install etcnet, when not install pve
 
