@@ -2,7 +2,7 @@
 
 Name: spruce
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -14,6 +14,8 @@ Vcs: https://github.com/shonubot/Spruce
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Requires: python3-module-pycairo
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson
@@ -55,6 +57,9 @@ Summary: Python3 module for %name
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Dec 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt2
+- Add pycairo dependency
+
 * Sun Dec 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt1
 - 0.1.3 -> 0.1.4
 
