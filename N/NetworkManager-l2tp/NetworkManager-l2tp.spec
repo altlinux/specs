@@ -6,7 +6,7 @@
 %def_with gtk4
 
 Name: NetworkManager-l2tp
-Version: 1.20.20
+Version: 1.20.22
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -31,6 +31,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libssl-devel
 BuildRequires: libnss-devel
 BuildRequires: gettext
+BuildRequires: alternatives
 %{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel}
 
 %description
@@ -41,6 +42,8 @@ with NetworkManager.
 License: GPLv2+
 Summary: Common part of %name GTK support
 Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires(pre): alternatives
 Requires: NetworkManager-l2tp = %version-%release
 
 %description gtk-common
@@ -92,6 +95,16 @@ This package contains files for GTK4 applications to use %name.
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/nm-l2tp-auth-dialog-gtk3<<EOF
+%_libexecdir/NetworkManager/nm-l2tp-auth-dialog	%_libexecdir/NetworkManager/nm-l2tp-auth-dialog-gtk3	10
+EOF
+%if_with gtk4
+cat >%buildroot%_altdir/nm-l2tp-auth-dialog-gtk4<<EOF
+%_libexecdir/NetworkManager/nm-l2tp-auth-dialog	%_libexecdir/NetworkManager/nm-l2tp-auth-dialog-gtk4	20
+EOF
+%endif
+
 %find_lang %name
 
 %files
@@ -103,21 +116,29 @@ This package contains files for GTK4 applications to use %name.
 %config %_libexecdir/NetworkManager/VPN/nm-l2tp-service.name
 
 %files gtk-common -f %name.lang
-%_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_datadir/metainfo/*.xml
 
 %files gtk3
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp-editor.so
+%_altdir/nm-l2tp-auth-dialog-gtk3
+%_libexecdir/NetworkManager/nm-l2tp-auth-dialog-gtk3
 
 %if_with gtk4
 %files gtk4
 %_libdir/NetworkManager/libnm-gtk4-vpn-plugin-l2tp-editor.so
+%_altdir/nm-l2tp-auth-dialog-gtk4
+%_libexecdir/NetworkManager/nm-l2tp-auth-dialog-gtk4
 %endif
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Dec 16 2025 Mikhail Efremov <sem@altlinux.org> 1.20.22-alt1
+- Packaged both GTK3 and GTK4 nm-l2tp-auth-dialog.
+- Built both GTK3 and GTK4 auth dialog.
+- Updated to 1.20.22.
+
 * Fri Dec 27 2024 Mikhail Efremov <sem@altlinux.org> 1.20.20-alt1
 - Updated to 1.20.20.
 
