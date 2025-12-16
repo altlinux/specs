@@ -7,7 +7,7 @@
 %endif
 
 Name: mixxx
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: Free digital DJ software
@@ -96,6 +96,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Tue Dec 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.5.4-alt1
+- New version 2.5.4.
+
 * Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.5.3-alt1
 - New version 2.5.3.
 
