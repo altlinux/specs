@@ -1,4 +1,5 @@
 %define pypi_name Cython
+%define post -1
 # requires python3(gdb) < 0
 %def_disable debugger
 %ifarch %ix86 armh
@@ -8,7 +9,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -18,7 +19,7 @@ Url: http://www.cython.org
 
 Vcs: https://github.com/cython/cython.git
 #Source: https://pypi.io/packages/source/C/%pypi_name/%pypi_name-%version.tar.gz
-Source: https://github.com/cython/cython/archive/%version/%pypi_name-%version.tar.gz
+Source: https://github.com/cython/cython/archive/%version/%pypi_name-%version%post.tar.gz
 
 Provides: python3-module-cython = %EVR
 
@@ -137,6 +138,9 @@ done
 %endif
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3-1
+
 * Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
