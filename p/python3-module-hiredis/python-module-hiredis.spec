@@ -2,10 +2,12 @@
 %define pypi_name hiredis
 %define mod_name %pypi_name
 
+# %%python3_set_limited_api is not supported yet
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -17,6 +19,8 @@ Vcs: https://github.com/redis/hiredis-py
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libhiredis-devel
@@ -57,6 +61,9 @@ rm -r ./vendor/hiredis/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.1 -> 3.3.0.
+
 * Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
 - 2.3.2 -> 3.2.1.
 
