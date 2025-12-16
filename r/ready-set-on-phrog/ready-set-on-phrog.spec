@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -32,13 +32,19 @@ install -pDm0644 50_org.gnome.desktop.screensaver_lock-enabled \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
 install -pDm0644 50_%name.conf \
 	%buildroot%_sysconfdir/security/pwquality.conf.d/50_%name.conf
+install -pDm0644 50_%name.rules \
+	%buildroot%_datadir/polkit-1/rules.d/50_%name.rules
 
 %files
 %_libexecdir/ready-set-first-run
 %_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
 %_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
 %_sysconfdir/security/pwquality.conf.d/50_%name.conf
+%_datadir/polkit-1/rules.d/50_%name.rules
 
 %changelog
+* Tue Dec 16 2025 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
+- Added polkit rule with self-remove in run script.
+
 * Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build.
