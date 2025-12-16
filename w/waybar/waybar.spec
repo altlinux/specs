@@ -6,7 +6,7 @@
 
 Name: waybar
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
 License: MIT
@@ -68,9 +68,6 @@ BuildRequires: pkgconfig(jack)
 # mpris module
 BuildRequires: pkgconfig(playerctl)
 
-# sndio module
-BuildRequires: pkgconfig(sndio)
-
 BuildRequires: libgtk-layer-shell-devel
 BuildRequires: libgps-devel
 
@@ -103,6 +100,9 @@ BuildRequires: libgps-devel
 %_man5dir/*
 
 %changelog
+* Tue Dec 16 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt2
+- Remove sndio module (ALT#57240).
+
 * Mon Dec 15 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
 - New version (0.14.0)
 - Ship systemd user unit (ALT#54456)
