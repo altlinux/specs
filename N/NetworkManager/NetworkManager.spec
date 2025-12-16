@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.55.90
+Version: 1.55.91
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -649,6 +649,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 16 2025 Mikhail Efremov <sem@altlinux.org> 1.55.91-alt1
+- Updated to 1.55.91 (1.56-rc2).
+
 * Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 1.55.90-alt1
 - Updated to 1.55.90 (1.56-rc1).
 
