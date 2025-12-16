@@ -1,10 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name xxhash
+%define mod_name %pypi_name
 
 %def_with check
 
+# %%python3_set_limited_api is not supported yet
+
 Name: python3-module-%pypi_name
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -15,6 +18,8 @@ VCS: https://github.com/ifduyue/python-xxhash.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libxxhash-devel
@@ -53,11 +58,14 @@ python -m unittest -v
 ENDUNITTEST
 
 %files
-%doc *.rst
-%python3_sitelibdir/xxhash/
+%doc README.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
+- 3.5.0 -> 3.6.0.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.4.1 -> 3.5.0.
 
