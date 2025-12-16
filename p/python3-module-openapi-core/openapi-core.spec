@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.5
-Release: alt1.1
+Version: 0.20.0
+Release: alt1
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -60,6 +60,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Dec 16 2025 Anton Vyatkin <toni@altlinux.org> 0.20.0-alt1
+- New version 0.20.0.
+
 * Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 0.19.5-alt1.1
 - NMU: fixed FTBFS (removed jsonschema-spec).
 
