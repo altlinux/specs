@@ -2,7 +2,7 @@
 %define import_path github.com/google/osv-scanner/v2
 
 Name: osv-scanner
-Version: 2.2.3
+Version: 2.3.1
 Release: alt1
 
 Summary: Vulnerability scanner written in Go which uses the data provided by https://osv.dev
@@ -51,5 +51,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Dec 16 2025 Artem Krasovskiy <aibure@altlinux.org> 2.3.1-alt1
+- New version 2.3.1.
+
 * Fri Oct 03 2025 Artem Krasovskiy <aibure@altlinux.org> 2.2.3-alt1
 - Initial build for Sisyphus.
