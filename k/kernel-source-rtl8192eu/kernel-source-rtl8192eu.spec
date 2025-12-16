@@ -1,12 +1,11 @@
 Name: kernel-source-rtl8192eu
-Version: 5.11.2.1
-Release: alt2.gitc56c37f
+Version: 5.11.2.3
+Release: alt1.git8626992
 
 Summary: Realtek rtl8192eu official Linux driver
 License: MIT
 Group: Development/Kernel
 URL: https://github.com/clnhub/rtl8192eu-linux
-Packager: Dmitry Terekhin <jqt4@altlinux.org>
 
 Source0: %name-%version.tar
 
@@ -14,8 +13,8 @@ BuildArch: noarch
 BuildPreReq: rpm-build-kernel
 
 %description
-This driver is based on the (latest) official Realtek v5.2.19.1 driver
-with fixes and improvements to support the latest kernels (up to 5.12).
+This driver is based on the (latest) official Realtek v5.11.2.3 driver
+with fixes and improvements to support the latest kernels (up to 6.19).
 
 %prep
 %setup -q -c
@@ -28,6 +27,10 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Dec 16 2025 Danila Skachedubov <skachedubov@altlinux.org> 5.11.2.3-alt1.git8626992
+- New version.
+- Add support for kernel 6.19.
+
 * Wed Apr 02 2025 Paul Wolneykien <manowar@altlinux.org> 5.11.2.1-alt2.gitc56c37f
 - Add kernel 6.14(+) support (thx clnhub).
 
