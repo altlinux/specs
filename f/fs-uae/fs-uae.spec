@@ -1,5 +1,5 @@
 Name:       fs-uae
-Version:    3.1.66
+Version:    3.2.35
 Release:    alt1
 License:    GPLv2
 URL:        https://fs-uae.net
@@ -45,13 +45,15 @@ Amiga games against (or with) friends over the Internet.
 %files -f %name.lang
 %doc *[A-Z]
 %_bindir/*
-%_libexecdir/%name-device-helper
 %_desktopdir/*
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 %_datadir/mime/*
 
 %changelog
+* Tue Dec 16 2025 Artyom Bystrov <arbars@altlinux.ru> 3.2.35-alt1
+- Update to new version
+
 * Sat Dec 31 2022 Artyom Bystrov <arbars@altlinux.ru> 3.1.66-alt1
 - Rising from the archive 8)
 - Update to new version
