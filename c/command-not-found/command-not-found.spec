@@ -2,7 +2,7 @@
 
 Name: command-not-found
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: Console assistant for ALT Linux
 License: GPL-3.0-or-later
@@ -12,6 +12,8 @@ URL: https://altlinux.space/alt-gnome/command-not-found.git
 VCS: https://altlinux.space/alt-gnome/command-not-found.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+Requires: apt-repo-tools
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -39,6 +41,9 @@ BuildRequires: meson
 %config(noreplace) %_sysconfdir/command-not-found/config
 
 %changelog
+* Tue Dec 16 2025 Anton Osipov <radiolamp@altlinux.org> 0.5-alt2
+- Add runtime dependency on apt-repo-tools (Closes: 57242).
+
 * Mon Dec 08 2025 Anton Osipov <radiolamp@altlinux.org> 0.5-alt1
 - New version: 0.5.
 
