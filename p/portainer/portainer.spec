@@ -1,6 +1,6 @@
 Name: portainer
-Version: 2.33.2
-Release: alt2
+Version: 2.33.6
+Release: alt1
 
 Summary: A lightweight docker management UI
 
@@ -32,7 +32,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.6"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.11"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -63,7 +63,7 @@ go build -x \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=52ea23ef56cb25eede29c995f7d971d011eb24d0' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=eb63a7ad7cd11c364ec9305c7d6e6435542876c7' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %else
@@ -115,6 +115,13 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Tue Dec 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.6-alt1
+- New LTS version 2.33.6 (Fixes: CVE-2025-62725, CVE-2025-47906,
+  CVE-2025-47910, CVE-2025-47913, CVE-2024-25621, CVE-2025-47914,
+  CVE-2025-58181, CVE-2025-47912, CVE-2025-58183, CVE-2025-58185,
+  CVE-2025-58186, CVE-2025-58187, CVE-2025-58188, CVE-2025-58189,
+  CVE-2025-61723, CVE-2025-61724, CVE-2025-61725).
+
 * Tue Sep 30 2025 Ivan A. Melnikov <iv@altlinux.org> 2.33.2-alt2
 - NMU: Build on loongarch64 and riscv64.
 
