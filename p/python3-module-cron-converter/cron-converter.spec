@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
+Version: 1.3.1
 Release: alt1
 
 Summary: Cron string converter for Python
@@ -56,5 +56,8 @@ by roccivic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.3.1-alt1
+- Updated to 1.3.1.
+
 * Thu Oct 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.2-alt1
 - Initial build for ALT Sisyphus.

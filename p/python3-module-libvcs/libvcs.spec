@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.36.0
+Version: 0.38.1
 Release: alt1
 
 Summary: Lite, typed, pythonic utilities for git, svn, mercurial, etc
@@ -75,6 +75,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.38.1-alt1
+- Updated to 0.38.1.
+
 * Wed Sep 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.0-alt1
 - Initial build for ALT Sisyphus.
 

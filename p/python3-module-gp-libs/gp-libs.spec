@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.13
+Version: 0.0.17
 Release: alt1
 
 Summary: Incubator for pytest and sphinx helpers for git-pull python projects 
@@ -68,6 +68,9 @@ ENDTESTS
 %python3_sitelibdir/__pycache__/pytest_doctest_docutils.*
 
 %changelog
+* Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.17-alt1
+- Updated to 0.0.17.
+
 * Wed Sep 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.13-alt1
 - Initial build for ALT Sisyphus.
 
