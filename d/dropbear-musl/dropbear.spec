@@ -14,7 +14,7 @@
 Name: %pkgname
 Summary: A smallish SSH server and client
 Version: 2025.88
-Release: alt2
+Release: alt3
 License: MIT
 # "Dropbear is open source software, distributed under a MIT-style license."
 Group: System/Servers
@@ -72,7 +72,7 @@ sed -i '/LDFLAGS/s/-static/-static-pie/' Makefile.in
 export CC=musl-gcc
 %endif
 # --disable-harden: We have hardening enabled in GCC by default.
-%ifarch x86_64 %ix86
+%ifarch %ix86
 # Additional upstream hardening for x86.
 %add_optflags -mfunction-return=thunk -mindirect-branch=thunk
 %endif
@@ -138,6 +138,9 @@ EOF
 %_bindir/scp
 
 %changelog
+* Tue Dec 16 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt3
+- Fix FTBFS on x86_64 since GCC 14.3.1-alt2.
+
 * Tue Oct 14 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt2
 - Try to fix ALT beekeeper rebuilds under load with allow_reuse_address.
 
