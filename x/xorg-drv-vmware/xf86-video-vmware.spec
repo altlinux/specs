@@ -2,7 +2,7 @@
 
 Name: xorg-drv-vmware
 Version: 13.4.0
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: VMware SVGA Device video driver
@@ -19,6 +19,7 @@ PreReq: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 BuildRequires: libXext-devel xorg-proto-devel libudev-devel
+BuildRequires: libxatracker-devel
 
 %description
 %summary
@@ -44,6 +45,9 @@ BuildRequires: libXext-devel xorg-proto-devel libudev-devel
 %_man4dir/*
 
 %changelog
+* Fri Dec 12 2025 Anton Midyukov <antohami@altlinux.org> 1:13.4.0-alt3
+- rebuild with libxatracker-devel (Closes: 57216)
+
 * Fri Sep 05 2025 Anton Midyukov <antohami@altlinux.org> 1:13.4.0-alt2
 - rebuild without libxatracker-devel
 
