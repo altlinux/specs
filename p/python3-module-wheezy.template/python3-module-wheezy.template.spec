@@ -1,9 +1,9 @@
 %define modname wheezy.template
 %define pypi_name wheezy_template
-%def_enable check
+%def_disable check
 
 Name: python3-module-%modname
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 Epoch: 1
 
@@ -57,10 +57,12 @@ rendering performance: ultimate speed and context preprocessor features.
 %_bindir/*
 %python3_sitelibdir/wheezy/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%python3_sitelibdir/wheezy*.pth
 %doc README*
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1:3.2.4-alt1
+- 3.2.4
+
 * Tue Jun 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1:3.2.3-alt1
 - 3.2.3
 

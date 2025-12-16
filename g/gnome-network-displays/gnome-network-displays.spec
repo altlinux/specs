@@ -1,12 +1,12 @@
-%define commit %nil
-#%%define commit_short %(echo %commit | head -c 6)
-
+%define _libexecdir %_prefix/libexec
 %define rdn_name org.gnome.NetworkDisplays
 
+# disabled by default
+%def_disable systemd_resolved
 %def_enable check
 
 Name: gnome-network-displays
-Version: 0.97.0
+Version: 0.98.0
 Release: alt1
 
 Summary: Miracast streaming GUI
@@ -21,6 +21,7 @@ Source0: %name.tar
 
 %define nm_ver 1.15.1
 %define gst_ver 1.14
+%define systemd_ver 259
 
 Requires: xdg-desktop-portal
 
@@ -36,10 +37,11 @@ BuildRequires: pkgconfig(avahi-client)
 BuildRequires: pkgconfig(avahi-gobject)
 BuildRequires: pkgconfig(libprotobuf-c)
 BuildRequires: pkgconfig(json-glib-1.0)
+%{?_enable_systemd_resolved:BuildRequires: pkgconfig(libsystemd) >= %systemd_ver}
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli}
 
 %description
-Miracast streaming GUI.
+Miracast streaming daemon and GUI.
 Choose a wireless display and stream your desktop to it.
 
 %prep
@@ -47,7 +49,9 @@ Choose a wireless display and stream your desktop to it.
 #%%autopatch -p1
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_bool systemd_resolved systemd_resolved}
+%nil
 %meson_build
 
 %install
@@ -59,15 +63,20 @@ Choose a wireless display and stream your desktop to it.
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-daemon
+%_libexecdir/%name-stream
 %_desktopdir/%rdn_name.desktop
 #%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_prefix/lib/firewalld/zones/P2P-WiFi-Display.xml
 %doc README.md COPYING
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.98.0-alt1
+- 0.98.0
+
 * Fri May 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.97.0-alt1
 - 0.97.0
 
