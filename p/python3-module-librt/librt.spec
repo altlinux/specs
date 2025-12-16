@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 Summary: Mypyc runtime library
 License: MIT
@@ -53,6 +53,9 @@ cp -r lib-rt/* .
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 0.7.4-alt1
+- 0.7.3 -> 0.7.4.
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 0.7.3-alt1
 - Initial build for sisyphus.
 
