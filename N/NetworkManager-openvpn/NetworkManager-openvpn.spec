@@ -11,7 +11,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -21,11 +21,13 @@ Vcs: https://gitlab.gnome.org/GNOME/NetworkManager-openvpn.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gettext
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
+BuildRequires: alternatives
 %{?_with_gtk4:BuildRequires: libgtk4-devel >= 4.6.3 libnma-gtk4-devel}
 
 Requires: NetworkManager-daemon   >= %nm_version
@@ -39,6 +41,8 @@ OpenVPN.
 License: GPLv2+
 Summary: Common part of %name GTK support
 Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires(pre): alternatives
 Requires: NetworkManager-openvpn = %version-%release
 
 %description gtk-common
@@ -87,6 +91,15 @@ This package contains files for GTK4 applications to use %name.
 
 %install
 %makeinstall_std
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/nm-openvpn-auth-dialog-gtk3<<EOF
+%_libexecdir/NetworkManager/nm-openvpn-auth-dialog	%_libexecdir/NetworkManager/nm-openvpn-auth-dialog-gtk3	10
+EOF
+%if_with gtk4
+cat >%buildroot%_altdir/nm-openvpn-auth-dialog-gtk4<<EOF
+%_libexecdir/NetworkManager/nm-openvpn-auth-dialog	%_libexecdir/NetworkManager/nm-openvpn-auth-dialog-gtk4	20
+EOF
+%endif
 %find_lang %name
 
 %check
@@ -101,20 +114,31 @@ make check
 %config %_libexecdir/NetworkManager/VPN/nm-openvpn-service.name
 
 %files gtk-common -f %name.lang
-%_libexecdir/NetworkManager/nm-openvpn-auth-dialog
 %_datadir/metainfo/*.xml
 
 %files gtk3
 %_libdir/NetworkManager/libnm-vpn-plugin-openvpn-editor.so
+%_altdir/nm-openvpn-auth-dialog-gtk3
+%_libexecdir/NetworkManager/nm-openvpn-auth-dialog-gtk3
 
 %if_with gtk4
 %files gtk4
 %_libdir/NetworkManager/libnm-gtk4-vpn-plugin-openvpn-editor.so
+%_altdir/nm-openvpn-auth-dialog-gtk4
+%_libexecdir/NetworkManager/nm-openvpn-auth-dialog-gtk4
 %endif
 
 %exclude %_libdir/NetworkManager/*.la
+%exclude %_sysusersdir/nm-openvpn-sysusers.conf
+%exclude %_tmpfilesdir/nm-openvpn-tmpfiles.conf
 
 %changelog
+* Tue Dec 16 2025 Mikhail Efremov <sem@altlinux.org> 1.12.4-alt1
+- Don't package sysusers.conf and tmpfiles.conf files.
+- Packaged both GTK3 and GTK4 nm-openvpn-auth-dialog.
+- Built both GTK3 and GTK4 auth dialog.
+- Updated to 1.12.4.
+
 * Wed Sep 17 2025 Mikhail Efremov <sem@altlinux.org> 1.12.3-alt1
 - Updated to 1.12.3.
 
