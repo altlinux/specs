@@ -10,7 +10,7 @@
 # Enable static library builds by default.
 %def_without staticlibs
 # Build a fresh libjvm.so for use in a copy of the bootstrap JDK (bootstrap)
-%def_with fresh_libjvm
+%def_without fresh_libjvm
 # Build with system libraries
 %def_with system_libs
 
@@ -294,9 +294,9 @@
 # New Version-String scheme-style defines
 %global featurever 25
 %global interimver 0
-%global updatever 0
+%global updatever 1
 %global patchver 0
-%global buildver 36
+%global buildver 8
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -334,7 +334,7 @@
 
 # The tag used to create the OpenJDK tarball
 %global vcstag jdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}
-%global vcstag_new jdk-jdk-%{filever}-%{buildver}
+%global vcstag_new jdk25u-jdk-%{filever}-%{buildver}
 
 # Define milestone (EA for pre-releases, GA for releases)
 # Release will be (where N is usually a number starting at 1):
@@ -482,10 +482,6 @@ Source1: bootstrap.tar
 
 # Desktop files. Adapted from IcedTea
 Source9: jconsole.desktop.in
-
-# Release notes
-# https://mail.openjdk.org/pipermail/jdk-updates-dev/
-Source10: NEWS
 
 # Source code for alt-java
 Source11: alt-java.c
@@ -1293,9 +1289,6 @@ for suffix in %{build_loop} ; do
 #            mv -f $manpage.tmp $manpage
 #          done
 #        fi
-        # Install release notes
-        cp -a %{SOURCE10} `pwd`
-        cp -a %{SOURCE10} `pwd`/legal
         # stabilize permissions; aprtially duplicated in instalojdk
         find `pwd` -name "*.so" -exec chmod 755 {} \; -exec echo "set 755 to so {}" \; ;
         find `pwd` -type d -exec chmod 755 {} \; -exec echo "set 755 to dir {}" \; ;
@@ -1380,7 +1373,6 @@ fi
 # Install release notes
 commondocdir=${RPM_BUILD_ROOT}%{_defaultdocdir}/%{uniquejavadocdir -- $suffix}
 install -d -m 755 ${commondocdir}
-cp -a %{SOURCE10} ${commondocdir}
 
 # Install icons and menu entries
 for s in 16 24 32 48 ; do
@@ -1678,7 +1670,6 @@ $JAVA_HOME/bin/jar -tf $JAVA_HOME/lib/src.zip | grep 'sun.misc.Unsafe'
 done
 
 # Remove unnecessary files
-rm -f %buildroot%{_jvmdir}/%{sdkdir}/NEWS
 rm -f %buildroot%{_jvmdir}/%{sdkdir}/javadocs.zip
 rm -f %buildroot%_datadir/javadoc/*.zip
 rm -f %buildroot%_datadir/javadoc/java-zip
@@ -1703,7 +1694,6 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 # important note, see https://bugzilla.redhat.com/show_bug.cgi?id=1038092 for whole issue
 # all config/noreplace files (and more) have to be declared in pretrans. See pretrans
 %{_jvmdir}/%{sdkdir}/legal
-%doc %{_defaultdocdir}/%{uniquejavadocdir}/NEWS
 %dir %{_sysconfdir}/.java/.systemPrefs
 %dir %{_sysconfdir}/.java
 %dir %{_jvmdir}/%{sdkdir}
@@ -1985,5 +1975,9 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Tue Dec 16 2025 Andrey Cherepanov <cas@altlinux.org> 0:25.0.1.0.8-alt1
+- New version (fixes: CVE-2025-53066, CVE-2025-53057, CVE-2025-61748).
+- End of bootstrap.
+
 * Fri Oct 17 2025 Andrey Cherepanov <cas@altlinux.org> 0:25.0.0.0.36-alt1
 - Initual build for Sisyphus.
