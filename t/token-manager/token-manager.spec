@@ -1,22 +1,28 @@
 %define _unpackaged_files_terminate_build 1
+
+%ifarch %ix86
+%define run_arch ia32
+%endif
 %ifarch x86_64
-%define cpro_arch amd64
-%define miss_arch ia32
-%else
-%define cpro_arch ia32
-%define miss_arch amd64
+%define run_arch amd64
+%endif
+%ifarch aarch64
+%define run_arch aarch64
+%endif
+%ifarch e2kv6
+%define run_arch e2k64
 %endif
 
 Name:    token-manager
 Version: 5.3
-Release: alt1
+Release: alt2
 
 Summary: Certificate manager for CryptoPro CSP
 License: MIT
 Group:   Security/Networking
 URL:     https://github.com/wolandius/token-manager
 
-ExclusiveArch: x86_64 %ix86
+ExclusiveArch: x86_64 %ix86 aarch64 e2kv6
 
 Source: %name-%version.tar
 Source1: cpconfig-pam.alt
@@ -50,30 +56,30 @@ Parent project by Boris Makarenko https://github.com/bmakarenko/token-manager
 
 %install
 %python3_install
-%ifarch x86_64
+%ifarch x86_64 aarch64 e2kv6
 mv %buildroot/usr/{lib,%_lib}
 %endif
-install -Dm 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/cpconfig-%cpro_arch
-%ifarch %ix86
-rm %buildroot%_desktopdir/token-manager.desktop
-%else
-rm %buildroot%_desktopdir/token-manager-%miss_arch.desktop
-%endif
-rm %buildroot%_sysconfdir/pam.d/cpconfig-%miss_arch \
-   %buildroot%_sysconfdir/security/console.apps/cpconfig-%miss_arch
+sed -i 's/Exec=token-manager/Exec=token-manager --%run_arch/' \
+	%buildroot%_desktopdir/token-manager.desktop
+rm %buildroot%_desktopdir/token-manager-*.desktop
+rm -r %buildroot%_sysconfdir/pam.d
+rm -r %buildroot%_sysconfdir/security
+
 %find_lang token_manager
 
 %files -f token_manager.lang
 %_bindir/%name
 %_desktopdir/*.desktop
-%config(noreplace) %_sysconfdir/pam.d/cpconfig-%cpro_arch
-%config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 %python3_sitelibdir/token_manager*
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_datadir/token_manager
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Mon Dec 08 2025 Anton Midyukov <antohami@altlinux.org> 5.3-alt2
+- Remove unneeded console.apps and pam.d for crypto-pro 5.
+- Build for aarch64 and e2kv6 too.
+
 * Wed Nov 19 2025 Andrey Cherepanov <cas@altlinux.org> 5.3-alt1
 - New version (fixes: OVE-20251119-0002 Support extra fields for cetificate check dates).
 
