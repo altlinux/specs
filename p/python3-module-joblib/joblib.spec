@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name joblib
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
@@ -51,18 +52,18 @@ and has specific optimizations for numpy arrays.
 set -o pipefail
 %__python3 - <<-'EOF' | sort -u > _vendor.txt
 import pkgutil
-for mod in pkgutil.iter_modules(["joblib/externals"]):
+for mod in pkgutil.iter_modules(["%mod_name/externals"]):
     print(mod.name)
 EOF
 %pyproject_deps_resync vendored pip_reqfile _vendor.txt
 
-VENDORED_PATH='joblib/externals'
+VENDORED_PATH='%mod_name/externals'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
 rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
 cp "%SOURCE1" "$UNVENDORED_PATH"
 sed -i \
-    -e 's/@VENDORED_ROOT@/"joblib.externals"/' \
+    -e 's/@VENDORED_ROOT@/"%mod_name.externals"/' \
     -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
     "$UNVENDORED_PATH"
 
@@ -80,12 +81,15 @@ sed -i \
 
 %files
 %doc CHANGES.rst README.rst
-%python3_sitelibdir/joblib/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/joblib/test*
-%exclude %python3_sitelibdir/joblib/__pycache__/test*
+%exclude %python3_sitelibdir/%mod_name/test*
+%exclude %python3_sitelibdir/%mod_name/__pycache__/test*
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
+- 1.5.2 -> 1.5.3.
+
 * Tue Sep 02 2025 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2.
 
