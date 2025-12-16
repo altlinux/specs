@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pygit2
+%define mod_name pygit2
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 
 Summary: Python bindings for libgit2
@@ -49,10 +50,13 @@ Bindings to the libgit2 shared library, implements Git plumbing.
 
 %files
 %doc COPYING AUTHORS.md CHANGELOG.md
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.19.0-alt1
+- Updated to 1.19.0.
+
 * Fri May 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
 - Updated to 1.18.0 (closes #54422).
 
