@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: qtile
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
@@ -16,7 +16,6 @@ Url: http://www.qtile.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-Requires: python3-module-pywlroots >= 0.17.0
 Requires: python3-module-cairocffi >= 1.6.0
 Requires: python3-module-xcffib >= 1.4.0
 
@@ -35,15 +34,13 @@ BuildRequires: libpango-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libinput-devel
 BuildRequires: libxkbcommon-devel
+BuildRequires: libxcbutil-cursor-devel
 BuildRequires: libdrm-devel
 
-# wlroots is poorly maintained, using vendored headers from python3-module-pywlroots
-# See: https://bugzilla.altlinux.org/54843
-# See: https://lists.altlinux.org/pipermail/devel/2025-June/219307.html
 BuildRequires: libwayland-server-devel
+BuildRequires: libwlroots-devel
+BuildRequires: wayland-protocols
 BuildRequires: libpixman-devel
-BuildRequires: python3-module-pywlroots
-%global libwlroots_file libwlroots.so.12
 
 %if_with check
 BuildRequires: python3-module-pygobject3
@@ -52,6 +49,8 @@ BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-modules-curses
 BuildRequires: python3-module-mypy
+BuildRequires: python3-module-anyio
+BuildRequires: python3-module-libcst
 BuildRequires: libgtk-layer-shell
 BuildRequires: libgdk-pixbuf-gir
 BuildRequires: libgtk+3-gir
@@ -90,14 +89,9 @@ if [ "$(rpmvercmp "$setuptools_version" 77.0.3)" = -1 ]; then
         -e 's/^\(license = \)\(".*"\)$/\1{text = \2}/' ./pyproject.toml
 fi
 
-sed -i -e "/libraries=/ s/wlroots/:%libwlroots_file/" \
-    ./libqtile/backend/wayland/cffi/build.py
-
 %build
-export CFLAGS="%optflags -I %python3_sitelibdir/wlroots/include"
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export CFFI_TMPDIR=$(mktemp -d -t cffi_tempidr.XXXXXXXXX)
-PYTHONPATH="$PWD" ./scripts/ffibuild -v
 
 %pyproject_build
 
@@ -111,6 +105,12 @@ popd
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
+#FIXME: force pyproject to build platlib wheel
+if [ ! -d %buildroot/%python3_sitelibdir ]; then
+    mkdir -p %buildroot/%python3_sitelibdir
+    mv %buildroot/%python3_sitelibdir_noarch/* %buildroot/%python3_sitelibdir/
+fi
+
 # A workaround to run qtile from SDDM
 cat > %buildroot%_bindir/qtile-start <<EOF
 #!/bin/sh -efu
@@ -123,10 +123,8 @@ sed -i -e 's|^Exec=.*|Exec=%_bindir/qtile-start|' resources/qtile.desktop
 install -Dm 644 resources/qtile.desktop -t %buildroot%_datadir/xsessions/
 install -Dm 644 resources/qtile-wayland.desktop -t %buildroot%_datadir/wayland-sessions/
 
-# hack to drop .abi3 from binaries
-find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
-
 %check
+%tox_create_default_config
 %tox_check_pyproject
 
 %files
@@ -142,6 +140,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 0.34.0-alt1
+- New version 0.34.0.
+
 * Fri Jul 25 2025 Egor Ignatov <egori@altlinux.org> 0.33.0-alt1
 - New version 0.33.0.
 
