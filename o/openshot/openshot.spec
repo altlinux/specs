@@ -6,7 +6,7 @@
 %def_enable qtwebengine
 %endif
 
-%define ver_major 3.3
+%define ver_major 3.4
 %define xdg_name org.openshot.OpenShot
 Name: openshot
 Version: %ver_major.0
@@ -16,6 +16,8 @@ Summary: Non Linear Video Editor using Python and MLT
 Group: Video
 License: GPL-3.0-or-later
 Url: http://www.openshotvideo.com/
+
+Vcs: https://github.com/OpenShot/openshot-qt.git
 
 %define _name  %name-qt
 
@@ -78,6 +80,9 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Mon Dec 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
