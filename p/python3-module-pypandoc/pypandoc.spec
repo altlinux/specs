@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.16
+Version: 1.16.2
 Release: alt1
 
 Summary: Thin wrapper for pandoc
@@ -42,6 +42,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %check
 # haskell/pandoc bug
 # HandshakeFailed (Error_Protocol "certificate has unknown CA" UnknownCa)
+# https://bugzilla.altlinux.org/56775
 export SYSTEM_CERTIFICATE_PATH=/usr/share/ca-certificates
 %__python3 tests.py
 
@@ -52,6 +53,12 @@ export SYSTEM_CERTIFICATE_PATH=/usr/share/ca-certificates
 
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
+* Wed Nov 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Sat Nov 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16-alt1
 - 1.16
 

@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-dbusmock
-Version: 0.37.1
+Version: 0.37.2
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -66,6 +66,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.37.2-alt1
+- 0.37.2
+
 * Fri Oct 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.37.1-alt1
 - 0.37.1
 
