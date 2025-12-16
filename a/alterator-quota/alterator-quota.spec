@@ -1,8 +1,6 @@
 Name: alterator-quota
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
-
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 Summary: alterator module for managing filesystem quotas
 License: GPL
@@ -45,6 +43,10 @@ alterator module for managing filesystem quotas
 %_bindir/*
 
 %changelog
+* Tue Oct 07 2025 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt1
+- Replace 'egrep' with 'grep -E' (Closes: 53474).
+- Clean Packager.
+
 * Wed Dec 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.3-alt1
 - Fixed obtaining real device name when mapper device is listed by UUID.
 
