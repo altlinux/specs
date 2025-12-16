@@ -1,14 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 %define pypi_name pynacl
-%define project_name PyNaCl
 %define mod_name nacl
+
+# .github/workflows/wheel-builder.yml
+%python3_set_limited_api 3.8
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
-Release: alt2.1
+Version: 1.6.1
+Release: alt1
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 License: Apache-2.0
 Group: Development/Python3
@@ -16,6 +18,8 @@ Url: https://pypi.org/project/PyNaCl/
 Vcs: https://github.com/pyca/pynacl/
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libsodium-devel >= 1.0.16
@@ -32,7 +36,7 @@ and speed.
 %prep
 %setup
 # Remove bundled libsodium, to be sure
-rm -vrf src/libsodium/
+rm -r src/libsodium/
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -45,8 +49,6 @@ export SODIUM_INSTALL=system
 
 %install
 %pyproject_install
-# FIXME
-mv %buildroot/%python3_sitelibdir/%mod_name/{_sodium.abi3,_sodium}.so
 
 %files
 %doc README.rst
@@ -54,6 +56,9 @@ mv %buildroot/%python3_sitelibdir/%mod_name/{_sodium.abi3,_sodium}.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
+- 1.5.0 -> 1.6.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.5.0-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
