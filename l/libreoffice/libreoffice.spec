@@ -43,7 +43,7 @@ Name: libreoffice
 %define hversion 25.8
 %define urelease 3.2
 Version: %hversion.%urelease
-Release: alt2
+Release: alt3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -196,7 +196,8 @@ BuildRequires: libeot-devel
 BuildRequires: libgraphite2-devel
 %if_with java
 # 7.0.4.2
-BuildRequires: java-devel >= 9.0.0
+# java.lang.SecurityManager is missing in Java 25
+BuildRequires: java-17-openjdk-devel
 %endif
 # 7.1.5.2
 BuildRequires: libbox2d-devel
@@ -855,6 +856,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Dec 17 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.3.2-alt3
+- FTBFS: built with Java 17 because Java 25 does not support SecurityManager
+  for bundled hsqldb.
+
 * Tue Nov 25 2025 Ivan A. Melnikov <iv@altlinux.org> 25.8.3.2-alt2
 - Drop loongarch64-specific patch 501 from spec, as upstream is
   patching skia in the same way now (fixes building on loongarch64).
