@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 2.3
+%define ver_major 2.4
 %define rdn_name app.fotema.%_name
 
 %def_enable check
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 # grep ORT_VERSION ort/build.rs
-%define onnx_ver 1.16.0
+%define onnx_ver 1.23.2
 Source4: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-x64-%onnx_ver.tgz
 Source5: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-aarch64-%onnx_ver.tgz
 
@@ -85,9 +85,9 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-%patch -p2
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-	./vendor/ort/.cargo-checksum.json
+#%%patch -p2
+#sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+#	./vendor/ort/.cargo-checksum.json
 
 mkdir onnxruntime
 %ifarch x86_64
@@ -119,6 +119,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README* THUMBNAILS*
 
 %changelog
+* Wed Dec 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Tue Oct 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 

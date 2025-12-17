@@ -2,7 +2,7 @@
 
 %define _name wayback
 %define binary_name X%_name
-%define ver_major 0.2
+%define ver_major 0.3
 %define rdn_name io.github.fizzyizzy05.%_name
 
 %def_enable man
@@ -77,6 +77,9 @@ capabilities to host a rootful Xwayland server.
 %doc README.*
 
 %changelog
+* Wed Dec 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt1
+- 0.3
+
 * Sun Jul 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt1
 - 0.2
 
