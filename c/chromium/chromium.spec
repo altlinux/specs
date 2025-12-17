@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        143.0.7499.109
+Version:        143.0.7499.146
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -100,7 +100,6 @@ Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-142-Add-ExtractData-support-for-text-uri-list.patch
 Patch033: 0033-FEDORA-chromium-142-Update-pointer-position-during-draggin.patch
 Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
-Patch035: 0035-FRDORA-chromium-143-omnibox-next-Improve-cutout-mouse-handling-for-Wayla.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 
@@ -660,6 +659,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Dec 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.146-alt1
+- New version (143.0.7499.146).
+- Fixes:
+  + CVE-2025-14765: Use after free in WebGPU
+  + CVE-2025-14766: Out of bounds read and write in V8
+
 * Thu Dec 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.109-alt1
 - New version (143.0.7499.109).
 - Fixes:
