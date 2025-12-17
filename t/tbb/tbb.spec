@@ -5,7 +5,7 @@
 %def_with python
 
 Name: tbb
-Version: 2022.2.0
+Version: 2022.3.0
 Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
@@ -148,8 +148,6 @@ if [ -f "%buildroot%_pkgconfigdir/tbb32.pc" ];then
 	mv "%buildroot%_pkgconfigdir/tbb32.pc" "%buildroot%_pkgconfigdir/tbb.pc"
 fi
 
-
-
 %ifnarch ppc64le aarch64 armh
 %check
 %cmake_build -t test
@@ -179,6 +177,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 17 2025 Anton Farygin <rider@altlinux.org> 2022.3.0-alt1
+- 2022.2.0 -> 2022.3.0
+
 * Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 2022.2.0-alt1
 - 2022.1.0 -> 2022.2.0
 
