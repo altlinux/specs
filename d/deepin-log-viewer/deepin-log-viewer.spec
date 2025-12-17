@@ -4,7 +4,7 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.22
+Version: 6.5.25
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -87,12 +87,11 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %files -f %name.lang
 %doc README.md LICENSE.txt debian/changelog
 %_bindir/*
-%_userunitdir/coredump-reporter.service
-%_userunitdir/coredump-reporter.timer
+%_unitdir/coredump-reporter.service
+%_unitdir/coredump-reporter.timer
 %_unitdir/deepin-log-viewer-daemon.service
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
-%_datadir/%name/translations/deepin_log_viewer.qm
 %_datadir/%name/translations/deepin-log-viewer.qm
 %_datadir/%name/translations/deepin-log-viewer_ky@Arab.qm
 %dir %_datadir/%name/DocxTemplate/
@@ -103,12 +102,9 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/dbus-1/system-services/com.deepin.logviewer.service
-%_datadir/dbus-1/system-services/org.deepin.logviewer.ops.service
 %_datadir/dbus-1/system.d/com.deepin.logviewer.conf
-%_datadir/dbus-1/system.d/org.deepin.logviewer.ops.conf
 %_datadir/polkit-1/actions/com.deepin.pkexec.logViewer*.policy
 %_datadir/glib-2.0/schemas/com.deepin.log.viewer.gschema.xml
-%_unitdir/deepin-log-viewer-ops.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.log.viewer/
@@ -135,6 +131,9 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %changelog
+* Wed Dec 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.25-alt1
+- New version 6.5.25.
+
 * Thu Nov 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.22-alt1
 - New version 6.5.22.
 
