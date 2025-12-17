@@ -75,7 +75,7 @@ BuildRequires: java-17-devel
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1
+Release:       alt2
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -101,6 +101,9 @@ Patch2:        %{name}-build.patch
 Patch3:        %{name}-%{major_version}.%{minor_version}-catalina-policy.patch
 Patch4:        rhbz-1857043.patch
 Patch6:        %{name}-%{major_version}.%{minor_version}-bnd-annotation.patch
+# backported from
+# https://github.com/apache/tomcat/commit/93fc51176bbcf643a46cc271b85ff49cbb01f1a6
+Patch7:        %{name}-9.0.112-Avoid-possible-NPEs-when-using-a-TLS-enabled-custom-connector.patch
 
 BuildArch:     noarch
 
@@ -227,6 +230,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch3 -p0
 %patch4 -p1
 %patch6 -p0
+%patch7 -p1
 
 # Remove webservices naming resources as it's generally unused
 rm -rf java/org/apache/naming/factory/webservices
@@ -571,6 +575,9 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 1:9.0.112-alt2
+- Fixed NPE on dogtag pki installation (closes: #57265).
+
 * Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.112-alt1
 - new version
 - removed precompiled armh-specific blobs
