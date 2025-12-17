@@ -2,8 +2,8 @@
 %define import_path github.com/projectdiscovery/nuclei
 
 Name: nuclei
-Version: 3.6.0
-Release: alt2
+Version: 3.6.1
+Release: alt1
 
 Summary: Nuclei is a modern vulnerability scanner built on a simple YAML-based DSL
 
@@ -17,7 +17,7 @@ ExclusiveArch: %go_arches
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
 
-Patch1: vendored-ericlagergren-decimal-riscv64-and-loongarch64-support.patch
+#Patch1: vendored-ericlagergren-decimal-riscv64-and-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -30,7 +30,7 @@ APIs, networks, DNS, and cloud configurations.
 
 %prep
 %setup -a1
-%autopatch -p1
+#%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -53,6 +53,10 @@ export IGNORE_SOURCES=1
 %_bindir/nuclei
 
 %changelog
+* Wed Dec 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.6.1-alt1
+- 3.6.0 -> 3.6.1
+- disabled vendored-ericlagergren-decimal patch
+
 * Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.0-alt2
 - NMU: fix FTBFS on loongarch64 and riscv64
 
