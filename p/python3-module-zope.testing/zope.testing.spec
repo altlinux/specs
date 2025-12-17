@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0
+Version: 6.1
 Release: alt1
 Summary: Zope testing helpers
 License: ZPL-2.1
@@ -23,7 +23,6 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -60,6 +59,9 @@ flexible test runner, and supports both doctest and unittest.
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.txt
 
 %changelog
+* Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 6.0 -> 6.1.
+
 * Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 6.0-alt1
 - 5.1 -> 6.0.
 
