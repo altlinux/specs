@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.4.2
-Release:  alt1.1
+Version:  0.4.4
+Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
 License:  GPLv2
@@ -57,6 +57,34 @@ A script to update and commit RPM checksum files.
 %_man1dir/checksumbot.1.*
 
 %changelog
+* Tue Dec 16 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.4-alt1
+- checksumbot: Include checksumdiff report in the output.
+- checksumbot: Include RPM names diff in the output.
+- checksumbot: Added configuration option to include RPM package
+  lists into the checksum repository.
+- Added option to send checksumdiff statistic report to a file.
+- Make checksumdiff report statistics in verbose mode.
+- Make checksumdiff check the total record counters.
+- checksumdiff: Verify per-task checksum files using one-line
+  checksum views.
+- Always replace per-task *.chksum files when checksumdiff.
+- Make checksummerge support inplace file update.
+
+* Tue Dec 09 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt1
+- checksumgen: Improved job control: reap all processes when
+  interrupted.
+- checksumgen: Fix: Exit with error if one of the jobs exited
+  with error.
+- checksumgen: Fix: Exclude directories from file list
+  (Fixes: OVE-20251209-0001).
+- checksumgen: Only trace xargs if DEBUG > 1.
+- checksumgen: Print the TODO list of packages in DEBUG mode.
+- checksumgen: Output the command line in DEBUG mode.
+- Don't enable shell trace (-x) if DEBUG < 3.
+- checksumbot: Run mkimage-profiles with REPORT=1 in debug mode.
+- checksumbot: Added -r, --ref command-line option.
+- checksumbot: Fix: Use LANG=C for log file timestamps.
+
 * Wed Nov 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.2-alt1.1
 - Note, that v0.3.0-alt1 fixes missing checksum data for *.ko.zst files
   by including *.ko.zst by default (Fixes: OVE-20251204-0001).
