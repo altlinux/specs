@@ -1,5 +1,5 @@
 Name:    coppwr
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Low level control GUI for the PipeWire multimedia server
@@ -33,14 +33,14 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/dimtpap/egui-snarl.git?rev=0d51e7a24e1849114c8806dc6351cebc58dbabcc"]
+[source."git+https://github.com/dimtpap/egui-snarl.git?rev=a0b529e23131fc5c00d995c479047557be646bb3"]
 git = "https://github.com/dimtpap/egui-snarl.git"
-rev = "0d51e7a24e1849114c8806dc6351cebc58dbabcc"
+rev = "a0b529e23131fc5c00d995c479047557be646bb3"
 replace-with = "vendored-sources"
 
-[source."git+https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git?rev=605d15996f3258b3e1cc34e445dfbdf16a366c7e"]
+[source."git+https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git?rev=bc3f3ddcf1d61083257f5f04b800c5a411fc2c4d"]
 git = "https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git"
-rev = "605d15996f3258b3e1cc34e445dfbdf16a366c7e"
+rev = "bc3f3ddcf1d61083257f5f04b800c5a411fc2c4d"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -73,6 +73,9 @@ install -Dm644 assets/icon/32.png %buildroot/%_datadir/icons/hicolor/32x32/apps/
 %_datadir/icons/hicolor/*/apps/io.github.dimtpap.coppwr.*
 
 %changelog
+* Wed Dec 17 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Fri Sep 12 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.0-alt1
 - new version 1.7.0
 
