@@ -1,5 +1,5 @@
 Name: tree-sitter-vimdoc
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Vimdoc grammar for tree-sitter
@@ -30,6 +30,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-vimdoc
 %_libdir/tree-sitter-vimdoc
 
 %changelog
+* Wed Dec 17 2025 Vladimir Didenko <cow@altlinux.org> 4.1.0-alt1
+- new version
+
 * Tue May 20 2025 Vladimir Didenko <cow@altlinux.org> 4.0.0-alt1
 - new version
 
