@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.4.4
+Version:  0.4.5
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -57,6 +57,12 @@ A script to update and commit RPM checksum files.
 %_man1dir/checksumbot.1.*
 
 %changelog
+* Wed Dec 17 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.5-alt1
+- Untabify all help pages.
+- checksumbot: Added --cb option to override CHKSUMBRANCH
+  configuration option.
+- checksumgen: Fixed shellcheck SC2317.
+
 * Tue Dec 16 2025 Paul Wolneykien <manowar@altlinux.org> 0.4.4-alt1
 - checksumbot: Include checksumdiff report in the output.
 - checksumbot: Include RPM names diff in the output.
