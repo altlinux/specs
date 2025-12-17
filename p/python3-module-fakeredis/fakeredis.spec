@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 2.32.1
+Version: 2.33.0
 Release: alt1
 Summary: Fake implementation of redis API for testing purposes
 License: BSD
@@ -51,6 +51,9 @@ rm %buildroot%python3_sitelibdir/%mod_name/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 2.33.0-alt1
+- 2.32.1 -> 2.33.0.
+
 * Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 2.32.1-alt1
 - 2.31.1 -> 2.32.1.
 
