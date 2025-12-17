@@ -1,31 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name zope.event
+%define ns_name zope
+%define mod_name event
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.1
+Version: 6.1
 Release: alt1
-
 Summary: Very basic event publishing system
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.event/
 Vcs: https://github.com/zopefoundation/zope.event
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+# switched to native namespace
+Requires: python3-module-zope >= 3.3.0-alt10
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 The zope.event package provides a simple event system. It provides:
@@ -36,24 +39,10 @@ The zope.event package provides a simple event system. It provides:
   event dispatching system that builds on zope.event can be found in
   zope.component.
 
-%package tests
-Summary: Tests for zope.event
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-The zope.event package provides a simple event system. It provides:
-
-* An event publishing system
-* A very simple event-dispatching system on which more sophisticated
-  event dispatching systems can be built. For example, a type-based
-  event dispatching system that builds on zope.event can be found in
-  zope.component.
-
-This package contains tests for zope.event.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -61,26 +50,19 @@ This package contains tests for zope.event.
 %install
 %pyproject_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc README.*
-%python3_sitelibdir/zope/event
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests*
-
-%files tests
-%python3_sitelibdir/*/*/tests*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests*
 
 %changelog
+* Wed Dec 17 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 5.1.1 -> 6.1.
+
 * Tue Jul 22 2025 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
 - 5.1 -> 5.1.1.
 
