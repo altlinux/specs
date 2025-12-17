@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 7.4.3
+Version: 7.5.0
 Release: alt1
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -96,6 +96,9 @@ PATH=%buildroot%_bindir:$PATH
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Wed Dec 17 2025 Vitaly Chikunov <vt@altlinux.org> 7.5.0-alt1
+- Update to 7.5.0 (2025-06-18).
+
 * Mon Jun 16 2025 Vitaly Chikunov <vt@altlinux.org> 7.4.3-alt1
 - Update to 7.4.3 (2025-06-16).
 
