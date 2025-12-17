@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.36
+Version: 6.0.37
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 # %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
 Conflicts: notify-osd
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd rpm-build-xdg
 BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel
 %if_with clang
 BuildRequires: clang-devel
@@ -80,6 +80,7 @@ export READELF="llvm-readelf"
 %_bindir/dde-switchtogreeter
 %_bindir/dde-wm-chooser
 %_bindir/dde-hints-dialog
+%_bindir/deepin-login-reminder
 %dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/dde-bluetooth-dialog
 %_libexecdir/deepin-daemon/dde-lowpower
@@ -93,12 +94,21 @@ export READELF="llvm-readelf"
 %_userunitdir/dde-blackwidget.service
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
+%_xdgconfigdir/autostart/deepin-login-reminder.desktop
 # outside %%find_lang
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
+# dsg
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.login-reminder/
+%_datadir/dsg/configs/org.deepin.login-reminder/org.deepin.login-reminder.json
 
 %changelog
+* Wed Dec 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
+- New version 6.0.37.
+
 * Tue Dec 02 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
 - New version 6.0.36.
 
