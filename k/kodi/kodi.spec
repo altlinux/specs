@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.3
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -11,13 +11,16 @@ Requires: kodi-data = %version-%release
 Provides: kodi-bin = %version-%release
 Obsoletes: kodi-bin
 
+# enough's enough
+ExcludeArch: i586
+
 Source0: %name-%version-%release.tar
 Source1: groovy.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
 BuildRequires: libunistring-devel libidn2-devel libEGL-devel
-BuildRequires: /proc swig java-devel
+BuildRequires: /proc swig java-21-devel
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bluez)
@@ -201,6 +204,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Wed Dec 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt2
+- pinned java-21 BR
+
 * Sat Nov 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt1
 - 21.3 released
 
