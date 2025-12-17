@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.6.2
+Version: 1.6.4
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -10,31 +10,20 @@ Url: https://github.com/benjamimgois/goverlay
 Source: https://github.com/benjamimgois/goverlay/archive/%version/%name-%version.tar.gz
 Patch: goverlay-enable-debuginfo-generation.patch
 
-#ExclusiveArch: x86_64
-ExcludeArch: ppc64le armh
 BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt6pas-devel
 
 Requires: mangohud vulkan-tools vkBasalt
 Requires: qt6pas
 
-
-#Recommends: git
-#Recommends: mesa-demos
-#Recommends: vkbasalt
-#Recommends: vulkan-tools
-
 %description
-GOverlay is an opensource project that aims to create a graphical UI to
-help manage Linux overlays. Currently supported:
-
-- MangoHUD
-- vkBasalt
+Goverlay helps Linux gamers get the most out of their system by offering an easy graphical interface to configure MangoHud, 
+vkBasalt, and OptiScaler. Whether you want performance monitoring, visual enhancements, or smarter upscaling, 
+Goverlay makes everything accessible in just a few clicks.
 
 %prep
 %setup
 
 %build
-#set_build_flags
 %make_build
 
 %install
@@ -51,6 +40,10 @@ help manage Linux overlays. Currently supported:
 /usr/libexec/goverlay
 
 %changelog
+* Wed Dec 17 2025 Ilya Mashkin <oddity@altlinux.ru> 1.6.4-alt1
+- 1.6.4
+- Cleanup spec
+
 * Sat Dec 13 2025 Ilya Mashkin <oddity@altlinux.ru> 1.6.2-alt1
 - 1.6.2
 
