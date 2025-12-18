@@ -6,7 +6,7 @@
 
 Name:    userpasswd
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Graphical utility for changing user password
 License: GPLv3+
@@ -97,6 +97,9 @@ EOF
 %lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Dec 18 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.1-alt2
+- Updated Name[ru] in .desktop
+
 * Wed May 21 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.1-alt1
 - Fixed display of icon on the panel in Wayland sessions (Closes: 54368)
 - Fixed starting /usr/bin/userpasswd by clicking the icon if userpasswd
