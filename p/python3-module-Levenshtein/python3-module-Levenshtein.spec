@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.27.1
+Version: 0.27.3
 Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
@@ -63,6 +63,8 @@ It supports both normal and Unicode strings.
 # standard is not specified, but rapidfuzz requires at least C++17
 %add_optflags -std=c++17
 %endif
+sed -i 's/python/python3/' src/Levenshtein/generate.sh
+bash src/Levenshtein/generate.sh
 %pyproject_build
 
 %install
@@ -77,6 +79,9 @@ It supports both normal and Unicode strings.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.27.3-alt1
+- Updated to 0.27.3.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.27.1-alt1
 - Updated to 0.27.1.
 
