@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -43,6 +43,13 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Dec 17 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.4-alt1
+- Revert "chore: add 'exit_status = true' for new version of
+  executor"
+- build: updated vertion in script
+- fix: fixed warnings on disabled samba in prediag
+- feat: added reverse_with_warnings prediag mode
+
 * Fri Dec 12 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.3-alt1
 - build: removed /bin/samba-tool dependancy
 - fix: fixed false negative results on warnings
