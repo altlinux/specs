@@ -12,7 +12,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: RQ (Redis Queue) integration for Flask and Quart applications
 License: MIT
@@ -64,7 +64,7 @@ connections are available.
 
 %check
 export PATH="$PATH:%_sbindir"
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -p no:unraisableexception
 
 %files
 %doc CHANGES.md LICENSE.txt README.md
@@ -72,5 +72,8 @@ export PATH="$PATH:%_sbindir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.3-alt2
+- Fixed FTBFS (ignore redis unraisable exception).
+
 * Thu Oct 02 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.3-alt1
 - Packaged for ALT Sisyphus.
