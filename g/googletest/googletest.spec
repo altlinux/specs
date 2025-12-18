@@ -1,6 +1,6 @@
 Name: googletest
 Version: 1.17.0
-Release: alt1
+Release: alt1.1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -79,7 +79,7 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %cmake \
   -DBUILD_SHARED_LIBS:BOOL=TRUE \
   -Dgmock_build_tests:BOOL=TRUE \
-  -DCMAKE_CXX_STANDARD=17
+  -DCMAKE_CXX_STANDARD=20
 %cmake_build
 
 %install
@@ -114,6 +114,9 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %_includedir/gmock
 
 %changelog
+* Thu Dec 18 2025 Fr. Br. George <george@altlinux.org> 1.17.0-alt1.1
+- Rebuild against C++20
+
 * Thu May 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.17.0-alt1
 - New version 1.17.0.
 
