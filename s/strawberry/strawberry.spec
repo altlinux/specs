@@ -1,7 +1,8 @@
 %def_without clang
+%def_with tests
 
 Name: strawberry
-Version: 1.2.15
+Version: 1.2.16
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -21,12 +22,16 @@ Patch: %name-%version-%release.patch
 
 Requires: gst-plugins-good1.0 vlc-mini
 
-BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
+BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
 BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel taglib-devel libvlc-devel protobuf-compiler sparsehash-devel rapidjson-devel
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
 BuildRequires: libicu-devel
+
+%if_with tests
+BuildRequires: ctest desktop-file-utils /usr/bin/appstream-util
+%endif
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -85,9 +90,15 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %install
 %cmake_install
 
+%if_with tests
 %check
+# Tests for the graphical environment are not supported in the build environment.
+sed -i '/add_test_file(.* true)/d' tests/CMakeLists.txt
+export LC_ALL=C.UTF-8
+cmake --build "%_cmake__builddir" -j%__nprocs -t run_strawberry_tests
 desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberry.desktop
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
+%endif
 
 %files
 %doc COPYING Changelog README.md
@@ -98,6 +109,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Thu Dec 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.16-alt1
+- New version 1.2.16.
+- Enabled tests.
+
 * Tue Nov 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.15-alt1
 - New version 1.2.15.
 
