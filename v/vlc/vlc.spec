@@ -1,5 +1,5 @@
 Name: vlc
-Version: 3.0.22
+Version: 3.0.23
 Release: alt1
 
 Summary: VLC media player
@@ -1294,6 +1294,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Dec 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.23-alt1
+- 3.0.23 released
+
 * Tue Nov 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.22-alt1
 - 3.0.22 released
 
