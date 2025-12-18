@@ -1,8 +1,8 @@
 Name: kernel-image-6.18
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest1
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Dec 18 2025 Kernel Bot <kernelbot@altlinux.org> 6.18.2-alt1
+- v6.18.2 (2025-12-18).
+
 * Sat Dec 13 2025 Vitaly Chikunov <vt@altlinux.org> 6.18.1-alt2
 - spec: Fix usage of the newly introduced %conf section.
 
