@@ -1,33 +1,38 @@
 Name: python3-module-zlib-ng
-Version: 0.4.3
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Python bindings for the zlib-ng library
 License: PSF-2.0
 Group: Development/Python
-Url: https://pypi.org/project/zlib-ng/
+Url: https://pypi.org/project/zlib-ng
+VCS: https://github.com/pycompression/python-zlib-ng
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(test)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: pkgconfig(zlib-ng)
+BuildRequires: python3(test)
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
-
-# Hot fix for python3.13
-# https://github.com/musicinmybrain/python-zlib-ng/commit/15ca0b99dc428d3d6b0fab999caa315019952624#diff-c2df034c4f580c134fed2f9e064b5ad831c069deefc4536c046fe99e90f52b81
-sed -i 's/READ, WRITE = 1, 2/READ, WRITE = gzip.READ, gzip.WRITE/' src/zlib_ng/gzip_ng.py
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PYTHON_ZLIB_NG_LINK_DYNAMIC=true
 %pyproject_build
 
@@ -35,13 +40,16 @@ export PYTHON_ZLIB_NG_LINK_DYNAMIC=true
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/zlib_ng
 %python3_sitelibdir/zlib_ng-%version.dist-info
 
 %changelog
+* Thu Dec 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
+
 * Wed Sep 10 2025 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt2
 - Fixed build with python3.13.
 
