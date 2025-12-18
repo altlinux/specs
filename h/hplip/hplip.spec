@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.25.8
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -1319,6 +1319,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Dec 17 2025 Anton Midyukov <antohami@altlinux.org> 1:3.25.8-alt3
+- NMU: hplip-alt-hplip-desktop.patch: add Name[ru].
+
 * Thu Dec 11 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.8-alt2
 - Fixed checksum for 3.25.8 (ALT #57084).
 
