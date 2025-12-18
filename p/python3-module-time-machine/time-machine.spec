@@ -2,6 +2,8 @@
 %define pypi_name time-machine
 %define mod_name time_machine
 
+# %%python3_set_limited_api is not supported yet
+
 %def_with check
 
 %define add_python_extra() \
@@ -16,7 +18,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: Travel through time in your tests
 License: MIT
@@ -66,6 +68,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 18 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.0 -> 3.2.0.
+
 * Wed Nov 26 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 2.19.0 -> 3.1.0.
 
