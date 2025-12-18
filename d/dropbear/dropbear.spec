@@ -13,8 +13,8 @@
 
 Name: %pkgname
 Summary: A smallish SSH server and client
-Version: 2025.88
-Release: alt3
+Version: 2025.89
+Release: alt1
 License: MIT
 # "Dropbear is open source software, distributed under a MIT-style license."
 Group: System/Servers
@@ -138,6 +138,10 @@ EOF
 %_bindir/scp
 
 %changelog
+* Wed Dec 17 2025 Vitaly Chikunov <vt@altlinux.org> 2025.89-alt1
+- Update to DROPBEAR_2025.89 (2025-12-13). (Fixes: CVE-2025-14282,
+  CVE-2019-6111).
+
 * Tue Dec 16 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt3
 - Fix FTBFS on x86_64 since GCC 14.3.1-alt2.
 
