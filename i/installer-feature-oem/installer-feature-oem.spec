@@ -1,6 +1,6 @@
 Name: installer-feature-oem
-Version: 0.2
-Release: alt4
+Version: 0.3
+Release: alt1
 
 Summary: OEM mode support for installer
 License: GPL-2.0-or-later
@@ -17,9 +17,16 @@ BuildArch: noarch
 %package stage2
 Summary: OEM mode support for installer
 Group: System/Configuration/Other
-Requires: installer-common-stage2
 
 %description stage2
+%summary.
+
+%package wayland-only-stage2
+Summary: OEM mode (wayland only) support for installer
+Group: System/Configuration/Other
+Requires: %name-stage2 = %EVR
+
+%description wayland-only-stage2
 %summary.
 
 %prep
@@ -30,10 +37,19 @@ Requires: installer-common-stage2
 
 %files stage2
 %_datadir/install2/initinstall.d/*
+%exclude %_datadir/install2/initinstall.d/99-oem-wayland-only.sh
 %_datadir/install2/preinstall.d/*
 %_datadir/install2/postinstall.d/*
+%exclude %_datadir/install2/postinstall.d/40-oem-wayland.sh
+
+%files wayland-only-stage2
+%_datadir/install2/initinstall.d/99-oem-wayland-only.sh
+%_datadir/install2/postinstall.d/40-oem-wayland.sh
 
 %changelog
+* Thu Dec 18 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- Add subpackage installer-feature-oem-wayland-only-stage2.
+
 * Wed Dec 11 2024 Anton Midyukov <antohami@altlinux.org> 0.2-alt4
 - replace 40-oem-step.sh from preinstall.d/ to postinstall.d/
 
