@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.62
+%define kernel_sublevel	.63
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -493,7 +493,7 @@ banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 %if "%base_flavour" == "rt"
-	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
+	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=off" \
 	'uname -a; rtcheck -v'
 %else
 	'uname -a'
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Dec 18 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.63-alt1
+- v6.12.63 (2025-12-18).
+
 * Sat Dec 13 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.62-alt1
 - v6.12.62 (2025-12-12).
 - config: CONFIG_SND_SOC_AMD_RPL_ACP6x=m.
