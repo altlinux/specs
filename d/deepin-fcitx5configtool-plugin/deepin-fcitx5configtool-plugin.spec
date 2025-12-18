@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-fcitx5configtool-plugin
-Version: 6.0.20
+Version: 6.0.22
 Release: alt1
 
 Summary: The input method management plug-in of DDE control center
@@ -71,6 +71,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Thu Dec 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.22-alt1
+- New version 6.0.22.
+
 * Mon Oct 27 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
 - New version 6.0.20.
 
