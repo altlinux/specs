@@ -8,7 +8,7 @@
 
 Name: TiMidity++
 Version: 2.15.0
-Release: alt1.3
+Release: alt1.4
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -19,6 +19,7 @@ Source0: http://prdownloads.sourceforge.net/timidity/%name-%version%prerel.tar.b
 Source1: timidity.init
 Source2: timidity.sysconfig
 Source3: timidity.desktop
+Source4: timidity.service
 Source100: TiMidity++.watch
 
 # ALT patches
@@ -131,6 +132,7 @@ export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notra
 install -pDm755 %SOURCE1 %buildroot%_initdir/%_name
 install -pDm644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%_name
 install -pDm644 %SOURCE3 %buildroot%_desktopdir/%_name.desktop
+install -pDm644 %SOURCE4 %buildroot/%_unitdir/%_name.service
 install -pDm644 interface/pixmaps/%_name.xpm %buildroot%_liconsdir/%_name.xpm
 
 # default config
@@ -141,7 +143,7 @@ echo "dir %_datadir/%_name" >%buildroot%_sysconfdir/%_name.cfg
 sed -i 's,%buildroot,,g' %buildroot%_usr/lib/%_name/tkmidity.tcl
 %if_with emacs
 sed -i  -e 's@/usr/local/bin/%_name@%_bindir/%_name@' \
-	-e 's@%buildroot@@' interface/%_name.el
+        -e 's@%buildroot@@' interface/%_name.el
 install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %endif
 
@@ -155,12 +157,16 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %_desktopdir/%_name.desktop
 %_liconsdir/*
 %_initdir/%_name
+%_unitdir/%_name.service
 %_sysconfdir/sysconfig/%_name
 %config(noreplace) %_sysconfdir/%_name.cfg
 %doc ChangeLog INSTALL.orig README
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Thu Dec 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.15.0-alt1.4
+- NMU: add systemd service file.
+
 * Thu Dec 26 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.15.0-alt1.3
 - NMU: fixed FTBFS (-Wimplicit-function-declaration).
 
@@ -220,7 +226,7 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 * Wed Sep 02 2009 Michael Shigorin <mike@altlinux.org> 2.13.2-alt10
 - introduced initscript (closes: #20433)
 - replaced debian menufile with freedesktop one
-- %_sysconfdir/%_name.cfg is now non-autoreplaceable config
+- %%_sysconfdir/%%_name.cfg is now non-autoreplaceable config
 
 * Wed Dec 03 2008 Michael Shigorin <mike@altlinux.org> 2.13.2-alt9
 - applied repocop patch
