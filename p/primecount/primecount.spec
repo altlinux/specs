@@ -1,7 +1,7 @@
-%define soname 7
+%define soname 8
 
 Name: primecount
-Version: 7.20
+Version: 8.0
 Release: alt1
 
 Summary: Count the number of primes
@@ -70,12 +70,11 @@ ctest
 %endif
 
 %files
-%doc README.md ChangeLog
+%doc README.md ChangeLog COPYING
 %_bindir/primecount
 %_man1dir/primecount.1*
 
 %files -n lib%name%soname
-%doc COPYING
 %_libdir/libprimecount.so.%soname
 %_libdir/libprimecount.so.%version
 
@@ -88,6 +87,9 @@ ctest
 %_libdir/cmake/primecount/
 
 %changelog
+* Thu Dec 18 2025 Leontiy Volodin <lvol@altlinux.org> 8.0-alt1
+- New version 8.0.
+
 * Thu Nov 06 2025 Leontiy Volodin <lvol@altlinux.org> 7.20-alt1
 - New version 7.20.
 
