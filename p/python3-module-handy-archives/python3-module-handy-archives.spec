@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt2
+Release: alt3.35.g735b08c
 
 Summary: Some handy archive helpers for Python
 License: MIT
@@ -18,15 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch: 18b4319972210d7b4512bb3431c2746708ff8be5.patch
-Patch1: 85526bff5b6b46aa77dd361ba031291fcb21b195.patch
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -34,21 +30,16 @@ BuildRequires: python3-test
 %endif
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile tests/requirements.txt
 %endif
-
-# use reason= instead of deprecated msg= arg for pytest.skip()
-sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 
 %build
 %pyproject_build
@@ -57,7 +48,7 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -W ignore::DeprecationWarning
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.rst
@@ -65,6 +56,9 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt3.35.g735b08c
+- Fixed FTBFS (apply upstream fixes).
+
 * Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt2
 - Fixed FTBFS.
 
@@ -79,4 +73,3 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 
 * Thu Sep 29 2022 Anton Zhukharev <ancieg@altlinux.org> 0.1.4-alt1
 - initial build for Sisyphus (temporary broken package)
-
