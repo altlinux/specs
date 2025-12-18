@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.16.1
+Version: 1.16.2
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -50,7 +50,7 @@ Requires: dconf
 Requires: fuse3
 Requires: p11-kit-server
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-systemd rpm-build-gir
 BuildRequires: meson socat
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
@@ -225,6 +225,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Dec 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Sun May 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
