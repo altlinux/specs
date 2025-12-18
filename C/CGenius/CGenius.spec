@@ -1,8 +1,8 @@
 %define _metainfodir %_datadir/metainfo
 
 Name: CGenius
-Version: 3.5.1
-Release: alt2
+Version: 3.6.1
+Release: alt1
 
 Summary: the clone of Commander Keen
 License: GPL2
@@ -74,7 +74,7 @@ added to Episode 1, 2, 3 and 4 so far. More is about to come!
 %prep
 %setup -n Commander-Genius-v%version
 rm -rf Build dlls
-%patch0 -p1
+#%%patch0 -p1
 
 %build
 %cmake \
@@ -106,6 +106,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Thu Dec 18 2025 Artyom Bystrov <arbars@altlinux.org> 3.6.1-alt1
+- Update to new version
+
 * Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 3.5.1-alt2
 - Fix FTBFS
 
