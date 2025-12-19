@@ -6,7 +6,7 @@
 %define _localstatedir %_var
 
 Name: shibboleth-sp
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 
 Summary: Open source system for attribute-based Web SSO
@@ -16,7 +16,8 @@ Group: Networking/Other
 Url: https://shibboleth.net/
 VCS: https://git.shibboleth.net/git/cpp-sp
 
-Source0: https://shibboleth.net/downloads/service-provider/%version/%name-%version.tar.gz
+# Source-url: https://shibboleth.net/downloads/service-provider/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: shibd.service
 Patch: %name-%version-%release.patch
 
@@ -170,6 +171,9 @@ EOF
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Dec 19 2025 Leontiy Volodin <lvol@altlinux.org> 3.5.2-alt1
+- New version 3.5.2.
+
 * Thu Sep 04 2025 Leontiy Volodin <lvol@altlinux.org> 3.5.1-alt1
 - New version 3.5.1.
 - Added VCS tag.
