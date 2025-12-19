@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: %rname
-Version: 4.0.3
+Version: 4.0.5
 Release: alt1
 %K6init
 
@@ -25,6 +25,7 @@ Patch1: alt-soname.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libsmbclient-devel
+BuildRequires: kde6-kdsoap-devel kde6-kdsoap-ws-discovery-client-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kstatusnotifieritem-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kparts-devel kf6-ktextwidgets-devel kf6-kwallet-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-kcrash-devel kf6-kdnssd-devel kf6-kirigami-devel
@@ -54,7 +55,9 @@ Group: System/Libraries
 %patch1 -p1
 
 %build
-%K6build
+%K6build \
+    -DSMB4K_WITH_WS_DISCOVERY:BOOL=ON \
+    #
 
 %install
 %K6install
@@ -84,6 +87,10 @@ Group: System/Libraries
 %_K6lib/libsmb4kdialogs.so.*
 
 %changelog
+* Fri Dec 19 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.5-alt1
+- new version (closed: CVE-2025-66002, CVE-2025-66002)
+- build with ws-discovery support
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.3-alt1
 - new version
 
