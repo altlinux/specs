@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: system-backup
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Script for local system backup
@@ -15,13 +15,19 @@ BuildArch: noarch
 Packager: Leonid Krivoshein <klark@altlinux.org>
 
 Requires: bash
+Requires: btrfs-progs
 Requires: coreutils
+Requires: e2fsprogs
+Requires: gawk
+Requires: jfsutils
 Requires: kmod
 Requires: pigz
 Requires: pv
+Requires: sed
 Requires: sfdisk
 Requires: tar
 Requires: util-linux
+Requires: xfsprogs
 AutoReq: noshell, noshebang
 
 %description
@@ -32,13 +38,28 @@ This backup solution restricted by local mounted storages.
 %setup
 
 %install
-mkdir -pm755 %buildroot%_bindir
-install -pm755 %name %buildroot%_bindir/
+mkdir -p -m 0755 %buildroot%_bindir
+install -p -m 0755 %name %buildroot%_bindir/
 
 %files
 %_bindir/*
 
 %changelog
+* Fri Dec 19 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt1
+- Added support for installer-feature-swapfile;
+- Added basic support for the 'timeshift' layout;
+- The backup version changed to 0.2, it includes:
+  + SWPFILE (the size and name of the swap file);
+  + TMSHIFT (a Timeshift-partitioned device info);
+  + root.sub (btrfs subvolume info for @ / ROOT);
+  + home.sub (btrfs subvolume info for @home / HOME);
+  + root.opts (mount options for the ROOT subvolume);
+  + home.opts (mount options for the HOME subvolume);
+  + *.jfs, *.xfs, *.btrfs (additional FS information);
+  + now the NONVRAM file is not empty when it created;
+  + all these objects are optional;
+- Also added multiple code and style improvements.
+
 * Fri May 16 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.4-alt1
 - Bug fixes, requirements added, minor improvements.
 
