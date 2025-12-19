@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 1.1.0
+Version: 1.3.0
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
@@ -77,6 +77,7 @@ that use Cap'n Proto.
 %makeinstall_std
 
 %check
+uname -a # For bugreports.
 # disable networking test
 subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 # AsyncIo/AncillaryMessageHandler test will fail on older kernels (such as
@@ -101,6 +102,12 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Thu Dec 18 2025 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
+- Update to v1.3.0 (2025-12-16).
+
+* Sat Jun 21 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
+- Update to v1.2.0 (2025-06-15).
+
 * Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
 - Update to v1.1.0 (2024-12-21).
 
