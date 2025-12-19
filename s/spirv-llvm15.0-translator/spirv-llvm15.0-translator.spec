@@ -1,9 +1,9 @@
 %define llvmversion 15
-%define git 9c47ecad
+%define git %nil
 
 Name: spirv-llvm%llvmversion.0-translator
-Version: 15.0.15
-Release: alt2.g%{git}
+Version: 15.0.19
+Release: alt1
 
 Summary: LLVM 15 to SPIRV Translator
 License: NCSA
@@ -93,6 +93,9 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Fri Dec 19 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.19-alt1
+- 15.0.19.
+
 * Wed Oct 22 2025 L.A. Kostis <lakostis@altlinux.ru> 15.0.15-alt2.g9c47ecad
 - 15.0.15 GIT 9c47ecad.
 
