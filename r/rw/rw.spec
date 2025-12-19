@@ -1,8 +1,8 @@
 %define soname 0
 
 Name: rw
-Version: 0.9
-Release: alt3
+Version: 0.10
+Release: alt1
 
 Summary: Program that calculates rank-width and rank-decompositions
 Summary(ru): Программа, вычисляющая ранговую ширину и декомпозицию рангов
@@ -13,7 +13,6 @@ Url: https://sourceforge.net/projects/rankwidth/
 
 # Source-url: https://downloads.sourceforge.net/rankwidth/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: rw-0.9-alt-fix-igraph1.patch
 
 Provides: rankwidth = %version-%release
 
@@ -51,7 +50,6 @@ This package contains the header files for %name.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %autoreconf
@@ -81,6 +79,9 @@ rm %buildroot%_libdir/*.la
 %_libdir/lib%name.so
 
 %changelog
+* Fri Dec 19 2025 Leontiy Volodin <lvol@altlinux.org> 0.10-alt1
+- New version 0.10 (with rpmgs script).
+
 * Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 0.9-alt3
 - Fix build with igraph 1.0.0.
 
