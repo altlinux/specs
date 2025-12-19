@@ -3,7 +3,7 @@
 
 Name: plumelib-options
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Command-line option processing for Java
 License: MIT
@@ -18,7 +18,7 @@ Patch0: %name-%version-alt-patch.patch
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-default
+BuildRequires: java-17-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: checker-qual
 BuildRequires: apache-commons-lang3
@@ -60,5 +60,8 @@ documentation are generated automatically.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Dec 19 2025 Anton Meleshnikov <alton@altlinux.org> 2.0.3-alt2
+- NMU: FTBFS Fix.
+
 * Sun Nov 23 2025 Ivan Khanas <xeno@altlinux.org> 2.0.3-alt1
 - First build for ALT.
