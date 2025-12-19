@@ -8,7 +8,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-control-center
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: A fork of GNOME Control Center for the Budgie 10 Series
@@ -20,7 +20,6 @@ Url: https://github.com/BuddiesOfBudgie/budgie-control-center
 # Source0-url: %url/releases/download/v%version/budgie-control-center-%version.tar.xz
 Source0: %name-%version.tar
 
-Patch0: 0001-fix-FTBFS-with-incompatible-pointer-types.patch
 Patch1: 0002-disable-gnome-bluetooth.patch
 
 BuildRequires(pre): rpm-macros-meson
@@ -151,7 +150,6 @@ This package contains architecture-agnostic common assets for ${name}
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -214,6 +212,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_datadir/sounds/budgie/default/alerts/*.ogg
 
 %changelog
+* Fri Dec 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+- remove obsolete patch (already applied upstream)
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - initial build for ALT Sisyphus
 
