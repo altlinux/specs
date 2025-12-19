@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.22.1
-Release: alt1
+Release: alt2
 
 Summary: Ultra fast asyncio event loop
 License: MIT and Apache-2.0
@@ -52,14 +52,8 @@ uvloop is implemented in Cython and uses libuv under the hood.
 %__rm %buildroot%python3_sitelibdir/%mod_name/_testbase.py
 
 %check
-# Tests 'test_write_buffer_full' disabled because of:
-# https://github.com/MagicStack/uvloop/issues/576
-%__rm -rf %mod_name
-%pyproject_run_pytest \
-%ifarch ppc64le
-    -k 'not test_write_buffer_full' \
-%endif
-    -vra
+rm -rf %mod_name
+%pyproject_run -- pytest -vra
 
 %files
 %doc README.rst LICENSE-APACHE LICENSE-MIT
@@ -67,6 +61,9 @@ uvloop is implemented in Cython and uses libuv under the hood.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt2
+- Fixed FTBFS (fixed python version predicate in tests).
+
 * Fri Oct 17 2025 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt1
 - Updated to 0.22.1.
 - Reverted building scheme "fixing".
