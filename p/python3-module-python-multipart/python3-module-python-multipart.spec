@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.20
-Release: alt2
+Version: 0.0.21
+Release: alt1
 
 Summary: A streaming multipart parser for Python
 License: Apache-2.0
@@ -57,6 +57,9 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 19 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.21-alt1
+- Updated to 0.0.21.
+
 * Fri Jul 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.20-alt2
 - Removed 'multipart' import name to avoid conflict with 'multipart' package.
 - Actualized upstream VCS location.
