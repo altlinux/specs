@@ -4,7 +4,7 @@
 %define appname io.elementary.screenshot
 
 Name: elementary-screenshot
-Version: 8.0.3
+Version: 8.0.4
 Release: alt1
 
 Summary: Screenshot tool designed for elementary OS
@@ -53,5 +53,8 @@ BuildRequires: pkgconfig(libportal)
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.4-alt1
+- New version 8.0.4.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
 - Initial build for Sisyphus
