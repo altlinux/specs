@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.32
+Version: 1.16.33
 Release: alt1
 
 Summary: Installer common parts
@@ -180,6 +180,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Fri Dec 19 2025 Anton Midyukov <antohami@altlinux.org> 1.16.33-alt1
+- install2: fix xinit args.
+
 * Sat Dec 13 2025 Anton Midyukov <antohami@altlinux.org> 1.16.32-alt1
 - Add Wayland support (thx romenskiy@).
 - Add VNC of Wayland support (thx romenskiy@).
