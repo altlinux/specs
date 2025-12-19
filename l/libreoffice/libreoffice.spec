@@ -41,9 +41,9 @@
 
 Name: libreoffice
 %define hversion 25.8
-%define urelease 3.2
+%define urelease 4.2
 Version: %hversion.%urelease
-Release: alt3
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -72,7 +72,6 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: libreoffice-25.8.3.2-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -443,7 +442,6 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-tar xf %SOURCE4 --strip-components=0 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -856,6 +854,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Dec 19 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt1
+- New version (closes: CVE-2025-14714).
+
 * Wed Dec 17 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.3.2-alt3
 - FTBFS: built with Java 17 because Java 25 does not support SecurityManager
   for bundled hsqldb.
