@@ -3,7 +3,7 @@
 %define libkdsoapwsdiscoveryclient libkdsoapwsdiscoveryclient%sover
 
 Name: kde6-%rname
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 %K6init
 
@@ -73,5 +73,8 @@ rm -rf %buildroot/%_datadir/doc/* ||:
 %_K6link/lib*.so
 
 %changelog
+* Fri Dec 19 2025 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - initial build
