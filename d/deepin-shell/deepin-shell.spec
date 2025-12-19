@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.22
+Version: 2.0.23
 Release: alt1
 
 Summary: Plugins for DDE
@@ -151,6 +151,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Fri Dec 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.23-alt1
+- New version 2.0.23.
+
 * Mon Dec 15 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.22-alt1
 - New version 2.0.22.
 
