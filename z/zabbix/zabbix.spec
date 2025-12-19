@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		6542e21fe6a
+%define svnrev		ba52e2ee4ff
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 7.0.21
-Release: alt2
+Version: 7.0.22
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -864,6 +864,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Dec 19 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.22-alt1
+- 7.0.22 (Fixes: CVE-2025-49642, CVE-2025-49643)
+
 * Sun Nov 09 2025 Michael Shigorin <mike@altlinux.org> 1:7.0.21-alt2
 - E2K: java8 provides jre-openjdk = 1.8.0, not 8 (fix for 7.0.8-alt2)
 
