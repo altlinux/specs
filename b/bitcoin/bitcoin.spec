@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 30.0
+Version: 30.1
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -59,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Fri Dec 19 2025 Alexei Takaseev <taf@altlinux.org> 30.1-alt1
+- 30.1
+
 * Thu Oct 16 2025 Alexei Takaseev <taf@altlinux.org> 30.0-alt1
 - 30.0
 
