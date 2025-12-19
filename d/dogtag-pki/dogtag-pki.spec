@@ -20,7 +20,7 @@
 
 Name: dogtag-pki
 Version: 11.6.1
-Release: alt1
+Release: alt2
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
 Group: System/Servers
@@ -732,6 +732,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Fri Dec 19 2025 Stanislav Levin <slev@altlinux.org> 11.6.1-alt2
+- Backported fixes for JDK 25 (closes: #57281).
+
 * Mon Jul 21 2025 Stanislav Levin <slev@altlinux.org> 11.6.1-alt1
 - 11.4.3 -> 11.6.1.
 
