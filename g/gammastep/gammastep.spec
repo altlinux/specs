@@ -1,8 +1,8 @@
-# missed typelib(AppIndicator3) in the repo
-%def_without appindicator
+# use AyatanaAppIndicator3 instead of missed AppIndicator3
+%def_with appindicator
 
 Name: gammastep
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: Adjusts the color temperature of your screen according to time of day
@@ -15,7 +15,7 @@ Url: https://gitlab.com/chinstrap/gammastep
 Source0: %name-%version.tar
 
 
-BuildRequires: rpm-build-intro
+BuildRequires(pre): rpm-build-intro rpm-build-gir
 
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
@@ -54,10 +54,8 @@ Group: System/Configuration/Hardware
 BuildArch: noarch
 
 Requires: %name = %EVR
-#Requires: libgtk+3
-#Requires: libappindicator-libgtk+3
-#Requires: python3dist(pygobject)
-#Requires: python3dist(pyxdg)
+Requires: typelib(AyatanaAppIndicator3)
+%add_typelib_req_skiplist typelib(AppIndicator3)
 
 %description indicator
 This package provides a status icon for %name that allows the user
@@ -100,6 +98,11 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Fri Dec 19 2025 Vitaly Lipatov <lav@altlinux.ru> 2.0.11-alt1
+- new version 2.0.11 (with rpmrb script)
+- enable gammastep-indicator subpackage
+- use AyatanaAppIndicator3 instead of AppIndicator3
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
 - new version 2.0.10 (with rpmrb script)
 
