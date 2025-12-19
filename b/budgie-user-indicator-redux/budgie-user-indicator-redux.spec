@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: budgie-user-indicator-redux
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: Manage your user session from the Budgie panel
@@ -18,7 +18,7 @@ BuildRequires: vala
 BuildRequires: intltool
 BuildRequires: cmake
 BuildRequires: pkgconfig(accountsservice)
-BuildRequires: pkgconfig(budgie-1.0)
+BuildRequires: pkgconfig(budgie-2.0)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(vapigen)
 BuildRequires: sassc
@@ -53,5 +53,8 @@ the menu.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Mar 18 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
