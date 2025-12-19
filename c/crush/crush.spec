@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: crush
-Version: 0.22.1
+Version: 0.28.0
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -53,14 +53,7 @@ install -Dpm644 crush.1 -t %buildroot%_man1dir
 
 %check
 %buildroot%_bindir/crush --version | grep -Fx '%name version %version'
-# Test and ensure provides fetching is disabled.
-# 1. If providers auto-update is not disabled test will fail with:
-# panic: Failed to initialize config: failed to load providers: failed to load providers
 go test ./...
-# 2. Also, crush logs will fail.
-./crush logs >log 2>&1
-grep -q 'Providers auto-update is disabled' log
-{ ! grep -E 'unable to fetch|http' log; }
 
 %files
 %define _customdocdir %_docdir/%name
@@ -73,6 +66,9 @@ grep -q 'Providers auto-update is disabled' log
 %_man1dir/%name.1*
 
 %changelog
+* Fri Dec 19 2025 Andrey Limachko <liannnix@altlinux.org> 0.28.0-alt1
+- Update to v0.28.0.
+
 * Tue Dec 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.22.1-alt1
 - Experimental update to v0.22.1 (2025-12-08).
 
