@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        143.0.7499.146
+Version:        143.0.7499.169
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -659,6 +659,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Dec 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.169-alt1
+- New version (143.0.7499.169).
+
 * Wed Dec 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.146-alt1
 - New version (143.0.7499.146).
 - Fixes:
@@ -670,7 +673,7 @@ EOF
 - Fixes:
   + CVE-2025-14372: Use after free in Password Manager
   + CVE-2025-14373: Inappropriate implementation in Toolbar
-  + third issue with an exploit is known to exist in the wild
+  + CVE-2025-14174: Out of bounds memory access in ANGLE
 
 * Thu Dec 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.40-alt1
 - New version (143.0.7499.40).
