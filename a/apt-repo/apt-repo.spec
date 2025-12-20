@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.9
+Version:  1.5.0
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -12,6 +12,7 @@ BuildArch: noarch
 Source:   %name-%version.tar
 Requires: apt
 Requires: curl
+BuildRequires: perl-Term-ANSIColor
 
 %description
 The apt-repo script allow to show, add and remove APT repositories
@@ -41,6 +42,11 @@ bash -n bash-completion.sh
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 1.5.0-alt1
+- Support installing kernel tasks.
+- Support installing archived tasks.
+- Use https URLs if supported by APT.
+
 * Sat Sep 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.9-alt1
 - Added bash-completion script.
 
