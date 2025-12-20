@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: numix-icon-theme-square
-Version: 25.11.15
+Version: 25.12.15
 Release: alt1
 
 Summary: Square icon theme from the Numix project
@@ -27,18 +27,29 @@ serves as a companion to the base Numix icon theme (numix-icon-theme).
 # nothing to build here
 
 %install
-install -d %{buildroot}%{_datadir}/icons
+install -d %buildroot%_iconsdir
 
-mkdir -p %{buildroot}%{_datadir}/doc/%{name}
-cp -pr Numix-Square %{buildroot}%{_datadir}/icons/Numix-Square
-cp -pr Numix-Square-Light %{buildroot}%{_datadir}/icons/Numix-Square-Light
+mkdir -p %buildroot%_datadir/doc/%name
+cp -pr Numix-Square %buildroot%_iconsdir/Numix-Square
+cp -pr Numix-Square-Light %buildroot%_iconsdir/Numix-Square-Light
 
 %files
 %doc LICENSE README.md
-%{_datadir}/icons/Numix-Square
-%{_datadir}/icons/Numix-Square-Light
+%_iconsdir/Numix-Square
+%_iconsdir/Numix-Square-Light
+
+# prevent "find-provides: broken symbolic link" messages
+%exclude %_iconsdir/Numix-Square-Light/16/panel
+%exclude %_iconsdir/Numix-Square-Light/22/panel
+%exclude %_iconsdir/Numix-Square-Light/24/panel
+%exclude %_iconsdir/Numix-Square/16/panel
+%exclude %_iconsdir/Numix-Square/22/panel
+%exclude %_iconsdir/Numix-Square/24/panel
 
 %changelog
+* Sat Dec 20 2025 Nikolay Strelkov <snk@altlinux.org> 25.12.15-alt1
+- New version 25.12.15.
+
 * Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 25.11.15-alt1
 - New version 25.11.15.
 
