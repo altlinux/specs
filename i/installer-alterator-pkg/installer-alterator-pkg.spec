@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Sat Dec 20 2025 Fedor Moseichuck <phobos@altlinux.org> 3.2.5-alt1
+- ui/pkg/radiogroups: improve handling of package lists for details-vbox
+
 * Tue Dec 02 2025 Fedor Moseichuck <phobos@altlinux.org> 3.2.4-alt1
 - license: add LICENSE file and copyright headers
 - ui: add pkg/radiogroups

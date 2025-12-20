@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.33
+Version: 1.16.34
 Release: alt1
 
 Summary: Installer common parts
@@ -180,6 +180,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Sat Dec 20 2025 Fedor Moseichuck <phobos@altlinux.org> 1.16.34-alt1
+- steps/pkg-radiogroups: fix X-Alterator-Help file parameter
+
 * Fri Dec 19 2025 Anton Midyukov <antohami@altlinux.org> 1.16.33-alt1
 - install2: fix xinit args.
 
