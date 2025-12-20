@@ -7,15 +7,16 @@
 
 Name: lib%{_name}2
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: A canvas widget for GTK+3 that uses cairo for drawing
 Group: System/Libraries
 License: LGPLv2+
-Url: https://live.gnome.org/GooCanvas
+Url: https://gitlab.gnome.org/Archive/goocanvas
+VCS: https://gitlab.gnome.org/Archive/goocanvas
 
-#Source: %_name-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-gnome
 # From configure.in
@@ -87,9 +88,11 @@ This package provides Python language bindings for for the GooCanvas library.
 
 %prep
 %setup -n %_name-%version
+%patch0 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
+gettextize -f
 %autoreconf
 %configure %{subst_enable static} \
 	--enable-gtk-doc \
@@ -128,6 +131,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 2.0.4-alt3
+- fixed FTBFS via patch from Debian with fix casting to GooCanvasItemModelSimple
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt2
 - disbaled useless goocanvas2 python2 module
 
