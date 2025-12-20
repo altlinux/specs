@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	nvidia-open
-%define module_version  580.105.08
+%define module_version  580.119.02
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -34,6 +34,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sat Dec 20 2025 L.A. Kostis <lakostis@altlinux.ru> 580.119.02-alt1
+- 580.119.02.
+
 * Sun Dec 07 2025 L.A. Kostis <lakostis@altlinux.ru> 580.105.08-alt1
 - 580.105.08.
 - Fix license tag.
