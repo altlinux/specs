@@ -5,8 +5,8 @@
 %add_verify_elf_skiplist %_libdir/*.so
 
 Name:           dd_rescue
-Version:        1.99.21
-Release:        alt2
+Version: 1.99.22
+Release: alt1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPLv2
@@ -15,8 +15,6 @@ VCS:            https://git.code.sf.net/p/ddrescue/code
 Source:         %name-%version.tar
 # http://www.kalysto.org/pkg/dd_rhelp-%{rhelp_version}.tar.gz
 Source1:        dd_rhelp-%{rhelp_version}.tar
-
-Patch1: dd_rescue-%version-alt.patch
 
 BuildRequires: autoconf
 BuildRequires: libacl-devel libattr-devel
@@ -33,7 +31,6 @@ recovery.
 %prep
 %setup
 %setup -a 1 -D -T
-%patch1 -p1
 %ifarch %e2k
 # The combination of the laziness of the author of the makefile and
 # the desire of the compiler for Elbrus to throw errors for any reason
@@ -69,6 +66,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzma.1*
 
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 1.99.22-alt1
+- 1.99.21 -> 1.99.22
+
 * Fri Sep 05 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.99.21-alt2
 - e2k build fix
 
