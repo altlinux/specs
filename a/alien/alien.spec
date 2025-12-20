@@ -1,11 +1,11 @@
 Name: alien
 Version: 8.95.9
-Release: alt2
+Release: alt3
 
 Summary: Install Debian and Slackware Packages with RPM
 
 Group: Archiving/Other
-License: GPL
+License: GPLv2
 Url: https://github.com/Project-OSS-Revival/alien
 VCS: https://github.com/Project-OSS-Revival/alien.git
 
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 Patch1: alien-8.95.9-alt-fix-empty-description.patch
 Patch2: alien-alt-plaintext-scripts.patch
 Patch3: alien-8.95.9-alt-fix-empty-version.patch
+Patch4: alien-8.95.9-alt-fallback-to-tar-makepkg.patch
+Patch5: alien-8.95.9-alt-fix-directory-contained-spaces.patch
 
 # Automatically added by buildreq on Mon Feb 13 2006
 BuildRequires: perl-devel perl-podlators
@@ -37,6 +39,8 @@ It is recommended install dpkg package to full dpkg support.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir INSTALLMAN3DIR=%_man3dir VERSION=%version
@@ -51,6 +55,11 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt3
+- restored tar fallback for tgz generation when
+  makepkg was unavailable (Closes: #57269)
+- fixed rpm build failure when working directory contained spaces (Closes: #57275)
+
 * Wed Dec 10 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt2
 - fixed VERSION not being set when building without debian/changelog
 - deb->rpm: fixed empty Summary when Description started on next line (Closes: #55264)
