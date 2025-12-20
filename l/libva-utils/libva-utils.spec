@@ -1,11 +1,11 @@
 Name: libva-utils
-Version: 2.22.0
+Version: 2.23.0
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
 Group: Graphical desktop/Other
 Url: https://01.org/linuxmedia
-#git https://github.com/01org/libva-utils
+VCS: https://github.com/01org/libva-utils
 Source0: %name-%version.tar
 
 BuildRequires: libtool
@@ -71,8 +71,10 @@ autoreconf -fisv
 %_bindir/vppscaling_csc
 %_bindir/vppsharpness
 
-
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 2.23.0-alt1
+- 2.22.0 -> 2.23.0
+
 * Thu Jun 27 2024 Anton Farygin <rider@altlinux.ru> 2.22.0-alt1
 - 2.22.0
 
