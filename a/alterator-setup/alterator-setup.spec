@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -138,6 +138,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Sat Dec 20 2025 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
+- Enable authentication for wayland vnc.
+
 * Thu Dec 18 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - alterator-setup-run: Allow VT switching on wayland.
 - alterator-setup-run: switch to tty2 on wayland (not VNC).
