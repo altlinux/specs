@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-eslint
-Version: 8.47.0
+Version: 9.39.2
 Release: alt1
 
 Summary: Find and fix problems in your JavaScript code
@@ -66,6 +66,12 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/{docs,tests}/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 9.39.2-alt1
+- new version 9.39.2 (with rpmrb script)
+
+* Thu Apr 03 2025 Vitaly Lipatov <lav@altlinux.ru> 9.23.0-alt1
+- new version 9.23.0 (with rpmrb script)
+
 * Sat Aug 26 2023 Vitaly Lipatov <lav@altlinux.ru> 8.47.0-alt1
 - new version 8.47.0 (with rpmrb script) (ALT bug 47277)
 - don't pack docs
