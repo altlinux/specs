@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -45,13 +45,11 @@ Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 Requires: bc
 #features
-Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
 Requires: installer-feature-auto-domain
-Requires: installer-feature-services
 Requires: installer-feature-quota-stage2
 
 %description stage2
@@ -73,7 +71,6 @@ Requires: alterator-root
 Requires: alterator-luks
 #Requires: alterator-x11
 Requires: installer-feature-nfs-client-stage3
-Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-bell-off-stage3
@@ -125,6 +122,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sat Dec 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt4
+- Remove outdated "Requires" tags (Closes: 57148).
+
 * Wed Nov 12 2025 Fedor Moseichuck <phobos@altlinux.org> 11.1-alt3
 - installer-steps: Replace pkg-groups with pkg-radiogroups
 
