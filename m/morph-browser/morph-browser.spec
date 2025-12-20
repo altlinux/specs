@@ -3,7 +3,7 @@
 %def_with check
 
 Name: morph-browser
-Version: 1.1.2
+Version: 1.99.1
 Release: alt1
 
 Summary: Web Browser for Lomiri
@@ -24,6 +24,8 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
+BuildRequires: pkgconfig(Qt5Svg)
+BuildRequires: pkgconfig(libpsl)
 BuildRequires: pkgconfig(libapparmor)
 BuildRequires: /usr/bin/xvfb-run
 BuildRequires: qt5-webengine-devel
@@ -58,6 +60,7 @@ and using the Lomiri UI components.
 %build
 %cmake \
        -DCLICK_MODE=off \
+       -DCMAKE_INSTALL_PREFIX=%_prefix \
        -DCMAKE_INSTALL_LIBDIR=%_lib
 %cmake_build
 
@@ -88,5 +91,8 @@ and using the Lomiri UI components.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/morph-browser.mo
 
 %changelog
+* Sat Dec 20 2025 Nikolay Strelkov <snk@altlinux.org> 1.99.1-alt1
+- New version 1.99.1.
+
 * Wed Jul 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus
