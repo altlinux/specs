@@ -18,7 +18,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.1.0
+Version: %ver_major.6.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -90,7 +90,7 @@ interface to the JavaScript engine.
 %prep
 %setup -n firefox-%{version}
 #%%setup -Dc -n mozjs-%version
-%patch1 -p1
+#%%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -182,6 +182,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Sat Dec 20 2025 Yuri N. Sedunov <aris@altlinux.org> 140.6.0-alt1
+- 140.6.0
+
 * Wed Aug 13 2025 Yuri N. Sedunov <aris@altlinux.org> 140.1.0-alt1
 - first build for Sisyphus
 

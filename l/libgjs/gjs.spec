@@ -7,12 +7,12 @@
 %define mozjs_ver_major 140
 %define mozjs_ver 140.1.0
 
-%def_disable check
+%def_enable check
 %def_enable installed_tests
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -117,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Dec 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.86.0-alt1.1
+- enabled %%check
+
 * Thu Sep 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.86.0-alt1
 - 1.86.0
 
