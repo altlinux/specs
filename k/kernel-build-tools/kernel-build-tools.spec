@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.129
+Version: 0.130
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -98,6 +98,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 0.130-alt1
+- kernel.req.files: fix handling of paths with spaces in RPM_BUILD_ROOT
+
 * Thu Jul 03 2025 Vitaly Chikunov <vt@altlinux.org> 0.129-alt1
 - Add fake P:kernel-headers-modules-talos (ALT#55019).
 
