@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper for libmodbus
 
@@ -25,6 +25,8 @@ BuildRequires: python3(wheel)
 BuildRequires: pkgconfig(libmodbus)
 BuildRequires: libffi-devel
 
+Requires: libmodbus
+
 %description
 Python Interface for libmodbus written with CFFI.
 
@@ -43,6 +45,9 @@ Python Interface for libmodbus written with CFFI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt2
+- add missed libmodbus requires (ALT bug 57276)
+
 * Tue Dec 16 2025 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - initial build for ALT Sisyphus
 
