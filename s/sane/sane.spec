@@ -2,7 +2,7 @@
 
 Name: sane
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -18,6 +18,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %oname-%version.tar
 #Source1: %name-%version.ru.po
 Source2: %name.xinetd
+Source3: saned.socket
+Source4: saned@.service
 
 Patch3: sane-1.0.19-hp-psc.patch
 Patch4: sane-backends-1.0.18-epson-1270.patch
@@ -231,6 +233,8 @@ install -D -m0644 tools/udev/libsane.rules %buildroot%_udevrulesdir/25-libsane.r
 #sed 's/,[[:space:]]\+GROUP=\"[^"]\+\"[[:space:]]*//' -i %buildroot%_udevrulesdir/25-libsane.rules
 
 install -D %SOURCE2 -m0644 %buildroot%_sysconfdir/xinetd.d/%name
+install -D -m0644 %SOURCE3 %buildroot%_unitdir/saned.socket
+install -D -m0644 %SOURCE4 %buildroot%_unitdir/saned@.service
 mkdir -p %buildroot%_lockdir/%name/
 mkdir -p %buildroot%_tmpfilesdir/
 echo "D %_lockdir/%name 0770 root scanner -" >%buildroot%_tmpfilesdir/%name.conf
@@ -258,6 +262,8 @@ rm -f %buildroot%_libdir/%name/*.la
 %files -n %name-server
 %config(noreplace) %_sysconfdir/xinetd.d/%name
 %config(noreplace) %_sysconfdir/sane.d/saned.conf
+%_unitdir/saned.socket
+%_unitdir/saned@.service
 %_sbindir/saned
 %_man8dir/saned*
 
@@ -295,6 +301,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
+- add systemd socket and service files for saned (ALT bug 52492)
+
 * Fri Oct 17 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script) (ALT bug 56269)
 
