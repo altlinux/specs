@@ -21,7 +21,7 @@
 
 Name: telegram-desktop
 Version: 5.13.1
-Release: alt3
+Release: alt4
 
 Summary: Telegram Desktop messaging app
 
@@ -44,6 +44,7 @@ Patch7: telegram-desktop-fix-build-with-make.patch
 Patch9: telegram-desktop-try-fix-circular-deps.patch
 Patch10: telegram-desktop-fix-protoc.patch
 Patch11: telegram-desktop-fix-glibmm-2.86-compatibility.patch
+Patch12: fix-calendar-week-selection.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -244,6 +245,7 @@ or business messaging needs.
 %patch5 -p2
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -379,6 +381,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt4
+- fix calendar week day selection (ALT bug 56266)
+
 * Sun Oct 18 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 5.13.1-alt3
 - Replace hardcoded cld3_src with standard CMake paths.
 - Added patch fix-glibmm-2.86-compatibility
