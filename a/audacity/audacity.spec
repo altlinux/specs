@@ -17,7 +17,7 @@
 
 Name: audacity
 Version: 3.7.7
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -41,6 +41,7 @@ Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
 Patch0007: 0007-Manual-document-session-path.patch
 Patch0008: 0008-Fix-release-build-warning.patch
+Patch0009: 0009-fix-mixerboard-mute-solo-buttons.patch
 
 Source2000: audacity-e2k.patch
 
@@ -268,6 +269,10 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Fri Dec 19 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.7-alt2
+- Fix mix and solo buttons rendering on mixer (upstream
+  issue #9368, PR #10099)
+
 * Sat Dec 13 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.7-alt1
 - 3.7.7
 
