@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.43.7
+Version: 1.43.8
 Release: alt1
 
 Summary: A personal full text search package
@@ -30,6 +30,7 @@ Patch: recoll-alt-default-8bit-encoding-for-ru.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libaspell-devel ImageMagick
 %{?_with_fam:BuildRequires: libfam-devel}
 BuildRequires: libxapian-devel >= 0.9
@@ -55,6 +56,7 @@ BuildRequires: qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase
 Requires: python3-modules-sqlite3
 %add_findreq_skiplist %_datadir/%name/filters/*
 %add_findreq_skiplist %_datadir/%name/examples/*
+%add_python3_req_skip conftree
 
 %description
 Recoll is a personal full-text search package based on a very powerful
@@ -224,6 +226,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Sun Dec 21 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.8-alt1
+- 1.43.8
+
 * Sat Nov 08 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.7-alt1
 - 1.43.7
 
