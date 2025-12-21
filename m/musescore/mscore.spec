@@ -17,7 +17,7 @@
 %define mversion 4.6
 
 Name: musescore
-Version: %mversion.4
+Version: %mversion.5
 Release: alt1
 
 Summary: Music notation and composition software
@@ -171,6 +171,9 @@ rm -rvf %buildroot%_includedir %buildroot%_libdir
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Sun Dec 21 2025 Ivan A. Melnikov <iv@altlinux.org> 4.6.5-alt1
+- 4.6.5
+
 * Sat Dec 06 2025 Ivan A. Melnikov <iv@altlinux.org> 4.6.4-alt1
 - 4.6.4
 
