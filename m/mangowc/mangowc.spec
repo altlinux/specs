@@ -1,0 +1,71 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+Name: mangowc
+Version: 0.10.8
+Release: alt1
+
+Summary: wayland compositor base wlroots and scenefx (dwm but wayland)
+License: GPL-3.0-or-later
+Group: Graphical desktop/Other
+Url: https://github.com/DreamMaoMao/mangowc
+
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-cmake
+
+BuildRequires: meson
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: /usr/bin/wayland-scanner
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(xcb)
+BuildRequires: pkgconfig(xcb-icccm)
+BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(wlroots-0.19)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(scenefx-0.4)
+BuildRequires: pkgconfig(glesv2)
+
+# Defined in config.conf
+Requires: /usr/bin/rofi
+Requires: /usr/bin/foot
+
+%description
+MangoWC is a lightweight, high-performance Wayland compositor built on dwl,
+designed for speed, flexibility, and a modern, customizable desktop experience.
+
+For configuration hints see %_datadir/doc/%name-%version/README.md and
+https://github.com/DreamMaoMao/mangowc/wiki .
+
+%prep
+%setup
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+
+%files
+%doc README.md
+%doc LICENSE
+%doc LICENSE.wlroots
+%doc LICENSE.tinywl
+%doc LICENSE.sway
+%doc LICENSE.dwm
+%doc LICENSE.dwl
+%dir %_sysconfdir/mango
+%config(noreplace) %_sysconfdir/mango/config.conf
+%_bindir/mango
+%_bindir/mmsg
+%_datadir/wayland-sessions/mango.desktop
+
+%changelog
+* Sun Dec 21 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.8-alt1
+- Initial build for Sisyphus
