@@ -1,8 +1,8 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.4
-Release: alt2
+Version: 0.1.5
+Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -57,6 +57,9 @@ Summary: Python3 module for %name
 %python3_sitelibdir/%name/
 
 %changelog
+* Sun Dec 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.5-alt1
+- 0.1.4 -> 0.1.5
+
 * Mon Dec 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt2
 - Add pycairo dependency
 
