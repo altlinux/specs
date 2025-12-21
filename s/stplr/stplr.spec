@@ -4,8 +4,8 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.0.27
-Release: alt2
+Version: 0.0.28
+Release: alt1
 
 Summary: Universal package build and management system for Linux
 License: GPL-3.0-or-later
@@ -20,9 +20,12 @@ Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
 Requires: sysctl-conf-userns
+# for %_bindir/%name migrate
+Requires: /proc
 
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
 BuildRequires: rpm-build-golang
+BuildRequires: libsystemd-devel
 
 %description
 Stapler is a universal package build and management system for Linux 
@@ -46,10 +49,14 @@ not in its repositories.
 %_sbindir/groupadd -r -f %builder_user
 %_sbindir/useradd -M -r -d %_cachedir/%name -s /sbin/nologin -c "Stapler Builder" -g %builder_group %builder_user >/dev/null 2>&1 ||:
 
+%post
+%_bindir/%name migrate
+
 %files
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %attr(0755,%builder_user,%builder_group) %_cachedir/%name
@@ -58,6 +65,9 @@ not in its repositories.
 %doc README.md
 
 %changelog
+* Fri Dec 12 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.28-alt1
+- New version 0.0.28.
+
 * Thu Sep 25 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.27-alt2
 - Add requires sysctl-conf-userns (ALT#56136).
 
