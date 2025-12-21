@@ -1,16 +1,19 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define app_id org.widelands.Widelands 
+
 Name: widelands
-Version: 1.2.1
-Release: alt2
+Version: 1.3
+Release: alt1
 Epoch: 1
 
 Summary: Open source realtime-strategy game
 License: GPL-2.0-or-later
 Group: Games/Strategy
 
-Url: https://www.widelands.org
+URL: https://www.widelands.org
+VCS: https://github.com/widelands/widelands.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -79,20 +82,23 @@ sed -i '/-fno-elide-constructors/d' CMakeLists.txt
 desktop-file-validate %buildroot%_desktopdir/*.desktop
 
 # Validate appdata (provided by upstream)
-appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metainfo.xml
 
 %files
-%doc ChangeLog CREDITS
+%doc Release_Notes.md README.md
 %_man6dir/widelands.6.*
 %_bindir/%name
-%_iconsdir/hicolor/*/apps/*.png
-%_datadir/metainfo/*.appdata.xml
-%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/%app_id.png
+%_datadir/metainfo/%app_id.metainfo.xml
+%_desktopdir/%app_id.desktop
 
 %files data
 %_datadir/%name
 
 %changelog
+* Sun Dec 21 2025 Anton Midyukov <antohami@altlinux.org> 1:1.3-alt1
+- New version 1.3.
+
 * Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1:1.2.1-alt2
 - Add upstream commit "Update asio interfaces (GH #6665 / CB #5025)"
   (Fix FTBFS with asio-devel >= 1.34)
