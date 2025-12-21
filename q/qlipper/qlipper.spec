@@ -1,6 +1,6 @@
 Name: qlipper
-Version: 5.1.2
-Release: alt3.20241029.1
+Version: 6.0.0
+Release: alt1
 
 Summary: Lightweight clipboard history
 License: GPL-3.0-or-later
@@ -21,6 +21,7 @@ BuildRequires: cmake
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: qt6-tools-devel
+BuildRequires: kf6-kguiaddons-devel
 
 %description
 Lightweight clipboard history applet.
@@ -59,6 +60,9 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %dir %_datadir/%name/translations
 
 %changelog
+* Sun Dec 21 2025 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
+- New version 6.0.0.
+
 * Wed Jun 04 2025 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt3.20241029.1
 - new snapshot
 - build with qt6
