@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.63.0
+Version: 0.77.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -51,6 +51,8 @@ EOF
 # Disable OOB updates.
 perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
 	END { die unless $x }' codex-rs/tui/src/updates.rs
+perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
+	END { die unless $x }' codex-rs/tui2/src/updates.rs
 
 %build
 cargo build \
@@ -81,7 +83,7 @@ codex --version | grep -Fx '%name-cli %version'
 
 %files
 %define _customdocdir %_docdir/%name
-%doc CHANGELOG.md LICENSE README.md docs
+%doc CHANGELOG.md LICENSE README.md docs .gear/README.alt
 %_bindir/codex
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -89,6 +91,10 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sun Dec 21 2025 Vitaly Chikunov <vt@altlinux.org> 0.77.0-alt1
+- Update to rust-v0.77.0 (2025-12-20).
+- --oss is broken, use Responses API via config (see README.alt).
+
 * Sun Nov 23 2025 Vitaly Chikunov <vt@altlinux.org> 0.63.0-alt1
 - Experimental update to rust-v0.63.0 (2025-11-21).
 - The behavior of the --oss option is restored, and by default it's turned
