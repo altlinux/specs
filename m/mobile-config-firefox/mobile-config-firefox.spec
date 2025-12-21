@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: mobile-config-firefox
-Version: 4.6.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Mobile and privacy friendly firefox configuration 
@@ -20,6 +22,10 @@ extended support releases of Firefox.
 
 %prep
 %setup
+# fix hardcoded autoconfig path
+sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" src/mobile-config-autoconfig.js
+# fix "outdated UserAgent" in Google search
+sed -i 's/wwww.)?google/www.)?google/' src/modules/UserAgentManager.sys.mjs
 
 %build
 %make_build
@@ -32,13 +38,14 @@ extended support releases of Firefox.
 
 
 %files
-%config(noreplace) %firefox_datadir/policies/policies.json
-%_sysconfdir/mobile-config-firefox/
-%firefox_prefix/mobile-config-autoconfig.js
-%firefox_prefix/defaults/pref/mobile-config-prefs.js
+%firefox_datadir
+%firefox_prefix
 %_datadir/metainfo/org.postmarketos.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Wed Dec 17 2025 Andrew Savchenko <bircoph@altlinux.org> 5.0.1-alt1
+- Update to 5.0.1.
+
 * Sat Apr 26 2025 Egor Shestakov <ved@altlinux.org> 4.6.0-alt1
 - New version.
 
