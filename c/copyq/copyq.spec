@@ -1,5 +1,5 @@
 Name: copyq
-Version: 10.0.0
+Version: 13.0.0
 Release: alt1
 
 Summary: CopyQ - Advanced clipboard manager
@@ -17,9 +17,9 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake, extra-cmake-modules, gcc-c++
 
 BuildRequires: libXtst-devel, libXfixes-devel
-BuildRequires: qt5-tools-devel qt5-svg-devel qt5-x11extras-devel
-BuildRequires: qt5-wayland-devel wayland-devel libwayland-cursor-devel qt5-declarative-devel
-BuildRequires: kf5-knotifications-devel
+BuildRequires: qt6-tools-devel qt6-svg-devel
+BuildRequires: qt6-wayland-devel wayland-devel libwayland-cursor-devel qt6-declarative-devel
+BuildRequires: kf6-knotifications-devel kf6-kstatusnotifieritem-devel kf6-kguiaddons-devel
 
 %description
 CopyQ is advanced clipboard manager with searchable and editable history with
@@ -32,7 +32,7 @@ support for image formats, command line control and more.
 %build
 %cmake \
   -Wno-dev \
-  -DWITH_QT6:BOOL=OFF \
+  -DWITH_QT6:BOOL=ON \
   -DWITH_TESTS:BOOL=ON \
   -DPLUGIN_INSTALL_PREFIX=%_libdir/%name/plugins \
   -DTRANSLATION_INSTALL_PREFIX:PATH=%_datadir/%name/locale
@@ -58,6 +58,10 @@ support for image formats, command line control and more.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 13.0.0-alt1
+- new version 13.0.0 (with rpmrb script)
+- build with Qt6 instead of Qt5 (ALT bug 45722)
+
 * Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 10.0.0-alt1
 - new version 10.0.0 (with rpmrb script)
 
