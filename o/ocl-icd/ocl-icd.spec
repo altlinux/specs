@@ -1,5 +1,5 @@
 Name: ocl-icd
-Version: 2.3.2
+Version: 2.3.4
 Release: alt1
 
 Summary: OpenCL ICD Bindings
@@ -67,6 +67,9 @@ make check
 %_man7dir/*
 
 %changelog
+* Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
+- new version 2.3.4 (with rpmrb script) (ALT bug 48530)
+
 * Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt1
 - Updated to v2.3.2 (Fix FTBFS with new opencl-headers).
 - Added cllayerinfo to -devel subpackage.
