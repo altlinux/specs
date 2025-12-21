@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: xpdf
-Version: 4.05
-Release: alt2
+Version: 4.06
+Release: alt1
 
 Summary: The PDF viewer and tools
 License: GPLv2 or GPLv3
@@ -114,9 +115,7 @@ viewer.
 
 %prep
 %setup -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 sed -i \
     "s|/usr/local/etc|%_sysconfdir|;
@@ -128,6 +127,19 @@ sed -i \
      s|^#antialias|antialias|;
      " \
     doc/sample-xpdfrc
+
+cat << EOF >> doc/sample-xpdfrc
+
+initialZoom         width
+initialSidebarState no
+bind f5 any toggleFullScreenMode
+bind f9 any toggleSidebar
+#popupMenuCmd    Open            "run(firefox-wrap %u)"
+popupMenuCmd    Copy            copy
+popupMenuCmd    Save            saveAs
+popupMenuCmd    "Save as Image" saveImage
+
+EOF
 
 sed -i "s|/usr/local|%_prefix|" */add-to-xpdfrc
 
@@ -223,6 +235,24 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Dec 21 2025 Andrew Savchenko <bircoph@altlinux.org> 4.06-alt1
+- Update xpdf to version 4.06
+- Update Thai language files to version 2025-Aug-13
+- Fixes:
+  - CVE-2024-2971: Out-of-bounds array write in Xpdf 4.05 due to negative object number in indirect reference
+  - CVE-2024-3247: PDF object loop in object stream
+  - CVE-2024-3248: PDF object loop in Catalog::readFileAttachmentAnnots
+  - CVE-2024-3900: Out-of-bounds stack array write in Xpdf 4.05 due to missing zero check
+  - CVE-2024-4141: Out-of-bounds array write in Xpdf 4.05 due to incorrect bounds check
+  - CVE-2024-4568: PDF object loop in PSOutputDev::setupResources
+  - CVE-2024-4976: Out-of-bounds array write due to missing object type check
+  - CVE-2024-7866: PDF object loop in Gfx::drawForm
+  - CVE-2024-7867: Integer overflow and divide-by-zero due to extremely large coordinates in page boxes
+  - CVE-2024-7868: Invalid memory read due to uninitialized variable in DCT decoder
+  - CVE-2025-2574: Out-of-bounds array write due to incorrect integer overflow checking in the PostScript function interpreter code
+  - CVE-2025-3154: Out-of-bounds array write triggered by an invalid VerticesPerRow value in a PDF shading dictionary
+  - CVE-2025-11896: PDF object loop in CMap::parse
+
 * Sun Jul 14 2024 Andrew Savchenko <bircoph@altlinux.org> 4.05-alt2
 - Fix svg icons rendering (Closes: 50287)
 
