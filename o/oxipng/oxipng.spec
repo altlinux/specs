@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 9.1
+%define ver_major 10.0
 
 %def_disable bootstrap
 %def_enable check
 
 Name: oxipng
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: PNG compression optimizer
@@ -49,6 +49,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Sun Dec 07 2025 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1
+- 10.0.0
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 9.1.5-alt1
 - 9.1.5
 
