@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.25
+Version: 1.2.26
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -82,7 +82,7 @@ This package provides headers for LSP-developers.
 
 %ifarch %e2k
 sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" \
-	modules/lsp-3rd-party/include/steinberg/vst2.h
+    modules/lsp-3rd-party/include/steinberg/vst2.h
 %endif
 
 %build
@@ -132,6 +132,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.26-alt1
+- 1.2.26
+
 * Tue Nov 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.25-alt1
 - 1.2.25
 
