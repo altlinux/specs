@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 2.1.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group:  Video
@@ -16,7 +16,7 @@ Url: https://anongit.kde.org/plasma-camera.git
 Provides: kde5-plasma-camera = %EVR
 Obsoletes: kde5-plasma-camera < %EVR
 
-Requires: qt6-multimedia kf6-kirigami
+Requires: qt6-multimedia kf6-kirigami kf6-kirigami-addons
 
 Source: %rname-%version.tar
 
@@ -47,6 +47,9 @@ Simple camera application for mobile devices.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt2
+- fix requires
+
 * Fri Dec 12 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 
