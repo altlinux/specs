@@ -1,18 +1,18 @@
-%define soversion 2.3
+%define soversion 2.2
 %def_disable static
 
-Name: GLEW
-Version: 2.3.0
-Release: alt1
+Name: GLEW2.2
+Version: 2.2.0
+Release: alt3
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD and MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://glew.sourceforge.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: https://github.com/nigels-com/glew/releases/download/glew-%version/glew-%version.tgz
+Source: https://downloads.sourceforge.net/project/glew/glew/%version/glew-%version.tgz
 
 BuildRequires: libGLU-devel
 
@@ -23,47 +23,17 @@ which OpenGL extensions are supported on the target platform. OpenGL core and ex
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%name%soversion
+%package -n lib%name
 Summary: The OpenGL Extension Wrangler library
-Group: System/Libraries
+Group: System/Legacy libraries
 Provides: libGLEW = %version
 
-%description -n lib%name%soversion
+%description -n lib%name
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
-
-%package -n lib%name-devel
-Summary: The OpenGL Extension Wrangler library development files
-Group: Development/C
-Provides: libglew-devel = %version
-Obsoletes: libglew-devel < %version
-Provides: lib%{name}mx-devel = %version
-Obsoletes: lib%{name}mx-devel < %version
-
-%description -n lib%name-devel
-The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
-extension loading library. GLEW provides efficient run-time mechanisms for determining 
-which OpenGL extensions are supported on the target platform. OpenGL core and extension
-functionality is exposed in a single header file. GLEW has been tested on a variety of 
-operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
-
-The package contains the C headers to compile programs based on %name.
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: The OpenGL Extension Wrangler library development files
-Group: Development/C
-
-%description -n lib%name-devel-static
-The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
-extension loading library. GLEW provides efficient run-time mechanisms for determining 
-which OpenGL extensions are supported on the target platform. OpenGL core and extension
-functionality is exposed in a single header file. GLEW has been tested on a variety of 
-operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
-%endif
 
 %prep
 %setup -n glew-%version
@@ -84,27 +54,21 @@ install -pm755 -- %_datadir/gnu-config/config.guess config/
 %install
 %makeinstall_std BINDIR=%_bindir LIBDIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
 
+%__rm %buildroot%_includedir/GL/*.h
+%__rm %buildroot%_libdir/lib*.so
+%__rm %buildroot%_pkgconfigdir/*.pc
+
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
-%files -n lib%name%soversion
+%files -n lib%name
 %doc LICENSE.txt doc/*
-%_libdir/lib%name.so.%soversion
-%_libdir/lib%name.so.%soversion.*
-
-%files -n lib%name-devel
-%_includedir/GL/*.h
-%_libdir/lib*.so
-%_pkgconfigdir/*.pc
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%endif
+%_libdir/libGLEW.so.%soversion
+%_libdir/libGLEW.so.%soversion.*
 
 %changelog
-* Mon Dec 22 2025 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
-- Version 2.3.0
+* Mon Dec 22 2025 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt3
+- Build as legacy Library
 
 * Thu May 25 2023 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt2
 - Build with EGL support (ALT #46138)
