@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 22 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
+- update to Simply Linux 11.1rc
+
 * Sun Nov 09 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt1
 - update to Simply Linux 11.1beta
 
