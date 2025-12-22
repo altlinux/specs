@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 48.5
+Version: 49.2
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -19,11 +19,11 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
 BuildRequires: rust-cargo
 BuildRequires: gi-docgen
 BuildRequires: itstool
 BuildRequires: appstream
+BuildRequires: blueprint-compiler
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgtk4-gir-devel
 BuildRequires: pkgconfig(ddjvuapi)
@@ -83,7 +83,7 @@ Requires: %name-gir = %EVR
 install -vD %SOURCE2 .cargo/config.toml
 
 %build
-%meson -Dviewer=true \
+%meson -Dshell=true \
        -Dpreviewer=true \
        -Dthumbnailer=true \
        -Dnautilus=true \
@@ -118,7 +118,7 @@ install -vD %SOURCE2 .cargo/config.toml
 %_iconsdir/hicolor/*/apps/%xdg_name-symbolic.svg
 %_datadir/thumbnailers/%name.thumbnailer
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%_datadir/metainfo/%name-*.metainfo.xml
+%_datadir/metainfo/%xdg_name.*.metainfo.xml
 %_man1dir/*.1.*
 
 %files doc
@@ -137,6 +137,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 49.2-alt1
+- Updated to 49.2.
+
 * Wed Jul 23 2025 Anton Zhukharev <ancieg@altlinux.org> 48.5-alt1
 - Updated to 48.5.
 
