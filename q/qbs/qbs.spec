@@ -5,8 +5,8 @@
 %def_with check
 
 Name:    qbs
-Version: 3.0.1
-Release: alt2
+Version: 3.1.2
+Release: alt1
 
 Summary: Modern build tool for software projects
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later) AND (LGPL-2.1-only OR LGPL-3.0-only WITH Qt-LGPL-exception-1.1) AND GPL-3.0-only WITH Qt-GPL-exception-1.0
@@ -15,7 +15,6 @@ Url: 		 https://qbs.io/
 Vcs:     https://github.com/qbs/qbs.git
 
 Source: %name-%version.tar
-Patch0: 0001-fixed-i586-compatibility.patch
 
 BuildRequires(pre): cmake rpm-macros-qt6
 BuildRequires: ninja-build
@@ -63,7 +62,6 @@ The %name-examples package contains example files for using %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 export PATH="%{_qt6_bindir}:$PATH";
@@ -87,8 +85,9 @@ export QTDIR=%_qt6_prefix;
 	-DINSTALL_TRANSLATIONSDIR=%_qt6_translationdir \
 	-DINSTALL_MKSPECSDIR=%_qt6_mkspecsdir \
 	-DQT_DISABLE_RPATH:BOOL=TRUE \
-  -DQBS_LIB_INSTALL_DIR=%{_libdir} \
-  -DQBS_PLUGINS_INSTALL_BASE=%{_lib} \
+  -DWITH_TESTS=OFF \
+  -DQBS_LIB_INSTALL_DIR=%_libdir \
+  -DQBS_PLUGINS_INSTALL_BASE=%_lib \
   -DWITH_UNIT_TESTS=ON \
   -DQBS_ENABLE_RPATH=OFF \
   -DQBS_INSTALL_QCH_DOCS=ON \
@@ -98,14 +97,10 @@ export QTDIR=%_qt6_prefix;
 
 %install
 %cmake_install
-install -Dpm 0644 doc/man/qbs.1 %buildroot%_man1dir/qbs.1
+install -Dpm 0644 doc/man/%name.1 %buildroot%_man1dir/%name.1
 
 #Remove python dmgbuild directory, macOS specific utilites.
-rm -rfv %buildroot%_datadir/qbs/python/
-
-#Don't package tests
-rm -v %buildroot%_bindir/tst_*
-rm -v %buildroot%_bindir/clang-format-test
+rm -rfv %buildroot%_datadir/%name/python
 
 %if_with check
 %check
@@ -115,21 +110,25 @@ rm -v %buildroot%_bindir/clang-format-test
 %files
 %doc *.md LICENSE.LGPLv21 LICENSE.LGPLv3 LICENSE.GPL3-EXCEPT LGPL_EXCEPTION.txt
 %_bindir/%{name}*
-%_libdir/%name/
+%_libdir/%name
 %_libdir/lib%{name}*.so.*
-%_datadir/%name/
-%_libexecdir/%name/
+%_datadir/%name
+%_libexecdir/%name
 %_man1dir/%name.1*
 %exclude %_datadir/%name/examples
 
 %files devel 
-%_includedir/%name/
+%_includedir/%name
 %_libdir/lib%{name}*.so
 
 %files examples
-%_datadir/%name/examples/
+%_datadir/%name/examples
 
 %changelog
+* Thu Dec 18 2025 Nikita Shmatko <nash@altlinux.org> 3.1.2-alt1
+- New version 3.1.2.
+- Removed obsolete i586 compatibility patch.
+
 * Wed Sep 24 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt2
 - Fixed update from qbs-1.23.
 
