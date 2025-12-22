@@ -13,11 +13,11 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           xmlunit
-Version:        2.8.2
-Release:        alt1_8jpp11
+Version:        2.10.0
+Release:        alt1
 Summary:        Provides classes to do asserts on xml
 # The whole package is ASL 2.0 except for xmlunit-legacy which is BSD
-License:        ASL 2.0 and BSD
+License:        Apache-2.0
 URL:            https://www.xmlunit.org/
 BuildArch:      noarch
 
@@ -26,16 +26,19 @@ Source0:        %{name}-%{version}.tar.gz
 # Remove bundled binaries which cannot be easily verified for licensing
 Source1:        generate-tarball.sh
 
-Patch1:         0001-Disable-tests-requiring-network-access.patch
-Patch2:         0002-Port-to-hamcrest-2.1.patch
-Patch3:         0003-Drop-support-for-JAXB.patch
+Patch1:          0001-Disable-tests-requiring-network-access.patch
+# This also solves the problem of tests requiring network. The files that would
+# be fetched are identical to the local file
+Patch2:          0002-Use-local-schema.patch
+Patch3:          0003-Drop-support-for-JAXB.patch
+Patch4:          0004-Port-to-assertj-core-3.patch
 
+BuildRequires:  jurand
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
@@ -74,6 +77,7 @@ This package provides %{summary}.
 %package        legacy
 Group: Development/Java
 Summary:        Legacy package for %{name}
+License:        BSD-3-Clause
 
 %description    legacy
 This package provides %{summary}.
@@ -95,20 +99,24 @@ This package provides %{summary}.
 %prep
 %setup -q -n %{name}-%{version}-src
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
-# Tests compare the string constent of thrown exceptions
-# and we use a different version of assertj
-find xmlunit-assertj3/src/test -name '*.java' -exec sed -i 's/\(Expecting not blank but was:\)<\(.*\)>/\1 \2/' {} +
-sed -i 's/\(expected:\)<\\"\[\(something\)\]\\"> but was:<\\"\[\(abc\)\]\\">/\1 \\"\2\\"\\nbut was : \\"\3\\"/' xmlunit-assertj3/src/test/java/org/xmlunit/assertj3/ValueAssertTest.java
+rm -r xmlunit-core/src/main/java/org/xmlunit/builder/javax_jaxb\
+ xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactory.java\
+ xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactoryLocator.java\
+ xmlunit-core/src/test/java/org/xmlunit/builder/javax_jaxb\
+;
+
+# Port to hamcrest 2.1
+%java_remove_annotations xmlunit-matchers -p org[.]hamcrest[.]Factory
 
 %pom_disable_module xmlunit-assertj
+%pom_disable_module xmlunit-jakarta-jaxb-impl
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin -r :maven-shade-plugin
+%pom_remove_plugin -r org.cyclonedx:cyclonedx-maven-plugin
 
 %mvn_alias org.xmlunit:xmlunit-legacy xmlunit:xmlunit
 %mvn_alias org.xmlunit:xmlunit-assertj3 org.xmlunit:xmlunit-assertj
@@ -136,6 +144,9 @@ rm -rf xmlunit-core/src/{main,test}/java/org/xmlunit/builder/{jaxb/,JaxbBuilder.
 %files placeholders -f .mfiles-xmlunit-placeholders
 
 %changelog
+* Mon Dec 22 2025 Anton Meleshnikov <alton@altlinux.org> 0:2.10.0-alt1
+- new version (thanks fedora for the spec and patches)
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt1_8jpp11
 - update
 
