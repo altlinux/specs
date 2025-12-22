@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
 %global commit      8137c0605054452dd001c04e231de399e86ae7cb
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global altkernel 6.12.45-talos
-%define _libexecdir %_prefix/libexec
+%global shortcommit %(c=%commit; echo ${c:0:7})
+%global altkernel 6.12.59-talos
+%define _libexecdir %prefix/libexec
 %define alt_registry registry.altlinux.org
 %define alt_orchestra_registry altlinux.space/alt-orchestra
 %ifdef _priority_distbranch
@@ -14,7 +14,7 @@
 
 Name: talos
 Version: 1.10.8
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -30,7 +30,7 @@ ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.24.0
 # For define versions
-BuildRequires: etcd kubernetes-common coredns containerd flannel
+BuildRequires: etcd-for-kubernetes kubernetes-common coredns-for-kubernetes containerd flannel
 #BuildRequires: /usr/bin/protoc libprotobuf-devel
 #BuildRequires: /usr/bin/protoc-gen-go /usr/bin/protoc-gen-go-vtproto /usr/bin/protoc-gen-go-grpc
 
@@ -64,7 +64,7 @@ Group: System/Configuration/Boot and Init
 %summary.
 
 %package devel
-Summary: Source of talos 
+Summary: Source of talos
 Group: Development/Other
 BuildArch: noarch
 %description devel
@@ -75,8 +75,8 @@ BuildArch: noarch
 %autopatch -p1
 
 %define go_ver %(rpm -q --qf '%%{VERSION}' golang)
-%define etcd_ver %(rpm -q --qf '%%{VERSION}' etcd)
-%define coredns_ver %(rpm -q --qf '%%{VERSION}' --whatprovides coredns)
+%define etcd_ver %(rpm -q --qf '%%{VERSION}' --whatprovides etcd-for-kubernetes)
+%define coredns_ver %(rpm -q --qf '%%{VERSION}' --whatprovides coredns-for-kubernetes)
 %define kubernetes_ver %(rpm -q --qf '%%{VERSION}' --whatprovides kubernetes-common)
 %define containerd_ver %(rpm -q --qf '%%{VERSION}' containerd)
 %define flannel_ver %(rpm -q --qf '%%{VERSION}' flannel)
@@ -105,7 +105,6 @@ sed -i \
   pkg/machinery/config/configloader/internal/decoder/testdata/controlplane.yaml \
   pkg/machinery/config/configloader/internal/decoder/testdata/worker.yaml
 
-
 # TODO:
 #KubeletSystemReservedMemoryControlPlane
 #KubeletSystemReservedMemoryWorker
@@ -115,7 +114,6 @@ sed -i \
 # Define ALT kernel
 sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "%altkernel"|' \
   pkg/machinery/constants/constants.go
-
 
 # Define ALT k8s registry
 sed -i \
@@ -165,12 +163,15 @@ echo -n ${TAG} > pkg/machinery/gendata/data/tag
 #  --go-vtproto_out=paths=source_relative:api --go-vtproto_opt=features=marshal+unmarshal+size \
 #  api/common/common.proto
 
-
 %golang_prepare
 TAGS=$TAGS_TALOS %golang_build cmd/installer
 TAGS=$TAGS_TALOSCTL %golang_build cmd/talosctl
 TAGS=$TAGS_TALOS %golang_build internal/app/init
 TAGS=$TAGS_TALOS %golang_build internal/app/machined
+
+"$BUILDDIR/bin/talosctl" completion bash > talosctl.bash
+"$BUILDDIR/bin/talosctl" completion zsh > talosctl.zsh
+"$BUILDDIR/bin/talosctl" completion fish > talosctl.fish
 
 %install
 export BUILDDIR="$PWD/.build"
@@ -183,9 +184,16 @@ mkdir -p %buildroot/usr/libexec/talos
 mv %buildroot%_bindir/init %buildroot%_libexecdir/%name/init
 mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 
+install -Dpm 0644 talosctl.bash %buildroot%_datadir/bash-completion/completions/talosctl
+install -Dpm 0644 talosctl.zsh %buildroot%_datadir/zsh/site-functions/_talosctl
+install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/talosctl.fish
+
 %files -n talosctl
 %doc README.md LICENSE
 %_bindir/talosctl
+%_datadir/bash-completion/completions/talosctl
+%_datadir/zsh/site-functions/_talosctl
+%_datadir/fish/vendor_completions.d/talosctl.fish
 
 %files installer
 %_bindir/installer
@@ -197,6 +205,12 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %go_path/src/%import_path
 
 %changelog
+* Fri Dec 19 2025 Alexander Stepchenko <geochip@altlinux.org> 1.10.8-alt2
+- Update to kernel-image-talos-6.12.59.
+- Fix detecting image-cache in OS image.
+- Fix default OCI images versions.
+- Package talosctl completion files.
+
 * Fri Nov 21 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.8-alt1
 - New version 1.10.8.
 
