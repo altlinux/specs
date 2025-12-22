@@ -4,7 +4,7 @@
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.15
+Version: 1.0.17
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -55,35 +55,39 @@ export AR="llvm-ar"
 
 %files
 %doc LICENSE README.md debian/changelog
-%_sysconfdir/xdg/autostart/oom-score-adjust.desktop
 %dir %_libdir/deepin-service-manager/
-%_libdir/deepin-service-manager/libOOMScoreAdjust.so
 %_libdir/deepin-service-manager/libplugin-qt-thememanager.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpaperslideshow.so
 %_libdir/deepin-service-manager/libplugin-dde-xsettings.so
 %dir %_datadir/deepin-service-manager/
-%dir %_datadir/deepin-service-manager/system/
 %if_with ipwatchd
+%_bindir/ipwatchd
 %_libdir/deepin-service-manager/libplugin-ipwatchd.so
 %_datadir/dbus-1/system.d/org.deepin.ipwatchd.conf
+%dir %_datadir/deepin-service-manager/system/
 %_datadir/deepin-service-manager/system/plugin-ipwatchd.json
+%dir %_unitdir/deepin-service-group@deepin-daemon.service.d/
+%_unitdir/deepin-service-group@deepin-daemon.service.d/ipwatchd-override.conf
+%dir %_localstatedir/ipwatchd/
+%_localstatedir/ipwatchd/ipwatchd.conf
 %endif
-%_datadir/dbus-1/system.d/org.deepin.service.OOMScoreAdjust.conf
-%_datadir/dbus-1/system-services/org.deepin.OOMScoreAdjust.service
-%_datadir/dbus-1/services/org.deepin.dde.XSettings.service
-%_datadir/deepin-service-manager/system/OOM-Score-Adjust.json
 %dir %_datadir/deepin-service-manager/user/
 %_datadir/deepin-service-manager/user/plugin-qt-thememanager.json
 %_datadir/deepin-service-manager/user/plugin-qt-wallpaperslideshow.json
 %_datadir/deepin-service-manager/user/plugin-dde-xsettings.json
+%_datadir/dbus-1/services/org.deepin.dde.XSettings1.service
+%dir %_userunitdir/dde-session-pre.target.wants/
+%_userunitdir/dde-session-pre.target.wants/org.deepin.dde.XSettings1.service
+%_userunitdir/org.deepin.dde.XSettings1.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.service.manager/
-%_datadir/dsg/configs/org.deepin.service.manager/org.deepin.service.manager.oom-score-adjust.json
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 
 %changelog
+* Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
+- New version 1.0.17.
+
 * Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.15-alt1
 - New version 1.0.15.
 
