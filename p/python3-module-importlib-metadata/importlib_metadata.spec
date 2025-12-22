@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name importlib-metadata
+%define mod_name importlib_metadata
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.7.0
+Version: 8.7.1
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
 # PyPI name(dash, underscore)
@@ -23,6 +26,7 @@ Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -61,10 +65,13 @@ CPython.
 
 %files
 %doc README.rst
-%python3_sitelibdir/importlib_metadata/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 22 2025 Stanislav Levin <slev@altlinux.org> 8.7.1-alt1
+- 8.7.0 -> 8.7.1.
+
 * Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 8.7.0-alt1
 - 8.6.1 -> 8.7.0.
 
