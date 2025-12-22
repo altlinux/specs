@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    csvlens
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Command line csv viewer
@@ -69,6 +69,9 @@ install -pv %SOURCE1 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Dec 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.15.0-alt1
+- New version.
+
 * Wed Nov 05 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.0-alt1
 - New version.
 
