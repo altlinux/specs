@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
@@ -58,6 +58,9 @@ install -v %SOURCE2 setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
+- Updated to 0.6.0.
+
 * Tue Nov 11 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
