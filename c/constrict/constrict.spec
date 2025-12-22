@@ -4,7 +4,7 @@
 
 Name: constrict
 Version: 25.10
-Release: alt1
+Release: alt2
 Summary: Compress videos to target sizes
 Group: Video
 License: GPL-3.0-or-later
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 
 Requires: ffmpeg
 Requires: ffprobe
+Requires: typelib(Adw)
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-python3
@@ -24,8 +25,8 @@ BuildRequires: meson
 BuildRequires: blueprint-compiler
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
-BuildRequires: libgio
-BuildRequires: libgtk4
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libadwaita-1)
 
 %description
 Constrict compresses your videos to your chosen file size - useful for uploading
@@ -59,5 +60,8 @@ at various bitrates yourself.
 %_iconsdir/hicolor/scalable/apps/%app_id.svg
 
 %changelog
+* Wed Dec 17 2025 Vladislav Petrukhin <vladp@altlinux.org> 25.10-alt2
+- Fixed: #57256.
+
 * Mon Nov 24 2025 Vladislav Petrukhin <vladp@altlinux.org> 25.10-alt1
 - Initial build.
