@@ -2,7 +2,7 @@
 %add_optflags -Wno-deprecated-declarations -Wno-address
 %global soversion 2
 Name: libvpl
-Version: 2.15.0
+Version: 2.16.0
 Release: alt1
 Summary: Intel Video Processing Library
 License: MIT
@@ -52,7 +52,6 @@ Requires: libvpl%soversion = %EVR
 This package contains the development headers and pkgconfig files for
 the Intel Video Processing Library.
 
-
 %prep
 %setup
 %patch0 -p1
@@ -91,6 +90,9 @@ the Intel Video Processing Library.
 %_datadir/vpl/
 
 %changelog
+* Mon Dec 22 2025 Anton Farygin <rider@altlinux.org> 2.16.0-alt1
+- 2.15.0 -> 2.16.0
+
 * Thu Apr 24 2025 Anton Farygin <rider@altlinux.com> 2.15.0-alt1
 - 2.14.0 -> 2.15.0
 
