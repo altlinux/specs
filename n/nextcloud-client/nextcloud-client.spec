@@ -1,5 +1,5 @@
 Name: nextcloud-client
-Version: 3.15.2
+Version: 4.0.4
 Release: alt1
 %K6init no_altplace
 
@@ -38,6 +38,7 @@ BuildRequires: libqt6-webenginewidgets qt6-webengine-devel
 BuildRequires: libvulkan-devel
 BuildRequires: libgio-devel glib2-devel
 BuildRequires: /usr/bin/rsvg-convert
+BuildRequires: pkgconfig(libp11)
 
 %description
 The Nextcloud Desktop Client is a tool to synchronize files from Nextcloud Server with your computer.
@@ -139,6 +140,9 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/__pycache__/*
 
 %changelog
+* Sun Dec 21 2025 Sergey Zhidkih <rx1513@altlinux.org> 4.0.4-alt1
+- NMU: new version (ALT#55009)
+
 * Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 3.15.2-alt1
 - new version
 
