@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,15 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 22 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
+- fix some typos (ALT 57326, 57324, 57320, 57313, 57297, 57290, 57288, 57285)
+- fix pve-vm (ALT 57321, 57322, 57328, 57330, 57332, 57315, 57300, 57302, 57296)
+- fix pve-storage (ALT 57316, 57318, 57319, 57327, 57329, 57323)
+- fix pve-notifications (ALT 57325, 57317, 57331)
+- fix pve-backup (ALT 57298, 57299)
+- fix pve-network (ALT 57287, 57286)
+- fix product link (ALT 57292)
+
 * Tue Dec 16 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt1
 - update to ALT Virtualization PVE 11.1rc1
 
