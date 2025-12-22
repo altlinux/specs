@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.12
+Version: 2.0.14
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -28,8 +28,8 @@ Patch1: deepin-session-2.0.6-alt-uos-version.patch
 %filter_from_requires /\/usr\/bin\/kwin_x11/d
 # Recommends: kwin
 
-BuildRequires(pre): rpm-build-ninja rpm-build-systemd rpm-macros-dqt6
-BuildRequires: cmake libXcursor-devel libXfixes-devel dtk6-common-devel libdtk6core-devel libsecret-devel libsystemd-devel dqt6-base-devel dqt6-tools-devel
+BuildRequires(pre): rpm-build-ninja rpm-build-systemd rpm-build-xdg rpm-macros-dqt6
+BuildRequires: cmake libXcursor-devel libXfixes-devel dtk6-common-devel libdtk6core-devel libsecret-devel libsystemd-devel dqt6-base-devel dqt6-tools-devel libcap-ng-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -69,6 +69,8 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_bindir/dde-version-checker
 %_bindir/dde-xsettings-checker
 %_bindir/dde-quick-login
+%_bindir/dde-oom-score-adj
+%_xdgconfigdir/autostart/dde-oom-score-adj.desktop
 %_libexecdir/dde-session-ctl
 %_datadir/dbus-1/services/org.deepin.dde.Session1.service
 %_datadir/xsessions/deepin.desktop
@@ -84,6 +86,9 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_userunitdir/dde-version-checker@quick-login.service
 
 %changelog
+* Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.14-alt1
+- New version 2.0.14.
+
 * Thu Dec 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.12-alt1
 - New version 2.0.12.
 
