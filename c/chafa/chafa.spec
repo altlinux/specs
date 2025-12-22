@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: chafa
-Version: 1.14.2
+Version: 1.18.0
 Release: alt1
 %global sum     Image-to-text converter for terminal
 Summary: %sum
@@ -84,7 +84,7 @@ autoreconf -ivf
 %doc AUTHORS
 %doc COPYING.LESSER
 %_libdir/lib%name.so.0
-%_libdir/lib%name.so.0.9.2
+%_libdir/lib%name.so.0.11.0
 
 %files static
 %doc AUTHORS
@@ -104,6 +104,9 @@ autoreconf -ivf
 %doc COPYING.LESSER
 
 %changelog
+* Mon Dec 22 2025 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1
+- Update to new version
+
 * Thu Sep  5 2024 Artyom Bystrov <arbars@altlinux.org> 1.14.2-alt1
 - Update to new version
 
