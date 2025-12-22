@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.13.2
+Version: 0.14.0
 Release: alt1
 
 Summary: Flask extension for integration with the awesome pydantic package
@@ -60,5 +60,8 @@ with Flask.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.0-alt1
+- Updated to 0.14.0.
+
 * Thu Sep 25 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.2-alt1
 - Packaged for ALT Sisyphus.
