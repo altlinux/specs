@@ -1,7 +1,7 @@
 %define		php_extension	apcu
 %define 	real_name	APCu
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.1.27
+Version: 5.1.28
 Epoch:		1
 Release:	alt1.%_php_release_version
 Summary:	PHP extension APCu - APC User Cache
@@ -13,7 +13,6 @@ VCS:		https://github.com/krakjoe/apcu
 Source0:	php-%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
-
 
 BuildRequires(pre): rpm-build-php8.4-version
 BuildRequires: php-devel = %php_version
@@ -64,6 +63,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Mon Dec 22 2025 Anton Farygin <rider@altlinux.org> 1:5.1.28-alt1
+- 5.1.27 -> 5.1.28
 
 * Fri Aug 29 2025 Anton Farygin <rider@altlinux.com> 1:5.1.27-alt1
 - 5.1.24 -> 5.1.27
