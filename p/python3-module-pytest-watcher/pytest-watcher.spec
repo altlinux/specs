@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.3
+Version: 0.6.0
 Release: alt1
 
 Summary: Automatically rerun your tests on file modification
@@ -35,10 +35,11 @@ Works on Unix (Linux, MacOS, BSD) and Windows.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -58,6 +59,9 @@ Works on Unix (Linux, MacOS, BSD) and Windows.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.0-alt1
+- Updated to 0.6.0.
+
 * Wed Sep 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.3-alt1
 - Initial build for ALT Sisyphus.
 
