@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -308,9 +308,7 @@ banner build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
 KernelVer=%kversion-%flavour-%krelease
-
-echo "Building Kernel $KernelVer"
-
+echo "Configuring Kernel $KernelVer"
 %make_build mrproper
 make -s kernelversion | grep -Fx '%kversion-%flavour-%krelease'
 
@@ -515,6 +513,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Dec 19 2025 Alexei Takaseev <taf@altlinux.org> 6.18.2-alt1
+- v6.18.2 (2025-12-18).
+
 * Sat Dec 13 2025 Alexei Takaseev <taf@altlinux.org> 6.18.1-alt1
 - v6.18.1 (2025-12-12).
 - config: CONFIG_SYSFB_SIMPLEFB=n, CONFIG_DRM_VESADRM=y, CONFIG_DRM_EFIDRM=y
