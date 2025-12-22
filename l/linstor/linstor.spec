@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.33.0
-Release: alt1
+Release: alt2
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -94,7 +94,7 @@ Linstor shared components between linstor-controller and linstor-satellite
 %package controller
 Summary: Linstor controller specific files
 Group: System/Servers
-Requires: linstor-common = %EVR
+Requires(post): linstor-common = %EVR
 Requires: java-21-openjdk
 Requires: java-common
 
@@ -161,6 +161,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Mon Dec 22 2025 Anton Midyukov <antohami@altlinux.org> 1.33.0-alt2
+- NMU: linstor-controller: Requires(post): linstor-common (Closes: 53487).
+
 * Thu Dec 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.33.0-alt1
 - 1.33.0
 
