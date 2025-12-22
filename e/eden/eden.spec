@@ -1,5 +1,5 @@
 Name: eden
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Nintendo Switch Emulator
@@ -16,6 +16,9 @@ ExcludeArch: %ix86
 Source0: %name-v%version.tar
 Source1: cache-cpm.tar
 
+# https://git.%name-emu.dev/%name-emu/%name/commit/bccc46a32599cae419bf094e27840a6f5e4256c4
+Patch0: %name-0.0.4-fix-fmt-join.patch
+
 BuildRequires: /proc
 BuildRequires: alt-os-release
 BuildRequires: boost-asio-devel
@@ -24,6 +27,7 @@ BuildRequires: catch-devel
 BuildRequires: clang
 BuildRequires: clang-tools
 BuildRequires: ctest
+BuildRequires: frozen-devel
 BuildRequires: git-core
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
@@ -31,26 +35,36 @@ BuildRequires: libVulkanUtilityLibraries-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbrotli-devel
+BuildRequires: libcpp-httplib-devel
 BuildRequires: libcpp-jwt-devel
 BuildRequires: libcubeb-devel
+BuildRequires: libedit-devel
 BuildRequires: libenet-devel
+BuildRequires: libffi-devel
 BuildRequires: libfmt-devel
+BuildRequires: libgamemode-devel
 BuildRequires: liblz4-devel
+BuildRequires: libmbedtls-3.6-devel
+BuildRequires: liboaknut-devel
 BuildRequires: libopus-devel
+BuildRequires: libsimpleini-devel
 BuildRequires: libspirv-tools-devel
+BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libunordered_dense-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
+BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
-BuildRequires: libzydis-devel
 BuildRequires: lld
 BuildRequires: llvm
+BuildRequires: llvm-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: qt6-tools-devel
 BuildRequires: quazip-qt6-devel
+BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 
 %description
@@ -58,9 +72,14 @@ Eden is an experimental open-source emulator for the Nintendo Switch, built with
 
 %prep
 %setup -n %name -a 1
+%patch0 -p1
 
 %build
 sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
+
+%ifarch aarch64
+sed -i -e 's/-Werror=unused/-Wno-error=unused/' src/CMakeLists.txt
+%endif
 
 export CC="clang"
 export CXX="clang++"
@@ -77,16 +96,12 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DYUZU_USE_BUNDLED_QT:BOOL=OFF \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_SDL2:BOOL=OFF \
-	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=OFF \
-	-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES:BOOL=OFF \
-	-DYUZU_USE_EXTERNAL_VULKAN_SPIRV_TOOLS:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_FFMPEG:BOOL=OFF \
 	-DYUZU_USE_BUNDLED_OPENSSL:BOOL=OFF \
-	-DYUZU_CHECK_SUBMODULES:BOOL=OFF \
 	-DYUZU_ENABLE_LTO:BOOL=ON \
 	-DYUZU_TESTS:BOOL=ON \
-	-DTITLE_BAR_FORMAT_IDLE:STRING='Eden | v%version' \
-	-DTITLE_BAR_FORMAT_RUNNING:STRING='Eden | v%version' \
+	-DTITLE_BAR_FORMAT_IDLE:STRING="Eden | v%version | Clang $(llvm-config --version)" \
+	-DTITLE_BAR_FORMAT_RUNNING:STRING="Eden | v%version | Clang $(llvm-config --version)" \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -108,6 +123,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Mon Dec 22 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1
+- New version 0.0.4.
+
 * Fri Sep 05 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt1
 - Stable version 0.0.3
 
