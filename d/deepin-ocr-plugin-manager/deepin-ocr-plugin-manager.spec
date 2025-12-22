@@ -3,20 +3,21 @@
 %def_disable clang
 
 Name: deepin-ocr-plugin-manager
-Version: 0.0.2.0019
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: Deepin OCR plugin manager
 
 License: Apache-2.0 and BSL-1.0 and GPL-3.0+
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-ocr-plugin-manager
-Vcs: https://github.com/linuxdeepin/deepin-ocr-plugin-manager.git
+VCS: https://github.com/linuxdeepin/deepin-ocr-plugin-manager
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-ocr-plugin-manager/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-ocr-plugin-manager-0.0.2.0019-alt-fixes-symbols.patch
-Patch2: deepin-ocr-plugin-manager-0.0.2.0019-alt-ncnn-20250916.patch
+Patch2: deepin-ocr-plugin-manager-1.0.1-alt-ncnn-20250916.patch
 
 ExcludeArch: ppc64le
 
@@ -99,6 +100,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%name/model/
 
 %changelog
+* Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
+- New version 1.0.1.
+
 * Tue Sep 16 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2.0019-alt2
 - Fixed build with ncnn 20250916.
 
