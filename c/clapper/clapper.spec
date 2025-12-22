@@ -1,10 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 0.8
+%define ver_major 0.10
 %define api_ver 0.0
 %define rdn_name com.github.rafostar.Clapper
 
+%def_enable doc
 %def_enable enhancers_loader
+%def_enable pipeline_preview
 %def_enable check
 
 Name: clapper
@@ -26,7 +28,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
-%define adw_ver 1.4.0
+%define adw_ver 1.5.0
 %define gst_ver 1.24
 
 Requires: lib%name = %EVR
@@ -55,7 +57,9 @@ BuildRequires: gir(Gtk) = 4.0
 BuildRequires: gir(Gst) gir(GstAudio) gir(GstBase)
 BuildRequires: gir(GstPbutils) gir(GstTag) gir(GstVideo)
 %{?_enable_enhancers_loader:BuildRequires: pkgconfig(libpeas-2)}
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_pipeline_preview:BuildRequires: pkgconfig(libcgraph) pkgconfig(libgvc)}
+%{?_enable_doc:BuildRequires: gi-docgen /usr/bin/dot}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 A GNOME media player built using GJS with GTK4 toolkit and powered by
@@ -76,12 +80,24 @@ Requires: lib%name = %EVR
 %description -n lib%name-devel
 This package provides development files for Clapper libraries.
 
+%package -n lib%name-devel-doc
+Summary: Development documentation for Clapper libraries
+Group: Development/Documentation
+Conflicts: lib%name < %version-%release
+BuildArch: noarch
+
+%description -n lib%name-devel-doc
+This package contains development documentation for Clapper and
+ClapperGtk libraries.
+
 %prep
 %setup -n %name-%version
 
 %build
 %meson \
-    %{subst_enable_meson_feature enhancers_loader enhancers-loader}
+    %{subst_enable_meson_bool doc doc} \
+    %{subst_enable_meson_feature enhancers_loader enhancers-loader} \
+    %{subst_enable_meson_feature pipeline_preview pipeline-preview}
 %nil
 %meson_build
 
@@ -135,7 +151,14 @@ ln -s gstreamer-1.0/libgst%name.so %buildroot%_libdir/libgst%name.so
 %_vapidir/%name-%api_ver.*
 %_vapidir/%name-gtk-%api_ver.*
 
+%files -n lib%name-devel-doc
+%exclude %_datadir/doc/clapper
+%exclude %_datadir/doc/clapper-gtk
+
 %changelog
+* Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

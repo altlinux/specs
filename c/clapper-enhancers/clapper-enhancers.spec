@@ -13,7 +13,7 @@
 
 Name: %_name-enhancers
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Plugins enhancing Clapper library capabilities
 License: GPL-3.0-or-later
@@ -77,6 +77,9 @@ Plugins enhancing Clapper media player library capabilities.
 %doc README*
 
 %changelog
+* Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1.1
+- rebuild against clapper-0.10
+
 * Tue Jun 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
