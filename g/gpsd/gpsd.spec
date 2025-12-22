@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with libQgpsmm
-%define abiversion 31
+%define abiversion 32
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.26.1
-Release: alt2
+Version: 3.27.1
+Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
@@ -283,6 +283,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 3.27.1-alt1
+- 3.26.1 -> 3.27.1
+
 * Sun Oct 12 2025 Anton Farygin <rider@altlinux.com> 3.26.1-alt2
 - built with qt6
 
