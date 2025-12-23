@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name protontricks
-%define mod_name %pypi_name
+%define mod_name protontricks
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
 
 Summary: Python package for %pypi_name
@@ -72,6 +72,9 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %_desktopdir/protontricks*.desktop
 
 %changelog
+* Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.13.1-alt1
+- Updated to 1.13.1.
+
 * Tue Aug 12 2025 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
 - Updated to 1.13.0.
 
