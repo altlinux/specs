@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt4
+Release: alt5
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -303,6 +303,7 @@ mkdir -p  %buildroot/%_sysconfdir/dconf/db/default.d/
 install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
 
 #notes
+cp %_datadir/distro-licenses/ALT_Server_License/%version/license.{all,ru}.html %buildroot%_datadir/alt-notes/
 cp -a %_datadir/alterator/editions/edition_server/{release,final}-notes.*.html %buildroot%_datadir/alt-notes/
 for relnotes in %_datadir/alterator/editions/edition_server/final-notes.*.html; do \
    suffix="${relnotes#*final-notes.}"; \
@@ -373,6 +374,7 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 %_datadir/alt-notes/livecd-*
 %_datadir/alt-notes/release-notes.*
 %_datadir/alt-notes/final-notes.*
+%_datadir/alt-notes/license.*
 
 %files mate-settings
 %_datadir/install3/lightdm-gtk-greeter.conf
@@ -396,6 +398,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Dec 23 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt5
+- Copy licenses from distro-licenses
+
 * Fri Oct 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt4
 - The logo design in logo_width.png has been updated
 
