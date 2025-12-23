@@ -4,9 +4,11 @@
 
 %def_with check
 
+%python3_set_limited_api
+
 Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
 License: BSD-3-Clause
@@ -19,6 +21,8 @@ Source1: %pyproject_deps_config_name
 Source2: setup.py
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_build_filter scikit-build
@@ -58,6 +62,9 @@ install -v %SOURCE2 setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt2
+- Built based on Python Limited API.
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
 - Updated to 0.6.0.
 
