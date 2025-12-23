@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaptop
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 Summary: swap usage monitor written in rust
 License: MIT
@@ -45,6 +45,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.5-alt1
+- 1.0.3 -> 1.0.5
+
 * Thu Sep 25 2025 Pavel Shilov <zerospirit@altlinux.org> 1.0.3-alt1
 - 1.0.1 -> 1.0.3
 
