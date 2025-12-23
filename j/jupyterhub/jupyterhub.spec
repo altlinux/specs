@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    jupyterhub
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1
 
 Summary: Multi-user server for Jupyter notebooks
@@ -53,6 +53,9 @@ Group: Development/Python3
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Tue Dec 23 2025 Anton Vyatkin <toni@altlinux.org> 5.4.3-alt1
+- new version 5.4.3
+
 * Wed Oct 29 2025 Anton Vyatkin <toni@altlinux.org> 5.4.2-alt1
 - new version 5.4.2
 
