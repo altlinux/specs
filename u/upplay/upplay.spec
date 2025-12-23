@@ -1,5 +1,5 @@
 Name: upplay
-Version: 1.9.7
+Version: 1.9.8
 Release: alt1
 
 Summary: UPnP/OpenHome audio Control Point
@@ -7,11 +7,13 @@ License: GPLv2
 Group: Sound
 Url: http://www.lesbonscomptes.com/upplay/
 
+ExcludeArch: i586
+
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++
 BuildRequires: jsoncpp-devel libcurl-devel libexpat-devel libupnpp-devel
-BuildRequires: qt5-base-devel qt5-script-devel qt5-webkit-devel mpris-qt5-devel
+BuildRequires: qt6-base-devel qt6-webengine-devel libambermpris-devel
 
 %description
 Upplay is a simple Qt-based UPnP/OpenHome audio Control Point.
@@ -23,7 +25,7 @@ chosen if available).
 %setup
 
 %build
-%qmake_qt5
+%qmake_qt6
 %make_build
 
 %install
@@ -37,6 +39,9 @@ make install INSTALL_ROOT=%buildroot
 %_pixmapsdir/upplay.png
 
 %changelog
+* Tue Dec 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.8-alt1
+- 1.9.8 released
+
 * Wed Jun 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.7-alt1
 - 1.9.7 released
 
