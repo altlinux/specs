@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 29
+%define _php_release_version 30
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -203,7 +203,6 @@ in use by other PHP-related packages.
 sed -i 's/__has_feature(c_atomic)/0/' Zend/zend_atomic.h
 %endif
 
-
 cp -dpR %SOURCE2 .
 
 LIBS="$LIBS -lpthread"
@@ -371,8 +370,6 @@ echo "extension=openssl.so" >%buildroot/%php_extconf/openssl/config
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 
-
-
 subst 's,@php_name@,%php_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@_php_version@,%_php_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@php_major@,%_php_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
@@ -437,7 +434,6 @@ rm -f /etc/php/%_php_suffix/*/php.d/01_mysqlnd.ini ||:
 %post openssl
 rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 
-
 %files
 %_altdir/php%_php_suffix
 %_bindir/phpdbg%_php_suffix
@@ -492,6 +488,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Mon Dec 22 2025 Anton Farygin <rider@altlinux.org> 8.2.30-alt1
+- 8.2.29 -> 8.2.30 (Fixes: CVE-2025-14180, CVE-2025-14178, CVE-2025-14177)
+
 * Thu Jul 31 2025 Anton Farygin <rider@altlinux.com> 8.2.29-alt1
 - 8.2.28 -> 8.2.29 (Fixes: CVE-2025-1735, CVE-2025-6491, CVE-2025-1220)
 

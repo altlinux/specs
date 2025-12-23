@@ -4,7 +4,7 @@
 %define		php_extension	redis
 %define 	real_name	redis
 Name:	 	php%_php_suffix-%php_extension
-Version:	6.2.0
+Version:	6.3.0
 Release:	alt1.%php_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
@@ -63,6 +63,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Fri Nov 21 2025 Anton Farygin <rider@altlinux.com> 6.3.0-alt1
+- 6.2.0 -> 6.3.0
 
 * Thu Apr 03 2025 Anton Farygin <rider@altlinux.com> 6.2.0-alt1
 - 6.1.0 -> 6.2.0
