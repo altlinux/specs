@@ -1,6 +1,6 @@
 Name: eden
 Version: 0.0.4
-Release: alt1
+Release: alt2
 
 Summary: Nintendo Switch Emulator
 License: GPLv3+
@@ -18,6 +18,8 @@ Source1: cache-cpm.tar
 
 # https://git.%name-emu.dev/%name-emu/%name/commit/bccc46a32599cae419bf094e27840a6f5e4256c4
 Patch0: %name-0.0.4-fix-fmt-join.patch
+# https://git.%name-emu.dev/%name-emu/%name/commit/fbd28a9d34c364af07347cdc7059886539b7cb55
+Patch1: %name-0.0.4-fix-dynarmic-tests.patch
 
 BuildRequires: /proc
 BuildRequires: alt-os-release
@@ -72,7 +74,7 @@ Eden is an experimental open-source emulator for the Nintendo Switch, built with
 
 %prep
 %setup -n %name -a 1
-%patch0 -p1
+%autopatch -p1
 
 %build
 sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
@@ -123,6 +125,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Tue Dec 23 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt2
+- Add patch to fix dynarmic tests
+
 * Mon Dec 22 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1
 - New version 0.0.4.
 
