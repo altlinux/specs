@@ -1,15 +1,14 @@
 %define pypi_name pyfuse3
 
-# RuntimeError: Multi-threaded test running is not supported ?
-%def_disable check
+%def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Python 3 bindings for libfuse 3 with async I/O support
 Group: Development/Python3
-License: LGPL-2.0-or-later
+License: LGPL-2.1-or-later
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/libfuse/pyfuse3.git
@@ -19,7 +18,7 @@ Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(fuse3)
 BuildRequires: python3(cython) python3(wheel) python3(setuptools)
-%{?_enable_check:BuildRequires: python3(pytest)
+%{?_enable_check:BuildRequires: /proc python3(pytest)
 BuildRequires: python3(trio) python3(pytest_trio)}
 
 %description
@@ -49,6 +48,10 @@ py.test3 -v -rs test/
 %doc README* Changes.*
 
 %changelog
+* Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+- enabled %%check
+
 * Thu Aug 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
