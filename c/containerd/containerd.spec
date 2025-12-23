@@ -3,7 +3,7 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%global commit      1c4457e00facac03ce1d75f7b6777a7a851e5c41
+%global commit      dea7da592f5d1d2b7755e3a161be07f43fad8f75
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	2.2.0
+Version:	2.2.1
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -87,6 +87,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Tue Dec 23 2025 Vladimir Didenko <cow@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Tue Nov 11 2025 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
