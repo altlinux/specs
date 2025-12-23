@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.1
-Release: alt4
+Release: alt5
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -122,6 +122,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Tue Dec 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt5
+- Remove sysconfig-proxy step from installer steps.
+
 * Sat Dec 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt4
 - Remove outdated "Requires" tags (Closes: 57148).
 
