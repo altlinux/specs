@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: errands
-Version: %ver_major.2.9
+Version: %ver_major.2.10
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -33,7 +33,7 @@ BuildArch: noarch
 %add_python3_path %_datadir/%name
 
 Requires: python3-module-pygobject3
-Requires: python3-module-icalendar >= 5.0.11
+Requires: python3-module-icalendar >= 6.3.1
 Requires: dconf gnome-keyring gnome-online-accounts
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -75,6 +75,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2.10-alt1
+- 46.2.10
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2.9-alt1
 - 46.2.9
 
