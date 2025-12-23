@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -107,6 +107,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Mon Dec 22 2025 Anton Golubev <golubevan@altlinux.org> 6.1.2-alt1
+- fix lost focus on disable/enable screen (Closes: 57165)
+
 * Tue Dec 09 2025 Anton Golubev <golubevan@altlinux.org> 6.1.1-alt1
 - fix Russian translations for fallback greeter (Closes: 57147)
 - initialize pointer member in KWinKeyboardBackend (Closes: 57175)
