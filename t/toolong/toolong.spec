@@ -4,10 +4,10 @@
 
 Name: toolong
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: A terminal application to view, tail, merge, and search log files.
 License: MIT
-Group: Editors
+Group: Shells
 Url: https://github.com/Textualize/toolong
 BuildArch: noarch
 
@@ -21,6 +21,8 @@ BuildRequires: python3-module-poetry-core
 BuildRequires: python3(click)
 BuildRequires: python3(textual)
 BuildRequires: python3-module-typing-extensions
+
+Conflicts: lua5.4-module-tl
 
 %description
 A terminal application to view, tail, merge, and search log files (plus JSONL).
@@ -45,6 +47,9 @@ A terminal application to view, tail, merge, and search log files (plus JSONL).
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.4.0-alt2
+- Added explicit Conflicts tag to prevent installation issues.
+
 * Sun Oct 05 2025 Pavel Shilov <zerospirit@altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus
 

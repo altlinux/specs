@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mendingwall
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 Summary: Linux distributions offer a choice of desktop environment, but installing more than one can break themes and clutter menus. 
 License: GPL-3.0
@@ -31,7 +31,7 @@ native environment only.
 %prep
 %setup
 %autopatch -p1
-sed -i 's/^Categories=.*/Categories=Settings;DataVisualization;/' data/org.indii.mendingwall.desktop.in
+sed -i 's/^Categories=.*/Categories=Education;DataVisualization;/' data/org.indii.mendingwall.desktop.in
 sed -i 's/^Keywords=.*/Keywords=statistics;simulation;visualization;geostatistics;point-process;/' data/org.indii.mendingwall.desktop.in
 
 %build
@@ -58,6 +58,9 @@ sed -i 's/^Keywords=.*/Keywords=statistics;simulation;visualization;geostatistic
 %_datadir/metainfo/org.indii.mendingwall.metainfo.xml
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.8-alt1
+- 0.3.7 -> 0.3.8
+
 * Fri Oct 10 2025 Pavel Shilov <zerospirit@altlinux.org> 0.3.7-alt1
 - 0.3.6 -> 0.3.7
 
