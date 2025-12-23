@@ -9,10 +9,10 @@ BuildRequires: jpackage-default
 %global srcname JCTools
 
 Name:           jctools
-Version:        3.3.0
-Release:        alt2_5jpp11
+Version:        4.0.5
+Release:        alt1
 Summary:        Java Concurrency Tools for the JVM
-License:        ASL 2.0
+License:        Apache-2.0
 
 URL:            https://github.com/JCTools/JCTools
 Source0:        https://github.com/JCTools/JCTools/archive/v%{version}/%{srcname}-%{version}.tar.gz
@@ -22,7 +22,7 @@ BuildArch:      noarch
 BuildRequires:  mvn(com.google.guava:guava-testlib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-all)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
 Source44: import.info
 
 %description
@@ -50,10 +50,10 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q -n %{srcname}-%{version}
 
+%pom_change_dep -r org.hamcrest:hamcrest-all org.hamcrest:hamcrest
+
 # drop some failure-prone tests (race conditions?)
 rm jctools-core/src/test/java/org/jctools/queues/MpqSanityTestMpscCompound.java
-rm jctools-core/src/test/java/org/jctools/queues/atomic/AtomicMpqSanityTestMpscCompound.java
-rm jctools-core/src/test/java/org/jctools/maps/NonBlockingHashMapTest.java
 
 # set correct version in all pom.xml files
 %pom_xpath_set pom:project/pom:version %{version}
@@ -67,7 +67,7 @@ rm jctools-core/src/test/java/org/jctools/maps/NonBlockingHashMapTest.java
 %pom_remove_plugin :maven-javadoc-plugin jctools-core
 
 # remove tests with additional kotlin dependencies
-%pom_remove_dep org.jetbrains.kotlinx:lincheck jctools-core
+%pom_remove_dep org.jetbrains.kotlinx:lincheck-jvm jctools-core
 rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 # disable unused modules with unavailable dependencies
@@ -107,6 +107,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %changelog
+* Tue Dec 23 2025 Anton Meleshnikov <alton@altlinux.org> 4.0.5-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt2_5jpp11
 - update
 
