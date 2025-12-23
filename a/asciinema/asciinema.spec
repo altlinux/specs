@@ -5,8 +5,8 @@
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
 
 Name: asciinema
-Version: 3.0.0
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 Summary: Terminal session recorder
 License: GPLv3
@@ -80,6 +80,9 @@ install -Dm 644 doc/man/%name-upload.1 %buildroot%_man1dir/%name-upload.1
 %fish_completionsdir/%name.fish
 
 %changelog
+* Tue Dec 23 2025 Denis Sergeev <zeff@altlinux.org> 3.0.1-alt1
+- 3.0.0 -> 3.0.1.
+
 * Tue Sep 16 2025 Denis Sergeev <zeff@altlinux.org> 3.0.0-alt2
 - 3.0.0-rc5 -> 3.0.0.
 
