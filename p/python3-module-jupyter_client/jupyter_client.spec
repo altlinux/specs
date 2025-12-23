@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.6.3
-Release: alt3
+Version: 8.7.0
+Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -69,6 +69,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Tue Dec 23 2025 Anton Vyatkin <toni@altlinux.org> 8.7.0-alt1
+- New version 8.7.0.
+
 * Tue Oct 21 2025 Anton Vyatkin <toni@altlinux.org> 8.6.3-alt3
 - Fixed FTBFS.
 
