@@ -1,8 +1,9 @@
 %define nameL com.github.luisbocanegra.minimize2tray
 
 Name: plasma-addon-kwin-minimize2tray
-Version: 20251026
+Version: 0.1.0
 Release: alt1
+Epoch: 1
 
 Summary: Hide windows to the system tray, similar to KDocker but in the form of a KWin Script that works on Wayland
 License: GPL-3.0-only
@@ -38,6 +39,9 @@ BuildRequires: kf6-kservice-devel kf6-kstatusnotifieritem-devel
 %_libdir/qt6/qml/com/github/luisbocanegra/*
 
 %changelog
+* Tue Dec 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:0.1.0-alt1
+- Release: 0.1.0.
+
 * Mon Oct 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 20251026-alt1
 - update to git.08061042
 
