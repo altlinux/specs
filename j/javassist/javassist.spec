@@ -5,10 +5,10 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javassist
-Version:        3.28.0
-Release:        alt1_2jpp11
+Version:        3.30.2
+Release:        alt1
 Summary:        Java Programming Assistant for Java bytecode manipulation
-License:        MPLv1.1 or LGPLv2+ or ASL 2.0
+License:        MPL-1.1 or LGPL-2.1-or-later or Apache-2.0
 
 %global upstream_version rel_%(sed s/\\\\./_/g <<<"%{version}")_ga
 
@@ -20,7 +20,7 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-all)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
 Source44: import.info
 
 %description
@@ -48,6 +48,9 @@ javassist development documentation.
 %prep
 %setup -q -n %{name}-%{upstream_version}
 
+#change deprecated dependency
+%pom_change_dep org.hamcrest:hamcrest-all org.hamcrest:hamcrest
+
 # remove unnecessary maven plugins
 %pom_remove_plugin :maven-source-plugin
 
@@ -62,7 +65,7 @@ javassist development documentation.
 
 
 %build
-%mvn_build -f
+%mvn_build -j
 
 # remove bundled jar and class files *after* they were used for running tests
 rm javassist.jar src/test/resources/*.jar
@@ -75,13 +78,12 @@ find src/test -name "*.class" -print -delete
 
 %files -f .mfiles
 %doc --no-dereference License.html
-%doc Readme.html
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference License.html
-
+%doc README.md Examples.md
 
 %changelog
+* Mon Dec 22 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.30.2-alt1
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.28.0-alt1_2jpp11
 - new version
 
