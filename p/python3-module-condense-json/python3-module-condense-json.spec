@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Python function for condensing JSON using replacement strings
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1.3-alt1
+- Updated to 0.1.3.
+
 * Tue Apr 08 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1.2-alt1
 - Built for ALT Sisyphus.
 
