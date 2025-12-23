@@ -36,7 +36,13 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt1
+Release: alt2
+
+%ifarch %ix86 x86_64
+BuildRequires: gfxboot >= 4
+BuildRequires: design-bootloader-source >= 7.3-alt1
+BuildRequires: cpio
+%endif
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -70,7 +76,11 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPL-2.0
 
 Requires(pre): coreutils
+Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %branding_add_conflicts %flavour bootloader
+
+%define grub_normal light-gray/black
+%define grub_high white/dark-gray
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -353,11 +363,27 @@ find %buildroot -name \*.in -delete
 mkdir -p %buildroot/%_sysconfdir/dconf/db/default.d/
 install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
 
-%post bootloader
+#bootloader
+%pre bootloader
+%ifarch %ix86 x86_64
+[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
+%endif
 %ifarch %ix86 x86_64 aarch64
+[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
+%endif
+
+%post bootloader
 . shell-config
-shell_config_del /etc/sysconfig/grub2 GRUB_THEME
-shell_config_del /etc/sysconfig/grub2 GRUB_BACKGROUND
+shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
+#shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
+shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
+shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+
+%ifarch %ix86 x86_64 aarch64
+%preun bootloader
+[ $1 = 0 ] || exit 0
+[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
+    %__rm -f /boot/splash/message
 %endif
 
 %post indexhtml
@@ -370,6 +396,11 @@ sed -i '/pam_env\.so/ {
 ' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
+%ifarch %ix86 x86_64
+%_datadir/gfxboot/%theme
+/boot/splash/%theme
+%endif
+/boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
@@ -413,10 +444,10 @@ fi
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 %_iconsdir/hicolor/*/apps/alt-%theme.svg
-%exclude %_datadir/design/%theme/icons/system-logo.png
 
 %files bootsplash
-%_datadir/design/%theme/icons/system-logo.png
+%_datadir/plymouth/themes/%theme/*
+%_pixmapsdir/system-logo.png
 
 %files release
 %_sysconfdir/altlinux-release
@@ -486,6 +517,12 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Tue Dec 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt2
+- Remove duplicate link to Yandex zen channel Basealt in indexhtml.
+- Update product-logo.png.
+- Update grub.jpg.
+- Return grub config and remove language setting up in grub.
+
 * Tue Sep 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt1
 - Add default edition to os-release and dconf.
 - Return indexhtml to menu and desktop.
