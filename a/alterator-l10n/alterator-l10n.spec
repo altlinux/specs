@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.175
+Version: 2.9.176
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Tue Dec 23 2025 Anton Midyukov <antohami@altlinux.org> 2.9.176-alt1
+- help/ru_RU/users.html: update.
+
 * Fri Dec 05 2025 Anton Midyukov <antohami@altlinux.org> 2.9.175-alt1
 - tzone-po: fix typo in russian translation (Closes: 56949)
 
