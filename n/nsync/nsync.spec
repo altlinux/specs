@@ -7,7 +7,7 @@
 %define soname 1
 
 Name: nsync
-Version: 1.29.2
+Version: 1.30.0
 Release: alt1
 
 Summary: A C library that exports various synchronization primitives, such as mutexes
@@ -76,6 +76,9 @@ Group: Development/C
 %_libdir/libnsync_cpp.so
 
 %changelog
+* Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.30.0-alt1
+- Updated to 1.30.0.
+
 * Thu Nov 28 2024 Anton Zhukharev <ancieg@altlinux.org> 1.29.2-alt1
 - Built for ALT Sisyphus.
 
