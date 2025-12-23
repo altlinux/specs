@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,14 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Tue Dec 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
+- erc: fix -b and other single-letter commands (ALT bug 57263)
+- erc: fix empty args check
+- erc: add missing -h flag for tar.bz2 extraction
+- erc: fix wrong variable in repack loop
+- erc: fail when target exists without -f flag
+- erc-sh-archive: fix list_formats output for 7z backend
+
 * Wed Dec 10 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt1
 - erc: add support for repack zip->tar with 7z
 - erc: fix path to unpacked archives
