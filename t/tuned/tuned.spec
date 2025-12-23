@@ -7,13 +7,14 @@
 
 Name: tuned
 Version: 2.26.0
-Release: alt1
+Release: alt2
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
 Url: https://tuned-project.org/
 Vcs: https://github.com/redhat-performance/tuned
 BuildArch: noarch
+Provides: python3(tuned.ppd)
 
 Requires: ethtool
 Requires: hdparm
@@ -60,6 +61,16 @@ Requires: powertop polkit
 
 %description gtk
 GTK GUI that can control tuned and provides simple profile editor.
+
+%package ppd
+Summary: PPD compatibility daemon
+Group: System/Configuration/Other
+Requires: %name = %EVR
+Conflicts: power-profiles-daemon
+
+%description ppd
+An API translation daemon that allows applications to easily transition
+to TuneD from power-profiles-daemon (PPD).
 
 %package utils
 Group: System/Configuration/Other
@@ -238,6 +249,7 @@ make html PYTHON=%__python3
 %makeinstall_std DOCDIR=%_docdir/%name
 %__subst 's/\(dynamic_tuning[ \t]*=[ \t]*\).*/\10/' %buildroot%_sysconfdir/tuned/tuned-main.conf
 %makeinstall_std DOCDIR=%_docdir/%name install-html
+%makeinstall_std DOCDIR=%_docdir/%name install-ppd
 
 mkdir -p %buildroot%_datadir/tuned/grub2
 mv %buildroot%_sysconfdir/grub.d/00_tuned %buildroot%_datadir/tuned/grub2/00_tuned
@@ -344,6 +356,15 @@ if [ $1 -eq 0 ]; then
 	fi
 fi
 
+%post ppd
+%systemd_post tuned-ppd.service
+
+%preun ppd
+%preun_systemd tuned-ppd.service
+
+%postun ppd
+%systemd_postun_with_restart tuned-ppd.service
+
 %files
 %exclude %_docdir/%name/README.*
 %doc %_docdir/%name
@@ -399,6 +420,17 @@ fi
 %_datadir/tuned/grub2
 %_datadir/polkit-1/actions/com.redhat.tuned.policy
 %_libexecdir/tuned/defirqaffinity*
+
+%files ppd
+%_sbindir/tuned-ppd
+%config(noreplace) %_sysconfdir/tuned/ppd.conf
+%_unitdir/tuned-ppd.service
+%_datadir/dbus-1/system-services/net.hadess.PowerProfiles.service
+%_datadir/dbus-1/system-services/org.freedesktop.UPower.PowerProfiles.service
+%_datadir/dbus-1/system.d/net.hadess.PowerProfiles.conf
+%_datadir/dbus-1/system.d/org.freedesktop.UPower.PowerProfiles.conf
+%_datadir/polkit-1/actions/net.hadess.PowerProfiles.policy
+%_datadir/polkit-1/actions/org.freedesktop.UPower.PowerProfiles.policy
 
 %files gtk
 %_sbindir/tuned-gui
@@ -508,6 +540,9 @@ fi
 %files checkinstall
 
 %changelog
+* Tue Dec 23 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt2
+- Package tuned-ppd (ALT#57338).
+
 * Sat Sep 20 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt1
 - Update to v2.26.0 (2025-08-24).
 
