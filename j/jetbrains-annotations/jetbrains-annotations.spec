@@ -1,6 +1,6 @@
 Name: jetbrains-annotations
 Version: 24.1.0
-Release: alt1
+Release: alt2
 
 Summary: IntelliJ IDEA Annotations
 License: Apache-2.0
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 Patch0: 0001-Adapt-for-Gradle-8-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-17-compat
 BuildRequires: xgradle
 
 %description
@@ -47,6 +47,9 @@ This package contains javadoc for %name.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Dec 22 2025 Anton Meleshnikov <alton@altlinux.org> 24.1.0-alt2
+- FTBFS fix.
+
 * Sat Nov 01 2025 Ivan Khanas <xeno@altlinux.org> 24.1.0-alt1
 - New version.
 
