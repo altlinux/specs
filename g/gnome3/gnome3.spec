@@ -1,7 +1,7 @@
 %define ver_major 49
 
 Name: gnome3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -87,7 +87,6 @@ Requires: gnome-control-center >= %ver_major
 #Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
-Requires: gnome-shell-extensions-system-monitor
 Requires: gnome-browser-connector
 # user settings utility
 #Requires: gnome-tweaks >= %tweaks_ver
@@ -103,6 +102,8 @@ Requires: yelp >= %yelp_ver
 
 # GNOME Utilities
 Requires: gnome-system-monitor >= %monitor_ver
+Requires: gnome-shell-extensions-system-monitor
+Requires: resources
 Requires: gnome-logs >= %logs_ver
 Requires: gucharmap >= %gucharmap_ver
 Requires: gnome-calculator >= %ver_major
@@ -137,6 +138,7 @@ Requires: gnome-maps >= %ver_major
 
 # Look & Feel
 ## Default themes
+Requires: gtk3-theme-adw-gtk3
 Requires: gnome-icon-theme >= 3.12
 Requires: gnome-icon-theme-symbolic >= 3.12
 Requires: gnome-themes-extra >= %themes_ver
@@ -225,16 +227,18 @@ Requires: rhythmbox
 ## All Rhythmbox plugins
 Requires: rhythmbox-plugins
 ## Default media player
-Requires: totem
+Requires: showtime
+#Requires: totem
 # and plugins
-Requires: totem-plugins
+#Requires: totem-plugins
 ## Stock GNOME games
 Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
 Requires: gnome-photos >= %photos_ver
-# Image viewer
-Requires: eog >= %eog_ver
-Requires: eog-plugins
+## Image viewer, browser and simple editor
+Requires: gthumb
+#Requires: eog >= %eog_ver
+#Requires: eog-plugins
 ## Default CD/DVD burning interface
 Requires: brasero >= %brasero_ver
 ## Clipboard manager
@@ -291,15 +295,13 @@ Requires: %name-default = %version-%release
 # Sound & graphics & video
 ## CD-ripper
 Requires: goobox
-## Image viewer, browser and simple editor
-Requires: gthumb
 ## Non-linear DV editor
 Requires: kino
 #Requires: dvgrab
 ## SANE (Scanner Access Now Easy) frontend
 Requires: xsane
 ## Utilities
-## Internet telephon
+## Internet telephone
 Requires: ekiga
 ## Client for ed2k network
 Requires: aMule
@@ -307,7 +309,7 @@ Requires: aMule
 Requires:  transmission-gtk
 # Windows (TM) communications
 ## RDP
-Requires: freerdp
+Requires: freerdp3
 ## NX
 Requires: freenx
 # Requires: nxlaunch
@@ -479,6 +481,11 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- minimal: added resources, gtk3-theme-adw-gtk3
+- default: totem -> showtime
+           eog -> gthumb
+
 * Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
 - default: removed gnome-keyring-ssh in favor of gcr-ssh-agent
 - regular: openweather -> simple-weather
