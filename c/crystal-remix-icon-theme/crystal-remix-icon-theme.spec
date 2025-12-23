@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: crystal-remix-icon-theme
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: A Crystal icon theme for modern Linux desktop environments
@@ -38,5 +38,8 @@ rm -v %buildroot%_iconsdir/crystal-remix/install.sh
 %_iconsdir/crystal-remix/*
 
 %changelog
+* Tue Dec 23 2025 Nikolay Strelkov <snk@altlinux.org> 2.8-alt1
+- New version 2.8.
+
 * Sun Nov 16 2025 Nikolay Strelkov <snk@altlinux.org> 2.7-alt1
 - Initial build for Sisyphus

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: crystal-dock
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: A cool dock (desktop panel) for Linux desktop
@@ -70,5 +70,8 @@ xvfb-run -a %ctest -j1 -VV
 %_desktopdir/crystal-dock.desktop
 
 %changelog
+* Tue Dec 23 2025 Nikolay Strelkov <snk@altlinux.org> 2.16-alt1
+- New version 2.16.
+
 * Sun Nov 16 2025 Nikolay Strelkov <snk@altlinux.org> 2.15-alt1
 - Initial build for Sisyphus
