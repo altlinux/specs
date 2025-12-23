@@ -8,8 +8,8 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.33.0
-Release: alt3
+Version: 1.33.1
+Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -163,6 +163,9 @@ and creates drbd resource files.
 %preun_systemd linstor-satellite
 
 %changelog
+* Tue Dec 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.33.1-alt1
+- 1.33.1
+
 * Tue Dec 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.33.0-alt3
 - NMU: linstor-controller: update alternatives in %%post (Closes: 53487).
 - Used systemd macros for systemd services.
