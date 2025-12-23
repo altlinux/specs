@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.33.0
-Release: alt2
+Release: alt3
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -95,6 +95,7 @@ Linstor shared components between linstor-controller and linstor-satellite
 Summary: Linstor controller specific files
 Group: System/Servers
 Requires(post): linstor-common = %EVR
+Requires(post): java-common
 Requires: java-21-openjdk
 Requires: java-common
 
@@ -119,13 +120,14 @@ Linstor controller manages linstor satellites and persistant data storage.
 
 
 %post controller
+alternatives-update
 source %_sysconfdir/profile.d/javahome.sh
 %LS_PREFIX/bin/controller.postinst.sh
-%post_service linstor-controller
+%post_systemd linstor-controller
 #test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
 
 %preun controller
-%preun_service linstor-controller
+%preun_systemd linstor-controller
 
 ### satellite
 %package satellite
@@ -154,13 +156,17 @@ and creates drbd resource files.
 %_sysconfdir/linstor/linstor_satellite-example.toml
 
 %post satellite
-%post_service linstor-satellite
+%post_systemd linstor-satellite
 #test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
 
 %preun satellite
-%preun_service linstor-satellite
+%preun_systemd linstor-satellite
 
 %changelog
+* Tue Dec 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.33.0-alt3
+- NMU: linstor-controller: update alternatives in %%post (Closes: 53487).
+- Used systemd macros for systemd services.
+
 * Mon Dec 22 2025 Anton Midyukov <antohami@altlinux.org> 1.33.0-alt2
 - NMU: linstor-controller: Requires(post): linstor-common (Closes: 53487).
 
