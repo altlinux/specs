@@ -4,8 +4,10 @@
 
 %def_with check
 
+%python3_set_limited_api
+
 Name: python3-module-%pypi_name
-Version: 1.10.0
+Version: 1.10.2
 Release: alt1
 
 Summary: Python bindings for jq
@@ -18,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -58,6 +62,10 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.10.2-alt1
+- Updated to 1.10.2.
+- Built based on Python Limited API.
+
 * Tue Jul 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.10.0-alt1
 - Updated to 1.10.0.
 
