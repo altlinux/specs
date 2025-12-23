@@ -2,9 +2,10 @@
 
 %define sover 6
 %define libkirigamiaddonsstatefulapp libkirigamiaddonsstatefulapp%sover
+%define libkirigamiapp libkirigamiapp%sover
 
 Name: kf6-%rname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 %K6init
 
@@ -29,7 +30,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-tools-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-ki18n-devel kf6-kconfig-devel kf6-kirigami-devel kf6-kglobalaccel-devel
-BuildRequires: kf6-kcoreaddons-devel kf6-kguiaddons-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-kcolorscheme-devel kf6-kcrash-devel kf6-kiconthemes-devel
 
 %description
 Set of "widgets" i.e visual end user components along with a code to support them.
@@ -58,6 +59,13 @@ Requires: %name-common >= %EVR
 %description -n %libkirigamiaddonsstatefulapp
 %name library
 
+%package -n %libkirigamiapp
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkirigamiapp
+%name library
+
 %prep
 %setup -n %rname-%version
 
@@ -78,6 +86,7 @@ Requires: %name-common >= %EVR
 
 %files devel
 %_K6inc/KirigamiAddonsStatefulApp/
+%_K6inc/KirigamiAddons/*/
 %_libdir/cmake/KF6KirigamiAddons/
 %_K6link/lib*.so
 %_K6data/kdevappwizard/templates/*kirigamiaddons*
@@ -86,7 +95,14 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiAddonsStatefulApp.so.%sover
 %_K6lib/libKirigamiAddonsStatefulApp.so.*
 
+%files -n %libkirigamiapp
+%_K6lib/libKirigamiApp.so.%sover
+%_K6lib/libKirigamiApp.so.*
+
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1
 - new version
 
