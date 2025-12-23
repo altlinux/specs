@@ -1,6 +1,6 @@
 Name: alien
 Version: 8.95.9
-Release: alt3
+Release: alt4
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -55,6 +55,9 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Tue Dec 23 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt4
+- fix tar fallback to match Slackware path format (closes: #57314)
+
 * Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 8.95.9-alt3
 - restored tar fallback for tgz generation when
   makepkg was unavailable (Closes: #57269)
