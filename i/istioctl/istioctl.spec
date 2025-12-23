@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.28.1
+Version: 1.28.2
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -47,7 +47,7 @@ sed '/buildVersion/s|"unknown"|"%version"|' \
    -i pkg/version/version.go
 
 %build
-go build \
+go build -x \
    -mod=vendor \
    -buildmode=pie \
    -ldflags=" \
@@ -87,6 +87,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Dec 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.28.2-alt1
+- New version 1.28.2.
+
 * Thu Dec 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.28.1-alt1
 - New version 1.28.1.
 
