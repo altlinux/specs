@@ -1,6 +1,6 @@
 Name:           retroarch-joypad-autoconfig
 Version:        1.17.0
-Release:        alt2
+Release:        alt3
 Summary:        RetroArch Joypad Autoconfig Files
 License:        MIT
 Group:          Emulators
@@ -8,6 +8,7 @@ URL:            https://github.com/libretro/retroarch-joypad-autoconfig
 
 Source:         %{name}-%{version}.tar
 Source1:        GAMESIR_Gamesir-X2_Type-C.cfg
+Source2:	8BitDo_Ultimate_2C_Wireless.cfg
 
 BuildRequires:  make
 BuildArch:      noarch
@@ -29,13 +30,17 @@ Autoconfig files included in this package are used to recognize input devices an
 %makeinstall_std
 
 install -Dm0644 %SOURCE1 %{buildroot}%{_datadir}/libretro/autoconfig/udev/"GAMESIR Gamesir-X2 Type-C.cfg"
+install -Dm0644 %SOURCE2 %{buildroot}%{_datadir}/libretro/autoconfig/udev/"8BitDo Ultimate 2C Wireless.cfg"
 
 %files
-%doc README.md COPYING
+%doc README.md COPYING retropad_layout.png
 %dir %{_datadir}/libretro/autoconfig
 %{_datadir}/libretro/autoconfig/*
 
 %changelog
+* Tue Dec 23 2025 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt3
+- Add config for 8BitDo Ultimate 2C Wireless.cfg
+
 * Thu Oct  2 2025 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt2
 - Add configs for handhelds (tnx ROCKNIX)
 
