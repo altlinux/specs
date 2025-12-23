@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oha
-Version: 1.10.0
+Version: 1.12.1
 Release: alt1
 Summary: Ohayou, HTTP load generator with tui animation
 License: MIT
@@ -50,6 +50,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.12.1-alt1
+- 1.10.0 -> 1.12.1
+
 * Mon Sep 15 2025 Pavel Shilov <zerospirit@altlinux.org> 1.10.0-alt1
 - 1.9.0 -> 1.10.0
 

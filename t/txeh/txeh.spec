@@ -2,7 +2,7 @@
 %global import_path github.com/github.com/txn2/txeh
 
 Name: txeh
-Version: 1.5.4
+Version: 1.7.0
 Release: alt1
 Summary: Go library and CLI utility for /etc/hosts management
 License:  Apache-2.0
@@ -49,5 +49,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.7.0-alt1
+- 1.5.4 -> 1.7.0
+
 * Fri Dec 13 2024 Pavel Shilov <zerospirit@altlinux.org> 1.5.4-alt1
 - Initial build for Sisyphus

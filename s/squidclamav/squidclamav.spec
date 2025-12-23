@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: squidclamav
-Version: 7.3
+Version: 7.4
 Release: alt1
 Summary: HTTP Antivirus for Squid based on ClamAv and the ICAP protocol
 License: GPL-3.0-or-later
@@ -66,5 +66,8 @@ rm -fr %buildroot%_datadir/%name
 %attr(0644,root,root) %_datadir/c_icap/templates/squidclamav/*/MALWARE_FOUND
 
 %changelog
+* Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 7.4-alt1
+- New version 7.4
+
 * Fri Nov 14 2025 Pavel Shilov <zerospirit@altlinux.org> 7.3-alt1
 - Initial build for Sisyphus.
