@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.60b0
+Version: 0.60b1
 Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
@@ -30,6 +30,7 @@ BuildRequires: python3-module-opentelemetry-test-utils
 BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-pytest-benchmark
+BuildRequires: python3-module-wrapt
 %endif
 
 BuildArch: noarch
@@ -191,6 +192,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Tue Dec 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.60b1-alt1
+- New version.
+
 * Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.60b0-alt1
 - New version.
 
