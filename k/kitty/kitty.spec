@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.44.0
+Version: 0.45.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -173,7 +173,7 @@ python3 setup.py linux-package \
 
 %install
 mkdir -pv %buildroot
-cp -r ./linux-package %buildroot%_prefix
+cp -a ./linux-package %buildroot%_prefix
 
 %buildroot%_bindir/kitten __complete__ setup bash | \
     install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
@@ -232,6 +232,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Wed Dec 24 2025 Egor Ignatov <egori@altlinux.org> 0.45.0-alt1
+- new version 0.45.0
+
 * Wed Nov 05 2025 Egor Ignatov <egori@altlinux.org> 0.44.0-alt1
 - new version 0.44.0
 
