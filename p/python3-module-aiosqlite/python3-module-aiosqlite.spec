@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 0.22.1
 Release: alt1
 
 Summary: asyncio bridge to the standard sqlite3 module
@@ -62,6 +62,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 24 2025 Stanislav Levin <slev@altlinux.org> 0.22.1-alt1
+- 0.22.0 -> 0.22.1.
+
 * Mon Dec 15 2025 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
 - 0.21.0 -> 0.22.0.
 
