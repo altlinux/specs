@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: AppImage Thumbnailer
@@ -58,18 +58,20 @@ freedesktop.org spec.
 
 %install
 %meson_install
-%find_lang --output=%name.lang %binary_name
+%find_lang --output=%name.lang %_name
 
 %check
 %__meson_test -v
 
 %files -f %name.lang
 %_bindir/%_name
-%_libdir/%_name/
 %_datadir/thumbnailers/%_name.thumbnailer
 %doc README*
 
 %changelog
+* Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Mon Dec 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - first build for Sisyphus
 

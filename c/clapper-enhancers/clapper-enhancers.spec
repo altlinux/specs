@@ -1,19 +1,21 @@
 %def_disable snapshot
 
 %define _name clapper
-%define ver_major 0.8
+%define ver_major 0.10
 %define api_ver 0.0
 %define rdn_name com.github.rafostar.Clapper
 
 %def_enable lbry
 %def_enable peertube
 %def_enable yt_dlp
+%def_enable recall
+%def_disable control_hub
 
 %def_enable check
 
 Name: %_name-enhancers
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Plugins enhancing Clapper library capabilities
 License: GPL-3.0-or-later
@@ -43,10 +45,13 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson gcc-c++ vala-tools
 BuildRequires: pkgconfig(clapper-%api_ver)
 BuildRequires: pkgconfig(libpeas-2)
+BuildRequires: libpeas2-python3-loader
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-tag-1.0)
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
+%{?_enable_recall:BuildRequires: pkgconfig(sqlite3)}
+%{?_enable_control_hub:BuildRequires: pkgconfig(microdns)}
 
 %description
 Plugins enhancing Clapper media player library capabilities.
@@ -58,7 +63,9 @@ Plugins enhancing Clapper media player library capabilities.
 %meson \
     %{subst_enable_meson_feature lbry lbry} \
     %{subst_enable_meson_feature peertube peertube} \
-    %{subst_enable_meson_feature yt_dlp yt-dlp}
+    %{subst_enable_meson_feature yt_dlp yt-dlp} \
+    %{subst_enable_meson_feature recall recall} \
+    %{subst_enable_meson_feature control_hub control-hub}
 %nil
 %meson_build
 
@@ -74,9 +81,16 @@ Plugins enhancing Clapper media player library capabilities.
 %{?_enable_lbry:%_libdir/%_name-%api_ver/enhancers/lbry/}
 %{?_enable_peertube:%_libdir/%_name-%api_ver/enhancers/peertube/}
 %{?_enable_yt_dlp:%_libdir/%_name-%api_ver/enhancers/yt-dlp/}
+%{?_enable_recall:%_libdir/%_name-%api_ver/enhancers/recall/}
+%_libdir/%_name-%api_ver/enhancers/media-scanner/
+%_libdir/%_name-%api_ver/enhancers/mpris/
+%_libdir/%_name-%api_ver/enhancers/parser-m3u/
 %doc README*
 
 %changelog
+* Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1.1
 - rebuild against clapper-0.10
 
