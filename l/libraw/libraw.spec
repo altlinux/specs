@@ -9,7 +9,7 @@
 %define dmp_ver 0.18.8
 
 Name: libraw
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: library for reading RAW files obtained from digital photo cameras
@@ -126,6 +126,10 @@ export LIBS+="-lpthread -lomp"
 %endif
 
 %changelog
+* Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
+- 0.21.5 (fixed CVE-2025-43961, CVE-2025-43962,
+          CVE-2025-43963, CVE-2025-43964)
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.4-alt1
 - 0.21.4
 
