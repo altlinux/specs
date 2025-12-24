@@ -1,5 +1,5 @@
 Name: ocaml-opam-file-format
-Version: 2.1.6
+Version: 2.2.0
 Release: alt1
 Summary: Parser and printer for the opam file syntax
 Group: Development/ML
@@ -7,7 +7,7 @@ Group: Development/ML
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/opam-file-format/
 Source0: %name-%version.tar
-BuildRequires: ocaml dune
+BuildRequires: ocaml dune ocaml-menhir
 
 %description
 Parser and printer for the opam file syntax.
@@ -37,6 +37,9 @@ files for developing applications that use %name.
 %doc LICENSE
 
 %changelog
+* Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.1.6 -> 2.2.0
+
 * Sat Nov 04 2023 Anton Farygin <rider@altlinux.ru> 2.1.6-alt1
 - 2.1.6
 
