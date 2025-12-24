@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 33
+%define _php_release_version 34
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -24,8 +24,8 @@ Release: alt1
 
 License: PHP-3.01
 Group:	 Development/Other
-Url: http://www.php.net/
-#Git: http://git.php.net/repository/php-src.git
+Url: https://www.php.net/
+VCS: https://github.com/php/php-src
 
 Source0: php-source.tar
 Source1: phpver.rpm.macros.standalone
@@ -56,7 +56,6 @@ Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch21: php-%version-upstream.patch
 # Support for loading extensions before the run of tests in addition to tested modules
 Patch23: php-8.3-alt-preload-extensions-during-tests.patch
-
 
 Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
 Patch71: php8.0-debian-Use-system-timezone.patch
@@ -200,14 +199,12 @@ in use by other PHP-related packages.
 %patch21 -p1
 %patch23 -p1
 
-
 %patch70 -p1
 %patch71 -p1
 
 %ifarch %e2k
 %patch2000 -p1
 %endif
-
 
 cp -dpR %SOURCE2 .
 
@@ -376,8 +373,6 @@ echo "extension=openssl.so" >%buildroot/%php_extconf/openssl/config
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 cp %SOURCE1 %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 
-
-
 subst 's,@php_name@,%php_name,'           %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@_php_version@,%_php_version,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
 subst 's,@php_major@,%_php_major,'   %buildroot/%_sysconfdir/rpm/macros.d/%php_macros_file
@@ -442,7 +437,6 @@ rm -f /etc/php/%_php_suffix/*/php.d/01_mysqlnd.ini ||:
 %post openssl
 rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 
-
 %files
 %_altdir/php%_php_suffix
 %_bindir/phpdbg%_php_suffix
@@ -497,6 +491,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 8.1.34-alt1
+- 8.1.33 -> 8.1.34 (Fixes: CVE-2025-14180, CVE-2025-14178, CVE-2025-14177)
+
 * Thu Jul 31 2025 Anton Farygin <rider@altlinux.com> 8.1.33-alt1
 - 8.1.33 (Fixes: CVE-2025-1735, CVE-2025-6491, CVE-2025-1220)
 
