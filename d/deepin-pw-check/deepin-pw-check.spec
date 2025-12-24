@@ -1,10 +1,11 @@
 %define soname 1
+%define _libexecdir %_prefix/libexec
 
 %def_disable clang
 %def_without cracklib
 
 Name: deepin-pw-check
-Version: 6.0.6
+Version: 6.0.7
 Release: alt1
 
 Summary: Verify the validity of the password for DDE
@@ -13,7 +14,8 @@ License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pw-check
 
-Source0: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-pw-check/archive/%version/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: vendor.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-pw-check-6.0.2-alt-libdir.patch
@@ -75,12 +77,8 @@ This package provides static libraries for %name.
 %else
 patch -p1 < rpm/0001-Mangle-Suit-Cracklib2.9.6.patch
 %endif
-sed -i 's|@LIBDIR@|%_lib|' \
-  misc/pkgconfig/libdeepin_pw_check.pc
 sed -i 's|os-version|uos-version|g' \
   tool/pwd_conf_update.c
-sed -i 's|${DESTDIR}/lib/systemd/system|${DESTDIR}%_unitdir|g' \
-  Makefile
 # do not use uadp
 sed -i '/\/usr\/share\/uadp/d' \
   misc/systemd-service/deepin-passwd-conf.service
@@ -92,23 +90,23 @@ export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export GOPATH="$PWD/vendor"
-export PAM_MODULE_DIR=/%_lib/security
+export PAM_MODULE_DIR=%_libdir/security
 export PKG_FILE_DIR=%_libdir/pkgconfig
 export LIBDIR=%_lib
-export GO111MODULE=off
+export GO111MODULE=on
 %make
 
 %install
 export GOPATH=/usr/share/gocode
-export PAM_MODULE_DIR=/%_lib/security
+export PAM_MODULE_DIR=%_libdir/security
 export PKG_FILE_DIR=%_libdir/pkgconfig
 export LIBDIR=%_lib
-export GO111MODULE=off
+export GO111MODULE=on
 %makeinstall_std
 
 %files
-%doc README.md LICENSE
-/%_lib/security/pam_deepin_pw_check.so
+%doc README.md LICENSE debian/changelog
+%_libdir/security/pam_deepin_pw_check.so
 %_bindir/pwd-conf-update
 %_unitdir/deepin-passwd-conf.service
 %_datadir/locale/*/LC_MESSAGES/%name.mo
@@ -130,6 +128,10 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Wed Dec 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Applied usrmerge.
+
 * Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
 - New version 6.0.6.
 
