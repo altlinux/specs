@@ -8,9 +8,12 @@
 %define libusb_commit c4d237a5803900b78dcc2961d057fcc8a678d3fd
 %define hwinfo_commit 351c59828a79958f74f3ccab5e7773ffd724f6f7
 %define json_version 3.12.0
+%define sdl3_commit bdb72bb3f051de32c91f5deb439a50bfd51499dc
+%define sdl3_mixer_commit 4182794ea45fe28568728670c6f1583855d0e85c
+%define miniz_version 3.1.0
 
 Name: shadps4
-Version: 0.12.5
+Version: 0.13.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -45,6 +48,12 @@ Source8: ext-libusb-%libusb_commit.tar
 Source9: ext-hwinfo-%hwinfo_commit.tar
 # https://github.com/nlohmann/json/archive/v%json_version/json-%json_version.tar.gz
 Source10: json-%json_version.tar
+# https://github.com/shadps4-emu/ext-SDL/archive/%sdl3_commit/ext-SDL-%sdl3_commit.tar.gz
+Source11: ext-SDL-%sdl3_commit.tar
+# https://github.com/libsdl-org/SDL_mixer/archive/%sdl3_mixer_commit/SDL_mixer-%sdl3_mixer_commit.tar.gz
+Source12: SDL_mixer-%sdl3_mixer_commit.tar
+# https://github.com/richgel999/miniz/archive/%miniz_version/miniz-%miniz_version.tar.gz
+Source13: miniz-%miniz_version.tar
 
 Patch0: %name-0.11.0-glslang-16-alt.patch
 
@@ -54,30 +63,52 @@ BuildRequires: clang
 BuildRequires: cmake
 BuildRequires: glslang-devel
 BuildRequires: libSDL3-devel
+BuildRequires: libalsa-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
+BuildRequires: libdecor-devel
+BuildRequires: libdrm-devel
+BuildRequires: libe2fs
+BuildRequires: libflac-devel
+BuildRequires: libfluidsynth-devel
 BuildRequires: libfmt-devel
+BuildRequires: libfribidi-devel
+BuildRequires: libgbm-devel
+BuildRequires: libgme-devel
 BuildRequires: libhalf-devel
 BuildRequires: libmagic_enum-devel
+BuildRequires: libmpg123-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libqt5-eglfskmssupport
 BuildRequires: librobin-map-devel
+BuildRequires: libslang2
+BuildRequires: libsndio7-devel
 BuildRequires: libspirv-tools-devel
 BuildRequires: libssl-devel
 BuildRequires: libstb-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
+BuildRequires: libthai-devel
 BuildRequires: libtoml11-devel
 BuildRequires: libudev-devel
+BuildRequires: libusb-devel
 BuildRequires: libuuid-devel
+BuildRequires: libvorbis-devel
 BuildRequires: libvulkan-memory-allocator-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
 BuildRequires: libxbyak-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libxmp-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
 BuildRequires: lld
 BuildRequires: llvm
 BuildRequires: ninja-build
+BuildRequires: pipewire-jack-libs-devel
 BuildRequires: rapidjson-devel
 BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
@@ -86,7 +117,7 @@ BuildRequires: spirv-headers
 shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 %patch0 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
@@ -99,6 +130,9 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../ext-libusb-%libusb_commit externals/ext-libusb
 %__mv -Tf ../ext-hwinfo-%hwinfo_commit externals/hwinfo
 %__mv -Tf ../json-%json_version externals/json
+%__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
+%__mv -Tf ../SDL_mixer-%sdl3_mixer_commit externals/sdl3_mixer
+%__mv -Tf ../miniz-%miniz_version externals/miniz
 
 %build
 export CC="clang"
@@ -124,6 +158,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Wed Dec 24 2025 Nazarov Denis <nenderus@altlinux.org> 0.13.0-alt1
+- Version 0.13.0
+
 * Sat Nov 08 2025 Nazarov Denis <nenderus@altlinux.org> 0.12.5-alt1
 - Version 0.12.5
 
