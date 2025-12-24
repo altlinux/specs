@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: opentofu
-Version: 1.10.7
+Version: 1.11.2
 Release: alt1
 Summary: OpenTofu lets you declaratively manage your cloud infrastructure
 
@@ -12,8 +12,8 @@ License: MPL-2.0
 Url: https://github.com/opentofu/opentofu
 Vcs: https://github.com/opentofu/opentofu.git
 
-Source0: %name-%version.tar
-Source1: %name-%version-vendor.tar
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 ExclusiveArch:  %go_arches
 
@@ -25,7 +25,8 @@ BuildRequires: /proc
 OpenTofu lets you declaratively manage your cloud infrastructure.
 
 %prep
-%setup -a1
+%setup
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -49,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sun Dec 21 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.11.2-alt1
+- New version 1.11.2.
+
 * Thu Nov 27 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.10.7-alt1
 - New version 1.10.7.
 
