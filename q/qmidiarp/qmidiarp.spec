@@ -1,5 +1,5 @@
 Name: qmidiarp
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: An arpeggiator, sequencer and MIDI LFO
@@ -7,13 +7,12 @@ License: GPLv2
 Group: Sound
 Url: https://sourceforge.net/projects/qmidiarp/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ qt5-tools
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: pkgconfig(Qt5Xml)
+BuildRequires: cmake gcc-c++ qt6-tools
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Xml)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(liblo)
@@ -28,7 +27,7 @@ QMidiArp is an arpeggiator, sequencer and MIDI LFO for ALSA and JACK.
 
 %description -n lv2-qmidiarp-plugin
 QMidiArp is an arpeggiator, sequencer and MIDI LFO for ALSA and JACK.
-This package contains above as LV2 plugin.
+This package contains above as LV2 plugins.
 
 %prep
 %setup
@@ -42,7 +41,6 @@ This package contains above as LV2 plugin.
 
 %files
 %_bindir/qmidiarp
-%_datadir/qmidiarp/translations
 %_datadir/metainfo/*.xml
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.svg
@@ -52,6 +50,9 @@ This package contains above as LV2 plugin.
 %_libdir/lv2/*.lv2
 
 %changelog
+* Wed Dec 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.2-alt1
+- 0.7.2 released
+
 * Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.1-alt1
 - 0.7.1 released
 
