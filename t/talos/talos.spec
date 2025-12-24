@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      8137c0605054452dd001c04e231de399e86ae7cb
+%global commit      1e50b9f8580855544fe0d6c045339b1b0af1cf02
 %global shortcommit %(c=%commit; echo ${c:0:7})
 %global altkernel 6.12.59-talos
 %define _libexecdir %prefix/libexec
@@ -13,8 +13,8 @@
 %endif
 
 Name: talos
-Version: 1.10.8
-Release: alt2
+Version: 1.11.6
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -205,6 +205,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed Dec 24 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.11.6-alt1
+- New version 1.11.6.
+
 * Fri Dec 19 2025 Alexander Stepchenko <geochip@altlinux.org> 1.10.8-alt2
 - Update to kernel-image-talos-6.12.59.
 - Fix detecting image-cache in OS image.
