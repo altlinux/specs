@@ -8,8 +8,11 @@
 %define modname %{_name}numpy
 %endif
 
+# tests totally broken in upstream side
+%def_disable check
+
 Name: lib%_name
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: Generic Programming for Computer Vision
@@ -35,6 +38,7 @@ BuildRequires: openexr-devel >= 3
 BuildRequires: doxygen
 %{?_with_hdf5:BuildRequires: libhdf5-devel}
 %{?_enable_python:BuildRequires: boost-python3-devel libnumpy-devel}
+%{?_enable_check:BuildRequires: ctest libgtest-devel}
 BuildRequires: libgomp-devel
 
 Provides: %_name
@@ -88,14 +92,19 @@ sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 %{?_disable_python:-DWITH_VIGRANUMPY:BOOL=OFF} \
 %{?_enable_python:-DWITH_VIGRANUMPY:BOOL=ON -DPYTHON_VERSION=3} \
 %if_with hdf5
-	-DWITH_HDF5:BOOL=ON \
+    -DWITH_HDF5:BOOL=ON \
 %endif
-	-DWITH_OPENEXR:BOOL=ON \
-	-DDOCINSTALL:STRING=share/doc
+    -DWITH_OPENEXR:BOOL=ON \
+    -DDOCINSTALL:STRING=share/doc \
+    %{?_enable_check:-DCREATE_CTEST_TARGETS=ON}
+%nil
 %cmake_build
 
 %install
 %cmakeinstall_std
+
+%check
+%ctest
 
 %files
 %_libdir/%{name}impex.so.*
@@ -117,6 +126,9 @@ sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
 
 %changelog
+* Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- 1.12.3
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
