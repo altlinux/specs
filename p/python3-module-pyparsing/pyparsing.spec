@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.2.5
+Version: 3.3.1
 Release: alt1
 Summary: Python parsing module
 License: MIT
@@ -71,6 +71,9 @@ that client code uses to construct the grammar directly in Python code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 23 2025 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.2.5 -> 3.3.1.
+
 * Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 3.2.5-alt1
 - 3.2.3 -> 3.2.5.
 
