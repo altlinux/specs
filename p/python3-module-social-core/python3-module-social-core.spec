@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.8.1
+Version: 4.8.3
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -75,6 +75,9 @@ This package contains tests for %name.
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Wed Dec 24 2025 Alexander Burmatov <thatman@altlinux.org> 4.8.3-alt1
+- Update to version 4.8.3.
+
 * Wed Oct 15 2025 Alexander Burmatov <thatman@altlinux.org> 4.8.1-alt1
 - Update to version 4.8.1.
 
