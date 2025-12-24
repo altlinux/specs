@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.33
+Version: 0.5.34
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -38,6 +38,7 @@ start and stop services.
 %setup
 
 %build
+%define optflags_lto %nil
 make -C src VERSION=%version
 
 %install
@@ -123,6 +124,10 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Sat Oct 25 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.34-alt1
+- Fix usrmerged sysv daemon restarts (ALT#51911, ALT#56593).
+- Compile without LTO to increase FORTIFY_SOURCE sensitivity.
+
 * Wed Dec 15 2021 Dmitry V. Levin <ldv@altlinux.org> 0.5.33-alt1
 - service, post_service, preun_service:
   + removed obsolete systemd unit name translation,
