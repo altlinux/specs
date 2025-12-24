@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mobile-config-firefox
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
-Summary: Mobile and privacy friendly firefox configuration 
+Summary: Mobile and privacy friendly firefox configuration
 
 License: MPL-2.0
 Group: System/Configuration/Networking
@@ -23,19 +23,17 @@ extended support releases of Firefox.
 %prep
 %setup
 # fix hardcoded autoconfig path
-sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" src/mobile-config-autoconfig.js
-# fix "outdated UserAgent" in Google search
-sed -i 's/wwww.)?google/www.)?google/' src/modules/UserAgentManager.sys.mjs
-
+sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" \
+                            src/mobile-config-autoconfig.js
 %build
 %make_build
 
 %install
 %makeinstall \
-		DESTDIR=%buildroot \
-		FIREFOX_DIR=%firefox_prefix \
-		FIREFOX_CONFIG_DIR=%firefox_datadir \
-
+        DESTDIR=%buildroot \
+        FIREFOX_DIR=%firefox_prefix \
+        MCF_DIR=%firefox_datadir \
+        %nil
 
 %files
 %firefox_datadir
@@ -43,6 +41,11 @@ sed -i 's/wwww.)?google/www.)?google/' src/modules/UserAgentManager.sys.mjs
 %_datadir/metainfo/org.postmarketos.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Wed Dec 24 2025 Egor Shestakov <ved@altlinux.org> 5.1.0-alt1
+- Update to 5.1.0:
+  + Change FIREFOX_CONFIG_DIR to MCF_DIR.
+- Minor spec cleanup.
+
 * Wed Dec 17 2025 Andrew Savchenko <bircoph@altlinux.org> 5.0.1-alt1
 - Update to 5.0.1.
 
