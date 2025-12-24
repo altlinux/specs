@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt3
+Release: alt4
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -10,6 +10,9 @@ Url: https://rsync.samba.org
 
 # git://git.altlinux.org/gears/r/rsync.git
 Source: %name-%version-%release.tar
+
+# This is only needed for the SIMD rolling hash impl variant.
+BuildRequires: gcc-c++
 
 BuildRequires: libacl-devel
 BuildRequires: libattr-devel
@@ -55,6 +58,9 @@ This package includes rsyncd daemon functionality.
 %configure \
 	--enable-lz4 \
 	--enable-openssl \
+%ifarch x86_64
+	--enable-roll-simd \
+%endif
 	--enable-xxhash \
 	--enable-zstd \
 	--enable-acl-support \
@@ -114,6 +120,11 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Tue Sep 30 2025 Arseny Maslennikov <arseny@altlinux.org> 3.2.7-alt4
+- Apply upstream commit 797e17fc4a6f. (Fixes: CVE-2025-10158)
+- Fixed a feature test to work with gcc 14. (Closes: 55855)
+- Enabled simd-roll during build. (Closes: 55898)
+
 * Fri Jan 31 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt3
 - Backported upstream bugfix commits:
   + rsync crashes with "*** buffer overflow detected ***: terminated
