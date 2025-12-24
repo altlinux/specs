@@ -2,7 +2,7 @@
 
 Name: system-backup
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: Script for local system backup
 Group: Archiving/Backup
@@ -45,6 +45,9 @@ install -p -m 0755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Dec 24 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt2
+- Fixed significant regression (ALT #57339).
+
 * Fri Dec 19 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt1
 - Added support for installer-feature-swapfile;
 - Added basic support for the 'timeshift' layout;
