@@ -1,8 +1,8 @@
 %define rname breeze-icons
 
 Name: kf6-%rname
-Version: 6.20.0
-Release: alt2
+Version: 6.21.0
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -56,7 +56,7 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch10 -p1
-%patch11 -p1
+#%patch11 -p1
 
 chmod a+x *.sh
 
@@ -161,6 +161,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
 * Fri Nov 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt2
 - fix breeze-dark icons too dark
 

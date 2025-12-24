@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf6-%rname
-Version: 6.20.0
+Version: 6.21.0
 Release: alt1
 %K6init no_altplace
 
@@ -149,6 +149,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K6qml/org/kde/i18n/localeData/
 %files -n libkf6i18nqml
 %_K6lib/libKF6I18nQml.so.*
+%_K6qml/org/kde/ki18n/
 
 %if_enabled python
 #%files -n python-module-%rname
@@ -163,6 +164,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
 * Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
 - new version
 

@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf6-%rname
-Version: 6.20.0
+Version: 6.21.0
 Release: alt1
 %K6init no_altplace
 
@@ -87,7 +87,6 @@ Requires: %name-common
 %description -n %libreviewboardhelpers
 KF6 library
 
-
 %prep
 %setup -n %rname-%version
 
@@ -133,6 +132,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
 * Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
 - new version
 

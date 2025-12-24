@@ -1,8 +1,8 @@
 %define rname kstatusnotifieritem
 
 Name: kf6-%rname
-Version: 6.20.0
-Release: alt2
+Version: 6.21.0
+Release: alt1
 %K6init altplace
 
 Group: System/Libraries
@@ -74,6 +74,9 @@ KF6 library
 
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

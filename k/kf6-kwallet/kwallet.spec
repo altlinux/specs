@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.20.0
-Release: alt2
+Version: 6.21.0
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -141,6 +141,9 @@ __EOF__
 
 
 %changelog
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
 * Mon Dec 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt2
 - fix l10n (thanks mcpain@alt)
 
