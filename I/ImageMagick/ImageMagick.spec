@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.2
-%define drelease	8
+%define drelease 11
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -196,7 +196,6 @@ popd
 %install
 %make transform='' DESTDIR=%buildroot INSTALLDIRS=vendor install
 
-
 sed -i "s,%_libdir/libMagickCore.la,-L%_libdir -lMagickCore," %buildroot%_libdir/%mgkdir-%dversion/modules-%qlev/*/*.la
 
 install -pDm644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
@@ -272,6 +271,12 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 7.1.2.11-alt1
+- 7.1.2.10 -> 7.1.2.11
+
+* Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 7.1.2.10-alt1
+- 7.1.2.8 -> 7.1.2.10
+
 * Mon Oct 27 2025 Anton Farygin <rider@altlinux.com> 7.1.2.8-alt1
 - 7.1.2.3 -> 7.1.2.8 (Fixes: CVE-2025-62171)
 
@@ -658,7 +663,6 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 
 * Tue Sep 13 2011 Anton Farygin <rider@altlinux.ru> 6.7.2.5-alt1
 - new version with new soname
-
 
 * Fri Sep 09 2011 Anton Farygin <rider@altlinux.ru> 6.7.2.3-alt1
 - new version
