@@ -39,7 +39,7 @@ BuildRequires: jpackage-default
 
 Name:           openas2
 Version:        2.10.0
-Release:        alt4_9jpp11
+Release:        alt5
 Summary:        Java-based implementation of the EDIINT AS2 standard
 
 License:        BSD
@@ -72,7 +72,7 @@ BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  bouncycastle-mail bouncycastle-pkix bouncycastle-pg
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -351,6 +351,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Dec 24 2025 Anton Meleshnikov <alton@altlinux.org> 2.10.0-alt5
+- fixed build (renamed Buildrequires)
+
 * Tue Oct 01 2024 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt4_9jpp11
 - deleted unneeded systemd-* packages from Requires and Buildrequires
 
