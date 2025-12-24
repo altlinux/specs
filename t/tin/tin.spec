@@ -1,6 +1,6 @@
 Name: tin
-Version: 2.6.4
-Release: alt2
+Version: 2.6.5
+Release: alt1
 
 Summary: A basic Internet news reader
 License: BSD
@@ -94,6 +94,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %_bindir/*.pl
 
 %changelog
+* Wed Dec 24 2025 Michael Shigorin <mike@altlinux.org> 2.6.5-alt1
+- new version (watch file uupdate)
+
 * Tue Dec 31 2024 Michael Shigorin <mike@altlinux.org> 2.6.4-alt2
 - upstream suggestions (thank you, Urs!):
   + enable cancel locks (closes: #48629)
