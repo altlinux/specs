@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.20
+Release: alt0.21
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -46,6 +46,7 @@ Available plugins:
 - useful
 - components
 - policies
+- journal
 
 %prep
 %setup
@@ -61,6 +62,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Dec 24 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.21
+- Added new plugin journal.
+- policies: added new entries.
+
 * Tue Dec 02 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.20
 - Components: transition to the new alterator API.
 - Added new plugin policies.
