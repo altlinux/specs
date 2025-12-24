@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.33.1
-Release: alt1
+Release: alt2
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -121,7 +121,8 @@ Linstor controller manages linstor satellites and persistant data storage.
 
 %post controller
 alternatives-update
-source %_sysconfdir/profile.d/javahome.sh
+S="%_sysconfdir/profile.d/javahome.sh"
+source $S
 %LS_PREFIX/bin/controller.postinst.sh
 %post_systemd linstor-controller
 #test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
@@ -163,6 +164,9 @@ and creates drbd resource files.
 %preun_systemd linstor-satellite
 
 %changelog
+* Wed Dec 24 2025 Andrey Cherepanov <cas@altlinux.org> 1.33.1-alt2
+- NMU: removed /etc/profile.d/javahome.sh from autorequirements.
+
 * Tue Dec 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.33.1-alt1
 - 1.33.1
 
