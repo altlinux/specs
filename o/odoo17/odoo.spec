@@ -1,9 +1,9 @@
 %define  snapshot  20250827
 %define  addonsdir %python_sitelibdir/odoo/addons
 
-Name:    odoo
+Name:    odoo17
 Version: 17.0
-Release: alt1.%snapshot
+Release: alt2.%snapshot
 Epoch:   1
 
 Summary: Odoo is a suite of web based open source business apps
@@ -12,12 +12,12 @@ Group:   System/Servers
 URL:     http://www.odoo.com/
 # Git: https://github.com/odoo/odoo (branch: 14.0)
 
-Source0: %name.tar
+Source0: odoo.tar
 Source1: odoo.service
 Source2: odoo.init
 Source3: README.ALT
 
-Patch1: %name-alt-fix-openerp-import.patch
+Patch1: odoo-alt-fix-openerp-import.patch
 
 BuildArch: noarch
 
@@ -45,6 +45,8 @@ Requires: wkhtmltopdf
 Requires: lessjs >= 3.0.0
 Requires: sassc
 
+Conflicts: odoo
+
 %description
 Server package for OpenERP.
 
@@ -69,7 +71,7 @@ You can also find more additions (aka. modules) for this ERP system in:
 http://www.openerp.com/ or  http://apps.openerp.com/
 
 %prep
-%setup -q -n %name
+%setup -q -n odoo
 %patch1 -p1
 cp %SOURCE3 .
 rm -f addons/hw_drivers/iot_handlers/drivers/PrinterDriver_W.py \
@@ -133,7 +135,7 @@ getent passwd _odoo > /dev/null || \
 %_unitdir/odoo.service
 %_initdir/odoo
 %python3_sitelibdir/odoo
-%python3_sitelibdir/%name-*.egg-info
+%python3_sitelibdir/odoo-*.egg-info
 %_spooldir/odoo
 %attr(0755,_odoo,odoo) %_logdir/odoo
 %attr(0755,_odoo,odoo) %_runtimedir/odoo
@@ -143,6 +145,9 @@ getent passwd _odoo > /dev/null || \
 #%%attr(-,openerp,openerp) %ghost %_logdir/openerp/openerp-server.log
 
 %changelog
+* Wed Dec 24 2025 Andrey Cherepanov <cas@altlinux.org> 1:17.0-alt2.20250827
+- Renamed to odoo17.
+
 * Tue Sep 30 2025 Andrey Cherepanov <cas@altlinux.org> 1:17.0-alt1.20250827
 - New version on branch 17.0.
 
