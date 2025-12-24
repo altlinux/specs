@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2648,6 +2648,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Dec 23 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.3-alt1
+- 258.3.
+
 * Fri Nov 14 2025 Alexey Shabalin <shaba@altlinux.org> 1:258.2-alt1
 - 258.2.
 - Fix add [SUCCESS=merge] to /etc/nsswitch.conf.
