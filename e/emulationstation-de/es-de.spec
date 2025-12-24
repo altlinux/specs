@@ -4,7 +4,7 @@
 %define _localedir %_datadir/locale
 Summary: A cross-platform graphical front-end for emulators - desktop edition
 Name: emulationstation-de
-Version: 3.2.0
+Version: 3.4.0
 Release: alt1
 License: MIT
 Group: Emulators
@@ -60,6 +60,7 @@ This is fork of original ES from Batocera project.
 
 %build
 %cmake
+
 %cmake_build
 
 %install
@@ -111,6 +112,9 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Mon Dec 15 2025 Artyom Bystrov <arbars@altlinux.org> 3.4.0-alt1
+- Update to new version
+
 * Fri May 23 2025 Artyom Bystrov <arbars@altlinux.org> 3.2.0-alt1
 - Update to new version
 
