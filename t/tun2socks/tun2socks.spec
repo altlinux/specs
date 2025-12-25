@@ -1,9 +1,10 @@
-%define git_short_commit 4127937
+%define git_commit c8c08cfeea01e38af3ae1b93329d3be8659fff46
 %define import_path github.com/xjasonlyu/tun2socks
 
 Name: tun2socks
-Version: 2.6.0
-Release: alt1
+Version: 2.5.2
+Release: alt1.gitc8c08cf1
+Epoch: 1
 
 Summary: %name - powered by gVisor TCP/IP stack
 License: MIT
@@ -12,8 +13,8 @@ Group: System/Servers
 Url: https://github.com/xjasonlyu/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/xjasonlyu/%name/archive/v%version/%name-%version.tar.gz
-Source0: %name-%version.tar
+# https://github.com/xjasonlyu/%name/archive/%git_commit/%name-%git_commit.tar.gz
+Source0: %name-%git_commit.tar
 # go mod vendor
 Source1: vendor.tar
 
@@ -30,7 +31,7 @@ Features:
  - Network Stack: Powered by the user-space TCP/IP stack from Google container application kernel gVisor.
 
 %prep
-%setup -a 1
+%setup -n %name-%git_commit -a 1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -38,7 +39,7 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="\
     -X github.com/xjasonlyu/tun2socks/v2/internal/version.Version=%version \
-    -X github.com/xjasonlyu/tun2socks/v2/internal/version.GitCommit=%git_short_commit \
+    -X github.com/xjasonlyu/tun2socks/v2/internal/version.GitCommit=c8c08cf \
     $LDFLAGS \
 "
 
@@ -59,6 +60,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Dec 26 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.5.2-alt1.gitc8c08cf1
+- Rollback to 2.5.2 (git c8c08cf1) for correct work Amnezia VPN with Xray protocol (ALT #55798)
+
 * Sun Jun 08 2025 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
 - Version 2.6.0
 
