@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: inputplumber
-Version: 0.67.0
+Version: 0.69.1
 Release: alt1
 
 Summary: Open source input router and remapper daemon for Linux
@@ -74,6 +74,7 @@ EOF
 %_datadir/dbus-1/system.d/org.shadowblip.InputPlumber.conf
 %_datadir/inputplumber/
 %_datadir/polkit-1/actions/org.shadowblip.InputPlumber.policy
+%_datadir/polkit-1/rules.d/org.shadowblip.InputPlumber.rules
 %_unitdir/inputplumber-suspend.service
 %_unitdir/inputplumber.service
 %_udevhwdbdir/59-inputplumber.hwdb
@@ -82,6 +83,9 @@ EOF
 %_udevrulesdir/99-inputplumber-device-setup.rules
 
 %changelog
+* Mon Dec 22 2025 Boris Yumankulov <boria138@altlinux.org> 0.69.1-alt1
+- new version 0.69.1
+
 * Fri Nov 07 2025 Boris Yumankulov <boria138@altlinux.org> 0.67.0-alt1
 - new version 0.67.0
 
