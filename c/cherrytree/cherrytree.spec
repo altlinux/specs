@@ -1,6 +1,6 @@
 Name: cherrytree
-Version: 1.2.0
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8): Записная книжка иерархической структуры для заметок
@@ -14,6 +14,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 # Source-url: https://www.giuspen.com/software/cherrytree_%version.tar.xz
 Source: %name-%version.tar
 Patch: categories.patch
+Patch1: ct_ru_flag.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -40,7 +41,7 @@ file with extension ".ctd".
 
 %prep
 %setup
-%patch -p0
+%autopatch -p0
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar\*|g_autofree_edg_ex(gchar,Glib::ustring) |" src/ct/ct_{misc_utils,storage_xml}.cc
@@ -79,6 +80,10 @@ rm -r src/spdlog
 
 
 %changelog
+* Tue Dec 09 2025 Danila Skachedubov <skachedubov@altlinux.org> 1.6.2-alt1
+- new version 1.6.2 (with rpmrb script)
+- added a patch for correct display of the Russian flag (Closes: #48695)
+
 * Mon Nov 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0-alt2
 - e2k build fix
 
