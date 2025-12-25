@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-chrony
 Name: alterator-service-chrony
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Service for managment chrony
@@ -42,6 +42,30 @@ install -p -D -m644 default-chrony.conf %buildroot%_localstatedir/alterator/serv
 %_localstatedir/alterator/service/%service/default-chrony.conf
 
 %changelog
+* Thu Dec 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3-alt1
+- Fixed make_ntp_entry function (thx Michael Mukhin)
+- Fixed parse_conf_file function (thx Michael Mukhin)
+- Corrected required fields and default values (thx Michael Mukhin)
+- Add diag-chrony (thx Michael Mukhin)
+- Add 'exit_status = true' for new version of executor (thx Kirill Sharov)
+- ci: add secret scanning (thx Maria Alexeeva)
+- Remove unused functions (thx Michael Mukhin)
+- Add a function for working with server, pool, and default pool
+  strings (thx Michael Mukhin)
+- Fix parser function (thx Michael Mukhin)
+- Fix undeploy function (thx Michael Mukhin)
+- Add new parameters to .service file (thx Michael Mukhin)
+- Remove unused functions (thx Michael Mukhin)
+- The service-chrony is adapted for POSIX (thx Michael Mukhin)
+- The parse_conf_file function has been simplified. The
+  make_ntp_entry function has been added to handle server, pool,
+  and default pool json (thx Michael Mukhin)
+- The name of the require parameter has been changed. (thx Michael Mukhin)
+- The default pool, server, and pool settings have been fixed and
+  adapted to the new Enum parameters. (thx Michael Mukhin)
+- Information messages has been changed (thx Michael Mukhin)
+- Change service name to chrony_service (thx Kirill Sharov)
+
 * Fri Oct 03 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2-alt1
 - Add internal parameters. Fix status function
 
