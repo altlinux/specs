@@ -1,15 +1,17 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-screensaver
-Version: 6.5.2
+Version: 6.5.4
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-screensaver
+VCS: https://github.com/linuxdeepin/deepin-screensaver
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-screensaver/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
@@ -61,7 +63,7 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 %DQ6install
 
 %files
-%doc CHANGELOG.md
+%doc debian/changelog
 %_bindir/%{name}*
 %_datadir/dbus-1/services/*
 %_datadir/dbus-1/interfaces/*
@@ -84,6 +86,10 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 %_libexecdir/%name/modules/
 
 %changelog
+* Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
+- New version 6.5.4.
+- Added VCS tag.
+
 * Wed Jul 30 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
 - New version 6.5.2.
 - Switched to Qt 6.
