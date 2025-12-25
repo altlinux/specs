@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.9.2
+Version: 2.9.3
 Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
@@ -32,6 +32,10 @@ BuildRequires: libzstd-devel
 BuildRequires: python3-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: zlib-devel
+BuildRequires: libidn2-devel
+# TODO: https://bugzilla.altlinux.org/57354
+BuildRequires: gdal
+BuildRequires: libgdal-devel
 
 %description
 %summary
@@ -86,6 +90,9 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Nov 27 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt1
+- New version.
+
 * Tue Sep 09 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.2-alt1
 - New version.
 
