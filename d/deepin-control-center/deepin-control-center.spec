@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.56
+Version: 6.1.64
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -27,7 +27,7 @@ Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-dqt6 patchelf
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-dqt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libdareader-devel libdde-shell-devel deepin-shell libicu-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -151,6 +151,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.64-alt1
+- New version 6.1.64.
+
 * Thu Nov 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.56-alt1
 - New version 6.1.56.
 - Built with polkit-qt6 for DDE instead system.
