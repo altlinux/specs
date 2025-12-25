@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-
 %ifdef _priority_distbranch
 %define altbranch %_priority_distbranch
 %else
@@ -10,11 +9,12 @@
 %endif
 
 %def_enable check
+%_python3_set_noarch
 
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
@@ -22,8 +22,6 @@ License: GPL-3.0
 Group: Development/Other
 URL: https://altlinux.space/ALTLinux/alt-releases-matrix
 VCS: https://altlinux.space/ALTLinux/alt-releases-matrix.git
-
-BuildArch: noarch
 
 Source: %name-%version.tar
 Patch1: %name-%version-%release.patch
@@ -33,6 +31,9 @@ BuildRequires(pre): rpm-macros-nodejs
 BuildRequires: golang
 BuildRequires: rustfmt
 BuildRequires: clang-tools
+BuildRequires: ocaml
+BuildRequires: dune
+BuildRequires: ocaml-ocamlformat
 BuildRequires: python3-module-black
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-yaml
@@ -47,6 +48,7 @@ definitions related to ALT Linux repositories and distributions, offering
 developers native representations for multiple programming languages.
 
 %package devel
+BuildArch: noarch
 Summary: C header-only library from %name
 Group: Development/C
 
@@ -54,6 +56,7 @@ Group: Development/C
 Package contains a header-only C library with data definitions from from %name.
 
 %package -n python3-module-%oname
+BuildArch: noarch
 Summary: Python library form %name
 Group: Development/Python3
 
@@ -61,6 +64,7 @@ Group: Development/Python3
 Package contains a Python library with data definitions from from %name.
 
 %package -n node-%name-js
+BuildArch: noarch
 Summary: JavaScript library form %name
 Group: Development/Other
 
@@ -68,12 +72,28 @@ Group: Development/Other
 Package contains a JavaScript library with data definitions from from %name.
 
 %package -n node-%name-ts
+BuildArch: noarch
 Summary: TypeScript library form %name
 Group: Development/Other
 
 %description -n node-%name-ts
 Package contains a typeScript library with data definitions from from %name.
 
+%package -n ocaml-%name
+Summary: OCaml library from %name
+Group: Development/ML
+
+%description -n ocaml-%name
+Package contains an OCaml library with data definitions from %name.
+
+%package -n ocaml-%name-devel
+Summary: OCaml library from %name
+Requires: ocaml-%name = %EVR
+Group: Development/ML
+
+%description -n ocaml-%name-devel
+Package contains development files for an OCaml library with data
+definitions from %name.
 
 %prep
 %setup
@@ -103,6 +123,10 @@ cp -r generated/javascript/* %buildroot%nodejs_sitelib/%name-js
 # TypeScript library files
 mkdir -p %buildroot%nodejs_sitelib/%name-ts
 cp -r generated/typescript/* %buildroot%nodejs_sitelib/%name-ts
+# OCaml library files
+pushd generated/ocaml
+%dune_install
+popd
 
 %files
 %dir %_datadir/%name
@@ -125,7 +149,13 @@ cp -r generated/typescript/* %buildroot%nodejs_sitelib/%name-ts
 %dir %nodejs_sitelib/%name-ts
 %nodejs_sitelib/%name-ts/*
 
+%files -n ocaml-%name-devel -f generated/ocaml/ocaml-files.devel
+%files -n ocaml-%name -f generated/ocaml/ocaml-files.runtime
+
 %changelog
+* Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 0.2.0-alt1
+- Added ocaml-alt-release-matrix library for OCaml
+
 * Tue Aug 26 2025 Danil Shein <dshein@altlinux.org> 0.1.1-alt1
 - new version
 
