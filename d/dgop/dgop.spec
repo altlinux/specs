@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dgop
-Version: 0.1.11
+Version: 0.1.12
 Release: alt1
 
 Summary: System monitoring CLI and REST API
@@ -42,6 +42,9 @@ install -Dm 755 %name -t %buildroot%_bindir
 %_bindir/dgop
 
 %changelog
+* Mon Dec 22 2025 Boris Yumankulov <boria138@altlinux.org> 0.1.12-alt1
+- new version 0.1.12
+
 * Fri Nov 07 2025 Boris Yumankulov <boria138@altlinux.org> 0.1.11-alt1
 - initial build for ALT Sisyphus
 
