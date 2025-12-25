@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.0.8
+Version: 8.0.9
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -134,6 +134,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.9-alt1
+- 8.0.9
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.8-alt1
 - 8.0.8
 
