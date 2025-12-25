@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 5.0
+%define ver_major 5.1
 %define rdn_name de.haeckerfelix.Shortwave
 
 %define optflags_lto %nil
@@ -19,22 +19,23 @@ Url: https://gitlab.gnome.org/World/Shortwave
 Vcs: https://gitlab.gnome.org/World/Shortwave.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define gtk_ver 4.20
+%define adwaita_ver 1.8
 %define shumate_ver 1.3
+%define glycin_api_ver 2
 
 Requires: gst-plugins-base1.0
 Requires: gst-plugins-bad1.0
 Requires: yelp
 # since 4.0.0
-Requires: glycin-loaders
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo git
@@ -53,6 +54,8 @@ BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires: pkgconfig(gstreamer-bad-audio-1.0)
 # for glycin
+BuildRequires: pkgconfig(glycin-%glycin_api_ver)
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libseccomp)
 
@@ -90,6 +93,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
 - updated to 5.0.0-5-ga84ba20
 
