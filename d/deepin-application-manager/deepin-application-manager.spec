@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.39
+Version: 1.2.41
 Release: alt1
 
 Summary: App manager for Deepin
@@ -23,12 +23,14 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 %if_enabled check
 BuildRequires(pre): ctest
 %endif
-BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dtk6-common-devel libdtk6core-devel
+BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dqt6-wayland-devel dtk6-common-devel libdtk6core-devel treeland-protocols libwayland-server-devel libwayland-egl-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description
 %summary.
@@ -110,6 +112,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.41-alt1
+- New version 1.2.41.
+
 * Fri Dec 12 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.39-alt1
 - New version 1.2.39.
 - Enabled check.
