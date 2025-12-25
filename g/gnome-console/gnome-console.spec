@@ -11,7 +11,7 @@
 %def_without nautilus
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Console
@@ -102,6 +102,9 @@ EOF
 %endif
 
 %changelog
+* Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
+- 49.2
+
 * Mon Oct 20 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
