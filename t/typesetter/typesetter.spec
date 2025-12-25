@@ -1,0 +1,75 @@
+%define oname net.trowell.typesetter
+
+Name: typesetter
+Version: 0.8.3
+Release: alt1
+
+Summary: A minimalist, local-first Typst editor
+License: GPL-3.0-only
+Group: Editors
+Url: https://typesetter.trowell.net
+VCS: https://codeberg.org/haydn/typesetter
+
+Source: %name-%version.tar
+Source1: vendor.tar
+ 
+BuildRequires(pre): rpm-build-rust rpm-macros-meson
+BuildRequires: /proc
+BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(pango) pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(cairo-gobject) pkgconfig(gtk4)
+BuildRequires: pkgconfig(graphene-gobject-1.0) meson
+BuildRequires: pkgconfig(gtksourceview-5) pkgconfig(openssl)
+BuildRequires: pkgconfig(libspelling-1) pkgconfig(libadwaita-1)
+BuildRequires: /usr/bin/appstreamcli
+
+%description
+Typesetter is a lightweight desktop application for creating beautiful documents with Typst.
+- Adaptive, user-friendly interface: Focus on writing. Great for papers, reports, slides, books, and any structured writing.
+- Powered by Typst: A modern markup-based typesetting language, combining the simplicity of Markdown with the power of LaTeX.
+- Local-first: Your files stay on your machine. No cloud lock-in.
+- Package support: Works offline, but can fetch and update packages online when needed.
+- Automatic preview: See your rendered document update as you write.
+- Click-to-jump: Click on a part of the preview to jump to the corresponding position in the source file.
+- Magnifier tool: Click and hold on the preview to inspect fine details.
+- Centered scrolling: Keeps your writing visually anchored as you type.
+- Syntax highlighting: Makes your documents easier to read and edit.
+- Document statistics: Easily calculate page, word, and character counts.
+- Fast and native: Built in Rust and GTK following the GNOME human interface guidelines.
+
+%prep
+%setup -a1
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+
+%find_lang %name --all-name
+
+%files -f %name.lang
+%doc *.md COPYING LICENSE
+%_bindir/%name
+%_datadir/applications/%oname.desktop
+%_datadir/dbus-1/services/%oname.service
+%_datadir/fonts/Typesetter*.ttf
+%_datadir/glib-2.0/schemas/%oname.gschema.xml
+%_iconsdir/hicolor/*/apps/*.svg
+%_datadir/metainfo/%oname.metainfo.xml
+%_datadir/mime/packages/typst.xml
+%_datadir/%name
+
+%changelog
+* Thu Dec 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.3-alt1
+- Initial build for Sisyphus.
+
