@@ -1,5 +1,5 @@
 Name: ca-certificates-digital.gov.ru
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Russian Trusted Root CA
@@ -21,14 +21,19 @@ BuildArch: noarch
 
 %install
 install -Dpm 0644 russian_trusted_root_ca_pem.crt %buildroot%_datadir/pki/ca-trust-source/anchors/russian_trusted_root_ca_pem.cer
+install -Dpm 0644 russian_trusted_root_ca_gost_2025_pem.crt %buildroot%_datadir/pki/ca-trust-source/anchors/russian_trusted_root_ca_gost_2025_pem.cer
 install -Dpm 0644 russian_trusted_sub_ca_pem.crt  %buildroot%_datadir/pki/ca-trust-source/anchors/russian_trusted_sub_ca_pem.cer
 install -Dpm 0644 russian_trusted_sub_ca_2024_pem.crt %buildroot%_datadir/pki/ca-trust-source/anchors/russian_trusted_sub_ca_2024_pem.cer
+install -Dpm 0644 russian_trusted_sub_ca_gost_2025_pem.crt %buildroot%_datadir/pki/ca-trust-source/anchors/russian_trusted_sub_ca_gost_2025_pem.cer
 install -Dpm 0644 rootca_ssl_rsa2022.crt %buildroot%_datadir/pki/ca-trust-source/anchors/rootca_ssl_rsa2022.cer
 
 %files
 %_datadir/pki/ca-trust-source/anchors/*.cer
 
 %changelog
+* Thu Dec 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
+- Added russian_trusted_root_ca_gost_2025_pem.crt and russian_trusted_sub_ca_gost_2025_pem.crt from https://www.gosuslugi.ru/crt (ALT #57352).
+
 * Tue May 20 2025 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - Added russian_trusted_sub_ca_2024_pem.crt and rootca_ssl_rsa2022.crt.
 
