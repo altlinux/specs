@@ -1,7 +1,7 @@
 %define oname manticoresearch
 
 Name: python3-module-manticoresearch
-Version: 7.0.0
+Version: 9.0.0
 Release: alt1
 
 Summary: Official Python client for Manticore Search
@@ -17,7 +17,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-devel
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 Experimental low-level client for Manticore Search.
@@ -26,21 +27,23 @@ Experimental low-level client for Manticore Search.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
-
-%check
 
 %files
 %doc README.md
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Thu Dec 26 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.0-alt1
+- new version 9.0.0
+- switch to pyproject_build
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
 - new version 7.0.0 (with rpmrb script)
 
