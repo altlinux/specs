@@ -11,7 +11,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.12.4
+Version: 1.12.5
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -133,6 +133,9 @@ make check
 %exclude %_tmpfilesdir/nm-openvpn-tmpfiles.conf
 
 %changelog
+* Thu Dec 25 2025 Mikhail Efremov <sem@altlinux.org> 1.12.5-alt1
+- Updated to 1.12.5.
+
 * Tue Dec 16 2025 Mikhail Efremov <sem@altlinux.org> 1.12.4-alt1
 - Don't package sysusers.conf and tmpfiles.conf files.
 - Packaged both GTK3 and GTK4 nm-openvpn-auth-dialog.
