@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: doomrunner
-Version: 1.8.1
+Version: 1.9.1
 Release: alt1
 
 Summary: Modern preset-oriented graphical launcher of ZDoom and derivatives
@@ -14,7 +14,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ qt5-base-devel
+BuildRequires: gcc-c++ qt6-base-devel
 
 %description
 Doom Runner is yet another launcher of common Doom source ports (like GZDoom, Zandronum, PrBoom, ...)
@@ -28,7 +28,7 @@ First you perform an initial setup, setting up the paths and adding all your Doo
 %setup -n %name-%version
 
 %build
-%qmake_qt5 "CONFIG+=release"
+%qmake_qt6 "CONFIG+=release"
 
 %make_build
 
@@ -65,5 +65,9 @@ install -D -m 0644 ./Install/XDG/io.github.Youda008.DoomRunner.appdata.xml %buil
 %_datadir/metainfo/io.github.Youda008.DoomRunner.appdata.xml
 
 %changelog
+* Thu Dec 25 2025 Artyom Bystrov <arbars@altlinux.org> 1.9.1-alt1
+- Switch to Qt6
+- Update to new version
+
 * Mon Aug 14 2023 Artyom Bystrov <arbars@altlinux.org> 1.8.1-alt1
 - Initial build in Sisypus
