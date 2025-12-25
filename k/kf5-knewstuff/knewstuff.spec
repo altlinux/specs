@@ -2,8 +2,8 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
-%K5init no_altplace
+Release: alt2
+%K5init no_altplace no_appdata
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 downloading and sharing additional application data
@@ -98,9 +98,9 @@ done
 #%_K5data/knewstuff/
 %_kf5_data/kmoretools/
 
-%files
-%_K5bin/knewstuff-dialog*
-%_K5xdgapp/*knewstuff-dialog*.desktop
+#%files
+#%_K5bin/knewstuff-dialog*
+#%_K5xdgapp/*knewstuff-dialog*.desktop
 
 %files devel
 %_K5plug/designer/*newstuff*.so
@@ -122,6 +122,9 @@ done
 
 
 %changelog
+* Thu Dec 25 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- don't package knewstuff-dialog
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
