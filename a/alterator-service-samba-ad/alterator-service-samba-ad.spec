@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -58,6 +58,21 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Thu Dec 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7.2-alt1
+- Fix other parsing errors
+- Fix incorrect dns forwarders parsing (Closes: #57363)
+- Fix grep error
+- Add regexp for realm, netbios and hostname.
+- Add force undeploy
+- Add force deploy
+- Remove incorrect resource from .service file
+- Remove default name for realm, hostname and domain netbios name
+- Fix enable_unit function
+- Add the ability to change the hostname
+- Fix Samba startup error before post diagnostics
+- Change example description from uppercase to uppercase
+- Edit name in service file
+
 * Tue Dec 09 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7.1-alt1
 - Fix domain controller lookup error when joining a domain
 
