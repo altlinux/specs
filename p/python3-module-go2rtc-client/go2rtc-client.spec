@@ -1,5 +1,5 @@
 Name: python3-module-go2rtc-client
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Asynchronous Python client for go2rtc
@@ -36,13 +36,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -o=addopts= tests
+%pyproject_run_pytest -o addopts=
 
 %files
 %python3_sitelibdir/go2rtc_client
 %python3_sitelibdir/go2rtc_client-%version.dist-info
 
 %changelog
+* Thu Dec 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
+- 0.4.0 released
+
 * Fri Dec  5 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
 - 0.3.0 released
 
@@ -54,4 +57,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Mon Nov 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.0-alt1
 - 0.1.0 released
-
