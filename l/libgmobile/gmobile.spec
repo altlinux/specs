@@ -14,7 +14,7 @@
 
 %define _name gmobile
 %define namespace Gm
-%define ver_major 0.5
+%define ver_major 0.6
 %define api_ver_major 0
 %define api_ver 0
 %define sover 0
@@ -136,7 +136,8 @@ rm %buildroot%_libdir/%name.a
 %_libdir/%name.so.*
 %{?_enable_hwdb:
 %_udevrulesdir/61-%_name.rules
-%_udevhwdbdir/61-%_name-wakeup.hwdb}
+%_udevhwdbdir/61-%_name-wakeup.hwdb
+%_udevhwdbdir/61-%_name-torch.hwdb}
 %{?_enable_hwdb:%{?_enable_man:%_man5dir/%_name.udev.5*}}
 %doc NEWS README*
 
@@ -174,6 +175,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
