@@ -2,7 +2,7 @@
 
 Name: angelscript
 Version: 2.38.0
-Release: alt1
+Release: alt2
 
 Summary: Flexible cross-platform scripting library
 
@@ -57,6 +57,9 @@ developing applications that use %name.
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+sed -i 's/ifdef AS_E2K/ifdef __e2k__/' sdk/%name/source/as_callfunc_e2k.S
+%endif
 sed -i 's|lib/cmake/Angelscript|%_lib/cmake/Angelscript|' \
   sdk/%name/projects/cmake/CMakeLists.txt
 sed -i '/DESTINATION/s|lib|%_lib|g' \
@@ -99,6 +102,9 @@ cd sdk/%name/projects/meson/
 %endif
 
 %changelog
+* Thu Dec 25 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.38.0-alt2
+- e2k build fix
+
 * Tue Aug 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.38.0-alt1
 - New version 2.38.0.
 - Updated vcs tag.
