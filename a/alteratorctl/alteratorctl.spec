@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,6 +55,22 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Fri Dec 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.3-alt1
+- Changed (thx Andrey Alekseev):
+  + Order of parameter validation, parameter table output, and password 
+    confirmation. Parameters are only validated after the table is displayed.
+    Passwords are requested interactively only if all other 
+    parameters are valid.
+- Fixed (thx Pavel Khromov and Andrey Alekseev):
+  + Removed parameters from command help that did not match their context.
+  + Segmentation faults (play, resource conflict checks, ...).
+  + Inaccuracies in output (extra characters, etc.).
+  + The play command check would fail if diagnostics were enabled.
+  + Incorrect triggering of conflict detection during undeploy.
+  + Retrieving the status of the service list.
+  + Disabling resource conflict checks within a service during its configuration.
+  + Handling of invalid enum values.
+
 * Fri Dec 12 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.2-alt1
 - Made params table more pretty.
 - Made services module help more detailed.
