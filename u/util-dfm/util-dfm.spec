@@ -5,7 +5,7 @@
 %define sover 1
 
 Name: util-dfm
-Version: 1.3.39
+Version: 1.3.43
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
@@ -18,7 +18,7 @@ Vcs: https://github.com/linuxdeepin/util-dfm
 # Source-url: https://github.com/linuxdeepin/util-dfm/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: util-dfm-1.3.30-alt-pkgconfig-dqt6.patch
+Patch1: util-dfm-1.3.43-alt-pkgconfig-dqt6.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel dtk6-common-devel libdtk6core-devel liblucene++-devel
@@ -106,9 +106,13 @@ This package provides development files for libdfm-search.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
+%patch1 -p2
 sed -i 's|Version: .*|Version: %version|g' \
   $(find ./misc -name '*.pc.in')
+# remove broken requires
+sed -i 's| Boostsystem Threads||' \
+  misc/dfm-search/dfm-search.pc.in
 
 %build
 %if_with clang
@@ -180,6 +184,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/dfm6-search/dfm6-search*.cmake
 
 %changelog
+* Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.43-alt1
+- New version 1.3.43.
+
 * Wed Oct 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.39-alt1
 - New version 1.3.39.
 
