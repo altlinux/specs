@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt42
+Release: alt43
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -127,6 +127,7 @@ Group: System/Libraries
 License: GPLv2+ and LGPLv2+ with exceptions
 Provides: rpm-plugin-selinux = %EVR
 Provides: librpmio(PGPHASHALGO_BLAKE2B)%{?_is_libsuff:(%{_libsuff}bit)} = 100
+Provides: librpm(RPMTAG_APTINDEXLONGFILESIZE)%{?_is_libsuff:(%{_libsuff}bit)} = 100
 Obsoletes: rpm-plugin-selinux < %EVR
 Conflicts: librpm < 4.0.4-alt102
 # due to liblua update
@@ -577,6 +578,12 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Fri Dec 26 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt43
+- Use close_range(2) for scripts (thx Vitaly Chikunov).
+- Fixed support of packages with large files (>=4Gb).
+- Added more convenient names (RPMTAG_APTINDEX*) for APTRPM-specific tags.
+- Added RPMTAG_APTINDEXLONGFILESIZE tag for packages bigger then 4Gb.
+
 * Wed Jul 30 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt42
 - Backported upstream fix for python bindings to fix build with python 3.13+.
 

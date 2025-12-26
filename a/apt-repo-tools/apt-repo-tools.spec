@@ -1,7 +1,5 @@
-%def_disable coverage
-
 Name: apt-repo-tools
-Version: 0.8.1
+Version: 0.9
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -11,13 +9,13 @@ Group: Development/Other
 Source: %name-%version.tar
 
 Requires: librpmio(PGPHASHALGO_BLAKE2B)%{?_is_libsuff:(%{_libsuff}bit)} = 100
+Requires: librpm(RPMTAG_APTINDEXLONGFILESIZE)%{?_is_libsuff:(%{_libsuff}bit)} = 100
 Provides: apt-utils = 0.5.15lorg4
 Obsoletes: apt-utils <= 0.5.15lorg4
 
-BuildRequires: gcc-c++ libapt-devel librpm-devel
-%if_enabled coverage
-BuildRequires: lcov
-%endif
+BuildRequires(pre): rpm-macros-meson
+
+BuildRequires: gcc-c++ libapt-devel librpm-devel meson ninja-build
 
 %description
 This package contains the utility programs that can prepare a repository
@@ -28,29 +26,16 @@ generating the indices): genbasedir, genpkglist, gensrclist.
 %setup
 
 %build
-# To avoid some errors on API change:
-%add_optflags -Werror=overloaded-virtual
-# A style enforcement: always use the keyword, which helps to avoid API misuse
-%add_optflags -Werror=suggest-override
-%add_optflags -Werror=return-type
-./bootstrap
-mkdir build
-cd build
-%define _configure_script ../configure
-%configure \
-	%{?_enable_coverage:--enable-code-coverage} \
+%meson \
 	%nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std -C build
+%meson_install
 mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 
 %check
-%make_build check -C build VERBOSE=1
-%if_enabled coverage
-make code-coverage-capture -C build
-%endif
+%meson_test
 
 %files
 /usr/bin/genpkglist
@@ -62,6 +47,10 @@ make code-coverage-capture -C build
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Fri Dec 26 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9-alt1
+- Added support of packages bigger then 4Gb.
+- Fixed gensrclist speed regression introduced in version 0.7.0 (ALT#40779).
+
 * Thu Aug 31 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.1-alt1
 - gensrclist: fix patching the last record (closes: #47368)
 - genbasedir: replace deprecated fgrep with grep -F
