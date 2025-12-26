@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.40.0
-Release: alt1.1
+Version: 0.41.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -29,7 +29,7 @@ BuildRequires: libswresample-devel libxkbcommon-devel libdrm-devel libv4l-devel 
 
 BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
 
-BuildRequires: libgbm-devel libplacebo-devel >= 6.338.0 libSDL2-devel libavdevice-devel libXpresent-devel
+BuildRequires: libgbm-devel libplacebo-devel >= 6.338.2 libSDL2-devel libavdevice-devel libXpresent-devel
 
 BuildRequires: libzimg-devel vapoursynth-devel nv-codec-headers pipewire-libs-devel libsixel-devel libmujs-devel libcaca-devel libcdio-devel libcdio-paranoia-devel
 
@@ -75,6 +75,16 @@ Requires: %name = %version-%release
 %description -n bash-completion-%name
 Bash completion for %name.
 
+%package -n fish-completion-%name
+Summary: Fish completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description -n fish-completion-%name
+Fish completion for %name.
+
+
 %package -n libmpv-devel
 Summary: Header files for %name
 Group: Development/C
@@ -109,7 +119,9 @@ This package contains %name shared library
 	-D libmpv=true \
 	-D jack=enabled \
 	-D vulkan=enabled \
-	-D sdl2=enabled \
+	-D sdl2-gamepad=enabled \
+	-D sdl2-audio=enabled \
+	-D sdl2-video=enabled \
 	-D vapoursynth=enabled \
 	-D pipewire=enabled \
 	-D javascript=enabled
@@ -123,8 +135,9 @@ rm -rfv %buildroot/share/
 rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 
 %files
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/encoding-profiles.conf
+# no more configs in /etc since 0.41.0
+#%dir %_sysconfdir/%name
+#%config %_sysconfdir/%name/encoding-profiles.conf
 %_bindir/%name
 %_man1dir/%name.1.*
 %_miconsdir/%name.png
@@ -142,6 +155,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
+%files -n fish-completion-%name
+%_datadir/fish/vendor_completions.d/%name.fish
+
 %files -n libmpv-devel
 %_libdir/libmpv.so
 %_includedir/%name
@@ -151,6 +167,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
+- 0.41.0
+
 * Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 0.40.0-alt1.1
 - Add yt-dlp to requires (closes ALT #54548).
 
