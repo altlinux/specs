@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.16
+Version: 0.1.17
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -16,11 +16,16 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires(pre): rpm-macros-alternatives
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: extra-cmake-modules
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-base-common
+BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kwidgetsaddons-devel
 BuildRequires: boost-devel-headers
 BuildRequires: libtomlplusplus-devel
 BuildRequires: libqtsingleapplication-qt6-devel
@@ -64,14 +69,15 @@ Requires: alterator-module-executor >= 0.1.14
 %install
 %cmakeinstall_std
 
-install -D -m644 setup/%name.desktop \
-    %buildroot%_desktopdir/%name.desktop
+install -D -m644 setup/org.altlinux.alterator-explorer.desktop \
+    %buildroot%_desktopdir/org.altlinux.alterator-explorer.desktop
+
 %if_with legacy
 install -d %buildroot/%_altdir
 cat > %buildroot/%_altdir/%name <<EOF
 %_bindir/%alt_name	%_bindir/%name 50
 EOF
-echo "NoDisplay=true" >> %buildroot%_desktopdir/%name.desktop
+echo "NoDisplay=true" >> %buildroot%_desktopdir/org.altlinux.alterator-explorer.desktop
 touch %buildroot/%_bindir/%alt_name
 %endif
 
@@ -79,7 +85,8 @@ touch %buildroot/%_bindir/%alt_name
 %_datadir/alterator/categories/*
 %doc *.md
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/org.altlinux.alterator-explorer.desktop
+%_K6dbus_srv/*.service
 
 %if_with legacy
 %ghost %_bindir/%alt_name
@@ -88,6 +95,18 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Fri Dec 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.17-alt1
+- Fixed (thx Andrey Alekseev and Oleg Chagaev):
+  + window was delayed until all objects are built
+  + launched apps are now keeped after acc window closed
+  + application coud not raise its window on Wayland
+  + reference text
+  + the input cursor is removed in the reference
+- Added (thx Andrey Alekseev):
+  + dbus-activation mechanism
+  + xdg-activation protocol
+  + --replace commandline option for replacing existing window
+
 * Tue Aug 19 2025 Andrey Limachko <liannnix@altlinux.org> 0.1.16-alt1
 - correct icon handling in Wayland (thx Semen Fomchenkov)
 - use standard Alterator icon (thx Semen Fomchenkov)
