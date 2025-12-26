@@ -17,7 +17,7 @@
 
 Name: audacity
 Version: 3.7.7
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -114,9 +114,9 @@ BuildRequires: rpm-build >= 4.0.4-alt133
 %else
 %define soname_suffix %nil
 %endif
-Requires: libavformat.so.61%soname_suffix
-Requires: libavcodec.so.61%soname_suffix
-Requires: libavutil.so.59%soname_suffix
+Requires: libavformat.so.62%soname_suffix
+Requires: libavcodec.so.62%soname_suffix
+Requires: libavutil.so.60%soname_suffix
 
 
 # Since suil 0.10.24-alt1, toolkit-specific modules are packaged
@@ -273,6 +273,9 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Fri Dec 26 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.7-alt4
+- Update ffmpeg dependencies to 8.0
+
 * Tue Dec 23 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.7-alt3
 - Address some HiDPI issues (upstream PR #10103)
 
