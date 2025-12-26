@@ -1,5 +1,5 @@
 Name: woof
-Version: 14.0.0
+Version: 15.3.0
 Release: alt1
 Summary: continuation of Lee Killough's Doom source port MBF targeted at modern systems
 Group: Games/Arcade
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL2_net-devel libopenal-devel libsndfile-devel
-BuildRequires: make
+BuildRequires: make libebur128-devel libalsa-devel
 BuildRequires: python3-module-cmake_build_extension libxmp-devel libfluidsynth-devel fluidsynth
 
 ExcludeArch: armh
@@ -31,7 +31,6 @@ mkdir -p %buildroot%_bindir/
 mkdir -p %buildroot%_datadir/%name
 install -m 0755 ./%_arch-alt-linux/src/woof %buildroot%_bindir/%name
 install -m 0755 ./%_arch-alt-linux/src/woof-setup %buildroot%_bindir/%name
-cp -r ./%_arch-alt-linux/src/autoload %buildroot%_datadir/%name
 
 %find_lang %name
 
@@ -41,6 +40,8 @@ cp -r ./%_arch-alt-linux/src/autoload %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Fri Dec 19 2025 Artyom Bystrov <arbars@altlinux.org> 15.3.0-alt1
+- Update to new version
 
 * Mon Feb 19 2024 Artyom Bystrov <arbars@altlinux.org> 14.0.0-alt1
 - Update to new version
