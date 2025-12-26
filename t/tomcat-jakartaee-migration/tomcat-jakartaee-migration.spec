@@ -1,6 +1,6 @@
 Name:    tomcat-jakartaee-migration
 Version: 1.0.9
-Release: alt1
+Release: alt2
 Summary: Apache Tomcat migration tool for Jakarta EE
 
 License: Apache-2.0
@@ -41,10 +41,23 @@ The tool can be used from the command line or as an Ant task.
 %mvn_install
 install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-%name.pom
 
+# CLI helper
+install -d -m 0755 %buildroot%_bindir
+cat > %buildroot%_bindir/javax2jakarta <<'_EOF'
+#!/bin/sh
+
+java -cp "/usr/share/java/tomcat-jakartaee-migration/*:/usr/share/java/*" org.apache.tomcat.jakartaee.MigrationCLI "$@"
+_EOF
+chmod +x %buildroot%_bindir/javax2jakarta
+
 %files -f .mfiles
 %doc *.md
+%_bindir/javax2jakarta
 %_mavenpomdir/*.pom
 
 %changelog
+* Fri Dec 26 2025 Stanislav Levin <slev@altlinux.org> 1.0.9-alt2
+- Package CLI tool (javax2jakarta) (closes: #57376).
+
 * Mon Dec 08 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.0.9-alt1
 - Initial build for Sisyphus.
