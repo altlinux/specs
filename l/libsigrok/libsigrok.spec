@@ -1,6 +1,6 @@
 Name: libsigrok
 Version: 0.6.0
-Release: alt0.20241004
+Release: alt0.20251120
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -115,6 +115,9 @@ install -pm0644 contrib/61-libsigrok-uaccess.rules %buildroot%_udevrulesdir/
 %python3_sitelibdir/libsigrok-%version-*-info
 
 %changelog
+* Fri Dec 26 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.0-alt0.20251120
+- git snapshot libsigrok-unreleased-1848-g0bc24877
+
 * Thu Oct 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.0-alt0.20241004
 - git snapshot libsigrok-unreleased-1783-g3385c04b
 
