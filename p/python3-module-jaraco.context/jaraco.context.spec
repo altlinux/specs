@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jaraco.context
+%define ns_name jaraco
+%define mod_name context
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
-Release: alt1.1
+Version: 6.0.2
+Release: alt1
 Summary: Context managers by Jaraco
 License: MIT
 Group: Development/Python3
@@ -19,9 +21,12 @@ Patch0: %name-%version-alt.patch
 %py3_provides %pypi_name
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
+# requires internet
+%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -46,14 +51,17 @@ BuildRequires(pre): rpm-build-pyproject
 
 %check
 %pyproject_run_pytest -vra \
-    --deselect='jaraco/context/__init__.py::jaraco.context.repo_context'
+    --deselect='%ns_name/%mod_name/__init__.py::jaraco.context.repo_context'
 
 %files
 %doc README.rst
-%python3_sitelibdir/jaraco/context/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 25 2025 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1
+- 6.0.1 -> 6.0.2.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

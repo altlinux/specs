@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jaraco.test
+%define ns_name jaraco
+%define mod_name test
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.5.1
-Release: alt1.1
+Version: 5.6.0
+Release: alt1
 Summary: Testing support by jaraco
 License: MIT
 Group: Development/Python3
@@ -15,7 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # required by jaraco/test/cpython.py
 Requires: python3-test
@@ -24,6 +27,8 @@ Requires: python3-test
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
+# requires internet
+%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -53,10 +58,13 @@ BuildRequires: python3-test
 
 %files
 %doc README.rst
-%python3_sitelibdir/jaraco/test/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 25 2025 Stanislav Levin <slev@altlinux.org> 5.6.0-alt1
+- 5.5.1 -> 5.6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
