@@ -7,7 +7,7 @@
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -138,6 +138,9 @@ sed -i 's|Gst\(FrameCompositionApi\)|GES\1|' ges/ges-frame-composition-meta.c
 %endif
 
 %changelog
+* Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
+- 1.26.10
+
 * Tue Dec 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.9-alt1
 - 1.26.9
 
