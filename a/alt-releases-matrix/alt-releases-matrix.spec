@@ -14,7 +14,7 @@
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
@@ -34,6 +34,7 @@ BuildRequires: clang-tools
 BuildRequires: ocaml
 BuildRequires: dune
 BuildRequires: ocaml-ocamlformat
+BuildRequires: shfmt
 BuildRequires: python3-module-black
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-yaml
@@ -110,6 +111,7 @@ python3 -m pytest -vra tests
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/%name/lib
 cp -r data/ %buildroot%_datadir/%name/
+cp -r generated/bash %buildroot%_datadir/%name/lib
 cp -r generated/go %buildroot%_datadir/%name/lib
 cp -r generated/rust %buildroot%_datadir/%name/lib
 # C library files
@@ -153,6 +155,12 @@ popd
 %files -n ocaml-%name -f generated/ocaml/ocaml-files.runtime
 
 %changelog
+* Fri Dec 26 2025 Danil Shein <dshein@altlinux.org> 0.2.1-alt1
+- added bash library generation support
+- data: removed discontinued branches from active list:
+  sisyphus_mipsel, p9_e2k, p9_mipsel, c10f1, c9f1
+- ocaml: added active_branches list for iteration over branch names
+
 * Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 0.2.0-alt1
 - Added ocaml-alt-release-matrix library for OCaml
 
