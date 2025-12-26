@@ -148,22 +148,23 @@
 %def_disable cuvid
 %endif # cuvid
 
-%define avdevicever 62
-%define avformatver 62
-%define avfilterver 11
-%define avcodecver 62
-%define swresamplever 6
-%define swscalever 9
-%define avutilver 60
+%define avdevicever 61
+%define avformatver 61
+%define avfilterver 10
+%define avcodecver 61
+%define postprocver 58
+%define swresamplever 5
+%define swscalever 8
+%define avutilver 59
 
 %ifarch %ix86
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg
+Name:		ffmpeg7.1
 Epoch:		2
-Version: 8.0.1
-Release:	alt1
+Version:	7.1.2
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -175,10 +176,9 @@ VCS: https://github.com/FFmpeg/FFmpeg
 # https://git.ffmpeg.org/ffmpeg.git
 Source:		%name-%version.tar
 Patch:		%name-%version-%release.patch
-Patch2000: %name-e2k-simd.patch
+Patch2000: ffmpeg-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
-BuildRequires: nasm
 %ifarch %ix86 x86_64
 BuildRequires:	yasm
 %endif
@@ -266,6 +266,7 @@ such as audio, video, subtitles and related metadata.
 The ffmpeg is a command line toolbox to manipulate, convert and stream
 multimedia content.
 
+
 %package	doc
 Summary:	FFmpeg documentation
 Group:		Documentation
@@ -328,6 +329,7 @@ Group:		Video
 
 This package contains a multimedia streaming server for live broadcasts.
 
+
 %package -n	ffserver-doc
 Summary:	Documentation for ffserver
 Group:		Documentation
@@ -337,6 +339,7 @@ BuildArch:	noarch
 %common_descr
 
 This package contains documentation for ffserver.
+
 
 %package -n	libavcodec%avcodecver
 Summary:	provides implementation of a wider range of codecs
@@ -362,8 +365,10 @@ Summary: Static development files for libavcodec
 Group: Development/C
 Requires: libavcodec-devel = %EVR
 
+
 %description -n libavcodec-devel-static
 This package contains static development files for libavcodec.
+
 
 %package -n	libavdevice%avdevicever
 Summary:	FFmpeg device handling library
@@ -438,6 +443,7 @@ Requires: libavcodec-devel = %EVR
 %description -n libavformat-devel
 This package contains development files for libavformat.
 
+
 %package -n libavformat-devel-static
 Summary: Static development files for libavformat
 Group: Development/C
@@ -472,6 +478,32 @@ Requires: libavutil-devel = %EVR
 %description -n libavutil-devel-static
 This package contains static development files for libavutil.
 
+%package -n	libpostproc%postprocver
+Summary:	FFmpeg postprocessing library
+Group:		System/Libraries
+
+%description -n libpostproc%postprocver
+%common_descr
+
+The libpostproc library implements video postprocessing routines.
+
+%package -n libpostproc-devel
+Summary: Development files for libpostproc
+Group: Development/C
+Requires: libpostproc%postprocver = %EVR
+Requires: libavutil-devel = %EVR
+
+%description -n libpostproc-devel
+This package contains development files for libpostproc.
+
+%package -n libpostproc-devel-static
+Summary: Static development files for libpostproc
+Group: Development/C
+Requires: libpostproc-devel = %EVR
+
+%description -n libpostproc-devel-static
+This package contains static development files for libpostproc.
+
 %package -n	libswresample%swresamplever
 Summary:	FFmpeg audio resampling, rematrixing and sample format conversion library
 Group:		System/Libraries
@@ -498,6 +530,7 @@ Requires: libswresample-devel = %EVR
 
 %description -n libswresample-devel-static
 This package contains static development files for libswresample.
+
 
 %package -n	libswscale%swscalever
 Summary:	FFmpeg image scaling and colorspace and pixel format conversion library
@@ -675,153 +708,45 @@ xz Changelog
 %makeinstall_std
 
 %check
-export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavutil:libswresample:libswscale"
+export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavutil:libpostproc:libswresample:libswscale"
 tests/checkasm/checkasm
 %make_build V=1 alltools examples testprogs
 %make check
 
-%files
-%doc README.md
-%doc MAINTAINERS
-%doc Changelog*
-%doc LICENSE.md
-%_bindir/ffmpeg
-%{?_enable_doc:%_man1dir/ffmpeg*}
-%_datadir/ffmpeg
-%exclude %_datadir/ffmpeg/examples
-
-%if_enabled doc
-%files doc
-%doc doc/ffmpeg*.html
-%doc doc/faq.html
-%doc doc/fate.html
-%doc doc/general.html
-%doc doc/git-howto.html
-%doc doc/lib*.html
-%doc doc/nut.html
-%doc doc/platform.html
-%_man3dir/*
-%endif
-
-%if_enabled ffplay
-%files -n ffplay
-%_bindir/ffplay
-%{?_enable_doc:%_man1dir/ffplay*}
-
-%if_enabled doc
-%files -n ffplay-doc
-%doc doc/ffplay*.html
-%endif
-%endif
-
-%if_enabled ffprobe
-%files -n ffprobe
-%_bindir/ffprobe
-%{?_enable_doc:%_man1dir/ffprobe*}
-
-%if_enabled doc
-%files -n ffprobe-doc
-%doc doc/ffprobe*.html
-%endif
-%endif
-
-%if_enabled ffserver
-%files -n ffserver
-%_bindir/ffserver
-%{?_enable_doc:%_man1dir/ffserver*}
-%endif
-
-%if_enabled doc
-%files -n ffserver-doc
-%{?_enable_ffserver:%doc doc/ffserver*.html}
-%endif
-
 %files -n libavcodec%avcodecver
 %_libdir/libavcodec.so.%{avcodecver}*
-
-%files -n libavcodec-devel
-%_includedir/libavcodec
-%_libdir/libavcodec.so
-%_pkgconfigdir/libavcodec.pc
 
 %files -n libavdevice%avdevicever
 %_libdir/libavdevice.so.%{avdevicever}*
 
-%files -n libavdevice-devel
-%_includedir/libavdevice
-%_libdir/libavdevice.so
-%_pkgconfigdir/libavdevice.pc
 
 %files -n libavfilter%avfilterver
 %_libdir/libavfilter.so.%{avfilterver}*
 
-%files -n libavfilter-devel
-%_includedir/libavfilter
-%_libdir/libavfilter.so
-%_pkgconfigdir/libavfilter.pc
 
 %files -n libavformat%avformatver
 %_libdir/libavformat.so.%{avformatver}*
 
-%files -n libavformat-devel
-%_includedir/libavformat
-%_pkgconfigdir/libavformat.pc
-%_libdir/libavformat.so
-
 %files -n libavutil%avutilver
 %_libdir/libavutil.so.%{avutilver}*
 
-%files -n libavutil-devel
-%_includedir/libavutil
-%_libdir/libavutil.so
-%_pkgconfigdir/libavutil.pc
+%files -n libpostproc%postprocver
+%_libdir/libpostproc.so.%{postprocver}*
+
 
 %files -n libswresample%swresamplever
 %_libdir/libswresample.so.%{swresamplever}*
 
-%files -n libswresample-devel
-%_includedir/libswresample
-%_libdir/libswresample.so
-%_pkgconfigdir/libswresample.pc
-
 %files -n libswscale%swscalever
 %_libdir/libswscale.so.%{swscalever}*
 
-%files -n libswscale-devel
-%_includedir/libswscale
-%_libdir/libswscale.so
-%_pkgconfigdir/libswscale.pc
-
-%if_enabled static
-%files -n libavformat-devel-static
-%_libdir/libavformat.a
-
-%files -n libavcodec-devel-static
-%_libdir/libavcodec.a
-
-%files -n libavutil-devel-static
-%_libdir/libavutil.a
-
-%files -n libswresample-devel-static
-%_libdir/libswresample.a
-
-%files -n libswscale-devel-static
-%_libdir/libswscale.a
-
-%files -n libavdevice-devel-static
-%_libdir/libavdevice.a
-
-%files -n libavfilter-devel-static
-%_libdir/libavfilter.a
-
-%endif
 
 %changelog
-* Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 2:8.0.1-alt1
-- 8.0 -> 8.0.1
+* Fri Nov 07 2025 Anton Farygin <rider@altlinux.com> 2:7.1.2-alt2
+- keep only shared libs for legacy compatibility
 
-* Thu Nov 06 2025 Anton Farygin <rider@altlinux.com> 2:8.0-alt1
-- 7.1.1 -> 8.0
+* Fri Nov 07 2025 Anton Farygin <rider@altlinux.com> 2:7.1.2-alt1
+- 7.1.1 -> 7.1.2
 
 * Tue Jul 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:7.1.1-alt4
 - e2k patch update
