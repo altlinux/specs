@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define appname com.github.matfantinel.reminduck
+%define appname io.github.ellie_commons.reminduck
 
 Name: reminduck
-Version: 1.6.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Remember your stuff in an adorably annoying way
@@ -20,11 +20,11 @@ BuildRequires(pre): rpm-build-vala
 BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: vala-tools
-BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: pkgconfig(granite)
-BuildRequires: vapi(granite)
+BuildRequires: pkgconfig(granite-7)
+BuildRequires: pkgconfig(libportal)
 
 %description
 A simple reminder app made to be quick and easy - Reminduck focuses on simple
@@ -38,10 +38,8 @@ And it quacks.
 
 %prep
 %setup
-sed -i "s|Categories=.*|Categories=Office;ProjectManagement;|" data/com.github.matfantinel.reminduck.desktop.in
+sed -i "s|Categories=.*|Categories=Office;ProjectManagement;|" data/reminduck.desktop.in
 sed -i "s|data/screenshots/||" README.md
-
-patch -p1 < elementary-theme.patch
 
 %build
 %meson
@@ -59,10 +57,14 @@ patch -p1 < elementary-theme.patch
 %doc COPYING README.md data/screenshots/Main.png
 %_bindir/%appname
 %_desktopdir/%{appname}.desktop
-%_datadir/glib-2.0/schemas/%{appname}.gschema.xml
-%_iconsdir/hicolor/*/apps/%{appname}.svg
-%_datadir/metainfo/com.github.matfantinel.reminduck.appdata.xml
+%_datadir/glib-2.0/schemas/%{name}.gschema.xml
+%_iconsdir/hicolor/*/apps/%{appname}.png
+%_iconsdir/scalable/apps/%{appname}.svg
+%_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Dec 26 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
+- new version 2.2.0 (with rpmrb script)
+
 * Tue Dec 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.6.2-alt1
 - Initial build for Sisyphus
