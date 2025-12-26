@@ -1,15 +1,16 @@
 Name: ashell
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 License: MIT
 
-Summary: A ready to go Wayland status bar for Hyprland
+Summary: A ready to go Wayland status bar for Hyprland and Niri
 
 Group: Graphical desktop/Other
 
 Url: https://github.com/MalpenZibo/ashell
 Vcs: https://github.com/MalpenZibo/ashell.git
 
+ExcludeArch: %ix86
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: config.toml
@@ -42,6 +43,11 @@ subst 's|"rfkill"|"%_sbindir/rfkill"|' src/services/bluetooth/mod.rs
 %_bindir/%name
 
 %changelog
+* Fri Dec 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.0-alt1
+- new version (0.7.0) with rpmgs script
+- drop i586 support
+- niri support
+
 * Sun Oct 12 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.6.0-alt1
 - new version (0.6.0) with rpmgs script
 
