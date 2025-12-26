@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-hanabi
 Version: 1
-Release: alt1.20fe84dc.1
+Release: alt1.476a2953.1
 Epoch: 1
 
 Summary: Live Wallpaper for GNOME
@@ -17,12 +17,15 @@ Vcs: https://github.com/jeffshee/gnome-ext-hanabi.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: node_modules.tar
+
 Patch: %name-%version-%release.patch
+Patch1: fix49.patch
 
 Requires: gnome-shell >= 42.0
 
-BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
+BuildRequires(pre): rpm-macros-meson rpm-build-nodejs
+BuildRequires: meson node npm
 BuildRequires: %_bindir/glib-compile-schemas
 
 %description
@@ -38,8 +41,9 @@ or 'Force GtkMediaFile' in the extension settings can help.
 или 'Force GtkMediaFile' в настройках расширения может помочь.
 
 %prep
-%setup
-%autopatch -p1
+%setup -a1
+%patch -p1
+%patch1 -p0
 
 %build
 %meson
@@ -58,6 +62,10 @@ or 'Force GtkMediaFile' in the extension settings can help.
 %doc README.md
 
 %changelog
+* Fri Dec 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt1.476a2953.1
+- Update to git.476a2953.
+- Fix: work on Gnome 49
+
 * Mon Sep 15 2025 Vladimir Vaskov <rirusha@altlinux.org> 1:1-alt1.20fe84dc.1
 - New snapshot.
 - Switched to snapshot version instaed of date tag.
