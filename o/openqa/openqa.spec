@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt24.gitd6e697fd7
+Release: alt25.gitd6e697fd7
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -219,6 +219,7 @@ sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbi
 #nginx
 sed -i -e 's,"$(DESTDIR)"/etc/nginx/vhosts.d,"$(DESTDIR)"%_sysconfdir/nginx/sites-available.d,g' Makefile
 sed -i -e 's,vhosts.d/,sites-available.d/,g' etc/nginx/vhosts.d/openqa.conf.template
+sed -i -e 's|include vhosts\.d/|include sites-available\.d/|g' etc/nginx/vhosts.d/openqa-locations.inc
 #These services and files are not used.
 rm -rf systemd/openqa-vde_switch.service
 rm -rf systemd/openqa-slirpvde.service
@@ -541,6 +542,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Fri Dec 26 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt25.gitd6e697fd7
+- nginx: switch includes to sites-available.d
+- Commit hash: d6e697fd7
+
 * Tue Dec 09 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt24.gitd6e697fd7
 - update to current version
 - Commit hash: d6e697fd7
