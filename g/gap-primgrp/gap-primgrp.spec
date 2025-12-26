@@ -1,7 +1,7 @@
 %define repo primgrp
 
 Name: gap-primgrp
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 Summary: GAP: Primitive Permutation Groups Library
 License: GPL-2.0-or-later
@@ -39,6 +39,9 @@ perl -i -pe 's{#!%_bindir/env }{#!/bin/}' scripts/*
 %gap_sitelib/%repo/
 
 %changelog
+* Fri Dec 26 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Wed Oct 01 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.1-alt1
 - New version 4.0.1.
 - Fixed license tag.
