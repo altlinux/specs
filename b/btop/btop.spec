@@ -1,5 +1,5 @@
 Name: btop
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 
 Summary: Resource monitor that shows usage and stats for processor, memory, disks, network and processes.
@@ -42,6 +42,9 @@ PREFIX=%buildroot/%_prefix make install
 
 
 %changelog
+* Fri Dec 26 2025 Alexei Mezin <alexvm@altlinux.org> 1.4.6-alt1
+- New version
+
 * Wed Sep 24 2025 Alexei Mezin <alexvm@altlinux.org> 1.4.5-alt1
 - New version
 
