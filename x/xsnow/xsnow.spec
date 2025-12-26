@@ -1,5 +1,5 @@
 Name: xsnow
-Version: 3.7.9
+Version: 3.9.0
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
@@ -72,6 +72,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_datadir/pixmaps/xsnow.svg
 
 %changelog
+* Fri Dec 26 2025 Alexei Mezin <alexvm@altlinux.org> 3.9.0-alt1
+- New version
+
 * Sat Nov 16 2024 Alexei Mezin <alexvm@altlinux.org> 3.7.9-alt1
 - New version
 - Remove some country specific options
