@@ -1,5 +1,5 @@
 Name:     PC6001VX
-Version:  4.2.13
+Version:  4.3.0
 Release:  alt1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
@@ -94,6 +94,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Fri Dec 26 2025 Artyom Bystrov <arbars@altlinux.org> 4.3.0-alt1
+- New version 4.3.0.
+
 * Wed Jun 11 2025 Artyom Bystrov <arbars@altlinux.org> 4.2.13-alt1
 - New version 4.2.13.
 
