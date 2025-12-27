@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt9
+Release: alt9.1
 
 Summary: Multi-format image decoder library
 Group: System/Libraries
@@ -63,7 +63,7 @@ for developing C++ applications that use %nameplus.
 %prep
 %setup -n FreeImage
 # fix line endings
-find ./ -type f -print0| xargs -r0 dos2unix --
+find ./ -type f -print0| xargs -r0 dos2unix -e -- ||:
 
 %patch -p1
 %patch1 -p1
@@ -112,6 +112,9 @@ sh ./genfipsrclist.sh
 %_libdir/%nameplus.so
 
 %changelog
+* Sat Dec 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt9.1
+- fixed build
+
 * Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt9
 - fixed build against libraw-0.21
 
