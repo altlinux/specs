@@ -3,8 +3,8 @@
 %define _peasrc peazip-sources
 
 Name: peazip
-Version: 10.7.0
-Release: alt3
+Version: 10.8.0
+Release: alt1
 
 Summary: File and archive manager
 License: LGPL-3.0-only
@@ -122,6 +122,9 @@ install %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenus/KDE6-d
 %_datadir/kio/servicemenus/*.desktop
 
 %changelog
+* Sat Dec 27 2025 Anton Kurachenko <srebrov@altlinux.org> 10.8.0-alt1
+- New version 10.8.0.
+
 * Tue Nov 18 2025 Anton Kurachenko <srebrov@altlinux.org> 10.7.0-alt3
 - BuildRequires: p7zip -> 7-zip.
 - PIE enabled.
