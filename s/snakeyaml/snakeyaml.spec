@@ -1,41 +1,25 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global vertag 29e2699b80fc
-
 Name:           snakeyaml
+Version:        2.5
+Release:        alt1
+
 Summary:        YAML parser and emitter for Java
-Version:        1.27
-Release:        alt1_4jpp11
-License:        ASL 2.0
+License:        Apache-2.0
+Group: 		Development/Java
+URL:            https://bitbucket.org/snakeyaml/snakeyaml.git
 
-URL:            https://bitbucket.org/asomov/%{name}
-Source0:        %{url}/get/%{name}-%{version}.tar.gz
-
-# Upstream has forked gdata-java and base64 and refuses [1] to
-# consider replacing them by external dependencies.  Bundled libraries
-# need to be removed and their use replaced by system libraries.
-# See rhbz#875777 and http://code.google.com/p/snakeyaml/issues/detail?id=175
-#
-# Replace use of bundled Base64 implementation with java.util.Base64
-Patch0:         0001-replace-bundled-base64coder-with-java.util.Base64.patch
-# We don't have gdata-java in Fedora any longer, use commons-codec instead
-Patch1:         0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
-Patch2:         reader_bom_test_fix.patch
+Source:         %name-%version.tar
 
 BuildArch:      noarch
 
+BuildRequires: 	/proc
+BuildRequires: 	jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.apache.velocity:velocity)
-Source44: import.info
+
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
+BuildRequires: mvn(org.openjdk.jmh:jmh-core)
+BuildRequires: mvn(org.openjdk.jmh:jmh-generator-annprocess)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 
 %description
 SnakeYAML features:
@@ -46,45 +30,53 @@ SnakeYAML features:
       native Java objects.
     * support for all types from the YAML types repository.
     * relatively sensible error messages.
+    * when you plan to feed the parser with untrusted data please study the
+      settings which allow to restrict incoming data.
 
+%package javadoc
+Group: 		Development/Java
+Summary: 	Javadoc for %name
+BuildArch: 	noarch
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-This package contains %{summary}.
-
+%description javadoc
+This package contains the API documentation for %name.
 
 %prep
-%setup -q -n asomov-%{name}-%{vertag}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%setup
 
-
-%mvn_file : %{name}
-
-%pom_remove_plugin :cobertura-maven-plugin
-%pom_remove_plugin :maven-changes-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-license-plugin
+%pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :formatter-maven-plugin
+%pom_remove_plugin :maven-source-plugin
 
-# Replacement for bundled gdata-java-client
-%pom_add_dep commons-codec:commons-codec
+%pom_remove_dep :velocity-engine-core
+%pom_remove_dep :joda-time
+%pom_remove_dep :lombok
 
-# Unnecessary test-time only dependency
-%pom_remove_dep joda-time:joda-time
 rm -rf src/test/java/examples/jodatime
+#rm -rf src/test/java/org/yaml/snakeyaml/jmh
+
+rm src/test/java/org/yaml/snakeyaml/reader/ReaderBomTest.java
 
 # fails in rpmbuild only due to different locale
-rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.java
+#rm src/test/java/org/yaml/snakeyaml/issues/issue67/NonAsciiCharsInClassNameTest.java
 # fails after unbundling
-rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
+#rm src/test/java/org/yaml/snakeyaml/issues/issue318/ContextClassLoaderTest.java
+
+# Tests using dependencies we don't have/have removed
+rm src/test/java/org/yaml/snakeyaml/emitter/template/VelocityTest.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue387/YamlExecuteProcessContextTest.java
+rm src/test/java/org/yaml/snakeyaml/env/ApplicationProperties.java
+rm src/test/java/org/yaml/snakeyaml/env/EnvLombokTest.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue527/Fuzzy47047Test.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue530/Fuzzy47039Test.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue543/Fuzzer50355Test.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue525/FuzzyStackOverflowTest.java
+#rm src/test/java/org/yaml/snakeyaml/issues/issue529/Fuzzy47028Test.java
+#rm src/test/java/org/yaml/snakeyaml/issues/issue531/Fuzzy47081Test.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue526/Fuzzy47027Test.java
+rm src/test/java/org/yaml/snakeyaml/issues/issue1100/JacksonTest.java
 
 # Problematic test resources for maven-resources-plugin 3.2
 rm src/test/resources/issues/issue99.jpeg
@@ -100,20 +92,15 @@ rm src/test/resources/pyyaml/invalid-utf8-byte.loader-error
 rm src/test/resources/pyyaml/invalid-utf8-byte.stream-error
 rm src/test/resources/pyyaml/empty-document-bug.data
 rm src/test/resources/pyyaml/spec-05-02-utf16be.data
+rm -rf src/test/resources/fuzzer/
 # Test using the jpeg data removed above
 rm src/test/java/org/yaml/snakeyaml/issues/issue99/YamlBase64Test.java
 
-# convert CR+LF to LF
-sed -i 's/\r//g' LICENSE.txt
-
-
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build
 
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc LICENSE.txt
@@ -121,8 +108,11 @@ sed -i 's/\r//g' LICENSE.txt
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
-
 %changelog
+* Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.5-alt1
+- updated to 2.5
+- removed import.info
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.27-alt1_4jpp11
 - update
 

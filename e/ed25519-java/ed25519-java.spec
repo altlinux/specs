@@ -1,28 +1,24 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          ed25519-java
 Version:       0.3.0
-Release:       alt1_14jpp11
+Release:       alt2
 Summary:       Implementation of EdDSA (Ed25519) in Java
+
+Group:         Development/Java
 License:       CC0
 URL:           https://github.com/str4d/ed25519-java
 Source0:       https://github.com/str4d/ed25519-java/archive/v%{version}/%{name}-%{version}.tar.gz
 
 # https://github.com/str4d/ed25519-java/commit/e0ac35769db8553fb714b09f0d3f3d2b001fd033
 Patch0: 0001-EdDSAEngine.initVerify-Handle-any-non-EdDSAPublicKey.patch
-
 Patch1: 0002-Disable-test-that-relies-on-internal-sun-JDK-classes.patch
 
+BuildRequires: /proc
+BuildRequires: jpackage-default
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.hamcrest:hamcrest-all)
 
 BuildArch:     noarch
-Source44: import.info
 
 %description
 This is an implementation of EdDSA in Java. Structurally, it
@@ -46,14 +42,14 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
-%patch0 -p1
-%patch1 -p1
+%setup
+%autopatch -p1
 
 # Unwanted tasks
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
+
 # Unavailable plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
 
@@ -63,8 +59,10 @@ This package contains javadoc for %{name}.
 %pom_xpath_remove pom:plugin/pom:configuration/pom:target
 %pom_xpath_remove pom:plugin/pom:configuration/pom:source
 
+%pom_remove_dep :hamcrest-all
+
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=11
+%mvn_build
 
 %install
 %mvn_install
@@ -77,6 +75,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Dec 19 2025 Evgeniy Serov <scala@altlinux.org> 0.3.0-alt2
+- fixed FTBFS
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_14jpp11
 - update
 

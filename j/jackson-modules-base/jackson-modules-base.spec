@@ -1,49 +1,76 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with     jp_minimal
-
 Name:           jackson-modules-base
-Version:        2.11.4
-Release:        alt1_5jpp11
-Summary:        Jackson modules: Base
-License:        ASL 2.0
+Version:        2.20.1
+Release:        alt1
 
+Summary:        Uber-project for foundational modules of Jackson that build directly on core components but nothing else; not including data format or datatype modules
+License:        Apache-2.0
+Group:          Development/Java
 URL:            https://github.com/FasterXML/jackson-modules-base
-Source0:        https://github.com/FasterXML/jackson-modules-base/archive/%{name}-%{version}.tar.gz
 
+Source:         %name-%version.tar
+
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
-BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
+
+BuildRequires:  mvn(com.google.code.maven-replacer-plugin:maven-replacer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
+
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.mockito:mockito-all)
-BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.mockito:mockito-core)
 
 BuildArch:      noarch
-Source44: import.info
 
 %description
-Jackson "base" modules: modules that build directly on databind,
-and are not data-type, data format, or JAX-RS provider modules.
+This is a multi-module umbrella project for Jackson modules that are considered
+foundational, building on core databind, but not including datatype or data
+format modules, or JAX-RS providers. Not all "general" modules are included
+here; this grouping is to be used for more mature (and generally slower moving,
+stable) modules.
+
+%package javadoc
+Group:     Development/Java
+Summary:   Javadoc for %name
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %name.
+
+%package -n jackson-module-afterburner
+Summary:   Jackson extension module used to enhance performance using bytecode generation to replace use of Reflection for field access and method calls
+Group:     Development/Java
+
+%description -n jackson-module-afterburner
+Module that will add dynamic bytecode generation for standard Jackson POJO
+serializers and deserializers, eliminating majority of remaining data binding
+overhead.
+
+%package -n jackson-module-blackbird
+Summary:   Jackson extension module that uses LambdaMetafactory based code generation to replace reflection calls
+Group:     Development/Java
+
+%description -n jackson-module-blackbird
+The Afterburner has long been your engine of choice for maximum Jackson
+performance. But in the brave new Java 11 world, the trusty Afterburner
+is showing its age. It uses horrifying bytecode manipulation and cracks
+Unsafe.defineClass which will stop working soon.
+
+%package -n jackson-module-guice
+Summary:   Stuff to make integration with Guice a bit easier
+Group:     Development/Java
+
+%description -n jackson-module-guice
+This extension allows Jackson to delegate ObjectMapper creation and value
+injection to Guice when handling data bindings.
 
 %package -n jackson-module-jaxb-annotations
-Group: Development/Java
-Summary: Support for using JAXB annotations as an alternative to "native" Jackson annotations
+Summary:   Support for using JAXB annotations as an alternative to "native" Jackson annotations
+Group:     Development/Java
 
 %description -n jackson-module-jaxb-annotations
 This Jackson extension module provides support for using JAXB (javax.xml.bind)
@@ -51,64 +78,97 @@ annotations as an alternative to native Jackson annotations. It is most often
 used to make it easier to reuse existing data beans that used with JAXB
 framework to read and write XML.
 
+%package -n jackson-module-mrbean                                                                                                                                                                                          
+Summary:   Functionality for implementing interfaces and abstract types dynamically ("bean materialization"), integrated with Jackson (although usable externally as well)
+Group:     Development/Java
+
+%description -n jackson-module-mrbean
+Mr Bean is an extension that implements support for "POJO type materialization";
+ability for databinder to construct implementation classes for Java interfaces
+and abstract classes, as part of deserialization. Extension plugs in using
+standard Module interface, and requires Jackson 2.0 or above.
+
+%package -n jackson-module-osgi
+Summary:   Jackson module to inject OSGI services in deserialized beans
+Group:     Development/Java
+
+%description -n jackson-module-osgi
+This module provides a way to inject OSGI services into deserialized objects.
+Thanks to the JacksonInject annotations, the OsgiJacksonModule will search for
+the required service in the OSGI service registry and injects it in the object
+while deserializing.
+
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-%pom_remove_dep org.glassfish.jaxb:jaxb-runtime jaxb
+# missing jakarta inject
+%pom_disable_module guice7
 
-# no need for Java 9 module stuff
-%pom_remove_plugin -r :moditect-maven-plugin
+# missing Jakarta XML Binding
+%pom_disable_module jakarta-xmlbind
 
-# move to "old" glassfish-jaxb-api artifactId
-%pom_change_dep -r jakarta.xml.bind:jakarta.xml.bind-api javax.xml.bind:jaxb-api
+# rename mockito
+%pom_change_dep :mockito-all :mockito-core osgi
 
-# Disable bundling of asm
-%pom_remove_plugin ":maven-shade-plugin" afterburner mrbean paranamer
-%pom_xpath_remove "pom:properties/pom:osgi.private" mrbean paranamer
+# test fails since mockito was upgraded to 2.x
+rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.java
 
-sed -i 's/\r//' mrbean/src/main/resources/META-INF/{LICENSE,NOTICE}
-cp -p mrbean/src/main/resources/META-INF/{LICENSE,NOTICE} .
-
-# Fix OSGi dependency
-%pom_change_dep org.osgi:org.osgi.core org.osgi:osgi.core osgi
-
-# NoClassDefFoundError: net/sf/cglib/core/CodeGenerationException
-%pom_add_dep cglib:cglib:3.2.4:test guice
-
-%pom_disable_module afterburner
-%pom_disable_module guice
-%pom_disable_module mrbean
-%pom_disable_module osgi
+# paranamer removed from sisyphus
 %pom_disable_module paranamer
 
-# Allow javax,activation to be optional
-%pom_add_plugin "org.apache.felix:maven-bundle-plugin" jaxb "
-<configuration>
-  <instructions>
-    <Import-Package>javax.activation;resolution:=optional,*</Import-Package>
-  </instructions>
-</configuration>"
+%pom_disable_module no-ctor-deser
 
-# This test fails since mockito was upgraded to 2.x
-rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.java
+# no need
+%pom_disable_module android-record
 
 %mvn_file ":{*}" jackson-modules/@1
 
 %build
-%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- \
+    -Dmaven.compiler.source=1.8 \
+    -Dmaven.compiler.target=1.8 \
+    -Dmaven.javadoc.source=1.8 \
+    -Dmaven.compiler.release=8 \
 
 %install
 %mvn_install
 
+%files javadoc -f .mfiles-javadoc
+
 %files -f .mfiles-jackson-modules-base
 %doc README.md release-notes
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
+
+%files -n jackson-module-afterburner -f .mfiles-jackson-module-afterburner
+%doc afterburner/README.md afterburner/release-notes
+%doc --no-dereference LICENSE
+
+%files -n jackson-module-blackbird -f .mfiles-jackson-module-blackbird
+%doc blackbird/README.md
+%doc --no-dereference LICENSE
+
+%files -n jackson-module-guice -f .mfiles-jackson-module-guice
+%doc guice/README.md
+%doc --no-dereference LICENSE
 
 %files -n jackson-module-jaxb-annotations -f .mfiles-jackson-module-jaxb-annotations
 %doc jaxb/README.md jaxb/release-notes
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
+
+%files -n jackson-module-mrbean -f .mfiles-jackson-module-mrbean
+%doc mrbean/README.md mrbean/release-notes
+%doc --no-dereference LICENSE
+
+%files -n jackson-module-osgi -f .mfiles-jackson-module-osgi
+%doc osgi/README.md osgi/release-notes
+%doc --no-dereference LICENSE
 
 %changelog
+* Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1
+- fixed FTBFS
+- new version 2.20.1
+- removed import.info
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_5jpp11
 - update
 

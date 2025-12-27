@@ -1,29 +1,30 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:          jackson-dataformats-text
-Version:       2.9.8
-Release:       alt1_9jpp11
-Summary:       Jackson standard text-format data format backends
-License:       ASL 2.0
-URL:           https://github.com/FasterXML/jackson-dataformats-text
-Source0:       https://github.com/FasterXML/jackson-dataformats-text/archive/%{name}-%{version}.tar.gz
+Name:          	jackson-dataformats-text
+Version:       	2.20.1
+Release:       	alt1
 
+Summary:       	Jackson standard text-format data format backends
+License:       	ASL 2.0
+Group: 		Development/Java
+URL:  		https://github.com/FasterXML/jackson-dataformats-text
+
+Source:       	%name-%version.tar
+
+BuildRequires: 	/proc
+BuildRequires: 	jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind) >= %{version}
-BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
+
 BuildRequires:  mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires:  mvn(com.google.guava:guava)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
+
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(org.yaml:snakeyaml)
+BuildRequires:  mvn(org.jetbrains:annotations)
+
+#BuildRequires:	jflex
 
 BuildArch:      noarch
-Source44: import.info
 
 %description
 Parent pom for Jackson text-format dataformats.
@@ -60,52 +61,59 @@ functionality.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-# Obsoletes standalone jackson-dataformat-* packages since F28
-Obsoletes: jackson-dataformat-csv-javadoc < %{version}-%{release}
-Provides:  jackson-dataformat-csv-javadoc = %{version}-%{release}
-Obsoletes: jackson-dataformat-properties-javadoc < %{version}-%{release}
-Provides:  jackson-dataformat-properties-javadoc = %{version}-%{release}
-Obsoletes: jackson-dataformat-yaml-javadoc < %{version}-%{release}
-Provides:  jackson-dataformat-yaml-javadoc = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 This package contains API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup
 
-cp -p yaml/src/main/resources/META-INF/{NOTICE,LICENSE} .
-sed -i 's/\r//' LICENSE NOTICE
+# TODO: needed for TOML
+%pom_remove_plugin :jflex-maven-plugin toml
+
+
+%pom_disable_module toml
+# can help compile without jflex-maven-plugin
+# jflex --skel toml/src/main/jflex/skeleton-toml -d toml/src/main/java toml/src/main/jflex/com/fasterxml/jackson/dataformat/toml/toml.jflex
 
 %mvn_file ":{*}" jackson-dataformats/@1
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- \
+    -Dmaven.compiler.source=1.8 \
+    -Dmaven.compiler.target=1.8 \
+    -Dmaven.javadoc.source=1.8 \
+    -Dmaven.compiler.release=8 \
 
 %install
 %mvn_install
 
-%files -f .mfiles-jackson-dataformats-text
+%files -f .mfiles
 %doc README.md release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
-%files -n jackson-dataformat-csv -f .mfiles-jackson-dataformat-csv
+%files -n jackson-dataformat-csv
 %doc csv/README.md csv/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
-%files -n jackson-dataformat-properties -f .mfiles-jackson-dataformat-properties
+%files -n jackson-dataformat-properties
 %doc properties/README.md properties/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
-%files -n jackson-dataformat-yaml -f .mfiles-jackson-dataformat-yaml
+%files -n jackson-dataformat-yaml
 %doc yaml/README.md yaml/release-notes/*
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference LICENSE
 
 %changelog
+* Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1
+- fixed FTBFS
+- new version 2.20.1 (without toml)
+- removed import.info
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.9.8-alt1_9jpp11
 - java11 build
 
