@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -27,7 +27,11 @@ Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.g
 %else
 Source: %name-%version.tar
 %endif
-
+# Fix build with FFmpeg 8
+# https://github.com/OpenShot/libopenshot/pull/1018
+Patch: %name-0.5.0-up-ffmpeg8.patch
+# Fix babl detection
+Patch1: %name-0.5.0-rh-fix-babl-detection.patch
 # based on http://github.com/EntityFX/libopenshot
 Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
@@ -40,7 +44,7 @@ BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-de
 BuildRequires: libImageMagick-devel zlib-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libswresample-devel libswscale-devel
-BuildRequires: libavdevice-devel libpostproc-devel
+BuildRequires: libavdevice-devel
 BuildRequires: libbabl-devel
 # https://github.com/RazrFalcon/resvg
 # BuildRequires: libresvg-devel
@@ -76,6 +80,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
 %setup
+%patch -p1 -b .ffmpeg8
+%patch1 -p1 -b .babl_detection
+
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -112,6 +119,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Dec 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1.1
+- rebuilt against FFmpeg-8.0 libraries
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
