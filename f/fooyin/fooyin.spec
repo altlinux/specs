@@ -2,7 +2,7 @@
 
 Name: fooyin
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Music player built around customisation
 License: GPL-3.0
@@ -29,7 +29,6 @@ BuildRequires: libavdevice-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libswscale-devel
 BuildRequires: libswresample-devel
-BuildRequires: libpostproc-devel
 BuildRequires: libkdsingleapplication-qt6-devel
 
 %description
@@ -72,6 +71,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Sat Dec 27 2025 Anton Kurachenko <srebrov@altlinux.org> 0.9.2-alt2
+- Fixed FTBFS with ffmpeg-8.
+
 * Tue Sep 23 2025 Anton Kurachenko <srebrov@altlinux.org> 0.9.2-alt1
 - New version 0.9.2.
 
