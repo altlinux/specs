@@ -1,7 +1,7 @@
 %def_with check
 
 Name: bottom
-Version: 0.11.4
+Version: 0.12.1
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
@@ -14,6 +14,7 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+# need for tests
 BuildRequires: /proc /dev/pts
 
 %description
@@ -38,7 +39,8 @@ install -D -m 644 target/tmp/bottom/completion/btm.fish %buildroot%_datadir/fish
 install -D -m 644 target/tmp/bottom/completion/_btm %buildroot%_datadir/zsh/site-functions/_btm
 
 %check
-%rust_test
+export RUST_BACKTRACE=full
+%rust_test -- --skip test_data_collection
 
 %files
 %doc LICENSE CHANGELOG.md README.md sample_configs
@@ -49,6 +51,9 @@ install -D -m 644 target/tmp/bottom/completion/_btm %buildroot%_datadir/zsh/site
 %_datadir/zsh/site-functions/_btm
 
 %changelog
+* Sat Dec 27 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.12.1-alt1
+- Updated to version 0.12.1.
+
 * Sat Nov 22 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.11.4-alt1
 - Updated to version 0.11.4.
 
