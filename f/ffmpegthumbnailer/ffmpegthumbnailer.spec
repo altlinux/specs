@@ -1,7 +1,7 @@
 %define sover 4
 
 Name: ffmpegthumbnailer
-Version: 2.2.3
+Version: 2.3.0
 Release: alt1
 
 Summary: Lightweight video thumbnailer that can be used by file managers
@@ -23,7 +23,6 @@ BuildRequires: libpng-devel
 BuildRequires: libswscale-devel
 BuildRequires: libswresample-devel
 BuildRequires: libavfilter-devel
-BuildRequires: libpostproc-devel
 
 %description
 Lightweight video thumbnailer that can be used by file managers.
@@ -87,6 +86,9 @@ developers to generate thumbnails in their projects.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 27 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 2.2.3-alt1
 - new version 2.2.3
 - use Shared Libs Policy
