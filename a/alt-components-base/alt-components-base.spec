@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,9 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Sat Dec 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.8-alt1
+- components/education-robotics: set arch x86_64 for gz-sim
+
 * Tue Dec 23 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.9.7-alt1
 - components: change zabbix-server (thx Elena Mishina and Dmitriy Terekhin)
 - editions: fix the location of the elements in the final-notes
