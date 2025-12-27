@@ -2,16 +2,19 @@
 %define dist Net-SSLeay
 Name: perl-%dist
 Version: 1.94
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for using OpenSSL
-License: BSD-style
+License: Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
 VCS: git+https://github.com/radiator-software/p5-net-ssleay.git
 
 Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{dist}-%{version}.tar
+Patch1: 01-perl-Net-SSLeay-version_check_on_autopkgtest.patch
+Patch2: 02-perl-Net-SSLeay-test-32_x509_get_cert_info-allow-single-colon.patch
+Patch3: 03-perl-Net-SSLeay-test-32_x509_get_cert_info-openssl-3.4.1.patch
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libssl-devel openssl perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn perl-threads
@@ -24,6 +27,7 @@ so you can write servers or clients for more complicated applications.
 
 %prep
 %setup -q -n %{dist}-%{version}
+%autopatch -p1
 [ %version = 1.86_09 ] && rm t/local/36_verify.t
 
 %build
@@ -38,6 +42,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Dec 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.94-alt2
+- NMU: fix FTBFS with Debian patches
+
 * Sun Feb 18 2024 Igor Vlasenko <viy@altlinux.org> 1.94-alt1
 - new version
 
