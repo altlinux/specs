@@ -1,5 +1,5 @@
 %define ver_major 14.0
-%define api_ver_major 14
+%define api_ver_major 15
 %define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
 %define soname 1
@@ -17,8 +17,8 @@
 # Weston backend: RDP remote screensharing
 %def_enable backend_rdp
 
-# Compositor: RDP screen-sharing support
-%def_enable screenshare
+# Compositor: RDP screen-sharing support (deprecated)
+%def_disable screenshare
 
 # Weston backend: Wayland (nested)
 %def_enable backend_wayland
@@ -35,6 +35,9 @@
 
 # Weston renderer: EGL / OpenGL ES 2.x
 %def_enable renderer_gl
+
+# Weston renderer: Vulkan
+%def_enable renderer_vulkan
 
 # Weston launcher for systems without logind (removed since 11.0.0)
 %def_disable deprecated_weston_launch
@@ -60,14 +63,17 @@
 # Weston shell UI: traditional desktop
 %def_enable shell_desktop
 
-# Weston shell UI: fullscreen/kiosk
-%def_enable shell_fullscreen
+# Weston shell UI: fullscreen/kiosk (deprecated)
+%def_disable shell_fullscreen
 
 # Weston shell UI: IVI (automotive)
 %def_enable shell_ivi
 
 # Weston shell UI: kiosk (desktop apps)
 %def_enable shell_kiosk
+
+# Weston shell UI: Lua (programmable)
+%def_enable shell_lua
 
 # Weston desktop shell: default helper client selection
 %define desktop_shell_client_default weston-desktop-shell
@@ -111,7 +117,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -135,8 +141,8 @@ Requires: xorg-dri-swrast
 %define gst_api_ver 1.0
 %define mesa_ver 21.1.1
 
-BuildRequires(pre): meson
-BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): meson rpm-build-xdg %{?_enable_shell_lua:rpm-build-lua}
+BuildRequires: gcc-c++
 %{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
 %{?_enable_launcher_libseat:BuildRequires: pkgconfig(libseat)}
 BuildRequires: libGLES-devel libglvnd-devel
@@ -157,6 +163,7 @@ BuildRequires: libinput-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdbus-devel
 BuildRequires: libpam0-devel
+%{?_enable_renderer_vulkan:BuildRequires: pkgconfig(vulkan) glslang}
 %{?_enable_image_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_image_webp:BuildRequires: libwebp-devel}
 %{?_enable_color_management_lcms:BuildRequires: liblcms2-devel}
@@ -174,6 +181,7 @@ BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
 %{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
 %{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel >= 0.8}
+%{?_enable_shell_lua:BuildRequires: lua5.4-devel}
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -223,11 +231,13 @@ Header files for doing development with the weston.
     -Dweston-launch-group=xgrp} \
     --libexecdir=%clientsdir \
     %{subst_enable_meson_bool backend_x11 backend-x11} \
+    %{subst_enable_meson_bool renderer_vulkan renderer-vulkan} \
     %{subst_enable_meson_bool backend_rdp backend-rdp} \
     %{subst_enable_meson_bool backend_vnc backend-vnc} \
     %{subst_enable_meson_bool xwayland xwayland} \
     %{subst_enable_meson_bool remoting remoting} \
     %{subst_enable_meson_bool shell_ivi shell-ivi} \
+    %{subst_enable_meson_bool shell_lua shell-lua} \
     %{subst_enable_meson_bool pipewire pipewire} \
     %{subst_enable_meson_bool test_junit_xml test-junit-xml}
 %nil
@@ -256,17 +266,17 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %{?_enable_color_management_colord:%_libdir/%name/cms-colord.so}
 %{?_enable_deprecated_color_management_static:%_libdir/%name/cms-static.so}
 %{?_enable_shell_desktop:%_libdir/%name/desktop-shell.so}
-%{?_enable_shell_fullscreen:%_libdir/%name/fullscreen-shell.so}
 %{?_enable_shell_ivi:
 %_libdir/%name/hmi-controller.so
 %_libdir/%name/ivi-shell.so}
 %{?_enable_shell_kiosk:%_libdir/%name/kiosk-shell.so}
-%{?_enable_screenshare:%_libdir/%name/screen-share.so}
+%{?_enable_shell_lua:%_libdir/%name/lua-shell.so}
 %{?_enable_systemd:%_libdir/%name/systemd-notify.so}
 # clients
 %dir %_libdir/%name/clients
 %{?_enable_shell_desktop:%_libdir/%name/clients/%name-desktop-shell}
 %{?_enable_shell_ivi:%_libdir/%name/clients/%name-ivi-shell-user-interface}
+%{?_enable_shell_lua:%_libdir/%name/clients/shell.lua}
 %_libdir/%name/clients/%name-keyboard
 %_libdir/%name/clients/%name-simple-im
 
@@ -284,6 +294,7 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_libdir/lib%{name}*.so.*
 %dir %_libdir/lib%name-%api_ver
 %{?_enable_renderer_gl:%_libdir/lib%name-%api_ver/gl-renderer.so}
+%{?_enable_renderer_vulkan:%_libdir/lib%name-%api_ver/vulkan-renderer.so}
 %{?_enable_remoting:%_libdir/lib%name-%api_ver/remoting-plugin.so}
 %{?_enable_xwayland:%_libdir/lib%name-%api_ver/xwayland.so}
 %{?_enable_pipewire:%_libdir/lib%name-%api_ver/pipewire-plugin.so}
@@ -312,6 +323,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 14.0.91-alt1
+- 14.0.91
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 14.0.2-alt1
 - 14.0.2
 
