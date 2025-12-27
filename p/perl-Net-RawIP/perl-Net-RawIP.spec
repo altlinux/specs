@@ -1,7 +1,7 @@
 %define dist Net-RawIP
 Name: perl-%dist
 Version: 0.25
-Release: alt3.2
+Release: alt4
 
 Summary: Perl extension to manipulate raw IP packets
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch1: Net-RawIP-0.25-Decalare-used-function.patch
 
 # a test tries to open /proc/net/route
 BuildPreReq: /proc
@@ -22,6 +23,7 @@ with an optional feature for manipulating Ethernet headers.
 
 %prep
 %setup -n %dist-%version
+%autopatch -p1
 
 %ifdef __BTE
 # disable network-dependent tests
@@ -40,6 +42,9 @@ mv t/iflist.t t/iflist.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Dec 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.25-alt4
+- NMU: fix FTBFS
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.25-alt3.2
 - rebuild with new perl 5.28.1
 
