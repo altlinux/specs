@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Date/Parse.pm) perl(Finance/Quote/Bloomberg.pm) perl(Finance/Quote/Consorsbank.pm) perl(Finance/Quote/IndiaMutual.pm) perl(Finance/Quote/OnVista.pm) perl(Finance/Quote/TMX.pm) perl(HTTP/CookieJar/LWP.pm) perl(IO/String.pm) perl(Readonly.pm)
+BuildRequires: perl(Date/Parse.pm) perl(HTTP/CookieJar/LWP.pm) perl(IO/String.pm) perl(Readonly.pm)
 # END SourceDeps(oneline)
 Epoch: 1
 %define dist Finance-Quote
 
 Name: perl-%dist
-Version: 1.66
+Version: 1.68
 Release: alt1
 
 Summary: Get stock and mutual fund quotes from various exchanges
@@ -19,7 +19,7 @@ Source0: http://www.cpan.org/authors/id/B/BP/BPSCHUCK/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-CGI perl-Crypt-SSLeay perl-HTML-TableExtract perl-HTML-Tree perl-devel perl-libwww perl(Date/Calc.pm) perl(JSON.pm) perl(DateTime.pm) perl(LWP/Protocol/https.pm) perl(DateTime/Format/Strptime.pm) perl(Text/Template.pm) perl(JSON/Parse.pm) perl(String/Util.pm) perl(Module/Load.pm) perl(Test/Pod/Coverage.pm) perl(Date/Simple.pm) perl(DateTime/Format/ISO8601.pm) perl(HTML/TokeParser/Simple.pm) perl(HTML/TreeBuilder/XPath.pm) perl(Web/Scraper.pm) perl(Date/Range.pm) perl(Spreadsheet/XLSX.pm) perl(Date/Manip.pm)
+BuildRequires: perl-CGI perl-Crypt-SSLeay perl-HTML-TableExtract perl-HTML-Tree perl-devel perl-libwww perl(Date/Calc.pm) perl(JSON.pm) perl(DateTime.pm) perl(LWP/Protocol/https.pm) perl(DateTime/Format/Strptime.pm) perl(Text/Template.pm) perl(JSON/Parse.pm) perl(String/Util.pm) perl(Module/Load.pm) perl(Test/Pod/Coverage.pm) perl(Date/Simple.pm) perl(DateTime/Format/ISO8601.pm) perl(HTML/TokeParser/Simple.pm) perl(HTML/TreeBuilder/XPath.pm) perl(Web/Scraper.pm) perl(Date/Range.pm) perl(Spreadsheet/XLSX.pm) perl(Date/Manip.pm) perl-HTTP-Cookies
 
 %description
 This module gets stock quotes from various internet sources, including
@@ -40,12 +40,13 @@ greater flexibility and stability.
 %files
 %doc Examples/ Documentation/ Changes Examples README
 %perl_vendor_privlib/Finance
-#%perl_vendor_privlib/GPATH
-#%perl_vendor_privlib/GRTAGS
-#%perl_vendor_privlib/GTAGS
 
 
 %changelog
+* Sat Dec 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:1.68-alt1
+- new version
+- NMU: fix FTBFS
+
 * Thu Jul 10 2025 Igor Vlasenko <viy@altlinux.org> 1:1.66-alt1
 - automated CPAN update
 
