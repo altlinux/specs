@@ -1,5 +1,5 @@
 Name: clipse
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 License: MIT
 
@@ -16,10 +16,14 @@ Source1: %name-development-%version.tar
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 
+Requires: wl-clipboard
+
 %description
 clipse is a configurable, TUI-based clipboard manager application written in Go
 with minimal dependency. Though the app is optimized for a Linux OS using
 a dedicated window manager, clipse can also be used on any Unix-based system.
+
+Built for Wayland!
 
 %prep
 %setup -a1
@@ -28,7 +32,7 @@ a dedicated window manager, clipse can also be used on any Unix-based system.
 subst 's|Type:      "basic"|Type: "kitty"|' config/constants.go
 
 %build
-%gobuild -mod=vendor
+%gobuild -mod=vendor -tags wayland
 
 %install
 install -D -m 0755 ./clipse %buildroot/%_bindir/clipse
@@ -38,5 +42,8 @@ install -D -m 0755 ./clipse %buildroot/%_bindir/clipse
 %_bindir/clipse
 
 %changelog
+* Sat Dec 27 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Thu Mar 27 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.1.0-alt1
 - Initial build
