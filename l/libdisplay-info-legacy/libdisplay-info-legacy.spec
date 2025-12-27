@@ -1,28 +1,27 @@
-%def_disable snapshot
-%define ver_major 0.3
-%define sover 3
+%define _name libdisplay-info
 
+%def_disable snapshot
 %def_enable check
 
 # subprojects/edid-decode.wrap
 %define edid_decode_ver c6b859d7f0251e2433fb81bd3f67bd2011c2036c
 %def_disable edid_decode_as_subproject
 
-Name: libdisplay-info
-Version: %ver_major.0
-Release: alt1
+Name: %_name-legacy
+Version: 0.2.0
+Release: alt2
 
 Summary: EDID and DisplayID library
-Group: System/Libraries
+Group: System/Legacy libraries
 License: MIT
 Url: https://emersion.pages.freedesktop.org/libdisplay-info/
 
 Vcs: https://gitlab.freedesktop.org/emersion/libdisplay-info.git
 
 %if_disabled snapshot
-Source: https://gitlab.freedesktop.org/emersion/%name/-/archive/%version/%name-%version.tar.gz
+Source: https://gitlab.freedesktop.org/emersion/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 # https://git.linuxtv.org/edid-decode.git
 %{?_enable_edid_decode_as_subproject:Source1: edid-decode-%edid_decode_ver.tar}
@@ -47,7 +46,7 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup %{?_enable_edid_decode_as_subproject:-a1
+%setup -n %_name-%version %{?_enable_edid_decode_as_subproject:-a1
 mv edid-decode-%edid_decode_ver subprojects/edid-decode}
 
 %build
@@ -62,20 +61,19 @@ mv edid-decode-%edid_decode_ver subprojects/edid-decode}
 %__meson_test
 
 %files
-%_bindir/di-edid-decode
-%_libdir/%name.so.%{sover}
-%_libdir/%name.so.%{ver_major}*
+#%_bindir/di-edid-decode
+%_libdir/%_name.so.*
 %doc README.md
 
 %files devel
-%_includedir/%name/
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
+#%_includedir/%name/
+#%_libdir/%name.so
+#%_pkgconfigdir/%name.pc
 
 
 %changelog
-* Tue Aug 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
-- 0.3.0
+* Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- legacy library w/o devel subpackage
 
 * Fri Jun 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
