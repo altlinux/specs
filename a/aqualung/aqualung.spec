@@ -1,7 +1,7 @@
 Name: aqualung
 Summary: Music Player for GNU/Linux
 Version: 2.0
-Release: alt2
+Release: alt3
 License: GPL-2.0
 Group: Sound
 Url: https://aqualung.jeremyevans.net
@@ -176,6 +176,9 @@ rmdir %buildroot%_docdir/%name
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sat Dec 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0-alt3
+- update from upstream/master: fix FTBFS with ffmpeg 8
+
 * Thu Jun 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0-alt2
 - update from upstream/master
 - enable sndio, jack and ifp support
