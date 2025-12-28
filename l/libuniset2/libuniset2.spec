@@ -28,7 +28,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.41.2
+Version: 2.42.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -421,6 +421,16 @@ Requires: %name-extension-common = %version-%release
 
 %description extension-js
 JavaScript runner for %{name}
+
+%if_enabled opcua
+%package extension-js-opcua
+Group: Development/C++
+Summary: JavaScript support for %{name} with OPCUA
+Requires: %name-extension-common = %version-%release
+
+%description extension-js-opcua
+JavaScript runner for %{name} (supported opcua)
+%endif
 %endif
 
 %prep
@@ -645,9 +655,16 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 
 %if_enabled js
 %files extension-js
-%_bindir/%oname-jscript*
+%_bindir/%oname-jscript
 %_datadir/%oname/js/
+%exclude %_bindir/*-opcua
+%exclude %_datadir/%oname/js/*-opcua*
 
+%if_enabled opcua
+%files extension-js-opcua
+%_bindir/%oname-jscript-opcua
+%_datadir/%oname/js/%oname-opcua-client.js
+%endif
 %endif
 
 
@@ -699,6 +716,15 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Nov 15 2025 Pavel Vainerman <pv@altlinux.ru> 2.42.1-alt1
+- (jscript): simitator
+- (jscript): modbus client
+- (jscript): opcua client
+- (logdb): supported "self" logserver
+- (logdb): backpressure, show "disconnected status"
+- (logdb): logdb-ws-reader
+- (logdb): fixed "reconnect" (logserver, websocket)
+
 * Sun Nov 09 2025 Pavel Vainerman <pv@altlinux.ru> 2.41.2-alt1
 - (logdb): servers list supported "log levels"
 - (jscript): c++ http server
