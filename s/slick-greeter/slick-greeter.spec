@@ -5,8 +5,8 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 2.0.9
-Release: alt2
+Version: 2.2.5
+Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPL-3.0-or-later
@@ -19,7 +19,8 @@ Source2: %name.gschema.override
 Patch: %name-%version-%release.patch
 
 Requires: lightdm
-Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
+Requires: xapps-icons
+Requires: xapp-symbolic-icons
 Requires: onboard
 Requires: orca
 
@@ -89,11 +90,14 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_man8dir/slick-greeter.8.*
 
 %changelog
+* Sun Dec 28 2025 Anton Midyukov <antohami@altlinux.org> 2.2.5-alt1
+- New version 2.2.5.
+
 * Tue Apr 08 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.9-alt2
 - NMU: remove requirement of /usr/share/design/current
 
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 2.0.9-alt1
-- new version (2.0.9) with rpmgs script
+- New version 2.0.9.
 
 * Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 2.0.8-alt1
 - 2.0.8
