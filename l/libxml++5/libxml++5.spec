@@ -2,7 +2,7 @@
 
 %define _name libxml++
 %define git_name libxmlplusplus
-%define ver_major 5.4
+%define ver_major 5.6
 %define api_ver 5.0
 
 %def_disable doc
@@ -14,13 +14,15 @@ Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://libxmlplusplus.sourceforge.net/
 
-%if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-%else
 Vcs: https://github.com/libxmlplusplus/libxmlplusplus.git
+
+%if_disabled snapshot
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: https://github.com/libxmlplusplus/libxmlplusplus/releases/download/%version/%_name-%version.tar.xz
+%else
 Source: %git_name-%version.tar
 %endif
 
@@ -87,6 +89,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Sun Dec 28 2025 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
 - 5.4.0
 

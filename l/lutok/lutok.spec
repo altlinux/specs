@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lutok
-Version: 0.6
+Version: 0.6.2
 Release: alt1
 
 Summary: Lightweight C++ API library for Lua
@@ -138,6 +138,9 @@ $ kyua test -k %pkgtestsdir/Kyuafile
 %endif
 
 %changelog
+* Sun Dec 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
 - 0.6 (ported to lua-5.4)
 - enabled %%check
