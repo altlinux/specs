@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: numix-icon-theme-circle
-Version: 25.12.15
+Version: 25.12.27
 Release: alt1
 
 Summary: Circle icon theme from the Numix project
@@ -47,6 +47,9 @@ cp -pr Numix-Circle-Light %buildroot%_iconsdir/Numix-Circle-Light
 %exclude %_iconsdir/Numix-Circle/24/panel
 
 %changelog
+* Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 25.12.27-alt1
+- New version 25.12.27.
+
 * Sat Dec 20 2025 Nikolay Strelkov <snk@altlinux.org> 25.12.15-alt1
 - New version 25.12.15.
 

@@ -3,7 +3,7 @@
 %define appname io.github.ellie_commons.reminduck
 
 Name: reminduck
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Remember your stuff in an adorably annoying way
@@ -63,6 +63,9 @@ sed -i "s|data/screenshots/||" README.md
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Fri Dec 26 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
 - new version 2.2.0 (with rpmrb script)
 
