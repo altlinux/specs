@@ -5,7 +5,7 @@
 
 Name:		sparse
 Version:	0.6.4
-Release:	alt2
+Release:	alt3
 Summary: 	A semantic parser for C
 License:	MIT
 Group:		Development/C
@@ -18,21 +18,17 @@ BuildRequires:	libxml2-devel
 BuildRequires:	libgtk+3-devel
 # for semind (ex sindex)
 BuildRequires:	libsqlite3-devel
-# for docs
-BuildRequires:	python3-module-recommonmark
-BuildRequires:	python3-module-sphinx
-BuildRequires:	python3-module-sphinx_rtd_theme
-BuildRequires:	sphinx
 
 %description
-Sparse, the semantic parser, provides a compiler frontend capable of parsing
-most of ANSI C as well as many GCC extensions, and a collection of sample
-compiler backends, including a static analyzer also called "sparse". Sparse
-provides a set of annotations designed to convey semantic information about
-types, such as what address space pointers point to, or what locks a function
-acquires or releases.
+Sparse, the semantic parser, provides a compiler frontend capable of
+parsing most of ANSI C as well as many GCC extensions, and a collection
+of sample compiler backends, including a static analyzer also called
+"sparse".  Sparse provides a set of annotations designed to convey
+semantic information about types, such as what address space pointers
+point to, or what locks function acquires or releases.
 
-Sparse is primarily used in the development and debugging of the Linux kernel.
+Sparse is primarily used in the development and debugging of the Linux
+kernel.
 
 %prep
 %setup
@@ -40,7 +36,6 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %make_build CFLAGS="%optflags" V=1
-%make_build -C Documentation SPHINXBUILD=sphinx-build-3 html
 
 %install
 %makeinstall_std PREFIX=%_prefix
@@ -49,7 +44,7 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %make_build check
 
 %files
-%doc LICENSE README FAQ Documentation/build/html
+%doc LICENSE README FAQ Documentation/*.rst Documentation/release-notes
 %_bindir/c2xml
 %_bindir/cgcc
 %_bindir/semind
@@ -58,6 +53,10 @@ Sparse is primarily used in the development and debugging of the Linux kernel.
 %_man1dir/*.1*
 
 %changelog
+* Sun Dec 28 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.4-alt3
+- Update to v0.6.4-73-gfbdde312 (2025-10-15).
+- Do not build html documentation with Sphinx (FTBFS).
+
 * Wed May 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.6.4-alt2
 - Fix buffer overrun warning from fortify.
 
