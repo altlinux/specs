@@ -1,12 +1,14 @@
 Name: amneziawg-go
-Version: 0.2.16
-Release: alt1
+Version: 0.2.13
+Release: alt2
+Epoch: 1
 
 Summary: Go Implementation of AmneziaWG
 License: MIT
 Group: System/Servers
 
 Url: https://amnezia.org/
+Vcs: https://github.com/amnezia-vpn/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/amnezia-vpn/%name/archive/v%version/%name-%version.tar.gz
@@ -41,6 +43,9 @@ extra layer of stealth, making it a superb choice for those seeking a fast and d
 %_bindir/%name
 
 %changelog
+* Mon Dec 29 2025 Nazarov Denis <nenderus@altlinux.org> 1:0.2.13-alt2
+- Rollback to 0.2.13 for correct work Amnezia VPN with AmneziaWG protocol (ALT #57204)
+
 * Thu Dec 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.2.16-alt1
 - New version 0.2.16.
 
