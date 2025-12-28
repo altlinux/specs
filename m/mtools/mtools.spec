@@ -1,7 +1,7 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.46
+Version: 4.0.49
 Release: alt1
 Epoch: 1
 
@@ -14,7 +14,6 @@ Url: https://www.gnu.org/software/mtools/
 Source: %name-%version.tar
 Source1: floppyd.xinetd
 Source100: mtools.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 Patch0: mtools-3.9.6-config.patch
 
@@ -130,18 +129,21 @@ touch EFI/BOOT/bootia32.efi EFI/enroll/cert
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Sun Dec 28 2025 Anton Midyukov <antohami@altlinux.org> 1:4.0.49-alt1
+- New version 4.0.49.
+
 * Wed Dec 04 2024 Anton Midyukov <antohami@altlinux.org> 1:4.0.46-alt1
-- new version (4.0.46) with rpmgs script
-- cleanup scpec, remove unused patches
+- New version.
+- Cleanup spec, remove unused patches.
 
 * Wed Mar 22 2023 Anton Midyukov <antohami@altlinux.org> 1:4.0.43-alt1
-- new version 4.0.43
+- new version 4.0.43.
 
 * Fri Nov 18 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.42-alt1
-- new version (4.0.42) with rpmgs script via gear-uupdate
+- New version 4.0.42.
 
 * Mon Jul 19 2021 Anton Midyukov <antohami@altlinux.org> 1:4.0.32-alt3
-- add check mcopy to image with FAT12
+- Add check mcopy to image with FAT12.
 
 * Mon Jul 19 2021 Michael Shigorin <mike@altlinux.org> 1:4.0.32-alt2
 - reverting to 4.0.32 due to mcopy breakage (ALT#40532)
