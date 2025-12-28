@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 4cbb57a79
+%global commit_hash 17eb20c13
 
 Name: qwen-code
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: AI-powered command-line workflow tool for developers
 License: Apache-2.0
@@ -29,9 +29,7 @@ It enhances your development workflow with advanced code
 understanding, automated tasks, and intelligent assistance.
 
 %prep
-# npm ci
-# git add -f node_modules packages/cli/node_modules packages/core/node_modules
-# git commit -m "Updated node modules." --no-verify
+# ./alt/update_modules.sh
 %setup -a 1 -a 2 -a 3
 mkdir -p packages/{core,cli}/src/generated
 tee packages/{core,cli}/src/generated/git-commit.{js,ts} <<EOF
@@ -62,6 +60,9 @@ install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 %doc LICENSE
 
 %changelog
+* Sun Dec 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.0-alt1
+- Updated to version 0.6.0.
+
 * Mon Dec 15 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.0-alt1
 - Updated to version 0.5.0.
 
