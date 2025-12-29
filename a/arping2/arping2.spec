@@ -2,7 +2,7 @@
 %define libnet_ver 2
 
 Name: arping2
-Version: 2.27
+Version: 2.28
 Release: alt1
 
 Summary: Layer2 Ethernet pinger
@@ -49,6 +49,9 @@ mv %buildroot%_man8dir/{%origname,%name}.8
 %_man8dir/*
 
 %changelog
+* Mon Dec 29 2025 Michael Shigorin <mike@altlinux.org> 2.28-alt1
+- new version (watch file uupdate)
+
 * Sun Dec 28 2025 Michael Shigorin <mike@altlinux.org> 2.27-alt1
 - new version (watch file uupdate)
 
