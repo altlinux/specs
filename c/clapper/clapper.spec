@@ -7,11 +7,12 @@
 %def_enable doc
 %def_enable enhancers_loader
 %def_enable pipeline_preview
+%def_enable server
 %def_enable check
 
 Name: clapper
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Clapper is a GNOME media player
 License: GPL-3.0-or-later
@@ -30,6 +31,7 @@ Source: %name-%version.tar
 %define gtk_ver 4.10
 %define adw_ver 1.5.0
 %define gst_ver 1.24
+%define microdns_ver 0.2.0
 
 Requires: lib%name = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -58,6 +60,7 @@ BuildRequires: gir(Gst) gir(GstAudio) gir(GstBase)
 BuildRequires: gir(GstPbutils) gir(GstTag) gir(GstVideo)
 %{?_enable_enhancers_loader:BuildRequires: pkgconfig(libpeas-2)}
 %{?_enable_pipeline_preview:BuildRequires: pkgconfig(libcgraph) pkgconfig(libgvc)}
+%{?_enable_server:BuildRequires: pkgconfig(microdns) >= %microdns_ver}
 %{?_enable_doc:BuildRequires: gi-docgen /usr/bin/dot}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -97,7 +100,8 @@ ClapperGtk libraries.
 %meson \
     %{subst_enable_meson_bool doc doc} \
     %{subst_enable_meson_feature enhancers_loader enhancers-loader} \
-    %{subst_enable_meson_feature pipeline_preview pipeline-preview}
+    %{subst_enable_meson_feature pipeline_preview pipeline-preview} \
+    %{subst_enable_meson_feature server server}
 %nil
 %meson_build
 
@@ -156,6 +160,9 @@ ln -s gstreamer-1.0/libgst%name.so %buildroot%_libdir/libgst%name.so
 %exclude %_datadir/doc/clapper-gtk
 
 %changelog
+* Mon Dec 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.1
+- enabled server feature
+
 * Mon Dec 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
