@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.27
+Version: 0.0.31
 Release: alt1
 
 Summary: SQL databases in Python, designed for simplicity, compatibility, and robustness
@@ -73,6 +73,9 @@ export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.31-alt1
+- Updated to 0.0.31.
+
 * Thu Oct 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.27-alt1
 - Updated to 0.0.27.
 
