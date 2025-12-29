@@ -19,7 +19,7 @@
 
 Name:   	claws-mail
 Version:	4.3.1
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -30,6 +30,28 @@ Vcs:		git://git.claws-mail.org/claws.git
 
 Source: %name-%version.tar
 Patch:	%name-%version-%release.patch
+
+# Patches from upstream git:
+Patch100: Fix-CID-1643855-Null-pointer-dereferences-NULL_RETUR.patch
+Patch101: Fix-CID-1491244-remove-never-used-anyway-wrong-retur.patch
+Patch102: Fix-CID-1491244-Also-fix-return-if-fail.-Thanks-to-B.patch
+Patch103: Fix-CID-1508490-unnecessary-use-of-32-bit-time.patch
+Patch104: Fix-CID-1508491-Use-of-32-bit-time_t.patch
+Patch105: Fix-CID-1643906-use-time_t-as-much-as-possible-and-I.patch
+Patch106: Fix-CID-1642806-Double-free-USE_AFTER_FREE.patch
+Patch107: Fix-CID-1642795-Double-free-USE_AFTER_FREE.patch
+Patch108: Fix-CID-1491061-Out-of-bounds-access-OVERRUN.patch
+Patch109: Fix-CID-1220354-Overflowed-constant-INTEGER_OVERFLOW.patch
+Patch110: Fix-type-mismatch-in-comparisons.patch
+Patch111: CID-1498794-Improper-use-of-negative-value-NEGATIVE_.patch
+Patch112: Make-sure-all-data-manipulation-around-mimeinfo-leng.patch
+Patch113: Fix-CID-1642780-Resource-leak-and-potential-password.patch
+Patch114: Fix-CID-1644197.-False-positive.patch
+Patch115: Fix-CID-1642812-resource-leak-and-other-issues.patch
+Patch116: Fix-CID-1491239-resource-leak.patch
+Patch117: Attempt-to-fix-CID-1491271-Resource-leak.patch
+Patch118: Fix-CID-1498799-Uninitialized-scalar-variable.patch
+Patch119: Fix-CID-1220388-Out-of-bounds-write-OVERRUN.patch
 
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
@@ -602,6 +624,27 @@ echo 'echo "%version"' >./version
 
 %patch -p1
 
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+%patch118 -p1
+%patch119 -p1
+
 %autoreconf
 
 %build
@@ -816,6 +859,29 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Dec 29 2025 Mikhail Efremov <sem@altlinux.org> 4.3.1-alt3
+- Patches from upstream:
+  + Fix: CID 1643855:  Null pointer dereferences  (NULL_RETURNS);
+  + Fix CID 1491244, remove (never used anyway) wrong return;
+  + Fix CID 1491244: Also fix return if fail;
+  + Fix CID 1508490 (unnecessary) use of 32-bit time;
+  + Fix CID 1508491: Use of 32-bit time_t;
+  + Fix CID 1643906: use time_t as much as possible and I/O;
+  + Fix CID 1642806: Double free (USE_AFTER_FREE);
+  + Fix CID 1642795: Double free (USE_AFTER_FREE);
+  + Fix CID 1491061: Out-of-bounds access (OVERRUN);
+  + Fix CID 1220354: Overflowed constant (INTEGER_OVERFLOW);
+  + Fix type mismatch in comparisons;
+  + CID 1498794: Improper use of negative value;
+  + Make sure all data manipulation around mimeinfo->length;
+  + Fix CID 1642780: Resource leak (and potential password leak);
+  + Fix CID 1644197. False positive;
+  + Fix CID 1642812 "resource leak" and other issues;
+  + Fix CID 1491239: resource leak;
+  + Attempt to fix CID 1491271 Resource leak;
+  + Fix CID 1498799 Uninitialized scalar variable;
+  + Fix CID 1220388: Out-of-bounds write (OVERRUN).
+
 * Thu Nov 13 2025 Michael Shigorin <mike@altlinux.org> 4.3.1-alt2
 - E2K: the repository includes all packages to build
   fancy, networkmanager and python plugins, so these
