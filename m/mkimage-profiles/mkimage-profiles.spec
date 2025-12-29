@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.9
+Version: 1.8.10
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 1.8.10-alt1
+- live-install: add use/live-install/wayland
+- oem: add use/oem/wayland feature
+- x11: cleanup use/x11/wacom
+- vmguest: add +vmguest-wayland without depends on xorg
+- Cleanup syslinux gfxboot everything
+- efi: fix 40-efi-shell script for edk2-efi-shell >= 20250808-alt1
+
 * Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 1.8.9-alt1
 - docs: fix links for docs/index.html
 - domain-client-i: remove installer-feature-nfs-client-stage3
