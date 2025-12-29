@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: obs-studio-plugin-multi-rtmp
-Version: 0.5.0.1
-Release: alt1.1
+Version: 0.7.3.2
+Release: alt1
 
 Summary: This is a plugin to streaming to multiple RTMP servers concurrently
 
@@ -35,21 +37,22 @@ It can also use standalone encoders with basic configuration (bitrate).
 %setup
 
 %build
-%cmake_insource
-%make_build
+%add_optflags -Wno-reorder
+%cmake -DENABLE_QT=ON
+%cmake_build
 
 %install
-mkdir -p %buildroot%_datadir/obs
-mkdir -p %buildroot%_libdir/obs-plugins
-mv rundir/RelWithDebInfo/data/obs-plugins %buildroot%_datadir/obs
-mv rundir/RelWithDebInfo/obs-plugins/64bit/obs-multi-rtmp.so %buildroot%_libdir/obs-plugins/obs-multi-rtmp.so
+%cmake_install
 
 %files
-%doc Readme.md LICENSE
+%doc README.md LICENSE
 %_libdir/obs-plugins/obs-multi-rtmp.so
 %_datadir/obs/obs-plugins/obs-multi-rtmp
 
 %changelog
+* Sun Dec 28 2025 Mikhail Tergoev <fidel@altlinux.org> 0.7.3.2-alt1
+- 0.7.3.2
+
 * Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.0.1-alt1.1
 - NMU: Build on all 64-bit architectures
 

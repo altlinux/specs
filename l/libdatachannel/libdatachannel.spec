@@ -1,8 +1,8 @@
 %define soversion() %(echo "%1" | awk -F. '{print $1"."$2}')
 
 Name: libdatachannel
-Version: 0.22.3
-Release: alt2
+Version: 0.24.0
+Release: alt1
 Summary: WebRTC network library featuring Data Channels, Media Transport, and WebSockets
 
 License: MPL-2.0
@@ -64,6 +64,9 @@ sed -i -E 's/(std::.*<.*> .*)\{\};/\1={};/' examples/streamer/ArgParser.hpp
 %_libdir/%name.so
 
 %changelog
+* Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 0.24.0-alt1
+- New version 0.24.0.
+
 * Wed Apr 16 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.22.3-alt2
 - e2k build fix
 

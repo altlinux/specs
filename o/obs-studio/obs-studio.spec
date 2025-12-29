@@ -4,19 +4,21 @@
 %add_python3_path %_libdir/obs-scripting/
 %add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
 
-%define websocket_version 5.5.6
+%define websocket_version 5.6.3
+#%%define browser_version 2.26.3
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 31.1.2
+Version: 32.0.4
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
-Url: https://github.com/obsproject/obs-studio
-Vcs: https://github.com/obsproject/obs-studio.git
+URL: https://github.com/obsproject/obs-studio
+VCS: https://github.com/obsproject/obs-studio.git
 Source: %name-%version.tar
 Source1: obs-websocket-%websocket_version.tar
+#Source2: obs-browser-%%browser_version.tar
 
 Patch: %name-%version-%release.patch
 
@@ -50,7 +52,6 @@ BuildRequires: libv4l-devel
 BuildRequires: libswscale-devel libswresample-devel
 BuildRequires: libavutil-devel libavformat-devel libavdevice-devel libavfilter-devel libavcodec-devel
 BuildRequires: libvlc-devel
-BuildRequires: libpostproc-devel
 BuildRequires: fontconfig-devel libfreetype-devel libpng-devel libexpat-devel
 BuildRequires: systemd-devel libudev-devel
 BuildRequires: pkgconfig(dbus-1)
@@ -74,6 +75,7 @@ BuildRequires: libdatachannel-devel
 BuildRequires: libuthash-devel
 BuildRequires: nv-codec-headers
 BuildRequires: nlohmann-json-devel
+BuildRequires: simde-devel
 %ifarch x86_64 aarch64
 BuildRequires: libvpl-devel
 %endif
@@ -132,13 +134,15 @@ Development files for %name.
 %patch -p1
 rmdir plugins/obs-websocket
 mv obs-websocket-%websocket_version plugins/obs-websocket
+#rmdir plugins/obs-browser
+#mv obs-browser-%%browser_version plugins/obs-browser
 
 %ifarch %e2k
 # someone added this poorly written code to upstream
 sed -i '/MATCHES "e2k"/c if(false)' cmake/Modules/CompilerConfig.cmake
 %add_optflags -DSIMDE_ARCH_AMD64=1000 -mno-sse4.2
 %endif
-touch plugins/obs-{browser,websocket}/CMakeLists.txt
+touch plugins/obs-browser/CMakeLists.txt
 
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
@@ -214,6 +218,12 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Sat Dec 27 2025 Anton Midyukov <antohami@altlinux.org> 32.0.4-alt1
+- New version 32.0.4.
+
+* Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 31.1.2-alt2
+- update obs-websocket to 5.6.2
+
 * Sun Jul 27 2025 Anton Midyukov <antohami@altlinux.org> 31.1.2-alt1
 - new version (31.1.2) with rpmgs script
 
