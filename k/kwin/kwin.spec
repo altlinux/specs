@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.5.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -43,6 +43,7 @@ Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
 Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
+Patch6: ef450432.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -138,6 +139,7 @@ KF6 library
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %K6build \
@@ -201,6 +203,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt2
+- add upstream fix against KDEBUG#513151
+
 * Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
 - new version
 
