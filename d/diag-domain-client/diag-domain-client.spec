@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -55,6 +55,11 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Dec 29 2025 Andrey Limachko <liannnix@altlinux.org> 0.6.0-alt1
+- fix: correct kerberos cache file path handling
+- feat: added kerberos tracing test (thx Kozyrev Yuri)
+- chore: added tmp files cleanup (thx Kozyrev Yuri)
+
 * Tue Dec 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.5.2-alt1
 - fix: adjust shellcheck directives for SC2329
 - docs: update copyright year and add GPL license header
