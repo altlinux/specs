@@ -1,6 +1,6 @@
 Name:    cage
 Version: 0.2.1
-Release: alt2
+Release: alt3
 
 Summary: A Wayland kiosk
 License: MIT
@@ -42,6 +42,11 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt3
+- Upstream fixes:
+  + Fix segfault when title or app_id is NULL.
+  + xdg_shell: skip configure in request_fullscreen handler if unmapped.
+
 * Fri Dec 12 2025 Anton Midyukov <antohami@altlinux.org> 0.2.1-alt2
 - Upstream fixes:
   + Add support for wlr-foreign-toplevel-management
