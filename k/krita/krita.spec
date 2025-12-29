@@ -38,7 +38,7 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 5.2.13
+Version: 5.2.14
 Release: alt1
 %K5init no_altplace
 
@@ -529,6 +529,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.14-alt1
+- new version
+
 * Wed Oct 01 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.13-alt1
 - new version (fixes: CVE-2025-59820)
 
