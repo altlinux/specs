@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.18.2
-Release: alt2
+Release: alt3
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python
@@ -12,6 +12,7 @@ Url: https://python-future.org/
 # https://github.com/PythonCharmers/python-future.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: CVE-2022-40899.patch
 BuildArch: noarch
 
 %description
@@ -39,6 +40,9 @@ rm -r %buildroot%python_sitelibdir/*/tests
 %python_sitelibdir/*
 
 %changelog
+* Thu Nov 27 2025 Alexander Danilov <admsasha@altlinux.org> 0.18.2-alt3
+- Applied upstream patch (fixed CVE-2022-40899).
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.18.2-alt2
 - Build without python3 support.
 
