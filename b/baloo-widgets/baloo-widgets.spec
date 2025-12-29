@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 25.08.3
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -47,7 +47,8 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
-Obsoletes: libkf5baloowidgets < %EVR
+# tagsfileitemaction
+Requires: kf6-baloo
 %description -n libkf6baloowidgets
 %name library
 
@@ -82,6 +83,9 @@ Obsoletes: libkf5baloowidgets < %EVR
 
 
 %changelog
+* Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
+- fix requries
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
