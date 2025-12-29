@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
+%ifnarch i586
 %define _stripped_files_terminate_build 1
+%endif
 
 %define ruff_pypi_name ruff
 %define ruff_import_name ruff
-%define ruff_version 0.13.3
+%define ruff_version 0.14.10
 
 %define ty_pypi_name ty
 %define ty_import_name ty
-%define ty_version 0.0.1a21
+%define ty_version 0.0.4
 
 %define bash_completionsdir %_datadir/bash-completion/completions
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
@@ -84,6 +86,7 @@ touch python/%ruff_import_name/py.typed
 rm -rv docs/requirements*.txt docs/.gitignore docs/.overrides
 
 %build
+export CARGO_BUILD_JOBS=%__nprocs
 %ifarch aarch64
 # aarch64 needs this flag to avoid the following building errors:
 #    - undefined reference to `__aarch64_swp1_acq'
@@ -94,6 +97,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 # i586 needs this flag to avoid the following building error:
 #    - undefined reference to '__stack_chk_fail_local'
 export CFLAGS="$CFLAGS -fno-stack-protector"
+# decrease parallel jobs to lower required memory allocation
+# (this need to fit in 4GB limit for 32-bit machines)
+export CARGO_BUILD_JOBS=1
 %endif
 %pyproject_build -o dist-%ruff_pypi_name
 
@@ -122,6 +128,13 @@ mkdir -p %buildroot%zsh_completionsdir
 %buildroot%_bindir/ruff generate-shell-completion zsh \
     > %buildroot%zsh_completionsdir/_%ruff_pypi_name
 
+%buildroot%_bindir/ty generate-shell-completion bash \
+    > %buildroot%bash_completionsdir/%ty_pypi_name
+%buildroot%_bindir/ty generate-shell-completion fish \
+    > %buildroot%fish_completionsdir/%ty_pypi_name.fish
+%buildroot%_bindir/ty generate-shell-completion zsh \
+    > %buildroot%zsh_completionsdir/_%ty_pypi_name
+
 # move python-module to noarch-directory
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
 mkdir -p %buildroot%python3_sitelibdir_noarch
@@ -142,12 +155,20 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %files -n %ty_pypi_name
 %doc LICENSE
 %_bindir/ty
+%bash_completionsdir/%ty_pypi_name
+%fish_completionsdir/%ty_pypi_name.fish
+%zsh_completionsdir/_%ty_pypi_name
 
 %files -n python3-module-%ty_pypi_name
 %python3_sitelibdir_noarch/%ty_import_name/
 %python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Mon Dec 29 2025 Anton Zhukharev <ancieg@altlinux.org> 0.14.10-alt1
+- Updated ruff to 0.14.10.
+- Updated ty to 0.0.4.
+- Shipped shell completions for ty.
+
 * Fri Oct 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.13.3-alt1
 - Updated ruff to 0.13.3.
 
