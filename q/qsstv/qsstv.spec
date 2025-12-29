@@ -1,6 +1,6 @@
 Name: qsstv
-Version: 9.5.8
-Release: alt2
+Version: 9.5.11
+Release: alt1
 
 Summary: Qt-based SSTV and HamDRM
 License: GPLv2
@@ -11,6 +11,7 @@ Source1: qsstv.1
 Source2: index.html
 
 Patch0: qsstv-9.5.8-rigcontrol.cpp.patch
+Patch1: qsstv-9.5.11-Fix-broken-DRM-decode.patch
 
 Requires: icon-theme-hicolor
 
@@ -64,6 +65,9 @@ install -D -m0644 %SOURCE1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Dec 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.5.11-alt1
+- new version
+
 * Mon Dec 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.5.8-alt2
 - add some documentation
 
