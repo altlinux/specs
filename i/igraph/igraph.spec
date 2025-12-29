@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: igraph
-Version: 1.0.0
-Release: alt1.1
+Version: 1.0.1
+Release: alt1
 
 Summary: Library for creating and manipulating graphs
 License: GPL-2.0+
@@ -146,6 +146,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
+- New version 1.0.1.
+
 * Mon Sep 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1.1
 - Packaged libigraph-doc subpackage as noarch.
 
