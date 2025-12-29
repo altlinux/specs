@@ -1,22 +1,26 @@
+%define _unpackaged_files_terminate_build 1
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-usbguard
 Version: 0.2.3
-Release: alt1
+Release: alt2
+
 Summary: alterator module to control usb devices
 Group: System/Configuration/Other
-License: %gpl2plus
+License: GPL-2.0-or-later
 Url: https://gitlab.basealt.space/proskurinov/alterator_usbguard
+VCS: https://gitlab.basealt.space/proskurinov/alterator_usbguard.git
 
 Source: %name-%version.tar
 Source1: %name-%version-thirdparty-cppcodec.tar
 Source2: %name-%version-thirdparty-rapidcsv.tar
 
+BuildRequires(pre): rpm-macros-cmake
+BuildPreReq: gcc-c++ cmake ninja-build
+BuildRequires: usbguard-devel libusbguard1 boost-devel-headers
+BuildRequires: libsdbus-cpp-devel libsystemd-devel gettext-tools
+
 Requires: usbids usbguard alterator
-BuildPreReq: gcc-c++ cmake ninja-build rpm-macros-cmake rpm-build-licenses 
-
-BuildRequires: usbguard-devel libusbguard1 boost-devel-headers  libsdbus-cpp-devel libsystemd-devel gettext-tools
-
 
 %description
 Alterator Module to control USB devices via USBGuard.
@@ -31,7 +35,9 @@ Alterator Module to control USB devices via USBGuard.
 %install
 %cmake_install --config Release
 
-%files
+%find_lang alterator-usbguard
+
+%files -f alterator-usbguard.lang
 %_altdata_dir/applications/USBGuard.desktop
 %_altdata_dir/design/scripts/alt-usb-guard.js
 %_altdata_dir/design/styles/alt_usb_guard.css
@@ -40,10 +46,11 @@ Alterator Module to control USB devices via USBGuard.
 %_altdata_dir/help/ru_RU/usbguard.html
 %_usr/lib/alterator/backend3/usbguard
 %_sysconfdir/usbguard/android_vidpid.json
-%lang(ru)  %_datadir/locale/ru/LC_MESSAGES/alterator-usbguard.mo
-
 
 %changelog
+* Mon Dec 29 2025 Oleg Proskurin <proskur@altlinux.org> 0.2.3-alt2
+- Fix major mistakes in the .spec file.
+
 * Wed Mar 26 2025 Oleg Proskurin <proskur@altlinux.org> 0.2.3-alt1
 - Port to sdbus-c++ 2.1.0-alt1 aka libsdbus-cpp2
 
