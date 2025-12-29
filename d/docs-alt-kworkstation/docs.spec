@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 29 2025 Elena Mishina <lepata@altlinux.org> 11.2-alt2
+- update to ALT Kworkstation 11.2
+
 * Mon Dec 01 2025 Elena Mishina <lepata@altlinux.org> 11.2-alt1
 - update to ALT Kworkstation 11.2RC1
 - update virtualbox (closes #57045)
