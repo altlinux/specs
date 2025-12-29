@@ -15,7 +15,7 @@
 
 Name:           icinga-php-library
 Version:        0.17.0
-Release:        alt1
+Release:        alt2
 Summary:        Icinga PHP Library for Icinga Web 2
 License:        MIT
 Group:          Monitoring
@@ -25,10 +25,11 @@ Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version
 
 BuildRequires(pre): rpm-build-php-version
 
+BuildRequires:  php%php_defver-devel
 BuildRequires:  fdupes
 BuildArch:      noarch
 
-Requires: php%_php_major.%_php_minor-intl
+Requires: php%php_defver-intl
 
 %description
 This project bundles all Icinga PHP libraries into one
@@ -55,6 +56,9 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt2
+- Select PHP version using %%php_defver macro.
+
 * Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 0.17.0-alt1
 - New version 0.17.0.
 

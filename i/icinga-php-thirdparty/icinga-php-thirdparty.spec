@@ -15,7 +15,7 @@
 
 Name:           icinga-php-thirdparty
 Version:        0.13.1
-Release:        alt1
+Release:        alt2
 Summary:        Icinga PHP Thirdparty for Icinga Web 2
 License:        MIT
 Group:          Monitoring
@@ -23,6 +23,9 @@ URL:            https://icinga.com
 Vcs:            https://github.com/Icinga/icinga-php-thirdparty.git
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 
+BuildRequires(pre): rpm-build-php-version
+
+BuildRequires:  php%php_defver-devel
 BuildRequires:  fdupes
 BuildArch:      noarch
 
@@ -60,6 +63,9 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt2
+- Select PHP version using %%php_defver macro.
+
 * Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt1
 - New version 0.13.1.
 

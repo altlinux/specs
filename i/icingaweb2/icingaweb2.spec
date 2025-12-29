@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.5
-Release:        alt1
+Release:        alt2
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -40,7 +40,7 @@ Requires:       icinga2-common
 
 BuildRequires(pre): rpm-build-php-version
 
-BuildRequires:  php-devel
+BuildRequires:  php%php_defver-devel
 BuildRequires:  icinga-php-library >= 0.13.0
 
 Provides:       icinga2-web
@@ -70,7 +70,7 @@ Requires:       bash-completion
 Requires:       icinga-l10n >= 1.1.0
 Requires:       %name-common = %version-%release
 Requires:       %name-php = %version-%release
-Requires:       php%_php_major.%_php_minor
+Requires:       php%php_defver
 
 %description cli
 Icinga command line interface.
@@ -87,14 +87,14 @@ Summary:        Icinga Web PHP library
 Group:          Development/Other
 Requires:       icinga-php-library >= 0.13.0
 Requires:       icinga-php-thirdparty >= 0.12.0
-Requires:       php%_php_major.%_php_minor-openssl
+Requires:       php%php_defver-openssl
 Requires:       %name-php-sql = %version-%release
-Requires:       php%_php_major.%_php_minor-ldap
-Requires:       php%_php_major.%_php_minor-mbstring
-Requires:       php%_php_major.%_php_minor-gd
-Requires:       php%_php_major.%_php_minor-imagick
-Requires:       php%_php_major.%_php_minor-curl
-Requires:       php%_php_major.%_php_minor-fileinfo
+Requires:       php%php_defver-ldap
+Requires:       php%php_defver-mbstring
+Requires:       php%php_defver-gd
+Requires:       php%php_defver-imagick
+Requires:       php%php_defver-curl
+Requires:       php%php_defver-fileinfo
 
 %description php
 Icinga Web PHP and vendor libraries.
@@ -102,7 +102,7 @@ Icinga Web PHP and vendor libraries.
 %package php-mysql
 Summary:        MySQL PDO bindings for Icinga Web PHP library
 Group:          Development/Other
-Requires:       php%_php_major.%_php_minor-pdo_mysql
+Requires:       php%php_defver-pdo_mysql
 Provides:       %name-php-sql = %version-%release
 
 %description php-mysql
@@ -111,8 +111,8 @@ Selects MySQL PDO module to be used with Icinga Web PHP library.
 %package php-pgsql
 Summary:        PostgreSQL PDO bindings for Icinga Web PHP library
 Group:          Development/Other
-Requires:       php%_php_major.%_php_minor-pdo_pgsql
-Requires:       php%_php_major.%_php_minor-pgsql
+Requires:       php%php_defver-pdo_pgsql
+Requires:       php%php_defver-pgsql
 Provides:       %name-php-sql = %version-%release
 
 %description php-pgsql
@@ -121,7 +121,7 @@ Selects PostgreSQL PDO module to be used with Icinga Web PHP library.
 %package nginx
 Summary:        Run Icinga Web with Nginx web server
 Group:          System/Configuration/Other
-Requires:       php%_php_major.%_php_minor-fpm-fcgi
+Requires:       php%php_defver-fpm-fcgi
 Requires:       %name-php-fpm = %version-%release
 Requires:       %name = %version-%release
 Requires:       nginx
@@ -151,7 +151,7 @@ cat <<EOF >%name-php-fpm.conf
 [%name]
 user = %icinga_user
 group = %icingaweb_group
-listen = %_var/run/php%_php_major.%_php_minor-fpm/%name.socket
+listen = %_var/run/php%php_defver-fpm/%name.socket
 listen.owner = root
 listen.group = _webserver
 listen.mode = 0660
@@ -186,9 +186,9 @@ EOF
 bin/icingacli setup config webserver nginx \
 			  --document-root %_datadir/%name/public \
 			  --config %_sysconfdir/%name \
-			  --fpm-socket-path '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' | \
-	sed -e 's/^.\+$/    &/' \
-	    >>nginx-%name.conf
+			  --fpm-socket-path '%_var/run/php%php_defver-fpm/%name.socket' >.nginx-%name.setup.conf
+sed -i -e 's/^.\+$/    &/' .nginx-%name.setup.conf
+cat .nginx-%name.setup.conf >>nginx-%name.conf
 cat <<EOF >>nginx-%name.conf
 }
 EOF
@@ -213,7 +213,7 @@ install -dm 775 %buildroot%_var/log/%name
 install -Dpm 0755 bin/icingacli.patched %buildroot%_bindir/icingacli
 mkdir -p %buildroot%webdir
 mkdir %buildroot%webdir/sessions %buildroot%webdir/tmp
-install -D -m0644 %name-php-fpm.conf %buildroot%_sysconfdir/fpm%_php_major.%_php_minor/php-fpm.d/%name.conf
+install -D -m0644 %name-php-fpm.conf %buildroot%_sysconfdir/fpm%php_defver/php-fpm.d/%name.conf
 mkdir -p %buildroot%_datadir/icinga-php
 install -D -m0644 nginx-%name.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 install -D -m0644 %name-php-fpm.tmpfiles.conf %buildroot%_sysconfdir/tmpfiles.d/%name.conf
@@ -238,7 +238,7 @@ if [ $1 -eq 1 ]; then
 fi
 
 %check
-grep -F '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' ./nginx-icingaweb2.conf
+grep -F '%_var/run/php%php_defver-fpm/%name.socket' ./nginx-icingaweb2.conf
 
 %files
 %doc CHANGELOG.md
@@ -280,7 +280,7 @@ grep -F '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' ./nginx-icingawe
 %_bindir/icingacli
 
 %files php-fpm
-%config(noreplace) %_sysconfdir/fpm%_php_major.%_php_minor/php-fpm.d/%name.conf
+%config(noreplace) %_sysconfdir/fpm%php_defver/php-fpm.d/%name.conf
 %config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
 %ghost %dir /run/%name
 
@@ -303,6 +303,10 @@ grep -F '%_var/run/php%_php_major.%_php_minor-fpm/%name.socket' ./nginx-icingawe
 %_datadir/%name/public/css
 
 %changelog
+* Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.5-alt2
+- Select PHP version using %%php_defver macro.
+- Fix: Don't mask the exit status of icingacli setup.
+
 * Fri Aug 15 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.5-alt1
 - New version 2.12.5.
 - Fixed --fpm-socket-path setup CLI flag (thx Jan Schuppik).

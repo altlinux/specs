@@ -22,7 +22,7 @@
 
 Name:           icingaweb2-module-director
 Version:        1.11.5
-Release:        alt1
+Release:        alt2
 
 Summary:        Config module for Icinga 2
 License:        GPL-2.0-or-later
@@ -35,18 +35,18 @@ Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version
 Patch0:         director-no-deprecated-modules.patch
 
 BuildRequires(pre): rpm-build-php-version
-BuildRequires:  php-devel
+BuildRequires:  php%php_defver-devel
 
 Requires:       icinga2 >= 2.8.0
 Requires:       icingaweb2 >= 2.8.0
 Requires:       icingaweb2-common >= 2.8.0
 Requires:       icingaweb2-module-incubator >= 0.22.0
-Requires:       php%_php_major.%_php_minor >= 7.3
-Requires:       php%_php_major.%_php_minor-curl
-Requires:       php%_php_major.%_php_minor-iconv
-Requires:       php%_php_major.%_php_minor-pcntl
-Requires:       php%_php_major.%_php_minor-posix
-Requires:       php%_php_major.%_php_minor-sockets
+Requires:       php%php_defver >= 7.3
+Requires:       php%php_defver-curl
+Requires:       php%php_defver-iconv
+Requires:       php%php_defver-pcntl
+Requires:       php%php_defver-posix
+Requires:       php%php_defver-sockets
 
 BuildArch:      noarch
 
@@ -101,6 +101,9 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %_unitdir/icinga-director.service
 
 %changelog
+* Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 1.11.5-alt2
+- Select PHP version using %%php_defver macro.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 1.11.5-alt1
 - New version 1.11.5 (fixes: CVE-2024-24820, CVE-2025-23203).
 

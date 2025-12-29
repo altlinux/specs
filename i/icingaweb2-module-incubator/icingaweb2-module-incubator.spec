@@ -22,7 +22,7 @@
 
 Name: icingaweb2-module-%module_name
 Version: 0.22.0
-Release: alt1
+Release: alt2
 Summary: Bleeding edge Icinga Web 2 libraries
 License: MIT
 Group: Monitoring
@@ -36,9 +36,9 @@ Patch1:  upstream-Fix-form-validation.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-php-version
-BuildRequires: php-devel
+BuildRequires: php%php_defver-devel
 
-Requires: php%_php_major.%_php_minor-ctype
+Requires: php%php_defver-ctype
 
 %description
 Icinga Web 2 - ReactPHP-based 3rd party libraries
@@ -66,6 +66,9 @@ cp -pv *.md *.php *.info %buildroot%basedir/modules/%module_name
 %basedir/modules/%module_name/*
 
 %changelog
+* Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 0.22.0-alt2
+- Select PHP version using %%php_defver macro.
+
 * Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.22.0-alt1
 - New version 0.22.0.
 
