@@ -4,8 +4,8 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 %K6init
 
 Group: Video
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt1
+- new version
+
 * Fri Nov 21 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt2
 - update russian translation
 
