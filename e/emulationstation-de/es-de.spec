@@ -5,7 +5,7 @@
 Summary: A cross-platform graphical front-end for emulators - desktop edition
 Name: emulationstation-de
 Version: 3.4.0
-Release: alt1
+Release: alt2
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -32,7 +32,7 @@ BuildRequires:  libfreetype-devel
 BuildRequires:  gcc-c++ cmake
 BuildRequires:  libSDL2-devel
 BuildRequires:  boost-devel
-BuildRequires:  libcurl-devel libvlc-devel libavcodec-devel libavfilter-devel libavformat-devel libgit2-devel libpoppler-devel libswresample-devel libswscale-devel libpostproc-devel libpoppler-gir-devel libpoppler-cpp-devel
+BuildRequires:  libcurl-devel libvlc-devel libavcodec-devel libavfilter-devel libavformat-devel libgit2-devel libpoppler-devel libswresample-devel libswscale-devel libpoppler-gir-devel libpoppler-cpp-devel
 BuildRequires:  libpugixml-devel
 BuildRequires:  libcec-devel libudev-devel
 BuildRequires:  libSDL2-devel libSDL2_mixer-devel
@@ -112,6 +112,9 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Mon Dec 29 2025 Artyom Bystrov <arbars@altlinux.org> 3.4.0-alt2
+- Remove unneded pachage from BR
+
 * Mon Dec 15 2025 Artyom Bystrov <arbars@altlinux.org> 3.4.0-alt1
 - Update to new version
 
