@@ -6,7 +6,7 @@
 
 Name: dtkmultimedia
 Version: 6.0.4
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit multimedia modules
 
@@ -24,7 +24,6 @@ Vcs: https://github.com/linuxdeepin/dtkmultimedia
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtkmultimedia-6.0.1-pull61-ffmpeg7.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 %if_enabled clang
@@ -111,7 +110,6 @@ This package provides %name documantation.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 %if_enabled clang
@@ -174,6 +172,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt2
+- Fixed build with ffmpeg 8.0.1.
+
 * Wed Oct 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
 - New version 6.0.4.
 
