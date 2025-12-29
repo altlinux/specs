@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.26
+Version: 6.0.28
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -110,6 +110,9 @@ export READELF="llvm-readelf"
 # ---
 
 %changelog
+* Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.28-alt1
+- New version 6.0.28.
+
 * Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.26-alt1
 - New version 6.0.26.
 
