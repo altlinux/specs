@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -63,8 +63,10 @@ rm -r %buildroot%_datadir/%name/mirrors
 
 %find_lang %name --all-name
 
-%preun
-%_bindir/python3 %_datadir/%name/ams_check.py
+%post
+if [ "$1" -eq 2 ]; then
+   python3 %_datadir/%name/ams_check.py
+fi
 
 %files -f %name.lang
 %_bindir/%name
@@ -82,6 +84,11 @@ rm -r %buildroot%_datadir/%name/mirrors
 %_bindir/ams
 
 %changelog
+* Mon Dec 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.2-alt1
+- GUI: added: https protocol support.
+- GUI: added: convert http -> https.
+- GUI: fix: minor flaws.
+
 * Mon Dec 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.1-alt1
 - ams: added: "file" protocol
 - fix: some errors
