@@ -4,8 +4,8 @@
 
 %def_with check
 
-Name: httpdbg
-Version: 1.2.1
+Name: python3-module-%pypi_name
+Version: 2.0.0
 Release: alt1
 
 Summary: Tool to trace the HTTP(S) client requests in python code
@@ -18,6 +18,9 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+
+Provides: httpdbg = %EVR
+Obsoletes: httpdbg < %EVR
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -59,6 +62,9 @@ A very simple tool to debug HTTP(S) client and server request.
 %_bindir/pyhttpdbg
 
 %changelog
+* Mon Dec 29 2025 Maxim Tulskiy <tulskijms@altlinux.org> 2.0.0-alt1
+- Updated to new version v2.0.0.
+
 * Sun Apr 27 2025 Maxim Tulskiy <tulskijms@altlinux.org> 1.2.1-alt1
 - Initial build for ALT Sisyphus.
 
