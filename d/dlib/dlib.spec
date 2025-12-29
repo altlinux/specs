@@ -2,21 +2,22 @@
 
 Name: dlib
 Version: 20.0.0
-Release: alt1
+Release: alt2
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
 Url: http://dlib.net
-Vcs: https://github.com/davisking/dlib.git
+VCS: https://github.com/davisking/dlib
 
-Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libX11-devel libfftw3-devel libgif-devel libjpeg-devel libpng-devel libsqlite3-devel openmpi-devel python3-devel
 # END SourceDeps(oneline)
 BuildRequires: cmake rpm-build-python3 python3-module-setuptools python3-module-wheel
-BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel libpostproc-devel pybind11-devel python3-module-pybind11
+BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel libjxl-devel pybind11-devel python3-module-pybind11
 
 %description
 Dlib is a general purpose cross-platform C++ library
@@ -61,7 +62,7 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
   -DLIB_USE_CUDA=false \
   -DBUILD_SHARED_LIBS=true \
   -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
-  -DDLIB_JXL_SUPPORT=false \
+  -DDLIB_JXL_SUPPORT=true \
 #   -DUSE_AVX_INSTRUCTIONS=false \
 #   -DUSE_SSE4_INSTRUCTIONS=false \
 #
@@ -92,6 +93,10 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt2
+- Fixed build with ffmpeg 8.0.1.
+- Built with JPEG XL support.
+
 * Tue Jun 03 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt1
 - New version 20.0.0.
 
