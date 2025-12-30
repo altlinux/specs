@@ -2,7 +2,7 @@
 
 Name: dlib
 Version: 20.0.0
-Release: alt2
+Release: alt3
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -33,6 +33,15 @@ This package provides library for %name.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
+Requires: libgif-devel
+Requires: libsqlite3-devel
+Requires: libavdevice-devel
+Requires: libavfilter-devel
+Requires: libswresample-devel
+Requires: libswscale-devel
+Requires: liblapack-devel
+Requires: libopenblas-devel
+Requires: libjxl-devel
 
 %description devel
 This package provides development files for %name.
@@ -93,6 +102,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Tue Dec 30 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt3
+- Added requires on dlib-devel.
+
 * Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt2
 - Fixed build with ffmpeg 8.0.1.
 - Built with JPEG XL support.
