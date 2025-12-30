@@ -1,6 +1,6 @@
 Name: normcap
 Version: 0.6.0
-Release: alt5
+Release: alt6
 
 Summary: OCR powered screen-capture tool to capture information instead of images
 
@@ -12,6 +12,11 @@ VCS: https://github.com/dynobo/normcap
 BuildArch: noarch
 
 Source: %name-%version.tar
+# https://bugzilla.altlinux.org/57353
+Source1: com.github.dynobo.normcap.desktop
+Source2: normcap.desktop
+Source3: normcap
+Source4: normcap2
 
 Requires: tesseract xsel
 
@@ -35,16 +40,6 @@ Summary: OCR powered screen-capture tool to capture information instead of image
 
 %prep
 %setup
-cat >> %name.desktop <<EOF
-#!/usr/bin/python3
-[Desktop Entry]
-Categories=Utility;
-Name=Normcap
-Type=Application
-Terminal=false
-Exec=%name
-Icon=%python3_sitelibdir/%name/resources/icons/%name.png
-EOF
 #remove update check
 %autopatch -p0
 
@@ -58,19 +53,28 @@ done
 
 %install
 %pyproject_install
-install -Dm 0644 %name.desktop %buildroot%_datadir/applications/%name.desktop
+rm -v %buildroot%_bindir/%name
+install -Dm 0644 %SOURCE1 %buildroot%_datadir/applications/com.github.dynobo.normcap.desktop
+install -Dm 0644 %SOURCE2 %buildroot%_datadir/applications/%name.desktop
+install -Dm0755 %SOURCE3 %buildroot%_bindir/%name
+install -Dm0755 %SOURCE4 %buildroot%_bindir/normcap2
+
 cp -f -r %name/resources/locales %buildroot%python3_sitelibdir/%name/resources
 
 %files 
 %doc *.md
 %_bindir/%name
-%_datadir/applications/%name.desktop
+%_bindir/normcap2
+%_datadir/applications/*.desktop
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Tue Dec 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt6
+- fix: launch via application shortcut with permissions in Gnome 49 (ALT #57353)
+
 * Mon Nov 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.0-alt5
 - fix: launch via application shortcut in Gnome 49
 - feat(screenshot): do not try gnome-screenshot on Gnome 49+
