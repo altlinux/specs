@@ -4,11 +4,12 @@ Name: opari2
 License: BSD
 Group: Development/Tools
 Summary: OPARI2 is a source-to-source instrumentation tool for OpenMP and hybrid codes
-Version: 2.0.5
+Version: 2.0.9
 Release: alt1
 Url: http://www.vi-hps.org/projects/score-p/
 
 Source: %name-%version.tar
+Source999: watch
 
 BuildRequires: gcc-c++ uncrustify doxygen gcc-fortran
 BuildRequires: texlive-base-bin graphviz 
@@ -67,6 +68,9 @@ ln -s %_libexecdir/pomp2-parse-init-regions.awk %buildroot%_bindir/
 %_docdir/%name
 
 %changelog
+* Tue Dec 30 2025 Anton Farygin <rider@altlinux.org> 2.0.9-alt1
+- 2.0.5 -> 2.0.9
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.5-alt1
 - Updated to upstream version 2.0.5.
 
