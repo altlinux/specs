@@ -1,6 +1,6 @@
 Name:    nexus
 Version: 3.42.0
-Release: alt1
+Release: alt2
 
 Summary: Cloud-Native Binary Artifact Management
 License: EPL-1.0
@@ -75,5 +75,8 @@ install -Dpm 0644 %SOURCE3 %buildroot%_unitdir/nexus.service
 %config(noreplace) %_unitdir/%name.service
 
 %changelog
+* Mon Dec 29 2025 Evgeniy Serov <scala@altlinux.org> 3.42.0-alt2
+- Fix JAVA_HOME in nexus.service.
+
 * Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 3.42.0-alt1
 - Initial build for Sisyphus.
