@@ -3,7 +3,7 @@
 
 Name: tun2socks
 Version: 2.5.2
-Release: alt1.gitc8c08cf1
+Release: alt2.gitc8c08cf1
 Epoch: 1
 
 Summary: %name - powered by gVisor TCP/IP stack
@@ -20,6 +20,8 @@ Source1: vendor.tar
 
 BuildRequires: python3
 BuildRequires: rpm-build-golang
+
+Requires: libnss-resolve
 
 %description
 Features:
@@ -60,6 +62,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Dec 30 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.5.2-alt2.gitc8c08cf1
+- Add require on libnss-resolve for correct DNS resolve (ALT #57401)
+
 * Fri Dec 26 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.5.2-alt1.gitc8c08cf1
 - Rollback to 2.5.2 (git c8c08cf1) for correct work Amnezia VPN with Xray protocol (ALT #55798)
 
