@@ -1,11 +1,13 @@
 Name: scst
-Version: 3.4.0
+Version: 3.10
 Release: alt1
 Summary: Generic SCSI target subsystem for Linux
 License: GPL-2.0
 Group: System/Kernel and hardware
-URL: http://%name.sf.net
-Source: %name-%version.tar.bz2
+URL: http://scst.sf.net
+VCS: https://github.com/SCST-project/scst.git
+
+Source: %name-%version.tar
 
 BuildRequires: rpm-build-kernel
 
@@ -32,9 +34,8 @@ Provides: kernel-src-%name = %version-%release
 This package contains SCST modules sources for Linux kernel.
 
 %prep
-%setup -q
-
-tar -cJf %name-%version.tar.xz %name/src %name/README %name/README.*
+%setup
+tar -cJf %name-%version.tar.xz %name/src iscsi-scst qla2x00t %name/README %name/README.*
 
 %install
 install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
@@ -49,6 +50,14 @@ install -m0644 %name/include/* %buildroot%_includedir/%name/
 %_usrsrc/kernel
 
 %changelog
+* Tue Dec 30 2025 Andrey Cherepanov <cas@altlinux.org> 3.10-alt1
+- New version.
+
+* Mon Apr 21 2025 Andrey Cherepanov <cas@altlinux.org> 3.9-alt1
+- New version.
+- Packaged all sources in one kernel-source-scst.
+- Built from https://github.com/SCST-project/scst.git
+
 * Sat Oct 31 2020 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version (ALT #38809).
 
