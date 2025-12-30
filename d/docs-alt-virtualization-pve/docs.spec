@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Dec 30 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
+- small improvements (ALT 57405, 57341, 57359)
+- fix sdn (ALT 57396, 57397, 57398)
+- fix typo (ALT 57400)
+
 * Mon Dec 22 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt2
 - fix some typos (ALT 57326, 57324, 57320, 57313, 57297, 57290, 57288, 57285)
 - fix pve-vm (ALT 57321, 57322, 57328, 57330, 57332, 57315, 57300, 57302, 57296)
