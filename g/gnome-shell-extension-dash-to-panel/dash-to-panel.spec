@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-dash-to-panel
 Version: 72
-Release: alt1
+Release: alt2
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -55,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 %doc README.md COPYING
 
 %changelog
+* Tue Dec 30 2025 Anton Midyukov <antohami@altlinux.org> 72-alt2
+- Update russian translations.
+
 * Wed Oct 15 2025 Anton Midyukov <antohami@altlinux.org> 72-alt1
 - New version 72.
 
