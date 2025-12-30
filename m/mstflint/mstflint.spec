@@ -5,9 +5,14 @@
 %def_enable cs
 %def_enable inband
 %def_enable openssl
+%def_disable i2c
+%def_disable cables
+%def_disable nvml
+%def_disable vfio
+%def_disable dpa
 
 Name: mstflint
-Version: 4.32.0.1
+Version: 4.34.0.2
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -27,6 +32,7 @@ BuildRequires: gcc-c++
 %{?_enable_inband:BuildRequires: rdma-core-devel}
 %{?_enable_cs:BuildRequires: libssl-devel}
 %{?_enable_openssl:BuildRequires: libssl-devel openssl}
+
 BuildRequires: libiniparser-devel jsoncpp-devel libmuparser-devel libsqlite3-devel
 AutoReq: yes, nopython
 
@@ -59,6 +65,11 @@ echo "#define TOOLS_GIT_SHA \"%release\"" > common/gitversion.h
     %{subst_enable inband} \
     %{subst_enable cs} \
     %{subst_enable openssl} \
+    %{subst_enable i2c} \
+    %{subst_enable cables} \
+    %{subst_enable nvml} \
+    %{subst_enable vfio} \
+    %{subst_enable dpa} \
     MSTFLINT_VERSION_STR="%name %version-%release"
 
 %make_build
@@ -80,6 +91,9 @@ rm -f  %buildroot%_libdir/%name/*.a
 %_man1dir/*
 
 %changelog
+* Tue Dec 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.34.0.2-alt1
+- v4.34.0-2
+
 * Mon May 12 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.32.0.1-alt1
 - v4.32.0-1
 
