@@ -3,7 +3,7 @@
 %undefine _strict_symbol_defs_build
 
 Name: qmplay2
-Version: 25.01.19
+Version: 25.09.11
 Release: alt1
 Group: Video
 Summary: A Qt based media player, streamer and downloader
@@ -138,6 +138,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/%pname.appdata.xml
 %_includedir/%pname/
 
 %changelog
+* Tue Dec 30 2025 Artyom Bystrov <arbars@altlinux.org> 25.09.11-alt1
+- Update to new version
+
 * Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 25.01.19-alt1
 - Update to new version
 
