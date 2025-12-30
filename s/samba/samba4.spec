@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.9
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,17 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Oct 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt2
+- Add support of intersite scheduled replication (thx Vladimir Rubanov):
+  + python.netcmd: implement commands to list connections and control schedule
+  + s4,dsdb: cancel current pending operation if running it ahead of schedule
+  + s4,kcc: fix replication schedule unpacking for site-links
+  + s4,dsdb: add function drepl_is_time_scheduled
+  + s4,dsdb: remove element from repsTo list if it has
+    WERR_DS_DRA_NO_REPLICA status
+  + s4,dsdb: return WERR_DS_DRA_NO_REPLICA when
+    DRSUAPI_DRS_NEVER_NOTIFY flag present
+
 * Fri Oct 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt1
 - Update to security release of Samba 4.21
 - Security fixes (Fixes: CVE-2025-9640, CVE-2025-10230):
