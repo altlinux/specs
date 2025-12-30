@@ -2,7 +2,7 @@
 %define dist CGI-SpeedyCGI
 Name: perl-%dist
 Version: 2.22
-Release: alt9
+Release: alt10
 
 Summary: Speed up perl scripts by running them persistently
 License: GPLv2
@@ -19,7 +19,8 @@ Patch3:		perl-CGI-SpeedyCGI-2.22-brigade_foreach.patch
 Patch4:		perl-CGI-SpeedyCGI-2.22-exit_messages.patch
 Patch5:		perl-CGI-SpeedyCGI-2.22-perl_510.patch
 Patch6:		perl-CGI-SpeedyCGI-2.22-c99_inline.patch
-Patch7:         CGI-SpeedyCGI-2.22-Fix-building-on-Perl-without-dot-in-INC.patch
+Patch7:		CGI-SpeedyCGI-2.22-Fix-building-on-Perl-without-dot-in-INC.patch
+Patch8:		perl-CGI-SpeedyCGI-2.22-c99.patch
 # alt orig
 Patch33: CGI-SpeedyCGI-2.22-alt-perl5.26-EU-MM.patch
 Patch34: CGI-SpeedyCGI-2.22-alt-gcc10.patch
@@ -50,21 +51,6 @@ programs.
 
 %prep
 %setup -q -n %dist-%version
-%if 0
-%patch10 -p1
-%patch20 -p1
-%patch30 -p1
-%patch40 -p1
-%patch50 -p1
-%patch60 -p1
-%patch70 -p1
-%patch80 -p1
-%patch85 -p1
-%patch90 -p1
-%patch95 -p1
-%patch96 -p1
-%patch97 -p1
-%endif
 %patch0 -p1 -b .documentation
 %patch1 -p1 -b .empty_param
 %patch2 -p1 -b .strerror
@@ -73,6 +59,7 @@ programs.
 %patch5 -p1 -b .perl_510
 %patch6 -p1 -b .c99_inline
 %patch7 -p1 -b .inc
+%patch8 -p1 -b .c99
 
 %patch33 -p1
 %patch34 -p1
@@ -83,7 +70,9 @@ programs.
 %build
 # Hackaround for SMP build
 NPROCS=1
-%perl_vendor_build
+#%%perl_vendor_build
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%optflags -Wno-incompatible-pointer-types" NO_PACKLIST=1
+%make_build
 
 %install
 %perl_vendor_install
@@ -94,6 +83,9 @@ NPROCS=1
 %perl_vendor_privlib/CGI
 
 %changelog
+* Tue Dec 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.22-alt10
+- NMU: fix FTBFS with PerlIO_reopen function
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 2.22-alt9
 - fixed build with new gcc10
 
