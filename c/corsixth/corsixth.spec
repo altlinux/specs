@@ -1,5 +1,5 @@
 Name: corsixth
-Version: 0.68.0
+Version: 0.69.1
 Release: alt1
 
 Summary: Open source clone of Theme Hospital
@@ -26,7 +26,6 @@ BuildRequires: libswresample-devel
 BuildRequires: libavformat-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libswscale-devel
-BuildRequires: libpostproc-devel
 BuildRequires: libcurl-devel
 
 BuildRequires(pre): rpm-macros-cmake
@@ -62,6 +61,9 @@ operating systems (Windows, macOS, Linux, and BSD), high resolution, and more.
 %_man6dir/corsix-th.6.*
 
 %changelog
+* Tue Dec 30 2025 Anton Midyukov <antohami@altlinux.org> 0.69.1-alt1
+- New version 0.69.1.
+
 * Sun Jan 05 2025 Anton Midyukov <antohami@altlinux.org> 0.68.0-alt1
 - new version (0.68.0) with rpmgs script
 
