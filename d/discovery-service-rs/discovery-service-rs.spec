@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: discovery-service-rs
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: The alternative to original Talos Discovery Service
@@ -61,6 +61,11 @@ useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "discovery-servi
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Tue Dec 26 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.3-alt1
+- Dependencies update.
+- Fix bug with too long affiliate endpoint.
+- Fix bug not notifying subscribers about endpoints update.
+
 * Tue Dec 03 2025 Artyom Sinyugin <writers@altlinux.org> 0.1.2-alt1
 - Fix bug with missing html templates for systemd service.
 
