@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -99,6 +99,7 @@ GObject introspection devel data for %libname
 # ALT #47557
 sed -i 's|-G %name|-G users|' data/72-feedbackd.rules
 
+
 %build
 %meson \
     %{subst_enable_meson_feature introspection introspection} \
@@ -121,6 +122,8 @@ sed -i 's|-G %name|-G users|' data/72-feedbackd.rules
 %_libexecdir/fbd-alert-slider
 %_libexecdir/fbd-ledctrl
 %_userunitdir/fbd-alert-slider.service
+# see above ALT #47557
+%exclude %_sysusersdir/%name.conf
 %_udevrulesdir/72-%name.rules
 %_datadir/dbus-1/interfaces/%xdg_name.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Haptic.xml
@@ -150,6 +153,9 @@ sed -i 's|-G %name|-G users|' data/72-feedbackd.rules
 %endif
 
 %changelog
+* Tue Dec 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
+- 0.8.8
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
