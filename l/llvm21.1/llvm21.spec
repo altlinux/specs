@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -143,8 +143,6 @@ Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
 
 # ispc patches
 Patch200: ispc-20_1_21_1_full-unroll-fix.patch
-# https://github.com/llvm/llvm-project/issues/135998
-Patch201: ispc-20_1_revert_be6c752e1576.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -766,7 +764,6 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 
 # ispc patches
 %patch200 -p1
-%patch201 -p2
 
 # upstream patches for loongarch
 
@@ -1512,6 +1509,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Dec 30 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.8-alt0.2
+- remove ispc-20_1_revert_be6c752e1576.patch, upstream has a workaround.
+
 * Mon Dec 29 2025 L.A. Kostis <lakostis@altlinux.ru> 21.1.8-alt0.1
 - Update to 21.1.8.
 - Added patches from ISPC:
