@@ -1,7 +1,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -70,6 +70,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Tue Dec 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.4-alt1
+- 0.8.3 -> 0.8.4
+
 * Thu Dec 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.3-alt1
 - Initial build for Sisyphus.
 
