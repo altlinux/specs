@@ -13,8 +13,8 @@
 %def_without check
 
 Name: teleport
-Version: 18.2.0
-Release: alt2
+Version: 18.6.1
+Release: alt1
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
 License: AGPL-3.0
@@ -156,6 +156,9 @@ make test
 %_bindir/tbot
 
 %changelog
+* Mon Dec 29 2025 Artem Krasovskiy <aibure@altlinux.org> 18.6.1-alt1
+- New version 18.6.1.
+
 * Fri Sep 12 2025 Ivan A. Melnikov <iv@altlinux.org> 18.2.0-alt2
 - NMU: Fix FTBFS on loongarch64.
 
