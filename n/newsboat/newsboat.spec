@@ -1,7 +1,7 @@
-%def_without check
+%def_with check
 
 Name:	 newsboat
-Version: 2.41
+Version: 2.42
 Release: alt1
 
 Summary: An RSS/Atom feed reader for the text console
@@ -19,6 +19,7 @@ Source3: Cargo.lock
 Provides:  newsbeuter = %EVR
 Obsoletes: newsbeuter < %EVR
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires:	/proc
 BuildRequires:	asciidoctor
 BuildRequires:	gcc-c++
@@ -75,8 +76,8 @@ cp -fv %SOURCE3 .
 export CFLAGS="%optflags"
 export CXXFLAGS="$CFLAGS"
 
-make test
-cargo test
+%make test
+%rust_test --workspace
 
 %files -f %name.lang
 %doc LICENSE
@@ -92,6 +93,9 @@ cargo test
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Dec 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.42-alt1
+- Updated to r2.42.
+
 * Tue Sep 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.41-alt1
 - Updated to r2.41.
 

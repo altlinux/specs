@@ -1,8 +1,8 @@
 %def_without check
 
 Name:    vaultwarden
-Version: 1.34.2
-Release: alt2
+Version: 1.35.0
+Release: alt1
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -98,6 +98,9 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Mon Dec 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.35.0-alt1
+- New version.
+
 * Fri Sep 12 2025 Ilya Sorochan <k0tran@altlinux.org> 1.34.2-alt2
 - Remove obsolete loongarch64 patch for mysqlclient-sys crate.
 
