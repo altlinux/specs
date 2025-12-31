@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: icon-theme-cosmic
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: COSMIC Icons
@@ -45,6 +45,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 

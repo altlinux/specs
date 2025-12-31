@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: COSMIC Session Manager
@@ -54,6 +54,8 @@ Requires: cosmic-term
 Requires: cosmic-player
 Requires: cosmic-wallpapers
 Requires: orca
+Requires: gnome-keyring
+Requires: libsecret
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -90,6 +92,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 

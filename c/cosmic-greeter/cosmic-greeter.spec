@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-greeter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: COSMIC Greeter
@@ -26,10 +26,13 @@ Source: %name-%version%beta.tar
 Source1: %name-%version%beta-cargo.tar
 
 Requires: greetd
-Requires: cosmic-comp cosmic-randr
+Requires: cosmic-comp
+Requires: cosmic-randr
+Requires: icon-theme-cosmic
+
 Provides: greetd-greeter
 
-BuildRequires(pre): rpm-build-rust rpm-macros-pam0
+BuildRequires(pre): rpm-build-rust rpm-macros-pam0 rpm-macros-alternatives rpm-macros-systemd
 BuildRequires: just clang-devel
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libudev)
@@ -60,6 +63,14 @@ just build-release
 export VERGEN_GIT_SHA=%version
 export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 just rootdir=%buildroot install
+install -Dm 644 %name.toml -t %buildroot/%_sysconfdir/greetd/greeters/
+
+mkdir -p %buildroot/%_altdir
+echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/%name.toml 30" \
+    > %buildroot%_altdir/greetd-%name
+
+sed -i 's/cosmic-greeter.toml/config.toml/' debian/%name.service
+install -Dm 644 debian/%name{.service,-daemon.service} -t %buildroot%_unitdir/
 
 %check
 export VERGEN_GIT_SHA=%version
@@ -67,15 +78,27 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_test
 
 %files
+%_sysconfdir/greetd/greeters/%name.toml
 %_bindir/%name
 %_bindir/%name-start
 %_bindir/%name-daemon
+%_altdir/greetd-%name
+%_unitdir/%name.service
+%_unitdir/%name-daemon.service
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %_datadir/dbus-1/system.d/%rdn_name.conf
 %doc README*
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
+* Sat Dec 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
+- installed cosmic-greeter{.service,-daemon.service},
+  and /etc/greetd/greeters/cosmic-greeter.toml as alternative of
+  /etc/greetd/greeters/config.toml (ALT #57295)
+
 * Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 

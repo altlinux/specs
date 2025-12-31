@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-store
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: COSMIC Store
@@ -62,6 +62,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 

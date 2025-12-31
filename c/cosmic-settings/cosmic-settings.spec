@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.0
 %define beta %nil
 %define rdn_name com.system76.CosmicSettings
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-settings
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: COSMIC Settings
@@ -93,6 +93,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- epoch-1.0.1-1-g2566969
+
 * Thu Dec 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
