@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.208
+Version: 4.0.4.209
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -451,6 +451,10 @@ fi
 %files checkinstall
 
 %changelog
+* Fri Dec 12 2025 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.209-alt1
+- Added -bk/-tk command line options to rpmbuild.
+  "--short-circuit -bk" would then be a natural equivalent to ALT-specific "-bt".
+
 * Mon Nov 17 2025 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.208-alt1
 - Backport %%conf section.
 
