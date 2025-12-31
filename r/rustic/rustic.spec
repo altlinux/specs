@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name:    rustic
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -94,6 +94,9 @@ diff -qr --exclude=target . ../x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Dec 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.10.3-alt1
+- Update to v0.10.3 (2025-12-28).
+
 * Wed Nov 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.10.2-alt1
 - Update to v0.10.2 (2025-11-11).
 
