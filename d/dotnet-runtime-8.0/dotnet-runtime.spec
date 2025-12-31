@@ -20,6 +20,8 @@
 %def_with bootstrap
 # TODO:
 %def_with skipmanaged
+%def_enable debuginfo
+
 %if_feature unwind 1.5
 %def_with libunwind
 %else
@@ -28,7 +30,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: %_dotnet_coreversion
-Release: alt1
+Release: alt2
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -215,7 +217,7 @@ EOF
 # build CLR
 cd src/coreclr/
 bash -x ./build-runtime.sh \
-    %debrelopt -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
+    %debrelopt %{?_enable_debuginfo:-keepnativesymbols} -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
     -cmakeargs -DENABLE_LLDBPLUGIN=0 \
 %if_without single_file_diagnostics
     -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
@@ -228,7 +230,7 @@ cd -
 
 # build Native libraries
 cd src/native/libs/
-bash -x ./build-native.sh %debrelopt
+bash -x ./build-native.sh %{?_enable_debuginfo:-keepnativesymbols} %debrelopt
 cd -
 
 # FIXME: allow get the release info from release.json file
@@ -240,6 +242,7 @@ export artifacts=$(pwd)/artifacts
 cd src/native/corehost/
 sh -x ./build.sh \
     %debrelopt \
+    %{?_enable_debuginfo:-keepnativesymbols} \
     -portablebuild 0 \
     -coreclrartifacts $artifacts/bin/coreclr/Linux.%_dotnet_arch.%debrel \
     -nativelibsartifacts  $artifacts/bin/native/Linux-%_dotnet_arch-%debrel \
@@ -397,6 +400,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Dec 30 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt2
+- add debuginfo (ALT bug 57032)
+
 * Fri Oct 24 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.21-alt1
 - .NET 8.0.21 release
 - fixed CVEs:
