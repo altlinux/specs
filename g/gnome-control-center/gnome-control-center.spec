@@ -20,7 +20,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.2.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -95,7 +95,9 @@ Requires: rygel
 # for desktop sharing
 Requires: gnome-remote-desktop
 # for power management
-Requires: power-profiles-daemon
+#Requires: power-profiles-daemon
+#Requires: org.freedesktop.UPower.PowerProfiles.service
+Requires: ppd-service
 # GPU detection
 Requires: switcheroo-control
 
@@ -233,6 +235,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2.2-alt1.1
+- required virtual ppd-service instead of power-profiles-daemon (ALT #57346)
+
 * Fri Nov 28 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2.2-alt1
 - 49.2.2
 

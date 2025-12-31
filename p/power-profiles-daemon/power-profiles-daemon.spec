@@ -1,6 +1,6 @@
 Name:           power-profiles-daemon
 Version:        0.30
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Makes power profiles handling available over D-Bus
 Group:          System/Configuration/Hardware
@@ -9,6 +9,9 @@ URL:            https://gitlab.freedesktop.org/hadess/power-profiles-daemon
 
 VCS:            https://gitlab.freedesktop.org/hadess/power-profiles-daemon.git
 Source:         %name-%version.tar
+
+Provides: ppd-service
+Conflicts: ppd-service
 
 BuildRequires(pre):  rpm-macros-systemd
 BuildRequires(pre):  rpm-macros-meson
@@ -73,6 +76,9 @@ mkdir -p %buildroot/%_localstatedir/power-profiles-daemon
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt1.1
+- Provides/Conflicts: ppd-service (part of ALT#57346)
+
 * Fri Mar 14 2025 Roman Alifanov <ximper@altlinux.org> 0.30-alt1
 - new version 0.30 (with rpmrb script)
 
