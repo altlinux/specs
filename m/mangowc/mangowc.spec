@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: mangowc
-Version: 0.10.8
+Version: 0.10.9
 Release: alt1
 
 Summary: wayland compositor base wlroots and scenefx (dwm but wayland)
@@ -67,5 +67,8 @@ https://github.com/DreamMaoMao/mangowc/wiki .
 %_datadir/wayland-sessions/mango.desktop
 
 %changelog
+* Wed Dec 31 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.9-alt1
+- New version 0.10.9.
+
 * Sun Dec 21 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.8-alt1
 - Initial build for Sisyphus

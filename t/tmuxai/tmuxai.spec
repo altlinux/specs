@@ -2,7 +2,7 @@
 
 %global import_path github.com/alvinunreal/tmuxai
 Name: tmuxai
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: AI-Powered, Non-Intrusive Terminal Assistant
@@ -51,6 +51,9 @@ echo "      For a sample configuration file, see /usr/share/doc/tmuxai-%version/
 %_bindir/*
 
 %changelog
+* Wed Dec 31 2025 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt1
 - New version 2.0.2.
 
