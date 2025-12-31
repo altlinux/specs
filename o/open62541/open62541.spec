@@ -4,7 +4,7 @@
 %define lname libopen62541
 
 Name: open62541
-Version: 1.3.14
+Version: 1.4.14
 Release: alt1
 
 Summary: open62541 is an open source and free implementation of OPC UA (OPC Unified Architecture) written in the common subset of the C99 and C++98 languages.
@@ -49,8 +49,17 @@ open62541 is an open source and free implementation of OPC UA (OPC Unified Archi
 Summary: open62541 is an open source and free implementation of OPC UA (OPC Unified Architecture
 Group: Development/C
 Requires: python3
-%add_findreq_skiplist %_datadir/%name/tools/nodeset_compiler/*.py %_datadir/%name/tools/*.py
+%add_findreq_skiplist %_datadir/%name/tools/nodeset_compiler/*.py
+%add_findreq_skiplist %_datadir/%name/tools/*.py
 AutoProv: yes,nopython
+# Filter internal Python module dependencies (not real external packages)
+%filter_from_requires /python3.backend_open62541/d
+%filter_from_requires /python3.nodeset_compiler/d
+%filter_from_requires /python3.opaque_type_mapping/d
+%filter_from_requires /python3.type_parser/d
+%filter_from_requires /python3.datatypes/d
+%filter_from_requires /python3.nodes/d
+%filter_from_requires /python3.nodeset/d
 
 %description -n %lname-tools
 open62541 tools
@@ -61,7 +70,15 @@ subst 's|#!/usr/bin/env python|#!/usr/bin/env python3|g' tools/nodeset_compiler/
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%cmake -DBUILD_SHARED_LIBS=ON -DUA_BUILD_TOOLS=ON -DOPEN62541_VERSION="v%{version}" -DUA_ENABLE_JSON_ENCODING=ON -DUA_BUILD_EXAMPLES=ON -DUA_MULTITHREADING=100 -DCMAKE_SKIP_RPATH:BOOL=ON
+
+# Disable hardening on i586 - GCC's -fhardened flag causes issues with -pie -z now
+%ifarch %ix86
+%define _cmake_hardening -DUA_ENABLE_HARDENING=OFF
+%else
+%define _cmake_hardening %nil
+%endif
+
+%cmake -DBUILD_SHARED_LIBS=ON -DUA_BUILD_TOOLS=ON -DOPEN62541_VERSION="v%{version}" -DUA_ENABLE_JSON_ENCODING=ON -DUA_BUILD_EXAMPLES=ON -DUA_MULTITHREADING=100 -DCMAKE_SKIP_RPATH:BOOL=ON %{_cmake_hardening}
 #-DUA_ENABLE_WEBSOCKET_SERVER=ON -DUA_ENABLE_AMALGAMATION=ON
 %cmake_build
 
@@ -77,17 +94,25 @@ ctest -V
 
 %files -n %lname-devel
 %_includedir/%{name}/
-%_includedir/*.h
+# %_includedir/*.h
 %_libdir/*.so
 %_libdir/cmake/%{name}/
+%_datadir/%{name}/schema/
 %_libdir/pkgconfig/*.pc
 
 %files -n %lname-tools
 %_datadir/%{name}/
+%exclude %_datadir/%{name}/schema/
 %exclude %_bindir/*
 
 
 %changelog
+* Wed Dec 31 2025 Pavel Vainerman <pv@altlinux.ru> 1.4.14-alt1
+- new version (1.4.14) with rpmgs script
+
+* Sat Aug 09 2025 Pavel Vainerman <pv@altlinux.ru> 1.4.13-alt1
+- new version (1.4.13) with rpmgs script
+
 * Sun Oct 06 2024 Pavel Vainerman <pv@altlinux.ru> 1.3.14-alt1
 - new version (1.3.14) with rpmgs script
 
