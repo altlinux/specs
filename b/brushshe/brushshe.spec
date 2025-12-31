@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: brushshe
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Painting app, written in Python, CustomTkinter and PIL
@@ -29,7 +29,7 @@ Brushshe is a simple and user-friendly raster graphics editor.
 
 %prep
 %setup
-sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/main/||" README.md
+sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/main/docs/||" README.md
 sed -i "s|https://raw.githubusercontent.com/limafresh/Brushshe/refs/heads/main/Brushshe/icons/logo.svg|/usr/share/icons/hicolor/scalable/apps/brushshe.svg|" README.md
 
 %build
@@ -44,19 +44,19 @@ cp -rv Brushshe %buildroot/%_datadir
 mkdir -pv %buildroot/%_bindir
 cat <<EOF > %buildroot/%_bindir/%name
 #!/bin/sh
-python3 %_datadir/Brushshe/brushshe.py "\$@"
+python3 %_datadir/Brushshe/main.py "\$@"
 EOF
 chmod a+x %buildroot/%_bindir/%name
 
 # icon
 mkdir -pv %buildroot/%_iconsdir/hicolor/scalable/apps/
-cp Brushshe/icons/logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps/%name.svg
+cp -v Brushshe/assets/icons/logo.svg %buildroot/%_iconsdir/hicolor/scalable/apps/%name.svg
 
 # desktop-file
 install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
-%doc LICENSE LICENSE_CC0 README.md screenshot.png
+%doc LICENSE LICENSE-CC0 README.md docs/screenshot.png
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -64,5 +64,8 @@ install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_datadir/Brushshe/*
 
 %changelog
+* Wed Dec 31 2025 Nikolay Strelkov <snk@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Sun Nov 02 2025 Nikolay Strelkov <snk@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus
