@@ -7,7 +7,7 @@
 
 Name: tuned
 Version: 2.26.0
-Release: alt2
+Release: alt3
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -66,7 +66,10 @@ GTK GUI that can control tuned and provides simple profile editor.
 Summary: PPD compatibility daemon
 Group: System/Configuration/Other
 Requires: %name = %EVR
+Provides: ppd-service
+Conflicts: ppd-service
 Conflicts: power-profiles-daemon
+Conflicts: tlp
 
 %description ppd
 An API translation daemon that allows applications to easily transition
@@ -540,6 +543,10 @@ fi
 %files checkinstall
 
 %changelog
+* Wed Dec 31 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt3
+- tuned-ppd provides ppd-service for gnome-control-center (ALT#57346).
+- Add tuned-ppd conflicts with tlp.
+
 * Tue Dec 23 2025 Vitaly Chikunov <vt@altlinux.org> 2.26.0-alt2
 - Package tuned-ppd (ALT#57338).
 
