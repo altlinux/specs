@@ -1,11 +1,11 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
-License: GPL-3.0-or-later
+License: GPL-3.0-only
 Group: Other
 
 Url: https://github.com/shonubot/Spruce
@@ -57,6 +57,10 @@ Summary: Python3 module for %name
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Dec 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt1
+- 0.1.5 -> 0.1.6
+- changed license tag
+
 * Sun Dec 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.5-alt1
 - 0.1.4 -> 0.1.5
 
