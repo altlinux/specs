@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.6.8
-Release: alt3
+Version: 1.7.1
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -39,6 +39,7 @@ BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(minizip)
 BuildRequires: pkgconfig(Qt6Network)
 BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Svg)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(SDL2_image)
 BuildRequires: pkgconfig(SDL2_mixer)
@@ -47,6 +48,8 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: tbb-devel
 BuildRequires: libfuzzylite-devel >= 6.0
 BuildRequires: libluajit-devel
+BuildRequires: libsquish-devel
+BuildRequires: libonnxruntime-devel
 BuildRequires: qt6-tools-devel
 #BuildRequires: git-core
 
@@ -95,33 +98,41 @@ VCMI - это фанатский проект с открытым исходны
 
 %build
 %cmake \
-       -DCMAKE_INSTALL_LIBDIR=%_lib \
-       -DCMAKE_SKIP_RPATH=OFF \
-       -DENABLE_TEST=OFF \
-       -DFORCE_BUNDLED_FL=OFF \
-       -DENABLE_INNOEXTRACT=OFF
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-UCMAKE_INSTALL_LIBDIR \
+	-DCMAKE_INSTALL_RPATH_USE_LINK_PATH=ON \
+	-DCMAKE_INSTALL_RPATH=%_libdir/%name \
+	-DENABLE_TEST=OFF \
+	-DFORCE_BUNDLED_FL=OFF \
+	-DENABLE_INNOEXTRACT=OFF \
+	-DENABLE_GOLDMASTER=ON
 
 %cmake_build
 
 %install
 %cmake_install
-mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
-mv %buildroot/%_libdir/%name/libvcmiqt.so %buildroot/%_libdir/libvcmiqt.so
+
 rm -f %buildroot%_libdir/*.a
 
 %files
 %doc docs/*
-%_bindir/%{name}*
+%_bindir/vcmibuilder
+%_bindir/vcmiclient
+%_bindir/vcmieditor
+%_bindir/vcmilauncher
+%_bindir/vcmiserver
 %_datadir/%name/
 %_datadir/metainfo/eu.vcmi.VCMI.metainfo.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_libdir/libvcmi.so
-%_libdir/libvcmiqt.so
 %_libdir/%name/
 
 %changelog
+* Wed Dec 31 2025 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Tue Dec 30 2025 Anton Midyukov <antohami@altlinux.org> 1.6.8-alt3
 - Rebuild without libpostproc-devel (fix FTBFS.
 
