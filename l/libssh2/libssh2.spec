@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libssh2
-Version: 1.11.0
-Release: alt2
+Version: 1.11.1
+Release: alt1
 
 Summary: A library implementing the SSH2 protocol
 Group: Networking/Remote access
@@ -10,12 +10,6 @@ License: BSD
 Url: https://www.libssh2.org/
 VCS: https://github.com/libssh2/libssh2.git 
 Source: %name-%version.tar
-Patch0001: 0001-scp-fix-missing-cast-for-targets-without-large-file-support.patch
-Patch0002: 0002-autotools-skip-tests-requiring-static-lib-if---disable-static-1072.patch
-Patch0003: 0003-autotools-improve-libz-position.patch
-Patch0004: 0004-test_sshdtest-set-a-safe-PID-directory-1089.patch
-Patch0005: 0005-Dont-put-LIBS-in-pc-file.patch
-Patch0006: 0006-upstream-CVE-2023-48795-fix.patch
 
 BuildRequires: libssl-devel zlib-devel
 # for tests
@@ -48,7 +42,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 # set version
@@ -80,6 +73,10 @@ LC_ALL=en_US.UTF-8 %make -C tests check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 1.11.1-alt1
+- updated from 1.11.0 to 1.11.1
+- removed patches (merged upstream)
+
 * Tue Jan 30 2024 Anton Farygin <rider@altlinux.ru> 1.11.0-alt2
 - Applied security fix from upstream (Fixes: CVE-2023-48795).
 
