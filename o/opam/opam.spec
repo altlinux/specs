@@ -1,35 +1,40 @@
+%def_with check
 Name: opam
-Version: 2.3.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: A source-based package manager for OCaml
-License: LGPLv3
 Group: Development/ML
-Url: https://github.com/ocaml/opam
+License: LGPL-2.1-only WITH OCaml-LGPL-linking-exception
+Url: https://opam.ocaml.org
+VCS: https://github.com/ocaml/opam
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
 BuildRequires: ocaml
-BuildRequires: libacl-devel
 BuildRequires: dune
-BuildRequires: ocaml-opam-file-format-devel
-BuildRequires: ocaml-cppo_ocamlbuild-devel
-BuildRequires: ocaml-cppo
-BuildRequires: ocaml-mccs-devel
-BuildRequires: ocaml-findlib-devel
-BuildRequires: ocaml-uutf-devel
-BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-cudf-devel
-BuildRequires: ocaml-ocamlgraph-devel
-BuildRequires: ocaml-cmdliner-devel
-BuildRequires: ocaml-re-devel
-BuildRequires: ocaml-dose3-devel
-BuildRequires: ocaml-extlib-devel
+BuildRequires: ocaml-compiler-libs
+BuildRequires: ocaml-base64-devel >= 3.1.0
+BuildRequires: ocaml-cudf-devel >= 0.7
+BuildRequires: ocaml-dose3-devel >= 6.1
 BuildRequires: ocaml-jsonm-devel
-BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-spdx_licenses-devel
-BuildRequires: ocaml-sha-devel
-BuildRequires: ocaml-opam-0install-cudf-devel
+BuildRequires: ocaml-mccs-devel >= 1.1+17
+BuildRequires: ocaml-ocamlgraph-devel
+BuildRequires: ocaml-opam-0install-cudf-devel >= 0.5.0
+BuildRequires: ocaml-opam-file-format-devel >= 2.1.4
+BuildRequires: ocaml-patch-devel >= 3.0.0
+BuildRequires: ocaml-re-devel >= 1.10.0
+BuildRequires: ocaml-sha-devel >= 1.13
+BuildRequires: ocaml-spdx_licenses-devel >= 1.0.0
 BuildRequires: ocaml-swhid_core-devel
-BuildRequires: curl gcc-c++
+BuildRequires: ocaml-uutf-devel
+BuildRequires: libstdc++-devel
+
+%if_with check
+BuildRequires: rpm-build-vm
+BuildRequires: git
+BuildRequires: diffutils
+BuildRequires: libssl-devel
+%endif
 
 %description
 OPAM stands for OCaml PAckage Manager.
@@ -56,47 +61,203 @@ yourself in at least one of these profiles:
  * You want to create your own packages yourself, put them on your own
    repository, with minimal effort.
 
-%package doc
-Summary: Documentation files for %name
-Group: Documentation
-Requires: %name = %version-%release
+%package -n ocaml-opam-client
+Summary: Client library for opam
+Group: Development/ML
 
-%description doc
-The %name-doc package contains documentation for using %name.
+%description -n ocaml-opam-client
+Actions on the opam root, switches, installations, and front-end.
+
+%package -n ocaml-opam-client-devel
+Summary: Development files for ocaml-opam-client
+Requires: ocaml-opam-client = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-client-devel
+Development files for ocaml-opam-client.
+
+%package -n ocaml-opam-core
+Summary: Core library for opam
+Group: Development/ML
+
+%description -n ocaml-opam-core
+Small standard library extensions, and generic system interaction
+modules used by opam.
+
+%package -n ocaml-opam-core-devel
+Summary: Development files for ocaml-opam-core
+Requires: ocaml-opam-core = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-core-devel
+Development files for ocaml-opam-core.
+
+%package -n ocaml-opam-devel
+Summary: Bootstrapped development binary for opam
+Group: Development/ML
+
+%description -n ocaml-opam-devel
+This package compiles (bootstraps) opam. For consistency and safety of
+the installation, the binaries are not installed into the PATH, but into
+lib/opam-devel, from where the user can manually install them
+system-wide.
+
+%package -n ocaml-opam-devel-devel
+Summary: Development files for ocaml-opam-devel
+Requires: ocaml-opam-devel = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-devel-devel
+Development files for ocaml-opam-devel.
+
+%package -n ocaml-opam-format
+Summary: Format library for opam
+Group: Development/ML
+
+%description -n ocaml-opam-format
+Definition of opam datastructures and its file interface.
+
+%package -n ocaml-opam-format-devel
+Summary: Development files for ocaml-opam-format
+Requires: ocaml-opam-format = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-format-devel
+Development files for ocaml-opam-format.
+
+%package -n ocaml-opam-installer
+Summary: Installation of files to a prefix, following opam conventions
+Group: Development/ML
+
+%description -n ocaml-opam-installer
+opam-installer is a small tool that can read *.install files, as defined
+by opam [1], and execute them to install or remove package files without
+going through opam.
+
+[1] http://opam.ocaml.org/doc/2.0/Manual.html#lt-pkgname-gt-install
+
+%package -n ocaml-opam-installer-devel
+Summary: Development files for ocaml-opam-installer
+Requires: ocaml-opam-installer = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-installer-devel
+Development files for ocaml-opam-installer.
+
+%package -n ocaml-opam-repository
+Summary: Repository library for opam
+Group: Development/ML
+
+%description -n ocaml-opam-repository
+This library includes repository and remote sources handling, including
+curl/wget, rsync, git, mercurial, darcs backends.
+
+%package -n ocaml-opam-repository-devel
+Summary: Development files for ocaml-opam-repository
+Requires: ocaml-opam-repository = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-repository-devel
+Development files for ocaml-opam-repository.
+
+%package -n ocaml-opam-solver
+Summary: Solver library for opam
+Group: Development/ML
+
+%description -n ocaml-opam-solver
+Solver and Cudf interaction. This library is based on the Cudf and Dose
+libraries, and handles calls to the external solver from opam.
+
+%package -n ocaml-opam-solver-devel
+Summary: Development files for ocaml-opam-solver
+Requires: ocaml-opam-solver = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-solver-devel
+Development files for ocaml-opam-solver.
+
+%package -n ocaml-opam-state
+Summary: State library for opam
+Group: Development/ML
+
+%description -n ocaml-opam-state
+Handling of the ~/.opam hierarchy, repository and switch states.
+
+%package -n ocaml-opam-state-devel
+Summary: Development files for ocaml-opam-state
+Requires: ocaml-opam-state = %EVR
+Group: Development/ML
+
+%description -n ocaml-opam-state-devel
+Development files for ocaml-opam-state.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
 %build
-%configure
-export DUNE_ARGS="--verbose"
-export PATH=$PWD:$PATH
-
-make
+%dune_build -p opam-client,opam-core,opam-devel,opam-format,opam-installer,opam-repository,opam-solver,opam-state,opam
 
 %install
-export DUNE_ARGS="--verbose"
-export PATH=$PWD:$PATH
+%dune_install_multi opam-client opam-core opam-devel opam-format opam-installer opam-repository opam-solver opam-state opam
+mv ocaml-files.runtime.opam ocaml-files.runtime.opam.lst
+cat ocaml-files.devel.opam >> ocaml-files.runtime.opam.lst
+rm -f ocaml-files.devel.opam
 
-%makeinstall_std LIBINSTALL_DIR=%buildroot%_libdir/ocaml
+%check
+cat <<__EOF__ >run-test-in-vm.sh
+#!/bin/bash
+sudo /sbin/sysctl kernel.userns_restrict=0
+sudo /sbin/sysctl kernel.unprivileged_userns_clone=1
+export export TESTN0REP0=0
+export TESTALL=0
+%dune_check -p opam-client,opam-core,opam-format,opam-installer,opam,opam-repository,opam-state,opam-solver
+__EOF__
+chmod a+x ./run-test-in-vm.sh
+vm-run --user ./run-test-in-vm.sh
 
-rm -rf %buildroot%prefix/doc
 
-%files
-%doc README.md LICENSE CHANGES
-%doc AUTHORS CONTRIBUTING.md
-%_bindir/%name
-%_bindir/%name-installer
-%_mandir/man1/%name.1*
-%_mandir/man1/%name-*.1*
+%files -f ocaml-files.runtime.opam.lst
 
-%files doc
-%doc doc/
-%doc tests/
-%doc shell/
+%files -n ocaml-opam-client -f ocaml-files.runtime.opam-client
+
+%files -n ocaml-opam-client-devel -f ocaml-files.devel.opam-client
+
+%files -n ocaml-opam-core -f ocaml-files.runtime.opam-core
+
+%files -n ocaml-opam-core-devel -f ocaml-files.devel.opam-core
+
+%files -n ocaml-opam-devel -f ocaml-files.runtime.opam-devel
+
+%files -n ocaml-opam-devel-devel -f ocaml-files.devel.opam-devel
+
+%files -n ocaml-opam-format -f ocaml-files.runtime.opam-format
+
+%files -n ocaml-opam-format-devel -f ocaml-files.devel.opam-format
+
+%files -n ocaml-opam-installer -f ocaml-files.runtime.opam-installer
+
+%files -n ocaml-opam-installer-devel -f ocaml-files.devel.opam-installer
+
+%files -n ocaml-opam-repository -f ocaml-files.runtime.opam-repository
+
+%files -n ocaml-opam-repository-devel -f ocaml-files.devel.opam-repository
+
+%files -n ocaml-opam-solver -f ocaml-files.runtime.opam-solver
+
+%files -n ocaml-opam-solver-devel -f ocaml-files.devel.opam-solver
+
+%files -n ocaml-opam-state -f ocaml-files.runtime.opam-state
+
+%files -n ocaml-opam-state-devel -f ocaml-files.devel.opam-state
 
 %changelog
+* Thu Dec 25 2025 Anton Farygin <rider@altlinux.org> 2.5.0-alt1
+- 2.3.0 -> 2.5.0
+- switch from make to dune build system
+- build opam libraries for use as dependencies by other packages
+- enable tests
+
 * Fri Jan 24 2025 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
 - changed BR to fix build with rpm-build-ocaml >= 1.7
 
@@ -170,4 +331,5 @@ rm -rf %buildroot%prefix/doc
 
 * Thu Dec 21 2017 Anton Farygin <rider@altlinux.ru> 1.3.1-alt1
 - first build for ALT
+
 

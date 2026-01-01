@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ RPM macros and reqprov helpers to be used in OCaml packages.
 mkdir -p %buildroot%_rpmlibdir
 install -pD -m644 ocaml %buildroot%_rpmmacrosdir/ocaml
 install -pD -m644 ocaml.env %buildroot%_rpmmacrosdir/ocaml.env
-install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir/
+install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions ocaml-find-files-multi %buildroot%_rpmlibdir/
 
 %files
 %_rpmmacrosdir/ocaml
@@ -34,6 +34,13 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Thu Dec 26 2025 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
+- added %%ocaml_find_files_multi and %%dune_install_multi macros
+  for multi-package dune projects (e.g., opam, dune)
+- generates per-package file listings: ocaml-files.runtime.<pkg>,
+  ocaml-files.devel.<pkg>
+- uses .install files from _build when available for accurate file lists
+
 * Mon Jan 20 2025 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
 - enabled parallel build in Dune with %_smp_mflags
 - remove ocaml-cmi dependencies for .cmt and .cmti files in devel packages
