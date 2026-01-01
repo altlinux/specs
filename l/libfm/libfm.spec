@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: libfm
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Core library of PCManFM file manager
@@ -130,6 +130,9 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %endif
 
 %changelog
+* Sun Dec 28 2025 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Mon Mar 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - new version 1.4.0
 - build with gtk+3
