@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 0.0
 
 Name: pystring
-Version: 1.1.3
-Release: alt1.git.281419d
+Version: 1.1.4
+Release: alt1
 Summary: C++ functions matching the interface and behavior of python string methods with std::string
 License: BSD-3-Clause
 Group: Development/C++
 Url: https://github.com/imageworks/pystring
-
-# https://github.com/imageworks/pystring.git
+VCS: https://github.com/imageworks/pystring.git
 Source: %name-%version.tar
 
 # Taken from Fedora
@@ -101,13 +101,16 @@ popd
 
 %files -n lib%name
 %doc LICENSE
-%doc README
-%_libdir/*.so.*
+%doc README.md
+%_libdir/*.so.%soname
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 
 %changelog
+* Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 1.1.4-alt1
+- 1.1.3 -> 1.1.4
+
 * Tue Jun 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.3-alt1.git.281419d
 - Initial build for ALT.
