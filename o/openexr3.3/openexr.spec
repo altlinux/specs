@@ -5,10 +5,10 @@
 %endif
 
 %define rname OpenEXR
-%define libsover 33
-Name: openexr
-Version: 3.4.4
-Release: alt1
+%define libsover 32
+Name: openexr3.3
+Version: 3.3.5
+Release: alt2
 
 %define _cmake__builddir BUILD
 %define common openexr%libsover-common
@@ -38,7 +38,6 @@ BuildRequires: imath-devel
 BuildRequires: python3-module-imath
 BuildRequires: cmake ctest
 BuildRequires: libdeflate-devel
-BuildRequires: libopenjph-devel
 
 %define descr The OpenEXR project provides the specification and reference \
 implementation of the EXR file format, the professional-grade \
@@ -55,34 +54,12 @@ deep compositing, and DI.
 %description
 %descr
 
-%package -n %common
-Group: System/Configuration/Other
-Summary: Common empty package for %name
-BuildArch: noarch
-
-%description -n %common
-Common empty package for %name
-
 %package -n %libopenexr
 Summary: %rname library
 Group: System/Libraries
 
 %description -n %libopenexr
 %descr
-
-%package devel
-Summary: Headers for developing programs that will use OpenEXR
-Group: Development/Other
-Provides: ilmbase-devel = %version
-Obsoletes: ilmbase-devel < %version
-Requires: imath-devel
-Requires: libdeflate-devel
-Requires: libopenjph-devel
-%description devel
-%descr
-
-This package contains the static libraries and header files needed for
-developing applications with OpenEXR
 
 %package -n %libiex
 Summary: libIex %rname library
@@ -129,22 +106,10 @@ make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
 cp -ar openexr-test-images/* BUILD/src/test/bin/
 %ctest %relax
 
-%files -n %common
-%doc *.md
-%_docdir/%rname/examples
-
-%files
-%_bindir/*
 
 %files -n %libopenexr
 %_libdir/libOpenEXR-*.so.%libsover
 %_libdir/libOpenEXR-*.so.%libsover.*
-
-%files devel
-%_libdir/lib*.so
-%_includedir/OpenEXR/*
-%_pkgconfigdir/OpenEXR.pc
-%_libdir/cmake/OpenEXR/*.cmake
 
 %files -n %libiex
 %_libdir/libIex*.so.%libsover
@@ -163,11 +128,8 @@ cp -ar openexr-test-images/* BUILD/src/test/bin/
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
-* Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 3.4.4-alt1
-- 3.4.2 -> 3.4.4
-
-* Sun Oct 26 2025 Anton Farygin <rider@altlinux.com> 3.4.2-alt1
-- 3.3.5 -> 3.4.2
+* Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 3.3.5-alt2
+- built as Legacy library withot devel package
 
 * Wed Aug 27 2025 Anton Farygin <rider@altlinux.com> 3.3.5-alt1
 - 3.3.3 -> 3.3.5 (Fixes: CVE-2025-48071)

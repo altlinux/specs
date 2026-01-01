@@ -15,12 +15,9 @@
 %ifarch x86_64
 %def_with cuda
 %def_with hiprt
-# oneapi needs sycl compiler
-%def_without levelzero
 %else
 %def_without cuda
 %def_without hiprt
-%def_without levelzero
 %endif
 
 %ifarch x86_64 aarch64 loongarch64
@@ -54,33 +51,43 @@
 %def_without hip
 %endif
 
+%ifarch x86_64
+# OneAPI/SYCL for Intel GPU support
+%def_with oneapi
+%else
+%def_without oneapi
+%endif
+
+%if_with oneapi
+# oneapi library is built with SYCL compiler without debug info
+%filter_from_requires /libcycles_kernel_oneapi_aot\.so/d
+%add_verify_elf_skiplist %_libdir/libcycles_kernel_oneapi_aot.so
+%add_debuginfo_skiplist %_libdir/libcycles_kernel_oneapi_aot.so
+%endif
+
 Name: blender
-Version: 4.3.2
-Release: alt1.1
+Version: 4.5.5
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
 URL: https://www.blender.org
+VCS: https://projects.blender.org/blender/blender.git
 
 # Blender doesn't officially support 32-bit build since 2.80. See also:
 # https://developer.blender.org/T67184
 ExcludeArch: %ix86 %arm
 
-# https://projects.blender.org/blender/blender.git
 Source: %name-%version.tar
-# assets from blender-v4.3-release
-# https://projects.blender.org/blender/blender-assets.git
-Source1: blender-assets-v%version.tar
+# git lfs from blender git release
+Source1: blender-lfs-%version.tar
+# cheryy-picked upstream commits
+Patch1: %name-%version-%release.patch
 
 Patch21: blender-2.77-alt-enable-localization.patch
-Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
+Patch22: blender-4.5-eigen-fix-build.patch
 Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
-Patch25: blender-3.4.1-gcc-13-fix.patch
-Patch26: blender-4.0.1-alt-pcre.patch
-Patch27: blender-4.3.0-upstream-Fix-FFmpeg-deprecation-warnings.patch
-Patch28: blender-4.3.0-upstream-Fix-Remove-internal-ffmpeg-API-usage-fix-ffmpeg-7-co.patch
-Patch29: blender-4.3.0-upstream-Cycles-Support-building-with-OpenVDB-12.patch
 
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -94,27 +101,16 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
-Patch35: blender-4.4-alt-hiprt-2.5.patch
-Patch36: blender-4.3.0-generic-64bit.patch
-Patch37: blender-4.3.0-loongarch64.patch
-Patch38: blender-4.3.0-alt-unbundle-hiprt.patch
-# new OSL 1.14 API changes
-# partialy implements upstream c997e614144e41351ab348ab7ef56d25ba9a3936
-# and faa17e2cc673421efd48969d4ddbb60d01f649ee
-Patch39: blender-4.3-osl-1.14-compat.patch
-# new OIIO API 3.x changes
-# upstream 4f4c3f73b697436922464e087823f53e8681d7e8
-# upstream c3c05559d6a7e10981ad8e3c13a8ee7862399c78
-Patch40: blender-4.3.0-upstream-update-oiio-apis.patch
-# python3.12 compatibility
-# ALT bug 54359
-# upstream 1865de1c738a1a1ead520fbd38487815e13906e9
-Patch41: blender-4.3-upstream-129926-fix-python3.12.patch
-# python3.13 compatibility
-# https://sources.debian.org/data/main/b/blender/4.3.2%2Bdfsg-2/debian/patches/0006-fix_FTBFS_py313.patch
-Patch42: 0006-fix_FTBFS_py313.patch
-
+# FFmpeg 8.0 compatibility (AV_INPUT_BUFFER_MIN_SIZE removed)
+Patch35: blender-4.5-ffmpeg-8.0.patch
+# ALT Linux: install oneapi library to /usr/lib64 instead of /usr/share/blender/lib
+Patch40: blender-4.5-alt-oneapi-libdir.patch
 Patch2000: blender-e2k-support.patch
+
+# Required since the io_scene_gltf2 addon loads libdraco.so at runtime
+# using cdll.LoadLibrary and relies on it for
+# Draco mesh compression/decompression.
+Requires: libdraco
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
@@ -122,7 +118,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: ninja-build /proc
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
-BuildRequires: libfftw3-devel >= 3.3.9 libjack-devel libopenal-devel libsndfile-devel
+BuildRequires: libfftw3-devel >= 3.3.9 pipewire-jack-libs-devel libopenal-devel libsndfile-devel
 BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
 BuildRequires: liblzo2-devel
 BuildRequires: python3-devel
@@ -153,6 +149,19 @@ BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel li
 BuildRequires: libvulkan-devel libshaderc-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
+BuildRequires: openxr-devel
+BuildRequires: MaterialX-devel
+BuildRequires: libmanifold-devel libClipper2-devel libassimp-devel
+BuildRequires: libdraco-devel
+
+%if_with oneapi
+BuildRequires: intel-ocloc
+# Intel GPU (OneAPI/SYCL) support
+BuildRequires: libsycl-devel libze-devel
+BuildRequires: clang-dpcpp-devel llvm-dpcpp-devel
+BuildRequires: clang-dpcpp-tools libigc2
+%endif
+
 %ifarch aarch64
 BuildRequires: sse2neon-devel
 %endif
@@ -190,7 +199,7 @@ BuildRequires: OpenUSD-devel
 BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
-%set_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
+%add_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
 %endif
 
 %if_with oidn
@@ -201,9 +210,6 @@ BuildRequires: openimagedenoise-devel
 BuildRequires: mold
 %endif
 
-%if_with levelzero
-BuildRequires: liboneapi-level-zero1-devel
-%endif
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -324,22 +330,15 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 
 %prep
 %setup -a1
+%patch1 -p1
 
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1 -b .openvdb12-support
-
-#%%patch30 -p1
 %patch31 -p1
-#%%patch32 -p1
 %ifarch aarch64
-# see https://github.com/OE4T/meta-tegra/pull/1445
+# https://github.com/OE4T/meta-tegra/pull/1445
 %patch33 -p1
 mkdir -p /tmp/bits
 cat >/tmp/bits/math-vector.h <<EOF
@@ -349,14 +348,10 @@ cat >/tmp/bits/math-vector.h <<EOF
 EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
-%patch35 -p1 -b .hiprt-2.5
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1 -b .unbundle-hiprt
-%patch39 -p1 -b .osl-1.14
-%patch40 -p1 -b .oiio-3.x
-%patch41 -p1 -b .python3.12
-%patch42 -p1 -b .python3.13
+%patch35 -p1
+%if_with oneapi
+%patch40 -p1
+%endif
 
 %ifarch %e2k
 %patch2000 -p1
@@ -372,7 +367,7 @@ sed -i 's/-freciprocal-math//' intern/cycles{,/kernel}/CMakeLists.txt
 rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
 
 # Remove bundled libraries which must not be used instead of system ones
-rm -rf extern/{Eigen3,glew,lzo,gflags,glog}
+rm -rf extern/{Eigen3,glew,lzo,gflags,glog,draco}
 
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
@@ -403,15 +398,19 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DHIP_LINKER_EXECUTABLE=%_bindir/clang++-rocm \
 	-DHIPRT_COMPILER_PARALLEL_JOBS=4 \
 %endif #hiprt
-%if_with levelzero
+%if_with oneapi
 	-DLEVEL_ZERO_ROOT_DIR=%prefix \
+	-DSYCL_ROOT_DIR=%prefix/lib/llvm-dpcpp \
+	-DOCLOC_INSTALL_DIR=%prefix \
+	-DSYCL_OFFLINE_COMPILER_PARALLEL_JOBS=2 \
 	-DWITH_CYCLES_DEVICE_ONEAPI:BOOL=ON \
 	-DWITH_CYCLES_ONEAPI_BINARIES:BOOL=ON \
-%endif #levelzero
+%endif #oneapi
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
 	-DWITH_FFTW3=ON \
 	-DWITH_JACK=ON \
+	-DJACK_LIBRARY=%_libdir/pipewire-0.3/jack/libjack.so \
 	-DWITH_CODEC_SNDFILE=ON \
 	-DWITH_IMAGE_OPENJPEG=ON \
 	-DWITH_PYTHON=ON \
@@ -439,6 +438,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DWITH_OPENCOLORIO=ON \
 	-DWITH_OPENVDB:BOOL=ON \
 	-DWITH_OPENVDB_BLOSC:BOOL=ON \
+	-DWITH_SYSTEM_DRACO=ON \
 	-DWITH_SYSTEM_LZO=ON \
 	-DWITH_SYSTEM_EIGEN3:BOOL=ON \
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
@@ -456,7 +456,9 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
-ninja-build -v -j %__nprocs -C %_cmake__builddir
+# Limit parallel jobs: OneAPI/SYCL kernel compilation is very memory-intensive
+# and can cause OOM with too many parallel jobs
+ninja-build -v -j 4 -C %_cmake__builddir
 
 %if_with docs
 pushd doc/doxygen
@@ -466,6 +468,15 @@ popd
 %endif
 
 %install
+# Pre-generate man page with LD_LIBRARY_PATH for oneapi library
+%if_with oneapi
+export LD_LIBRARY_PATH=%_cmake__builddir/intern/cycles/kernel:$LD_LIBRARY_PATH
+%endif
+%if_with docs
+python3 doc/manpage/blender.1.py \
+    --blender %_cmake__builddir/bin/blender \
+    --output %_cmake__builddir/source/creator/blender.1
+%endif
 %cmake_install
 
 %files
@@ -478,11 +489,14 @@ popd
 %exclude %_datadir/%name/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
 %if_with hiprt
-%exclude %_datadir/%name/*/%kern_dir/kernel_rt_gfx.hipfb*
+%exclude %_datadir/%name/*/%kern_dir/kernel_rt_gfx*.hipfb*
 %endif
 %if_with cuda
 %exclude %_datadir/%name/*/%kern_dir/kernel_compute*.ptx*
 %exclude %_datadir/%name/*/%kern_dir/kernel_sm_*.cubin*
+%endif
+%if_with oneapi
+%_libdir/libcycles_kernel_oneapi_aot.so
 %endif
 %_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%name/
@@ -495,7 +509,7 @@ popd
 
 %if_with hiprt
 %files cycles-hiprt-kernels
-%_datadir/%name/*/%kern_dir/kernel_rt_gfx.hipfb*
+%_datadir/%name/*/%kern_dir/kernel_rt_gfx*.hipfb*
 %endif
 
 %if_with cuda
@@ -510,6 +524,16 @@ popd
 %endif
 
 %changelog
+* Tue Dec 31 2025 Anton Farygin <rider@altlinux.com> 4.5.5-alt1
+- 4.3.2 -> 4.5.5
+- Built with external libdraco.
+- Added OneAPI/SYCL support for Intel GPU rendering (x86_64 only).
+- Added FFmpeg 8.0 compatibility patch.
+- Added OpenXR support for VR headsets.
+- Added MaterialX support.
+- Added libmanifold, libClipper2, libassimp dependencies.
+- Switched from libjack to pipewire-jack for JACK audio support.
+
 * Fri Sep 12 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.2-alt1.1
 - NMU: fixed building with python3.13.
 
