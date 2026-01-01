@@ -20,9 +20,8 @@
 %define libparu_soname 1
 %define libsuitesparseconfig_soname 7
 
-
 Name: libsuitesparse
-Version: 7.10.3
+Version: 7.12.1
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
@@ -45,7 +44,6 @@ BuildRequires: cmake
 %description
 Package contains a set of shared libraries to use efficient calculation
 algorithms with sparse matricies.
-
 
 %package devel
 Summary: Development files of SuiteSparse
@@ -80,7 +78,6 @@ Mongoose executable can read a Matrix Market file containing an adjacency
 matrix and output timing and partitioning information to a plain-text file.
 Simply call it with the following syntax:
 mongoose <MM-input-file.mtx> [output-file]
-
 
 %package -n libamd%libamd_soname
 Group: Sciences/Mathematics
@@ -352,13 +349,13 @@ sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
 
 %files -n libsuitesparse_mongoose%mongoose_soname
 %_libdir/libsuitesparse_mongoose.so.%mongoose_soname
+%_libdir/libsuitesparse_mongoose.so.%mongoose_soname.*
 
 %files -n libspex%libspex_soname
 %_libdir/libspexpython.so.%libspex_soname
 %_libdir/libspexpython.so.%libspex_soname.*
 %_libdir/libspex.so.%libspex_soname
 %_libdir/libspex.so.%libspex_soname.*
-
 
 %files -n libparu%libparu_soname
 %_libdir/libparu.so.%libparu_soname
@@ -378,6 +375,9 @@ sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
 %_bindir/suitesparse_mongoose
 
 %changelog
+* Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 7.12.1-alt1
+- 7.10.3 -> 7.12.1
+
 * Wed Jul 23 2025 Anton Farygin <rider@altlinux.com> 7.10.3-alt1
 - 7.10.1 -> 7.10.3
 
