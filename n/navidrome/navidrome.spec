@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/navidrome/navidrome
 # git rev-parse --short v%version
-%global commit_hash 131c0c565
+%global commit_hash cc3cca607
 
 Name: navidrome
-Version: 0.58.5
+Version: 0.59.0
 Release: alt1
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
@@ -22,10 +22,10 @@ Source5: navidrome.service
 # CPU time limit exceeded
 ExcludeArch: i586
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: esbuild
 BuildRequires: gcc-c++
-BuildRequires: golang
 BuildRequires: npm
 BuildRequires: taglib-devel
 
@@ -37,31 +37,10 @@ It gives you freedom to listen to your music collection from any browser
 or mobile device. It's like your personal Spotify!
 
 %prep
-# go mod vendor
-# git add vendor -f && git commit -m "Updated go vendor modules."
-# npm --prefix ui ci
-# rm -vf ui/node_modules/{esbuild/bin/esbuild,@esbuild/linux-*/bin/esbuild}
-# git add ui/node_modules -f && git commit -m "Updated node modules."
+# ./alt/update_modules.sh
 %setup -a 1 -a 2
 # use system esbuild
-%ifarch x86_64
-%define arch_dir x64
-%endif
-%ifarch i586
-%define arch_dir ia32
-%endif
-%ifarch aarch64
-%define arch_dir arm64
-%endif
-%ifarch loongarch64
-%define arch_dir loong64
-%endif
-%ifarch ppc64le
-%define arch_dir ppc64
-%endif
-mkdir -p node_modules/{esbuild/bin,@esbuild/linux-%arch_dir/bin}
-ln -sv %_bindir/esbuild node_modules/esbuild/bin/esbuild
-ln -sv %_bindir/esbuild node_modules/@esbuild/linux-%arch_dir/bin/esbuild
+ln -sv %_bindir/esbuild ui
 sed -i "s/0.25.4/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
 
 %build
@@ -69,6 +48,7 @@ export BUILDDIR=$PWD/.gopath
 export IMPORT_PATH=%import_path
 export GOPATH=$BUILDDIR:%go_path
 export GOFLAGS=-mod=vendor
+export ESBUILD_BINARY_PATH=./esbuild
 npm --prefix ui run build
 %golang_prepare
 cd .gopath/src/%import_path
@@ -105,6 +85,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Thu Jan 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.59.0-alt1
+- Updated to version 0.59.0.
+
 * Mon Nov 10 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.58.5-alt1
 - Updated to version 0.58.5.
 
