@@ -8,7 +8,7 @@
 %endif
 
 Name: ngtcp2
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -22,7 +22,6 @@ Source100: %name-%version-tests-munit.tar
 Source101: %name-%version-third-party-urlparse.tar
 Source102: %name-%version-third-party-urlparse-http-parser.tar
 Source103: %name-%version-third-party-urlparse-munit.tar
-
 
 BuildRequires: gcc-c++ CUnit-devel
 # need openssl-quic branch
@@ -75,7 +74,6 @@ rm -rf %buildroot%_defaultdocdir/%name
 %make_build check %relax
 [ -f "tests/test-suite.log" ] && cat "tests/test-suite.log"
 
-
 %files -n lib%name.%ngtcpsoname
 %_libdir/lib%{name}.so.%{ngtcpsoname}.*
 %_libdir/lib%{name}.so.%{ngtcpsoname}
@@ -91,6 +89,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Fri Dec 26 2025 Anton Farygin <rider@altlinux.org> 1.19.0-alt1
+- 1.18.0 -> 1.19.0
+
 * Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 1.18.0-alt1
 - 1.17.0 -> 1.18.0
 
