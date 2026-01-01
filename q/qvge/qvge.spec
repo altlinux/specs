@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qvge
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 Summary: Qt Visual Graph Editor
 Group: Development/Other
 License: MIT
 Url: https://github.com/ArsMasiuk/qvge
-
-# https://github.com/ArsMasiuk/qvge.git
+VCS: https://github.com/ArsMasiuk/qvge.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel qt5-svg-devel qt5-x11extras-devel
@@ -21,6 +21,7 @@ in a simple and intuitive way.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 cd src
@@ -34,13 +35,16 @@ cd src
 %files
 %doc LICENSE
 %doc CHANGES README.md
-%_bindir/qvgeapp
+%_bindir/qvge
 %_datadir/appdata/%name.appdata.xml
 %_datadir/mime/packages/application-xgr.xml
 %_datadir/pixmaps/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 0.7.0-alt1
+- 0.6.3 -> 0.7.0
+
 * Thu Jul 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.3-alt1
 - Updated to upstream version 0.6.3.
 
