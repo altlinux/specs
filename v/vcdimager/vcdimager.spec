@@ -1,16 +1,19 @@
 %define ver_major 2.0
 %def_disable static
+%def_enable check
 
 Name: vcdimager
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: VideoCD (pre-)mastering and ripping tool
 Group: Video
-License: GPL
-Url: http://%name.org
+License: GPL-2.0-or-later
+Url: http://www.vcdimager.org
 
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
+# https://salsa.debian.org/debian/vcdimager/-/blob/debian/master/debian/patches/0005-ftbfs_with_libxml_2.14.x.patch?ref_type=heads
+Patch1: %name-2.0.1-deb-0005-ftbfs_with_libxml_2.14.x.patch
 
 %define libcdio_ver 2.0.0
 
@@ -73,6 +76,7 @@ statically linked against libvcd.
 
 %prep
 %setup
+%patch1 -p1 -b .libxml2-2.14
 
 %build
 %autoreconf
@@ -84,6 +88,9 @@ statically linked against libvcd.
 
 # remove non-packaged files
 %__rm -f %buildroot%_infodir/dir
+
+%check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/*
@@ -106,6 +113,12 @@ statically linked against libvcd.
 %endif
 
 %changelog
+* Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1.1
+- rebuild against libiso9660.so.11 from libcdio-2.3.0
+- applied deb pach for feature libxml2-2.14.x
+- enabled %check
+- fixed License tag
+
 * Thu Jan 11 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 

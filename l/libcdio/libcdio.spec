@@ -1,22 +1,30 @@
+%define sover 19
+%define iso_sover 12
+%define udf_sover 0
+
 %def_enable cddb
+%def_disable doc
+%def_enable check
 
 Name: libcdio
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 
 Summary: CD-ROM/CD-image access library
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: System/Libraries
-Url: http://www.gnu.org/software/%name/
+Url: https://www.gnu.org/software/%name/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 #Source: ftp://ftp.gnu.org/gnu/libcdio/%name-%version.tar.gz
-# git://git.sv.gnu.org/libcdio.git
+Vcs: https://github.com/libcdio/libcdio.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libncurses-devel help2man makeinfo
 %{?_enable_cddb:BuildRequires: libcddb-devel}
+%{?_enable_doc:BuildRequires: doxygen texi2html}
 
 %description
 This library is to encapsulate CD-ROM reading and control. Applications
@@ -26,7 +34,7 @@ CD-ROM can use this library.
 %package -n libcdio++
 Summary: C++ wrappers to the CD-ROM/CD-image access library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n libcdio++
 These C++ libraries provide object-oriented wrappers to the libcdio APIs.
@@ -34,7 +42,7 @@ These C++ libraries provide object-oriented wrappers to the libcdio APIs.
 %package devel
 Summary: %name development files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides %name development files.
@@ -42,8 +50,8 @@ This package provides %name development files.
 %package -n libcdio++-devel
 Summary: Development files for libcdio C++ wrappers
 Group: Development/C++
-Requires: libcdio++ = %version-%release
-Requires: %name-devel = %version-%release
+Requires: libcdio++ = %EVR
+Requires: %name-devel = %EVR
 
 %description -n libcdio++-devel
 This package provides development files for C++ wrappers to libcdio APIs.
@@ -51,7 +59,7 @@ This package provides development files for C++ wrappers to libcdio APIs.
 %package utils
 Summary: A simple utilities which read and displayings CD info.
 Group: File tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 This package provides simple utilities which read and displayings CD
@@ -64,17 +72,23 @@ info.
 %build
 %autoreconf
 %configure \
-	%{subst_enable cddb} \
-	--enable-maintainer-mode \
-	--disable-static
+    %{subst_enable cddb} \
+    --enable-maintainer-mode \
+    --disable-static
+%nil
 %make_build
+%{?_enable_doc:%make -C doc html}
 
 %install
 %makeinstall_std
 
+%make -k check VERBOSE=1
+
 %files
-%doc AUTHORS README NEWS* THANKS TODO
-%_libdir/*.so.*
+%doc AUTHORS README* NEWS* THANKS TODO
+%_libdir/%name.so.%{sover}*
+%_libdir/libiso9660.so.%{iso_sover}*
+%_libdir/libudf.so.%{udf_sover}*
 %_infodir/%name.info*
 %exclude %_libdir/*++.so.*
 
@@ -98,6 +112,12 @@ info.
 %_man1dir/*.1*
 
 %changelog
+* Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0-2-gd81ad27d
+
+* Sun Jan 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Dec 05 2019 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
