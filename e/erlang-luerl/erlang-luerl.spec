@@ -3,8 +3,8 @@
 %define realname luerl
 
 Name: erlang-%realname
-Version: 0.3
-Release: alt4
+Version: 1.5.1
+Release: alt1
 Summary: Lua in Erlang
 Group: Development/Erlang
 License: Apache-2.0
@@ -37,6 +37,9 @@ An experimental implementation of Lua 5.2 written solely in pure Erlang.
 %_erllibdir/%realname-%version
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.5.1-alt1
+- 0.3 -> 1.5.1
+
 * Tue Mar 31 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3-alt4
 - Fixed build with rebar2.
 
