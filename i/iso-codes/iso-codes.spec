@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: iso-codes
-Version: 4.19.0
+Version: 4.20.1
 Release: alt1
 
 Group: System/Internationalization
@@ -14,7 +14,8 @@ Vcs: https://salsa.debian.org/iso-codes-team/iso-codes.git
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: common-licenses python3-base
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson common-licenses
 
 %description
 This package provides several ISO standards:
@@ -38,19 +39,18 @@ when building programs that use %name
 ln -sf %_licensedir/LGPL-2.1 LICENSE
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --all-name iso --output=%name.lang
 
 %check
-%make check
+%__meson_test
 
 %files -f %name.lang
-%doc CHANGELOG* README.md TODO
+%doc CHANGELOG* README.md
 %doc --no-dereference LICENSE
 %_datadir/xml/%name/
 %_datadir/%name/json/
@@ -59,6 +59,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 4.20.1-alt1
+- 4.20.1
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 4.19.0-alt1
 - 4.19.0
 
