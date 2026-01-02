@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: witr
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Why is this running?
@@ -41,7 +41,7 @@ go build -ldflags "-X main.version=v%{version}" -o witr ./cmd/witr
 
 %install
 install -Dm 0755 witr %buildroot%_bindir/witr
-install -Dm 644 docs/witr.1 %buildroot%_man1dir/witr.1
+install -Dm 644 docs/cli/witr.1 %buildroot%_man1dir/witr.1
 
 %files
 %doc LICENSE README.md
@@ -49,5 +49,8 @@ install -Dm 644 docs/witr.1 %buildroot%_man1dir/witr.1
 %_man1dir/witr.1.*
 
 %changelog
+* Fri Jan 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.6-alt1
+- New version 0.1.6.
+
 * Thu Jan 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.5-alt1
 - Initial build for Sisyphus
