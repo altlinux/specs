@@ -1,16 +1,16 @@
 %define optflags_lto %nil
 
-%define git_ver 18170
-%define git_commit 23b339d410fafc21326502d381b4b03611fa294b
+%define git_ver 18592
+%define git_commit c5511200d5a8997b5413b37cb3a4860ab3189a63
 
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
 %define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
 %define soundtouch_commit 3982730833b6daefe77dcfb32b5c282851640c17
-%define fusion_version 1.2.8
+%define fusion_version 1.2.11
 %define gamemode_version 1.8.2
 
 Name: rpcs3
-Version: 0.0.38
+Version: 0.0.39
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -18,6 +18,7 @@ License: GPLv2
 Group: Emulators
 
 Url: https://%name.net/
+Vcs: https://github.com/RPCS3/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64
@@ -34,6 +35,8 @@ Source3: soundtouch-%soundtouch_commit.tar
 Source4: Fusion-%fusion_version.tar
 # https://github.com/FeralInteractive/gamemode/archive/%gamemode_version/gamemode-%gamemode_version.tar.gz
 Source5: gamemode-%gamemode_version.tar
+
+Patch0: %name-0.0.39-fix-glew-definitions.patch
 
 BuildRequires: /proc
 BuildRequires: alt-os-release
@@ -82,6 +85,8 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5
+
+%patch0 -p1
 
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
@@ -151,6 +156,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Jan 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.39-alt1
+- Version 0.0.39
+
 * Wed Oct 01 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.38-alt1
 - Version 0.0.38
 
