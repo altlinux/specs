@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,9 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Dec 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.9-alt1
+- editions/education: up license version 11.0 -> 11.1
+
 * Sat Dec 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.8-alt1
 - components/education-robotics: set arch x86_64 for gz-sim
 
