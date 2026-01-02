@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.28
+Version: 3.4.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -19,7 +19,10 @@ BuildRequires: cmake
 BuildRequires: fcitx5-devel
 BuildRequires: gcc-c++
 BuildRequires: libXScrnSaver-devel
-BuildRequires: libXext-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXt-devel
+BuildRequires: libXtst-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: libaudio-devel
@@ -34,6 +37,7 @@ BuildRequires: libibus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libslang2
+BuildRequires: libsndio7-devel
 BuildRequires: libsoup3.0-devel
 BuildRequires: libudev-devel
 %ifnarch %e2k
@@ -99,6 +103,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Fri Jan 02 2026 Nazarov Denis <nenderus@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+
 * Wed Dec 03 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.28-alt1
 - New version 3.2.28.
 
