@@ -5,7 +5,7 @@
 %define oname fox
 
 Name: libfox
-Version: %major.57
+Version: 1.6.59
 Release: alt1
 
 Summary: The FOX C++ GUI Toolkit shared libraries
@@ -16,6 +16,7 @@ Url: http://www.fox-toolkit.org/fox.html
 
 # ftp://ftp.fox-toolkit.org/pub/%oname-%version.tar.gz
 Source: %oname-%version.tar
+Source999: watch
 Patch1: %oname-%version-alt-build.patch
 
 # Automatically added by buildreq on Wed Jul 15 2009
@@ -145,6 +146,9 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 %_man1dir/calculator.*
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.6.59-alt1
+- 1.6.57 -> 1.6.59
+
 * Thu Jul 04 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.57-alt1
 - Updated to stable upstream version 1.6.57.
 - Recoded spec to UTF-8.
