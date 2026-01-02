@@ -1,7 +1,7 @@
 %define ocamlmod biniou
 Name: ocaml-%ocamlmod
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Summary: Safe and fast binary data format
 Group: Development/ML
 License: BSD-3-Clause
@@ -48,17 +48,17 @@ developing applications that use %name.
 %check
 %dune_check
 
-# avoid potential future name conflict
-mv %buildroot%_bindir/{,ocaml-}bdump
-
 %files -f ocaml-files.runtime
 %doc LICENSE
 
 %files devel -f ocaml-files.devel
 %doc README.md CHANGES.md
-%_bindir/ocaml-bdump
+%_bindir/bdump
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.2.2-alt2
+- renamed ocaml-bdump back to bdump
+
 * Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 - fixed License and Url tags
