@@ -2,8 +2,8 @@
 %define pg_ver 15
 
 Name: postgresql%pg_ver-postgis
-Version: 3.5.2
-Release: alt1.1
+Version: 3.6.1
+Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
@@ -89,6 +89,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Fri Jan 02 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.1-alt1
+- New version.
+
 * Sat Jun 07 2025 Ivan A. Melnikov <iv@altlinux.org> 3.5.2-alt1.1
 - NMU: Package bitcode on loongarcht64 (fixes FTBFS)
 

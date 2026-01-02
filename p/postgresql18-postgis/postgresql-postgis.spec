@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define pg_ver 17
+%define pg_ver 18
 
 Name: postgresql%pg_ver-postgis
 Version: 3.6.1
