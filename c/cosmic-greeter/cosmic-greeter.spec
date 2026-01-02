@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -57,7 +57,6 @@ export VERGEN_GIT_SHA=%version
 export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 export RUSTFLAGS="${RUSTFLAGS} -g"
 just build-release
-#%rust_build
 
 %install
 export VERGEN_GIT_SHA=%version
@@ -65,12 +64,18 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 just rootdir=%buildroot install
 install -Dm 644 %name.toml -t %buildroot/%_sysconfdir/greetd/greeters/
 
+# greetd config
 mkdir -p %buildroot/%_altdir
 echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/%name.toml 30" \
     > %buildroot%_altdir/greetd-%name
 
+# services
 sed -i 's/cosmic-greeter.toml/config.toml/' debian/%name.service
 install -Dm 644 debian/%name{.service,-daemon.service} -t %buildroot%_unitdir/
+
+# PAM config
+install -d %buildroot%_sysconfdir/pam.d
+  ln -s login %buildroot%_sysconfdir/pam.d/%name
 
 %check
 export VERGEN_GIT_SHA=%version
@@ -79,6 +84,7 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 
 %files
 %_sysconfdir/greetd/greeters/%name.toml
+%_sysconfdir/pam.d/%name
 %_bindir/%name
 %_bindir/%name-start
 %_bindir/%name-daemon
@@ -91,6 +97,10 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1.1
+- installed /etc/pam.d/cosmic-greeter
+  as a symlink to /etc/pam.d/login (ALT #57416)
+
 * Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
