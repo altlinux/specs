@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.78
+Version: 1.79
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -224,6 +224,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Fri Jan 02 2026 Vitaly Chikunov <vt@altlinux.org> 1.79-alt1
+- Fix console handling.
+
 * Thu Dec 25 2025 Vitaly Chikunov <vt@altlinux.org> 1.78-alt1
 - More support for experimenting with graphic boot.
 
