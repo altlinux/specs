@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.28
+Version: 1.3.29
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -68,6 +68,10 @@ Shell functions and kbd data for %name.
 %_sysconfdir/alterator/sysconfig/gnome-kbd
 
 %changelog
+* Fri Jan 02 2026 Anton Midyukov <antohami@altlinux.org> 1.3.29-alt1
+- alterator-sysconfig-functions: add gdm dconf support.
+- preinstall.d/20-sysconfig.sh: copy dconf override for GNOME too.
+
 * Mon Dec 15 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.28-alt1
 - Added en_ZA locale support.
 
