@@ -3,7 +3,7 @@
 %global realname p1_utils
 
 Name: erlang-%realname
-Version: 1.0.26
+Version: 1.0.28
 Release: alt1
 Summary: Erlang Utility Modules from ProcessOne
 Group: Development/Erlang
@@ -43,6 +43,9 @@ Erlang Utility Modules from ProcessOne.
 %_erllibdir/%realname-%version
 
 %changelog
+* Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 1.0.28-alt1
+- 1.0.26 -> 1.0.28
+
 * Mon Sep 23 2024 Egor Ignatov <egori@altlinux.org> 1.0.26-alt1
 - Updated to upstream version 1.0.26.
 
