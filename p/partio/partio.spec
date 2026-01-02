@@ -3,8 +3,8 @@
 %define soname 1
 
 Name: partio
-Version: 1.19.0
-Release: alt2
+Version: 1.19.2
+Release: alt1
 Summary: A library for particle IO and manipulation
 Group: Development/Other
 License: BSD-3-Clause
@@ -142,6 +142,9 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/partio/test
 
 %changelog
+* Thu Jan 01 2026 Anton Farygin <rider@altlinux.org> 1.19.2-alt1
+- 1.19.0 -> 1.19.2
+
 * Fri May 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.0-alt2
 - Fix build with googletest 1.17.0
 
