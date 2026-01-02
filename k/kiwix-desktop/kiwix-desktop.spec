@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kiwix-desktop
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: Offline reader for works with the highly compressed ZIM file format
@@ -51,6 +51,9 @@ export PATH=%_qt6_bindir:$PATH
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Fri Jan 02 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+
 * Sat Dec 21 2024 Constantin Sunzow <protvin@altlinux.org> 2.4.1-alt1
 - Enable check for unpackaged files.
 - Regroup spec tags and trim unnecessary spaces.
