@@ -8,7 +8,7 @@
 
 Name: %{_name}-session
 Version: 6.6.1
-Release: alt1
+Release: alt2
 
 License: GPL-2.0-or-later
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -80,6 +80,7 @@ Summary: Wayland session for Cinnamon
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires(pre): %{_name} >= %ver_major
+Requires: xorg-xwayland
 
 %description wayland
 Wayland session for Cinnamon.
@@ -139,6 +140,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Sat Jan 03 2026 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt2
+- cinnamon-session-wayland: add depend on xorg-xwayland.
+
 * Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt1
 - New version 6.6.1.
 
