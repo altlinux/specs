@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     geonkick
-Version:  3.6.2
+Version:  3.7.0
 Release:  alt1
 
 Summary:  A free software percussion synthesizer
@@ -78,6 +78,9 @@ This package contains Geonkick build as LV2 plugins.
 
 
 %changelog
+* Sat Jan 03 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
