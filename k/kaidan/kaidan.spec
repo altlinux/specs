@@ -3,7 +3,7 @@
 %define xdg_name im.kaidan.kaidan
 
 Name: kaidan
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Modern Chat App for Every Device
@@ -22,7 +22,7 @@ Source: %name-v%version.tar
 
 %K6init no_altplace appdata
 
-%define qxmpp_ver 1.11.0
+%define qxmpp_ver 1.13.0
 %define qt_ver 6.6
 %define kf_ver 6.11
 %define kr_ver 1.4.0
@@ -80,6 +80,9 @@ you are not dependent on one specific service provider.
 %doc NEWS.md README.md
 
 %changelog
+* Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Fri Nov 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - v0.13.0-21-g7dc198a8
 
