@@ -3,7 +3,7 @@
 
 Name: kdotool
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Xdotool-like for KDE Wayland
 License: Apache-2.0
@@ -13,6 +13,8 @@ Vcs: https://github.com/jinliu/kdotool
 
 Source: %name-%version.tar
 Source1: vendor.tar
+
+Patch: kdotool-0.2.1-alt-never_type_fallback_fixes.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: libdbus-devel
@@ -30,6 +32,7 @@ runs it, and then deletes it, using KWin's DBus interface.
 
 %prep
 %setup -a 1
+%autopatch -p 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -62,5 +65,8 @@ EOF
 %_bindir/kdotool
 
 %changelog
+* Tue Dec 23 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.1-alt2
+- Fix FTBFS with new rust.
+
 * Wed Jun 11 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.1-alt1
 - First build for alt.
