@@ -3,7 +3,7 @@
 %define luarocks_revision 1
 
 Name: lua5.4-module-luautf8
-Version: 0.1.7
+Version: 0.2.0
 Release: alt1_lr%luarocks_revision
 
 Summary: A utf-8 support module for Lua and LuaJIT
@@ -66,6 +66,9 @@ luarocks-5.4 test --test-type command \
 %lua_modulesdir/lua-utf8.so
 
 %changelog
+* Tue Dec 16 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.2.0-alt1_lr1
+- New version (2.0.0).
+
 * Tue Sep 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.1.7-alt1_lr1
 - New version (0.1.7).
 
