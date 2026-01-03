@@ -3,7 +3,7 @@
 %define luarocks_revision 0
 
 Name: lua5.4-module-lualanes
-Version: 3.17.1
+Version: 3.17.2
 Release: alt1_lr%luarocks_revision
 
 Summary: Lanes is a lightweight, native, lazy evaluating multithreading library for Lua 5.1 to 5.4
@@ -90,5 +90,8 @@ EOF
 %doc docs/*
 
 %changelog
+* Tue Dec 23 2025 Sergey Zhidkih <rx1513@altlinux.org> 3.17.2-alt1_lr0
+- New version (3.17.2).
+
 * Mon Apr 22 2025 Sergey Zhidkih <rx1513@altlinux.org> 3.17.1-alt1_lr0
 - First build for alt.
