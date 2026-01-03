@@ -1,8 +1,8 @@
 %def_without static
 
 Name: ddrescue
-Version: 1.29.1
-Release: alt3
+Version: 1.30
+Release: alt1
 
 Summary: Data copying in presence of I/O errors
 License: GPLv2+
@@ -66,6 +66,9 @@ make check
 %endif
 
 %changelog
+* Sat Jan 03 2026 Michael Shigorin <mike@altlinux.org> 1.30-alt1
+- new version (watch file uupdate)
+
 * Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.29.1-alt3
 - separate %%check
 - use %%configure macro
