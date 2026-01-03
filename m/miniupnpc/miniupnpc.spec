@@ -2,7 +2,7 @@
 
 Name: miniupnpc
 Version: 2.3.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: UPnP client library
@@ -15,6 +15,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # http://miniupnp.free.fr/files/%name-%version.tar.gz
 Source: %name-%version.tar
+# https://github.com/miniupnp/miniupnp/commit/e263ab6f56c382e10fed31347ec68095d691a0e8
+Patch0: %name-2.3.3-fix_size_t.patch
 
 BuildRequires: cmake
 
@@ -47,6 +49,7 @@ Development tools for %name
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %cmake -DUPNPC_BUILD_STATIC:BOOL=FALSE
@@ -77,6 +80,9 @@ Development tools for %name
 %_bindir/upnpc-shared
 
 %changelog
+* Sat Jan 03 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.3.3-alt3
+- Fix 'size_t' has not been declared
+
 * Wed Oct 01 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.3.3-alt2
 - New version 2.3.3.
 
