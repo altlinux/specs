@@ -4,8 +4,8 @@
 %define build_type Release
 
 Name:    CloudReverb
-Version: 0.4
-Release: alt3
+Version: 0.4.1
+Release: alt1
 
 Summary: Algorithmic reverb plugin based on CloudSeed
 License: MIT
@@ -109,6 +109,9 @@ cp -a "VST3/CloudReverb.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Sat Jan 03 2026 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Wed Nov 26 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt3
 - explicitly define JUCE_TARGET_ARCHITECTURE (fixes FTBFS
   on loongarch64).
