@@ -1,5 +1,5 @@
 Name:    f-engrave
-Version: 1.76
+Version: 1.77
 Release: alt1
 
 Summary: f-engrave is a text or image to g-code program for both engraving and v-carving
@@ -73,6 +73,9 @@ END
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Jan 04 2026 Alexei Mezin <alexvm@altlinux.org> 1.77-alt1
+- New version
+
 * Sat Nov 16 2024 Alexei Mezin <alexvm@altlinux.org> 1.76-alt1
 - New version
 
