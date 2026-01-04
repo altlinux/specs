@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.22
+Version: 1.23
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Jan 04 2026 Vitaly Chikunov <vt@altlinux.org> 1.23-alt1
+- Fix installing kernel-headers.
+
 * Wed Oct 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.22-alt1
 - remove-old-kernels: Fix removing old kernels for x.y flavours.
 
