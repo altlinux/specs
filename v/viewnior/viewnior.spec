@@ -6,7 +6,7 @@
 
 Name: viewnior
 Version: 1.8
-Release: alt2
+Release: alt3
 
 Summary: Elegant image viewer
 License: GPLv3+
@@ -23,7 +23,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libatk-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config
 BuildRequires: rpm-macros-meson
 BuildRequires: gcc-c++ intltool libexiv2-devel libgtk+2-devel
-BuildRequires:  meson
+BuildRequires:  meson shared-mime-info-devel cmake
 
 %if_with gnome
 BuildRequires: libGConf-devel
@@ -71,6 +71,9 @@ chmod 644 AUTHORS COPYING NEWS README.md TODO src/*
 %_datadir/metainfo/%{name}.metainfo.xml
 
 %changelog
+* Sun Jan 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8-alt3
+- Fix FTBFS.
+
 * Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt2
 - rebuild with new libexiv2
 
