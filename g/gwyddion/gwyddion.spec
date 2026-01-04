@@ -3,7 +3,7 @@
 %def_with ruby
 
 Name: gwyddion
-Version: 2.68
+Version: 2.70
 Release: alt1
 
 Summary: An SPM data visualization and analysis tool
@@ -284,6 +284,9 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 
 %changelog
+* Sun Jan 04 2026 Alexei Mezin <alexvm@altlinux.org> 2.70-alt1
+- new version
+
 * Sun Apr 06 2025 Alexei Mezin <alexvm@altlinux.org> 2.68-alt1
 - new version
 
