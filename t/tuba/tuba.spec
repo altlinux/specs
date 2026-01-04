@@ -2,7 +2,7 @@
 %global alt_name fedi
 
 Name: tuba
-Version: 0.9.2
+Version: 0.10.3
 Release: alt1
 License: GPL-3.0-only
 Group: Networking/Other
@@ -61,7 +61,7 @@ populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 
 %install
 %meson_install
-%find_lang %xdg_name
+%find_lang %xdg_name --all-name
 
 %check
 # The .desktop and .metainfo.xml files are validated during the test suite, so
@@ -69,19 +69,19 @@ populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 %meson_test
 
 %files -f %xdg_name.lang
-%doc LICENSE
-%doc README.md
-%_mandir/man1/%xdg_name.1*
+%doc LICENSE *.md
 %_bindir/%xdg_name
 %_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
+%_mandir/man1/%xdg_name.1*
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%_datadir/gtksourceview-5/language-specs/%alt_name-*.lang
-%_datadir/gtksourceview-5/styles/%alt_name-*.xml
-%exclude %_datadir/locale/zh_Hans/LC_MESSAGES/dev.geopjr.Tuba.mo
 
 %changelog
+* Sun Jan 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.3-alt1
+- 0.9.2 -> 0.10.3 (ALT #56726)
+
 * Sun Jul 13 2025 Anton Palgunov <toxblh@altlinux.org> 0.9.2-alt1
 - new version 0.9.2 (with rpmrb script)
 
