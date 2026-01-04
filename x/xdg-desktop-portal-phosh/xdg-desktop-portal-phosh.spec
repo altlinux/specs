@@ -2,9 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.51
+%define ver_major 0.52
 %define beta %nil
-%define pfs_ver d007e739
+%define pfs_ver c9bd3394
 
 %define _name phosh
 # phrosh portal
@@ -97,6 +97,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+
 * Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - 0.51.0
 

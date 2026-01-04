@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.51
+%define ver_major 0.52
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -40,6 +40,8 @@ Source10: gvc-%gvc_ver.tar
 Requires: dconf feedbackd lm_sensors3
 # and ModemManager 1.25.1
 Requires: cellbroadcastd
+# for sysfs backend
+Requires: sysfsutils
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
@@ -47,7 +49,7 @@ BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.84
 BuildRequires: pkgconfig(gtk4) >= 4.12.5
 BuildRequires: pkgconfig(gtk4-wayland) >= 4.4
-BuildRequires: pkgconfig(libadwaita-1) >= 1.5
+BuildRequires: pkgconfig(libadwaita-1) >= 1.7
 BuildRequires: pkgconfig(wayland-client) >= 1.14
 BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
@@ -78,7 +80,12 @@ Mobile Settings App for phosh and related components.
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version%beta -a10 %{?_enable_embed_gmobile:-a11
 mv gmobile-%gmobile_ver subprojects/gmobile}
+
 mv gvc-%gvc_ver subprojects/gvc
+pushd subprojects/gvc
+for p in ../packagefiles/gvc/*.patch; do
+    patch -p1 -i $p; done
+popd
 
 %build
 %meson
@@ -109,6 +116,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+
 * Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - 0.51.0
 

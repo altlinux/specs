@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.51
+%define ver_major 0.52
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -58,6 +58,7 @@ Patch3: %name-0.29.0-alt-service-dm.patch
 # https://bugzilla.altlinux.org/54947
 Patch4: %name-0.48-alt-tcb_egid_fix.patch
 # https://bugzilla.altlinux.org/55117
+# faled with 0.52.0
 Patch5: %name-0.48.0-alt-app-grig-keyboard-fix.patch
 
 %define gmobile_ver 0.1.0
@@ -72,6 +73,8 @@ Requires: phoc >= %ver_major
 Requires: feedbackd >= %feedback_ver
 Requires: gnome-shell-data
 Requires: mutter-gnome
+# see phosh.session
+Requires: gnome-settings-daemon
 Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
@@ -101,7 +104,7 @@ BuildRequires: libfeedback-devel >= %feedback_ver
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
-BuildRequires: pkgconfig(gio-2.0) >= 2.76.0
+BuildRequires: pkgconfig(gio-2.0) >= 2.80.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 43
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 47
@@ -128,6 +131,8 @@ BuildRequires: pkgconfig(evince-document-3.0)
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(gnome-bluetooth-3.0)
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
+# since 0.52
+BuildRequires: pkgconfig(qrcodegen)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0
 BuildRequires: gir(GnomeDesktop) = 3.0} gir(GnomeBluetooth) = 3.0
@@ -189,7 +194,7 @@ mv libcall-ui-%callui_ver subprojects/libcall-ui
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
 %patch4 -p1 -b .tcb_egid_fix
-%patch5 -p1 -b .osk
+#%%patch5 -p1 -b .osk
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 # full path to capsh
 sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
@@ -324,6 +329,10 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+- disabled broken alt-app-grig-keyboard-fix.patch
+
 * Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - 0.51.0
 

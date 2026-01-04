@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.51
+%define ver_major 0.52
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -14,7 +14,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: Stevia is a default keyboard for Phosh
 Group: Graphical desktop/GNOME
@@ -149,6 +149,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+
 * Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1.1
 - tried to fix mobi.phosh.OSK alternative to avoid duplicate names
 

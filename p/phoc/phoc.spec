@@ -1,10 +1,11 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.51
+%define ver_major 0.52
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 %define xdg_name mobi.phosh.Phoc
+%define schema_name mobi.phosh.phoc
 
 %define dev_uid 500
 %define wlroots_ver_major 0.19
@@ -12,7 +13,7 @@
 # since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
-%define gmobile_ver 0.1.0
+%define gmobile_ver 0.6.0
 %def_disable embed_gmobile
 # since 0.48
 %define gvdb_ver 4758f6f
@@ -140,7 +141,7 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_bindir/%name
 %_bindir/%name-outputs-states
 %_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
+%_datadir/glib-2.0/schemas/%schema_name.gschema.xml
 %_iconsdir/hicolor/symbolic/apps/%xdg_name.svg
 %{?_enable_man:%_man1dir/%name.1*
 %_man1dir/%name-outputs-states.1*
@@ -152,6 +153,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
+- 0.52.0
+
 * Sat Nov 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.51.0-alt1
 - 0.51.0
 
