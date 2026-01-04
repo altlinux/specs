@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kiwix-desktop
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Offline reader for works with the highly compressed ZIM file format
@@ -51,6 +51,9 @@ export PATH=%_qt6_bindir:$PATH
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Sun Jan 04 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
+- New version.
+
 * Fri Jan 02 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - New version.
 
