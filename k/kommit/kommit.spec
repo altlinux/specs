@@ -1,7 +1,7 @@
 Name: kommit
-Version: 1.6.0
+Version: 1.8.1
 Release: alt1
-%K5init
+%K6init
 
 Group: Graphical desktop/KDE
 Summary: Git gui client for KDE
@@ -12,18 +12,21 @@ Source: %name-%version.tar.gz
 ExcludeArch: i586 armh
 
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
-Buildrequires: kf5-kdoctools kf5-kdoctools-devel 
-BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-ktexteditor-devel
-BuildRequires: kf5-ktextwidgets-devel kf5-kparts-devel kf5-ktexteditor-devel
-BuildRequires: kf5-kxmlgui-devel kf5-syntax-highlighting-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-base-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
+Buildrequires: kf6-kdoctools kf6-kdoctools-devel kf6-kiconthemes-devel
+BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-ktexteditor-devel
+BuildRequires: kf6-ktextwidgets-devel kf6-kparts-devel kf6-ktexteditor-devel
+BuildRequires: kf6-kxmlgui-devel kf6-syntax-highlighting-devel
 BuildRequires: libgit2-devel
-BuildRequires: qt5-charts-devel
+BuildRequires: qt6-charts-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: dolphin-devel
+
 ##gettext 
-Requires: kf5-syntax-highlighting libkf5kiowidgets libkf5kiogui libkf5kiocore libgit2 libqt5-charts
+Requires: kf6-syntax-highlighting libkf6kiowidgets libkf6kiogui libkf6kiocore libgit2 libqt6-charts
 
 %description
 %summary.
@@ -34,24 +37,28 @@ Requires: kf5-syntax-highlighting libkf5kiowidgets libkf5kiogui libkf5kiocore li
 %__subst 's|Categories=Development|Categories=Development;RevisionControl;|' src/data/*.desktop
 
 %build
-%K5build
+%K6build -DBUILD_WITH_QT6=ON -DCMAKE_BUILD_TYPE=MinSizeRel
 
 %install
-%K5install
+%K6install
 %find_lang %name --with-kde --all-name
 
 
 %files -f %name.lang
 %_bindir/*
 %_libdir/*
-##%_K5plug/dolphin/vcs/*.so
-%_datadir/qlogging-categories5/*.*categories
+%_K6plug/dolphin/vcs/*.so
+%_datadir/qlogging-categories6/*.*categories
 %_desktopdir/*
-%_K5icon/*/*/apps/*
-%_K5icon/*/*/actions/*
+%_K6icon/*/*/apps/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Jan 04 2026 Alexei Mezin <alexvm@altlinux.org> 1.8.1-alt1
+- New version
+  - switch to QT6
+  - enable Dolphin plugin
+
 * Sat Nov 16 2024 Alexei Mezin <alexvm@altlinux.org> 1.6.0-alt1
 - New version
 - Drop Dolphin5 integration
