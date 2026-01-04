@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.48
+%define ver_major 3.49
 %define oldname gnome-latex
 %define xdg_name org.gnome.enter_tex
 
@@ -13,9 +13,9 @@ Release: alt1
 Summary: Integrated LaTeX Environment for the GNOME desktop
 Group: Publishing
 License: GPL-3.0-or-later
-Url: https://gitlab.gnome.org/swilmet/gnome-latex
+Url: https://gitlab.gnome.org/World/gedit/enter-tex
 
-Vcs: https://gitlab.gnome.org/swilmet/enter-tex.git
+Vcs: https://gitlab.gnome.org/World/gedit/enter-tex.git
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
@@ -27,10 +27,11 @@ Obsoletes: %oldname < 47
 Provides: %oldname = %EVR
 
 Requires: %_bindir/latexmk dconf
+Requires: texlive-dist
 
 %define gtk_ver 3.24
-%define gtksource_ver 299.3.0
-%define tepl_ver 6.13
+%define gtksource_ver 299.6.0
+%define tepl_ver 6.14
 %define amtk_ver 5.9.0
 %define vala_ver 0.46.5
 
@@ -110,6 +111,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.49.0-alt1
+- 3.49.0
+
 * Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
 - 3.48.0
 

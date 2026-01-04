@@ -3,9 +3,9 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
-%define lib_ver 48.2
+%define lib_ver 49
 %define api_ver 3.0
 %define namespace Gedit
 %def_enable plugins
@@ -13,7 +13,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -34,8 +34,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %define glib_ver 2.76.0
 %define gtk_ver 3.24.0
-%define tepl_ver 6.11
-%define gtksourceview_ver 299.3.0
+%define tepl_ver 6.14
+%define gtksourceview_ver 299.6.0
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
 %define soup_ver 2.60.0
@@ -49,7 +49,7 @@ Requires: typelib(Peas) = 1.0 typelib(Gdk) = 3.0
 Requires: dconf gnome-icon-theme gvfs zenity
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson yelp-tools %_bindir/appstream-util
+BuildRequires: meson yelp-tools %_bindir/appstreamcli
 BuildRequires: desktop-file-utils >= 0.22
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: iso-codes-devel >= 0.35
@@ -208,6 +208,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2 (no more python plugins)
 

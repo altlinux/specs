@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 48
+%define ver_major 49
 %define beta %nil
 # removed python plugins since 48.2
 %def_disable python
@@ -10,7 +10,7 @@
 %{?_enable_python:%add_python3_path %gedit_pluginsdir}
 
 Name: gedit-plugins
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Plugins for GEdit
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
 %define gtksourceview_ver 299.0.4
-%define gedit_ver 48.0
+%define gedit_ver 49.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -89,6 +89,9 @@ This package contains various plugins for gEdit.
 
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 49.0-alt1
+- 49.0
+
 * Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2 (removed python plugins)
 

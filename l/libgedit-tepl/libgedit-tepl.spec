@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 6.13
+%define ver_major 6.14
 %define api_ver 6
 %define namespace Tepl
 
@@ -170,6 +170,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 6.14.0-alt1
+- 6.14.0
+
 * Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 6.13.0-alt1
 - 6.13.0
 

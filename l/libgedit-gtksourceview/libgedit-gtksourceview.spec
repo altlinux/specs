@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gtksourceview
-Version: %ver_major.5.0
+Version: %ver_major.6.0
 Release: alt1
 
 Summary: Gedit Technology - Source code editing widget
@@ -135,7 +135,7 @@ xvfb-run %__meson_test
 %_vapidir/%name-%api_ver.deps
 %_vapidir/%name-%api_ver.vapi
 %endif
-%doc HACKING
+%doc CONTRIBUTING
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -157,6 +157,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 299.6.0-alt1
+- 299.6.0
+
 * Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 299.5.0-alt1
 - 299.5.0
 
