@@ -11,14 +11,15 @@
 
 Name: plymouth
 Version: 24.004.60
-Release: alt6.20250516.1
+Release: alt7.20251219.1
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
 License: GPL-2.0-or-later
 Group: System/Base
 
-Url: http://www.freedesktop.org/wiki/Software/Plymouth
+URL: https://www.freedesktop.org/wiki/Software/Plymouth
+VCS: https://gitlab.freedesktop.org/plymouth/plymouth
 
 Source: %name-%version.tar
 
@@ -53,7 +54,7 @@ after boot.
 %package system-theme
 Summary: Plymouth default theme
 Group: System/Base
-Provides: %name-system-plugin = %version-%release
+Provides: %name-system-plugin = %EVR
 Requires: plymouth(system-theme)
 Requires: %name = %EVR
 BuildArch: noarch
@@ -102,7 +103,7 @@ the system.
 %package plugin-label
 Summary: Plymouth label plugin
 Group: System/Base
-Requires: lib%name = %EVR
+Requires: %name = %EVR
 
 %description plugin-label
 This package contains the label control plugin for
@@ -112,7 +113,7 @@ graphical boot splashes using pango and cairo.
 %package plugin-fade-throbber
 Summary: Plymouth "Fade-Throbber" plugin
 Group: System/Base
-Requires: lib%name = %EVR
+Requires: %name = %EVR
 Requires: lib%name-graphics = %EVR
 
 %description plugin-fade-throbber
@@ -124,8 +125,8 @@ while other images pulsate around during system boot up.
 Summary: Plymouth "Fade-In" theme
 Group: System/Base
 Requires: %name-plugin-fade-throbber = %EVR
-Requires(post): %name-scripts = %version-%release
-Provides: plymouth(system-theme) = %version-%release
+Requires(post): %name-scripts = %EVR
+Provides: plymouth(system-theme) = %EVR
 BuildArch: noarch
 
 %description theme-fade-in
@@ -137,7 +138,7 @@ while stars twinkle around the logo during system boot up.
 Summary: Plymouth "Spinfinity" theme
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-spinfinity
@@ -148,7 +149,7 @@ spins in the shape of an infinity sign.
 %package plugin-space-flares
 Summary: Plymouth "space-flares" plugin
 Group: System/Base
-Requires: lib%name = %EVR
+Requires: %name = %EVR
 Requires: lib%name-graphics = %EVR
 Requires: plymouth-plugin-label = %EVR
 
@@ -160,7 +161,7 @@ Plymouth. It features a corner image with animated flares.
 Summary: Plymouth "Solar" theme
 Group: System/Base
 Requires: %name-plugin-space-flares = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 Requires: plymouth-system-theme
 BuildArch: noarch
 
@@ -171,7 +172,7 @@ Plymouth. It features a blue flamed sun with animated solar flares.
 %package plugin-two-step
 Summary: Plymouth "two-step" plugin
 Group: System/Base
-Requires: lib%name = %EVR
+Requires: %name = %EVR
 Requires: lib%name-graphics = %EVR
 Requires: plymouth-plugin-label = %EVR
 
@@ -185,7 +186,7 @@ short, fast one-shot animation.
 Summary: Plymouth "Charge" plugin
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-charge
@@ -197,7 +198,7 @@ and finally burst into full form.
 Summary: Plymouth "Glow" plugin
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-glow
@@ -206,7 +207,7 @@ This package contains the "Glow" boot splash theme for Plymouth.
 %package plugin-script
 Summary: Plymouth "script" plugin
 Group: System/Base
-Requires: lib%name = %EVR
+Requires: %name = %EVR
 Requires: lib%name-graphics = %EVR
 
 %description plugin-script
@@ -219,7 +220,7 @@ boot splash themes.
 Summary: Plymouth "Script" plugin
 Group: System/Base
 Requires: %name-plugin-script = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-script
@@ -231,7 +232,7 @@ plugin.
 Summary: Plymouth "Spinner" theme
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-spinner
@@ -242,7 +243,7 @@ Plymouth. It features a small spinner on a dark background.
 Summary: Plymouth "BGRT" theme
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-bgrt
@@ -254,7 +255,7 @@ Jimmac's spinner theme using the ACPI BGRT graphics as background.
 Summary: Plymouth "BGRT-ALT" theme
 Group: System/Base
 Requires: %name-plugin-two-step = %EVR
-Requires(post): %name-scripts = %version-%release
+Requires(post): %name-scripts = %EVR
 BuildArch: noarch
 
 %description theme-bgrt-alt
@@ -481,6 +482,10 @@ fi \
 %files system-theme
 
 %changelog
+* Sat Jan 03 2026 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt7.20251219.1
+- new snapshot
+- add depend on plymouth to plymouth-plugin-* (Closes: 53880)
+
 * Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt6.20250516.1
 - new snapshot
 
