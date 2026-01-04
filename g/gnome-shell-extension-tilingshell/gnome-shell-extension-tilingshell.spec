@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 17.1
+%define git_ver 17.2
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
@@ -78,6 +78,9 @@ popd
 %doc README.md
 
 %changelog
+* Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1:17.2-alt1
+- 17.2
+
 * Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1:17.1-alt1
 - 17.1 (GNOME 49 supported)
 - switched build to git release numbering

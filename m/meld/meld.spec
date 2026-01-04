@@ -1,18 +1,20 @@
 %def_disable snapshot
 
-%define ver_major 3.22
+%define ver_major 3.23
 %define xdg_name org.gnome.Meld
 
 %def_enable check
 
 Name: meld
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
 Group: Text tools
 Url: https://meld.app
+
+Vcs: https://gitlab.gnome.org/GNOME/meld.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -22,18 +24,22 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+%define python_ver 3.10
 %define gtk_api_ver 3.0
 %define gtksource_api_ver 4
 
+Requires: python3-module-pygobject3
 Requires: dconf
 Requires: typelib(Gtk) = %gtk_api_ver
 Requires: typelib(GtkSource) = %gtksource_api_ver
 Requires: librsvg icon-theme-adwaita
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson yelp-tools /usr/bin/appstream-util desktop-file-utils
-BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
+BuildRequires: meson yelp-tools
+BuildRequires: python3-devel >= %python_ver
+BuildRequires: python3-module-pygobject3-devel python3-module-pycairo-devel
 BuildRequires: gir(Gtk) = %gtk_api_ver gir(GtkSource) = %gtksource_api_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Meld is a visual diff and merge tool. It lets you compare two or three
@@ -47,7 +53,7 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %setup
 
 %build
-%meson -Dbyte-compile=false
+%meson
 %meson_build
 
 %install
@@ -60,17 +66,22 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %files -f %name.lang
 %attr(0755,root,root) %_bindir/%name
 %python3_sitelibdir_noarch/*
-%exclude %python3_sitelibdir_noarch/%name/build_helpers.py
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/glib-2.0/schemas/org.gnome.meld.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/mime/packages/%xdg_name.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1.*
 %doc NEWS README*
 
 %changelog
+* Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.23.1-alt1
+- 3.23.1
+
+* Wed Mar 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.23.0-alt1
+- 3.23.0
+
 * Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 3.22.3-alt1
 - 3.22.3
 
