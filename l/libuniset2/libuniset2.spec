@@ -28,7 +28,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.43.1
+Version: 2.44.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -433,6 +433,45 @@ JavaScript runner for %{name} (supported opcua)
 %endif
 %endif
 
+%package extension-launcher
+Group: Development/C++
+Summary: Process lifecycle manager for UniSet2 distributed systems
+Requires: %name-extension-common = %version-%release
+
+%description extension-launcher
+Process lifecycle manager for UniSet2 distributed systems.
+Handles startup sequence, health monitoring, and automatic restarts.
+
+%package extension-uno
+Group: Development/C++
+Summary: Combined application for running multiple UniSet2 extensions
+Requires: %name-extension-common = %version-%release
+%if_enabled opcua
+Requires: %name-extension-opcua = %version-%release
+%endif
+%if_enabled io
+Requires: %name-extension-io = %version-%release
+%endif
+%if_enabled logicproc
+Requires: %name-extension-logicproc = %version-%release
+%endif
+%if_enabled mqtt
+Requires: %name-extension-mqtt = %version-%release
+%endif
+%if_enabled uwebsocket
+Requires: %name-extension-wsgate = %version-%release
+%endif
+%if_enabled clickhouse
+Requires: %name-extension-clickhouse = %version-%release
+%endif
+%if_enabled pgsql
+Requires: %name-extension-pgsql = %version-%release
+%endif
+
+%description extension-uno
+Combined application that runs multiple UniSet2 extensions in a single process
+with direct SharedMemory access (without IPC overhead).
+
 %prep
 %setup
 
@@ -688,6 +727,15 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %endif
 %endif
 
+%files extension-launcher
+%_bindir/%oname-launcher
+%_datadir/%oname/launcher.html
+%_datadir/%oname/launcher-app.js
+%_datadir/%oname/uniset2-launcher.service.template
+
+%files extension-uno
+%_bindir/%oname-uno
+
 %files extension-common-devel
 %dir %_includedir/%oname/extensions
 %_includedir/%oname/extensions/*.*
@@ -716,6 +764,14 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Jan 05 2026 Pavel Vainerman <pv@altlinux.ru> 2.44.1-alt1
+- (uno): "all in one" process
+- (launcher): uniset launcher
+- minor fixes
+
+* Thu Jan 01 2026 Pavel Vainerman <pv@altlinux.ru> 2.43.2-alt1
+- (core): fixed bug in 'getAnyObjectID'
+
 * Wed Dec 31 2025 Pavel Vainerman <pv@altlinux.ru> 2.43.1-alt1
 - (opcua): update libs open62541 and open62541pp
 
