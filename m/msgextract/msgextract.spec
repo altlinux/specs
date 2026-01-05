@@ -1,8 +1,8 @@
 Name: msgextract
-Version: 0.4
+Version: 0.5
 Release: alt1
 
-Summary: Easily extract the contents of MSG email files
+Summary: Easily extract the contents of MSG or EML email files
 
 License: GPLv2
 Group: File tools
@@ -16,7 +16,7 @@ Requires: perl-Email-Outlook-Message-scripts mpack
 BuildArch: noarch
 
 %description
-A simple script to automate the unpacking of an MSG email message file so that it can be done with one command.
+A simple script to automate the unpacking of an MSG or EML email message file so that it can be done with one command.
 
 %prep
 %setup
@@ -29,6 +29,9 @@ install -Dm755 %name.sh %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jan 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt1
+- Added extraction directly from EML file.
+
 * Mon Jul 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4
 

@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -42,6 +42,7 @@ Additional mirrors for %name.
 Summary: A terminal simple local mirror switcher for ALT
 Group: Other
 BuildArch: noarch
+BuildRequires: perl-String-Util
 %description cli
 A terminal simple local mirror switcher for ALT.
 
@@ -84,6 +85,12 @@ fi
 %_bindir/ams
 
 %changelog
+* Mon Jan 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.3-alt1
+- GUI: fix: some errors
+- GUI: add: architecture check
+- CLI: fix: switch with no active mirror
+- CLI: add: check branch
+
 * Mon Dec 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.2-alt1
 - GUI: added: https protocol support.
 - GUI: added: convert http -> https.
