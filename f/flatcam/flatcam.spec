@@ -3,7 +3,7 @@
 
 Name: flatcam
 Version: 8.995
-Release: alt2
+Release: alt3
 
 Summary: 2D Computer-Aided PCB Manufacturing
 
@@ -38,17 +38,27 @@ for Isolation routing.
 
 %install
 %makeinstall_std
+
 # requires svgtrace, which requires the problematic python3-module-playwright (it is built 
 # with an excessive number of dependencies: -dev, node-playwright and others)
-rm -f %buildroot%_datadir/%name/appPlugins/ToolImage.py
+rm %buildroot%_datadir/%name/appPlugins/ToolImage.py
 
-%files
+# remove translation sources
+find %buildroot%_datadir/%name/locale -type f -name "*.po" -delete
+rm -r %buildroot%_datadir/%name/locale_template
+
+%find_lang strings
+
+%files -f strings.lang
 %doc README.md LICENSE
 %_datadir/%name
 %_bindir/%name
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jan 05 2026 Polina Poidenko <polipoki@altlinux.org> 8.995-alt3
+- Remove translation sources.
+
 * Mon Jan 05 2026 Polina Poidenko <polipoki@altlinux.org> 8.995-alt2
 - Add depend on libGLU.
 
