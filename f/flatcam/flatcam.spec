@@ -3,7 +3,7 @@
 
 Name: flatcam
 Version: 8.995
-Release: alt1
+Release: alt2
 
 Summary: 2D Computer-Aided PCB Manufacturing
 
@@ -23,6 +23,7 @@ AutoProv: nopython3
 Buildrequires(pre): rpm-macros-python3
 Buildrequires: rpm-build-python3
 
+Requires: libGLU
 %add_python3_path %_datadir/%name
 
 %description
@@ -48,6 +49,9 @@ rm -f %buildroot%_datadir/%name/appPlugins/ToolImage.py
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jan 05 2026 Polina Poidenko <polipoki@altlinux.org> 8.995-alt2
+- Add depend on libGLU.
+
 * Mon Jan 05 2026 Polina Poidenko <polipoki@altlinux.org> 8.995-alt1
 - New version beta-8.995 (Closes: 56689).
 - Build with PyQt6.
