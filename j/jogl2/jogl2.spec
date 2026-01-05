@@ -1,6 +1,6 @@
 Name:    jogl2
 Version: 2.5.0
-Release: alt1
+Release: alt2
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
@@ -36,7 +36,6 @@ ExcludeArch: armh %ix86
 BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat
 BuildRequires: jpackage-utils
 BuildRequires: gluegen2-devel = %{version}
 BuildRequires: eclipse-swt
@@ -164,6 +163,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.md LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Mon Jan 05 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt2
+- FTBFS: remove strictly build with Java 11.x.
+
 * Wed Apr 16 2025 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - New version
 
