@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.1
-Release: alt1.1%beta
+Release: alt1.2%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -75,7 +75,7 @@ install -Dm 644 debian/%name{.service,-daemon.service} -t %buildroot%_unitdir/
 
 # PAM config
 install -d %buildroot%_sysconfdir/pam.d
-  ln -s login %buildroot%_sysconfdir/pam.d/%name
+  ln -s greetd %buildroot%_sysconfdir/pam.d/%name
 
 %check
 export VERGEN_GIT_SHA=%version
@@ -97,6 +97,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Mon Jan 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1.2
+- switched /etc/pam.d/cosmic-greeter to greetd PAM config (ALT #57427)
+
 * Fri Jan 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1.1
 - installed /etc/pam.d/cosmic-greeter
   as a symlink to /etc/pam.d/login (ALT #57416)
