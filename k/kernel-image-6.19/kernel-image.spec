@@ -1,5 +1,5 @@
 Name: kernel-image-6.19
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.18
 %define kernel_base_version	6.19
 %define kernel_sublevel	.0
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jan 05 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc4
+- Update to v6.19-rc4 (2026-01-04).
+
 * Sun Dec 28 2025 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc3
 - Update to v6.19-rc3 (2025-12-28).
 
