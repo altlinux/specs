@@ -1,8 +1,10 @@
 # wx-config
 %global wxversion 3.2
 
+%define app_id org.guayadeque.Guayadeque
+
 Name: guayadeque
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 Summary: Music player
 License: GPL-3.0-or-later and BSD and LGPL-2.0-or-later and wxWidgets
@@ -41,7 +43,7 @@ and uses the Gstreamer media framework.
  -DCMAKE_BUILD_TYPE='Release' \
  -DCMAKE_EXE_LINKER_FLAGS:STRING=-lwx_gtk3u_aui-%wxversion \
  -DCMAKE_CXX_FLAGS="%optflags"
- 
+
 %cmake_build
 
 %install
@@ -50,8 +52,8 @@ and uses the Gstreamer media framework.
 %find_lang %name
 
 %check
-desktop-file-validate %buildroot%_datadir/applications/*.desktop
-appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xml
+desktop-file-validate %buildroot%_datadir/applications/%app_id.desktop
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metainfo.xml
 
 %files -f %name.lang
 %doc LICENSE RADIOS.md README.md
@@ -60,10 +62,13 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %_datadir/guayadeque/*.xml
 %dir %_datadir/guayadeque
 %_iconsdir/hicolor/*/apps/guayadeque.png
-%_desktopdir/org.guayadeque.guayadeque.desktop
-%_datadir/metainfo/org.guayadeque.guayadeque.metainfo.xml
+%_desktopdir/%app_id.desktop
+%_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Jan 05 2026 Anton Midyukov <antohami@altlinux.org> 0.7.5-alt1
+- new version 0.7.5.
+
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 0.7.4-alt1
 - new version 0.7.4.
 
