@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Curtail
-%define ver_major 1.13
+%define ver_major 1.14
 %define xdg_name com.github.huluti.%_name
 
 %def_enable check
@@ -67,12 +67,16 @@ whether keep or not metadata of images.
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README*
 
 %changelog
+* Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
