@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define commit 56f49e5f51074d9b851e9e7f5d72e3c79d50d1a3
+%define commit 0f87c748cf34a9bcbc4351ad051bcef8cce79158
 %define shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: falcond-profiles
 Version: 1.0
-Release: alt1.git%shortcommit
+Release: alt2.git%shortcommit
 
 Summary: List of rules used in falcond
 
@@ -12,7 +12,7 @@ License: MIT
 Group: System/Kernel and hardware
 Url: https://github.com/PikaOS-Linux/falcond-profiles
 
-# Source-url: https://github.com/PikaOS-Linux/falcond-profiles.git
+# Source-url: https://github.com/PikaOS-Linux/falcond-profiles/archive/%commit.tar.gz?/falcond-profiles-%commit.tar.gz
 Source: %name-%version.tar
 
 ExclusiveArch: %zig_arches
@@ -44,8 +44,11 @@ cp -a usr/share/falcond/profiles/htpc/* %buildroot%_datadir/falcond/profiles/htp
 %_datadir/falcond/profiles/handheld/*.conf
 %_datadir/falcond/profiles/htpc/*.conf
 
-
 %changelog
+* Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 1.0-alt2.git0f87c74
+- updated to upstream git 0f87c74
+- pin commit to 0f87c748cf34a9bcbc4351ad051bcef8cce79158
+
 * Mon Sep 29 2025 Boris Yumankulov <boria138@altlinux.org> 1.0-alt1.git56f49e5
 - initial build for ALT Sisyphus
 
