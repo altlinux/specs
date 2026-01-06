@@ -4,7 +4,7 @@
 
 %define soname 0
 # endless sigh
-%define lversion 25.8
+%define lversion 25.11
 %define qt_ver 6
 
 %def_enable alembic
@@ -22,7 +22,7 @@
 %def_enable materialx
 
 Name: OpenUSD
-Version: 25.08
+Version: 25.11
 Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
@@ -40,14 +40,11 @@ Source1: org.openusd.usdview.desktop
 Source2: stb_image.patch
 
 Patch0: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
-# Port to Embree 4.x
-# https://github.com/PixarAnimationStudios/OpenUSD/pull/2313
-Patch1: embree4.patch
 # SONAME patch from Fedora/RH
-Patch2: 0001-Downstream-only-add-an-SONAME-version.patch
+Patch1: 0001-Downstream-only-add-an-SONAME-version.patch
 # Fix blender GL errors when using Hydra
 # https://github.com/PixarAnimationStudios/OpenUSD/pull/2550
-Patch4: 2550.patch
+Patch2: 2550.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build /proc
 BuildRequires: gcc-c++
@@ -414,6 +411,11 @@ done
 %python3_sitelibdir/pxr
 
 %changelog
+* Wed Nov 19 2025 L.A. Kostis <lakostis@altlinux.ru> 25.11-alt0.1
+- 25.11.
+- embree4: drop patch (merged by upstream).
+- rediffed/update patches.
+
 * Wed Sep 03 2025 L.A. Kostis <lakostis@altlinux.ru> 25.08-alt0.1
 - 25.08.
 - aarch64: disable ExecLibrary (doesn't compile).

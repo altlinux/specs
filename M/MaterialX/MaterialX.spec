@@ -12,13 +12,13 @@
 %def_with viewer
 
 Name: MaterialX
-Version: 1.39.3
+Version: 1.39.4
 Release: alt0.1
 Summary: MaterialX is an open standard for representing rich material and look-development content in computer graphics
 Group: Development/Other
 License: Apache-2.0
 Url: http://www.materialx.org
-VCS: https://github.com/AcademySoftwareFoundation/MaterialX.git
+VCS: https://github.com/AcademySoftwareFoundation/MaterialX
 Source0: %name-%version.tar
 Source1: NanoGUI.tar
 Source2: glfw.tar
@@ -172,6 +172,9 @@ ln -s %_datadir/%name/libraries %buildroot%python3_sitelibdir/%name/libraries
 %endif
 
 %changelog
+* Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 1.39.4-alt0.1
+- 1.39.4.
+
 * Thu Mar 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.39.3-alt0.1
 - Initial build for ALTLinux.
 

@@ -3,21 +3,21 @@
 %set_verify_elf_method strict
 %def_disable doc
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 %def_with cuda
 %filter_from_requires /libcudart\.so\.12/d
 %else
 %def_without cuda
 %endif
 
-%define soname 3.6.1
+%define soname 3.7.0
 
 Name: opensubdiv
 Version: %soname
-Release: alt1
+Release: alt2
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
-License: Apache-2.0
+License: TOST
 URL: https://graphics.pixar.com/opensubdiv/
 
 # https://github.com/PixarAnimationStudios/OpenSubdiv.git
@@ -90,6 +90,10 @@ Group: Development/C++
 Requires: lib%name = %EVR
 # ugly workaround until cpp.req support cmake
 Requires: ocl-icd-devel libgomp-devel
+# due /usr/lib64/libcudart.so
+%if_with cuda
+Requires: nvidia-cuda-devel
+%endif
 
 %description devel
 OpenSubdiv is a set of open source libraries that implement
@@ -162,6 +166,15 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt2
+- aarch64: enable CUDA.
+- devel: add cuda deps.
+
+* Sat Nov 15 2025 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt1
+- 3.7.0.
+- Change license from Apache 2.0 to TOST
+  (https://disneystreaming.github.io/TOST-1.0.txt).
+
 * Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.1-alt1
 - 3.6.1.
 - spec: remove cuda gcc hacks.
