@@ -3,7 +3,7 @@
 %define nameS org.gnome.shell.extensions.mediacontrols
 
 Name: gnome-shell-extension-media-controls
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: A mpris client for the Gnome shell
@@ -58,6 +58,9 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Tue Jan 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.2-alt1
+- 2.4.1 -> 2.4.2
+
 * Fri Dec 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.4.1-alt1
 - 2.4.0 -> 2.4.1
 
