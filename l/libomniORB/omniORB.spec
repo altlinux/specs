@@ -1,7 +1,7 @@
 %def_disable static
 
 Name:    libomniORB
-Version: 4.3.2
+Version: 4.3.4
 Release: alt1
 
 Summary: ORB from AT&T (core libraries)
@@ -217,6 +217,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Tue Jan 06 2026 Pavel Vainerman <pv@altlinux.ru> 4.3.4-alt1
+- new version (4.3.4) with rpmgs script
+
 * Sun Apr 14 2024 Pavel Vainerman <pv@altlinux.ru> 4.3.2-alt1
 - new version (4.3.2) with rpmgs script
 
