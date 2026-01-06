@@ -2,7 +2,7 @@
 %define app_id app.devsuite.Manuals
 
 Name: manuals
-Version: 48.0
+Version: 49.1
 Release: alt1
 
 Summary: Install, Browse, and Search developer documentation
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(libdex-1)
 BuildRequires: pkgconfig(libpanel-1)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(libfoundry-1)
 
 %description
 Manuals is an extraction of the Documentation component of GNOME Builder
@@ -47,5 +48,8 @@ into a standalone application.
 %doc README.md
 
 %changelog
+* Tue Jan 06 2026 Semen Fomchenkov <armatik@altlinux.org> 49.1-alt1
+- 49.1
+
 * Mon Apr 07 2025 Alexander Davydzik <paladindev@altlinux.org> 48.0-alt1
 - initial build
