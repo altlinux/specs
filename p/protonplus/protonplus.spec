@@ -4,7 +4,7 @@
 %def_without check
 
 Name: protonplus
-Version: 0.5.14
+Version: 0.5.15
 Release: alt1
 
 Summary: Simple and powerful manager for Wine, Proton, DXVK and VKD3D
@@ -62,6 +62,9 @@ Supports Steam, Lutris, Heroic and Bottles.
 %_iconsdir/hicolor/*/apps/%xdg_name.png
 
 %changelog
+* Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 0.5.15-alt1
+- new version 0.5.15
+
 * Mon Dec 22 2025 Boris Yumankulov <boria138@altlinux.org> 0.5.14-alt1
 - new version 0.5.14
 
