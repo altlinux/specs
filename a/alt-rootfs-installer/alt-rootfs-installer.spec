@@ -1,10 +1,11 @@
 Name: alt-rootfs-installer
 Version: 0.7.2
-Release: alt2
+Release: alt3
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
-Url:  https://git.altlinux.org/people/antohami/packages/alt-rootfs-installer.git
+URL: https://altlinux.space/antohami/alt-rootfs-installer
+VCS: https://altlinux.space/antohami/alt-rootfs-installer
 BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -40,6 +41,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Tue Jan 06 2026 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt3
+- Update URL, add VCS tag.
+
 * Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt2
 - fix show current version
 - Update supported boards for u-boot-rockhip 2025.10
