@@ -5,7 +5,7 @@
 
 
 Name: neomutt
-Version: 20251211
+Version: 20260105
 Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-or-later
@@ -84,6 +84,7 @@ sed -i -E 's/.*struct ExpandoDefinition \*const (.*NoPadding) =(.*);/#define \1\
 %endif
 
 %build
+%define optflags_lto %nil
 %define docdir %_docdir/%name
 %undefine _configure_gettext
 %configure \
@@ -131,6 +132,10 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Tue Jan 06 2026 Vitaly Chikunov <vt@altlinux.org> 20260105-alt1
+- Update to 20260105 (2026-01-05). The same as 20251211 with a revert of the
+  Browser fix.
+
 * Mon Dec 15 2025 Vitaly Chikunov <vt@altlinux.org> 20251211-alt1
 - Update to 20251211 (2025-12-11).
 
