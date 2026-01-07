@@ -28,7 +28,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.44.1
+Version: 2.44.2
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -764,6 +764,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Wed Jan 07 2026 Pavel Vainerman <pv@altlinux.ru> 2.44.2-alt1
+- (launcher): supported omniNames autostart and --uniset-port auto
+- (conf): logdir, lockdir by default at $TMPDIR
+
 * Mon Jan 05 2026 Pavel Vainerman <pv@altlinux.ru> 2.44.1-alt1
 - (uno): "all in one" process
 - (launcher): uniset launcher
