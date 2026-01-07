@@ -1,5 +1,5 @@
 Name: tintin++
-Version: 2.02.51
+Version: 2.02.60
 Release: alt1
 Summary: Console MUD client
 License: GPLv2
@@ -9,10 +9,7 @@ Packager: %packager
 
 Source: %name-%version.tar
 
-Patch0: alt-tintin++-pcre.patch
-
-# Automatically added by buildreq on Tue Jun 07 2011
-BuildRequires: libpcre-devel zlib-devel
+BuildRequires: libpcre2-devel zlib-devel
 
 %description
 TinTin++, aka tt++, is a free MUD client for Mac OS X, Linux,
@@ -30,7 +27,6 @@ TinTin++ или tt++ - это свободный клиент для игр MUD
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 cd src
@@ -59,6 +55,9 @@ install -pm644 TODO %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Tue Jan 06 2026 Andrey Bergman <vkni@altlinux.org> 2.02.60-alt1
+- Update to a new version.
+
 * Sun Jun 01 2025 Andrey Bergman <vkni@altlinux.org> 2.02.51-alt1
 - Update to a new version.
 
