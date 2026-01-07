@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rename-flac
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 
 Summary: CLI tool to rename FLAC files
@@ -36,7 +36,7 @@ mkdir -pv %buildroot/%_man1dir/
 rst2man manpage.rst %buildroot/%_man1dir/rename-flac.1
 
 %files
-%doc CHANGELOG  LICENSE README.md
+%doc CHANGELOG.md LICENSE README.md
 %_bindir/%name
 %_man1dir/*
 %exclude %python3_sitelibdir/__pycache__
@@ -44,5 +44,8 @@ rst2man manpage.rst %buildroot/%_man1dir/rename-flac.1
 %python3_sitelibdir/rename_flac.py
 
 %changelog
+* Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 2.4.1-alt1
+- New version 2.4.1.
+
 * Sun Jun 22 2025 Nikolay Strelkov <snk@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus

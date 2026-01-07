@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: picplanner
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Graphical application for photography planning
@@ -75,6 +75,9 @@ sed -i "s|https://gitlab.com/zwarf/picplanner/-/raw/main/||" README.md
 %_datadir/metainfo/de.zwarf.picplanner.metainfo.xml
 
 %changelog
+* Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.3-alt1
 - New version 0.5.3 from untagged commit.
 
