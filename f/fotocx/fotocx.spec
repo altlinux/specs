@@ -1,5 +1,5 @@
 Name: fotocx
-Version: 25.5
+Version: 26.0
 Release: alt1
 
 %define app_id kornelix.%name
@@ -31,6 +31,8 @@ Provides: fotoxx = %EVR
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel
 BuildRequires: liblcms2-devel perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
+BuildRequires: liborigin2-devel
+BuildRequires: libjxl-devel libbrotli-devel highway-devel
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -80,11 +82,12 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %_datadir/%name/
 %_man1dir/%name.1*
 %_datadir/metainfo/%app_id.metainfo.xml
-%doc doc/changelog doc/copyright
-
-%exclude %_datadir/doc/%name
+%doc %_datadir/doc/%name
 
 %changelog
+* Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 26.0-alt1
+- 26.0
+
 * Wed Nov 19 2025 Yuri N. Sedunov <aris@altlinux.org> 25.5-alt1
 - 25.5
 

@@ -1,21 +1,25 @@
 %def_disable snapshot
 %define _name cloudproviders
-%define rdn_name org.freedesktop.CloudProviders
-%define ver_major 0.3
-%define api_ver %ver_major
+%define namespace CloudProviders
+%define rdn_name org.freedesktop.%namespace
+%define ver_major 0.4
+%define api_ver 0.3
 
-%def_enable gtk_doc
-%def_enable check
+%def_enable doc
+# broken docs
+%def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
 Group: System/Libraries
-License: LGPLv3+
+License: LGPL-3.0-or-later
 Url: https://gitlab.gnome.org/External/%name
+
+Vcs: https://gitlab.gnome.org/GNOME/libcloudproviders.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -23,12 +27,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.56
+%define glib_ver 2.64
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson
-BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel vala-tools
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+BuildRequires: meson >= 1.9 vala-tools
+BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel
+%{?_enable_doc:BuildRequires: gi-docgen}
 
 %description
 %name is a DBus API that allows cloud storage sync clients to
@@ -89,8 +93,10 @@ the functionality of the installed %_name library.
 %setup
 
 %build
-%meson %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_installed_tests:-Dinstalled-tests=true}
+%meson \
+    %{subst_enable_meson_bool doc documentation} \
+    %{subst_enable_meson_bool installed_tests installed-tests}
+%nil
 %meson_build
 
 %install
@@ -110,14 +116,14 @@ the functionality of the installed %_name library.
 %_vapidir/%_name.*
 
 %files gir
-%_typelibdir/CloudProviders-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/CloudProviders-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
-%_datadir/gtk-doc/html/%name/
+%_datadir/doc/%name-%api_ver/
 %endif
 
 %if_enabled installed_tests
@@ -131,6 +137,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
 - 0.3.6
 

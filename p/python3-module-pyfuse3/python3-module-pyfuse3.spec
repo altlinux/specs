@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 
 Summary: Python 3 bindings for libfuse 3 with async I/O support
@@ -17,7 +17,8 @@ Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(fuse3)
-BuildRequires: python3(cython) python3(wheel) python3(setuptools)
+BuildRequires: python3(cython) python3(wheel)
+BuildRequires: python3(setuptools) python3(setuptools_scm)
 %{?_enable_check:BuildRequires: /proc python3(pytest)
 BuildRequires: python3(trio) python3(pytest_trio)}
 
@@ -40,14 +41,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3 -v -rs test/
 
 %files
-%python3_sitelibdir/%{pypi_name}_asyncio.py
-%python3_sitelibdir/_%pypi_name.py
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/__pycache__/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README* Changes.*
 
 %changelog
+* Wed Jan 07 2026 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 - enabled %%check
