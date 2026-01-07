@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.24.5
+Version: 1.25.3
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -90,8 +90,10 @@ mkdir -p %buildroot%_man1dir
 %buildroot%_bindir/%name docs --man > %buildroot%_man1dir/%name.1
 
 # install completions
-install -D -p -m 0644 contrib/autocompletion/bash_autocomplete %buildroot%_datadir/bash-completion/completions/%name
-install -D -p -m 0644 contrib/autocompletion/zsh_autocomplete %buildroot%_datadir/zsh/site-functions/_%name
+mkdir -p %buildroot%_datadir/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
+%buildroot%_bindir/%name completion bash > %buildroot%_datadir/bash-completion/completions/%name
+%buildroot%_bindir/%name completion fish > %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+%buildroot%_bindir/%name completion zsh  > %buildroot%_datadir/zsh/site-functions/_%name
 
 %pre
 groupadd -r -f %name 2>/dev/null ||:
@@ -117,10 +119,13 @@ useradd -r -g %name -c 'Gitea daemon' \
 %_unitdir/%name.service
 %_man1dir/*
 %_datadir/bash-completion/completions/gitea
+%_datadir/fish/vendor_completions.d/gitea.fish
 %_datadir/zsh/site-functions/_gitea
 
-
 %changelog
+* Wed Jan 07 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.3-alt1
+- 1.25.3.
+
 * Tue Sep 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.5-alt1
 - 1.24.5.
 
