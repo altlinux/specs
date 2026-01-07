@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.13.3
+Version: 0.13.5
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -153,7 +153,7 @@ kill %%?ollama
 %_sysusersdir/%name.conf
 %dir %_libexecdir/ollama
 %_libexecdir/ollama/libggml-base.so
-%_libexecdir/ollama/libggml-base.so.SOVERSION
+%_libexecdir/ollama/libggml-base.so.*
 %_libexecdir/ollama/libggml-cpu*.so
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
@@ -168,6 +168,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Wed Jan 07 2026 Vitaly Chikunov <vt@altlinux.org> 0.13.5-alt1
+- Update to v0.13.5 (2025-12-18).
+
 * Fri Dec 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.13.3-alt1
 - Update to v0.13.3 (2025-12-11).
 
