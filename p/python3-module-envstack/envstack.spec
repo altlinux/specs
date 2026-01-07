@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%nameD
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Stacked environment variable management system
@@ -26,6 +26,13 @@ Source: %name-%version.tar
 %description
 %summary.
 
+%package -n %nameD
+Group:   Development/Python3
+Requires: %name = %EVR
+Summary: Stacked environment variable management system
+%description -n %nameD
+Stacked environment variable management system
+
 %prep
 %setup
 
@@ -43,7 +50,14 @@ Source: %name-%version.tar
 %python3_sitelibdir/%nameD/
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
+%files -n %nameD
+%_bindir/%nameD
+%_bindir/whichenv
+
 %changelog
+* Wed Jan 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.4-alt1
+- 0.9.3 -> 0.9.4
+
 * Sun Dec 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3-alt1
 - 0.9.2 -> 0.9.3
 
