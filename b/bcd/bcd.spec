@@ -4,14 +4,14 @@
 %global optflags_lto %nil
 %global soname 0
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 %def_with cuda
 %filter_from_requires /libcudart\.so\.12/d
 %endif
 
 Name: bcd
 Version: 1.1
-Release: alt3.%{?date0}git%{?shortcommit0}
+Release: alt4.%{?date0}git%{?shortcommit0}
 Summary: Bayesian Collaborative Denoiser for Monte-Carlo Rendering
 Group: Graphics
 # BSD: main program
@@ -113,8 +113,8 @@ developing applications that use %name.
 
 %build
 %add_optflags -Wno-return-type
-export CXXFLAGS="%optflags $(pkg-config --cflags eigen3 OpenEXR) -I%_includedir/nlohmann"
-export LDFLAGS="$(pkg-config --libs eigen3 OpenEXR)"
+export CXXFLAGS="%optflags $(pkg-config --cflags eigen3) -I%_includedir/nlohmann"
+export LDFLAGS="$(pkg-config --libs eigen3)"
 %cmake \
   -Wno-dev \
   -DBCD_BUILD_GUI=OFF \
@@ -154,6 +154,10 @@ cp -pr include/* %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Wed Jan 07 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt4.20180610gitd94c9fa
+- Fix FTBFS with new OpenEXR.
+- aarch64: enable cuda.
+
 * Sat Oct 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt3.20180610gitd94c9fa
 - Use -std=c++14 for new eigen3 and cuda (to fix FTBFS).
 
