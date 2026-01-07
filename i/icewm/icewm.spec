@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.9.0
+Version: 4.0.0
 Release: alt1
 Epoch:3
 
@@ -42,7 +42,7 @@ BuildRequires: cmake gcc-c++ imlib2-devel libSM-devel libXcomposite-devel
 BuildRequires: libXcursor-devel libXdamage-devel libXft-devel libXinerama-devel
 BuildRequires: libXrandr-devel libXres-devel libalsa-devel libao-devel
 BuildRequires: libfribidi-devel librsvg-devel libsndfile-devel
-BuildRequires: perl-Pod-Html perl-Pod-Usage
+BuildRequires: perl-Pod-Usage /usr/bin/pod2html
 %if_with markdown
 BuildRequires: discount
 %else
@@ -181,6 +181,9 @@ fi
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Wed Jan 07 2026 Dmitriy Khanzhin <jinn@altlinux.org> 3:4.0.0-alt1
+- 4.0.0
+
 * Thu Sep 04 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.9.0-alt1
 - 3.9.0
 - built with libXcursor instead of libXpm
