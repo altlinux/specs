@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: corestats
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: System resource viewer for C Suite
@@ -41,7 +41,11 @@ sed -i "s|Utility;|System;Monitor;|" cc.cubocore.CoreStats.desktop
 %_bindir/corestats
 %_desktopdir/cc.cubocore.CoreStats.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreStats.svg
+%_datadir/metainfo/cc.cubocore.CoreStats.metainfo.xml
 
 %changelog
+* Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

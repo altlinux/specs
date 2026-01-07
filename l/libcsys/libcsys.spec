@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcsys
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Library for managing drive and getting system resource information in real time.
@@ -54,5 +54,8 @@ real time for C Suite. It uses some parts of Stacer project.
 %_datadir/pkgconfig/csys.pc
 
 %changelog
+* Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Mon Dec 29 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

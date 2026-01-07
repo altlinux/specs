@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcprime
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Library for bookmarking, saving activities, sharing files and more
@@ -54,5 +54,8 @@ settings of CoreApps.
 %_datadir/pkgconfig/cprime*.pc
 
 %changelog
+* Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Mon Dec 29 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus
