@@ -1,8 +1,8 @@
 %def_with qmlui
 
 Name:     qlcplus
-Version:  5.0.1
-Release:  alt2
+Version:  5.1.0
+Release:  alt1
 
 Summary:  Q Light Controller Plus
 
@@ -12,13 +12,24 @@ Url:      https://github.com/mcallegari/qlcplus
 
 Source:   %name-%version.tar
 Patch1:   qlcplus-qmlui.patch
+Patch2:   qlcplus-fixtureeditor.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: libalsa-devel libftdi1-devel libudev-devel libusb-compat-devel
+BuildRequires: /proc
+BuildRequires: libalsa-devel
+BuildRequires: libcups-devel
+BuildRequires: libftdi1-devel
+BuildRequires: libudev-devel
+BuildRequires: libusb-compat-devel
+BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(libftdi1)
+BuildRequires: pkgconfig(sndfile)
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-tools
+BuildRequires: qt6-tools-devel
 BuildRequires: qt6-websockets-devel
 %if_with qmlui
 BuildRequires: qt6-3d-devel
@@ -33,7 +44,7 @@ commercial softwares.
 
 %prep
 %setup
-sed -ie '/UDEVRULESDIR/s|/etc/udev/rules.d|/usr/lib/udev/rules.d|' variables.pri
+sed -ie '/UDEVRULESDIR/s|/etc/udev/rules.d|/usr/lib/udev/rules.d|' variables.pri variables.cmake
 %ifarch %ix86
 sed -ie "s/QMAKE_CXXFLAGS += -Werror/#&/g" variables.pri
 %endif
@@ -41,21 +52,24 @@ export LANG="C.UTF-8"
 %if_with qmlui
 %autopatch -p1
 %endif
+# Temp hack:
+sed -ie 's!virtualconsole/vcaudiotrigger.cpp!virtualconsole/vcaudiotriggers.cpp!' qmlui/qlcplus_*.ts qmlui/qmlui.pro
 
 %build
 export LANG="C.UTF-8"
+%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch
 %if_with qmlui
 ./translate.sh release qmlui
-qmake-qt6 CONFIG+=qmlui
+%cmake -Dqmlui=ON
 %else
 ./translate.sh release ui
-qmake-qt6
+%cmake
 %endif
-%make_build
+%cmake_build
 
 %install
 export LANG="C.UTF-8"
-INSTALL_ROOT=%buildroot make install
+%cmake_install
 %if_with qmlui
 mv %buildroot/%_bindir/qlcplus-qml %buildroot/%_bindir/qlcplus
 sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot/%_datadir/applications/qlcplus.desktop
@@ -82,6 +96,10 @@ sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot/%_datadir/applica
 %endif
 
 %changelog
+* Tue Jan 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.1.0-alt1
+- Update to 5.1.0.
+- Build with cmake.
+
 * Wed Dec 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.0.1-alt2
 - Add translations and new UI.
 
