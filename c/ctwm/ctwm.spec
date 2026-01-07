@@ -5,7 +5,7 @@ Summary(ru): Основанный на twm оконный менеджер дл�
 Name: ctwm
 Version: 4.1.0
 Epoch: 1
-Release: alt1
+Release: alt3
 
 Source: %name-%version.tar.xz
 Url: http://www.ctwm.org/index.html
@@ -93,9 +93,9 @@ install -D system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
 install -D %SOURCE1 %buildroot/%_bindir/startctwm
 install -D %SOURCE6 %buildroot%prefix/libexec/%name-session-target
 install -d %buildroot%_user_unitdir
-install -D %SOURCE7 %buildroot%_user_unitdir/
-install -D %SOURCE8 %buildroot%_user_unitdir/
-install -D %SOURCE9 %buildroot%_user_unitdir/
+install -m644 -D %SOURCE7 %buildroot%_user_unitdir/
+install -m644 -D %SOURCE8 %buildroot%_user_unitdir/
+install -m644 -D %SOURCE9 %buildroot%_user_unitdir/
 install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 
 %files
@@ -113,7 +113,7 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 %doc doc/devman/*.html doc/devman/static
 
 %files systemd
-%_user_unitdir/*
+%attr(0644,root,root) %_user_unitdir/*
 %prefix/libexec/*
 %_datadir/xsessions/%name-systemd.desktop
 
@@ -123,6 +123,12 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 %endif
 
 %changelog
+* Wed Jan 07 2026 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt3
+- Fix "Please remove executable permission" warning
+
+* Wed Feb 14 2024 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt2
+- Fix systemd support
+
 * Tue Jan 16 2024 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt1
 - Autobuild version bump to 4.1.0
 
