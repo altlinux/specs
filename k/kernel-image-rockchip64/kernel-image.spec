@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.2
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -160,25 +160,30 @@ Patch0117: rk3399-usbc-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patc
 Patch0118: rk3399-usbc-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
 Patch0119: rk3399-usbc-usb-typec-tcpm-Unregister-altmodes-before-registerin.patch
 Patch0120: rk3399-usbc-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch
-Patch0121: rk356x-add-rkvdec2-support.patch
-Patch0122: rk3588-0010-fix-clk-divisions.patch
-Patch0123: rk3588-0025-add-missing-op-nodes.patch
-Patch0124: rk3588-1010-arm64-dts-rock-5b-Slow-down-emmc-to-hs200.patch
-Patch0125: rk3588-1040-board-khadas-edge2-add-nodes.patch
-Patch0126: rk3588-1041-board-khadas-edge2-mcu.patch
-Patch0127: rk3588-1051-board-nanopc-t6-fan-support.patch
-Patch0128: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
-Patch0129: rk3588-1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
-Patch0130: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
-Patch0131: rk3588-1072-arm64-dts-rockchip-add-AP6275P-wifi-to-Orange-Pi-5B.patch
-Patch0132: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
-Patch0133: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
-Patch0134: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
-Patch0135: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
-Patch0136: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
-Patch0137: rk35xx-montjoie-crypto-v2-rk35xx.patch
-Patch0138: temporary-workaround-dma-reset.patch
-Patch0139: wifi-4003-add-bcm43342-chip.patch
+Patch0121: rk3528-01-arm64-dts-rockchip-Add-PCIe-Gen2x1-controller-for-RK.patch
+Patch0122: rk3528-02-arm64-dts-rockchip-Add-SFC-node-for-RK3528.patch
+Patch0123: rk3528-net-dsa-realtek-fixes-for-radxa-e24c-switch-chip.patch
+Patch0124: rk356x-add-rkvdec2-support.patch
+Patch0125: rk3588-0010-fix-clk-divisions.patch
+Patch0126: rk3588-0025-add-missing-op-nodes.patch
+Patch0127: rk3588-1010-arm64-dts-rock-5b-Slow-down-emmc-to-hs200.patch
+Patch0128: rk3588-1040-board-khadas-edge2-add-nodes.patch
+Patch0129: rk3588-1041-board-khadas-edge2-mcu.patch
+Patch0130: rk3588-1051-board-nanopc-t6-fan-support.patch
+Patch0131: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
+Patch0132: rk3588-1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
+Patch0133: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
+Patch0134: rk3588-1072-arm64-dts-rockchip-add-AP6275P-wifi-to-Orange-Pi-5B.patch
+Patch0135: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
+Patch0136: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
+Patch0137: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
+Patch0138: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
+Patch0139: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
+Patch0140: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
+Patch0141: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
+Patch0142: rk35xx-montjoie-crypto-v2-rk35xx.patch
+Patch0143: temporary-workaround-dma-reset.patch
+Patch0144: wifi-4003-add-bcm43342-chip.patch
 
 # ALT Patches
 Patch2000: 2000-OrangePI5-Enable-UART0-and-pps_gpio.patch
@@ -513,6 +518,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Thu Jan 08 2026 Alexei Takaseev <taf@altlinux.org> 6.18.3-alt1
+- v6.18.3 (2026-01-02).
+
 * Fri Dec 19 2025 Alexei Takaseev <taf@altlinux.org> 6.18.2-alt1
 - v6.18.2 (2025-12-18).
 
