@@ -1,4 +1,4 @@
-%define pg_ver 16
+%define pg_ver 18
 
 Name: postgresql%pg_ver-timescaledb
 Version: 2.23.1
