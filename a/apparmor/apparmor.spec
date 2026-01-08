@@ -10,7 +10,7 @@
 %def_with python
 
 Name: apparmor
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 
 Summary: Name-based Mandatory Access Control
@@ -294,6 +294,9 @@ make -C profiles check-parser
 %endif
 
 %changelog
+* Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.3-alt1
+- NMU: new version 4.1.3.
+
 * Fri Oct 31 2025 Nikolay Strelkov <snk@altlinux.org> 4.1.2-alt1
 - NMU: major version upgrade (4.1.2) with rpmgs script (closes #56684)
 

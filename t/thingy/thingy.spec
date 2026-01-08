@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thingy
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Document Manager
@@ -13,6 +13,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+Requires: typelib(XApp)
 
 BuildArch: noarch
 
@@ -51,6 +53,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt1
+- New version 1.2.4.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.3-alt1
 - New version 1.2.3.
 
