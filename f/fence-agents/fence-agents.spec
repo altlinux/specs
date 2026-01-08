@@ -1,6 +1,7 @@
 %add_python3_req_skip XenAPI
 %add_python3_req_skip __main__
 %add_python3_req_skip redfish
+%add_python3_req_skip requests.packages.urllib3.util.retry
 %add_python3_path %_datadir/fence
 %allow_python3_import_path %_datadir/fence
 
@@ -11,7 +12,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.16.0
+Version: 4.17.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -32,7 +33,7 @@ BuildRequires: libxml2-devel nss-devel nspr-devel
 BuildRequires: flex libuuid-devel
 
 # skipped: pve, raritan, rcd-serial, virsh
-%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-cyberpower-ssh fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-eaton-ssh fence-agents-ecloud fence-agents-emerson fence-agents-eps fence-agents-gce fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ibm-powervs fence-agents-ibm-vpc fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-ovm fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack fence-agents-nutanix-ahv
+%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-aws-vpc-net fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-cyberpower-ssh fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-eaton-ssh fence-agents-ecloud fence-agents-emerson fence-agents-eps fence-agents-gce fence-agents-hds-cb fence-agents-hetzner-cloud fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ibm-powervs fence-agents-ibm-vpc fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-ovm fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-shelly fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack fence-agents-nutanix-ahv
 
 %description
 Fence Agents is a collection of scripts to handle remote
@@ -134,6 +135,18 @@ Obsoletes: fence-agents < %EVR
 
 %description azure-arm
 Fence agent for Azure Resource Manager instances.
+
+%package aws-vpc-net
+License: GPL-2.0-or-later AND LGPL-2.0-or-later
+Summary: Fence agent for Amazon AWS VPC network and power fencer
+Requires: fence-agents-common = %EVR
+Requires: python3-module-boto3
+BuildArch: noarch
+Group: System/Base
+Obsoletes: fence-agents < 3.1.13
+
+%description aws-vpc-net
+Fence agent for Amazon AWS instances that fences by modifying aws sec groups
 
 %package bladecenter
 BuildArch: noarch
@@ -301,6 +314,17 @@ Obsoletes: fence-agents < 3.1.13
 
 %description gce
 Fence agent for GCE (Google Cloud Engine) instances.
+
+%package hetzner-cloud
+License: GPL-2.0-or-later AND LGPL-2.0-or-later
+Summary: Fence agent for Hetzner Cloud
+Requires: fence-agents-common = %EVR
+BuildArch: noarch
+Group: System/Base
+Obsoletes: fence-agents < 3.1.13
+
+%description hetzner-cloud
+Fence agent for Hetzner Cloud.
 
 %package heuristics-ping
 License: GPLv2+ and LGPLv2+
@@ -689,6 +713,16 @@ Requires: fence-agents-common = %version-%release
 %description skalar
 The fence-agents-skalar package contains fence agent for Skala-R virtualization platform.
 
+%package shelly
+License: GPL-2.0-or-later AND LGPL-2.0-or-later
+Summary: Fence agent for Shelly Switches
+Requires: fence-agents-common = %EVR
+BuildArch: noarch
+Group: System/Base
+
+%description shelly
+Fence agent for Shelly Switches.
+
 %package vbox
 BuildArch: noarch
 Group: System/Base
@@ -942,6 +976,10 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %_datadir/fence/azure_fence.py*
 %_man8dir/fence_azure_arm.8*
 
+%files aws-vpc-net
+%_sbindir/fence_aws_vpc_net
+%_man8dir/fence_aws_vpc_net.8*
+
 %files bladecenter
 %_sbindir/fence_bladecenter
 %_man8dir/fence_bladecenter.8*
@@ -1011,6 +1049,10 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %files gce
 %_sbindir/fence_gce
 %_man8dir/fence_gce.8*
+
+%files hetzner-cloud
+%_sbindir/fence_hetzner_cloud
+%_man8dir/fence_hetzner_cloud.8*
 
 %files heuristics-ping
 %_sbindir/fence_heuristics_ping
@@ -1192,6 +1234,10 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/fence_skalar
 %_man8dir/fence_skalar.8*
 
+%files shelly
+%_sbindir/fence_shelly_gen2
+%_man8dir/fence_shelly_gen2.8*
+
 %files vbox
 %_sbindir/fence_vbox
 %_man8dir/fence_vbox.8*
@@ -1265,6 +1311,9 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 %changelog
+* Thu Jan 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.17.0-alt1
+- 4.17.0
+
 * Wed Nov 27 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0-alt1
 - 4.16.0
 - Add nutanix-ahv module.
