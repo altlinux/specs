@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    pdfminersix
-Version: 20251230
+Version: 20260107
 Release: alt1
 
 Summary: Community maintained fork of pdfminer - we fathom PDF
@@ -47,6 +47,9 @@ subst 's/^license = .*/license = {text = "MIT"}/' pyproject.toml
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Thu Jan 08 2026 Andrey Cherepanov <cas@altlinux.org> 20260107-alt1
+- New version.
+
 * Thu Jan 01 2026 Andrey Cherepanov <cas@altlinux.org> 20251230-alt1
 - New version.
 
