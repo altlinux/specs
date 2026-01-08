@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.18
+Version: %ver_major.19
 Release: alt1%beta
 
 Summary: COSMIC Camera
@@ -26,8 +26,6 @@ Source: %url/archive/v%version/%_name-%version%beta.tar.gz
 Source: %_name-%version%beta.tar
 %endif
 Source1: %_name-%version%beta-cargo.tar
-
-Requires: gnome-system-monitor
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -68,6 +66,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.19-alt1
+- 0.1.19
+
 * Wed Dec 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.18-alt1
 - first build for Sisyphus
 
