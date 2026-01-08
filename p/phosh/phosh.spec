@@ -11,7 +11,9 @@
 %define dev_uid 1000
 
 # since 0.41 gvc & libcallui subprojects use wrap-files
-%define gvc_ver 5f9768a
+#%define gvc_ver 5f9768a
+# https://gitlab.gnome.org/guidog/libgnome-volume-control/-/tree/phosh/0.52.1?ref_type=tags
+%define gvc_ver phosh-0.52.1
 %define callui_ver 0.1.5
 
 # shared libs disabled by default
@@ -28,7 +30,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -329,6 +331,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.1-alt1
+- 0.52.1
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
 - 0.52.0
 - disabled broken alt-app-grig-keyboard-fix.patch
