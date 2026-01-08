@@ -2,13 +2,13 @@
 
 %define _name rewaita
 %define __name Rewaita
-%define ver_major 1.0
+%define ver_major 1.1
 %define rdn_name io.github.swordpuffin.%_name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME colors customizer
@@ -30,6 +30,7 @@ Source: %__name-%version.tar
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
+Requires: typelib(GtkSource) = 5
 Requires: typelib(Xdp) = 1.0
 Requires: dconf
 
@@ -68,6 +69,9 @@ popular color schemes.
 %doc README.*
 
 %changelog
+* Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.8-alt1
 - 1.0.8
 
