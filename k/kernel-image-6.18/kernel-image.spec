@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jan 08 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.4-alt1
+- v6.18.4 (2026-01-08).
+
 * Fri Jan 02 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.3-alt1
 - v6.18.3 (2026-01-02).
 
