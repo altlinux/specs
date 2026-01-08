@@ -2,8 +2,8 @@
 %global import_path code.gitea.io/tea
 
 Name: gitea-tea
-Version: 0.10.1
-Release: alt2
+Version: 0.11.1
+Release: alt1
 Summary: command line tool to interact with Gitea
 
 License: MIT
@@ -47,17 +47,23 @@ export GOPATH="%go_path"
 export IGNORE_SOURCES=1
 
 %golang_install
-install -Dpm644 contrib/autocomplete.sh %buildroot%_datadir/bash-completion/completions/tea
-install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/_tea
-
+# install completions
+mkdir -p %buildroot%_datadir/{bash-completion/completions,fish/vendor_completions.d,zsh/site-functions}
+%buildroot%_bindir/tea completion bash > %buildroot%_datadir/bash-completion/completions/tea
+%buildroot%_bindir/tea completion fish > %buildroot%_datadir/fish/vendor_completions.d/tea.fish
+%buildroot%_bindir/tea completion zsh  > %buildroot%_datadir/zsh/site-functions/_tea
 
 %files
 %doc *.md
 %_bindir/*
 %_datadir/bash-completion/completions/tea
+%_datadir/fish/vendor_completions.d/tea.fish
 %_datadir/zsh/site-functions/_tea
 
 %changelog
+* Thu Jan 08 2026 Alexey Shabalin <shaba@altlinux.org> 0.11.1-alt1
+- New version 0.11.1.
+
 * Thu Aug 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.10.1-alt2
 - Fix bash autocomplete script to use --generate-shell-completion
   flag
@@ -76,4 +82,3 @@ install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/
 
 * Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - Initial build for ALT
-
