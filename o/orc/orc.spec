@@ -1,7 +1,6 @@
 %def_disable snapshot
 %define ver_major 0.4
-%def_enable gtk_doc
-
+%def_disable doc
 %def_enable check
 
 %ifarch %valgrind_arches
@@ -9,7 +8,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.41
+Version: %ver_major.42
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -27,8 +26,9 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
-BuildRequires: meson >= 0.54 glib2-devel >= 2.10.0 gtk-doc
+BuildRequires: meson >= 0.54 glib2-devel >= 2.10.0
 %{?_enable_valgrind:BuildRequires: valgrind-devel}
+%{?_enable_doc:BuildRequires: hotdoc}
 
 %description
 Orc is a library and set of tools for compiling and executing very
@@ -111,7 +111,7 @@ This package contains documentation for Orc.
 
 %build
 %meson \
-    %{subst_enable_meson_feature gtk_doc gtk_doc}
+    %{subst_enable_meson_feature doc hotdoc}
 %nil
 %meson_build
 
@@ -144,10 +144,15 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_libdir/lib%name-test-%ver_major.so
 %_pkgconfigdir/%name-test-%ver_major.pc
 
+%if_enabled doc
 %files doc
-%_datadir/gtk-doc/html/%name
+%_datadir/doc/%name
+%endif
 
 %changelog
+* Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.42-alt1
+- 0.4.42
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.41-alt1
 - 0.4.41
 
