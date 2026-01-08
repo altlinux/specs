@@ -12,7 +12,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 108
+Version: 109
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -196,7 +196,6 @@ initramfs (using dracut) which tries to load an IMA policy during startup.
 
 %prep
 %setup
-echo "DRACUT_VERSION=%version" > dracut-version.sh
 
 %build
 %configure \
@@ -204,13 +203,11 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
     --bashcompletiondir=%bash_completion_dir \
     --libdir=%prefix/lib
 
-%make_build
+%make_build DRACUT_VERSION=%version DRACUT_FULL_VERSION=%version
 
 %install
 %makeinstall_std \
-    libdir=%prefix/lib enable_test=no
-
-echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version.sh
+    libdir=%prefix/lib enable_test=no DRACUT_FULL_VERSION=%version-%release
 
 # Cleanup
 rm -frv -- %buildroot%dracutlibdir/modules.d/11fips
@@ -253,7 +250,6 @@ mkdir -p %buildroot%_logdir
 touch %buildroot%_logdir/dracut.log
 mkdir -p %buildroot%_sharedstatedir/initramfs
 
-install -m 0644 dracut.conf.d/alt.conf.example %buildroot%dracutlibdir/dracut.conf.d/01-dist.conf
 rm -fv %buildroot%_mandir/man?/*suse*
 
 echo 'hostonly="no"' > %buildroot%dracutlibdir/dracut.conf.d/02-generic-image.conf
@@ -279,7 +275,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/skipcpio
 %config(noreplace) %_sysconfdir/dracut.conf
 %dracutlibdir/dracut.conf.d/01-dist.conf
-%dracutlibdir/dracut.conf.d/10-hostonly.conf
+%dracutlibdir/dracut.conf.d/hostonly/10-hostonly.conf
 %dir %_sysconfdir/dracut.conf.d
 %dir %dracutlibdir/dracut.conf.d
 %dracutlibdir/dracut.conf.d/generic
@@ -348,7 +344,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/45plymouth
 %dracutlibdir/modules.d/68lvmmerge
 %dracutlibdir/modules.d/68lvmthinpool-monitor
-%dracutlibdir/modules.d/68systemd-sysusers
 %dracutlibdir/modules.d/70bluetooth
 %dracutlibdir/modules.d/70btrfs
 %dracutlibdir/modules.d/70crypt
@@ -356,6 +351,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/70dmraid
 %dracutlibdir/modules.d/70fs-lib
 %dracutlibdir/modules.d/70kernel-modules
+%dracutlibdir/modules.d/70kernel-modules-export
 %dracutlibdir/modules.d/70kernel-modules-extra
 %dracutlibdir/modules.d/70lvm
 %dracutlibdir/modules.d/70mdraid
@@ -406,6 +402,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/77selinux
 %dracutlibdir/modules.d/77syslog
 %dracutlibdir/modules.d/77usrmount
+%dracutlibdir/modules.d/78systemd-sysusers
 %dracutlibdir/modules.d/80base
 %dracutlibdir/modules.d/81busybox
 %dracutlibdir/modules.d/84memstrack
@@ -505,6 +502,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/dracut.conf.d/ima
 
 %changelog
+* Tue Dec 30 2025 Alexey Shabalin <shaba@altlinux.org> 109-alt1
+- 109
+
 * Wed Aug 20 2025 Alexey Shabalin <shaba@altlinux.org> 108-alt1
 - 108
 - Cherry-pick some commits from main branch.
