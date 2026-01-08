@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: Bibtex parser for Python 3
 License: MIT
@@ -28,6 +28,8 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 
+Patch: %name-%version-%release.patch
+
 %description
 The bibtexparser module provides parsing and writing of BibTeX files
 functionality. The parsed data is returned as a simple BibDatabase object
@@ -36,6 +38,7 @@ such as books and journal articles.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -54,5 +57,8 @@ such as books and journal articles.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt2
+- Fixed FTBFS.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt1
 - Initial build for Sisyphus
