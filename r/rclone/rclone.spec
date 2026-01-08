@@ -3,18 +3,16 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
-Name:     rclone
-Version: 1.72.0
+Name: rclone
+Version: 1.72.1
 Release: alt1
-Summary:  "rsync" for cloud storage
-License:  MIT
-Group:    Networking/File transfer
-Vcs:      https://github.com/rclone/rclone
-Url:      https://rclone.org/
+Summary: "rsync" for cloud storage
+License: MIT
+Group: Networking/File transfer
+Vcs: https://github.com/rclone/rclone
+Url: https://rclone.org/
 
-Source:   %name-%version.tar
-
-BuildRequires(pre): banner
+Source: %name-%version.tar
 BuildRequires: golang
 
 %description
@@ -27,7 +25,6 @@ files and directories to and from different cloud storage providers:
 
 %prep
 %setup
-find vendor -name '*.md' -exec false {} +
 
 %build
 go build -v \
@@ -47,7 +44,6 @@ install -Dpm644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 install -Dpm644 %name.1 -t %buildroot%_man1dir
 
 %check
-banner tests
 PATH=%buildroot%_bindir:$PATH
 # Simplest
 rclone version
@@ -85,6 +81,9 @@ diff COPYING /tmp/COPYING
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Thu Jan 08 2026 Vitaly Chikunov <vt@altlinux.org> 1.72.1-alt1
+- Update to v1.72.1 (2025-12-10). (Fixes: CVE-2025-61729).
+
 * Thu Nov 27 2025 Vitaly Chikunov <vt@altlinux.org> 1.72.0-alt1
 - Update to v1.72.0 (2025-11-21). (Fixes: CVE-2025-22869, CVE-2025-30204,
   CVE-2025-58181).
