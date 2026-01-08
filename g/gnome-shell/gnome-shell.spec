@@ -5,7 +5,9 @@
 %define beta %nil
 %define api_ver 17
 %define gst_api_ver 1.0
-%define gvc_ver 5f9768a
+#%define gvc_ver 5f9768a
+# https://gitlab.gnome.org/guidog/libgnome-volume-control/-/tree/phosh/0.52.1?ref_type=tags
+%define gvc_ver phosh-0.52.1
 
 %def_enable x11
 %def_enable extensions_tool
@@ -16,7 +18,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -29,6 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 %{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
+Source1: gvc-%gvc_ver.tar
 
 Patch3: %name-48.1-alt-invalid_user_shell.patch
 Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
@@ -209,9 +212,11 @@ preferences and removing or disabling unwanted extensions.
 %set_typelibdir %_libdir/%name
 
 %prep
-%setup -n %name-%version%beta %{?_enable_snapshot:-a1
+%setup -n %name-%version%beta -a1 %{?_enable_snapshot:-a1
 mkdir subprojects/gvc
 cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
+rm -rf subprojects/gvc
+mv gvc-%gvc_ver subprojects/gvc
 
 %patch3 -b .shells
 %patch4 -b .default_folders
@@ -313,6 +318,11 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
+- build with gvc-phosh/0.52.1 from 
+  https://gitlab.gnome.org/guidog/libgnome-volume-control.git
+  as Phosh done
+
 * Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
