@@ -12,7 +12,7 @@
 
 Name: mono
 Version: 6.12.0.206
-Release: alt2
+Release: alt3
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -1407,6 +1407,9 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Jan 05 2026 Andrey Cherepanov <cas@altlinux.org> 6.12.0.206-alt3
+- Replace deprecated egrep in filetrigger (ALT #55660).
+
 * Mon Jul 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.12.0.206-alt2
 - NMU: fix FTBFS with cmake 4.
 
