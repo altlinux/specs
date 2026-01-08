@@ -9,10 +9,11 @@
 %def_with zxing
 %def_without openssl
 
+# Attention! Use only one UI: kde5 or kde6
 # enable kde5 UI
-%def_disable kde5
+%def_enable kde5
 # enable kde6 UI
-%def_enable kde6
+%def_disable kde6
 
 %ifarch mipsel
 %def_without java
@@ -20,9 +21,15 @@
 %def_with java
 %endif
 %if_enabled kde5
+%define enable_kde 1
 %def_enable qt5
 %else
 %def_disable qt5
+%if_enabled kde6
+%define enable_kde 1
+%else
+%define enable_kde 0
+%endif
 %endif
 %if_enabled kde6
 %def_enable qt6
@@ -43,7 +50,7 @@ Name: libreoffice
 %define hversion 25.8
 %define urelease 4.2
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -277,7 +284,7 @@ This package provides maximum possible installation of %name along winth
 other office packages, except of language packs and GNOME/KDE bindings.
 
 %package gtk3
-Summary: GTK3 Extensions for %name
+Summary: GTK3 GUI for %name
 Group:  Office
 Requires: %name = %EVR
 Provides: LibreOffice-gtk3 = %EVR
@@ -289,10 +296,10 @@ Provides: LibreOffice-gnome = %EVR
 Provides: %name-gnome = %EVR
 Obsoletes: %name-gnome < %EVR
 %description gtk3
-GTK3 extensions for %name
+GTK3 GUI for %name
 
 %package gtk4
-Summary: GTK4 Extensions for %name
+Summary: GTK4 GUI for %name
 Group:  Office
 Requires: %name = %EVR
 Provides: LibreOffice-gtk4 = %EVR
@@ -301,74 +308,55 @@ Obsoletes: LibreOffice-gtk4 < %EVR
 Obsoletes: LibreOffice-still-gtk4 < %EVR
 Requires: %name = %EVR
 %description gtk4
-GTK3 extensions for %name
+GTK4 GUI for %name
 
-%if_enabled qt5
-%package qt5
-Summary: Qt5 Extensions for %name
+%if %{enable_kde}
+%package qt
+Summary: Qt GUI for %name
 Group:  Office
 Requires: %name = %EVR
-Provides: LibreOffice-qt5 = %EVR
-Provides: LibreOffice-still-qt5 = %EVR
 Obsoletes: LibreOffice-qt5 < %EVR
-Obsoletes: LibreOffice-still-qt5 < %EVR
-Requires: %name = %EVR
-%description qt5
-qt5 extensions for %name
-%endif
-
-%if_enabled qt6
-%package qt6
-Summary: Qt6 Extensions for %name
-Group:  Office
-Requires: %name = %EVR
-Provides: LibreOffice-qt6 = %EVR
-Provides: LibreOffice-still-qt6 = %EVR
 Obsoletes: LibreOffice-qt6 < %EVR
-Obsoletes: LibreOffice-still-qt6 < %EVR
-Requires: %name = %EVR
-Provides: LibreOffice-still-qt5 = %EVR
 Obsoletes: LibreOffice-still-qt5 < %EVR
-%description qt6
-qt6 extensions for %name
-%endif
+Obsoletes: LibreOffice-still-qt6 < %EVR
+Obsoletes: libreoffice-qt5 < %EVR
+Obsoletes: libreoffice-qt6 < %EVR
+Provides:  LibreOffice-qt5 = %EVR
+Provides:  LibreOffice-qt6 = %EVR
+Provides:  LibreOffice-still-qt5 = %EVR
+Provides:  LibreOffice-still-qt6 = %EVR
+Provides:  libreoffice-qt5 = %EVR
+Provides:  libreoffice-qt6 = %EVR
+Requires: %name = %EVR
+%description qt
+Qt GUI for %name
 
-%if_enabled kde5
-%package kde5
-Summary: KDE5 Extensions for %name
+%package kde
+Summary: KDE GUI for %name
 Group:  Office
 Requires: %name = %EVR
-Provides: LibreOffice-kde5 = %EVR
-Provides: LibreOffice-still-kde5 = %EVR
+Obsoletes: %name-kde4 < %EVR
+Obsoletes: %name-kde4 < %EVR
 Obsoletes: LibreOffice-kde5 < %EVR
-Obsoletes: LibreOffice-still-kde5 < %EVR
-Requires: %name = %EVR
-Provides:  %name-kde4 = %EVR
-Obsoletes: %name-kde4 < %EVR
-Provides:  LibreOffice4-kde4 = %EVR
-Obsoletes: LibreOffice4-kde4 < %EVR
-%description kde5
-KDE5 extensions for %name
-%endif
-
-%if_enabled kde6
-%package kde6
-Summary: KDE6 Extensions for %name
-Group:  Office
-Requires: %name = %EVR
-Provides: LibreOffice-kde6 = %EVR
-Provides: LibreOffice-still-kde6 = %EVR
 Obsoletes: LibreOffice-kde6 < %EVR
-Obsoletes: LibreOffice-still-kde6 < %EVR
-Requires: %name = %EVR
-Provides:  %name-kde4 = %EVR
-Obsoletes: %name-kde4 < %EVR
-Provides:  LibreOffice4-kde4 = %EVR
-Obsoletes: LibreOffice4-kde4 < %EVR
-Provides: LibreOffice-still-kde5 = %EVR
 Obsoletes: LibreOffice-still-kde5 < %EVR
-%description kde6
-KDE6 extensions for %name
+Obsoletes: LibreOffice-still-kde6 < %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
+Obsoletes: libreoffice-kde5 < %EVR
+Obsoletes: libreoffice-kde6 < %EVR
+Provides:  %name-kde4 = %EVR
+Provides:  %name-kde4 = %EVR
+Provides:  LibreOffice-kde5 = %EVR
+Provides:  LibreOffice-kde6 = %EVR
+Provides:  LibreOffice-still-kde5 = %EVR
+Provides:  LibreOffice-still-kde6 = %EVR
+Provides:  LibreOffice4-kde4 = %EVR
+Provides:  LibreOffice4-kde4 = %EVR
+Provides:  libreoffice-kde5 = %EVR
+Provides:  libreoffice-kde6 = %EVR
+%description kde
+KDE GUI for %name
 %endif
 
 %package -n libreofficekit
@@ -814,20 +802,20 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %endif
 
 %if_enabled qt5
-%files qt5 -f files.qt5
+%files qt -f files.qt5
 %endif
 
 %if_enabled kde5
-%files kde5 -f files.kde5
+%files kde -f files.kde5
 %_datadir/metainfo/org.libreoffice.kde.metainfo.xml
 %endif
 
 %if_enabled qt6
-%files qt6 -f files.qt6
+%files qt -f files.qt6
 %endif
 
 %if_enabled kde6
-%files kde6 -f files.kde6
+%files kde -f files.kde6
 %_datadir/metainfo/org.libreoffice.kde.metainfo.xml
 %endif
 
@@ -854,6 +842,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Jan 08 2026 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt2
+- Packaged libreoffice-qt and libreoffice-kde without its major version.
+- Built with Qt5 and KDE5 (ALT #57028).
+
 * Fri Dec 19 2025 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt1
 - New version (closes: CVE-2025-14714).
 
