@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.64.48
+Version: 3.64.49
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -157,6 +157,60 @@ EOF
 %endif
 
 %changelog
+* Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.64.49-alt1
+- epm repack freeplane: ignore libjawt.so
+- epm play: fix --installed check to return correct exit code
+- epm play aksusbd: add new version (10.21)
+- epm play.d/common.sh: is_installed_by_play: add BASEPKGNAME fallback check
+- epm play: add teamspeak3-server
+- epm-sh-functions: support md5, sha1, sha512 checksums
+- epm play: add dorion (Discord alternative client)
+- epm play: add chatmcp (AI chat client with MCP)
+- epm remove: add backend:package syntax support
+- epm play claude-code: add wrapper with env vars
+- epm play chatmcp: need glibc 2.34 or above
+- serv: auto daemon-reload before start/restart/reload
+- serv log: show from end, support -f for follow
+- epm play: add trilium (personal knowledge base)
+- epm play: add steamcmd (Steam console client)
+- epm repack dbeaver-ce: remove non-Linux JNA libs and java-openjdk dependency (ALT bug 57446)
+- epm play trilium: switch to TriliumNext/Trilium repo (Notes archived)
+- epm play meridius: use get_github_url to skip prereleases
+- epm play.d/common.sh: add --print-url support, use fetch_url for GitHub API
+- epm play: add --print-url option
+- epm play --update: respect hold mark on packages
+- set_sudo: check /dev/tty instead of stdin for password prompts
+- epm play: add windsurf (AI-powered code editor)
+- epm play: add standard-notes (encrypted notes app)
+- epm play sunshine: switch from Fedora COPR to GitHub releases
+- fish completion: add checksystem, create-fake, desktop, moo, optimize commands
+- epm play onescript-engine: switch to GitHub, add pack.d for 2.0+
+- epm play: add linkmeter-cli (network speed testing tool)
+- epm play: add sublime-merge (Git client)
+- epm play: add smartgit (Git GUI client)
+- epm play: add Gittyup (Git GUI client)
+- epm play: add Guitar (Git GUI client)
+- epm play: add git-butler (GitButler Git client)
+- epm repack.d: remove manual requires for add_electron_deps/add_chromium_deps
+- epm repack.d/generic*: fix /usr/share/pixmaps checking
+- epm install: suggest similar packages via fzf when package not found
+- epm play: split wasistlos from whatsapp
+- epm repack wasistlos: fixes
+- epm play: add fuzzy search suggestions for unknown apps
+- epm search: add backend:package syntax support
+- epm play: add --search option for searching apps by name or description
+- epm: add epmps alias for epm play --search
+- epm play.d/common.sh: add --print-url support
+- epm info: add --requires/--provides/--conflicts/--obsoletes/--recommends/--suggests/--changelog options
+- epm info: show help when called without arguments
+- epm info: add --whatdepends and --whatprovides options
+- epm play spravki-bk: add SHA256 checksum verification
+- many fixes and security fixes
+- epm desktop: fix list --json
+- epm desktop: add list-installed command
+- update embedded erc, eget, estrlist
+- epm-sh-functions: add SSH URL support to is_url (host:/path)
+
 * Fri Dec 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3.64.48-alt1
 - repack.d: ignore optional Qt shim libs in Chromium browsers
 - repack.d: fix add_conflicts quoting in chromium-gost-stable
