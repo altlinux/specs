@@ -1,5 +1,5 @@
 Name: estrlist
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: estrlist - string operation utility
@@ -30,6 +30,19 @@ install -D bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- estrlist: add new verbs: first, last
+- estrlist: add new verbs: firstupper, tolower
+- estrlist: optimize first and last, remove forks
+- estrlist: optimize count, remove fork to wc
+- estrlist: fix contains to use exact word matching
+- estrlist: rename strip_spaces to strip and optimize it
+- estrlist: fix glob expansion in word list functions
+- estrlist: optimize reg_exclude, reg_wordexclude, reg_include
+- estrlist: add reg_wordinclude, fix reg_include to match ^pattern$
+- estrlist: fix contains to handle tabs and newlines
+- estrlist: has_space now checks all whitespace
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - estrlist: print out only to stderr if error
 - estrlist: add contains
