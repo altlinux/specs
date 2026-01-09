@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.17.0
+Version: 8.18.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -214,7 +214,7 @@ popd
 %files -n lib%name
 %_libdir/*.so.*
 
-%doc CHANGES.md README* docs/{FAQ,FEATURES.md}
+%doc CHANGES.md README* docs/{FAQ.md,FEATURES.md}
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -224,7 +224,7 @@ popd
 %_includedir/*
 %_man3dir/*
 %_man1dir/curl-config.*
-%doc docs/{THANKS,TODO,examples,BUGS.md,TheArtOfHttpScripting.md}
+%doc docs/{THANKS,TODO.md,examples,BUGS.md,TheArtOfHttpScripting.md}
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -232,6 +232,16 @@ popd
 %endif
  
 %changelog
+* Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 8.18.0-alt1
+- 8.17.0 -> 8.18.0
+- Fixes:
+  * CVE-2025-15224: libssh key passphrase bypass without agent set
+  * CVE-2025-15079: libssh global known_hosts override
+  * CVE-2025-14819: OpenSSL partial chain store policy bypass
+  * CVE-2025-14524: bearer token leak on cross-protocol redirect
+  * CVE-2025-14017: broken TLS options for threaded LDAPS
+  * CVE-2025-13034: No QUIC certificate pinning with GnuTLS
+
 * Wed Nov 05 2025 Anton Farygin <rider@altlinux.com> 8.17.0-alt1
 - 8.16.0 -> 8.17.0
 
@@ -652,7 +662,6 @@ popd
   CVE-2016-8623: Use-after-free via shared cookies 
   CVE-2016-8624: invalid URL parsing with '#'
   CVE-2016-8625: IDNA 2003 makes curl use wrong host
-
 
 * Thu Oct 27 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.50.3-alt2
 - libcurl-devel: packaged libcurl.m4
