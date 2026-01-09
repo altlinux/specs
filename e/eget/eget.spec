@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.15
+Version: 7.16
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,21 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.16-alt1
+- eget: add axel support
+- eget: add EGET_WGET_OPTIONS, EGET_CURL_OPTIONS, EGET_ARIA2_OPTIONS EGET_AXEL_OPTIONS
+- eget: fix double downloading on error
+- many fixes
+- eget: add --show-progress option to display progress bar in quiet mode
+- eget: add -N|--timestamping option for conditional downloads
+- eget: add Last-Modified warning for curl backend
+- eget: add -i|--input-file option
+- eget: support --option=value format for long options
+- eget: add --list support for FTP protocol
+- eget: add rsync backend support (rsync:// and ssh URLs)
+- eget: add EGET_MIRRORS variable support with eterfund defaults
+- eget: add --force/--allow-overwrite, error if file exists without flags
+
 * Tue Dec 09 2025 Vitaly Lipatov <lav@altlinux.ru> 7.15-alt1
 - eget: pass --no-glob to wget if used
 - eget: restore missed protocol in real url
