@@ -1,6 +1,6 @@
 Name:     webapp-manager
-Version:  1.4.5
-Release:  alt2
+Version:  1.4.6
+Release:  alt1
 
 Summary:  Run websites as if they were apps
 License:  GPLv3
@@ -65,6 +65,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Fri Jan 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.6-alt1
+- 1.4.5 -> 1.4.6
+
 * Sun Dec 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.4.5-alt2
 - fix: the app doesn't include the icons
 
