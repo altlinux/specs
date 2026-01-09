@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sticky-linuxmint
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: A sticky notes app for the linux desktop
@@ -14,6 +14,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: meson
 
 Requires: typelib(Gspell)
+Requires: xapp-symbolic-icons
 
 BuildArch: noarch
 
@@ -57,6 +58,9 @@ sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' data/sticky.desktop.in
 %_datadir/sticky/*
 
 %changelog
+* Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.30-alt1
+- New version 1.30.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.29-alt1
 - New version 1.29.
 

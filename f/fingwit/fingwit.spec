@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fingwit
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: Fingerprint Configuration Tool
@@ -20,6 +20,8 @@ Requires: python3-module-PAM
 Requires: typelib(XApp)
 # to get /etc/pam.d/gdm-fingerprint
 Requires: gdm-data
+
+Requires: xapp-symbolic-icons
 
 Source: %name-%version.tar
 
@@ -59,6 +61,9 @@ sed -i 's|^Categories=.*|Categories=GTK;Settings;HardwareSettings;|' data/fingwi
 %_datadir/pam-configs/fingwit
 
 %changelog
+* Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.8-alt1
+- New version 1.0.8.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.7-alt1
 - New version 1.0.7.
 

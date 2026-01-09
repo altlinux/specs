@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gnome-online-accounts-gtk
-Version: 3.50.9
+Version: 3.50.10
 Release: alt1
 
 Summary: A GTK Frontend for GNOME Online Accounts
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(goa-1.0)
 
 Requires: gnome-online-accounts
+Requires: xapp-symbolic-icons
 
 %description
 GUI Utility for logging into online accounts for the
@@ -50,6 +51,9 @@ sed -i "s|Categories=.*|Categories=Network;FileTransfer;InstantMessaging;News;|"
 %_iconsdir/hicolor/scalable/apps/gnome-online-accounts-gtk.svg
 
 %changelog
+* Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 3.50.10-alt1
+- New version 3.50.10.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 3.50.9-alt1
 - New version 3.50.9.
 

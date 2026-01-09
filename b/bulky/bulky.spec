@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bulky
-Version: 4.0
+Version: 4.2
 Release: alt1
 
 Summary: Bulk Renamer
@@ -13,6 +13,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+Requires: xapp-symbolic-icons
 
 BuildArch: noarch
 
@@ -53,6 +55,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/bulky/*
 
 %changelog
+* Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 4.2-alt1
+- New version 4.2.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
 - New version 4.0.
 

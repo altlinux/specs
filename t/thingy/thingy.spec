@@ -2,7 +2,7 @@
 
 Name: thingy
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Document Manager
 License: GPL-3.0-or-later
@@ -15,6 +15,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 Requires: typelib(XApp)
+Requires: xapp-symbolic-icons
 
 BuildArch: noarch
 
@@ -53,6 +54,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt2
+- Switch to xapp-symbolic-icons (XSI).
+
 * Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt1
 - New version 1.2.4.
 
