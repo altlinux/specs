@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,12 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
+- erc fix: prevent code execution via AppImage and regex injection
+- erc fix: quote shell variables to prevent word splitting
+- erc fix: improve safety of mv, mktemp and glob operations
+- erc: add snap extraction, refactor squashfs handling
+
 * Tue Dec 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
 - erc: fix -b and other single-letter commands (ALT bug 57263)
 - erc: fix empty args check
