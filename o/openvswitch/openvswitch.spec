@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.3.5
+Version: 3.3.7
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -379,6 +379,9 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 3.3.7-alt1
+- 3.3.7
+
 * Wed Aug 06 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.5-alt1
 - 3.3.5
 
