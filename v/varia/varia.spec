@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 2025.10
+%define ver_major 2026.1
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.14
+Version: %ver_major.5
 Release: alt1
 
 Summary: Quick and efficient download manager
@@ -28,9 +28,15 @@ Requires: /usr/bin/aria2p /usr/bin/aria2c
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 libadwaita >= %adw_ver
 Requires: yt-dlp
-Requires: dconf yelp
+%ifnarch %ix86
+Requires: deno
+%endif
+Requires: ffmpeg
+Requires: p7zip
+Requires: dconf
 
-BuildArch: noarch
+#BuildArch: noarch
+ExclusiveArch: x86_64 aarch64
 
 %add_python3_path %_datadir/%name
 
@@ -74,6 +80,9 @@ stream downloads.
 %doc README*
 
 %changelog
+* Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.1.5-alt1
+- 2026.1.5
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.10.14-alt1
 - 2025.10.14
 
