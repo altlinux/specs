@@ -3,7 +3,7 @@
 
 Name: nautilus-code
 Version: 0.6.alpha
-Release: alt1.b6c50d93.1
+Release: alt2.b6c50d93.1
 
 Summary: Extension which adds right-click menu items to open current folder in code editors
 License: AGPL-3.0
@@ -15,6 +15,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+Requires: nautilus-python
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-gir
@@ -42,5 +44,8 @@ VSCode or GNOME Builder (if they are installed).
 %_datadir/nautilus-python/extensions/%name.py
 
 %changelog
+* Tue Dec 16 2025 Vladimir Romanov <rirusha@altlinux.org> 0.6.alpha-alt2.b6c50d93.1
+- Added require on nautilus-python.
+
 * Sat Nov 29 2025 Vladimir Romanov <rirusha@altlinux.org> 0.6.alpha-alt1.b6c50d93.1
 - Initial build.
