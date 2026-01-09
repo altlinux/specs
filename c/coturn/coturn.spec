@@ -9,7 +9,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:		coturn
-Version:	4.7.0
+Version: 4.8.0
 Release:	alt1
 Summary:	Coturn TURN Server
 
@@ -29,7 +29,6 @@ BuildRequires:	libmariadb-devel
 Requires: 	libmariadb3
 BuildRequires:	libhiredis-devel
 BuildRequires:	perl-DBI, perl-libwww-perl
-
 
 %description
 The TURN Server is a VoIP media traffic NAT traversal server and gateway. It
@@ -78,7 +77,6 @@ combination of them):
 - network load-balancer server
 - DNS-based load balancing
 - built-in ALTERNATE-SERVER mechanism.
-
 
 %package 	utils
 Summary:	coturn: TURN client utils
@@ -307,6 +305,9 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 4.8.0-alt1
+- 4.7.0 -> 4.8.0
+
 * Mon Dec 01 2025 Anton Farygin <rider@altlinux.com> 4.7.0-alt1
 - 4.6.2 -> 4.7.0
 
