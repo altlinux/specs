@@ -1,5 +1,5 @@
 Name: kernel-image-rt
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
 %define kernel_sublevel	.64
@@ -493,7 +493,7 @@ banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 %if "%base_flavour" == "rt"
-	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=off" \
+	--tcg --mem=1G --cpu=2 --qemu="-rtc clock=vm -icount 0,sleep=off" \
 	'uname -a; rtcheck -v'
 %else
 	'uname -a'
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jan 09 2026 Vitaly Chikunov <vt@altlinux.org> 6.12.64-alt2
+- spec: check: Resolve rtcheck boot problem on aarch64.
+
 * Thu Jan 08 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.64-alt1
 - v6.12.64 (2026-01-08).
 
