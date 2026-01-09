@@ -3,7 +3,7 @@
 
 Name: forgejo
 Version: 11.0.9
-Release: alt1
+Release: alt2
 
 Summary: Self-hosted lightweight software forge
 
@@ -17,6 +17,9 @@ Source2: %name.service
 Source3: %name.service.d.conf
 # https://codeberg.org/forgejo/forgejo/pulls/8475
 Patch100: 8475.patch
+
+# fix c10f2 build https://github.com/msteinert/pam/pull/35
+Patch200: github-msteinert-pam-35.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: golang >= 1.24.6 rpm-build-golang
@@ -38,6 +41,7 @@ and privacy.
 %prep
 %setup
 %patch100 -p1
+%patch200 -p1 -d vendor/github.com/msteinert/pam/v2
 
 # https://codeberg.org/forgejo/forgejo/src/branch/forgejo/release-notes-published/11.0.7.md#go-1-25-upgrade
 sed -i "s|^go 1.25.0|go 1.24|" go.mod
@@ -116,6 +120,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Jan 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 11.0.9-alt2
+- Fix build for branch c10f2.
+
 * Thu Jan 08 2026 Maxim Slipenko <maks1ms@altlinux.org> 11.0.9-alt1
 - 11.0.9.
 
