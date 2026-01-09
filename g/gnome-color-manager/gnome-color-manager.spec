@@ -10,7 +10,7 @@
 
 Name: gnome-color-manager
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Color profile manager for the GNOME desktop
 License: GPL-2.0-or-later
@@ -36,7 +36,7 @@ Requires: colord icc-profiles
 %define lcms_ver 2.2
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
+BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstreamcli
 BuildRequires: docbook-utils xsltproc
 BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -103,11 +103,14 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_man1dir/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc --no-dereference COPYING
 %doc README AUTHORS
 
 %changelog
+* Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt3
+- updated to 3.36.2-69-g19b97168
+
 * Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt2
 - updated to 3.36.2-51-g5ce3b551
 
