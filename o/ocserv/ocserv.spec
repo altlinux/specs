@@ -8,8 +8,8 @@
 %def_enable oidc_auth
 
 Name: ocserv
-Version: 1.3.0
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -140,6 +140,9 @@ useradd -r -g %name -G %name  -c 'Ocserv VPN Daemon' \
 %_initdir/%name
 
 %changelog
+* Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt2
 - fix macros in spec.
 
