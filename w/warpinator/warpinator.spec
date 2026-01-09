@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Warpinator - send and receive files across a local network
@@ -83,6 +83,9 @@ Warpinator is a GTK+3 app to send and receive files across a local network.
 %doc README*
 
 %changelog
+* Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Sat Dec 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 

@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Hijri to Gregorian dates converter
@@ -54,6 +54,9 @@ py.test-3
 
 
 %changelog
+* Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - first build for Sisyphus
 
