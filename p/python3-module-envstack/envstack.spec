@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%nameD
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Stacked environment variable management system
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-yaml python3-module-cryptography
+BuildRequires: python3-module-yaml python3-module-cryptography envstack
 %endif
 
 BuildArch: noarch
@@ -43,7 +43,7 @@ Stacked environment variable management system
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests -k 'not test_thing' --ignore tests/test_cmds.py
+%pyproject_run_pytest tests
 
 %files
 %doc LICENSE README.md
@@ -55,6 +55,9 @@ Stacked environment variable management system
 %_bindir/whichenv
 
 %changelog
+* Sat Jan 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.5-alt1
+- 0.9.4 -> 0.9.5
+
 * Wed Jan 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.4-alt1
 - 0.9.3 -> 0.9.4
 
