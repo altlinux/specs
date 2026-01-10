@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 47
+%define ver_major 49
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
@@ -16,8 +16,8 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Eye Of Gnome
 License: GPL-2.0-or-later
@@ -189,6 +189,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sat Jan 10 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
+- 49.1
+
 * Sat Nov 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt2
 - updated to 47.0-33-gf3a82fb5
 - fixed for pygobject-3.52
