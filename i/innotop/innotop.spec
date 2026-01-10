@@ -1,7 +1,7 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.15.1
+Version: 1.15.2
 Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
@@ -69,6 +69,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Sat Jan 10 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.15.2-alt1
+- New version
+
 * Sat Oct 19 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.15.1-alt1
 - New version
   - New display mode to monitor Group Replication Members
