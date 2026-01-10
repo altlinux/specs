@@ -5,10 +5,10 @@
 
 
 Name: apache2-%module_name
-Version: 2.4.18.1
+Version: 2.4.19
 Release: alt1
 
-Summary: Apache 2.x OpenID Connect Relying Party authentication and authorization module
+Summary: Apache 2.4 OpenID Connect Relying Party authentication and authorization module
 
 License: %asl
 Group:   System/Servers
@@ -22,7 +22,7 @@ Patch0:  %real_name-%version.patch
 Source1: auth_openidc.load
 Source2: auth_openidc.conf
 
-BuildRequires(pre): apache2-devel >= 2.2.5
+BuildRequires(pre): apache2-devel >= 2.4
 BuildRequires(pre): rpm-build-licenses
 
 Requires(pre): apache2 >= %apache2_version-%apache2_release
@@ -31,10 +31,10 @@ BuildRequires: libssl-devel libuuid-devel libcjose-devel libcurl-devel libpcre-d
 
 %description
 mod_auth_openidc is a certified authentication and authorization
-module for the Apache 2.x HTTP server that implements the OpenID
+module for the Apache 2.4 HTTP server that implements the OpenID
 Connect Relying Party functionality.
 
-This module enables an Apache 2.x web server to operate as
+This module enables an Apache 2.4 web server to operate as
 an OpenID Connect Relying Party (RP) towards an OpenID Connect
 Provider (OP). It relays end user authentication to a Provider
 and receives user identity information from that Provider.
@@ -90,6 +90,9 @@ ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE.txt) LICENSE.
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Sat Jan 10 2026 Nikolay A. Fetisov <naf@altlinux.org> 2.4.19-alt1
+- New version
+
 * Sun Nov 02 2025 Nikolay A. Fetisov <naf@altlinux.org> 2.4.18.1-alt1
 - New version
 - Fixes:
