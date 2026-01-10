@@ -6,7 +6,7 @@
 %endif
 
 Name: xfsprogs
-Version: 6.17.0
+Version: 6.18.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -109,7 +109,6 @@ rm -rf %buildroot%_datadir/doc/%name
 %_sbindir/groupadd -r -f _xfsscrub ||:
 %_sbindir/useradd -M -r -d / -s /bin/false -c "Special User for the XFS Scrub service" -g _xfsscrub _xfsscrub >/dev/null 2>&1 ||:
 
-
 %files -f %name.lang
 %_sbindir/*
 %_unitdir/*.service
@@ -151,6 +150,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 6.18.0-alt1
+- 6.17.0 -> 6.18.0
+
 * Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 6.17.0-alt1
 - 6.16.0 -> 6.17.0
 
@@ -397,5 +399,4 @@ rm -rf %buildroot%_datadir/doc/%name
 
 * Wed May  2 2001 Chmouel Boudjnah <chmouel@mandrakesoft.com> 1.2.0-1mdk
 - Fist attempt based on the SGI spec.
-
 
