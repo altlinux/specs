@@ -7,7 +7,7 @@
 
 Name: rtcheck
 Version: 0.7.7
-Release: alt4
+Release: alt5
 License: GPL-2.0-only
 Summary: Test the running system for real-time capabilities
 Group: Development/Tools
@@ -52,6 +52,10 @@ install -p -m 644 -D %name.service %buildroot%_unitdir/%name.service
 %preun_service %name
 
 %changelog
+* Sat Jan 10 2026 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt5
+- Fix hrtimer resolution measurement algorithm.
+- Change "Caching results" message as explicitly skipped.
+
 * Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt4
 - Skip missing '/sys/kernel/realtime' (for Linux 6.12.)
 - spec: Cleanup and build improvements.
