@@ -2,7 +2,7 @@
 %define jarname commons-text
  
 Name:    apache-%jarname
-Version: 1.13.1
+Version: 1.15.0
 Release: alt1
 Summary: Apache Commons Text is a library focused on algorithms working on strings
 
@@ -48,5 +48,8 @@ find -type f '(' -name '*.jar' -o -name '*.class' ')' -print -delete
 %doc README.md RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Jan 10 2026 Andrey Cherepanov <cas@altlinux.org> 1.15.0-alt1
+- New version.
+
 * Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt1
 - Initial build for Sisyphus.
