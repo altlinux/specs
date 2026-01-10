@@ -14,7 +14,7 @@
 
 %define sover 0
 Name: wasmedge
-Version: 0.15.0
+Version: 0.16.1
 Release: alt1
 Summary: A lightweight, high-performance, and extensible WebAssembly runtime
 License: Apache-2.0
@@ -113,6 +113,9 @@ ls -la *.wasm
 %_libdir/libwasmedge.so
 
 %changelog
+* Fri Jan 09 2026 Vitaly Chikunov <vt@altlinux.org> 0.16.1-alt1
+- Update to 0.16.1 (2026-01-06).
+
 * Mon Aug 04 2025 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
 - Update to 0.15.0 (2025-08-04).
 
