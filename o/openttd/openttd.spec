@@ -1,17 +1,18 @@
-%define daterev 20250413
-%define gitsnapshot 369983846a82bdd87e911bdd940ec49f3316c6ac
+%define daterev 20260101
+%define gitsnapshot 30cc053596e34eb1d66ecbaae861d515cf3644ac
 %define version_major 15
 %define version_minor 0
 
 Name: openttd
-Version: %version_major.%version_minor
-Release: alt0.beta2
+Version: 15.0
+Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
 Group: Games/Strategy
 
 Url: https://www.openttd.org/
+VCS: https://github.com/OpenTTD/OpenTTD
 Source: %name-%version.tar
 Source1: %name.watch
 Patch: %name-15.0-alt.patch
@@ -27,12 +28,11 @@ BuildRequires: cmake
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
 
-
 %prep
 %setup
 %patch -p1
-echo "%version-beta2	%daterev	0	%gitsnapshot	1	0" >.ottdrev
-echo "%version-beta2" >.version
+echo "%version	%daterev	0	%gitsnapshot	1	1" >.ottdrev
+echo "%version" >.version
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_DATADIR=share/games
@@ -50,6 +50,9 @@ echo "%version-beta2" >.version
 %_man6dir/*
 
 %changelog
+* Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 15.0-alt1
+- 15.0-beta2 -> 15.0
+
 * Fri Apr 25 2025 Anton Farygin <rider@altlinux.com> 15.0-alt0.beta2
 - 14.1 -> 15.0-beta2
 

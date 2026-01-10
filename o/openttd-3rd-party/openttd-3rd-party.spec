@@ -1,13 +1,13 @@
 %define msxver 0.4.2
 %define sfxver 1.0.3
 Name: openttd-3rd-party
-Version: 7.1
-Release: alt3
+Version: 8.0
+Release: alt1
 
 Summary: 3rd Party data files for openttd
 License: GPLv2
 Group: Games/Strategy
-URL: http://www.openttd.com/
+URL: https://www.openttd.org/
 Buildarch: noarch
 Source: opengfx-%version.tar
 Source1: openmsx-%msxver.tar
@@ -39,6 +39,9 @@ cp openmsx-%msxver/*.{mid,obm} %buildroot%_datadir/games/openttd/gm
 
 
 %changelog
+* Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 8.0-alt1
+- opengfx: 7.1 -> 8.0
+
 * Wed Apr 13 2022 Anton Farygin <rider@altlinux.ru> 7.1-alt3
 - opensfx: 1.0.2 -> 1.0.3
 
