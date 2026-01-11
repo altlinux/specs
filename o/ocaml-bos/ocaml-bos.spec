@@ -1,7 +1,7 @@
 %define libname bos
 Name:           ocaml-%libname
 Version:        0.2.1
-Release:        alt3
+Release:        alt4
 Summary:        Basic OS interaction for OCaml
 License:        ISC
 Group:          Development/ML
@@ -9,7 +9,7 @@ Url:            https://erratique.ch/software/bos
 VCS: https://github.com/dbuenzli/bos
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 ocaml-opam-installer
 BuildRequires: ocaml-astring-devel ocaml-rresult-devel ocaml-fpath-devel ocaml-fmt-devel ocaml-logs-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 
@@ -46,6 +46,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.2.1-alt4
+- fixed FTBFS with opam-installer package changes
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.2.1-alt3
 - updated buildrequires to fix build with rpm-build-ocaml >= 1.7
 

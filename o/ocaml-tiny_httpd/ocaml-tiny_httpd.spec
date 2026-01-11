@@ -5,7 +5,7 @@
 %endif
 %define ocamlmod tiny_httpd
 Name: ocaml-%ocamlmod
-Version: 0.17.0
+Version: 0.19
 Release: alt1
 Summary: Minimal HTTP server using threads
 Group: Development/ML
@@ -66,5 +66,8 @@ developing applications that use %name.
 %_bindir/tiny-httpd-vfs-pack
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.19-alt1
+- 0.17.0 -> 0.19
+
 * Wed Sep 18 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - first build for ALT

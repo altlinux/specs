@@ -1,15 +1,17 @@
 %define libname logs
 Name:           ocaml-%libname
-Version:        0.7.0
-Release:        alt3
+Version: 0.9.0
+Release: alt1
 Summary:        Logging infrastructure for OCaml
 License:        ISC
 Group:          Development/ML
 Url:            https://erratique.ch/software/logs
 VCS: https://github.com/dbuenzli/logs
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
-BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-fmt-devel ocaml-lwt-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
@@ -32,10 +34,11 @@ programs which use %name
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
-ocaml pkg/pkg.ml build --with-js_of_ocaml false \
+ocaml pkg/pkg.ml build --with-js_of_ocaml-compiler false \
                        --with-lwt true
 
 %install
@@ -47,8 +50,12 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc LICENSE.md CHANGES.md README.md
 
 %files devel -f ocaml-files.devel
+%_ocamldir/logs/top/logs_top_init_ml
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.9.0-alt1
+- 0.7.0 -> 0.9.0
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.7.0-alt3
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 

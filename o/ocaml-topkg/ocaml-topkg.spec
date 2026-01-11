@@ -1,6 +1,6 @@
 %define oname   topkg
 Name: ocaml-topkg
-Version: 1.0.7
+Version: 1.1.1
 Release: alt1
 Summary: The transitory OCaml software packager
 License: ISC
@@ -8,7 +8,7 @@ Group: Development/ML
 Url: https://erratique.ch/software/topkg
 VCS: https://github.com/dbuenzli/topkg
 Source0: %name-%version.tar
-BuildRequires: opam
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-ocamlbuild
@@ -42,7 +42,6 @@ developing applications that use %name.
 sed -i 's,%%%%VERSION_NUM%%%%,%version,g;s,result,,g' pkg/META
 ocaml pkg/pkg.ml "build"
 
-
 %install
 opam-installer \
 	--prefix=%buildroot%prefix \
@@ -61,6 +60,9 @@ rm -rf %buildroot%prefix/doc/%oname
 %doc doc/ test/
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 1.1.1-alt1
+- 1.0.7 -> 1.1.1
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1
 - fix package version
 - update homepage and add the VCS tag
