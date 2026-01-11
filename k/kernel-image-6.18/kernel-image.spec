@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -495,7 +495,7 @@ banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 %if "%base_flavour" == "rt"
-	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
+	--tcg --mem=1G --cpu=2 --qemu="-rtc clock=vm -icount 0,sleep=off" \
 	'uname -a; rtcheck -v'
 %else
 	'uname -a'
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jan 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.5-alt1
+- v6.18.5 (2026-01-11).
+
 * Thu Jan 08 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.4-alt1
 - v6.18.4 (2026-01-08).
 
