@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define kflavours 6.12 6.17 6.18
 %define inst_dir %_sysconfdir/apt/sources.list.d
 %define alt_url https://lakostis.unsafe.ru/RPMS/ALTLinux
 
 Name: apt-repo-lakostis-kmodules
 Version: 0.0.2
-Release: alt2
+Release: alt3
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -36,6 +35,9 @@ printf '#rpm %alt_url/kmodules/repo x86_64 hasher\n' "$flavour" > %buildroot%ins
 %inst_dir/*.list
 
 %changelog
+* Mon Jan 12 2026 L.A. Kostis <lakostis@altlinux.ru> 0.0.2-alt3
+- remove kflavours.
+
 * Mon Dec 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.2-alt2
 - fix repo files generation.
 
