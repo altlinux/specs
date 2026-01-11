@@ -1,6 +1,6 @@
-%define soname 13
+%define soname 14
 Name: mac
-Version: 11.18
+Version: 11.91
 Release: alt1
 
 Summary: Monkey's Audio Codec
@@ -9,6 +9,7 @@ Group: Sound
 
 Url: https://monkeysaudio.com
 Source0: %name-%version.tar
+Source999: watch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -67,6 +68,9 @@ sed -i 's/\r$//' Readme.txt
 %_includedir/*
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 11.91-alt1
+- 11.18 -> 11.91
+
 * Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 11.18-alt1
 - 10.96 -> 11.18
 
