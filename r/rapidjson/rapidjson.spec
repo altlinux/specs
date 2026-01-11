@@ -7,7 +7,7 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt8.git473553bd
+Release: alt9.git473553bd
 
 Summary: Fast JSON parser and generator for C++
 
@@ -20,9 +20,6 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 # Downstream-patch for gtest.
 Patch1: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
-
-# The in-tree config is not needed for an RPM
-Patch2: rapidjson-1.1.0-alt-no-intree-config.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-valgrind
@@ -124,7 +121,7 @@ sed -i 's/ -std=c++11//' CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Copy the documentation-files to final location.
 cp -at %buildroot%_docdir/%name-doc-%version -- examples
@@ -152,6 +149,9 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt9.git473553bd
+- Fix RapidJSONConfig.cmake (Closes: 57462).
+
 * Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt8.git473553bd
 - Fix installation of pkg-config and cmake files
   (fixes build on loongarch64 and riscv64);
