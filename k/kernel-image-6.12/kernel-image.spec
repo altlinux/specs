@@ -1,8 +1,8 @@
 Name: kernel-image-6.12
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.64
+%define kernel_sublevel	.65
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jan 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.65-alt1
+- v6.12.65 (2026-01-11).
+
 * Fri Jan 09 2026 Vitaly Chikunov <vt@altlinux.org> 6.12.64-alt2
 - spec: check: Resolve rtcheck boot problem on aarch64.
 
