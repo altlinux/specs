@@ -5,10 +5,11 @@
 
 Name: wayfire
 Summary: A modular and extensible wayland compositor
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 License: MIT
-Url: https://wayfire.org
+URL: https://wayfire.org
+VCS: https://github.com/WayfireWM/wayfire
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
@@ -101,8 +102,11 @@ rm -v %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Thu Aug 28 2025 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
-- new version 0.10.0
+- New version 0.10.0.
 
 * Sat Oct 12 2024 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
-- initial build
+- Initial build.
