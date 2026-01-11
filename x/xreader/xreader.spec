@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: xreader
-Version: 4.6.1
+Version: 4.6.3
 Release: alt1
 
 Summary: A document viewer
@@ -146,6 +146,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 4.6.3-alt1
+- new version 4.6.3
+
 * Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 4.6.1-alt1
 - new version 4.6.1
 

@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.4.15
+Version: 3.4.16
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -101,6 +101,9 @@ rm -r %buildroot%_pkgconfigdir/%name.pc
 %doc README.md THANKS
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 3.4.16-alt1
+- New version 3.4.16.
+
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 3.4.15-alt1
 - New version 3.4.15.
 

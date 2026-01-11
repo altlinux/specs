@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -110,6 +110,9 @@ rm -v %buildroot%_libdir/cinnamon-settings-daemon-3.0/*.a
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 6.6.2-alt1
+- New version 6.6.2.
+
 * Mon Dec 15 2025 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt1
 - New version 6.6.1.
 
