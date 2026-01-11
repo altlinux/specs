@@ -5,7 +5,7 @@
 %endif
 
 Name:    python3-module-%modulename
-Version: 4.6.8
+Version: 4.11.0
 Release: alt1
 
 Summary: Python library for loading and using triangular meshes
@@ -34,6 +34,7 @@ BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-mapbox-earcut
 BuildRequires: python3-module-matplotlib-tk
 BuildRequires: python3-modules-tkinter
+BuildRequires: python3-module-pycollada
 
 BuildArch: noarch
 
@@ -145,47 +146,50 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
 %doc *.md
 
 %changelog
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 4.11.0-alt1
+- New version 4.11.0.
+
 * Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 4.6.8-alt1
-- new version (4.6.8) with rpmgs script
-- spec: add VCS tag
+- New version 4.6.8.
+- spec: add VCS tag.
 
 * Wed Feb 26 2025 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1.1
 - NMU: dropped dependency on removed svg.
 
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 4.5.3-alt1
-- new version (4.5.3) with rpmgs script
-- pack %%_bindir/trimesh
+- New version 4.5.3 with rpmgs script.
+- Pack %%_bindir/trimesh.
 
 * Fri Aug 09 2024 Anton Midyukov <antohami@altlinux.org> 4.4.4-alt1
-- new version (4.4.4) with rpmgs script
-- not check test_screw
+- New version 4.4.4.
+- Do not check test_screw.
 
 * Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 4.4.3-alt1
-- new version (4.4.3) with rpmgs script
+- New version 4.4.3.
 
 * Thu Apr 18 2024 Anton Midyukov <antohami@altlinux.org> 4.3.0-alt1
-- new version (4.3.0) with rpmgs script
+- New version 4.3.0.
 
 * Tue Mar 12 2024 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt1
-- new version (4.2.0) with rpmgs script
+- New version 4.2.0.
 
 * Fri Feb 02 2024 Anton Midyukov <antohami@altlinux.org> 4.1.2-alt1
-- new version (4.1.2) with rpmgs script
+- New version 4.1.2.
 
 * Mon Dec 25 2023 Anton Midyukov <antohami@altlinux.org> 4.0.8-alt1
-- new version (4.0.8) with rpmgs script
+- New version 4.0.8.
 
 * Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 4.0.7-alt1
-- new version (4.0.7) with rpmgs script
+- New version 4.0.7.
 
 * Tue Dec 19 2023 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt1
-- new version (4.0.6) with rpmgs script
+- New version 4.0.6.
 
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 3.22.0-alt1
-- new version (3.22.0) with rpmgs script
+- New version 3.22.0.
 
 * Tue Jan 10 2023 Anton Midyukov <antohami@altlinux.org> 3.17.1-alt1
-- new version (3.17.1) with rpmgs script
+- New version 3.17.1.
 
 * Fri Mar 04 2022 Anton Midyukov <antohami@altlinux.org> 3.9.42-alt1
-- Initial build for Sisyphus
+- Initial build for Sisyphus.
