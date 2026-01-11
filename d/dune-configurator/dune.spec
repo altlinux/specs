@@ -24,7 +24,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.19.0
+Version: 3.20.2
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -211,6 +211,7 @@ BuildRequires: ocaml-stdune-devel >= %version
 BuildRequires: ocaml-pp-devel
 BuildRequires: ocaml-xdg-devel
 BuildRequires: ocaml-odoc-devel
+BuildRequires: ocaml-ocamlc-loc-devel
 %description -n ocaml-%pkgname
 Library to connect and control a running dune instance.
 
@@ -316,6 +317,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 3.20.2-alt1
+- 3.19.0 -> 3.20.2
+
 * Mon May 26 2025 Anton Farygin <rider@altlinux.com> 3.19.0-alt1
 - 3.17.2 -> 3.19.0
 
@@ -456,5 +460,4 @@ rm -rf vendor/csexp vendor/pp
 
 * Tue Dec 19 2017 Anton Farygin <rider@altlinux.ru> 1.0-alt1.git4570020
 - first build for ALT, based on RH spec
-
 
