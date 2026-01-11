@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.12.2
-Release: alt2
+Version: 0.13.0
+Release: alt1
 
 Summary: Mock/Stub/Spy library for Python
 License: BSD-2-Clause
@@ -48,6 +48,9 @@ mocks, stubs and fakes.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Jan 11 2026 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt1
+- New version 0.13.0.
+
 * Thu Aug 07 2025 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt2
 - Fixed FTBFS.
 
