@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clifm
-Version: 1.27
+Version: 1.27.1
 Release: alt1
 
 Summary: Shell-like, command line terminal file manager
@@ -67,6 +67,9 @@ Virtual directories.
 %_iconsdir/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Sun Jan 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.27.1-alt1
+- New version 1.27.1.
+
 * Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.27-alt1
 - New version 1.27.
 

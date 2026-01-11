@@ -3,7 +3,7 @@
 %define appname io.github.phastmike.tags
 
 Name: tags
-Version: 1.8
+Version: 2.0
 Release: alt1
 
 Summary: A simple text tagger
@@ -56,5 +56,8 @@ sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.gi
 %_iconsdir/hicolor/symbolic/apps/%{appname}-symbolic.svg
 
 %changelog
+* Sun Jan 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.0-alt1
+- New version 2.0.
+
 * Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 1.8-alt1
 - Initial build for Sisyphus
