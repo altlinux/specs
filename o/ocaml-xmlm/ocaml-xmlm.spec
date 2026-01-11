@@ -2,7 +2,7 @@ Name: ocaml-xmlm
 %global libname %(sed -e 's/^ocaml-//' <<< %name)
 Group: Development/ML
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: A streaming XML codec
 License: BSD
 Url: https://erratique.ch/software/xmlm
@@ -12,7 +12,7 @@ BuildRequires: ocaml >= 4.06
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-topkg-devel
-BuildRequires: opam
+BuildRequires: ocaml-opam-installer
 BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
@@ -49,6 +49,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc CHANGES.md _build/test/examples.ml _build/test/xhtml.ml doc
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt3
+- changed BR to fix build with ocaml-opam-installer
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.4.0-alt2
 - changed BR to fix build with rpm-build-ocaml >= 1.7
 
