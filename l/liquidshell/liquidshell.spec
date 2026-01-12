@@ -6,7 +6,7 @@
 %define libliquidshell liquidshell%liquidshell_sover
 
 Name: %rname
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 %K6init no_altplace appdata
 
@@ -100,5 +100,8 @@ sed -i 's|^Type=.*|Type=XSession|' %buildroot/%_datadir/xsessions/liquidshell-se
 %_datadir/metainfo/*liquidshell*
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.10.1-alt1
+- new version
+
 * Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
 - initial build
