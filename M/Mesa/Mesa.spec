@@ -95,7 +95,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.3
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -249,6 +249,13 @@ Obsoletes: xorg-dri-virgl < %epoch:%version-%release
 %description -n xorg-dri-virtio
 DRI driver for VirtIO
 
+%package -n vulkan-mesa-layers
+Summary: Mesa's explicit Vulkan layers
+Group: System/X11
+
+%description -n vulkan-mesa-layers
+Mesa's explicit Vulkan layers
+
 %package -n mesa-dri-drivers
 Summary: Mesa-based DRI drivers
 Group: System/X11
@@ -292,7 +299,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dplatforms=x11,wayland \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers=device-select \
+	-Dvulkan-layers='device-select, overlay, screenshot' \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec' \
 %ifarch %radeon_arches
 	-Dllvm=enabled \
@@ -397,9 +404,14 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/zink_dri.so
 %_libdir/libvulkan_lvp.so
 %_datadir/vulkan/icd.d/lvp_icd*.json
-#_bindir/mesa-overlay-control.py
-%_libdir/libVkLayer_MESA*.so
-%_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
+%_libdir/libVkLayer_MESA_device_select.so
+%_datadir/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
+
+%files -n vulkan-mesa-layers
+%_bindir/mesa-*.py
+%_libdir/libVkLayer_MESA_overlay.so
+%_libdir/libVkLayer_MESA_screenshot.so
+%_datadir/vulkan/explicit_layer.d/VkLayer_MESA*.json
 
 %ifarch %virgl_arches
 %files -n xorg-dri-virtio
@@ -466,6 +478,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Jan 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.3-alt1
+- 25.3.3
+
 * Thu Dec 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.2-alt1
 - 25.3.2
 
