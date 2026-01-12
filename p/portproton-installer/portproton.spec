@@ -9,7 +9,7 @@ AutoProv: no
 %define i586_req_l3 libvulkan.so.1 libvulkan_intel.so libvulkan_radeon.so libvulkan_lvp.so
 
 Name: portproton-installer
-Version: 1.7.3
+Version: 1.7.5
 Release: alt1
 
 Summary: Installer for PortProton
@@ -59,6 +59,10 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Jan 12 2026 Mikhail Tergoev <fidel@altlinux.org> 1.7.5-alt1
+- updated to 1.7.5
+- added portproton:// handler for ppdb.linux-gaming.ru
+
 * Mon Jul 21 2025 Mikhail Tergoev <fidel@altlinux.org> 1.7.3-alt1
 - updated to 1.7.3
 - dropped requires: /usr/bin/icoextract
