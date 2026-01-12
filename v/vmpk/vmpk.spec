@@ -1,5 +1,5 @@
 Name: vmpk
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Virtual MIDI Piano Keyboard
@@ -45,6 +45,9 @@ so, connect the other MIDI port to the input port of VMPK.
 %_man1dir/vmpk.1*
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.2-alt1
+- 0.9.2 released
+
 * Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.1-alt1
 - 0.9.1 released
 
