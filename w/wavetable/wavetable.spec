@@ -1,6 +1,6 @@
 Name: wavetable
-Version: 1.0.23
-Release: alt2
+Version: 1.0.26
+Release: alt1
 
 Summary: Wavetable synth
 License: BSD-3-Clause
@@ -53,13 +53,20 @@ mkdir -p %buildroot%_libdir/{lv2,vst3}
 cp -av %_cmake__builddir/*/LV2/*.lv2 %buildroot%_libdir/lv2
 cp -av %_cmake__builddir/*/VST3/*.vst3 %buildroot%_libdir/vst3
 
+%define _customdocdir %_docdir/wavetable
+
 %files -n lv2-wavetable-plugin
+%doc Manual.md
 %_libdir/lv2/*
 
 %files -n vst3-wavetable-plugin
+%doc Manual.md
 %_libdir/vst3/*
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.26-alt1
+- 1.0.26 released
+
 * Thu Nov 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.23-alt2
 - 1.0.23-9-gb459616
 
