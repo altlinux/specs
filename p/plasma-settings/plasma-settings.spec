@@ -1,7 +1,7 @@
 %define rname plasma-settings
 
 Name: %rname
-Version: 25.11.0
+Version: 25.12.0
 Release: alt1
 %K6init
 
@@ -71,5 +71,8 @@ Core files needed for %rname
 
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.0-alt1
+- new version
+
 * Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 25.11.0-alt1
 - initial build
