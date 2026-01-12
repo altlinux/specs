@@ -24,7 +24,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.10
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -94,6 +94,11 @@ This package contains development documentation for GStreamer Good Plugins
 
 %prep
 %setup -n %_name-good-%version
+%ifarch %e2k
+# error: expression must have a constant value
+sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n;s/\};/}/;Ta' \
+    sys/v4l2/gstv4l2object.c
+%endif
 
 %build
 # required for gcc-14
@@ -139,6 +144,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Mon Jan 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1.1
+- fixed %%e2k build by ilyakurdyukov@
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
 - 1.26.10
 
