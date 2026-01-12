@@ -1,5 +1,5 @@
 Name: qtractor
-Version: 1.5.10
+Version: 1.5.11
 Release: alt1
 
 Summary: Audio/MIDI multi-track sequencer
@@ -45,7 +45,7 @@ sed -i "s/'\\\\0'/QChar(&)/" src/qtractorPluginForm.cpp
 %endif
 
 %build
-%cmake -DCONFIG_CLAP=NO -DCONFIG_VST2=NO -DCONFIG_VST3=NO
+%cmake -DCONFIG_CLAP=NO -DCONFIG_VST2=NO -DCONFIG_VST3=NO -DCONFIG_LIBAUBIO=ON
 %cmake_build
 
 %install
@@ -72,6 +72,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.11-alt1
+- 1.5.11 released
+
 * Fri Dec 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.10-alt1
 - 1.5.10 released
 
