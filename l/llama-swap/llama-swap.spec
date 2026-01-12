@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: llama-swap
-Version: 152
+Version: 183
 Release: alt1
 Summary: A proxy for llama.cpp-server to provide automatic model switching
 License: MIT
@@ -29,15 +29,18 @@ install -Dp llama-swap -t %buildroot%_bindir
 
 %check
 %buildroot%_bindir/llama-swap --version | grep -F 'version: %version (%release), built at'
-go build -o "build/simple-responder_linux_$(go env GOARCH)" misc/simple-responder/simple-responder.go
+go build -o "build/simple-responder_linux_$(go env GOARCH)" cmd/simple-responder/simple-responder.go
 go test -v ./...
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE.md README.md examples
+%doc LICENSE.md README.md docs config.example.yaml
 %_bindir/llama-swap
 
 %changelog
+* Sun Jan 11 2026 Vitaly Chikunov <vt@altlinux.org> 183-alt1
+- Update to v183 (2026-01-08).
+
 * Sat Aug 16 2025 Vitaly Chikunov <vt@altlinux.org> 152-alt1
 - Update to v152 (2025-08-15).
 
