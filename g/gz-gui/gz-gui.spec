@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define ver 9
+%define soversion 10
 
 Name:    gz-gui
-Version: %ver.0.0
-Release: alt2
+Version: 10.0.0
+Release: alt1
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
 License: Apache-2.0
@@ -13,8 +13,12 @@ Url:      https://github.com/gazebosim/gz-gui
 Source:   %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+Patch1: gz-gui-publisher-plugin-test-fix.patch
+
 # Same as for ogre-next via libgz-rendering-devel
 ExclusiveArch: x86_64 %e2k
+
+Conflicts: libgz-gui
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -27,60 +31,78 @@ BuildRequires: libgz-transport-devel >= 11.0.0
 BuildRequires: libgz-rendering-devel >= 6.0.0
 BuildRequires: libgz-common-devel
 BuildRequires: libgz-plugin-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-quick1-devel
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: libqt6-quickcontrols2
 BuildRequires: libstdc++-devel-static
+
+BuildRequires: ctest
+BuildRequires: xvfb-run
+BuildRequires: qt6-5compat-devel
 
 %description
 Gazebo GUI builds on top of Qt to provide widgets which are useful when
 developing robotics applications, such as a 3D view, plots, dashboard, etc,
 and can be used together in a convenient unified interface.
 
-%package -n lib%name
-Summary: Library of %name
+%package -n libgz-gui%soversion
+Summary: Library of gz-gui
 Group: System/Libraries
-Requires: qt5-quickcontrols
-Requires: qt5-quickcontrols2
+Requires: libqt6-quickcontrols2
 
-%description -n lib%name
+%description -n libgz-gui%soversion
 %summary
 
-%package -n lib%{name}-devel
-Summary: Development files for %name
+%package -n libgz-gui-devel
+Summary: Development files for gz-gui
 Group: Development/C++
 
-%description -n lib%{name}-devel
+%description -n libgz-gui-devel
 %summary
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
-# Replace libGrid3D.so by libGridConfig.so without RPATH
-rm -f %buildroot%_libdir/gz-gui-%ver/plugins/libGrid3D.so
-cp %buildroot%_libdir/gz-gui-%ver/plugins/{libGridConfig.so,libGrid3D.so}
+%cmake_install
 
-%files -n lib%name
+%check
+export CMAKE_PREFIX_PATH="%buildroot%_prefix"
+Xvfb :99 -screen 0 1920x1080x24 &
+XVFB_PID=$!
+export DISPLAY=:99
+
+# Some tests fail if parallelization is enabled.
+%ctest --parallel 1
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+%files
 %doc AUTHORS README.md
-%_libexecdir/ruby/*
-%_libdir/lib*.so.*
-%_libdir/lib*.so
-%_libdir/gz-gui-*/plugins
-%_datadir/gz/gui*.yaml
-%_datadir/gz/gz2.completion.d/gui*.bash_completion.sh
+%_libexecdir/ruby/gz/cmdgui%soversion.rb
+%_libdir/gz-gui-%soversion/plugins
+%_datadir/gz/gui%soversion.yaml
+%_datadir/gz/gz2.completion.d/gui%soversion.bash_completion.sh
 
-%files -n lib%{name}-devel
-%_includedir/gz/*
-%_cmakedir/*
-%_pkgconfigdir/*.pc
+%files -n libgz-gui%soversion
+%_libdir/libgz-gui.so.%soversion
+%_libdir/libgz-gui.so.%version
+
+%files -n libgz-gui-devel
+%_includedir/gz/gui%soversion
+%_libdir/libgz-gui.so
+%_cmakedir/gz-gui
+%_cmakedir/gz-gui-all
+%_pkgconfigdir/gz-gui.pc
 
 %changelog
+* Wed Dec 24 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
+- New version.
+
 * Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
 - E2K: builds fine.
 - Minor spec cleanup.

@@ -5,7 +5,7 @@
 
 Name: bullet3
 Version: 3.25
-Release: alt3
+Release: alt4
 
 Summary: Professional 3D collision detection library
 
@@ -17,7 +17,7 @@ VCS: https://github.com/bulletphysics/bullet3.git
 Source: %name-%version.tar
 
 # patch from https://svnweb.mageia.org/packages/cauldron/bullet/current/SOURCES/bullet-3.24-fix-bullet-config.cmake.patch?revision=1919697&view=markup
-Patch0: bullet-3.24-fix-bullet-config.cmake.patch
+#Patch0: bullet-3.24-fix-bullet-config.cmake.patch
 
 Patch1: bullet-3.24-use-system-libs.patch
 
@@ -124,7 +124,7 @@ rm -rv {data/,examples/}
     -DINSTALL_LIBS=ON \
     -DOpenGL_GL_PREFERENCE=GLVND \
     -DUSE_CUSTOM_VECTOR_MATH=ON \
-    -DUSE_DOUBLE_PRECISION=ON \
+    -DUSE_DOUBLE_PRECISION=OFF \
     -DINCLUDE_INSTALL_DIR=%_includedir/%oname \
 %if_disabled demo
     -DBUILD_BULLET2_DEMOS=OFF \
@@ -208,6 +208,9 @@ rm -rv {data/,examples/}
 %_libdir/libBulletXmlWorldImporter.so
 
 %changelog
+* Thu Dec 25 2025 Pavel Petrykin <silverducks@altlinux.org> 3.25-alt4
+- Fix gz-physics compatibility.
+
 * Tue Sep 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.25-alt3
 - Fix the pkg-config module.
 

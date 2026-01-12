@@ -1,13 +1,14 @@
-Name:    gz-cmake
-Version: 4.0.0
+%define _unpackaged_files_terminate_build 1
+
+Name: gz-cmake
+Version: 5.0.0
 Release: alt1
 
 Summary: A set of CMake modules that are used by the C++-based Gazebo projects
 License: Apache-2.0
-Group:   Development/C++
-Url:     https://github.com/gazebosim/gz-cmake
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Group: Development/C++
+Url: https://gazebosim.org/libs/cmake/
+Vcs: https://github.com/gazebosim/gz-cmake
 
 Source: %name-%version.tar
 Patch: gz-cmake-alt-find-ogre-next.patch
@@ -27,7 +28,7 @@ up a modern cmake build system using good practices.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %cmake
@@ -39,12 +40,14 @@ subst 's|^#!.*$|#!%__python3|' `find %buildroot%_datadir/gz/gz-cmake* -name \*.p
 
 %files
 %doc README.md
-%_includedir/gz/cmake*
-%_datadir/cmake/gz-cmake*
-%_libdir/pkgconfig/*.pc
-%_datadir/gz
+%_datadir/cmake/gz-cmake
+%_libdir/pkgconfig/gz-cmake.pc
+%_datadir/gz/gz-cmake
 
 %changelog
+* Fri Dec 19 2025 Pavel Petrykin <silverducks@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - New version.
 

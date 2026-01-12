@@ -1,18 +1,20 @@
 %define _unpackaged_files_terminate_build 1
+%define soversion 16
 %def_without python
 
 Name:    sdformat
-Version: 15.0.0
+Version: 16.0.0
 Release: alt1
 
 Summary: Simulation Description Format (SDFormat) parser and description files
 License: Apache-2.0
 Group:   Development/C++
-Url:     https://github.com/gazebosim/sdformat
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Url: https://gazebosim.org/libs/sdformat/
+Vcs: https://github.com/gazebosim/sdformat
 
 Source: %name-%version.tar
+
+Conflicts: libsdformat
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -30,6 +32,9 @@ BuildRequires: python3-devel
 BuildRequires: pybind11-devel
 %endif
 BuildRequires: gem-rexml
+BuildRequires: ctest
+BuildRequires: /proc
+BuildRequires: libgtest
 
 %description
 SDFormat is an XML file format that describes environments, objects, and robots
@@ -39,46 +44,60 @@ terrain, static or dynamic objects, and articulated robots with various
 sensors, and acutators. The format of SDFormat is also described by XML, which
 facilitates updates and allows conversion from previous versions.
 
-%package -n lib%name
-Summary: Library of %name
+%package -n libsdformat%soversion
+Summary: Library of sdformat
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libsdformat%soversion
 %summary
 
-%package -n lib%{name}-devel
-Summary: Development files for %name
+%package -n libsdformat-devel
+Summary: Development files for sdformat
 Group: Development/C++
 
-%description -n lib%{name}-devel
+%description -n libsdformat-devel
 %summary
 
 %prep
 %setup
+rm -rf tests/gtest_vendor
 
 %build
 %cmake -GNinja -Wno-dev \
-       -DBUILD_TESTING=OFF
+       -DBUILD_TESTING=ON
 %ninja_build -C "%_cmake__builddir"
 
 %install
 %ninja_install -C "%_cmake__builddir"
 
-%files -n lib%name
-%doc AUTHORS README.md
-%_libexecdir/ruby/*
-%_libdir/lib*.so.*
-%_datadir/sdformat*
-%_datadir/gz/gz2.completion.d/*.sh
-%_datadir/gz/*.yaml
+%check
+%ctest \
+  --exclude-regex 'element_memory_leak|_TEST\.py'
+  #
 
-%files -n lib%{name}-devel
-%_includedir/gz/%{name}*
-%_libdir/lib*.so
-%_libdir/cmake/sdformat*
-%_libdir/pkgconfig/*.pc
+%files
+%_datadir/sdformat
+%_datadir/gz/gz2.completion.d/sdf%soversion.bash_completion.sh
+%_datadir/gz/sdformat.yaml
+%doc AUTHORS README.md
+%_libexecdir/ruby/gz
+%_prefix/libexec/gz/sdformat/gz-sdformat-sdf
+
+%files -n libsdformat%soversion
+%_libdir/libsdformat.so.%soversion
+%_libdir/libsdformat.so.%version
+
+%files -n libsdformat-devel
+%_includedir/gz/sdformat%soversion
+%_libdir/libsdformat.so
+%_libdir/cmake/sdformat
+%_libdir/cmake/sdformat-all
+%_libdir/pkgconfig/sdformat.pc
 
 %changelog
+* Wed Dec 22 2025 Pavel Petrykin <silverducks@altlinux.org> 16.0.0-alt1
+- New version.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 15.0.0-alt1
 - New version.
 

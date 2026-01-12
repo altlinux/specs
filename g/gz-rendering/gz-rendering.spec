@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define ver 9
+%define soversion 10
 
-Name:    gz-rendering
-Version: %ver.0.0
-Release: alt2
+Name: gz-rendering
+Version: 10.0.0
+Release: alt1
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
 License: Apache-2.0
-Group:   Development/C++
+Group: Development/C++
+Vcs: https://github.com/gazebosim/gz-rendering
+Url: https://gazebosim.org/libs/rendering/
 
-Url:     https://github.com/gazebosim/gz-rendering
-Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch: gz-rendering-orge-next-2.3.3.patch
 
@@ -29,23 +29,28 @@ BuildRequires: libgz-math-devel >= 6.0.0
 BuildRequires: libgz-common-devel
 BuildRequires: libgz-plugin-devel
 
+BuildRequires: ctest
+BuildRequires: xvfb-run
+BuildRequires: /proc
+BuildRequires: qt6-5compat-devel
+
 %description
 Gazebo Rendering is a C++ library designed to provide an abstraction for
 different rendering engines. It offers unified APIs for creating 3D graphics
 applications.
 
-%package -n lib%name
-Summary: Library of %name
+%package -n libgz-rendering%soversion
+Summary: Library of gz-rendering
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libgz-rendering%soversion
 %summary
 
-%package -n lib%{name}-devel
-Summary: Development files for %name
+%package -n libgz-rendering-devel
+Summary: Development files for gz-rendering
 Group: Development/C++
 
-%description -n lib%{name}-devel
+%description -n libgz-rendering-devel
 %summary
 
 %prep
@@ -55,29 +60,54 @@ sed -i 's/2\.3\.1/2.3.3/' CMakeLists.txt
 
 %build
 %cmake -GNinja -Wno-dev \
-       -DBUILD_TESTING=OFF \
-       -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
-%ninja_build -C "%_cmake__builddir"
-cp -a %_cmake__builddir/lib/libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir
-ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering%ver-ogre2.so
-ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering-ogre2.so
+  -DBUILD_TESTING=ON \
+  -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
-%files -n lib%name
+%check
+# See issue:
+# https://github.com/gazebosim/gz-rendering/issues/1212
+exclude_tests=(
+    "INTEGRATION_depth_camera_ogre2_gl3plus"
+    "INTEGRATION_versioned_symbols"
+    "UNIT_Utils_TEST_ogre2_gl3plus"
+)
+exclude_regex=$(IFS='|'; echo "${exclude_tests[*]}")
+
+export CMAKE_PREFIX_PATH="%buildroot%_prefix"
+Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
+XVFB_PID=$!
+export DISPLAY=:99
+export GZ_RENDERING_PLUGIN_PATH="%buildroot%_libdir"
+export GZ_RENDERING_RESOURCE_PATH="%buildroot%_datadir/gz/gz-rendering"
+%ctest \
+  --parallel 1 \
+  -E "$exclude_regex"
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+%files
 %doc AUTHORS README.md
-%_libdir/lib*.so.*
-%_libdir/lib*.so
 %_libdir/gz-rendering-*
-%_datadir/gz/gz-rendering*
+%_libdir/libgz-rendering-*
+%_datadir/gz/gz-rendering
 
-%files -n lib%{name}-devel
-%_includedir/gz/rendering*
-%_cmakedir/*
-%_pkgconfigdir/*.pc
+%files -n libgz-rendering%soversion
+%_libdir/libgz-rendering.so.%soversion
+%_libdir/libgz-rendering.so.%version
+
+%files -n libgz-rendering-devel
+%_includedir/gz/rendering%soversion
+%_libdir/libgz-rendering.so
+%_cmakedir/gz-rendering*
+%_pkgconfigdir/gz-rendering*.pc
 
 %changelog
+* Thu Dec 25 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
+- New version.
+
 * Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
 - E2K: builds fine.
 - Minor spec cleanup.

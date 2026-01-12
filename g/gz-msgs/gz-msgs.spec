@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+%define soversion 12
 
-Name:    gz-msgs
-Version: 11.0.1
+Name: gz-msgs
+Version: 12.0.0
 Release: alt1
 
 Summary: Messages for Gazebo robot simulation
 License: Apache-2.0
-Group:   Development/C++
-Url:     https://github.com/gazebosim/gz-msgs
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Group: Development/C++
+Url: https://gazebosim.org/libs/msgs/
+Vcs: https://github.com/gazebosim/gz-msgs
 
 Source: %name-%version.tar
+
+Conflicts: libgz-msgs
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -22,6 +24,7 @@ BuildRequires: libprotobuf-devel
 BuildRequires: libtinyxml2-devel
 BuildRequires: libgz-math-devel
 BuildRequires: protobuf-compiler
+BuildRequires: ctest
 
 %add_python3_path %_libdir/python/gz/msgs*
 %filter_from_requires /python3(gz.msgs)/d
@@ -29,18 +32,18 @@ BuildRequires: protobuf-compiler
 %description
 Gazebo Messages: Protobuf messages and functions for robot applications.
 
-%package -n lib%name
-Summary: Library of %name
+%package -n libgz-msgs%soversion
+Summary: Library of gz-msgs
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libgz-msgs%soversion
 %summary
 
-%package -n lib%{name}-devel
-Summary: Development files for %name
+%package -n libgz-msgs-devel
+Summary: Development files for gz-msgs
 Group: Development/C++
 
-%description -n lib%{name}-devel
+%description -n libgz-msgs-devel
 %summary
 
 %prep
@@ -54,25 +57,38 @@ ln -s /usr/include/google proto/google
 %install
 %ninja_install -C "%_cmake__builddir"
 
-%files -n lib%name
-%doc AUTHORS README.md
-%_bindir/*
-%_libexecdir/ruby/*
-%_libdir/lib*.so.*
-%_libdir/lib*.so
-%_datadir/gz/gz2.completion.d/*.sh
-%_datadir/gz/*.yaml
-%_datadir/gz/gz-msgs*
-%_datadir/gz/protos/gz-msgs*
-%_libdir/python/gz/msgs*
-%_prefix/libexec/gz/msgs*/gz-msgs
+%check
+%ctest \
+    --exclude-regex ".*\.py"
 
-%files -n lib%{name}-devel
-%_includedir/gz/msgs*
-%_libdir/cmake/gz-msgs*
-%_libdir/pkgconfig/*.pc
+%files
+%doc AUTHORS README.md
+%_bindir/gz-msgs_generate.py
+%_bindir/gz-msgs_generate_factory.py
+%_bindir/gz-msgs_protoc_plugin
+%_libexecdir/ruby/gz/cmdmsgs%soversion.rb
+%_datadir/gz/gz2.completion.d/msgs%soversion.bash_completion.sh
+%_datadir/gz/msgs%soversion.yaml
+%_datadir/gz/gz-msgs/protos
+%_datadir/gz/protos/gz-msgs%soversion.gz_desc
+%_libdir/python/gz/msgs
+%_prefix/libexec/gz/msgs/gz-msgs
+
+%files -n libgz-msgs%soversion
+%_libdir/libgz-msgs.so.%soversion
+%_libdir/libgz-msgs.so.%version
+
+%files -n libgz-msgs-devel
+%_includedir/gz/msgs%soversion
+%_libdir/cmake/gz-msgs
+%_libdir/cmake/gz-msgs-all
+%_libdir/pkgconfig/gz-msgs.pc
+%_libdir/libgz-msgs.so
 
 %changelog
+* Mon Dec 22 2025 Pavel Petrykin <silverducks@altlinux.org> 12.0.0-alt1
+- New version.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 11.0.1-alt1
 - New version.
 
