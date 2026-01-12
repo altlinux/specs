@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.36
-%define dmversion 1.02.210
+%define lvm2version 2.03.38
+%define dmversion 1.02.212
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -492,6 +492,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Mon Jan 12 2026 Alexey Shabalin <shaba@altlinux.org> 2.03.38-alt1
+- 2.03.38
+
 * Sun Oct 26 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.36-alt1
 - 2.03.36
 
