@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.16.2
+Version: 3.17.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -141,6 +141,9 @@ exit 0
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Jan 12 2026 Leontiy Volodin <lvol@altlinux.org> 3.17.0-alt1
+- New version 3.17.0.
+
 * Wed Nov 05 2025 Leontiy Volodin <lvol@altlinux.org> 3.16.2-alt1
 - New version 3.16.2.
 
