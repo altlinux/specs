@@ -1,5 +1,5 @@
 Name: tree-sitter-lua
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Lua grammar for tree-sitter
@@ -22,6 +22,7 @@ gcc -shared %optflags %optflags_shared -Isrc src/parser.c src/scanner.c -o lua.s
 install -pm0644 -D lua.so %buildroot%_libdir/libtree-sitter-lua.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-lua/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-lua
+cp -a queries %buildroot%_libdir/tree-sitter-lua
 
 %files
 %doc LICENSE* README*
@@ -29,6 +30,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-lua
 %_libdir/tree-sitter-lua
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.1-alt1
+- 0.4.1 released
+
 * Mon May 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
 - 0.4.0 released
 
