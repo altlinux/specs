@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt2
+Release: alt3
 %K5init no_altplace no_appdata
 
 Group: System/Libraries
@@ -51,24 +51,23 @@ developing applications that use %name.
 %package -n libkf5newstuff
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5newstuff
-KF5 library
+KF5 library.
 
 %package -n libkf5newstuffcore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5newstuffcore
-KF5 library
+KF5 library.
 
 %package -n libkf5newstuffwidgets
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5newstuffwidgets
-KF5 library
-
+KF5 library.
 
 %prep
 %setup -n %rname-%version
@@ -120,8 +119,10 @@ done
 %files -n libkf5newstuffwidgets
 %_K5lib/libKF5NewStuffWidgets.so.*
 
-
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
+- fix requires
+
 * Thu Dec 25 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
 - don't package knewstuff-dialog
 
