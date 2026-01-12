@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -518,6 +518,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon Jan 12 2026 Alexei Takaseev <taf@altlinux.org> 6.18.5-alt1
+- v6.18.5 (2026-01-11).
+
 * Fri Jan 09 2026 Alexei Takaseev <taf@altlinux.org> 6.18.4-alt1
 - v6.18.4 (2026-01-08).
 - Update DTS for Rockchip from Armbian
