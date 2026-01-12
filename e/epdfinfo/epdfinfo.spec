@@ -1,5 +1,5 @@
 Name: epdfinfo
-Version: 1.1.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Emacs PDF helper
@@ -34,6 +34,9 @@ BuildRequires: pkgconfig(zlib)
 %_bindir/epdfinfo
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Tue Jun 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
 - 1.1.0 released
 
