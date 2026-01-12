@@ -1,8 +1,11 @@
 %define rname baloo-widgets
+%ifndef defaultkde
+%define defaultkde 6
+%endif
 
 Name: %rname
 Version: 25.08.3
-Release: alt2
+Release: alt3
 %K6init altplace
 
 Group: System/Libraries
@@ -47,8 +50,11 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+Obsoletes: libkf5baloowidgets < %EVR
 # tagsfileitemaction
+%if %defaultkde == 6
 Requires: kf6-baloo
+%endif
 %description -n libkf6baloowidgets
 %name library
 
@@ -78,11 +84,15 @@ Requires: kf6-baloo
 %files -n libkf6baloowidgets
 %dir %_K6plug/kf6/propertiesdialog/
 %_K6lib/libKF6BalooWidgets.so.*
+%if %defaultkde == 6
 %_K6plug/kf6/kfileitemaction/*.so
 %_K6plug/kf6/propertiesdialog/*.so
-
+%endif
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt3
+- fix obsoletes
+
 * Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
 - fix requries
 
