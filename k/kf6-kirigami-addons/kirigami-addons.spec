@@ -5,7 +5,7 @@
 %define libkirigamiapp libkirigamiapp%sover
 
 Name: kf6-%rname
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 %K6init
 
@@ -100,6 +100,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiApp.so.*
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.11.0-alt1
+- new version
+
 * Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
 - new version
 
