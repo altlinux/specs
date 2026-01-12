@@ -2,7 +2,7 @@
 
 Name: mate-wayland-session
 Version: 1.28.4
-Release: alt2
+Release: alt3
 
 Summary: MATE wayland session manager
 License: GPL-2.0
@@ -28,6 +28,22 @@ Requires: wdisplays
 # MATE components from session/mate-wayland-components.sh script
 Requires: mate-polkit
 Requires: mate-notification-daemon
+Requires: NetworkManager-applet-gtk
+Requires: blueman
+Requires: gnome-keyring
+Requires: wf-shell
+Requires: mate-panel
+Requires: mate-file-manager
+Requires: polkit
+Requires: mate-settings-daemon
+
+# Useful minimal set of packages
+Requires: fonts-ttf-liberation
+Requires: mate-menus
+Requires: mate-terminal
+Requires: caja-open-terminal
+Requires: mate-icon-theme
+Requires: icon-theme-hicolor
 
 %description
 mate-wayland-session contains the MATE wayland session manager, which
@@ -54,6 +70,10 @@ NOCONFIGURE=1 mate-autogen
 %_datadir/wayland-sessions/MATE.desktop
 
 %changelog
+* Mon Jan 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt3
+- Updated to the latest commit d2d8675.
+- Adjusted dependencies and path to wayfire.ini.
+
 * Thu Aug 28 2025 Nikolay Strelkov <snk@altlinux.org> 1.28.4-alt2
 - Exclude leftovers of firedecor, as it is now stale and do not build.
 
