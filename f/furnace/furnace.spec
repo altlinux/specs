@@ -1,5 +1,5 @@
 Name: furnace
-Version: 0.6.8.2
+Version: 0.6.8.3
 Release: alt1
 Epoch: 1
 Summary: Chiptune tracker supporting many console soundchips
@@ -98,6 +98,9 @@ install -D -m 0644 ./res/furnace.appdata.xml.in %buildroot%_datadir/metainfo/fur
 %_docdir/%name
 
 %changelog
+* Mon Jan 12 2026 Artyom Bystrov <arbars@altlinux.org> 1:0.6.8.3-alt1
+- New version
+
 * Mon Jun  2 2025 Artyom Bystrov <arbars@altlinux.org> 1:0.6.8.2-alt1
 - New version
 
