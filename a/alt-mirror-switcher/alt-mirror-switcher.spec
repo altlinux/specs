@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,12 @@ fi
 %_bindir/ams
 
 %changelog
+* Tue Jan 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.4-alt1
+- GUI: fix: don't closing the application if there is no architecture.
+- CLI: fix: some errors.
+- CLI: add: architecture check.
+- CLI: add: ams list check.
+
 * Mon Jan 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.3-alt1
 - GUI: fix: some errors
 - GUI: add: architecture check
