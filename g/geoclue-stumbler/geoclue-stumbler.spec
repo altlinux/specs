@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name geoclue-stumbler
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name org.kop316.stumbler
 
 %def_enable check
@@ -73,6 +73,9 @@ feedback on if geoclue can submit data.
 %doc README*
 
 %changelog
+* Mon Jan 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- updated to 1.2-3-g62bfd1d
+
 * Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - first build for Sisyphus (1.1-1-gd5dd771)
 
