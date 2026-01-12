@@ -18,8 +18,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.34.1
-Release: alt2
+Version: 7.36.1
+Release: alt1
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -81,7 +81,7 @@ Conflicts: libmlt7 < 7.34.1
 %package -n %libmlt
 Summary: %Name framework library
 Group: System/Libraries
-Requires: %nam-qt6 >= %version
+#Requires: %nam-qt6 >= %version
 %description -n %libmlt
 %Name is a multimedia framework designed for television broadcasting.
 
@@ -157,9 +157,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %exclude %_libdir/mlt-%mlt_major/libmltqt*.so
 %_datadir/mlt-%mlt_major/
 
-%files -n %nam-qt5
-%_libdir/mlt-%mlt_major/libmltglaxnimate.so
-%_libdir/mlt-%mlt_major/libmltqt.so
+#%files -n %nam-qt5
+#%_libdir/mlt-%mlt_major/libmltglaxnimate.so
+#%_libdir/mlt-%mlt_major/libmltqt.so
 
 %files -n %nam-qt6
 %_libdir/mlt-%mlt_major/libmltglaxnimate-qt6.so
@@ -186,6 +186,11 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 7.36.1-alt1
+- new version (closes: 7417)
+- don't package Qt5 module
+- don't require Qt6 module
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 7.34.1-alt2
 - fix package Qt plugins
 
