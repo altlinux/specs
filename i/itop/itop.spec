@@ -2,7 +2,7 @@
 
 Name: itop
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: IT Operations Portal
 License: AGPL-3.0
@@ -33,16 +33,6 @@ Group: Networking/Other
 Requires: %name = %version-%release, apache2
 %description apache2
 Apache 2.x web-server configuration for %name
-
-%package php8.1
-Summary: PHP8.1 dependencies for %name
-Group: Networking/Other
-Requires: %name = %version-%release
-Requires: php8.1-mysqli, php8.1-ldap, php8.1-soap, php8.1-mcrypt, php8.1-xmlreader, php8.1-gd2, php8.1-zip, php8.1-openssl
-Requires: php8.1-mbstring, php8.1-fileinfo, php8.1-curl, php8.1-apcu
-
-%description php8.1
-PHP8.1 dependencies for %name
 
 %package php8.2
 Summary: PHP8.2 dependencies for %name
@@ -152,13 +142,14 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-%files php8.1
-
 %files php8.2
 
 %files php8.3
 
 %changelog
+* Mon Jan 12 2026 Anton Farygin <rider@altlinux.org> 3.2.2-alt2
+- Removed PHP 8.1 support (EOL)
+
 * Fri Aug 22 2025 Pavel Zilke <zidex@altlinux.org> 3.2.2-alt1
 - New version 3.2.2
 - Security fixes:
