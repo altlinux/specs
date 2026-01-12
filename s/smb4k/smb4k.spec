@@ -6,7 +6,7 @@
 %define rname smb4k
 Name: %rname
 Version: 4.0.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Other
@@ -87,8 +87,11 @@ Group: System/Libraries
 %_K6lib/libsmb4kdialogs.so.*
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 4.0.5-alt2
+- fix previous changelog
+
 * Fri Dec 19 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.5-alt1
-- new version (closed: CVE-2025-66002, CVE-2025-66002)
+- new version (closed: CVE-2025-66002, CVE-2025-66003)
 - build with ws-discovery support
 
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.3-alt1
