@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:		viking
-Version:	1.10
-Release:	alt3
+Version:	1.11
+Release:	alt1
 
 Summary:	GPS data editor, analyzer and viewer
 
@@ -96,6 +96,9 @@ make check
 %_datadir/help/C/%name/*
 
 %changelog
+* Mon Jan 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.11-alt1
+- new version 1.11 (with rpmrb script)
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 1.10-alt3
 - Applied repocop fix for freedesktop-desktop
 
