@@ -41,8 +41,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
-Release: alt1.2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -236,6 +236,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Jan 12 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
+- 49.3
+
 * Sat Dec 06 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.2
 - 00_org.gnome.software.gschema.override:
   fixed "official-repos" value (ALT #57076)
