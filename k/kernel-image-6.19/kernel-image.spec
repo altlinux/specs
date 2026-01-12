@@ -1,5 +1,5 @@
 Name: kernel-image-6.19
-Release: alt0.rc4
+Release: alt0.rc5
 %define kernel_src_version	6.18
 %define kernel_base_version	6.19
 %define kernel_sublevel	.0
@@ -495,7 +495,7 @@ banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 %if "%base_flavour" == "rt"
-	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
+	--tcg --mem=1G --cpu=2 --qemu="-rtc clock=vm -icount 0,sleep=off" \
 	'uname -a; rtcheck -v'
 %else
 	'uname -a'
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jan 12 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc5
+- Update to v6.19-rc5 (2026-01-11).
+
 * Mon Jan 05 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc4
 - Update to v6.19-rc4 (2026-01-04).
 
