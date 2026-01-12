@@ -1,16 +1,17 @@
 %define sover 1
 
 Name: imlib2
-Version: 1.12.5
+Version: 1.12.6
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
 Group: System/Libraries
 Url: https://git.enlightenment.org/old/legacy-imlib2
-Vcs: https://git.enlightenment.org/old/legacy-imlib2.git
+VCS: https://git.enlightenment.org/old/legacy-imlib2
 # Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %def_disable static
 %def_enable mmx
@@ -18,7 +19,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: gcc-c++ libgomp-devel
-BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libwebp-devel libtiff-devel libid3tag-devel libraw-devel libyuv-devel
+BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libwebp-devel libtiff-devel libid3tag-devel libraw-devel libyuv-devel libavif-devel
 %ifnarch armh
 BuildRequires: libjxl-devel
 %endif
@@ -65,6 +66,7 @@ distribution.
 
 %prep
 %setup
+%patch -p1
 #sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
 sed -i '1a#include <stdbool.h>' \
   src/modules/loaders/loader_gif.c
@@ -118,6 +120,10 @@ make check
 %endif
 
 %changelog
+* Mon Jan 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.12.6-alt1
+- New version 1.12.6.
+- Added AVIF support.
+
 * Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 1.12.5-alt1
 - New version 1.12.5.
 
