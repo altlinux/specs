@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -24,17 +24,14 @@ This package contains daemon providing JSON HTTP API to a running
 radicle seed node.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
+tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=be5605ac
-export CARGO_HOME=${PWD}/cargo
+export GIT_HEAD=fadd6146
 cargo install %_smp_mflags --offline --no-track --path . --root=%buildroot%_prefix
 
 mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
@@ -48,6 +45,9 @@ asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_ma
 %_unitdir/radicle-httpd.service
 
 %changelog
+* Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.22.0-alt1
+- 0.22.0 released
+
 * Mon Dec 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.21.0-alt1
 - 0.21.0 released
 
