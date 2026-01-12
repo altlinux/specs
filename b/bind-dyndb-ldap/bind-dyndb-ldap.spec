@@ -4,27 +4,22 @@
 %define restart_flag /run/named/named.restart
 
 Name: bind-dyndb-ldap
-Version: 11.11
-Release: alt2
-
+Version: 12.0
+Release: alt1
 Summary: LDAP back-end plug-in for BIND
-License: %gpl2plus
+License: MPL-2.0
 Group: System/Servers
-
 URL: https://pagure.io/bind-dyndb-ldap 
+Vcs: https://pagure.io/bind-dyndb-ldap
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-licenses
-
+Requires: bind >= %bind_version
 BuildRequires: bind-devel >= %bind_version
 BuildRequires: libldap-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libuuid-devel
 BuildRequires: libsasl2-devel
 BuildRequires: autoconf-archive
-
-Requires: bind >= %bind_version
 
 %description
 This package provides an LDAP back-end plug-in for BIND. It features
@@ -106,6 +101,9 @@ sed -i.bak --follow-symlinks -e "$SEDSCRIPT" /etc/named.conf
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Mon Jan 12 2026 Stanislav Levin <slev@altlinux.org> 12.0-alt1
+- 11.11 -> 12.0.
+
 * Thu Dec 18 2025 Stanislav Levin <slev@altlinux.org> 11.11-alt2
 - Fixed FTBFS (bind 9.18.43).
 
