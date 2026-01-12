@@ -4,7 +4,7 @@
 %def_disable static
 
 Name:       mcpp
-Version:    2.7.2.2
+Version:    2.7.2.3
 Release:    alt1
 
 Summary:    Alternative C/C++ preprocessor
@@ -13,8 +13,9 @@ License:    BSD-2-Clause
 Group:      Development/C
 URL:        https://mcpp.sourceforge.net/
 
-Source:     https://codeberg.org/museoa/mcpp/archive/%version/%name-%version.tar.gz
-VCS:        https://codeberg.org/museoa/mcpp.git
+# Source-url: https://codeberg.org/museoa/mcpp/archive/%version/%name-%version.tar.gz
+Source:     %name-%version.tar
+VCS:        https://codeberg.org/museoa/mcpp
 Patch:     %name-%version-%release.patch
 
 %description
@@ -67,6 +68,7 @@ This package provides an html manual for mcpp.
 %autopatch -p1
 
 %build
+%autoreconf
 %configure \
     %{subst_enable static} \
     --enable-mcpplib
@@ -103,6 +105,9 @@ rm -rf %buildroot%_docdir/%name
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Mon Jan 12 2026 Leontiy Volodin <lvol@altlinux.org> 2.7.2.3-alt1
+- New version 2.7.2.3.
+
 * Thu Jul 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.7.2.2-alt1
 - NMU: new version 2.7.2.2.
 - Updated source and license tags.
