@@ -8,7 +8,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 2.18.0
+Version: 2.19.0
 Release: alt1
 
 Summary: Production-ready, Light, Flexible and Extensible ASGI API framework | Effortlessly Build Performant APIs
@@ -144,6 +144,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 12 2026 Alexander Burmatov <thatman@altlinux.org> 2.19.0-alt1
+- New 2.19.0 version.
+
 * Mon Oct 13 2025 Alexander Burmatov <thatman@altlinux.org> 2.18.0-alt1
 - New 2.18.0 version.
 

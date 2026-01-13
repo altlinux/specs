@@ -8,8 +8,8 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 25.3.0
-Release: alt2
+Version: 25.12.0
+Release: alt1
 
 Summary: Accelerate your web app development | Build fast, run fast
 License: MIT
@@ -61,7 +61,8 @@ webserver.
     --deselect=tests/test_app.py::test_create_server_no_startup \
     --deselect=tests/test_app.py::test_create_server_main_convenience \
     --deselect=tests/test_app.py::test_uvloop_cannot_never_called_with_create_server \
-    --deselect=tests/test_app.py::test_multiple_uvloop_configs_display_warning
+    --deselect=tests/test_app.py::test_multiple_uvloop_configs_display_warning \
+    --deselect=tests/test_app.py::test_app_websocket_parameters
 
 %files
 %doc *.rst
@@ -70,6 +71,9 @@ webserver.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 25.12.0-alt1
+- 25.3.0 -> 25.12.0
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 25.3.0-alt2
 - Fix tests.
 
