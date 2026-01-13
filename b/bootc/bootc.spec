@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.9.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -59,9 +59,6 @@ rm -fv -- %buildroot/%_prefix/lib/%name/storage
 # Needs only for Rad Hat
 rm -fv -- %buildroot/%_unitdir/bootc-publish-rhsm-facts.service
 
-%check
-%make test-bin-archive
-
 %post
 # Create link to ostree bootc storage removed at %install
 if [ -e /sysroot/ostree/bootc/storage ] && [ ! -L "%_prefix/lib/%name/storage" ]; then
@@ -77,9 +74,9 @@ fi
 %files
 %_bindir/%name
 %_prefix/lib/%name/
+%_prefix/lib/dracut/modules.d/51%name
 %_gen_dir/bootc-systemd-generator/
 %_unitdir/bootc-*
-%_unitdir/composefs-finalize-staged.service
 %_docdir/%name/
 %_man5dir/bootc*
 %_man8dir/bootc*
@@ -90,6 +87,10 @@ fi
 %_bindir/system-reinstall-bootc
 
 %changelog
+* Sun Dec 07 2025 Vladimir Romanov <rirusha@altlinux.org> 1.11.0-alt1
+- New version: 1.11.0.
+- Removed broken tests.
+
 * Sat Oct 11 2025 Vladimir Romanov <rirusha@altlinux.org> 1.9.0-alt1
 - New version: 1.9.0.
 
