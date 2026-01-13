@@ -2,18 +2,18 @@
 %define  modulename agate
 
 Name:    python3-module-%modulename
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
-Summary: A Python data analysis library that is optimized for humans instead of machines.
+Summary: A Python data analysis library that is optimized for humans instead of machines
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/wireservice/agate
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools
-BuildRequires: python3-dev
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 %{?_with_doc:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 
 BuildArch: noarch
@@ -54,6 +54,9 @@ cp docs/_build/man/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Jan 13 2026 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
+- Automatically updated to 1.14.0.
+
 * Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt1
 - Automatically updated to 1.13.0.
 

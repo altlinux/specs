@@ -1,10 +1,10 @@
 %define  modulename agate-sql
 
 Name:    python3-module-%modulename
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
-Summary: agate-sql adds SQL read/write support to agate.
+Summary: agate-sql adds SQL read/write support to agate
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/wireservice/agate-sql
@@ -12,7 +12,7 @@ URL:     https://github.com/wireservice/agate-sql
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jan 13 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.3-alt1
+- Automatically updated to 0.7.3.
+
 * Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
 - Automatically updated to 0.7.2.
 
