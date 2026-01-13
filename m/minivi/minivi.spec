@@ -1,0 +1,49 @@
+Name: minivi
+Version: 0.10.0
+Release: alt1
+
+Summary: A small application for viewing images
+
+License: GPL-3.0-only
+Group: Graphics
+
+Url: https://github.com/AlexanderShad/minivi
+Vcs: https://github.com/AlexanderShad/minivi
+
+Source: %name-%version.tar
+Source1: minivi.desktop
+
+BuildRequires: lazarus
+
+%description
+A small application for viewing images.
+Everything is minimalistic.
+Functionality:
+    closing the application by pressing Esc / Q / Ctrl + Q
+    opening images, both when associating files and from the application by pressing Ctrl + O / O
+    setting an image as a desktop background by pressing W
+    deleting an image by pressing Del / D
+    calling help by pressing F1
+    switch images with arrows
+
+%prep
+%setup
+
+%build
+lazbuild src/minivi.lpi
+
+%install
+install -D src/%name %buildroot%_bindir/%name
+install -Dm 0644 src/%name.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
+install -Dm 0644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
+
+%files
+%_bindir/%name
+%_iconsdir/hicolor/128x128/apps/%name.png
+%_datadir/applications/%name.desktop
+%doc README.md
+
+%changelog
+* Tue Jan 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.10.0-alt1
+- Initial build for ALT Linux.
+
