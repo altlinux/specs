@@ -1,15 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-# Release 2.7.1 is not tagged:
-%global commit ebd425331229365dc3ec42d1bb8b2cc3c2332f81
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 %define soname 2
 %define libname lib%name%soname
 %define devname lib%name-devel
 
 Name: openvr
-Version: 2.7.1
+Version: 2.12.14
 Release: alt1
 
 Summary: Virtual reality SDK
@@ -94,6 +90,9 @@ rm -r thirdparty samples/thirdparty
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jan 12 2026 Ilya Sorochan <k0tran@altlinux.org> 2.12.14-alt1
+- 2.12.14
+
 * Mon May 12 2025 Mikhail Tergoev <fidel@altlinux.org> 2.7.1-alt1
 - 2.7.1
 

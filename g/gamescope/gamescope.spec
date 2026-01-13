@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gamescope
-Version: 3.16.4
+Version: 3.16.19
 Release: alt1
 
 Summary: Micro-compositor for video games on Wayland
@@ -13,14 +13,12 @@ Url: https://github.com/Plagman/gamescope
 
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
-Source2: stb.pc
 
 Patch1: gamescope-alt-NestedRefresh60.patch
 Patch2: 0001-cstdint.patch
 Patch3: Allow-to-use-system-wlroots.patch
-Patch4: Switch-wlroots-to-the-new-pc-filename.patch
-Patch5: Add-pixman-dependency.patch
-Patch6: Add-libudev-dependency.patch
+Patch4: gamescope-3.16.19-alt-use-system-glm.patch
+Patch5: gamescope-3.16.19-alt-use-system-stb.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -79,9 +77,6 @@ Gamescope is the micro-compositor optimized for running video games on Wayland.
 %setup -a1
 %autopatch -p1
 
-mkdir -p pkgconfig
-cp -v %SOURCE2 pkgconfig/stb.pc
-
 # use system spirv headers
 sed -i 's^../thirdparty/SPIRV-Headers/include/spirv/^/usr/include/spirv/^' src/meson.build
 rm -rv thirdparty/SPIRV-Headers
@@ -90,7 +85,6 @@ rm -rv thirdparty/SPIRV-Headers
 rm -rv subprojects/{libdisplay-info,libliftoff,openvr,wlroots}
 
 %build
-export PKG_CONFIG_PATH=pkgconfig
 %meson \
     -Davif_screenshots=enabled \
     -Dbenchmark=enabled \
@@ -121,6 +115,9 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %_datadir/%name/
 
 %changelog
+* Mon Jan 12 2026 Ilya Sorochan <k0tran@altlinux.org> 3.16.19-alt1
+- 3.16.19
+
 * Mon May 12 2025 Mikhail Tergoev <fidel@altlinux.org> 3.16.4-alt1
 - 3.16.4
 
