@@ -3,7 +3,7 @@
 %define app_id space.aides.TunerFirejail
 
 Name: tuner-firejail
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Plugin for Tuner that adds Firejail settings page
@@ -46,5 +46,8 @@ BuildRequires: pkgconfig(json-glib-1.0)
 %doc README.md
 
 %changelog
+* Tue Jan 13 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.2-alt1
+- New version 0.1.2.
+
 * Wed Jan 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.1-alt1
 - Initial build.

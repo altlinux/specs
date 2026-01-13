@@ -6,7 +6,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Extensible control center
@@ -17,7 +17,7 @@ Url: https://altlinux.space/alt-gnome/Tuner
 Vcs: https://altlinux.space/alt-gnome/Tuner
 Source: %name-%version.tar
 
-Requires: lib%name = %EVR
+Requires: lib%name%api_ver = %EVR
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-vala
 BuildRequires: meson
@@ -26,6 +26,7 @@ BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(libpeas-2)
+BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: gir(Peas) = 2
 BuildRequires: gir(Gee) = 0.8
 BuildRequires: gir(Adw) = 1
@@ -43,12 +44,12 @@ You can create your own plugins without affecting the main program code.
 Easy creation of plugins working with dconf and unlimited plugin functionality
 thanks to libpeas.
 
-%package -n lib%name
+%package -n lib%name%api_ver
 Summary: Versatile library for creating extensible apps and plugins for them
 Group: System/Libraries
 Requires: libpeas2-python3-loader
 
-%description -n lib%name
+%description -n lib%name%api_ver
 lib%name is a library designed to support both core application development
 and plugin integration. It provides several build-in widgets and API to
 create and extend pages. It also provides API to add plugins to your own app.
@@ -56,7 +57,7 @@ create and extend pages. It also provides API to add plugins to your own app.
 %package -n lib%name-devel
 Summary: Development files for lib%name
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: lib%name%api_ver = %EVR
 
 %description -n lib%name-devel
 This package contains development libraries and header files
@@ -65,7 +66,7 @@ that are needed to write applications that use lib%name.
 %package -n lib%name-devel-doc
 Summary: Development documentation for lib%name
 Group: Development/Documentation
-Conflicts: lib%name < %version-%release
+Conflicts: lib%name%api_ver < %version-%release
 BuildArch: noarch
 
 %description -n lib%name-devel-doc
@@ -74,7 +75,7 @@ This package contains development documentation for the lib%name.
 %package -n lib%name-gir
 Summary: GObject introspection data for the lib%name
 Group: System/Libraries
-Requires: lib%name = %EVR
+Requires: lib%name%api_ver = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the lib%name.
@@ -110,7 +111,7 @@ GObject introspection devel data for the lib%name.
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %doc README.md
 
-%files -n lib%name
+%files -n lib%name%api_ver
 %_libdir/lib%name-%api_ver.so.*
 
 %files -n lib%name-devel
@@ -132,6 +133,11 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Tue Jan 13 2026 Alexander Davydzik <paladindev@altlinux.org> 0.6.1-alt1
+- added import & export config
+- fixed subpage building
+- added api version to library
+
 * Fri Dec 05 2025 Alexander Davydzik <paladindev@altlinux.org> 0.6.0-alt1
 - updated translations
 - new plugin api features

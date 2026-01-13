@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerGdm
 
 Name: tuner-gdm
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Gnome Display Manager settings
@@ -44,6 +44,9 @@ Plugin for Tuner that adds Gnome Display Manager settings
 %doc README.md
 
 %changelog
+* Tue Jan 13 2026 Alexander Davydzik <paladindev@altlinux.org> 0.4.1-alt1
+- updated to latest tuner api
+
 * Thu Jul 03 2025 Alexander Davydzik <paladindev@altlinux.org> 0.4.0-alt1
 - fixed copying monitors.xml (Closes: 55027)
 - added more info to plugin file
