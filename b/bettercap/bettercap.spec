@@ -3,7 +3,7 @@
 %global import_path github.com/bettercap/bettercap
 
 Name: bettercap
-Version: 2.41.4
+Version: 2.41.5
 Release: alt1
 
 Summary: Swiss army knife for network attacks and monitoring
@@ -43,14 +43,17 @@ export GOROOT="%_libexecdir/golang"
 %gobuild -mod=vendor
 
 %install
-install -Dpm 755 %name %{buildroot}%{_bindir}/%name
-install -Dpm 644 %name.service %{buildroot}%{_unitdir}/%name.service
+install -Dpm 755 %name %buildroot%_bindir/%name
+install -Dpm 644 %name.service %buildroot%_unitdir/%name.service
 
 %files
 %doc *.md
-%{_bindir}/%name
-%{_unitdir}/%name.service
+%_bindir/%name
+%_unitdir/%name.service
 
 %changelog
+* Tue Jan 13 2026 Denis Rastyogin <gerben@altlinux.org> 2.41.5-alt1
+- Updated to 2.41.5.
+
 * Tue Aug 26 2025 Denis Rastyogin <gerben@altlinux.org> 2.41.4-alt1
 - Initial build for Sisyphus.
