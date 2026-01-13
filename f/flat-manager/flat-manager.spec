@@ -2,7 +2,7 @@
 
 Name: flat-manager
 Version: 0.4.6
-Release: alt2
+Release: alt3
 
 Summary: Manager for flatpak repositories
 License: Apache-2.0 OR MIT
@@ -53,8 +53,8 @@ Requires: python3(packaging)
 %rust_install %name gentoken delta-generator-client
 install -m755 -D %name-client %buildroot/%_bindir/%name-client
 install -m644 -D %SOURCE11 %buildroot/%_unitdir/%name.service
-install -m644 -D %SOURCE12 %buildroot/%_sysusersdir/%name.sysusers
-install -m644 -D %SOURCE13 %buildroot/%_tmpfilesdir/%name.tmpfiles
+install -m644 -D %SOURCE12 %buildroot/%_sysusersdir/%name.conf
+install -m644 -D %SOURCE13 %buildroot/%_tmpfilesdir/%name.conf
 
 %check
 %rust_test
@@ -67,14 +67,17 @@ install -m644 -D %SOURCE13 %buildroot/%_tmpfilesdir/%name.tmpfiles
 %_bindir/gentoken
 %_bindir/delta-generator-client
 %_unitdir/%name.service
-%_sysusersdir/%name.sysusers
-%_tmpfilesdir/%name.tmpfiles
+%_sysusersdir/%name.conf
+%_tmpfilesdir/%name.conf
 %doc README.md example-config.json example.env
 
 %files client
 %_bindir/%name-client
 
 %changelog
+* Sat Jan 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4.6-alt3
+- Fixed sysusers and tmpfiles filenames.
+
 * Sat Dec 13 2025 Vladimir Romanov <rirusha@altlinux.org> 0.4.6-alt2
 - Added gentoken with delta-generator-client bins.
 - Fixed flat-manager-client python3(packaging) missing require.
