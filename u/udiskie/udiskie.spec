@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    %pypi_name
-Version: 2.5.8
-Release: alt2
+Version: 2.6.1
+Release: alt1
 
 Summary: Automounter for removable media
 License: MIT
@@ -70,6 +70,9 @@ Group: Development/Python3
 %_datadir/zsh/site-functions/_udiskie-umount
 
 %changelog
+* Tue Jan 13 2026 Artem Semenov <savoptik@altlinux.org> 2.6.1-alt1
+- Updated to 2.6.1
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 2.5.8-alt2
 - NMU: fixed FTBFS (tox 4.30).
 
