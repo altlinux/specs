@@ -38,20 +38,17 @@ BuildRequires: jpackage-11-compat
 #
 
 Name:           javacc
-Version:        7.0.4
-Release:        alt1_7jpp11
+Version:        7.0.13
+Release:        alt1
 Epoch:          0
 Summary:        A parser/scanner generator for java
-License:        BSD
-URL:            http://javacc.org
+License:        BSD-3-Clause AND BSD-2-Clause
+URL:            https://javacc.org
 Source0:        https://github.com/javacc/javacc/archive/%{version}.tar.gz
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  javacc
-# Explicit javapackages-tools requires since scripts use
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
 
 BuildArch:      noarch
 Source44: import.info
@@ -65,6 +62,7 @@ standard capabilities related to parser generation such as tree building (via
 a tool called JJTree included with JavaCC), actions, debugging, etc.
 
 %package manual
+License: BSD-3-Clause AND GPL-2.0-or-later AND LGPL-2.1-or-later AND (AFL-2.0 OR BSD-3-Clause) AND ISC
 Group: Development/Java
 Summary:        Manual for %{name}
 BuildArch: noarch
@@ -80,61 +78,64 @@ Requires:       %{name} = %{version}-%{release}
 %description demo
 Examples for %{name}.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
 %setup -q -n %{name}-%{version}
 
 # Remove binary information in the source tar
 find . -name "*.jar" -delete
-find . -name "*.class" -delete
+find examples -name .gitignore -delete
 
-find ./examples -type f -exec sed -i 's/\r//' {} \;
+fixtimestamp() {
+  touch -r $1.orig $1
+  rm $1.orig
+}
+
+mv examples/JJTreeExamples/cpp/README examples/JJTreeExamples/cpp/README.orig
+iconv -f WINDOWS-1252 -t UTF-8 examples/JJTreeExamples/cpp/README.orig > \
+  examples/JJTreeExamples/cpp/README
+fixtimestamp examples/JJTreeExamples/cpp/README
+
+sed -i.orig 's/\r//' examples/JJTreeExamples/cpp/eg3.jjt
+fixtimestamp examples/JJTreeExamples/cpp/eg3.jjt
 
 %build
 build-jar-repository -p bootstrap javacc
 
 # There is maven pom which doesn't really work for building. The tests don't
 # work either (even when using bundled jars).
-ant jar javadoc -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
+%ant jar -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
 
 # The pom dependencies are also wrong
-%mvn_artifact --skip-dependencies pom.xml target/javacc-%{version}.jar
+%mvn_artifact --skip-dependencies pom.xml target/javacc.jar
 
 %install
 %mvn_file : %{name}
 
-%mvn_install -J target/javadoc
+%mvn_install
 
 %jpackage_script javacc '' '' javacc javacc true
-ln -s %{_bindir}/javacc %{buildroot}%{_bindir}/javacc.sh
+ln -s javacc %{buildroot}%{_bindir}/javacc.sh
 %jpackage_script jjdoc '' '' javacc jjdoc true
 %jpackage_script jjtree '' '' javacc jjtree true
 
 %files -f .mfiles
 %doc --no-dereference LICENSE
-%doc README
+%doc README.md
 %{_bindir}/javacc
 %{_bindir}/javacc.sh
 %{_bindir}/jjdoc
 %{_bindir}/jjtree
 
 %files manual
-%doc www/*
+%doc docs/*
 
 %files demo
 %doc examples
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Tue Jan 13 2026 Anton Meleshnikov <alton@altlinux.org> 0:7.0.13-alt1
+- new version (thanks fedora for the spec)
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:7.0.4-alt1_7jpp11
 - update
 

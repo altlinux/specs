@@ -4,11 +4,11 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
-Version:       3.24.2
-Release:       alt1_3jpp11
+Version:       3.26.2
+Release:       alt1
 Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
-License:       LGPLv3+ or ASL 2.0
-URL:           http://javaparser.org
+License:       LGPLv3+ or Apache-2.0
+URL:           https://javaparser.org
 Source0:       https://github.com/javaparser/javaparser/archive/%{name}-parent-%{version}.tar.gz
 
 BuildRequires:  maven-local
@@ -44,7 +44,6 @@ sed -i 's/\r//' readme.md
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :coveralls-maven-plugin
 
 # Compatibility alias
 %mvn_alias :javaparser-core com.google.code.javaparser:javaparser
@@ -82,7 +81,7 @@ sed -i \
 %pom_disable_module javaparser-core-serialization
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -95,6 +94,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Tue Jan 13 2026 Anton Meleshnikov <alton@altlinux.org> 3.26.2-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.24.2-alt1_3jpp11
 - new version
 
