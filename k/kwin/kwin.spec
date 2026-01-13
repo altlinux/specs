@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.5.4
-Release: alt3
+Release: alt4
 %K6init
 
 Group: Graphical desktop/KDE
@@ -205,6 +205,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt4
+- don't use std::ranges::to
+
 * Mon Dec 29 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt3
 - fix compile with gcc-13
 
