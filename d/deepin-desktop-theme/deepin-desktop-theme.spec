@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.26
+Version: 1.1.27
 Release: alt1
 
 Summary: Deepin desktop themes
@@ -43,6 +43,7 @@ This package provides desktop themes for DDE.
 Summary: Tools for %name
 Group: Graphical desktop/Other
 Requires: libdqt6-gui = %_dqt6_version
+Requires: dtk6gui
 
 %description -n xdgicon2dci
 This package provides xdgicon2dci tool for %name.
@@ -129,6 +130,10 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %dir %_datadir/deepin-xdgicon-convert/translations/
 
 %changelog
+* Tue Jan 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.27-alt1
+- New version 1.1.27.
+- Fixed xdgicon2dci startup.
+
 * Fri Dec 26 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.26-alt1
 - New version 1.1.26.
 
