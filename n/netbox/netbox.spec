@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.4.8
+Version: 4.4.9
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -20,7 +20,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-mkdocs
-BuildRequires: python3-module-mkdocs-material >= 9.7.0
+BuildRequires: python3-module-mkdocs-material >= 9.7.1
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.0
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.1
@@ -56,14 +56,14 @@ Requires: python3-module-psycopg >= 3.3.2
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-requests >= 2.32.5
 Requires: python3-module-rq >= 2.6.1
-Requires: python3-module-social-app-django >= 5.6.0
-Requires: python3-module-social-core >= 4.8.1
+Requires: python3-module-social-app-django >= 5.7.0
+Requires: python3-module-social-core >= 4.8.3
 Requires: python3-module-sorl-thumbnail >= 12.11.0
-Requires: python3-module-strawberry-graphql >= 0.287.2
+Requires: python3-module-strawberry-graphql >= 0.287.3
 Requires: python3-module-strawberry-django >= 0.70.1
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
-Requires: python3-module-tzdata >= 2025.2
+Requires: python3-module-tzdata >= 2025.3
 Requires: python3-module-packaging
 Requires: python3-module-django-auth-ldap
 Requires: python3-module-sentry-sdk
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Dec 24 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.9-alt1
+- New 4.4.9 version.
+
 * Wed Dec 10 2025 Alexander Burmatov <thatman@altlinux.org> 4.4.8-alt1
 - New 4.4.8 version.
 
