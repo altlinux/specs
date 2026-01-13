@@ -21,7 +21,7 @@ ShaperBox and FilterShaper. It features:\
 
 
 Name:    filtr
-Version: 1.0.9
+Version: 1.1.0
 Release: alt1
 
 Summary: %common_summary
@@ -117,5 +117,8 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Tue Jan 13 2026 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sun Jan 11 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.9-alt1
 - build for Sisyphus
