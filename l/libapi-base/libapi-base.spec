@@ -3,8 +3,8 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%define api_version 4
-%define minor_version 4
+%define api_version 5
+%define minor_version 0
 %define gir_name ApiBase
 
 Name: libapi-base
@@ -104,6 +104,9 @@ Requires: %name%api_version-gir = %EVR
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Mon Jan 12 2026 Vladimir Romanov <rirusha@altlinux.org> 5.0-alt1
+- New version: 5.0.
+
 * Fri Jan 09 2026 Vladimir Romanov <rirusha@altlinux.org> 4.4-alt1
 - New version: 4.4.
 

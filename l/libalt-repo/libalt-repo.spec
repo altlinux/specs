@@ -4,7 +4,7 @@
 %define gir_name AltRepo
 
 Name: libalt-repo
-Version: 1.21.1
+Version: 1.21.5+1
 Release: alt1
 
 Summary: ALT Repo API library on Vala
@@ -25,8 +25,8 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gee) = 0.8
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(libapi-base-4)
-BuildRequires: gir(ApiBase) = 4
+BuildRequires: pkgconfig(libapi-base-5)
+BuildRequires: gir(ApiBase) = 5
 
 %description
 %summary.
@@ -107,6 +107,9 @@ Requires: %name%api_version-gir = %EVR
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Mon Jan 12 2026 Vladimir Romanov <rirusha@altlinux.org> 1.21.5+1-alt1
+- New Version 1.21.5+1.
+
 * Fri Sep 05 2025 Vladimir Vaskov <rirusha@altlinux.org> 1.21.1-alt1
 - New Version 1.21.1.
 - Changed URL and VCS.
