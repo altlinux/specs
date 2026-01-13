@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.5.2
+Version: 6.5.3
 Release: alt1
 
 Summary: Scalable, non-blocking web server and tools
@@ -59,6 +59,9 @@ export ASYNC_TEST_TIMEOUT=120
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 29 2025 Alexander Danilov <admsasha@altlinux.org> 6.5.3-alt1
+- Updated to 6.5.3.
+
 * Tue Aug 19 2025 Grigory Ustinov <grenka@altlinux.org> 6.5.2-alt1
 - Automatically updated to 6.5.2.
 
