@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2025.10
+Version: 2026.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -28,12 +28,15 @@ This package supports various Rockchip based boards.
 
 %prep
 %setup
-rm configs/generic-rk33*_defconfig
-sed -i '/^CONFIG_FS_EXFAT/d' configs/*
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3568-generic,rk3568-inmys-smarc-evm,' \
+	< configs/generic-rk3568_defconfig \
+	> configs/nms-sm-evm-v1-rk3568_defconfig
 # ALT#55304
 sed '/^CONFIG_DEFAULT_FDT_FILE/ s,powkiddy-x55,powkiddy-x35s,' \
 	< configs/powkiddy-x55-rk3566_defconfig \
 	> configs/powkiddy-x35s-rk3566_defconfig
+sed -i '/^CONFIG_FS_EXFAT/d' configs/*
+rm configs/generic-rk33*_defconfig
 
 %build
 export PYTHON=python3
@@ -77,6 +80,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.01-alt1
+- 2026.01 released
+
 * Tue Oct 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.10-alt1
 - 2025.10 released
 
