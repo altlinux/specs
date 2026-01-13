@@ -1,9 +1,10 @@
 %define somver 8
 %define sover %somver.0.2
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: qhull
 Version: 2020.2
-Release: alt2
+Release: alt3
 
 Summary: General dimension convex hull programs
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -77,6 +78,31 @@ understanding the output. <http://www.geomview.org>
 
 This package contains the files for development.
 
+%package -n lib%{name}cpp-devel-static
+Summary:        Development and documentation files for qhull - C++ interface
+Group:          Sciences/Mathematics
+Requires:       %name = %version
+
+%description -n lib%{name}cpp-devel-static
+Qhull computes the convex hull, Delaunay triangulation, Voronoi diagram,
+halfspace intersection about a point, furthest-site Delaunay triangulation,
+and furthest-site Voronoi diagram.
+
+This package contains the header files and static lib for Qhull's C++ interface.
+
+
+%package -n lib%name-devel-static
+Summary:        Development and documentation files for qhull
+Group:          Sciences/Mathematics
+Requires:       %name = %version
+
+%description -n lib%name-devel-static
+Qhull computes the convex hull, Delaunay triangulation, Voronoi diagram,
+halfspace intersection about a point, furthest-site Delaunay triangulation,
+and furthest-site Voronoi diagram.
+
+This package contains the header files and static lib for Qhull's.
+
 %package doc
 Summary: General dimension convex hull program documentation
 Group: Sciences/Mathematics
@@ -104,7 +130,7 @@ This package contains the HTML documentation.
 %build
 export CFLAGS="%optflags_shared"
 export CXXFLAGS="%optflags_shared"
-cmake \
+%cmake \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     %if %_lib == lib64
     -DLIB_SUFFIX:STRING=64 \
@@ -115,20 +141,17 @@ cmake \
     -DLIB_INSTALL_DIR="%_libdir" \
     -DBIN_INSTALL_DIR="%_bindir" \
     -DMAN_INSTALL_DIR="%_mandir/man1/" \
-    -DBUILD_STATIC_LIBS=OFF \
     .
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 # Fixup wrong location
 %if "%_lib" != "lib"
     mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
     mv %buildroot%_prefix/lib/pkgconfig %buildroot%_libdir/
 %endif
-
-install -m755 user_eg* %buildroot%_bindir
 
 %files
 %doc Announce.txt COPYING.txt File_id.diz README.txt REGISTER.txt
@@ -140,14 +163,33 @@ install -m755 user_eg* %buildroot%_bindir
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_libdir/cmake/*
-%_pkgconfigdir/*
-%_includedir/*
+%_libdir/cmake/Qhull/QhullTargets.cmake
+%_libdir/cmake/Qhull/QhullConfig.cmake
+%_libdir/cmake/Qhull/QhullConfigVersion.cmake
+%_libdir/cmake/Qhull/QhullTargets-noconfig.cmake
+%_pkgconfigdir/qhull_r.pc
+%_includedir/libqhull
+%_includedir/libqhull_r
+
+%files -n lib%name-devel-static
+%_libdir/libqhullstatic.a
+%_libdir/libqhullstatic_r.a
+%_libdir/pkgconfig/qhullstatic.pc
+%_libdir/pkgconfig/qhullstatic_r.pc
+
+%files -n lib%{name}cpp-devel-static
+%_includedir/libqhullcpp/
+%_libdir/libqhullcpp.a
+%_libdir/pkgconfig/qhullcpp.pc
 
 %files doc
 %doc %_docdir/%name
 
 %changelog
+* Fri Dec 05 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 2020.2-alt3
+- Add libqhullcpp-devel-static and libqhull-devel-static.
+- Remove DBUILD_STATIC_LIBS=OFF.
+
 * Thu May 15 2025 Grigory Ustinov <grenka@altlinux.org> 2020.2-alt2
 - Fixed FTBFS.
 
