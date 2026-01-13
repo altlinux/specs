@@ -5,8 +5,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 0.9.2
-Release: alt2
+Version: 0.10.0
+Release: alt1
 Summary: OCaml Curl library (ocurl)
 License: MIT
 Group: Development/ML
@@ -14,7 +14,9 @@ Url: https://ygrek.org/p/ocurl/
 VCS: https://github.com/ygrek/ocurl
 Source0: %name-%version.tar
 
-BuildRequires: ocaml ocaml-findlib libcurl-devel
+BuildRequires: ocaml libcurl-devel
+BuildRequires: rpm-build-ocaml dune
+BuildRequires: ocaml-dune-configurator-devel
 
 %description
 The Ocaml Curl Library (Ocurl) is an interface library for the
@@ -32,42 +34,22 @@ developing applications that use %name.
 %prep
 %setup
 
-%ifnarch %ocaml_native_arch
-sed -i 's/ curl_lwt\$(EXT_OBJ)//;s/ curl\$(EXT_LIB)//' Makefile.in
-%endif
-
 %build
-# Parallel builds don't work.
-unset MAKEFLAGS
-
-# Add -fPIC to avoid:
-# /usr/bin/ld: /usr/lib64/ocaml/curl/libcurl-helper.a(curl-helper.o):
-# relocation R_X86_64_32S against `.rodata' can not be used when
-# making a shared object; recompile with -fPIC
-CFLAGS="%optflags -fPIC" \
-%configure --libdir=%_libdir --with-findlib
-make
+%dune_build -p curl
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot%_libdir/ocaml
-mkdir -p %buildroot%ocamlsitelib  %buildroot%ocamlstublib 
-make install
-
-# Make clean in the examples dir so our docs don't contain binaries.
-make -C examples clean
-
-%ocaml_find_files
+%dune_install -p curl
 
 %files -f ocaml-files.runtime
 %doc COPYING
-%ocamlstublib/*.so.owner
-
 
 %files devel -f ocaml-files.devel
 %doc examples/*
 
 %changelog
+* Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
+- 0.9.2 -> 0.10.0
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.9.2-alt2
 - added support for bytecode-only version of the ocaml package
 - fixed URL and VCS tags
