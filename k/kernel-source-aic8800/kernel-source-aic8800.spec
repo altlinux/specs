@@ -1,7 +1,7 @@
 %define _customdocdir %_defaultdocdir/%module_name
 
 %define module_name aic8800
-%define module_version 0.0.4.b4e4
+%define module_version 0.0.40.3a09
 %define module_release alt1
 
 Name: kernel-source-%module_name
@@ -10,17 +10,16 @@ Release: %module_release
 
 Summary: %module_name kernel module
 
-License: GPL-3.0-only
+License: GPL-2.0-only
 Group: Development/Kernel
-Url: https://github.com/For-ACGN/AIC8800DC
-VCS: https://github.com/For-ACGN/AIC8800DC
+URL: https://github.com/shenmintao/aic8800d80
+VCS: https://github.com/shenmintao/aic8800d80
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source: %name-%version.tar
 
 Patch0: aic8800-%version-%release.patch
-Patch1: aic8800-1.0.6-gentoo-linux-6.12.patch
 
 BuildArch: noarch
 
@@ -52,16 +51,14 @@ Documentation and helper scripts for %summary.
 pushd %name-%version
 %patch0 -p1
 cd drivers/aic8800/
-%patch1 -p1
 sed -i '/\/sbin\/depmod/d' Makefile
 popd
 
 %install
-install -m644 -pD %name-%version/tools/aic.rules %buildroot%_udevrulesdir/aic.rules
+install -m644 -pD %name-%version/aic.rules %buildroot%_udevrulesdir/aic.rules
 
 mkdir -p %buildroot%_customdocdir
-install -m644 -p %name-%version/doc/AX300*.pdf %buildroot%_customdocdir
-install -m644 -p %name-%version/{LICENSE,README.md} %buildroot%_customdocdir
+install -m644 -p %name-%version/README.md %buildroot%_customdocdir
 
 mkdir -p %kernel_srcdir
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
@@ -76,5 +73,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_customdocdir
 
 %changelog
+* Tue Jan 13 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.40.3a09-alt1
+- New version 0-40-g3a0945b.
+- Switch to more actual upstream (ALT #57409).
+
 * Thu Aug 28 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.4.b4e4-alt1
 - Initial build for ALT Sisyphus (ALT #55709).
