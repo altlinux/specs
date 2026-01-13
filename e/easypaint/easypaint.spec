@@ -1,7 +1,7 @@
 Name: easypaint
 Epoch: 1
 Version: 0.1.1
-Release: alt4
+Release: alt5
 Summary: Easy graphic editing program
 License: MIT
 Group: Graphics
@@ -12,8 +12,15 @@ Source1: %name.desktop
 Patch: easypaint-0.1.1-fix-link-to-tracker.patch
 Patch1: 0001-Added-system-translation-preload-for-qt5.patch
 Patch2: easypaint-0.1.1-fix-build-with-qt-5.15.patch
+Patch3: Port-to-QT6.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools
+BuildRequires: clang
+BuildRequires: cmake
+BuildRequires: make
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: gcc-c++
+BuildRequires: libstdc++-devel
 BuildRequires: ImageMagick-tools
 
 %description
@@ -24,29 +31,24 @@ BuildRequires: ImageMagick-tools
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-pushd sources
-lrelease-qt5 easypaint.pro
-%qmake_qt5
-%make_build
-popd
+%cmake
+%cmake_build
 
 %install
-install -Dp -m0755 sources/bin/easypaint %buildroot%_bindir/%name
 install -Dp -m0644 sources/media/logo/easypaint_64.png %buildroot%_pixmapsdir/%name.png
 install -Dp -m0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-mkdir -p %buildroot%_datadir/%name/translations
-cp sources/translations/*.qm %buildroot%_datadir/%name/translations/
-
+%cmake_install
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
         convert %buildroot%_pixmapsdir/%name.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
 done
 
 %files
-%_bindir/%name
-%_datadir/%name
+%_bindir/easypaint
+%_datadir/easypaint
 %_desktopdir/%name.desktop
 %_pixmapsdir/*.png
 %_liconsdir/*
@@ -54,6 +56,9 @@ done
 %_miconsdir/*
 
 %changelog
+* Wed Dec 24 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 1:0.1.1-alt5
+- Switching to qt6.
+
 * Mon Aug 31 2020 Grigory Ustinov <grenka@altlinux.org> 1:0.1.1-alt4
 - Fixed FTBFS.
 
