@@ -2,8 +2,8 @@
 
 Name:             melonds
 Summary:          Nintendo DS emulator
-Version:          0.9.5
-Release:          alt2.gitd8f1d10
+Version:          1.1
+Release:          alt1
 Group:            Emulators
 License:          GPL-3.0-or-later
 URL:              http://melonds.kuribo64.net/
@@ -21,17 +21,18 @@ BuildRequires:    libcurl-devel
 BuildRequires:    libpcap-devel
 BuildRequires:    libslirp-devel
 BuildRequires:    pkgconfig(gtk+-3.0)
-BuildRequires:    pkgconfig(Qt5Core)
-BuildRequires:    pkgconfig(Qt5Network)
-BuildRequires:    pkgconfig(Qt5OpenGL)
-BuildRequires:    pkgconfig(Qt5Multimedia)
-BuildRequires:    pkgconfig(Qt5Widgets)
-BuildRequires:    pkgconfig(Qt5Svg) 
+BuildRequires:    pkgconfig(Qt6Core)
+BuildRequires:    pkgconfig(Qt6Network)
+BuildRequires:    pkgconfig(Qt6OpenGL)
+BuildRequires:    pkgconfig(Qt6Multimedia)
+BuildRequires:    pkgconfig(Qt6Widgets)
+BuildRequires:    pkgconfig(Qt6Svg) 
 BuildRequires:    pkgconfig(libzstd)
 BuildRequires:    pkgconfig(libenet)
 BuildRequires:    pkgconfig(sdl2)
 BuildRequires:    pkgconfig(epoxy)
 BuildRequires:    ninja-build extra-cmake-modules
+BuildRequires:    libfaad-devel
 
 
 %description
@@ -63,6 +64,9 @@ DESTDIR=%{buildroot} ninja install
 %{_datadir}/icons/hicolor/*/apps/net.kuribo64.melonDS.png
 
 %changelog
+* Tue Jan 13 2026 Artyom Bystrov <arbars@altlinux.org> 1.1-alt1
+- Update to new version
+
 * Wed Nov 06 2024 Ivan A. Melnikov <iv@altlinux.org> 0.9.5-alt2.gitd8f1d10
 - NMU: fix FTBFS on loongarch64.
 
