@@ -1,5 +1,5 @@
 Name:    netbox-dns
-Version: 1.4.7
+Version: 1.5.0
 Release: alt1
 
 Summary: NetBox DNS is a NetBox plugin for managing DNS data
@@ -12,8 +12,7 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.3.2
-Conflicts: netbox > 4.4.99
+Requires: netbox >= 4.5.0
 Requires: python3-module-dns
 
 BuildArch: noarch
@@ -42,6 +41,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-dns/README
 %_defaultdocdir/netbox-dns/README
 
 %changelog
+* Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt1
+- New 1.5.0 version.
+
 * Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 1.4.7-alt1
 - New 1.4.7 version.
 

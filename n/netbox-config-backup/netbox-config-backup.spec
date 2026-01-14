@@ -1,6 +1,6 @@
 Name:    netbox-config-backup
-Version: 2.1.9
-Release: alt2
+Version: 2.2.2
+Release: alt1
 
 Summary: A configuration backup system using napalm
 License: Apache-2.0
@@ -12,7 +12,7 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.4.0
+Requires: netbox >= 4.5.0
 Requires: netbox-napalm-plugin
 Requires: python3-module-netmiko
 Requires: python3-module-napalm
@@ -52,6 +52,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/ncb-rq@.service
 %python3_sitelibdir/netbox_config_backup-%version.dist-info
 
 %changelog
+* Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 2.2.2-alt1
+- New 2.2.2 version.
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 2.1.9-alt2
 - New 2.1.9 version.
 
