@@ -3,7 +3,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 6.0.51
+Version: 6.0.52
 Release: alt1
 Epoch: 1
 
@@ -81,6 +81,11 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %install
 %DQ6install
 %find_lang --with-qt %repo
+mkdir -p %buildroot%_localstatedir/lightdm/lightdm-deepin-greeter/
+
+%pre
+%_sbindir/groupadd -r -f _ldm >/dev/null 2>&1 || :
+%_sbindir/useradd -M -r -d %_localstatedir/lightdm/lightdm-deepin-greeter -s /bin/false -c "DDE LightDM daemon" -g _ldm _ldm >/dev/null 2>&1 || :
 
 %files -f %repo.lang
 %doc LICENSE README.md
@@ -110,6 +115,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_datadir/deepin-authentication/privileges/
 %_datadir/deepin-authentication/privileges/lightdm-deepin-greeter.conf
 %_libdir/security/pam_inhibit_autologin.so
+%attr(750,_ldm,_ldm) %_localstatedir/lightdm/lightdm-deepin-greeter/
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/
@@ -135,6 +141,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Wed Jan 14 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.0.52-alt1
+- New version 6.0.52.
+- Fixed lightdm-deepin-greeter permissions.
+
 * Fri Nov 28 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.0.51-alt1
 - New version 6.0.51 (see dde-session-shell-snipe).
 - Use system-auth-common for dde-lock.
