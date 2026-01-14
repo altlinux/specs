@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        143.0.7499.192
+Version:        144.0.7559.59
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,7 +80,7 @@ Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-gentoo-stylesheet.patch
 
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch012: 0012-DEBIAN-rust-no-alloc-shim.patch
+# Patch012: 0012-DEBIAN-rust-no-alloc-shim.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
@@ -97,8 +97,6 @@ Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
-Patch032: 0032-FEDORA-chromium-142-Add-ExtractData-support-for-text-uri-list.patch
-Patch033: 0033-FEDORA-chromium-142-Update-pointer-position-during-draggin.patch
 Patch034: 0034-FRDORA-chromium-143-autodarkmode-workaround.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
@@ -118,16 +116,18 @@ Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 Patch054: 0054-OPENMANDRIVA-chromium-132-compile.patch
 
+Patch061: 0061-DEBIAN-autofill-binarypb.patch
+Patch062: 0062-DEBIAN-nodejs-set-intersection.patch
+Patch063: 0063-DEBIAN-value-or.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
 Patch066: 0066-DEBIAN-fix-rk3588-v4l2-av1-decoder.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
-# for rust < 1.86:
-Patch068: 0068-DEBIAN-adler1.patch
 
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
+Patch072: 0072-FEDORA-chromium-144-rust-libadler2.patch
 
 %if_enabled gost
 Patch080: chromium-alt-check-themes.patch
@@ -256,6 +256,7 @@ BuildRequires:  python3(simplejson)
 
 BuildRequires:  rust       >= 1.75.0-alt2
 BuildRequires:  rust-cargo >= 1.75.0-alt2
+BuildRequires:  rustfmt
 %if_enabled gost
 BuildRequires:  patchutils
 %endif
@@ -278,10 +279,6 @@ faster, and more stable way for all Internet users to experience the web.
 %prep
 %setup -q -n chromium  %{?_enable_gost:-a300}
 %autopatch -p1
-# for rust after 1.86 revert adler2 patch:
-%if "%(rpmquery --qf '%%{VERSION}' rust)" >= "1.86"
-%patch068 -R -p1
-%endif
 %if_enabled gost
 # Patches from chromium-gost
 # Copy instruction from chromium-gost/build_linux/chromium-gost-prepare.sh
@@ -341,6 +338,7 @@ ln -sf %_bindir/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
 
 mkdir -p third_party/rust-toolchain/bin
 ln -sf %_bindir/bindgen third_party/rust-toolchain/bin/bindgen
+ln -sf %_bindir/rustfmt third_party/rust-toolchain/bin/rustfmt
 
 rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
@@ -659,6 +657,20 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jan 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.59-alt1
+- New version (144.0.7559.59).
+- Fixes:
+  + CVE-2026-0899: Out of bounds memory access in V8
+  + CVE-2026-0900: Inappropriate implementation in V8
+  + CVE-2026-0901: Inappropriate implementation in Blink
+  + CVE-2026-0902: Inappropriate implementation in V8
+  + CVE-2026-0903: Insufficient validation of untrusted input in Downloads
+  + CVE-2026-0904: Incorrect security UI in Digital Credentials
+  + CVE-2026-0905: Insufficient policy enforcement in Network
+  + CVE-2026-0906: Incorrect security UI
+  + CVE-2026-0907: Incorrect security UI in Split View
+  + CVE-2026-0908: Use after free in ANGLE
+
 * Wed Jan 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 143.0.7499.192-alt1
 - New version (143.0.7499.192).
 - Fixes:
