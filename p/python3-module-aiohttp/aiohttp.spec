@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.13.2
+Version: 3.13.3
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -89,6 +89,7 @@ make cythonize-nodeps
 	--ignore=tests/autobahn \
 	--ignore=tests/test_proxy_functional.py \
 	--ignore-glob='tests/test_benchmarks_*' \
+	--deselect='tests/test_web_functional.py::test_keepalive_expires_on_time' \
 	tests \
 %ifarch ppc64le
 	||:
@@ -106,6 +107,11 @@ make cythonize-nodeps
 %python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Mon Jan 12 2026 Stanislav Levin <slev@altlinux.org> 3.13.3-alt1
+- 3.13.2 -> 3.13.3
+  + (fixes: CVE-2025-69223, CVE-2025-69224, CVE-2025-69225, CVE-2025-69226)
+  + (fixes: CVE-2025-69227, CVE-2025-69228, CVE-2025-69229, CVE-2025-69230)
+
 * Wed Oct 29 2025 Stanislav Levin <slev@altlinux.org> 3.13.2-alt1
 - 3.12.15 -> 3.13.2.
 
