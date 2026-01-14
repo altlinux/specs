@@ -1,7 +1,7 @@
 %define rname plasma-wayland-protocols
 
 Name: kde5-%rname
-Version: 1.19.0
+Version: 1.20.0
 Release: alt1
 %K6init altplace no_appdata
 
@@ -10,8 +10,12 @@ Summary: XML files of non-standard wayland protocols used in Plasma
 License: LGPL-2.0-or-later
 Url: https://invent.kde.org/libraries/plasma-wayland-protocols
 
+BuildArch: noarch
+
 Requires: wayland-protocols
 Provides: %rname = %EVR
+Provides: kde5-%rname = %EVR
+Provides: kde6-%rname = %EVR
 
 Source: %rname-%version.tar
 
@@ -32,10 +36,13 @@ XML files of non-standard wayland protocols used in Plasma.
 %K6install
 
 %files
-%_libdir/cmake/PlasmaWaylandProtocols/
+%_datadir/cmake/PlasmaWaylandProtocols/
 %_datadir/plasma-wayland-protocols/
 
 %changelog
+* Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 1.20.0-alt1
+- new version
+
 * Thu Nov 13 2025 Sergey V Turchin <zerg@altlinux.org> 1.19.0-alt1
 - new version
 
