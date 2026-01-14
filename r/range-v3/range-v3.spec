@@ -1,10 +1,16 @@
 # Check also https://github.com/EasyCoding/range-v3/blob/master/range-v3.spec
 
+%ifarch %e2k
+%def_without test
+%def_without examples
+%else
 %def_with test
+%def_with examples
+%endif
 
 Name: range-v3
 Version: 0.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: Range library for C++14/17/20, basis for C++20's std::ranges
 
@@ -64,6 +70,9 @@ which was merged into the C++20 working drafts in November 2018.
 %if_without test
     -DRANGE_V3_TESTS:BOOL=OFF \
 %endif
+%if_without examples
+    -DRANGE_V3_EXAMPLES:BOOL=OFF \
+%endif
     -DRANGE_V3_DOCS:BOOL=OFF
 %make_build
 
@@ -86,6 +95,9 @@ rm -vf %buildroot%_includedir/module.modulemap
 %_datadir/cmake/%name
 
 %changelog
+* Tue Jan 13 2026 Michael Shigorin <mike@altlinux.org> 0.12.0-alt1.1
+- E2K: examples ftbfs workaround (ilyakurdyukov@)
+
 * Sun Aug 28 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
 - new version 0.12.0 (with rpmrb script)
 
