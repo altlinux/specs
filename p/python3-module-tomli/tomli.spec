@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: A lil' TOML parser
 License: MIT
@@ -26,8 +26,8 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-Tomli is a Python library for parsing TOML. Tomli is fully compatible with TOML
-v1.0.0.
+Tomli is a Python library for parsing TOML. Version 2.4.0 and later are
+compatible with TOML v1.1.0. Older versions are TOML v1.0.0 compatible.
 
 %prep
 %setup
@@ -50,6 +50,9 @@ v1.0.0.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 13 2026 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
+- 2.3.0 -> 2.4.0.
+
 * Tue Oct 14 2025 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.1 -> 2.3.0.
 
