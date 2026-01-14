@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: Fork of the standard library cgi and cgitb modules, being deprecated in PEP-594
@@ -49,6 +49,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 14 2026 Grigory Ustinov <grenka@altlinux.org> 2.6.4-alt1
+- Automatically updated to 2.6.4.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.3-alt1
 - Automatically updated to 2.6.3.
 
