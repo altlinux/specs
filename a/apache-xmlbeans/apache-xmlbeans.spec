@@ -3,7 +3,7 @@
 
 Name: apache-xmlbeans
 Version: 5.3.0
-Release: alt1
+Release: alt2
 Summary: XMLBeans is a technology for accessing XML by binding it to Java types
 License: Apache-2.0
 Group: Development/Java
@@ -21,6 +21,8 @@ BuildArch: noarch
 BuildRequires: gcc-c++ rpm-build-java swig unzip
 BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
+BuildRequires: pom2metadata
+BuildRequires: xmlstarlet
 
 %description
 XMLBeans is a technology for accessing XML by binding it to Java types.
@@ -56,16 +58,23 @@ gradle --no-daemon %gradle_target
 %endif
 
 %install
-mkdir -p %buildroot%_javadir/xmlbeans
-find build -name xmlbeans-%version.jar -exec cp '{}' %buildroot%_javadir/xmlbeans ';'
-mkdir -p %buildroot%_mavenpomdir
-find build -name \*.pom -exec cp '{}' %buildroot%_mavenpomdir ';'
+install -Dpm0644 build/libs/xmlbeans-%version.jar %buildroot%_javadir/xmlbeans/xmlbeans.jar
+# Remove deprecated requirement
+xmlstarlet ed -N m="http://maven.apache.org/POM/4.0.0" -d "//m:dependency[m:groupId='com.sun.org.apache.xml.internal' and m:artifactId='resolver']" build/dist/maven/xmlbeans-%version.pom > pom-new.xml && /bin/mv -f pom-new.xml build/dist/maven/xmlbeans-%version.pom
+install -Dpm0644 build/dist/maven/xmlbeans-%version.pom %buildroot%_mavenpomdir/xmlbeans/xmlbeans.pom
+mkdir -p %buildroot%_datadir/maven-metadata
+pom2metadata build/dist/maven/xmlbeans-%version.pom %buildroot%_datadir/maven-metadata/xmlbeans.xml xmlbeans
 
 %files
 %doc README.md
-%_javadir/xmlbeans/*
-%_mavenpomdir/*
+%_javadir/xmlbeans/*.jar
+%_mavenpomdir/xmlbeans/*.pom
+%_datadir/maven-metadata/*.xml
 
 %changelog
+* Mon Jan 12 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt2
+- Packaged xmvn metadata file.
+- Removed com.sun.org.apache.xml.internal:resolver from requirements.
+
 * Sun Jul 06 2025 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
 - Initial build for Sisyphus.
