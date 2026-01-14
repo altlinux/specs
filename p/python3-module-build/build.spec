@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name build
+%define mod_name %pypi_name
 
 %def_with check
 %def_with uv
@@ -16,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: A simple, correct Python build frontend
 License: MIT
@@ -82,13 +83,16 @@ Requires: python3-module-%pypi_name
 
 %files
 %doc README.md
-%python3_sitelibdir/build/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n pyproject-build
 %_bindir/pyproject-build
 
 %changelog
+* Tue Jan 13 2026 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0.
+
 * Mon Aug 04 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.2.post1 -> 1.3.0.
 
