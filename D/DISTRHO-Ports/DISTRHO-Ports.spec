@@ -3,11 +3,15 @@
 %global _optlevel 3
 %global optflags_optimization -O3
 
+%ifarch loongarch64
+%global optflags_optimization -Ofast -mlsx -mlasx -flax-vector-conversions
+%endif
+
 %global distrho LV2 port by DISTRHO
 
 Name:    DISTRHO-Ports
 Version: 20210315
-Release: alt0.1.gitd3b62da2
+Release: alt0.2.gitd3b62da2
 
 Summary: Linux audio plugins and LV2 ports by DISTRHO
 License: GPL-2.0+ AND GPL-3.0+ AND LGPL-2.0+ AND MIT AND Apache-2.0
@@ -46,6 +50,10 @@ BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
+
+%ifarch loongarch64 riscv64
+BuildRequires: simde-devel
+%endif
 
 %description
 %summary.
@@ -138,6 +146,22 @@ probably won't be able to create heavy distortion effects with this
 plugin.
 
 
+%package -n lv2-Roth-Air-plugin
+Summary:  Roth-Air audio plugin -- %distrho
+Group: Sound
+
+%description -n lv2-Roth-Air-plugin
+%distrho of Roth-Air plugin from Daniel Rothmann.
+
+Roth-Air is a mixing tool for easily adding airy, crispy presence
+to your audio. This is achieved by a combination of multiband
+compression and gentle saturation of the highs. It enables for a
+stronger, more consistent presence of high frequency material and
+works particularly well with vocals, synths and strings. The process
+is made easy by a simple user interface, automatic makeup gain and a
+combined function "AIR" knob.
+
+
 %package -n lv2-StereoSourceSeparation-plugin
 Summary: Stereo Source Separator -- %distrho
 Group: Sound
@@ -208,6 +232,12 @@ sh -eux "%SOURCE2"
 
 %autopatch -p1
 
+%ifnarch x86_64
+# mute JUCE assertions
+find libs -type f  -name *.h -print0 \
+  | xargs -0 sed -i '/define\s\+JUCE_LOG_ASSERTIONS/ s/\b1\b/0/'
+%endif
+
 %build
 export GCC_USE_CCACHE=1
 
@@ -241,9 +271,11 @@ LUFSMeter-Multi
 # individual
 easySSP
 luftikus
+%ifnarch loongarch64 riscv64
 pitchedDelay
+%endif
 refine
-# roth-air is broken
+roth-air
 stereosourceseparation
 swankyamp
 temper
@@ -280,11 +312,16 @@ wolpertinger"
 %files -n lv2-luftikus-plugin
 %_libdir/lv2/Luftikus.lv2
 
+%ifnarch loongarch64 riscv64
 %files -n lv2-PitchedDelay-plugin
 %_libdir/lv2/PitchedDelay.lv2
+%endif
 
 %files -n lv2-ReFine-plugin
 %_libdir/lv2/ReFine.lv2
+
+%files -n lv2-Roth-Air-plugin
+%_libdir/lv2/Roth-Air.lv2
 
 %files -n lv2-StereoSourceSeparation-plugin
 %_libdir/lv2/StereoSourceSeparation.lv2
@@ -307,5 +344,12 @@ wolpertinger"
 
 
 %changelog
+* Wed Jan 14 2026 Ivan A. Melnikov <iv@altlinux.org> 20210315-alt0.2.gitd3b62da2
+- build and package roth-air;
+- build on loongarch64 and riscv64:
+  + build fixes for these architectures;
+  + make vitalium cross-platform via simde.
+  + mute JUCE assertions on non-Intel architectures
+
 * Wed Dec 31 2025 Ivan A. Melnikov <iv@altlinux.org> 20210315-alt0.1.gitd3b62da2
 - build for sisyphus
