@@ -1,6 +1,6 @@
 Name: metrics-server
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary:  Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines
 Group: Development/Other
@@ -28,6 +28,7 @@ by kubectl top, making it easier to debug autoscaling pipelines.
 %autopatch -p1
 
 %build
+export GIT_TAG="%version-%release"
 export GOROOT="%_libexecdir/golang"
 make ARCH=$(go env GOARCH)
 
@@ -47,5 +48,8 @@ make test-unit ARCH=$(go env GOARCH)
 
 
 %changelog
+* Tue Nov 18 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 0.8.0-alt2
+- Fixed a bug with version output (Closes: #56330).
+
 * Tue Aug 12 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus.
