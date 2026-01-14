@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name GitPython
+%define mod_name git
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.45
+Version: 3.1.46
 Release: alt1
 Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
@@ -16,6 +17,8 @@ Source: %name-%version.tar
 Source1: git-history-tests.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Requires: /usr/bin/git
 # PyPI names
@@ -56,7 +59,7 @@ data streaming.
 %endif
 
 # unbundle
-rm -vr git/ext/*
+rm -vr %mod_name/ext/*
 
 %build
 %pyproject_build
@@ -92,10 +95,13 @@ export NO_SUBMODULES=YES
     --ignore test/test_submodule.py
 
 %files
-%python3_sitelibdir/git/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 14 2026 Stanislav Levin <slev@altlinux.org> 3.1.46-alt1
+- 3.1.45 -> 3.1.46.
+
 * Thu Jul 24 2025 Stanislav Levin <slev@altlinux.org> 3.1.45-alt1
 - 3.1.44 -> 3.1.45.
 
