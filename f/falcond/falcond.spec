@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: falcond
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Advanced Linux Gaming Performance Daemon
@@ -44,6 +44,9 @@ install -Dm644 debian/falcond.service %buildroot%_unitdir
 
 
 %changelog
+* Thu Jan 08 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.3-alt1
+- new version 1.2.3
+
 * Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 1.2.2-alt1
 - new version 1.2.2
 
