@@ -11,9 +11,9 @@
 
 # Attention! Use only one UI: kde5 or kde6
 # enable kde5 UI
-%def_enable kde5
+%def_disable kde5
 # enable kde6 UI
-%def_disable kde6
+%def_enable kde6
 
 %ifarch mipsel
 %def_without java
@@ -50,7 +50,7 @@ Name: libreoffice
 %define hversion 25.8
 %define urelease 4.2
 Version: %hversion.%urelease
-Release: alt2
+Release: alt3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -842,6 +842,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Jan 13 2026 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt3
+- Returned build Qt6 and KDE6.
+
 * Thu Jan 08 2026 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt2
 - Packaged libreoffice-qt and libreoffice-kde without its major version.
 - Built with Qt5 and KDE5 (ALT #57028).
