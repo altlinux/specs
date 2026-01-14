@@ -1,7 +1,7 @@
 %define pypi_name cotyledon
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Cotyledon provides a framework for defining long-running services
@@ -65,6 +65,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html
 
 %changelog
+* Wed Jan 14 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
+- Automatically updated to 2.2.0.
+
 * Tue Sep 02 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 
