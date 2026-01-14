@@ -1,0 +1,47 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: alt-workstation-10-11-upgrade
+Version: 0.2.0
+Release: alt1
+
+Summary: A simple tool for ALT Workstation upgrade from 10 to 11
+License: GPL-3.0-or-later
+Group: System/Configuration/Other
+Url: https://altlinux.space/alt-gnome/alt_workstation_10-11_upgrade
+VCS: https://altlinux.space/alt-gnome/alt_workstation_10-11_upgrade
+
+BuildArch: noarch
+
+Source: %name-%version.tar
+
+%add_python3_path %_bindir
+%add_python3_path %_prefix/libexec
+
+Requires: branding-alt-workstation-graphics
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: rpm-build-python3
+
+%description
+%summary.
+
+%prep
+%setup
+
+%build
+%meson --libexecdir=libexec
+%meson_build
+
+%install
+%meson_install
+
+%files
+%_bindir/alt-workstation-10-11-upgrade
+%_prefix/libexec/alt-workstation-10-11-upgrade-finish
+%_sysconfdir/xdg/autostart/alt-workstation-10-11-upgrade-finish.desktop
+%python3_sitelibdir/alt_workstation_10_11_upgrade/
+
+%changelog
+* Wed Jan 14 2026 Alexey Volkov <qualimock@altlinux.org> 0.2.0-alt1
+- initial build for ALT
