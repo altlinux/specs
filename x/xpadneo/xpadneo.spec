@@ -3,7 +3,7 @@
 
 Name: xpadneo
 Version: 0.9.8
-Release: alt1
+Release: alt2
 
 Summary: Driver for Xbox Wireless Controller
 
@@ -13,6 +13,8 @@ Url: https://github.com/atar-axis/xpadneo
 
 # Source-url: https://github.com/atar-axis/xpadneo/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: xpadneo-0.9.8-alt-get-rid-of-redundant-file-installs-removes.patch
 
 Requires: dkms-xpadneo = %EVR
 BuildArch: noarch
@@ -32,6 +34,7 @@ Advanced Linux Driver for Xbox One Wireless Gamepad (DKMS-variant).
 %prep
 %setup
 sed "s/@DO_NOT_CHANGE@/%version/" hid-xpadneo/dkms.conf.in > hid-xpadneo/dkms.conf
+%patch -p2
 
 %build
 %install
@@ -69,6 +72,9 @@ fi
 %_usrsrc/%dkms_name-%version/
 
 %changelog
+* Tue Jan 06 2026 Boris Yumankulov <boria138@altlinux.org> 0.9.8-alt2
+- rebase DKMS hooks cleanup patch
+
 * Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 0.9.8-alt1
 - new version 0.9.8
 
