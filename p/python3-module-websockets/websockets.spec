@@ -1,5 +1,5 @@
 Name: python3-module-websockets
-Version: 15.0.1
+Version: 16.0
 Release: alt1
 
 Summary: Python WebSocket library
@@ -10,7 +10,10 @@ Url: https://github.com/python-websockets/websockets
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
 
-BuildRequires(pre): rpm-build-pyproject
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -39,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/websockets-%version.dist-info
 
 %changelog
+* Wed Jan 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.0-alt1
+- 16.0 released
+
 * Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.0.1-alt1
 - 15.0.1 released
 
