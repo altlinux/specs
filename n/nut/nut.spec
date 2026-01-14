@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.4
-Release: alt1
+Release: alt2
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -486,25 +486,25 @@ fi
 %confdir/upsd.conf
 %confdir/upsd.users
 %confdir/upsd.pem
-%config(noreplace) %attr(640,root,upsdrv) %confdir/ups.conf
+%config(noreplace) %attr(640,upsd,upsdrv) %confdir/ups.conf
 
 %_man5dir/upsd.conf.*
 %_man5dir/upsd.users.*
 
 %_sysconfdir/syslog.d/*
-%dir %attr(0710,root,upsdrv) %ROOT
-%dir %attr(0710,root,upsdrv) %ROOT/dev
+%dir %attr(0710,upsd,upsdrv) %ROOT
+%dir %attr(0710,upsd,upsdrv) %ROOT/dev
 %ghost %attr(666,root,root) %ROOT/dev/*
-%dir %attr(0710,root,upsdrv) %ROOT/var
-%dir %attr(0710,root,upsdrv) %ROOT%_localstatedir
-%dir %attr(1730,root,upsdrv) %ROOT%_localstatedir/upsd
-%dir %attr(0710,root,upsdrv) %ROOT%_sysconfdir
-%dir %attr(0710,root,upsdrv) %ROOT%confdir
-%config(noreplace) %attr(640,root,upsd) %ROOT%confdir/cmdvartab
-%config(noreplace) %attr(640,root,upsd) %ROOT%confdir/upsd.conf
-%config(noreplace) %attr(640,root,upsd) %ROOT%confdir/upsd.users
-%config(noreplace) %attr(640,root,upsd) %ROOT%confdir/upsd.pem
-%attr(640,root,upsdrv) %ROOT%confdir/ups.conf
+%dir %attr(0710,upsd,upsdrv) %ROOT/var
+%dir %attr(0710,upsd,upsdrv) %ROOT%_localstatedir
+%dir %attr(1730,upsd,upsdrv) %ROOT%_localstatedir/upsd
+%dir %attr(0710,upsd,upsdrv) %ROOT%_sysconfdir
+%dir %attr(0710,upsd,upsdrv) %ROOT%confdir
+%config(noreplace) %attr(640,upsd,upsd) %ROOT%confdir/cmdvartab
+%config(noreplace) %attr(640,upsd,upsd) %ROOT%confdir/upsd.conf
+%config(noreplace) %attr(640,upsd,upsd) %ROOT%confdir/upsd.users
+%config(noreplace) %attr(640,upsd,upsd) %ROOT%confdir/upsd.pem
+%attr(640,upsd,upsdrv) %ROOT%confdir/ups.conf
 
 %_localstatedir/upsd
 
@@ -599,6 +599,9 @@ fi
 %python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Wed Jan 14 2026 Andrey Kovalev <ded@altlinux.org> 2.8.4-alt2
+- Fixed service startup permissions (closes: #56727)
+
 * Tue Sep 09 2025 Andrey Kovalev <ded@altlinux.org> 2.8.4-alt1
 - Updated to upstream version 2.8.4.
 
