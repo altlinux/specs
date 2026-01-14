@@ -10,8 +10,8 @@ BuildRequires: unzip
 %global archivename SourceHanSansKR
 
 Name:		fonts-otf-adobe-source-han-sans-kr
-Version:	1.004
-Release:	alt1_1
+Version:	2.005
+Release:	alt1
 Summary:	Adobe OpenType Pan-CJK font family for Korean
 
 License:	OFL
@@ -27,15 +27,14 @@ Source44: import.info
 Source Han Sans is a set of OpenType/CFF Pan-CJK fonts.
 
 %prep
-%setup -q -n %{archivename}
-
+%setup -n %{oldname}-%{version} -q -c 
 
 %build
 
 %install
 
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.otf %{buildroot}%{_fontdir}
+install -m 0644 -p SubsetOTF/KR/*.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		   %{buildroot}%{_fontconfig_confdir}
@@ -87,6 +86,9 @@ fi
 %doc LICENSE.txt
 
 %changelog
+* Wed Jan 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.005-alt1
+- 1.004 -> 2.005
+
 * Wed Dec 06 2017 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_1
 - new version
 
