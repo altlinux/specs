@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.13.5
+Version: 0.14.0
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -168,6 +168,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Wed Jan 14 2026 Vitaly Chikunov <vt@altlinux.org> 0.14.0-alt1
+- Update to v0.14.0 (2026-01-13).
+
 * Wed Jan 07 2026 Vitaly Chikunov <vt@altlinux.org> 0.13.5-alt1
 - Update to v0.13.5 (2025-12-18).
 
