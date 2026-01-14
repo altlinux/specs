@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.16
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Wed Jan 14 2026 Anton Midyukov <antohami@altlinux.org> 2.4.16-alt2
+- NMU: desktop/cups.desktop.in: do not show in Phosh.
+
 * Thu Dec 04 2025 Anton Farygin <rider@altlinux.com> 2.4.16-alt1
 - 2.4.15 -> 2.4.16
 
