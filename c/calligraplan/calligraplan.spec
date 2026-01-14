@@ -1,50 +1,50 @@
-# obsileted koffice version
-%define koffice_ver 4:2.3.70
 %define oname calligra-plan
 
-%define sover 18
-%define libplankernel libplankernel%sover
-%define libplanmodels libplanmodels%sover
-%define libplanui libplanui%sover
-%define libplankundo2 libplankundo2%sover
-%define libplanmain libplanmain%sover
-%define libplanodf libplanodf%sover
-%define libplanplugin libplanplugin%sover
-%define libplanprivate libplanprivate%sover
-%define libplanstore libplanstore%sover
-%define libplanwidgets libplanwidgets%sover
-%define libplanwidgetutils libplanwidgetutils%sover
-%define libplanworkfactory libplanworkfactory%sover
+%define sover 4
+%define libcalligraplankernel libcalligraplankernel%sover
+%define libcalligraplanmodels libcalligraplanmodels%sover
+%define libcalligraplanui libcalligraplanui%sover
+%define libcalligraplankundo2 libcalligraplankundo2%sover
+%define libcalligraplanmain libcalligraplanmain%sover
+%define libcalligraplanodf libcalligraplanodf%sover
+%define libcalligraplanplugin libcalligraplanplugin%sover
+%define libcalligraplanprivate libcalligraplanprivate%sover
+%define libcalligraplanstore libcalligraplanstore%sover
+%define libcalligraplanwidgets libcalligraplanwidgets%sover
+%define libcalligraplanwidgetutils libcalligraplanwidgetutils%sover
+%define libcalligraplanportfolioprivate libcalligraplanportfolioprivate%sover
+%define libcalligraplantjscheduler libcalligraplantjscheduler%sover
+%define libcalligraplanworkprivate libcalligraplanworkprivate%sover
 
 Name: calligraplan
-Version: 3.3.0
-Release: alt2
+Version: 4.0.1
+Release: alt1
 Epoch: 0
-%K5init
+%K6init
 
 Group: Office
 Summary: A project planner
-License: GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later
+License: GPL-2.0-or-later AND LGPL-2.0-only AND LGPL-2.0-or-later AND LGPL-2.1-or-later
 Url: https://www.calligra.org/plan/
-Provides: koffice-kplato = %koffice_ver
-Obsoletes: koffice-kplato < %koffice_ver
-Requires: %oname-common = %EVR
-Requires: kf5-kreport
+
+Requires: %oname-common >= %EVR
 
 Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-x11extras-devel
-BuildRequires: libqca-qt5-devel
-BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
-BuildRequires: kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
-BuildRequires: kf5-kinit-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel
-BuildRequires: kf5-kio-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kactivities-devel kde5-kholidays-devel kf5-kdiagram-devel
-BuildRequires: kf5-kjs-devel kf5-kitemmodels-devel kf5-kcalcore-devel kf5-kdoctools-devel
-BuildRequires: zlib-devel
+BuildRequires: qt6-declarative-devel qt6-svg-devel
+BuildRequires: libqca-qt6-devel
+BuildRequires: zlib-devel libvulkan-devel libcups-devel
+BuildRequires: kf6-karchive-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
+BuildRequires: kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
+BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kcmutils-devel
+BuildRequires: kf6-kio-devel kf6-knotifications-devel kf6-kparts-devel kf6-ktextwidgets-devel
+BuildRequires: kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kholidays-devel
+BuildRequires: kf6-kitemmodels-devel kf6-kcalendarcore-devel kf6-kdoctools-devel
+BuildRequires: plasma6-activities-devel
+BuildRequires: kde6-kdiagram-devel
 
 %description
 Plan is a project management application. It is intended for managing
@@ -53,11 +53,7 @@ moderately large projects with multiple resources.
 %package -n %oname
 Group: Office
 Summary: A project planner
-License: GPLv2+ / LGPLv2+
-Provides: koffice-kplato = %koffice_ver
-Obsoletes: koffice-kplato < %koffice_ver
-Requires: %oname-common = %EVR
-Requires: kf5-kreport
+Requires: %oname-common >= %EVR
 %description -n %oname
 Plan is a project management application. It is intended for managing
 moderately large projects with multiple resources.
@@ -66,7 +62,7 @@ moderately large projects with multiple resources.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 %description -n %oname-common
 %name common package
 
@@ -77,102 +73,116 @@ Conflicts: libflake-devel
 %description -n %oname-devel
 Header files and libraries needed for %name development
 
-%package -n %libplankernel
+%package -n %libcalligraplankernel
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplankernel
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplankernel
 %name library
 
-%package -n %libplanmodels
+%package -n %libcalligraplanmodels
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanmodels
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanmodels
 %name library
 
-%package -n %libplanui
+%package -n %libcalligraplanui
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanui
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanui
 %name library
 
-%package -n %libplankundo2
+%package -n %libcalligraplankundo2
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplankundo2
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplankundo2
 %name library
 
-%package -n %libplanmain
+%package -n %libcalligraplanmain
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanmain
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanmain
 %name library
 
-%package -n %libplanodf
+%package -n %libcalligraplanodf
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanodf
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanodf
 %name library
 
-%package -n %libplanplugin
+%package -n %libcalligraplanplugin
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanplugin
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanplugin
 %name library
 
-%package -n %libplanprivate
+%package -n %libcalligraplanprivate
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanprivate
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanprivate
 %name library
 
-%package -n %libplanstore
+%package -n %libcalligraplanstore
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanstore
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanstore
 %name library
 
-%package -n %libplanwidgets
+%package -n %libcalligraplanwidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanwidgets
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanwidgets
 %name library
 
-%package -n %libplanwidgetutils
+%package -n %libcalligraplanwidgetutils
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanwidgetutils
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanwidgetutils
 %name library
 
-%package -n %libplanworkfactory
+%package -n %libcalligraplanportfolioprivate
 Summary: %name library
 Group: System/Libraries
-Requires: %oname-common = %EVR
-%description -n %libplanworkfactory
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanportfolioprivate
+%name library
+
+%package -n %libcalligraplantjscheduler
+Summary: %name library
+Group: System/Libraries
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplantjscheduler
+%name library
+
+%package -n %libcalligraplanworkprivate
+Summary: %name library
+Group: System/Libraries
+Requires: %oname-common >= %EVR
+%description -n %libcalligraplanworkprivate
 %name library
 
 %prep
 %setup
 
 %build
-%K5build \
+%K6build \
     -DPACKAGERS_BUILD=OFF \
     -DBUILD_TESTING=OFF \
-    -DTEMPLATES_INSTALL_DIR:PATH=%_K5tmpl \
+    -DTEMPLATES_INSTALL_DIR:PATH=%_K6tmpl \
     #
 
 %install
-%K5install
+%K6install
 
 ## unpackaged files
 rm -frv %buildroot/%_datadir/locale/x-test/
@@ -180,73 +190,75 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %find_lang --with-kde --all-name %name
 
 %files -n %oname-common -f %name.lang
-%_K5icon/*/*/*/*
+%_K6icon/*/*/*/*
+%_K6xdgmime/*plan*.xml
 
 %files -n %oname-devel
-%_K5link/lib*.so
+%_K6link/lib*.so
 
 %files -n %oname
-%dir %_K5plug/calligraplan/
-%dir %_K5plug/calligraplan/parts/
-%dir %_K5plug/calligraplan/formatfilters/
-%dir %_K5plug/calligraplan/schedulers/
-%config(noreplace) %_K5xdgconf/calligraplan*rc
-%_K5bin/calligraplan
-%_K5bin/calligraplanwork
-%_K5lib/libkdeinit5_calligraplan.so
-%_K5lib/libkdeinit5_calligraplanwork.so
-%_K5plug/calligraplan/parts/calligraplanpart.so
-%_K5plug/calligraplan/formatfilters/plan*.so
-%_K5plug/calligraplan/schedulers/*plan*.so
-%_K5plug/calligraplanworkpart.so
+%dir %_K6plug/calligraplan/
+%dir %_K6plug/calligraplan/parts/
+%dir %_K6plug/calligraplan/formatfilters/
+%dir %_K6plug/calligraplan/schedulers/
+%config(noreplace) %_K6xdgconf/calligraplan*rc
+%_K6bin/calligraplan*
+%_K6plug/calligraplan/
 %_datadir/calligraplan/
 %_datadir/calligraplanwork/
-%_K5xmlgui/calligraplan/
-%_K5xmlgui/calligraplanwork/
-%_K5cfg/calligraplansettings.kcfg
-%_K5cfg/calligraplanworksettings.kcfg
-%_K5xdgapp/org.kde.calligraplan.desktop
-%_K5xdgapp/org.kde.calligraplanwork.desktop
-%_datadir/metainfo/org.kde.calligraplan.appdata.xml
+%_K6data/kxmlgui?/calligraplan*/
+%_K6cfg/calligraplansettings.kcfg
+%_K6cfg/calligraplanworksettings.kcfg
+%_K6xdgapp/org.kde.calligraplan*.desktop
+%_datadir/metainfo/*calligraplan*.xml
 
-%files -n %libplankernel
-%_K5lib/libplankernel.so.%sover
-%_K5lib/libplankernel.so.*
-%files -n %libplanmodels
-%_K5lib/libplanmodels.so.%sover
-%_K5lib/libplanmodels.so.*
-%files -n %libplanui
-%_K5lib/libplanui.so.%sover
-%_K5lib/libplanui.so.*
-%files -n %libplankundo2
-%_K5lib/libplankundo2.so.%sover
-%_K5lib/libplankundo2.so.*
-%files -n %libplanmain
-%_K5lib/libplanmain.so.%sover
-%_K5lib/libplanmain.so.*
-%files -n %libplanodf
-%_K5lib/libplanodf.so.%sover
-%_K5lib/libplanodf.so.*
-%files -n %libplanplugin
-%_K5lib/libplanplugin.so.%sover
-%_K5lib/libplanplugin.so.*
-%files -n %libplanprivate
-%_K5lib/libplanprivate.so.%sover
-%_K5lib/libplanprivate.so.*
-%files -n %libplanstore
-%_K5lib/libplanstore.so.%sover
-%_K5lib/libplanstore.so.*
-%files -n %libplanwidgets
-%_K5lib/libplanwidgets.so.%sover
-%_K5lib/libplanwidgets.so.*
-%files -n %libplanwidgetutils
-%_K5lib/libplanwidgetutils.so.%sover
-%_K5lib/libplanwidgetutils.so.*
-%files -n %libplanworkfactory
-%_K5lib/libplanworkfactory.so.%sover
-%_K5lib/libplanworkfactory.so.*
+%files -n %libcalligraplankernel
+%_K6lib/libcalligraplankernel.so.%sover
+%_K6lib/libcalligraplankernel.so.*
+%files -n %libcalligraplanmodels
+%_K6lib/libcalligraplanmodels.so.%sover
+%_K6lib/libcalligraplanmodels.so.*
+%files -n %libcalligraplanui
+%_K6lib/libcalligraplanui.so.%sover
+%_K6lib/libcalligraplanui.so.*
+%files -n %libcalligraplankundo2
+%_K6lib/libcalligraplankundo2.so.%sover
+%_K6lib/libcalligraplankundo2.so.*
+%files -n %libcalligraplanmain
+%_K6lib/libcalligraplanmain.so.%sover
+%_K6lib/libcalligraplanmain.so.*
+%files -n %libcalligraplanodf
+%_K6lib/libcalligraplanodf.so.%sover
+%_K6lib/libcalligraplanodf.so.*
+%files -n %libcalligraplanplugin
+%_K6lib/libcalligraplanplugin.so.%sover
+%_K6lib/libcalligraplanplugin.so.*
+%files -n %libcalligraplanprivate
+%_K6lib/libcalligraplanprivate.so.%sover
+%_K6lib/libcalligraplanprivate.so.*
+%files -n %libcalligraplanstore
+%_K6lib/libcalligraplanstore.so.%sover
+%_K6lib/libcalligraplanstore.so.*
+%files -n %libcalligraplanwidgets
+%_K6lib/libcalligraplanwidgets.so.%sover
+%_K6lib/libcalligraplanwidgets.so.*
+%files -n %libcalligraplanwidgetutils
+%_K6lib/libcalligraplanwidgetutils.so.%sover
+%_K6lib/libcalligraplanwidgetutils.so.*
+%files -n %libcalligraplanportfolioprivate
+%_K6lib/libcalligraplanportfolioprivate.so.%sover
+%_K6lib/libcalligraplanportfolioprivate.so.*
+%files -n %libcalligraplantjscheduler
+%_K6lib/libcalligraplantjscheduler.so.%sover
+%_K6lib/libcalligraplantjscheduler.so.*
+%files -n %libcalligraplanworkprivate
+%_K6lib/libcalligraplanworkprivate.so.%sover
+%_K6lib/libcalligraplanworkprivate.so.*
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 0:4.0.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 0:3.3.0-alt2
 - fix build requries
 
