@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-session
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: COSMIC Session Manager
@@ -92,6 +92,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Wed Jan 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Wed Dec 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

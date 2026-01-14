@@ -7,8 +7,8 @@
 %def_enable check
 
 Name: cosmic-greeter
-Version: %ver_major.1
-Release: alt1.2%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -97,6 +97,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Jan 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Jan 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1.2
 - switched /etc/pam.d/cosmic-greeter to greetd PAM config (ALT #57427)
 
