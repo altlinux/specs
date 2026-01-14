@@ -1,7 +1,7 @@
 %define oname org.kde.drawy
 
 Name: drawy
-Version: 20260111
+Version: 20260113
 Release: alt1
 
 Summary: Drawy is a work-in-progress infinite whiteboard tool
@@ -46,6 +46,9 @@ which aims to be a native-desktop alternative to the amazing web-based Excalidra
 %_datadir/locale/*/LC_MESSAGES/*.qm
 
 %changelog
+* Wed Jan 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260113-alt1
+- update to git.c2ab5a6c
+
 * Mon Jan 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260111-alt1
 - update to git.83e0f4e5
 
