@@ -1,5 +1,5 @@
 Name: radicle
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
@@ -41,7 +41,7 @@ tar cf %SOURCE1 .cargo vendor
 %endif
 
 %install
-export GIT_HEAD=bbd1e2cff60cb80
+export GIT_HEAD=4a5a51e6e550456
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path crates/radicle-$p --root=%buildroot%_prefix
 done
@@ -73,6 +73,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Wed Jan 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
+- 1.6.0 released
+
 * Wed Oct 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
 - 1.5.0 released
 
