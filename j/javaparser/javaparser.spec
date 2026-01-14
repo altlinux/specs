@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: java-17-openjdk-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
 Version:       3.26.2
-Release:       alt1
+Release:       alt2
 Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or Apache-2.0
 URL:           https://javaparser.org
@@ -18,6 +18,8 @@ BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.javassist:javassist)
+BuildRequires:  mvn(org.checkerframework:checker-qual)
 
 BuildArch:     noarch
 Source44: import.info
@@ -69,11 +71,15 @@ sed -i \
 %pom_disable_module javaparser-core-testing
 %pom_disable_module javaparser-core-testing-bdd
 
-# Don't build the symbol solver
-%pom_disable_module javaparser-symbol-solver-core
-#%pom_disable_module javaparser-symbol-solver-logic
-#%pom_disable_module javaparser-symbol-solver-model
 %pom_disable_module javaparser-symbol-solver-testing
+
+# Add required checker-qual for javaparser-symbol-solver-core
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+    <groupId>org.checkerframework</groupId>
+    <artifactId>checker-qual</artifactId>
+    <version>3.52.0</version>
+</dependency>" javaparser-symbol-solver-core
 
 # Only need to ship the core module
 %pom_disable_module javaparser-core-generators
@@ -94,6 +100,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Wed Jan 14 2026 Anton Meleshnikov <alton@altlinux.org> 3.26.2-alt2
+- enabled javaparser-symbol-solver-core module
+
 * Tue Jan 13 2026 Anton Meleshnikov <alton@altlinux.org> 3.26.2-alt1
 - new version
 
