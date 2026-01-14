@@ -11,7 +11,7 @@ intrinsic headers such as <xmmintrin.h>, only implemented with NEON-based \
 counterparts to produce the exact semantics of the intrinsics.
 
 Name:    sse2neon
-Version: 1.8.0
+Version: 1.9.1
 Release: alt1
 Summary: A translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
@@ -47,16 +47,14 @@ mkdir -p %buildroot%_includedir
 install -pm644 %name.h %buildroot%_includedir/
 
 %check
+export CXXFLAGS='%optflags'
+# clang supports more instructions than gcc
+export CXX=clang++
+export CC=clang
 # checks are hw depended? Ignore then for now
 # failed tests:
-# [00:00:27] Test mm_set_rounding_mode           failed
-# [00:00:27] Test mm_setcsr                      failed
-# [00:00:27] Test mm_storeu_si64                 failed
-# [00:00:27] Test mm_cvtpd_epi32                 failed
-# [00:00:27] Test mm_cvtpd_pi32                  failed
-# [00:00:27] Test mm_cvttpd_epi32                failed
-# [00:00:27] Test mm_cvttpd_pi32                 failed
-# [00:00:28] Test mm_set_denormals_zero_mode     failed
+#[00:00:28] Test ftz_output_flush                    [FAIL]
+#[00:00:28] Test daz_input_flush                     [FAIL]
 make check ||:
 
 %files devel
@@ -65,6 +63,9 @@ make check ||:
 %_includedir/*
 
 %changelog
+* Wed Jan 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.9.1-alt1
+- 1.9.1.
+
 * Mon Feb 17 2025 L.A. Kostis <lakostis@altlinux.ru> 1.8.0-alt1
 - 1.8.0.
 
