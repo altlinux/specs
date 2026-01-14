@@ -2,7 +2,7 @@
 
 Name: pdfcsp
 Version: 0.4.0
-Release: alt1
+Release: alt2
 Summary: Library for CryptoPro PDF electronic signatures support.
 License: LGPL-3.0-or-later
 Group: System/Libraries
@@ -155,6 +155,9 @@ Command line tools for pdf signatures
 %_datadir/locale/ru_RU/LC_MESSAGES/signpdf.mo
 
 %changelog
+* Wed Jan 14 2026 Oleg Proskurin <proskur@altlinux.org> 0.4.0-alt2
+- Fix the build.
+
 * Mon Oct 13 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.0-alt1
 - New features:
   + Add machine-readable power of attorney (MRPA) support.
