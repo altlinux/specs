@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.6.0
+Version: 140.7.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -437,6 +437,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jan 14 2026 Pavel Vasenkov <pav@altlinux.org> 140.7.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-0877 Mitigation bypass in the DOM: Security component
+  + CVE-2026-0878 Sandbox escape due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-0879 Sandbox escape due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-0880 Sandbox escape due to integer overflow in the Graphics component
+  + CVE-2026-0882 Use-after-free in the IPC component
+  + CVE-2025-14327 Spoofing issue in the Downloads Panel component
+  + CVE-2026-0883 Information disclosure in the Networking component
+  + CVE-2026-0884 Use-after-free in the JavaScript Engine component
+  + CVE-2026-0885 Use-after-free in the JavaScript: GC component
+  + CVE-2026-0886 Incorrect boundary conditions in the Graphics component
+  + CVE-2026-0887 Clickjacking issue, information disclosure in the PDF Viewer component
+  + CVE-2026-0890 Spoofing issue in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-0891 Memory safety bugs fixed in Firefox ESR 140.7, Thunderbird ESR 140.7, Firefox 147 and Thunderbird 147
+
 * Wed Dec 10 2025 Pavel Vasenkov <pav@altlinux.org> 140.6.0-alt1
 - New ESR version.
 - Security fixes:
