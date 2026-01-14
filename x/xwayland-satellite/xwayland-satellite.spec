@@ -1,5 +1,5 @@
 Name: xwayland-satellite
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Xwayland outside your Wayland
@@ -41,5 +41,8 @@ install -vpD %SOURCE2 .cargo/config.toml
 %_bindir/xwayland-satellite
 
 %changelog
+* Wed Jan 14 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8-alt1
+- Update version.
+
 * Wed Nov 12 2025 Ilya Sorochan <k0tran@altlinux.org> 0.7-alt1
 - Initial build.
