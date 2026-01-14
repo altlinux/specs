@@ -4,8 +4,8 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 25.12.2
-Release: alt2
+Version: 25.12.31
+Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
 License: GPL-3.0-or-later
@@ -16,9 +16,6 @@ VCS: https://github.com/mltframework/shotcut.git
 ExcludeArch: armh
 
 Source: %name-%version.tar
-
-# https://github.com/mltframework/shotcut/pull/1764
-Patch: desktop-russian-translations.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -114,7 +111,6 @@ These are all currently implemented features:
 
 %prep
 %setup
-%autopatch -p1
 
 %ifarch %e2k
 sed -i '/ createIndex([^,()]*, [^,()]*, (int)0);$/s/(int)0/(quintptr)0/' \
@@ -151,6 +147,9 @@ done
 %_man1dir/*
 
 %changelog
+* Wed Jan 14 2026 Andrey Cherepanov <cas@altlinux.org> 25.12.31-alt1
+- New version.
+
 * Wed Dec 17 2025 Anton Midyukov <antohami@altlinux.org> 25.12.2-alt2
 - org.shotcut.Shotcut.desktop: add russian translations.
 
