@@ -14,11 +14,11 @@
 %define oname alt_releases_matrix
 
 Name: alt-releases-matrix
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: A comprehensive, cross-language set of constants and definitions related to ALT Linux repositories and distributions
-License: GPL-3.0
+License: LGPLv2.1+
 Group: Development/Other
 URL: https://altlinux.space/ALTLinux/alt-releases-matrix
 VCS: https://altlinux.space/ALTLinux/alt-releases-matrix.git
@@ -155,6 +155,9 @@ popd
 %files -n ocaml-%name -f generated/ocaml/ocaml-files.runtime
 
 %changelog
+* Wed Jan 14 2026 Danil Shein <dshein@altlinux.org> 0.2.2-alt1
+- changed library license: GPLv3 => LGPLv2.1+ 
+
 * Fri Dec 26 2025 Danil Shein <dshein@altlinux.org> 0.2.1-alt1
 - added bash library generation support
 - data: removed discontinued branches from active list:
