@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -25,7 +25,6 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: /proc
 %pyproject_builddeps_check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra all
 %endif
 
 %description
@@ -51,7 +50,7 @@ The key features are:
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -67,6 +66,10 @@ The key features are:
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
 export COLUMNS=135
+# Set TERM to "xterm-256color" because some tests rely on decorated output from
+# Python's Rich module. When "TERM=dumb", the Rich will disable any decorations
+# and output plain text.
+export TERM="xterm-256color"
 ## test_show_completion and test_install_completion
 # Deselect these tests because of typer doesn't support SH, but this shell is
 # run in hasher.
@@ -81,6 +84,9 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 15 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.1-alt1
+- Updated to 0.21.1.
+
 * Mon Dec 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.0-alt1
 - Updated to 0.21.0.
 
