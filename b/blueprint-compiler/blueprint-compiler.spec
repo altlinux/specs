@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.18
+%define ver_major 0.19
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_enable docs
@@ -8,7 +8,7 @@
 
 Name: blueprint-compiler
 Version: %ver_major.0
-Release: alt3%beta
+Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
@@ -18,7 +18,7 @@ Url: https://gitlab.gnome.org/jwestman/blueprint-compiler
 Vcs: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version%beta.tar.bz2
+Source: %url/-/archive/%version/%name-%version%beta.tar.bz2
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -72,6 +72,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Mon Nov 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt3
 - updated to 0.18.0-79-g70f32dc
 
