@@ -1,10 +1,8 @@
 Name:		pick
 Version:	4.0.0
-Release:	alt1
+Release:	alt2
 Summary:	Reads a list of choices from stdin and outputs the selected choice to stdout
 Source:		%name-%version.tar.gz
-Source1:	Makefile.inc
-Source2:	config.h
 URL:		https://github.com/mptre/pick
 Group:		Text tools
 License:	MIT
@@ -20,9 +18,9 @@ stdout.  Therefore it is easily used both in pipelines and subshells.
 
 %prep
 %setup
-cp %SOURCE1 %SOURCE2 .
 
 %build
+MAKEFLAGS="-O" PREFIX="%_prefix" MANDIR="%_mandir" ./configure
 %make_build
 
 %install
@@ -37,5 +35,8 @@ cp %SOURCE1 %SOURCE2 .
 make test
 
 %changelog
+* Thu Jan 15 2026 Fr. Br. George <george@altlinux.org> 4.0.0-alt2
+- Force handmade configure to work
+
 * Tue Dec 16 2025 Fr. Br. George <george@altlinux.org> 4.0.0-alt1
 - Initial build for ALT
