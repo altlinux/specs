@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 1.0.5
-Release: alt2
+Release: alt3
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -93,10 +93,10 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %build
 qmake-qt6
-%make_build debug
+%make_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot debug-install
+%makeinstall_std INSTALL_ROOT=%buildroot
 
 cp -r %name-parts %buildroot/%_datadir/%name
 install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
@@ -127,8 +127,11 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Jan 15 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt3
+- Made building parallel.
+
 * Fri Jun 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.5-alt2
-* Fully enabled ngspice simulation.
+- Fully enabled ngspice simulation.
 
 * Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Build new version.
