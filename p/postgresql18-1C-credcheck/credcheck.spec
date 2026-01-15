@@ -2,7 +2,7 @@
 %def_with jit
 
 Name: postgresql%pg_ver-credcheck
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: The credcheck PostgreSQL extension provides few general credential checks
@@ -51,6 +51,9 @@ By using this extension, we can define a set of rules:
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Jan 15 2026 Alexei Takaseev <taf@altlinux.org> 4.4-alt1
+- 4.4
+
 * Fri Dec 26 2025 Alexei Takaseev <taf@altlinux.org> 4.3-alt1
 - 4.3
 
