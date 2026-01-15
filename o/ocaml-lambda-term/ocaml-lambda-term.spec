@@ -1,6 +1,6 @@
 %define pkgname lambda-term
 Name: ocaml-%pkgname
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 Summary: Terminal manipulation library for OCaml
 
@@ -50,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 15 2026 Anton Farygin <rider@altlinux.org> 3.3.3-alt1
+- 3.3.2 -> 3.3.3
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 3.3.2-alt1
 - 3.3.2
 
