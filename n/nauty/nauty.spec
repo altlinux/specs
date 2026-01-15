@@ -1,7 +1,7 @@
-%define lver 2_9_1
+%define lver 2_9_3
 
 Name: nauty
-Version: 2.9.1
+Version: 2.9.3
 Release: alt1
 Epoch: 1
 
@@ -93,6 +93,9 @@ rm -f %buildroot%_libdir/{*.la,*.a}
 %_pkgconfigdir/libnauty*.pc
 
 %changelog
+* Thu Jan 15 2026 Leontiy Volodin <lvol@altlinux.org> 1:2.9.3-alt1
+- New version 2.9.3.
+
 * Thu Sep 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.9.1-alt1
 - New version 2.9.1.
 
