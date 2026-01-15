@@ -1,5 +1,5 @@
 Name: alterator-module-backend3
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Module for using backend3 scripts
@@ -33,6 +33,13 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Jan 15 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt1
+- Fix GMainContext for method timeout.
+- Fix forced backend3 process termination and its child processes. Before this
+  fix, when the backend3 process was forcefully terminated, its child
+  processes were not terminated.
+- Fix typo in warning.
+
 * Wed Oct 29 2025 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
 - Add the ability to supplement the input parameter with variables from the
   environment subtable in the method description. Values for such variables
