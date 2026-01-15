@@ -2,9 +2,10 @@
 # I have looked at all these errors and it is a formatting issue.
 # Needs to be investigated.
 %def_without check
+%define modules odoc-parser,odoc
 
 Name: ocaml-odoc
-Version: 2.4.4
+Version: 3.1.0
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -16,7 +17,7 @@ Patch0: %name-%version-%release.patch
 BuildRequires: ocaml >= 4.07.1
 BuildRequires: ocaml-findlib-devel
 BuildRequires: dune
-BuildRequires: ocaml-cmdliner-devel ocaml-bos-devel
+BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-camlp-streams-devel
 BuildRequires: ocaml-fmt-devel
@@ -27,7 +28,9 @@ BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-crunch
+BuildRequires: ocaml-compiler-libs
 %if_with check
+BuildRequires: ocaml-bos-devel
 BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: ocaml-markup-devel
 BuildRequires: ocaml-alcotest-devel
@@ -54,15 +57,15 @@ signature files for developing applications that use %name.
 %patch0 -p1
 
 %build
-%dune_build --release @install
+%dune_build -p %modules
 
 %install
-%dune_install
+%dune_install -p %modules
 
 mkdir -p %buildroot/%_docdir
 
 %check
-%dune_check
+%dune_check %modules
 
 %files -f ocaml-files.runtime
 %_docdir/*
@@ -72,6 +75,9 @@ mkdir -p %buildroot/%_docdir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 12 2026 Anton Farygin <rider@altlinux.org> 3.1.0-alt1
+- 2.4.4 -> 3.1.0
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
 - 2.4.3 -> 2.4.4
 

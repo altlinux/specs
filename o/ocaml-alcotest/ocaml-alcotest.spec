@@ -6,7 +6,7 @@
 
 %define libname alcotest
 Name: ocaml-%libname
-Version: 1.8.0
+Version: 1.9.1
 Release: alt1
 Summary: Alcotest is a lightweight and colourful test framework.
 Group: Development/ML
@@ -54,7 +54,6 @@ developing applications that use %name.
 %dune_install %libname
 rm -rf %buildroot/usr/doc
 
-
 %check
 %dune_check -p %libname %relax_check
 
@@ -64,6 +63,9 @@ rm -rf %buildroot/usr/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 1.9.1-alt1
+- 1.8.0 -> 1.9.1
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.7.0 -> 1.8.0
 
