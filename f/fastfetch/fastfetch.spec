@@ -1,5 +1,5 @@
 Name: fastfetch
-Version: 2.57.0
+Version: 2.57.1
 Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
@@ -90,6 +90,9 @@ popd
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Thu Jan 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.57.1-alt1
+- 2.57.0 -> 2.57.1
+
 * Tue Jan 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.57.0-alt1
 - 2.56.1 -> 2.57.0
 
