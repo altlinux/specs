@@ -1,6 +1,6 @@
 %global import_path github.com/moby/buildkit
 Name:     buildkit
-Version:  0.26.1
+Version:  0.26.3
 Release:  alt1
 
 Summary:  BuildKit is a toolkit for converting source code to build artifacts
@@ -20,6 +20,14 @@ Requires: containerd
 %description
 BuildKit is a toolkit for converting source code to build artifacts in an
 efficient, expressive and repeatable manner.
+
+%package rootless
+Summary: Use buildkit rootless
+Group: Other
+Requires: rootlesskit %name slirp4netns
+
+%description rootless
+%summary
 
 %prep
 %setup
@@ -43,12 +51,16 @@ export IGNORE_SOURCES=1
 %golang_install
 
 install -Dm 0644 examples/systemd/system/* -t %buildroot%_unitdir
+install -Dm 0644 examples/systemd/user/* -t %buildroot%_user_unitdir
 
 %post
 %post_service %name
 
 %preun
 %preun_service %name
+
+%files rootless
+%_user_unitdir/buildkit*
 
 %files
 %_bindir/*
@@ -57,6 +69,10 @@ install -Dm 0644 examples/systemd/system/* -t %buildroot%_unitdir
 %doc docs
 
 %changelog
+* Wed Jan 14 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.26.3-alt1
+- new version 0.26.3
+- add rootless package
+
 * Tue Nov 18 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.26.1-alt1
 - new version 0.26.1
 
