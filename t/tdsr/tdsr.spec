@@ -1,21 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    tdsr
-Version: 20240602
-Release: alt2
+Version: 20250830
+Release: alt1
 
 Summary: A console screen reader for macOS and Linux
 License: GPL-3.0
-Group:   Development/Python3
+Group:   Accessibility
 URL:     https://github.com/tspivey/tdsr
 Source: %name-%version.tar
-Patch0: 0001-Fixed-config-path.patch
 
-Requires: python3-module-pyte
-Requires: speech-dispatcher
+# Ignome macos requires
+%add_python3_req_skip PyObjCTools
+%add_python3_req_skip objc
+%add_python3_req_skip Foundation
+%add_python3_req_skip AVFoundation
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit-core
 
 BuildArch: noarch
 
@@ -29,27 +35,38 @@ What works
 * Reading by line, word and character
 * cursor keys (waits some amount of time and speaks)
 
+%package -n python3-module-%name
+Summary: Python3 module fore %name
+Group: Development/Python3
+
+%description -n python3-module-%name
+%summary
+
 %prep
 %setup
-%patch0 -p1
 
 %build
+%pyproject_build
 
 %install
-install -D -m 775 %name %buildroot%_bindir/%name
-install -D -m 775 speechdispatcher %buildroot%_bindir/speechdispatcher
-install -D -m 644 %name.cfg.dist %buildroot%_sysconfdir/%name.cfg
-install -D -m 444 COPYING.txt %buildroot%_docdir/%name-%version/COPYING.txt
-install -D -m 444 readme.md %buildroot%_docdir/%name-%version/readme.md
+%pyproject_install
+
+mkdir -p %buildroot%_sysconfdir/%name
+ln -s %python3_sitelibdir/%name/tdsr.cfg.dist %buildroot%_sysconfdir/%name/%name.cfg
 
 %files
-%config(noreplace) %_sysconfdir/%name.cfg
+%doc readme.md COPYING.txt
+%config(noreplace) %_sysconfdir/%name/%name.cfg
 %_bindir/%name
-%_bindir/speechdispatcher
-%_docdir/%name-%version/COPYING.txt
-%_docdir/%name-%version/readme.md
+
+%files -n python3-module-%name
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-0.0.dist-info
 
 %changelog
+* Wed Jan 14 2026 Artem Semenov <savoptik@altlinux.org> 20250830-alt1
+- Updated to latest pip version 20250830
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 20240602-alt2
 - Cleaned-up the spec
 
