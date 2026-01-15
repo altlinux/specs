@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: aurynk
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Wirelessly connect, manage and control your Android devices from Linux
@@ -78,6 +78,9 @@ sed -i "s|data/screenshots/|screenshots/|g" README.md
 %python3_sitelibdir/%name/
 
 %changelog
+* Thu Jan 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+
 * Mon Jan 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
 - New version 1.2.1 (closes: #57233).
 
