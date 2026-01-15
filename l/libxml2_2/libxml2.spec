@@ -1,83 +1,36 @@
-%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 0
 %set_verify_elf_method strict
 
 %define rname       libxml2
-%define abiversion  16
-%define libname %{rname}_%abiversion
+%define abiversion  2
+%define libname %rname
 
-Name: libxml2
-Version: 2.14.6
-Release: alt2
+Name: libxml2_%abiversion
+Version: 2.12.10
+Release: alt3
 Epoch: 1
 
 Summary: The library for manipulating XML files
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: https://gitlab.gnome.org/GNOME/libxml2
 Vcs: https://gitlab.gnome.org/GNOME/libxml2.git
 
-%def_with python2
 %def_disable static
-%def_without legacy
-%def_without icu
-%def_without readline
+%define srcname %name-%version
 
-Source: %name-%version.tar
+Source: %srcname.tar
 # https://www.w3.org/XML/Test/xmlts20130923.tar.gz
 Source1: xmlts.tar
 Patch: %name-%version-%release.patch
 
 Requires: xml-common
-%{?_with_legacy:BuildRequires: pkgconfig(zlib) pkgconfig(liblzma)}
-%{?_with_icu:BuildRequires: pkgconfig(icu-uc)}
-%{?_with_readline:BuildRequires: pkgconfig(readline)}
-%{?_with_docs:BuildRequires: xsltproc doxygen docbook-style-xsl}
 
-%if_with python2
-BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-%endif
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: liblzma-devel zlib-devel
 
 %package -n %libname
 Summary: %summary
-Group: System/Libraries
-
-%package devel
-Summary: Development environment for building applications manipulating XML files
-Group: Development/C
-Requires: %libname = %EVR
-
-%package devel-static
-Summary: Static library for building applications manipulating XML files
-Group: Development/C
-Requires: %rname-devel = %EVR
-
-%package -n xml-utils
-Summary: Various XML utilities
-Group: Text tools
-Requires: %libname = %EVR
-Provides: xmllint = %epoch:%version
-Obsoletes: xmllint < %epoch:%version
-
-%package -n python-module-%rname
-Summary: Python bindings for the %rname library
-Group: Development/Python
-Requires: %libname = %EVR
-Provides: libxml2-python = %epoch:%version, python-modules-%rname = %epoch:%version
-
-%package -n python3-module-%rname
-Summary: Python3 bindings for the %rname library
-Group: Development/Python3
-Requires: %libname = %EVR
-
-%package doc
-Summary: Documentation for the %rname library
-Group: Development/C
-Conflicts: %libname < %epoch:%version, %libname > %epoch:%version
-BuildArch: noarch
+Group: System/Legacy libraries
 
 %description
 This library allows to manipulate XML files.  It includes support
@@ -104,109 +57,37 @@ URI library.
 This package contains the shared library required to run
 applications manipulating XML files.
 
-%description devel
-This library allows to manipulate XML files.  It includes support
-to read, modify and write XML and HTML files.  There is DTDs support
-this includes parsing and validation even with complex DtDs, either
-at parse time or later once the document has been modified.  The output
-can be a simple SAX stream or and in-memory DOM like representations.
-In this case one can use the built-in XPath and XPointer implementation
-to select subnodes or ranges.  A flexible Input/Output mechanism is
-available, with existing HTTP and FTP modules and combined to an
-URI library.
-
-This package contains the libraries, include and other files
-you can use to develop applications manipulating XML files.
-
-%description devel-static
-This library allows to manipulate XML files.  It includes support
-to read, modify and write XML and HTML files.  There is DTDs support
-this includes parsing and validation even with complex DtDs, either
-at parse time or later once the document has been modified.  The output
-can be a simple SAX stream or and in-memory DOM like representations.
-In this case one can use the built-in XPath and XPointer implementation
-to select subnodes or ranges.  A flexible Input/Output mechanism is
-available, with existing HTTP and FTP modules and combined to an
-URI library.
-
-This package contains the static library you can use to develop
-statically linked applications manipulating XML files.
-
-%description -n xml-utils
-This package contains xml tools:
-+ xmllint - utility for parsing and validating XML files;
-+ xmlcatalog - command line tool to parse and manipulate XML or SGML
-catalog files.
-
-%description -n python-module-%rname
-This package contains a module that permits applications
-written in the Python programming language to use the interface
-supplied by the %rname library to manipulate XML files.
-
-This library allows to manipulate XML files.  It includes support
-to read, modify and write XML and HTML files.  There is DTDs support
-this includes parsing and validation even with complex DTDs, either
-at parse time or later once the document has been modified.
-
-%description -n python3-module-%rname
-This package contains a module that permits applications
-written in the Python3 programming language to use the interface
-supplied by the %rname library to manipulate XML files.
-
-This library allows to manipulate XML files.  It includes support
-to read, modify and write XML and HTML files.  There is DTDs support
-this includes parsing and validation even with complex DTDs, either
-at parse time or later once the document has been modified.
-
-%description doc
-This package contains documentation on the XML C library.
-
 %prep
-%setup -n %rname-%version -a1
+%setup -n %srcname -a1
 %patch -p1
 
 %build
+export ac_cv_path_WGET=/usr/bin/wget
+export ac_cv_path_XMLLINT=/usr/bin/xmllint
+export ac_cv_path_XSLTPROC=/usr/bin/xsltproc
+# disable dependency on binutils-devel
+export ac_cv_header_ansidecl_h=no
+mkdir -p m4
 %autoreconf
 mkdir build
 pushd build
 ln -s ../xmlconf
 mkdir -p fuzz
 %define _configure_script ../configure
-export PYTHON="%__python3"
 %configure \
-    %{subst_with python} \
+    --without-python \
     %{subst_enable static} \
-    %{subst_with legacy} \
-    %{subst_with icu} \
-    %{subst_with readline} \
     --disable-silent-rules
 %make_build DOC_MODULE=%rname-%version
 popd
-%if_with python2
-mkdir python2
-pushd python2
-export PYTHON="%__python"
-%configure \
-	%{subst_with python} \
-	--disable-static \
-	%{subst_with legacy} \
-	%{subst_with icu} \
-	%{subst_with readline} \
-	--disable-silent-rules
-cp -la ../build/{*.la,.libs} .
-%make_build -C python
-popd
-%endif
 
 %check
 %make_build DOC_MODULE=%rname-%version -k check -C build
 
 %install
 %makeinstall_std DOC_MODULE=%rname-%version -C build
-%if_with python2
-%makeinstall_std -C python2/python
-%endif
 find %buildroot -type f -name '*.la' -print -delete
+mv %buildroot%_datadir/aclocal/libxml{,2}.m4
 
 %define pkgdocdir %_docdir/%rname-%version
 mv %buildroot%_defaultdocdir/%rname %buildroot%pkgdocdir
@@ -221,48 +102,9 @@ rm -rf %buildroot%_defaultdocdir/%rname
 %pkgdocdir/NEWS
 %pkgdocdir/README.md
 
-%files -n xml-utils
-%_bindir/xmllint
-%_bindir/xmlcatalog
-%_man1dir/xmllint.*
-%_man1dir/xmlcatalog.*
-
-%files devel
-%_bindir/*-config
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*
-%_libdir/cmake/*
-%_man1dir/*-config*
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif	#enabled static
-
-%if_with python2
-%files -n python-module-%rname
-%python_sitelibdir/*
-%endif
-
-%files -n python3-module-%rname
-%python3_sitelibdir/*
-
-%files doc
-%dir %pkgdocdir
-%pkgdocdir/*.html
-%_datadir/gtk-doc/html/libxml2
-
 %changelog
-* Thu Dec 25 2025 Maxim Slipenko <maks1ms@altlinux.org> 1:2.14.6-alt2
-- Library package renamed to match the shared libs policy.
-
-* Wed Dec 24 2025 Alexey Shabalin <shaba@altlinux.org> 1:2.14.6-alt1
-- 2.14.6.
-- Build without legacy (without lzma and zlib support).
-- Drop ftp and http support.
-- Fixes: CVE-2025-6021, CVE-2025-6170, CVE-2025-49794, CVE-2025-49795,
-  CVE-2025-49796, CVE-2025-7425.
+* Thu Dec 25 2025 Maxim Slipenko <maks1ms@altlinux.org> 1:2.12.10-alt3
+- Packaged as a legacy library
 
 * Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 1:2.12.10-alt2
 - Add patch from openSuse for work around an issue with libxml2
