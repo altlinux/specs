@@ -4,7 +4,7 @@
 Name: gnome-shell-extension-arcmenu
 Epoch: 1
 Version: 68.0
-Release: alt2
+Release: alt3
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -49,6 +49,11 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Wed Jan 14 2026 Dmitry Udalov <udalov@altlinux.org> 1:68.0-alt3
+- New snapshot.
+- Improved duplicate items handling in icon grid.
+- Add option to show generic application names.
+
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 1:68.0-alt2
 - src/extension.js: remove undefined this._updateNotification.
 
