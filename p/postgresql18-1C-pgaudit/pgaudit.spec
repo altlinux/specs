@@ -1,7 +1,7 @@
-%define pg_ver 17-1C
+%define pg_ver 18-1C
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 17.1
+Version: 18.0
 Release: alt1
 
 Summary: PostgreSQL Audit Extension
@@ -47,6 +47,10 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Oct 22 2025 Alexei Takaseev <taf@altlinux.org> 18.0-alt1
+- 18.0
+- Build for PG 18
+
 * Wed Mar 19 2025 Alexei Takaseev <taf@altlinux.org> 17.1-alt1
 - 17.1
 

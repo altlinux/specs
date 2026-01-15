@@ -1,4 +1,4 @@
-%define pg_ver 17-1C
+%define pg_ver 18-1C
 %def_with jit
 
 Name: postgresql%pg_ver-pg_cron

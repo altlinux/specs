@@ -1,8 +1,8 @@
-%define pg_ver 17-1C
+%define pg_ver 18-1C
 %def_with jit
 
 Name: postgresql%pg_ver-pg_hint_plan
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 
 Summary: pg_hint_plan makes it possible to tweak PostgreSQL execution plans using so-called "hints" in SQL comments
@@ -62,5 +62,5 @@ install -pDm0644 docs/_build/man/pg_hint_plan.1 %buildroot%_man1dir/pg_hint_plan
 %_man1dir/*
 
 %changelog
-* Mon Nov 10 2025 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt1
+* Mon Nov 10 2025 Alexei Takaseev <taf@altlinux.org> 1.8.0-alt1
 - Initial build for ALT Linux

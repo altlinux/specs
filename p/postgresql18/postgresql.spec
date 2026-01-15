@@ -22,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     1
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -61,6 +61,7 @@ Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 # 1C
 Conflicts: %{prog_name}17-1C
+Conflicts: %{prog_name}18-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel libnuma-devel liburing-devel
@@ -136,6 +137,7 @@ Conflicts: %libpq_name-15
 Conflicts: %libpq_name-16
 Conflicts: %libpq_name-17
 Conflicts: %libpq_name-17-1C
+Conflicts: %libpq_name-18-1C
 
 %description -n %libpq_name-%postgresql_major
 C and C++ libraries to enable user programs to communicate with the
@@ -199,6 +201,7 @@ Conflicts: %libpq_name-15-devel
 Conflicts: %libpq_name-16-devel
 Conflicts: %libpq_name-17-devel
 Conflicts: %libpq_name-17-1C-devel
+Conflicts: %libpq_name-18-1C-devel
 
 %description -n %libpq_name-%postgresql_major-devel
 The libpq package provides the essential shared library for any PostgreSQL
@@ -226,6 +229,7 @@ Conflicts: %{prog_name}15-devel
 Conflicts: %{prog_name}16-devel
 Conflicts: %{prog_name}17-devel
 Conflicts: %{prog_name}17-1C-devel
+Conflicts: %{prog_name}18-1C-devel
 
 %description devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -258,6 +262,7 @@ Conflicts: rpm-macros-%prog_name-15
 Conflicts: rpm-macros-%prog_name-16
 Conflicts: rpm-macros-%prog_name-17
 Conflicts: rpm-macros-%prog_name-17-1C
+Conflicts: rpm-macros-%prog_name-18-1C
 
 %description -n rpm-macros-%prog_name-%postgresql_major
 RPM macros to PostgreSQL for build server extentions
@@ -279,6 +284,7 @@ Conflicts: %libecpg_name-15
 Conflicts: %libecpg_name-16
 Conflicts: %libecpg_name-17
 Conflicts: %libecpg_name-17-1C
+Conflicts: %libecpg_name-18-1C
 
 %description -n %libecpg_name-%postgresql_major
 An embedded SQL program consists of code written in an ordinary programming
@@ -301,6 +307,7 @@ Conflicts: %libecpg_name-15-devel
 Conflicts: %libecpg_name-16-devel
 Conflicts: %libecpg_name-17-devel
 Conflicts: %libecpg_name-17-1C-devel
+Conflicts: %libecpg_name-18-1C-devel
 
 %description -n %libecpg_name-%postgresql_major-devel
 ECPG development files.  You will need to install this package to build any
@@ -317,6 +324,7 @@ Conflicts: %libecpg_name-15-devel-static
 Conflicts: %libecpg_name-16-devel-static
 Conflicts: %libecpg_name-17-devel-static
 Conflicts: %libecpg_name-17-1C-devel-static
+Conflicts: %libecpg_name-18-1C-devel-static
 
 %description -n %libecpg_name-%postgresql_major-devel-static
 Development static library for %libecpg_name-%postgresql_major-devel
@@ -341,6 +349,7 @@ Conflicts: %{prog_name}15-server-devel
 Conflicts: %{prog_name}16-server-devel
 Conflicts: %{prog_name}17-server-devel
 Conflicts: %{prog_name}17-1C-server-devel
+Conflicts: %{prog_name}18-1C-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -352,6 +361,7 @@ Group: Databases
 BuildArch: noarch
 # 1C
 Conflicts: %{prog_name}17-1C-docs
+Conflicts: %{prog_name}18-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -366,6 +376,7 @@ Requires: %name-server = %EVR
 Provides: %prog_name-contrib = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-contrib
+Conflicts: %{prog_name}18-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -381,6 +392,7 @@ Requires: glibc-locales
 Provides: %prog_name-server = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-server
+Conflicts: %{prog_name}18-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -401,6 +413,7 @@ Requires: %name-server = %EVR
 Provides: %prog_name-tcl = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-tcl
+Conflicts: %{prog_name}18-1C-tcl
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -414,6 +427,7 @@ Requires: %name-server = %EVR
 Provides: %prog_name-perl = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-perl
+Conflicts: %{prog_name}18-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -427,6 +441,7 @@ Requires: %name-server = %EVR
 Provides: %prog_name-python = %EVR
 # 1C
 Conflicts: %{prog_name}17-1C-python
+Conflicts: %{prog_name}18-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -716,6 +731,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}18-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}18-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -1122,6 +1142,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 14 2026 Alexei Takaseev <taf@altlinux.org> 18.1-alt2
+- Add Conflicts: 18-1C
+
 * Wed Nov 12 2025 Alexei Takaseev <taf@altlinux.org> 18.1-alt1
 - 18.1 (Fixes CVE-2025-12817, CVE-2025-12818)
 
