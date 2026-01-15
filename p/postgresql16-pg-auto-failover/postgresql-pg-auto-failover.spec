@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-pg-auto-failover
 Version: 2.2
-Release: alt1
+Release: alt2
 
 Summary: Postgres %pg_ver extension and service for automated failover and high-availability
 License: PostgreSQL
@@ -29,6 +29,7 @@ BuildRequires: setproctitle-devel
 BuildRequires: libreadline-devel
 BuildRequires: libselinux-devel
 BuildRequires: libecpg6-%pg_ver-devel-static
+BuildRequires: libnuma-devel
 
 Requires: postgresql%pg_ver-server
 Provides: pg-auto-failover
@@ -61,6 +62,10 @@ by the monitor.
 %_datadir/pgsql/extension
 
 %changelog
+* Thu Jan 15 2026 Alexei Takaseev <taf@altlinux.org> 2.2-alt2
+- Add support PostgreSQL 18
+- Add BR libnuma-devel
+
 * Fri Apr 04 2025 Alexei Takaseev <taf@altlinux.org> 2.2-alt1
 - 2.2
 
