@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
-Summary: Provides library functionality for communicating with a FIDO device over USB as well as verifying attestation and assertion signatures
+Summary: FIDO2/WebAuthn library for implementing clients and servers
 License: BSD-2-Clause and Apache-2.0 and MPL-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/fido2/
@@ -38,7 +38,7 @@ as well as verifying attestation and assertion signatures.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -56,6 +56,9 @@ as well as verifying attestation and assertion signatures.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 15 2026 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1
 - Updated to 2.0.0.
 
@@ -80,4 +83,3 @@ as well as verifying attestation and assertion signatures.
 
 * Sat Jul 23 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
-
