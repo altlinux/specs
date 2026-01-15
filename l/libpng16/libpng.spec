@@ -1,11 +1,12 @@
 Name: libpng16
-Version: 1.6.53
+Version: 1.6.54
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
 License: PNGv2
 Group: System/Libraries
 Url: http://www.libpng.org/pub/png/
+VCS: https://github.com/pnggroup/libpng
 
 Provides: libpng = %version
 Conflicts: libpng15 < 1.5.28-alt2
@@ -17,7 +18,7 @@ BuildRequires: zlib-devel
 %package -n libpng-devel
 Summary: PNG development library
 Group: Development/C
-Requires: libpng16 = %version-%release, zlib-devel
+Requires: libpng16 = %EVR
 Conflicts: libpng15-devel
 Conflicts: libpng12-devel
 
@@ -78,6 +79,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Thu Jan 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.54-alt1
+- 1.6.54 (fixes: CVE-2026-22695, CVE-2026-22801)
+
 * Mon Dec 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.53-alt1
 - 1.6.53 released
 
