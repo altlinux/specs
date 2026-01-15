@@ -7,7 +7,7 @@
 %define docdir %_docdir/%name-doc-%version
 
 Name: python3-module-%modulename
-Version: 5.0.1
+Version: 7.2.0
 Release: alt1
 
 Summary: Textual is a Rapid Application Development framework for Python
@@ -60,6 +60,8 @@ rm src/textual/drivers/win32.py
 
 %install
 %pyproject_install
+rm -rf %buildroot%python3_sitelibdir/textual/demo
+rm -f %buildroot%python3_sitelibdir/textual/__main__.py
 
 # test_snapshots needs GUI mode, tested locally
 # test_textual_env_var assert None is not None
@@ -80,6 +82,10 @@ rm src/textual/drivers/win32.py
 %doc docs/* examples/
 
 %changelog
+* Thu Jan 15 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 7.2.0-alt1
+- New version (7.2.0).
+- Exclude upstream demo from the main package to avoid packaging demo as public provides.
+
 * Wed Jul 30 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 5.0.1-alt1
 - New version (5.0.1).
 
