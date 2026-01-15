@@ -3,7 +3,7 @@
 
 Name:    gz-plugin
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform C++ library for dynamically loading plugins
 License: Apache-2.0
@@ -62,7 +62,7 @@ Group: Development/C++
 %ninja_install -C "%_cmake__builddir"
 
 %check
-%ctest
+%ctest --parallel 1
 
 %files
 %doc AUTHORS README.md
@@ -92,6 +92,9 @@ Group: Development/C++
 %_libdir/libgz-plugin-loader.so
 
 %changelog
+* Tue Dec 23 2025 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt2
+- Fix FTBFS: race condition in tests.
+
 * Tue Dec 23 2025 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt1
 - New version.
 
