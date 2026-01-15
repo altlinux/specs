@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Backport of compression.zstd
 License: PSF-2.0
@@ -37,9 +37,6 @@ BuildRequires: libzstd-devel
 rm -r src/c/zstd/
 # workaround for generating zstd license (see setup.py for details)
 mkdir src/c/zstd && touch src/c/zstd/LICENSE
-# drop legacy pkgutil-style namespace in favour of the native one
-# https://github.com/brandon-rhodes/backports
-rm src/python/backports/__init__.py
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -61,6 +58,9 @@ export BACKPORTSZSTD_SKIP_EXTENSION_TEST=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 15 2026 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.0 -> 1.3.0.
+
 * Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
