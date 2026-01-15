@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    lios
-Version: 20241022
-Release: alt2
+Version: 20250608
+Release: alt1
 
 Summary: Linux-intelligent-ocr-solution
 License: GPL-3.0
@@ -77,6 +77,9 @@ chmod 755 %buildroot%_bindir/%name
 %python3_sitelibdir/%name-2.5.dist-info
 
 %changelog
+* Thu Jan 15 2026 Artem Semenov <savoptik@altlinux.org> 20250608-alt1
+- Updated to new version 20250608
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 20241022-alt2
 - Cleaned-up the spec
 
