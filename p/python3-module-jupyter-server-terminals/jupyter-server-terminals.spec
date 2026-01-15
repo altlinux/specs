@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.3
-Release: alt2
+Version: 0.5.4
+Release: alt1
 
 Summary: A Jupyter Server Extension Providing Support for Terminals
 License: BSD-3-Clause
@@ -57,6 +57,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/*.json \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 15 2026 Anton Vyatkin <toni@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt2
 - Fix FTBFS.
 
