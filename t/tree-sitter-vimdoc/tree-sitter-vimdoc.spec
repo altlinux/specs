@@ -1,6 +1,6 @@
 Name: tree-sitter-vimdoc
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Vimdoc grammar for tree-sitter
 License: Apache-2.0
@@ -22,14 +22,20 @@ Source: %name-%version.tar
 install -pm0644 -D libtree-sitter-vimdoc.so %buildroot%_libdir/libtree-sitter-vimdoc.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-vimdoc/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-vimdoc
+mkdir -p %buildroot%_datadir/tree-sitter/queries/vimdoc
+cp -a queries/vimdoc/* %buildroot%_datadir/tree-sitter/queries/vimdoc
 
 %files
 %doc LICENSE* README*
 %_libdir/*.so
 %_libdir/*.so*
 %_libdir/tree-sitter-vimdoc
+%_datadir/tree-sitter/queries/vimdoc
 
 %changelog
+* Thu Jan 15 2026 Vladimir Didenko <cow@altlinux.org> 4.1.0-alt2
+- pack query files
+
 * Wed Dec 17 2025 Vladimir Didenko <cow@altlinux.org> 4.1.0-alt1
 - new version
 
