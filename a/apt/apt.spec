@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt98
+Release: alt99
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -318,6 +318,7 @@ Group: Other
 BuildArch: noarch
 Requires(pre): %name-tests
 Requires(pre): %name = %EVR
+Requires(pre): gpg-keygen
 
 %description basic-checkinstall
 Immediately test %name when installing this package.
@@ -339,8 +340,6 @@ if [ -n "$found_unwanted_reqs_of_tests" ]; then
     exit 1
 fi
 
-pushd %_datadir/%name/tests/
-
 # force the target arch for the tests
 #
 # By default, the packages would be built for the arch detected by rpm-build
@@ -351,6 +350,14 @@ pushd %_datadir/%name/tests/
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
 export APT_TEST_TARGET="$system_arch"
 
+# prepare data for rpm --import
+APT_TEST_GPGPUBKEY="$PWD"/example-pubkey.asc
+gpg-keygen --passphrase '' \
+	--name-real 'Some One' --name-email someone@example.com \
+	/dev/null "$APT_TEST_GPGPUBKEY"
+
+export APT_TEST_GPGPUBKEY
+
 # cache built pkgs and other stuff
 APT_TEST_INTERMEDIATES="$(mktemp -d)"
 export APT_TEST_INTERMEDIATES
@@ -358,9 +365,9 @@ export APT_TEST_INTERMEDIATES
 # this macro can be prefixed (e.g., by environment assignments),
 # therefore the extra backslash in the first line
 %global runtests \\\
-		./run-tests -v
+		%_datadir/%name/tests/run-tests -v
 
-# A quick test with just one method for the case without APT_TEST_GPGPUBKEY.
+# A quick test with just one method
 APT_TEST_METHODS='file' APT_TEST_http_METHODS= %runtests
 
 # The same tests, but just via cdrom with a missing release:
@@ -373,7 +380,6 @@ BuildArch: noarch
 Requires(pre): %name-tests
 Requires(pre): %name = %EVR
 Requires(pre): %complete_reqs_of_tests
-Requires(pre): gpg-keygen
 
 %description checkinstall
 Immediately test %name when installing this package.
@@ -385,7 +391,6 @@ and some additional peculiarities are tested).
 
 %pre checkinstall -p %_sbindir/sh-safely
 set -o pipefail
-pushd %_datadir/%name/tests/
 
 # This option makes sense just for the maintainer (to test the tests).
 # This option makes the built pkgs be saved under a special filename
@@ -405,14 +410,6 @@ pushd %_datadir/%name/tests/
 # at least, on armh. So, we set the target by force to a value that must work.
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
 export APT_TEST_TARGET="$system_arch"
-
-# prepare data for rpm --import
-APT_TEST_GPGPUBKEY="$PWD"/example-pubkey.asc
-gpg-keygen --passphrase '' \
-	--name-real 'Some One' --name-email someone@example.com \
-	/dev/null "$APT_TEST_GPGPUBKEY"
-
-export APT_TEST_GPGPUBKEY
 
 # cache built pkgs and other stuff
 APT_TEST_INTERMEDIATES="$(mktemp -d)"
@@ -442,7 +439,6 @@ in parallel) in order to possibly detect races
 
 %pre xxtra-heavy-load-checkinstall -p %_sbindir/sh-safely
 set -o pipefail
-pushd %_datadir/%name/tests/
 
 # force the target arch for the tests
 #
@@ -466,7 +462,7 @@ export APT_TEST_GPGPUBKEY
 APT_TEST_INTERMEDIATES="$(mktemp -d)"
 export APT_TEST_INTERMEDIATES
 
-. ./run-tests.defaults.sh
+. %_datadir/%name/tests/run-tests.defaults.sh
 
 all_unique_methods=('' $(for method in "${APT_TEST_ALL_METHODS[@]}" "${APT_TEST_ALL_http_METHODS[@]}"; do echo "$method"; done | sort -u))
 readonly -a all_unique_methods
@@ -608,8 +604,14 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Thu Jan 15 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt99
+- basic-checkinstall subpkg:
+  + Do the testing with an installed GPG key in this subpkg.
+  + Fixed permission issues when running it unpriviledged. (ALT#54672)
+
 * Sun Nov 02 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.5.15lorg2-alt98
-- Fixed size mismatch for files >2GB by using strtoul() instead of atoi() in acquire-worker (ALT#56327).
+- Fixed size mismatch for files >2GB by using strtoul() instead of atoi()
+  in acquire-worker (ALT#56327).
 
 * Wed Jul 02 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.5.15lorg2-alt97
 - Increased the pkgpriorities buffer size from 32*1024 to 128*1024 (Closes: #55057).
@@ -618,6 +620,16 @@ exec 1>&2
 - Added support for HTTPS connections through an HTTP proxy (ALT#38543).
   (Backported from Debian 1.5_alpha4~9.) (To come next: through HTTPS proxy.)
   Applicable configuration is the same as for HTTP.
+- Fixes:
+  + OVE-20250602-0002 Not using HTTPS from behind a proxy opens doors for
+  exploiting APT's bugs.
+  When using APT from behind a proxy, impossibility to use a trusted
+  connection to the trusted vendor's HTTPS server may open doors for an
+  attack on APT's http method that would make APT misbehave and execute
+  arbitrary code (in a package) prepared by an attacker who controls one
+  of the connection nodes, e.g., by exploiting any bug in APT that would
+  lead to misinterpretation of internal responses from the http method,
+  which--among other things--has the power to fake computed checksums.
 
 * Wed May 21 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt95
 - Restricted access to files output by Debug::Connect (to protect secrets).
@@ -672,6 +684,15 @@ exec 1>&2
   when looking for the end of headers, so headers and content got corrupt.)
   + Implemented Debug::Connect config parameter (a dir; if set, operations
   on the FDs from Connect() are logged there with all the data).
+- Fixes:
+  + OVE-20250602-0001 Failure to complete an HTTP download may prevent a timely
+  security update.
+  An error in APT's http method may prevent it to complete an HTTP download and
+  to do a security update on time. In practice, this was observed intermittently
+  when working through a specific proxy server, namely tinyproxy, due to
+  specific sizes of the chunks in which data was transferred.
+  Workaround: try more times; or download the file with an external tool and put
+  it into APT's download cache directory.
 - tests:
   + Decoupled testing just HTTPS from testing certificate pinning.
   + Added testing HTTP(S) over HTTP proxy beside testing just HTTP(S).
