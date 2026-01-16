@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Curtail
-%define ver_major 1.14
+%define ver_major 1.15
 %define xdg_name com.github.huluti.%_name
 
 %def_enable check
@@ -26,7 +26,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 %add_python3_path %_datadir/%name
 
-%define adwaita_ver 1.6
+%define adwaita_ver 1.8
+%define oxipng_ver 10
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -35,7 +36,7 @@ Requires: jpegoptim
 Requires: pngquant
 Requires: /usr/bin/cwebp
 Requires: /usr/bin/scour
-Requires: oxipng
+Requires: oxipng >= %oxipng_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
@@ -74,6 +75,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
+- 1.15.0
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
