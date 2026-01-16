@@ -1,6 +1,6 @@
 %def_with doc
 Name:    csvkit
-Version: 2.0.1
+Version: 2.2.0
 Release: alt1
 
 Summary: A suite of utilities for converting to and working with CSV, the king of tabular file formats
@@ -64,6 +64,12 @@ cp docs/_build/man/*.1 %buildroot%_man1dir
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jan 16 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
+* Tue Mar 11 2025 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Tue Jul 16 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
