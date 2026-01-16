@@ -1,5 +1,5 @@
 Name: xdp-tools
-Version: 1.5.7
+Version: 1.6.0
 Release: alt1
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -7,11 +7,12 @@ Group: Development/Tools
 Url: https://github.com/xdp-project/xdp-tools
 
 Source0: xdp-tools-%version.tar
+Patch: xdpsock-alt-types.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define llvm_version 20.1
+%define llvm_version 21.1
 
 %add_debuginfo_skiplist  %_libdir/bpf/*.o
 %add_verify_elf_skiplist %_libdir/bpf/*.o
@@ -56,7 +57,9 @@ libxdp.
 
 %prep
 %setup
+%ifarch %ix86
 %autopatch -p1
+%endif
 
 %build
 export LIBDIR='%_libdir'
@@ -114,12 +117,17 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Fri Jan 16 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
+- 1.6.0.
+- Bump llvm to 21.1.
+- %%ix86: fix type format errors.
+
 * Mon Nov 17 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.7-alt1
 - 1.5.7.
 
 * Mon Aug 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.6-alt1
 - 1.5.6.
-- Bump llvm 20.1.
+- Bump llvm to 20.1.
 
 * Mon Jun 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt1
 - 1.5.5.
