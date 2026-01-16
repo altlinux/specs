@@ -22,7 +22,7 @@
 
 Name: %_name
 Version: %ver_major.4
-Release: alt2%beta
+Release: alt2.1%beta
 
 Summary: Tools and library to rectifying the defects introduced by your photographic equipment.
 Group: System/Libraries
@@ -42,7 +42,7 @@ Requires: %_name-tools = %EVR
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: cmake gcc-c++ libgomp-devel
-BuildRequires: glib2-devel libpng-devel
+BuildRequires: glib2-devel libpng-devel zlib-devel
 BuildRequires: doxygen
 BuildRequires: python3-devel python3-module-setuptools python3-module-docutils
 %{?_enable_check:BuildRequires: ctest}
@@ -161,6 +161,9 @@ popd
 %_datadir/%name/version_%api_ver/
 
 %changelog
+* Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt2.1
+- fixed BR
+
 * Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt2
 - updated to v0.3.4-1-gebfbe426
 - restored provides
