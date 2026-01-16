@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: iotas
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -32,7 +32,7 @@ Requires: python3-module-mdit-plugins >= 0.5.0
 # https://bugzilla.altlinux.org/55824
 Requires: python3-module-markdown-it >= 4.0.0
 # https://bugzilla.altlinux.org/56289
-Requires: python3-module-pypandoc >= 1.15
+Requires: python3-module-pypandoc >= 1.16.2
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -94,6 +94,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
+- 0.12.6
+
 * Thu Nov 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.5-alt1
 - 0.12.5
 
