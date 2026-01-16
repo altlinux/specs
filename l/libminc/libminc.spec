@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1 
+%define soname 5.3.0
 
 Name: libminc
-Version: 2.4.3
-Release: alt2.1
+Version: 2.4.07
+Release: alt1
 
 Group: System/Libraries
 Summary: The core library and API of the MINC toolkit 
@@ -29,9 +30,17 @@ to users.
 %description 
 %_description
 
+%package -n libminc2_%soname
+Summary: The core library and API of the MINC toolkit
+Group: System/Libraries
+%description -n libminc2_%soname
+%_description
+
 %package devel
 Summary: Development files for libminc
 Group: Development/C
+Requires: libminc2_%soname = %EVR
+
 %description devel 
 This package contains development files for libminc.
 %_description
@@ -53,16 +62,19 @@ This package contains development files for libminc.
 %install
 %cmake_install
 
-%files
+%files -n libminc2_%soname
 %doc README COPYING NEWS ChangeLog
-%_libdir/lib*.so.*
+%_libdir/libminc2.so.%soname
 
 %files devel
-%_libdir/lib*.so
-%_libdir/cmake/%name/*.cmake
+%_libdir/libminc2.so
+%_libdir/cmake/libminc
 %_includedir/*
 
 %changelog
+* Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 2.4.07-alt1
+- 2.4.3 -> 2.4.07
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 2.4.3-alt2.1
 - NMU: spec: adapted to new cmake macros.
 

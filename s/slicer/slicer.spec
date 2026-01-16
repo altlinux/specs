@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %def_with fftw
-%define slicerver 5.8
+%define slicerver 5.10
 
 Name: slicer
-Version: %slicerver.1
+Version: %slicerver.0
 Release: alt1
 Summary: Medical Visualization and Processing Environment for Research
 %if_with fftw
@@ -29,12 +29,18 @@ Source3: slicer.desktop
 
 Patch1: slicer-5.3.0-upstream-wc-last-change-date-fix.patch
 Patch2: slicer-5.6.1-alt-itk-compat.patch
-Patch3: slicer-5.8.0-alt-build.patch
-Patch4: slicer-5.8.0-alt-python3-compat.patch
-Patch5: slicer-5.8.0-alt-vtk-compat-findpoint.patch
-Patch6: slicer-5.8.0-alt-vtk-compat-unused-headers.patch
-Patch7: slicer-5.8.0-alt-vtk-compat-version-check.patch
-Patch8: slicer-5.8.1-alt-BUG-Cast-u8-prefix-literals-to-const-char.patch
+Patch3: slicer-5.10.0-alt-build.patch
+Patch4: slicer-5.10.0-alt-python3-compat.patch
+Patch5: slicer-5.10.0-alt-vtk-compat-findpoint.patch
+Patch6: slicer-5.10.0-alt-fix-icon-engine-moc.patch
+Patch7: slicer-5.10.0-alt-itk-axesreorder-compat.patch
+Patch8: slicer-5.10.0-alt-python313-compat.patch
+# Disabled: rapidjson cmake config fixed in rapidjson-1.1.0-alt9
+#Patch9: slicer-5.10.0-alt-rapidjson-header-only.patch
+# RapidJSON is header-only, so don't link against it
+Patch10: slicer-5.10.0-alt-rapidjson-no-link.patch
+# Fix MOC generation for Qt plugins (CTK macros require explicit MOC_SRCS)
+Patch11: slicer-5.10.0-alt-fix-qt-plugins-moc.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-cmake
@@ -140,7 +146,6 @@ find . -name '*.py' | xargs sed -i \
 	-e '1s|^#!/usr/bin/python$|#!/usr/bin/python3|' \
 	%nil
 
-
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
@@ -180,6 +185,8 @@ find . -name '*.py' | xargs sed -i \
 install -d %buildroot%_bindir
 cat > %buildroot%_bindir/Slicer << END
 #!/bin/sh
+# Force XCB platform to avoid Wayland/GLX issues
+export QT_QPA_PLATFORM=xcb
 exec %_libdir/Slicer-%slicerver/Slicer "\$@"
 END
 
@@ -193,7 +200,6 @@ find %buildroot%_libdir/Slicer-%slicerver -name '*.so*' | while read i ; do
 	ln -sr $i %buildroot%_libdir/
 done
 
-
 # install desktop file and icon
 install -d %buildroot%_desktopdir
 install -m644 %SOURCE3 %buildroot%_desktopdir/
@@ -204,6 +210,10 @@ install -m644 Resources/3DSlicer-DesktopIcon.png %buildroot%_datadir/%name/
 # remove unpackaged files
 find %buildroot%_libdir -name '*.a' -delete
 find %buildroot%_libdir/Slicer-%slicerver/share/Slicer-%slicerver/Wizard/Templates -name '*.h' -delete
+
+# Disable CTKAppLauncher splash screen (Slicer has its own Qt splash)
+sed -i 's/launcherNoSplashScreen=false/launcherNoSplashScreen=true/' \
+    %buildroot%_libdir/Slicer-%slicerver/bin/SlicerLauncherSettings.ini
 
 # generated cmake files require a lot of fixing before they'd become useable
 rm -rf %buildroot%_libdir/cmake
@@ -236,6 +246,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 5.10.0-alt1
+- 5.8.1 -> 5.10.0
+
 * Wed Jul 30 2025 Vasiliy Kovalev <kovalev@altlinux.org> 5.8.1-alt1
 - NMU: 5.8.0 -> 5.8.1.
 - spec: Add condition FFTW3 support and license change (enabled by default).

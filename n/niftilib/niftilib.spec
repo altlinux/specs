@@ -1,19 +1,27 @@
+%define libznz_soname 3
+%define libniftiio_soname 2
+%define libnifti2_soname 2
+%define libnifticdf_soname 2
+
 Name: niftilib
-Version: 0.20100720
-Release: alt4
+Version: 3.0.1
+Release: alt1
 Summary: A set of i/o libraries for reading and writing nifti-1 files
-License: Public
+License: ALT-Public-Domain
 Group: File tools
-Url: http://niftilib.sourceforge.net/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/NIFTI-Imaging/nifti_clib
+VCS: https://github.com/NIFTI-Imaging/nifti_clib.git
+Source: %name-%version.tar
+Patch0: niftilib-3.0.1-fedora-dont-get-version-from-git.patch
 
-# cvs -z3 -d:pserver:anonymous@niftilib.cvs.sourceforge.net:/cvsroot/niftilib co -P Clibs
-Source: %name-%version.tar.gz
-Source1: CMakeCache.txt
-
-Requires: lib%name = %version-%release
-
-BuildPreReq: cmake gcc-c++ zlib-devel doxygen ctest
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: zlib-devel
+BuildRequires: ctest
+BuildRequires: doxygen
+BuildRequires: /usr/bin/help2man
+BuildRequires: libexpat-devel
+BuildRequires: /proc
 
 %description
 Niftilib is a set of i/o libraries for reading and writing files in the
@@ -21,22 +29,45 @@ nifti-1 data format. nifti-1 is a binary file format for storing medical
 image data, e.g. magnetic resonance image (MRI) and functional MRI
 (fMRI) brain images.
 
-%package -n lib%name
-Summary: Shared libraries of Niftilib
+%package -n libznz%libznz_soname
+Summary: Low-level library for handling read/write of compressed files
 Group: System/Libraries
 
-%description -n lib%name
-Niftilib is a set of i/o libraries for reading and writing files in the
-nifti-1 data format. nifti-1 is a binary file format for storing medical
-image data, e.g. magnetic resonance image (MRI) and functional MRI
-(fMRI) brain images.
+%description -n libznz%libznz_soname
+Low-level library for handling read/write of compressed files.
+This is part of the Niftilib package.
 
-This package contains shared libraries of Niftilib.
+%package -n libniftiio%libniftiio_soname
+Summary: Core i/o routines for reading and writing nifti-1 format files
+Group: System/Libraries
+
+%description -n libniftiio%libniftiio_soname
+Core i/o routines for reading and writing nifti-1 format files.
+Primarily routines to read/write and manipulate the header field
+information, including orientation matrices.
+
+%package -n libnifti2_%libnifti2_soname
+Summary: Core i/o routines for reading and writing nifti-2 format files
+Group: System/Libraries
+
+%description -n libnifti2_%libnifti2_soname
+Core i/o routines for reading and writing nifti-2 format files.
+
+%package -n libnifticdf%libnifticdf_soname
+Summary: Functions to compute cumulative distributions and their inverses
+Group: System/Libraries
+
+%description -n libnifticdf%libnifticdf_soname
+Functions to compute cumulative distributions and their inverses.
+This is part of the Niftilib package.
 
 %package -n lib%name-devel
 Summary: Development files of Niftilib
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: libznz%libznz_soname = %EVR
+Requires: libniftiio%libniftiio_soname = %EVR
+Requires: libnifti2_%libnifti2_soname = %EVR
+Requires: libnifticdf%libnifticdf_soname = %EVR
 
 %description -n lib%name-devel
 Niftilib is a set of i/o libraries for reading and writing files in the
@@ -59,77 +90,79 @@ image data, e.g. magnetic resonance image (MRI) and functional MRI
 
 This package contains development documentation for Niftilib.
 
-%package examples
-Summary: Examples for Niftilib
-Group: Development/Documentation
-Requires: lib%name = %version-%release
-
-%description examples
-Niftilib is a set of i/o libraries for reading and writing files in the
-nifti-1 data format. nifti-1 is a binary file format for storing medical
-image data, e.g. magnetic resonance image (MRI) and functional MRI
-(fMRI) brain images.
-
-This package contains examples for Niftilib.
-
 %prep
 %setup
-install -m644 %SOURCE1 .
+%patch0 -p0
 
 %build
-ls examples >EXAMPLES_FILES
 
-cmake \
-	-DCMAKE_C_FLAGS:STRING="%optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	.
-%make_build VERBOSE=1
+%cmake \
+    -DGIT_REPO_VERSION:STRING="%{version}" \
+    -DBUILD_SHARED_LIBS=ON \
+    -DNIFTI_BUILD_APPLICATIONS=ON \
+    -DNIFTI_BUILD_TESTING=ON \
+    -DNIFTI_INSTALL_NO_DOCS=OFF \
+    -DBUILD_TESTING=ON \
+    -DDOWNLOAD_TEST_DATA=OFF \
+    -DUSE_NIFTI2_CODE=ON \
+    -DUSE_CIFTI_CODE=ON \
+    -DUSE_FSL_CODE=OFF \
+    -DNIFTI_INSTALL_LIBRARY_DIR=%{_lib} \
+    -DNIFTI_INSTALL_DOC_DIR=%{_docdir}/%{name}/ \
+    -Dfetch_testing_data_SOURCE_DIR:PATH=%{_builddir}/nifti-test-data-3.0.2 \
+    .
 
-pushd docs
-doxygen Doxy_nifti.txt
-popd
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
-if [ ! -d %buildroot%_libdir ]; then
-	install -d %buildroot%_libdir
-	mv %buildroot%_libexecdir/* %buildroot%_libdir/
-fi
+# Rename man pages (they are installed with _manpage suffix)
+for f in nifti1_tool nifti_stats nifti_tool; do
+    if [ -f %buildroot%_mandir/man1/${f}_manpage.1* ]; then
+        mv %buildroot%_mandir/man1/${f}_manpage.1* %buildroot%_mandir/man1/${f}.1
+    fi
+done
 
-install -d %buildroot%_docdir/lib%name-devel/examples
-install -d %buildroot%_man3dir
-cp -fR docs/html/* %buildroot%_docdir/lib%name-devel
-install -m644 docs/man/man3/* %buildroot%_man3dir
-
-pushd examples
-cp $(cat ../EXAMPLES_FILES) \
-	%buildroot%_docdir/lib%name-devel/examples/
-popd
-sed -i 's|^|%_docdir/lib%name-devel/examples/|' EXAMPLES_FILES
 
 %files
 %doc LICENSE Updates.txt
 %_bindir/*
-%exclude %_bindir/fsl_api_driver
+%_man1dir/*
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n libznz%libznz_soname
+%_libdir/libznz.so.%libznz_soname
+%_libdir/libznz.so.%libznz_soname.*
+
+%files -n libniftiio%libniftiio_soname
+%_libdir/libniftiio.so.%libniftiio_soname
+%_libdir/libniftiio.so.%libniftiio_soname.*
+
+%files -n libnifti2_%libnifti2_soname
+%_libdir/libnifti2.so.%libnifti2_soname
+%_libdir/libnifti2.so.%libnifti2_soname.*
+
+%files -n libnifticdf%libnifticdf_soname
+%_libdir/libnifticdf.so.%libnifticdf_soname
+%_libdir/libnifticdf.so.%libnifticdf_soname.*
 
 %files -n lib%name-devel
-%_libdir/*.so
-%_includedir/*
+%_datadir/cmake/NIFTI
+%_includedir/nifti/
+%_libdir/libznz.so
+%_libdir/libniftiio.so
+%_libdir/libnifti2.so
+%_libdir/libnifticdf.so
+%_libdir/libcifti.so
 
 %files -n lib%name-devel-doc
-%_docdir/lib%name-devel
-%exclude %_docdir/lib%name-devel/examples
-%_man3dir/*
-
-%files examples -f EXAMPLES_FILES
-%_bindir/fsl_api_driver
-%dir %_docdir/lib%name-devel/examples
+%_docdir/%name
 
 %changelog
+* Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 3.0.1-alt1
+- 0.20100720 -> 3.0.1
+- split libraries into separate packages according to SharedLibsPolicy
+
 * Sat Apr 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.20100720-alt4
 - Fixed build
 

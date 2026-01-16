@@ -2,7 +2,7 @@
 
 Name: pythonqt
 Version: 3.6.1
-Release: alt1
+Release: alt2
 Summary: CMake-ified version of PythonQt
 License: LGPL-2.1
 Group: Development/C++
@@ -65,6 +65,9 @@ This package contains development files for PythonQt.
 %_libdir/*.so
 
 %changelog
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 3.6.1-alt2
+- update to patched-v3.6.1-2025-12-22-469f01f6a
+
 * Wed Jul 30 2025 Anton Farygin <rider@altlinux.com> 3.6.1-alt1
 - updated to 3.6.1 from the CTK git repository
 
