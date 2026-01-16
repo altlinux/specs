@@ -2,7 +2,7 @@
 %define appname id.waydro.Container
 
 Name: waydroid
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
@@ -65,6 +65,9 @@ mkdir -p %buildroot{%_sysconfdir,%_localstatedir/%name} && touch %buildroot%_sys
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Jan 16 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1
+- 1.6.1.
+
 * Mon Nov 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt1
 - 1.6.0.
 - fix unowned dir (closes #56970).
