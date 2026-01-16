@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.10
+Release: alt0.11
 Epoch: 1
 Url: https://altsp.su
 
@@ -342,6 +342,7 @@ fi
 %_datadir/glib-2.0/schemas/50_mutter-custom-settings.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-desktop-a11y.gschema.override
+%_datadir/glib-2.0/schemas/50_arcmenu-apps-show-generic-names.gschema.override
 
 %files slideshow
 %_sysconfdir/alterator/slideshow.conf
@@ -358,6 +359,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Jan 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.11
+- gnome-settings: show generic names in arcmenu by default.
+
 * Thu Dec 04 2025 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.10
 - gnome-settings: enable a11y indicator on panel.
 
