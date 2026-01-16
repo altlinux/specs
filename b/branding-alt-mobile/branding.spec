@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt3
+Release: alt4
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -206,8 +206,6 @@ install -Dm644 phosh-settings/50-lockscreen.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override;
 install -Dm644 phosh-settings/50-background.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override
-install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override \
-	%buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 install -Dm644 phosh-settings/50-interface.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/
 
@@ -241,10 +239,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %files phosh-settings
 %_datadir/glib-2.0/schemas/50-background.gschema.override
 %_datadir/glib-2.0/schemas/50-lockscreen.gschema.override
-%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Fri Jan 16 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
+- Remove phosh-settings/50-camera-privacy-disabled.gschema.override.
+
 * Thu Jan 15 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt3
 - Revert "license: add version to distro name" for fix /etc/os-release,
   index.html.
