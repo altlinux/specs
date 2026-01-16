@@ -2,7 +2,7 @@
 
 Name: dlib
 Version: 20.0.0
-Release: alt3
+Release: alt4
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: gcc-c++ libX11-devel libfftw3-devel libgif-devel libjpeg-devel libpng-devel libsqlite3-devel openmpi-devel python3-devel
 # END SourceDeps(oneline)
 BuildRequires: cmake rpm-build-python3 python3-module-setuptools python3-module-wheel
-BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel libjxl-devel pybind11-devel python3-module-pybind11
+BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-devel libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel libjxl-devel pybind11-devel python3-module-pybind11 zlib-devel
 
 %description
 Dlib is a general purpose cross-platform C++ library
@@ -102,6 +102,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Fri Jan 16 2026 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt4
+- Fixed build with libpng-devel 1.6.54-alt1.
+
 * Tue Dec 30 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt3
 - Added requires on dlib-devel.
 
