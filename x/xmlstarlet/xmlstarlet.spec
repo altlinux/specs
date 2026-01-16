@@ -3,7 +3,7 @@
 Name: xmlstarlet
 Summary: Command Line XML Toolkit
 Version: 1.6.1
-Release: alt1
+Release: alt2
 License: MIT
 Group: Text tools
 URL: http://xmlstar.sourceforge.net/
@@ -12,6 +12,7 @@ URL: http://xmlstar.sourceforge.net/
 Source: %name-%version.tar
 
 Patch1: xmlstarlet-1.6.1-nogit.patch
+Patch2: xmlstarlet-1.6.1-alt-fix-build-with-libxml2-2.14.patch
 
 BuildRequires: xmlto
 BuildRequires: libxml2-devel libxslt-devel zlib-devel
@@ -27,6 +28,7 @@ commands.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -51,6 +53,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/%{name}.1*
 
 %changelog
+* Fri Jan 16 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.6.1-alt2
+- FTBFS: fix build with new libxml2 2.14
+
 * Wed Jan 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.1-alt1
 - Updated to upstream version 1.6.1.
 
