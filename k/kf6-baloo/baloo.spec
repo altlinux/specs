@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf6-%rname
-Version: 6.21.0
+Version: 6.22.0
 Release: alt1
 %K6init no_altplace
 
@@ -18,7 +18,6 @@ License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-only
 
 Provides: kf5-baloo = %EVR
 Obsoletes: kf5-baloo < %EVR
-Obsoletes: libkf5baloowidgets < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
@@ -107,6 +106,9 @@ KF6 library
 
 
 %changelog
+* Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt1
+- new version
+
 * Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
 - new version
 

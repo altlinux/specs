@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.21.0
+Version: 6.22.0
 Release: alt1
 %K6init altplace
 
@@ -25,7 +25,9 @@ BuildRequires(pre): python3-module-sip-devel
 
 BuildRequires: extra-cmake-modules gcc-c++ qt6-tools-devel
 BuildRequires: /usr/bin/gperf
+%if_enabled python
 BuildRequires: python3-module-PyQt6-devel
+%endif
 
 %description
 KCodecs provide a collection of methods to manipulate strings using various encodings.
@@ -130,6 +132,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt1
+- new version
+
 * Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
 - new version
 

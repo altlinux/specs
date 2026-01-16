@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.21.0
+Version: 6.22.0
 Release: alt1
 %K6init altplace
 
@@ -19,7 +19,8 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 %if_enabled python
-BuildRequires(pre): python3-module-sip-devel python3-module-PyQt6-devel
+BuildRequires(pre): python3-module-sip-devel
+BuildRequires: python3-module-PyQt6-devel
 BuildRequires: python3-module-kcoreaddons-devel
 %endif
 BuildRequires: extra-cmake-modules kf6-kcoreaddons-devel kf6-kwindowsystem-devel libpolkitqt6-qt6-devel qt6-tools-devel
@@ -143,6 +144,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt1
+- new version
+
 * Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
 - new version
 
