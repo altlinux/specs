@@ -1,12 +1,13 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.7
+%define ver_major 2.11
 %define rdn_name io.github.plrigaux.%name
+%define bus_name io.github.plrigaux.SysDManager
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.5
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -22,6 +23,7 @@ Source: https://github.com/plrigaux/sysd-manager/archive/v%version/%name-%versio
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
+Patch1: %name-2.11.5-alt-schemas.patch
 
 %define adw_ver 1.8
 %define rust_ver 1.89
@@ -47,15 +49,21 @@ and peak at their journal logs.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+# fix schemas
+%patch1 -b .bad
+#sed -i '/<schemalist>/,$!d' data/schemas/%rdn_name.gschema.xml
+
 %build
+%rust_build --manifest-path %name-proxy/Cargo.toml
 %rust_build \
 %ifarch %ix86 aarch64
-    --config 'profile.release.lto=false'
+    --config 'profile.release.lto=false' \
 %endif
 %nil
+cargo run -p transtools -- packfiles
 
 %install
-%rust_install
+%rust_install %name %name-proxy
 install -v -Dm644 data/applications/%rdn_name.desktop \
     -t %buildroot%_datadir/applications
 install -v -Dm644 data/icons/hicolor/scalable/apps/%rdn_name.svg \
@@ -66,17 +74,39 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
     -t %buildroot%_datadir/metainfo
 cp -r target/locale %buildroot/%_datadir/
 
+install -vDm644 sysd-manager-proxy/data/%bus_name.conf -T  %buildroot/%_datadir/dbus-1/system.d/%bus_name.conf
+sed -i 's/{BUS_NAME}/%bus_name/
+         s/{DESTINATION}/%bus_name/
+         s/{ENVIRONMENT}//
+         s/{INTERFACE}/%bus_name/' %buildroot/%_datadir/dbus-1/system.d/%bus_name.conf
+install -vDm644 sysd-manager-proxy/data/%bus_name.policy -t %buildroot/%_datadir/polkit-1/actions
+install -vDm644 sysd-manager-proxy/data/sysd-manager-proxy.service -T %buildroot%_unitdir/%name-proxy.service
+sed -i  's/{BUS_NAME}/%bus_name/
+         s/{DESTINATION}/%bus_name/
+         s/{ENVIRONMENT}//
+         s|{EXECUTABLE}|%_bindir/%name-proxy|
+         s/{INTERFACE}/%bus_name/
+         s/{SERVICE_ID}/sysd-manager-proxy/' %buildroot%_unitdir/%name-proxy.service
+
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-proxy
+%_unitdir/%name-proxy.service
 %_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/system.d/%bus_name.conf
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/polkit-1/actions/%bus_name.policy
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc CHANGELOG*  README*
+%doc CHANGELOG* README*
 
 %changelog
+* Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.5-alt1
+- 2.11.5
+
 * Tue Nov 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - 2.7.1
 
