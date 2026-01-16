@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.24
+Version: 2.0.26
 Release: alt1
 
 Summary: Plugins for DDE
@@ -133,6 +133,10 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_datadir/dsg/configs/org.deepin.dde.shell/*.json
 %dir %_datadir/dsg/configs/org.deepin.ds.dock/
 %_datadir/dsg/configs/org.deepin.ds.dock/*.json
+%dir %_datadir/dsg/configs/overrides/
+%dir %_datadir/dsg/configs/overrides/org.deepin.dde.shell/
+%dir %_datadir/dsg/configs/overrides/org.deepin.dde.shell/org.deepin.dtk.preference/
+%_datadir/dsg/configs/overrides/org.deepin.dde.shell/org.deepin.dtk.preference/org.deepin.dtk.preference.json
 
 %files -n lib%repo%sover
 %_libdir/lib%repo.so.%{sover}*
@@ -151,6 +155,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %_libdir/libds-notification-shared.so
 
 %changelog
+* Fri Jan 16 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.26-alt1
+- New version 2.0.26.
+
 * Fri Dec 26 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.24-alt1
 - New version 2.0.24.
 
