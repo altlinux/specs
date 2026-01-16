@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -61,8 +61,12 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_datadir/dbus-1/interfaces/*.xml
 %_bindir/alt-components
 %_desktopdir/*.desktop
+%_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.6-alt1
+- Add app icon.
+
 * Mon Dec 22 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.5-alt1
 - Fix broken unprocessing of packages in components.
 

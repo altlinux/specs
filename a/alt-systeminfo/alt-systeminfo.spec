@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.7
+Version: 0.4.8
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -81,6 +81,7 @@ ALT Systeminfo - Alterator application that shows information about system.
 %_desktopdir/*
 %_bindir/*
 %doc LICENSE CHANGELOG.md
+%_iconsdir/hicolor/*/*/*.svg
 
 %files_alterator_interface release_notes1
 %files_alterator_backend release-notes
@@ -90,6 +91,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.8-alt1
+- Add app icon.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.7-alt1
 - Add 'exit_status = true' for new version of executor.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -48,8 +48,12 @@ and package repositories through apt and rpm.
 %_alterator_datadir/backends/*.backend
 %_alterator_datadir/applications/*.application
 %_desktopdir/*.desktop
+%_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.7-alt1
+- Add app icon.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.6-alt1
 - Add 'exit_status = true' for new version of executor.
 
