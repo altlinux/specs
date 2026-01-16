@@ -1,6 +1,6 @@
 Name: glyr
 Version: 1.0.10
-Release: alt1.1
+Release: alt2
 Summary: Music related metadata searchengine
 License: GPLv3
 Group: System/Libraries
@@ -60,6 +60,8 @@ Glyr development files.
 %patch2
 
 subst 's|<curl/multi.h>|<curl/curl.h>|' lib/core.c
+# https://bugzilla.altlinux.org/57496
+subst 's|"9"|"10"|' CMakeLists.txt
 
 %build
 %cmake_insource
@@ -82,6 +84,9 @@ subst 's|<curl/multi.h>|<curl/curl.h>|' lib/core.c
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.10-alt2
+- fix: version number (ALT #57496)
+
 * Sun Nov 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.10-alt1.1
 - NMU:FTBFS:fix: expected identifier or '(' before ')' token
 
