@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.5.4
-Release: alt4
+Version: 6.5.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -43,8 +43,7 @@ Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
 Patch4: alt-def-numlock.patch
 Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
-Patch6: ef450432.patch
-Patch7: alt-gcc13.patch
+Patch6: alt-gcc13.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -141,7 +140,6 @@ KF6 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 %build
 %K6build \
@@ -205,6 +203,9 @@ KF6 library
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
+- new version
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt4
 - don't use std::ranges::to
 

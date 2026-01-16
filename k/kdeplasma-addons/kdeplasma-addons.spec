@@ -14,7 +14,7 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -199,6 +199,9 @@ touch touch-%_arch
 
 
 %changelog
+* Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
+- new version
+
 * Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
 - new version
 

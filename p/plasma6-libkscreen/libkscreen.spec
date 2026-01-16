@@ -7,7 +7,7 @@
 
 %define rname libkscreen
 Name: plasma6-%rname
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 %K6init
 
@@ -17,7 +17,6 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
-Patch1: alt-pnp-ids-path.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
 BuildRequires: libvulkan-devel
@@ -71,7 +70,6 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 export PATH=%_qt6_bindir:$PATH
@@ -112,6 +110,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
+- new version
+
 * Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
 - new version
 

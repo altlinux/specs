@@ -7,7 +7,7 @@
 %define libweather_ion libweather_ion%weather_ion_sover
 
 Name: plasma6-%rname
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 %K6init
 
@@ -113,6 +113,9 @@ Requires: %name-common >= %version-%release
 %_K6lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
+- new version
+
 * Wed Dec 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.5.4-alt1
 - new version
 
