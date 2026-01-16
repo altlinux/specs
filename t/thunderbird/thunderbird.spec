@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 146.0.1
+Version: 147.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -382,6 +382,26 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Jan 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-0877: Mitigation bypass in the DOM: Security component
+  + CVE-2026-0878: Sandbox escape due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-0879: Sandbox escape due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-0880: Sandbox escape due to integer overflow in the Graphics component
+  + CVE-2026-0881: Sandbox escape in the Messaging System component
+  + CVE-2026-0882: Use-after-free in the IPC component
+  + CVE-2026-0883: Information disclosure in the Networking component
+  + CVE-2026-0884: Use-after-free in the JavaScript Engine component
+  + CVE-2026-0885: Use-after-free in the JavaScript: GC component
+  + CVE-2026-0886: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-0887: Clickjacking issue, information disclosure in the PDF Viewer component
+  + CVE-2026-0888: Information disclosure in the XML component
+  + CVE-2026-0889: Denial-of-service in the DOM: Service Workers component
+  + CVE-2026-0890: Spoofing issue in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-0891: Memory safety bugs fixed in Firefox ESR 140.7, Thunderbird ESR 140.7, Firefox 147 and Thunderbird 147
+  + CVE-2026-0892: Memory safety bugs fixed in Firefox 147 and Thunderbird 147
+
 * Sat Dec 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 146.0.1-alt1
 - New version.
 
