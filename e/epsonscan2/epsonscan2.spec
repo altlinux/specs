@@ -2,7 +2,7 @@
 
 Name:    epsonscan2
 Version: 6.7.82.0
-Release: alt1
+Release: alt2
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -21,12 +21,13 @@ BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: libjpeg-devel
-BuildRequires: libtiff-devel
 BuildRequires: libpng-devel
 BuildRequires: libsane-devel
-BuildRequires: rapidjson
+BuildRequires: libtiff-devel
 BuildRequires: libusb-devel
 BuildRequires: qt5-base-devel
+BuildRequires: rapidjson
+BuildRequires: zlib-devel
 
 %description
 This software provides applications to easily turn hard-copy documents and
@@ -65,6 +66,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Sat Jan 17 2026 Andrey Cherepanov <cas@altlinux.org> 6.7.82.0-alt2
+- FTBFS: built with zlib-devel.
+
 * Tue Nov 18 2025 Andrey Cherepanov <cas@altlinux.org> 6.7.82.0-alt1
 - New version.
 
