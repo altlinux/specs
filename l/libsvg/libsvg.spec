@@ -7,7 +7,7 @@
 
 Name: libsvg
 Version: 0.1.4
-Release: alt4
+Release: alt5
 
 Summary: A generic SVG library
 
@@ -20,11 +20,13 @@ Source: %name-%version.tar
 
 Patch0: libsvg-0.1.4-link.patch
 Patch1: libsvg-0.1.4-libpng14.patch
+Patch2: svgint-0.1.4-alt-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libjpeg)
+BuildRequires: zlib-devel
 
 Source44: import.info
 
@@ -52,7 +54,9 @@ files to allow you to develop with libsvg.
 %prep
 %setup
 
-%autopatch -p0
+%patch0 -p0
+%patch1 -p0
+%patch2 -p1
 
 %build
 CFLAGS+=" -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
@@ -78,6 +82,9 @@ rm -f %buildroot%_libdir/libsvg.la
 %_libdir/pkgconfig/libsvg.pc
 
 %changelog
+* Sat Jan 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt5
+- fixed FTBFS
+
 * Tue Jul 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.4-alt4
 - spec cleanup
 
