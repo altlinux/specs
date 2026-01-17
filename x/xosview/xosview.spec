@@ -3,14 +3,13 @@
 %set_verify_elf_method strict
 
 Name: xosview
-Version: 1.24
+Version: 1.25
 Release: alt1
 Summary: An X Window System utility for monitoring system resources
 License: GPL-2.0 and BSD-4-Clause-UC
 Group: Monitoring
 Url: http://xosview.sourceforge.net/
-
-# https://github.com/hills/xosview.git
+VCS: https://github.com/hills/xosview.git
 Source: %name-%version.tar
 Source1: xosview16.png
 Source2: xosview32.png
@@ -70,6 +69,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*.png
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 1.25-alt1
+- 1.24 -> 1.25
+
 * Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1.24-alt1
 - 1.23 -> 1.24
 
