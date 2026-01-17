@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 Summary: Python implementation of the actor model
 License: Apache-2.0
@@ -45,6 +45,9 @@ which makes it easier to build concurrent applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Jan 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.1-alt1
+- Updated to version 4.4.1.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.0-alt1
 - Updated to version 4.4.0.
 
