@@ -1,5 +1,5 @@
 Name: xsimd
-Version: 13.2.0
+Version: 14.0.0
 Release: alt1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
@@ -7,6 +7,7 @@ License: BSD
 Url: https://xsimd.readthedocs.io/
 VCS: https://github.com/xtensor-stack/xsimd
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -40,6 +41,7 @@ Provides: %name-static = %version-%release
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 sed -i '/#elif defined(__x86_64__)/i #elif defined(__e2k__)\nsse2=sse3=ssse3=sse4_1=1;best=sse4_1::version();' \
 	include/xsimd/config/xsimd_cpuid.hpp
@@ -74,6 +76,9 @@ sed -i 's/<T, A>::batch.*(register_type reg/& __attribute__((unused))/' \
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Fri Jan 09 2026 Anton Farygin <rider@altlinux.org> 14.0.0-alt1
+- 13.2.0 -> 14.0.0
+
 * Mon Mar 10 2025 Anton Farygin <rider@altlinux.ru> 13.2.0-alt1
 - 13.1.0 -> 13.2.0
 
