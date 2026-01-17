@@ -1,15 +1,19 @@
 Name: shntool
 Version: 3.0.10
-Release: alt1.qa1
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt2
 
 Summary: Multi-purpose WAVE data processing and reporting utility
 License: GPLv2+
 Group: Sound
 
-URL: http://www.etree.org/shnutils/shntool
-Source: %url/dist/src/shntool-%version.tar.gz
+URL: http://shnutils.freeshell.org/shntool/
+Source: shntool-%version.tar
+Patch0: shntool-3.0.10-debian-add-wave-format-extensible.patch
+Patch1: shntool-3.0.10-upstream-fix-mmssff-non-cd.patch
+Patch2: shntool-3.0.10-debian-fix-large-files.patch
+Patch3: shntool-3.0.10-debian-fix-large-times.patch
+Patch4: shntool-3.0.10-debian-join-allow-single-file.patch
+
 
 Requires: bonk flac mac shorten sox ttaenc wavpack
 
@@ -24,6 +28,7 @@ that particular file type.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %configure
@@ -43,6 +48,13 @@ popd
 %_man1dir/*
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 3.0.10-alt2
+- applied fixes from Debian and upstream (closes: #56802):
+  * support WAVE_FORMAT_EXTENSIBLE in WAV parser
+  * fix integer overflows when processing large files and long durations
+  * allow mm:ss:ff format for non-CD-quality audio (error -> warning)
+  * allow single input file in join mode
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.0.10-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
