@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%ifarch x86_64 %ix86 aarch64 ppc64le
+%ifarch x86_64 %ix86 aarch64
 %def_with libdpdk
 %else
 %def_without libdpdk
@@ -46,13 +46,14 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt7
+Release: alt8
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
 Group: Monitoring
 
-Url: http://collectd.org
+Url: https://collectd.org/
+VCS: https://github.com/collectd/collectd
 Source0: %url/files/%name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -1017,6 +1018,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 5.12.0-alt8
+- applied upstream commit 050877e1 to fix build with libvirt API changes
+
 * Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 5.12.0-alt7
 - applied upstream commit ca7a8de6 to fix build with gcc 14
 
