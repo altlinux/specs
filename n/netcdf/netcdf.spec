@@ -10,7 +10,7 @@
 
 Name: netcdf
 Version: 4.9.3
-Release: alt1
+Release: alt2
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: NetCDF
 Group: System/Libraries
@@ -18,6 +18,7 @@ Url: https://www.unidata.ucar.edu/software/netcdf/
 
 VCS: https://github.com/Unidata/netcdf-c.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel libxml2-devel
 BuildRequires: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
@@ -176,6 +177,7 @@ HDF5-based NetCDF files that use these compression methods.
 
 %prep
 %setup
+%patch0 -p1
 
 rm -fR udunits/expat
 
@@ -185,7 +187,7 @@ rm -fR udunits/expat
 %configure \
 	--enable-shared \
 	--enable-static=no \
-	--enable-netcdf-4 \
+	--disable-hdf5 --disable-netcdf-4 --with-hdf5=no \
 	--enable-doxygen \
 	--enable-internal-docs \
 	--enable-v2 \
@@ -233,6 +235,10 @@ rm -f %buildroot%_libdir/hdf5/plugin/*.la
 %doc docs/html examples
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 4.9.3-alt2
+- added upstream commit to fix build with MARKDOWN_STRICT=yes in doxygen
+  from version 1.15.0
+
 * Tue Apr 01 2025 Anton Farygin <rider@altlinux.com> 4.9.3-alt1
 - 4.9.2 -> 4.9.3
 - renamed source package from libnetcdf to netcdf according upstream name
