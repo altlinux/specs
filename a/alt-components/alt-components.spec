@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Sat Jan 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.7-alt1
+- Fix segmentation fault when dist-upgrades.log is empty (Closes: #57520).
+
 * Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.6-alt1
 - Add app icon.
 
