@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.80.0
+Version: 0.87.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -91,6 +91,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sat Jan 17 2026 Vitaly Chikunov <vt@altlinux.org> 0.87.0-alt1
+- Update to rust-v0.87.0 (2026-01-16).
+
 * Sat Jan 10 2026 Vitaly Chikunov <vt@altlinux.org> 0.80.0-alt1
 - Update to rust-v0.80.0 (2026-01-09).
 
