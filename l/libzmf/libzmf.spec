@@ -4,7 +4,7 @@
 
 Name: libzmf
 Version: 0.0.2
-Release: alt2
+Release: alt3
 Summary: A library for import of Zoner document formats
 
 Group: System/Libraries
@@ -19,6 +19,7 @@ BuildPreReq: help2man
 # Automatically added by buildreq on Wed Feb 08 2017
 # optimized out: gnu-config libstdc++-devel pkg-config python-base python-modules python3 zlib-devel
 BuildRequires: boost-devel-headers doxygen gcc-c++ libicu-devel libpng-devel librevenge-devel python3-base
+BuildRequires: zlib-devel
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: cppunit-devel}}
 
@@ -109,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}
 %_mandir/man1/zmf2svg.1*
 
 %changelog
+* Sat Jan 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt3
+- fixed FTBFS
+
 * Sat Aug 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt2
 - fixed FTBFS
 
