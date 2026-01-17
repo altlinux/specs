@@ -1,9 +1,10 @@
 %define dotnet_version 9.0
+%define xdg_name com.github.PintaProject.Pinta
 
 %def_with prebuild
 
 Name: pinta
-Version: 3.0.4
+Version: 3.1.1
 Release: alt1
 
 Summary: An easy to use drawing and image editing program
@@ -66,13 +67,16 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=true
 %doc readme.md license-mit.txt license-pdn.txt
 %_bindir/%name
 %_libdir/%name/
-%_desktopdir/%name.desktop
+%_libdir/pkgconfig/%name.pc
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%{name}*
-%_pixmapsdir/%{name}*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.1-alt1
+- new version 3.1.1
+
 * Fri Oct 10 2025 Alexander Kovalev <alexvk@altlinux.org> 3.0.4-alt1
 - new version 3.0.4
 
