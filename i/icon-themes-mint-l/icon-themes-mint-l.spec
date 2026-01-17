@@ -1,5 +1,5 @@
 Name: icon-themes-mint-l
-Version: 1.7.6
+Version: 1.8.0
 Release: alt1
 
 Summary: Mint-L Icon Theme
@@ -48,6 +48,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-L.json
 
 %changelog
+* Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Wed Sep 03 2025 Alexander Kovalev <alexvk@altlinux.org> 1.7.6-alt1
 - New version 1.7.6.
 

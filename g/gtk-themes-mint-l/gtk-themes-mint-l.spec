@@ -1,5 +1,5 @@
 Name: gtk-themes-mint-l
-Version: 2.0.1
+Version: 2.0.6
 Release: alt1
 
 Summary: Mint-L Theme
@@ -18,8 +18,7 @@ Requires: x-cursor-themes-Bibata
 
 BuildArch: noarch
 
-BuildRequires: python3
-BuildRequires: sassc
+BuildRequires: python3-module-libsass
 
 %description
 %summary.
@@ -52,6 +51,9 @@ cp -a usr %buildroot/
 %_datadir/cinnamon/styles.d/00_mint-l.styles
 
 %changelog
+* Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 2.0.6-alt1
+- New version 2.0.6.
+
 * Wed Sep 03 2025 Alexander Kovalev <alexvk@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
