@@ -14,7 +14,7 @@
 %endif
 
 Name:    qgis
-Version: 3.44.6
+Version: 3.44.7
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -401,6 +401,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Sat Jan 17 2026 Andrey Cherepanov <cas@altlinux.org> 3.44.7-alt1
+- New version.
+
 * Sat Dec 20 2025 Andrey Cherepanov <cas@altlinux.org> 3.44.6-alt1
 - New version.
 
