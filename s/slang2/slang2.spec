@@ -5,7 +5,7 @@
 
 Name: slang2
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 Summary: The shared library for the S-Lang extension language
 License: GPL-2.0-or-later
@@ -14,6 +14,7 @@ Url: http://www.jedsoft.org/slang/
 
 # https://www.jedsoft.org/releases/slang/slang-2.3.2.tar.bz2
 Source: slang-%version.tar
+Source999: watch
 
 Patch2: slang-2.3.3-owl-alt-fixes.patch
 Patch3: slang-2.2.4-alt-doc.patch
@@ -21,9 +22,8 @@ Patch3: slang-2.2.4-alt-doc.patch
 Patch11: slang-2.2.4-deb-demos-make.patch
 Patch12: slang-2.2.4-deb-hostent-haddr.patch
 
-# Automatically added by buildreq on Tue Sep 25 2012
-# optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
 BuildRequires: libICE-devel libX11-devel libncurses-devel libpcre-devel libpng-devel
+BuildRequires: zlib-devel
 
 # for src/test/posixio.sl
 BuildRequires: /dev/pts
@@ -152,6 +152,9 @@ export TERM=xterm
 %endif
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 2.3.3-alt2
+- added Build Dependency zlib-devel to fix build in new environment
+
 * Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 2.3.3-alt1
 - 2.3.3
 - removed -fno-strict-overflow from %%optflags and slang-2.3.2-slarray-ub.patch
