@@ -1,12 +1,11 @@
 Name:          meshsdfilter
 Version:       0.0.1
-Release:       alt0.gitb814112
+Release:       alt0.gitb814112.1
 Summary:       Static/Dynamic Filter for Mesh Geometry
 License:       BSD-3-Clause
 Group:         Sciences/Mathematics
 Url:           https://github.com/bldeng/MeshSDFilter
 Vcs:           https://github.com/bldeng/MeshSDFilter.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
 Source1:       FindMeshSDFilter.cmake
@@ -14,7 +13,7 @@ Patch:         patch.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: eigen3
+BuildRequires: eigen3-compat-devel
 BuildRequires: openmesh-devel
 
 %description
@@ -29,10 +28,10 @@ the following paper:
 Group:         Development/C++
 Summary:       Development files for %name
 
-Requires:      %{name} = %EVR
 Requires:      cmake
 Requires:      gcc-c++
 Requires:      eigen3
+Requires:      eigen3-compat-devel
 Requires:      openmesh-devel
 
 %description   devel
@@ -64,5 +63,8 @@ install -Dm644 %SOURCE1 %buildroot%_datadir/cmake/Modules/FindMeshSDFilter.cmake
 %_datadir/cmake/Modules/
 
 %changelog
+* Thu Nov 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.0.1-alt0.gitb814112.1
+- * rebase to upstream with move to compat eigen3
+
 * Thu Jan 25 2024 Pavel Skrylev <majioa@altlinux.org> 0.0.1-alt0.gitb814112
 - initial build for Sisyphus
