@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.9
+Version: 0.9.10
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -80,7 +80,7 @@ for d in categories/*/ ; do
     mkdir -p "%buildroot%_alterator_datadir/components/categories/$d"
     install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/categories/$d/"
 
-    find "categories/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+    find "categories/$d" -type f \( -name "description*.html" -o -name "*.md" \) -print0 | while IFS= read -r -d '' file; do
         install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/categories/$d"
     done
 
@@ -105,7 +105,7 @@ for d in components/*/ vendors/*/*/ ; do
         install -v -p -m 664 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
 
-    find "$dd/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+    find "$dd/$d" -type f \( -name "description*.html" -o -name "*.md" \) -print0 | while IFS= read -r -d '' file; do
         install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
 
@@ -157,6 +157,24 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Sat Jan 17 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.9.10-alt1
+- Add initial Markdown files for component descriptions.
+- Fix editions:
+  + update release notes for ALT Server 11.1 and ALT Domain 11.1
+  + remove and replace base-browser to chromium at server and domain editions
+  + add bind component to server editions
+  + remove other network components in domain edition
+  + remove domain network components in server edition
+  + update kubernetes to 1.33 in server and domain editions
+  + update final-notes for domain add caption Documentation
+    to QR codes add variable to indicate the current year in the
+    copyright for the Russian-language installation fix the location
+    of the elements in the final-notes file (thx Maria Fokanova)
+- Fix components:
+  + add kubernetes1_32 and kubernetes1_33
+  + add samba-extension-laps-v2-schema package to samba-dc component
+  + add bind component
+
 * Tue Dec 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.9-alt1
 - editions/education: up license version 11.0 -> 11.1
 
