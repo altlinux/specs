@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -12,8 +12,10 @@ VCS: https://altlinux.space/alt-gnome/ReadySet.git
 
 Source: %name-%version.tar
 
-Requires: ready-set
 Requires: phrog
+Requires: ready-set-plugin-language
+Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-user-passwdqc
 
 BuildArch: noarch
 
@@ -43,6 +45,9 @@ install -pDm0644 50_%name.rules \
 %_datadir/polkit-1/rules.d/50_%name.rules
 
 %changelog
+* Fri Jan 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3-alt1
+- Updated for new ready-set 0.3.0.
+
 * Tue Dec 16 2025 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
 - Added polkit rule with self-remove in run script.
 
