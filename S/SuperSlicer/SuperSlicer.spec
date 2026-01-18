@@ -5,7 +5,7 @@
 Name: SuperSlicer
 Summary: A PrusaSlicer fork (which is a slic3r fork) (previously Slic3r++)
 Version: 2.7.61.10
-Release: alt1
+Release: alt2
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://superslicer.net
@@ -57,7 +57,6 @@ BuildRequires: libpng-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgmpxx-devel
 BuildRequires: libglew-devel
-BuildRequires: qhull
 BuildRequires: libqhull-devel
 
 BuildRequires: libbgcode-devel-static
@@ -75,8 +74,6 @@ BuildRequires: libwebkit2gtk-devel
 BuildRequires: catch-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
-BuildRequires: libqhullcpp-devel-static
-BuildRequires: libqhull-devel-static
 BuildRequires: bzlib-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libsystemd-devel
@@ -153,5 +150,8 @@ popd
 %doc README.md doc/
 
 %changelog
+* Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 2.7.61.10-alt2
+- Rebuild with shared library qhullcpp instead static.
+
 * Mon Dec 22 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 2.7.61.10-alt1
 - Initial build.

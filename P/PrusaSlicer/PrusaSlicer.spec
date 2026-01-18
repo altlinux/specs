@@ -4,10 +4,11 @@
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 Version: 2.9.4
-Release: alt1
+Release: alt2
 License: AGPL-3.0-only
 Group: Engineering
-Url: https://www.prusa3d.com/prusaslicer/
+URL: https://www.prusa3d.com/prusaslicer/
+VCS: https://github.com/prusa3d/PrusaSlicer
 
 # Source-url: https://github.com/prusa3d/PrusaSlicer/archive/refs/tags/version_%version.tar.gz
 Source: %name-%version.tar
@@ -59,7 +60,6 @@ BuildRequires: libpng-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgmpxx-devel
 BuildRequires: libglew-devel
-BuildRequires: qhull
 BuildRequires: libqhull-devel
 
 BuildRequires: libbgcode-devel-static
@@ -77,8 +77,6 @@ BuildRequires: libwebkit2gtk-devel
 BuildRequires: catch-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libffi-devel
-BuildRequires: libqhullcpp-devel-static
-BuildRequires: libqhull-devel-static
 BuildRequires: bzlib-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libsystemd-devel
@@ -174,6 +172,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 2.9.4-alt2
+- Rebuild with shared library qhullcpp instead static.
+
 * Thu Dec 04 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 2.9.4-alt1
 - new version (2.9.4)
 

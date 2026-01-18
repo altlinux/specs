@@ -1,20 +1,19 @@
-%define somver 8
-%define sover %somver.0.2
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define sover 8.0
 
 Name: qhull
 Version: 2020.2
-Release: alt3
+Release: alt4
 
 Summary: General dimension convex hull programs
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 License: BSD-style
 Group: Sciences/Mathematics
-Source: %name-%version.tar.gz
-URL: http://www.qhull.org/
-Requires: lib%name = %version-%release
+Source: %name-%version.tar
+Patch0: build-qhullcpp-as-shared-library.patch
+Patch1: fix-CMake-target-export.patch
+URL: https://github.com/qhull/qhull/wiki
+VCS: https://github.com/qhull/qhull
 
-# Automatically added by buildreq on Sat Nov 01 2008
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ gcc-fortran cmake
 
 Conflicts: labplot1.6
@@ -33,13 +32,12 @@ lattices, and random points.
 Qhull produces graphical output for Geomview.  This helps with
 understanding the output. <http://www.geomview.org>
 
-%package -n lib%name
+%package -n libqhull_r%sover
 Summary: General dimension convex hull program library
-Group: Sciences/Mathematics
-Obsoletes: %name-lib < %version-%release
-Provides: %name-lib = %version-%release
+Group: System/Libraries
+Obsoletes: libqhull < %EVR
 
-%description -n lib%name
+%description -n libqhull_r%sover
 Qhull is a general dimension convex hull program that reads a set
 of points from stdin, and outputs the smallest convex set that contains
 the points to stdout.  It also generates Delaunay triangulations, Voronoi
@@ -53,14 +51,35 @@ lattices, and random points.
 Qhull produces graphical output for Geomview.  This helps with
 understanding the output. <http://www.geomview.org>
 
-This package contains the dynamic library files.
+This package contains the C shared library.
+
+%package -n libqhullcpp%sover
+Summary: General dimension convex hull program library
+Group: System/Libraries
+
+%description -n libqhullcpp%sover
+Qhull is a general dimension convex hull program that reads a set
+of points from stdin, and outputs the smallest convex set that contains
+the points to stdout.  It also generates Delaunay triangulations, Voronoi
+diagrams, furthest-site Voronoi diagrams, and halfspace intersections
+about a point.
+
+Rbox is a useful tool in generating input for Qhull; it generates
+hypercubes, diamonds, cones, circles, simplices, spirals,
+lattices, and random points.
+
+Qhull produces graphical output for Geomview.  This helps with
+understanding the output. <http://www.geomview.org>
+
+This package contains the the shared C++ library.
 
 %package -n lib%name-devel
 Summary: General dimension convex hull program development files.
-Group: Sciences/Mathematics
-Requires: lib%name = %version-%release
-Obsoletes: %name-devel < %version-%release
-Provides: %name-devel = %version-%release
+Group: Development/Other
+Requires: libqhull_r%sover = %EVR
+Requires: libqhullcpp%sover = %EVR
+Obsoletes: %name-devel < %EVR
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 Qhull is a general dimension convex hull program that reads a set
@@ -77,31 +96,6 @@ Qhull produces graphical output for Geomview.  This helps with
 understanding the output. <http://www.geomview.org>
 
 This package contains the files for development.
-
-%package -n lib%{name}cpp-devel-static
-Summary:        Development and documentation files for qhull - C++ interface
-Group:          Sciences/Mathematics
-Requires:       %name = %version
-
-%description -n lib%{name}cpp-devel-static
-Qhull computes the convex hull, Delaunay triangulation, Voronoi diagram,
-halfspace intersection about a point, furthest-site Delaunay triangulation,
-and furthest-site Voronoi diagram.
-
-This package contains the header files and static lib for Qhull's C++ interface.
-
-
-%package -n lib%name-devel-static
-Summary:        Development and documentation files for qhull
-Group:          Sciences/Mathematics
-Requires:       %name = %version
-
-%description -n lib%name-devel-static
-Qhull computes the convex hull, Delaunay triangulation, Voronoi diagram,
-halfspace intersection about a point, furthest-site Delaunay triangulation,
-and furthest-site Voronoi diagram.
-
-This package contains the header files and static lib for Qhull's.
 
 %package doc
 Summary: General dimension convex hull program documentation
@@ -126,40 +120,30 @@ This package contains the HTML documentation.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-export CFLAGS="%optflags_shared"
-export CXXFLAGS="%optflags_shared"
-%cmake \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    %if %_lib == lib64
-    -DLIB_SUFFIX:STRING=64 \
-    %endif
-    -DCMAKE_SKIP_RPATH:BOOL=ON \
-    -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-    -DINCLUDE_INSTALL_DIR="%_includedir" \
-    -DLIB_INSTALL_DIR="%_libdir" \
-    -DBIN_INSTALL_DIR="%_bindir" \
-    -DMAN_INSTALL_DIR="%_mandir/man1/" \
-    .
+%cmake	-DBUILD_SHARED_LIBS=ON \
+	-DBUILD_STATIC_LIBS=OFF \
+	-DLINK_APPS_SHARED=ON \
+	%nill
 %cmake_build
 
 %install
 %cmake_install
-
-# Fixup wrong location
-%if "%_lib" != "lib"
-    mv %buildroot%_prefix/lib/cmake %buildroot%_libdir/
-    mv %buildroot%_prefix/lib/pkgconfig %buildroot%_libdir/
-%endif
 
 %files
 %doc Announce.txt COPYING.txt File_id.diz README.txt REGISTER.txt
 %_bindir/*
 %_man1dir/*
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n libqhull_r%sover
+%_libdir/libqhull_r.so.%sover
+%_libdir/libqhull_r.so.%sover.*
+
+%files -n libqhullcpp%sover
+%_libdir/libqhullcpp.so.%sover
+%_libdir/libqhullcpp.so.%sover.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -167,25 +151,21 @@ export CXXFLAGS="%optflags_shared"
 %_libdir/cmake/Qhull/QhullConfig.cmake
 %_libdir/cmake/Qhull/QhullConfigVersion.cmake
 %_libdir/cmake/Qhull/QhullTargets-noconfig.cmake
-%_pkgconfigdir/qhull_r.pc
+%_pkgconfigdir/*.pc
 %_includedir/libqhull
 %_includedir/libqhull_r
-
-%files -n lib%name-devel-static
-%_libdir/libqhullstatic.a
-%_libdir/libqhullstatic_r.a
-%_libdir/pkgconfig/qhullstatic.pc
-%_libdir/pkgconfig/qhullstatic_r.pc
-
-%files -n lib%{name}cpp-devel-static
-%_includedir/libqhullcpp/
-%_libdir/libqhullcpp.a
-%_libdir/pkgconfig/qhullcpp.pc
+%_includedir/libqhullcpp
 
 %files doc
 %doc %_docdir/%name
 
 %changelog
+* Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 2020.2-alt4
+- Build libqhullcpp as shared library.
+- Disable build static libraries.
+- Split libqhull by libqhull_r%%sover and libqhullcpp%%sover subpackages.
+- Cleanup spec, update URL, add VCS tag.
+
 * Fri Dec 05 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 2020.2-alt3
 - Add libqhullcpp-devel-static and libqhull-devel-static.
 - Remove DBUILD_STATIC_LIBS=OFF.
