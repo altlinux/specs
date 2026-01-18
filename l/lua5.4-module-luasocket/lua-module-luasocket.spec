@@ -1,120 +1,80 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-%define luarocks_revision 1
-%define abiversion 1
+%define target_lua_version 5.4
 
-Name: lua5.4-module-luasocket
+# Original package name LuaSocket
+%define oname luasocket
+%define oversion 3.1.0-1
+%define rockspec luasocket/rockspecs/luasocket-3.1.0-1.rockspec
+Name: lua%target_lua_version-module-%oname
 Version: 3.1.0
-Release: alt2_lr%luarocks_revision
+Release: alt3_lr1
 Epoch: 1
-
 Summary: Network support for the Lua language
 License: MIT
 Group: Development/Other
-Url: https://lunarmodules.github.io/luasocket/
-Vcs: https://github.com/lunarmodules/luasocket
+Url: https://github.com/lunarmodules/luasocket
 
-Source: luasocket-%version.tar
-Patch1: lua-module-luasocket-3.0.0-alt-headers.patch
-
-%if "5.4" >= "5.3"
-Obsoletes: lua-module-luasocket < %EVR
-Provides: lua-module-luasocket = %version
-%else
-Obsoletes: lua5-luasocket < %EVR
-Provides: lua5-luasocket = %version
+%if "%target_lua_version" == "5.1"
+Obsoletes: lua-module-%oname < %EVR
+Provides: lua-module-%oname = %EVR
 %endif
-
+%if "%target_lua_version" == "5.4"
+Obsoletes: liblua%target_lua_version-module-%oname < %EVR
+%endif
 # self-dependencies
-%filter_from_requires /lua5.4(dispatch)/d
-%filter_from_requires /lua5.4(socket\..*)/d
+%filter_from_requires /lua%target_lua_version.dispatch/d
+%filter_from_requires /lua%target_lua_version.socket\./d
+%filter_from_requires /lua%target_lua_version.ssl\./d
 
-BuildRequires(pre): rpm-macros-lua
-BuildRequires: lua5.4-luarocks
-BuildRequires: liblua5.4-devel
+Source: https://github.com/lunarmodules/luasocket/archive/refs/tags/v3.1.0.tar.gz#/%oname-%version.tar.gz
 
-Provides: luarocks5.4(luasocket) = %EVR
+BuildPreReq: rpm-macros-lua >= 1.5.2 rpm-build-lua
+BuildRequires: liblua%target_lua_version-devel lua%target_lua_version-luarocks
 
 %description
-LuaSocket is a Lua extension library that is composed by two parts: a C
-core that provides support for the TCP and UDP transport layers, and a
-set of Lua modules that add support for functionality commonly needed
-by applications that deal with the Internet.
-
-%package devel
-Summary: Headers for %name
-Group: Development/Other
-Requires: %name
-
-%description devel
-This package contains development files for %name.
-
-%package -n liblua5.4-module-luasocket%abiversion
-Summary: Shared libraries for %name
-Group: Development/Other
-Requires: %name
-
-%description -n liblua5.4-module-luasocket%abiversion
-Shared libraries for %name.
+      LuaSocket is a Lua extension library composed of two parts: a set of C
+      modules that provide support for the TCP and UDP transport layers, and a
+      set of Lua modules that provide functions commonly needed by applications
+      that deal with the Internet.
 
 %prep
-%setup -n luasocket-%version
-%patch1 -p2
-
-%build
-luarocks-5.4 make --verbose --local --deps-mode all CFLAGS="%optflags" --pack-binary-rock \
-    rockspecs/luasocket-%version-%luarocks_revision.rockspec
+%setup -n %oname-%version
 
 %install
-luarocks-5.4 install *.rock --verbose --local --tree %buildroot%prefix --deps-mode none \
-    --no-manifest
-
-# install development files
-install -d %buildroot%_includedir/luasocket
-install -p -m 0644 src/*.h %buildroot%_includedir/luasocket
-
-# rename shared libraries
-mv %buildroot%lua_modulesdir/mime/core.so     %buildroot%lua_modulesdir/mime/core.so.%abiversion
-mv %buildroot%lua_modulesdir/socket/core.so   %buildroot%lua_modulesdir/socket/core.so.%abiversion
-mv %buildroot%lua_modulesdir/socket/serial.so %buildroot%lua_modulesdir/socket/serial.so.%abiversion
-mv %buildroot%lua_modulesdir/socket/unix.so   %buildroot%lua_modulesdir/socket/unix.so.%abiversion
-# create symlinks
-ln -sr %buildroot%lua_modulesdir/mime/core.so.%abiversion       %buildroot%lua_modulesdir/mime/core.so
-ln -sr %buildroot%lua_modulesdir/socket/core.so.%abiversion     %buildroot%lua_modulesdir/socket/core.so
-ln -sr %buildroot%lua_modulesdir/socket/serial.so.%abiversion   %buildroot%lua_modulesdir/socket/serial.so
-ln -sr %buildroot%lua_modulesdir/socket/unix.so.%abiversion     %buildroot%lua_modulesdir/socket/unix.so
+%luarocks_make rockspecs/%oname-%oversion.rockspec
+%luarocks_move_docs docs
 
 %check
-subst 's|bin/lua$|bin/lua5.4|' test/udp-zero-length-send*
+subst 's|bin/lua$|bin/lua%current_lua_version|' test/udp-zero-length-send*
 %lua_path_add_buildroot
-( lua5.4 test/testsrvr.lua ||: )&
+( %lua test/testsrvr.lua ||: )&
 sleep 1
-lua5.4 test/testclnt.lua
-lua5.4 test/hello.lua
+%lua test/testclnt.lua
+%lua test/hello.lua
+
+%add_findreq_skiplist %luarocks_dbdir_prefix-*/%oname/*/{doc,docs,etc,examples,samples,spec,test}/*
 
 %files
-%doc LICENSE
-%luarocks_dbdir/luasocket
+%lua_modulesdir/*
 %lua_modulesdir_noarch/*
-
-%files devel
-%_includedir/luasocket
-%lua_modulesdir/mime/core.so
-%lua_modulesdir/socket/core.so
-%lua_modulesdir/socket/serial.so
-%lua_modulesdir/socket/unix.so
-
-%files -n liblua5.4-module-luasocket%abiversion
-%lua_modulesdir/mime/core.so.%abiversion
-%lua_modulesdir/socket/core.so.%abiversion
-%lua_modulesdir/socket/serial.so.%abiversion
-%lua_modulesdir/socket/unix.so.%abiversion
+%luarocks_dbdir_prefix-%target_lua_version/%oname
+%doc CHANGELOG.* FIX* LICENSE* README.* TODO* WISH* docs_from_rockstree/*
+%exclude %luarocks_dbdir_prefix-%target_lua_version/manifest
 
 %changelog
+* Sat Dec 27 2025 Ildar Mulyukov <ildar@altlinux.ru> 1:3.1.0-alt3_lr1
+- autogenerated by lrimport
+- remove the patch that already in upstream
+- remove "shared libraries" part (irrelevant for Lua modules)
+
 * Tue Apr 01 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:3.1.0-alt2_lr1
 - Change build system from make to luarocks.
 - Repackage according to shared library policy.
 - Refactor spec.
+
+* Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 3.0rc1-alt5_lr2
+- fix build with newer autodep system
 
 * Sat Oct 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.1.0-alt1
 - Updated to 3.1.0.
