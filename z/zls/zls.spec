@@ -1,7 +1,7 @@
 %global _zig_cache_dir %_builddir/zig-cache
 
 Name:     zls
-Version:  0.15.0
+Version:  0.15.1
 Release:  alt1
 Summary:  A Zig language server supporting Zig developers with features like autocomplete and goto definition
 
@@ -40,6 +40,9 @@ mv ./vendor %_zig_cache_dir
 %_bindir/zls
 
 %changelog
+* Sun Jan 18 2026 Ilya Sorochan <k0tran@altlinux.org> 0.15.1-alt1
+- 0.15.0 -> 0.15.1
+
 * Wed Oct 22 2025 Ilya Sorochan <k0tran@altlinux.org> 0.15.0-alt1
 - 0.14.0 -> 0.15.0
 
