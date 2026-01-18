@@ -1,5 +1,5 @@
 Name: apt-repo-tools
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: Utilities to create APT repositories
@@ -47,6 +47,9 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Tue Dec 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.10-alt1
+- pkglist-query: Support compressed pkglists.
+
 * Fri Dec 26 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9-alt1
 - Added support of packages bigger then 4Gb.
 - Fixed gensrclist speed regression introduced in version 0.7.0 (ALT#40779).
