@@ -4,7 +4,7 @@
 
 Name: savedesktop
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary: Save your desktop configuration
 License: GPL-3.0-or-later
@@ -28,6 +28,19 @@ BuildRequires: rpm-build-python3
 %filter_from_requires /python3(savedesktop.gui.more_options_dialog)/d
 %filter_from_requires /python3(savedesktop.gui.password_checker)/d
 %filter_from_requires /python3(savedesktop.gui.synchronization_dialogs)/d
+
+Requires: tar
+Requires: /usr/bin/7z
+Requires: /usr/bin/gio
+Requires: gvfs
+Requires: /usr/bin/xdg-open
+Requires: /usr/bin/notify-send
+Requires: /usr/bin/dconf
+Requires: /usr/bin/gsettings
+Requires: /usr/bin/flatpak
+Requires: coreutils
+Requires: /usr/bin/dbus-send
+Requires: /usr/bin/gdbus
 
 BuildArch: noarch
 
@@ -75,5 +88,8 @@ sed -i "s|/data/screenshots/||g" README.md
 %_datadir/savedesktop/*
 
 %changelog
+* Sun Jan 18 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.1-alt2
+- Explicitly require all the executables which are used by the package.
+
 * Sat Jan 17 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.1-alt1
 - Initial build for Sisyphus
