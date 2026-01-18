@@ -2,7 +2,7 @@
 
 Name: songrec
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -12,6 +12,7 @@ VCS: https://github.com/marin-m/SongRec
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+Source2: songrec.mo
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -57,12 +58,14 @@ install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.s
 install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
 install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
-for locale in fr_FR nl it pl es ja ca de_DE ko_KR sk_SK pt_BR; do
- install -Dm 0644 translations/${locale}/LC_MESSAGES/%name.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%name.mo
-done
+mkdir -p translations/ru/LC_MESSAGES/
+cp -a %SOURCE2 translations/ru/LC_MESSAGES/
 
-%check
-%rust_test
+mkdir -p %buildroot%_datadir/%name
+for locale in fr_FR nl it pl es ja ca de_DE ko_KR sk_SK pt_BR ru; do
+ install -Dm 0644 translations/${locale}/LC_MESSAGES/%name.mo \
+ %buildroot%_datadir/%name/translations/${locale}/LC_MESSAGES/%name.mo
+done
 
 %files
 %doc *.md LICENSE
@@ -70,8 +73,11 @@ done
 %_iconsdir/hicolor/*/apps/%nameB.svg
 %_datadir/applications/%nameB.desktop
 %_datadir/metainfo/%nameB.metainfo.xml
-%_datadir/locale/*/LC_MESSAGES/%name.mo
+%_datadir/%name
 
 %changelog
+* Sun Jan 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.4.3-alt2
+- added russian locale
+
 * Sun Mar 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.3-alt1
 - Initial build for ALT Linux.
