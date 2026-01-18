@@ -1,0 +1,52 @@
+%global _unpackaged_files_terminate_build 1
+
+Name:    forgejo-mcp
+Version: 2.5.0
+Release: alt1
+
+%global import_path codeberg.org/goern/forgejo-mcp/v%(echo %{version} | cut -d. -f1)
+
+Summary: This Model Context Protocol (MCP) server provides tools and resources for interacting with the Forgejo (specifically Codeberg.org) REST API
+License: MIT
+Group:   Development/Tools
+Url:     https://codeberg.org/goern/forgejo-mcp
+Vcs:     https://codeberg.org/goern/forgejo-mcp.git
+
+Source: %name-%version.tar
+Source1: %name-%version-vendor.tar
+
+ExclusiveArch: %go_arches
+
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+
+%description
+%summary.
+
+%prep
+%setup -a1
+
+%build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+export LDFLAGS="-X main.Version=%version"
+
+%golang_prepare
+
+%golang_build .
+
+%install
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
+
+%golang_install
+
+%files
+%doc README.md
+%_bindir/%name
+
+%changelog
+* Sun Jan 18 2026 Maxim Slipenko <maks1ms@altlinux.org> 2.5.0-alt1
+- Initial build.
+
