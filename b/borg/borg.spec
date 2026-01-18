@@ -1,5 +1,5 @@
 Name: borg
-Version: 1.4.1
+Version: 1.4.3
 Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
@@ -71,6 +71,12 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Sun Jan 18 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.3-alt1
+- 1.4.3 release
+
+* Tue Nov 18 2025 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.2-alt1
+- 1.4.2 release
+
 * Mon Sep 08 2025 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.1-alt1
 - 1.4.1 release
 
