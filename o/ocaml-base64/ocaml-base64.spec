@@ -1,6 +1,6 @@
 %define  modulename base64
 Name:    ocaml-%modulename
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 Summary: Base64 encoding for OCaml
 License: ISC
@@ -15,7 +15,6 @@ BuildRequires: ocaml-alcotest-devel
 BuildRequires: ocaml-fpath-devel
 BuildRequires: ocaml-result-devel
 BuildPreReq: rpm-build-ocaml >= 1.4
-
 
 %description
 %summary
@@ -47,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 3.5.2-alt1
+- 3.5.1 -> 3.5.2
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 3.5.1-alt1
 - 3.5.1
 
