@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-pcre2
 Version: 8.0.4
-Release: alt1
+Release: alt2
 Summary: Bindings to the Perl Compatibility Regular Expressions library (version 2)
 Group: Development/ML
 License: LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception
@@ -27,6 +27,7 @@ substitution, similar to the functionality offered by the Perl language.
 %package devel
 Summary: Development files for %name
 Requires: %name = %EVR
+Requires: libpcre2-devel
 Group: Development/ML
 
 %description devel
@@ -51,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 8.0.4-alt2
+- Added libpcre2 to requires in devel package
+
 * Fri Jan 16 2026 Anton Farygin <rider@altlinux.org> 8.0.4-alt1
 - Initial build for ALT Linux.
 
