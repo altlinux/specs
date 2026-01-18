@@ -1,14 +1,18 @@
+%define sover 0
+%define sorel 9.1
+
 Name: hackrf
-Version: 2024.02.1
+Version: 2026.01.1
 Release: alt1
 Summary: HackRF Utilities
 
 Group: Engineering
-License: GPLv2
-Url: https://github.com/mossmann/%name
+License: GPL-2.0-or-later AND BSD-3-Clause
+URL: https://greatscottgadgets.com/hackrf/
+VCS: https://github.com/mossmann/hackrf
 
 Source: %name-%version.tar
-Patch: disable_building_static_libraries.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -20,10 +24,18 @@ BuildRequires: pkgconfig(fftw3f)
 Hardware designs and software for HackRF, a project to produce a low cost, open
 source software radio platform.
 
+%package -n lib%name%sover
+Summary: Library for HackRF
+Group: System/Libraries
+Conflicts: hackrf < 2026.01.1
+
+%description -n lib%name%sover
+Library for HackRF.
+
 %package devel
 Summary: Development files for %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: lib%name%sover = %EVR
 Requires: libusb-devel
 
 %description devel
@@ -33,7 +45,6 @@ Files needed to develop software against libhackrf.
 Summary: Supplemental documentation for HackRF
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
 
 %description doc
 Supplemental documentation for HackRF. For more information, visit the wiki at
@@ -43,16 +54,14 @@ https://github.com/mossmann/hackrf/wiki
 %setup
 %autopatch -p1
 
-# Fix "plugdev" nonsense
-%__subst 's/GROUP="@HACKRF_GROUP@"/ENV{ID_SOFTWARE_RADIO}="1"/g' host/libhackrf/53-hackrf.rules.in
-%__subst 's/GROUP="plugdev"/ENV{ID_SOFTWARE_RADIO}="1"/g' host/libhackrf/53-hackrf.rules
-
 %build
 pushd host
 %cmake \
-    -DINSTALL_UDEV_RULES=on \
+    -DENABLE_STATIC_LIB=OFF \
+    -DENABLE_SHARED_LIB=ON \
+    -DINSTALL_UDEV_RULES=ON \
     -DUDEV_RULES_PATH:PATH=%_udevrulesdir \
-    -DUDEV_RULES_GROUP=plugdev
+    -DUDEV_RULES_GROUP=uucp
 
 %cmake_build
 popd
@@ -62,21 +71,34 @@ pushd host
 %cmake_install
 popd
 
+# fix version
+sed -i 's/^Version:*/Version: %sover.%sorel/' %buildroot%_pkgconfigdir/libhackrf.pc
+
 %files
 %doc COPYING TRADEMARK Readme.md
 %_bindir/hackrf_*
-%_libdir/libhackrf.so.*
 %_udevrulesdir/53-hackrf.rules
+
+%files -n libhackrf%sover
+%_libdir/libhackrf.so.%sover
+%_libdir/libhackrf.so.%sover.%sorel
 
 %files devel
 %_includedir/libhackrf
 %_pkgconfigdir/libhackrf.pc
 %_libdir/libhackrf.so
+%_libdir/cmake/HackRF/
 
 #files doc
 #_docdir/%name
 
 %changelog
+* Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 2026.01.1-alt1
+- New version 2026.01.1.
+
+* Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 2024.02.1-alt2
+- Improvement spec.
+
 * Sat Feb 24 2024 Anton Midyukov <antohami@altlinux.org> 2024.02.1-alt1
 - New version 2024.02.1.
 
