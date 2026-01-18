@@ -2,7 +2,7 @@
 
 %global import_path github.com/xyproto/gendesk
 Name: gendesk
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 
 Summary: Generate desktop-files and download png-icons
@@ -39,5 +39,8 @@ install -Dpm644 %SOURCE1 %buildroot/%_pixmapsdir/%{name}.png
 %_pixmapsdir/*
 
 %changelog
+* Sun Jan 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.11-alt1
+- New version 1.0.11.
+
 * Sun Jun 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.10-alt1
 - Initial build for Sisyphus

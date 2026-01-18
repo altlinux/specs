@@ -3,11 +3,11 @@
 %def_without check
 
 Name: xapp-symbolic-icons
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: Set of symbolic icons for GTK applications and projects
-License: GPL-3.0-only AND LGPL-3.0-only
+License: LGPL-3.0-only
 Group: Graphics
 URL: https://github.com/xapp-project/xapp-symbolic-icons
 
@@ -47,12 +47,15 @@ xsi-replace-adwaita-symbolic
 %meson_test
 
 %files
-%doc AUTHORS ChangeLog COPYING COPYING.LESSER README.md
+%doc AUTHORS README.md
 %_bindir/xsi-replace-adwaita-symbolic
 %_datadir/xapp/xsi-adwaita-symbolic.info
 %_iconsdir/hicolor/scalable/actions/xsi-*.svg
 
 %changelog
+* Sun Jan 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.9-alt1
+- New version 1.0.9.
+
 * Wed Jan 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.8-alt1
 - New version 1.0.8.
 
