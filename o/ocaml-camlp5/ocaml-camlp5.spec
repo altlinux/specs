@@ -4,7 +4,7 @@
 
 %define module camlp5
 Name: ocaml-camlp5
-Version: 8.03.01
+Version: 8.04.00
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
@@ -20,6 +20,7 @@ BuildRequires: ocaml >= 4.08.1 ocaml-findlib ocaml-camlp-streams-devel
 BuildRequires: ocaml-rresult-devel ocaml-bos-devel ocaml-re-devel ocaml-fmt-devel
 BuildRequires: ocaml-astring-devel ocaml-fpath-devel
 BuildRequires: perl-IPC-System-Simple perl-String-ShellQuote
+BuildRequires: ocaml-pcre2-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 %description
@@ -60,6 +61,9 @@ install -p -m644 compile/pa_o_fast.cmi %buildroot%_ocamldir/%module/
 %_man1dir/*5*.1*
 
 %changelog
+* Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 8.04.00-alt1
+- 8.03.01 -> 8.04.00
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 8.03.01-alt1
 - 8.03.01
 
