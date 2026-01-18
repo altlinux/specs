@@ -1,8 +1,10 @@
+%def_disable snapshot
+
 %define _name warehouse
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name io.github.flattool.Warehouse
 
-# bad metadata
+# online screenshots
 %def_disable check
 
 Name: %_name
@@ -16,18 +18,25 @@ Url: https://github.com/flattool/warehouse
 
 Vcs: https://github.com/flattool/warehouse.git
 
+%if_disabled snapshot
+Source: %url/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
+
+%define adw_ver 1.8
 
 Requires: python3-module-pygobject3
 Requires: dconf flatpak-spawn
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson blueprint-compiler typelib(Adw)
+BuildRequires: meson blueprint-compiler
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver typelib(Adw)
 BuildRequires: /usr/bin/glib-compile-resources
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
@@ -61,6 +70,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Wed Jun 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 

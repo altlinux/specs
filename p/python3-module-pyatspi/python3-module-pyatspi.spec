@@ -2,16 +2,18 @@
 %define ver_major 2.58
 
 %def_enable tests
-%def_disable check
+%def_enable check
 
 Name: python3-module-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python bindings for at-spi library
 Group: Development/Python3
-License: LGPL-2.0
+License: LGPL-2.0-only
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
+
+Vcs: https://gitlab.gnome.org/GNOME/pyatspi2.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -20,11 +22,10 @@ BuildArch: noarch
 %define pygobject_ver 3.9.90
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson python3-devel python3-module-pygobject3-devel >= %pygobject_ver
-BuildRequires:  libX11-devel libICE-devel libSM-devel
-%{?_enable_tests:BuildRequires: python3-module-dbus-gobject python3-module-dbus-devel
-BuildRequires: libat-spi2-core-devel libgtk+3-devel libxml2-devel}
-%{?_enable_check:BuildRequires: /proc dbus at-spi2-core typelib(Atspi) = 2.0 typelib(Gtk) = 3.0}
+BuildRequires: meson python3-module-pygobject3-devel >= %pygobject_ver
+%{?_enable_tests:BuildRequires: python3(dbus) pkgconfig(atk)
+BuildRequires: pkgconfig(atspi-2) pkgconfig(atk-bridge-2.0) libxml2-devel}
+%{?_enable_check:BuildRequires: xvfb-run /proc dbus at-spi2-core typelib(Atspi) = 2.0}
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -42,14 +43,16 @@ This package includes a Python 3 client library for at-spi.
 %setup -n %_name-%version
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_bool tests enable_tests}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-%__meson_test
+xvfb-run %__meson_test
 
 %files
 %python3_sitelibdir/%_name/
@@ -57,6 +60,10 @@ This package includes a Python 3 client library for at-spi.
 
 
 %changelog
+* Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 2.58.1-alt1
+- 2.58.1
+- enabled %%check
+
 * Wed Sep 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.58.0-alt1
 - 2.58.0
 

@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 %define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
 
 %define _name easyeffects
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.0.9
+Version: 8.1.0
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -33,6 +33,7 @@ Conflicts: %_name < 8.0.0
 %define calf_ver 0.90.1
 %define lsp_ver 1.2.10
 
+Requires: qt6-wayland
 Requires: pipewire >= %pw_ver dconf
 Requires: calf calf-plugins >= %calf_ver
 Requires: lv2-lsp-plugins >= %lsp_ver
@@ -134,6 +135,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sat Jan 17 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Thu Dec 25 2025 Yuri N. Sedunov <aris@altlinux.org> 8.0.9-alt1
 - 8.0.9
 

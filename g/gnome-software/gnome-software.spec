@@ -42,7 +42,7 @@
 
 Name: gnome-software
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPL-2.0-or-later
@@ -77,8 +77,6 @@ Patch10: %name-48.3-alt-white-list.patch
 %define applist_ver 3.0
 
 Requires: gnome-app-list >= %applist_ver
-
-%{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-systemd
@@ -117,6 +115,16 @@ Requires: %name = %EVR
 %description devel
 This package contains files necessary to develop plugins for GNOME
 Software.
+
+%package plugin-packagekit
+Summary: PackageKit Support for GNOME Software
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: packagekit
+Requires: appstream-data
+
+%description plugin-packagekit
+This package provides PackageKit support for GNOME Software.
 
 %package plugin-fwupd
 Summary: Firmware Upgrade Support for GNOME Software
@@ -196,14 +204,13 @@ _EOF_
 %_libdir/%name/plugins-%plugins_ver/
 %{?_enable_fwupd:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_fwupd.so}
 %{?_enable_flatpak:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_flatpak.so}
+%{?_enable_packagekit:%exclude %_libdir/%name/plugins-%plugins_ver/libgs_plugin_packagekit.so}
 %_userunitdir/%name.service
 %_desktopdir/%xdg_name.desktop
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
-%_desktopdir/%name-local-file-packagekit.desktop
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
 %_datadir/swcatalog/xml/gnome-pwa-list-proprietary.xml
 %_datadir/dbus-1/services/%xdg_name.service
-%{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*/*/*.svg
@@ -215,6 +222,12 @@ _EOF_
 %{?_enable_snap:%_datadir/metainfo/%xdg_name.Plugin.Snap.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
+
+%{?_enable_packagekit:
+%files plugin-packagekit
+%_desktopdir/%name-local-file-packagekit.desktop
+%_libdir/%name/plugins-%plugins_ver/libgs_plugin_packagekit.so
+%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 
 %{?_enable_fwupd:
 %files plugin-fwupd
@@ -236,6 +249,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1.1
+- new optional -plugin-packagekit subpackage
+
 * Mon Jan 12 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
 - 49.3
 
