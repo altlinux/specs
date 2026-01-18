@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 29
+%define _php_release_version 30
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -486,6 +486,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 8.3.30-alt1
+- 8.3.29 -> 8.3.30
+
 * Mon Dec 22 2025 Anton Farygin <rider@altlinux.org> 8.3.29-alt1
 - 8.3.27 -> 8.3.29 (Fixes: CVE-2025-14180, CVE-2025-14178, CVE-2025-14177)
 
