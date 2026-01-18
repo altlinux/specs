@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -50,6 +50,9 @@ cp -rv build-aux/lib/udev/rules.d/60-portprotonqt.rules %buildroot/%_udevrulesdi
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Jan 14 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.10-alt1
+- new version 0.1.10
+
 * Mon Dec 08 2025 Boris Yumankulov <boria138@altlinux.org> 0.1.9-alt1
 - new version 0.1.9
 
