@@ -5,7 +5,7 @@
 
 Name: widelands
 Version: 1.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Open source realtime-strategy game
@@ -34,6 +34,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 BuildRequires: libglew-devel
 BuildRequires: libpng-devel
+BuildRequires: zlib-devel
 BuildRequires: libcurl-devel
 BuildRequires: libicu-devel
 BuildRequires: asio-devel
@@ -96,6 +97,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %_datadir/%name
 
 %changelog
+* Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 1:1.3-alt2
+- Fix build with libpng-devel 1.6.54-alt1.
+
 * Sun Dec 21 2025 Anton Midyukov <antohami@altlinux.org> 1:1.3-alt1
 - New version 1.3.
 
