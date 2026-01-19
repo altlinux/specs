@@ -1,6 +1,6 @@
 Name: pdf4qt
-Version: 1.5.2.0
-Release: alt2
+Version: 1.5.3.0
+Release: alt1
 
 Summary: Open source PDF editor
 
@@ -14,10 +14,8 @@ ExcludeArch: i586
 
 Source: %name-%version.tar
 
-#migrated to blend2d 0.21.0
-Patch: pdfblpainter-1.5.2.0-alt-build.patch
 #move translations
-Patch1: CMakeLists-1.5.2.0-alt-fixes.patch
+Patch: CMakeLists-1.5.2.0-alt-fixes.patch
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake clang qt6-base-devel qt6-tools-devel
@@ -51,14 +49,12 @@ Summary: %name library
 %prep
 %setup
 %autopatch -p0
-#fix start app from LaunchPad
+#fix: start app from LaunchPad
 subst 's|QString("./%1")|QString("/usr/bin/%1")|' Pdf4QtLaunchPad/launchdialog.cpp
-#fix load plugins
+#fix: load plugins
 subst 's|"lib"|"lib64"|' Pdf4QtLibGui/pdfprogramcontroller.cpp
-#fix load translations
+#fix: load translations
 subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
-#fix: build with new blend2d 0.21.2
-subst 's|<blend2d.h>|<blend2d/blend2d.h>|' Pdf4QtLibCore/sources/pdfblpainter.cpp
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
@@ -90,6 +86,9 @@ subst 's|<blend2d.h>|<blend2d/blend2d.h>|' Pdf4QtLibCore/sources/pdfblpainter.cp
 %_libdir/libPdf4QtLibWidgets.so.%version
 
 %changelog
+* Mon Jan 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.3.0-alt1
+- 1.5.2.0 -> 1.5.3.0
+
 * Tue Nov 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.5.2.0-alt2
 - fix: build with new blend2d 0.21.2
 
