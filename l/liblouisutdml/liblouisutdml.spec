@@ -4,7 +4,7 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt4
+Release: alt5
 Summary: Braille transcription library for UTDML documents
 License: LGPL-3.0-or-later
 Group: Accessibility
@@ -18,14 +18,12 @@ Patch2: 0001-fix-Wimplicit-function-declaration-warnings.patch
 Patch3: 0002-Fix-callback-type.patch
 Patch4: 0003-Fixed-segmentation-fault-in-the-file2brl-ALT-bug-513.patch
 Patch5: exclude-louis-3.33.0-failed-tests.patch
+Patch6: 0001-libxml_errors-drop-ATTRIBUTE_UNUSED.patch
 
-BuildRequires: libtool
 BuildRequires: help2man
-BuildRequires: liblouis-devel  
+BuildRequires: liblouis-devel
 BuildRequires: libxml2-devel
 BuildRequires: texinfo
-BuildRequires: texlive 
-BuildRequires: texlive-collection-basic
 BuildRequires: texlive-dist
 
 %description
@@ -37,7 +35,7 @@ the specifications in the document.
 liblouisutdml is the successor of liblouisxml.
 
 %package -n %name%sover
-Group: Accessibility
+Group: System/Libraries
 Summary: Lib files for %name
 Provides: %name = %EVR
 
@@ -47,7 +45,6 @@ Lib files for %name
 %package devel
 Group: Development/C++
 Summary: Development files for %name
-Requires: %name = %EVR
 
 %description devel
 %name is a braille transcription library for UTDML (Unifiedaa Tactile
@@ -59,17 +56,15 @@ Group: Accessibility
 Summary: Utilities that convert various file formats into braille
 Requires: antiword
 Requires: poppler-utils
-Requires: %name = %EVR
 
 %description utils
 This package provides the command-line utility file2brl that translates XML
 or text files into embosser-ready braille files.
 
 %package doc
-Group: Accessibility
+Group: Documentation
 Summary: Documentation of the library and the corresponding utilities
 BuildArch: noarch
-Requires: %name = %EVR
 
 %description doc
 %name is a braille transcription library for UTDML (Unified Tactile
@@ -84,6 +79,7 @@ provided by %name-utils.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %autoreconf
@@ -100,8 +96,7 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %make check
 
 %files -n %name%sover
-%doc AUTHORS ChangeLog README NEWS
-%doc COPYING.LIB
+%doc AUTHORS ChangeLog README NEWS  COPYING.LIB
 %_libdir/%name.so.%sover
 %_libdir/%name.so.%sover.*
 %_datadir/%name/
@@ -122,6 +117,9 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_infodir/%name.info.*
 
 %changelog
+* Mon Jan 19 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt5
+- Fixed FTBFS after libxml2 update to 2.14.6
+
 * Fri Apr 18 2025 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt4
 - Fixed build with liblouis 3.33.0
 
