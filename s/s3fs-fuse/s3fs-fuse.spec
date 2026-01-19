@@ -1,5 +1,5 @@
 Name:     s3fs-fuse
-Version:  1.95
+Version:  1.97
 Release:  alt1
 
 Summary:  FUSE-based file system backed by Amazon S3
@@ -13,7 +13,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 Source:   %name-%version.tar
 
 BuildRequires: gcc-c++ make
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: libcurl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libssl-devel
@@ -47,6 +47,9 @@ rsync backup to s3.
 %_man1dir/*.1.xz
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.97-alt1
+- Automatically updated to 1.97.
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.95-alt1
 - Automatically updated to 1.95.
 
