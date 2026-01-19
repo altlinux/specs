@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jan 19 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt3
+- small improvements
+- typo fixes (closes #57525)
+
 * Tue Dec 30 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
 - update to ALT Mobile 11.0RC1
 - small improvements (closes #57194, #57196)
