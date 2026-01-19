@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ready-set-on-phrog
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Configs for start ready-set through phrog
@@ -32,8 +32,6 @@ install -pDm0644 50_mobi.phosh.phrog_first-run \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
 install -pDm0644 50_org.gnome.desktop.screensaver_lock-enabled \
 	%buildroot%_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
-install -pDm0644 50_%name.conf \
-	%buildroot%_sysconfdir/security/pwquality.conf.d/50_%name.conf
 install -pDm0644 50_%name.rules \
 	%buildroot%_datadir/polkit-1/rules.d/50_%name.rules
 
@@ -41,10 +39,14 @@ install -pDm0644 50_%name.rules \
 %_libexecdir/ready-set-first-run
 %_sysconfdir/dconf/db/local.d/50_mobi.phosh.phrog_first-run
 %_sysconfdir/dconf/db/local.d/50_org.gnome.desktop.screensaver_lock-enabled
-%_sysconfdir/security/pwquality.conf.d/50_%name.conf
 %_datadir/polkit-1/rules.d/50_%name.rules
 
 %changelog
+* Tue Jan 20 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4-alt1
+- Updated for new ready-set 0.3.1.
+- Removed pwquality config file, because we use passwdqc.
+- Added permission for running ready-set-ruler.
+
 * Fri Jan 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3-alt1
 - Updated for new ready-set 0.3.0.
 

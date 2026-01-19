@@ -10,7 +10,7 @@
 %define api_version 0
 
 Name: ready-set
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: The utility for configuring the system at the first start
@@ -21,7 +21,7 @@ Vcs: https://altlinux.space/alt-gnome/ReadySet.git
 
 Source: %name-%version.tar
 
-Requires: %name-translation = %EVR
+Requires: %name-common = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
@@ -48,14 +48,27 @@ BuildRequires: pkgconfig(systemd)
 %description
 %summary.
 
-%package translation
-Summary: Translation file for %name frontends
-Group: System/Internationalization
+%package common
+Summary: Common files for %name frontends
+Group: Other
 
-BuildArch: noarch
+Obsoletes: %name-translation <= 0.3.0-alt1
+Provides: %name-translation = %EVR
 
-%description translation
-%summary: cli and gui.
+%description common
+%summary.
+
+# %package cli
+# Summary: CLI %name frontend
+# Group: Other
+
+# BuildArch: noarch
+
+# Requires: %name-common = %EVR
+# Conflicts: %name = %EVR
+
+# %description cli
+# %summary.
 
 %package -n %libname%api_version
 Summary: %name library
@@ -165,12 +178,15 @@ Requires: %name = %EVR
 
 %files
 %_libexecdir/%name
+%_iconsdir/hicolor/*/apps/%{app_id}*
+
+# %files cli
+
+%files common -f %name.lang
+%_libexecdir/%name-ruler
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
-%_iconsdir/hicolor/*/apps/%{app_id}*
 %doc README.en.md
-
-%files translation -f %name.lang
 
 %files -n %libname%api_version
 %_libdir/%libname-%api_version.so.%api_version
@@ -190,17 +206,17 @@ Requires: %name = %EVR
 %_girdir/%girname-%api_version.gir
 
 %files plugin-keyboard
-%_datadir/polkit-1/rules.d/%app_id.Plugin.Keyboard.rules
+%_datadir/%name/rules.d/%app_id.Plugin.Keyboard.rules
 %_libdir/%name/plugins/keyboard.plugin
 %_libdir/%name/plugins/libkeyboard.so
 
 %files plugin-language
-%_datadir/polkit-1/rules.d/%app_id.Plugin.Language.rules
+%_datadir/%name/rules.d/%app_id.Plugin.Language.rules
 %_libdir/%name/plugins/language.plugin
 %_libdir/%name/plugins/liblanguage.so
 
 %files plugin-user-common
-%_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
+%_datadir/%name/rules.d/%app_id.Plugin.User.rules
 %_libexecdir/%name-set-root-password
 
 %files plugin-user-passwdqc
@@ -216,6 +232,11 @@ Requires: %name = %EVR
 %_libdir/%name/plugins/libwelcome.so
 
 %changelog
+* Mon Jan 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.1-alt1
+- New version: 0.3.1. (closes: #57526)
+- %name-translation renamed with %name-common to store all common files
+  between frontends.
+
 * Fri Jan 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.0-alt1
 - New version: 0.3.0.
 
