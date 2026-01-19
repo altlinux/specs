@@ -5,7 +5,7 @@
 
 Name: niftilib
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Summary: A set of i/o libraries for reading and writing nifti-1 files
 License: ALT-Public-Domain
 Group: File tools
@@ -30,6 +30,7 @@ image data, e.g. magnetic resonance image (MRI) and functional MRI
 (fMRI) brain images.
 
 %package -n libznz%libznz_soname
+Obsoletes: libniftilib <= 0.20100720
 Summary: Low-level library for handling read/write of compressed files
 Group: System/Libraries
 
@@ -38,6 +39,7 @@ Low-level library for handling read/write of compressed files.
 This is part of the Niftilib package.
 
 %package -n libniftiio%libniftiio_soname
+Obsoletes: libniftilib <= 0.20100720
 Summary: Core i/o routines for reading and writing nifti-1 format files
 Group: System/Libraries
 
@@ -47,6 +49,7 @@ Primarily routines to read/write and manipulate the header field
 information, including orientation matrices.
 
 %package -n libnifti2_%libnifti2_soname
+Obsoletes: libniftilib <= 0.20100720
 Summary: Core i/o routines for reading and writing nifti-2 format files
 Group: System/Libraries
 
@@ -54,6 +57,7 @@ Group: System/Libraries
 Core i/o routines for reading and writing nifti-2 format files.
 
 %package -n libnifticdf%libnifticdf_soname
+Obsoletes: libniftilib <= 0.20100720
 Summary: Functions to compute cumulative distributions and their inverses
 Group: System/Libraries
 
@@ -159,6 +163,9 @@ done
 %_docdir/%name
 
 %changelog
+* Mon Jan 19 2026 Anton Farygin <rider@altlinux.org> 3.0.1-alt2
+- added Obsolete for old libniftilib package
+
 * Sat Jan 10 2026 Anton Farygin <rider@altlinux.org> 3.0.1-alt1
 - 0.20100720 -> 3.0.1
 - split libraries into separate packages according to SharedLibsPolicy
