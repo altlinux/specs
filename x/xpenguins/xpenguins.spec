@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xpenguins
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: XPenguins -- little penguins on your desktop
@@ -11,17 +11,17 @@ Summary(ru_RU.KOI8-R): XPenguins -- маленькие пингвины на вашем рабочем столе
 License: GPLv2
 Group: Toys
 Url: http://xpenguins.seul.org/
+Vcs: https://sourceforge.net/projects/xpenguins/files/
 
 Source0: %name-%version.tar.bz2
 Source2: %name-icons.tar.bz2
 
-Patch01: %name-2.2-alt-warnings-Wall_fix.patch
-Patch02: %name-2.2-debian-gcc-14.patch
-
 BuildRequires: libXpm-devel libXext-devel libXt-devel
 BuildRequires: pkgconfig(gmodule-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
-
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xinerama)
+Buildrequires: pkgconfig(xtst)
 
 %description
 XPenguins is an desktop amusement. It creates little penguins that
@@ -37,7 +37,7 @@ XPenguins это представление на рабочем столе. Эта программа создает на
 
 %prep
 %setup -a2
-%autopatch
+#%%autopatch
 
 %build
 %configure
@@ -76,6 +76,9 @@ EOF
 %_liconsdir/%name.xpm
 
 %changelog
+* Mon Jan 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.2.4-alt1
+- 3.2.4
+
 * Tue Jul 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
