@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: minder
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Mind-mapping application
@@ -66,12 +66,16 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_iconsdir/hicolor/*/mimetypes/application-%rdn_name.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/mime/packages/%rdn_name.xml
 %doc AUTHORS* README*
 
 
 %changelog
+* Mon Jan 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
+- 2.0.4
+
 * Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
