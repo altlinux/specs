@@ -1,10 +1,12 @@
 Name: midish
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: MIDI sequencer/filter
 Group: Sound
 URL: http://www.midish.org
-VCS: https://caoua.org/git/midish
+# https://caoua.org/git/midish
+# original git repo not responding for a long time
+VCS: https://github.com/ratchov/midish
 License: BSD
 
 Source: %name-%version.tar
@@ -49,6 +51,9 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Automatically updated to 1.4.1.
+
 * Wed May 14 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 
