@@ -3,7 +3,7 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.22.3
+Version: 0.22.4
 Release: alt1
 Name: python3-module-%oname
 License: PDDL and Python and BSD and GPLv3
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-pyproject
 Conflicts: python-module-docutils
 Source1: %pyproject_deps_config_name
+Source999: watch
 %pyproject_runtimedeps_metadata
 %pyproject_builddeps_build
 
@@ -40,7 +41,6 @@ what-you-see-is-what-you-get plaintext markup syntax.
 %install
 %pyproject_install
 
-
 %check
 python3 test/alltests.py
 
@@ -49,6 +49,9 @@ python3 test/alltests.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 19 2026 Anton Farygin <rider@altlinux.org> 0.22.4-alt1
+- 0.22.3 -> 0.22.4
+
 * Mon Dec 01 2025 Anton Farygin <rider@altlinux.com> 0.22.3-alt1
 - 0.22.3
 
