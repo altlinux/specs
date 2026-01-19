@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: Accurately separate the TLD from the registered domain and subdomains of a URL
@@ -59,6 +59,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 5.3.1-alt1
+- Automatically updated to 5.3.1.
+
 * Tue Apr 22 2025 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
 - Automatically updated to 5.3.0.
 
