@@ -4,7 +4,7 @@
 %define libkpimpkpass libkpimpkpass%sover
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -15,8 +15,8 @@ License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt6-base-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: shared-mime-info
 BuildRequires: kf6-karchive-devel
 
@@ -65,7 +65,7 @@ Obsoletes: libkpimpkpass < %EVR
 %files common -f %name.lang
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories6/*.*categories
-#%_K6xdgmime/*.xml
+%_K6xdgmime/*pkpass*.xml
 
 %files devel
 %_K6inc/KPim6/KPkPass/
@@ -75,9 +75,12 @@ Obsoletes: libkpimpkpass < %EVR
 %files -n %libkpimpkpass
 %_K6lib/libKPim6PkPass.so.%sover
 %_K6lib/libKPim6PkPass.so.*
-
+%_K6qml/org/kde/pkpass/
 
 %changelog
+* Fri Jan 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 

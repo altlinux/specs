@@ -16,8 +16,8 @@
 %define libkpim6webengineviewer libkpim6webengineviewer%sover
 
 Name: %rname
-Version: 25.08.3
-Release: alt2
+Version: 25.12.1
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -27,7 +27,6 @@ License: LGPL-2.1-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-gpgme17.patch
-Patch2: CVE-2025-69412.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
@@ -127,7 +126,6 @@ Requires: %name-common >= %EVR
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
-%patch2 -p1
 
 %if_disabled qtwebengine
 sed -i 's|WebEngineWidgets||' CMakeLists.txt
@@ -209,6 +207,9 @@ mkdir -p %buildroot/%_K6plug/pim6
 
 
 %changelog
+* Fri Jan 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
 - apply patch (fixes: CVE-2025-69412)
 

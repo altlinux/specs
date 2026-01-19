@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -273,6 +273,9 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 
 
 %changelog
+* Fri Jan 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
