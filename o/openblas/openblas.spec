@@ -26,8 +26,8 @@
 
 
 Name: openblas
-Version: 0.3.30
-Release: alt1
+Version: 0.3.31
+Release: alt2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -158,6 +158,12 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Jan 19 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.31-alt2
+- backport upstream fix for NO_LAPACK builds.
+
+* Fri Jan 16 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.31-alt1
+- 0.3.31.
+
 * Thu Jun 19 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.30-alt1
 - 0.3.30.
 
