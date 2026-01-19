@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.0.2
-Release: alt3
+Release: alt4
 %K5init
 
 Summary: A powerful batch renamer for KDE5
@@ -28,7 +28,7 @@ BuildRequires: kf5-kjs-devel kf5-kio-devel kf5-kservice-devel kf5-kwidgetsaddons
 BuildRequires: kf5-kxmlgui-devel
 BuildRequires: libexiv2-devel
 BuildRequires: fontconfig-devel libfreetype-devel libpodofo-devel
-BuildRequires: libtag-devel
+BuildRequires: taglib-devel
 BuildRequires: qt5-base-devel
 
 %description
@@ -66,6 +66,9 @@ It can also change access and modification dates, permissions, and file ownershi
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt4
+- build with new taglib
+
 * Tue Apr 29 2025 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt3
 - move service menus to standard place
 
