@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.6.3
-Release: alt4.1.1
+Version: 1.0.0
+Release: alt1
 
 Summary: Functors, Applicatives, And Monads in Python
 
@@ -19,12 +19,12 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 %endif
 
 BuildArch: noarch
@@ -42,10 +42,6 @@ in Python in production environments you should use FSlash instead.
 
 %prep
 %setup
-sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
-# hotfix for python3.12
-sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
-sed -i 's/readfp/read_file/' versioneer.py
 
 %build
 %pyproject_build
@@ -63,6 +59,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt4.1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
