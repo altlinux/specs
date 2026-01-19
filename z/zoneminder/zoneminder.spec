@@ -6,8 +6,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.37.63
-Release: alt14.git2e3faf4a0
+Version: 1.37.74
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -68,7 +68,7 @@ Zones and Config.
 %package nginx
 Summary: Zoneminder configuration file and requires for nginx
 Group: Networking/WWW
-Requires: php8.1-fpm-fcgi fcgiwrap nginx
+Requires: php%phpver-fpm-fcgi fcgiwrap nginx
 BuildArch: noarch
 %description nginx
 Zoneminder configuration file and requires for nginx
@@ -181,6 +181,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Mon Jan 19 2026 Anton Farygin <rider@altlinux.org> 1.37.74-alt1
+- update to 1.37.74
+
 * Tue Nov 25 2025 Anton Farygin <rider@altlinux.com> 1.37.63-alt14.git2e3faf4a0
 - update to upstream 2e3faf4a0
 
