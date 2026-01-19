@@ -14,7 +14,7 @@
 # - chrome-trace
 # - dune-rpc
 
-%define dune_pkg dune-rpc
+%define dune_pkg fs-io
 %if "%dune_pkg" != "bootstrap"
 %define subpackagename -%dune_pkg
 %def_with subpackage

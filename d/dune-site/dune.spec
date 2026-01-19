@@ -3,6 +3,8 @@
 # - ordering
 # - configurator
 # - dyn
+# - fs-io
+# - top-closure
 # - stdune
 # - private-libs
 # - site
@@ -24,7 +26,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.20.2
+Version: 3.21.0
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -42,6 +44,11 @@ BuildRequires: ocaml-csexp-devel
 %endif
 
 %if "%dune_pkg" == "bootstrap"
+BuildRequires: ocaml-uutf-devel
+BuildRequires: ocaml-spawn-devel
+BuildRequires: ocaml-csexp-devel
+BuildRequires: ocaml-re-devel
+BuildRequires: ocaml-pp-devel
 %package -n emacs-dune
 Summary: Emacs support for Ocaml Dune
 Requires: %name = %EVR
@@ -131,12 +138,41 @@ BuildRequires: ocaml-ordering-devel = %version ocaml-pp-devel
 Dynamic type.
 %endif
 
+%if "%dune_pkg" == "fs-io"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: Dune File System Operations library
+Requires: dune = %EVR
+%description -n ocaml-%pkgname
+fs-io is a library from the dune project that abstracts filesystem input/output
+operations. It offers a set of predictable and easy-to-use APIs for working with
+files and directories, including reading and writing data, path handling, and
+error management, simplifying filesystem-related logic in applications.
+%endif
+
+%if "%dune_pkg" == "top-closure"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: Dune Topological Closure
+Requires: dune = %EVR
+%description -n ocaml-%pkgname
+top-closure is a library from the dune project that implements algorithms for
+computing topological closures over dependency graphs. It helps determine and
+process the complete set of elements required by a given node, respecting
+dependency ordering, and is useful for dependency resolution, build systems,
+and graph-based analyses.
+%endif
+
 %if "%dune_pkg" == "stdune"
 %define pkgname %dune_pkg
 %package -n ocaml-%pkgname
 Group: Development/ML
 Summary: Dune's unstable standard library
 Requires: dune = %EVR
+BuildRequires: ocaml-top-closure-devel = %version
+BuildRequires: ocaml-fs-io-devel = %version
 BuildRequires: ocaml-ordering-devel = %version
 BuildRequires: ocaml-csexp-devel ocaml-pp-devel ocaml-dyn-devel = %version
 %description -n ocaml-%pkgname
@@ -317,6 +353,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 3.21.0-alt1
+- 3.20.2 -> 3.21.0
+
 * Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 3.20.2-alt1
 - 3.19.0 -> 3.20.2
 
