@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define _name copyous
 %define uuid %_name@boerdereinar.dev
 %define xdg_name org.gnome.shell.extensions.%_name
 
 Name: gnome-shell-extension-%_name
-Version: 1.1.3
+Version: 1.3.0
 Release: alt1
 Summary: Modern Clipboard Manager for GNOME
 Group: Graphical desktop/GNOME
@@ -50,8 +51,9 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%uuid/schemas
 %files -f %uuid.lang
 %_datadir/gnome-shell/extensions/%uuid
 
-
 %changelog
+* Mon Jan 19 2026 Vladislav Petrukhin <vladp@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Mon Dec 08 2025 Vladislav Petrukhin <vladp@altlinux.org> 1.1.3-alt1
 - Initial build.
-
