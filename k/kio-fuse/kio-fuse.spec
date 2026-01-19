@@ -5,8 +5,8 @@
 %define service_name kio-fuse
 
 Name: %rname
-Version: 5.1.0
-Release: alt11
+Version: 5.1.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,6 @@ Provides:  kde5-kio-fuse = %EVR
 Obsoletes: kde5-kio-fuse < %EVR
 
 Source: %rname-%version.tar
-Patch1: kdebug-482902.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules glibc-devel qt6-declarative-devel
@@ -46,7 +45,6 @@ developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build \
@@ -67,6 +65,9 @@ developing applications that use %name.
 %_tmpfilesdir/kio-fuse-tmpfiles.conf
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
+- new version
+
 * Wed Apr 23 2025 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt11
 - add fix against kdebug#482902
 
