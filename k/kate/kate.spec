@@ -4,7 +4,7 @@
 %define libkateprivate libkateprivate%sover
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -142,7 +142,9 @@ kde6_add_text_mimes %buildroot/%_K6xdgapp/org.kde.kwrite.desktop
 #%files core
 
 %files
+%_K6bin/exec_inspect.sh
 %_K6bin/kate
+%_K6plug/kf6/kio/*kateexec*.so
 %_K6plug/kf6/ktexteditor/
 %_K6xdgapp/org.kde.kate.desktop
 %_K6data/kateproject/
@@ -167,6 +169,9 @@ kde6_add_text_mimes %buildroot/%_K6xdgapp/org.kde.kwrite.desktop
 
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 

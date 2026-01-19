@@ -6,7 +6,7 @@
 %def_disable libzip
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -108,6 +108,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 

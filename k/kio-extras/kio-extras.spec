@@ -6,8 +6,8 @@
 %def_enable exiv2
 
 Name: %rname
-Version: 25.08.3
-Release: alt2
+Version: 25.12.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -136,6 +136,9 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

@@ -1,7 +1,7 @@
 %define rname kcalc
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ BuildRequires: libgmp-devel libmpfr-devel libmpc-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
-BuildRequires: kf6-kcrash-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kcrash-devel kf6-kcolorscheme-devel kf6-kiconthemes-devel
 
 %description
 %summary.
@@ -55,6 +55,9 @@ rm -f po/ru/kcalc.po.tmp
 
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 

@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -118,17 +118,16 @@ done
 %_datadir/qlogging-categories6/*.*categories
 
 %files
+%config(noreplace) %_sysconfdir/ufw/applications.d/kdeconnect
 %_K6bin/kdeconnect*
 %_K6start/*kdeconnect*.desktop
 %_K6xdgapp/*kdeconnect*.desktop
 %_K6plug/kf6/*/*kdeconnect*.so
-#%_K6plug/plasma/kcms/systemsettings_qwidgets/*kdeconnect*.so
 %_K6plug/kdeconnect/
 %_K6qml/org/kde/kdeconnect/
 %_K6dbus_srv/org.kde.kdeconnect.service
 %_K6notif/kdeconnect.notifyrc
 %_K6icon/hicolor/*/apps/*kdeconnect*.*
-#%_K6srv/*kdeconnect*.*
 %_K6data/plasma/plasmoids/org.kde.kdeconnect/
 %_K6data/kdeconnect/
 %_datadir/metainfo/*kdeconnect*.xml
@@ -147,6 +146,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Tue Nov 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
