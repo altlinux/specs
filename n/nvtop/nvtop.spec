@@ -4,13 +4,14 @@
 %define git %nil
 
 Name: nvtop
-Version: 3.2.0
+Version: 3.3.1
 Release: alt1
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
 Group: Monitoring
 License: GPLv3
 Url: https://github.com/Syllo/nvtop
+Vcs: https://github.com/Syllo/nvtop
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
@@ -50,11 +51,14 @@ a htop familiar way.
 %doc README.* COPYING
 %_bindir/%name
 %_man1dir/%name.*
-%_iconsdir/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
-%_datadir/metainfo/%name.metainfo.xml
+%_datadir/metainfo/io.github.syllo.%name.metainfo.xml
 
 %changelog
+* Mon Jan 19 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.1-alt1
+- 3.3.1.
+
 * Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 3.2.0-alt1
 - 3.2.0.
 
