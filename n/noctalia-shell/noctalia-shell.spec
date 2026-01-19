@@ -1,5 +1,5 @@
 Name: noctalia-shell
-Version: 3.1.1
+Version: 4.1.1
 Release: alt1
 
 Summary: A sleek and minimal desktop shell thoughtfully crafted for Wayland
@@ -35,6 +35,8 @@ Requires: xdg-desktop-portal-gtk
 
 # False positive
 %filter_from_requires /kitty/d
+%filter_from_requires /hyprland/d
+%filter_from_requires /mangowc/d
 
 %description
 A beautiful, minimal desktop shell for Wayland that actually gets out of your
@@ -60,5 +62,8 @@ install -Dm644 Assets/Services/systemd/noctalia.service \
 %_userunitdir/noctalia.service
 
 %changelog
+* Sun Jan 18 2026 Ilya Sorochan <k0tran@altlinux.org> 4.1.1-alt1
+- Update version.
+
 * Tue Nov 18 2025 Ilya Sorochan <k0tran@altlinux.org> 3.1.1-alt1
 - Initial build.
