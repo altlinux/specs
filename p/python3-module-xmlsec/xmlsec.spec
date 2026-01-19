@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.3.16
+Version: 1.3.17
 Release: alt1
 
 Summary: Python bindings for the XML Security Library
@@ -47,6 +47,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.17-alt1
+- Automatically updated to 1.3.17.
+
 * Thu Jul 24 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.16-alt1
 - Automatically updated to 1.3.16.
 
