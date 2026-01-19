@@ -1,8 +1,8 @@
 %define  modulename restructuredtext_lint
 
 Name:    python3-module-%modulename
-Version: 1.4.0
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: reStructuredText linter
 License: Unlicense
@@ -37,6 +37,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Automatically updated to 2.0.2.
+
 * Mon Dec 25 2023 Ajrat Makhmutov <rauty@altlinux.org> 1.4.0-alt2
 - Mapped PyPI name to distro's one.
 
