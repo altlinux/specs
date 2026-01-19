@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,6 +55,16 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Mon Jan 19 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.4-alt1
+- Added:
+  + Ability to select the "Other components" section in the Components module.
+  + Pretty printing of edition license.
+- Fixed:
+  + Failure to retrieve the edition license.
+  + Running service diagnostic tests with the `--all` option.
+  + Failures when saving reports in the Diagnostics module.
+  + Path formatting in the services parameters table.
+
 * Fri Dec 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.3-alt1
 - Changed (thx Andrey Alekseev):
   + Order of parameter validation, parameter table output, and password 
