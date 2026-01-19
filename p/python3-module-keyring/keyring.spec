@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.6.0
-Release: alt2
+Version: 25.7.0
+Release: alt1
 
 Summary: Keyring provides an easy way to access the system keyring service
 
@@ -68,12 +68,15 @@ fi
 %tox_check_pyproject
 
 %files
-%doc *.rst LICENSE
+%doc *.rst
 %_bindir/%oname
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 25.7.0-alt1
+- Automatically updated to 25.7.0.
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 25.6.0-alt2
 - Fixed FTBFS.
 
