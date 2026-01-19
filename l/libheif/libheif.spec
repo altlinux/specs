@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.20.2
+Version: 1.21.2
 Release: alt1
 
 Summary: HEIF file format decoder and encoder
@@ -14,6 +14,7 @@ Patch: %name-%version-alt.patch
 
 BuildRequires: cmake ctest gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libgdk-pixbuf-devel libaom-devel
 BuildRequires: libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel libx265-devel
+BuildRequires: libaom-tools libx264-devel zlib-devel
 %ifnarch %e2k
 BuildRequires: librav1e-devel libdav1d-devel
 %endif
@@ -88,6 +89,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jan 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.21.2-alt1
+- 1.21.2
+
 * Wed Sep 03 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.20.2-alt1
 - 1.20.2
 
