@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 24.11.1
+Version: 25.10.0
 Release: alt1
 
 Summary: Library for working with HTML/CSS color formats in Python
@@ -50,6 +50,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 25.10.0-alt1
+- Automatically updated to 25.10.0.
+
 * Mon Nov 11 2024 Grigory Ustinov <grenka@altlinux.org> 24.11.1-alt1
 - Automatically updated to 24.11.1.
 
