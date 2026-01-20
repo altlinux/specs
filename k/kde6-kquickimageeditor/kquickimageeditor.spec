@@ -1,7 +1,10 @@
 %define rname kquickimageeditor
 
+%define sover 1
+%define libkquickimageeditor libkquickimageeditor%sover
+
 Name: kde6-%rname
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 %K6init altplace
 
@@ -16,6 +19,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: kf6-kconfig-devel
 
 %description
 KQuickImageEditor is a set of QtQuick components providing basic image editing capabilities.
@@ -36,27 +40,43 @@ Conflicts: kde5-kquickimageeditor-devel
 %description devel
 This package contains the development files for %name.
 
+%package -n %libkquickimageeditor
+Group: System/Libraries
+Summary: %name library
+#Requires: %name-common >= %EVR
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+%description -n %libkquickimageeditor
+%name library
 
 %prep
 %setup -n %rname-%version
 
 %build
 %K6build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
     #
 
 %install
 %K6install
 %find_lang --with-kde --all-name %name
 
-%files -f %name.lang
+%files -n %libkquickimageeditor -f %name.lang
+%doc LICENSES/*
+%_K6lib/libKQuickImageEditor.so.%sover
+%_K6lib/libKQuickImageEditor.so.*
 %_K6qml/org/kde/kquickimageeditor/
 
 %files devel
+%_K6inc/??uick?mage?ditor/
+%_K6link/lib*.so
 %_K6lib/cmake/KQuickImageEditor/
 %_K6archdata/mkspecs/modules/*KQuickImageEditor*.pri
 
-
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
+- new version
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
 - new version
 
