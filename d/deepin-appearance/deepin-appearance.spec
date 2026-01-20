@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.76
+Version: 1.1.77
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -71,6 +71,9 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:%_includedir/qt6
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.77-alt1
+- New version 1.1.77.
+
 * Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.76-alt1
 - New version 1.1.76.
 
