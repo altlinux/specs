@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 2.0.20
+Version: 2.0.23
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -84,6 +84,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/launchpadcommon.so
 
 %changelog
+* Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.23-alt1
+- New version 2.0.23.
+
 * Wed Dec 17 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.20-alt1
 - New version 2.0.20.
 
