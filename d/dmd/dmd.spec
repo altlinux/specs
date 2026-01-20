@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.111.0
+Version: 2.112.1
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -26,7 +26,7 @@ Source2: phobos-%version.tar
 Source3: tools-%version.tar
 
 Patch1: druntime-2.110.0-alt-build.patch
-Patch2: dmd-2.109.1-alt-build.patch
+Patch2: dmd-2.112.1-alt-build.patch
 
 BuildRequires: gcc-c++ curl-devel
 BuildRequires: zlib-devel
@@ -205,6 +205,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Jan 20 2026 Andrey Kovalev <ded@altlinux.org> 2.112.1-alt1
+- Updated to upstream version 2.112.1.
+
 * Wed May 07 2025 Andrey Kovalev <ded@altlinux.org> 2.111.0-alt1
 - Updated to upstream version 2.111.0.
 
