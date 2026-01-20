@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-image-viewer
-Version: 6.0.32
+Version: 6.0.36
 Release: alt1
 
 Summary: Image viewer for Deepin
@@ -104,6 +104,9 @@ export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %_dqt6_plugindir/imageformats/libxraw.so
 
 %changelog
+* Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
+- New version 6.0.36.
+
 * Thu Oct 30 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.32-alt1
 - New version 6.0.32.
 
