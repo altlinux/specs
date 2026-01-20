@@ -2,7 +2,7 @@
 %define  modulename agate
 
 Name:    python3-module-%modulename
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: A Python data analysis library that is optimized for humans instead of machines
@@ -29,7 +29,7 @@ problems with readable code.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with doc
 cd docs
@@ -38,7 +38,7 @@ cd -
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with doc
 mkdir -p %buildroot%_man1dir
@@ -47,13 +47,16 @@ cp docs/_build/man/*.1 %buildroot%_man1dir
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 %if_with doc
 %doc %_man1dir/*
 %doc docs/_build/text/*
 %endif
 
 %changelog
+* Tue Jan 20 2026 Grigory Ustinov <grenka@altlinux.org> 1.14.1-alt1
+- Automatically updated to 1.14.1.
+
 * Tue Jan 13 2026 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
 - Automatically updated to 1.14.0.
 
