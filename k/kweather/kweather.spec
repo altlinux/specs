@@ -1,7 +1,7 @@
 %define rname kweather
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -47,11 +47,14 @@ A convergent weather application for Plasma.
 %_K6xdgapp/*kweather*.desktop
 %_K6dbus_srv/*kweather*.service
 %_K6icon/hicolor/*/apps/*kweather*
-%_K6data/plasma/plasmoids/*kweather*/
+#%_K6data/plasma/plasmoids/*kweather*/
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 

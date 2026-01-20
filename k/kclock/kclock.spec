@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -20,12 +20,13 @@ Patch1: alt-bindir.patch
 Patch2: alt-clean-countries.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-wayland-devel
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-knotifications-devel
 BuildRequires: kf6-kpackage-devel kf6-kservice-devel kf6-kstatusnotifieritem-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-kcrash-devel kf6-ksvg-devel kf6-kio-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-kirigami-addons-devel
+BuildRequires: plasma-wayland-protocols
 BuildRequires: plasma6-lib-devel
 
 %description
@@ -84,6 +85,9 @@ developing applications that use %name.
 
 
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
