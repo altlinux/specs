@@ -1,7 +1,7 @@
 %define rname kdesdk-thumbnailers
 
 Name: %rname
-Version: 25.08.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -41,10 +41,13 @@ BuildRequires: kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel
 %files -f %name.lang
 %doc LICENSES/*
 %_K6plug/kf?/thumbcreator/*othumb*.so
-%_K6cfg/*.kcfg
+#%_K6cfg/*.kcfg
 
 
 %changelog
+* Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.3-alt1
 - new version
 
