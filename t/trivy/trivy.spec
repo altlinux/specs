@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.66.0
+Version: 0.68.2
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -26,7 +26,7 @@ Source3: %name.sysconfig
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang wire golang >= 1.24.4
+BuildRequires: rpm-build-golang wire golang >= 1.25
 
 BuildRequires: /proc
 
@@ -82,6 +82,7 @@ export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 export LDFLAGS="-X github.com/aquasecurity/trivy/pkg/version/app.ver=%version"
 export CGO_ENABLED=0
+export GOEXPERIMENT=jsonv2
 
 %golang_prepare
 wire gen pkg/commands/... pkg/rpc/... pkg/k8s/...
@@ -114,6 +115,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Dec 19 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.68.2-alt1
+- 0.68.2
+
 * Wed Sep 10 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.66.0-alt1
 - 0.66.0
 - Change trivy-db module url from github.com to altlinux.space
