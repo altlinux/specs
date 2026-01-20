@@ -2,7 +2,7 @@
 %define nameLC plasma_applet_%nameL
 
 Name: plasma-applet-drawer
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: A customizable fullscreen launcher widget for KDE Plasma
@@ -31,7 +31,7 @@ mv contents/locale %_builddir/%name-%version/
 install -d %buildroot%_datadir/plasma/plasmoids/%nameL
 cp -p -r contents %buildroot%_datadir/plasma/plasmoids/%nameL/
 cp -a *.json *.md %buildroot%_datadir/plasma/plasmoids/%nameL/
-for locale in de ro ru uk; do
+for locale in de ro ru uk pl; do
   install -Dm 0644 locale/${locale}/LC_MESSAGES/%nameLC.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
@@ -42,5 +42,8 @@ done
 %doc README.md
 
 %changelog
+* Tue Jan 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.0.2-alt1
+- 2.0.1 -> 2.0.2
+
 * Mon Aug 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.0.1-alt1
 - Initial build for ALT Linux.
