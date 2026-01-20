@@ -13,9 +13,9 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		6.18
-%define karch x86_64 aarch64 %ix86
+%define karch x86_64 aarch64
 
 %setup_kernel_module %flavour
 %define module_srcver	%(echo %module_version | tr -d .)
@@ -309,6 +309,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 20 2026 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+- prepare for exclude i586 from build
 
 * Fri Oct 10 2025 Sergey V Turchin <zerg at altlinux dot org> 580.95.05-alt1
 - new release (580.95.05)
