@@ -14,7 +14,7 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: %rname
-Version: 25.08.2
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -150,6 +150,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 

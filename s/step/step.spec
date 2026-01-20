@@ -1,7 +1,7 @@
 %define rname step
 
 Name: %rname
-Version: 25.04.3
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -44,6 +44,9 @@ you can not only learn but feel how physics works!
 %setup -n %rname-%version
 %patch0 -p2
 
+sed -i 's|^find_package.*Eigen3.*REQUIRED.*|find_package(Eigen3 REQUIRED)|' CMakeLists.txt
+
+
 mv po/ru/step.po{,.old}
 msgcat --use-first %SOURCE10 po/ru/step.po.old > po/ru/step.po
 rm -f po/ru/step.po.old
@@ -74,6 +77,12 @@ rm -f po/ru/step.po.old
 
 
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
+* Wed Oct 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
+- new version
+
 * Tue Jul 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.3-alt1
 - new version
 
