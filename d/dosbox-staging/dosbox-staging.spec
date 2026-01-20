@@ -1,6 +1,6 @@
 Name: dosbox-staging
 Version: 0.82.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
@@ -14,7 +14,7 @@ Patch: dosbox-staging-0.77.0-ne2000.patch
 
 # Automatically added by buildreq on Thu Apr 07 2022
 # optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libglvnd-devel libgmock-devel libgpg-error libogg-devel libopus-devel libp11-kit libstdc++-devel libxcb-devel ninja-build perl pkg-config python3 python3-base sh4 xz zlib-devel
-BuildRequires: ctags gcc-c++ git-core libSDL2_net-devel libalsa-devel libfluidsynth-devel libgtest-devel libmt32emu-devel libopusfile-devel libpcap-devel libpng-devel libslirp-devel meson libiir1-devel libspeexdsp-devel libSDL2_image-devel
+BuildRequires: ctags gcc-c++ git-core libSDL2_net-devel libalsa-devel libfluidsynth-devel libgtest-devel libmt32emu-devel libopusfile-devel libpcap-devel libpng-devel libslirp-devel meson libiir1-devel libspeexdsp-devel libSDL2_image-devel zlib-devel
 
 %description
 dosbox-staging is an attempt to revitalize DOSBox's development process.
@@ -70,6 +70,9 @@ mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 %exclude %_datadir/licenses
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 0.82.2-alt2
+- Add zlib-devel in BR
+
 * Sat Jul 19 2025 Fr. Br. George <george@altlinux.org> 0.82.2-alt1
 - Autobuild version bump to 0.82.2
 

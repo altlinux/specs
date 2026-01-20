@@ -1,6 +1,6 @@
 Name: pngcrush
 Version: 1.8.13
-Release: alt3
+Release: alt4
 
 Summary: Optimizer for PNG (Portable Network Graphics) files
 License: zlib
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 # https://www.mail-archive.com/debian-bugs-dist%40lists.debian.org/msg1957191.html
 Patch0: ignore_PNG_IGNORE_ADLER32.patch
 
-BuildPreReq: libpng-devel libcrc32c-devel
+BuildPreReq: libpng-devel libcrc32c-devel zlib-devel
 
 %description
 Pngcrush is a commandline optimizer for PNG (Portable Network Graphics)
@@ -42,6 +42,9 @@ install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 %doc ChangeLog.zst LICENSE
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 1.8.13-alt4
+- Add zlib-devel in BR
+
 * Fri Nov  8 2024 Artyom Bystrov <arbars@altlinux.org> 1.8.13-alt3
 - Fix build
 

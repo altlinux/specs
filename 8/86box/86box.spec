@@ -2,7 +2,7 @@
 %set_verify_elf_method rpath=relaxed
 Name: 86box
 Version: 5.3
-Release: alt1
+Release: alt2
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems
 Group: Emulators
 License: GPLv3
@@ -11,6 +11,9 @@ Url: https://86box.net/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
+
+# Only make the fallthrough define available in C code, fixes https://github.com/86Box/86Box/issues/6607
+Patch: 0092ce15de3efac108b961882f870a8c05e8c38f.patch
 
 BuildPreReq: rpm-macros-cmake rpm-macros-qt5 qt5-declarative-devel libslirp-devel extra-cmake-modules
 BuildRequires: gcc-c++ libevdev-devel ecm wayland-devel libwayland-client-devel libffi-devel libappstream-glib libjack-devel libxkbcommon-devel liblash-devel pkgconfig(systemd) libdbus-devel libinstpatch-devel
@@ -31,6 +34,7 @@ Download release with the release number of emulator, and unzip in
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %ifarch %ix86
@@ -77,6 +81,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/net.86box.86Box.me
 %_iconsdir/hicolor/*/apps/net.86box.86Box.png
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 5.3-alt2
+- Add patch for fixing
+
 * Thu Dec 25 2025 Artyom Bystrov <arbars@altlinux.org> 5.3-alt1
 - update to new version
 

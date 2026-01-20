@@ -1,6 +1,6 @@
 Name: TORCS
 Version: 1.3.7
-Release: alt2
+Release: alt3
 
 Summary: The Open Racing Car Simulator
 
@@ -30,7 +30,7 @@ Requires: freeglut plib libalut
 BuildRequires: gcc-c++ imake libGL-devel libXext-devel libXi-devel libXmu-devel
 BuildRequires: libXrandr-devel libXrender-devel libalut-devel libexpat-devel
 BuildRequires: libfreeglut-devel libpng-devel plib-devel xorg-cf-files xorg-sdk
-BuildRequires: libXxf86vm-devel libogg-devel libvorbis-devel libopenal-devel
+BuildRequires: libXxf86vm-devel libogg-devel libvorbis-devel libopenal-devel zlib-devel
 
 %description
 A 3D racing car simulator using OpenGL.
@@ -114,6 +114,9 @@ done
 %_gamesdatadir/torcs/*
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 1.3.7-alt3
+- Add zlib-devel in BR
+
 * Mon Apr 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt2
 - Fixed ftbfs.
 

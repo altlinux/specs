@@ -1,6 +1,6 @@
 Name:       fs-uae
 Version:    3.2.35
-Release:    alt1
+Release:    alt2
 License:    GPLv2
 URL:        https://fs-uae.net
 Group:      Emulators
@@ -9,7 +9,8 @@ Source:     %name-%version.tar.gz
 
 # Automatically added by buildreq on Mon Jan 18 2021
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libXext-devel libXfixes-devel libglvnd-devel libstdc++-devel pkg-config python-modules python2-base sh4 tzdata xorg-proto-devel zlib-devel
-BuildRequires: gcc-c++ glib2-devel glibc-devel-static libSDL-devel libSDL2-devel libSDL2_ttf-devel libXi-devel libXv-devel libmpeg2-devel libopenal-devel libpng-devel zip
+BuildRequires: gcc-c++ glib2-devel glibc-devel-static libSDL-devel libSDL2-devel libSDL2_ttf-devel libXi-devel libXv-devel libmpeg2-devel libopenal-devel libpng-devel zip zlib-devel
+
 
 %description
 FS-UAE is an Amiga emulator for Windows, Linux and Mac OS X based on
@@ -51,6 +52,9 @@ Amiga games against (or with) friends over the Internet.
 %_datadir/mime/*
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.ru> 3.2.35-alt2
+- Add zlib-devel in BR
+
 * Tue Dec 16 2025 Artyom Bystrov <arbars@altlinux.ru> 3.2.35-alt1
 - Update to new version
 
