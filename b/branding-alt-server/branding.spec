@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt5
+Release: alt6
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -398,6 +398,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jan 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt6
+- update year for copyright to 2026
+
 * Tue Dec 23 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt5
 - Copy licenses from distro-licenses
 
