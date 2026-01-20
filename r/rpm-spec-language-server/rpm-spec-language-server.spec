@@ -3,16 +3,16 @@
 
 Name: rpm-spec-language-server
 Version: 0.0.2
-Release: alt1
+Release: alt2
 Summary: Language Server for RPM spec files
 License: GPL-2.0-or-later
 Group: Development/Python3
 Url: https://github.com/dcermak/rpm-spec-language-server
 Vcs: https://github.com/dcermak/rpm-spec-language-server.git
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 #Source1: %pyproject_deps_config_name
-#Patch0: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -42,6 +42,7 @@ Supported LSP endpoints:
 
 %prep
 %setup
+%patch -p1
 
 # Relax poetry dependencies
 sed -i 's/pygls = "^2.0"/pygls = "*"/' pyproject.toml
@@ -69,5 +70,8 @@ sed -i 's/pygls = "^2.0"/pygls = "*"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 19 2026 Alexey Shabalin <shaba@altlinux.org> 0.0.2-alt2
+- Fix errors and update tests.
+
 * Sun Dec 21 2025 Alexey Shabalin <shaba@altlinux.org> 0.0.2-alt1
 - Initial build.
