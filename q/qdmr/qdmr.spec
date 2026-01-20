@@ -1,6 +1,6 @@
 
 Name: qdmr
-Version: 0.13.2
+Version: 0.13.3
 Release: alt1
 
 Summary: GUI application and command-line-tool to program DMR radios
@@ -86,6 +86,9 @@ with libdmrconf. It is not required for QDMR users.
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Tue Jan 20 2026 Ivan A. Melnikov <iv@altlinux.org> 0.13.3-alt1
+- v0.13.3.
+
 * Mon Dec 01 2025 Ivan A. Melnikov <iv@altlinux.org> 0.13.2-alt1
 - v0.13.2.
 
