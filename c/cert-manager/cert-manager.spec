@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cert-manager
-Version: 1.19.1
+Version: 1.19.2
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -75,6 +75,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/startupapicheck
 
 %changelog
+* Fri Dec 12 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.2-alt1
+- 1.19.1 -> 1.19.2 (Fixes: CVE-2025-47914, CVE-2025-58181, CVE-2025-61727, CVE-2025-61729)
+
 * Tue Dec 09 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.1-alt1
 - 1.15.3 -> 1.19.1 (Fixes: CVE-2025-27144, CVE-2025-22868, CVE-2025-47913, CVE-2025-30204, CVE-2025-22870)
 
