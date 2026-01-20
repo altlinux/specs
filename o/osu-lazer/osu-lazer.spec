@@ -2,7 +2,7 @@
 %define dotnetver 8.0
 
 Name: osu-lazer
-Version: 2025.1209.0
+Version: 2026.119.0
 Release: alt1
 
 Summary: Rhythm is just a *click* away!
@@ -78,6 +78,9 @@ echo 'Icon=%_libdir/osu-lazer/lazer.ico' >> %buildroot%_desktopdir/osu-lazer.des
 %_desktopdir/osu-lazer.desktop
 
 %changelog
+* Mon Jan 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 2026.119.0-alt1
+- New version.
+
 * Tue Dec 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 2025.1209.0-alt1
 - New version.
 
