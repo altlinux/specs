@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-packageurl
-Version: 0.17.5
+Version: 0.17.6
 Release: alt1
 Summary: Python implementation of the package url spec
 License: MIT
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: %name-vendors-%version.tar
 
 Provides: python3-module-%pypi_name = %EVR
 
@@ -24,16 +25,18 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest python3-module-pydantic
 %endif
 
 %description
 Python library to parse and build "purl" aka. Package URLs.
 
 %prep
-%setup
+%setup -a 2
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+
+mv %name-vendors-%version/purl-spec/* spec/
 
 %build
 %pyproject_build
@@ -48,6 +51,9 @@ Python library to parse and build "purl" aka. Package URLs.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 20 2026 Andrey Kovalev <ded@altlinux.org> 0.17.6-alt1
+- Updated to upstream version 0.17.6.
+
 * Tue Sep 09 2025 Andrey Kovalev <ded@altlinux.org> 0.17.5-alt1
 - Updated to upstream version 0.17.5.
 
