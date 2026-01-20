@@ -1,16 +1,17 @@
 %def_enable check
 
 Name: nasm
-Version: 2.16.03
+Version: 3.01
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
 License: BSD-2-Clause
 Group: Development/Other
-Url: http://www.nasm.us/
+Url: https://www.nasm.us
 
 Vcs: https://github.com/netwide-assembler/nasm.git
-Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
+
+Source: https://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.xz
 Source1: https://www.nasm.us/pub/nasm/releasebuilds/%version/%name-%version-xdoc.tar.xz
 
 # Support for the rdf format has been discontinued and all the RDOFF
@@ -52,10 +53,10 @@ tar Jxf %SOURCE1 --strip-components 1
 cd doc
 gzip -9f *.txt *.ps || true
 cd html
-ln -sf nasmdoc0.html index.html
+ln -sf nasm00.html index.html
 
 %check
-python3 travis/nasm-t.py run
+%make -k -C test golden test diff VERBOSE=1
 
 %files
 %doc CHANGES AUTHORS README* doc/internal.doc
@@ -68,6 +69,9 @@ python3 travis/nasm-t.py run
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
 
 %changelog
+* Tue Jan 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.01-alt1
+- 3.01
+
 * Wed May 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.16.03-alt1
 - 2.16.03
 
