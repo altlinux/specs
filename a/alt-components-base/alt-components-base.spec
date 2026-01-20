@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.10
+Version: 0.9.11
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,9 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Jan 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.9.11-alt1
+- editions: remove the ALT Server version in edition_domain
+
 * Sat Jan 17 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.9.10-alt1
 - Add initial Markdown files for component descriptions.
 - Fix editions:
