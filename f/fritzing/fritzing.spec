@@ -1,6 +1,6 @@
 Name: fritzing
-Version: 1.0.5
-Release: alt3
+Version: 1.0.6
+Release: alt1
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -127,6 +127,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Jan 15 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
+- Build new version.
+
 * Thu Jan 15 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt3
 - Made building parallel.
 
