@@ -1,5 +1,5 @@
 Name: kmscube
-Version: 0.0.20240215
+Version: 0.0.20251024
 Release: alt1
 
 Summary: Bare metal graphics demo using DRM/KMS 
@@ -9,7 +9,8 @@ Url: https://gitlab.freedesktop.org/mesa/kmscube
 
 Source: %name-%version.tar
 
-BuildRequires: libdrm-devel libgbm-devel libEGL-devel libGLES-devel meson
+BuildRequires: meson
+BuildRequires: libdrm-devel libgbm-devel libEGL-devel libGLES-devel libpng-devel
 
 %description
 kmscube is a little demonstration program for how to drive bare metal graphics
@@ -32,6 +33,9 @@ OpenGL or OpenGL ES.
 %_bindir/texturator
 
 %changelog
+* Tue Jan 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20251024-alt1
+- up to f60e50e
+
 * Tue May 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20240215-alt1
 - up to 6ab022f
 
