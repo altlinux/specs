@@ -17,7 +17,7 @@ BuildRequires: jpackage-17-compat
 # %%tomcatname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define tomcatname tomcat
 %define name tomcat10
-%define version 10.1.20
+%define version 10.1.47
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -51,7 +51,7 @@ BuildRequires: jpackage-17-compat
 %global jspspec 3.1
 %global major_version 10
 %global minor_version 1
-%global micro_version 20
+%global micro_version 47
 %global packdname apache-tomcat-%version-src
 %global servletspec 6.0
 %global elspec 5.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-17-compat
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt4_jvm17
+Release: alt1_jvm17
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -514,6 +514,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Mon Jan 19 2026 Ilfat Aminov <aminov@altlinux.org> 1:10.1.47-alt1_jvm17
+- 10.1.47
+
 * Thu Dec 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:10.1.20-alt4_jvm17
 - pre-compiled JAR files were excluded from the source tree:
   + aqute-bnd v6.3.1
