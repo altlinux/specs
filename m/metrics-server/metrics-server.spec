@@ -1,6 +1,6 @@
 Name: metrics-server
 Version: 0.8.0
-Release: alt2
+Release: alt3
 
 Summary:  Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines
 Group: Development/Other
@@ -27,6 +27,12 @@ by kubectl top, making it easier to debug autoscaling pipelines.
 %setup -a1
 %autopatch -p1
 
+# Remove this after Go 1.26 released and -race for riscv64 is added
+# https://github.com/golang/go/issues/64345
+%ifarch riscv64
+sed -i 's/-race//' Makefile
+%endif
+
 %build
 export GIT_TAG="%version-%release"
 export GOROOT="%_libexecdir/golang"
@@ -48,6 +54,9 @@ make test-unit ARCH=$(go env GOARCH)
 
 
 %changelog
+* Tue Jan 20 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.0-alt3
+- Temporary remove `-race` flag for riscv64.
+
 * Tue Nov 18 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 0.8.0-alt2
 - Fixed a bug with version output (Closes: #56330).
 
