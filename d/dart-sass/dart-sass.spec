@@ -2,7 +2,7 @@
 
 %define binary_name sass
 %define _name dart-%binary_name
-%define ver_major 1.94
+%define ver_major 1.97
 %define import_path sass-sass
 %define sass_version 3.1.0
 
@@ -71,6 +71,9 @@ install -vDm644 -t %buildroot/%_datadir/%_name build/language/spec/embedded_sass
 %doc *.md
 
 %changelog
+* Tue Jan 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.97.2-alt1
+- 1.97.2
+
 * Thu Dec 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.94.2-alt1
 - 1.94.2
 
