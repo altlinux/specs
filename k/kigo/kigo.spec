@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: %rname
-Version: 25.08.2
+Version: 25.12.1
 Release: alt1
 %K6init
 
@@ -57,6 +57,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
+- new version
+
 * Thu Oct 23 2025 Sergey V Turchin <zerg@altlinux.org> 25.08.2-alt1
 - new version
 
