@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Contains greedy algorithms to solve two typical bin packing problems
 
@@ -23,6 +23,8 @@ BuildRequires: python3(Cython)
 
 BuildArch: noarch
 
+Requires: python3 >= 3.10
+
 %if_with check
 BuildRequires: python3(numpy)
 BuildRequires: python3(pytest)
@@ -33,6 +35,22 @@ BuildRequires: python3(pytest-cov)
 Heuristic distribution of weighted items to bins (either a fixed number of
 bins or a fixed number of volume per bin). Data may be in form of list,
 dictionary, list of tuples or csv-file.
+
+This package contains Python module '%%pypi_name'.
+
+%package -n %pypi_name
+Group: Sciences/Other
+Requires: %name = %version-%release
+License: MIT
+Summary: An utility to solve two typical bin packing problems
+
+%description -n %pypi_name
+Heuristic distribution of weighted items to bins (either a fixed number of
+bins or a fixed number of volume per bin). Data may be in form of list,
+dictionary, list of tuples or csv-file.
+
+This package contains command-line utility interfacing with the
+Python module '%%pypi_name'.
 
 %prep
 %setup
@@ -48,10 +66,17 @@ dictionary, list of tuples or csv-file.
 
 %files
 %doc README.md
-%_bindir/binpacking
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
+%files -n %pypi_name
+%doc README.md
+%_bindir/binpacking
+
 %changelog
+* Tue Jan 20 2026 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt2
+- Extract the 'binpacking' utility into the separate package.
+- Require Python3 >= 3.10.
+
 * Tue Jan 20 2026 Paul Wolneykien <manowar@altlinux.org> 2.0.0-alt1
 - Version 2.0.0 (initial build for Sisyphus).
