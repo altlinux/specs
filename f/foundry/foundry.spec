@@ -6,7 +6,7 @@
 
 Name: foundry
 Version: 1.0.1
-Release: alt2
+Release: alt3
 
 Summary: A tool that brings core features of GNOME Builder into a library and CLI tool
 License: LGPL-2.1
@@ -101,14 +101,12 @@ Requires: lib%name-devel = %EVR
 %_bindir/%name
 %_datadir/%name/
 %_datadir/metainfo/app.devsuite.Foundry.metainfo.xml
-%dir %_datadir/bash-completion
-%dir %_datadir/bash-completion/completions
 %_datadir/bash-completion/completions/%name
 
 %files -n lib%soname
 %_libdir/lib%name-%apiver.so*
 %_libdir/lib%name-gtk-%apiver.so*
-%_datadir/glib-2.0/schemas/
+%_datadir/glib-2.0/schemas/app.devsuite.foundry*
 
 %files -n lib%name-devel
 %_libdir/lib%name-%apiver/
@@ -126,6 +124,9 @@ Requires: lib%name-devel = %EVR
 %_girdir/FoundryGtk-%apiver.gir
 
 %changelog
+* Tue Jan 20 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt3
+- fix files paths
+
 * Thu Jan 15 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt2
 - move GSchema files to libfoundry
 
