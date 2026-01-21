@@ -1,7 +1,7 @@
 %define rname mint-x-icons
 
 Name: icon-themes-mint-x
-Version: 1.7.2
+Version: 1.7.5
 Release: alt1
 Summary: Mint-X icon theme
 License: GPLv3+
@@ -41,6 +41,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-X.json
 
 %changelog
+* Sun Jan 18 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Wed May 21 2025 Alexander Kovalev <alexvk@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
