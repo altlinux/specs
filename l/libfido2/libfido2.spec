@@ -9,7 +9,7 @@
 %define abiversion 1
 Name: libfido2
 Version: 1.16.0
-Release: alt2
+Release: alt3
 
 Summary: Library functionality to communicate with a FIDO device over USB
 License: BSD-2-Clause
@@ -40,6 +40,8 @@ Supports the FIDO U2F (CTAP 1) and FIDO2 (CTAP 2) protocols.
 %package -n %{name}_%{abiversion}
 Summary: %{summary %name}
 Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 
 %description -n %{name}_%{abiversion}
 %{description %name}.
@@ -101,6 +103,9 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %_man3dir/*
 
 %changelog
+* Tue Jan 20 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt3
+- Fix upgrading after 1.16.0-alt1 (ALT#56956).
+
 * Fri Aug 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt2
 - Shipped udev-rules for FIDO devices.
 
