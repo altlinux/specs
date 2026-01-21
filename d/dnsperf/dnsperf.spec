@@ -1,6 +1,6 @@
 Name:    dnsperf
-Version: 2.14.0
-Release: alt2
+Version: 2.15.0
+Release: alt1
 
 Summary: DNS Performance Testing Tools
 License: Apache-2.0
@@ -54,6 +54,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/*
 
 %changelog
+* Wed Jan 21 2026 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
+- New version.
+
 * Wed Nov 12 2025 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt2
 - Required gnuplot for resperf-report (ALT #56823).
 
