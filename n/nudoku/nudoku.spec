@@ -1,5 +1,5 @@
 Name:     nudoku
-Version:  6.0.0
+Version:  7.0.0
 Release:  alt1
 
 Summary:  ncurses based sudoku game
@@ -44,6 +44,9 @@ nudoku can also generate PDF files, containing sudokus.
 %_man6dir/%name.6.*
 
 %changelog
+* Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
+- Automatically updated to 7.0.0.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 
