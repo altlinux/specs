@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -8,8 +8,6 @@ Summary(ru_RU.UTF-8): Записная книжка иерархической �
 Group: Office
 License: GPLv2+
 Url: http://www.giuspen.com/cherrytree/
-
-Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 # Source-url: https://www.giuspen.com/software/cherrytree_%version.tar.xz
 Source: %name-%version.tar
@@ -80,6 +78,9 @@ rm -r src/spdlog
 
 
 %changelog
+* Tue Jan 20 2026 Danila Skachedubov <skachedubov@altlinux.org> 1.6.3-alt1
+- new version 1.6.3 (with rpmrb script)
+
 * Tue Dec 09 2025 Danila Skachedubov <skachedubov@altlinux.org> 1.6.2-alt1
 - new version 1.6.2 (with rpmrb script)
 - added a patch for correct display of the Russian flag (Closes: #48695)
