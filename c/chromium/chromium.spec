@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        144.0.7559.59
+Version:        144.0.7559.96
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,7 +80,6 @@ Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-gentoo-stylesheet.patch
 
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
-# Patch012: 0012-DEBIAN-rust-no-alloc-shim.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
@@ -657,6 +656,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jan 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.96-alt1
+- New version (144.0.7559.96).
+- Fixes:
+  + CVE-2026-1220: Race in V8
+
 * Wed Jan 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.59-alt1
 - New version (144.0.7559.59).
 - Fixes:
