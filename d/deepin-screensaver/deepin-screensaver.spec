@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-screensaver
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
@@ -61,14 +61,18 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 
 %install
 %DQ6install
+%find_lang --with-qt deepin-custom-screensaver
 
-%files
+%files -f deepin-custom-screensaver.lang
 %doc debian/changelog
 %_bindir/%{name}*
 %_datadir/dbus-1/services/*
 %_datadir/dbus-1/interfaces/*
 %_datadir/%name/
-%_datadir/deepin-custom-screensaver/
+%dir %_datadir/deepin-custom-screensaver/
+%dir %_datadir/deepin-custom-screensaver/translations/
+%_datadir/deepin-custom-screensaver/translations/deepin-custom-screensaver.qm
+%_datadir/deepin-custom-screensaver/translations/deepin-custom-screensaver_ky@Arab.qm
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/deepin-custom-screensaver/
 %_sysconfdir/%name/deepin-custom-screensaver/deepin-custom-screensaver*
@@ -86,6 +90,9 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 %_libexecdir/%name/modules/
 
 %changelog
+* Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.5-alt1
+- New version 6.5.5.
+
 * Thu Dec 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
 - New version 6.5.4.
 - Added VCS tag.
