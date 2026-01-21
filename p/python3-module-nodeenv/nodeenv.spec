@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Virtual environment for Node.js & integrator with virtualenv
@@ -54,6 +54,9 @@ py.test-3 -k 'not test_smoke'
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
+- Automatically updated to 1.10.0.
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.1-alt1
 - Automatically updated to 1.9.1.
 
