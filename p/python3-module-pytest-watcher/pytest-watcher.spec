@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Automatically rerun your tests on file modification
@@ -59,6 +59,9 @@ Works on Unix (Linux, MacOS, BSD) and Windows.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 20 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.3-alt1
+- Updated to 0.6.3.
+
 * Mon Dec 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.2-alt1
 - Updated to 0.6.2.
 

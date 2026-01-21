@@ -35,7 +35,7 @@
 %define turtle_nemo_plg turtle_nemo.py
 
 Name: turtle
-Version: 0.13.3
+Version: 0.14
 Release: alt1
 
 Summary: Turtle is a graphical interface for version control intended to run on gnome and nautilus
@@ -62,6 +62,7 @@ BuildRequires: python3-module-pygit2
 BuildRequires: python3-module-dbus
 BuildRequires: libgtk4
 BuildRequires: libadwaita-gir
+BuildRequires: nautilus-python
 %endif
 
 %description
@@ -193,6 +194,9 @@ python3 -m compileall %buildroot%nemo_extdir/%turtle_nemo_plg
 %nemo_extdir/__pycache__/turtle_*
 
 %changelog
+* Tue Jan 20 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.14-alt1
+- Updated to 0.14.
+
 * Fri Jun 06 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.13.3-alt1
 - Updated to 0.13.3.
 
