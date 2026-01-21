@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tdf
-Version: 0.4.3
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: A tui-based PDF viewer
 License: AGPL-3.0-only
@@ -32,10 +32,6 @@ large PDFs. Built with ratatui.
 %setup -a1 -a2 -a3
 %rust_prep
 cat >> .cargo/config.toml <<EOF
-[source."git+https://github.com/itsjunetime/kittage.git"]
-git = "https://github.com/itsjunetime/kittage.git"
-replace-with = "vendored-sources"
-
 [source."git+https://github.com/itsjunetime/ratatui-image.git?branch=vb64_on_personal"]
 git = "https://github.com/itsjunetime/ratatui-image.git"
 branch = "vb64_on_personal"
@@ -43,11 +39,6 @@ replace-with = "vendored-sources"
 
 [source."git+https://github.com/itsjunetime/ratatui.git"]
 git = "https://github.com/itsjunetime/ratatui.git"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/lukaslihotzki/vb64?branch=update"]
-git = "https://github.com/lukaslihotzki/vb64"
-branch = "update"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/messense/mupdf-rs.git?rev=2e0fae910fac8048c7008211fc4d3b9f5d227a07"]
@@ -59,8 +50,9 @@ EOF
 cargo-vendor-checksum --vendor vendor --all --ignore-missing
 
 %build
+export RUSTC_BOOTSTRAP=1
 export CARGO_PROFILE_RELEASE_LTO=thin
-%rust_build --no-default-features --features cbz,epub
+%rust_build --features cbz,epub
 
 %install
 %rust_install
@@ -70,6 +62,9 @@ export CARGO_PROFILE_RELEASE_LTO=thin
 %_bindir/%name
 
 %changelog
+* Wed Jan 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.5.0-alt1
+- new version
+
 * Tue Nov 11 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.4.3-alt2
 - reduced memory usage
 - enabled cbz and epub format support
