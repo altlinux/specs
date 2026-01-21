@@ -2,12 +2,12 @@
 %define candle_prefix %_libdir/%name
 
 Name: candle
-Release: alt2
-Version: 10.11.1
+Release: alt1
+Version: 10.12
 
 Summary: %name application with G-Code visualizer written in Qt
 Group: Engineering
-License: GPL-3.0-only
+License: GPL-3.0-or-later
 Url: https://github.com/Denvi/Candle
 VCS: https://github.com/Denvi/Candle
 
@@ -18,7 +18,6 @@ Source1: %name.desktop
 Patch0: alt-fix-app-resource-paths.patch
 Patch1: alt-dont-use-rpath.patch
 Patch2: alt-start-with-system-locale.patch
-Patch3: alt-fix-freezing-opening-dialogs.patch
 
 BuildRequires: cmake
 BuildRequires: qt5-multimedia-devel
@@ -80,6 +79,9 @@ find %buildroot%_datadir/%name -type f -name '*.ts' -exec rm -f {} \;
 %_pixmapsdir/%name.ico
 
 %changelog
+* Wed Jan 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 10.12-alt1
+- new version
+
 * Tue Nov 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 10.11.1-alt2
 - fix freezing when opening dialogs (closes: 56912, 56913)
 
