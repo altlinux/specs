@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%module_name
-Version: 4.11.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Python interface for c-ares
@@ -58,6 +58,9 @@ export LANG=en_US.UTF-8
 %endif
 
 %changelog
+* Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1.
+
 * Wed Sep 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.11.0-alt1
 - Automatically updated to 4.11.0.
 
