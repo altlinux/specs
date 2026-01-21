@@ -1,5 +1,5 @@
 Name: raze
-Version: 1.10.2
+Version: 1.11.0
 Release: alt1
 
 Summary: Raze is a fork of Build engine games backed by GZDoom tech
@@ -74,6 +74,9 @@ done
 %_datadir/%name/%name.pk3
 
 %changelog
+* Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 1.11.0-alt1
+- Update to new version
+
 * Sun Jul  7 2024 Artyom Bystrov <arbars@altlinux.org> 1.10.2-alt1
 - Update to new version
 
