@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Counter
@@ -24,8 +24,8 @@ Source: https://github.com/vtrlx/tally/archive/%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-Patch1: %name-0.7.2-alt-makefile.patch
-Patch2: %name-0.7.2-alt-no_flatpak.patch
+Patch1: %name-0.7.3-alt-makefile.patch
+Patch2: %name-0.7.3-alt-no_flatpak.patch
 
 %define lua_ver 5.4
 
@@ -34,6 +34,7 @@ Requires: lua5.4 LuaGObject%lua_ver typelib(Adw) = 1
 BuildRequires(pre): rpm-build-lua
 BuildRequires: clang
 BuildRequires: lua%lua_ver-devel
+BuildRequires: %_bindir/glib-compile-resources
 
 %description
 A counter for GNOME.
@@ -57,12 +58,16 @@ sed -i 's/cc/clang/' Makefile
 %files -f %name.lang
 %_bindir/%_name
 %_desktopdir/%rdn_name.desktop
+%_datadir/%name/
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %doc README*
 
 %changelog
+* Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Mon Dec 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 

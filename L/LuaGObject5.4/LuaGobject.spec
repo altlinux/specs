@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: %_name%lua_ver
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Lua-5.4 bindings to GObject libraries
@@ -55,6 +55,9 @@ necessary for certain Gtk functionality.
 %doc README.md docs samples
 
 %changelog
+* Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
+- 0.10.4
+
 * Tue Dec 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
 - 0.10.3
 
