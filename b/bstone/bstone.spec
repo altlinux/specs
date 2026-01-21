@@ -1,6 +1,6 @@
 Name:     bstone
-Version:  1.2.12
-Release:  alt1.1
+Version:  1.3.2
+Release:  alt1
 
 Summary:  Unofficial source port for Blake Stone series
 License:  GPL2
@@ -41,7 +41,7 @@ more information about data assets wtat needed to play).
 %prep
 %setup
 
-%patch0 -p1
+#patch0 -p1
 
 %build
 %cmake \
@@ -49,16 +49,19 @@ more information about data assets wtat needed to play).
     -DCMAKE_BUILD_TYPE='RelWithDebInfo' \
     -DBSTONE_USE_STATIC_LINKING=0
 
-%make_build -C %_cmake__builddir
+%cmake_build
 
 %install
-install -Dm0755 %_cmake__builddir/src/bstone %buildroot%_bindir/bstone
+%cmake_install
 
 %files
-%doc CHANGELOG.md README.md TODO.md  LICENSE
+%doc CHANGELOG.md README.md TODO.md
 %_bindir/%name
 
 %changelog
+* Wed Jan 21 2026 Artyom Bystrov <arbars@altlinux.org> 1.3.2-alt1
+- New version 1.3.2.
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.2.12-alt1.1
 - Update patch for fixing headers
 
