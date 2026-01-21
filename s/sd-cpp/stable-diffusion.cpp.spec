@@ -10,7 +10,7 @@
 %endif
 
 Name: sd-cpp
-Version: 20251207
+Version: 20260119
 Release: alt1
 Summary: Diffusion model (SD, Flux, Wan, Qwen Image) inference in pure C/C++
 License: MIT
@@ -43,8 +43,8 @@ Inference of Diffusion models in pure C/C++. Supports CPU and CUDA.
 
 Supported models:
   Image Models: SD1.x, SD2.x, SD-Turbo, SDXL, SDXL-Turbo, some SD1.x and SDXL
-    distilled models, SD3/SD3.5, FlUX.1-dev/FlUX.1-schnell, FLUX.2-dev, Chroma,
-    Chroma1-Radiance, Qwen Image, Z-Image, Ovis-Image
+    distilled models, SD3/SD3.5, FlUX.1-dev / FlUX.1-schnell, FLUX.2-dev /
+    FLUX.2-klein, Chroma, Chroma1-Radiance, Qwen Image, Z-Image, Ovis-Image
   Image Edit Models: FLUX.1-Kontext-dev, Qwen Image Edit/Qwen Image Edit 2509
   Video Models: Wan2.1/Wan2.2
   PhotoMaker support
@@ -91,9 +91,14 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs assets wiki
-%_bindir/sd-cpp
+%_bindir/sd-server
+%_bindir/sd-cpp-cli
 
 %changelog
+* Mon Jan 19 2026 Vitaly Chikunov <vt@altlinux.org> 20260119-alt1
+- Update to master-480-b87fe13-1-ga48b4a3a (2026-01-19).
+- Now supports FLUX.2-klein.
+
 * Sun Dec 07 2025 Vitaly Chikunov <vt@altlinux.org> 20251207-alt1
 - Update to master-398-2f0bd31-2-gbf1a388b (2025-12-07).
 - Now supports FLUX.2-dev and Z-Image.
