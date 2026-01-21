@@ -6,18 +6,18 @@
 %endif
 
 Name: GraphicsMagick
-Version: 1.3.45
-Release: alt2
+Version: 1.3.46
+Release: alt1
 
 Summary: Image manipulation and translation utility
 License: MIT
 Group: Graphics
-Url: http://www.graphicsmagick.org
+Url: https://sourceforge.net/projects/graphicsmagick
 
 Provides: %name-common = %version-%release
 Obsoletes: GraphicsMagick-common
 
-Source: ftp://ftp.graphicsmagick.org/pub/%name/%name-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
@@ -188,6 +188,9 @@ make check
 %_man1dir/GraphicsMagick++-config.*
 
 %changelog
+* Wed Jan 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.46-alt1
+- 1.3.46 released
+
 * Fri Sep 27 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.45-alt2
 - NMU: fix OpenMP BR (and use GOMP).
 
