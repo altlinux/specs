@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.7
+Version: 3.2.11
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -35,6 +35,7 @@ BuildRequires: libX11-devel
 BuildRequires: jackit-devel
 BuildRequires: liblua5.3-devel
 BuildRequires: libstdc++-devel-static
+BuildRequires: libwebp-devel
 
 %description
 SLADE3 is a modern editor for Doom-engine based games and source
@@ -100,6 +101,9 @@ done
 %_datadir/metainfo/net.mancubus.SLADE.metainfo.xml
 
 %changelog
+* Tue Jan 21 2026 Artyom Bystrov <arbars@altlinux.org> 3.2.11-alt1
+- Update to new version
+
 * Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 3.2.7-alt1
 - Update to new version
 
