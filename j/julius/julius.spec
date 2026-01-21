@@ -1,5 +1,5 @@
 Name:           julius
-Version:        1.7.0
+Version:        1.8.0
 Release:        alt1
 Summary:        An open source re-implementation of Caesar III
 License:        GPL-3.0-only
@@ -58,5 +58,8 @@ https://github.com/bvschaik/julius/wiki/Patches
 %_datadir/metainfo/com.github.bvschaik.julius.metainfo.xml
 
 %changelog
+* Wed Jan 21 2026 Artyom Bystrov <arbars@altlinux.org> 1.8.0-alt1
+- Update to new version
+
 * Wed Nov 1 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.0-alt1
 - Initial commit
