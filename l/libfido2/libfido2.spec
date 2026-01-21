@@ -7,9 +7,11 @@
 %def_with check
 
 %define abiversion 1
+%define libname libfido2
+
 Name: libfido2
 Version: 1.16.0
-Release: alt3
+Release: alt4
 
 Summary: Library functionality to communicate with a FIDO device over USB
 License: BSD-2-Clause
@@ -37,30 +39,33 @@ and to verify attestation and assertion signatures.
 
 Supports the FIDO U2F (CTAP 1) and FIDO2 (CTAP 2) protocols.
 
-%package -n %{name}_%{abiversion}
-Summary: %{summary %name}
+%package -n %{libname}_%{abiversion}
+Summary: Library functionality to communicate with FIDO device over USB
 Group: System/Libraries
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
+Provides: %libname = %EVR
+Obsoletes: %libname < %EVR
 
-%description -n %{name}_%{abiversion}
-%{description %name}.
+%description -n %{libname}_%{abiversion}
+Provides library functionality to communicate with a FIDO device over USB,
+and to verify attestation and assertion signatures.
+
+Supports the FIDO U2F (CTAP 1) and FIDO2 (CTAP 2) protocols.
 
 %package devel
-Summary: Development header files for %name
+Summary: Development header files for libfido2
 Group: Development/C
-Requires: %{name}_%{abiversion} = %EVR
+Requires: %{libname}_%{abiversion} = %EVR
 
 %description devel
-Provides development header files for %name.
+Provides development header files for libfido2.
 
 %package tools
 Summary: Command-line tools to communicate with a FIDO device over USB
 Group: System/Configuration/Hardware
-Requires: %{name}_%{abiversion} = %EVR
+Requires: %{libname}_%{abiversion} = %EVR
 
 %description tools
-Provides command-line tools for %name.
+Provides command-line tools for libfido2.
 
 %prep
 %setup
@@ -86,25 +91,29 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %check
 %ctest
 
-%files -n %{name}_%{abiversion}
+%files -n %{libname}_%{abiversion}
 %doc LICENSE NEWS
-%_libdir/%name.so.%abiversion
-%_libdir/%name.so.%version
+%_libdir/%libname.so.%abiversion
+%_libdir/%libname.so.%version
 %_udevrulesdir/70-u2f.rules
 
 %files tools
-%_bindir/*
-%_man1dir/*
+%_bindir/fido2-*
+%_man1dir/fido2-*.1*
 
 %files devel
-%_includedir/*
-%_libdir/%name.so
-%_pkgconfigdir/%name.pc
-%_man3dir/*
+%_includedir/fido.h
+%_includedir/fido/
+%_libdir/%libname.so
+%_pkgconfigdir/%libname.pc
+%_man3dir/*.3*
 
 %changelog
+* Wed Jan 21 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt4
+- Unbound library name and source package name (ALT#56956).
+
 * Tue Jan 20 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt3
-- Fix upgrading after 1.16.0-alt1 (ALT#56956).
+- Fixed upgrading after 1.16.0-alt1 (ALT#56956).
 
 * Fri Aug 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt2
 - Shipped udev-rules for FIDO devices.
