@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -22,13 +22,13 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-mkdocs-material >= 9.7.1
 BuildRequires: python3-module-mkdocs-material-extensions
-BuildRequires: python3-module-mkdocstrings >= 1.0.0
+BuildRequires: python3-module-mkdocstrings >= 1.0.1
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.1
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 5.2.9
+Requires: python3-module-django >= 5.2.10
 Requires: python3-module-django-cors-headers >= 4.9.0
-Requires: python3-module-django-debug-toolbar >= 6.1.0
+Requires: python3-module-django-debug-toolbar >= 6.2.0
 Requires: python3-module-django-filter >= 25.2
 Requires: python3-module-django-htmx >= 1.27.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
@@ -47,7 +47,7 @@ Requires: python3-module-drf-spectacular >= 0.29.0
 Requires: python3-module-drf-spectacular-sidecar >= 2026.1.1
 Requires: python3-module-feedparser >= 6.0.12
 Requires: python3-module-jinja2 >= 3.1.6
-Requires: python3-module-jsonschema >= 4.25.1
+Requires: python3-module-jsonschema >= 4.26.0
 Requires: python3-module-markdown >= 3.10
 Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.2
@@ -59,8 +59,8 @@ Requires: python3-module-rq >= 2.6.1
 Requires: python3-module-social-app-django >= 5.7.0
 Requires: python3-module-social-core >= 4.8.3
 Requires: python3-module-sorl-thumbnail >= 12.11.0
-Requires: python3-module-strawberry-graphql >= 0.288.2
-Requires: python3-module-strawberry-django >= 0.73.0
+Requires: python3-module-strawberry-graphql >= 0.289.2
+Requires: python3-module-strawberry-django >= 0.74.1
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
 Requires: python3-module-tzdata >= 2025.3
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Jan 21 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.1-alt1
+- New 4.5.1 version.
+
 * Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.0-alt1
 - New 4.5.0 version.
 
