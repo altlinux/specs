@@ -3,8 +3,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.0.1
-Release: alt1.1
+Version: 3.1.0
+Release: alt1
 
 Summary: An easy-to-use, Pythonic and complete IMAP client library
 License: BSD-3-Clause
@@ -42,6 +42,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 21 2026 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
