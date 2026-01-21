@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
@@ -19,9 +19,11 @@ BuildRequires: python3-module-pdm-backend
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-gitconfig
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-mkdocstrings
+BuildRequires: python3-module-griffe-inherited-docstrings
 %endif
 
 BuildArch: noarch
@@ -61,6 +63,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt1
+- Automatically updated to 1.15.0.
+
 * Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt1
 - Automatically updated to 1.14.0.
 
