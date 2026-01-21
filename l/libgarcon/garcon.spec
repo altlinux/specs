@@ -5,7 +5,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.20.0
+Version: 4.21.0
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -18,17 +18,19 @@ Vcs: https://gitlab.xfce.org/xfce/garcon.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.15.6-alt1 libxfce4ui-gtk3-devel >= 4.15.7-alt1
-BuildRequires: glib2-devel >= 2.14
+BuildRequires(pre): rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libxfce4util-devel >= 4.18.0 libxfce4ui-gtk3-devel >= 4.21.0
+BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel libxfce4ui-gtk3-gir-devel}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: gtk-doc}
+# For tests
+%{?!_without_check:%{?!_disable_check:BuildRequires: altlinux-freedesktop-menu-xfce}}
 
 Obsoletes: libxfce4menu
 Requires: xfce-freedesktop-menu
-Requires: exo-utils
+Requires: libxfce4ui-utils
 
 %define _unpackaged_files_terminate_build 1
 
@@ -145,26 +147,24 @@ BuildArch: noarch
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-	%{subst_enable introspection} \
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_bool docs gtk-doc} \
+	-Dtests=true
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 # Remove uz@Latn: it is the same as uz and
 # glibc not support such language in any case.
-rm -rf %buildroot%_datadir/locale/uz@Latn/
+rm -r %buildroot%_datadir/locale/uz@Latn/
 
 %find_lang %_name
+
+%check
+%meson_test
 
 %files -f %_name.lang
 %doc AUTHORS NEWS README.md
@@ -220,8 +220,13 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_datadir/gir-1.0/GarconGtk-*.gir
 %endif
 
-
 %changelog
+* Mon Jan 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Enabled tests.
+- Replaced exo-utils with libxfce4ui-utils.
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 

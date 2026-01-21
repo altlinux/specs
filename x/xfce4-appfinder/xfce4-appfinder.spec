@@ -1,5 +1,5 @@
 Name: xfce4-appfinder
-Version: 4.20.0
+Version: 4.21.0
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
@@ -13,9 +13,13 @@ Vcs: https://gitlab.xfce.org/xfce/xfce4-appfinder.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%define xfce_min_vers 4.18.0
+
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.18.0 libxfce4ui-gtk3-devel >= 4.18.0
-BuildRequires: libxfconf-devel >= 4.18.0 libgarcon-devel >= 4.18.0
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libxfce4util-devel >= %xfce_min_vers
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
+BuildRequires: libxfconf-devel >= %xfce_min_vers libgarcon-devel >= %xfce_min_vers
 
 # xfrun4 was replaced with xfce4-appfinder
 Conflicts: xfce-utils < 4.8.3-alt3
@@ -36,14 +40,12 @@ applications on your system.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-%make_build
+%meson
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -55,6 +57,10 @@ applications on your system.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 

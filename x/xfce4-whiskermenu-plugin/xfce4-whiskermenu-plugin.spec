@@ -1,6 +1,6 @@
 Name: xfce4-whiskermenu-plugin
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -19,10 +19,14 @@ Patch: %name-%version-%release.patch
 %endif
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0 xfce4-dev-tools
 BuildRequires: gcc-c++
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel
-BuildRequires: libgarcon-devel libexo-gtk3-devel
+BuildRequires: libxfconf-devel
+BuildRequires: libgarcon-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: libaccountsservice-devel
 %{?_enable_wayland:Buildrequires: libgtk-layer-shell-devel}
 
@@ -62,6 +66,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 2.10.0-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 2.10.0-alt1
 - Switched to meson build.
 - Updated to 2.10.0.

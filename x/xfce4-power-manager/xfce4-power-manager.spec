@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
-Version: 4.20.0
-Release: alt2
+Version: 4.21.1
+Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -14,8 +14,9 @@ Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util >= 4.19.4 libxfconf-devel libxfce4panel-gtk3-devel
-BuildRequires: libxfce4ui-gtk3-devel >= 4.18.4
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libX11-devel libXext-devel libXrandr-devel
 BuildRequires: libwayland-client-devel wayland-devel >= 1.20 wayland-protocols >= 1.25 wlr-protocols
 BuildRequires: libnotify-devel >= 0.7.8
@@ -46,18 +47,17 @@ applications to prevent automatic sleep actions via the power manager.
 %xfce4_cleanup_version
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	--enable-wayland \
-	--enable-polkit \
-	--with-backend=linux \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dhost-os=linux \
+	-Dx11=enabled \
+	-Dwayland=enabled \
+	-Dpolkit=enabled \
+	-Dpanel-plugin=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -74,9 +74,11 @@ applications to prevent automatic sleep actions via the power manager.
 %_mandir/man?/*
 %_datadir/metainfo/*.xml
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Switched to meson build.
+- Updated to 4.21.1.
+
 * Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
 - Added fake changelog entry.
 
@@ -88,9 +90,6 @@ applications to prevent automatic sleep actions via the power manager.
 
 * Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
 - Updated to 4.19.4.
-
-* Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
-- Updated to 4.18.4.
 
 * Fri Jun 07 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt2.g974546ec
 - Upstream git snapshot (master branch).

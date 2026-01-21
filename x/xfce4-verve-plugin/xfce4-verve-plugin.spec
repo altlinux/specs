@@ -1,6 +1,6 @@
 Name: xfce4-verve-plugin
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Command line plugin for Xfce Desktop
 License: GPLv2+
@@ -16,12 +16,16 @@ Obsoletes: verve-plugin < 0.3.6
 Provides: verve-plugin
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0-alt1 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel
 BuildRequires: libpcre2-devel
 
 Requires: xfce4-panel
+%if_xfce4_need_exo
 Requires: exo-utils
+%else
+Requires: libxfce4ui-utils
+%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -56,6 +60,9 @@ plugin for the Xfce panel. It supports several nice features, such as:
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1
 - Switched to meson build.
 - Updated to 2.1.0.

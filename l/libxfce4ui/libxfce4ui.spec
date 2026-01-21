@@ -1,8 +1,8 @@
 %def_enable introspection
 %def_enable vala
-%def_enable glibtop
+%def_enable libgtop
 
-%if_disabled glibtop
+%if_disabled libgtop
 %def_disable epoxy
 %def_disable gudev
 %else
@@ -10,12 +10,12 @@
 %def_enable gudev
 %endif
 
-%def_disable gladeui2
+%def_disable glade
 
 %def_disable docs
 
 Name: libxfce4ui
-Version: 4.20.2
+Version: 4.21.3
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -30,18 +30,18 @@ Vcs: https://gitlab.xfce.org/xfce/libxfce4ui.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel
 BuildRequires: libX11-devel libICE-devel libSM-devel libstartup-notification-devel
 BuildRequires: libgtk+3-devel
-%{?_enable_gladeui2:BuildRequires: libgladeui2.0-devel}
-%{?_enable_glibtop:BuildRequires: libgtop-devel}
+%{?_enable_glade:BuildRequires: libgladeui2.0-devel}
+%{?_enable_libgtop:BuildRequires: libgtop-devel}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 Requires: %name-common = %version-%release
 
@@ -132,39 +132,38 @@ Conflicts: xfce-utils < 4.8.3-alt3
 %description -n xfce4-about
 This package contains the 'About Xfce' dialog.
 
+%package utils
+Summary: Utility files for %name
+Group: Graphical desktop/XFce
+
+%description utils
+This package conteins Xfce utilities for %name.
+
 %prep
 %setup
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	--enable-wayland \
-	--enable-startup-notification \
-	%{subst_enable gladeui2} \
-	%{subst_enable glibtop} \
-	%{subst_enable gudev} \
-	%{subst_enable epoxy} \
-	%{subst_enable introspection} \
-	%{subst_enable vala} \
-	--enable-tests \
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	-Dwayland=enabled \
+	-Dstartup-notification=enabled \
+	%{subst_enable_meson_feature glade glade} \
+	%{subst_enable_meson_feature libgtop libgtop} \
+	%{subst_enable_meson_feature gudev gudev} \
+	%{subst_enable_meson_feature epoxy epoxy} \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_feature vala vala} \
+	%{subst_enable_meson_bool docs gtk-doc}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-make check
+%meson_test
 
 %if_enabled docs
 %files devel-doc
@@ -174,6 +173,7 @@ make check
 %files common -f %name.lang
 %doc README.md NEWS AUTHORS
 %_iconsdir/hicolor/*/apps/*
+%_pixmapsdir/%name/
 %config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/*.xml
 
 %files gtk3
@@ -188,11 +188,10 @@ make check
 %_libdir/%libxfce4kbd_name_gtk3.so
 %_libdir/%libxfce4ui_name_gtk3.so
 
-%if_enabled gladeui2
+%if_enabled glade
 %_datadir/glade/catalogs/*.xml
 %_datadir/glade/pixmaps/*/*/*/*
 %_libdir/glade/modules/*.so
-%exclude %_libdir/glade/modules/*.la
 %endif
 
 %if_enabled introspection
@@ -212,7 +211,18 @@ make check
 %_bindir/xfce4-about
 %_desktopdir/xfce4-about.desktop
 
+%files utils
+%_bindir/xfce-desktop-item-edit
+%_bindir/xfce-open
+
 %changelog
+* Mon Jan 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1
+- Renamed build options to match meson options.
+- Added utils subpackage.
+- Switched to meson build.
+- Dropped shortcut for xfce4-popup-menu.
+- Updated to 4.21.3.
+
 * Thu Aug 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Updated to 4.20.2.
 

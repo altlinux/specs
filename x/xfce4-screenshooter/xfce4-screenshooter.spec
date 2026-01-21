@@ -1,6 +1,6 @@
 Name: xfce4-screenshooter
 Version: 1.11.3
-Release: alt1
+Release: alt2
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -20,8 +20,11 @@ Patch: %name-%version-%release.patch
 %endif
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0-alt1 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: libX11-devel libXi-devel libXext-devel libXfixes-devel libXtst-devel
 %{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel wlr-protocols wayland-protocols libgtk-layer-shell-devel}
 BuildRequires: libpango-devel >= 1.44.0
@@ -76,6 +79,9 @@ A plugin for the Xfce panel is also available.
 %_mandir/man1/xfce4-screenshooter*
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 1.11.3-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Mon Nov 10 2025 Mikhail Efremov <sem@altlinux.org> 1.11.3-alt1
 - Switched to meson build.
 - Updated to 1.11.3.

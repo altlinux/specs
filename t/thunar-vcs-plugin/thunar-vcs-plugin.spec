@@ -3,7 +3,7 @@
 
 Name: thunar-vcs-plugin
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Version Contol System plugin for Thunar
 License: GPL-2.0-or-later
@@ -15,8 +15,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libthunar-devel >= 4.18.0 libgio-devel libxfce4util-devel libexo-gtk3-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0-alt1 xfce4-dev-tools
+BuildRequires: libthunar-devel >= 4.18.0 libgio-devel libxfce4util-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: libxfce4ui-gtk3-devel >= 4.18.0
 BuildRequires: libgtk+3-devel
 %if_enabled subversion
@@ -52,6 +55,9 @@ menu. It also shows the svn file status in the file properties window.
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Fixed meson checks.
 - Switched to meson build.

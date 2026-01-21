@@ -1,5 +1,5 @@
 Name: rpm-build-xfce4
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: comfort build environment for xfce4 and plugins
@@ -46,6 +46,9 @@ install -m644 %SOURCE0 %buildroot%_rpmmacrosdir/xfce4
 
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Added %%if_xfce4_need_exo macro.
+
 * Tue May 13 2025 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
 - xfce4_cleanup_version: Cleanup xfce-revision.h.in too.
 - xfce4_cleanup_version: Check for configure.ac presence.

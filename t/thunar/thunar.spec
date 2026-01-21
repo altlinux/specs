@@ -1,12 +1,11 @@
+%def_enable introspection
+%def_enable terminal
 %def_disable docs
-# Upstream tests are broken for now:
-# new function thunarx_provider_module_unuse is not
-# in the thunarx.symbols list.
-%def_disable check
+%define soname 0
 
 Name: thunar
-Version: 4.20.6
-Release: alt2
+Version: 4.21.3
+Release: alt2.g6e2ad21d1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -17,20 +16,22 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/thunar.git
 Source: %name-%version.tar
-Source1: for_translation_thunar_master_ru.po
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-xfce4 >= 0.2.0
-
-BuildRequires: xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.19.0
-BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
-BuildRequires: libSM-devel libexif-devel libpcre2-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.2.0 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0 libxfconf-devel >= 4.12.0
+BuildRequires: libxfce4util >= 4.17.2
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.2
+BuildRequires: libSM-devel libpcre2-devel
+BuildRequires: libgexiv2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify-devel libgudev-devel
+BuildRequires: xsltproc docbook-style-xsl
 BuildRequires: desktop-file-utils
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
+%{?_enable_terminal:BuildRequires: libvte3-devel}
+%{?_enable_docs:BuildRequires: gtk-doc}
 # For /usr/share/gettext/its/polkit.{its,loc}
 # See https://gitlab.xfce.org/xfce/thunar/-/issues/1403
 BuildRequires: libpolkit-devel
@@ -39,7 +40,7 @@ BuildRequires: libpolkit-devel
 
 Requires: lib%name = %version-%release
 Requires: eject
-Requires: exo-utils
+Requires: libxfce4ui-utils
 Requires: xfconf-utils
 
 Obsoletes: Thunar < 1.3.1
@@ -73,6 +74,26 @@ Provides: libThunar = %version-%release
 %description -n lib%name
 This package contains libraries for %name.
 
+%if_enabled introspection
+%package -n lib%name-gir
+Summary: GObject introspection data for lib%name
+Group: System/Libraries
+Requires: lib%name = %EVR
+
+%description -n lib%name-gir
+GObject introspection data for lib%name.
+
+%package -n lib%name-gir-devel
+Summary: GObject introspection devel data for lib%name
+Group: System/Libraries
+BuildArch: noarch
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
+
+%description -n lib%name-gir-devel
+GObject introspection devel data for lib%name.
+%endif
+
 %if_enabled docs
 %package -n lib%name-devel-doc
 Summary: Development documentation for lib%name
@@ -89,32 +110,21 @@ This package contains development documentation for lib%name.
 %patch -p1
 %xfce4_cleanup_version
 
-# Merge our own and upstream Russian translations
-# Ignore errors if merged file was created
-msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po ||:
-[ -s merged_ru.po ] || exit 1
-mv -f merged_ru.po po/ru.po
-
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	--enable-largefile \
-	--enable-exif \
-	--enable-pcre2 \
-	--enable-gio-unix \
-	--with-custom-thunarx-dirs-enabled=no \
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	-Dgexiv2=enabled \
+	-Dpcre2=enabled \
+	-Dgio-unix=enabled \
+	-Dthunarx-dirs-envvar=false \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_feature terminal terminal} \
+	%{subst_enable_meson_bool docs gtk-doc}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang thunar
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Filesystem \
@@ -122,7 +132,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/thunar-bulk-rename.desktop
 
 %check
-make check
+%meson_test
 
 %files -f thunar.lang
 %doc README.md NEWS AUTHORS
@@ -137,7 +147,6 @@ make check
 %_datadir/xfce4/panel/plugins/*.desktop
 %_user_unitdir/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
-%exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
 %_libdir/thunarx-*/*.so
 %_libdir/Thunar/
@@ -145,21 +154,39 @@ make check
 %_docdir/thunar
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n lib%name-devel
 %_pkgconfigdir/*.pc
 %_includedir/thunarx-*/
 %_libdir/*.so
 
+%if_enabled introspection
+%files -n lib%name-gir
+%_libdir/girepository-1.0/*.typelib
+
+%files -n lib%name-gir-devel
+%_datadir/gir-1.0/*.gir
+%endif
+
 %if_enabled docs
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
 %endif
 
-%exclude %_libdir/thunarx-*/*.la
-
 %changelog
+* Thu Jan 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt2.g6e2ad21d1
+- Enabled integrated terminal.
+
+* Wed Jan 14 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1.g6e2ad21d1
+- Enabled tests.
+- Added terminal knob.
+- Replaced exo-utils with libxfce4ui-utils.
+- Switched to meson build.
+- Used upstream Russian translation.
+- Updated to upstream git snapshot (4.21.3+).
+
 * Fri Nov 21 2025 Mikhail Efremov <sem@altlinux.org> 4.20.6-alt2
 - Used our own Russian translation.
 

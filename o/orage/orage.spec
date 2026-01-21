@@ -1,6 +1,6 @@
 Name: orage
-Version: 4.20.2
-Release: alt1
+Version: 4.21.0
+Release: alt2
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -13,9 +13,12 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
-BuildRequires: libnotify-devel libical-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libxfce4util-devel >= 4.20.0
+BuildRequires: libxfce4ui-gtk3-devel >= 4.20.0
+BuildRequires: libical-glib-devel
+BuildRequires: libnotify-devel
 
 Requires: xfce4-common
 
@@ -34,19 +37,18 @@ Xfce.
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
-%xfce4reconf
-%configure \
-	--enable-libnotify \
-	--enable-archive \
-	--enable-libxfce4ui \
-	--disable-x11-tray-icon \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dlibnotify=enabled \
+	-Darchive=true \
+	-Dx11-tray-icon=false
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -61,6 +63,13 @@ Xfce.
 %_datadir/themes/Default/orage-4.0/
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt2
+- Cleanup version string.
+
+* Wed Jan 14 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Fri Aug 08 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Updated to 4.20.2.
 

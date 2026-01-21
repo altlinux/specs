@@ -10,7 +10,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.20.0
+Version: 4.21.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -26,13 +26,13 @@ Patch: %_name-%version-%release.patch
 
 %define _unpackaged_files_terminate_build 1
 
-BuildRequires: rpm-build-xfce4 >= 0.2.0 libxfce4util-devel xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 >= 0.2.0 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util-devel >= 4.17.3
 BuildRequires: libgio-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_vala:BuildRequires: vala-tools}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libxfce4util-gir-devel}
+%{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala}
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 # For tests:
 %{?!_without_check:%{?!_disable_check:BuildRequires: dbus-tools-gui xvfb-run}}
@@ -107,33 +107,23 @@ Vala bindings for %name.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	%{subst_enable introspection} \
-	%{subst_enable vala} \
-%if_enabled gsettings
-	--enable-gsettings-backend \
-%else
-	--disable-gsettings-backend \
-%endif
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_feature vala vala} \
+	%{subst_enable_meson_bool gsettings gsettings-backend} \
+	%{subst_enable_meson_bool docs gtk-doc}
+
+
+%meson_build -v
 
 %install
 mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 
-%makeinstall_std
+%meson_install
 %find_lang %_name
 
 %check
-xvfb-run make -k check
+xvfb-run %meson_test
 
 %files -f %_name.lang
 %doc AUTHORS NEWS
@@ -142,8 +132,6 @@ xvfb-run make -k check
 %_libdir/*.so.*
 %if_enabled gsettings
 %_libdir/gio/modules/*.so
-
-%exclude %_libdir/gio/modules/*.la
 %endif
 
 %files devel
@@ -174,6 +162,10 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 

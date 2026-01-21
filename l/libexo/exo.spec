@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.20.0
+Version: 4.21.0
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -34,6 +34,9 @@ various custom widgets and APIs extending the functionality of GLib and
 GTK. It also ships utilities for defining preferred applications,
 mounting storage devices and more.
 
+WARNING: %_name is deprecated with Xfce >= 4.21.
+Use libxfce4ui >= 4.21 instead.
+
 %description -l ru_RU.UTF-8
 Libexo - библиотека расширений Xfce предназначенная для использования в
 приложениях разрабатываемых под Xfce.
@@ -55,6 +58,9 @@ Group: Graphical desktop/XFce
 This package conteins Xfce utilities for defining preferred applications,
 mounting storage devices and more.
 
+WARNING: %_name-utils is deprecated with Xfce >= 4.21.
+It replaced by libxfce4ui-utils >= 4.21.
+
 %package gtk3
 Summary: Extension library to Xfce (GTK+3 version)
 Group: System/Libraries
@@ -65,6 +71,9 @@ Libexo is an Xfce library targeted at application development. It contains
 various custom widgets and APIs extending the functionality of GLib and GTK.
 This is a GTK+3 version.
 
+WARNING: Libexo is deprecated with Xfce >= 4.21.
+Use libxfce4ui >= 4.21 instead.
+
 %package gtk3-devel
 Summary: Development files for %name-gtk3
 Group: Development/C
@@ -74,6 +83,9 @@ Requires: %name-gtk3 = %version-%release
 This package contains development files required for packaging
 %name-based software.
 This is a GTK+3 version.
+
+WARNING: Libexo is deprecated with Xfce >= 4.21.
+Use libxfce4ui >= 4.21 instead.
 
 %if_enabled docs
 %package devel-doc
@@ -136,6 +148,10 @@ make check
 %endif
 
 %changelog
+* Mon Jan 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Added deprecation warning to description.
+- Updated to 4.21.0.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 

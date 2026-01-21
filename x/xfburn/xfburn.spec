@@ -1,6 +1,6 @@
 Name: xfburn
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: CD-R/CD-RW disc writing application
 Url: https://docs.xfce.org/apps/xfburn/start
@@ -13,8 +13,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson rpm-macros-meson
-BuildRequires(pre): xfce4-dev-tools rpm-build-xfce4 >= 0.5.0-alt1
-BuildRequires: libxfce4util-devel >= 4.18.0 libxfce4ui-gtk3-devel libexo-gtk3-devel
+BuildRequires(pre): xfce4-dev-tools rpm-build-xfce4 >= 0.6.0-alt1
+BuildRequires: libxfce4util-devel >= 4.18.0 libxfce4ui-gtk3-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: xsltproc docbook-style-xsl
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libburn-devel libisofs-devel libgio-devel libgudev-devel
 
@@ -52,6 +55,9 @@ compositions.
 %_man1dir/*
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Thu Jun 19 2025 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Updated description.
 - Switched to meson build.

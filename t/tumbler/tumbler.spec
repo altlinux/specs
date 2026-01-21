@@ -1,9 +1,10 @@
 %def_enable ffmpeg
 %def_disable gstreamer
 %def_enable gepub
+%def_disable docs
 
 Name: tumbler
-Version: 4.20.1
+Version: 4.21.1
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -19,16 +20,16 @@ Vcs: https://gitlab.xfce.org/xfce/tumbler.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4util-devel >= 4.17.1
-BuildRequires: libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
+BuildRequires: libfreetype-devel libgio-devel libjpeg-devel libpng-devel
 BuildRequires: libpoppler-glib-devel libgsf-devel libcurl-devel
 %{?!_with_bootstrap:BuildRequires: libopenraw-gnome-devel}
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: libgdk-pixbuf-devel gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_enable_gepub:BuildRequires: libgepub-devel libgdk-pixbuf-devel}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 %define _unpackaged_files_terminate_build 1
 
@@ -61,19 +62,17 @@ Development files and headers for %name
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
+%meson \
 	--libexecdir=%_prefix/libexec \
-	%{?_disable_ffmpeg:--disable-ffmpeg-thumbnailer} \
-	%{?_disable_gstreamer:--disable-gstreamer-thumbnailer} \
-	%{?_disable_gepub:--disable-gepub-thumbnailer} \
-	--disable-static \
-	--disable-gtk-doc
+	%{subst_enable_meson_feature ffmpeg ffmpeg-thumbnailer} \
+	%{subst_enable_meson_feature gstreamer gst-thumbnailer} \
+	%{subst_enable_meson_feature gepub gepub-thumbnailer} \
+	%{subst_enable_meson_bool docs gtk-doc}
 
-%make_build
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -85,9 +84,6 @@ Development files and headers for %name
 %_user_unitdir/*.service
 %_iconsdir/hicolor/*/apps/*
 
-%exclude %_libdir/%name-1/plugins/*.la
-%exclude %_libdir/%name-1/plugins/cache/*.la
-
 %files -n lib%name
 %_libdir/*.so.*
 
@@ -97,6 +93,10 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Switched to meson build.
+- Updated to 4.21.1.
+
 * Mon Oct 13 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
 - Updated to 4.20.1.
 

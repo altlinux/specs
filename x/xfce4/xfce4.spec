@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.20
-Release: alt2
+Version: 4.21
+Release: alt1
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -32,6 +32,7 @@ Requires: xfce4-settings
 Requires: xfconf-utils
 Requires: xfdesktop
 Requires: xfwm4
+Requires: libxfce4ui-utils
 
 %description minimal
 %name-minimal is a virtual package to provide minimal installation
@@ -121,12 +122,13 @@ Requires: xfce-polkit
 #Requires: desktop-screensaver-modules-xscreensaver-gl
 %commonreqs
 Requires: xfce4-clipman-plugin
+Requires: xfce4-mpc-plugin
 Requires: xfce4-pulseaudio-plugin
-# For xfce4-pulseaudio-plugin
-Requires: pavucontrol
-
-# No xfce4-mpc-plugin on aarch64
-#Requires: xfce4-mpc-plugin
+# xfce4-pulseaudio-plugin using pavucontrol by default,
+# but it can use different mixer.
+# And PipeWire is default everywhere, so
+# pawucontrol with pipewire-pulse can be used instead, for example.
+# Requires: pavucontrol
 
 # Thunar plugins
 # It requires additional configuration in /etc/samba/smb.conf.
@@ -166,6 +168,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 4.21-alt1
+- full: Drop pavucontrol.
+- full: Add xfce4-mpc-plugin.
+- minimal: Eplicitly add libxfce4ui-utils.
+
 * Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 4.20-alt2
 - full,regular: Add xfce4-wavelan-plugin.
 

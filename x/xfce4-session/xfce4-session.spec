@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.20.3
+Version: 4.21.1
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -16,8 +16,10 @@ Source2: xfce4-xscreensaver.desktop
 
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.18.0 libxfce4ui-gtk3-devel >= 4.18.4
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.18.0
+BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libxfce4windowing-devel >= 4.19.2
 # For gdk-pixbuf-csource
 BuildRequires: libgdk-pixbuf-devel
@@ -64,17 +66,15 @@ Wayland session for Xfce desktop environment.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--with-backend=linux \
-	--enable-x11 \
-	--enable-wayland \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dhost-os=linux \
+	-Dx11=enabled \
+	-Dwayland=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver.desktop
 %find_lang %name
@@ -101,6 +101,10 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xfce4/labwc/
 
 %changelog
+* Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Switched to meson build.
+- Updated to 4.21.1.
+
 * Thu Aug 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.3-alt1
 - Updated to 4.20.3.
 

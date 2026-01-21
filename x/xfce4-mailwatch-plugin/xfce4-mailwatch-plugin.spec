@@ -1,6 +1,6 @@
 Name: xfce4-mailwatch-plugin
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: The Xfce4 Mailwatch Plugin is a multi-protocol, multi-mailbox mail watcher
 Summary(ru_RU.UTF8): Многопротокольный апплет для проверки нескольких почтовых ящиков для Xfce4
@@ -14,8 +14,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.6.0-alt1 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+%if_xfce4_need_exo
+BuildRequires: libexo-gtk3-devel
+%endif
 BuildRequires: libgnutls-devel libgcrypt-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -54,6 +57,9 @@ Currently, the protocols supported are:
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt2
+- Rebuilt with libxfce4ui-4.21.
+
 * Tue May 20 2025 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Fixed bogus date in changelog.
 - Switched to meson build.
