@@ -2,7 +2,7 @@
 %def_with check
 
 Name: astroterm
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 
 Summary: A planetarium for your terminal
@@ -48,6 +48,9 @@ cp %SOURCE1 %_builddir/%name-%version/data
 %doc LICENSE README.md
 
 %changelog
+* Thu Jan 20 2026 Timofei Fedotov <sovtouch@altlinux.org> 1.0.10-alt1
+- Updated to 1.0.10 for ALT Sisyphus.
+
 * Thu Oct 1 2025 Timofei Fedotov <sovtouch@altlinux.org> 1.0.9-alt1
 - Updated to 1.0.9 for ALT Sisyphus.
 
