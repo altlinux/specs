@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -42,9 +42,10 @@ Requires: alterator-module-executor >= 0.1.29
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: cmake-modules
+BuildRequires: cmake-modules extra-cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
+BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libtomlplusplus-devel
 
 Provides: alterator-interface-release_notes = %version-%release
@@ -80,7 +81,7 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application systeminfo
 %_desktopdir/*
 %_bindir/*
-%doc LICENSE CHANGELOG.md
+%doc LICENSE
 %_iconsdir/hicolor/*/*/*.svg
 
 %files_alterator_interface release_notes1
@@ -91,6 +92,10 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.9-alt1
+- Fixed launched apps now may raise their windows on wayland.
+  Thx Andrey Alekseev.
+
 * Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.8-alt1
 - Add app icon.
 

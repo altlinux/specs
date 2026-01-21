@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -78,6 +78,7 @@ cat > %buildroot/%_altdir/%name <<EOF
 %_bindir/%alt_name	%_bindir/%name 50
 EOF
 echo "NoDisplay=true" >> %buildroot%_desktopdir/org.altlinux.alterator-explorer.desktop
+sed -i "s/Exec=alterator-explorer/Exec=acc/" %buildroot%_desktopdir/org.altlinux.alterator-explorer.desktop
 touch %buildroot/%_bindir/%alt_name
 %endif
 
@@ -95,6 +96,10 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.18-alt1
+- Fixed (thx Andrey Alekseev):
+  + raising window on wayland
+
 * Fri Dec 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.1.17-alt1
 - Fixed (thx Andrey Alekseev and Oleg Chagaev):
   + window was delayed until all objects are built

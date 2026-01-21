@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.11
+Version: 0.1.12
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -26,7 +26,6 @@ BuildRequires: boost-devel-headers
 BuildRequires: kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kitemmodels-devel
 BuildRequires: kf6-kdbusaddons-devel
-BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: librange-v3-devel
 
 Requires: alterator-interface-service >= 0.2.1
@@ -68,6 +67,10 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.12-alt1
+- Fixed (thx Andrey Alekseev):
+  + raising application window on wayland
+
 * Thu Jan 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.11-alt1
 - Added:
   + app icon

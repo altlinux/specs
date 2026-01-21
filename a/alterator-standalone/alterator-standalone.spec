@@ -3,7 +3,7 @@
 %define legacy_name acc-legacy
 
 Name: alterator-standalone
-Version: 7.5.1
+Version: 7.5.2
 Release: alt1
 
 Summary: System Management center
@@ -66,6 +66,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_man8dir/*
 
 %changelog
+* Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 7.5.2-alt1
+- add StartupNotify to the .desktop file
+
 * Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 7.5.1-alt1
 - replace /usr/sbin/acc -> /usr/sbin/acc-legacy-run
 
