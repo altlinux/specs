@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.9.41
-Release: alt3
+Version: 0.9.42
+Release: alt1
 
 Summary: Solves automatic numerical differentiation problems in one or more variables
 
@@ -14,13 +14,15 @@ Url: https://pypi.org/project/numdifftools
 VCS: https://github.com/pbrod/numdifftools
 BuildArch: noarch
 Source: %name-%version.tar
-Patch0: nd-0.9.41-alt-fix-pytest-runner.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pdm
+BuildRequires: python3-module-pdm-backend
 %if_with check
 BuildRequires: xvfb-run
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-algopy
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-matplotlib
@@ -51,7 +53,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch0
 
 %build
 %pyproject_build
@@ -80,6 +81,9 @@ and not test_complex_hessian_issue_35"
 %doc LICENSE.txt *.rst
 
 %changelog
+* Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 0.9.42-alt1
+- Automatically updated to 0.9.42.
+
 * Mon Feb 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.41-alt3
 - Fixed FTBFS.
 
