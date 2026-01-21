@@ -4,7 +4,7 @@
 %def_with nftset
 
 Name: dnsmasq
-Version: 2.91
+Version: 2.92
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -175,6 +175,11 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Wed Jan 21 2026 Mikhail Efremov <sem@altlinux.org> 2.92-alt1
+- Fixed build with -Werror on 32bit systems.
+- Driopped obsoleted patch.
+- Updated to 2.92 (fixes: CVE-2025-54318).
+
 * Wed Mar 26 2025 Mikhail Efremov <sem@altlinux.org> 2.91-alt1
 - Driopped obsoleted patch.
 - dnsmasq.service: Fixed race with openresolv.
