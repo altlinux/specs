@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.19.0
+Version: 4.19.2
 Release: alt1
 Epoch: 1
 
@@ -484,6 +484,9 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Wed Jan 21 2026 Mikhail Efremov <sem@altlinux.org> 1:4.19.2-alt1
+- Updated to 4.19.2.
+
 * Mon Jan 19 2026 Mikhail Efremov <sem@altlinux.org> 1:4.19.0-alt1
 - useradd: Fix fail_exit() calls.
 - chpasswd,newusers: Add process_selinux argument to some functions.
