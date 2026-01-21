@@ -1,10 +1,10 @@
 %def_disable clang
-%def_with ipwatchd
+%def_without ipwatchd
 
 %define repo dde-services
 
 Name: deepin-services
-Version: 1.0.17
+Version: 1.0.19
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -45,7 +45,9 @@ export AR="llvm-ar"
 %endif
 %DQ6build \
   -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-%if_without ipwatchd
+%if_with ipwatchd
+  -DENABLE_PLUGIN_IPWATCHD=ON \
+%else
   -DENABLE_PLUGIN_IPWATCHD=OFF \
 %endif
 #
@@ -85,6 +87,10 @@ export AR="llvm-ar"
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 
 %changelog
+* Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.19-alt1
+- New version 1.0.19.
+- Disabled ipwatchd plugin (by upstream).
+
 * Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
 - New version 1.0.17.
 

@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 2.0.14
+Version: 2.0.15
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -86,6 +86,9 @@ chmod +x %buildroot%_sysconfdir/X11/Xsession.d/97deepin-keyring-wb
 %_userunitdir/dde-version-checker@quick-login.service
 
 %changelog
+* Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.15-alt1
+- New version 2.0.15.
+
 * Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.14-alt1
 - New version 2.0.14.
 
