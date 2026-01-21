@@ -23,7 +23,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 Epoch: 1
 
@@ -80,9 +80,11 @@ Source: %name-%version%beta.tar
 %define colord_ver 1.4.5
 %define eis_ver 1.5.0
 %define display_info_ver 0.2
+%define glycin_api_ver 2
 %define glycin_ver 2.0
 
 Requires: lib%name = %EVR
+Requires: glycin-%glycin_api_ver-loaders
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
@@ -309,10 +311,12 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files tests
 %_libexecdir/installed-tests/%name-%api_ver/
 %_datadir/installed-tests/%name-%api_ver/
-#%pkgdatadir/tests/
 %endif
 
 %changelog
+* Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1:49.3-alt1
+- 49.3
+
 * Mon Nov 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1:49.2-alt1
 - 49.2
 

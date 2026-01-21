@@ -17,8 +17,8 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt1.1%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -318,6 +318,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
+- 49.3
+
 * Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
 - build with gvc-phosh/0.52.1 from 
   https://gitlab.gnome.org/guidog/libgnome-volume-control.git
