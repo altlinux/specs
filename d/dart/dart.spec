@@ -1,28 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 %define soversion 6.16
-%def_without dartpy
+%def_with dartpy
 
-Name:    dart
-Version: 6.16.1
+Name: dart
+Version: 6.16.5
 Release: alt1
 
 Summary: DART: Dynamic Animation and Robotics Toolkit
 License: BSD-2-Clause
-Group:   Development/C++
-Url:     https://github.com/dartsim/dart
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Group: Development/C++
+Url: https://dartsim.github.io/
+Vcs: https://github.com/dartsim/dart
 
 Source: %name-%version.tar
 Patch0: dart-alt-cmake-dir.patch
 Patch1: dart-alt-python3.12.patch
-#Patch2: dart-disable-download-pybind11.patch
 Patch3: dart-alt-disable-octomap.patch
 Patch4: dart-alt-disable-python-tests.patch
-# See https://github.com/dartsim/dart/issues/2332
-Patch5: dart-6.16.1-upstream-bullet-includes-fix.patch
-# Raycast fix is optional, however it should make the error clearer if this test fails
-Patch6: dart-6.16.1-upstream-raycast-segfault-fix.patch
 
 ExcludeArch: %ix86 armh
 
@@ -169,19 +163,21 @@ Group: Documentation
   -DDART_USE_SYSTEM_GOOGLEBENCHMARK=ON \
 %if_with dartpy
   -DDART_BUILD_DARTPY=ON \
-  -Dpybind11_FOUND=ON
+  -DDART_USE_SYSTEM_PYBIND11=ON \
+%endif
+  #
+
+%if_with dartpy
+%cmake_build --target all tests dartpy
+%else
+%cmake_build --target all tests
 %endif
 
-%ninja_build -C "%_cmake__builddir" all tests
-
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
-# See https://github.com/dartsim/dart/issues/2332
-%ctest \
-  --exclude-regex "test_ForceDependentSlip" \
-  #
+%ctest
 
 %files -n libdart%soversion
 %doc README.md
@@ -237,13 +233,17 @@ Group: Documentation
 
 %if_with dartpy
 %files -n python3-module-dartpy
-%_libdir/python3/site-packages/dartpy.*.so
+%_libdir/python3/site-packages/dartpy.cpython-*.so
 %endif
 
 %files docs
 %_defaultdocdir/dart
 
 %changelog
+* Wed Jan 22 2026 Pavel Petrykin <silverducks@altlinux.org> 6.16.5-alt1
+- New version.
+- Reenable build of dartpy (ALT 57546).
+
 * Fri Dec 19 2025 Pavel Petrykin <silverducks@altlinux.org> 6.16.1-alt1
 - New version.
 
