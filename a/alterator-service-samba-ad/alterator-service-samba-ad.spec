@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -27,18 +27,20 @@ Service for Samba AD management.
 
 %install
 mkdir -p %buildroot%_alterator_datadir/services
-mkdir -p %buildroot%_datadir/%name/samba-ad
+mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad
+mkdir -p %buildroot%_localstatedir/alterator/service/samba-ad/config-backup
 
 install -p -D -m755 %service %buildroot%_bindir/%service
 install -p -D -m755 %service-bind %buildroot%_bindir/%service-bind
 install -p -D -m755 %service-status %buildroot%_bindir/%service-status
 install -p -D -m755 %service-configure %buildroot%_bindir/%service-configure
 install -p -D -m755 %service-functions %buildroot%_bindir/%service-functions
+install -p -D -m644 %service-entry-update %buildroot%_bindir/%service-entry-update
 install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
 install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
-install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/samba-ad/provision-parameters.schema.json
-install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/samba-ad/join-parameters.schema.json
+install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/provision-parameters.schema.json
+install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/join-parameters.schema.json
 install -pDm 644 %service.bash-completion \
      %buildroot%_datadir/bash-completion/completions/%service
 install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samba-ad/status.json
@@ -49,15 +51,33 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_bindir/%service-status
 %_bindir/%service-configure
 %_bindir/%service-functions
+%_bindir/%service-entry-update
 %_alterator_datadir/backends/%service.backend
 %_alterator_datadir/services/%service.service
 %_datadir/bash-completion/completions/%service
-%_datadir/%name/samba-ad/provision-parameters.schema.json
-%_datadir/%name/samba-ad/join-parameters.schema.json
+%_datadir/%name/provision-parameters.schema.json
+%_datadir/%name/join-parameters.schema.json
 %_localstatedir/alterator/service/samba-ad/
+%_localstatedir/alterator/service/samba-ad/config-backup
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Thu Jan 22 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.3-alt1
+- Add Systemd resolved settings (Closes: #57497)
+- Add Network Manager settings
+- Fix typo
+- Add disabling dnsstublistener and editing resolvconf.conf
+- Fix incorrect path to smb.conf in get_forwarders_samba_internal function
+- Fix enable unit function (Closes: 57494)
+- Disable smb and nmb services (Closes: #57495)
+- Fix domain controller name change when joining (Closes: #57498)
+- Fix incorrect samba internal forwarders parsing (Closes: #57512)
+- Add dinamic entry update
+- Delete comment for name of domain controller
+- Add array prefix for dns forwarders
+- Disable shellcheck rule 1087
+- Fix an incorrect hostname setting
+
 * Thu Dec 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7.2-alt1
 - Fix other parsing errors
 - Fix incorrect dns forwarders parsing (Closes: #57363)
