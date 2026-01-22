@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: typhoon
-Version: 1.3.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Stylish weather app based on Stormcloud
@@ -77,5 +77,8 @@ sed -i "s|https://archisman-panigrahi.github.io/typhoon/assets/img/||" README.md
 %_datadir/typhoon/*
 
 %changelog
+* Thu Jan 22 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Sat Jan 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.3-alt1
 - Initial build for Sisyphus

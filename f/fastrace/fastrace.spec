@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: fastrace
-Version: 0.4.1
+Version: 1.0.0
 Release: alt1
 
 Summary: A fast, dependency-free traceroute implementation in pure C
@@ -29,10 +29,13 @@ routing issues.
 %makeinstall_std PREFIX=%_prefix
 
 %files
-%doc CHANGELOG.md docs LICENSE README.md
+%doc CHANGELOG.md LICENSE README.md
 %_bindir/%name
 
 %changelog
+* Thu Jan 22 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+
 * Fri Dec 05 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt1
 - New version 0.4.1.
 
