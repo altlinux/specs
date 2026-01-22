@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
 Version: 0.9.0
-Release: alt1
+Release: alt2.g89613b7
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libgarcon-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfconf-devel libgarcon-devel
 BuildRequires: librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files libnotify-devel
 
 Requires: xfce4-panel
@@ -34,10 +34,10 @@ XFce panel.
 * гибкая настройка управления раскладкой (глобально, для каждого
   приложения или для каждого окна).
 
-
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %meson
@@ -60,6 +60,10 @@ XFce panel.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Thu Jan 22 2026 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt2.g89613b7
+- Added libxfconf-devel to BR.
+- Upstream git snapshot.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
 - Switched to meson build.
 - Updated to 0.9.0.
