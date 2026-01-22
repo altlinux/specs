@@ -8,7 +8,7 @@
 %def_enable test
 
 Name: Ptex
-Version: 2.4.3
+Version: 2.5.1
 Release: alt1
 Summary: Per-Face Texture Mapping for Production Rendering
 
@@ -20,6 +20,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ zlib-devel /usr/bin/doxygen graphviz
+BuildRequires: libdeflate-devel
 %if_enabled test
 BuildRequires: ctest
 %endif
@@ -82,7 +83,7 @@ export FLAVOR=profile
 
 %if_enabled test
 %check
-make test
+%ctest
 %endif
 
 %install
@@ -105,6 +106,9 @@ make test
 %_pkgconfigdir/ptex.pc
 
 %changelog
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 2.5.1-alt1
+- 2.4.3 -> 2.5.1
+
 * Sun Jul 21 2024 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
 - update to 2.4.3
 - libPtex2 was renamed according shared libs policy
