@@ -3,7 +3,7 @@
 
 Name:    gz-gui
 Version: 10.0.0
-Release: alt1
+Release: alt2
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
 License: Apache-2.0
@@ -73,7 +73,7 @@ Group: Development/C++
 
 %check
 export CMAKE_PREFIX_PATH="%buildroot%_prefix"
-Xvfb :99 -screen 0 1920x1080x24 &
+Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
 XVFB_PID=$!
 export DISPLAY=:99
 
@@ -100,6 +100,9 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-gui.pc
 
 %changelog
+* Tue Jan 20 2026 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt2
+- Minor logging fix.
+
 * Wed Dec 24 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
 - New version.
 
