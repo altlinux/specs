@@ -1,6 +1,6 @@
 Name: xfdesktop
 Version: 4.20.1
-Release: alt2
+Release: alt3
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -16,6 +16,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
 BuildRequires: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: libxfce4util-devel
 BuildRequires: libxfconf-devel >= 4.19.3
 BuildRequires: libxfce4windowing-devel >= 4.19.8
 BuildRequires: libX11-devel
@@ -81,6 +82,9 @@ fi
 %ghost %default_background
 
 %changelog
+* Thu Jan 22 2026 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt3
+- Explicitly link against libxfce4util.
+
 * Fri Mar 07 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt2
 - Set default background as symlink.
 
