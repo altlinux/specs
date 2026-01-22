@@ -290,9 +290,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 9
+%global updatever 10
 %global patchver 0
-%global buildver 10
+%global buildver 7
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -1990,6 +1990,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Jan 22 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.10.0.7-alt1
+- New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
+  CVE-2026-21945).
+
 * Fri Oct 31 2025 Andrey Cherepanov <cas@altlinux.org> 0:21.0.9.0.10-alt1
 - New version (fixes: CVE-2025-53057, CVE-2025-53066, CVE-2025-61748).
 
