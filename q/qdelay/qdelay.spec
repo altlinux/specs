@@ -25,7 +25,7 @@ to be quick. It features: \
 
 
 Name:    qdelay
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: %common_summary
@@ -121,6 +121,9 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Thu Jan 22 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Sat Jan 10 2026 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
