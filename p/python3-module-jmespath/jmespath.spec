@@ -1,23 +1,21 @@
 %define oname jmespath
-%def_disable doc
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/jmespath/
-
-# https://github.com/boto/jmespath.git
+Vcs: https://github.com/jmespath/jmespath.py
 Source: %name-%version.tar
-Patch1: %oname-0.9.3-alt-docs.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-guzzle_sphinx_theme}
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-hypothesis
@@ -27,45 +25,27 @@ BuildRequires: python3-module-hypothesis
 JMESPath allows you to declaratively specify how to extract elements
 from a JSON document.
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-JMESPath allows you to declaratively specify how to extract elements
-from a JSON document.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-%patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%if_enabled doc
-sphinx-build-3 -b html -d build/doctrees doc/source build/html
-%endif
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest
 
 %files
-%doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
-
-%if_enabled doc
-%files docs
-%doc build/html/*
-%endif
+%doc README.*
+%_bindir/jp.py
+%python3_sitelibdir/%oname
 
 %changelog
+* Fri Jan 23 2026 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Apr 04 2023 Anton Vyatkin <toni@altlinux.org> 1.0.1-alt1
 - (NMU) New version 1.0.1.
 
