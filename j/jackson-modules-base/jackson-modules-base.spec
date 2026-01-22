@@ -1,13 +1,15 @@
 Name:           jackson-modules-base
 Version:        2.20.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Uber-project for foundational modules of Jackson that build directly on core components but nothing else; not including data format or datatype modules
 License:        Apache-2.0
 Group:          Development/Java
-URL:            https://github.com/FasterXML/jackson-modules-base
+VCS:            https://github.com/FasterXML/jackson-modules-base
 
 Source:         %name-%version.tar
+
+Patch1:		0001-Replace-javax-with-jakarta.patch
 
 BuildRequires:  /proc
 BuildRequires:  jpackage-default
@@ -23,6 +25,7 @@ BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
 
 BuildArch:      noarch
 
@@ -33,18 +36,11 @@ format modules, or JAX-RS providers. Not all "general" modules are included
 here; this grouping is to be used for more mature (and generally slower moving,
 stable) modules.
 
-%package javadoc
-Group:     Development/Java
-Summary:   Javadoc for %name
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %name.
+%javadoc_package
 
 %package -n jackson-module-afterburner
 Summary:   Jackson extension module used to enhance performance using bytecode generation to replace use of Reflection for field access and method calls
 Group:     Development/Java
-
 %description -n jackson-module-afterburner
 Module that will add dynamic bytecode generation for standard Jackson POJO
 serializers and deserializers, eliminating majority of remaining data binding
@@ -53,7 +49,6 @@ overhead.
 %package -n jackson-module-blackbird
 Summary:   Jackson extension module that uses LambdaMetafactory based code generation to replace reflection calls
 Group:     Development/Java
-
 %description -n jackson-module-blackbird
 The Afterburner has long been your engine of choice for maximum Jackson
 performance. But in the brave new Java 11 world, the trusty Afterburner
@@ -63,25 +58,29 @@ Unsafe.defineClass which will stop working soon.
 %package -n jackson-module-guice
 Summary:   Stuff to make integration with Guice a bit easier
 Group:     Development/Java
-
 %description -n jackson-module-guice
 This extension allows Jackson to delegate ObjectMapper creation and value
 injection to Guice when handling data bindings.
 
+%package -n jackson-module-jakarta-xmlbind-annotations
+Summary:   Jackson module: Jakarta XML Bind Annotations (jakarta.xml.bind)
+Group:     Development/Java
+%description -n jackson-module-jakarta-xmlbind-annotations
+Support for using Jakarta XML Bind (aka JAXB 3.0) annotations as an alternative
+to "native" Jackson annotations, for configuring data-binding.
+
 %package -n jackson-module-jaxb-annotations
 Summary:   Support for using JAXB annotations as an alternative to "native" Jackson annotations
 Group:     Development/Java
-
 %description -n jackson-module-jaxb-annotations
 This Jackson extension module provides support for using JAXB (javax.xml.bind)
 annotations as an alternative to native Jackson annotations. It is most often
 used to make it easier to reuse existing data beans that used with JAXB
 framework to read and write XML.
 
-%package -n jackson-module-mrbean                                                                                                                                                                                          
+%package -n jackson-module-mrbean
 Summary:   Functionality for implementing interfaces and abstract types dynamically ("bean materialization"), integrated with Jackson (although usable externally as well)
 Group:     Development/Java
-
 %description -n jackson-module-mrbean
 Mr Bean is an extension that implements support for "POJO type materialization";
 ability for databinder to construct implementation classes for Java interfaces
@@ -91,7 +90,6 @@ standard Module interface, and requires Jackson 2.0 or above.
 %package -n jackson-module-osgi
 Summary:   Jackson module to inject OSGI services in deserialized beans
 Group:     Development/Java
-
 %description -n jackson-module-osgi
 This module provides a way to inject OSGI services into deserialized objects.
 Thanks to the JacksonInject annotations, the OsgiJacksonModule will search for
@@ -100,15 +98,15 @@ while deserializing.
 
 %prep
 %setup
+%autopatch -p1
 
-# missing jakarta inject
 %pom_disable_module guice7
-
-# missing Jakarta XML Binding
-%pom_disable_module jakarta-xmlbind
 
 # rename mockito
 %pom_change_dep :mockito-all :mockito-core osgi
+
+# revert jaxb annotation dependency
+%pom_change_dep javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api jaxb
 
 # test fails since mockito was upgraded to 2.x
 rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.java
@@ -133,8 +131,6 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %install
 %mvn_install
 
-%files javadoc -f .mfiles-javadoc
-
 %files -f .mfiles-jackson-modules-base
 %doc README.md release-notes
 %doc --no-dereference LICENSE
@@ -151,6 +147,10 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc guice/README.md
 %doc --no-dereference LICENSE
 
+%files -n jackson-module-jakarta-xmlbind-annotations -f .mfiles-jackson-module-jakarta-xmlbind-annotations
+%doc jakarta-xmlbind/README.md
+%doc --no-dereference LICENSE
+
 %files -n jackson-module-jaxb-annotations -f .mfiles-jackson-module-jaxb-annotations
 %doc jaxb/README.md jaxb/release-notes
 %doc --no-dereference LICENSE
@@ -164,6 +164,10 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt2
+- Added new JAXB module.
+- Updated older JAXB module (javax-based) to Jakarta APIs.
+
 * Sat Dec 27 2025 Evgeniy Serov <scala@altlinux.org> 2.20.1-alt1
 - fixed FTBFS
 - new version 2.20.1

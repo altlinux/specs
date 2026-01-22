@@ -1,16 +1,12 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_27jpp11
-Epoch:          1
+Release:        alt8
+Epoch:		1
+
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
+Group: 		Development/Java
 URL:            https://ws.apache.org/xmlrpc/
-BuildArch:      noarch
 
 Source0:        https://archive.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
 
@@ -27,15 +23,19 @@ Patch3: 0004-disallow-loading-external-dtd.patch
 Patch4: 0005-Remove-dep-on-ancient-commons-httpclient.patch
 # CVE-2019-17570 - Deserialization of server-side exception from faultCause in XMLRPC error response
 Patch5: 0006-Fix-for-CVE-2019-17570.patch
+Patch6: 0007-Replace-javax-with-jakarta.patch 
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(org.apache.ws.commons.util:ws-commons-util)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.apache.ws.commons.util:ws-commons-util)
-Source44: import.info
+
+BuildArch:      noarch
 
 %description
 Apache XML-RPC is a Java implementation of XML-RPC, a popular protocol
@@ -72,13 +72,7 @@ Summary: XML-RPC server implementation
 
 %prep
 %setup -q -n apache-%{name}-%{version}-src
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%autopatch -p1
 
 sed -i 's/\r//' LICENSE.txt
 
@@ -89,7 +83,7 @@ sed -i 's/\r//' LICENSE.txt
 %pom_remove_plugin :maven-javadoc-plugin
 
 # Add missing dep when building against Java 11
-%pom_add_dep javax.xml.bind:jaxb-api:2.2.12
+%pom_add_dep jakarta.xml.bind:jakarta.xml.bind-api
 
 # don't hard code source and target levels
 sed -i -e '/<source>/d' \
@@ -117,6 +111,9 @@ sed -i -e '/<source>/d' \
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 1:3.1.3-alt8
+- Updated for compatibility with the new jaxb api.
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:3.1.3-alt7_27jpp11
 - update
 

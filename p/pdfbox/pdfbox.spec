@@ -1,26 +1,26 @@
-Epoch: 0
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:          pdfbox
-Version:       2.0.26
-Release:       alt1_3jpp11
-Summary:       Apache PDFBox library for working with PDF documents
-License:       ASL 2.0
-URL:           http://pdfbox.apache.org/
-Source0:       http://archive.apache.org/dist/pdfbox/%{version}/pdfbox-%{version}-src.zip
+Name:          	pdfbox
+Version:       	2.0.26
+Release:       	alt2
+
+Summary:       	Apache PDFBox library for working with PDF documents
+License:       	Apache-2.0
+Group:		Development/Java
+URL:           	http://pdfbox.apache.org/
+
+Source0:       	http://archive.apache.org/dist/pdfbox/%{version}/pdfbox-%{version}-src.zip
 
 # Use system font instead of bundled font
-Patch0:        pdfbox-use-system-liberation-font.patch
+Patch0:        	pdfbox-use-system-liberation-font.patch
 # Use system icc profiles
-Patch1:        pdfbox-use-system-icc-profiles-openicc.patch
+Patch1:        	pdfbox-use-system-icc-profiles-openicc.patch
+# Replace javax with jakarta
+Patch2:		0001-Replace-javax-with-jakarta.patch
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
+BuildRequires:	unzip
+
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(junit:junit)
@@ -29,28 +29,27 @@ BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
 BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.mockito:mockito-core)
 
-BuildRequires: fonts-ttf-dejavu
-BuildRequires: fonts-ttf-google-noto-emoji
-BuildRequires: fonts-ttf-liberation
-BuildRequires: icc-profiles-openicc
-BuildRequires: fontconfig libfontconfig1
-Requires:      fonts-ttf-liberation
+BuildRequires: 	fonts-ttf-dejavu
+BuildRequires: 	fonts-ttf-google-noto-emoji
+BuildRequires: 	fonts-ttf-liberation
+BuildRequires: 	icc-profiles-openicc
+BuildRequires: 	fontconfig libfontconfig1
+Requires:      	fonts-ttf-liberation
 
 # TODO: Require liberation-sans-fonts >= 2 and don't ignore test failures
 
-BuildArch:     noarch
+BuildArch:     	noarch
 
 # Ant support was removed by upstream (Obsoletes added in F28)
-Obsoletes:     %{name}-ant < %{version}-%{release}
+Obsoletes:     	%{name}-ant < %{version}-%{release}
 # Jempbox subproject was removed by upstream (Obsoletes added in F28)
-Obsoletes:     jempbox < %{version}-%{release}
+Obsoletes:     	jempbox < %{version}-%{release}
 # Examples package was dropped due to requiring too old lucene (Obsoletes added in F29)
-Obsoletes:     %{name}-examples < %{version}-%{release}
-Source44: import.info
+Obsoletes:	%{name}-examples < %{version}-%{release}
 
 %description
 Apache PDFBox is an open source Java PDF library for working with PDF
@@ -60,48 +59,48 @@ PDFBox also includes several command line utilities. Apache PDFBox is
 published under the Apache License v2.0.
 
 %package debugger
-Group: Development/Java
+Group: 		Development/Java
 # See: debugger/target/classes/META-INF/DEPENDENCIES
-Requires:      mvn(commons-logging:commons-logging)
-Requires:      mvn(org.apache.pdfbox:fontbox)
-Requires:      mvn(org.apache.pdfbox:pdfbox)
-Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(commons-logging:commons-logging)
+Requires:      	mvn(org.apache.pdfbox:fontbox)
+Requires:      	mvn(org.apache.pdfbox:pdfbox)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
 # needed by wrapper script
-Requires:      javapackages-tools
-Summary:       Apache PDFBox Debugger
+Requires:      	javapackages-tools
+Summary:       	Apache PDFBox Debugger
 
 %description debugger
 This package contains the PDF debugger for Apache PDFBox.
 
 %package tools
-Group: Development/Java
+Group: 		Development/Java
 # See: tools/target/classes/META-INF/DEPENDENCIES
-Requires:      mvn(commons-logging:commons-logging)
-Requires:      mvn(org.apache.pdfbox:fontbox)
-Requires:      mvn(org.apache.pdfbox:pdfbox)
-Requires:      mvn(org.apache.pdfbox:pdfbox-debugger)
-Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(commons-logging:commons-logging)
+Requires:      	mvn(org.apache.pdfbox:fontbox)
+Requires:      	mvn(org.apache.pdfbox:pdfbox)
+Requires:      	mvn(org.apache.pdfbox:pdfbox-debugger)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
 # needed by wrapper script
-Requires:      javapackages-tools
-Summary:       Apache PDFBox Tools
+Requires:      	javapackages-tools
+Summary:       	Apache PDFBox Tools
 
 %description tools
 This package contains command line tools for Apache PDFBox.
 
 %package javadoc
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Javadoc for %{name}
-BuildArch: noarch
+BuildArch: 	noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %package -n fontbox
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Apache FontBox
 
 %description -n fontbox
@@ -109,34 +108,34 @@ FontBox is a Java library used to obtain low level information from font
 files. FontBox is a subproject of Apache PDFBox.
 
 %package parent
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Apache PDFBox Parent POM
 
 %description parent
 Apache PDFBox Parent POM.
 
 %package reactor
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Apache PDFBox Reactor POM
 
 %description reactor
 Apache PDFBox Reactor POM.
 
 %package -n preflight
-Group: Development/Java
+Group: 		Development/Java
 # See: preflight/pom.xml
-Requires:      mvn(jakarta.activation:jakarta.activation-api)
-Requires:      mvn(javax.xml.bind:jaxb-api)
+Requires:      	mvn(jakarta.activation:jakarta.activation-api)
+Requires:	mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 # See: preflight/target/classes/META-INF/DEPENDENCIES
-Requires:      mvn(commons-logging:commons-logging)
-Requires:      mvn(org.apache.pdfbox:fontbox)
-Requires:      mvn(org.apache.pdfbox:pdfbox)
-Requires:      mvn(org.apache.pdfbox:xmpbox)
-Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(commons-logging:commons-logging)
+Requires:      	mvn(org.apache.pdfbox:fontbox)
+Requires:      	mvn(org.apache.pdfbox:pdfbox)
+Requires:      	mvn(org.apache.pdfbox:xmpbox)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
 # needed by wrapper script
-Requires:      javapackages-tools
+Requires:      	javapackages-tools
 Summary:        Apache Preflight
 
 %description -n preflight
@@ -145,7 +144,7 @@ a parser compliant with the ISO-19005 (PDF/A) specification. Preflight is a
 subproject of Apache PDFBox.
 
 %package -n xmpbox
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Apache XmpBox
 
 %description -n xmpbox
@@ -155,7 +154,7 @@ contents.  It is mainly used by subproject preflight of Apache PDFBox.
 XmpBox is a subproject of Apache PDFBox.
 
 %prep
-%setup -q
+%setup
 find -name '*.class' -delete
 find -name '*.jar' -delete
 find -name 'sRGB.icc*' -print -delete
@@ -164,6 +163,7 @@ find -name '*.ttf' -print -delete
 
 %patch0 -p1 -b .font
 %patch1 -b .openicc
+%patch2 -p1
 
 # Don't build apps (it's just a bundle of everything)
 %pom_disable_module preflight-app
@@ -227,11 +227,14 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 
 %pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api preflight
 
+# Revert jaxb annotation dependency
+%pom_change_dep javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api xmpbox preflight
+
 %build
 # Integration tests all require internet access to download test resources, so skip
 # Use compat version of lucene
 # Ignore test failures on F28 and earlier due to liberation fonts being too old
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true -P !jdkGte9
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true -P !jdkGte9
 
 %install
 %mvn_install
@@ -272,6 +275,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jan 21 2026 Evgeniy Serov <scala@altlinux.org> 2.0.26-alt2
+- Updated for compatibility with the new jaxb api.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.0.26-alt1_3jpp11
 - new version
 

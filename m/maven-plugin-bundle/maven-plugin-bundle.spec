@@ -1,43 +1,28 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
 Name:           maven-plugin-bundle
-Version:        5.1.1
-Release:        alt1_3jpp11
+Version:        5.1.9
+Release:        alt1
 Summary:        Maven Bundle Plugin
-License:        ASL 2.0
+
+License:        Apache-2.0
+Group: 		Development/Java
 URL:            https://felix.apache.org
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/felix/maven-bundle-plugin/%{version}/maven-bundle-plugin-%{version}-source-release.tar.gz
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
+
 BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
-BuildRequires:  mvn(org.apache.maven:maven-archiver)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
-BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
 BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-%endif
-Source44: import.info
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.jdom:jdom)
 
 %description
 Provides a maven plugin that supports creating an OSGi bundle
@@ -45,9 +30,9 @@ from the contents of the compilation classpath along with its
 resources and dependencies. Plus a zillion other features.
 
 %package javadoc
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Javadoc for %{name}
-BuildArch: noarch
+BuildArch: 	noarch
 
 %description javadoc
 API documentation for %{name}.
@@ -57,25 +42,13 @@ API documentation for %{name}.
 
 find -name '*.jar' -delete
 
-# There is forked version of maven-osgi in
-# src/{main,test}/java/org/apache/maven
-
-rm -rf src/main/java/org/apache/felix/obrplugin/
 %pom_remove_dep :org.apache.felix.bundlerepository
 
-rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
-%pom_remove_dep :doxia-sink-api
-%pom_remove_dep :doxia-site-renderer
-%pom_remove_dep :maven-reporting-api
-
-%pom_remove_dep :org.osgi.core
-%pom_remove_dep :jdom
-
-%pom_remove_plugin :maven-invoker-plugin
+rm -rf src/main/java/org/apache/felix/obrplugin/
+#rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 
 %build
-# Tests depend on bundled JARs
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.target=8
 
 %install
 %mvn_install
@@ -87,6 +60,10 @@ rm -f src/main/java/org/apache/felix/bundleplugin/baseline/BaselineReport.java
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Jan 13 2026 Evgeniy Serov <scala@altlinux.org> 5.1.9-alt1
+- Updated to 5.1.9.
+- Removed import.info.
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_3jpp11
 - new version
 

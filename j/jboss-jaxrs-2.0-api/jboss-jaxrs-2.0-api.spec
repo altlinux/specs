@@ -11,32 +11,33 @@ BuildRequires: jpackage-default
 
 Name:          jboss-jaxrs-2.0-api
 Version:       1.0.0
-Release:       alt1_16jpp11
+Release:       alt2
 Summary:       JAX-RS 2.0: The Java API for RESTful Web Services
 # ASL 2.0 src/main/java/javax/ws/rs/core/GenericEntity.java
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           https://github.com/jboss/jboss-jaxrs-api_spec
 Source0:       https://github.com/jboss/jboss-jaxrs-api_spec/archive/%{oname}-%{namedversion}.tar.gz
 
+Patch1:        0001-Replace-javax-with-jakarta.patch
+
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.jboss:jboss-parent:pom:)
-BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 
 BuildArch:     noarch
-Source44: import.info
 
 %description
 JSR 339: JAX-RS 2.0: The Java API for RESTful Web Services.
 
 %prep
 %setup -q -n jboss-jaxrs-api_spec-%{oname}-%{namedversion}
+%autopatch -p1
 
 # Unneeded plugin
 %pom_remove_plugin :maven-source-plugin
 
-# Fix JDK11 build, add missing javax.xml.bind
-%pom_add_dep javax.xml.bind:jaxb-api
+%pom_add_dep jakarta.xml.bind:jakarta.xml.bind-api
 
 %mvn_file :%{oname} %{name}
 
@@ -53,6 +54,9 @@ JSR 339: JAX-RS 2.0: The Java API for RESTful Web Services.
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 1.0.0-alt2
+- Updated for compatibility with the new jaxb api.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt1_16jpp11
 - update
 

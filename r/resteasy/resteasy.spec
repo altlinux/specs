@@ -1,31 +1,34 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define version 3.0.26
 %global namedreltag .Final
 %global namedversion %{version}%{namedreltag}
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt2_17jpp11
+Release:        alt3
+
 Summary:        Framework for RESTful Web services and Java applications
 License:        Apache-2.0
+Group:          Development/Java
 URL:            http://resteasy.jboss.org/
+
 Source0:        https://github.com/resteasy/Resteasy/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
+
 Patch1:         0001-RESTEASY-2559-Improper-validation-of-response-header.patch
 Patch2:         0001-Remove-Log4jLogger.patch
+Patch3:		0001-Replace-javax.activation-imports-with-jakarta.activa.patch
+Patch4:		0001-Update-to-new-jakarta-xml-bind-namespace.patch
 
 BuildArch:      noarch
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
+
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-#BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires:  tomcat-servlet-4.0-api
 
 # Jackson 2
@@ -41,7 +44,6 @@ BuildRequires:  mvn(org.jboss.logging:jboss-logging-processor)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-Source44: import.info
 
 %description
 %global desc \
@@ -120,8 +122,7 @@ Summary: %name Servlet Initializer
 
 %prep
 %setup -q -n Resteasy-%{namedversion}
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 
 %pom_disable_module arquillian
@@ -204,9 +205,8 @@ find -name '*.jar' -print -delete
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jaxb
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jackson2
 
-# add dependencies for EE APIs that were removed in Java 11
-%pom_add_dep javax.xml.bind:jaxb-api resteasy-jaxrs
-%pom_add_dep javax.xml.bind:jaxb-api resteasy-servlet-initializer
+%pom_add_dep jakarta.xml.bind:jakarta.xml.bind-api resteasy-jaxrs
+%pom_add_dep jakarta.xml.bind:jakarta.xml.bind-api resteasy-servlet-initializer
 
 %pom_remove_plugin :maven-clean-plugin
 
@@ -246,6 +246,9 @@ find -name '*.jar' -print -delete
 %files -n pki-%{name}-servlet-initializer -f .mfiles-servlet-initializer
 
 %changelog
+* Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 3.0.26-alt3
+- Updated for compatibility with the new jaxb api.
+
 * Fri Mar 07 2025 Stanislav Levin <slev@altlinux.org> 3.0.26-alt2_17jpp11
 - Packaged servlet-initializer.
 

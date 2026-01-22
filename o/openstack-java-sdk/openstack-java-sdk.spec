@@ -1,39 +1,26 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# % global git_hash git10597f7
-
 Name:           openstack-java-sdk
 Version:        3.2.9
-Release:        alt1_9jpp11
-Summary:        OpenStack Java SDK
+Release:        alt2
 
-License:        ASL 2.0
-URL:            https://github.com/woorea/%{name}
-Source0:        https://github.com/woorea/%{name}/archive/%{name}-%{version}.tar.gz
+Summary:        OpenStack Java SDK
+License:        Apache-2.0
+VCS:            https://github.com/woorea/%name
+Group:          Development/Java
+
+Source0:        https://github.com/woorea/%name/archive/%name-%version.tar.gz
+
+Patch0:         0001-Replace-javax-with-jakarta.patch
+
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(org.jboss.resteasy:resteasy-jaxrs)
+BuildRequires:  mvn(com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider)
 
 BuildArch:      noarch
-
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  jackson-annotations >= 2.9.0
-BuildRequires:  jackson-core >= 2.9.0
-BuildRequires:  jackson-databind >= 2.9.0
-BuildRequires:  jackson-jaxrs-json-provider >= 2.9.0
-BuildRequires:  maven-local
-BuildRequires:  junit
-BuildRequires:  mvn(org.apache.httpcomponents:httpclient) >= 4.5.0
-BuildRequires:  mvn(org.jboss.resteasy:resteasy-jaxrs)
-
-Requires:  jackson-annotations >= 2.9.0
-Requires:  jackson-core >= 2.9.0
-Requires:  jackson-databind >= 2.9.0
-Requires:  jackson-jaxrs-json-provider >= 2.9.0
-Source44: import.info
 
 %description
 OpenStack client implementation in Java.
@@ -193,15 +180,19 @@ This package contains the %{summary}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch0 -p1
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
+
+# revert jaxb annotation dependency
+%pom_change_dep -r javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api
 
 %mvn_package ":{openstack-java-sdk,openstack-client-connectors}" __noinstall
 
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P "!console,!examples,!jersey2,!jersey,resteasy" -DskipTests
+%mvn_build -f -s -- -P "!console,!examples,!jersey2,!jersey,resteasy"
 
 
 %install
@@ -291,6 +282,9 @@ This package contains the %{summary}.
 %dir %{_javadir}/%{name}
 
 %changelog
+* Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 3.2.9-alt2
+- Updated for compatibility with the new jaxb api.
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 3.2.9-alt1_9jpp11
 - update
 

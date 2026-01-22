@@ -1,26 +1,23 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           jaxb-stax-ex
-Version:        1.8.3
-Release:        alt1_8jpp11
-Summary:        Extended StAX API
-License:        BSD
+Version:        2.1.0
+Release:        alt1
 
-URL:            https://github.com/eclipse-ee4j/jaxb-stax-ex
-Source0:        https://github.com/eclipse-ee4j/jaxb-stax-ex/archive/%{version}/%{name}-%{version}.tar.gz
+Summary:        Extended StAX API
+License:        BSD-3-Clause
+Group:		Development/Java
+VCS:            https://github.com/eclipse-ee4j/jaxb-stax-ex
+
+Source:		%name-%version.tar
+
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 
 BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-Source44: import.info
 
 %description
 This project contains a few extensions to complement JSR-173 StAX API in
@@ -33,28 +30,19 @@ the following areas:
   FastInfoset.
 - Improve the namespace support.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
-%setup -q
+%setup
 
-
-# remove unnecessary dependency on parent POM
 %pom_remove_parent
-
-# remove unnecessary maven plugins
 %pom_remove_plugin :buildnumber-maven-plugin
-%pom_remove_plugin :glassfish-copyright-maven-plugin
-%pom_remove_plugin :maven-enforcer-plugin
-
 
 %build
 %mvn_build
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.md NOTICE.md
@@ -62,6 +50,10 @@ the following areas:
 
 
 %changelog
+* Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+- Removed import.info.
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_8jpp11
 - update
 

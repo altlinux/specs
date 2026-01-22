@@ -1,74 +1,49 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-BuildRequires: /usr/bin/git
 Name:           jaxb-dtd-parser
-Version:        1.5.0
-Release:        alt1_3jpp11
+Version:        1.5.1
+Release:        alt1
+
 Summary:        SAX-like API for parsing XML DTDs
-License:        BSD
-URL:            https://github.com/eclipse-ee4j/jaxb-dtd-parser
-BuildArch:      noarch
-Source0:        https://github.com/eclipse-ee4j/jaxb-dtd-parser/archive/%{version}/%{name}-%{version}.tar.gz
-BuildRequires:  git
+License:        BSD-3-Clause
+Group:		Development/Java
+VCS:            https://github.com/eclipse-ee4j/jaxb-dtd-parser
+
+Source:		%name-%version.tar
+
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
-Provides:       glassfish-dtd-parser = %{version}-%{release}
-Source44: import.info
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+BuildArch:      noarch
 
 %description
 SAX-like API for parsing XML DTDs.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-%description javadoc
-API documentation for %{name}.
-
+%javadoc_package
 
 %prep
-# -S: enable usage of git repo
-%setup -q
-git init -q
-git config user.name "rpmbuild"
-git config user.email "<rpmbuild>"
-git config gc.auto 0
-git add --force .
-git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+%setup -n %name-%version/dtd-parser
 
-# delete precompiled jar and class files
-find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
-
-cd dtd-parser
-# remove unnecessary dependency on parent POM
-# org.eclipse.ee4j:project is not packaged and isn't needed
 %pom_remove_parent
-# remove unnecessary plugins
-%pom_remove_plugin :glassfish-copyright-maven-plugin
-cd -
+%pom_remove_plugin :buildnumber-maven-plugin
 
 %build
-cd dtd-parser
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-cd -
+%mvn_build
 
 %install
-cd dtd-parser
 %mvn_install
-cd -
 
-%files -f dtd-parser/.mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
-%doc README.md
-%files javadoc -f dtd-parser/.mfiles-javadoc
-%doc --no-dereference LICENSE.md NOTICE.md
+%files -f .mfiles
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+%doc ../README.md
 
 %changelog
+* Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 1.5.1-alt1
+- Updated to 1.5.1.
+- Removed import.info.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_3jpp11
 - new version
 

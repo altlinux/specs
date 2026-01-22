@@ -1,97 +1,158 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-BuildRequires: /usr/bin/git
 Name:           jaxb
-Version:        2.3.5
-Release:        alt1_5jpp11
+Version:        4.0.6
+Release:        alt1
 Summary:        JAXB Reference Implementation
-# EDL-1.0 license is BSD-3-clause
-License:        BSD
+
+Group: 		Development/Java
+License:        BSD-3-Clause
 URL:            https://github.com/eclipse-ee4j/jaxb-ri
 BuildArch:      noarch
 
-Source0:        https://github.com/eclipse-ee4j/jaxb-ri/archive/%{version}-RI/%{name}-%{version}.tar.gz
+Source:		%name-%version.tar
 
-BuildRequires:  git
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun.activation:jakarta.activation)
-BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
-BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
-BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
-BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.ant:ant-junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
+BuildRequires:  mvn(com.github.relaxng:relaxngDatatype:2011.1)
+BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  mvn(com.sun.istack:istack-commons-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
-BuildRequires:  mvn(xml-resolver:xml-resolver)
+BuildRequires:  mvn(com.sun.xml.fastinfoset:FastInfoset)
+BuildRequires:  mvn(net.java.dev.msv:xsdlib)
+BuildRequires:  mvn(org.apache.ant:ant-junit)
+BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
+BuildRequires:  mvn(com.sun.istack:istack-commons-tools)
 BuildRequires:  mvn(xmlunit:xmlunit)
-Source44: import.info
+BuildRequires:  mvn(com.google.code.javaparser:javaparser)
 
 %description
-GlassFish JAXB Reference Implementation.
-
-%package runtime
-Group: Development/Java
-Summary:        JAXB Runtime
-%description runtime
-JAXB (JSR 222) Reference Implementation
-
-%package txw2
-Group: Development/Java
-Summary:        TXW2 Runtime
-%description txw2
-TXW is a library that allows you to write XML documents.
+Jakarta XML Binding gives Java developers an efficient and standard way of
+mapping between XML and Java code. Java developers using Jakarta XML Binding
+are more productive because they can write less code themselves and do not
+have to be experts in XML. Jakarta XML Binding makes it easier for developers
+to extend their applications with XML and Web Services technologies.
 
 %package codemodel
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Codemodel Core
 %description codemodel
 The core functionality of the CodeModel java source code generation
 library.
 
 %package codemodel-annotation-compiler
-Group: Development/Java
+Group: 		Development/Java
 Summary:        Codemodel Annotation Compiler
 %description codemodel-annotation-compiler
 The annotation compiler ant task for the CodeModel java source code
 generation library.
 
+%package bom
+Group: 		Development/Java
+Summary:	JAXB BOM
+%description bom
+JAXB Bill of Materials (BOM)
+
+%package bom-ext
+Group:          Development/Java
+Summary:        JAXB BOM with ALL dependencies
+%description bom-ext
+%summary.
+If you are not sure - DON'T USE THIS BOM. Use com.sun.xml.bind:jaxb-bom instead.
+
+%package codemodel-parent
+Group: 		Development/Java
+Summary:        Codemodel
+%description codemodel-parent
+Java source code generation library.
+
+%package core
+Group:          Development/Java
+Summary:        JAXB Core
+%description core
+JAXB Core module. Contains sources required by XJC, JXC and Runtime modules.
+
+%package external-parent
+Group:          Development/Java
+Summary:        JAXB External parent
+%description external-parent
+JAXB External parent module. Contains sources for external components.
+
+%package jxc
+Group:          Development/Java
+Summary:        JAXB JXC
+%description jxc
+JAXB schema generator.The *tool* to generate XML schema based on java classes.
+
+%package runtime-parent
+Group:          Development/Java
+Summary:        JAXB Runtime parent
+%description runtime-parent
+JAXB Runtime parent module. Contains sources used during runtime processing.
+
+%package runtime
+Group:          Development/Java
+Summary:        JAXB Runtime
+%description runtime
+JAXB (JSR 222) Reference Implementation.
+
+%package parent
+Group:          Development/Java
+Summary:        Jakarta XML Binding Implementation
+%description parent
+Open source Implementation of Jakarta XML Binding (formerly JSR-222)
+
+%package txw-parent
+Group:          Development/Java
+Summary:        JAXB TXW parent
+%description txw-parent
+JAXB TXW parent module. Contains sources for TXW component.
+
 %package xjc
-Group: Development/Java
+Group:          Development/Java
 Summary:        JAXB XJC
 %description xjc
-JAXB Binding Compiler. Contains source code needed for binding
-customization files into java sources. In other words: the tool to
-generate java classes for the given xml representation.
+JAXB Binding Compiler. Contains source code needed for binding customization
+files into java sources.
+In other words: the *tool* to generate java classes for the given xml
+representation.
+
+%package relaxng-datatype
+Group:		Development/Java
+Summary:        RelaxNG Datatype
+%description relaxng-datatype
+RelaxNG Datatype library.
 
 %package rngom
-Group: Development/Java
+Group: 		Development/Java
 Summary:        RELAX NG Object Model/Parser
 %description rngom
 This package contains RELAX NG Object Model/Parser.
 
+%package txw2
+Group: 		Development/Java
+Summary:        TXW2 Runtime
+%description txw2
+TXW is a library that allows you to write XML documents.
+
 %package txwc2
-Group: Development/Java
+Group: 		Development/Java
 Summary:        TXW2 Compiler
 %description txwc2
 JAXB schema generator. The tool to generate XML schema based on java
 classes.
 
 %package xsom
-Group: Development/Java
+Group: 		Development/Java
 Summary:        XML Schema Object Model
 %description xsom
 XML Schema Object Model (XSOM) is a Java library that allows applications to
@@ -99,101 +160,93 @@ easily parse XML Schema documents and inspect information in them. It is
 expected to be useful for applications that need to take XML Schema as an
 input.
 
-%package relaxng-datatype
-Group: Development/Java
-Summary:        RelaxNG Datatype
-%description relaxng-datatype
-RelaxNG Datatype library.
-
 %prep
-%setup -q -n jaxb-ri-%{version}-RI
-git init -q
-git config user.name "rpmbuild"
-git config user.email "<rpmbuild>"
-git config gc.auto 0
-git add --force .
-git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+%setup -n %name-%version/jaxb-ri
 
-# Delete precompiled jar and class files
-find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
+rm xsom/src/test/java/com/sun/xml/xsom/test/XSOMParserTest.java
+rm codemodel/codemodel/src/test/java/com/sun/codemodel/tests/JDefinedClassInstanceInitTest.java
 
-cd jaxb-ri
-# Remove unnecessary dep on ee4j parent pom (it adds nothing to our downstream builds)
 %pom_remove_parent boms/bom external xsom codemodel
-# SCM from parent: org.eclipse.ee4j:project:1.0.7
-%pom_xpath_inject 'pom:project' \
-    '<scm>
-      <connection>scm:git:git@github.com:eclipse-ee4j/ee4j.git</connection>
-      <developerConnection>scm:git:git@github.com:eclipse-ee4j/ee4j.git</developerConnection>
-      <url>https://github.com/eclipse-ee4j/ee4j</url>
-    </scm>' external
-# Fix dep on xml resolver
-%pom_change_dep com.sun.org.apache.xml.internal:resolver xml-resolver:xml-resolver:1.2 xjc jxc
-sed -i -e 's/com\.sun\.org\.apache\.xml\.internal\.resolver/org.apache.xml.resolver/' xjc/src/main/java/com/sun/tools/xjc/CatalogUtil.java
-# Missing dep in Fedora: org.checkerframework:compiler
-%pom_disable_module jxc
-# Disable unneeded extra OSGi bundles
-%pom_disable_module jxc bundles
-%pom_disable_module osgi bundles
-%pom_disable_module ri bundles
-%pom_disable_module runtime bundles
-%pom_disable_module xjc bundles
-# Ignore osgi tests
+
+%pom_remove_plugin -r :buildnumber-maven-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+
+%pom_remove_dep :angus-activation core
+%pom_remove_dep :compiler jxc
+
+%pom_disable_module bundles
+
+# missing docbkx-maven-plugin
+%pom_disable_module docs
 %pom_disable_module tools/osgi_tests
-# lack of dependency when building documentation
-%pom_disable_module release-documentation docs
-# Compatibility
-%mvn_alias com.sun.xml.bind.external:relaxng-datatype com.github.relaxng:relaxngDatatype relaxngDatatype:relaxngDatatype
-%mvn_alias org.glassfish.jaxb:jaxb-runtime org.glassfish.jaxb:jaxb-core
-%mvn_alias org.glassfish.jaxb:jaxb-xjc com.sun.xml.bind:jaxb-xjc
-%mvn_alias org.glassfish.jaxb:xsom com.sun.xsom:xsom
-# Don't install aggregator and parent poms
-%mvn_package :jaxb-bom __noinstall
-%mvn_package :jaxb-bom-ext __noinstall
-%mvn_package :jaxb-bundles __noinstall
-%mvn_package :jaxb-codemodel-parent __noinstall
-%mvn_package :jaxb-docs-parent __noinstall
-%mvn_package :jaxb-external-parent __noinstall
-%mvn_package :jaxb-parent __noinstall
-%mvn_package :jaxb-runtime-parent __noinstall
-%mvn_package :jaxb-samples __noinstall
-%mvn_package :jaxb-txw-parent __noinstall
-%mvn_package :jaxb-www __noinstall
-cd -
 
 %build
-cd jaxb-ri
-%mvn_build -s -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
-cd -
+%mvn_build -j -s -- -Dproject.build.sourceEncoding=UTF-8 -Dproject.reporting.outputEncoding=UTF-8
 
 %install
-cd jaxb-ri
 %mvn_install
-cd -
 
-%files codemodel -f jaxb-ri/.mfiles-codemodel
-%doc --no-dereference LICENSE.md NOTICE.md
-%files codemodel-annotation-compiler -f jaxb-ri/.mfiles-codemodel-annotation-compiler
-%doc --no-dereference LICENSE.md NOTICE.md
-%files relaxng-datatype -f jaxb-ri/.mfiles-relaxng-datatype
-%doc --no-dereference LICENSE.md NOTICE.md
-%files rngom -f jaxb-ri/.mfiles-rngom
-%doc --no-dereference LICENSE.md NOTICE.md
-%files runtime -f jaxb-ri/.mfiles-jaxb-runtime
-%doc --no-dereference LICENSE.md NOTICE.md
-%files txw2 -f jaxb-ri/.mfiles-txw2
-%doc --no-dereference LICENSE.md NOTICE.md
-%files txwc2 -f jaxb-ri/.mfiles-txwc2
-%doc --no-dereference LICENSE.md NOTICE.md
-%files xjc -f jaxb-ri/.mfiles-jaxb-xjc
-%doc --no-dereference LICENSE.md NOTICE.md
-%files xsom -f jaxb-ri/.mfiles-xsom
-%doc --no-dereference LICENSE.md NOTICE.md
+%files codemodel -f .mfiles-codemodel
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files codemodel-annotation-compiler -f .mfiles-codemodel-annotation-compiler
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files bom -f .mfiles-jaxb-bom
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files bom-ext -f .mfiles-jaxb-bom-ext
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files codemodel-parent -f .mfiles-jaxb-codemodel-parent
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files core -f .mfiles-jaxb-core
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files external-parent -f .mfiles-jaxb-external-parent
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files jxc -f .mfiles-jaxb-jxc
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files runtime-parent -f .mfiles-jaxb-runtime-parent
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files runtime -f .mfiles-jaxb-runtime
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files parent -f .mfiles-jaxb-parent
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files txw-parent -f .mfiles-jaxb-txw-parent
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files xjc -f .mfiles-jaxb-xjc
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files relaxng-datatype -f .mfiles-relaxng-datatype
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files rngom -f .mfiles-rngom
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files txw2 -f .mfiles-txw2
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files txwc2 -f .mfiles-txwc2
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
+
+%files xsom -f .mfiles-xsom
+%doc --no-dereference ../LICENSE.md ../NOTICE.md
 
 %changelog
+* Fri Jan 16 2026 Evgeniy Serov <scala@altlinux.org> 4.0.6-alt1
+- Updated to 4.0.6.
+- Removed import.info.
+
 * Thu Jun 09 2022 Igor Vlasenko <viy@altlinux.org> 2.3.5-alt1_5jpp11
 - new version
 
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.3.3-alt1_6jpp11
 - new version
-

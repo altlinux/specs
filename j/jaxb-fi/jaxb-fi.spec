@@ -1,35 +1,28 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           jaxb-fi
-Version:        1.2.18
-Release:        alt1_7jpp11
+Version:        2.1.1
+Release:        alt1
+
 Summary:        Implementation of the Fast Infoset Standard for Binary XML
-# jaxb-fi is licensed ASL 2.0 and EDL-1.0 (BSD)
-# bundled org.apache.xerces.util.XMLChar.java is licensed ASL 1.1
-License:        ASL 2.0 and BSD and ASL 1.1
-URL:            https://github.com/eclipse-ee4j/jaxb-fi
-BuildArch:      noarch
+License:        Apache-2.0
+Group:		Development/Java
+VCS:            https://github.com/eclipse-ee4j/jaxb-fi
 
-Source0:        https://github.com/eclipse-ee4j/jaxb-fi/archive/%{version}/%{name}-%{version}.tar.gz
+Source:		%name-%version.tar
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun.xml.stream.buffer:streambuffer)
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.glassfish.jaxb:xsom)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(com.sun.xml.stream.buffer:streambuffer)
+BuildRequires:  mvn(com.sun.xsom:xsom)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
-# package renamed in fedora 33, remove in fedora 35
-Provides:       glassfish-fastinfoset = %{version}-%{release}
-Obsoletes:      glassfish-fastinfoset < 1.2.15-5
 
-# javadoc subpackage is currently not built
-Obsoletes:      glassfish-fastinfoset-javadoc < 1.2.15-5
-Source44: import.info
+BuildArch:      noarch
 
 %description
 Fast Infoset Project, an Open Source implementation of the Fast Infoset
@@ -40,70 +33,64 @@ describes an open, standards-based "binary XML" format that is based on
 the XML Information Set.
 
 %package -n FastInfoset
-Group: Development/Java
-Summary:        FastInfoset
+Group:		Development/Java
+Summary:	FastInfoset
+
 %description -n FastInfoset
-%{summary}.
+%summary.
 
 %package -n FastInfosetRoundTripTests
-Group: Development/Java
+Group: 		Development/Java
 Summary:        FastInfoset Roundtrip Tests
+
 %description -n FastInfosetRoundTripTests
-%{summary}.
+%summary.
 
 %package -n FastInfosetSamples
-Group: Development/Java
+Group: 		Development/Java
 Summary:        FastInfoset Samples
+
 %description -n FastInfosetSamples
-%{summary}.
+%summary.
 
 %package -n FastInfosetUtilities
-Group: Development/Java
+Group: 		Development/Java
 Summary:        FastInfoset Utilities
+
 %description -n FastInfosetUtilities
-%{summary}.
+%summary.
 
 %prep
-%setup -q
+%setup
 
-
-pushd code
-# remove unnecessary dependency on parent POM
-# org.eclipse.ee4j:project is not packaged and not required
 %pom_remove_parent
 
-# disable unnecessary plugins
 %pom_remove_plugin :buildnumber-maven-plugin
-%pom_remove_plugin :glassfish-copyright-maven-plugin
-
-# disable parent
-%mvn_package :fastinfoset-project __noinstall
-popd
 
 %build
-pushd code
-%mvn_build -s -f -j -- -DbuildNumber=unknown
-popd
+%mvn_build -j -s
 
 %install
-pushd code
 %mvn_install
-popd
 
-%files -n FastInfoset -f code/.mfiles-FastInfoset
+%files -n FastInfoset -f .mfiles-FastInfoset
 %doc --no-dereference LICENSE NOTICE.md
 %doc README.md
 
-%files -n FastInfosetRoundTripTests -f code/.mfiles-FastInfosetRoundTripTests
+%files -n FastInfosetRoundTripTests -f .mfiles-FastInfosetRoundTripTests
 %doc --no-dereference LICENSE NOTICE.md
 
-%files -n FastInfosetSamples -f code/.mfiles-FastInfosetSamples
+%files -n FastInfosetSamples -f .mfiles-FastInfosetSamples
 %doc --no-dereference LICENSE NOTICE.md
 
-%files -n FastInfosetUtilities -f code/.mfiles-FastInfosetUtilities
+%files -n FastInfosetUtilities -f .mfiles-FastInfosetUtilities
 %doc --no-dereference LICENSE NOTICE.md
 
 %changelog
+* Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 2.1.1-alt1
+- Updated to 2.1.1.
+- Removed import.info.
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_7jpp11
 - update
 
