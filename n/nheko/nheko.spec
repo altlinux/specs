@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.12.0
-Release: alt3
+Release: alt4
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -12,6 +12,7 @@ Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
 Patch1: %name-fmt11-fix.patch
+Patch2: alt-qt-6.10.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: qt6-tools-devel qt6-multimedia-devel qt6-svg-devel
@@ -77,6 +78,9 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt4
+- Fix to build with Qt-6.10 .
+
 * Mon Sep 01 2025 Paul Wolneykien <manowar@altlinux.org> 0.12.0-alt3
 - Fix: Add runtime dependency on libqt6-quickparticles (closes: 49690, 50671).
 
