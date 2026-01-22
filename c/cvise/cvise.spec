@@ -2,7 +2,7 @@
 
 Name: cvise
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 BuildRequires: astyle
 
 BuildRequires: clang-devel llvm-devel
+BuildRequires: clang-tools
 
 BuildRequires: cmake
 BuildRequires: flex
@@ -52,6 +53,7 @@ BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 Requires: astyle
 Requires: clang
+Requires: clang-tools
 Requires: indent
 Requires: llvm
 Requires: unifdef
@@ -102,6 +104,10 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Wed Jan 21 2026 Ivan A. Melnikov <iv@altlinux.org> 2.12.0-alt2
+- NMU: add clang-tools (for clang-format) to BR and package
+  requires (ALT#57584).
+
 * Fri Dec 19 2025 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt1
 - new version 2.12.0 (with rpmrb script)
 
