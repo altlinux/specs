@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: footage
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Simple video editor for GNOME
@@ -60,7 +60,7 @@ your choice.
 %setup -n %{?_enable_snapshot:%_name}%{?_disable_snapshot:%name}-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -85,6 +85,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* PRESS*
 
 %changelog
+* Thu Jan 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - added gst-plugin-gif and ffprobe to runtime dependencies (ALT #50114)
 
