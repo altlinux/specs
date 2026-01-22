@@ -1,6 +1,6 @@
 Name: xfwm4
 Version: 4.20.0
-Release: alt1
+Release: alt2
 
 %def_enable epoxy
 %def_enable xi2
@@ -16,8 +16,8 @@ Vcs: https://gitlab.xfce.org/xfce/xfwm4.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfconf-devel
 
 BuildRequires: gnome-doc-utils xml-utils xsltproc
 BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
@@ -78,6 +78,9 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Thu Jan 22 2026 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
+- Explicitly link against libxfce4utils.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
