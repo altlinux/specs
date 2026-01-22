@@ -1,32 +1,30 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           google-gson
-Version:        2.9.1
-Release:        alt1_1jpp11
+Version:        2.13.2
+Release:        alt1
 Summary:        Java lib for conversion of Java objects into JSON representation
-License:        ASL 2.0
-URL:            https://github.com/google/gson
-Source0:        https://github.com/google/gson/archive/gson-parent-%{version}.tar.gz
 
-# Internal packages are naughtily used by other packages in Fedora
-Patch1: 0002-Also-export-internal-packages-in-OSGi-metadata.patch
-# Remove dependency on unavailable templating-maven-plugin
-# Reverts upstream commit https://github.com/google/gson/commit/d84e26d
-Patch3: 0004-This-commit-added-a-dependency-on-templating-maven-p.patch
+Group: 		Development/Java
+License:        Apache-2.0
+VCS:            https://github.com/google/gson
+
+Source:         %name-%version.tar
+
+BuildRequires: 	/proc
+BuildRequires: 	jpackage-default
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(kr.motd.maven:os-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:  mvn(org.moditect:moditect-maven-plugin)
+BuildRequires:  mvn(com.google.guava:guava-testlib)
+BuildRequires:  mvn(com.google.errorprone:error_prone_annotation)
+BuildRequires:  mvn(com.google.truth:truth)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:  mvn(com.google.errorprone:error_prone_core)
+BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 
 BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-jar-plugin)
-BuildRequires:  bnd-maven-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
-Source44: import.info
 
 %description
 Gson is a Java library that can be used to convert a Java object into its
@@ -35,50 +33,42 @@ equivalent Java object. Gson can work with arbitrary Java objects including
 pre-existing objects that you do not have source-code of.
 
 %package javadoc
-Group: Development/Java
+Group: 		Development/Java
 Summary:        API documentation for %{name}
-BuildArch: noarch
+BuildArch: 	noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n gson-gson-parent-%{version}
-#rm ./gradle/wrapper/gradle-wrapper.jar
-%patch1 -p1
-%patch3 -p1
+%setup
 
-# The test EnumWithObfuscatedTest requires the plugins copy-rename-maven-plugin, proguard-maven-plugin and maven-resources-plugin to work correctly because it tests Gson interaction with a class obfuscated by ProGuard.
-# https://github.com/google/gson/issues/2045
-rm ./gson/src/test/java/com/google/gson/functional/EnumWithObfuscatedTest.java
+%pom_xpath_remove pom:extensions
 
-# to check later
-rm ./gson/src/test/java/com/google/gson/internal/bind/DefaultDateTypeAdapterTest.java
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
+%pom_remove_plugin :spotless-maven-plugin
+%pom_remove_plugin :maven-artifact-plugin
 
 %pom_remove_plugin :copy-rename-maven-plugin gson
 %pom_remove_plugin :proguard-maven-plugin gson
 
-%pom_remove_plugin  :moditect-maven-plugin gson
+%pom_remove_plugin :templating-maven-plugin gson
+sed 's/${project.version}/%version/' gson/src/main/java-templates/com/google/gson/internal/GsonBuildConfig.java >gson/src/main/java/com/google/gson/internal/GsonBuildConfig.java
 
-# Remove dependency on unavailable templating-maven-plugin
-%pom_remove_plugin  org.codehaus.mojo:templating-maven-plugin gson
-rm gson/src/test/java/com/google/gson/internal/GsonBuildConfigTest.java
-rm gson/src/test/java/com/google/gson/functional/GsonVersionDiagnosticsTest.java
+%pom_remove_dep -r :error_prone_annotations
+%java_remove_annotations gson extras -s \
+  -p com[.]google[.]errorprone[.]annotations[.] \
 
-# to fix error: package javax.annotation is not visible import javax.annotation.PostConstruct;
-rm extras/src/main/java/com/google/gson/typeadapters/PostConstructAdapterFactory.java
-rm extras/src/test/java/com/google/gson/typeadapters/PostConstructAdapterFactoryTest.java
+%pom_disable_module test-jpms
+%pom_disable_module test-graal-native-image
+%pom_disable_module test-shrinker
 
 #depends on com.google.caliper
 %pom_disable_module metrics
 
-#depends on com.google.protobuf:protobuf-java:jar:4.0.0-rc-2 and com.google.truth:truth:jar:1.1.3
 %pom_disable_module proto
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -91,6 +81,12 @@ rm extras/src/test/java/com/google/gson/typeadapters/PostConstructAdapterFactory
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jan 12 2026 Evgeniy Serov <scala@altlinux.org> 2.13.2-alt1
+- Updated to 2.13.2.
+
+* Sat Jan 03 2026 Evgeniy Serov <scala@altlinux.org> 2.12.1-alt1
+- Updated to 2.12.1.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_1jpp11
 - new version
 
