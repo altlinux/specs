@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -23,6 +23,8 @@ Common files for Alterator Entry specification:
 - TOML schemas for Alterator Entry types
 - alterator-entry script to validate Alterator Entry files and extract data
 - editions2packages script to extract packages from editions
+- base2list and metadata2directory script for creating lists and
+  image groups based on editions and components
 
 %package -n python3-module-alterator-entry
 Summary: Python3 module to validate and extract fields from Alterator Entry
@@ -49,6 +51,8 @@ BuildRequires: python3-module-jsonschema
 %pyproject_install
 install -D -m 755 scripts/alterator-entry %buildroot%_bindir/alterator-entry
 install -D -m 755 scripts/editions2packages %buildroot%_bindir/editions2packages
+install -D -m 755 scripts/base2list %buildroot%_bindir/base2list
+install -D -m 755 scripts/metadata2directory %buildroot%_bindir/metadata2directory
 
 mkdir -p %buildroot%_alterator_datadir
 cp -r ./schemas %buildroot%_alterator_datadir/schemas 
@@ -63,12 +67,19 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %doc %_alterator_datadir/schemas/
 %_bindir/alterator-entry
 %_bindir/editions2packages
+%_bindir/base2list
+%_bindir/metadata2directory
 
 %files -n python3-module-alterator-entry
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Jan 22 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.7-alt1
+- Add base2list and metadata2directory scripts (thx Dmitriy Terekhin).
+  The scripts are needed for creating lists and
+  image groups based on editions and components in mkimage-profiles.
+
 * Thu Nov 27 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.6-alt1
 - Add more extensive .backend example (thx Ivan Savin)
 - Update json schema for .backend
