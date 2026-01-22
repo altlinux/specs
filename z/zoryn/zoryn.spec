@@ -1,0 +1,161 @@
+%def_with check
+Name: zoryn
+Version: 0.11.0
+Release: alt1
+Summary: Maintainer assistant for ALT Linux package maintenance
+Group: Development/ML
+License: GPL-2.0-or-later
+Url: https://altlinux.space/rider/zoryn
+VCS: https://altlinux.space/rider/zoryn
+Source0: %name-%version.tar
+Patch0: %name-%version-dev.patch
+
+BuildRequires: ocaml >= 4.08.0
+BuildRequires: libcurl-devel
+BuildRequires: dune >= 3.0
+BuildRequires: ocaml-cmdliner-devel >= 2.1.0
+BuildRequires: ocaml-re-devel >= 1.10.0
+BuildRequires: ocaml-yojson-devel >= 1.7.0
+BuildRequires: ocaml-curl-devel >= 0.9.0
+BuildRequires: ocaml-toml-devel
+BuildRequires: ocaml-opam-file-format-devel >= 2.1.0
+BuildRequires: ocaml-parsexp-devel
+BuildRequires: ocaml-ppxlib-devel >= 0.28.0
+BuildRequires: ocaml-alt-releases-matrix-devel >= 0.2.0
+BuildRequires: ocaml-lambda-term-devel >= 3.0.0
+BuildRequires: ocaml-lwt-devel >= 5.0.0
+BuildRequires: ocaml-linenoise-devel
+BuildRequires: libev-devel
+
+%if_with check
+BuildRequires: ocaml-alcotest-devel >= 1.7.0
+BuildRequires: git-core
+BuildRequires: git-subtree
+BuildRequires: /dev/pts
+%endif
+
+Requires: gear
+Requires: hasher
+Requires: bubblewrap
+Requires: git-core
+Requires: openssh-clients
+Requires: rsync
+Requires: alt-releases-matrix
+
+%description
+Zoryn is a maintainer assistant that simplifies routine ALT Linux package
+maintenance tasks. It provides a unified interface for version updates from
+upstream, local and remote hasher builds with multi-arch support, spec file
+operations, task management on gitery/gyle, and cross-branch submissions.
+Includes batch builds, automatic dependency detection, and CVE detection
+in changelogs.
+
+%package -n ocaml-%name
+Summary: OCaml libraries for %name
+Group: Development/ML
+
+%description -n ocaml-%name
+OCaml runtime libraries for %name.
+
+%package -n ocaml-%name-devel
+Summary: Development files for %name
+Requires: ocaml-%name = %EVR
+Group: Development/ML
+
+%description -n ocaml-%name-devel
+The ocaml-%name-devel package contains libraries and signature files for
+developing applications that use %name.
+
+%prep
+%setup
+%patch0 -p1
+
+%build
+%dune_build -p zoryn
+
+%install
+%dune_install --docdir=%_docdir/%name-%version zoryn
+
+%check
+%dune_check -p zoryn
+
+%files
+%_docdir/%name-%version/
+%_bindir/zoryn
+%_bindir/zoryn_config_fix
+%_man1dir/zoryn*.1*
+%_datadir/bash-completion/completions/zoryn
+%_datadir/zsh/site-functions/_zoryn
+
+%files -n ocaml-%name -f ocaml-files.runtime
+
+%files -n ocaml-%name-devel -f ocaml-files.devel
+
+%changelog
+* Wed Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.11.0-alt1
+- added 'zoryn task test-rebuild' for testing rebuilds with dependencies
+- added 'zoryn builder remove' for deleting builder configs
+- added sandbox execution for .gear/up.d and .gear/merge-up.d hooks
+- added --dptype/--depth options to task rebuild for RDB queries
+- added smart download for remote builds (only new packages)
+- added interactive input with linenoise in 'zoryn builder add'
+- added 'gen environment --update-config' option
+- fixed build commands to respect [builders] default config
+- fixed hasher_number to apply to all build commands
+- fixed various TUI and rebuild workflow issues
+
+* Sun Jan 19 2026 Anton Farygin <rider@altlinux.org> 0.10.0-alt1
+- security: multiple fixes for shell injection, SSRF, path traversal
+- security: enabled TLS verification, use HTTPS for git/SRPM downloads
+- added 'zoryn task batch' for batch package submission
+- added 'zoryn task refresh' to update stale rebuild subtasks
+- added 'zoryn builder clean' for hasher chroot cleanup
+- added concatenated digits support in gen version-up (e.g. camlidl113)
+- added PyPI support in gen watch for Gentoo ebuilds
+- migrated config files to TOML with legacy INI fallback
+- fixed version leading zeros preservation in zoryn up
+- fixed remote builder directory handling and exit code detection
+- fixed task dependency logic for multi-repo builds
+
+* Wed Jan 15 2026 Anton Farygin <rider@altlinux.org> 0.9.0-alt1
+- added interactive TUI mode (--top) for monitoring multi-builder builds
+- added parallel builder status checks with fork
+- added 'zoryn builder config' and 'zoryn builder list --simple' commands
+- added 'zoryn task rebuild --all-subtasks' for rebuilding all packages from task
+- added default builder, default_arch and parallel options in config
+- added --sequential flag for build commands
+- added comma-separated --builder option for multiple builders
+- added per-project changelog template in .gear/version-up
+- changed build command from gear-hsh to hsh (unified tarball workflow)
+- fixed TUI cancel killing all builders instead of selected one
+- fixed remote build output garbling with ssh -tt (now uses script wrapper)
+- fixed task replace to preserve subtask position
+- fixed --builder option being ignored when default_arch configured
+- fixed builder selection to prefer free builders over busy ones
+
+* Mon Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.8.0-alt1
+- added 'zoryn builder' command for managing remote/local builders
+- added builder support to 'zoryn build', 'zoryn up', 'zoryn task rebuild'
+- added parallel and multi-architecture builds
+
+* Mon Jan 13 2026 Anton Farygin <rider@altlinux.org> 0.7.5-alt1
+- added 'zoryn build' command for local hasher builds
+- added 'zoryn gen environment' command for dev environment setup
+- added task rebuild --build-deps and --up options
+- added zsh completion
+
+* Sun Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.4-alt1
+- renamed 'zoryn build' command to 'zoryn submit'
+
+* Sun Jan 12 2026 Anton Farygin <rider@altlinux.org> 0.7.3-alt1
+- gen watch: added Gentoo/Arch fallback when Debian watch not found
+- task rebuild: added --from-log option with smart log search
+- task download: added -o/--output option and task ID argument
+- up: added gear-update-opts config option
+- build: added batch specsubst support
+- watch: fixed uversionmangle/pagemangle/downloadurlmangle handling
+- added man pages for all commands
+- fixed bash-completion install path
+
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.7.2-alt1
+- Initial build for ALT Linux.
