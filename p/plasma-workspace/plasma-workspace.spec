@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -52,7 +52,7 @@ Requires: kf6-kconfig kf6-kded kf6-kdeclarative
 Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
 #Requires: kio-extras
 Requires: kf6-kquickcharts kf6-kirigami
-Requires: plasma6-kpipewire plasma6-kglobalacceld milou
+Requires: plasma6-kpipewire plasma6-kglobalacceld milou knighttime
 Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
 Requires: kwin kwin-x11
 Requires: kf6-kirigami-addons
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt2
+- fix requires
+
 * Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt1
 - new version
 
