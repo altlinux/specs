@@ -5,7 +5,7 @@
 # LTO causes errors, disable it
 %global optflags_lto %nil
 
-%define major 4.0.6
+%define major 5.0.3
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
@@ -27,25 +27,17 @@ Source3: %name-logrotate
 Patch0: %name-%version-%release.patch
 
 # from OpenSuse
-Patch101: %name-4.0.0.2496.0-fedora-add-pkgconfig-files.patch
+Patch101: %name-5.0.3-fedora-add-pkgconfig-files.patch
 
 # from Debian to be sent upstream
-Patch203: %name-4.0.5-debian-no-copy-from-icu.patch
-Patch205: %name-4.0.5-debian-cloop-honour-build-flags.patch
-
-# from upstream
-Patch301: %name-4.0.6-fedora-c++17.patch
-Patch302: %name-4.0.0.2496.0-fedora-noexcept.patch
+Patch205: %name-5.0.3-debian-cloop-honour-build-flags.patch
 
 # ALT patches
-Patch1001: %name-4.0.0.2496.0-alt-dont-link-libstdcxx-statically.patch
-Patch1003: %name-4.0.0.2496.0-alt-disable-examples.patch
+Patch1001: %name-5.0.3-alt-dont-link-libstdcxx-statically.patch
+Patch1003: %name-5.0.3-alt-disable-examples.patch
 
 # Elbrus
-Patch2000: %name-e2k.patch
-
-# LoongArch
-Patch3500: %name-loongarch.patch
+Patch2000: %name-5.0.3-e2k.patch
 
 Requires: libfbclient = %EVR
 # altbug #55658
@@ -57,6 +49,7 @@ BuildRequires: gcc gcc-c++
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: bison
+BuildRequires: cmake
 BuildRequires: libtool
 BuildRequires: libncurses-devel
 BuildRequires: zlib-devel libtommath-devel
@@ -148,16 +141,12 @@ Examples for Firebird SQL server.
 %setup
 %patch0 -p1
 %patch101 -p1
-%patch203 -p1
 %patch205 -p1
-%patch301 -p1
-%patch302 -p1
 %patch1001 -p1
 %patch1003 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
-%patch3500 -p1
 
 # sed vs patch for portability and addtional location changes
 # based on FIREBIRD=%_libdir/firebird
@@ -169,12 +158,6 @@ check_sed() {
 
 check_sed "$(sed -i -e 's:"isql :"isql-fb :w /dev/stdout' \
 	src/isql/isql.epp | wc -l)" "1" "src/isql/isql.epp" # 1 line
-check_sed "$(sed -i -e 's:isql :isql-fb :w /dev/stdout' \
-	src/msgs/history2.sql | wc -l)" "4" "src/msgs/history2.sql" # 4 lines
-check_sed "$(sed -i -e 's:--- ISQL:--- ISQL-FB:w /dev/stdout' \
-	-e 's:isql :isql-fb :w /dev/stdout' \
-	-e 's:ISQL :ISQL-FB :w /dev/stdout' \
-	src/msgs/messages2.sql | wc -l)" "6" "src/msgs/messages2.sql" # 6 lines
 
 find . -name \*.sh -exec chmod +x {} + || { echo "chmod failed" ; exit -1 ; }
 rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf failed" ; exit -1 ;}
@@ -350,8 +333,7 @@ fi
 %dir %attr(2775,root,%name) %_localstatedir/%name/secdb
 %dir %attr(2775,root,%name) %_localstatedir/%name/system
 %dir %attr(2775,root,%name) %_localstatedir/%name/backup
-%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security4.fdb
-%attr(0664,firebird,firebird) %_localstatedir/%name/system/help.fdb
+%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security5.fdb
 %attr(0664,firebird,firebird) %_localstatedir/%name/system/firebird.msg
 %dir %_localstatedir/%name/tzdata
 %_localstatedir/%name/tzdata/*.res
@@ -375,7 +357,6 @@ fi
 %_bindir/gfix
 %_bindir/gstat-fb
 %_bindir/isql-fb
-%_bindir/qli
 %_bindir/fbtracemgr
 
 %files -n libfbclient
@@ -414,6 +395,11 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Wed Jan 22 2026 Anton Farygin <rider@altlinux.com> 5.0.3-alt1
+- 4.0.6 -> 5.0.3
+- removed patches applied upstream: c++17, noexcept, loongarch
+- adapted patches for new version
+
 * Mon Sep 15 2025 Anton Farygin <rider@altlinux.com> 4.0.6-alt1
 - 4.0.5 -> 4.0.6
 - added an explicit dependency on libicu to prevent startup errors (closes: #55658)
@@ -546,117 +532,3 @@ fi
 
 * Wed Aug 06 2008 Boris Savelev <boris@altlinux.org> 2.1.1.17910.0-alt1
 - initial build for Sisyphus
-
-* Tue Mar 11 2008 Tiago Salem <salem@mandriva.com.br> 2.0.3.12981.0-2mdv2008.1
-+ Revision: 186539
-- Fix initscript and create %_sysconfdir/gds_hosts.equiv on %%post to fix bug #34267
-- bump release
-
-  + Olivier Blin <oblin@mandriva.com>
-    - restore BuildRoot
-
-  + Thierry Vignaud <tvignaud@mandriva.com>
-    - kill re-definition of %%buildroot on Pixel's request
-
-* Thu Sep 13 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.3.12981.0-1mdv2008.0
-+ Revision: 84989
-- New upstream: 2.0.3.12981, fixing an annoying bug.
-
-* Fri Aug 24 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.2.12964.0-3mdv2008.0
-+ Revision: 71056
-- New upstream: 2.0.2
-
-* Fri Aug 17 2007 Funda Wang <fundawang@mandriva.org> 2.0.1.12855.0-3mdv2008.0
-+ Revision: 64705
-- fix obsoletes old package
-
-* Wed Aug 15 2007 Funda Wang <fundawang@mandriva.org> 2.0.1.12855.0-2mdv2008.0
-+ Revision: 63722
-- Fix file conflict
-
-* Wed May 09 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.1.12855.0-1mdv2008.0
-+ Revision: 25665
-- New upstream: 2.0.1
-- Removed patch amd64: applied upstream.
-
-* Fri Jan 19 2007 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12748-8mdv2007.0
-+ Revision: 110615
-- Improve firebird-classic and firebird-superserver summaries in order
-  to explicit their difference: xinetd and standalone.
-
-* Fri Nov 24 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12748-7mdv2007.1
-+ Revision: 86946
-- Added /var/lib/firebird and /var/lib/firebird/backup to server-common
-  package.
-
-* Thu Nov 16 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12748-6mdv2007.1
-+ Revision: 84834
-- Try libncurses-devel instead
-- Added buildrequires to libncurses5-devel
-- New upstream: 2.0.0.12748 (2.0.0 final)
-- Fully disabled parallel build, as it is broken for now.
-- Bumped release, in order to be able to rebuild for x86_64.
-- Added missing BuildRequires to libtermcap-devel, as required by included
-  readline.
-
-* Wed Sep 13 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12724-4mdv2007.0
-+ Revision: 61079
-- Added Conflicts in firebird-server-common to firebird-firebird-server-classic
-  < 2.0 due to moved files.
-- Fix binaries ownership in firebird-server-classic. They should be owned by
-  root:root and not firebird:firebird.
-
-* Wed Sep 06 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12724-3mdv2007.0
-+ Revision: 59998
-- Applied Philippe Makowski suggestions:
-  * Include example employee.fdb
-  * -devel should requires libfbclient
-  * Tagged security2.fdb as config.
-
-* Tue Sep 05 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12724-2mdv2007.0
-+ Revision: 59875
-- Disabled parallel build: it's broken.
-- Import firebird
-
-* Sat Sep 02 2006 Marcelo Ricardo Leitner <mrl@mandriva.com> 2.0.0.12724-1mdv2007.0
-- Major packaging restructuring, following debian style.
-- Enabled superserver flavor.
-- Enhanced pre/post sections.
-- Do not remove firebird user on package removal: we may leave some files on
-  the filesystem.
-
-* Thu Aug 24 2006 Philippe Makowski <makowski@firebird-fr.eu.org> 2.0.0.12724-0.1mdk
-- Update to Firebird2
-
-* Tue Jul 26 2005 Stew Benedict <sbenedict@mandriva.com> 1.5.2.4731-0.3mdk
-- fix provides in lib package
-
-* Fri Jan 28 2005 Lenny Cartier <lenny@mandrakesoft.com> 1.5.2.4731-0.2mdk
-- add deps
-- little spec cleaning
-
-* Wed Jan 12 2005 Lenny Cartier <lenny@mandrakesoft.com> 1.5.2.4731-0.1mdk
-- from Philippe Makowski <makowski@firebird-fr.eu.org> :
-	- adapted to Mandrake
-	- updated from the CVS tree
-- libification
-- bzip2 patches
-- use configure macros
-- requires on versions not on releases
-
-* Wed Aug 18 2004 Erik S. LaBianca <erik@ilsw.com> - 1.5.1.4481-0.fdr.1
-- updated to 1.5.1 official source release
-- minimized install patch intrusiveness, move files in .spec file instead
-- don't try to remove the user/group on install, just leave the mess
-
-* Wed Feb 04 2004 Erik S. LaBianca <erik@ilsw.com> - 1.5.0.4280-postRC8.1
-- updated to CVS code
-- remove lock files from post/postun
-- set target arch to match prefix.linux settings
-- add dependencies to firebird RPM
-
-* Tue Feb 03 2004 Erik S. LaBianca <erik@ilsw.com> - 1.5.0.4201-1
-- updated to RC8 code
-- added gds_db service entry to %_sysconfdir/services if necessary in post
-- fix isql link
-
