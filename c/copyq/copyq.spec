@@ -1,6 +1,6 @@
 Name: copyq
 Version: 13.0.0
-Release: alt1
+Release: alt2
 
 Summary: CopyQ - Advanced clipboard manager
 
@@ -12,6 +12,7 @@ Url: https://github.com/hluk/CopyQ/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch1: alt-qt6.10.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake, extra-cmake-modules, gcc-c++
@@ -27,6 +28,7 @@ support for image formats, command line control and more.
 
 %prep
 %setup
+%patch1 -p1
 %__subst '/DQT_RESTRICTED_CAST_FROM_ASCII/d' CMakeLists.txt
 
 %build
@@ -58,6 +60,9 @@ support for image formats, command line control and more.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 13.0.0-alt2
+- fix compile with Qt-6.10
+
 * Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 13.0.0-alt1
 - new version 13.0.0 (with rpmrb script)
 - build with Qt6 instead of Qt5 (ALT bug 45722)
