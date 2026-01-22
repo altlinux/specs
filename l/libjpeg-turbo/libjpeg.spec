@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
-Version: 3.0.2
-Release: alt2.1
+Version: 3.1.3
+Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -88,17 +88,12 @@ a JPEG file.  Wrjpgcom inserts text comments into a JPEG file.
 %description -n libturbojpeg
 This package contains a turbojpeg shared library.
 
-%ifnarch armh i586
-%def_enable profiling
-%else
-%def_disable profiling
-%endif
-
 %def_disable static
+%def_disable profiling
 
 %prep
 %setup -n %name-%version-%release
-%patch0 -p2
+%patch0 -p1
 %patch1 -p1
 %patch2 -p2
 %ifarch %e2k
@@ -110,7 +105,7 @@ install -pm755 %_sourcedir/exifautotran .
 
 # restrict list of global symbols exported by the library.
 echo -e '{\nglobal:' > libjpeg.sym
-sed -En '/^EXTERN/ s,^.+\)\s+([^(]+).+$,\1;,p' jpeglib.h jpegint.h \
+sed -En '/^EXTERN/ s,^.+\)\s+([^(]+).+$,\1;,p' src/jpeglib.h src/jpegint.h \
 	| egrep -v '^(jinit_|jzero_far)' >> libjpeg.sym
 # extra symbols required by packages
 cat >> libjpeg.sym <<'EOF'
@@ -118,7 +113,6 @@ jinit_c_master_control;
 jinit_color_converter;
 jinit_master_decompress;
 jinit_downsampler;
-jpeg_std_message_table;
 local: *;
 };
 EOF
@@ -144,7 +138,6 @@ eprof -d %_cmake__builddir -s %_cmake__builddir/eprof.sum
 %cmake -G'Unix Makefiles' %{?!_enable_static:-DENABLE_STATIC=FALSE}
 %cmake_build
 make jpegexiforient
-bzip2 -9fk libjpeg.txt structure.txt usage.txt
 
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir %cmake_build -t test -- -k
@@ -155,29 +148,22 @@ install -pm755 exifautotran jpegexiforient %buildroot%_bindir/
 # do not package unwanted libturbojpeg files
 find %buildroot -name 'libturbojpeg.*a' -delete
 
-%define docdir %_docdir/%name
-rm -rf %buildroot%docdir
-mkdir -p %buildroot%docdir
-install -pm644 README* change.log \
-	coderules.txt libjpeg.txt.bz2 structure.txt.bz2 usage.txt.bz2 wizard.txt \
-	%buildroot%docdir/
+%define _customdocdir %_docdir/%name
 
 %files -n libjpeg
+%doc README.*
 %_libdir/libjpeg.so.*
-%dir %docdir
-%docdir/[CLR]*
 
 %files -n libjpeg-utils
 %_bindir/*
 %_mandir/man?/*
 
 %files -n libjpeg-devel
+%doc doc/*.txt
 %_libdir/libjpeg.so
 %_libdir/libturbojpeg.so
 %_includedir/j*
 %_includedir/turbojpeg.h
-%dir %docdir
-%docdir/[^CLR]*
 %_libdir/cmake/libjpeg-turbo
 %_pkgconfigdir/libjpeg.pc
 %_pkgconfigdir/libturbojpeg.pc
@@ -191,6 +177,9 @@ install -pm644 README* change.log \
 %_libdir/libturbojpeg.so.*
 
 %changelog
+* Wed Jan 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2:3.1.3-alt1
+- 3.1.3 released
+
 * Fri Feb 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:3.0.2-alt2.1
 - e2k patch update
 
