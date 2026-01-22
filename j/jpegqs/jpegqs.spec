@@ -1,5 +1,5 @@
 Name: jpegqs
-Version: 1.20230818
+Version: 1.20260122
 Release: alt1
 
 Summary: JPEG Quant Smooth - JPEG artifacts removal
@@ -24,18 +24,18 @@ quality).
 
 %build
 %make_build \
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 loongarch64 riscv64
 	SIMD=select \
 %endif
 %ifarch %e2k
 	CFLAGS="-Wall -Wno-reduced-alignment -O%_optlevel -g" SIMDFLG=-mno-avx \
 %else
-	CFLAGS="-Wall -O3 -g" \
+	CFLAGS="-Wall -O2 -g" \
 %endif
 %ifarch ppc64le
 	SIMDFLG= \
 %endif
-	LDFLAGS= app
+	LDFLAGS=-Wl,--gc-sections app
 
 %install
 install -pDm755 jpegqs %buildroot%_bindir/jpegqs
@@ -49,6 +49,9 @@ install -pDm644 jpegqs.1 %buildroot%_man1dir/jpegqs.1
 %_man1dir/jpegqs.1*
 
 %changelog
+* Thu Jan 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.20260122-alt1
+- riscv and loongarch support
+
 * Fri Aug 18 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.20230818-alt1
 - "DCT coefficient out of range" fix
 
