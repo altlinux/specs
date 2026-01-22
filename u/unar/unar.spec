@@ -1,16 +1,16 @@
 Name: unar
-Version: 1.10.1
-Release: alt1.1
+Version: 1.10.8
+Release: alt1
 Summary: Multi-format archive extractor
-License: LGPLv2+
+License: LGPLv2.1+
 Group: Archiving/Compression
-Url: http://unarchiver.c3.cx/unarchiver/
+Url: https://github.com/MacPaw/XADMaster
 Source: %name-%version.tar.gz
-# NB: source tree moved from "The Unarchiver" to unar-version
+Patch: unar-system_UniversalDetector.patch
 
-# Automatically added by buildreq on Mon Mar 03 2014
-# optimized out: libcloog-isl4 libgnustep-base libgnustep-objc2 libgnustep-objc2-devel libgpg-error libobjc-devel libp11-kit libstdc++-devel
-BuildRequires: bzlib-devel gcc-c++ gnustep-make-devel gnustep-base-devel libicu-devel unzip zlib-devel libstdc++-devel
+# Automatically added by buildreq on Wed Aug 25 2021
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnustep-base-devel libgnustep-base libobjc-devel libp11-kit libstdc++-devel python3-base sh4
+BuildRequires: bzlib-devel gcc-c++ gcc-objc libUniversalDetector-devel-static libicu-devel libwavpack-devel python3 zlib-devel
 
 %description
 The command-line utilities lsar and unar are capable of listing and extracting
@@ -19,13 +19,14 @@ and open source replacement of unrar.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%make_build -C XADMaster -f Makefile.linux
+%make_build -f Makefile.linux
 
 %install
 install -d %buildroot%_bindir
-install -pm755 XADMaster/unar XADMaster/lsar %buildroot%_bindir
+install -pm755 unar lsar %buildroot%_bindir
 install -d %buildroot%_mandir/man1
 install -pm644 Extra/*.1 %buildroot%_mandir/man1
 
@@ -33,12 +34,18 @@ install -D Extra/lsar.bash_completion %buildroot%_datadir/bash-completion/comple
 install -D Extra/unar.bash_completion %buildroot%_datadir/bash-completion/completions/unar
 
 %files
-%doc License.txt
+%doc *.md
 %_bindir/*
 %_man1dir/*
 %_datadir/bash-completion/*
 
 %changelog
+* Thu Jan 22 2026 Fr. Br. George <george@altlinux.org> 1.10.8-alt1
+- Autobuild version bump to 1.10.8
+
+* Mon Jul 12 2021 Fr. Br. George <george@altlinux.ru> 1.10.7-alt1
+- Autobuild version bump to 1.10.7 (Closes: #39069)
+
 * Mon Oct 12 2020 Andrey Cherepanov <cas@altlinux.org> 1.10.1-alt1.1
 - NMU: Build without libgnustep-objc2-devel.
 
