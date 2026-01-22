@@ -2,7 +2,7 @@
 
 Name: xfce4-indicator-plugin
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Plugin to display information from applications in the Xfce panel
 License: GPL-2.0-or-later
@@ -18,7 +18,8 @@ BuildRequires(pre): rpm-build-xfce4
 BuildRequires: libayatana-indicator3-devel
 BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: libxfce4ui-gtk3-devel
-BuildRequires: intltool
+BuildRequires: libxfce4util-devel
+BuildRequires: libxfconf-devel
 
 Requires: xfce4-panel >= 4.11
 
@@ -49,6 +50,9 @@ Ubuntu's MessagingMenu design specification.
 %_datadir/xfce4/panel/plugins/indicator.desktop
 
 %changelog
+* Thu Jan 22 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt2
+- Fix FTBFS by adding libxfce4util-devel and libxfconf-devel buildreqs.
+
 * Wed May 28 2025 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 
