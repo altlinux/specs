@@ -2,7 +2,7 @@
 %define abiversion 1
 
 Name: lib%oname
-Version: 1.9.2
+Version: 1.9.5
 Release: alt1
 
 Summary: A library to benchmark code snippets
@@ -72,6 +72,7 @@ Requires: lib%oname = %EVR
   -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=ON \
   -DBENCHMARK_ENABLE_INSTALL:BOOL=ON \
   -DBENCHMARK_DOWNLOAD_DEPENDENCIES:BOOL=OFF \
+  -DBENCHMARK_INSTALL_TOOLS:BOOL=OFF \
 %ifarch %e2k
   -DBENCHMARK_ENABLE_WERROR:BOOL=OFF \
 %endif
@@ -83,7 +84,7 @@ Requires: lib%oname = %EVR
 rm -rf %buildroot%_defaultdocdir
 
 %check
-ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
+%ctest
 
 %files
 %doc *.md
@@ -98,6 +99,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_includedir/*
 
 %changelog
+* Thu Jan 22 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.5-alt1
+- new version 1.9.5
+
 * Tue Apr 08 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.2-alt1
 - NMU: new version 1.9.2
 
