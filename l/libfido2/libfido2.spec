@@ -11,7 +11,7 @@
 
 Name: libfido2
 Version: 1.16.0
-Release: alt4
+Release: alt5
 
 Summary: Library functionality to communicate with a FIDO device over USB
 License: BSD-2-Clause
@@ -42,8 +42,10 @@ Supports the FIDO U2F (CTAP 1) and FIDO2 (CTAP 2) protocols.
 %package -n %{libname}_%{abiversion}
 Summary: Library functionality to communicate with FIDO device over USB
 Group: System/Libraries
+%if "%{libname}_%{abiversion}" == "libfido2_1"
 Provides: %libname = %EVR
 Obsoletes: %libname < %EVR
+%endif
 
 %description -n %{libname}_%{abiversion}
 Provides library functionality to communicate with a FIDO device over USB,
@@ -109,6 +111,9 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %_man3dir/*.3*
 
 %changelog
+* Thu Jan 22 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt5
+- Removed libfido2 obsoletion for future ABI version change (ALT#56956).
+
 * Wed Jan 21 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt4
 - Unbound library name and source package name (ALT#56956).
 
