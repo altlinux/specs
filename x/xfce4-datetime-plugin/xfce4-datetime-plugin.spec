@@ -1,6 +1,6 @@
 Name: xfce4-datetime-plugin
 Version: 0.8.3
-Release: alt3
+Release: alt4
 
 Summary: Datetime plugin for the Xfce panel
 License: GPLv2+
@@ -40,6 +40,10 @@ Please consider switching to clock plugin from xfce4-panel package.
 %makeinstall_std
 %find_lang %name
 
+%post
+echo "WARNING: %name is deprecated and will be removed soon.
+Please consider switching to clock plugin from xfce4-panel package." >&2
+
 %files -f %name.lang
 %doc README.md NEWS AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
@@ -47,6 +51,10 @@ Please consider switching to clock plugin from xfce4-panel package.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Jan 22 2026 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt4
+- Show deprecation message when the package installed/upgraded.
+- Fixed build with libxfce4ui >= 4.21.
+
 * Mon Jan 27 2025 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt3
 - Added note "plugin deprecated" to description.
 
