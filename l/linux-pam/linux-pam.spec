@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -164,7 +164,7 @@ This packages contains RPM macros for packaging PAM modules.
 cp -p alt/pam_listfile.c modules/pam_listfile/
 
 %build
-%meson -Dwerror=true -Dpam_unix=disabled \
+%meson -Dwerror=true -Dvendordir= -Dpam_unix=disabled \
        %{subst_enable_meson_feature lastlog pam_lastlog} \
        %{subst_enable_meson_feature selinux selinux} \
        %{subst_enable_meson_feature audit audit} \
@@ -282,6 +282,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Jan 22 2026 Dmitry V. Levin <ldv@altlinux.org> 1.7.2-alt1
+- v1.7.1 -> v1.7.2.
+
 * Tue Jun 17 2025 Dmitry V. Levin <ldv@altlinux.org> 1.7.1-alt1
 - v1.7.0 -> v1.7.1.
 
