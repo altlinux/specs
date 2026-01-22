@@ -1,16 +1,16 @@
 %def_disable bootstrap
 
 Name: libcap-ng
-Version: 0.8.5
+Version: 0.9
 Release: alt1
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
 Group: System/Libraries
 
-Url: http://people.redhat.com/sgrubb/libcap-ng
+Url: https://people.redhat.com/sgrubb/libcap-ng
+Vcs: https://github.com/stevegrubb/libcap-ng
 Source: %name-%version.tar
-Patch0: 0001-Fix-python-path-when-invoking-py-compile-54.patch
 
 BuildRequires: kernel-headers
 BuildRequires: libattr-devel
@@ -73,16 +73,12 @@ touch NEWS
 %autoreconf
 %if_disabled bootstrap
 
-export PYTHON=python3
 %configure --libdir=/%_lib
 %make_build PYLIBVER=python%_python3_version%_python3_abiflags
 
 %else
 
-%configure --libdir=/%_lib \
-	--with-python=no \
-	--with-python3=no \
-	%nil
+%configure --libdir=/%_lib --with-python3=no
 %make_build
 
 %endif
@@ -135,11 +131,14 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %endif
 
 %changelog
+* Mon Jan 12 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9-alt1
+- NMU: Updated to 0.9.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 0.8.5-alt1
-- (NMU) Updated to 0.8.5.
+- NMU: Updated to 0.8.5.
 
 * Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.4-alt1
-- (NMU) Updated to 0.8.4.
+- NMU: Updated to 0.8.4.
 
 * Mon Apr 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.3-alt2
 - Simplified the bootstrap sequence (closes: #45741)
