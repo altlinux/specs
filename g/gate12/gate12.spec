@@ -19,7 +19,7 @@ control inspired by plugins like GrossBeat and ShaperBox. It features:\
 
 
 Name:    gate12
-Version: 1.2.3
+Version: 1.3.3
 Release: alt1
 
 Summary: %common_summary
@@ -115,5 +115,11 @@ cp -a VST3/*.vst3 %buildroot%_libdir/vst3
 
 
 %changelog
+* Thu Jan 22 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
+* Tue Jan 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Sun Jan 11 2026 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt1
 - build for Sisyphus
