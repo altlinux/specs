@@ -1,5 +1,5 @@
 Name: websocat
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: Netcat, curl and socat for WebSockets
@@ -49,6 +49,9 @@ subst 's+PATH=target/debug:$PATH+PATH=target/release:$PATH+g' ./test.sh
 %doc *.md
 
 %changelog
+* Mon Jan 19 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.14.1-alt1
+- Updated to v1.14.1.
+
 * Mon Aug 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.14.0-alt1
 - Updated to v1.14.0.
 

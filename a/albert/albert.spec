@@ -1,5 +1,5 @@
 %def_with check
-%define abiver 33
+%define abiver 34
 
 Name:    albert
 Version: %abiver.0.1
@@ -22,29 +22,29 @@ Source7: %name-%version-plugins-caffeine.tar
 Source8: %name-%version-plugins-calculator-qalculate.tar
 Source9: %name-%version-plugins-chromium.tar
 Source10: %name-%version-plugins-clipboard.tar
-Source11: %name-%version-plugins-contacts.tar
-Source12: %name-%version-plugins-datetime.tar
-Source13: %name-%version-plugins-debug.tar
-Source14: %name-%version-plugins-dictionary.tar
-Source15: %name-%version-plugins-docs.tar
-Source16: %name-%version-plugins-files.tar
-Source17: %name-%version-plugins-github.tar
-Source18: %name-%version-plugins-hash.tar
-Source19: %name-%version-plugins-mediaremote.tar
-Source20: %name-%version-plugins-menubar.tar
-Source21: %name-%version-plugins-obsidian.tar
-Source22: %name-%version-plugins-path.tar
-Source23: %name-%version-plugins-python.tar
-Source24: %name-%version-plugins-snippets.tar
-Source25: %name-%version-plugins-spotify.tar
-Source26: %name-%version-plugins-ssh.tar
-Source27: %name-%version-plugins-system.tar
-Source28: %name-%version-plugins-timer.tar
-Source29: %name-%version-plugins-timezones.tar
-Source30: %name-%version-plugins-urlhandler.tar
-Source31: %name-%version-plugins-vpn.tar
-Source32: %name-%version-plugins-websearch.tar
-Source33: %name-%version-plugins-widgetsboxmodel-qss.tar
+Source11: %name-%version-plugins-commandline.tar
+Source12: %name-%version-plugins-contacts.tar
+Source13: %name-%version-plugins-datetime.tar
+Source14: %name-%version-plugins-debug.tar
+Source15: %name-%version-plugins-dictionary.tar
+Source16: %name-%version-plugins-docs.tar
+Source17: %name-%version-plugins-files.tar
+Source18: %name-%version-plugins-github.tar
+Source19: %name-%version-plugins-hash.tar
+Source20: %name-%version-plugins-homebrew.tar
+Source21: %name-%version-plugins-mediaremote.tar
+Source22: %name-%version-plugins-menubar.tar
+Source23: %name-%version-plugins-obsidian.tar
+Source24: %name-%version-plugins-python.tar
+Source25: %name-%version-plugins-snippets.tar
+Source26: %name-%version-plugins-spotify.tar
+Source27: %name-%version-plugins-ssh.tar
+Source28: %name-%version-plugins-system.tar
+Source29: %name-%version-plugins-timer.tar
+Source30: %name-%version-plugins-timezones.tar
+Source31: %name-%version-plugins-urlhandler.tar
+Source32: %name-%version-plugins-vpn.tar
+Source33: %name-%version-plugins-websearch.tar
 Source34: %name-%version-plugins-widgetsboxmodel.tar
 # Link application against existent pybind from repo
 # Upstream requires submodule
@@ -68,6 +68,7 @@ BuildRequires: qt6-sql-mysql
 BuildRequires: qt6-sql-odbc
 BuildRequires: qt6-sql-postgresql
 BuildRequires: libqtkeychain-qt6-devel
+BuildRequires: qcoro6-devel
 %if_with check
 BuildRequires: doctest-devel
 %endif
@@ -139,6 +140,9 @@ Shared libraries for running Albert launcher application
 %_libdir/lib%name.so.%abiver.*
 
 %changelog
+* Wed Jan 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 34.0.1-alt1
+- New version.
+
 * Tue Oct 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 33.0.1-alt1
 - New version.
 
