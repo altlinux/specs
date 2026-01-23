@@ -1,7 +1,7 @@
 %define oname pycurl
 
 Name: python3-module-pycurl
-Version: 7.45.6
+Version: 7.45.7
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -27,7 +27,6 @@ This module provides the Python bindings to libcurl.
 %add_optflags -fno-strict-aliasing
 %pyproject_build
 
-
 %install
 %pyproject_install
 
@@ -36,6 +35,9 @@ This module provides the Python bindings to libcurl.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 23 2026 Anton Farygin <rider@altlinux.org> 7.45.7-alt1
+- 7.45.6 -> 7.45.7
+
 * Tue Apr 15 2025 Anton Farygin <rider@altlinux.com> 7.45.6-alt1
 - 7.45.4 -> 7.45.6
 
