@@ -1,10 +1,11 @@
 %global apiversion 0.0
+%define soname 0
 
 %set_automake_version 1.16
 
 Name: libzmf
 Version: 0.0.2
-Release: alt3
+Release: alt4
 Summary: A library for import of Zoner document formats
 
 Group: System/Libraries
@@ -31,7 +32,7 @@ Zoner Callisto/Draw v 4-5.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -45,10 +46,26 @@ BuildArch: noarch
 %description doc
 The %name-doc package contains documentation files for %name.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description common
+%name common package.
+
+%package -n %name%soname
+Group: System/Libraries
+Summary: %name library
+Obsoletes: %name <= 0.0.2-alt3
+
+%description -n %name%soname
+%name library.
+
 %package tools
 Summary: Tools to transform Zoner documents into other formats
 Group: Other
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 
 %description tools
 Tools to transform Zoner documents into other formats.
@@ -90,18 +107,20 @@ cp -p zmf2*.1 %buildroot/%_mandir/man1
 export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 %make_build check
 
-%files
-%doc AUTHORS NEWS COPYING
-%_libdir/%name-%apiversion.so.*
+%files -n %name%soname
+%_libdir/%name-%apiversion.so.%soname
+%_libdir/%name-%apiversion.so.%{soname}.*
 
 %files devel
-%doc ChangeLog
 %_includedir/%name-%apiversion
 %_libdir/%name-%apiversion.so
 %_libdir/pkgconfig/%name-%apiversion.pc
 
 %files doc
-%doc docs/doxygen/html COPYING
+%doc docs/doxygen/html
+
+%files common
+%doc COPYING AUTHORS NEWS ChangeLog
 
 %files tools
 %_bindir/zmf2raw
@@ -110,6 +129,9 @@ export LD_LIBRARY_PATH=%buildroot/%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}
 %_mandir/man1/zmf2svg.1*
 
 %changelog
+* Fri Jan 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt4
+- Builded in accordance with SharedLibsPolicy.
+
 * Sat Jan 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.0.2-alt3
 - fixed FTBFS
 
