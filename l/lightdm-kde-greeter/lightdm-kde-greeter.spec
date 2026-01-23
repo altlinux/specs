@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.1.2
+Version: 6.1.3
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -107,6 +107,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Thu Jan 22 2026 Anton Golubev <golubevan@altlinux.org> 6.1.3-alt1
+- KCM fixes due to the update of the Plasma (Closes: 57435)
+
 * Mon Dec 22 2025 Anton Golubev <golubevan@altlinux.org> 6.1.2-alt1
 - fix lost focus on disable/enable screen (Closes: 57165)
 
