@@ -2,13 +2,14 @@ Name: commander-wars
 Summary: The aim of this project is to create an Advance Wars Clone
 License: LGPLv3
 Version: 0.37.2.1
-Release: alt1
+Release: alt2
 
 Group: Games/Strategy
 Url: https://github.com/Robosturm/Commander_Wars/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 Patch: Fix_path.patch
+Patch1: alt-qt6.10.patch
 
 BuildRequires: qt6-base-devel libqt6-qml libqt6-qmlcore qt6-declarative-devel qt6-tools-devel qt6-multimedia-devel
 BuildRequires: rpm-macros-cmake
@@ -36,6 +37,7 @@ Data files (graphics, music, sounds) required by Commander Wars.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %__subst '/RPATH/d' CMakeLists.txt #remove insecure RPATH '/../'
 
@@ -43,7 +45,7 @@ Data files (graphics, music, sounds) required by Commander Wars.
 export CXXFLAGS="$CXXFLAGS -Wno-narrowing"
 export CXXFLAGS="$CFLAGS -Wno-narrowing"
 
-mkdir build
+mkdir -p build
 cd build
 cmake .. \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -94,6 +96,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 0.37.2.1-alt2
+- NMU: fix to build with Qt 6.10
+
 * Sat Nov  2 2024 Artyom Bystrov <arbars@altlinux.org> 0.37.2.1-alt1
 - update to new version
 
