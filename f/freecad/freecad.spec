@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.2
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -47,6 +47,7 @@ Patch8: 0001-Port-plugins-to-PySide6.QtWidgets.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=54082
 Patch9: freecad-1.0.0-upstream-findocc.patch
 Patch10: freecad-1.0.0-alt-print-attributes.patch
+Patch11: eigen3.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -61,8 +62,6 @@ BuildRequires(pre): rpm-build-ninja
 %endif
 BuildRequires(pre): rpm-build-python3
 BuildRequires: qt6-base-devel
-BuildRequires: qt6-assistant
-BuildRequires: qt6-designer
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
 %ifarch %qt6_qtwebengine_arches
@@ -184,6 +183,7 @@ rm -rf src/CXX
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/CAM/App/CMakeLists.txt
@@ -321,6 +321,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 1:1.0.2-alt3
+- Add fix to find eigen3
+
 * Fri Aug 22 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.2-alt2
 - Strictly ran with QT_QPA_PLATFORM=xcb.
 
