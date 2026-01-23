@@ -4,8 +4,8 @@
 %def_with python_ext
 
 Name: vapoursynth
-Version: 72
-Release: alt2
+Version: 73
+Release: alt1
 
 Summary: Video processing framework with simplicity in mind
 
@@ -147,6 +147,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %filter_from_requires /%python3_ABI_dep/d
 
 %changelog
+* Fri Jan 23 2026 Leontiy Volodin <lvol@altlinux.org> 73-alt1
+- New version 73.
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 72-alt2
 - fixed FTBFS with cython>3.1
 
