@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: falcond-gui
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: A GTK4/LibAdwaita application to control and monitor the Falcond gaming optimization daemon
@@ -61,6 +61,9 @@ install -pm 0644 res/falcond.png %buildroot%_iconsdir/hicolor/512x512/apps/falco
 
 
 %changelog
+* Fri Jan 23 2026 Boris Yumankulov <boria138@altlinux.org> 1.0.1-alt1
+- new version 1.0.1
+
 * Mon Jan 05 2026 Boris Yumankulov <boria138@altlinux.org> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
