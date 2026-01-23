@@ -1,6 +1,6 @@
 Name: kernel-source-bcmdhd
 Version: 101.10.591.52.27
-Release: alt3
+Release: alt4
 
 Summary: Source for BCMDHD module
 License: GPLv2
@@ -9,8 +9,8 @@ Group: Development/Kernel
 URL: https://github.com/armbian/bcmdhd-dkms
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-# https://github.com/armbian/bcmdhd-dkms/archive/refs/tags/%version-4/bcmdhd-dkms-%version-5.tar.gz
-Source0: bcmdhd-dkms-%version-5.tar
+# https://github.com/armbian/bcmdhd-dkms/archive/refs/tags/%version-4/bcmdhd-dkms-%version-6.tar.gz
+Source0: bcmdhd-dkms-%version-6.tar
 
 Source1: blacklist-bcmdhd.conf
 
@@ -30,7 +30,7 @@ Blacklist modules for correctly working module BCMDHD
 
 %prep
 %setup -c
-%__mv bcmdhd-dkms-%version-5/src %name-%version
+%__mv bcmdhd-dkms-%version-6/src %name-%version
 
 %install
 %__mkdir_p %kernel_srcdir
@@ -45,6 +45,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %config %_sysconfdir/modprobe.d/blacklist-bcmdhd.conf
 
 %changelog
+* Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 101.10.591.52.27-alt4
+- Update to 101.10.591.52.27-6
+
 * Thu Dec 11 2025 Nazarov Denis <nenderus@altlinux.org> 101.10.591.52.27-alt3
 - Update to 101.10.591.52.27-5
 
