@@ -1,3 +1,4 @@
+%define optflags_lto %nil
 %def_enable snapshot
 
 %define _name lptk
@@ -10,11 +11,11 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Stateless password manager
-License: GPL-3.0
+License: GPL-3.0-only
 Group: Graphical desktop/GNOME
 Url: https://gitlab.com/ogarcia/lptk
 
@@ -79,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
 * Thu Nov 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
