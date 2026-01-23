@@ -1,6 +1,6 @@
 %define libname ppxlib_jane
 Name: ocaml-%libname
-Version: 0.17.2
+Version: 0.17.4
 Release: alt1
 Summary: Utilities for working with Jane Street AST constructs
 License: MIT
@@ -24,7 +24,6 @@ That is, we only expose "unsurprising" things in this library.
 For example, if you construct an n-ary function using this library,
 the standard OCaml compiler will interpret it as n nested unary functions
 in the normal way.
-
 
 %package devel
 Summary: Development files for %name
@@ -50,10 +49,12 @@ developing applications that use %name.
 %files -f ocaml-files.runtime
 %doc README.md LICENSE.md
 
-
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.17.4-alt1
+- 0.17.2 -> 0.17.4
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.17.2-alt1
 - 0.17.0 -> 0.17.2
 

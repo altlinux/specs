@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    ocaml-%modulename
-Version: 0.17.0
+Version: 0.17.2
 Release: alt1
 Summary: A ppx rewriter that generates functions to copy local values to the global heap
 License: MIT
@@ -43,10 +43,12 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.17.2-alt1
+- 0.17.0 -> 0.17.2
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - 0.17.0
 
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - first build for ALT
-
 

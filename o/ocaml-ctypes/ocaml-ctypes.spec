@@ -1,6 +1,6 @@
 %define pkgname ctypes
 Name: ocaml-%pkgname
-Version: 0.23.0
+Version: 0.24.0
 Release: alt1
 Summary: Combinators for binding to C libraries without writing any C
 
@@ -44,6 +44,9 @@ developing applications that use %name.
 %_libdir/ocaml/%pkgname/*.h
 
 %changelog
+* Fri Jan 23 2026 Anton Farygin <rider@altlinux.org> 0.24.0-alt1
+- 0.23.0 -> 0.24.0
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.23.0-alt1
 - 0.21.1 -> 0.23.0
 

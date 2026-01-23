@@ -2,7 +2,7 @@
 %define docdir %_docdir/%name-%version
 %define module sqlite3
 Name: ocaml-%module
-Version: 5.2.0
+Version: 5.3.1
 Release: alt1
 Summary: OCaml library for accessing SQLite3 databases
 License: MIT
@@ -48,11 +48,14 @@ developing applications that use %name.
 %dune_check
 
 %files -f ocaml-files.runtime
-%doc LICENSE.md CHANGES.md README.md TODO.md
+%doc LICENSE.md CHANGELOG.md README.md TODO.md
 
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 23 2026 Anton Farygin <rider@altlinux.org> 5.3.1-alt1
+- 5.2.0 -> 5.3.1
+
 * Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
 - 5.2.0
 

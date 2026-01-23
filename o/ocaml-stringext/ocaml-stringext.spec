@@ -1,12 +1,13 @@
 %define libname stringext
 Name: ocaml-%libname
 Version: 1.6.0
-Release: alt3
+Release: alt4
 Summary: Extra string functions for OCaml
 Group: Development/ML
 License: MIT
 Url: https://github.com/rgrinberg/stringext
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
 BuildRequires: rpm-build-ocaml > 1.4
@@ -28,6 +29,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 sed -i 's,oUnit,ounit2,' lib_test/dune
@@ -45,6 +47,10 @@ sed -i 's,oUnit,ounit2,' lib_test/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 1.6.0-alt4
+- added upstream patch to build with ounit2
+- fixed tests with recent qcheck API
+
 * Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.6.0-alt3
 - fixed URL and License tag
 - cleanup specfile

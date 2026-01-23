@@ -1,6 +1,6 @@
 %define libname ppx_tydi
 Name: ocaml-%libname
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 Summary: Type-directed disambiguation of records in let-bindings for Ocaml
 License: MIT
@@ -16,7 +16,6 @@ BuildRequires: ocaml-base-devel >= %version
 Provides a ppx for [let] bindings. In [let%%tydi a = b in ...], [a]'s type
 is inferred from [b] rather than the other way around.
 This is convenient for record patterns whose fields are not in scope.
-
 
 %package devel
 Summary: Development files for %name
@@ -42,9 +41,11 @@ developing applications that use %name.
 %files -f ocaml-files.runtime
 %doc README.mdx LICENSE.md
 
-
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.17.1-alt1
+- 0.17.0 -> 0.17.1
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - first build for ALT Linux

@@ -1,13 +1,13 @@
 %define lwt_modules lwt,lwt_ppx,lwt_react
 Name: ocaml-lwt
-Version: 5.9.0
+Version: 5.9.2
 Release: alt1
 Summary: OCaml lightweight thread library
 
 Group: Development/ML
 License: MIT
 Url: http://ocsigen.org/lwt/
-# https://github.com/ocsigen/lwt
+VCS: https://github.com/ocsigen/lwt
 Source: %name-%version.tar
 
 BuildRequires:  ocaml-ocamldoc termutils ocaml-ssl ocaml-react-devel glib2-devel libev-devel chrpath
@@ -50,6 +50,9 @@ developing applications that use %name.
 %_libdir/ocaml/lwt/unix/*.h
 
 %changelog
+* Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 5.9.2-alt1
+- 5.9.0 -> 5.9.2
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 5.9.0-alt1
 - 5.7.0 -> 5.9.0
 
