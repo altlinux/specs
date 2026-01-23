@@ -2,34 +2,36 @@
 %def_disable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
-%define _name LibRaw
-%define ver_major 0.22
-%define sover 24
+%define __name LibRaw
+%define _name libraw
+##define __name lib
+%define ver_major 0.21
+%define sover 23
 # demosaic pack version
 %define dmp_ver 0.18.8
 
-Name: libraw
-Version: %ver_major.0
-Release: alt1
+Name: %_name-legacy
+Version: %ver_major.5
+Release: alt2
 
 Summary: library for reading RAW files obtained from digital photo cameras
-Group: System/Libraries
+Group: System/Legacy libraries
 License: LGPLv2.1 and CDDL-1.0
 Url: http://www.libraw.org
 
 Vcs: https://github.com/LibRaw/LibRaw.git
 
 %if_disabled snapshot
-Source: %url/data/%_name-%version.tar.gz
-#Source: https://github.com/LibRaw/LibRaw/archive/%version/%_name-%version.tar.gz
+Source: %url/data/%__name-%version.tar.gz
+#Source: https://github.com/LibRaw/LibRaw/archive/%version/%__name-%version.tar.gz
 %else
-Source: %_name-%version.tar
+Source: %__name-%version.tar
 %endif
 # GPLv2, GPLv3
-Source1: %url/data/%_name-demosaic-pack-GPL2-%dmp_ver.tar.gz
-Source2: %url/data/%_name-demosaic-pack-GPL3-%dmp_ver.tar.gz
+Source1: %url/data/%__name-demosaic-pack-GPL2-%dmp_ver.tar.gz
+Source2: %url/data/%__name-demosaic-pack-GPL3-%dmp_ver.tar.gz
 
-BuildRequires: gcc-c++ liblcms2-devel
+BuildRequires: gcc-c++ libjasper-devel liblcms2-devel
 BuildRequires: libjpeg-devel libgomp-devel zlib-devel
 
 %description
@@ -76,7 +78,7 @@ required for subsequent RAW conversion.
 This package contains static library.
 
 %prep
-%setup -n %_name-%version -a1 -a2
+%setup -n %__name-%version -a1 -a2
 %ifarch %e2k
 sed -i 's/default(none)//' src/preprocessing/raw2image.cpp
 %endif
@@ -91,6 +93,7 @@ export LIBS+="-lpthread -lomp"
 %configure \
     %{subst_enable static} \
     --docdir=%_datadir/doc/libraw-%version \
+    --enable-jasper \
     --enable-lcms \
     --enable-jpeg \
     --enable-openmp
@@ -104,10 +107,11 @@ export LIBS+="-lpthread -lomp"
 %make -k check VERBOSE=1
 
 %files
-%_libdir/libraw.so.%{sover}*
-%_libdir/libraw_r.so.%{sover}*
-%_datadir/doc/libraw-%version
+%_libdir/libraw.so.*
+%_libdir/libraw_r.so.*
+#%_datadir/doc/libraw-%version
 
+%if 0
 %files samples
 %_bindir/*
 
@@ -123,10 +127,11 @@ export LIBS+="-lpthread -lomp"
 %_libdir/libraw.a
 %_libdir/libraw_r.a
 %endif
+%endif
 
 %changelog
-* Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
-- 0.22.0 (soname bumped to 24)
+* Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt2
+- legacy library w/o devel subpackage
 
 * Wed Dec 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
 - 0.21.5 (fixed CVE-2025-43961, CVE-2025-43962,
