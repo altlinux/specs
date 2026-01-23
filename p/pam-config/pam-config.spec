@@ -1,5 +1,5 @@
 Name: pam-config
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Systemwide PAM config files for Linux-PAM
@@ -17,6 +17,9 @@ Source6: system-auth.filetrigger
 Source7: system-policy.filetrigger
 Source8: pam_access.control
 Source9: pam_canonicalize_user.control
+Source10: system-check-localuser-legacy.in
+Source11: system-check-localuser-systemd.in
+Source12: system-check-localuser.control
 
 %define _pamdir %_sysconfdir/pam.d
 
@@ -68,15 +71,35 @@ for only in system-auth-*-only; do
 	base="${target%%-$method}"
 	{
 		echo '#%%PAM-1.0'
+		sed -e "s/@METHOD@/$method/" \
+		    "$template" | grep '^#'
+	} > "$target"
+	{
 		for type in auth account password session; do
 			grep -q "^$type" "$only" || continue
 			sed -e "s/@TYPE@/$type/" \
 			    -e "s/@BASE@/$base/" \
 			    -e "s/@METHOD@/$method/" \
 			    "$template"
-		done
-	} > "$target"
+		done | grep -v '^#'
+	} >> "$target"
 done
+
+for template in %_sourcedir/system-check-localuser-*.in; do
+	template_base="$(basename $template)"
+	target="${template_base%%.in}"
+	{
+		echo '#%%PAM-1.0'
+		grep '^#' "$template"
+	} > "$target"
+	{
+		for type in auth account password session; do
+			sed -e "s/@TYPE@/$type/" \
+			    "$template"
+		done | grep -v '^#'
+	} >> "$target"
+done
+ln -s system-check-localuser-systemd system-check-localuser
 
 %install
 mkdir -p %buildroot{%_pamdir,%_controldir,/etc/security}
@@ -84,7 +107,7 @@ mkdir -p %buildroot{%_pamdir,%_controldir,/etc/security}
 cp -a * %buildroot%_pamdir/
 chmod 644 %buildroot%_pamdir/*
 
-for f in pam_access pam_canonicalize_user pam_mktemp system-auth system-policy; do
+for f in pam_access pam_canonicalize_user pam_mktemp system-auth system-check-localuser system-policy; do
 	install -pm755 %_sourcedir/$f.control %buildroot%_controldir/$f
 done
 
@@ -117,6 +140,13 @@ done
 %pre_control system-auth
 if [ -f "%_pamdir/system-policy" ]; then
 	%pre_control system-policy
+fi
+if [ -f "%_pamdir/system-check-localuser" ]; then
+	%pre_control system-check-localuser
+else
+	status_dir='/var/run/control'
+	status_file="$status_dir/system-check-localuser"
+	[ $1 -lt 2 ] || echo systemd > "$status_file"
 fi
 
 %post
@@ -154,6 +184,7 @@ if [ $1 -ge 2 ]; then
 	}
 fi
 %post_control -s local system-policy
+%post_control -s systemd system-check-localuser
 %post_control -s enabled pam_mktemp
 %post_control -s disabled pam_access
 %post_control -s disabled pam_canonicalize_user
@@ -183,9 +214,11 @@ fi
 %config(noreplace) %_pamdir/*-winbind
 %config(noreplace) %_pamdir/*-remote
 %config(noreplace) %_pamdir/common-login*
+%config(noreplace) %_pamdir/system-check-localuser-*
 %_pamdir/system-auth
 %_pamdir/system-auth-use_first_pass
 %_pamdir/system-policy
+%_pamdir/system-check-localuser
 %_rpmlibdir/system-auth.filetrigger
 %_rpmlibdir/system-policy.filetrigger
 /etc/security
@@ -194,6 +227,14 @@ fi
 %config %_controldir/*
 
 %changelog
+* Thu Jan 22 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.10.0-alt1
+- system-check-localuser.control: local user detection method.
+- system-auth-chooser (closes: #53858):
+  + update system UID validation range (from UID < 500 to UID < 1000)
+  + extract local user check into separate module system-check-localuser
+  + add systemd dynamic user support
+  + add detailed in-file documentation
+
 * Tue Sep 03 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.9.1-alt1
 - Added pam_canonicalize_user.so to system-auth-common (closes: #47426).
 - Added pam_canonicalize_user control (closes: #47713).

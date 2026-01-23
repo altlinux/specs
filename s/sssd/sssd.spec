@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.7
-Release: alt6
+Release: alt7
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -154,7 +154,7 @@ Group: Networking/Other
 License: LGPLv3+
 Provides: libnss_sss
 Provides: pam_sss
-Requires: pam-config >= 1.9.0
+Requires: pam-config >= 1.10.0
 
 %description client
 Provides the libraries needed by the PAM and NSS stacks to connect to the SSSD
@@ -923,6 +923,11 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Mon Jan 19 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt7
+- Move system-auth-sss local user check to system-check-localuser (hybrid
+  authentication with conditional branching of determines the authentication
+  path for local or non-local users with UID meeting a specific threshold).
+
 * Mon Jan 19 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt6
 - Update UID check for systemd dynamic users in system-auth-sss.
   Users with UID < 65536 are now treated as local.
