@@ -1,7 +1,9 @@
 %def_disable clang
 
+%define sover 0
+
 Name: dtklog
-Version: 0.0.6
+Version: 6.7.31
 Release: alt1
 
 Summary: Deepin tool kit log modules
@@ -15,13 +17,9 @@ VCS: https://github.com/linuxdeepin/dtklog
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Provides: libdtk5-log = %EVR
-Obsoletes: libdtk5-log < %EVR
-Provides: dtk5-log = %EVR
-Obsoletes: dtk5-log < %EVR
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 rpm-macros-dqt6
+BuildRequires: cmake dqt5-base-devel dqt6-base-devel libspdlog-devel
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-BuildRequires: cmake dqt5-base-devel libspdlog-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -31,12 +29,12 @@ BuildRequires: gcc-c++
 %description
 Deepin tool kit log modules.
 
-%package -n lib%{name}0
+%package -n lib%name%sover
 Summary: Libraries for %name
 Group: System/Libraries
 Requires: libdqt5-core = %_dqt5_version
 
-%description -n lib%{name}0
+%description -n lib%name%sover
 Deepin tool kit log modules.
 Libraries for %name.
 
@@ -44,10 +42,28 @@ Libraries for %name.
 Summary: Development package for %name
 Group: Development/KDE and QT
 Provides: dtk5-log-devel = %EVR
-Obsoletes: dtk5-log-devel < %EVR
 
 %description -n lib%name-devel
 Header files and libraries for %name.
+
+%package -n libdtk6log%sover
+Summary: Libraries for %name
+Group: System/Libraries
+Requires: libdqt6-core = %_dqt6_version
+
+%description -n libdtk6log%sover
+Deepin tool kit log modules.
+Libraries for dtk6log.
+
+%package -n libdtk6log-devel
+Summary: Development package for dtk6log
+Group: Development/KDE and QT
+Provides: dtk6-log-devel = %EVR
+Obsoletes: dtk6-log-devel < %EVR
+Provides: libdtk6log-devel = %EVR
+
+%description -n libdtk6log-devel
+Header files and libraries for dtk6log.
 
 %prep
 %setup
@@ -57,26 +73,39 @@ Header files and libraries for %name.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DLIBRARY_INSTALL_DIR=%_lib \
+  -DDTK5=OFF \
+  -DBUILD_WITH_SYSTEMD=ON \
+#
+
+echo "Start DTK5 build."
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 export PATH=%_dqt5_bindir:$PATH
-%cmake \
+%cmake -B build5 \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIBRARY_INSTALL_DIR=%_lib \
+  -DDTK5=ON \
   -DBUILD_WITH_SYSTEMD=ON \
   -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
-  #
-cmake --build %_cmake__builddir -j%__nprocs
+#
+cmake --build build5 -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
+DESTDIR=%buildroot cmake --install build5 --verbose
 
-%files -n lib%{name}0
-%doc README.md LICENSE*
-%_libdir/lib%name.so.0*
+%files -n lib%{name}%sover
+%doc README.md LICENSE* CHANGELOG.md
+%_libdir/lib%name.so.%{sover}*
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -88,7 +117,25 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_pkgconfigdir/%name.pc
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtklog.pri
 
+%files -n libdtk6log%sover
+%doc README.md LICENSE* CHANGELOG.md
+%_libdir/libdtk6log.so.%{sover}*
+
+%files -n libdtk6log-devel
+%_libdir/libdtk6log.so
+%dir %_includedir/dtk6/
+%dir %_includedir/dtk6/DLog/
+%_includedir/dtk6/DLog/*.h
+%dir %_libdir/cmake/Dtk6Log/
+%_libdir/cmake/Dtk6Log/*.cmake
+%_pkgconfigdir/dtk6log.pc
+%_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
+
 %changelog
+* Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt1
+- New version 6.7.31.
+- Unified dtk5 and dtk6 modules.
+
 * Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.6-alt1
 - New version 0.0.6.
 

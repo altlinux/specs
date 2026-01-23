@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.7.29
+Version: 6.7.32
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -18,12 +18,9 @@ Source: %name-%version.tar
 Patch0: %repo-%version-%release.patch
 Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# dqt5-base-devel-static for libQt5EdidSupport.a
-# Automatically added by buildreq on Wed Apr 30 2025
-# optimized out: cmake cmake-modules dqt5-base-common dqt5-base-devel dqt5-declarative-devel fontconfig-devel gcc-c++ glib2-devel glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-mesa libGLX-mesa libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcairo-devel libcap-ng libcrypt-devel libctf-nobfd0 libdouble-conversion-devel libdouble-conversion3 libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-eglfsdeviceintegration libdqt5-eglfskmssupport libdqt5-gui libdqt5-network libdqt5-opengl libdqt5-printsupport libdqt5-qml libdqt5-qmlmodels libdqt5-qmlworkerscript libdqt5-quick libdqt5-quickparticles libdqt5-quickshapes libdqt5-quicktest libdqt5-quickwidgets libdqt5-sql libdqt5-test libdqt5-waylandclient libdqt5-waylandcompositor libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libdqt5-xml libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libgraphite2-devel libharfbuzz-cairo libharfbuzz-gobject libharfbuzz-icu libicu-devel libp11-kit libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-eglfsdeviceintegration libqt5-eglfskmssupport libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-qmlworkerscript libqt5-quick libqt5-sql libqt5-test libqt5-waylandclient libqt5-widgets libqt5-xcbqpa libqt5-xml libsasl2-3 libspirv-tools0 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 libxkbfile-devel llvm19.1-libs pam0_userpass perl pkg-config python3 python3-base sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel extra-cmake-modules libdbus-devel libgtest-devel libharfbuzz-devel libmtdev-devel libdqt5-quickshapes libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel
-# BuildRequires: kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libwayland-cursor-devel
+# Common BuildRequires.
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: libdbus-devel libmtdev-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libSM-devel libcairo-devel libxcbutil-keysyms-devel libxcbutil-cursor-devel libxkbcommon-x11-devel libxcbutil-devel libXevie-devel libxprintutil-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -31,12 +28,29 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++
 %endif
 
+# DTK5 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt5
+# dqt5-base-devel-static for libQt5EdidSupport.a
+BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel libdqt5-quickshapes
+# BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libwayland-cursor-devel
+
 Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
 # Requires: libdqt5-waylandclient = %%_dqt5_version
 
+# DTK6 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: dqt6-base-devel
+
 %description
-%repo is the
-%summary.
+%repo is the %summary.
+
+%package -n deepin-qt6platform-plugins
+Summary: Qt platform integration plugins for Deepin Desktop Environment
+Group: Graphical desktop/Other
+Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-opengl = %_dqt6_version
+
+%description -n deepin-qt6platform-plugins
+%repo is the %summary.
 
 %prep
 %setup -n %repo-%version
@@ -53,10 +67,23 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DDTK5=OFF \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DQT_XCB_PRIVATE_HEADERS=%_dqt6_headerdir/QtXcb \
+  -DPLUGIN_INSTALL_DIR=%_dqt6_plugindir \
+  -DDTK_VERSION=%version \
+#
+
+echo "Start DTK5 build."
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5:%_dqt5_libdir:$CMAKE_PREFIX_PATH
 export PATH=%_dqt5_bindir:$PATH
 %cmake \
   -GNinja \
+  -DDTK5=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
@@ -68,6 +95,7 @@ export PATH=%_dqt5_bindir:$PATH
 cmake --build %_cmake__builddir -j%__nprocs
 
 %install
+%DQ6install
 %cmake_install
 
 %files
@@ -75,7 +103,16 @@ cmake --build %_cmake__builddir -j%__nprocs
 %doc LICENSE
 %_dqt5_plugindir/platforms/libdxcb.so
 
+%files -n deepin-qt6platform-plugins
+%doc CHANGELOG.md README.md
+%doc LICENSE
+%_dqt6_plugindir/platforms/libdxcb.so
+
 %changelog
+* Fri Jan 23 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
+- New version 6.7.32.
+- Unified dtk5 and dtk6 modules.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.29-alt1
 - New version 5.7.29.
 

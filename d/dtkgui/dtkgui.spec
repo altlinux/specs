@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.7.28
+Version: 6.7.32
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -20,18 +20,26 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: dtkgui-alt-git.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# dqt5-base-devel-static -> libQt5XkbCommonSupport.a
-# Automatically added by buildreq on Tue Jul 22 2025
-# optimized out: cmake cmake-modules dqt5-base-devel gcc-c++ glib2-devel glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-svg libdqt5-waylandclient libdqt5-widgets libdqt5-xml libdtklog-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt1 liblcms2-devel libp11-kit libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libxkbcommon-devel pkg-config python3 python3-base sh5 wayland-devel xorg-proto-devel
-BuildRequires: dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel dtk6-common-devel extra-cmake-modules libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel treeland-protocols
-# BuildRequires: libpcre2-devel libffi-devel libmount-devel libblkid-devel libselinux-devel libjpeg-devel libtiff-devel bzlib-devel libbrotli-devel libexpat-devel libpixman-devel
-# BuildRequires: libXdmcp-devel
+# Common BuildRequires.
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake dtk6-common-devel dtk6-common-configs librsvg-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libfreeimage-devel libraw-devel
+
 %if_enabled clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++ libgomp-devel
 %endif
+
+# DTK5 BuildRequires.
+# libQt5XkbCommonSupport.a -> dqt5-base-devel-static
+BuildRequires(pre): rpm-macros-dqt5
+BuildRequires: extra-cmake-modules dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libqtxdg-devel
+
+# DTK6 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: dqt6-base-devel dqt6-wayland-devel libdqt6-waylandclient libdtk6core-devel
+# waiting Qt6XdgIconLoaderConfig.cmake
+# BuildRequires: libdqt6xdg-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -49,7 +57,7 @@ Requires: libdqt5-waylandclient = %_dqt5_version
 DtkGui is used for DDE look and feel.
 This package contains the shared libraries.
 
-%package -n lib%{name}-devel
+%package -n lib%name-devel
 Summary: Development package for %name
 Group: Graphical desktop/Other
 Provides: dtk5-gui-devel = %EVR
@@ -58,24 +66,65 @@ Obsoletes: dtk5-gui-devel < %EVR
 %description -n lib%{name}-devel
 Header files and libraries for %name.
 
+%package -n dtk6gui
+Summary: Deepin Toolkit, gui module for DDE look and feel
+Group: Graphical desktop/Other
+
+%description -n dtk6gui
+DtkGui is used for DDE look and feel.
+
+%package -n libdtk6gui6
+Summary: Library for dtk6gui
+Group: System/Libraries
+Provides: libdtk6-gui = %EVR
+Obsoletes: libdtk6-gui < %EVR
+Requires: libdqt6-core = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
+
+%description -n libdtk6gui6
+DtkGui is used for DDE look and feel.
+This package contains the shared libraries.
+
+%package -n libdtk6gui-devel
+Summary: Development package for dtk6gui
+Group: Graphical desktop/Other
+Provides: dtk6-gui-devel = %EVR
+Obsoletes: dtk6-gui-devel < %EVR
+
+%description -n libdtk6gui-devel
+Header files and libraries for dtk6gui.
+
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
 
 %build
-%add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%else
+%add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
 %endif
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DDTK5=OFF \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
+  -DPACKAGE_TOOL_INSTALL_DIR=libexec/dtk6/DGui/bin \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DLIB_INSTALL_DIR=%_libdir \
+  -DLIBRARY_INSTALL_DIR=%_lib \
+  -DDTK_VERSION=%version \
+  -DBUILD_DOCS=OFF \
+#
+
+echo "Start DTK5 build."
 export PATH=%_dqt5_bindir:$PATH
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-%cmake \
+%cmake -B build5 \
   -GNinja \
+  -DDTK5=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
@@ -86,17 +135,15 @@ export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
   -DLIBRARY_INSTALL_DIR=%_lib \
   -DDTK_VERSION=%version \
   -DBUILD_DOCS=OFF \
-  %if_enabled clang
-  -DLLVM_USE_LINKER=lld \
-  %endif
 #
-cmake --build %_cmake__builddir -j%__nprocs
+cmake --build build5 -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
+DESTDIR=%buildroot cmake --install build5 --verbose
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE CHANGELOG.md
 %dir %_libexecdir/dtk5/
 %dir %_libexecdir/dtk5/DGui/
 %_libexecdir/dtk5/DGui/bin/
@@ -104,7 +151,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files -n lib%{name}5
 %_libdir/libdtkgui.so.5*
 
-%files -n lib%{name}-devel
+%files -n lib%name-devel
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DGui/
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtkgui.pri
@@ -115,7 +162,31 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_pkgconfigdir/dtkgui.pc
 %_libdir/libdtkgui.so
 
+%files -n dtk6gui
+%doc README.md LICENSE CHANGELOG.md
+%dir %_libexecdir/dtk6/
+%dir %_libexecdir/dtk6/DGui/
+%_libexecdir/dtk6/DGui/bin/
+
+%files -n libdtk6gui6
+%_libdir/libdtk6gui.so.6*
+
+%files -n libdtk6gui-devel
+%dir %_includedir/dtk6/
+%_includedir/dtk6/DGui/
+%_dqt6_mkspecsdir/modules/qt_lib_dtkgui.pri
+%dir %_libdir/cmake/Dtk6Gui/
+%_libdir/cmake/Dtk6Gui/Dtk6GuiConfig.cmake
+%_libdir/cmake/Dtk6Gui/Dtk6GuiConfigVersion.cmake
+%_libdir/cmake/Dtk6Gui/Dtk6GuiTargets*.cmake
+%_pkgconfigdir/dtk6gui.pc
+%_libdir/libdtk6gui.so
+
 %changelog
+* Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
+- New version 6.7.32.
+- Unified dtk5 and dtk6 modules.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.28-alt1
 - New version 5.7.28.
 

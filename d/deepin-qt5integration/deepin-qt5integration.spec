@@ -3,13 +3,13 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.7.28
+Version: 6.7.32
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
 
 License: LGPL-3.0-or-later
-Group: System/Libraries
+Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt5integration
 VCS: https://github.com/linuxdeepin/qt5integration
 
@@ -17,14 +17,11 @@ VCS: https://github.com/linuxdeepin/qt5integration
 Source: %repo-%version.tar
 Patch: %repo-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# dqt5-base-devel-static for libQt5ThemeSupport.a
-# Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-svg-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel libwayland-client-devel
-
-# Requires: deepin-qt5platform-plugins
 Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-widgets = %_dqt5_version
+
+# Common BuildRequires.
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake dtk6-common-devel libgtest-devel libmtdev-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -32,17 +29,52 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++
 %endif
 
+# DTK5 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt5
+# dqt5-base-devel-static for libQt5ThemeSupport.a
+BuildRequires: libdtkwidget-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel libwayland-client-devel
+
+# DTK6 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: libdtk6widget-devel dqt6-base-devel libcups-devel libqt6xdg-devel
+
 %description
 Multiple Qt plugins to provide better Qt5 integration for DDE is included.
+
+%package -n deepin-qt6integration
+Summary: Qt platform theme integration plugins for DDE
+Group: Graphical desktop/Other
+Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-widgets = %_dqt6_version
+
+%description -n deepin-qt6integration
+Multiple Qt plugins to provide better Qt6 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
 %patch -p1
 
 %build
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%endif
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DDTK5=OFF \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DPLUGIN_INSTALL_BASE_DIR=%_dqt6_plugindir \
+  -DDTK_VERSION=%version \
+#
+
+echo "Start DTK5 build."
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5X11Extras:%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-%cmake \
+%cmake -B build5 \
   -GNinja \
+  -DDTK5=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
@@ -50,10 +82,11 @@ export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5X11Extras:%_dqt5_libdir/cmake:$C
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DPLUGIN_INSTALL_BASE_DIR=%_dqt5_plugindir \
 #
-cmake --build %_cmake__builddir -j%__nprocs
+cmake --build build5 -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
+DESTDIR=%buildroot cmake --install build5 --verbose
 
 %files
 %doc README.md
@@ -66,7 +99,22 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/platformthemes/libqdeepin.so
 %_dqt5_plugindir/styles/libchameleon.so
 
+%files -n deepin-qt6integration
+%doc README.md
+%doc LICENSE
+%doc CHANGELOG.md
+%_dqt6_plugindir/iconengines/libdicon.so
+%_dqt6_plugindir/iconengines/libdsvgicon.so
+%_dqt6_plugindir/imageformats/libdci.so
+%_dqt6_plugindir/imageformats/libdsvg.so
+%_dqt6_plugindir/platformthemes/libqdeepin.so
+%_dqt6_plugindir/styles/libchameleon.so
+
 %changelog
+* Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.32-alt1
+- New version 6.7.32.
+- Unified dtk5 and dtk6 modules.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.28-alt1
 - New version 5.7.28.
 

@@ -4,12 +4,12 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.7.28
+Version: 6.7.31
 Release: alt1
 
 Summary: Deepin tool kit core modules
 
-License: LGPL-2.1+ and LGPL-3.0+
+License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkcore
 VCS: https://github.com/linuxdeepin/dtkcore
@@ -17,20 +17,33 @@ VCS: https://github.com/linuxdeepin/dtkcore
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtkcore-alt-uos.patch
+Patch1: dtk6core-6.0.9-alt-uos-version.patch
 
 Provides: libdtk5-core = %EVR
 Obsoletes: libdtk5-core < %EVR
 Provides: dtk5-core = %EVR
 Obsoletes: dtk5-core < %EVR
 
-BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-dqt5
-BuildRequires: cmake rpm-build-python3 dtk6-common-devel libdtklog-devel gsettings-qt-devel libsystemd-devel dqt5-base-devel libuchardet-devel libspdlog-devel libicu-devel libdbus-devel
+# Common BuildRequires.
+BuildRequires(pre): rpm-build-ninja deepin-desktop-base
+BuildRequires: cmake rpm-build-python3 dtk6-common-devel libsystemd-devel libuchardet-devel libspdlog-devel libicu-devel libdbus-devel
+
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+# DTK6 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: dqt6-base-devel libdtk6log-devel
+%if_with docs
+BuildRequires: dqt6-base-doc
+%endif
+
+# DTK5 BuildRequires.
+BuildRequires(pre): rpm-macros-dqt5
+BuildRequires: libdtklog-devel libgsettings-qt-devel dqt5-base-devel
 %if_with docs
 BuildRequires: dqt5-base-doc
 %endif
@@ -59,6 +72,33 @@ Requires: dtkcore = %EVR
 %description -n lib%name-devel
 Header files and libraries for %name.
 
+%package -n dtk6core
+Summary: Deepin tool kit core modules
+Group: Graphical desktop/Other
+Provides: dtk6core = %EVR
+
+%description -n dtk6core
+Deepin tool kit core modules.
+
+%package -n libdtk6core6
+Summary: Libraries for dtk6core
+Group: System/Libraries
+Requires: libdqt6-core = %_dqt6_version
+
+%description -n libdtk6core6
+Deepin tool kit core modules.
+Libraries for dtk6core.
+
+%package -n libdtk6core-devel
+Summary: Development package for dtk6core
+Group: Development/KDE and QT
+Provides: dtk6-core-devel = %EVR
+Obsoletes: dtk6-core-devel < %EVR
+Requires: dtk6core = %EVR
+
+%description -n libdtk6core-devel
+Header files and libraries for dtk6core.
+
 %if_with docs
 %package doc
 Summary: %name documantation
@@ -69,6 +109,16 @@ Obsoletes: dtk5-core-doc < %EVR
 
 %description doc
 This package provides %name documantation.
+
+%package -n dtk6core-doc
+Summary: dtk6core documantation
+Group: Documentation
+BuildArch: noarch
+Provides: dtk6-core-doc = %EVR
+Obsoletes: dtk6-core-doc < %EVR
+
+%description -n dtk6core-doc
+This package provides  dtk6coredocumantation.
 %endif
 
 %prep
@@ -80,9 +130,25 @@ This package provides %name documantation.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+
+echo "Start DTK6 build."
+%DQ6build \
+  -DDTK5=OFF \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DDTK_VERSION=%version \
+  -DLIBRARY_INSTALL_DIR=%_lib \
+  -DBUILD_WITH_SYSTEMD=ON \
+%if_without docs
+  -DBUILD_DOCS=OFF \
+%endif
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
+#
+
+echo "Start DTK5 build."
 export PATH=%_dqt5_bindir:$PATH
-%cmake \
+%cmake -B build5 \
   -GNinja \
+  -DDTK5=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
@@ -97,14 +163,15 @@ export PATH=%_dqt5_bindir:$PATH
 %endif
   -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
   -DFEATURES_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/features/ \
-  #
-cmake --build %_cmake__builddir -j%__nprocs
+#
+cmake --build build5 -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
+DESTDIR=%buildroot cmake --install build5 --verbose
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE CHANGELOG.md
 %dir %_libexecdir/dtk5
 %dir %_libexecdir/dtk5/DCore/
 %_libexecdir/dtk5/DCore/bin/
@@ -130,7 +197,38 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_datadir/doc/dtkcore.qch
 %endif
 
+%files -n dtk6core
+%doc README.md LICENSE CHANGELOG.md
+%dir %_libexecdir/dtk6
+%dir %_libexecdir/dtk6/DCore/
+%_libexecdir/dtk6/DCore/bin/
+
+%files -n libdtk6core6
+%_libdir/libdtk6core.so.6*
+
+%files -n libdtk6core-devel
+%doc docs/Specification.md
+%_libdir/libdtk6core.so
+%dir %_includedir/dtk6/
+%_includedir/dtk6/DCore/
+%_dqt6_mkspecsdir/modules/qt_lib_dtkcore.pri
+%_dqt6_mkspecsdir/features/dtk_install_dconfig.prf
+%_libdir/cmake/Dtk6Core/
+%_libdir/cmake/Dtk6CMake/
+%_libdir/cmake/Dtk6Tools/
+%_libdir/cmake/Dtk6DConfig/
+%_pkgconfigdir/dtk6core.pc
+
+%if_with docs
+%files -n dtk6core-doc
+%_dqt6_datadir/doc/dtk6core.qch
+%endif
+
 %changelog
+* Thu Jan 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.31-alt1
+- New version 6.7.31.
+- Unified dtk5 and dtk6 modules.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.28-alt1
 - New version 5.7.28.
 
