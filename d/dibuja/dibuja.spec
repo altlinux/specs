@@ -1,4 +1,4 @@
-%define ver_major 0.24
+%define ver_major 0.26
 %define gegl_ver_major 0.4
 
 %def_with gtk3
@@ -53,6 +53,9 @@ Paintbrush for Mac but for Linux.
 
 
 %changelog
+* Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Tue Jun 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 - built with GTK3
