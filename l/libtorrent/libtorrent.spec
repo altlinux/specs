@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 35
+%define soname 36
 
 Name: libtorrent
 Epoch: 3
-Version: 0.16.5
+Version: 0.16.6
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -88,6 +88,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jan 23 2026 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.6-alt1
+- 0.16.6.
+
 * Thu Dec 11 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.5-alt1
 - 0.16.5.
 

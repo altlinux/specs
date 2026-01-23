@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtorrent
-Version: 0.16.5
+Version: 0.16.6
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
-License: GPLv2
+License: GPL-2.0-or-later AND LGPL-2.0-or-later AND MPL-1.0
 Url: https://github.com/rakshasa/rtorrent/wiki
 
 # https://github.com/rakshasa/rtorrent.git
@@ -62,6 +62,11 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_datadir/%name/lua
 
 %changelog
+* Fri Jan 23 2026 L.A. Kostis <lakostis@altlinux.ru> 0.16.6-alt1
+- 0.16.6.
+- License: use SPDX tags and cover under
+  GPL/MPL/LGPL (due libtorrent).
+
 * Thu Dec 11 2025 L.A. Kostis <lakostis@altlinux.ru> 0.16.5-alt1
 - 0.16.5.
 
