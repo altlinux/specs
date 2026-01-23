@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.8
+Version: 2.1.13
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -17,10 +17,13 @@ Source1: vendor.tar
 Source2: zui.tar
 Source3: zot.service
 Source4: config.json
+Source5: go.mod
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang rpm-build-nodejs
 BuildRequires: golang
+BuildRequires: esbuild
+BuildRequires: rollup-native
 # to download trivy database, etc.
 Requires: ca-certificates
 ExcludeArch: i586
@@ -40,6 +43,30 @@ sed -i 's/^bench: modcheck build-metadata$/bench: build-metadata/' Makefile
 sed -E -i 's/go build (.?*) -s -w/go build \1/' Makefile
 # fixes: -buildmode=pie requires external (cgo) linking, but cgo is not enabled
 sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/' Makefile
+
+cp %{SOURCE5} ./go.mod
+
+%ifarch x86_64
+%define node_arch x64
+%endif
+
+%ifarch aarch64
+%define node_arch arm64
+%endif
+
+%define vite_nm zui/node_modules/vite/node_modules
+%define esb_arch @esbuild/linux-%node_arch
+%define vite_esb_dir %vite_nm/%esb_arch
+%define vite_esb_parent %vite_nm/@esbuild
+
+if [ ! -d "%vite_esb_dir" ]; then
+    mv %vite_esb_parent/linux-* %vite_esb_dir
+fi
+
+ln -sf %_bindir/esbuild %vite_esb_dir/bin/esbuild
+ln -sf %_bindir/esbuild %vite_nm/.bin/esbuild
+
+ln -sf %_bindir/rollup  zui/node_modules/.bin/rollup
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -118,6 +145,12 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Wed Jan 14 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.13-alt1
+- 2.1.8 -> 2.1.13
+- Change trivy and trivy-db modules source to altlinux.space in go.mod
+- Change esbuild and rollup node modules to system ones
+- Change build with system rollup and esbuild modules.
+
 * Tue Sep 09 2025 Alexander Stepchenko <geochip@altlinux.org> 2.1.8-alt1
 - Update to 2.1.8.
 
