@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.24
+Version: 1.0.25
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -79,6 +79,7 @@ alt-atomic-onyx \
 alt-atomic-core \
 alt-orchestra \
 iamos \
+alt-atomic-kyanite \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -90,6 +91,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Jan 23 2026 Vladimir Romanov <rirusha@altlinux.org> 1.0.25-alt1
+- Added alt-atomic-kyanite.
+
 * Fri Dec 12 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.24-alt1
 - Added iamos
 
