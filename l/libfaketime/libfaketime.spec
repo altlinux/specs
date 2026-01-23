@@ -1,6 +1,6 @@
 Name: libfaketime
-Version: 0.9.10
-Release: alt3
+Version: 0.9.11
+Release: alt1
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -93,6 +93,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Fri Jan 23 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.9.11-alt1
+- new version 0.9.11
+
 * Tue Dec 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.10-alt3
 - NMU: fixed FTBFS on LoongArch
 
