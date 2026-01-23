@@ -1,5 +1,5 @@
 Name:    rakarrack-plus
-Version: 1.2.4
+Version: 1.3.2
 Release: alt1
 
 Summary: Rakarrack plus LV2s
@@ -54,7 +54,9 @@ sed -i 's/-fvect-cost-model//' CMakeLists.txt
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DEnableSysex=ON -DBuildCarlaPresets=ON \
+    -DEnableSysex=ON -DBuildCarlaPresets=OFF \
+    -DEnableNTK=OFF -DBuildRakarrackPlusLV2=OFF \
+    -DEnablePFFFT=OFF \
     -Wno-dev
 %cmake_build
 
@@ -77,6 +79,12 @@ sed -i 's/-fvect-cost-model//' CMakeLists.txt
 %_datadir/RakarrackPlus.lv2
 
 %changelog
+* Fri Jan 23 2026 Artyom Bystrov <arbars@altlinux.org> 1.3.2-alt1
+- Update to new version
+
+* Fri Sep 20 2024 Artyom Bystrov <arbars@altlinux.org> 1.2.6-alt1
+- Update to new version
+
 * Fri Dec  1 2023 Artyom Bystrov <arbars@altlinux.org> 1.2.4-alt1
 - Update to new version
 
