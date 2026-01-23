@@ -1,5 +1,5 @@
 Name: motion
-Version: 4.5.1
+Version: 4.7.1
 Release: alt1
 
 Summary: %name - Detect motion using a video4linux device
@@ -9,13 +9,12 @@ Group: Video
 Url: https://motion-project.github.io
 # Source0-url: https://github.com/Motion-Project/motion/archive/refs/tags/release-%version.tar.gz
 Source0: %name-%version.tar
-Patch3: motion-4.1.1-alt-mysql8-transition.patch
 
 BuildRequires: libavformat-devel libjpeg-devel postgresql-devel zlib-devel
 BuildRequires: libmjpegtools-devel libsqlite3-devel
 BuildRequires: libpostproc-devel libswscale-devel libavdevice-devel
 BuildRequires: libavfilter-devel libv4l-devel
-BuildRequires: libavformat-devel libjpeg-devel libmysqlclient-devel postgresql-devel zlib-devel libwebp-devel
+BuildRequires: libavformat-devel libjpeg-devel libmariadb-devel postgresql-devel zlib-devel libwebp-devel
 BuildRequires: libmicrohttpd-devel
 
 %description
@@ -24,7 +23,6 @@ It will make snapshots if motion is detected.
 
 %prep
 %setup
-#patch3 -p0
 
 sed -i 's|<postgresql[/]libpq-fe.h>|<pgsql/libpq-fe.h>|' src/%name.h
 sed -i 's|\(if [\\(]cnt->conf\.mysql_db && sqltype[\)]\)|//\1|' src/event.c
@@ -64,6 +62,10 @@ install -pDm0644 data/%name.service %buildroot/%_unitdir/%name.service
 %_man1dir/*
 
 %changelog
+* Sat Jan 24 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.7.1-alt1
+- new version (4.7.1) with rpmgs script
+- rebuild with libmariadb instead of libmysqlclient
+
 * Sun Aug 06 2023 Vitaly Lipatov <lav@altlinux.ru> 4.5.1-alt1
 - NMU: new version 4.5.1 (with rpmrb script)
 - fix linking with libwebp
