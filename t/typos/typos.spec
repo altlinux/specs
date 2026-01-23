@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: typos
-Version: 1.29.4
+Version: 1.42.1
 Release: alt1
 Summary: Source code spell checker
 License: Apache-2.0 or MIT
@@ -50,7 +50,7 @@ cargo build %_smp_mflags --offline --release --all-features
 install -Dp target/release/%name -t %buildroot%_bindir
 
 %check
-cargo test --release
+LANG=C.UTF-8 cargo test --release
 PATH=%buildroot%_bindir:$PATH
 typos --version | grep -Fx '%name-cli %version'
 echo Millenium  > /tmp/example.txt
@@ -65,6 +65,9 @@ echo Millenium  > /tmp/example.txt
 %_bindir/typos
 
 %changelog
+* Fri Jan 23 2026 Vitaly Chikunov <vt@altlinux.org> 1.42.1-alt1
+- Update to v1.42.1 (2026-01-19).
+
 * Sat Jan 04 2025 Vitaly Chikunov <vt@altlinux.org> 1.29.4-alt1
 - Update to v1.29.4 (2025-01-03).
 
