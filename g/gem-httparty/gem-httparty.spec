@@ -1,7 +1,7 @@
 %define        gemname httparty
 
 Name:          gem-httparty
-Version:       0.20.0
+Version:       0.24.2
 Release:       alt1
 Summary:       Makes http fun! Also, makes consuming restful web services dead easy
 License:       MIT
@@ -34,7 +34,7 @@ BuildRequires: gem(mime-types) >= 3.0 gem(mime-types) < 4
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem(multi_xml) >= 0.5.2
 Requires:      gem(mime-types) >= 3.0 gem(mime-types) < 4
-Provides:      gem(httparty) = 0.20.0
+Provides:      gem(httparty) = 0.24.2
 
 
 %description
@@ -42,14 +42,14 @@ Makes http fun! Also, makes consuming restful web services dead easy.
 
 
 %package       -n httparty
-Version:       0.20.0
+Version:       0.24.2
 Release:       alt1
 Summary:       Makes http fun! Also, makes consuming restful web services dead easy executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета httparty
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(httparty) = 0.20.0
+Requires:      gem(httparty) = 0.24.2
 
 %description   -n httparty
 Makes http fun! Also, makes consuming restful web services dead easy
@@ -60,14 +60,14 @@ executable(s).
 
 
 %package       -n gem-httparty-doc
-Version:       0.20.0
+Version:       0.24.2
 Release:       alt1
 Summary:       Makes http fun! Also, makes consuming restful web services dead easy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета httparty
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(httparty) = 0.20.0
+Requires:      gem(httparty) = 0.24.2
 
 %description   -n gem-httparty-doc
 Makes http fun! Also, makes consuming restful web services dead easy
@@ -104,5 +104,8 @@ documentation files.
 
 
 %changelog
+* Fri Jan 23 2026 Alexander Danilov <admsasha@altlinux.org> 0.24.2-alt1
+- New version 0.24.2.
+
 * Tue Oct 18 2022 Pavel Skrylev <majioa@altlinux.org> 0.20.0-alt1
 - + packaged gem with Ruby Policy 2.0
