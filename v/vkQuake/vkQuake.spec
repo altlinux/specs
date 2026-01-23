@@ -1,6 +1,6 @@
 Name: vkQuake
-Version: 1.32.3.1
-Release: alt2
+Version: 1.33.1
+Release: alt1
 
 Summary: Quake I engine
 License: GPL-2.0
@@ -11,8 +11,6 @@ BuildRequires: glslang libSDL2-devel libvulkan-devel meson spirv-tools
 BuildRequires: libflac-devel libvorbis-devel libopusfile-devel libmpg123-devel libstb-devel
 
 Source: %name-%version.tar
-# https://github.com/Novum/vkQuake/pull/809
-Patch0: fix-build-with-glslang-16.patch
 
 %description
 Vulkan port of id software's Quake engine.
@@ -26,7 +24,6 @@ vkQuake - современный движок для игры Quake, базир�
 
 %prep
 %setup -q
-%patch0 -p1
 %ifarch %e2k
 # error: unknown attribute "alloc_align"
 sed -i 's/__INTEL_COMPILER/__EDG__/' Quake/mimalloc/mimalloc.h
@@ -41,7 +38,7 @@ popd
 
 %build
 %add_optflags -Wno-error=unused-function
-%meson -Dmp3_lib=mpg123
+%meson -Dmp3_lib=mpg123 -Ddo_userdirs=enabled
 %meson_build -v
 
 %install
@@ -52,6 +49,10 @@ install -pDm755 %__builddir/vkquake %buildroot%_bindir/vkquake
 %_bindir/vkquake
 
 %changelog
+* Fri Jan 16 2026 L.A. Kostis <lakostis@altlinux.ru> 1.33.1-alt1
+- 1.33.1.
+- build: enable user directories support.
+
 * Wed Nov 19 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.32.3.1-alt2
 - e2k build fix
 
