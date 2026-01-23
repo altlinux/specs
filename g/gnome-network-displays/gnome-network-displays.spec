@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: gnome-network-displays
-Version: 0.98.0
+Version: 0.99.0
 Release: alt1
 
 Summary: Miracast streaming GUI
@@ -16,8 +16,8 @@ Url: https://gitlab.gnome.org/GNOME/gnome-network-displays
 
 Vcs: https://gitlab.gnome.org/GNOME/gnome-network-displays.git
 
-Source0: %name.tar
-#Patch0: %name-%version-%release.patch
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 %define nm_ver 1.15.1
 %define gst_ver 1.14
@@ -45,8 +45,8 @@ Miracast streaming daemon and GUI.
 Choose a wireless display and stream your desktop to it.
 
 %prep
-%setup -q -n %name
-#%%autopatch -p1
+%setup
+%patch0 -p1
 
 %build
 %meson \
@@ -74,6 +74,9 @@ Choose a wireless display and stream your desktop to it.
 %doc README.md COPYING
 
 %changelog
+* Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.99.0-alt1
+- 0.99.0
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.98.0-alt1
 - 0.98.0
 
