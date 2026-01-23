@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.4.1
-Release: alt2
+Release: alt3
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -41,17 +41,19 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.10.9
+Version: 0.11.4
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
+# Commented out for bootstrap
+# Conflicts: pve-ha-manager <= 5.0.6
 
 %description -n libpve-rs-perl
 %summary
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.8.0
+Version: 0.8.1
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -132,6 +134,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt3
+- Update:
+  + libpve-rs-perl 0.11.4
+- Bootstrap release
+
 * Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.1-alt2
 - NMU: Build on loongarch64
 

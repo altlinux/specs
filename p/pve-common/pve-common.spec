@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 9.0.9
+Version: 9.1.6
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 
+BuildRequires: tzdata
 BuildRequires: perl-Encode
 BuildRequires: perl-ph
 BuildRequires: perl(IO/Socket/IP.pm)
@@ -32,6 +33,7 @@ BuildRequires: perl(JSON.pm)
 BuildRequires: perl(MIME/Base32.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm)
 BuildRequires: perl(Crypt/OpenSSL/RSA.pm)
+BuildRequires: perl(IO/Stringy.pm)
 BuildRequires: perl(Date/Parse.pm)
 BuildRequires: perl(Net/SSLeay.pm)
 BuildRequires: perl(HTTP/Daemon.pm)
@@ -71,6 +73,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Jan 21 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt1
+- 9.1.6
+
 * Fri Aug 08 2025 Sergey Konev <darisishe@altlinux.org> 9.0.9-alt1
 - 9.0.9
 

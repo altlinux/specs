@@ -4,7 +4,7 @@
 Name: pve-guest-common
 Summary: PVE common guest-related modules
 Version: 6.0.2
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -48,6 +48,9 @@ This package contains a common code base used by pve-container and qemu-server
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 6.0.2-alt2
+- Minor fixes
+
 * Tue Aug 19 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 6.0.2-alt1
 - 6.0.2 
 

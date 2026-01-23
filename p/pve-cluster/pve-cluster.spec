@@ -3,7 +3,7 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 9.0.6
+Version: 9.0.7
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -168,6 +168,9 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Tue Jan 20 2026 Sergey Konev <darisishe@altlinux.org> 9.0.7-alt1
+- 9.0.7
+
 * Wed Aug 13 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt1
 - 9.0.6
 

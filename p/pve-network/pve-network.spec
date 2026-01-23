@@ -2,7 +2,7 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 1.1.6
+Version: 1.2.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -15,7 +15,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: libpve-network-perl = %EVR
 Requires: ifupdown2
-Requires: pve-common >= 9.0.2
+Requires: pve-common >= 9.1.1
 Requires: pve-cluster >= 9.0.1
 Requires: pve-firewall >= 5.1.0
 Requires: frr frr-pythontools
@@ -24,6 +24,7 @@ Requires: dnsmasq
 BuildRequires: pve-cluster
 BuildRequires: pve-firewall
 BuildRequires: pve-doc-generator
+BuildRequires: pve-common >= 9.1.1
 BuildRequires: perl
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -75,6 +76,9 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Sat Aug 09 2025 Sergey Konev <darisishe@altlinux.org> 1.1.6-alt1
 - 1.1.6
 

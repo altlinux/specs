@@ -2,8 +2,8 @@
 
 Name: proxmox-widget-toolkit
 Summary: ExtJS Helper Classes for Proxmox
-Version: 5.0.4
-Release: alt2
+Version: 5.1.5
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Other
 Url: https://www.proxmox.com
@@ -51,6 +51,9 @@ install -pD -m644 src/api-viewer/APIViewer.js %buildroot%_datadir/javascript/%na
 %_datadir/javascript/%name-dev
 
 %changelog
+* Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 5.1.5-alt1
+- 5.1.5
+
 * Wed Nov 12 2025 Sergey Konev <darisishe@altlinux.org> 5.0.4-alt2
 - Avoid sending translated size unit to API (Closes: #54815)
 

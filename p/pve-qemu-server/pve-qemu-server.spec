@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 9.0.18
+Version: 9.1.4
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -18,12 +18,12 @@ ExclusiveArch: x86_64 aarch64
 Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
-Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
-Requires: conntrack-tools
+Requires: socat genisoimage pve-qemu-system >= 10.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
+Requires: conntrack-tools python3-module-virt-firmware
 Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 9.0.3 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
-BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.0.7 pve-qemu-system >= 7.1 pve-network
+BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
+BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.0.16 pve-qemu-system >= 10.1 pve-network
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
 BuildRequires: pkgconf libpcre2-devel
@@ -80,6 +80,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Wed Jan 21 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt1
+- 9.1.4
+
 * Fri Aug 29 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.18-alt1
 - 9.0.18 
 

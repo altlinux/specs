@@ -3,7 +3,7 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 6.0.9
+Version: 6.0.18
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -14,11 +14,16 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64
 
 Requires(pre,postun): shadow-submap
-Requires: pve-lxc pve-lxc-syscalld pve-ha-manager >= 5.0.3 pve-access-control >= 8.0.0 pve-firewall >= 6.0.1
-Requires: proxmox-backup-client >= 3.2.3.1
+Requires: pve-lxc >= 6.0.5-alt3 pve-lxc-syscalld pve-ha-manager >= 5.0.3 pve-access-control >= 8.0.0 pve-firewall >= 6.0.1
+Requires: libpve-rs-perl >= 0.11.0 proxmox-backup-client >= 3.2.3.1
 Requires: dtach xz file binutils
+# For now implementation uses dhclient for setting up containers.
+# As ISC DHCP is deprecated, switch to using dhcpcd later
+# (or just wait until upstream does so)
+# (see also commit 2e5d6b7ce49bdc5927e8bf9bf8e0a3590cb4c390)
+Requires: dhcp-client
 
-BuildRequires: pve-common >= 8.1.0 pve-guest-common >= 5.1.0 pve-qemu-server pve-storage >= 8.3.5
+BuildRequires: pve-common >= 8.1.0 pve-guest-common >= 5.1.0 pve-qemu-server pve-storage >= 8.3.5 libpve-rs-perl >= 0.11.0
 BuildRequires: pve-firewall pve-cluster >= 4.0.8 libpve-cluster-perl pve-doc-generator xmlto pve-lxc >= 4.0.9
 BuildRequires: pve-manager pve-ha-manager >= 5.0.3
 BuildRequires: perl(Crypt/Eksblowfish/Bcrypt.pm) perl(UUID.pm)
@@ -57,6 +62,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Wed Jan 21 2026 Sergey Konev <darisishe@altlinux.org> 6.0.18-alt1
+- 6.0.18
+
 * Fri Aug 22 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 6.0.9-alt1
 - 6.0.9 
 

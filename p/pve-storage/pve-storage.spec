@@ -2,7 +2,7 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 9.0.13
+Version: 9.1.0
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -25,6 +25,7 @@ Requires: /usr/bin/iscsi-ls open-iscsi
 Requires: proxmox-backup-client >= 2.1.10 proxmox-backup-file-restore
 Requires: smartmontools
 Requires: pve-esxi-import-tools >= 0.6.0
+Requires: skopeo
 
 Conflicts: pve-container < 3.1.2
 Conflicts: pve-manager < 5.2.12
@@ -67,6 +68,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.0-alt1
+- 9.1.0
+
 * Wed Aug 13 2025 Sergey Konev <darisishe@altlinux.org> 9.0.13-alt1
 - 9.0.13
 

@@ -3,12 +3,12 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
-%define ver_major 9.0
-%define ver_minor 6
+%define ver_major 9.1
+%define ver_minor 4
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt1
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -24,8 +24,9 @@ Requires: perl-LWP-Protocol-https
 Requires: pve-common >= 9.0.8 pve-guest-common >= 5.1.4
 Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
-Requires: pve-container >= 5.2.5 pve-firewall pve-ha-manager >= 5.0.3 pve-qemu-server >= 9.0.10 pve-i18n >= 3.2.0 pve-docs
-Requires: proxmox-widget-toolkit >= 5.0.2 proxmox-mini-journalreader >= 1.3.1 proxmox-rrd-migration-tool >= 1.0.0
+Requires: pve-container >= 5.2.5 pve-firewall pve-ha-manager >= 5.0.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
+Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.0.3
+Requires: proxmox-widget-toolkit >= 5.1.1 proxmox-mini-journalreader >= 1.3.1
 Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.10.4
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
@@ -42,9 +43,9 @@ Source10: sencha-touch.tgz
 
 BuildRequires: pve-doc-generator >= 9.0.5 xmlto perl-Pod-Parser
 BuildRequires: pve-storage >= 8.3.5 pve-cluster >= 8.0.5
-BuildRequires: pve-common >= 9.0.4 pve-guest-common >= 5.1.4
-BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.1 pve-qemu-server >= 9.0.10,
-BuildRequires: pve-acme pve-http-server >= 6.0.3 pve-access-control >= 9.0.3
+BuildRequires: pve-common >= 9.1.1 pve-guest-common >= 5.1.4
+BuildRequires: libpve-cluster-perl >= 9.0.7 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.1 pve-qemu-server >= 9.0.28,
+BuildRequires: pve-acme pve-http-server >= 6.0.3 pve-access-control >= 9.0.4
 BuildRequires: proxmox-widget-toolkit >= 4.3.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
@@ -129,10 +130,6 @@ fi
 %triggerun -- %name < 9.0.0
 if [ $2 -gt 0 ]; then
     # PVE 8 to 9 upgrade
-    printf '\n\nNOTE: Migrating existing RRD metrics data from nodes, storages and virtual guests to new PVE format version - this can take some time!\n\n'
-    /usr/libexec/proxmox/proxmox-rrd-migration-tool --migrate || \
-        echo "migration failed, see output above for errors and try to migrate existing data manually by running '/usr/libexec/proxmox/proxmox-rrd-migration-tool --migrate'"
-
     if test -e /etc/lvm/lvm.conf && grep "^\s*thin_check_options" /etc/lvm/lvm.conf | grep -qv -- "--clear-needs-check-flag"; then
         printf '\nNOTE: Detected override for 'thin_check_options' without '--clear-needs-check-flag' option in /etc/lvm/lvm.conf\n'
         printf 'Add the option to the override or thin pools with minor issues might not automatically activate anymore!\n\n'
@@ -178,6 +175,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt1
+- 9.1.4
+
 * Tue Sep 30 2025 Sergey Konev <darisishe@altlinux.org> 9.0.6-alt3
 - Add Requires: pve-yew-mobile-gui (closes: #56097)
 
