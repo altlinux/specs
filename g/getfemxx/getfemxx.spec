@@ -2,10 +2,12 @@
 %define libgetfem libgetfem%sover
 %add_python3_req_skip _getfem
 
+%def_disable mumps
+
 %define rname getfem
 Name: getfemxx
 Version: 5.4.2
-Release: alt1.2
+Release: alt2
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -26,8 +28,10 @@ BuildRequires:python3-module-setuptools
 %ifnarch %{arm} aarch64 ppc64le
 #BuildRequires: scilab
 %endif
-
-BuildPreReq: libmuparser-devel libmumps-devel
+BuildPreReq: libmuparser-devel
+%if_enabled mumps
+BuildPreReq: libmumps-devel
+%endif
 BuildPreReq: liblapack-devel
 #libsuperlu-devel
 
@@ -74,14 +78,18 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 	--disable-static \
 	--enable-shared \
 	--enable-boost \
+%if_enabled mumps
 	--enable-mumps \
 	--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
+%else
+	--disable-mumps \
+%endif
 	--with-blas=openblas \
 	--with-pic \
 	--with-matlab-toolbox-dir=%_datadir/getfem_toolbox \
 	--enable-python3 \
-#	--enable-qhull \
 	#
+#	--enable-qhull \
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
 %make_build CFLAGS="$CUT_CFLAGS"
 
@@ -115,6 +123,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt2
+- build without mumps
+
 * Thu Oct 09 2025 Grigory Ustinov <grenka@altlinux.org> 5.4.2-alt1.2
 - Fixed build with python3.13.
 
