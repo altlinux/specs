@@ -3,7 +3,7 @@
 %def_with check
 
 Name: atuin
-Version: 18.10.0
+Version: 18.11.0
 Release: alt1
 
 Summary: Magical shell history
@@ -124,6 +124,9 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Fri Jan 23 2026 Boris Yumankulov <boria138@altlinux.org> 18.11.0-alt1
+- new version 18.11.0
+
 * Sun Oct 26 2025 Boris Yumankulov <boria138@altlinux.org> 18.10.0-alt1
 - new version 18.10.0
 - add requires to bash-preexec (ALT bug: 56351)
