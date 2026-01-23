@@ -3,7 +3,7 @@
 
 Name:    cilium
 Version: 1.18.2
-Release: alt1
+Release: alt2
 
 Summary: eBPF-based Networking, Security, and Observability
 License: Apache-2.0
@@ -17,7 +17,7 @@ BuildRequires: rpm-macros-golang
 BuildRequires: rpm-build-golang
 BuildRequires: golang > 1.21
 BuildRequires: /proc
-BuildRequires: buf, protobuf-go, gcc14, binutils, glibc-devel, coreutils
+BuildRequires: buf, protobuf-go, gcc, binutils, glibc-devel, coreutils
 
 Requires: ipset, iproute2, iptables, libipset-devel, net-tools
 Requires: conntrack-tools, cni-plugins
@@ -148,5 +148,8 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_localstatedir/%name/etcd-config.yaml
 
 %changelog
+* Fri Jan 23 2026 Alexander Stepchenko <geochip@altlinux.org> 1.18.2-alt2
+- Build using latest available gcc instead of gcc14.
+
 * Tue Oct 21 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.18.2-alt1
 - Initial build for ALTLinux.
