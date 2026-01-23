@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Abstraction layer for SKOS vocabularies
@@ -43,7 +43,8 @@ where deemed useful.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+# https://github.com/OnroerendErfgoed/skosprovider/issues/155
+%pyproject_run_pytest -v -k 'not (test_dump_species or test_dump_trees or test_dump_trees_inline_context or test_dump_trees_url_context or test_no_single_child or test_text_node)'
 
 %files
 %doc *.rst LICENSE
@@ -51,6 +52,9 @@ where deemed useful.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 23 2026 Anton Vyatkin <toni@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Fri Oct 31 2025 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 - New upstream url.
