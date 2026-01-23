@@ -23,7 +23,7 @@
 %def_enable check
 
 Name: gthumb
-Version: %ver_major.8.2
+Version: %ver_major.9
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -183,6 +183,9 @@ sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jan 23 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.9-alt1
+- 3.12.9
+
 * Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.8.2-alt1
 - 3.12.8.2
 
