@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.29
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Jan 23 2026 Ivan Savin <svn17@altlinux.org> 0.1.29-alt2
+- Add add secret scanning (alxvmr@).
+- Add .clang-format and CODESTYLE.md.
+
 * Fri Nov 28 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt1
 - Add a new option - exit_status. Methods no longer return an exit_status by
   default. To add the 'response' return value to a method, you need to add an

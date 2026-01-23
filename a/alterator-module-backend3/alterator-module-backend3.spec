@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,10 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Jan 23 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt2
+- Add add secret scanning (alxvmr@).
+- Add .clang-format and CODESTYLE.md.
+
 * Thu Jan 15 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt1
 - Fix GMainContext for method timeout.
 - Fix forced backend3 process termination and its child processes. Before this
