@@ -1,15 +1,15 @@
-#ifarch %ix86 x86_64
-#def_enable botan
-#else
+%ifarch %ix86 x86_64 aarch64
+%def_enable botan
+%else
 %def_disable botan
-#endif
+%endif
 
 Name: qca-qt6
 %define major 2
 %define minor 3
 %define bugfix 10
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %K6init no_altplace man
 
 Group: Networking/Instant messaging
@@ -272,6 +272,9 @@ done
 %_qt6_headerdir/Qca-qt6/
 
 %changelog
+* Fri Jan 23 2026 Sergey V Turchin <zerg@altlinux.org> 2.3.10-alt2
+- build with botan
+
 * Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.10-alt1
 - new version
 
