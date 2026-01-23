@@ -1,18 +1,17 @@
 Name: openarena
 Version: 0.8.8
-Release: alt3.1
+Release: alt4
 
 Summary: Open source first person shooter
 Group: Games/Arcade
 License: GPLv2
 URL: http://openarena.ws/
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
 Source0: openarena-0.8.8.zip
 Source1: %name.sh
-Source2: %name.png
-Source3: %name.desktop
+Source2: io.github.ec_.Quake3e.OpenArena.png
+Source3: io.github.ec_.Quake3e.OpenArena.desktop
+Source4: io.github.ec_.Quake3e.OpenArena.appdata.xml
 
 AutoReq: yes, noshell
 
@@ -38,22 +37,28 @@ dos2unix CHANGES CREDITS LINUXNOTES README WENEED readme_085.txt
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/pixmaps
 mkdir -p %buildroot%_bindir/
+mkdir -p %buildroot%_datadir/metainfo
 
 cp -pr baseoa missionpack %buildroot%_datadir/%name
 install -p -m755 %SOURCE1 %buildroot%_bindir/%name
 ln -s %name %buildroot%_bindir/%{name}_ded
 cp -p %SOURCE2 %buildroot%_datadir/pixmaps
 
-install -pD -m644 %SOURCE3 %buildroot%_datadir/applications/%name.desktop
+install -pD -m644 %SOURCE3 %buildroot%_datadir/applications/io.github.ec_.Quake3e.OpenArena.desktop
+install -pD -m644 %SOURCE4 %buildroot%_datadir/metainfo/io.github.ec_.Quake3e.OpenArena.appdata.xml
 
 %files
 %doc CHANGES CREDITS LINUXNOTES README WENEED readme_085.txt readme_088.txt
 %_bindir/*
 %_datadir/%name
-%_datadir/applications/%name.desktop
-%_datadir/pixmaps/%name.png
+%_datadir/applications/io.github.ec_.Quake3e.OpenArena.desktop
+%_datadir/pixmaps/io.github.ec_.Quake3e.OpenArena.png
+%_datadir/metainfo/io.github.ec_.Quake3e.OpenArena.appdata.xml
 
 %changelog
+* Fri Jan 23 2026 Anton Osipov <radiolamp@altlinux.org> 0.8.8-alt4
+- Add compatibility with the Flatpak build (Closes: 57616).
+
 * Fri Dec 01 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.8-alt3.1
 - NMU: Add loongarch64 and riscv64 support
 
@@ -91,7 +96,7 @@ install -pD -m644 %SOURCE3 %buildroot%_datadir/applications/%name.desktop
 
 * Tue Jul 28 2009 Rahul Sundaram <sundaram@fedoraproject.org> - 0.8.1-1
 - Catching up to a new release in a long time
-- new maps, guns, models, textures 
+- new maps, guns, models, textures
 - http://openarena.ws/svn/CHANGES
 
 * Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.7-4
@@ -127,7 +132,7 @@ install -pD -m644 %SOURCE3 %buildroot%_datadir/applications/%name.desktop
 - License tag fix
 
 * Mon Aug 13 2007 Jon Ciesla <limb@jcomserv.net> - 0.7.1-1
-- Added 0.7.1 patch. 
+- Added 0.7.1 patch.
 - Uses 0.7.0 .zip, took version macro out of URL and setup to accommodate.
 
 * Fri Jul 13 2007 Michał Bentkowski <mr.ecik at gmail.com> - 0.7.0-3
