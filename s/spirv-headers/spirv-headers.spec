@@ -1,8 +1,8 @@
-%define git 01e0577
+%define git b824a46
 
 Name: spirv-headers
 Version: 1.5.5
-Release: alt20.g%{git}
+Release: alt21.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -46,6 +46,9 @@ includes:
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Jan 23 2026 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt21.gb824a46
+- Updated to GIT b824a46 (for sdk-1.4.335.0).
+
 * Fri Oct 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt20.g01e0577
 - Updated to GIT 01e0577 (for sdk-1.4.328.1).
 
