@@ -1,4 +1,4 @@
-%define sover 1
+%define sover 2
 
 %def_enable static
 
@@ -7,7 +7,7 @@
 %endif
 
 Name: m4ri
-Version: 20251207
+Version: 20260122
 Release: alt1
 
 Summary: Linear Algebra over F_2
@@ -137,6 +137,9 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %endif
 
 %changelog
+* Fri Jan 23 2026 Leontiy Volodin <lvol@altlinux.org> 20260122-alt1
+- New version 20260122.
+
 * Tue Dec 09 2025 Leontiy Volodin <lvol@altlinux.org> 20251207-alt1
 - New version 20251207.
 
