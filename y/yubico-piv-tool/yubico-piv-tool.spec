@@ -4,8 +4,10 @@
 
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
+%define abiversion 2
+
 Name: yubico-piv-tool
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 
 Summary: Command line tool for the YubiKey PIV application
@@ -18,6 +20,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 Requires: pcsc-lite-ccid
+Requires: libykpiv%abiversion = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -38,23 +41,46 @@ With it you may generate keys on the device, importing keys and certificates,
 and create ceritficate requests, and other operations. A shared library and
 a command-line tools is included.
 
-%package devel
-Summary: Development files for yubico-piv-tool
-Group: Development/Other
+%package -n libykpiv%abiversion
+Summary: Library to interact with the PIV application on a Yubikey
+Group: System/Libraries
 
-%description devel
-%summary.
+%description -n libykpiv%abiversion
+Shared library to interact with the Personal Identity Verification (PIV)
+application on a YubiKey.
+
+%package -n libykpiv-devel
+Summary: Development files for libykpiv
+Group: Development/C++
+Requires: libykpiv%abiversion = %EVR
+
+%description -n libykpiv-devel
+Provides development files for libykpiv.
+
+%package -n ykcs11
+Summary: PKCS#11 module for a YubiKey
+Group: System/Libraries
+Requires: libykpiv%abiversion = %EVR
+
+%description -n ykcs11
+PKCS#11 module that allows external applications to communicate with
+the PIV application running on a YubiKey.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%cmake -DBUILD_STATIC_LIB=OFF
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DBUILD_STATIC_LIB=OFF
 %cmake_build
 
 %install
 %cmake_install
+
+# I don't think PKCS#11 module needs that almost empty pkg-config file.
+rm %buildroot%_pkgconfigdir/ykcs11.pc
 
 %check
 %ctest
@@ -62,19 +88,29 @@ Group: Development/Other
 %files
 %doc COPYING NEWS README
 %_bindir/%name
-%_libdir/libykpiv.so.*
-%_libdir/libykcs11.so.*
 %_man1dir/%name.*
 
-%files devel
+%files -n libykpiv%abiversion
 %doc COPYING NEWS README
-%_includedir/ykpiv/
+%_libdir/libykpiv.so.%abiversion
+%_libdir/libykpiv.so.%version
+
+%files -n libykpiv-devel
+%doc COPYING NEWS README
 %_libdir/libykpiv.so
-%_libdir/libykcs11.so
+%_includedir/ykpiv/
 %_pkgconfigdir/ykpiv.pc
-%_pkgconfigdir/ykcs11.pc
+
+%files -n ykcs11
+%_libdir/libykcs11.so
+%_libdir/libykcs11.so.%abiversion
+%_libdir/libykcs11.so.%version
 
 %changelog
+* Fri Jan 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.7.3-alt1
+- Updated to 2.7.3.
+- Separated libykpiv shared library and ykcs11 module.
+
 * Fri Aug 15 2025 Anton Zhukharev <ancieg@altlinux.org> 2.7.2-alt1
 - Updated to 2.7.2.
 
