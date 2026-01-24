@@ -3,9 +3,15 @@
 %def_disable docs
 %define soname 0
 
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%def_enable tests
+%else
+%def_disable tests
+%endif
+
 Name: thunar
-Version: 4.21.3
-Release: alt2.g6e2ad21d1
+Version: 4.21.4
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -119,7 +125,8 @@ This package contains development documentation for lib%name.
 	-Dthunarx-dirs-envvar=false \
 	%{subst_enable_meson_bool introspection introspection} \
 	%{subst_enable_meson_feature terminal terminal} \
-	%{subst_enable_meson_bool docs gtk-doc}
+	%{subst_enable_meson_bool docs gtk-doc} \
+	%{subst_enable_meson_bool tests tests}
 
 %meson_build -v
 
@@ -176,6 +183,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sat Jan 24 2026 Mikhail Efremov <sem@altlinux.org> 4.21.4-alt1
+- Updated to 4.21.4.
+
 * Thu Jan 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt2.g6e2ad21d1
 - Enabled integrated terminal.
 
