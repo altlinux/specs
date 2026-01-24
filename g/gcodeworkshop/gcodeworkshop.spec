@@ -1,6 +1,6 @@
 Name: gcodeworkshop
 Version: 202504
-Release: alt1
+Release: alt2
 
 Summary: GCodeWorkShop is text editor for CNC programmers
 License: GPL-3.0-or-later
@@ -11,9 +11,10 @@ VCS: https://github.com/GCodeProjects/GCodeWorkShop.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
-BuildRequires: qt5-serialport-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools
+BuildRequires: qt6-serialport-devel
+BuildRequires: qt6-5compat-devel
 
 %description
 %summary.
@@ -24,7 +25,7 @@ This is a fork of EdytorNC, a text editor for CNC programmers.
 %patch -p1
 
 %build
-%qmake_qt5 VERSION=%version PREFIX=%prefix
+%qmake_qt6 VERSION=%version PREFIX=%prefix
 %make_build
 %make_build i18n
 
@@ -43,6 +44,9 @@ rm -vr %buildroot/%_datadir/doc/gcodeworkshop/
 %doc COPYING COPYING.LESSER NEWS.md README.md doc/SerialTransmission_Help.html
 
 %changelog
+* Sat Jan 24 2026 Anton Midyukov <antohami@altlinux.org> 202504-alt2
+- Rebuild with qt6.
+
 * Sun May 18 2025 Anton Midyukov <antohami@altlinux.org> 202504-alt1
 - New version 202504.
 
