@@ -24,7 +24,7 @@
 
 Name: graphviz
 Version: 12.2.1
-Release: alt1.1
+Release: alt2
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -52,7 +52,7 @@ Patch42:                 graphviz-2.40.1-CVE-2018-10196.patch
 Patch43:                 graphviz-2.40.1-dotty-menu-fix.patch
 Patch44:                 graphviz-2.40.1-coverity-scan-fixes.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Provides: libdotneato = %version
 Obsoletes: libdotneato < %version
 
@@ -95,7 +95,7 @@ This package includes shared libraries for %name
 %package -n lib%name-devel
 Summary: Header files and C programming manual for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
@@ -105,7 +105,7 @@ This package includes header files for %name
 %package doc
 Summary: Documentation for %name
 Group: Publishing
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description doc
@@ -114,16 +114,24 @@ This package contains most of documentation for %name
 %package graphs
 Summary: Demo graphs for graphviz
 Group: Graphics
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description graphs
 This package provides some example graphs for %name.
 
+%package smyrna
+Summary: Interactive graph viewer on %name
+Group: Graphics
+Requires: %name = %EVR
+
+%description smyrna
+Interactive graph viewer on %name.
+
 %package guile
 Summary: Guile bindings to %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description guile
 This package makes %name functionality accessible from Guile
@@ -131,7 +139,7 @@ This package makes %name functionality accessible from Guile
 %package lua
 Summary: Lua bindings to %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description lua
 This package makes %name functionality accessible from Lua
@@ -139,7 +147,7 @@ This package makes %name functionality accessible from Lua
 %package perl
 Summary: Perl bindings to %name
 Group: Development/Perl
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description perl
 This package makes %name functionality accessible from Perl
@@ -147,7 +155,7 @@ This package makes %name functionality accessible from Perl
 %package -n python3-module-gv
 Summary: Python bindings to %name
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-gv
 This package makes %name functionality accessible from Python
@@ -155,7 +163,7 @@ This package makes %name functionality accessible from Python
 %package ruby
 Summary: Ruby bindings to %name
 Group: Development/Ruby
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description ruby
 This package makes %name functionality accessible from Ruby
@@ -163,7 +171,7 @@ This package makes %name functionality accessible from Ruby
 %package tcl
 Summary: Tcl bindings to %name
 Group: Development/Tcl
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: tcl >= 8.4.0-alt1
 Provides: tcl-tkspline = %version tcl-gd = %version
 Obsoletes: tcl-tkspline < %version tcl-gd < %version
@@ -290,11 +298,12 @@ rm -rf %buildroot%gvlibdir/python3/
 
 %files
 %_bindir/*
+%exclude %_bindir/smyrna
 %_desktopdir/*.desktop
 %dir %gvdatadir/
 %gvdatadir/gvpr
 %if_without bootstrap
-%gvdatadir/smyrna
+
 %endif
 %ghost %gvlibdir/config
 %_man1dir/*
@@ -320,6 +329,10 @@ rm -rf %buildroot%gvlibdir/python3/
 
 %files graphs
 %gvdatadir/graphs
+
+%files smyrna
+%_bindir/smyrna
+%gvdatadir/smyrna
 
 %if_enabled guile
 %files guile
@@ -372,6 +385,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Sat Jan 24 2026 Anton Midyukov <antohami@altlinux.org> 12.2.1-alt2
+- New subpackage smyrna.
+
 * Thu Jul 10 2025 Grigory Ustinov <grenka@altlinux.org> 12.2.1-alt1.1
 - NMU: Fixed FTBFS
 
