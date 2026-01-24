@@ -11,7 +11,7 @@
 
 Name: rpcs3
 Version: 0.0.39
-Release: alt1
+Release: alt1.1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -35,8 +35,6 @@ Source3: soundtouch-%soundtouch_commit.tar
 Source4: Fusion-%fusion_version.tar
 # https://github.com/FeralInteractive/gamemode/archive/%gamemode_version/gamemode-%gamemode_version.tar.gz
 Source5: gamemode-%gamemode_version.tar
-
-Patch0: %name-0.0.39-fix-glew-definitions.patch
 
 BuildRequires: /proc
 BuildRequires: alt-os-release
@@ -79,14 +77,13 @@ BuildRequires: llvm-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: xml-utils
+BuildRequires: zlib-devel
 
 %description
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5
-
-%patch0 -p1
 
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
@@ -156,6 +153,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.39-alt1.1
+- Fix FTBFS
+
 * Sat Jan 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.39-alt1
 - Version 0.0.39
 
