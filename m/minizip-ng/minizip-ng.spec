@@ -4,7 +4,7 @@
 %filter_from_provides /^pkgconfig(%compat_name)/d
 
 Name: %compat_name-ng
-Version: 4.0.10
+Version: 4.1.0
 Release: alt1
 Epoch: 1
 
@@ -197,6 +197,9 @@ developing applications that use %compat_name.
 %_libdir/lib%compat_name.so
 
 %changelog
+* Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 1:4.1.0-alt1
+- New version 4.1.0.
+
 * Mon May 05 2025 Nazarov Denis <nenderus@altlinux.org> 1:4.0.10-alt1
 - New version 4.0.10.
 
