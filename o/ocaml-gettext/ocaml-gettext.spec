@@ -1,8 +1,8 @@
 %def_with check
 %define ocamlmodule gettext
 Name: ocaml-%ocamlmodule
-Version: 0.4.2
-Release: alt6
+Version: 0.5.0
+Release: alt1
 Summary: OCaml library for i18n
 Group: Development/ML
 License: LGPLv2+ with OCaml-LGPL-linking-exception
@@ -69,6 +69,9 @@ find test -type f -name dune -exec sed -i 's,oUnit,ounit2,' {} \;
 %_man5dir/*.5*
 
 %changelog
+* Sat Jan 24 2026 Anton Farygin <rider@altlinux.org> 0.5.0-alt1
+- 0.4.2 -> 0.5.0
+
 * Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 0.4.2-alt6
 - added a fix to build with ocaml 5.3
 
