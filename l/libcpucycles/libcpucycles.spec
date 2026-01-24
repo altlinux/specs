@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libcpucycles
-Version: 20250925
+Version: 20260105
 Release: alt1
 Summary: Microlibrary for counting CPU cycles
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
@@ -62,7 +62,7 @@ Group: Development/C
 %define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS)
 echo "gcc %optflags -fPIC -fwrapv -fvisibility=hidden" > compilers/default
-./configure --prefix=%buildroot/usr
+./configure --prefix=%prefix
 sed -i 's/\bgcc\b/set -x \&\& &/' $(grep -r -w gcc -I -l build)
 %make_build
 
@@ -85,12 +85,17 @@ cpucycles-info
 %files devel
 %doc doc/*.md
 %_bindir/cpucycles-info
+%_bindir/cpucycles-open
 %_includedir/cpucycles.h
 %_libdir/libcpucycles.so
 %_man1dir/cpucycles-info.1*
+%_man1dir/cpucycles-open.1*
 %_man3dir/cpucycles.3*
 
 %changelog
+* Sat Jan 24 2026 Vitaly Chikunov <vt@altlinux.org> 20260105-alt1
+- Update to 20260105 (2026-01-05).
+
 * Mon Nov 03 2025 Vitaly Chikunov <vt@altlinux.org> 20250925-alt1
 - Update to 20250925 (2025-09-25).
 
