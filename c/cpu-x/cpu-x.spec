@@ -5,7 +5,7 @@
 
 Name: cpu-x
 Version: 5.4.0
-Release: alt1
+Release: alt2
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
@@ -80,6 +80,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Sat Jan 24 2026 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt2
+- Fix build with nasm >= 3.0.
+
 * Sun Sep 21 2025 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt1
 - 5.4.0.
 - Update vulkan-rt and gl-vendor patches.
