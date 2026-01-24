@@ -1,6 +1,8 @@
 Name: fuse3
-Version: 3.16.2
-Release: alt2
+Version: 3.18.1
+Release: alt1
+
+%define abiversion 4
 
 Summary: a tool for creating virtual filesystems
 License: GPL-2.0-or-later
@@ -17,21 +19,23 @@ BuildRequires(pre): rpm-macros-alternatives
 
 Requires(pre): fuse-common >= 1.1.3 alternatives
 
-BuildRequires: meson >= 0.51 ninja-build libudev-devel
+BuildRequires: meson >= 0.51 ninja-build
+BuildRequires: libudev-devel liburing-devel
 Conflicts: fuse < 2.9.9-alt5
+
+Provides: lib%name = %version-%release
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
 for creating custom filesystems with minimal effort
 as well as for using them.
 
-%package -n lib%name
+%package -n lib%{name}_%abiversion
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
 License: LGPL-2.1-or-later
-Requires: %name = %version-%release
 
-%description -n lib%name
+%description -n lib%{name}_%abiversion
 FUSE (Filesystem in USErspace), an excellent tool
 for creating custom filesystems with minimal effort.
 
@@ -41,7 +45,7 @@ This package contains shared libraries.
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
 License: LGPL-2.1-or-later
-Requires: lib%name = %version-%release
+Requires: lib%{name}_%abiversion = %version-%release
 
 %description -n lib%name-devel
 FUSE (Filesystem in USErspace), an excellent tool
@@ -91,7 +95,7 @@ fi
 # fuse-common-1.1.0-alt2 contains /lib/udev/rules.d/60-fuse.rules
 %exclude %_udevrulesdir/99-%name.rules
 
-%files -n lib%name
+%files -n lib%{name}_%abiversion
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -100,6 +104,13 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jan 24 2026 Evgeny Sinelnikov <sin@altlinux.org> 3.18.1-alt1
+- update to latest release 3.18.1
+- build with libuirng (fuse-over-io-uring communication)
+- rename libfuse3 to libfuse3_4 according to Shared Libs Policy
+- add libfuse3 provide to fuse3 to preserve compatibility with legacy
+  circular dependency
+
 * Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 3.16.2-alt2
 - added the ability to select the fusermount3/fuserumount3 version using
   alternatives by default (thx Korney Gedert) (fixes: 52316).
