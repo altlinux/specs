@@ -14,7 +14,7 @@
 
 Name: firefox-esr
 Version: 140.7.0
-Release: alt1
+Release: alt3
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -414,10 +414,25 @@ rm -rf -- \
 	done
 )
 
+# Install default policies
+install -D -m 644 .rpm/policies.json \
+	%buildroot%_sysconfdir/firefox/policies/policies.json
+
+# Provide environment variables
+for i in sh csh; do
+	install -D -m 755 .rpm/firefox-esr.$i \
+		%buildroot%_sysconfdir/profile.d/firefox-esr.$i
+done
+
 %files
 %dir %_sysconfdir/firefox
 %dir %_sysconfdir/firefox/defaults
 %dir %_sysconfdir/firefox/defaults/pref
+%dir %_sysconfdir/firefox/policies
+%config(noreplace) %_sysconfdir/firefox/policies/policies.json
+%dir %_sysconfdir/profile.d
+%config(noreplace) %_sysconfdir/profile.d/firefox-esr.sh
+%config(noreplace) %_sysconfdir/profile.d/firefox-esr.csh
 %_altdir/firefox
 %_bindir/firefox
 %_bindir/firefox-wayland
@@ -437,6 +452,14 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Jan 22 2026 Michael Shigorin <mike@altlinux.org> 140.7.0-alt3
+- Fix "new version means new blank profile" (Closes: #57602)
+  + thanks NixOS guys, see http://github.com/NixOS/nixpkgs/pull/119849
+
+* Thu Jan 22 2026 Michael Shigorin <mike@altlinux.org> 140.7.0-alt2
+- Get yandex search back through default policy
+  (Closes: #45190; see also: #43516; thanks Ruslan Gilfanov).
+
 * Wed Jan 14 2026 Pavel Vasenkov <pav@altlinux.org> 140.7.0-alt1
 - New ESR version.
 - Security fixes:
