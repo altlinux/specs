@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: GLEW
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: The OpenGL Extension Wrangler library
@@ -103,6 +103,9 @@ install -pm755 -- %_datadir/gnu-config/config.guess config/
 %endif
 
 %changelog
+* Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 2.3.1-alt1
+- Version 2.3.1
+
 * Mon Dec 22 2025 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - Version 2.3.0
 
