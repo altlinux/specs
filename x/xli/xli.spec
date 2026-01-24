@@ -2,7 +2,7 @@
 
 Name: xli
 Version: 1.17.0
-Release: alt10
+Release: alt11
 Summary: X11 Image Loading Utility
 License: MIT
 Group: Graphics
@@ -35,6 +35,8 @@ Patch25: 200.fix-assertion-image.patch
 Patch26: 210.fix-geometry-with-negative.patch
 Patch27: 220.fix-tgas-with-alpha.patch
 Patch28: 230.fix-buffer-overflow.patch
+
+BuildRequires: pkgconfig(zlib)
 
 Provides: xloadimage
 Obsoletes: xloadimage
@@ -113,6 +115,9 @@ chmod 644 README*
 # - look at 2006-11-10 snapshot?
 
 %changelog
+* Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt11
+- Fix FTBFS by adding zlib build dependency.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt10
 - NMU: fix FTBFS by refreshing and applying patches from Debian.
 

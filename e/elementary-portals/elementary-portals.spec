@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: elementary-portals
-Version: 8.0.4
+Version: 8.1.0
 Release: alt1
 
 Summary: Flatpak portals for Pantheon
@@ -51,9 +51,15 @@ Pantheon
 %_userunitdir/xdg-desktop-portal-pantheon.service
 %_libexecdir/xdg-desktop-portal-pantheon
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.pantheon.service
+%_datadir/glib-2.0/schemas/xdg-desktop-portal-pantheon.gschema.xml
 %_datadir/xdg-desktop-portal/portals/pantheon.portal
 %_datadir/metainfo/%{appname}.metainfo.xml
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/xdg-desktop-portal-pantheon.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/xdg-desktop-portal-pantheon.mo
 
 %changelog
+* Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.4-alt1
 - Initial build for Sisyphus

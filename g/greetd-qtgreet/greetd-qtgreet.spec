@@ -2,7 +2,7 @@
 
 Name: greetd-qtgreet
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Summary: Qt based greeter for greetd
 License: GPL-3.0-only
@@ -28,6 +28,8 @@ Requires: mpv
 Requires: greetd
 Requires: sway
 Requires: greetd-qtgreet-data
+
+Provides: greetd-greeter
 
 %description
 %summary, to be run under wayfire or similar wlr-based compositors.
@@ -100,5 +102,8 @@ install -d 755 %buildroot%_localstatedir/qtgreet
 %_datadir/qtgreet/themes/sidebar/style.qss
 
 %changelog
+* Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.4-alt2
+- Added missed greetd-greeter provider (closes: #57626).
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.4-alt1
 - Initial build for Sisyphus

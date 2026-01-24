@@ -2,7 +2,7 @@
 
 Name: wayqt
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Qt-based wrapper for various wayland protocols
 License: MIT
@@ -10,6 +10,8 @@ Group: System/Libraries
 Url: https://gitlab.com/desktop-frameworks/wayqt
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -57,6 +59,7 @@ projects.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -81,5 +84,8 @@ projects.
 %_pkgconfigdir/wayqt-qt6.pc
 
 %changelog
+* Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt2
+- Fix FTBFS by defining private_headers as bool in meson.build.
+
 * Mon Dec 29 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
