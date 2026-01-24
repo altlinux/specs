@@ -1,7 +1,7 @@
 %define modulename xcaplib
 
 Name:    python3-module-%modulename
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: XCAP (RFC4825) client library
@@ -50,6 +50,9 @@ manage documents on an XCAP server.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jan 24 2026 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
+- New version.
+
 * Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
 - New version.
 
