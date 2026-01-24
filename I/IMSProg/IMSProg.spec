@@ -3,7 +3,7 @@
 
 Name: IMSProg
 Version: 1.7.2
-Release: alt1
+Release: alt2
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
 Summary(ru_RU.UTF-8): I2C, SPI and MicroWire EEPROM/Flash программатор для CH341a устройств
@@ -16,8 +16,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(libusb-1.0)
 
 %description
@@ -53,8 +53,8 @@ EZP Chip.
 %patch -p1
 
 # update translations
-lrelease-qt5 IMSProg_editor/language/*.ts
-lrelease-qt5 IMSProg_programmer/language/*.ts
+lrelease-qt6 IMSProg_editor/language/*.ts
+lrelease-qt6 IMSProg_programmer/language/*.ts
 
 %build
 pushd IMSProg_editor
@@ -102,6 +102,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Sat Jan 24 2026 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt2
+- Rebuild with qt6.
+
 * Tue Nov 25 2025 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
 - New version 1.7.2.
 
