@@ -5,7 +5,7 @@
 %define native false
 %endif
 Name: ocaml-%pkgname
-Version: 0.15.0
+Version: 0.16.1
 Release: alt1
 Epoch: 1
 Summary: The Objective Caml project compilation tool
@@ -81,6 +81,9 @@ make \
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sat Jan 24 2026 Anton Farygin <rider@altlinux.org> 1:0.16.1-alt1
+- 0.15.0 -> 0.16.1
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 1:0.15.0-alt1
 - 0.15.0
 
