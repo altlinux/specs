@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.0.28
+Version: 0.0.29
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -40,7 +40,7 @@ not in its repositories.
 %autopatch -p1
 
 %build
-%make_build GIT_VERSION=v%version GENERATE=0
+%make_build GIT_VERSION=v%version GENERATE=0 CONFIG_DEFAULT_ROOT_CMD=pkexec
 
 %install
 %makeinstall_std PREFIX=%_prefix POST_INSTALL=0
@@ -62,9 +62,14 @@ not in its repositories.
 %attr(0755,%builder_user,%builder_group) %_cachedir/%name
 %attr(0755,root,root) %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.toml
+%config(noreplace) %_sysconfdir/%name/firejailed/global
 %doc README.md
 
 %changelog
+* Sat Jan 24 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.0.29-alt1
+- New version 0.0.29.
+- Default root command changed from to 'pkexec' (ALT#57614).
+
 * Fri Dec 12 2025 Maxim Slipenko <maks1ms@altlinux.org> 0.0.28-alt1
 - New version 0.0.28.
 
