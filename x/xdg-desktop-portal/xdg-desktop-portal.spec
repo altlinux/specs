@@ -8,7 +8,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.20.3
+Version: 1.21.0
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name}
 
 %define meson_ver 0.56.2
-%define glib_ver 2.72
+%define glib_ver 2.76
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2.90
 %define fuse3_ver 3.10.0
@@ -53,11 +53,15 @@ BuildRequires: pkgconfig(libportal) >= %portal_ver
 # since 1.9.1
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) pkgconfig(umockdev-1.0)
 BuildRequires: pkgconfig(gudev-1.0)
-%{?_enable_docs:BuildRequires: python3(sphinx) xmlto docbook-dtds docbook-style-xsl}
+%{?_enable_docs:BuildRequires: python3(sphinx) python3(sphinxext.opengraph)
+BuildRequires: python3(sphinx_copybutton)
+BuildRequires: python3(sphinx_basic_ng) python3(furo)
+BuildRequires: xmlto docbook-dtds docbook-style-xsl}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
 BuildRequires: python3(pytest) python3(gi)
 BuildRequires: python3(dbus) python3(dbusmock)
+BuildRequires: python3(xdist)
 BuildRequires: typelib(UMockdev) = 1.0
 BuildRequires: /usr/bin/gst-inspect-1.0
 # wavparse
@@ -87,6 +91,7 @@ Group: Development/Other
 Requires: %name = %EVR
 Requires: flatpak >= 1.6.0
 Requires: gst-plugins-good1.0
+Requires: python3(xdist)
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -133,7 +138,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_userunitdir/%name-rewrite-launchers.service
 %{?_enable_man:%_man5dir/portals.conf.5*}
 %doc README.md NEWS*
-%{?_enable_docs:%doc %_docdir/%name}
+%{?_enable_docs:%doc %__builddir/doc/html/}
 
 %files devel
 %_datadir/pkgconfig/%name.pc
@@ -145,6 +150,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Thu Jan 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Tue May 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
 - 1.20.3
 

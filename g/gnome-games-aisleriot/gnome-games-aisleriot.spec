@@ -1,23 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
+%define _libexecdir %_prefix/libexec
 
 %define _name aisleriot
 %define ver_major 3.22
-%define _libexecdir %_prefix/libexec
+%define xdg_name org.gnome.Aisleriot
 
 # fixed, kde, pysol, svg-rsvg, svg-qtsvg
 # default: svg-rsvg
 %define default_theme_format svg-rsvg
-%def_enable theme_kde
+%def_disable theme_kde
+%def_enable check
 
 Name: gnome-games-%_name
 Version: %ver_major.35
-Release: alt1
+Release: alt2
 
 Summary: A collection of card games
 Group: Games/Cards
 License: GPL-3.0-or-later and GFDL-1.3-or-later
 Url: https://wiki.gnome.org/Apps/Aisleriot
+
+Vcs: https://gitlab.gnome.org/GNOME/aisleriot.git
 
 %if_disabled snapshot
 Source: https://gitlab.gnome.org/GNOME/%_name/-/archive/%version/%_name-%version.tar.gz
@@ -26,11 +30,11 @@ Source: %_name-%version.tar
 %endif
 
 Obsoletes: gnome-games-sol
-Provides:  gnome-games-sol = %version-%release
-Provides:  %_name = %version-%release
+Provides:  gnome-games-sol = %EVR
+Provides:  %_name = %EVR
 
 Requires: pysol-cardsets
-%{?_enable_theme_kde:Requires: kde5-carddecks}
+%{?_enable_theme_kde:Requires: kde-carddecks}
 
 %define glib_ver 2.32.0
 %define gtk_ver 3.18.0
@@ -38,11 +42,13 @@ Requires: pysol-cardsets
 %define guile_ver 22
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: /proc meson guile%guile_ver guile%guile_ver-devel
-BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver librsvg-devel libcanberra-gtk3-devel
-BuildRequires: libICE-devel libSM-devel
-%{?_enable_theme_kde:BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel kde5-carddecks libxml2-devel}
+BuildRequires: /proc meson gcc-c++ yelp-tools
+BuildRequires: guile%guile_ver guile%guile_ver-devel
+BuildRequires: libgio-devel >= %glib_ver libxml2-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver librsvg-devel
+BuildRequires: libcanberra-gtk3-devel
+%{?_enable_theme_kde:BuildRequires: qt6-base-devel qt6-svg-devel kde-carddecks}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 AisleRiot also known as Solitaire or sol is a collection of over 80 card games
@@ -63,6 +69,9 @@ which are easy to play with the aid of a mouse.
 %meson_install
 %find_lang --with-gnome %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
 %_bindir/sol
 %_libdir/%_name/
@@ -72,13 +81,19 @@ which are easy to play with the aid of a mouse.
 %_datadir/%_name/
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/glib-2.0/schemas/org.gnome.Patience.WindowState.gschema.xml
-%_datadir/metainfo/sol.metainfo.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man6dir/sol.*
 %doc README* TODO COPYING.README
 
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 3.22.35-alt2
+- updated to 3.22.35-27-gf06e69fc
+- disabled obsolete kde5 card themes support (ALT #57630),
+  prepared for kde6 ones (see "update-to-qt6" branch)
+- fixed BR, added Vcs tag
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.22.35-alt1
 - 3.22.35
 

@@ -3,6 +3,7 @@
 %define ver_major 48
 %define beta %nil
 
+%def_disable libcap_ng
 %def_disable gtk_doc
 %def_disable debug
 %def_disable valgrind
@@ -15,7 +16,7 @@
 
 Name: gnome-keyring
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt2%beta
 
 Summary: %name is a password keeper for GNOME
 License: GPL-2.0 and LGPL-2.1
@@ -40,6 +41,8 @@ Source: %name-%version%beta.tar
 Requires(post): libcap-utils
 Requires: p11-kit >= %p11kit_ver
 
+Conflicts: oo7
+
 BuildRequires(pre): rpm-macros-meson rpm-macros-pam %{?_enable_systemd:rpm-build-systemd}
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: gtk-doc xsltproc
@@ -48,7 +51,7 @@ BuildRequires: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
 BuildRequires: pkgconfig(gcr-base-3) >= %gcr_ver
 BuildRequires: libtasn1-utils
-BuildRequires: libcap-ng-devel
+%{?_enable_libcap_ng:BuildRequires: libcap-ng-devel}
 %{?_enable_pam:BuildRequires: libpam-devel}
 %{?_enable_valgrind:BuildRequires: valgrind}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -91,6 +94,7 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
     %{subst_enable_meson_bool debug debug-mode} \
     %{subst_enable_meson_feature systemd systemd} \
     %{subst_enable_meson_feature selinux selinux} \
+    %{subst_enable_meson_feature libcap_ng libcap-ng} \
     %{subst_enable_meson_bool pam pam} \
     %{subst_enable_meson_bool ssh ssh-agent} \
     %{subst_enable_meson_bool man manpage}
@@ -106,8 +110,9 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
 %check
 %__meson_test
 
+%{?_enable_libcap_ng:
 %post
-setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
+setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:}
 
 %files -f %name.lang
 %_bindir/gnome-keyring
@@ -143,6 +148,10 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %endif
 
 %changelog
+* Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt2
+- updated to 48.0-23-gc814a0dc
+- added "Conflicts" to oo7
+
 * Tue Oct 28 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
 - disabled obsolete ssh support
 
