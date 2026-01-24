@@ -1,9 +1,10 @@
 %def_with check
+ExcludeArch: %ix86
 Name: zoryn
-Version: 0.11.0
-Release: alt1
+Version: 0.12.0
+Release: alt2
 Summary: Maintainer assistant for ALT Linux package maintenance
-Group: Development/ML
+Group: System/Configuration/Packaging
 License: GPL-2.0-or-later
 Url: https://altlinux.space/rider/zoryn
 VCS: https://altlinux.space/rider/zoryn
@@ -31,7 +32,9 @@ BuildRequires: libev-devel
 BuildRequires: ocaml-alcotest-devel >= 1.7.0
 BuildRequires: git-core
 BuildRequires: git-subtree
+BuildRequires: gear
 BuildRequires: /dev/pts
+BuildRequires: /proc
 %endif
 
 Requires: gear
@@ -92,6 +95,21 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Jan 24 2026 Anton Farygin <rider@altlinux.ru> 0.12.0-alt2
+- excluded 32-bit architectures (unstable, no real-world usage)
+
+* Fri Jan 24 2026 Anton Farygin <rider@altlinux.org> 0.12.0-alt1
+- added 'zoryn builder copy' for copying files into/from hasher chroot
+- added 'submit --replace' to replace subtask in existing task
+- added 'submit --dry-run' to preview actions without executing
+- added '--no-edit-commit' option to submit, task rebuild, task batch
+- changed 'submit --with' to auto-replace subtask if same tag exists
+- removed 'task replace' command (use 'submit --replace' instead)
+- fixed build with ppxlib 0.37.0
+- fixed error messages for common exceptions
+- fixed task download to auto-create destination directory
+- fixed task rebuild topological sorting with cycle handling
+
 * Wed Jan 22 2026 Anton Farygin <rider@altlinux.org> 0.11.0-alt1
 - added 'zoryn task test-rebuild' for testing rebuilds with dependencies
 - added 'zoryn builder remove' for deleting builder configs
