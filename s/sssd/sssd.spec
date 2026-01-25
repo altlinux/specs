@@ -6,10 +6,12 @@
 %def_with samba
 %def_without gdm_pam_extensions
 %def_disable systemtap
+%def_with subid
+%def_with faketime
 
 Name: sssd
-Version: 2.9.7
-Release: alt7
+Version: 2.9.8
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -113,6 +115,12 @@ BuildRequires: gdm-libs-devel
 %endif
 BuildRequires: libjansson-devel
 BuildRequires: libjose-devel
+%if_with subid
+BuildRequires: libsubid-devel
+%endif
+%if_with faketime
+BuildRequires: libfaketime
+%endif
 
 %if_with check
 BuildRequires: /proc /dev/pts
@@ -493,6 +501,7 @@ sed -i -e '/^\s\+pam-srv-tests\s\+\\$/d' Makefile.am
     --disable-rpath \
     --disable-static \
     %{subst_with kcm} \
+    %{subst_with subid} \
     %{subst_with samba} \
     %{?!_enable_systemtap:--disable-systemtap} \
     --without-python2-bindings \
@@ -785,6 +794,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_libdir/cifs-utils/cifs_idmap_sss.so
 %_altdir/cifs-idmap-plugin-sss
 %_libdir/%name/modules/sssd_krb5_localauth_plugin.so
+%if_with subid
+%_libdir/libsubid_sss.so
+%endif
 %_man8dir/pam_sss*
 %_mandir/*/man8/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
@@ -923,6 +935,30 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Jan 23 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt1
+- Update to latest 2.9 LTM release.
+- Enable build with subid ranges support.
+- Major fixes from upstream (GitHub#8209, GitHub#8184, GitHub#8253, GitHub#8257,
+                             GitHub#8260, GitHub#8273, GitHub#8311, GitHub#8302,
+                             GitHub#8327, GitHub#8347, GitHub#8380, GitHub#8249,
+                             GitHub#8229, GitHub#8317, GitHub#8274, GitHub#8276)
+  + Improved DN filtering in IPA during ipa_add_trusted_memberships_send().
+  + Fixed non-posix groups incorrectly storing gid=0 in cache.
+  + Added SUBID support to the LDAP provider.
+  + Fixed handling of empty trusts in ipa_get_trust_type().
+  + Disabled 'session_provider' by default in configuration.
+  + Removed deprecated 'ipa_enable_dns_sites' option (IPA).
+  + Restricted root from accessing arbitrary KCM caches (security fix).
+  + Fixed SSSD on IPA when using short user names.
+  + Fixed pac_check=no_check behavior in PAC module.
+  + IPA S2N no longer updates user-private-groups.
+  + Increased SBUS_MESSAGE_TIMEOUT to 5 minutes for better robustness.
+  + Filtered invalid IPv6 addresses for DNS updates.
+  + krb5_child now uses ERR_CHECK_NEXT_AUTH_TYPE instead of EAGAIN.
+  + Clarified sssd-idp package description.
+  + Fixed IPA trust handling with unknown trust type errors.
+  + Included local fixes and improvements for Passkey authentication.
+
 * Mon Jan 19 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt7
 - Move system-auth-sss local user check to system-check-localuser (hybrid
   authentication with conditional branching of determines the authentication
