@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -69,15 +69,18 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %preun_systemd %{name}d.service
 
 %files
-%doc API.md LICENSE README.md
+%doc LICENSE README.md
 %_bindir/%name
 %_desktopdir/io.github.ilya_zlobintsev.LACT.desktop
-%_pixmapsdir/io.github.ilya_zlobintsev.LACT.png
+%_iconsdir/hicolor/512x512/apps/io.github.ilya_zlobintsev.LACT.png
 %_iconsdir/hicolor/scalable/apps/io.github.ilya_zlobintsev.LACT.svg
 %_datadir/metainfo/io.github.ilya_zlobintsev.LACT.metainfo.xml
 %_unitdir/%{name}d.service
 
 %changelog
+* Sun Jan 25 2026 Nazarov Denis <nenderus@altlinux.org> 0.8.4-alt1
+- New version 0.8.4.
+
 * Sat Nov 22 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.3-alt1
 - New version 0.8.3.
 
