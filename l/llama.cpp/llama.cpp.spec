@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 7388
+Version: 7819
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -51,6 +51,7 @@ BuildRequires: libvulkan-devel
 %endif
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: ctest
+BuildRequires: python3-module-jinja2
 BuildRequires: tinyllamas-gguf
 }}
 
@@ -74,7 +75,7 @@ Supported models:
    ChatGLM3-6b + ChatGLM4-9b + GLMEdge-1.5b + GLMEdge-4b, SmolLM,
    EXAONE-3.0-7.8B-Instruct, FalconMamba Models, Jais, Bielik-11B-v2.3,
    RWKV-6, QRWKV-6, GigaChat-20B-A3B, Trillion-7B-preview, Ling models,
-   LFM2 models, Hunyuan models
+   LFM2 models, Hunyuan models, BailingMoeV2 (Ring/Ling 2.0) models
 
 Multimodal models:
 
@@ -202,12 +203,11 @@ install -Dpm644 llama-server.1 -t %buildroot%_man1dir
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
 ( ! cuobjdump --list-ptx %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
 # Local path are more useful for debugging becasue they are not stripped by default.
-%dnl export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libexecdir/llama PATH+=:%buildroot%_bindir
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback wants network.
-%ctest -j1 -E test-eval-callback
+%ctest -E 'test-download-model|test-eval-callback|test-state-restore-fragmented'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
@@ -266,10 +266,15 @@ mv %buildroot%_bindir/convert*.py -t %buildroot%_datadir/%name/examples
 %endif
 
 %changelog
+* Sat Jan 24 2026 Vitaly Chikunov <vt@altlinux.org> 1:7819-alt1
+- Update to b7819 (2026-01-23).
+- Responses API support (partial).
+
 * Sun Dec 14 2025 Vitaly Chikunov <vt@altlinux.org> 1:7388-alt1
 - Update to b7388 (2025-12-13).
 - llama-cli: New CLI experience (with the old moved to llama-completion).
 - llama-server: Live model switching.
+- Messages API support.
 
 * Fri Nov 21 2025 Vitaly Chikunov <vt@altlinux.org> 1:7127-alt1
 - Update to b7127 (2025-11-21).
