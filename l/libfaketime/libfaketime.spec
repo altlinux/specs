@@ -1,6 +1,6 @@
 Name: libfaketime
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -48,11 +48,11 @@ FAKETIME_COMPILE_CFLAGS="BOGUS"
     echo "force_monotonic"
     export FAKETIME_COMPILE_CFLAGS="-DFORCE_MONOTONIC_FIX"
 %endif
-%ifarch ppc64le
+%ifarch ppc64le riscv64
     echo "force_monotonic and pthread_nonver"
     export FAKETIME_COMPILE_CFLAGS="-DFORCE_MONOTONIC_FIX -DFORCE_PTHREAD_NONVER"
 %endif
-%ifarch armh aarch64 %e2k riscv64
+%ifarch armh aarch64 %e2k
     unset FAKETIME_COMPILE_CFLAGS
 %endif
 %ifarch loongarch64
@@ -93,6 +93,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Sun Jan 25 2026 Ivan A. Melnikov <iv@altlinux.org> 0.9.11-alt2
+- NMU: fixed FTBFS on riscv64
+
 * Fri Jan 23 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.9.11-alt1
 - new version 0.9.11
 
