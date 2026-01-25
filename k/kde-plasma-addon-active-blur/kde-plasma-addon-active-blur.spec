@@ -1,12 +1,13 @@
 %define plugin_id a2n.blur
 
 Name: kde-plasma-addon-active-blur
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 Summary: kde plasma wallpaper plugin that blur the wallpaper when a window is active
 License: GPL-3.0
 Group: Graphical desktop/KDE
 Url: https://github.com/bouteillerAlan/blurredwallpaper
+VCS: https://github.com/bouteillerAlan/blurredwallpaper
 
 Source: %name-%version.tar
 
@@ -29,6 +30,9 @@ cp -pr %plugin_id %buildroot%_datadir/plasma/wallpapers
 %_datadir/plasma/wallpapers/%plugin_id
 
 %changelog
+* Sun Jan 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.0-alt1
+- Updated to version 3.5.0.
+
 * Sat Nov 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 3.4.0-alt1
 - Updated to version 3.4.0.
 
