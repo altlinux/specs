@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: crush
-Version: 0.33.3
+Version: 0.35.0
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -66,6 +66,9 @@ go test ./...
 %_man1dir/%name.1*
 
 %changelog
+* Sun Jan 25 2026 Andrey Limachko <liannnix@altlinux.org> 0.35.0-alt1
+- Update to v0.35.0.
+
 * Mon Jan 19 2026 Andrey Limachko <liannnix@altlinux.org> 0.33.3-alt1
 - Update to v0.33.3.
 
