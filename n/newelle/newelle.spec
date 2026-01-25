@@ -2,7 +2,7 @@
 
 Name: newelle
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Ultimate Virtual Assistant
 License: GPL-3.0-or-later
@@ -57,6 +57,8 @@ Requires: git
 Requires: wget
 Requires: libportaudio2
 Requires: /usr/bin/xdg-open
+Requires: python3(pip)
+Requires: lsb-release
 
 BuildArch: noarch
 
@@ -105,6 +107,15 @@ chmod a+x %buildroot%_bindir/newelle
 
 %find_lang %name
 
+%post
+echo "WARNING: this is a modern application for working with AI LLMs."
+echo "         On the first launch it will download a set of Python modules"
+echo "         into isolated Python virtual environment at ~/.config/Newelle"
+echo "         and later it may/will download local LLMs files and extensions"
+echo "         into ~/.cache/Newelle/ and ~/.cache/huggingface depending on"
+echo "         user preferences."
+echo "         Please note that application can't work without these files."
+
 %check
 %meson_test
 
@@ -120,5 +131,11 @@ chmod a+x %buildroot%_bindir/newelle
 %_datadir/newelle/*
 
 %changelog
+* Sun Jan 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt2
+- Inform user about downloading data into home folder (closes: #57637):
+  + Use Python3 pip from the repository.
+  + Added post-install warning message about downloading files into home folder.
+- Added missed lsb-release dependency.
+
 * Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
