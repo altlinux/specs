@@ -1,5 +1,5 @@
 Name: kernel-image-6.19
-Release: alt0.rc6
+Release: alt0.rc7
 %define kernel_src_version	6.18
 %define kernel_base_version	6.19
 %define kernel_sublevel	.0
@@ -590,6 +590,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jan 25 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc7
+- Update to v6.19-rc7 (2026-01-25).
+- config: Enable CONFIG_PINCTRL_AMDISP=m.
+
 * Mon Jan 19 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc6
 - Update to v6.19-rc6 (2026-01-18).
 
