@@ -5,7 +5,7 @@
 
 Name: ocaml-%pkgname
 Version: 1.2.2
-Release: alt4
+Release: alt5
 Summary: OCaml module for Functional Reactive Programming (FRP)
 License: BSD
 Group: Development/ML
@@ -13,7 +13,8 @@ Url: https://erratique.ch/software/react
 VCS: https://github.com/dbuenzli/react
 Source: %name-%version.tar
 BuildPreReq: rpm-build-ocaml >= 1.6
-BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib-devel opam ocaml-topkg-devel
+BuildRequires: ocaml ocaml-ocamlbuild ocaml-findlib-devel ocaml-topkg-devel
+BuildRequires: ocaml-opam-installer
 
 %description
 React is an OCaml module for functional reactive programming (FRP).
@@ -60,6 +61,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 1.2.2-alt5
+- changed BR - use ocaml-opam-installer instead of the opam
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.2.2-alt4
 - changed BR - use ocaml-topkg-devel instead of the ocaml-topkg
 
