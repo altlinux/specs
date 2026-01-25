@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,10 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Jan 23 2026 Alexey Appolonov <alexey@altlinux.org> 0.12.1-alt1
+- A correct handling of a couple of special situations in which a task ID has
+  been specified.
+
 * Thu Nov 20 2025 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
 - New ability to add data that corresponds to left/right boundaries of a
   specified range to the results;
