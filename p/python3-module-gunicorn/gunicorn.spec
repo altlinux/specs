@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 23.0.0
+Version: 24.0.0
 Release: alt1
 
 Summary: WSGI HTTP Server for UNIX
@@ -28,6 +28,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-gevent
 BuildRequires: python3-module-eventlet
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
@@ -59,6 +60,9 @@ ln -s gunicorn %buildroot%_bindir/gunicorn.py3
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 23 2026 Anton Vyatkin <toni@altlinux.org> 24.0.0-alt1
+- New version 24.0.0.
+
 * Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 23.0.0-alt1
 - New version 23.0.0 (Fixes CVE-2024-1135) (Closes: #52085).
 - Migrate to pyproject macroses.
