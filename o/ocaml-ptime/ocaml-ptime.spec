@@ -1,7 +1,7 @@
 %define libname ptime
 Name: ocaml-%libname
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: POSIX time for OCaml
 License: ISC
 Group: Development/ML
@@ -9,7 +9,8 @@ Url: http://erratique.ch/software/ptime
 VCS:https://github.com/dbuenzli/ptime
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild-devel ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild-devel ocaml-topkg-devel ocaml >= 4.07.1
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-compiler-libs
 
 %package devel
@@ -51,6 +52,9 @@ ocaml pkg/pkg.ml test
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 1.2.0-alt3
+- changed BR - use ocaml-opam-installer instead of the opam
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 
