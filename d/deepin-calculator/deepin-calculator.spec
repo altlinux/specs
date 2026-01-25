@@ -2,7 +2,7 @@
 
 Name: deepin-calculator
 Version: 6.5.31
-Release: alt1
+Release: alt2
 
 Summary: An easy to use calculator for ordinary users
 
@@ -23,7 +23,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): desktop-file-utils
-BuildRequires: dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdtk6widget-devel
+BuildRequires: dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdtk6widget-devel libwayland-client-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -72,6 +72,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Sun Jan 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.31-alt2
+- Fixed build on dtk 6.7.31.
+
 * Fri Dec 12 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.31-alt1
 - New version 6.5.31.
 
