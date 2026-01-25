@@ -2,7 +2,7 @@
 %define app_id ru.ximper.Herbarium
 
 Name: herbarium
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Utility for managing mods for the game Everlasting Summer
@@ -72,9 +72,15 @@ Group: Other
 
 %files cli
 %_bindir/%name-cli
+%_datadir/zsh/site-functions/_herbarium-cli
+%_datadir/bash-completion/completions/herbarium-cli
+%_datadir/fish/vendor_completions.d/herbarium-cli.fish
 
 %files common -f %name.lang
 
 %changelog
+* Sat Jan 24 2026 David Sultaniiazov <x1z53@altlinux.org> 0.4.0-alt1
+- Update to 0.4.0.
+
 * Thu Dec 25 2025 David Sultaniiazov <x1z53@altlinux.org> 0.3.0-alt1
 - Initial build.
