@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.6
+Version: 14.7
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -119,6 +119,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Sun Jan 25 2026 Nikolay Strelkov <snk@altlinux.org> 14.7-alt1
+- New version 14.7.
+
 * Fri Dec 05 2025 Nikolay Strelkov <snk@altlinux.org> 14.6-alt1
 - New version 14.6.
 
