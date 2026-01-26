@@ -1,14 +1,14 @@
 Name: scdoc
-Version: 1.11.3
+Version: 1.11.4
 Release: alt1
-License: MIT
+
 Summary: Tool for generating roff manual pages
-URL: https://git.sr.ht/~sircmpwn/scdoc
+License: MIT
 Group: Development/Other
+Url: https://git.sr.ht/~sircmpwn/scdoc
+Vcs: https://git.sr.ht/~sircmpwn/scdoc
 
 Source: %name-%version.tar
-
-BuildRequires: gcc
 
 %description
 scdoc is a tool designed to make the process of writing man pages more
@@ -44,6 +44,9 @@ sed -i 's/\tinstall/\t$(INSTALL)/g' Makefile
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jan 26 2026 Ulysses Apokin <ulysses@altlinux.org> 1.11.4-alt1
+- New version (1.11.4)
+
 * Wed Dec 25 2024 Ulysses Apokin <ulysses@altlinux.org> 1.11.3-alt1
 - New version (1.11.3)
 
