@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -62,6 +62,10 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Mon Jan 26 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.4-alt1
+- Add default value for use-rfc2307 parameter
+- Fix incorrect device name in setup network manager
+
 * Thu Jan 22 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.3-alt1
 - Add Systemd resolved settings (Closes: #57497)
 - Add Network Manager settings
