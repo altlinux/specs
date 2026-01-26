@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt99
+Release: alt100
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -263,6 +263,11 @@ gettextize --force --quiet --no-changelog --symlink
 %add_optflags -std=gnu++20
 %ifarch %e2k
 %remove_optflags -Wno-error
+# REMINDER: drop the substitutions when we increase sover (can break ABI or API)
+find -type f -'(' -name '*.cc' -or -name '*.h' -')' -print0 \
+| xargs -0 sed -i -re \
+'s,std::(optional|nullopt|is_unsigned_v),std::experimental::\1,g;
+ s,^(#[[:blank:]]*include[[:blank:]]*)<(optional|type_traits)>,\1<experimental/\2>,'
 %endif
 
 %configure --includedir=%_includedir/apt-pkg --enable-Werror %{subst_enable static}
@@ -604,6 +609,13 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Sun Jan 25 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt100
+- e2k: Fixed the compilation of dependent packages with unchanged flags.
+  (Restored the e2k source code adaptations; simply removing them in
+  0.5.15lorg2-alt93 was wrong due to possible ABI or API breakage.)
+- Run all the tests with some long pkgprioties file (as a simplistic way
+  to make sure that the problem from 0.5.15lorg2-alt97 doesn't appear).
+
 * Thu Jan 15 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt99
 - basic-checkinstall subpkg:
   + Do the testing with an installed GPG key in this subpkg.
