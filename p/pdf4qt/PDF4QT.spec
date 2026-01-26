@@ -1,5 +1,7 @@
+%define soname 1
+
 Name: pdf4qt
-Version: 1.5.3.0
+Version: 1.5.3.1
 Release: alt1
 
 Summary: Open source PDF editor
@@ -34,16 +36,24 @@ Summary: Development files for %name
 This package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libpdf4qtlibcore
+%package -n libpdf4qtlibcore%soname
 Group: System/Libraries
 Summary: %name library
-%description -n libpdf4qtlibcore
+Obsoletes: libpdf4qtlibcore <= 1.5.3.0-alt1
+%description -n libpdf4qtlibcore%soname
 %name library.
 
-%package -n libpdf4qtlibwidgets
+%package -n libpdf4qtlibwidgets%soname
 Group: System/Libraries
 Summary: %name library
-%description -n libpdf4qtlibwidgets
+Obsoletes: libpdf4qtlibwidgets <= 1.5.3.0-alt1
+%description -n libpdf4qtlibwidgets%soname
+%name library.
+
+%package -n libpdf4qtlibgui%soname
+Group: System/Libraries
+Summary: %name library
+%description -n libpdf4qtlibgui%soname
 %name library.
 
 %prep
@@ -67,8 +77,6 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' 
 %doc *.md *.txt LICENSE
 %_bindir/*
 %_libdir/%name
-%_libdir/libPdf4QtLibGui.so.%version
-%_libdir/libPdf4QtLibGui.so
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*.appdata.xml
@@ -78,14 +86,21 @@ subst 's|applicationDirectory.absolutePath()|"%_datadir/Pdf4qt/translations/"|' 
 %_includedir/*/*.h
 %_libdir/libPdf4QtLibCore.so
 %_libdir/libPdf4QtLibWidgets.so
+%_libdir/libPdf4QtLibGui.so
 
-%files -n libpdf4qtlibcore
-%_libdir/libPdf4QtLibCore.so.%version
+%files -n libpdf4qtlibgui%soname
+%_libdir/libPdf4QtLibGui.so.%{soname}.*
 
-%files -n libpdf4qtlibwidgets
-%_libdir/libPdf4QtLibWidgets.so.%version
+%files -n libpdf4qtlibcore%soname
+%_libdir/libPdf4QtLibCore.so.%{soname}.*
+
+%files -n libpdf4qtlibwidgets%soname
+%_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Mon Jan 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.3.1-alt1
+- 1.5.3.0 -> 1.5.3.1
+
 * Mon Jan 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.3.0-alt1
 - 1.5.2.0 -> 1.5.3.0
 
