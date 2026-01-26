@@ -1,7 +1,7 @@
 %define pypi_name CustomTkinter
 
 Name:    python3-module-%pypi_name
-Version: 5.2.2
+Version: 5.3.0
 Release: alt1
 
 Summary: A modern and customizable python UI-library based on Tkinter
@@ -42,5 +42,8 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+
 * Thu Nov 07 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.2-alt1
 - Initial build for Sisyphus (Closes: #51982).
