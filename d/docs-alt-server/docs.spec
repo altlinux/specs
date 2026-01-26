@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jan 26 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt4
+- update to ALT Server 11.1RC
+- add alt-services
+
 * Tue Nov 25 2025 Elena Mishina <lepata@altlinux.org> 11.1-alt3
 - update SambaDC, PBS, OpenUDS, Nextcloud
 - add etcnet
