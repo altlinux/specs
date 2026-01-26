@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-one docs-alt-virtualization-pve docs-alt-mobile docs-alt-platform
 
 Name: docs-%variant
-Version: 11.0
-Release: alt3
+Version: 11.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jan 26 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt1
+- add: laps, alt-services
+- fix typos (closes #57404)
+
 * Thu Nov 27 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt3
 - fix dhcp script (closes #56174)
 - fix sssd settings (closes #56177)
