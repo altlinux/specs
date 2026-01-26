@@ -6,16 +6,11 @@
 
 %define webrtc_basedir %_builddir
 %define webrtc_tar webrtc-b99fd2c-6
-%ifarch x86_64
 %define webrtc_source %SOURCE4
 %define webrtc_dir %webrtc_basedir/linux-x64-release
-%else
-%define webrtc_source %SOURCE5
-%define webrtc_dir %webrtc_basedir/linux-arm64-release
-%endif
 
 Name: zed
-Version: 0.217.3
+Version: 0.220.6
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -24,14 +19,13 @@ Group: Editors
 Url: https://zed.dev/
 Vcs: https://github.com/zed-industries/zed
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: config.toml
 Source3: update-metadata-releases.py
 Source4: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
-Source5: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-arm64-release.zip
 Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
@@ -103,6 +97,10 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Mon Jan 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.220.6-alt1
+- Updated to 0.220.6.
+- Excluded aarch64 architecture.
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 0.217.3-alt1
 - Updated to 0.217.3.
 
