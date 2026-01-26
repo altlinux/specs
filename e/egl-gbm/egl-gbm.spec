@@ -3,7 +3,7 @@
 %define libnvidia_egl_gbm libnvidia-egl-gbm%sover
 
 Name: egl-gbm
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Group: System/Libraries
@@ -52,6 +52,9 @@ GBM EGL External Platform library development package.
 %_libdir/libnvidia-egl-gbm.so.*
 
 %changelog
+* Mon Jan 26 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1
+- new version
+
 * Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
 - new version
 
