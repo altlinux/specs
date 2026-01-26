@@ -1,10 +1,10 @@
-%global import_path github.com/traefik/traefik
+%global import_path github.com/traefik/traefik/v3
 
 %global _unpackaged_files_terminate_build 1
 %def_with prebuild_webui
 
 Name: traefik
-Version: 3.6.5
+Version: 3.6.7
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -104,9 +104,9 @@ mkdir -p dist
 
 go generate
 GOGC=off go build -ldflags " -w  \
-    -X %import_path/v3/pkg/version.Version=$VERSION \
-    -X %import_path/v3/pkg/version.Codename=$CODENAME \
-    -X %import_path/v3/pkg/version.BuildDate=$DATE \
+    -X %import_path/pkg/version.Version=$VERSION \
+    -X %import_path/pkg/version.Codename=$CODENAME \
+    -X %import_path/pkg/version.BuildDate=$DATE \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
@@ -149,6 +149,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Jan 26 2026 Alexey Shabalin <shaba@altlinux.org> 3.6.7-alt1
+- 3.6.7 (Fixes: CVE-2026-22045)
+
 * Wed Dec 24 2025 Alexey Shabalin <shaba@altlinux.org> 3.6.5-alt1
 - 3.6.5 (Fixes: CVE-2025-66490, CVE-2025-66491)
 
