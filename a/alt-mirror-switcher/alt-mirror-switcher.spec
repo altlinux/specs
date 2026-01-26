@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,10 @@ fi
 %_bindir/ams
 
 %changelog
+* Sat Jan 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.6-alt1
+- cli: fixed: check branch (ALT #57565)
+- cli: fixed: check ams lists
+
 * Sat Jan 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.5-alt1
 - excluded: ftp.heanet.ie (HEAnet, Ireland)
 
