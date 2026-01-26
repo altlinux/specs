@@ -1,9 +1,11 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 # $Id: alterator-control.spec,v 1.15 2006/04/28 10:48:26 inger Exp $ 
 
+%define _unpackaged_files_terminate_build 1
+
 Name: alterator-wizardface
-Version: 2.3
-Release: alt2
+Version: 2.4
+Release: alt1
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
@@ -31,6 +33,8 @@ BuildPreReq: alterator >= 5.0 guile
 # Automatically added by buildreq on Mon Jul 11 2005 (-bi)
 BuildRequires: alterator
 
+Requires: xbindkeys
+
 %description
 alterator's wizard like module aggregator
 
@@ -56,6 +60,17 @@ alterator's wizard like module aggregator
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Thu Jan 22 2026 Paul Wolneykien <manowar@altlinux.org> 2.4-alt1
+- Add captions for Help and Accessibility buttons.
+- Toggle screen reader using Ctrl+R keystroke.
+- Added installer-a11yctl CLI util to control the accessibility
+  components.
+- Run the screen reader if specified in the kernel command line
+  (use a11y=reader option for that).
+- Adjust the ALSA configuration when starting the screen reader.
+- Added the accessibility backend and popup.
+- Added the "Accessibility options" button.
+
 * Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 2.3-alt2
 - NMU: Remove alterator-wizardface-usermode subpackage (closes: 54142).
 
