@@ -1,13 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name Genshi
 %define pypi_nname genshi
-%define mod_name %pypi_nname
 
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.7.9
-Release: alt2.1
+Version: 0.7.10
+Release: alt1
 
 Summary: A toolkit for stream-based generation of output for the web
 
@@ -16,8 +14,6 @@ Group: Development/Python3
 Url: http://genshi.edgewall.org/
 Vcs: https://github.com/edgewall/genshi
 Source: %name-%version.tar
-# https://github.com/edgewall/genshi/pull/86
-Patch0: genshi-0.7.9-Switch-tests-to-pytest.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -36,7 +32,6 @@ feature is a template language, which is heavily inspired by Kid.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -46,13 +41,16 @@ feature is a template language, which is heavily inspired by Kid.
 %python3_prune
 
 %check
-%pyproject_run_pytest -vra %mod_name
+%pyproject_run_pytest -vra %pypi_nname
 
 %files
-%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_nname/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.10-alt1
+- Automatically updated to 0.7.10.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.7.9-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
