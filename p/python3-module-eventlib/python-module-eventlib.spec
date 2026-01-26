@@ -1,7 +1,7 @@
 %define  modulename eventlib
 
 Name:    python3-module-%modulename
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Networking library for SIP SIMPLE Client SDK
@@ -19,7 +19,6 @@ BuildArch: noarch
 
 Source: %modulename-%version.tar
 Patch1: alt-remove-obsoleted-hubs.patch
-Patch2: eventlib-replace-popen2-by-subprocess.patch
 
 %add_python3_req_skip stackless py.magic
 %py3_requires greenlet
@@ -36,7 +35,6 @@ io operations appear blocking at the source code level.
 rm -f eventlib/support/stackles{ss,pypys}.py
 rm -f eventlib/hubs/{libev,libevent}.py
 %patch1 -p1
-%patch2 -p1
 
 %build
 %python3_build
@@ -49,6 +47,9 @@ rm -f eventlib/hubs/{libev,libevent}.py
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jan 24 2026 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
+- New version.
+
 * Wed May 26 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
 - New version.
 
