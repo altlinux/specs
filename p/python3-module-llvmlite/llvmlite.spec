@@ -11,7 +11,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.45.1
+Version: 0.46.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -75,6 +75,9 @@ export CC=/usr/bin/clang-%{clang_version}
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
+- Automatically updated to 0.46.0.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.45.1-alt1
 - Automatically updated to 0.45.1.
 
