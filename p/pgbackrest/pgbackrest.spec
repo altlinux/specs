@@ -1,6 +1,6 @@
 Name:    pgbackrest
-Version: 2.57.0
-Release: alt2
+Version: 2.58.0
+Release: alt1
 
 Summary: Reliable PostgreSQL Backup & Restore
 License: MIT
@@ -65,6 +65,9 @@ cp %SOURCE1 %buildroot/%_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/%name.conf
 
 %changelog
+* Mon Jan 26 2026 Alexei Takaseev <taf@altlinux.org> 2.58.0-alt1
+- 2.58.0
+
 * Thu Oct 23 2025 Kirill Izmestev <felixz@altlinux.org> 2.57.0-alt2
 - Add config and directories for backups (ALT#54317).
 
