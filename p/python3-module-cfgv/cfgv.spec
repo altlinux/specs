@@ -3,8 +3,8 @@
 %define  modulename cfgv
 
 Name:    python3-module-%modulename
-Version: 3.4.0
-Release: alt1.1
+Version: 3.5.0
+Release: alt1
 
 Summary: Validate configuration and produce human readable error messages
 
@@ -51,6 +51,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
