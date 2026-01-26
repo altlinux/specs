@@ -6,17 +6,17 @@ BuildRequires: jpackage-11
 %global srcname metro-xmlstreambuffer
 
 Name:           xmlstreambuffer
-Version:        1.5.10
-Release:        alt1_5jpp11
+Version:        2.1.0
+Release:        alt1
 Summary:        Stream Based Representation for XML Infoset
-License:        BSD
+License:        BSD-3-Clause
 URL:            https://github.com/eclipse-ee4j/metro-xmlstreambuffer
 BuildArch:      noarch
 
 Source0:        https://github.com/eclipse-ee4j/metro-xmlstreambuffer/archive/%{version}/%{srcname}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun.activation:jakarta.activation)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
@@ -44,7 +44,7 @@ popd
 
 %build
 pushd streambuffer
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -DbuildNumber=unknown
+%mvn_build -j
 popd
 
 %install
@@ -57,6 +57,9 @@ popd
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Mon Jan 26 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.0-alt1
+- new version
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 1.5.10-alt1_5jpp11
 - update
 
