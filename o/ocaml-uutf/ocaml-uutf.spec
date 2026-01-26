@@ -1,16 +1,18 @@
 Name: ocaml-uutf
-Version: 1.0.3
-Release: alt4
+Version: 1.0.4
+Release: alt1
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
 Url: https://erratique.ch/software/uutf
+VCS: https://github.com/dbuenzli/uutf
 Source0: %name-%version.tar
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-result-devel
-BuildRequires: ocaml-topkg-devel opam
+BuildRequires: ocaml-topkg-devel
+BuildRequires: ocaml-opam-installer
 BuildRequires: rpm-build-ocaml >= 1.6
 
 %description
@@ -35,6 +37,7 @@ developing applications that use %name.
 
 %prep
 %setup
+sed -i 's,%%%%VERSION_NUM%%%%,%version,g' pkg/META
 
 %build
 ocaml pkg/pkg.ml build
@@ -52,6 +55,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc test/
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 1.0.4-alt1
+- 1.0.3 -> 1.0.4
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.0.3-alt4
 - changed BR - use ocaml-topkg-devel instead of the ocaml-topkg
 

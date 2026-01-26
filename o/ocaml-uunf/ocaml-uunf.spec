@@ -1,7 +1,7 @@
 %define libname uunf
 Name: ocaml-%libname
-Version: 16.0.0
-Release: alt2
+Version: 17.0.0
+Release: alt1
 Summary: Unicode text normalization for OCaml
 License: ISC
 Group: Development/ML
@@ -9,10 +9,10 @@ Url: https://erratique.ch/software/uunf
 VCS: https://github.com/dbuenzli/uunf
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.14.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.14.1
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-cmdliner-devel ocaml-result-devel ocaml-uucd-devel ocaml-uutf-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6
-
 
 %package devel
 Summary: Development files for programs which will use the BOS library
@@ -47,6 +47,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 17.0.0-alt1
+- 16.0.0 -> 17.0.0
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt2
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 

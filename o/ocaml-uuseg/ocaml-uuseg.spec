@@ -1,7 +1,7 @@
 %define libname uuseg
 Name: ocaml-%libname
-Version: 16.0.0
-Release: alt3
+Version: 17.0.0
+Release: alt1
 Summary: Unicode text segmentation for OCaml
 License: ISC
 Group: Development/ML
@@ -9,7 +9,7 @@ Url: https://erratique.ch/software/uuseg
 VCS: https://github.com/dbuenzli/uuseg
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.14.0
-BuildRequires: opam
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-topkg-devel
@@ -49,6 +49,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 17.0.0-alt1
+- 16.0.0 -> 17.0.0
+
 * Mon Jan 27 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt3
 - added ocaml-uucp-devel dependency to ocaml-uuseg-devel package
 

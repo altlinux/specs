@@ -1,6 +1,6 @@
 Name: ocaml-jsonm
 Version: 1.0.2
-Release: alt2
+Release: alt3
 Summary: Non-blocking streaming codec to decode and encode JSON
 License: ISC
 Group: Development/ML
@@ -10,7 +10,8 @@ Source0: %name-%version.tar
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild opam ocaml-topkg-devel
+BuildRequires: ocaml-ocamlbuild ocaml-topkg-devel
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-uutf-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 
@@ -52,6 +53,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc doc/
 
 %changelog
+* Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 1.0.2-alt3
+- changed BR - opam-installer was moved to ocaml-opam-installer package
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
 - updated BR to fix build with rpm-build-ocaml >= 1.7
 - fixed license

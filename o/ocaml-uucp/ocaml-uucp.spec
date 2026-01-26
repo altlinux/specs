@@ -1,7 +1,7 @@
 %define libname uucp
 Name: ocaml-%libname
-Version: 16.0.0
-Release: alt2
+Version: 17.0.0
+Release: alt1
 Summary: Unicode character properties for OCaml
 License: ISC
 Group: Development/ML
@@ -9,7 +9,7 @@ Url: https://erratique.ch/software/uucp
 VCS: https://github.com/dbuenzli/uucp
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.14.0
-BuildRequires: opam
+BuildRequires: ocaml-opam-installer
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-compiler-libs
 BuildRequires: ocaml-findlib-devel
@@ -35,12 +35,12 @@ files for developing applications that use %name.
 
 %prep
 %setup
+sed -i 's,%%%%VERSION%%%%,%version,g' pkg/META
 
 %build
 ocaml pkg/pkg.ml build --dev-pkg false  --with-uunf true  --with-cmdliner true --tests true
 
 %install
-sed -i 's,%%%%VERSION%%%%,%version,g' pkg/META
 opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %ocaml_find_files
 
@@ -51,6 +51,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 26 2026 Anton Farygin <rider@altlinux.org> 17.0.0-alt1
+- 16.0.0 -> 17.0.0
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt2
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 
