@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 10.0
+%define ver_major 10.1
 
 %def_disable bootstrap
 %def_enable check
@@ -49,6 +49,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Mon Jan 26 2026 Yuri N. Sedunov <aris@altlinux.org> 10.1.0-alt1
+- 10.1.0
+
 * Sun Dec 07 2025 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1
 - 10.0.0
 
