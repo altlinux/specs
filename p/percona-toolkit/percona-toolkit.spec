@@ -2,8 +2,8 @@
 %define import_path github.com/golang/dep
 
 Name: percona-toolkit
-Version: 3.7.0.1
-Release: alt1.1
+Version: 3.7.1
+Release: alt1
 
 Summary: Advanced MySQL and system command-line tools
 
@@ -114,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 3.7.1-alt1
+- 3.7.1.
+
 * Fri Aug 15 2025 L.A. Kostis <lakostis@altlinux.ru> 3.7.0.1-alt1.1
 - Update to 3.7.0-2:
   This release addresses multiple security vulnerabilities reported in Percona
