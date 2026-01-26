@@ -5,7 +5,7 @@
 
 Name: deepin-app-services
 Version: 1.0.29
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Service collection of DDE applications
@@ -24,7 +24,7 @@ BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: cmake libdtk6widget-devel libgtest-devel libcups-devel
+BuildRequires: cmake libdtk6widget-devel libgtest-devel libcups-devel libwayland-client-devel
 %if_with docs
 BuildRequires: doxygen dqt6-base-doc dqt6-tools-devel
 %endif
@@ -107,6 +107,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 1:1.0.29-alt3
+- Fixed build on dtk 6.7.31.
+
 * Mon Aug 25 2025 Leontiy Volodin <lvol@altlinux.org> 1:1.0.29-alt2
 - Reverted the stable version.
 - Fixed dde-dconfig-daemon startup.

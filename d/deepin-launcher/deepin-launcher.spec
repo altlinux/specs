@@ -4,7 +4,7 @@
 
 Name: deepin-launcher
 Version: 6.0.19
-Release: alt4
+Release: alt5
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -16,6 +16,7 @@ VCS: https://github.com/linuxdeepin/dde-launcher
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
@@ -46,6 +47,7 @@ The package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 export PATH=%_dqt5_bindir:$PATH
@@ -97,6 +99,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dde-launcher/*.h
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt5
+- Fixed build on dtk 6.7.31.
+
 * Mon Oct 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt4
 - Fixed build with dtk 5.7.23.
 - Added VCS tag.

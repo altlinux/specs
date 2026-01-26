@@ -4,7 +4,7 @@
 
 Name: deepin-desktop-theme
 Version: 1.1.27
-Release: alt1
+Release: alt2
 
 Summary: Deepin desktop themes
 
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libcups-devel dtk6-common-devel libdtk6core-devel libdtk6gui-devel libdtk6widget-devel
+BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libcups-devel dtk6-common-devel libdtk6core-devel libdtk6gui-devel libdtk6widget-devel libwayland-client-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel libstdc++-devel
 %else
@@ -130,6 +130,9 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %dir %_datadir/deepin-xdgicon-convert/translations/
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.27-alt2
+- Fixed build on dtk 6.7.31.
+
 * Tue Jan 13 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.27-alt1
 - New version 1.1.27.
 - Fixed xdgicon2dci startup.

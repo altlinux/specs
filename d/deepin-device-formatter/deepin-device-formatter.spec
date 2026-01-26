@@ -1,7 +1,7 @@
 %global repo dde-device-formatter
 
 Name: deepin-device-formatter
-Version: 1.5.2
+Version: 1.5.11
 Release: alt1
 
 Summary: Device formatter for Deepin Desktop Environment
@@ -9,13 +9,18 @@ Summary: Device formatter for Deepin Desktop Environment
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-device-formatter
-Vcs: git://github.com/linuxdeepin/dde-device-formatter.git
+VCS: https://github.com/linuxdeepin/dde-device-formatter
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dde-device-formatter/archive/%version/%repo-%version.tar.gz
+Source: %repo-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ cmake dqt6-base-devel dqt6-tools-devel deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libudisks2-qt6-devel
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires: gcc-c++ cmake dqt6-base-devel dqt6-tools-devel deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libudisks2-qt6-devel libwayland-client-devel
+
+Requires: libdqt6-gui = %_dqt6_version
 #Requires: icon-theme-hicolor
 
 %description
@@ -23,6 +28,7 @@ BuildRequires: gcc-c++ cmake dqt6-base-devel dqt6-tools-devel deepin-gettext-too
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 export LC_ALL=C.UTF-8
@@ -44,6 +50,10 @@ export LC_ALL=C.UTF-8
 %_datadir/%repo/translations/%repo.qm
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.11-alt1
+- New version 1.5.11.
+- Fixed build on dtk 6.7.31.
+
 * Thu Jan 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.2-alt1
 - New version 1.5.2.
 - Added vcs tag.

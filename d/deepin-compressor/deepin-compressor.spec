@@ -1,7 +1,9 @@
+%define _cmake__builddir BUILD
+
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.17
+Version: 6.5.21
 Release: alt1
 Epoch: 1
 
@@ -22,15 +24,13 @@ Patch: %name-%version-%release.patch
 Requires: p7zip
 # Requires: icon-theme-hicolor
 
+BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja rpm-macros-dqt5
+BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdtkwidget-devel libgio-devel libminizip-devel libmount-devel libzip-devel dqt5-svg-devel dqt5-tools-devel
 %if_enabled clang
-BuildRequires(pre): clang-devel
+BuildRequires: clang-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): desktop-file-utils rpm-macros-dqt6
-# Automatically added by buildreq on Thu Apr 24 2025
-# optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
-BuildRequires: dqt6-5compat-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel kf6-karchive-devel kf6-kcodecs-devel libarchive-devel libcups-devel libdtk6widget-devel libgio-devel libminizip-devel libmount-devel libzip-devel
 
 %description
 %summary.
@@ -52,15 +52,24 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-%DQ6build \
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
+%K5cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DVERSION=%version \
+    -DCMAKE_SKIP_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCOMPRESSOR_PLUGIN_PATH=%_libdir/%name/plugins \
 #
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%DQ6install
+%cmake_install
 %find_lang --with-qt %name
 
 %check
@@ -82,19 +91,17 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
-%_datadir/dbus-1/interfaces/com.deepin.Compressor.xml
-%_datadir/dbus-1/services/com.deepin.Compressor.service
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.compressor/
-%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.21-alt1
+- New version 6.5.21.
+- Built on dqt5 again (by upstream).
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.17-alt1
 - New version 6.5.17.
 

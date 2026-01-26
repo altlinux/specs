@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-image-viewer
-Version: 6.0.36
+Version: 6.0.37
 Release: alt1
 
 Summary: Image viewer for Deepin
@@ -27,7 +27,7 @@ BuildRequires(pre): gcc-c++
 %endif
 # Automatically added by buildreq on Wed Mar 26 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdeepin-ocr-plugin-manager1 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 liblcms2-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdeepin-ocr-plugin-manager-devel libdtk6declarative-devel libdtk6widget-devel libraw-devel libncnn-devel deepin-libopencv_world-devel libdqt6-qmlcompiler
+BuildRequires: dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdeepin-ocr-plugin-manager-devel libdtk6declarative-devel libdtk6widget-devel libraw-devel libncnn-devel deepin-libopencv_world-devel libdqt6-qmlcompiler libwayland-client-devel
 
 # provide the plugin for dtk
 %add_findprov_lib_path %_dqt6_plugindir/imageformats
@@ -104,6 +104,10 @@ export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %_dqt6_plugindir/imageformats/libxraw.so
 
 %changelog
+* Mon Jan 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
+- New version 6.0.37.
+- Fixed build on dtk 6.7.31.
+
 * Tue Jan 20 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
 - New version 6.0.36.
 
