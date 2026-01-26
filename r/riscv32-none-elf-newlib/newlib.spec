@@ -1,5 +1,5 @@
 Name: riscv32-none-elf-newlib
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: C library intended for use on embedded systems
@@ -95,6 +95,9 @@ rm -rf %buildroot%_infodir
 %_libexecdir/%target/lib/*
 
 %changelog
+* Mon Jan 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.0-alt1
+- 4.6.0 released
+
 * Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.5.0-alt1
 - 4.5.0 released
 
