@@ -2,27 +2,13 @@
 
 Name:    lios
 Version: 20250608
-Release: alt1
+Release: alt2
 
 Summary: Linux-intelligent-ocr-solution
 License: GPL-3.0
 Group:   Graphics
 VCS:     https://github.com/zendalona/lios
 Url:     http://sourceforge.net/projects/lios/
-
-Requires: python3-module-Pillow
-Requires: python3-module-sane
-Requires: python3-module-speechd
-Requires: tesseract
-Requires: ImageMagick
-Requires: cuneiform
-Requires: espeak
-Requires: poppler
-Requires: python3-module-enchant
-Requires: aspell-en
-Requires: aspell-ru
-Requires: gst-plugins-base1.0
-Requires: gstreamer1.0
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -33,6 +19,7 @@ BuildRequires: python3-module-wheel
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-fix-pathes.patch
 
 %description
 Lios is a free and open source software for converting print in to text using either scanner, camera, or screenshot
@@ -43,12 +30,24 @@ Lios is written in python3, and we release it under GPL-3 license.
 %package -n python3-module-%name
 Summary: python3 module for %name
 Group:          Development/Python3
+Requires: python3-module-Pillow
+Requires: python3-module-sane
+Requires: tesseract
+Requires: ImageMagick
+Requires: cuneiform
+Requires: espeak
+Requires: poppler
+Requires: aspell-en
+Requires: aspell-ru
+Requires: gst-plugins-base1.0
+Requires: gstreamer1.0
 
 %description -n python3-module-%name
 %summary
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -77,6 +76,9 @@ chmod 755 %buildroot%_bindir/%name
 %python3_sitelibdir/%name-2.5.dist-info
 
 %changelog
+* Mon Jan 26 2026 Artem Semenov <savoptik@altlinux.org> 20250608-alt2
+- Fixed pathes (Closes: 57645)
+
 * Thu Jan 15 2026 Artem Semenov <savoptik@altlinux.org> 20250608-alt1
 - Updated to new version 20250608
 
