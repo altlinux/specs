@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.0.16
-Release: alt1
+Release: alt2
 
 Summary: LBFGS and OWL-QN optimization algorithms
 
@@ -14,6 +14,7 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/PyLBFGS
 
 Source0: %name-%version.tar
+Patch0: pylbfgs-0.2.0.16-alt-numpy2-fixes.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
@@ -38,6 +39,7 @@ algorithm to Python users.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -56,6 +58,9 @@ py.test-3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 30 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.2.0.16-alt2
+- NMU: Fixed FTBFS.
+
 * Wed Jun 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0.16-alt1
 - Automatically updated to 0.2.0.16.
 
