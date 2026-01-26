@@ -1,11 +1,10 @@
 %define  oname GeoIP2
 %define  descr Python code for GeoIP2 webservice client and database reader
 
-%def_with docs
 %def_with check
 
 Name:    python3-module-%oname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: %descr
@@ -20,10 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-MaxMindDB
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
-%if_with docs
-BuildRequires: python3-module-sphinx
-%endif
+BuildRequires: python3-module-uv-build
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,6 +28,7 @@ BuildRequires: python3-module-decorator
 BuildRequires: python3-module-http-parser
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-pytest-httpserver
+BuildRequires: python3-module-requests
 %endif
 
 BuildArch: noarch
@@ -41,27 +38,11 @@ Source:  %name-%version.tar
 %description
 %descr
 
-%if_with docs
-%package doc
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description doc
-Documentation for %oname.
-%endif
-
 %prep
 %setup
 
-sed -i 's/license = "Apache-2.0"/license = {file = "LICENSE"}/' pyproject.toml
-
 %build
 %pyproject_build
-
-%if_with docs
-sphinx-build-3 -b html docs html
-rm -rf html/.{buildinfo,doctrees}
-%endif
 
 %install
 %pyproject_install
@@ -75,12 +56,11 @@ rm -rf html/.{buildinfo,doctrees}
 %python3_sitelibdir/geoip2
 %python3_sitelibdir/geoip2-%version.dist-info
 
-%if_with docs
-%files doc
-%doc LICENSE html
-%endif
-
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+- Built without docs.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 
