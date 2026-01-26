@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.7
-Release: alt1.1
+Version: 1.3.8
+Release: alt1
 
 Summary: Extensible validation for Python dictionaries
 
@@ -53,6 +53,9 @@ for custom validation.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
+- Automatically updated to 1.3.8.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.7-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
