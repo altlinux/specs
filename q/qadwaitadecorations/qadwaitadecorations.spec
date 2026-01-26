@@ -3,7 +3,7 @@
 
 Name: qadwaitadecorations
 Version: 0.1.7
-Release: alt1
+Release: alt2.22a97da9
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
@@ -92,6 +92,10 @@ Requires: libqt6-core = %_qt6_version
 %endif
 
 %changelog
+* Mon Jan 26 2026 Semen Fomchenkov <armatik@altlinux.org> 0.1.7-alt2.22a97da9
+- Update to commit (22a97da9)
+- Fix build for QT 6.10
+
 * Sat Oct 04 2025 Anton Midyukov <antohami@altlinux.org> 0.1.7-alt1
 - new version (0.1.7) with rpmgs script
 
