@@ -5,7 +5,7 @@
 
 Name: emacs-mode-auctex
 Version: 14.1.0
-Release: alt1
+Release: alt2
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPLv3
@@ -19,6 +19,7 @@ Source0: %name-%version.tar
 Source10: %name-11.10-info.ALT
 
 Patch1: auctex-14.1.0-alt-path-for-install-info.patch
+Patch2: auctex-14.1.0-alt-prevent-race-condition-under-heavy-CPU-load.patch
 
 Requires: common-licenses
 %if_with texmf
@@ -178,6 +179,9 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 %endif
 
 %changelog
+* Mon Jan 26 2026 Pavel Petrykin <silverducks@altlinux.org> 14.1.0-alt2
+- Fix FTBFS: Prevent race condition under heavy CPU load.
+
 * Thu Nov 27 2025 Pavel Petrykin <silverducks@altlinux.org> 14.1.0-alt1
 - New version.
 - Move preview files to texmf-latex-preview (ALT 28230).
