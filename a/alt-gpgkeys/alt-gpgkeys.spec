@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.8.129
+Version: 0.8.130
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -98,6 +98,11 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
 %_bindir/alt-rpmkey*
 
 %changelog
+* Mon Jan 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.130-alt1
+- Replaced keys:
+  + cas@ (A9EBF131 -> 3229D4E1; closes: #57632);
+  + fruktime@ (16D721C0 -> 93623610; closes: #57660).
+
 * Sat Jan 24 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.8.129-alt1
 - Replaced key: sin@ (A921DACA -> 430ED6B0).
 
