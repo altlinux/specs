@@ -3,16 +3,16 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.1
-Release: alt2.1
+Version: 1.1.0
+Release: alt1
 
 Summary: Implementation of bounded Levenshtein distance (Ukkonen)
 
 License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/ukkonen
+VCS:     https://github.com/asottile/ukkonen
 
-# https://github.com/asottile/ukkonen
 Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -31,7 +31,7 @@ BuildRequires: python3-module-pytest
 %endif
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -53,6 +53,9 @@ BuildRequires: python3-module-pytest
 %doc *.md
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
 - NMU: fixed FTBFS (tox 4).
 
