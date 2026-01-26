@@ -1,6 +1,6 @@
 Name:           jaxb-fi
 Version:        2.1.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Implementation of the Fast Infoset Standard for Binary XML
 License:        Apache-2.0
@@ -17,7 +17,7 @@ BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(com.sun.xml.stream.buffer:streambuffer)
-BuildRequires:  mvn(com.sun.xsom:xsom)
+BuildRequires:  mvn(org.glassfish.jaxb:xsom)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
@@ -87,6 +87,9 @@ Summary:        FastInfoset Utilities
 %doc --no-dereference LICENSE NOTICE.md
 
 %changelog
+* Mon Jan 26 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.1-alt2
+- Fixed FTBFS.
+
 * Thu Jan 15 2026 Evgeniy Serov <scala@altlinux.org> 2.1.1-alt1
 - Updated to 2.1.1.
 - Removed import.info.
