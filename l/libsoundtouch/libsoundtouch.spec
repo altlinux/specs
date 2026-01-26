@@ -1,11 +1,17 @@
 %def_disable snapshot
+%define __name SoundTouch
 %define _name soundtouch
+# soname bumped for CMake build
+%define sover 2
+%define binary_name soundstretch
+
 %def_enable openmp
+%def_disable dll
 %def_enable check
 
 Name: libsoundtouch
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: SoundTouch audio processing library
 License: LGPL-2.1-or-later
@@ -20,8 +26,10 @@ Source: %url/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-BuildRequires: gcc-c++ libstdc++-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libstdc++-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 SoundTouch is an open-source audio processing library that allows changing
@@ -34,10 +42,21 @@ each other, i.e.:
 %package devel
 Summary: Libraries/include files for development with %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Libraries/include files for development with %name.
+
+%package -n %binary_name
+Summary: soundstretch - audio processing CLI program
+Group: Sound
+Requires: %name = %EVR
+
+%description -n %binary_name
+This package provides utility from SoundTouch package.
+
+%binary_name processes WAV audio files by modifying the sound tempo
+pitch and playback rate properties independently from each other.
 
 %prep
 %setup -n %_name%{?_enable_snapshot:-%version}
@@ -50,36 +69,47 @@ echo "libSoundTouch_la_LDFLAGS+=-lomp" >> source/SoundTouch/Makefile.am
 %endif
 
 %build
-#touch NEWS README AUTHORS ChangeLog
-#%autoreconf
-./bootstrap
-%configure --disable-static \
-    %{subst_enable openmp}
-%make_build
+%ifarch %ix86
+%add_optflags -msse2
+%endif
+%cmake \
+    -DBUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON \
+    %{?_enable_dll:-DSOUNDTOUCH_DLL=ON} \
+    %{?_enable_openmp:-DOPENMP=ON} \
+%nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
+
+# for multispeech
+install -pD -m644 %_name.m4 -t %buildroot%_aclocaldir/
+
 rm -rf %buildroot/%_prefix/doc
 
 %check
-%make check
+%ctest
 
 %files
-%_bindir/soundstretch
-%_libdir/libSoundTouch.so.*
-%_libdir/libSoundTouchDll.so.*
+%_libdir/lib%__name.so.%{sover}*
+%{?_enable_dll:%_libdir/lib%{__name}DLL.so}
 %doc README.*
 
 %files devel
 %_includedir/%_name/
-%_includedir/SoundTouchDLL.h
-%_libdir/libSoundTouch.so
-%_libdir/libSoundTouchDll.so
+%_libdir/lib%__name.so
+%_libdir/cmake/%__name/
 %_aclocaldir/%_name.m4
 %_pkgconfigdir/%_name.pc
 
+%files -n %binary_name
+%_bindir/%binary_name
 
 %changelog
+* Mon Jan 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2
+- switched build to CMake (ALT #57653)
+
 * Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
