@@ -3,7 +3,7 @@
 %define soversion 6
 
 Name: xbps
-Version: 0.60.5
+Version: 0.60.6
 Release: alt1
 
 Summary: The X Binary Package System
@@ -120,6 +120,9 @@ sed -i '/\tatf_add_test_case empty_string/d' tests/xbps/xbps-digest/basic_test.s
 %_includedir/%name.h
 
 %changelog
+* Mon Jan 26 2026 Ulysses Apokin <ulysses@altlinux.org> 0.60.6-alt1
+- New version.
+
 * Tue Sep 09 2025 Ulysses Apokin <ulysses@altlinux.org> 0.60.5-alt1
 - New version.
 - libxbps is packaged separately according to shared libs policy.
