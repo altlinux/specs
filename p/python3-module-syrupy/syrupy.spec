@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Pytest Snapshot Test Utility
@@ -21,6 +21,7 @@ BuildRequires: python3-module-poetry
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-pydantic
 %endif
 
 BuildArch: noarch
@@ -49,6 +50,9 @@ to write tests which assert immutability of computed results.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 
