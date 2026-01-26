@@ -1,5 +1,5 @@
 Name: alterator-root
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -18,6 +18,7 @@ Conflicts: alterator-fbi < 5.25-alt4
 Conflicts: alterator-users < 8.1
 
 BuildPreReq: alterator >= 4.6-alt3
+BuildRequires: qt6-tools
 
 %description
 alterator module for edit system administrator properties
@@ -28,8 +29,19 @@ alterator module for edit system administrator properties
 %build
 %make_build
 
+# QML translations for alterator-framework UI
+lrelease-qt6 alterator-framework/ts/root_ru.ts
+
 %install
 %makeinstall
+
+install -Dpm644 dbus-backends/root.backend %buildroot%_datadir/alterator/backends/root.backend
+install -Dpm644 dbus-backends/org.altlinux.alterator.root.policy %buildroot%_datadir/polkit-1/actions/org.altlinux.alterator.root.policy
+install -d %buildroot%_datadir/alterator-framework/modules/root
+install -m 644 alterator-framework/manifest.json %buildroot%_datadir/alterator-framework/modules/root/
+install -m 644 alterator-framework/main.qml %buildroot%_datadir/alterator-framework/modules/root/
+install -d %buildroot%_datadir/alterator-framework/modules/root/ts
+install -m 644 alterator-framework/ts/root_ru.qm %buildroot%_datadir/alterator-framework/modules/root/ts/
 
 %files
 %_datadir/alterator/applications/*
@@ -37,7 +49,21 @@ alterator module for edit system administrator properties
 %_alterator_backend3dir/*
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/root.d
 
+%_datadir/alterator/backends/root.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.root.policy
+
+%dir %_datadir/alterator-framework
+%dir %_datadir/alterator-framework/modules
+%dir %_datadir/alterator-framework/modules/root
+%_datadir/alterator-framework/modules/root/manifest.json
+%_datadir/alterator-framework/modules/root/main.qml
+%dir %_datadir/alterator-framework/modules/root/ts
+%_datadir/alterator-framework/modules/root/ts/root_ru.qm
+
 %changelog
+* Fri Jan 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.3-alt1
+- add alterator-framework UI support (thx Oleg Chagaev)
+
 * Thu Jul 1 2025 Alexey Romanyuta <r9odt@altlinux.org> 1.2-alt1
 - backend3/root: add iscrypted parameter to allow pass crypted
   password to module
