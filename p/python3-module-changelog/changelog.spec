@@ -1,8 +1,8 @@
 %define  modulename changelog
 
 Name:    python3-module-%modulename
-Version: 0.6.1
-Release: alt2
+Version: 0.6.2
+Release: alt1
 
 Summary: A Sphinx extension to generate changelog files
 
@@ -16,7 +16,6 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch: remove-distutils-for-python-3.12.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -27,7 +26,6 @@ BuildRequires: python3-module-wheel
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -42,6 +40,9 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.2-alt1
+- Automatically updated to 0.6.2.
+
 * Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt2
 - Dropped dependency on distutils.
 
