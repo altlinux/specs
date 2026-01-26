@@ -294,9 +294,9 @@
 # New Version-String scheme-style defines
 %global featurever 25
 %global interimver 0
-%global updatever 1
+%global updatever 2
 %global patchver 0
-%global buildver 8
+%global buildver 10
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -397,7 +397,8 @@ URL:      http://openjdk.java.net/
 %global oj_vendor_bug_url https://bugzilla.redhat.com
 %global oj_vendor_version (Red_Hat-%{version}-%{release})
 
-%global top_level_dir_name %{vcstag_new}
+#global top_level_dir_name %{vcstag_new}
+%global top_level_dir_name jdk25u
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
 
 # parametrized macros are order-sensitive
@@ -467,8 +468,8 @@ ExclusiveArch: %{java_arches}
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
 
-# The source tarball, generated using generate_source_tarball.sh
-Source0: %{vcstag}.zip
+# The source tarball, download from https://github.com/openjdk/jdk25u/tags
+Source0: jdk25u.tar
 
 %if_with fresh_libjvm
 Source1: bootstrap.tar
@@ -840,7 +841,7 @@ echo "WARNING: The build of a fresh libjvm has been disabled due to a JDK versio
 echo "Build JDK version is %{buildjdkver}, feature JDK version is %{featurever}"
 %endif
 
-%setup -c -n %{uniquesuffix ""} -T -a 0
+%setup -c -n %{top_level_dir_name} -T -a 0
 # https://bugzilla.redhat.com/show_bug.cgi?id=1189084
 prioritylength=`expr length %{priority}`
 if [ $prioritylength -ne 8 ] ; then
@@ -1975,6 +1976,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Jan 22 2026 Andrey Cherepanov <cas@altlinux.org> 0:25.0.2.0.10-alt1
+- New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
+  CVE-2026-21945).
+
 * Tue Dec 16 2025 Andrey Cherepanov <cas@altlinux.org> 0:25.0.1.0.8-alt1
 - New version (fixes: CVE-2025-53066, CVE-2025-53057, CVE-2025-61748).
 - End of bootstrap.
