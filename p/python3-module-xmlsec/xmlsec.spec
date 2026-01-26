@@ -1,10 +1,10 @@
 %define oname xmlsec
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
 Version: 1.3.17
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the XML Security Library
 
@@ -37,8 +37,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc README* LICENSE
@@ -47,6 +46,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.17-alt2
+- Built with check.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.3.17-alt1
 - Automatically updated to 1.3.17.
 
