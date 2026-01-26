@@ -2,7 +2,7 @@
 
 Name: grip-grab
 Version: 0.6.7
-Release: alt2
+Release: alt3
 Url: https://github.com/alexpasmantier/grip-grab
 Vcs: https://github.com/alexpasmantier/grip-grab.git
 Summary: A fast lightweight ripgrep alternative
@@ -32,6 +32,9 @@ export RUSTFLAGS="-Copt-level=3"
 %_bindir/gg
 
 %changelog
+* Thu Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 0.6.7-alt3
+- Fix emergency stop when searching in a non-existent directory (ALT#56248).
+
 * Thu Aug 28 2025 Artyom Sinyugin <writers@altlinux.org> 0.6.7-alt2
 - Optimized build.
 
