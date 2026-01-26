@@ -4,7 +4,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.28.1
+Version: 0.30.1
 Release: alt1
 Summary: Prometheus Alertmanager
 
@@ -81,6 +81,9 @@ install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/te
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 0.30.1-alt1
+- New version 0.30.1.
+
 * Thu Jun 05 2025 Artyom Sinyugin <writers@altlinux.org> 0.28.1-alt1
 - New version 0.28.1.
 

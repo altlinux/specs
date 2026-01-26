@@ -3,7 +3,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 3.5.0
+Version: 3.9.1
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -27,7 +27,6 @@ BuildRequires: rpm-build-golang golang >= 1.21
 %if_disabled prebuilded_frontend
 BuildRequires: rpm-build-nodejs
 %endif
-BuildRequires: /proc
 
 Requires: %name-common = %EVR
 
@@ -68,7 +67,6 @@ This package contains the common files and settings for Prometheus.
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
 export TAGS="netgo,builtinassets"
 export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
          -X github.com/prometheus/common/version.Revision=%release \
@@ -95,13 +93,10 @@ scripts/compress_assets.sh
 
 %install
 export BUILDDIR="$PWD/.gopath"
-#export GOPATH="%go_path"
-mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/sysconfig,{%_sysconfdir,%_datadir,%_localstatedir}/%name}
+export IGNORE_SOURCES=1
+mkdir -p %buildroot{%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/sysconfig,{%_sysconfdir,%_datadir,%_localstatedir}/%name}
 
-pushd $BUILDDIR/src/%import_path
 %golang_install
-popd
-rm -rf -- %buildroot%go_root
 
 #install -m0755 prometheus %buildroot%_bindir/%name
 #install -m0755 promtool %buildroot%_bindir/promtool
@@ -147,6 +142,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 3.9.1-alt1
+- 3.9.1
+
 * Fri Aug 29 2025 Artyom Sinyugin <writers@altlinux.org> 3.5.0-alt1
 - New version 3.5.0.
 

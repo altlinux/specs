@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.9.1
+Version: 1.10.2
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -91,6 +91,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Jan 24 2026 Artyom Sinyugin <writers@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Thu Jun 05 2025 Artyom Sinyugin <writers@altlinux.org> 1.9.1-alt1
 - 1.9.1
 

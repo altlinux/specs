@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.29.0
+Version: 0.30.1
 Release: alt1
 Summary: Prometheus snmp exporter
 
@@ -89,6 +89,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/snmp.yml
 
 %changelog
+* Sat Jan 24 2026 Artyom Sinyugin <writers@altlinux.org> 0.30.1-alt1
+- New version 0.30.1.
+
 * Thu Jun 05 2025 Artyom Sinyugin <writers@altlinux.org> 0.29.0-alt1
 - New version 0.29.0.
 
