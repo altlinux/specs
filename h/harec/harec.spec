@@ -1,14 +1,15 @@
 %def_with check
 
 Name: harec
-Version: 0.24.2
+Version: 0.25.2
 Release: alt1
 Epoch: 1
 
 Summary: Hare language compiler written in C11 for POSIX-compatible systems
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Development/Other
-Url: https://git.sr.ht/~sircmpwn/harec
+Url: https://harelang.org/
+Vcs: https://git.sr.ht/~sircmpwn/harec
 
 Source: %name-%version.tar
 
@@ -31,9 +32,7 @@ cp configs/linux.mk config.mk
 %make ARCH=%_arch DEFAULT_TARGET=%_arch
 
 %install
-%make ARCH=%_arch DEFAULT_TARGET=%_arch \
-PREFIX=%buildroot%_prefix \
-install
+%make PREFIX=%buildroot%_prefix install
 
 %check
 %make ARCH=%_arch DEFAULT_TARGET=%_arch check
@@ -42,6 +41,9 @@ install
 %_bindir/%name
 
 %changelog
+* Mon Jan 26 2026 Ulysses Apokin <ulysses@altlinux.org> 1:0.25.2-alt1
+- New version.
+
 * Thu Jan 30 2025 Ulysses Apokin <ulysses@altlinux.org> 1:0.24.2-alt1
 - New version.
 

@@ -1,7 +1,7 @@
 %def_with check
 
 Name: hare
-Version: 0.24.2
+Version: 0.25.2
 Release: alt1
 Epoch: 1
 
@@ -16,11 +16,11 @@ Patch0: 0001-Change-ld-to-ld.bfd.patch
 Patch1: 0002-Skip-test-if-no-leapsec-data-avaible.patch
 Patch2: 0003-Do-not-check-the-pseudoterminal-in-hasher.patch
 
-BuildRequires: harec = %version
+BuildRequires: harec = %EVR
 BuildRequires: scdoc >= 1.11.3
 BuildRequires: qbe >= 1.2
 
-Requires: harec = %version
+Requires: harec = %EVR
 
 ExclusiveArch: x86_64 aarch64
 
@@ -33,30 +33,30 @@ performance tasks.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %build
 cp configs/linux.mk config.mk
 %make ARCH=%_arch DEFAULT_TARGET=%_arch
 
 %install
-%make PREFIX=%buildroot%prefix \
-ARCH=%_arch DEFAULT_TARGET=%_arch \
-install
+%make PREFIX=%buildroot%prefix install
 
 %check
 %make ARCH=%_arch DEFAULT_TARGET=%_arch check
 
 %files
+%doc %_usrsrc/%name/stdlib
 %_bindir/%name
 %_bindir/%{name}doc
-%doc %_usrsrc/%name/stdlib
 %_man1dir/*
 %_man5dir/*
+%dir %_usrsrc/%name
 
 %changelog
+* Mon Jan 26 2026 Ulysses Apokin <ulysses@altlinux.org> 1:0.25.2-alt1
+- New version.
+
 * Fri Jan 31 2025 Ulysses Apokin <ulysses@altlinux.org> 1:0.24.2-alt1
 - New version.
 
