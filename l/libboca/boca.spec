@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 1.0.7
-Release: alt1.git1f120b87
+Release: alt2.gitd98a4875
 
 Summary: A component library used by the fre:ac audio converter
 
@@ -66,5 +66,8 @@ export OBJCXXFLAGS="$CFLAGS"
 %_libdir/*.so
 
 %changelog
+* Sun Jan 25 2026 Alexander Kovalev <alexvk@altlinux.org> 1.0.7-alt2.gitd98a4875
+- Update to git d98a4875.
+
 * Tue Oct 14 2025 Alexander Kovalev <alexvk@altlinux.org> 1.0.7-alt1.git1f120b87
 - Initial build for ALT.

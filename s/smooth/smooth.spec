@@ -6,7 +6,7 @@
 
 Name: smooth
 Version: 0.9.10
-Release: alt1.gita7e64e52
+Release: alt2.gitce140ab9
 
 Summary: The smooth Class Library
 
@@ -82,5 +82,8 @@ export OBJCXXFLAGS="$CFLAGS"
 %_libdir/*.so
 
 %changelog
+* Sun Jan 25 2026 Alexander Kovalev <alexvk@altlinux.org> 0.9.10-alt2.gitce140ab9
+- Update to git ce140ab9.
+
 * Tue Oct 14 2025 Alexander Kovalev <alexvk@altlinux.org> 0.9.10-alt1.gita7e64e52
 - Initial build for ALT.

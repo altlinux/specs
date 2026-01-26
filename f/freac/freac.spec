@@ -2,7 +2,7 @@
 
 Name: freac
 Version: 1.1.7
-Release: alt1.git350d39ae
+Release: alt2.git1a5d96f8
 
 Summary: The fre:ac audio converter project
 
@@ -67,5 +67,8 @@ export OBJCXXFLAGS="$CFLAGS"
 %_docdir/%name
 
 %changelog
+* Sun Jan 25 2026 Alexander Kovalev <alexvk@altlinux.org> 1.1.7-alt2.git1a5d96f8
+- Update to git 1a5d96f8.
+
 * Tue Oct 14 2025 Alexander Kovalev <alexvk@altlinux.org> 1.1.7-alt1.git350d39ae
 - Initial build for ALT.
