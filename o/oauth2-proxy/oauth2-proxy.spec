@@ -2,8 +2,8 @@
 %global import_path github.com/oauth2-proxy/oauth2-proxy
 
 Name: oauth2-proxy
-Version: 7.12.0
-Release: alt2
+Version: 7.14.2
+Release: alt1
 
 Group: Security/Networking
 Summary: OAuth2 Proxy for authentication
@@ -68,6 +68,9 @@ useradd -r -g %name -d %_localstatedir/%name -M -s /dev/null -c "oauth2-proxy se
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Jan 23 2026 Artyom Sinyugin <writers@altlinux.org> 7.14.2-alt1
+- New version 7.14.2.
+
 * Thu Sep 11 2025 Artyom Sinyugin <writers@altlinux.org> 7.12.0-alt2
 - oauth2-proxy service was added (ALT#54460).
 - autocomplete file was added.
