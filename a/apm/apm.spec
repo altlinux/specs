@@ -3,14 +3,14 @@
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.3.1
+Version: 0.3.3
 Release: alt1
 
 Summary: Atomic Package Manager 
-License: GPL-3.0-or-later AND GPL-3.0-only
+License: GPL-3.0-or-later
 Group: System/Configuration/Packaging
-Url: https://altlinux.space/alt-atomic/apm
-Vcs: https://altlinux.space/alt-atomic/apm.git
+URL: https://altlinux.space/alt-atomic/apm
+VCS: https://altlinux.space/alt-atomic/apm.git
 
 ExclusiveArch: %go_arches
 
@@ -76,6 +76,9 @@ done
 %doc README.ru.md
 
 %changelog
+* Mon Jan 26 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.3-alt1
+- v0.3.3
+
 * Sun Jan 18 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.1-alt1
 - v0.3.1
 
