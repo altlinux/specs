@@ -1,6 +1,6 @@
 Name: accel-ppp
-Version: 1.13.0
-Release: alt4
+Version: 1.14.0
+Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
@@ -85,7 +85,7 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %preun_service %name
 
 %files
-%doc COPYING README accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt
+%doc COPYING README CHANGELOG.md accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt docs/ipoe_radius.md docs/pppoe_radius.md
 %config(noreplace) %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/logrotate.d/*
@@ -105,6 +105,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Jan 26 2026 Alexei Takaseev <taf@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Mon Dec 08 2025 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt4
 - update upstream to git:0a89d44ce83738f3253709eb1d450cc25c80943e
 - Change URL
