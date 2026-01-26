@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -67,6 +67,13 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Jan 26 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.13-alt1
+- Fixed (thx Andrey Alekseev):
+  + "Import parameters..." action not working properly
+    (Closes: #57606)
+  + removed unnescessary warnings about missing passwords
+    since they never ment to be exported
+
 * Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.12-alt1
 - Fixed (thx Andrey Alekseev):
   + raising application window on wayland
