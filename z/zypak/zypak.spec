@@ -1,6 +1,6 @@
 Name: zypak
 Version: 2025.09
-Release: alt1
+Release: alt2
 Summary: Redirect natively sandboxed applications to use a custom sandbox environment
 License: BSD
 Group: System/Base
@@ -27,6 +27,7 @@ sed -i 's/-Werror //g' Makefile
 sed -i 's/-DZYPAK_RELEASE="\\"\$(shell git describe --tags --dirty)\\""/-DZYPAK_RELEASE="\\"%version\\""/' \
  Makefile
 sed -i 's|/usr/bin/bash|/bin/bash|g' zypak-wrapper.sh
+sed -i 's|/lib|/lib/zypak|g' zypak-wrapper.sh
 
 %make_build
 
@@ -48,5 +49,8 @@ find build -name "libzypak-*.so" -exec install -m 644 {} %buildroot%_libexecdir/
 %_libexecdir/zypak/*.so
 
 %changelog
+* Mon Jan 26 2026 Anton Osipov <radiolamp@altlinux.org> 2025.09-alt2
+- Fixed zypak-wrapper to handle new library paths.
+
 * Fri Dec 26 2025 Anton Osipov <radiolamp@altlinux.org> 2025.09-alt1
 - Initial package.
