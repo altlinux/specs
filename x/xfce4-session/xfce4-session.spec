@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.21.1
-Release: alt1
+Release: alt2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -13,11 +13,16 @@ Vcs: https://gitlab.xfce.org/xfce/xfce4-session.git
 Source: %name-%version.tar
 Source1: xfce.wmsession
 Source2: xfce4-xscreensaver.desktop
+Source3: xfce4-session.target
+Source4: xfce4-session-target-helper
+Source5: xfce4-session-target-start.desktop.in
+Source6: xfce4-session-target-stop.desktop.in
 
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.18.0
 BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libxfce4windowing-devel >= 4.19.2
@@ -57,7 +62,7 @@ Requires: xorg-xwayland
 %description wayland
 Wayland session for Xfce desktop environment.
 
-%description -l ru
+%description -l ru_RU.UTF-8 wayland
 Данный пакет содержит сессию Wayland для окружения рабочего
 стола Xfce.
 
@@ -77,6 +82,13 @@ Wayland session for Xfce desktop environment.
 %meson_install
 install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver.desktop
+
+# xfce4-session.target
+install -Dm0644 %SOURCE3 %buildroot%_user_unitdir/xfce4-session.target
+install -pDm0755 %SOURCE4 %buildroot%_libdir/xfce4/session/xfce4-session-target-helper
+sed 's|@LIBDIR@|%_libdir|' <%SOURCE5 > %buildroot%_sysconfdir/xdg/autostart/xfce4-session-target-start.desktop
+sed 's|@LIBDIR@|%_libdir|' <%SOURCE6 > %buildroot%_sysconfdir/xdg/autostart/xfce4-session-target-stop.desktop
+
 %find_lang %name
 
 %files -f %name.lang
@@ -95,12 +107,18 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xsessions/*.desktop
 %_datadir/polkit-1/actions/*.policy
 %_datadir/xdg-desktop-portal/xfce-portals.conf
+%_user_unitdir/xfce4-session.target
+%_libdir/xfce4/session/xfce4-session-target-helper
 
 %files wayland
 %_datadir/wayland-sessions/xfce-wayland.desktop
 %_datadir/xfce4/labwc/
 
 %changelog
+* Mon Jan 26 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt2
+- Fixed Russian description.
+- Added xfce4-session.target unit (closes: #57638).
+
 * Tue Jan 13 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
 - Switched to meson build.
 - Updated to 4.21.1.
