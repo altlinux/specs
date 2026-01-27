@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.56.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -294,6 +294,10 @@ sed -r -i \
 	-e 's/^(CONFIG_SHA256_HWACCEL)=y/# \1 is not set/' \
 	external/busybox/config
 %endif
+%ifarch %e2k
+sed -i '/+= hash_sha.*x86-..\.o/d' \
+	external/busybox/upstream/libbb/Kbuild.src
+%endif
 
 make
 
@@ -403,6 +407,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 19 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.56.0-alt2
+- e2k build fix
+
 * Thu Nov 13 2025 Anton Midyukov <antohami@altlinux.org> 2.56.0-alt1
 - - Feature mdadm:
   + Workaround for the error in determining the RAID device in use.
