@@ -1,13 +1,13 @@
 %define soversion 3
 
 Name: opendht
-Version: 3.4.0
+Version: 3.6.2.3
 Release: alt1
 Summary: C++17 Distributed Hash Table implementation
-License: GPL-3.0
+License: GPL-3.0-only
 Group: System/Libraries
 URL: https://github.com/savoirfairelinux/opendht/wiki
-Vcs: https://github.com/savoirfairelinux/opendht.git
+Vcs: https://github.com/savoirfairelinux/opendht
 
 Source: %name-%version.tar
 
@@ -45,6 +45,7 @@ lib%name development libraries and headers.
 
 %build
 %cmake \
+	-DOPENDHT_DOWNLOAD_DEPS=OFF \
 	-DOPENDHT_BUILD_TOOLS=OFF \
 	-DOPENDHT_PYTHON=OFF \
 	-DOPENDHT_TESTS_NETWORK=OFF \
@@ -80,5 +81,14 @@ popd
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 3.6.2.3-alt1
+- 3.6.2.3.
+
+* Mon Nov 03 2025 L.A. Kostis <lakostis@altlinux.ru> 3.5.4-alt1
+- 3.5.4.
+
+* Mon Aug 18 2025 L.A. Kostis <lakostis@altlinux.ru> 3.5.1-alt1
+- 3.5.1.
+
 * Wed May 28 2025 L.A. Kostis <lakostis@altlinux.ru> 3.4.0-alt1
 - Initial build for ALTLinux.
