@@ -1,11 +1,9 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname txaio
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.9.2
+Version: 25.12.2
 Release: alt1
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
@@ -21,6 +19,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-twisted-core
 BuildRequires: python3-module-pytest
@@ -28,8 +27,6 @@ BuildRequires: python3-test
 %endif
 
 %py3_requires asyncio
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test/util.py
 
 %description
 txaio is a helper library for writing code that runs unmodified on both
@@ -44,22 +41,6 @@ Note that, with this approach, user code runs under the native event
 loop of either Twisted or asyncio. This is different from attaching
 either one's event loop to the other using some event loop adapter.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-txaio is a helper library for writing code that runs unmodified on both
-Twisted and asyncio.
-
-This is like six, but for wrapping over differences between Twisted and
-asyncio so one can write code that runs unmodified on both (aka "source
-code compatibility"). In other words: your users can choose if they want
-asyncio or Twisted as a dependency.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
@@ -69,21 +50,18 @@ This package contains tests for %oname.
 %install
 %pyproject_install
 
-cp -fR test/ %buildroot%python3_sitelibdir/%oname/
-
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc LICENSE examples/
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/test/
-
-%files tests
-%python3_sitelibdir/%oname/test/
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 25.12.2-alt1
+- Automatically updated to 25.12.2.
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 25.9.2-alt1
 - Automatically updated to 25.9.2.
 
