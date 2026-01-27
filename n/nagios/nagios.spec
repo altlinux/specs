@@ -12,8 +12,8 @@
 %define nagios_evhdir %_libexecdir/nagios/eventhandlers
 
 Name: nagios
-Version: 4.5.9
-Release: alt2
+Version: 4.5.11
+Release: alt1
 
 Summary: Services and network monitoring system
 License: GPL-2.0
@@ -73,6 +73,8 @@ BuildRequires: /proc
 BuildRequires: unzip
 BuildRequires: pkgconfig(gdlib)
 BuildRequires: pkgconfig(libssl)
+BuildRequires: pkgconfig(krb5)
+BuildRequires: pkgconfig(zlib)
 
 %description
 Nagios(R) is a host and service monitor designed to inform you of network
@@ -386,6 +388,10 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Tue Jan 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.11-alt1
+- new version
+- added build requirements zlib & krb5
+
 * Fri Jul 04 2025 Ivan A. Melnikov <iv@altlinux.org> 4.5.9-alt2
 - NMU: fix FTBFS on loongarch64 and riscv64 (and potentially
   all other architectures except the primary three)

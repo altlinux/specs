@@ -1,7 +1,7 @@
 # SPEC file for gltron game
 
 %define version 0.70
-%define release alt6
+%define release alt7
 
 Name: gltron
 Version: %version
@@ -32,6 +32,7 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: gnu-config libGL-devel libGLU-devel libSDL-devel libgpg-error libjson-c libogg-devel libstdc++-devel python-base python-modules python3 zlib-devel
 BuildRequires: gcc-c++ libSDL_sound-devel libmikmod-devel libpng-devel libsmpeg-devel libvorbis-devel
 BuildRequires: libSDL-devel libsmpeg-devel
+BuildRequires: pkgconfig(zlib)
 
 %description
 A 3D lightcycle Tron game using OpenGL.
@@ -92,6 +93,9 @@ wall while avoiding hitting the AI's own wall themselves.
 
 
 %changelog
+* Tue Jan 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.70-alt7
+- NMU: Fix FTBFS
+
 * Wed Feb 05 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.70-alt6
 - NMU: Fix FTBFS
 

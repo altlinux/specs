@@ -2,7 +2,7 @@
 
 Name:    ltfs
 Version: 3.5.0
-Release: alt2
+Release: alt3
 
 Summary: HPE Linear Tape File System
 License: LGPL-2.1
@@ -17,7 +17,7 @@ Source2: %name.pc.in
 Patch0:  service_file.patch
 Patch1:  ltfs-3.5-alt-fix-x86-incompatible-ptr.patch
 
-BuildRequires: libicu-devel
+BuildRequires: pkgconfig(icu-io)
 BuildRequires: fuse libfuse-devel
 BuildRequires: libxml2-devel
 BuildRequires: pkgconfig(uuid)
@@ -124,6 +124,9 @@ find %buildroot -type f '(' -iname \*.a -o -iname \*.la ')' -print -delete
 %_libdir/lib%name.so.*
 
 %changelog
+* Tue Jan 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.0-alt3
+- Unbound icu v7.4 build requirement.
+
 * Mon Feb 03 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.0-alt2
 - Fix FTBFS: incompatible pointer type error fix on i586.
 
