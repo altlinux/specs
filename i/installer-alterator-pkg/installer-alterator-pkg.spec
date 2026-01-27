@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jan 27 2026 Dmitry Terekhin <jqt4@altlinux.org> 3.2.7-alt1
+- Use the selected edition in pkg-size, pkg-install, 91-pkg-size.sh
+
 * Fri Jan 23 2026 Anton Midyukov <antohami@altlinux.org> 3.2.6-alt1
 - Replace run hooks prepkg/ to pkg-groups-init.
 
