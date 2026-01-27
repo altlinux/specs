@@ -1,7 +1,7 @@
 %define soname 8
 
 Name: primecount
-Version: 8.0
+Version: 8.1
 Release: alt1
 
 Summary: Count the number of primes
@@ -45,6 +45,7 @@ files for developing applications that use the primecount library.
 %build
 %cmake \
     -GNinja \
+    -DPRIMECOUNT_VERSION=%version \
 %ifarch %e2k
     -DCMAKE_SHARED_LINKER_FLAGS="-fopenmp" \
     -DCMAKE_EXE_LINKER_FLAGS="-fopenmp" \
@@ -87,6 +88,9 @@ ctest
 %_libdir/cmake/primecount/
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 8.1-alt1
+- New version 8.1.
+
 * Thu Dec 18 2025 Leontiy Volodin <lvol@altlinux.org> 8.0-alt1
 - New version 8.0.
 
