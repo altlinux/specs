@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: choose
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: Human-friendly and fast alternative to cut and (sometimes) awk
@@ -40,6 +40,8 @@ install -Dm755 target/release/choose %buildroot%_bindir/choose
 %_bindir/choose
 
 %changelog
+* Wed Sep 03 2025 Maxim Tulskiy <tulskijms@altlinux.org> 1.3.7-alt1
+- Updated to new version v1.3.7.
+
 * Sun May 04 2025 Maxim Tulskiy <tulskijms@altlinux.org> 1.3.6-alt1
 - Initial build for ALT Sisyphus.
-
