@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fresh
-Version: 0.1.88
+Version: 0.1.90
 Release: alt1
 
 Summary: Text editor for your terminal: easy, powerful and fast
@@ -52,8 +52,17 @@ install -Dm644 crates/fresh-editor/flatpak/io.github.sinelaw.fresh.svg %buildroo
 install -Dm644 crates/fresh-editor/flatpak/io.github.sinelaw.fresh.desktop %buildroot%_desktopdir/io.github.sinelaw.fresh.desktop
 install -Dm644 crates/fresh-editor/flatpak/io.github.sinelaw.fresh.metainfo.xml %buildroot%_datadir/metainfo/io.github.sinelaw.fresh.metainfo.xml
 
+# Disable telemetry and update check
+install -d %buildroot%_sysconfdir/fresh
+cat > %buildroot%_sysconfdir/fresh/config.json <<EOF
+{
+  "check_for_updates": false
+}
+EOF
+
 %files
 %doc LICENSE README.md CHANGELOG.md
+%config(noreplace) %_sysconfdir/fresh/config.json
 %_bindir/fresh
 %_libexecdir/fresh
 %_iconsdir/hicolor/scalable/apps/io.github.sinelaw.fresh.svg
@@ -61,6 +70,10 @@ install -Dm644 crates/fresh-editor/flatpak/io.github.sinelaw.fresh.metainfo.xml 
 %_datadir/metainfo/io.github.sinelaw.fresh.metainfo.xml
 
 %changelog
+* Tue Jan 27 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.90-alt1
+- new version 0.1.90
+- disable telemetry and update check
+
 * Sat Jan 24 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.88-alt1
 - initial build for ALT Sisyphus
 
