@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name screen-autorotate
 %define __name screen-rotate
@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Screen Rotate extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -42,11 +42,11 @@ This extension uses Mutter's D-Bus API, so it works on both X11 and Wayland.
 %prep
 %setup -n %name-%version%beta
 
-%install
-mkdir -p %buildroot%_datadir/{gnome-shell/extensions/%uuid,glib-2.0/schemas}
-cp -a %uuid/*.{js,json} %buildroot%_datadir/gnome-shell/extensions/%uuid/
-cp -a %uuid/schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
+%build
+%make_build
 
+%install
+%makeinstall_std
 %find_lang %gettext_domain
 
 %files -f %gettext_domain.lang
@@ -55,6 +55,9 @@ cp -a %uuid/schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
 %doc README.md
 
 %changelog
+* Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 27-alt2
+- updated to v27-2-gd22c7f0 (ALT #57650)
+
 * Sun Nov 30 2025 Yuri N. Sedunov <aris@altlinux.org> 27-alt1
 - 27
 
