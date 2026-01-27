@@ -1,7 +1,7 @@
 %define gimphelpdir %_datadir/gimp/3.0/help
 
 Name: gimp-help
-Version: 3.0.0
+Version: 3.0.2
 Release: alt1
 Summary: Help files for the GIMP
 License: GFDL-1.2
@@ -81,6 +81,9 @@ rm -fr %buildroot%gimphelpdir/pdf
 %gimphelpdir/ru
 
 %changelog
+* Tue Jan 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.0.2-alt1
+- 3.0.2
+
 * Tue Mar 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt1
 - 3.0.0
 
