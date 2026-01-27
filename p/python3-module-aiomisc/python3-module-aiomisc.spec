@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 17.9.9
+Version: 17.10.3
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -62,21 +62,20 @@ robust and easier to maintain.
 %setup
 %autopatch -p1
 
-# fix version in pyproject.toml
-sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
-
-# and in aiomisc/version.py
+# fix version in aiomisc/version.py
 TRIPLE=`python3 -c "print(tuple(map(int, '%version'.split('.'))))"`
 sed -i "/^version_info/s/= .*$/= $TRIPLE/" aiomisc/version.py
 sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 
+export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_build
 
 %install
@@ -91,6 +90,9 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 17.10.3-alt1
+- Updated to 17.10.3.
+
 * Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 17.9.9-alt1
 - Updated to 17.9.9.
 
