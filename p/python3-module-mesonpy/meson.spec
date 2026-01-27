@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: Meson PEP 517 Python build backend
@@ -20,12 +20,14 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pyproject-metadata
 BuildRequires: meson
+BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: git
 BuildRequires: patchelf
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-pytest-mock
+BuildRequires: cmake
 %endif
 
 BuildArch: noarch
@@ -63,6 +65,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.19.0-alt1
+- Automatically updated to 0.19.0.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 0.18.0-alt1
 - Automatically updated to 0.18.0.
 
