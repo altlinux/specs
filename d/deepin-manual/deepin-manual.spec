@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-manual
-Version: 6.5.36
+Version: 6.5.43
 Release: alt1
 
 Summary: Help files for DDE
@@ -28,7 +28,7 @@ Obsoletes: deepin-help
 BuildRequires(pre): rpm-macros-dqt6 rpm-macros-dqt6-webengine
 # Automatically added by buildreq on Fri Aug 08 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-pdf libdqt6-positioning libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickwidgets libdqt6-sql libdqt6-waylandclient libdqt6-webchannel libdqt6-webenginecore libdqt6-webenginewidgets libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pipewire-libs pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: dqt6-5compat-devel dqt6-positioning-devel dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-tools-devel dqt6-webchannel-devel dtk6-common-devel libcups-devel libdtk6widget-devel
+BuildRequires: dqt6-5compat-devel dqt6-positioning-devel dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-tools-devel dqt6-webchannel-devel dtk6-common-devel libcups-devel libdtk6widget-devel libwayland-client-devel
 BuildRequires: libsystemd-devel
 %if_enabled qtwebengine
 BuildRequires: dqt6-webengine-devel
@@ -83,6 +83,10 @@ sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
 %endif
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.43-alt1
+- New version 6.5.43.
+- Fixed build on dtk 6.7.31.
+
 * Fri Aug 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.36-alt1
 - New version 6.5.36.
 - Built via separate qt6 instead system (ALT #48138).
