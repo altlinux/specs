@@ -2,7 +2,7 @@
 %define import_path github.com/external-secrets/external-secrets/
 
 Name: external-secrets
-Version: 0.18.2
+Version: 1.3.1
 Release: alt1
 
 Summary: Kubernetes operator for syncing external secrets into Kubernetes Secrets
@@ -50,5 +50,8 @@ export IGNORE_SOURCES=1
 %doc README.md 
 
 %changelog
+* Tue Jan 27 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.3.1-alt1
+- Updated to new version v1.3.1.
+
 * Tue Jul 22 2025 Maxim Tulskiy <tulskijms@altlinux.org> 0.18.2-alt1
 - Initial build for ALT Sisyphus.
