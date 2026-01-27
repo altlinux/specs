@@ -1,5 +1,5 @@
 Name: ocaml-pcre
-Version: 8.0.2
+Version: 8.0.5
 Release: alt1
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
@@ -15,6 +15,7 @@ Obsoletes: ocaml-pcre-runtime < %version-%release
 
 BuildRequires: libpcre-devel 
 BuildRequires: ocaml-dune-configurator-devel ocaml-base
+BuildRequires: ocaml-ounit-devel
 
 %description
 This OCaml-library interfaces the PCRE (Perl-compatibility regular
@@ -50,6 +51,9 @@ developing applications that use %name.
 %doc README.md
 
 %changelog
+* Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 8.0.5-alt1
+- 8.0.2 -> 8.0.5
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 8.0.2-alt1
 - 7.5.0 -> 8.0.2
 
