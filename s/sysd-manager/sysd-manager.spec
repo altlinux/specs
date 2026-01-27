@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.11
+%define ver_major 2.12
 %define rdn_name io.github.plrigaux.%name
 %define bus_name io.github.plrigaux.SysDManager
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -50,7 +50,7 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 # fix schemas
-%patch1 -b .bad
+#%%patch1 -b .bad
 #sed -i '/<schemalist>/,$!d' data/schemas/%rdn_name.gschema.xml
 
 %build
@@ -104,6 +104,9 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %doc CHANGELOG* README*
 
 %changelog
+* Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.12.2-alt1
+- 2.12.2
+
 * Thu Jan 15 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.5-alt1
 - 2.11.5
 
