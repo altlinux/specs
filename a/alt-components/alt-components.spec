@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,16 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Jan 27 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.8-alt1
+- Fix segmentation fault if alterator-manager is unactive (Closes: #57586).
+- Clarify 'manually installed' term for safe mode option (thx Maria Alexeeva).
+- Fix modality of notification dialog.
+- Fix modality of warning log dialog.
+- Fix incorrect construction of date of last update.
+- Add update of component list after updating sources.
+- Fix missing D-Bus data about error in log.
+- Add localized title to wizard window.
+
 * Sat Jan 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.7-alt1
 - Fix segmentation fault when dist-upgrades.log is empty (Closes: #57520).
 
