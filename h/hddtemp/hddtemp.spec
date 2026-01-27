@@ -1,5 +1,5 @@
 Name: hddtemp
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 Epoch: 20110629
 
@@ -65,6 +65,9 @@ install -d %buildroot%_man8dir
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Tue Jan 27 2026 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4.4-alt1
+- new version 0.4.4
+
 * Sun Mar 21 2021 Vitaly Lipatov <lav@altlinux.ru> 20110629:0.4.3-alt1
 - new version 0.4.3 (with rpmrb script)
  + fix segfault if there is no bus
