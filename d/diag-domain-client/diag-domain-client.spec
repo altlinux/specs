@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -15,12 +15,16 @@ Source: %name-%version.tar
 
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-diag = 0.1.4
+Requires: apt-repo samba
 
 BuildRequires(pre): rpm-macros-alterator
 %ifnarch %e2k
 BuildRequires: shellcheck
 %endif
-BuildRequires: alterator-entry
+BuildRequires: alterator-entry bats
+BuildRequires: apt-repo samba
+BuildRequires: /dev
+BuildRequires: /proc
 
 Obsoletes: domain-diag < %EVR
 
@@ -31,21 +35,17 @@ Active Directory domain environment diagnostic tool.
 %setup
 
 %build
-sed -i 's/^VERSION=.*/VERSION=%version/' %name
-sed -i 's/@VERSION@/%version/g' %name.man
+%make_build
 
 %install
-install -p -D -m755 %name %buildroot%_bindir/%name
-install -p -D %name.man %buildroot%_mandir/man1/%name.1
-install -p -D -m644 alterator/%name.backend %buildroot%_alterator_datadir/backends/%name.backend
-install -p -D -m644 alterator/%diagnostic_tool.diag %buildroot%_alterator_datadir/diagnostictools/%diagnostic_tool.diag
-install -p -D -m644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+%makeinstall
 
 %check
 %ifnarch %e2k
 shellcheck %name
 %endif
 find ./alterator/ -type f -exec alterator-entry validate {} \+
+bats tests/report_test.bats
 
 %files
 %_bindir/%name
@@ -55,6 +55,13 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jan 23 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.0-alt1
+- build: added some missing requirements
+- fix: fixed report test (thnx liannnix@)
+- build: added autotests
+- build: added Makefile
+- feat: added functional report
+
 * Mon Dec 29 2025 Andrey Limachko <liannnix@altlinux.org> 0.6.0-alt1
 - fix: correct kerberos cache file path handling
 - feat: added kerberos tracing test (thx Kozyrev Yuri)
