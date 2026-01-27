@@ -1,9 +1,9 @@
 Name: gkrellm
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Multiple stacked system monitors
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Monitoring
 Url: https://gkrellm.srcbox.net
 Vcs: https://git.srcbox.net/gkrellm/gkrellm
@@ -17,7 +17,8 @@ Source2: gkrellm-2.2.8-alt-sysconfig
 # for gkrellm >= 2.2.0
 Requires: libgtk+2 >= 2.3.1
 
-BuildPreReq: libSM-devel libgtk+2-devel libntlm-devel libsensors3-devel libssl-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
+BuildRequires: meson libSM-devel libgtk+2-devel libntlm-devel libsensors3-devel libssl-devel
 
 %description
 GKrellM charts SMP CPU, load, Disk, and all active net interfaces
@@ -49,47 +50,36 @@ Gkrellm server allows connections from Gkrellm clients over network.
 %prep
 %setup
 
-subst 's|^FLAGS = \(.*\)|FLAGS = %optflags \1|' {src,server}/Makefile
-
 # gkrellmd tuning
-subst 's,^#allow-host\tlocalhost,allow-host	localhost,g' server/gkrellmd.conf
-subst 's,^max-clients.*,max-clients 5,g' server/gkrellmd.conf
-subst 's,^update-hz.*,update-hz 2,g' server/gkrellmd.conf
+subst 's,^#allow-host\tlocalhost,allow-host	localhost,g' data/gkrellmd.conf
+subst 's,^max-clients.*,max-clients 5,g' data/gkrellmd.conf
+subst 's,^update-hz.*,update-hz 2,g' data/gkrellmd.conf
 
 # set platform-dependent libdir
 subst 's,/usr/lib,%_libdir,g' src/gkrellm.h server/gkrellmd.h
 
 %build
-%make_build enable_nls=1 \
-	INSTALLROOT=%prefix \
-	SMC_LIBS='-L%_x11libdir -lSM -lICE'
+%meson \
+	-Dbuild-client=true \
+	-Dbuild-server=true \
+	-Dlmsensors=enabled \
+	-Dnls=enabled \
+	-Dsystemd=enabled \
+	-Dx11=enabled \
+	-Dssl=enabled \
+	-Dssl-backend=openssl \
+	-Dsystemd-unit-dir=%_unitdir \
+	%nil
+
+%meson_build
 
 %install
-mkdir -p %buildroot%_bindir
+%meson_install
 mkdir -p %buildroot%_libdir/gkrellm2/plugins
-mkdir -p %buildroot%_desktopdir
-
-%make_install install enable_nls=1 \
-	INSTALLROOT=%buildroot%prefix \
-	PKGCONFIGDIR=%buildroot%_pkgconfigdir
-
 rm -rf %buildroot%_iconsdir/hicolor/{24x24,64x64}
 
 install -D -m755 %SOURCE1 %buildroot%_initdir/gkrellmd
 install -D -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/gkrellmd
-# we're not there yet
-mv %buildroot%_prefix/etc/gkrellmd.conf %buildroot%_sysconfdir/gkrellmd.conf
-
-cat > %buildroot%_desktopdir/%name.desktop << __EOF__
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Gkrellm
-Exec=%name
-Icon=%name
-Categories=System;Monitor;
-Comment=A gtk-based monitoring app
-__EOF__
 
 %find_lang %name
 
@@ -127,6 +117,11 @@ __EOF__
 %_man1dir/gkrellmd.*
 
 %changelog
+* Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.0-alt1
+- 2.5.0.
+- Switch to meson.
+- License: use modern SPDX identifier.
+
 * Fri Jun 20 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt1
 - 2.4.0.
 - server: apply optflags.

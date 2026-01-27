@@ -2,12 +2,12 @@
 
 Name: gkrellm-%plugin
 Version: 0.2
-Release: alt1
+Release: alt2
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: GKrellM analog clock plugin
-Summary(ru_RU.KOI8-R): Часы со стрелками для GKrellM
-License: GPL
+Summary(ru_RU.UTF-8): п╖п╟я│я▀ я│п╬ я│я┌я─п╣п╩п╨п╟п╪п╦ п╢п╩я▐ GKrellM
+License: GPL-2.0-or-later
 Group: Monitoring
 Url: http://perso.wanadoo.fr/alltrax/alltraxclock.html
 
@@ -23,9 +23,10 @@ BuildRequires: gkrellm-devel glib2-devel libatk-devel libgtk+2-devel libpango-de
 %description
 A plugin for GKrellM, which displays a nice analog clock
 with the theme colors.
-%description -l ru_RU.KOI8-R
-Плагин для GKrellM, отображающий время на часах со стрелками
-соответственно оформлению GkrellM.
+
+%description -l ru_RU.UTF-8
+п÷п╩п╟пЁп╦п╫ п╢п╩я▐ GKrellM, п╬я┌п╬п╠я─п╟п╤п╟я▌я┴п╦п╧ п╡я─п╣п╪я▐ п╫п╟ я┤п╟я│п╟я┘ я│п╬ я│я┌я─п╣п╩п╨п╟п╪п╦
+я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╣п╫п╫п╬ п╬я└п╬я─п╪п╩п╣п╫п╦я▌ GkrellM.
 
 %prep
 %setup -q -n %{plugin}_%version
@@ -33,19 +34,21 @@ with the theme colors.
 %patch1 -p1
 
 %build
-%make_build enable_nls=1
-# CFLAGS="$RPM_OPT_FLAGS" LOCALEDIR=%_datadir/locale
+CFLAGS='%optflags' %make_build enable_nls=1
 
 %install
-#%__mkdir_p %buildroot%_libdir/gkrellm2/plugins
 %make_install install enable_nls=1 PLUGIN_DIR=%buildroot%_libdir/gkrellm2/plugins INSTALL_PREFIX=%buildroot LOCALEDIR=%_datadir/locale
-%find_lang alltraxclock
+%find_lang gkrellm-alltraxclock
 
-%files -f alltraxclock.lang
+%files -f gkrellm-alltraxclock.lang
 %doc debian/changelog debian/changelog.old
 %_libdir/gkrellm2/plugins/alltraxclock.so
 
 %changelog
+* Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt2
+- Enable debuginfo.
+- .spec: modernize a bit.
+
 * Thu Jun 19 2003 Grigory Batalov <bga@altlinux.ru> 0.2-alt1
 - 0.2
 - I18n and ru.po patches

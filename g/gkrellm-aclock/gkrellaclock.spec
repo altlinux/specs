@@ -3,11 +3,11 @@
 
 Name: gkrellm-%plugin
 Version: 0.3.2
-Release: alt3.qa1
+Release: alt4
 
 Summary: GKrellM aclock plugin
-Summary(ru_RU.CP1251): Аналоговые часы для GKrellM 
-License: GPL
+Summary(ru_RU.UTF-8): РђРЅР°Р»РѕРіРѕРІС‹Рµ С‡Р°СЃС‹ РґР»СЏ GKrellM
+License: GPL-2.0-or-later
 Group: Monitoring
 Url: http://www.geocities.com/m_muthukumar/gkrellaclock.html
 Source: http://www.geocities.com/m_muthukumar/%sourcename-%version.tar.gz
@@ -15,9 +15,9 @@ Source: http://www.geocities.com/m_muthukumar/%sourcename-%version.tar.gz
 Provides: %sourcename = %version
 Obsoletes: %sourcename <= %version
 
-Patch0: gkrellaclock-0.3.2-alt-i18n.patch.gz
-Patch1: gkrellaclock-0.3.2-alt-ru.patch.gz
-Patch2: gkrellaclock-0.3.2-alt-install.patch.gz
+Patch0: gkrellaclock-0.3.2-alt-i18n.patch
+Patch1: gkrellaclock-0.3.2-alt-ru.patch
+Patch2: gkrellaclock-0.3.2-alt-install.patch
 
 Requires: gkrellm >= 2.0
 
@@ -25,16 +25,17 @@ Requires: gkrellm >= 2.0
 BuildRequires: gkrellm-devel glib2-devel libatk-devel libgtk+2-devel libpango-devel pkgconfig
 
 %description
-This GKrellM plugin displays analog clock. 
+This GKrellM plugin displays analog clock.
 
-%description -l ru_RU.CP1251
-Плагин GKrellM отображающий аналоговые часы.
+%description -l ru_RU.UTF-8
+РџР»Р°РіРёРЅ GKrellM РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РёР№ Р°РЅР°Р»РѕРіРѕРІС‹Рµ С‡Р°СЃС‹.
 
 %prep
 %setup -q -n gkrellAclock-%version
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+subst 's|^FLAGS =.*|\0 %optflags|' Makefile
 
 %build
 %make_build enable_nls=1 LOCALEDIR=%_datadir/locale
@@ -49,6 +50,11 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/gkrell%plugin.so
 
 %changelog
+* Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 0.3.2-alt4
+- Actually enable debuginfo.
+- .spec: convert to utf8.
+- .spec: use SPDX tag for license.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.3.2-alt3.qa1
 - NMU: rebuilt for debuginfo.
 

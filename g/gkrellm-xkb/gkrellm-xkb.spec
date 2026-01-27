@@ -2,11 +2,12 @@
 
 Name: gkrellm-%plugin
 Version: 1.05
-Release: alt3
+Release: alt3.1
 
 Summary: GKrellM xkb plugin
-License: GPL
+License: GPL-2.0-or-later
 Group: Monitoring
+# url doesn't work, here only for historical reasons
 Url: http://sweb.cz/tripie/gkrellm/xkb/
 Source: http://sweb.cz/tripie/gkrellm/xkb/dist/%name-%version.tar.gz
 
@@ -18,28 +19,32 @@ Requires: gkrellm >= 2.0
 BuildRequires: gkrellm-devel glib2-devel libatk-devel libgtk+2-devel libpango-devel pkgconfig
 
 %description
-gkrellm-xkb is a plugin for gkrellm which displays a small country flag indicating 
-the currently-active national keyboard layout.
-The plugin uses the XKB X Window extension and doesn't work when the extension is 
-disabled or not available.
+gkrellm-xkb is a plugin for gkrellm which displays a small country flag
+indicating the currently-active national keyboard layout.  The plugin uses the
+XKB X Window extension and doesn't work when the extension is disabled or not
+available.
 
 %prep
 %setup -q
 %patch0 -p1
+subst 's|^FLAGS =.*|\0 %optflags|' Makefile
 
 %build
 %make_build
 
 %install
 mkdir -p %buildroot%_libdir/gkrellm2/plugins
-%__install -m755 %plugin.so %buildroot%_libdir/gkrellm2/plugins/%plugin.so
+install -m755 %plugin.so %buildroot%_libdir/gkrellm2/plugins/%plugin.so
 
 %files
 %doc TODO doc/*
 %_libdir/gkrellm2/plugins/%plugin.so
 
-
 %changelog
+* Mon Jan 26 2026 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt3.1
+- Enable debuginfo.
+- License: use SPDX tag.
+
 * Tue May 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.05-alt3
 - fix build
 
