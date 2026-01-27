@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: ClipMaster is a clipboard manager for GNOME Shell
@@ -56,6 +56,9 @@ cp -r %uuid %buildroot%_datadir/gnome-shell/extensions/
 %doc README.md
 
 %changelog
+* Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Sun Jan 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - first build for Sisyphus
 
