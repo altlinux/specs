@@ -4,12 +4,13 @@
 
 Name:    python3-module-espeak
 Version: 0.6.3
-Release: alt3
+Release: alt4
 
 Summary: Python C extension for the eSpeak speech synthesizer
 License: GPL-3.0
 Group:   Development/Python3
 Url:     https://github.com/asrp/python-espeak
+VCS:     https://github.com/asrp/python-espeak.git
 
 Source: %name-%version.tar
 
@@ -18,7 +19,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: espeak-ng-devel
+BuildRequires: libespeak-devel
 BuildRequires: gcc-c++
 
 %description
@@ -44,6 +45,9 @@ C library and does not simply make calls to the `espeak` binary.
 %python3_sitelibdir/python_espeak-%version.dist-info/*
 
 %changelog
+* Tue Jan 27 2026 Artem Semenov <savoptik@altlinux.org> 0.6.3-alt4
+- Fixed FTBFS after espeak ng update
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 0.6.3-alt3
 - Added description
 - Cleaned-up the spec
