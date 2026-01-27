@@ -5,7 +5,7 @@
 %def_without examples
 
 Name: assimp
-Version: 6.0.2
+Version: 6.0.4
 Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
@@ -126,7 +126,7 @@ rm -rf contrib/zlib
 %_bindir/%name
 
 %files -n lib%name%major
-%doc Readme.md LICENSE CREDITS CHANGES
+%doc Readme.md LICENSE CREDITS CHANGES.md
 %_libdir/lib%name.so.%major
 %_libdir/lib%name.so.%version
 
@@ -137,6 +137,9 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 6.0.4-alt1
+- 6.0.4.
+
 * Mon Jun 09 2025 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt1
 - 6.0.2.
 - devel: added libpugixml-devel to requires.
