@@ -1,5 +1,5 @@
 Name: libbabl
-Version: 0.1.116
+Version: 0.1.120
 Release: alt1
 Summary: babl is a dynamic, any to any, pixel format translation library
 License: %lgpl3only
@@ -80,6 +80,9 @@ sed "s|@BABL_GIT_VERSION@|%version|" git-version.h.in > git-version.h
 %_vapidir/babl-*.vapi
 
 %changelog
+* Tue Jan 27 2026 Valery Inozemtsev <shrek@altlinux.ru> 0.1.120-alt1
+- 0.1.120
+
 * Mon Oct 13 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.1.116-alt1
 - 0.1.116
 
