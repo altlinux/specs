@@ -5,10 +5,10 @@
 
 %global _unpackaged_files_terminate_build 1
 
-%define git_commit 1cf4bc4
+%define git_commit 65251b3
 
 Name:    etcd
-Version: 3.5.23
+Version: 3.5.26
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
@@ -112,6 +112,12 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Tue Jan 27 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.26-alt1
+- 3.5.23 -> 3.5.26
+- Fixes:
+  + CVE-2025-47914: Malformed constraint may cause denial of service in golang.org/x/crypto/ssh/agent
+  + CVE-2025-58181: Unbounded memory consumption in golang.org/x/crypto/ssh
+
 * Tue Oct 14 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.23-alt1
 - 3.5.16 -> 3.5.23
 - Fixes:
