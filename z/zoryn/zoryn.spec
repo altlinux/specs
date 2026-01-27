@@ -1,8 +1,8 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.12.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
 License: GPL-2.0-or-later
@@ -95,6 +95,21 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.1-alt1
+- fixed submit to reuse existing tag on HEAD
+- fixed flaky check_host_available test
+
+* Mon Jan 27 2026 Anton Farygin <rider@altlinux.org> 0.13.0-alt1
+- added 'check spec' command for RPM spec validation before submit
+- added 'gen version-up --filter' for version prefix filtering
+- added 'task batch --test' local test build mode
+- added 'task batch --skip' and '-b' builder selection
+- added '--run' and '--commit' options for submit
+- added submit config section in ~/.zoryn
+- changed submit to unified task run behavior across all modes
+- fixed gen version-up tag prefix and pattern handling
+- integrated check spec validation into submit workflow
+
 * Sat Jan 24 2026 Anton Farygin <rider@altlinux.ru> 0.12.0-alt2
 - excluded 32-bit architectures (unstable, no real-world usage)
 
