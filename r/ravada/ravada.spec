@@ -11,7 +11,7 @@
 %endif
 
 Name: ravada
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -208,6 +208,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Tue Jan 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Wed Oct 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
