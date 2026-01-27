@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.7.0
+Version: 6.7.1
 Release: alt1
 
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
@@ -55,6 +55,9 @@ py.test-3 -v --ignore tests/test_circular_imports.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 6.7.1-alt1
+- Automatically updated to 6.7.1.
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 6.7.0-alt1
 - Automatically updated to 6.7.0.
 
