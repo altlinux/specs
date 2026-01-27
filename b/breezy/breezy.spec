@@ -5,7 +5,7 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.3.13
+Version: 3.3.20
 Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
@@ -172,6 +172,12 @@ install -m0644 man1/brz.1 %buildroot%_man1dir/
 %endif
 
 %changelog
+* Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 3.3.20-alt1
+- 3.3.20.
+
+* Tue Nov 18 2025 L.A. Kostis <lakostis@altlinux.ru> 3.3.15-alt1
+- 3.3.15.
+
 * Tue Nov 18 2025 L.A. Kostis <lakostis@altlinux.ru> 3.3.13-alt1
 - 3.3.13.
 
