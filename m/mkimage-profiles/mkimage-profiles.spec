@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.10
+Version: 1.9.0
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jan 26 2026 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt1
+- live-install: do not add xterm for wayland-only installer
+- alternatives: do not abort script, when alternatives-manual error
+- features.in/Makefile: do not run generate.mk, generate.sh when
+  SUBPROFILES=main
+- create lists and groups from editions and components (thx jqt4@)
+- arm-rpi4: use universal u-boot, when available
+- Fix for commit "Cleanup syslinux gfxboot everything"
+- grub: add menu item "Install with screen reader"
+- drm, x11: drop optimus targets
+- bin/metadep-expander: add i586-nvidia_glx_* on x86_64 when available
+- x11: use nvidia list for biarch support on x86_64
+
 * Mon Dec 29 2025 Anton Midyukov <antohami@altlinux.org> 1.8.10-alt1
 - live-install: add use/live-install/wayland
 - oem: add use/oem/wayland feature
