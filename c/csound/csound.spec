@@ -5,7 +5,7 @@
 
 Name: csound
 Version: 6.18.1
-Release: alt2
+Release: alt3
 
 Summary: A sound synthesis language and library
 License: LGPL-2.1
@@ -13,38 +13,28 @@ Group: Sound
 URL: https://csound.github.io/
 VCS: https://github.com/csound/csound
 
+Conflicts: extract
+Conflicts: clearsilver
+
 Source: %name-%version.tar
 Patch0: cmakedir.patch
 
-BuildRequires(pre): rpm-build-java rpm-build-cmake rpm-macros-cmake rpm-build-python3
-BuildRequires: gcc-c++
-BuildRequires: doxygen
-BuildRequires: cmake
-BuildRequires: swig scons
-BuildRequires: libsndfile-devel
-BuildRequires: libpng-devel
-BuildRequires: libjpeg-devel
-BuildRequires: flex
-BuildRequires: bison
-BuildRequires: ladspa_sdk
-BuildRequires: libfluidsynth-devel
-BuildRequires: boost-program_options-devel java-devel
-BuildRequires: dssi-devel
-BuildRequires: libfltk-devel
-BuildRequires: swig-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libportaudio2-devel libportmidi-devel
-BuildRequires: libstk-devel
-BuildRequires: liblo-devel
-BuildRequires: eigen3-devel
-BuildRequires: libwiiuse-devel
-BuildRequires: libbluez-devel
-BuildRequires: llvm-devel
-BuildRequires: faust-devel
-BuildRequires: graphviz
-BuildRequires: xsltproc
-BuildRequires: libsamplerate-devel
+BuildRequires(pre): rpm-macros-java rpm-macros-cmake rpm-macros-python3
+BuildRequires: rpm-build-java rpm-build-cmake rpm-build-python3
 BuildRequires: CUnit-devel
+BuildRequires: doxygen
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: graphviz
+BuildRequires: java-devel
+BuildRequires: ladspa_sdk
+BuildRequires: liblo-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libportmidi-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libsamplerate-devel
+BuildRequires: libsndfile-devel
+BuildRequires: swig
 
 %description
 Csound is a sound and music synthesis system, providing facilities for
@@ -105,9 +95,9 @@ applications that use Csound.
 mkdir -pv %buildroot%_javadir
 mv -v %buildroot%_libdir/*.jar %buildroot%_javadir/
 
-rm -r %buildroot%_datadir/locale
+%find_lang %name%sover
 
-%files
+%files -f %name%sover.lang
 %doc COPYING
 %_bindir/*
 %_datadir/samples/*
@@ -134,6 +124,11 @@ rm -r %buildroot%_datadir/locale
 %_javadir/csnd6.jar
 
 %changelog
+* Tue Jan 27 2026 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt3
+- Optemised build requires
+- Packaged locales
+- Added conflicts to extract clearsilver (Closes: 57669)
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt2
 - Cleaned-up the spec
 
