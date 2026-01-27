@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.472.b08
+%define version 1.8.0.482.b08
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u472-b08
+%global shenandoah_revision jdk8u482-b08
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -385,7 +385,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.b08
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2142,6 +2142,10 @@ fi
 %endif
 
 %changelog
+* Mon Jan 26 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.482.b08-alt1
+- New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
+  CVE-2026-21945).
+
 * Sun Nov 09 2025 Michael Shigorin <mike@altlinux.org> 0:1.8.0.472.b08-alt2
 - E2K: add minimal part of Unipro patches for interpreted mode JVM
   (ilyakurdyukov@)
