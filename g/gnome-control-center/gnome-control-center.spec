@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -27,7 +27,7 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
-Vcs: https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
+Vcs: https://gitlab.gnome.org/GNOME/gnome-control-center.git
 
 %if_enabled snapshot
 Source: %name-%version%beta.tar
@@ -235,6 +235,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
+- 49.4
+
 * Mon Jan 05 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
 - 49.3
 

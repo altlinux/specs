@@ -5,17 +5,18 @@
 %def_with pic
 %def_disable usermode
 %def_enable xhost_root
+# /dev/disk/by-id required
 %def_disable check
 
 Name: gparted
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
 Summary(uk_UA.UTF-8): Редактор розділів %Name
 Group: System/Configuration/Hardware
-License: %gpl2plus
+License: GPL-2.0-or-later
 Url: http://%name.sourceforge.net/
 
 Vcs: https://gitlab.gnome.org/GNOME/gparted.git
@@ -46,7 +47,6 @@ Requires: udftools >= 2.0
 # exfatprogs conflicts with exfat-utils
 Requires: exfatprogs >= 1.1.0
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
 BuildRequires: libglibmm-devel >= 2.32 libgtkmm3-devel >= 3.4.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel
@@ -112,7 +112,7 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %check
-xvfb-run %make check
+xvfb-run %make -k check VERBOSE=1
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog.* README NEWS
@@ -131,6 +131,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Jan 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
