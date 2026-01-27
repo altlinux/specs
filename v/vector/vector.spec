@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vector
-Version: 0.50.0
+Version: 0.52.0
 Release: alt1
 
 Summary: A lightweight and ultra-fast tool for building observability pipelines
@@ -23,6 +23,7 @@ Patch: systemd-unit-alt.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust >= 1.80.0
+BuildRequires: libclang21
 BuildRequires: rpm-build-rust cmake gcc-c++ clang python3 git-core
 BuildRequires: libssl-devel libsasl2-devel zlib-devel liblz4-devel libzstd-devel rapidjson
 BuildRequires: librdkafka-devel
@@ -51,7 +52,7 @@ sed -i '/#!\[deny(warnings)\]/d'\
 cat %SOURCE5 >> %_builddir/%name-%version/.cargo/config.toml
 
 %build
-cargo-vendor-checksum --ignore-missing --vendor vendor --files-in-vendor-dir openssl-src/openssl/.gitattributes
+cargo-vendor-checksum --ignore-missing --vendor vendor --files-in-vendor-dir libssh2-sys/libssh2/tests/openssh_server/.gitattributes openssl-src/openssl/.gitattributes
 
 export CFLAGS="-O3 -DPIC -fPIC"
 export RUST_BACKTRACE=1
@@ -93,6 +94,9 @@ usermod -a -G adm vector >/dev/null 2>&1 || :
 %dir %attr(0770, root, vector) %_sharedstatedir/vector
 
 %changelog
+* Mon Jan 26 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.52.0-alt1
+- New version.
+
 * Sat Oct 18 2025 Ilya Muhamadeev <nicourced@altlinux.org> 0.50.0-alt1
 - New version.
 
