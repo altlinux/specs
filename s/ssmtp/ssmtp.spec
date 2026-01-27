@@ -1,22 +1,13 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
-Version: 2.64
-Release: alt6
+Version: 2.65
+Release: alt1
 License: GPL-2.0-or-later
 Group: System/Servers
 BuildRequires: libssl-devel
-Url: https://packages.debian.org/stable/mail/ssmtp
-VCS: https://salsa.debian.org/debian/ssmtp.git
+Url: https://github.com/Project-OSS-Revival/ssmtp
+VCS: https://github.com/Project-OSS-Revival/ssmtp
 Source: %name-%version.tar
-Patch1: ssmtp-2.64-fedora-md5auth-non-rsa.patch
-Patch2: ssmtp-2.64-fedora-garbage_writes.patch
-Patch3: ssmtp-2.64-fedora-authpass.patch
-Patch4: ssmtp-2.64-fedora-aliases.patch
-Patch5: ssmtp-2.64-fedora-remote-addr.patch
-Patch6: ssmtp-2.64-fedora-validate-TLS-server-cert.patch
-Patch7: ssmtp-2.64-defaultvalues.patch
-Patch8: ssmtp-2.64-fedora-c99.patch
-Patch9: ssmtp-2.64-fedora-configure-c99.patch
 Conflicts: sendmail sendmail-submit
 Conflicts: postfix
 Conflicts: masqmail
@@ -32,7 +23,6 @@ spool to poke around in, and no daemons running in the background. Mail is
 simply forwarded to the configured mailhost. Extremely easy configuration.
 WARNING: the above is all it does; it does not receive mail, expand aliases
 or manage a queue. That belongs on a mail hub with a system administrator.
-
 
 %package common
 Summary: ssmtp - common files
@@ -70,7 +60,6 @@ simply forwarded to the configured mailhost. Extremely easy configuration.
 WARNING: the above is all it does; it does not receive mail, expand aliases
 or manage a queue. That belongs on a mail hub with a system administrator.
 
-
 %prep
 %setup
 %autopatch -p1
@@ -99,9 +88,12 @@ ln -sf %_sbindir/%name %buildroot%_sbindir/sendmail
 %config(noreplace) %_sysconfdir/%name/revaliases
 
 %files docs
-%doc README TLS CHANGELOG_OLD INSTALL COPYING debian/changelog
+%doc README TLS CHANGELOG_OLD INSTALL COPYING ChangeLog
 
 %changelog
+* Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 2.65-alt1
+- 2.64 -> 2.65
+
 * Mon Feb 10 2025 Anton Farygin <rider@altlinux.ru> 2.64-alt6
 - built from debian git tag 2.64
 - built with fixes from Fedora
