@@ -5,7 +5,7 @@
 
 Name: deepin-system-monitor
 Version: 6.5.37
-Release: alt1
+Release: alt2
 
 Summary: A more user-friendly system monitor
 
@@ -24,7 +24,7 @@ Patch3: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
 BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils rpm-macros-dqt6
 # Automatically added by buildreq on Thu Mar 13 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libicu-devel libp11-kit libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxcbutil-icccm libxkbcommon-devel ninja-build perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: dde-dock-devel deepin-gettext-tools dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libcups-devel libdtk6widget-devel libnl-devel libpcap-devel libpolkitqt6-qt6-devel libudev-devel libxcbutil-icccm-devel
+BuildRequires: dde-dock-devel deepin-gettext-tools dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libcups-devel libdtk6widget-devel libnl-devel libpcap-devel libpolkitqt6-qt6-devel libudev-devel libxcbutil-icccm-devel libwayland-client-devel
 
 %if_enabled clang
 BuildRequires: clang-devel
@@ -126,6 +126,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.37-alt2
+- Fixed build on dtk 6.7.31.
+
 * Wed Dec 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.37-alt1
 - New version 6.5.37.
 

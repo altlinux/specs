@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.77
+Version: 2.0.79
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -28,7 +28,7 @@ BuildPreReq: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-qt6-devel
+BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-qt6-devel libwayland-client-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -108,8 +108,7 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %dir %_datadir/deepin-service-manager/user/
 %_datadir/deepin-service-manager/system/plugin-system-network.json
 %_datadir/deepin-service-manager/user/plugin-session-network.json
-%_datadir/dbus-1/system.d/org.deepin.service.SessionNetwork.conf
-%_datadir/dbus-1/system.d/org.deepin.service.SystemNetwork.conf
+%_datadir/dbus-1/system.d/org.deepin.dde.Network1.conf
 %_datadir/polkit-1/rules.d/50-dss-network-plugin.rules
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
@@ -145,6 +144,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.79-alt1
+- New version 2.0.79.
+- Fixed build on dtk 6.7.31.
+
 * Tue Dec 23 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.77-alt1
 - New version 2.0.77.
 

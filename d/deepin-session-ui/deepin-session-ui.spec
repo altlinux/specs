@@ -4,7 +4,7 @@
 
 Name: deepin-session-ui
 Version: 6.0.37
-Release: alt1
+Release: alt2
 
 Summary: Deepin desktop-environment - Session UI module
 
@@ -23,7 +23,7 @@ Patch: %name-%version-%release.patch
 Conflicts: notify-osd
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd rpm-build-xdg
-BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel libwayland-client-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -106,6 +106,9 @@ export READELF="llvm-readelf"
 %_datadir/dsg/configs/org.deepin.login-reminder/org.deepin.login-reminder.json
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt2
+- Fixed build on dtk 6.7.31.
+
 * Wed Dec 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.37-alt1
 - New version 6.0.37.
 

@@ -2,7 +2,7 @@
 
 Name: deepin-screensaver
 Version: 6.5.5
-Release: alt1
+Release: alt2
 Summary: Screensaver Tool
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-dqt6
 # Automatically added by buildreq on Wed Jul 30 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers xorg-proto-devel
-BuildRequires: gcc-c++ dqt6-5compat-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel libXScrnSaver-devel libXext-devel libcups-devel libdtk6widget-devel
+BuildRequires: gcc-c++ dqt6-5compat-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel libXScrnSaver-devel libXext-devel libcups-devel libdtk6widget-devel libwayland-client-devel
 # BuildRequires: xscreensaver-modules xscreensaver-modules-gl
 
 Requires: libdqt6-gui = %_dqt6_version
@@ -90,6 +90,9 @@ sed -i '/QT_LRELEASE/s|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lre
 %_libexecdir/%name/modules/
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.5-alt2
+- Fixed build on dtk 6.7.31.
+
 * Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.5-alt1
 - New version 6.5.5.
 

@@ -5,7 +5,7 @@
 
 Name: deepin-services
 Version: 1.0.19
-Release: alt1
+Release: alt2
 
 Summary: Manage DBus service on DDE
 
@@ -19,7 +19,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6gui-devel libX11-devel
+BuildRequires: cmake dqt6-base-devel dtk6-common-devel libdtk6gui-devel libX11-devel libwayland-client-devel
 %if_with ipwatchd
 BuildRequires: libsystemd-devel glib2-devel libpcap-devel libnet2-devel
 %endif
@@ -87,6 +87,9 @@ export AR="llvm-ar"
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.19-alt2
+- Fixed build on dtk 6.7.31.
+
 * Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.19-alt1
 - New version 1.0.19.
 - Disabled ipwatchd plugin (by upstream).

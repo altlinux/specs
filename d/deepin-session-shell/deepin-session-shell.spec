@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 6.0.52
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Deepin desktop-environment - Session shell module
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 # Requires: chkpwd-pam
 
 BuildRequires(pre): deepin-gettext-tools
-BuildRequires: cmake dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXcursor-devel libXrandr-devel libXtst-devel libcups-devel libdtk6widget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel dde-lightdm-devel
+BuildRequires: cmake dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXcursor-devel libXrandr-devel libXtst-devel libcups-devel libdtk6widget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel dde-lightdm-devel libwayland-client-devel
 %if_with clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -141,6 +141,9 @@ mkdir -p %buildroot%_localstatedir/lightdm/lightdm-deepin-greeter/
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.0.52-alt2
+- Fixed build on dtk 6.7.31.
+
 * Wed Jan 14 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.0.52-alt1
 - New version 6.0.52.
 - Fixed lightdm-deepin-greeter permissions.

@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 6.0.16
+Version: 6.0.17
 Release: alt1
 
 Summary: Deepin Polkit Agent
@@ -23,7 +23,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake libdtk6widget-devel dtk6-common-devel dqt6-tools-devel dqt6-declarative-devel libdde-shell-devel deepin-shell libpolkitqt6-dqt6-devel libcups-devel
+BuildRequires: cmake libdtk6widget-devel dtk6-common-devel dqt6-tools-devel dqt6-declarative-devel libdde-shell-devel deepin-shell libpolkitqt6-dqt6-devel libcups-devel libwayland-client-devel
 
 %description
 DDE Polkit Agent is the polkit agent used in Deepin Desktop Environment.
@@ -81,6 +81,10 @@ export READELF="llvm-readelf"
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt1
+- New version 6.0.17.
+- Fixed build on dtk 6.7.31.
+
 * Mon Oct 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
 - New version 6.0.16.
 - Applied FindLang Policy.

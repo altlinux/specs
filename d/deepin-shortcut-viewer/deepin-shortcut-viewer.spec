@@ -1,5 +1,5 @@
 Name: deepin-shortcut-viewer
-Version: 5.5.5
+Version: 5.5.6
 Release: alt1
 
 Summary: Deepin Shortcut Viewer
@@ -13,7 +13,7 @@ VCS: https://github.com/linuxdeepin/deepin-shortcut-viewer
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: cmake dqt6-base-devel libcups-devel dtk6-common-devel libdtk6widget-devel
+BuildRequires: cmake dqt6-base-devel libcups-devel dtk6-common-devel libdtk6widget-devel libwayland-client-devel
 
 %description
 The program displays a shortcut key window when a JSON data is passed.
@@ -35,6 +35,10 @@ The program displays a shortcut key window when a JSON data is passed.
 %_bindir/%name
 
 %changelog
+* Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 5.5.6-alt1
+- New version 5.5.6.
+- Fixed build on dtk 6.7.31.
+
 * Wed Jan 14 2026 Leontiy Volodin <lvol@altlinux.org> 5.5.5-alt1
 - New version 5.5.5.
 
