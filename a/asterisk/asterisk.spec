@@ -15,7 +15,7 @@
 %endif
 
 Name: asterisk
-Version: 20.17.0
+Version: 20.18.0
 Release: alt1
 
 Summary: Open source PBX
@@ -319,6 +319,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Mon Jan 26 2026 Ilya Demyanov <turbid@altlinux.org> 20.18.0-alt1
+- 20.18.0
+
 * Mon Dec 08 2025 Ilya Demyanov <turbid@altlinux.org> 20.17.0-alt1
 - 20.17.0
 - don't copy config.{sub,guess} from gnu-config - already updated in upstream
