@@ -364,7 +364,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -500,7 +500,7 @@ Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 Patch4:    openjdk17-alt-fix-build-for-i586.patch
 # LoongArch support
-Patch3500: jdk17u-17.0.11-loongarch.patch
+Patch3500: jdk17u-17.0.18-loongarch.patch
 # Alas LoongArch patch somewhat breaks PPC, hence the fixup
 Patch3510: jdk17u-17.0.9-ppc-fixup.patch
 
@@ -2020,6 +2020,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 27 2026 Ivan A. Melnikov <iv@altlinux.org> 0:17.0.18.0.8-alt2
+- Update loongarch64 patch to fix FTBFS.
+
 * Mon Jan 26 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.18.0.8-alt1
 - New version (fixes: CVE-2026-21925, CVE-2026-21932, CVE-2026-21933,
   CVE-2026-21945).
