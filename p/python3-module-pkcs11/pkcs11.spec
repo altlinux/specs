@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: PKCS#11/Cryptoki support for Python
@@ -89,6 +89,9 @@ py.test-3 -v --import-mode=append
 %python3_sitelibdir/python_pkcs11-%version.dist-info
 
 %changelog
+* Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt1
+- Automatically updated to 0.9.3.
+
 * Wed Oct 22 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
 - Automatically updated to 0.9.1.
 
