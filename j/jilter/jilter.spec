@@ -3,13 +3,13 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jilter
 Version:        1.2
-Release:        alt1_18jpp8
+Release:        alt2
 Summary:        Sendmail milter protocol for Java
 
 License:        Sendmail
@@ -66,8 +66,6 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/
 cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
-
-
 %files
 %doc LICENSE.txt
 %{_javadir}/%{name}.jar
@@ -78,6 +76,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Jan 27 2026 Anton Meleshnikov <alton@altlinux.org> 1.2-alt2
+- fixed FTBFS
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_18jpp8
 - fc update
 
