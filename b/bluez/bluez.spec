@@ -17,8 +17,8 @@
 %endif
 
 Name: bluez
-Version: 5.84
-Release: alt3
+Version: 5.85
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -75,10 +75,18 @@ Group: Networking/Other
 Requires: %name = %EVR
 
 %description btpclient
-BTP stands for Bluetooth Tester Protocol and aims at automated testing of BT
-stack. BTP is binary protocol and is already implemented in Zephyr Project.
+The Tester application uses binary protocol to control Zephyr stack and is
+aimed at automated testing. It requires two serial ports to operate. The first
+serial is used by Bluetooth Testing Protocol (BTP) to drive Bluetooth stack.
+BTP commands and events are received and buffered for further processing over
+the same serial.
 
-https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/btp_spec.txt
+BTP specification can be found in auto-pts project repository:
+https://github.com/intel/auto-pts The auto-pts is an automation framework for
+PTS Bluetooth testing tool provided by Bluetooth SIG.
+
+See https://docs.zephyrproject.org/latest/guides/bluetooth/index.html for full
+documentation about how to use this test.
 
 %package mpris-proxy
 Summary: Bluetooth mpris proxy
@@ -251,6 +259,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 5.85-alt1
+- 5.85.
+
 * Mon Nov 17 2025 Sergey V Turchin <zerg@altlinux.org> 5.84-alt3
 - package test-tools
 
