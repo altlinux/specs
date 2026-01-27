@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 5.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: URI parsing, classification and composition
@@ -16,6 +16,8 @@ VCS:     https://github.com/tkem/uritools
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,21 +34,23 @@ Source:  %name-%version.tar
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 
