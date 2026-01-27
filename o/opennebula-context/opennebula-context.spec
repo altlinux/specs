@@ -1,12 +1,11 @@
-
 Name: opennebula-context
 Summary: OpenNebula Contextualization Package
-Version: 6.6.1
+Version: 6.10.0
 Release: alt1
 License: Apache-2.0
 Group: System/Servers
-Url: http://opennebula.org
-# https://github.com/OpenNebula/addon-context-linux.git
+URL: http://opennebula.org
+VCS: https://github.com/OpenNebula/one-apps
 Source0: %name-%version.tar
 BuildArch: noarch
 
@@ -43,6 +42,8 @@ To get support check the OpenNebula web page:
 
 %build
 %install
+
+cd context-linux
 
 install -p -D -m 755 src/etc/one-context.d/loc-05-grow-rootfs \
 			%buildroot%_sysconfdir/one-context.d/loc-05-grow-rootfs
@@ -122,6 +123,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/*
 
 %changelog
+* Tue Jan 27 2026 Alexander Burmatov <thatman@altlinux.org> 6.10.0-alt1
+- 6.10.0
+
 * Wed Oct 18 2023 Andrew A. Vasilyev <andy@altlinux.org> 6.6.1-alt1
 - 6.6.1
 
