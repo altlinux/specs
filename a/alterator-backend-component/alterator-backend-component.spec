@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -69,6 +69,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Jan 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.2-alt1
+- Add DescriptionRaw method.
+- Complete missing information in help.
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.1-alt1
 - Add 'exit_status = true' for new version of executor.
 
