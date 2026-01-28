@@ -2,18 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: %pypi_name
-Version: 1.1.2
-Release: alt0.2
+Version: 1.3.0
+Release: alt1
 Summary: Python bindings for libgbinder
 Group: Development/Python
 
-License: GPLv3
+License: GPL-3.0-only
 Url: https://github.com/erfanoabdi/gbinder-python
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools python3-module-wheel python3-module-Cython libgbinder-devel
+BuildRequires: python3-module-wheel python3-module-Cython libgbinder-devel
 
 %package -n python3-module-%{pypi_name}
 Summary: %summary
@@ -28,15 +28,8 @@ Cython extension module for gbinder.
 %prep
 %setup
 %patch0 -p1
-# ugly hack, see https://github.com/erfanoabdi/gbinder-python/issues/18
-%ifarch %ix86
-for patch in .gear/*.patch; do
-cat "$patch" | patch -p1
-done
-%endif
 
 %build
-python3 setup.py sdist --cython
 %pyproject_build
 
 %install
@@ -47,6 +40,9 @@ python3 setup.py sdist --cython
 %python3_sitelibdir/gbinder_python-%{version}.dist-info/
 
 %changelog
+* Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
+- 1.3.0.
+
 * Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt0.2
 - ix86: Fix FTBFS with gcc14.
 
