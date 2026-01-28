@@ -4,7 +4,7 @@
 %def_disable orc
 
 Name: vips
-Version: 8.17.2
+Version: 8.18.0
 Release: alt1
 
 Summary: Large image processing library
@@ -71,6 +71,8 @@ BuildRequires: pkgconfig(libjxl)
 %endif
 BuildRequires: libarchive-devel
 BuildRequires: libexif-devel
+BuildRequires: libultrahdr-devel
+BuildRequires: libraw-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -206,6 +208,10 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.0-alt1
+- 8.18.0.
+- BR: added libraw and libuhdr.
+
 * Wed Oct 22 2025 L.A. Kostis <lakostis@altlinux.ru> 8.17.2-alt1
 - 8.17.2.
 
