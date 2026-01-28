@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    typst
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 
 Summary: New markup-based typesetting system that is powerful and easy to learn
@@ -101,6 +101,9 @@ install -m644 -v ./crates/%name-cli/artifacts/%name.bash \
 %_datadir/bash-completion/completions/%name.bash
 
 %changelog
+* Wed Jan 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.2-alt1
+- New version.
+
 * Thu Dec 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14.1-alt1
 - New version.
 
