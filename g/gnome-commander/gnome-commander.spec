@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -93,6 +93,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.18.5-alt1
+- 1.18.5
+
 * Sun Sep 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 
