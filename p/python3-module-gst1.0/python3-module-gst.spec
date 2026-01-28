@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gst-python
-%define ver_major 1.26
+%define ver_major 1.28
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-gst%gst_api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject3
@@ -27,6 +27,8 @@ Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
+
+%add_python3_path %_libdir/gstreamer-%gst_api_ver/python
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
 BuildRequires: meson orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
@@ -45,6 +47,7 @@ This package provides GStreamer overrides for PyGobject3.
 
 %prep
 %setup -n %_name-%version
+%python3_fix_shebang plugins/ges/python/gesotioformatter.py
 
 %build
 %meson \
@@ -60,10 +63,16 @@ This package provides GStreamer overrides for PyGobject3.
 
 %files
 %_libdir/gstreamer-%gst_api_ver/libgstpython.so
+%dir %_libdir/gstreamer-%gst_api_ver/python/
+%_libdir/gstreamer-%gst_api_ver/python/gesotioformatter.py
+%_libdir/gstreamer-%gst_api_ver/python/__pycache__/
 %python3_sitelibdir/gi/overrides/*
 %doc RELEASE NEWS
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
 - 1.26.10
 

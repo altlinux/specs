@@ -39,14 +39,14 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.26
+%define ver_major 1.28
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -64,6 +64,10 @@ Provides: %_name-bad = %EVR
 
 Obsoletes: gst-transcoder < 1.17
 Provides: gst-transcoder = %EVR
+
+# GStreamer-VAAPI has been removed in favour of the va plugin
+Obsoletes: gstreamer-vaapi < 1.28.0
+Provides:  gstreamer-vaapi = %EVR
 
 Requires: lib%_name%api_ver >= %ver_major
 Requires: gstreamer%api_ver >= %ver_major
@@ -177,22 +181,24 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_libdir/*.so.*
 %dir %_gst_libdir
 %_gst_libdir/*.so
+%_typelibdir/CudaGst-%api_ver.typelib
+%_typelibdir/GstAnalytics-1.0.typelib
 %_typelibdir/GstBadAudio-%api_ver.typelib
 %_typelibdir/GstCodecs-%api_ver.typelib
+%_typelibdir/GstCuda-%api_ver.typelib
+%_typelibdir/GstDxva-1.0.typelib
+%_typelibdir/GstHip-1.0.typelib
+%_typelibdir/GstHipGL-1.0.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
-%_typelibdir/GstPlayer-%api_ver.typelib
+%_typelibdir/GstMse-1.0.typelib
 %_typelibdir/GstPlay-%api_ver.typelib
+%_typelibdir/GstPlayer-%api_ver.typelib
 %_typelibdir/GstTranscoder-%api_ver.typelib
-%_typelibdir/GstWebRTC-%api_ver.typelib
-%_typelibdir/GstCuda-%api_ver.typelib
-%_typelibdir/CudaGst-%api_ver.typelib
 %_typelibdir/GstVa-%api_ver.typelib
 %_typelibdir/GstVulkan-%api_ver.typelib
 %_typelibdir/GstVulkanWayland-%api_ver.typelib
-%_typelibdir/GstAnalytics-1.0.typelib
-%_typelibdir/GstDxva-1.0.typelib
-%_typelibdir/GstMse-1.0.typelib
+%_typelibdir/GstWebRTC-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %_datadir/gstreamer-%api_ver/encoding-profiles/device/dvd.gep
@@ -206,29 +212,30 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/webm.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/online-services/youtube.gep
 %_datadir/gstreamer-%api_ver/encoding-profiles/file-extension/ts.gep
-%doc AUTHORS NEWS README* RELEASE
+%doc NEWS README* RELEASE
 
 %files devel
 %_includedir/gstreamer-%api_ver/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_girdir/GstInsertBin-%api_ver.gir
-%_girdir/GstMpegts-%api_ver.gir
-%_girdir/GstPlayer-%api_ver.gir
-%_girdir/GstWebRTC-%api_ver.gir
+%_girdir/CudaGst-%api_ver.gir
+%_girdir/GstAnalytics-1.0.gir
 %_girdir/GstBadAudio-%api_ver.gir
 %_girdir/GstCodecs-%api_ver.gir
-%_girdir/GstTranscoder-%api_ver.gir
-%_girdir/GstPlay-%api_ver.gir
-%_girdir/CudaGst-%api_ver.gir
 %_girdir/GstCuda-%api_ver.gir
+%_girdir/GstDxva-1.0.gir
+%_girdir/GstHip-1.0.gir
+%_girdir/GstHipGL-1.0.gir
+%_girdir/GstInsertBin-%api_ver.gir
+%_girdir/GstMpegts-%api_ver.gir
+%_girdir/GstMse-1.0.gir
+%_girdir/GstPlay-%api_ver.gir
+%_girdir/GstPlayer-%api_ver.gir
+%_girdir/GstTranscoder-%api_ver.gir
 %_girdir/GstVa-%api_ver.gir
 %_girdir/GstVulkan-%api_ver.gir
 %_girdir/GstVulkanWayland-%api_ver.gir
-%_girdir/GstAnalytics-1.0.gir
-%_girdir/GstDxva-1.0.gir
-%_girdir/GstMse-1.0.gir
-
+%_girdir/GstWebRTC-%api_ver.gir
 %if_enabled doc
 %files doc
 %_gtk_docdir/gst-plugins-bad-plugins-%api_ver
@@ -236,6 +243,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
 - 1.26.10
 

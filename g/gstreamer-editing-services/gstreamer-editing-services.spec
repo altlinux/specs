@@ -1,13 +1,13 @@
 %define _name ges
 %define new_name gst-editing-services
-%define ver_major 1.26
+%define ver_major 1.28
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -113,7 +113,7 @@ sed -i 's|Gst\(FrameCompositionApi\)|GES\1|' ges/ges-frame-composition-meta.c
 # gi overrides
 %python3_sitelibdir/gi/overrides/GES.py
 %python3_sitelibdir/gi/overrides/__pycache__/*
-%doc ChangeLog README* RELEASE NEWS AUTHORS
+%doc ChangeLog README* RELEASE NEWS
 
 # for tests only?
 %exclude %_libdir/gst-validate-launcher/python/*
@@ -138,6 +138,9 @@ sed -i 's|Gst\(FrameCompositionApi\)|GES\1|' ges/ges-frame-composition-meta.c
 %endif
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
 - 1.26.10
 

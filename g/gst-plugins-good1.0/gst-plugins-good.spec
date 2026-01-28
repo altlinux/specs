@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.26
+%define ver_major 1.28
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -23,8 +23,8 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.10
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -125,7 +125,7 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %{?_enable_qt5:%exclude %_gst_libdir/libgstqmlgl.so}
 %{?_enable_qt6:%exclude %_gst_libdir/libgstqml6.so}
 %_gst_datadir/*
-%doc AUTHORS NEWS README* RELEASE
+%doc NEWS README* RELEASE
 
 %if_enabled qt5
 %files qt5
@@ -144,6 +144,9 @@ sed -i -E 's/^static const GstV4l2.* ([^[ ]*) = \{$/#define \1 {/;T;:a;s/$/\\/;n
 %endif
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Mon Jan 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1.1
 - fixed %%e2k build by ilyakurdyukov@
 

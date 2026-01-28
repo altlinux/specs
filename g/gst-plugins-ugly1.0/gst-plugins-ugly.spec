@@ -1,10 +1,13 @@
 %define _name gst-plugins
-%define ver_major 1.26
+%define ver_major 1.28
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
+
+# deprecated since 1.28.0
+%def_enable mpeg2dec
 
 %def_disable doc
 # GPL-licensed plugins
@@ -14,7 +17,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -35,7 +38,8 @@ Source: http://gstreamer.freedesktop.org/src/%_name-ugly/%_name-ugly-%version.ta
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ orc liborc-test-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: liba52-devel libcdio-devel libid3tag-devel
-BuildRequires: libmad-devel libmpeg2-devel liboil-devel libx264-devel
+BuildRequires: libmad-devel liboil-devel libx264-devel
+%{?_enable_mpeg2dec:BuildRequires: libmpeg2-devel}
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libdvdread-devel
 %{?_enable_doc:BuildRequires: hotdoc gtk-doc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver-utils}
@@ -89,7 +93,7 @@ collection.
 %_gst_libdir/libgstdvdsub.so
 %_gst_libdir/libgstrealmedia.so
 %_datadir/gstreamer-%api_ver/*
-%doc AUTHORS NEWS README* RELEASE
+%doc NEWS README* RELEASE
 
 %if_enabled doc
 %files devel-doc
@@ -97,6 +101,9 @@ collection.
 %endif
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.10-alt1
 - 1.26.10
 
