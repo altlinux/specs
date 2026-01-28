@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-player
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: COSMIC Media Player
@@ -68,6 +68,9 @@ just rootdir=%buildroot install
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
