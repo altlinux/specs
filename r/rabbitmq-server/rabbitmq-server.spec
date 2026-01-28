@@ -4,7 +4,7 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.13.7
+Version: 4.1.8
 Release: alt1
 
 Summary: The RabbitMQ server
@@ -34,13 +34,13 @@ BuildRequires(pre): rpm-build-erlang rpm-build-python3
 BuildRequires: erlang-devel
 BuildRequires: erlang-otp-devel elixir
 BuildRequires: python3-module-simplejson
-BuildRequires: xmlto zip unzip netcat rsync
+BuildRequires: xmlto p7zip zip unzip netcat rsync
 
 #Disable erlang autoreq to avoid unmet dependencies on rabbitmq plugins
 AutoReq: noerlang
 Requires: elixir
-Requires: erlang >= 1:26.0
-Requires: erlang-otp >= 1:26.0
+Requires: erlang >= 1:26.2
+Requires: erlang-otp >= 1:26.2
 
 %description
 RabbitMQ is an implementation of AMQP, the emerging standard for high
@@ -156,6 +156,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jan 27 2026 Egor Ignatov <egori@altlinux.org> 4.1.8-alt1
+- 4.1.8
+
 * Thu Sep 19 2024 Egor Ignatov <egori@altlinux.org> 3.13.7-alt1
 - 3.13.7
 
