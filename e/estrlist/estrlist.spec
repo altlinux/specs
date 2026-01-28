@@ -1,35 +1,66 @@
 Name: estrlist
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: estrlist - string operation utility
 
-License: Public domain
+License: MIT
 Group: Development/Other
 Url: http://www.altlinux.org/Etersoft-build-utils
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-git: http://git.altlinux.org/people/lav/packages/estrlist.git
-Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%version.tar
+Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
-BuildArchitectures: noarch
+BuildRequires: rpm-build-rust
 
 Conflicts: etersoft-build-utils < 3.0.0
 
 %description
-String operation utility.
+String operation utility (Rust implementation).
 
 %prep
-%setup
+%setup -a1
+
+mkdir -p estrlist-rs/.cargo
+cat >> estrlist-rs/.cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+
+%build
+cd estrlist-rs
+%rust_build ||:
 
 %install
-install -D bin/%name %buildroot%_bindir/%name
+install -D bin/%name %buildroot%_bindir/%name.sh
+if [ -x estrlist-rs/target/release/estrlist ]; then
+    cd estrlist-rs
+    %rust_install %name
+else
+    echo "Rust binary not found, using shell version"
+    ln -s %{name}.sh %buildroot%_bindir/%name
+fi
 
 %files
+%_bindir/%name.sh
 %_bindir/%name
 
 %changelog
+* Fri Jan 23 2026 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- add Rust implementation (estrlist-rs)
+- spec: build Rust version using rpm-build-rust
+- change license to MIT
+- pack shell estrlist as estrlist.sh
+- estrlist.sh: optimize difference, containts, intersection
+- estrlist.sh: filter_strip_spaces: fix reading input without trailing newline
+- install estrlist-rust as estrlist (with fallback to estrlist)
+
 * Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - estrlist: add new verbs: first, last
 - estrlist: add new verbs: firstupper, tolower
