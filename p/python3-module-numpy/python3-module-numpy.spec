@@ -22,7 +22,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
@@ -172,6 +172,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Tue Jan 27 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.4.1-alt1
+- 2.4.0 -> 2.4.1
+
 * Wed Dec 24 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.4.0-alt1
 - 2.3.5 -> 2.4.0
 
