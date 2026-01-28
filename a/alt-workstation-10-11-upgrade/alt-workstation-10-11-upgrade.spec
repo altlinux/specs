@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-workstation-10-11-upgrade
-Version: 0.2.0
+Version: 1.0.0
 Release: alt1
 
 Summary: A simple tool for ALT Workstation upgrade from 10 to 11
@@ -43,5 +43,8 @@ BuildRequires: rpm-build-python3
 %python3_sitelibdir/alt_workstation_10_11_upgrade/
 
 %changelog
+* Wed Jan 28 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.0-alt1
+- new version 1.0.0 (closes: 57489)
+
 * Wed Jan 14 2026 Alexey Volkov <qualimock@altlinux.org> 0.2.0-alt1
 - initial build for ALT
