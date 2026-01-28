@@ -1,5 +1,5 @@
 Name: sonata
-Version: 1.7.1
+Version: 1.7.3
 Release: alt1
 
 Summary: Sonata is an elegant GTK+ music client for the Music Player Daemon (MPD).
@@ -9,22 +9,21 @@ Group: Sound
 Url: https://github.com/multani/sonata
 
 Source: %name-%version.tar
-BuildArch: noarch
 Source1: %{name}_16.png
 Source2: %{name}_32.png
 Source3: %{name}_48.png
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: desktop-file-utils python3-module-setuptools
-BuildRequires: python3-devel python3-module-tagpy
-BuildRequires: python3-module-dbus-devel
-BuildRequires: libX11-devel gcc-c++ libgtk+3-devel
 
-#Requires: python-module-tagpy python-module-elementtree python-module-ZSI python-module-python-mpd
-#Requires: python-module-dbus
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-tagpy
+BuildRequires: python3-module-dbus-devel
+
 Requires: python3-module-%name = %EVR
 Requires: dbus-tools-gui
 Requires(post,postun): desktop-file-utils
+
+BuildArch: noarch
 
 %description
 Sonata is an elegant GTK+ music client for the Music Player Daemon
@@ -75,11 +74,10 @@ This package contains Python module of Sonata.
 subst "s|'share/sonata'|'share/doc/%name-%version'|g" setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%find_lang %name
+%pyproject_install
 
 # set up icons for 'not the only and mighty Gnome and KDE'
 mkdir -p %buildroot%_niconsdir %buildroot%_liconsdir %buildroot%_miconsdir
@@ -87,21 +85,25 @@ install -m 644 %SOURCE1 %buildroot%_miconsdir/%name.png
 install -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 install -m 644 %SOURCE3 %buildroot%_liconsdir/%name.png
 
+%find_lang %name
+
 %files -f %name.lang
-%doc *.rst TODO TRANSLATORS CHANGELOG
-%_bindir/*
-%_desktopdir/*
-%_datadir/locale/*/*/%name.mo
-%_man1dir/*
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_man1dir/%name.1.*
 %_defaultdocdir/%name-%version
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 %_miconsdir/%name.png
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Wed Jan 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1
+- Automatically updated to 1.7.3.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
 - new version
 
