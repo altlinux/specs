@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-chrony
 Name: alterator-service-chrony
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Service for managment chrony
@@ -42,6 +42,13 @@ install -p -D -m644 default-chrony.conf %buildroot%_localstatedir/alterator/serv
 %_localstatedir/alterator/service/%service/default-chrony.conf
 
 %changelog
+* Wed Jan 28 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.4-alt1
+- Fixed work with makestep field (thx Michael Mukhin)
+- Fixed work with rtcsync field (thx Michael Mukhin)
+- Fixed work with disableDefaultPool field (Closes: #57513) (thx Michael Mukhin)
+- Fixed status function (Closes: #57515) (thx Michael Mukhin)
+- Added array labels (thx Michael Mukhin)
+
 * Thu Dec 25 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3-alt1
 - Fixed make_ntp_entry function (thx Michael Mukhin)
 - Fixed parse_conf_file function (thx Michael Mukhin)
