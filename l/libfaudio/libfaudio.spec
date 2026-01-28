@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: libfaudio
-Version: 25.05
+Version: 26.01
 Release: alt1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -73,8 +73,8 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %files -n %name-devel
 %_includedir/*
 %_libdir/*.so
-%_datadir/cmake/FAudio
-%_pkgconfigdir/*.pc
+%_libdir/pkgconfig/*.pc
+%_libdir/cmake/FAudio
 
 %if_enabled static
 %files -n %name-devel-static
@@ -82,6 +82,12 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 26.01-alt1
+- 26.01.
+
+* Mon Jul 28 2025 L.A. Kostis <lakostis@altlinux.ru> 25.07-alt1
+- 25.07.
+
 * Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05-alt1
 - 25.05.
 
