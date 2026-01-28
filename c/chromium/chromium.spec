@@ -26,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        144.0.7559.96
+Version:        144.0.7559.109
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -656,6 +656,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jan 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.109-alt1
+- New version (144.0.7559.109).
+- Fixes:
+  + CVE-2026-1504: Inappropriate implementation in Background Fetch API
+
 * Wed Jan 21 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.96-alt1
 - New version (144.0.7559.96).
 - Fixes:
