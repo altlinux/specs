@@ -1,17 +1,18 @@
 %set_verify_elf_method relaxed
 
+%define soname 25 
+
 Name:    monado
-Version: 25.0.0
+Version: 25.1.0
 Release: alt1
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
 Group:   Games/Other
 Url:     https://gitlab.freedesktop.org/monado/monado
-VCS:     https://gitlab.freedesktop.org/monado/monado.git
+VCS:     https://gitlab.freedesktop.org/monado/monado
 
 Source:  %name-%version.tar
-Patch:  fix-compilation-on-latest-vulkan-headers.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
@@ -43,13 +44,17 @@ implementation of the OpenXR API made by Khronos.
 Summary: Header files for monado
 Group: Development/C
 Requires: %name = %EVR
-
 %description devel
 Development files for the Monado OpenXR runtime.
 
+%package -n lib%name%soname
+Group: System/Libraries
+Summary: %name library
+%description -n lib%name%soname
+%name library.
+
 %prep
 %setup
-%patch -p1
 
 %build
 %cmake \
@@ -66,27 +71,25 @@ Development files for the Monado OpenXR runtime.
 %cmakeinstall_std
 
 %files
-%doc CONTRIBUTING.md LICENSE README.md
-%_bindir/monado-cli
-%_bindir/monado-ctl
-%_bindir/monado-service
-%_bindir/monado-gui
-%_libdir/libmonado.so.*
+%doc CONTRIBUTING.md LICENSES README.md
+%_bindir/%{name}*
 %_libdir/libopenxr_monado.so
-%dir %_datadir/openxr/
-%_datadir/openxr/
-%dir %_datadir/steamvr-monado/
-%_datadir/steamvr-monado/
-%_userunitdir/monado.service
-%_userunitdir/monado.socket
+%_datadir/openxr
+%_datadir/steamvr-monado
+%_userunitdir/%name.*
 
 %files devel
-%doc LICENSE README.md
-%dir %_includedir/%name
-%_includedir/%name/
+%_includedir/%name
 %_libdir/libmonado.so
 
+%files -n lib%name%soname
+%_libdir/libmonado.so.%soname
+%_libdir/libmonado.so.%{soname}.*
+
 %changelog
+* Wed Jan 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 25.1.0-alt1
+- 25.0.0 -> 25.1.0
+
 * Sun Jun 15 2025 Sergey Palcheh <minergenon@altlinux.org> 25.0.0-alt1
 - initial build for ALT Sisyphus
 
