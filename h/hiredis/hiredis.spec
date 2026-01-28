@@ -13,7 +13,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -57,6 +57,12 @@ libraries to develop applications using a Redis database.
 
 %prep
 %setup -n hiredis-%version
+%ifarch %e2k
+# error: comparison between signed and unsigned operands [-Werror=sign-compare]
+# breaks e2k build because -Werror, GCC don't complain for some reason
+# clearly wrong code, but will trigger only on 32-bit systems
+sed -i 's/elements > SIZE_MAX/elements > (long long)SIZE_MAX/' read.c
+%endif
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -108,6 +114,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Wed Jan 28 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.0-alt3
+- e2k build fix
+
 * Thu May 01 2025 Anton Farygin <rider@altlinux.com> 1.3.0-alt2
 - dopped upstream-added compatibility symlink libhiredis.so.1 symlink to comply
   with ALT Shared Lib Policy and allow parallel installation of multiple
