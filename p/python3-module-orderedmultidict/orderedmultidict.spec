@@ -1,12 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name orderedmultidict
 %define mod_name %pypi_name
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 
 Summary: Ordered Multivalue Dictionary. Helps power furl.
 
@@ -51,6 +50,9 @@ retains the order of insertions and deletions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- Automatically updated to 1.0.2.
+
 * Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2
 - migrated from removed setuptools' test command (see #50996).
 
