@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.13.1
-Release: alt1
+Release: alt2
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
@@ -159,6 +159,11 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/cron.daily/man-db.cron
 
 %changelog
+* Wed Jan 28 2026 Ivan A. Melnikov <iv@altlinux.org> 2.13.1-alt2
+- Use external xz utility for large pages or pages that require
+  a lot of RAM to decompress (fixes handling of pages compressed
+  with `xz -9`).
+
 * Tue May 20 2025 Ivan A. Melnikov <iv@altlinux.org> 2.13.1-alt1
 - New version (2.13.1).
 
