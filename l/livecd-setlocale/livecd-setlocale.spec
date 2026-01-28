@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.16
+Version: 0.3.17
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -34,6 +34,9 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Wed Jan 28 2026 Anton Midyukov <antohami@altlinux.org> 0.3.17-alt1
+- livecd-setlocale: fix exit from script.
+
 * Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 0.3.16-alt1
 - Use alterator-sysconfig-functions
 
