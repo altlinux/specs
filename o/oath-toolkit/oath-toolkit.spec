@@ -4,7 +4,7 @@
 %def_enable pam
 
 Name: oath-toolkit
-Version: 2.6.13
+Version: 2.6.14
 Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
@@ -182,6 +182,9 @@ rm -r %buildroot%_datadir/gtk-doc
 %endif
 
 %changelog
+* Wed Jan 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.6.14-alt1
+- 2.6.14
+
 * Fri Aug 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.6.13-alt1
 - 2.6.13
 - change building scheme (due to upstream commit e0a496bcf6)
