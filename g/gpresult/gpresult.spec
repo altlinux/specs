@@ -8,8 +8,8 @@
 %add_python3_req_skip gpresult.Preferences.Preferences.Shortcut
 
 Name: gpresult
-Version: 0.0.5
-Release: alt2
+Version: 0.0.6
+Release: alt1
 
 Summary: Display applied policies
 License: GPLv3+
@@ -44,6 +44,10 @@ The utility allows you to display a list of domain  (GPO) policies that apply to
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Jan 28 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.0.6-alt1
+- Fixed interpretation of '\' as an escape sequence (Closes: #57582)
+- Compilation of translation files now runs at build time
+
 * Tue May 06 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.5-alt2
 - Removed libgvdb-gir dependency (automatic dependency lookup works)
 - Translation files moved to /usr/share/locale/
