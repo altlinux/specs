@@ -1,16 +1,16 @@
 %define optflags_lto -flto=thin
 
 %define version_hi 2
-%define version_mid 4
-%define version_lo 0
+%define version_mid 6
+%define version_lo 3
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define git_date Sun Jun 29 22:47:12 2025
+%define Wed Jan 28 19:36:27 2026
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash e4af1c424451c6b65c5c387404315cef77e9901b
+%define git_hash bc8151d2a46d4aba039ea5580afbfc7bfcf6d730
 
 Name: pcsx2
-Version: 2.4.0
+Version: 2.6.3
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -18,6 +18,7 @@ License: GPLv3 and LGPLv3
 Group: Emulators
 
 Url: http://%name.net/
+Vcs: https://github.com/PCSX2/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
@@ -87,11 +88,12 @@ There is still lot of on going work to improve compatibility & speed.
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
 	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
 	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
-	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=TRUE \
-	-DCMAKE_BUILD_PO:BOOL=TRUE \
-	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
-	-DLTO_PCSX2_CORE:BOOL=TRUE \
-	-DPACKAGE_MODE:BOOL=TRUE \
+	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=ON \
+	-DCMAKE_BUILD_PO:BOOL=ON \
+	-DDISABLE_ADVANCE_SIMD:BOOL=ON \
+	-DLTO_PCSX2_CORE:BOOL=ON \
+	-DPACKAGE_MODE:BOOL=ON \
+	-DQT_NO_PRIVATE_MODULE_WARNING:BOOL=ON \
 	-GNinja \
 	-Wno-dev
 
@@ -124,6 +126,9 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Wed Jan 28 2026 Nazarov Denis <nenderus@altlinux.org> 2.6.3-alt1
+- New version 2.6.3.
+
 * Mon Jun 30 2025 Nazarov Denis <nenderus@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
