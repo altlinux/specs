@@ -8,8 +8,9 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.21.0
+Version: 1.20.3
 Release: alt1
+Epoch: 1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -150,6 +151,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.20.3-alt1
+- back to stable (ALT #57686)
+
 * Thu Jan 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
 - 1.21.0
 
