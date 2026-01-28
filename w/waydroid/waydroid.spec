@@ -3,7 +3,7 @@
 
 Name: waydroid
 Version: 1.6.1
-Release: alt1
+Release: alt1.1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
 License: GPLv3+
@@ -49,6 +49,13 @@ rm -rf %buildroot%_libexecdir/systemd && mkdir -p %buildroot%_unitdir
 install -m644 systemd/%name-container.service %buildroot%_unitdir/
 mkdir -p %buildroot{%_sysconfdir,%_localstatedir/%name} && touch %buildroot%_sysconfdir/gbinder.conf
 
+%postun
+if [ "$1" -eq 0 ]; then
+	echo 'Removing waydroid system data/cache directory...'
+	rm -rf %_localstatedir/%name ||:
+else :
+fi
+
 %files
 %ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %_sysconfdir/gbinder.conf
 %_unitdir/*.service
@@ -65,6 +72,9 @@ mkdir -p %buildroot{%_sysconfdir,%_localstatedir/%name} && touch %buildroot%_sys
 %dir %_localstatedir/%name
 
 %changelog
+* Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1.1
+- Clean downloaded cache files after uninstall (related to #56970).
+
 * Fri Jan 16 2026 L.A. Kostis <lakostis@altlinux.ru> 1.6.1-alt1
 - 1.6.1.
 
