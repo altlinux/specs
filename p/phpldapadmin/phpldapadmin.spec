@@ -2,22 +2,24 @@
 
 Name: phpldapadmin
 Version: 2.3.8
-Release: alt1
+Release: alt2
 
 Summary: Handle the adminstration of LDAP server over the web
 Summary(ru_RU.UTF8): Управление LDAP сервером через web
 License: GPL-2.0
 Group: Networking/WWW
 
-Url: http://phpldapadmin.sourceforge.net
+Url: https://phpldapadmin.org/
+VCS: https://github.com/leenooks/phpldapadmin
 Source: %name-%version.tar.gz
 Patch0: %name-convert_to_ascii.patch
 
-Requires: apache2-mod_php8.1 php8.1-ldap
+Requires: apache2-mod_php%php_defver php%php_defver-ldap
 
 BuildArch: noarch
 
 BuildPreReq:rpm-build-apache2
+BuildRequires(pre): rpm-build-php
 
 %define pla_home %_datadir/%name
 
@@ -85,6 +87,10 @@ install -m644  %name.conf %buildroot%apache2_sites_available
 %pla_home
 
 %changelog
+* Wed Jan 28 2026 Anton Farygin <rider@altlinux.org> 2.3.8-alt2
+- Use %%php_defver for default PHP version resolution.
+- Fix homepage URL and add VCS tag.
+
 * Sun Jan 04 2026 Andrey Cherepanov <cas@altlinux.org> 2.3.8-alt1
 - New version.
 
