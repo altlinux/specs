@@ -1,7 +1,9 @@
+%def_with check
+
 %define pypi_name pyasynchat
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Make asynchat available for Python 3.12 onwards
@@ -9,6 +11,7 @@ Summary: Make asynchat available for Python 3.12 onwards
 License: Python-2.0.1
 Group: Development/Python3
 Url: https://pypi.org/project/pyasynchat
+Vcs: https://github.com/simonrob/pyasynchat
 
 BuildArch: noarch
 
@@ -16,8 +19,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-test
+BuildRequires: python3-module-pyasyncore
+%endif
 
 %description
 This package contains the asynchat module as found in Python versions
@@ -36,12 +44,19 @@ chmod ugo-x README.md LICENSE
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/asynchat
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
+- Build new version.
+- Build with check.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
 - Build new version.
 
