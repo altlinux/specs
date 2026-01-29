@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.0
-Release: alt4
+Release: alt5
 
 Summary: Testscenarios, a pyunit extension for dependency injection
 
@@ -14,6 +14,19 @@ BuildArch: noarch
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+
+# Not full commit, just tests/test_testscenarios.py hunks
+# for applying next patches
+Patch0: 12250124d11440e94fd30149d1ffed6b1b88f02d.patch
+# Not full commit, just tests/test_testcase.py hunks
+# for applying next patches
+Patch1: 2907ab614964e5838047566c7477b16172717b92.patch
+# Fix compatibility with newer testtools
+Patch2: 75b76e7d07bc6d415384e668aefb6b887a3aa13d.patch
+# s/assertEquals/assertEqual/
+Patch3: fd9a58526f1f77c192c129f6e06cb61bf06dfea4.patch
+# https://github.com/testing-cabal/testscenarios/pull/1
+Patch4: 9e2c6ba88925700a42e46f554419fc1a31fc5f29.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -33,23 +46,31 @@ itself, allowing easy testing in different situations).
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 -m testtools.run -v testscenarios.test_suite
+%pyproject_run -- python -m testtools.run -v testscenarios.test_suite
 
 %files
 %doc Apache-2.0 BSD COPYING GOALS HACKING NEWS README doc
 %doc AUTHORS ChangeLog
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt5
+- Fixed compatibility with newer testtools.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt4
 - Fixed FTBFS.
 
