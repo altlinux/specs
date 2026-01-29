@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.29
+Version: 0.9.4
 Release: alt1
 
 Summary: Bindings for the scrypt key derivation function library
@@ -19,10 +19,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 %description
 This is a set of Python bindings for the scrypt key derivation
@@ -56,6 +52,9 @@ hardware.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
+- Automatically updated to 0.9.4.
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.8.29-alt1
 - Automatically updated to 0.8.29.
 
