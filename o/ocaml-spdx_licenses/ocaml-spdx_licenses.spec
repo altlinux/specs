@@ -1,6 +1,6 @@
 %define pkgname spdx_licenses
 Name: ocaml-%pkgname
-Version: 1.2.0
+Version: 1.4.0
 Release: alt1
 Summary: A library providing a strict SPDX License Expression parser for OCAML
 License: MIT
@@ -43,5 +43,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 29 2026 Anton Farygin <rider@altlinux.org> 1.4.0-alt1
+- 1.2.0 -> 1.4.0
+
 * Tue Sep 17 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - first build for ALT Linux
