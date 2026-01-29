@@ -3,17 +3,26 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
+%define import_path github.com/charmbracelet/crush
+%define go_builddir .build
+
 Name: crush
 Version: 0.36.0
-Release: alt1
+Release: alt2
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
 Group: Development/Other
-Url: https://github.com/charmbracelet/crush
+Url: https://charm.land
+Vcs: https://github.com/charmbracelet/crush
 
 ExcludeArch: %ix86
 
 Source: %name-%version.tar
+Source1: vendor.tar
+Source2: example-llama.cpp-crush.json
+Source3: example-ollama-crush.json
+Patch: %name-%version-alt.patch
+BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
 %description
@@ -34,38 +43,55 @@ Note: Automatic provider updates are disabled and could be enabled in config or
 
 %prep
 %setup
-sed -i '/TestCoderAgent/a t.Skip("noNetwork")' internal/agent/agent_test.go
+%__tar xf %SOURCE1
+%__cp %SOURCE2 ./
+%__cp %SOURCE3 ./
+%patch -p1
+%__sed -i '/TestCoderAgent/a t.Skip("noNetwork")' internal/agent/agent_test.go
 
 %build
-go build -v -buildmode=pie -ldflags="-X github.com/charmbracelet/crush/internal/version.Version=%version"
+export BUILDDIR="$PWD/%go_builddir"
+export IMPORT_PATH="%import_path"
+export LDFLAGS="-X github.com/charmbracelet/crush/internal/version.Version=%version"
+export GOFLAGS="-buildmode=pie"
+%golang_prepare
+%golang_build %go_builddir/src/%import_path
 set -C
-./crush completion bash > _bash
-./crush completion zsh  > _zsh
-./crush completion fish > _fish
-./crush man > crush.1
+./%go_builddir/bin/%name completion bash > _bash
+./%go_builddir/bin/%name completion zsh  > _zsh
+./%go_builddir/bin/%name completion fish > _fish
+./%go_builddir/bin/%name man > crush.1
 
 %install
-install -Dp crush -t %buildroot%_bindir
-install -Dpm644 _bash %buildroot%_datadir/bash-completion/completions/%name
-install -Dpm644 _fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
-install -Dpm644 _zsh  %buildroot%_datadir/zsh/site-functions/_%name
-install -Dpm644 crush.1 -t %buildroot%_man1dir
+export BUILDDIR="$PWD/%go_builddir"
+export IGNORE_SOURCES=1
+
+%golang_install
+%__install -Dpm644 _bash %buildroot%_datadir/bash-completion/completions/%name
+%__install -Dpm644 _fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+%__install -Dpm644 _zsh  %buildroot%_datadir/zsh/site-functions/_%name
+%__install -Dpm644 %name.1 -t %buildroot%_man1dir
 
 %check
-%buildroot%_bindir/crush --version | grep -Fx '%name version %version'
-go test ./...
+%buildroot%_bindir/%name --version | grep -Fx '%name version %version'
+cd %go_builddir/src/%import_path/
+%gotest ./...
 
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE.md README.md
-%doc .gear/example-*-crush.json
-%_bindir/crush
+%doc example-*-%name.json
+%_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 %_man1dir/%name.1*
 
 %changelog
+* Thu Jan 29 2026 Andrey Limachko <liannnix@altlinux.org> 0.36.0-alt2
+- Update spec and build schema.
+- Patch: Add allowed_commands configuration with CLI support.
+
 * Wed Jan 28 2026 Andrey Limachko <liannnix@altlinux.org> 0.36.0-alt1
 - Update to v0.36.0.
 
