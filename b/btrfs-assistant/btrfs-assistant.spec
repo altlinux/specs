@@ -3,7 +3,7 @@
 Name: btrfs-assistant
 Version: 2.2
 Summary: GUI management tool to make managing a Btrfs filesystem easier
-Release: alt1
+Release: alt2
 License: GPL-3.0
 Group: Archiving/Backup
 URL: https://gitlab.com/btrfs-assistant/btrfs-assistant
@@ -43,6 +43,12 @@ The primary features it offers are:
 
 %prep
 %setup
+%ifarch %e2k
+# error: integer conversion resulted in a change of sign
+#   inline constexpr size_t variant_npos = -1;
+#   constexpr size_t __magic_monostate_hash = -7777;
+sed -i 's/-Werror/-Wno-error/g' src/CMakeLists.txt
+%endif
 
 %build
 %cmake
@@ -66,6 +72,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 %_datadir/polkit-1/actions/org.%name.pkexec.policy
 
 %changelog
+* Thu Jan 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2-alt2
+- e2k build fix
+
 * Wed Jul 16 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.2-alt1
 - Updated to version 2.2.
 
