@@ -6,7 +6,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Extensible control center
@@ -133,6 +133,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Thu Jan 29 2026 Alexander Davydzik <paladindev@altlinux.org> 0.6.3-alt1
+- changed size bar width
+- fixed page skipping on small screens
+
 * Thu Jan 22 2026 Alexander Davydzik <paladindev@altlinux.org> 0.6.2-alt1
 - added more icons
 
