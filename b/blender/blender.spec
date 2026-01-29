@@ -66,7 +66,7 @@
 %endif
 
 Name: blender
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -209,7 +209,6 @@ BuildRequires: openimagedenoise-devel
 %if_with mold
 BuildRequires: mold
 %endif
-
 
 %add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
@@ -369,6 +368,10 @@ rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
 # Remove bundled libraries which must not be used instead of system ones
 rm -rf extern/{Eigen3,glew,lzo,gflags,glog,draco}
 
+# overlay LFS files over git-lfs pointers (must be after all patches)
+cp -rf blender-lfs-%version/* .
+rm -rf blender-lfs-%version
+
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
@@ -524,6 +527,9 @@ python3 doc/manpage/blender.1.py \
 %endif
 
 %changelog
+* Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 4.5.6-alt1
+- 4.5.5 -> 4.5.6
+
 * Tue Dec 31 2025 Anton Farygin <rider@altlinux.com> 4.5.5-alt1
 - 4.3.2 -> 4.5.5
 - Built with external libdraco.
