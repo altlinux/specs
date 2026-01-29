@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: A collection of compression algorithms
 License: MIT
@@ -16,6 +16,8 @@ Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-rust
+
 BuildRequires: python3-module-maturin
 # XXX: Since v2.8.4 isal and blosc2 subprojects could not be linked with
 # system provided libs.
@@ -25,13 +27,12 @@ BuildRequires: gcc-c++ glibc-devel-static cmake nasm
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(python3)
 BuildRequires: /proc
-BuildRequires: rust-cargo
-# BuildRequires: cargo-vendor-filterer
-%{?!_without_check:%{?!_disable_check:
+
+%if_with check
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-pytest
-}}
+%endif
 
 %description
 Your go-to for easy access to a plethora of compression algorithms,
@@ -39,27 +40,7 @@ all neatly bundled in one simple installation.
 
 %prep
 %setup -a1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep
 
 %build
 # enable system libraries where supported
@@ -83,6 +64,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1.1
+- NMU: spec refactoring
+
 * Fri Aug 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.11.0-alt1
 - 2.10.0 -> 2.11.0
 
