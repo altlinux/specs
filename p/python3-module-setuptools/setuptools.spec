@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name setuptools
+%define mod_name %pypi_name
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
@@ -8,8 +9,8 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 80.9.0
-Release: alt3
+Version: 80.10.2
+Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -27,9 +28,9 @@ Requires: python3-dev
 Provides: python3-module-distribute = %EVR
 %if_with bootstrap
 # hide bundled packages
-%add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/%mod_name/_vendor/*
 %endif
-%add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
+%add_findprov_skiplist %python3_sitelibdir/%mod_name/_distutils/*msvc*compiler*.py*
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -101,10 +102,7 @@ find -type f -name '*.exe' -delete
 %pyproject_deps_resync_metadata
 
 %build
-# build upstream version of a wheel (vendored dependencies),
-# that wheel is installed by virtualenv into venv,
-# otherwise dependencies of setuptools are not available in venv
-%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
+%pyproject_build
 
 mkdir ./dist_venv
 cp -a -t ./dist_venv ./dist/{setuptools-%version-*.whl,.wheeltracker}
@@ -114,8 +112,8 @@ cp -a -t ./dist_venv ./dist/{setuptools-%version-*.whl,.wheeltracker}
 rm -r ./build
 # build altlinux version of a wheel (unvendored dependencies),
 # setuptools 71.0.0 + prefer installed dependencies
-rm -r setuptools/_vendor
-%pyproject_build --backend-config-settings='{"--build-option": ["egg_info", "--tag-build=''", "--no-date"]}'
+rm -r %mod_name/_vendor
+%pyproject_build
 %endif
 
 %install
@@ -130,12 +128,12 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 # 71.0.1 includes tests again
 pushd %buildroot%python3_sitelibdir/
 rm -r \
-  ./setuptools/tests \
-  ./setuptools/_distutils/tests \
+  ./%mod_name/tests \
+  ./%mod_name/_distutils/tests \
   ./pkg_resources/tests \
   ./pkg_resources/api_tests.txt \
 %if_with bootstrap
-  ./setuptools/_vendor/importlib_resources/tests \
+  ./%mod_name/_vendor/importlib_resources/tests \
 %endif
 
 popd
@@ -165,10 +163,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %pyproject_run_pytest -vra -n4
 
 %files
-%doc *.rst
 %python3_sitelibdir/_distutils_hack/
 %python3_sitelibdir/distutils-precedence.pth
-%python3_sitelibdir/setuptools
+%python3_sitelibdir/%mod_name/
 
 %files -n python3-module-pkg_resources
 %python3_sitelibdir/pkg_resources
@@ -186,6 +183,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Jan 27 2026 Stanislav Levin <slev@altlinux.org> 1:80.10.2-alt1
+- 80.9.0 -> 80.10.2.
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1:80.9.0-alt3
 - Added support for simplified configuration of build with Limited API (part 2).
 
