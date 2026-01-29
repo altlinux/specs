@@ -2,7 +2,6 @@
 
 %define oname nbconvert
 
-%def_without doc
 %ifarch %ix86 x86_64 aarch64
 %def_with check
 %else
@@ -10,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.16.6
+Version: 7.17.0
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -28,25 +27,14 @@ Source2: lab-3.1.11-index.css
 Source3: lab-3.1.11-theme-light.css
 Source4: lab-3.1.11-theme-dark.css
 
-BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
-
-%if_with doc
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-html5lib python3(pandocfilters)
-BuildRequires: python3(sphinx_rtd_theme) python3(nbsphinx) python3(pandocfilters)
-BuildRequires: texlive texlive-dist
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-%endif
 
 %if_with check
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-pytest-qt
 BuildRequires: /usr/bin/xvfb-run
 BuildRequires: python3-module-PyQtWebEngine
-BuildRequires: /usr/bin/xelatex
 BuildRequires: /usr/bin/inkscape
 BuildRequires: python3(pandocfilters)
 BuildRequires: python3(defusedxml)
@@ -54,52 +42,22 @@ BuildRequires: python3(jupyterlab_pygments)
 BuildRequires: python3(nest_asyncio)
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-ipywidgets
-BuildRequires: python3-module-flaky
 BuildRequires: python3-module-traitlets-tests
+BuildRequires: python3-module-nbformat
+BuildRequires: python3-module-nbclient
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-bleach
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-mistune
+BuildRequires: python3-module-flaky
+BuildRequires: /usr/bin/pandoc
 %endif
 
 %py3_provides %oname
 
-# from pyproject.toml
-%py3_use beautifulsoup4
-%py3_use mistune >= 2.0.3
-%py3_use mistune < 4
-%py3_use jinja2 >= 3.0
-%py3_use Pygments >= 2.4.1
-%py3_use jupyterlab_pygments
-%py3_use traitlets >= 5.1
-%py3_use jupyter_core >= 4.7
-%py3_use nbformat >= 5.7
-%py3_use bleach
-%py3_use pandocfilters >= 1.4.1
-%py3_use defusedxml
-%py3_use nbclient >= 0.5.0
-%py3_use tinycss2
-
 %description
 Jupyter nbconvert converts notebooks to various other formats via Jinja
 templates.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Jupyter nbconvert converts notebooks to various other formats via Jinja
-templates.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Jupyter nbconvert converts notebooks to various other formats via Jinja
-templates.
-
-This package contains documentation for %oname.
 
 %prep
 %setup
@@ -111,37 +69,19 @@ cp %SOURCE2 share/templates/lab/static/index.css
 cp %SOURCE3 share/templates/lab/static/theme-light.css
 cp %SOURCE4 share/templates/lab/static/theme-dark.css
 
-
-%if_with doc
-echo "nbsphinx_allow_errors = True" >> docs/source/conf.py
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
-%endif
-
 %build
 %pyproject_build
 
 %install
 %pyproject_install
 
-%if_with doc
-export PYTHONPATH=$PWD
-export PATH=$PATH:%buildroot%_bindir
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
 %check
 export JUPYTER_PATH=%buildroot%_datadir/jupyter
-
-# some tests need pandoc, version must be at least 2.14.2 but less then 4.0.0
 
 %pyproject_run -- xvfb-run pytest -v -m 'not network' --color=no \
 --deselect=tests/exporters/test_qtpdf.py::TestQtPDFExporter::test_export \
 --deselect=tests/exporters/test_qtpng.py::TestQtPNGExporter::test_export \
 --deselect=tests/test_nbconvertapp.py::TestNbConvertApp::test_convert_full_qualified_name \
---deselect=tests/test_nbconvertapp.py::TestNbConvertApp::test_post_processor
 
 %files
 %doc *.md
@@ -153,15 +93,10 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
 
-%if_with doc
-%files pickles
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc docs/build/html/*
-%endif
-
 %changelog
+* Fri Jan 30 2026 Anton Vyatkin <toni@altlinux.org> 7.17.0-alt1
+- New version 7.17.0.
+
 * Tue Jan 28 2025 Anton Vyatkin <toni@altlinux.org> 7.16.6-alt1
 - New version 7.16.6.
 
