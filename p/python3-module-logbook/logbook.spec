@@ -1,24 +1,31 @@
 %define oname logbook
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.8.2
+Version: 1.9.2
 Release: alt1
 
 Summary: A logging replacement for Python
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/Logbook
 VCS: https://github.com/mitsuhiko/logbook
 
 Source: %name-%version.tar
+Source1: crates.tar
 
-BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-rust
+
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools-rust
 BuildRequires: python3-module-notebook python3-module-setuptools
 BuildRequires: python3-module-mock python3-module-brotlipy
+
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_basic_ng
+BuildRequires: python3-module-furo
 
 
 %description
@@ -44,18 +51,16 @@ An awesome logging implementation that is fun to use.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -a1
+%rust_prep
 
 sed -i 's/sphinx-build/&-3/' docs/Makefile
 
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
@@ -64,11 +69,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-py.test3
+%pyproject_run_pytest
 
 %files
 %doc LICENSE AUTHORS CHANGES *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -78,6 +84,10 @@ py.test3
 %doc docs/_build/html/*
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
+- Automatically updated to 1.9.2.
+- Built with check.
+
 * Tue Jun 24 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt1
 - Automatically updated to 1.8.2.
 
