@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-hanabi
 Version: 1
-Release: alt1.476a2953.1
+Release: alt2
 Epoch: 1
 
 Summary: Live Wallpaper for GNOME
@@ -20,7 +20,6 @@ Source: %name-%version.tar
 Source1: node_modules.tar
 
 Patch: %name-%version-%release.patch
-Patch1: fix49.patch
 
 Requires: gnome-shell >= 42.0
 
@@ -43,7 +42,6 @@ or 'Force GtkMediaFile' in the extension settings can help.
 %prep
 %setup -a1
 %patch -p1
-%patch1 -p0
 
 %build
 %meson
@@ -62,6 +60,9 @@ or 'Force GtkMediaFile' in the extension settings can help.
 %doc README.md
 
 %changelog
+* Thu Jan 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt2
+- updated to git.3a9a9060
+
 * Fri Dec 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:1-alt1.476a2953.1
 - Update to git.476a2953.
 - Fix: work on Gnome 49
