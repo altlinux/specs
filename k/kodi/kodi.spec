@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.3
-Release: alt3
+Release: alt4
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -17,7 +17,11 @@ Source1: groovy.tar
 %ifarch i586
 BuildRequires: java-17-devel
 %else
+%ifarch %e2k
+BuildRequires: java-devel
+%else
 BuildRequires: java-21-devel
+%endif
 %endif
 
 BuildRequires: cmake gcc-c++
@@ -207,6 +211,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Wed Jan 28 2026 Michael Shigorin <mike@altlinux.org> 21.3-alt4
+- E2K: use whatever java is available
+
 * Tue Dec 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt3
 - rebuilt with ffmpeg8
 
