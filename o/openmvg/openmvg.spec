@@ -1,9 +1,9 @@
 %define        _unpackaged_files_terminate_build 1
-%define        oname openMVG
+%define        nomen openMVG
 
 Name:          openmvg
-Version:       2.1
-Release:       alt5
+Version:       2.1.23
+Release:       alt1
 Summary:       open Multiple View Geometry
 License:       MPL-2.0
 Group:         System/Libraries
@@ -11,17 +11,18 @@ Url:           https://github.com/openMVG/openMVG
 Vcs:           https://github.com/openMVG/openMVG.git
 
 Source:        %name-%version.tar
-Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 BuildRequires: ghostscript
-BuildRequires: eigen3
+BuildRequires: eigen3-compat-devel
 BuildRequires: libgomp-devel
-#BuildRequires: libflann-devel
+BuildRequires: zlib-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
+BuildRequires: libtiff-devel
 BuildRequires: libopencv-devel
 BuildRequires: libmetis-devel
 BuildRequires: libcoinor-utils-devel
@@ -30,7 +31,6 @@ BuildRequires: libcoinor-clp-devel
 BuildRequires: libcoinor-osi-clp-devel
 BuildRequires: libcoinor-lemon-devel
 BuildRequires: libeasyexif-devel
-#BuildRequires: libfast-devel
 BuildRequires: libglog-devel
 BuildRequires: ceres-solver-devel
 # NOTE not defined in CMakeLists
@@ -40,6 +40,7 @@ BuildRequires: qt5-svg-devel
 BuildRequires: libsphinxclient-devel
 BuildRequires: libsuitesparse-devel
 BuildRequires: python3-module-cmake_build_extension
+BuildRequires: libglfw3-devel
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
@@ -100,13 +101,13 @@ Requires:      cmake
 Requires:      gcc-c++
 Requires:      doxygen
 Requires:      ghostscript
-Requires:      eigen3
+Requires:      eigen3-compat-devel
 Requires:      libgomp-devel
-#Requires:      libflann-devel
 Requires:      libjpeg-devel
 Requires:      libpng-devel
 Requires:      libopencv-devel
 Requires:      libmetis-devel
+Requires:      libfast-devel
 Requires:      libcoinor-utils-devel
 Requires:      libcoinor-osi-devel
 Requires:      libcoinor-clp-devel
@@ -118,6 +119,7 @@ Requires:      ceres-solver-devel
 Requires:      cereal-devel
 Requires:      qt5-base-devel
 Requires:      qt5-svg-devel
+Requires:      libglfw3-devel
 Requires:      libsphinxclient-devel
 Requires:      libsuitesparse-devel
 Requires:      python3-module-cmake_build_extension
@@ -146,7 +148,6 @@ OpenMVG is developed in C++ and runs on Android, iOS, Linux, macOS, and Windows.
 
 %prep
 %setup
-%autopatch -p1
 %ifarch %e2k
 # needs to be linked with the -fopenmp option
 sed -i '/include_directories(${OpenMP_C_INCLUDE_DIR})/i add_link_options(-fopenmp)' src/CMakeLists.txt
@@ -157,7 +158,6 @@ sed -i '/^extern template/s/.*/#ifndef IMAGE_IO_CPP\n&\n#endif/' src/openMVG/ima
 sed -i -E "/^[[:space:]]*#pragma omp .*[[:space:]]num_threads\(/{s/#/for(long &/;\
 s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
 s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
-	src/third_party/flann/src/cpp/flann/algorithms/*.h \
 	src/third_party/ceres-solver/internal/ceres/*.h
 # fix endianness and collision with other LCC
 sed -i 's/defined(__LCC__)/0/;s/defined(__LITTLE_ENDIAN__)/1/' src/nonFree/sift/vl/host.h
@@ -172,17 +172,18 @@ cd src
    -DOpenMVG_BUILD_DOC=OFF \
    -DOpenMVG_USE_OPENCV=ON \
    -DOpenMVG_USE_OPENMP=ON \
+   -DOpenMVG_USE_RERUN=OFF \
    -DOSI_INCLUDE_DIR_HINTS=ON \
    -DCLP_INCLUDE_DIR_HINTS=ON \
    -DCOINUTILS_INCLUDE_DIR_HINTS=ON \
+   -DLEMON_INCLUDE_DIR_HINTS=ON \
    -DCMAKE_BUILD_TYPE=RelWithDebInfo
-#false
+
 %cmake_build
 
 %install
 cd src
 %cmakeinstall_std
-rm -f %buildroot%_libexecdir/pkgconfig/flann.pc
 rm -rf %buildroot%_libdir/openMVG/webgl
 rm -f %buildroot%_libdir/openMVG/sensor_width_camera_database.txt
 rm -rf %buildroot%_includedir/openMVG_dependencies/
@@ -197,17 +198,22 @@ rm -f %buildroot%_libdir/libopenMVG_ceres.a
 
 %files         -n lib%name
 %doc *.md AUTHORS LICENSE
-%_libdir/lib%{oname}_*.so.*
+%_libdir/lib%{nomen}_*.so.*
 %_libdir/libvlsift.so
 
 %files         -n lib%name-devel
 %doc *.md AUTHORS LICENSE
-%_libdir/lib%{oname}_*.so
-%_cmakedir/%oname/
-%_includedir/%oname/
+%_libdir/lib%{nomen}_*.so
+%_cmakedir/%nomen/
+%_includedir/%nomen/
 
 
 %changelog
+* Wed Jan 14 2026 Pavel Skrylev <majioa@altlinux.org> 2.1.23-alt1
+- ^ 2.1 -> 2.1p23
+- - removed flann dep
+- ! fixed build out of FTBFS
+
 * Wed Aug 28 2024 Pavel Skrylev <majioa@altlinux.org> 2.1-alt5
 - + added explicit requires for glog package
 - ! for newer version of glog 1.7.1 this is required expicit exprt
