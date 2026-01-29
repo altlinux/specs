@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: isoinspector
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Tool that inspect ALT Linux distribution ISO/IMG images using ALTRepo API
@@ -41,6 +41,10 @@ install -Dm0755 isoinspector %buildroot%_bindir/isoinspector
 %doc LICENSE README.* AUTHORS.txt
 
 %changelog
+* Thu Jan 29 2026 Danil Shein <dshein@altlinux.org> 0.2.2-alt1
+- new version 0.2.2
+  + fix image type detection
+
 * Thu Jan 22 2026 Danil Shein <dshein@altlinux.org> 0.2.1-alt1
 - new version 0.2.1
   + add support for compressed and uncompressed IMG images
