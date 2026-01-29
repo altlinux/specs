@@ -1,76 +1,65 @@
 %define oname unittest-xml-reporting
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/unittest-xml-reporting/
-BuildArch: noarch
 
-# https://github.com/xmlrunner/unittest-xml-reporting.git
+License: BSD-2-Clause
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/unittest-xml-reporting
+Vcs: https://github.com/xmlrunner/unittest-xml-reporting
+
 Source: %name-%version.tar
 
-Patch: python3.11-support.patch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six python3-module-lxml
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-lxml
+%endif
 
 Requires: python3-module-django-tests
 
-%py3_provides xmlrunner
+BuildArch: noarch
 
+%py3_provides xmlrunner
 
 %description
 unittest-xml-reporting is a unittest test runner that can save test
 results to XML files that can be consumed by a wide range of tools, such
 as build systems, IDEs and continuous integration servers.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/xmlrunner/tests/
-
-%description tests
-unittest-xml-reporting is a unittest test runner that can save test
-results to XML files that can be consumed by a wide range of tools, such
-as build systems, IDEs and continuous integration servers.
-
-This package contains tests for %oname.
-
 %prep
 %setup
-%patch -p1
-
-sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
-
-cp -fR tests/ %buildroot%python3_sitelibdir/xmlrunner
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%tox_check_pyproject
 
 %files
 %doc *.md
 %python3_sitelibdir/xmlrunner/
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/xmlrunner/tests
-
-%files tests
-%python3_sitelibdir/xmlrunner/tests
+%python3_sitelibdir/unittest_xml_reporting-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+- Built with check.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
 - Build without check.
 
