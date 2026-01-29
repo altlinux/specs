@@ -3,24 +3,27 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.0
-Release: alt1.2
+Version: 1.1.0
+Release: alt1
 
 Summary: List processing tools and functional utilities
+
 License: BSD-3-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/toolz
 VCS: https://github.com/pytoolz/toolz
-BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-git-versioning
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
+
+BuildArch: noarch
 
 %description
 A set of utility functions for iterators, functions, and dictionaries.
@@ -28,7 +31,14 @@ A set of utility functions for iterators, functions, and dictionaries.
 %prep
 %setup
 
-sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
 %pyproject_build
@@ -49,6 +59,9 @@ rm -rv %buildroot/%python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.2
 - Removed tests from the package.
 
