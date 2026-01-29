@@ -1,5 +1,5 @@
 Name:     fasd
-Version:  1.0.4
+Version:  2.0.0
 Release:  alt1
 
 Summary:  Command-line productivity booster, offers quick access to files and directories
@@ -35,10 +35,13 @@ in the command line.
 %makeinstall_std PREFIX=/usr
 
 %files
-%_bindir/*
-%_man1dir/*
+%doc LICENSE README.md
+%_bindir/%name
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
 - Automatically updated to 1.0.4.
 
