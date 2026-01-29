@@ -1,7 +1,7 @@
-%define defphp php8.1
+%define defphp php%php_defver
 
 Name: eterban
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: Etersoft ban service
@@ -16,7 +16,8 @@ Source: %name-%version.tar
 BuildArchitectures: noarch
 
 # error: File must begin with "/": %webserver_htdocsdir/maintenance/
-BuildRequires(pre): rpm-macros-webserver-common rpm-build-python3
+BuildRequires(pre): rpm-macros-webserver-common
+BuildRequires(pre): rpm-build-python3 rpm-build-php
 
 #Requires: python3 python3-module-redis-py
 %add_python3_lib_path /usr/share/eterban
@@ -109,6 +110,9 @@ cp -a prod-server/usr/share/%name/* %buildroot%_datadir/%name/
 %dir %_datadir/%name/
 %_datadir/%name/eterban_switcher.py
 %_datadir/%name/unban.py
+%_datadir/%name/autoban_manager.py
+%_datadir/%name/autoban_cli.py
+%_datadir/%name/__pycache__/
 
 %files web
 %webserver_htdocsdir/%name/
@@ -119,6 +123,11 @@ cp -a prod-server/usr/share/%name/* %buildroot%_datadir/%name/
 %config(noreplace) /etc/fail2ban/action.d/eterban.conf
 
 %changelog
+* Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- eterban_switcher.py: return error on redis connection error
+- add auto-unban with exponential backoff
+- spec: use phpphp_defver macro instead of hardcoded php8.1
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - switch to php8.1-redis (ALT bug 46925)
 - eterban: improve count output
