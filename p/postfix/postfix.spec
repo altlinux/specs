@@ -1,6 +1,6 @@
 Name: postfix
 Version: 3.8.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -662,6 +662,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Tue Jan 27 2026 Andrew A. Vasilyev <andy@altlinux.org> 1:3.8.6-alt2
+- NMU: fix build with SASL and gcc-14.
+
 * Wed May 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.6-alt1
 - Updated to 3.8.6 (ALT#49734) (fixes CVE-2023-51764).
 - Fixed the pluginization patch to remove (harmless) warnings related to
