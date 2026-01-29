@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 2.4
-Release: alt5
+Version: 2.5.2
+Release: alt1
 
 Summary: Python RADIUS Implementation
 License: BSD-3-Clause
@@ -14,7 +14,8 @@ URL:     https://github.com/pyradius/pyrad
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-netaddr
 BuildRequires: python3-module-six
@@ -22,8 +23,7 @@ BuildRequires: python3-module-six
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
-Patch: refactor-test-aliases-for-python3.11-compat.patch
+Source:  %name-%version.tar
 
 %description
 pyrad is an implementation of a RADIUS client as described in RFC2865. It takes
@@ -31,8 +31,7 @@ care of all the details like building RADIUS packets, sending them and
 decoding responses.
 
 %prep
-%setup -n %modulename-%version
-%patch -p1
+%setup
 
 %build
 %pyproject_build
@@ -49,6 +48,9 @@ decoding responses.
 %doc *.rst
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 2.5.2-alt1
+- Automatically updated to 2.5.2.
+
 * Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 2.4-alt5
 - Fixed FTBFS (poetry-core 2.0).
 
