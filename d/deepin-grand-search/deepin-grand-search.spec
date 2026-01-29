@@ -4,7 +4,7 @@
 
 Name: deepin-grand-search
 Version: 6.0.28
-Release: alt1
+Release: alt2
 
 Summary: Basic search tool for DDE
 
@@ -64,10 +64,6 @@ export READELF="llvm-readelf"
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libddegrandsearch_dockplugin.so
-%dir %_datadir/dde-dock/
-%dir %_datadir/dde-dock/icons/
-%dir %_datadir/dde-dock/icons/dcc-setting/
-%_datadir/dde-dock/icons/dcc-setting/dcc-search.dci
 %dir %_libdir/dde-grand-search-daemon/
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
@@ -77,15 +73,6 @@ export READELF="llvm-readelf"
 %dir %_libdir/dde-grand-search/plugins/preview/
 %_libdir/dde-grand-search/plugins/preview/*.conf
 %_libdir/dde-grand-search/plugins/preview/*.so
-%dir %_libdir/dde-shell/
-%_libdir/dde-shell/org.deepin.ds.dock.searchitem.so
-%dir %_datadir/dde-shell/
-%dir %_datadir/dde-shell/org.deepin.ds.dock.searchitem/
-%_datadir/dde-shell/org.deepin.ds.dock.searchitem/metadata.json
-%_datadir/dde-shell/org.deepin.ds.dock.searchitem/searchitem.qml
-%dir %_datadir/dde-shell/org.deepin.ds.dock.searchitem/icons/
-%_datadir/dde-shell/org.deepin.ds.dock.searchitem/icons/dde-grand-search.dci
-%_datadir/dde-shell/org.deepin.ds.dock.searchitem/icons/search.dci
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %_datadir/deepin-service-manager/other/grand-search-daemon.json
@@ -93,8 +80,6 @@ export READELF="llvm-readelf"
 %dir %_datadir/dde-grand-search/
 %dir %_datadir/dde-grand-search/translations/
 %_datadir/dde-grand-search/translations/dde-grand-search.qm
-%dir %_datadir/dde-shell/org.deepin.ds.dock.searchitem/translations/
-%_datadir/dde-shell/org.deepin.ds.dock.searchitem/translations/org.deepin.ds.dock.searchitem.qm
 # ---
 %_datadir/dbus-1/interfaces/com.deepin.dde.GrandSearch.xml
 %_datadir/dbus-1/interfaces/com.deepin.dde.GrandSearchSetting.xml
@@ -110,6 +95,9 @@ export READELF="llvm-readelf"
 # ---
 
 %changelog
+* Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.28-alt2
+- Fixed build on dde-shell 2.0.27.
+
 * Mon Dec 29 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.28-alt1
 - New version 6.0.28.
 
