@@ -4,7 +4,7 @@
 
 Name: fflas-ffpack
 Version: 2.5.0.0.117.94aa
-Release: alt1
+Release: alt2
 
 Summary: Finite Field Linear Algebra Subroutines
 
@@ -62,6 +62,9 @@ the FFLAS-FFPACK API.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/__x86_64__/__e2k__/' fflas-ffpack/utils/fflas_intrinsic.h
+%endif
 
 #Do not compile in DATE and TIME
 sed '/HTML_TIMESTAMP/s/YES/NO/' -i doc/Doxyfile
@@ -105,6 +108,9 @@ sed -i 's,-fabi-version=6,,' \
 %_docdir/%name/
 
 %changelog
+* Thu Jan 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.0.0.117.94aa-alt2
+- e2k build fix
+
 * Thu Nov 14 2024 Leontiy Volodin <lvol@altlinux.org> 2.5.0.0.117.94aa-alt1
 - New version v2.5.0-117-g94aa8826.
 - Added vcs tag.
