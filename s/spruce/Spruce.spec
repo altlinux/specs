@@ -2,16 +2,18 @@
 
 Name: spruce
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: Lightweight cache cleaner and system maintenance tool
-License: GPL-3.0-only
+License: GPL-3.0-or-later
 Group: Other
 
 Url: https://github.com/shonubot/Spruce
 Vcs: https://github.com/shonubot/Spruce
 
 BuildArch: noarch
+AutoProv: nopython3
+Obsoletes: python3-module-spruce <= 0.1.6-alt1
 
 Source: %name-%version.tar
 
@@ -27,13 +29,6 @@ BuildRequires: pkgconfig(libadwaita-1) typelib(Adw)
 Spruce is a lightweight cache cleaner and system maintenance tool designed for GNU/Linux.
 It helps keep your system fresh by clearing unneeded caches, logs, temporary files and
 unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
-
-
-%package -n python3-module-%name
-Group:   Development/Python3
-Summary: Python3 module for %name
-%description -n python3-module-%name
-%summary.
 
 %prep
 %setup
@@ -51,12 +46,14 @@ Summary: Python3 module for %name
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/%name
 %_datadir/metainfo/%oname.metainfo.xml
+%python3_sitelibdir/%name/
 %doc *.md
 
-%files -n python3-module-%name
-%python3_sitelibdir/%name/
-
 %changelog
+* Thu Jan 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt2
+- updated to git.e8a4f030
+- changed license tag
+
 * Wed Dec 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt1
 - 0.1.5 -> 0.1.6
 - changed license tag
