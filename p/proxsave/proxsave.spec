@@ -1,0 +1,61 @@
+Name: proxsave
+Version: 0.12.8
+Release: alt1
+
+Summary: Backup tool for Proxmox PBS & PVE System Files
+License: MIT
+Group: Archiving/Backup
+
+Url: https://github.com/tis24dev/proxsave
+Vcs: https://github.com/tis24dev/proxsave
+
+ExcludeArch: i586
+
+Source: %name-%version.tar
+Source1: vendor.tar
+
+BuildRequires: golang
+
+%description
+ProxSave is a project created by enthusiasts, with the aim of simplifying
+recovery in critical moments.
+
+Restoring a PVE or PBS server after a disaster (or even just a migration)
+is always a process that requires skill, time, and patience, ProxSave
+allows you to save your entire environment and restore it at any time,
+allowing you to prepare the new installation to accommodate your personal
+data with as few manual changes as possible.
+
+ProxSave allows you to save and restore, integrating advanced features:
+automatic backups, multi-path saves, intelligent retention, encryption of
+backups, integrated Telegram and email notifications (cloud relay or
+Proxmox Notifications), and compatibility with webhooks, Gotify, and Prometheus.
+
+%package doc
+Summary: Documentation for the %name
+Group: Books/Other
+BuildArch: noarch
+%description doc
+Documentation for the %name
+
+%prep
+%setup -a1
+subst 's|0.0.0-dev|%version|' Makefile
+
+%build
+%make_build
+
+%install
+install -Dm0755 build/%name %buildroot%_bindir/%name
+
+%files
+%doc *.md LICENSE NOTICE 
+%_bindir/%name
+
+%files doc
+%doc docs
+
+%changelog
+* Thu Jan 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.12.8-alt1
+- Initial build for ALT Linux.
+
