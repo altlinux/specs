@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: BIDI algorithm related functions
@@ -16,10 +16,11 @@ VCS:     https://github.com/MeirKriheli/python-bidi
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-rust
+
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-maturin
-BuildRequires: rust-cargo
 BuildRequires: /proc
 
 %if_with check
@@ -34,31 +35,8 @@ Source1: vendor.tar
 %summary.
 
 %prep
-%setup
-
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[install]
-root = "%buildroot%_prefix"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
-
-tar -xvf %SOURCE1
+%setup -a1
+%rust_prep
 
 %build
 %pyproject_build
@@ -78,6 +56,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/python_bidi-%version.dist-info
 
 %changelog
+* Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.7-alt1
+- Automatically updated to 0.6.7.
+
 * Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.6-alt1
 - Automatically updated to 0.6.6.
 
