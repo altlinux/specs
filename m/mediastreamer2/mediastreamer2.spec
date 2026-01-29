@@ -4,7 +4,7 @@
 %def_without bcg729
 
 Name: mediastreamer2
-Version: 5.4.50
+Version: 5.4.81
 Release: alt1
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
@@ -20,14 +20,16 @@ Source: %name-%version.tar
 Provides: libmediastreamer = %version-%release
 Obsoletes: libmediastreamer < %version-%release
 
+Patch: %name-%version-%release.patch
 %if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" >= "5"
-Patch: mediastreamer2-5.3.74-opensuse-fix-build-ffmpeg5.patch
+Patch1: mediastreamer2-5.3.74-opensuse-fix-build-ffmpeg5.patch
 %endif
-Patch1: mediastreamer2-5.3.74-opensuse-fix-pkgconfig.patch
-Patch2: mediastreamer2-5.3.74-mageia-cmake-config-location.patch
-Patch3: mediastreamer2-5.3.74-mageia-soname.patch
-Patch4: mediastreamer2-5.3.74-mageia-system-OpenGL.patch
-Patch5: mediastreamer2-5.3.74-alt-pkgconfig-dav1d-aom.patch
+Patch2: mediastreamer2-5.3.74-opensuse-fix-pkgconfig.patch
+Patch3: mediastreamer2-5.3.74-mageia-cmake-config-location.patch
+Patch4: mediastreamer2-5.3.74-mageia-soname.patch
+Patch5: mediastreamer2-5.3.74-mageia-system-OpenGL.patch
+Patch6: mediastreamer2-5.3.74-alt-pkgconfig-dav1d-aom.patch
+Patch7: mediastreamer2-5.4.72-mageia-missing-headers.patch
 
 # fix mediastreamer2-mkvstream
 Requires: libglvnd-devel libGLEW-devel
@@ -128,7 +130,11 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
   -DBUILD_SHARED_LIBS=TRUE \
   -DENABLE_STRICT=NO \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
-  -DPACKAGE_MS2_PLUGINS_DIR=%_libdir/mediastreamer/plugins/
+  -DPACKAGE_MS2_PLUGINS_DIR=%_libdir/mediastreamer/plugins/ \
+%if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" > "8.0"
+  -DENABLE_FFMPEG=NO \
+%endif
+#
 %ninja_build -C "%_cmake__builddir"
 
 %install
@@ -162,6 +168,10 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Thu Jan 29 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.81-alt1
+- New version 5.4.81.
+- Disabled ffmpeg8 support.
+
 * Sun Oct 19 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.50-alt1
 - New version 5.4.50.
 
