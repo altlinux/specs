@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.148.7
+Version: 6.151.3
 Release: alt1
 
 Summary: A library for property based testing
@@ -18,9 +18,8 @@ VCS: https://github.com/HypothesisWorks/hypothesis
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: pytest.ini
-Source2: %pyproject_deps_config_name
-Source3: test.in
+Source1: %pyproject_deps_config_name
+Source2: test.in
 Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
@@ -58,12 +57,11 @@ in your code with less work.
 
 %prep
 %setup
-cp %SOURCE1 ./
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile %SOURCE3
+%pyproject_deps_resync_check_pipreqfile %SOURCE2
 %endif
 
 %build
@@ -98,6 +96,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Thu Jan 29 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.151.3-alt1
+- Updated to 6.151.3.
+
 * Thu Dec 18 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.148.7-alt1
 - Updated to 6.148.7.
 
