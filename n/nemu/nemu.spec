@@ -1,5 +1,5 @@
 Name:    nemu
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: Ncurses UI for QEMU
@@ -53,5 +53,8 @@ on ncurses5 library.
 %_datadir/nemu/templates/*
 
 %changelog
+* Wed Jan 28 2026 Ilya Sorochan <k0tran@altlinux.org> 3.4.0-alt1
+- Update version.
+
 * Tue Nov 05 2024 Ilya Sorochan <k0tran@altlinux.org> 3.3.1-alt1
 - Initial build for Sisyphus (Closes #51597).
