@@ -1,15 +1,13 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.4.1
-Release: alt4
+Version: 0.10.5
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
 License: GPLv2+ with exceptions and Apache-2.0
 Group: 	 System/Servers
 Url: 	 http://xrdp.sourceforge.net/
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version.tar
 # VCS:   https://github.com/neutrinolabs/xrdp
@@ -303,6 +301,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Jan 28 2026 Andrey Cherepanov <cas@altlinux.org> 0.10.5-alt1
+- New version (fixes: CVE-2025-68670).
+
 * Mon Sep 29 2025 Anton Midyukov <antohami@altlinux.org> 0.10.4.1-alt4
 - xrdp-alt-startwm.patch: fix for p11
 
