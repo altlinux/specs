@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -18,6 +18,12 @@ Requires: alterator-module-executor
 Requires: alterator-interface-service
 Requires: alterator-entry >= 0.4.5
 Requires: samba-dc
+Requires: krb5-kinit
+Requires: ldb-tools
+Requires: samba-doc
+Requires: samba-dcerpc
+Requires: samba-winbind
+Requires: samba-winbind-clients
 
 %description
 Service for Samba AD management.
@@ -62,6 +68,17 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Thu Jan 29 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.5-alt1
+- Change from fqdn to short name in get hostname function
+- Fix incorrect netbios name in join function
+- Fix exit status in status function
+- Update gitignore
+- Redirect stderr to stdout to handle exceptions correctly
+- Add dependencies
+- Fix incorrect dc name in join fucntion
+- Add dynamic functional level enum update for 2012_R
+- Add check current tag with Sisyphus (thx Maria Alexeeva)
+
 * Mon Jan 26 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.4-alt1
 - Add default value for use-rfc2307 parameter
 - Fix incorrect device name in setup network manager
