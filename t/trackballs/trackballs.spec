@@ -1,5 +1,5 @@
 Name: trackballs
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: Steer a marble ball through a labyrinth
@@ -72,6 +72,9 @@ subst 's/_TTF_Font/TTF_Font/g' ./src/glHelp.h
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jan 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.5-alt1
+- NMU: 1.3.5
+
 * Thu Apr 17 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.4-alt1
 - NMU: 1.3.4
 

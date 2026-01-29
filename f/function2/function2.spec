@@ -1,5 +1,5 @@
 Name:    function2
-Version: 4.2.4
+Version: 4.2.5
 Release: alt1
 
 Summary: Improved and configurable drop-in replacement to std::function
@@ -43,5 +43,8 @@ find %buildroot%prefix -maxdepth 1 \
 %_cmakedir/%name
 
 %changelog
+* Thu Jan 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.2.5-alt1
+- New version.
+
 * Thu Apr 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.2.4-alt1
 - Initial build for Sisyphus.
