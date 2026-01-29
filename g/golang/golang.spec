@@ -51,7 +51,7 @@
 
 Name:    golang
 Version: 1.25.6
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -70,6 +70,7 @@ ExclusiveArch: %go_arches
 %add_debuginfo_skiplist %go_root
 %brp_strip_none %go_root/bin/*
 %brp_strip_none %go_root/pkg/*
+%add_findreq_skiplist %go_root/lib/wasm/*
 
 AutoReq: nocpp
 
@@ -253,10 +254,6 @@ rm -rfv -- %buildroot%go_root/doc/Makefile
 rm -rfv -- \
     %buildroot%go_root/lib/time
 
-# remove lib/wasm scripts
-rm -rfv -- \
-    %buildroot%go_root/lib/wasm
-
 %if_enabled shared
 mkdir -p %buildroot%golibdir
 for file in $(find %buildroot%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
@@ -378,6 +375,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Jan 29 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.6-alt2
+- Package lib/wasm/wasm_exec.js (ALT#57661).
+
 * Mon Jan 19 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.6-alt1
 - 1.25.6 (Fixes: CVE-2025-68121, CVE-2025-61728, CVE-2025-61726,
   CVE-2025-61731, CVE-2025-68119, CVE-2025-61730).
