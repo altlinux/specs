@@ -6,6 +6,7 @@
 # check tag in Source-url every release
 
 %def_disable static
+%def_enable tde2e
 # Enable or disable clang compiler...
 %ifarch %e2k
 %def_without clang
@@ -15,15 +16,13 @@
 
 Name: tdlib
 Version: 1.8.52
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
 Group: Development/C++
 Url: https://github.com/tdlib/td
-
-ExcludeArch: %ix86
 
 #Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
 # Source-url: https://github.com/tdlib/td/commit/3870c29b158b75ca5e48e0eebd6b5c3a7994a000
@@ -75,6 +74,10 @@ Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
 
+%package -n tde2e-devel-static
+Group: Development/C++
+Summary: Development files for tde2e (from tdlib)
+
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C++
@@ -84,6 +87,9 @@ Requires: %name-devel = %EVR
 %summary.
 
 %description devel-static
+%summary.
+
+%description -n tde2e-devel-static
 %summary.
 
 %prep
@@ -100,19 +106,72 @@ export CC=clang
 export CXX=clang++
 %endif
 
-%cmake -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=1
+%ifarch i586
+export LDFLAGS="%{?ldflags} -Wl,--no-as-needed -latomic -Wl,--as-needed"
+%endif
+
+%define _cmake__builddir %_target_platform
+%cmake -B %_target_platform \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DBUILD_SHARED_LIBS=1 \
+  -DBUILD_TESTING=OFF
 %cmake_build
 
+%if_enabled tde2e
+%define _cmake__builddir %_target_platform-e2e
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_EXE_LINKER_FLAGS:STRING="$LDFLAGS" \
+    -DCMAKE_SHARED_LINKER_FLAGS:STRING="$LDFLAGS" \
+    -DCMAKE_MODULE_LINKER_FLAGS:STRING="$LDFLAGS" \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=OFF \
+    -DCMAKE_C_FLAGS="%optflags -fno-lto" \
+    -DCMAKE_CXX_FLAGS="%optflags -fno-lto" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%_lib \
+    -DBUILD_TESTING=OFF \
+    -DTD_ENABLE_JNI=OFF \
+    -DTD_ENABLE_DOTNET=OFF \
+    -DTD_WITH_ABSEIL=ON \
+    -DTD_E2E_ONLY=ON \
+    -DTDE2E_ENABLE_INSTALL=ON \
+    -DTDE2E_INSTALL_INCLUDES=ON
+%cmake_build
+%endif
+
 %install
-%cmakeinstall_std
+%define _cmake__builddir %_target_platform
+%cmake_install --parallel %{?_smp_build_ncpus}
+%if_enabled tde2e
+%define _cmake__builddir %_target_platform-e2e
+%cmake_install --parallel %{?_smp_build_ncpus}
+%endif
 
 %if_disabled static
-rm -fv %buildroot%_libdir/*.a
+find "%buildroot%_libdir" -type f -name '*.a' \
+  ! -path "%buildroot%_libdir/libtde2e.a" \
+  ! -path "%buildroot%_libdir/libtdutils.a" \
+  -print -delete
+%endif
+
+%if_disabled tde2e
+rm -f %_libdir/libtde2e.a
+rm -f %_libdir/libtdutils.a
 %endif
 
 #check
 # inet only
 #./BUILD/test/run_all_tests --filter -client
+
+%if_enabled tde2e
+%files -n tde2e-devel-static
+%_pkgconfigdir/tde2e.pc
+%_pkgconfigdir/tdutils.pc
+%_libdir/cmake/tde2e/
+%_libdir/libtde2e.a
+%_libdir/libtdutils.a
+%_includedir/td/e2e/
+%endif
 
 %files
 %doc LICENSE_1_0.txt
@@ -120,7 +179,10 @@ rm -fv %buildroot%_libdir/*.a
 %_libdir/libtd*.so.%version
 
 %files devel
-%_includedir/td
+%exclude %_pkgconfigdir/tde2e.pc
+%exclude %_pkgconfigdir/tdutils.pc
+%_includedir/td/tl/
+%_includedir/td/telegram/
 %_libdir/libtd*.so
 %_pkgconfigdir/*.pc
 %_libdir/cmake/Td/
@@ -128,11 +190,16 @@ rm -fv %buildroot%_libdir/*.a
 
 %if_enabled static
 %files devel-static
+%exclude %_libdir/libtde2e.a
+%exclude %_libdir/libtdutils.a
 %_libdir/libtd*.a
 %_libdir/cmake/Td/TdStaticTarget*
 %endif
 
 %changelog
+* Fri Jan 16 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 1.8.52-alt2
+- Add tde2e-devel-static.
+
 * Tue Aug 26 2025 Artem Semenov <savoptik@altlinux.org> 1.8.52-alt1
 - Updated to 1.8.52
 

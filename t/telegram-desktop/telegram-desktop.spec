@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 # TODO: build external, json11 separately
 # Check https://github.com/EasyCoding/tgbuild for patches
 
@@ -19,9 +22,9 @@
 %def_without ninja
 %def_without ffmpeg_static
 
-Name: telegram-desktop
-Version: 5.13.1
-Release: alt4
+Name:    telegram-desktop
+Version: 6.4.2
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -35,16 +38,6 @@ Source: %name-%version.tar
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
 #Source1: %name-gsl-%version.tar
-
-Patch1: telegram-desktop-remove-tgvoip.patch
-Patch2: telegram-desktop-set-native-window-frame.patch
-Patch3: alt-qt69.patch
-Patch5: telegram-desktop-fix-missed-cstdint.patch
-Patch7: telegram-desktop-fix-build-with-make.patch
-Patch9: telegram-desktop-try-fix-circular-deps.patch
-Patch10: telegram-desktop-fix-protoc.patch
-Patch11: telegram-desktop-fix-glibmm-2.86-compatibility.patch
-Patch12: fix-calendar-week-selection.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -202,6 +195,14 @@ BuildRequires: libswscale-devel >= %ffmpeg_version
 BuildRequires: libswresample-devel >= %ffmpeg_version
 %endif
 
+BuildRequires: libwayland-egl-devel
+BuildRequires: tde2e-devel-static
+
+BuildRequires: libmicrosoft-gsl-devel
+BuildRequires: libexpected-devel
+BuildRequires: librange-v3-devel
+BuildRequires: libqrcodegen-cpp-devel
+
 # Use the same Qt version as built with
 # See https://bugzilla.altlinux.org/49495
 # https://git.altlinux.org/gears/t/telegram-desktop.git?a=blob;f=tdesktop/Telegram/lib_ui/ui/rp_widget.cpp;h=41b24bc5cd896aadd6fc6c35fadfa00f5f4f4b8b#l25
@@ -239,13 +240,6 @@ or business messaging needs.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
-%patch3 -p1
-%patch5 -p2
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -264,25 +258,20 @@ subst 's|third_party/libyuv/include/libyuv.h|libyuv.h|' Telegram/ThirdParty/tgca
 # TODO: minizip
 for i in \
 %if_with gsl
-	Telegram/ThirdParty/GSL \
+    Telegram/ThirdParty/GSL \
 %endif
-	Telegram/ThirdParty/QR \
-	Telegram/ThirdParty/expected \
-	Telegram/ThirdParty/fcitx5-qt \
-	Telegram/ThirdParty/hime \
-	Telegram/ThirdParty/hunspell \
-	Telegram/ThirdParty/lz4 \
-	Telegram/ThirdParty/nimf \
-	Telegram/ThirdParty/range-v3 \
-	Telegram/ThirdParty/xxHash \
+    Telegram/ThirdParty/QR \
+    Telegram/ThirdParty/expected \
+    Telegram/ThirdParty/hunspell \
+    Telegram/ThirdParty/lz4 \
+    Telegram/ThirdParty/range-v3 \
+    Telegram/ThirdParty/xxHash \
 %if_with rlottie
-	Telegram/ThirdParty/rlottie \
+    Telegram/ThirdParty/rlottie \
 %endif
-	Telegram/ThirdParty/libtgvoip \
-	Telegram/ThirdParty/tgcalls/tgcalls/legacy \
-	%nil ; do
-	echo "Removing $i ..."
-	rm -r $i
+    %nil ; do
+    echo "Removing $i ..."
+    rm -r $i
 done
 
 %if_with rlottie
@@ -309,10 +298,17 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 # CMAKE_BUILD_TYPE should always be Release due to some hardcoded checks.
 #    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 
+%ifarch i586
+export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
+%endif
+
 %cmake \
 %if_with ninja
     -G Ninja \
 %endif
+    -DCMAKE_EXE_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
+    -DCMAKE_SHARED_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
+    -DCMAKE_MODULE_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DTDESKTOP_API_ID=%apiid \
     -DTDESKTOP_API_HASH=%apihash \
@@ -360,9 +356,9 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 # XDG files
 #install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
 
-ln -s %name %buildroot%_bindir/Telegram
-ln -s %name %buildroot%_bindir/telegram
-ln -s %name %buildroot%_bindir/telegramdesktop
+ln -s Telegram %buildroot%_bindir/%name
+ln -s Telegram %buildroot%_bindir/telegram
+ln -s Telegram %buildroot%_bindir/telegramdesktop
 
 %files
 %_bindir/%name
@@ -376,11 +372,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_iconsdir/hicolor/symbolic/apps/org.telegram.desktop-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.telegram.desktop-attention-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.telegram.desktop-mute-symbolic.svg
-
-#_man1dir/*
-%doc README.md
+%doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Thu Jan 15 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 6.4.2-alt1
+- Update to 6.4.2
+
 * Sat Dec 20 2025 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt4
 - fix calendar week day selection (ALT bug 56266)
 

@@ -24,8 +24,8 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 5.12.3
-Release: alt3
+Version: 6.3.10
+Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -41,22 +41,21 @@ Source1: %name-postsubmodules-%version.tar
 # Source2-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
 #Source2: %name-gsl-%version.tar
 
-Patch1: telegram-desktop-remove-tgvoip.patch
-Patch2: telegram-desktop-set-native-window-frame.patch
-Patch3: alt-qt69.patch
+#Patch1: telegram-desktop-remove-tgvoip.patch
+#Patch2: telegram-desktop-set-native-window-frame.patch
+#Patch3: alt-qt69.patch
 #Patch5: telegram-desktop-fix-missed-cstdint.patch
 #Patch7: telegram-desktop-fix-build-with-make.patch
 #Patch8: telegram-desktop-use-external-gsl.patch
 #Patch9: telegram-desktop-try-fix-circular-deps.patch
-Patch20: telegram-desktop-fix-protoc.patch
-Patch21: telegram-desktop-fix-glibmm-2.86-compatibility.patch
+#Patch20: telegram-desktop-fix-protoc.patch
+#Patch21: telegram-desktop-fix-glibmm-2.86-compatibility.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 ExcludeArch: ppc64le
 # [aarch64] error: cpio archive too big - 4103M
-ExcludeArch: aarch64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-compat >= 2.1.5
@@ -212,6 +211,14 @@ BuildRequires: libswscale-devel >= %ffmpeg_version
 BuildRequires: libswresample-devel >= %ffmpeg_version
 %endif
 
+BuildRequires: libwayland-egl-devel
+BuildRequires: tde2e-devel-static
+
+BuildRequires: libmicrosoft-gsl-devel
+BuildRequires: libexpected-devel
+BuildRequires: librange-v3-devel
+BuildRequires: libqrcodegen-cpp-devel
+
 # Use the same Qt version as built with
 # See https://bugzilla.altlinux.org/49495
 # https://git.altlinux.org/gears/t/telegram-desktop.git?a=blob;f=tdesktop/Telegram/lib_ui/ui/rp_widget.cpp;h=41b24bc5cd896aadd6fc6c35fadfa00f5f4f4b8b#l25
@@ -253,11 +260,11 @@ We are not responsible for the possible blocking of your account. Use the client
 
 %prep
 %setup -a1
-%patch1 -p2
-%patch2 -p2
-%patch3 -p1
-%patch20 -p1
-%patch21 -p1
+#%%patch1 -p2
+#%%patch2 -p2
+#%%patch3 -p1
+#%%patch20 -p1
+#%%patch21 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -280,19 +287,14 @@ for i in \
 %endif
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected \
-	Telegram/ThirdParty/fcitx5-qt \
-	Telegram/ThirdParty/hime \
 	Telegram/ThirdParty/hunspell \
 	Telegram/ThirdParty/lz4 \
-	Telegram/ThirdParty/nimf \
 	Telegram/ThirdParty/range-v3 \
 	Telegram/ThirdParty/xxHash \
 %if_with rlottie
 	Telegram/ThirdParty/rlottie \
 %endif
-	Telegram/ThirdParty/libtgvoip \
 %if 0
-	Telegram/ThirdParty/tgcalls/tgcalls/legacy \
 %endif
 	%nil ; do
 	echo "Removing $i ..."
@@ -325,11 +327,17 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 
 # CMAKE_BUILD_TYPE should always be Release due to some hardcoded checks.
 #    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%ifarch i586
+export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
+%endif
 
 %cmake \
 %if_with ninja
     -G Ninja \
 %endif
+    -DCMAKE_EXE_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
+    -DCMAKE_SHARED_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
+    -DCMAKE_MODULE_LINKER_FLAGS:STRING="%{?ldflags} ${EXTRA_LDFLAGS}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DTDESKTOP_API_ID=%apiid \
     -DTDESKTOP_API_HASH=%apihash \
@@ -381,29 +389,37 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 #install -m644 -D lib/xdg/tg.protocol %buildroot%_Kservices/tg.protocol
 
 #ln -s %name %buildroot%_bindir/Telegram
-ln -s %name %buildroot%_bindir/%oname
+ln -s AyuGram %buildroot%_bindir/%name
+ln -s AyuGram %buildroot%_bindir/%oname
 #ln -s %name %buildroot%_bindir/%{oname}desktop
 
 %files
 %_bindir/%name
+%_bindir/%oname
 #%_bindir/telegramdesktop
 #%_bindir/Telegram
-%_bindir/%oname
+%_bindir/AyuGram
 %_desktopdir/com.%oname.desktop.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/metainfo/*.metainfo.xml
-%_iconsdir/hicolor/16x16/apps/%oname.png
-%_iconsdir/hicolor/32x32/apps/%oname.png
-%_iconsdir/hicolor/48x48/apps/%oname.png
-%_iconsdir/hicolor/64x64/apps/%oname.png
-%_iconsdir/hicolor/128x128/apps/%oname.png
-%_iconsdir/hicolor/256x256/apps/%oname.png
-%_iconsdir/hicolor/512x512/apps/%oname.png
-%_iconsdir/hicolor/symbolic/apps/%oname-symbolic.svg
+%_iconsdir/hicolor/16x16/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/32x32/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/48x48/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/64x64/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/128x128/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/256x256/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/512x512/apps/com.ayugram.desktop.png
+%_iconsdir/hicolor/symbolic/apps/com.ayugram.desktop-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/com.ayugram.desktop-attention-symbolic.svg
+%_iconsdir/hicolor/symbolic/apps/com.ayugram.desktop-mute-symbolic.svg
 #_man1dir/*
 %doc README.md
 
 %changelog
+* Thu Jan 15 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 6.3.10-alt1
+- Update v6.3.10 (Closes: 55319)
+- Enable build on aarch64.
+
 * Sun Oct 18 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 5.12.3-alt3
 - Replace hardcoded cld3_src with standard CMake paths.
 - Added patch fix-glibmm-2.86-compatibility
