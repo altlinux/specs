@@ -1,24 +1,26 @@
-%define oname jmespath
+%define pypi_name jmespath
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
+
 Summary: JSON Matching Expressions
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/jmespath/
 Vcs: https://github.com/jmespath/jmespath.py
+
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-hypothesis
+BuildRequires: python3(pytest)
+BuildRequires: python3(hypothesis)
 %endif
 
 %description
@@ -40,9 +42,13 @@ from a JSON document.
 %files
 %doc README.*
 %_bindir/jp.py
-%python3_sitelibdir/%oname
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1.1
+- packaged lost dist-info
+
 * Fri Jan 23 2026 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 

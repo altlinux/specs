@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: Python library of web-related functions
@@ -17,11 +17,13 @@ Source: https://pypi.io/packages/source/w/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
+#Provides: python3(%pypi_name) = %EVR
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-tox python3-module-pytest
-BuildRequires: python3-module-pytest-cov python3-module-flake8 python3-module-mypy
-BuildRequires: python3-module-pylint python3-module-black}
+BuildRequires: python3(wheel) python3(hatchling)
+%{?_enable_check:BuildRequires: python3(tox) python3(pytest)
+BuildRequires: python3-module-pytest-cov python3(flake8) python3(mypy)
+BuildRequires: python3(pylint) python3(black)}
 
 %description
 This package provides Python library of web-related functions, such as:
@@ -53,6 +55,9 @@ extract arguments from urls
 %doc README*
 
 %changelog
+* Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Tue Jan 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
 - 2.3.1
 

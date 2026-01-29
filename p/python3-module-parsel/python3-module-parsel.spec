@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: XML/HTML parsing library
@@ -18,11 +18,13 @@ Source: https://github.com/scrapy/parsel/archive/v%version/%pypi_name-%version.t
 
 BuildArch: noarch
 
+#Provides: python3(%pypi_name) = %EVR
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(hatchling)
 %{?_enable_check:BuildRequires: python3(tox) python3-module-tox-no-deps python3-module-tox-console-scripts
 BuildRequires: python3(lxml) python3(cssselect) python3(psutil) python3(jmespath)
-BuildRequires: python3(w3lib) python3(sybil) python3(pytest_cov) /proc}
+BuildRequires: python3(editables) python3(w3lib) python3(sybil) python3(pytest_cov) /proc}
 
 %description
 Parsel is a Python library to extract and remove data from HTML and XML
@@ -47,6 +49,9 @@ expressions.
 %doc README*
 
 %changelog
+* Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
