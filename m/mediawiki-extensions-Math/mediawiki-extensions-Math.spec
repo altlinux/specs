@@ -2,11 +2,11 @@
 %define mwversion 1.40
 %setup_mediawiki_ext %mwversion %ShortName
 %define commit 4cf19b0
-%define defphp php8.1
+%define defphp php%php_defver
 
 Name: mediawiki-extensions-%ShortName
 Version: 3.0.0.%mwversion
-Release: alt1.%commit
+Release: alt2.%commit
 
 Summary: Math extension provides support for rendering mathematical formulas on-wiki
 
@@ -22,6 +22,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-mediawiki >= 0.6
+BuildRequires(pre): rpm-build-php
 
 # for default math rendering service
 Requires: %defphp-curl
@@ -50,6 +51,9 @@ rm -v %buildroot%mediawiki_ext_dir/maintenance/{buildPHPparser.js,downloadMoreTe
 %files -f %ShortName.files
 
 %changelog
+* Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.40-alt2.4cf19b0
+- use php_defver macro instead of hardcoded php8.1
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.40-alt1.4cf19b0
 - new version (3.0.0.1.40) with rpmgs script
 - change requires to php8.1-curl (ALT bug 46923)

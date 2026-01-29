@@ -2,11 +2,11 @@
 %define mwversion 1.40
 %setup_mediawiki_ext %mwversion %ShortName
 %define commit d3c0c1b
-%define defphp php8.1
+%define defphp php%php_defver
 
 Name: mediawiki-extensions-%ShortName
 Version: %mwversion
-Release: alt1.%commit
+Release: alt2.%commit
 
 Group: Networking/WWW
 Summary: Collects a number of pages. Collections can be edited, persisted and optionally retrieved as PDF, ODF or DocBook (XML)
@@ -19,6 +19,7 @@ License: GPLv2
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-build-php
 Requires: mediawiki-common >= 1.22
 
 Requires: %defphp-curl
@@ -44,6 +45,9 @@ This extension allows a user to organize personal selections of pages in a colle
 %files -f %ShortName.files
 
 %changelog
+* Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt2.d3c0c1b
+- use php_defver macro instead of hardcoded php8.1
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt1.d3c0c1b
 - new version (1.40) with rpmgs script
 - switch to php8.1 (ALT bug 46922)
