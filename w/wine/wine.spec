@@ -146,7 +146,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -475,7 +475,8 @@ Wine meta package. Use it for install all wine subpackages.
 Summary: Common wine files and scripts
 Summary(ru_RU.UTF-8): Общие файлы и скрипты Wine
 Group: Emulators
-BuildArch: noarch
+# Cannot be noarch: Requires wine which has ExclusiveArch
+#BuildArch: noarch
 %add_conflict common
 # we don't need provide anything
 AutoProv:no
@@ -948,6 +949,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1:10.18.1-alt2
+- wine-common: remove BuildArch noarch due ExclusiveArch in wine
+
 * Fri Nov 07 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.18.1-alt1
 - new version 10.18
 - update patches to staging wine-10.18
