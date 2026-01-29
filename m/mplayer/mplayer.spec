@@ -310,7 +310,7 @@
 Name: %lname
 Version: 1.5
 # upstream not provide git tags
-Release: alt2.%gitrev
+Release: alt3.%gitrev
 
 Summary: Media player
 Summary(uk_UA.UTF-8): Медіаплейер
@@ -353,9 +353,14 @@ Patch18: 0018-stream-stream_smb.c-include-time.h.patch
 Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
 Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
 Patch21: 0021-fix-usage-mp_msg.patch
+Patch22: 0022-fix-python-syntax.patch
 Patch23: 0023-loongarch64-riscv64-support.patch
 Patch24: 0024-mp_image.c-add-the-header-missing-now.patch
 Patch25: 0025-fifo.patch
+Patch26: 0026-fix-ffmpeg8.patch
+Patch27: 0027-fix-vdpau.patch
+Patch28: 0028-fix-dvd-crash.patch
+Patch29: 0029-format-string-literal.patch
 # avoid autopatch
 Source2000: mplayer-e2k.patch
 
@@ -373,7 +378,9 @@ Obsoletes: %Name-gui
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
 BuildRequires: libbs2b-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
-BuildRequires: rpm-build-python
+BuildRequires: rpm-build-python3
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(libbrotlidec)
 %{?gitrev:%{?_with_htmldocs:BuildRequires: docbook-style-xsl xsltproc sgml-common docbook-dtds}}
 
 %{?_enable_mencoder:%{?_enable_lame:BuildRequires: liblame-devel}}
@@ -927,7 +934,7 @@ done
 xz Changelog
 
 # fix python shebang
-find TOOLS -name '*.py' -exec sed -Ei '1s@(^#!/usr/bin/.*python$)@\12@' {} '+'
+find TOOLS -name '*.py' -exec sed -Ei '1s@(^#!/usr/bin/.*python$)@#!%__python3@' {} '+'
 
 %install
 %makeinstall_std
@@ -1015,6 +1022,7 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 %{?_enable_mplayer:%{?_enable_vidix:%add_verify_elf_skiplist %_libdir/%lname/vidix/*}}
 
+rm -r %buildroot/%_docdir/%name-%version/tech
 
 %if_enabled mplayer
 %files
@@ -1154,6 +1162,11 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Wed Jan 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.5-alt3.g567631e
+- Fix FTBFS with ffmpeg 8.
+- Switch to Python3.
+- Add more patches from SUSE.
+
 * Tue Mar 04 2025 Constantin Sunzow <protvin@altlinux.org> 1.5-alt2.g567631e
 - Fix FTBFS: rebuild from upstream commit.
 
