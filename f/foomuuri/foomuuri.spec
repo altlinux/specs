@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: foomuuri
-Version: 0.30
+Version: 0.31
 Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
@@ -92,12 +92,16 @@ vm-run \
 %_tmpfilesdir/%name.conf
 %attr(0700, root, root) %dir %_sharedstatedir/%name
 %_datadir/dbus-1/system.d/fi.foobar.Foomuuri1.conf
+%_datadir/polkit-1/actions/fi.foobar.Foomuuri1.policy
 
 %files firewalld
 %_datadir/dbus-1/system.d/fi.foobar.Foomuuri-FirewallD.conf
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Wed Jan 28 2026 Alexey Shabalin <shaba@altlinux.org> 0.31-alt1
+- New version 0.31 (Fixes: CVE-2025-67603, CVE-2025-67858).
+
 * Thu Dec 18 2025 Alexey Shabalin <shaba@altlinux.org> 0.30-alt1
 - New version 0.30.
 
