@@ -36,7 +36,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0-or-later
@@ -321,6 +321,11 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1.1
+- gdm-launch-environment.pam:
+  succeed_if also checks if user in group gnome-initial-setup
+  (ALT #57716)
+
 * Tue Nov 25 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
