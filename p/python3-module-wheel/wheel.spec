@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.46.3
-Release: alt1
+Release: alt2
 Summary: Command line tool for manipulating wheel files
 License: MIT
 Group: Development/Python3
@@ -60,6 +60,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 29 2026 Stanislav Levin <slev@altlinux.org> 0.46.3-alt2
+- Made tests compatible with packaging < 26.0.
+
 * Tue Jan 27 2026 Stanislav Levin <slev@altlinux.org> 0.46.3-alt1
 - 0.45.1 -> 0.46.3 (fixes: CVE-2026-24049).
 
