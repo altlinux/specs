@@ -3,7 +3,7 @@
 
 Name: ddrescueview
 Version: 0.4.5
-Release: alt1
+Release: alt2
 
 Summary: graphical viewer for GNU ddrescue map files
 License: GPL-3.0-or-later
@@ -19,7 +19,7 @@ BuildRequires: lazarus
 BuildRequires: dos2unix
 BuildRequires: qt5pas-devel
 
-ExcludeArch: i586
+ExcludeArch: i586 loongarch64 riscv64
 
 %description
 This small tool allows the user to graphically examine ddrescue's map files
@@ -64,5 +64,8 @@ install -Dm 644 resources/linux/applications/%{name}.desktop %buildroot%_desktop
 %_man1dir/ddrescueview.1.xz
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.5-alt2
+- Exclude loongarch64 and riscv64 arches as not buildable.
+
 * Thu Dec 25 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.5-alt1
 - Initial build for Sisyphus

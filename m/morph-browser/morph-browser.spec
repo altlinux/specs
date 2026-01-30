@@ -4,7 +4,7 @@
 
 Name: morph-browser
 Version: 1.99.2
-Release: alt1
+Release: alt2
 
 Summary: Web Browser for Lomiri
 License: GPL-3.0-only
@@ -12,6 +12,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/core/morph-browser
 
 Source: %name-%version.tar
+
+ExcludeArch: loongarch64 riscv64
 
 # sync with version 1.1.2+dfsg-3 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
@@ -91,6 +93,9 @@ and using the Lomiri UI components.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/morph-browser.mo
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.99.2-alt2
+- Exclude loongarch64 and riscv64 arches as not buildable.
+
 * Fri Dec 26 2025 Nikolay Strelkov <snk@altlinux.org> 1.99.2-alt1
 - New version 1.99.2.
 

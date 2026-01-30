@@ -4,7 +4,7 @@
 
 Name: wineglass
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: GUI for Wine
 License: GPL-3.0-or-later
@@ -12,6 +12,8 @@ Group: Emulators
 Url: https://github.com/aggalex/Wineglass
 
 Source: %name-%version.tar
+
+ExcludeArch: loongarch64 riscv64
 
 Patch: %name-%version-%release.patch
 
@@ -74,5 +76,8 @@ sed -i "s|https://github.com/aggalex/Wineglass/blob/master/data/icons/64/|%_icon
 %_datadir/wineglass/style.css
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt2
+- Exclude loongarch64 and riscv64 arches as not runnable.
+
 * Tue Dec 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1
 - Initial build for Sisyphus

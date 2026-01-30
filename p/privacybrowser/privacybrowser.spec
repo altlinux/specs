@@ -2,7 +2,7 @@
 
 Name: privacybrowser
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Summary: web browser that respects your privacy
 License: GPL-3.0-or-later
@@ -35,7 +35,7 @@ BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-knotifications-devel
 BuildRequires: kf6-kio-devel
 
-ExcludeArch: i586
+ExcludeArch: i586 riscv64
 
 %description
 Privacy Browser is a web browser based on Qt WebEngine with a focus on
@@ -85,5 +85,8 @@ by default but are easy to automatically enable on-the-fly or by domain.
 %_datadir/doc/HTML/en/privacybrowser/privacybrowser.png
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.8-alt2
+- Exclude riscv64 arch as not buildable.
+
 * Sat Nov 01 2025 Nikolay Strelkov <snk@altlinux.org> 0.8-alt1
 - Initial build for Sisyphus

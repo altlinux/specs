@@ -3,7 +3,7 @@
 
 Name: xyscan
 Version: 4.68
-Release: alt1
+Release: alt2
 
 Summary: data thief for scientists
 License: GPL-3.0-or-later
@@ -14,6 +14,8 @@ Vcs: https://salsa.debian.org/georgesk/xyscan
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
+
+ExcludeArch: loongarch64 riscv64
 
 BuildRequires(pre): rpm-macros-qt5
 
@@ -99,5 +101,8 @@ install -Dm 644 translations/%{name}_*.qm %buildroot/%_qt5_translationdir/
 %_datadir/xyscan/*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 4.68-alt2
+- Exclude loongarch64 and riscv64 arches as not buildable.
+
 * Thu Dec 25 2025 Nikolay Strelkov <snk@altlinux.org> 4.68-alt1
 - Initial build for Sisyphus

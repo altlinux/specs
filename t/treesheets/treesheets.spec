@@ -4,7 +4,7 @@
 
 Name: treesheets
 Version: 16035416413
-Release: alt1
+Release: alt2
 
 Summary: Free Form Data Organizer
 License: Zlib
@@ -13,6 +13,8 @@ Url: https://strlen.com/treesheets/
 VCS: https://github.com/aardappel/treesheets
 
 Source: %name-%version.tar
+
+ExcludeArch: loongarch64 riscv64
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
@@ -70,5 +72,8 @@ cp -v %buildroot/%_datadir/%cname/images/icon32.png %buildroot/%_niconsdir/%{cna
 %_datadir/mime/packages/*%{cname}.xml
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 16035416413-alt2
+- Exclude loongarch64 and riscv64 arches as not buildable.
+
 * Thu Jul 03 2025 Nikolay Strelkov <snk@altlinux.org> 16035416413-alt1
 - Initial build for Sisyphus

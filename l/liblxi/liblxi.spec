@@ -3,7 +3,7 @@
 
 Name: liblxi
 Version: 1.22
-Release: alt1
+Release: alt2
 
 Summary: LAN eXtensions for Instrumentation (LXI) software interface
 License: BSD-3-Clause
@@ -11,6 +11,8 @@ Group: System/Libraries
 Url: https://github.com/lxi/liblxi
 
 Source: %name-%version.tar
+
+ExcludeArch: loongarch64
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
@@ -66,5 +68,8 @@ This package contains development files for %name.
 %_man3dir/lxi_*.3*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.22-alt2
+- Exclude loongarch64 arch as not buildable.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.22-alt1
 - Initial build for Sisyphus

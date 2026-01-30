@@ -2,7 +2,7 @@
 
 Name: sigil
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -34,7 +34,7 @@ BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(cups)
 
-ExcludeArch: i586
+ExcludeArch: i586 riscv64
 
 Requires: %name-data = %EVR
 Requires: mathjax
@@ -152,6 +152,9 @@ ln -sfv %buildroot%_libdir/%name/libsigilgumbo.so %buildroot%_libdir/libsigilgum
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 2.7.0-alt2
+- Exclude riscv64 arch as not buildable.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 

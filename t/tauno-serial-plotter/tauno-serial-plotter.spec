@@ -2,7 +2,7 @@
 
 Name: tauno-serial-plotter
 Version: 1.20.4
-Release: alt1
+Release: alt2
 
 Summary: Serial Plotter for Arduino and other embedded devices
 License: GPL-3.0-or-later
@@ -14,6 +14,8 @@ BuildRequires: rpm-build-python3
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+ExcludeArch: riscv64
 
 %description
 %summary.
@@ -74,5 +76,8 @@ install -Dm755 src/tauno-serial-plotter.py %buildroot%_bindir/tauno-serial-plott
 %_datadir/appdata/art.taunoerik.tauno-serial-plotter.appdata.xml
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.20.4-alt2
+- Exclude riscv64 arch as not buildable.
+
 * Sat Jan 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.20.4-alt1
 - Initial build for Sisyphus

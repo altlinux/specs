@@ -3,7 +3,7 @@
 
 Name: lomiri-weather-app
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: Weather App for Lomiri Operating Environment
 License: GPL-3.0-only
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/apps/lomiri-weather-app
 
 Source: %name-%version.tar
+
+ExcludeArch: loongarch64 riscv64
 
 Patch: %name-%version-%release.patch
 
@@ -73,5 +75,8 @@ This package provides Lomiri's Weather App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-weather-app.mo
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
+- Exclude loongarch64 and riscv64 arches as not buildable.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
 - Initial build for Sisyphus

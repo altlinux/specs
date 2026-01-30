@@ -2,7 +2,7 @@
 
 Name: ebook-speaker
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: eBook reader that reads aloud in a synthetic voice
 License: GPL-2.0-or-later AND LGPL-3.0-or-later
@@ -11,7 +11,7 @@ Url: https://github.com/book-readers/ebook-speaker
 
 Source: %name-%version.tar
 
-ExcludeArch: i586
+ExcludeArch: i586 riscv64
 
 # sync with version 6.2.0-7 from Debian unstable
 Patch: %name-%version-%release.patch
@@ -130,5 +130,8 @@ cp -pv doc/ebook-speaker.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/ebook-speaker.svg
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
+- Exclude riscv64 as not runnable.
+
 * Sun Nov 30 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt1
 - Initial build for Sisyphus
