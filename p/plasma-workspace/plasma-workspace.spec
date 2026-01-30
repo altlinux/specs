@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -436,8 +436,8 @@ mv %buildroot/%_K6xdgmenu/plasma-applications.menu{,.plasma}
 ln -sr %buildroot/%_K6xdgmenu/plasma-applications.menu{.plasma,}
 mkdir -p %buildroot/%_altdir
 cat >%buildroot/%_altdir/%name<<EOF
-%_K6xdgmenu/plasma-applications.menu %_K6xdgmenu/plasma-applications.menu.plasma 20
-%_K6xdgmenu/plasma-applications.menu %_xdgmenusdir/applications.menu 10
+%_K6xdgmenu/plasma-applications.menu %_K6xdgmenu/plasma-applications.menu.plasma 10
+%_K6xdgmenu/plasma-applications.menu %_xdgmenusdir/applications.menu 20
 EOF
 
 # systemd user service deps
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt3
+- prefer old main menu structure for smooth dist-upgrade
+
 * Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt2
 - fix requires
 
