@@ -11,15 +11,15 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 6.12.0.206
-Release: alt3
+Version: 6.14.1
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
 License: MIT
 Url: https://www.mono-project.com
 
-# https://github.com/mono/mono.git
+# https://gitlab.winehq.org/mono/mono.git
 Source: %name-%version.tar
 
 # by running the following command:
@@ -44,19 +44,18 @@ Source15: %name-%version-external-cecil.tar
 Source16: %name-%version-external-cecil-legacy.tar
 Source17: %name-%version-external-corefx.tar
 Source18: %name-%version-external-corert.tar
-Source19: %name-%version-external-helix-binaries.tar
-Source20: %name-%version-external-ikdasm.tar
-Source21: %name-%version-external-ikvm.tar
-Source22: %name-%version-external-illinker-test-assets.tar
-Source23: %name-%version-external-linker.tar
-Source24: %name-%version-external-linker-external-cecil.tar
-Source25: %name-%version-external-llvm-project.tar
-Source26: %name-%version-external-Newtonsoft.Json.tar
-Source27: %name-%version-external-nuget-buildtasks.tar
-Source28: %name-%version-external-nunit-lite.tar
-Source29: %name-%version-external-roslyn-binaries.tar
-Source30: %name-%version-external-rx.tar
-Source31: %name-%version-external-xunit-binaries.tar
+Source19: %name-%version-external-ikdasm.tar
+Source20: %name-%version-external-ikvm.tar
+Source21: %name-%version-external-illinker-test-assets.tar
+Source22: %name-%version-external-linker.tar
+Source23: %name-%version-external-linker-external-cecil.tar
+Source24: %name-%version-external-llvm-project.tar
+Source25: %name-%version-external-Newtonsoft.Json.tar
+Source26: %name-%version-external-nuget-buildtasks.tar
+Source27: %name-%version-external-nunit-lite.tar
+Source28: %name-%version-external-roslyn-binaries.tar
+Source29: %name-%version-external-rx.tar
+Source30: %name-%version-external-xunit-binaries.tar
 
 Patch1: %name-alt-linking1.patch
 Patch2: %name-alt-linking2.patch
@@ -64,6 +63,7 @@ Patch3: %name-alt-monodoc-sourcesdir.patch
 Patch4: %name-alt-offline-build.patch
 Patch5: %name-alt-make-compat.patch
 Patch6: %name-alt-cmake-compat.patch
+Patch7: 0001-Fix-bad_elf_symbols-error-raised-by-qa-robot.patch
 
 # Patches from Fedora
 Patch101: mono-4.2.1-ppc.patch
@@ -79,6 +79,7 @@ Patch111: 0001-Replace-new-Csharp-features-with-old-ones.patch
 Patch112: 0001-Reenable-mdoc.exe-build.patch
 # fix issue with conflicts between i686 and x86_64 package (#1853724)
 Patch113: mono-6.6.0-fix-multi-arch-issue.patch
+Patch114: mono-6.14.0-arm64-fix-pointer-int.patch
 
 BuildRequires(pre): rpm-build-mono >= 2.0
 BuildRequires(pre): rpm-build-ubt
@@ -245,6 +246,7 @@ Requires: glib2-devel
 Conflicts: mono4-devel < %EVR
 Obsoletes: mono4-devel
 Provides: mono4-devel = %EVR
+Conflicts: chicken
 %qIF_ver_lt %ubt_id S1
 Conflicts: mono-mcs < %EVR
 Provides: mono-mcs = %EVR
@@ -512,13 +514,14 @@ Development files for libmono.
 %endif
 
 %prep
-%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31
+%setup -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %ifarch ppc64le
 %patch101 -p1
@@ -532,6 +535,7 @@ pushd external/api-doc-tools
 popd
 %patch112 -p1
 %patch113 -p1
+%patch114 -p1
 
 %if_enabled bootstrap
 mkdir -p mcs/class/lib/monolite-linux
@@ -574,7 +578,7 @@ NOCONFIGURE=yes sh ./autogen.sh
 	--enable-dynamic-btls \
 	%nil
 
-%make
+%make_build
 
 %install
 export LD_LIBRARY_PATH=$(pwd)/mono/native/.libs
@@ -643,7 +647,7 @@ for i in %_bindir/mono-gdb.py %_bindir/mono-sgen-gdb.py ; do
 done
 
 %files core -f mcs.lang
-%doc .github/CONTRIBUTING.md LICENSE COPYING.LIB NEWS README.md PATENTS.TXT
+%doc LICENSE COPYING.LIB NEWS README.md PATENTS.TXT
 %_rpmlibdir/mono-cert-sync.filetrigger
 %_sysconfdir/mono-4.5/
 %_sysconfdir/mono-4.0/
@@ -1407,6 +1411,11 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Jan 30 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.14.1-alt1
+- Updated to new upstream version 6.14.1.
+- Added conflicts with chicken package.
+- Solved bad_elf_symbols raised by qa-robot (thx vt@).
+
 * Mon Jan 05 2026 Andrey Cherepanov <cas@altlinux.org> 6.12.0.206-alt3
 - Replace deprecated egrep in filetrigger (ALT #55660).
 
