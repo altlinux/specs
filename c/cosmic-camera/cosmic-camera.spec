@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.21
+Version: %ver_major.23
 Release: alt1%beta
 
 Summary: COSMIC Camera
@@ -66,6 +66,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
+- 0.1.23
+
 * Thu Jan 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.21-alt1
 - 0.1.21
 

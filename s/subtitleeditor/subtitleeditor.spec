@@ -1,22 +1,22 @@
 %def_disable snapshot
 %define _name subtitleeditor
-%define ver_major 0.55
+%define ver_major 0.56
 %define gst_api_ver 1.0
 %define rdn_name org.kitone.%_name
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Graphical subtitle editor with sound waves representation
 Group: Video
 License: GPL-3.0-or-later
-Url: https://github.com/kitone/%name
+Url: https://github.com/subtitleeditor/subtitleeditor
 
-Vcs: https://github.com/kitone/subtitleeditor.git
+Vcs: https://github.com/subtitleeditor/subtitleeditor.git
 
 %if_disabled snapshot
-Source: https://github.com/kitone/%_name/archive/%version/%_name-%version.tar.gz
+Source: https://github.com/%_name/%_name/archive/%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -28,8 +28,8 @@ Requires: gst-libav
 Requires: iso-codes
 
 BuildRequires: gcc-c++ intltool
-BuildRequires: libgtkmm3-devel libxml++2-devel
-BuildRequires: gst-plugins%gst_api_ver-devel libgstreamermm%gst_api_ver-devel gst-plugins-good%gst_api_ver
+BuildRequires: libgtkmm3-devel libxml++3-devel
+BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-good%gst_api_ver
 BuildRequires: iso-codes-devel libenchant2-devel
 
 %description
@@ -66,6 +66,9 @@ waves, which makes it easier to synchronise subtitles to voices.
 %exclude %_libdir/*.so
 
 %changelog
+* Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
+- 0.56.1
+
 * Mon Sep 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.55.0-alt1
 - 0.55.0
 
