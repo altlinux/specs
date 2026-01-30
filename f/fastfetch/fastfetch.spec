@@ -1,14 +1,15 @@
 Name: fastfetch
-Version: 2.57.1
+Version: 2.58.0
 Release: alt1
-Summary: Like neofetch, but much faster because written in c
 
+Summary: Like neofetch, but much faster because written in c
 License: MIT
 Group: Monitoring
-Url: https://github.com/LinusDierheimer/fastfetch
-Packager: Artyom Bystrov <arbars@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
+Url: https://github.com/LinusDierheimer/fastfetch
+Vcs: https://github.com/LinusDierheimer/fastfetch
+
+Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++ ctest
@@ -36,7 +37,6 @@ BuildRequires: libffi-devel
 BuildRequires: libdrm-devel
 BuildRequires: librpm-devel
 BuildRequires: libelf-devel
-
 BuildRequires: chafa-devel
 
 %description
@@ -51,9 +51,8 @@ Summary: Bash completion files for %name
 Requires: bash-completion
 Requires: %name = %version-%release
 BuildArch: noarch
-
 %description bash-completion
-%summary
+%summary.
 
 %prep
 %setup
@@ -68,21 +67,17 @@ BuildArch: noarch
 %cmake_build
 
 %check
-pushd %_cmake__builddir
-ctest
-popd
+%ctest
 
 %install
 %cmake_install
 
 %files
-%doc LICENSE
-%doc README.md
-%_bindir/%name
-%_bindir/flashfetch
-%_datadir/%name/
-%_datadir/licenses/fastfetch/LICENSE
-%_man1dir/%name.1.xz
+%doc LICENSE *.md
+%_bindir/*
+%_datadir/%name
+%_datadir/licenses/%name/LICENSE
+%_man1dir/%name.1.*
 
 %files bash-completion
 %_datadir/bash-completion/completions/%name
@@ -90,6 +85,9 @@ popd
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Fri Jan 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.58.0-alt1
+- 2.57.1 -> 2.58.0
+
 * Thu Jan 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.57.1-alt1
 - 2.57.0 -> 2.57.1
 
