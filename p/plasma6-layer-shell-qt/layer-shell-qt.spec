@@ -5,7 +5,7 @@
 
 Name: plasma6-%rname
 Version: 6.5.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: 58f549d136.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libvulkan-devel
@@ -50,6 +51,7 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -77,6 +79,9 @@ Requires: %name-common
 %_K6lib/libLayerShellQtInterface.so.*
 
 %changelog
+* Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt2
+- add upstream fix for window activation
+
 * Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
 - new version
 
