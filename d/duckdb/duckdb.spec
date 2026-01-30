@@ -7,7 +7,7 @@
 %def_without check
 
 Name: duckdb
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: An analytical in-process SQL database management system
@@ -21,7 +21,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: python3-dev
@@ -53,18 +53,17 @@ necessary to develop DuckDB applications.
 find extension/icu/third_party/icu -name unicode -type d | xargs rm -rf
 
 %build
-%cmake  -GNinja \
-	-DWITH_INTERNAL_ICU=FALSE \
+%cmake  -DWITH_INTERNAL_ICU=FALSE \
 	-DOVERRIDE_GIT_DESCRIBE="v%version" \
 	-DOVERRIDE_GIT_RELEASE="%release" \
 	-DOVERRIDE_GIT_NOHASH=1 \
 	-DBUILD_EXTENSIONS="autocomplete;icu;tpch;tpcds;json;jemalloc" \
 	-DCMAKE_BUILD_TYPE=Release
 
-%ninja_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
 cat << EOF >> %buildroot%_sysconfdir/ld.so.conf.d/duckdb.conf
 %_libdir/duckdb
@@ -88,6 +87,9 @@ EOF
 %_cmakedir/DuckDB/
 
 %changelog
+* Thu Jan 29 2026 Artem Krasovskiy <aibure@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Tue Dec 23 2025 Artem Krasovskiy <aibure@altlinux.org> 1.4.3-alt1
 - New version 1.4.3 (closes: CVE-2025-64429).
 
