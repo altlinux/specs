@@ -1,12 +1,12 @@
 %global import_path github.com/sigstore/cosign/v2
 %global _unpackaged_files_terminate_build 1
 
-%define revision 488ef8ceed5ab5d77379e9077a124a0d0df41d06
+%define revision 6832fba4928c1ad69400235bbc41212de5006176
 
 %def_with check
 
 Name:    cosign
-Version: 2.5.3
+Version: 3.0.4
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -62,13 +62,17 @@ export BUILDDIR="$PWD/.gopath"
 %golang_install
 
 %check
-#%%make test
+%make test
 
 %files
 %doc README.md LICENSE
 %_bindir/%name
 
 %changelog
+* Fri Jan 30 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.0.4-alt1
+- New version 3.0.4 (Fixes: CVE-2026-22703).
+- Enable tests with no Internet access only.
+
 * Mon Aug 11 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.3-alt1
 - New version 2.5.3.
 - Disable tests, because need Internet access.
