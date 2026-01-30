@@ -5,7 +5,7 @@
 Name: SuperSlicer
 Summary: A PrusaSlicer fork (which is a slic3r fork) (previously Slic3r++)
 Version: 2.7.61.10
-Release: alt2
+Release: alt3
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://superslicer.net
@@ -58,17 +58,13 @@ BuildRequires: libgtk+3-devel
 BuildRequires: libgmpxx-devel
 BuildRequires: libglew-devel
 BuildRequires: libqhull-devel
-
-BuildRequires: libbgcode-devel-static
+BuildRequires: libbgcode-devel
 BuildRequires: libbgcode
-
 BuildRequires: libjpeg-devel
 BuildRequires: opencascade-devel
-BuildRequires: nanosvg-fltk-devel-static
+BuildRequires: nanosvg-devel
 BuildRequires: openssl-devel
-
-BuildRequires: heatshrink
-BuildRequires: heatshrink-devel-static
+BuildRequires: heatshrink-devel
 
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: catch-devel
@@ -150,6 +146,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Tue Jan 20 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.7.61.10-alt3
+- Recompiled using dynamic libraries.
+
 * Sun Jan 18 2026 Anton Midyukov <antohami@altlinux.org> 2.7.61.10-alt2
 - Rebuild with shared library qhullcpp instead static.
 
