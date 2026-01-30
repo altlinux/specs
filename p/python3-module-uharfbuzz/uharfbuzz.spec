@@ -3,7 +3,7 @@
 %def_with check
 
 Name:     python3-module-%oname
-Version:  0.53.2
+Version:  0.53.3
 Release:  alt1
 
 Summary:  An opinionated HarfBuzz Python binding
@@ -11,6 +11,7 @@ Summary:  An opinionated HarfBuzz Python binding
 License:  Apache-2.0
 Group:    Development/Python3
 URL:      https://pypi.org/project/uharfbuzz
+VCS:      https://github.com/harfbuzz/uharfbuzz
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -25,10 +26,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pkgconfig
 BuildRequires: libharfbuzz-devel
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 %description
 %summary.
@@ -54,6 +51,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 30 2026 Grigory Ustinov <grenka@altlinux.org> 0.53.3-alt1
+- Automatically updated to 0.53.3.
+
 * Sun Jan 18 2026 Grigory Ustinov <grenka@altlinux.org> 0.53.2-alt1
 - Automatically updated to 0.53.2.
 
