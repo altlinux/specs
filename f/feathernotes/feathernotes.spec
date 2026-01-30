@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: feathernotes
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Hierarchical notes-manager
@@ -47,5 +47,8 @@ It is independent of any desktop environment.
 %_datadir/mime/packages/feathernotes.xml
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.2-alt1
 - Initial build for Sisyphus

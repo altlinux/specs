@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: eqonomize
-Version: 1.5.11
+Version: 1.5.12
 Release: alt1
 
 Summary: personal accounting software for the small household economy
@@ -70,5 +70,8 @@ qmake-qt6 \
 %_datadir/doc/eqonomize/html/C/*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.12-alt1
+- New version 1.5.12.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.5.11-alt1
 - Initial build for Sisyphus

@@ -2,7 +2,7 @@
 
 Name: newelle
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Ultimate Virtual Assistant
 License: GPL-3.0-or-later
@@ -54,11 +54,13 @@ Requires: python3(six)
 Requires: python3(tldextract)
 
 Requires: git
-Requires: wget
 Requires: libportaudio2
 Requires: /usr/bin/xdg-open
 Requires: python3(pip)
 Requires: lsb-release
+Requires: /usr/bin/espeak
+Requires: /usr/bin/ffplay
+Requires: /usr/bin/ffmpeg
 
 BuildArch: noarch
 
@@ -108,7 +110,7 @@ chmod a+x %buildroot%_bindir/newelle
 %find_lang %name
 
 %post
-echo "WARNING: this is a modern application for working with AI LLMs."
+echo "WARNING: newelle is a modern application for working with AI LLMs."
 echo "         On the first launch it will download a set of Python modules"
 echo "         into isolated Python virtual environment at ~/.config/Newelle"
 echo "         and later it may/will download local LLMs files and extensions"
@@ -131,6 +133,10 @@ echo "         Please note that application can't work without these files."
 %_datadir/newelle/*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt3
+- Added missed espeak, ffplay and ffmpeg run-time dependencies.
+- Removed unneeded wget run-time dependency.
+
 * Sun Jan 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt2
 - Inform user about downloading data into home folder (closes: #57637):
   + Use Python3 pip from the repository.
