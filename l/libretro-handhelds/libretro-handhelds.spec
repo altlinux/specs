@@ -2,7 +2,7 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-handhelds
-Version:	20251012
+Version:	20260127
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -104,6 +104,9 @@ done
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Jan 30 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
+- Update to new versions
+
 * Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
 - Update to new versions
 

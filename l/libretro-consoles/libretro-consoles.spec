@@ -3,7 +3,7 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
-Version:	20251012
+Version:	20260127
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -158,6 +158,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Tue Jan 27 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt1
+- Update to new version
+
 * Sun Oct 12 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
 - Update to new version
 
