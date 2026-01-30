@@ -7,7 +7,7 @@
 
 Name: kf6-%rname
 Version: 6.22.1
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Libraries
@@ -149,6 +149,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Fri Jan 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.22.1-alt3
+- update (closes: 57621)
+
 * Tue Jan 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.22.1-alt2
 - fix issue with multiple clibpboard copies
 
