@@ -1,6 +1,6 @@
 Name: Seamly2D
 Release: alt1
-Version: 2025.7.28.216
+Version: 2026.1.26.213
 
 Summary: Open source patternmaking software
 Group: Other
@@ -10,11 +10,11 @@ VCS: https://github.com/FashionFreedom/Seamly2D
 
 Source: %name-%version.tar
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools
+BuildRequires: libxerces-c-devel
 BuildRequires: chrpath
 
 %description
@@ -24,7 +24,7 @@ BuildRequires: chrpath
 %setup
 
 %build
-%qmake_qt5 Seamly2D.pro
+%qmake_qt6 Seamly2D.pro
 %make_build
 
 %install
@@ -41,6 +41,10 @@ chrpath -d %buildroot/%_bindir/{seamly2d,seamlyme}
 %_datadir/seamly2d
 
 %changelog
+* Fri Jan 30 2026 Grigory Ustinov <grenka@altlinux.org> 2026.1.26.213-alt1
+- Automatically updated to 2026.1.26.213.
+- Built with qt6.
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 2025.7.28.216-alt1
 - Automatically updated to 2025.7.28.216.
 
