@@ -1,32 +1,31 @@
-Group: Games/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel libglvnd-devel
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-#global extra_version -2
+%define oname io.github.cxong.cdogs-sdl
 
-Name:           cdogs-sdl
-Version:        2.3.2
-Release:        alt2
-Summary:        C-Dogs is an arcade shoot-em-up
-# The game-engine is GPLv2+
-# The game art is CC
-License:        GPLv2+ and CC-BY and CC-BY-SA and CC0
-URL:            http://cxong.github.io/cdogs-sdl/
-Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
-#Patch0:         cdogs-sdl-0.5.8-cmake.patch
-#Patch1:         cdogs-sdl-0.7.3-fcommon-fix.patch
-Patch2:			fix-build.patch
-BuildRequires:  gcc
-BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
-BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libphysfs-devel libenet-devel
-BuildRequires:  desktop-file-utils libappstream-glib libwebp-devel libtiff-devel libtiffxx-devel libjpeg-devel libpng-devel
-Requires:       icon-theme-hicolor
-Obsoletes:      cdogs-data < 0.5
-Provides:       cdogs-data = %{version}-%{release}
-Source44: import.info
+Name: cdogs-sdl
+Version: 2.4.0
+Release: alt1
+
+Summary: C-Dogs is an arcade shoot-em-up
+License: BSD-2-Clause AND GPL-2.0-only AND CC-BY-3.0 AND CC-BY-SA-3.0
+Group: Games/Other
+
+Url: http://cxong.github.io/cdogs-sdl
+Vcs: https://github.com/cxong/cdogs-sdl
+
+Source: %name-%version.tar
+Patch: fix-build.patch
+
+Requires: icon-theme-hicolor
+
+Obsoletes: cdogs-data < 0.5
+Provides: cdogs-data = %EVR
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ libGLU-devel libSDL2-devel
+BuildRequires: libglvnd-devel libtinfo-devel libphysfs-devel libenet-devel
+BuildRequires: ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
+BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel
+BuildRequires: desktop-file-utils libappstream-glib libwebp-devel libtiff-devel 
+BuildRequires: libtiffxx-devel libjpeg-devel libpng-devel
 
 %description
 C-Dogs SDL is a port of the old DOS arcade game C-Dogs to modern operating
@@ -37,14 +36,14 @@ C-Dogs came with several built in missions and dogfight maps. This version
 does too. The author of the DOS version of C-Dogs was Ronny Wester. We would
 like to thank Ronny for releasing the C-Dogs sources to the public.
 
-
 %prep
-%setup -q -n %{name}-%{version}%{?extra_version}
-#%patch0 -p1
-#%patch1 -p1
-%patch2 -p1
+%setup
+%patch -p1
+
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+# unsupported as of lcc 1.25.17
+sed -i 's,-freg-struct-return,,' CMakeLists.txt
 %endif
 
 # We use the system enet
@@ -52,49 +51,36 @@ rm -r src/cdogs/enet
 # Misc. cleanups
 sed -i 's/\r//' doc/original_readme.txt
 find graphics sounds -name "*.sh" -delete
-
-%ifarch %e2k
-# unsupported as of lcc 1.25.17
-sed -i 's,-freg-struct-return,,' CMakeLists.txt
-%endif
-
 #fixed segmentation fault
 #https://github.com/cxong/cdogs-sdl/issues/888
 subst 's|Mix_CloseAudio();|//Mix_CloseAudio();|' src/cdogs/sounds.c
 subst 's|SoundReconfigure(s);|//SoundReconfigure(s);|' src/cdogs/sounds.c
 
 %build
-%{fedora_v2_cmake} \
-					-DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/\
-					-DUSE_SHARED_ENET=ON \
-					-DCMAKE_POLICY_VERSION_MINIMUM=3.5
-
-%fedora_v2_cmake_build
-
+%cmake \
+	-DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/\
+	-DUSE_SHARED_ENET=ON
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
-install -D -m 0644 build/linux/io.github.cxong.cdogs-sdl.appdata.xml %buildroot%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
-mkdir -p %buildroot%_datadir/%name/
 %check
-desktop-file-validate \
-  $RPM_BUILD_ROOT%{_datadir}/applications/io.github.cxong.%{name}.desktop
-appstream-util validate-relax --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
+%ctest
 
 %files
-%doc doc/AUTHORS doc/CREDITS doc/original_readme.txt doc/README_DATA.md
-%doc --no-dereference doc/COPYING.BSD doc/COPYING.GPL doc/COPYING.MJSON.txt doc/COPYING.xgetopt.txt doc/COPYING.yajl.txt doc/LICENSE.nanopb.txt doc/license.rlutil.txt
-%{_bindir}/%{name}*
-%{_datadir}/%{name}
-%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
-%{_datadir}/metainfo/io.github.cxong.%{name}.appdata.xml
-%{_datadir}/applications/io.github.cxong.%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/io.github.cxong.%{name}.png
-
+%doc COPYING README.md
+%_bindir/%{name}*
+%_datadir/%name
+%_datadir/applications/%oname.desktop
+%_iconsdir/hicolor/*/apps/%oname.png
+%_datadir/metainfo/%oname.appdata.xml
 
 %changelog
+* Fri Jan 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1
+- 2.3.2 -> 2.4.0
+- spec cleanup
+
 * Thu Nov 20 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.3.2-alt2
 - e2k build fix
 
