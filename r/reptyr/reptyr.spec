@@ -3,7 +3,7 @@
 
 Name: reptyr
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Tool for moving running programs between ptys
 License: MIT
@@ -11,6 +11,8 @@ Group: Terminals
 Url: https://github.com/nelhage/reptyr
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 %if_with check
 BuildRequires: /usr/bin/python3
@@ -31,7 +33,7 @@ from the new terminal.
 
 %prep
 %setup
-%__subst 's/python2/python3/g' Makefile
+%patch -p1
 
 %build
 %make_build
@@ -51,5 +53,8 @@ from the new terminal.
 %_man1dir/*
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt2
+- Added loongarch64 support.
+
 * Sun Jun 01 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus
