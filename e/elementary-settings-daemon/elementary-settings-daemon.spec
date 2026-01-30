@@ -6,7 +6,7 @@
 %define appname io.elementary.settings-daemon
 
 Name: elementary-settings-daemon
-Version: 8.4.0
+Version: 8.5.0
 Release: alt1
 
 Summary: Keep session settings in sync
@@ -55,7 +55,6 @@ components
 
 %files -f %{appname}.lang
 %doc LICENSE README.md
-%_sysconfdir/xdg/autostart/%{appname}.desktop
 %_bindir/%appname
 %_libexecdir/%{appname}.xdg-desktop-portal
 %_unitdir/%{appname}.check-for-firmware-updates.service
@@ -63,8 +62,8 @@ components
 %_userunitdir/%{appname}.xdg-desktop-portal.service
 %_userunitdir/%{appname}.system-update.service
 %_userunitdir/%{appname}.system-update.timer
+%_userunitdir/%{appname}.service
 %_datadir/accountsservice/interfaces/io.elementary.SettingsDaemon.AccountsService.xml
-%_desktopdir/%{appname}.desktop
 %_datadir/dbus-1/interfaces/io.elementary.SettingsDaemon.AccountsService.xml
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.elementary.settings-daemon.service
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
@@ -74,6 +73,9 @@ components
 %exclude %_datadir/locale/zh_HANT/LC_MESSAGES/io.elementary.settings-daemon.mo
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 8.5.0-alt1
+- New version 8.5.0.
+
 * Fri Nov 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.4.0-alt1
 - New version 8.4.0.
 

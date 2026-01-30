@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.3
-Release: alt2
+Version: 1.4.4
+Release: alt1
 
 Summary: Bibtex parser for Python 3
 License: MIT
@@ -57,6 +57,9 @@ such as books and journal articles.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.4-alt1
+- New version 1.4.4.
+
 * Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt2
 - Fixed FTBFS.
 
