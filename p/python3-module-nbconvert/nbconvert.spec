@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 7.17.0
-Release: alt1
+Release: alt2
 
 Summary: Converting Jupyter Notebooks
 
@@ -26,6 +26,21 @@ Source1: classic-5.4.0-style.css
 Source2: lab-3.1.11-index.css
 Source3: lab-3.1.11-theme-light.css
 Source4: lab-3.1.11-theme-dark.css
+
+Requires: python3(bs4)
+Requires: python3(mistune)
+Requires: python3(jinja2)
+Requires: python3(pygments)
+Requires: python3(jupyterlab_pygments)
+Requires: python3(traitlets)
+Requires: python3(jupyter_core)
+Requires: python3(nbformat)
+Requires: python3(bleach)
+Requires: python3(pandocfilters)
+Requires: python3(defusedxml)
+Requires: python3(nbclient)
+Requires: python3(tinycss2)
+Requires: python3(packaging)
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -94,6 +109,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Fri Jan 30 2026 Anton Vyatkin <toni@altlinux.org> 7.17.0-alt2
+- Fix missing reqs.
+
 * Fri Jan 30 2026 Anton Vyatkin <toni@altlinux.org> 7.17.0-alt1
 - New version 7.17.0.
 
