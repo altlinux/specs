@@ -11,7 +11,7 @@
 
 Name: sssd
 Version: 2.9.8
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -935,6 +935,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Jan 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt2
+- Fix typo in system-auth-use_first_pass-sss PAM stack rules.
+
 * Fri Jan 23 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.9.8-alt1
 - Update to latest 2.9 LTM release.
 - Enable build with subid ranges support.
