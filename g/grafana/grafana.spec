@@ -5,8 +5,8 @@
 %def_enable prebuilded_frontend
 
 Name: grafana
-Version: 12.1.0
-Release: alt2
+Version: 12.3.2
+Release: alt1
 Summary: Metrics dashboard and graph editor
 
 Group: Development/Other
@@ -207,6 +207,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Fri Jan 30 2026 Alexey Shabalin <shaba@altlinux.org> 12.3.2-alt1
+- 12.3.2 (Fixes: CVE-2026-21720, CVE-2026-21721).
+
 * Wed Aug 13 2025 Alexey Shabalin <shaba@altlinux.org> 12.1.0-alt2
 - Fixed execute grafana-cli.
 
