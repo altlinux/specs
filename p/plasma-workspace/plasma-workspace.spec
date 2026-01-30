@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt3
+Release: alt4
 Epoch: 1
 %K6init
 
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt4
+- don't enchance $XDG_CURRENT_DESKTOP
+
 * Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.5.5-alt3
 - prefer old main menu structure for smooth dist-upgrade
 
