@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.22.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -46,7 +46,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF6 library
 Requires: %name-common = %version-%release
-Requires: altlinux-freedesktop-menu-generic
+Requires: wm-common-freedesktop menu-icons
 %description -n libkf6service
 KF6 library
 
@@ -80,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Fri Jan 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt2
+- clean requires
+
 * Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt1
 - new version
 
