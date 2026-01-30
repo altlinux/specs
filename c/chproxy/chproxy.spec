@@ -1,7 +1,7 @@
 %global import_path github.com/ContentSquare/chproxy
 
 Name:     chproxy
-Version:  1.26.3
+Version:  1.30.0
 Release:  alt1
 
 Summary:  Open-Source ClickHouse http proxy and load balancer 
@@ -65,6 +65,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jan 30 2026 Nikolay Burykin <bne@altlinux.org> 1.30.0-alt1
+- 1.30.0
+
 * Mon Jun 10 2024 Nikolay Burykin <bne@altlinux.org> 1.26.3-alt1
 - Initial build for ALT
 
