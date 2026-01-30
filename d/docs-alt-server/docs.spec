@@ -4,11 +4,9 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-virtualization-pve docs-alt-virtualization-one docs-alt-mobile docs-alt-platforma
-
 Name: docs-%variant
 Version: 11.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -20,9 +18,9 @@ BuildArch: noarch
 Source: %name-%version-%release.tar
 
 Obsoletes: docs-basealt-desktop <= 8.0-alt2
-Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
 
-BuildRequires(pre):rpm-build-licenses
+BuildRequires(pre): rpm-macros-alternatives
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: publican
 BuildRequires: perl-podlators
 BuildRequires: libwebp-tools
@@ -38,15 +36,23 @@ BuildRequires: libwebp-tools
 
 %install
 %make_install DESTDIR=%buildroot docdir=%_docsinstalldir install
-ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationdir
 sed -i 's/src="images\/\(.*\).png"/src="images\/\1.webp"/g' %buildroot%_docsinstalldir/ru-RU/index.html
 for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %buildroot%_docsinstalldir/ru-RU/images/$(basename $file .png).webp -quiet && rm $file; done
 
+# Set alternative to doc
+mkdir -p -- %buildroot%_altdir
+cat > %buildroot%_altdir/%name <<EOF
+%_documentationdir	%_docsinstalldir	55
+EOF
+
 %files
 %_docsinstalldir
-%_documentationdir
+%_altdir/%name
 
 %changelog
+* Thu Jan 29 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt5
+- the spec file has been rewritten to support alternatives
+
 * Mon Jan 26 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt4
 - update to ALT Server 11.1RC
 - add alt-services
