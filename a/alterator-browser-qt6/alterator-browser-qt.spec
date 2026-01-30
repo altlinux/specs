@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.4
+Version: 3.7.5
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,11 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Jan 30 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.5-alt1
+- allow to force virtual keyboard
+- setAccessibleName() for text labels
+- allow to change font size from keyboard
+
 * Tue Dec 09 2025 Sergey V Turchin <zerg at altlinux dot org> 3.7.4-alt1
 - fix wizardface menu button
 
