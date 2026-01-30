@@ -1,29 +1,29 @@
 Name: fuse-sshfs
-Version: 3.7.2.0.7.gita2054a2
-Release: alt2
+Version: 3.7.5
+Release: alt1
 
 Summary: SSH filesystem using FUSE
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/libfuse/sshfs
+Vcs: https://github.com/libfuse/sshfs
 
-# repacked https://github.com/libfuse/sshfs/releases/download/sshfs-%version/sshfs-%version.tar.xz
-Source: sshfs-%version.tar
+Source: %name-%version.tar
 Source1: sshfs.watch
 
-BuildRequires: libfuse3-devel >= 3.1.0 meson python3-module-docutils
-Requires: ssh-provider-openssh-clients
-
 Provides: sshfs-fuse = %version sshfs = %version
+Requires: ssh-provider-openssh-clients
 Obsoletes: sshfs-fuse < %version sshfs < %version
 
-# Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: glib2-devel libfuse-devel openssh-clients
+BuildRequires: meson
+BuildRequires: pkgconfig(fuse3)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: python3-module-docutils
 
 %description
 This is a filesystem client based on the SSH File Transfer Protocol. Since most
 SSH servers already support this protocol it is very easy to set up: i.e. on
-the server side there's nothing to do. On the client side mounting the 
+the server side there's nothing to do. On the client side mounting the
 filesystem is as easy as logging into the server with ssh.
 
 The idea of sshfs was taken from the SSHFS filesystem distributed with LUFS,
@@ -37,7 +37,7 @@ that codebase, so he rewrote it. Features of this implementation are:
 * Reconnect on failure
 
 %prep
-%setup -q -n sshfs-%version
+%setup
 
 %build
 %meson
@@ -47,13 +47,16 @@ that codebase, so he rewrote it. Features of this implementation are:
 %meson_install
 
 %files
-%doc AUTHORS README.rst
+%doc AUTHORS README.md
 %_bindir/sshfs
 %_sbindir/mount.sshfs
 %_sbindir/mount.fuse.sshfs
 %_man1dir/sshfs.*
 
 %changelog
+* Fri Jan 30 2026 Anton Zhukharev <ancieg@altlinux.org> 3.7.5-alt1
+- Updated to 3.7.5.
+
 * Sat Apr 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.2.0.7.gita2054a2-alt2
 - Drop rst2man patch, see https://bugzilla.altlinux.org/41784.
 
