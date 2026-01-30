@@ -2,7 +2,7 @@
 %define import_path github.com/projectdiscovery/nuclei
 
 Name: nuclei
-Version: 3.6.2
+Version: 3.7.0
 Release: alt1
 
 Summary: Nuclei is a modern vulnerability scanner built on a simple YAML-based DSL
@@ -17,8 +17,6 @@ ExclusiveArch: %go_arches
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
 
-#Patch1: vendored-ericlagergren-decimal-riscv64-and-loongarch64-support.patch
-
 BuildRequires(pre): rpm-build-golang
 
 %description
@@ -30,7 +28,6 @@ APIs, networks, DNS, and cloud configurations.
 
 %prep
 %setup -a1
-#%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -53,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/nuclei
 
 %changelog
+* Fri Jan 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.7.0-alt1
+- 3.6.2 -> 3.7.0
+
 * Thu Jan 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.6.2-alt1
 - 3.6.1 -> 3.6.2
 
