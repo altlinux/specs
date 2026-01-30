@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,12 +55,22 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Fri Jan 30 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.5-alt1
+- Fixed:
+  + Services module usage help output.
+  + Services module contextual commands usage help output.
+  + Fixed a service crash that occurs during the resource conflict checking stage if only one service exists (Closes: #57364).
+  + Intercepting attempts to run service diagnostic tests in the absence of service tests.
+  + Fixed the missing message about the absence of the selected diagnostic tool.
+- Changed:
+  + Clarified description of manually installed packages and --allow-remove-manually option (Closes: #57591).
+
 * Mon Jan 19 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.4-alt1
 - Added:
   + Ability to select the "Other components" section in the Components module.
   + Pretty printing of edition license.
 - Fixed:
-  + Failure to retrieve the edition license.
+  + Failure to retrieve the edition license (Closes: #57236).
   + Running service diagnostic tests with the `--all` option.
   + Failures when saving reports in the Diagnostics module.
   + Path formatting in the services parameters table.
@@ -129,6 +139,7 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 
 * Sat May 31 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.9-alt1
 - Fixing build requires and creating symbolic link named actl
+- Renaming `--show-display-name` option of `components` module to `enable-display-name` (Closes: #57161)
 
 * Fri Apr 18 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.8-alt1
 - fix: fixed package list during install
