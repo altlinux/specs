@@ -1,5 +1,5 @@
 Name: libretro-database
-Version: 1.20.0
+Version: 1.22.2
 Release: alt1
 
 Summary: Databases for RetroArch
@@ -30,6 +30,9 @@ that are known to be good copies
 %_datadir/libretro/database/*
 
 %changelog
+* Fri  Jan 30 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.2-alt1
+- Update to new version
+
 * Thu Feb  6 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
 - Update to new version
 
