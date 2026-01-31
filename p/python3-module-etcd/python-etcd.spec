@@ -7,13 +7,14 @@
 
 Name:           python3-module-%modname
 Version:        0.4.5
-Release:        alt5.1
+Release:        alt6
 Summary:        A python client library for etcd
 Group:          System/Libraries
 License:        MIT
 URL:            http://pypi.python.org/pypi/%{srcname}
 Source0:        %{name}-%{version}.tar
 Patch:          remove-nose.patch
+Patch1:         pytest8.4.patch
 
 BuildArch:      noarch
 
@@ -40,6 +41,7 @@ election.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 
 %build
 %pyproject_build
@@ -62,6 +64,9 @@ election.
 %exclude %python3_sitelib/*/tests
 
 %changelog
+* Sat Jan 31 2026 Anton Vyatkin <toni@altlinux.org> 0.4.5-alt6
+- Fix FTBFS.
+
 * Sat Oct 28 2023 Ivan A. Melnikov <iv@altlinux.org> 0.4.5-alt5.1
 - NMU: drop Fedora-specific ExclusiveArch
   to build on loongarch64 and ricv64.
