@@ -3,14 +3,17 @@
 
 Name: vcmi
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
-License: GPL-2.0-or-later
+License: GPL-2.0-or-later AND Zlib
 Group: Games/Strategy
 
-Url: http://wiki.vcmi.eu/index.php?title=Main_Page
+URL: https://vcmi.eu
+VCS: https://github.com/vcmi/vcmi
+
 Source0: %name-%version.tar
+Source1: innoextract.tar
 Patch: %name-%version-%release.patch
 Patch2000: %name-e2k.patch
 
@@ -45,6 +48,7 @@ BuildRequires: pkgconfig(SDL2_image)
 BuildRequires: pkgconfig(SDL2_mixer)
 BuildRequires: pkgconfig(SDL2_ttf)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: liblzma-devel
 BuildRequires: tbb-devel
 BuildRequires: libfuzzylite-devel >= 6.0
 BuildRequires: libluajit-devel
@@ -87,8 +91,11 @@ VCMI - это фанатский проект с открытым исходны
 Вам нужно установить WoG перед запуском VCMI.
 
 %prep
-%setup
+%setup -a1
 %patch -p1
+
+rmdir launcher/lib/innoextract
+mv innoextract launcher/lib/
 
 %ifarch %e2k
 # error: multiple definition of `typeinfo for
@@ -105,7 +112,7 @@ VCMI - это фанатский проект с открытым исходны
 	-DCMAKE_INSTALL_RPATH=%_libdir/%name \
 	-DENABLE_TEST=OFF \
 	-DFORCE_BUNDLED_FL=OFF \
-	-DENABLE_INNOEXTRACT=OFF \
+	-DENABLE_INNOEXTRACT=ON \
 	-DENABLE_GOLDMASTER=ON
 
 %cmake_build
@@ -130,6 +137,10 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Jan 31 2026 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt2
+- Enable innoextract support.
+- Update URL, add VCS.
+
 * Wed Dec 31 2025 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 
