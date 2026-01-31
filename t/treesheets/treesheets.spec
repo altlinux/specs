@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %define cname TreeSheets
 
 Name: treesheets
-Version: 16035416413
-Release: alt2
+Epoch: 1
+Version: 2960
+Release: alt1
 
 Summary: Free Form Data Organizer
 License: Zlib
@@ -14,7 +16,7 @@ VCS: https://github.com/aardappel/treesheets
 
 Source: %name-%version.tar
 
-ExcludeArch: loongarch64 riscv64
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
@@ -37,6 +39,7 @@ one dimension. It's like a text editor, but with structure.
 
 %prep
 %setup
+%patch -p1
 sed -i "s|Categories=.*|Categories=Office;Calendar;Chart;ProjectManagement;Spreadsheet;WordProcessor;|" platform/linux/com.strlen.TreeSheets.desktop
 
 %build
@@ -44,8 +47,7 @@ sed -i "s|Categories=.*|Categories=Office;Calendar;Chart;ProjectManagement;Sprea
        -Wno-dev \
        -DCMAKE_BUILD_TYPE=Release \
        -DCMAKE_INSTALL_PREFIX=%_prefix \
-       -DGIT_WXWIDGETS_SUBMODULES=OFF \
-       -DTREESHEETS_WITH_STATIC_WXWIDGETS=OFF
+       -DENABLE_LOBSTER=off
 %cmake_build
 
 %install
@@ -55,6 +57,7 @@ mkdir -p %buildroot/%_miconsdir
 mkdir -p %buildroot/%_niconsdir
 cp -v %buildroot/%_datadir/%cname/images/icon16.png %buildroot/%_miconsdir/%{cname}.png
 cp -v %buildroot/%_datadir/%cname/images/icon32.png %buildroot/%_niconsdir/%{cname}.png
+cp -v %buildroot/%_datadir/doc/TreeSheets/examples/tutorial.cts %buildroot/%_datadir/doc/TreeSheets/examples/tutorial-en.cts
 
 %find_lang %name --all-name
 
@@ -72,6 +75,10 @@ cp -v %buildroot/%_datadir/%cname/images/icon32.png %buildroot/%_niconsdir/%{cna
 %_datadir/mime/packages/*%{cname}.xml
 
 %changelog
+* Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 1:2960-alt1
+- New version numbering, updated to 2960.
+- Enable build on loongarch64 and riscv64.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 16035416413-alt2
 - Exclude loongarch64 and riscv64 arches as not buildable.
 
