@@ -5,7 +5,7 @@
 
 Name: navidrome
 Version: 0.59.0
-Release: alt1
+Release: alt2
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
 Group: System/Servers
@@ -48,6 +48,7 @@ export BUILDDIR=$PWD/.gopath
 export IMPORT_PATH=%import_path
 export GOPATH=$BUILDDIR:%go_path
 export GOFLAGS=-mod=vendor
+export CGO_CFLAGS_ALLOW="--define-prefix"
 export ESBUILD_BINARY_PATH=./esbuild
 npm --prefix ui run build
 %golang_prepare
@@ -85,6 +86,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Sat Jan 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.59.0-alt2
+- Fixed build with golang 1.25.6.
+
 * Thu Jan 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.59.0-alt1
 - Updated to version 0.59.0.
 
