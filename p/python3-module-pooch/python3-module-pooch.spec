@@ -1,9 +1,9 @@
 %define pypi_name pooch
-# tests require network access
+# network required
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 
 Summary: A Python library for fetch and check data files
@@ -20,9 +20,10 @@ BuildArch: noarch
 %set_python3_req_method strict
 
 BuildRequires(pre): rpm-build-python3 >= 0.1.19
-BuildRequires: python3-module-setuptools python3-module-setuptools_scm python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-tqdm python3-module-paramiko
-BuildRequires: python3-module-xxhash python3-module-pytest-localftpserver}
+BuildRequires: python3(setuptools) python3(setuptools_scm) python3(wheel)
+%{?_enable_check:BuildRequires: python3(pytest) python3(tqdm) python3(paramiko)
+BuildRequires: python3(xxhash) python3(pytest_httpserver)
+BuildRequires: python3(pytest_localftpserver) python3(OpenSSL)}
 
 %description
 Pooch manages your Python library's sample data files. It automatically
@@ -62,6 +63,9 @@ py.test3 %pypi_name/tests
 
 
 %changelog
+* Sat Jan 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
