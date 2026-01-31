@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.92.0
+Version: 1.93.0
 Release: alt1
 Epoch: 1
 
@@ -20,16 +20,15 @@ VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
+# Our static configs for building specific parts of rust
+Source1: bootstrap.toml.d.tar
 # https://github.com/rust-lang/rust/issues/143735
 Patch001: rust-1.89.0-github_issue-strict_stage0_sysroot.patch
 # Replace shipped rust-lld with system's lld.
 # https://github.com/rust-lang/rust/issues/140473
-Patch002: rust-1.89.0-fedora-use_system_lld.patch
+Patch002: rust-1.93.0-fedora_alt-use_system_lld.patch
 # https://github.com/rust-lang/rust/issues/114940
 Patch003: rust-1.90.0-alt-dont_copy_libunwind_to_src.patch
-# https://bugzilla.altlinux.org/56652
-# https://github.com/stanislav-tkach/os_info/pull/428
-Patch004: rust-1.91.0-alt-altlinux_output_support.patch
 
 Requires: /proc
 Requires: gcc
@@ -214,7 +213,7 @@ can also be useful for creating minimal or bare-bones WebAssembly
 binaries.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
 
 %if_with bootstrap
@@ -260,9 +259,9 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 # Build configuration.
 cat > bootstrap.toml <<EOF
-change-id = 146435
+change-id = 148795
 include = [
-        ".rpm/bootstrap.toml.d/llvm-fork-build.toml"
+        "bootstrap.toml.d/llvm-fork-build.toml"
     ]
 
 [build]
@@ -469,6 +468,9 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Wed Jan 28 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.93.0-alt1
+- New version (1.93.0).
+
 * Thu Dec 11 2025 Sergey Zhidkih <rx1513@altlinux.org> 1:1.92.0-alt1
 - New version (1.92.0).
 
