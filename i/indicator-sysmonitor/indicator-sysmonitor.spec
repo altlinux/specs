@@ -2,7 +2,7 @@
 
 Name: indicator-sysmonitor
 Version: 0.10.2
-Release: alt2
+Release: alt3
 
 Summary: Ayatana application indicator to show various system parameters
 License: GPL-3.0
@@ -17,7 +17,7 @@ BuildRequires: python3-module-wheel
 %filter_from_requires /^typelib(AppIndicator3)/d
 Requires: typelib(AyatanaAppIndicator3)
 
-BuildArch: noarch
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 
@@ -59,6 +59,10 @@ make installbudgie DESTDIR=%buildroot
 %_libexecdir/budgie-desktop/plugins/budgiesysmonitor/*
 
 %changelog
+* Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt3
+- rebuild budgie-sysmonitor-applet with Budgie 10.10
+- add ExcludeArch: ix86
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.2-alt2
 - Applied repocop fix for freedesktop-categories
 

@@ -7,7 +7,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-desktop
-Version: 10.9.4
+Version: 10.10.0
 Release: alt1
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
@@ -15,6 +15,8 @@ Summary: A feature-rich, modern desktop designed to keep out the way of the user
 License: GPLv2 and LGPLv2
 Group: Graphical desktop/Other
 Url: https://github.com/BuddiesOfBudgie/budgie-desktop
+
+ExcludeArch: %ix86
 
 # Source0-url: %url/releases/download/v%version/%name-v%version.tar.xz
 Source0: %name-%version.tar
@@ -36,6 +38,8 @@ BuildRequires: libpeas2-gir-devel
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libwnck-3.0) >= 3.36.0
 BuildRequires: pkgconfig(libxfce4windowing-0)
+BuildRequires: libxfce4windowing-gir-devel
+BuildRequires: pkgconfig(gtk-layer-shell-0)
 BuildRequires: pkgconfig(polkit-agent-1) >= %polkit_version
 BuildRequires: pkgconfig(upower-glib) >= 0.99.13
 BuildRequires: pkgconfig(gudev-1.0)
@@ -51,31 +55,35 @@ BuildRequires: desktop-file-utils
 BuildRequires: gsettings-desktop-schemas >= %gsettings_desktop_schemas_version
 BuildRequires: gtk-doc >= 1.33.0
 BuildRequires: intltool
-BuildRequires: libmagpie-devel
 BuildRequires: meson
 BuildRequires: rpm-build-cmake
 BuildRequires: sassc
 BuildRequires: zenity >= 3.91.0
+BuildRequires: grim
+BuildRequires: slurp
+BuildRequires: wlopm
+BuildRequires: swayidle
+BuildRequires: swaybg
+BuildRequires: swaylock
+BuildRequires: gammastep
 BuildRequires: gir(Gtk) = 3.0
 
 Requires: budgie-control-center
 Requires: budgie-desktop-view
 Requires: budgie-screensaver
 Requires: budgie-session
+Requires: budgie-desktop-services
 Requires: gnome-settings-daemon
 Requires: gsettings-desktop-schemas
 Requires: PAM(pam_gnome_keyring.so)
 Requires: hicolor-icon-theme
 Requires: %_bindir/nm-applet
-Requires: xdotool
+Requires: labwc
 Requires: materia-gtk-theme
 Requires: papirus-icon-theme
 Requires: switcheroo-control
 Requires: zenity
 #Suggests:       slick-greeter
-
-#Requires: glib2%{?_isa} >= %glib2_version
-#Requires: gtk3%{?_isa} >= %gtk3_version
 
 %description
 A feature-rich, modern desktop designed to keep out the way of the user.
@@ -92,7 +100,8 @@ Header files, libraries, and other files for developing Budgie Desktop.
 %package docs
 Summary: Documentation for budgie-desktop
 Group: Documentation
-BuildArch: noarch
+# due ExcludeArch: %ix86
+#BuildArch: noarch
 Requires: gtk-doc
 Requires: %name = %EVR
 
@@ -101,6 +110,8 @@ Documentation for budgie-desktop
 
 %prep
 %setup
+# Fix missing wnck dependency for appsys vapi consumers
+sed -i '/link_with: libappsys,/a \    dependencies: [dep_wnck],' src/appsys/meson.build
 
 %build
 %meson -Dwith-hibernate=false
@@ -126,33 +137,40 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %dir %_libdir/%name/plugins/*
 %_bindir/budgie-*
 %_bindir/org.buddiesofbudgie.*
+%_bindir/startbudgielabwc
 %_desktopdir/org.buddiesofbudgie*.desktop
 %_datadir/backgrounds/budgie/default.jpg
 %_datadir/budgie/budgie-version.xml
+%_datadir/%name/gammastep.config
+%dir %_datadir/%name/labwc/
+%_datadir/%name/labwc/menu.xml
+%_datadir/%name/labwc/rc.xml
 %_datadir/glib-2.0/schemas/20_buddiesofbudgie.%name.notifications.gschema.override
 %_datadir/glib-2.0/schemas/20_solus-project.budgie.wm.gschema.override
 %_datadir/glib-2.0/schemas/com.solus-project.*.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.%name.raven.widget.*.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.%name.screenshot.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.settings-daemon.*.gschema.xml
-%_datadir/polkit-1/actions/org.buddiesofbudgie.settings-daemon.*.policy
+# removed in 10.10.0:
+#_datadir/polkit-1/actions/org.buddiesofbudgie.settings-daemon.*.policy
 %_datadir/gnome-session/sessions/org.buddiesofbudgie.BudgieDesktop.session
 %_iconsdir/hicolor/scalable/actions/*.svg
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/scalable/status/*.svg
+%_iconsdir/hicolor/symbolic/emblems/*.svg
 %_datadir/xdg-desktop-portal/budgie-portals.conf
-%_datadir/xsessions/%name.desktop
-%_libdir/girepository-1.0/Budgie-2.0.typelib
-%_libdir/girepository-1.0/BudgieRaven-2.0.typelib
+%_datadir/wayland-sessions/%name.desktop
+%_libdir/girepository-1.0/Budgie-3.0.typelib
+%_libdir/girepository-1.0/BudgieRaven-3.0.typelib
 %_libdir/%name/libgvc.so
-%_libdir/%name/libbsd.so
+%_prefix/lib/%name/budgie-screenshot-dialog
+%_prefix/lib/%name/labwc_bridge.py
 %_libdir/%name/plugins/*/*.plugin
 %_libdir/%name/plugins/*/*.so*
 %dir %_libdir/%name/raven-plugins/
 %dir %_libdir/%name/raven-plugins/*/
 %_libdir/%name/raven-plugins/*/*.plugin
 %_libdir/%name/raven-plugins/*/*.so*
-%_libexecdir/bsd-*
 %_libexecdir/%name/budgie-polkit-dialog
 %_libexecdir/%name/budgie-power-dialog
 %_libdir/libbudgie-appindexer.so.0*
@@ -161,19 +179,18 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_libdir/libbudgie-raven-plugin.so.0*
 %_libdir/libbudgietheme.so.0*
 %_libdir/libraven.so.0*
+%_libdir/libbudgie-windowing.so.0*
 %_man1dir/budgie-*
 %_man1dir/org.buddiesofbudgie.BudgieScreenshot.*
 %_man1dir/org.buddiesofbudgie.sendto.*
+%_man1dir/startbudgielabwc.*
 %_sysconfdir/xdg/autostart/*.desktop
 
 %files devel
 %dir %_includedir/%name/
 %_includedir/%name/*.h
-%dir %_includedir/budgie-settings-daemon-48/
-%dir %_includedir/budgie-settings-daemon-48/budgie-settings-daemon/
-%_includedir/budgie-settings-daemon-48/budgie-settings-daemon/*.h
-%_datadir/gir-1.0/Budgie-2.0.gir
-%_datadir/gir-1.0/BudgieRaven-2.0.gir
+%_datadir/gir-1.0/Budgie-3.0.gir
+%_datadir/gir-1.0/BudgieRaven-3.0.gir
 %_datadir/vala/vapi/budgie-*.deps
 %_datadir/vala/vapi/budgie-*.vapi
 %_libdir/libbudgie-appindexer.so
@@ -182,15 +199,23 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_libdir/libbudgie-raven-plugin.so
 %_libdir/libbudgietheme.so
 %_libdir/libraven.so
-%_pkgconfigdir/budgie-2.0.pc
-%_pkgconfigdir/budgie-raven-plugin-2.0.pc
+%_libdir/libbudgie-windowing.so
+%_pkgconfigdir/budgie-3.0.pc
+%_pkgconfigdir/budgie-raven-plugin-3.0.pc
 %_pkgconfigdir/budgie-theme-1.0.pc
-%_pkgconfigdir/budgie-settings-daemon.pc
+%_pkgconfigdir/budgie-windowing-1.0.pc
 
 %files docs
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.0-alt1
+- new version 10.10.0
+- add Wayland tools: grim, slurp, wlopm, swayidle, swaybg, swaylock, gammastep
+- add runtime deps: budgie-desktop-services, labwc
+- bump API versions to 3.0
+- add ExcludeArch: ix86
+
 * Thu Dec 18 2025 Vitaly Lipatov <lav@altlinux.ru> 10.9.4-alt1
 - new version 10.9.4 (with rpmrb script)
 

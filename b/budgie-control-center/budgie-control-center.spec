@@ -8,7 +8,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-control-center
-Version: 1.4.1
+Version: 2.0.0
 Release: alt1
 
 Summary: A fork of GNOME Control Center for the Budgie 10 Series
@@ -17,10 +17,10 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/BuddiesOfBudgie/budgie-control-center
 
+ExcludeArch: %ix86
+
 # Source0-url: %url/releases/download/v%version/budgie-control-center-%version.tar.xz
 Source0: %name-%version.tar
-
-Patch1: 0002-disable-gnome-bluetooth.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: chrpath
@@ -150,10 +150,10 @@ This package contains architecture-agnostic common assets for ${name}
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %meson \
+    -Dbluetooth=false \
     -Ddark_mode_distributor_logo=%_pixmapsdir/system-logo-white.png \
     -Ddocumentation=true \
     -Dmalcontent=true
@@ -169,7 +169,7 @@ chrpath --delete %buildroot%_bindir/%name
 
 %check
 desktop-file-validate %buildroot%_desktopdir/*.desktop
-appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata.xml
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.buddiesofbudgie.controlcenter.metainfo.xml
 
 %files
 %doc LICENSE
@@ -180,13 +180,15 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/org.buddiesofbudgie.Settings-*.svg
 %_man1dir/%name.1*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/org.buddiesofbudgie.controlcenter.metainfo.xml
 
 %files common -f %name.lang
 %dir %_datadir/budgie/
 %dir %_datadir/%name/
+%dir %_datadir/%name/keyfile/
 %dir %_datadir/%name/keybindings/
 %dir %_datadir/%name/pixmaps/
+%_datadir/%name/keyfile/labwc_keyfile.ini
 %dir %_pixmapsdir/budgie-faces
 %dir %_pixmapsdir/budgie-faces/legacy
 %dir %_datadir/sounds/budgie
@@ -212,6 +214,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_datadir/sounds/budgie/default/alerts/*.ogg
 
 %changelog
+* Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0
+- use meson option to disable bluetooth instead of patch
+
 * Fri Dec 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)
 - remove obsolete patch (already applied upstream)

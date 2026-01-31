@@ -2,18 +2,20 @@
 
 Name: budgie-indicator-applet
 Version: 0.7.2
-Release: alt2
+Release: alt3
 
 Summary: Application Indicator for the budgie-desktop
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/UbuntuBudgie/budgie-indicator-applet
 
+ExcludeArch: %ix86
+
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires: pkgconfig(budgie-2.0)
+BuildRequires: pkgconfig(budgie-3.0)
 BuildRequires: pkgconfig(ayatana-indicator3-0.4)
 
 Requires: typelib(AyatanaAppIndicator3)
@@ -32,7 +34,7 @@ applications that support the AppIndicator API
 ./autogen.sh \
              --libdir=%_libdir \
              --with-ayatana-indicators \
-             --with-budgie-typelib-version=2.0
+             --with-budgie-typelib-version=3.0
 %make_build
 
 %install
@@ -49,6 +51,10 @@ applications that support the AppIndicator API
 %_libdir/budgie-desktop/plugins/appindicator-applet/AppIndicatorApplet.plugin
 
 %changelog
+* Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.2-alt3
+- rebuild with budgie-3.0 API for Budgie 10.10
+- add ExcludeArch: ix86
+
 * Sat Dec 20 2025 Nikolay Strelkov <snk@altlinux.org> 0.7.2-alt2
 - Fixed FTBFS.
 

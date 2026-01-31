@@ -3,7 +3,7 @@
 %global vala_version 0.48
 
 Name: budgie-desktop-view
-Version: 1.3
+Version: 10.10.0
 Release: alt1
 
 Summary: Official Budgie desktop icons application / implementation
@@ -12,10 +12,10 @@ License: Apache-2.0
 Group: Graphical desktop/Other
 Url: https://github.com/BuddiesOfBudgie/budgie-desktop-view
 
+ExcludeArch: %ix86
+
 # Source0-url: %url/releases/download/v%version/%name-v%version.tar.xz
 Source0: %name-%version.tar
-
-Patch0: 0001-fix-compilation-under-newer-meson-and-gcc.patch
 
 BuildRequires(pre):  rpm-macros-meson
 
@@ -24,6 +24,8 @@ BuildRequires: pkgconfig(gio-unix-2.0) >= %glib2_version
 BuildRequires: pkgconfig(gdk-3.0) >= %gtk3_version
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk3_version
 BuildRequires: pkgconfig(vapigen) >= %vala_version
+BuildRequires: pkgconfig(gtk-layer-shell-0)
+BuildRequires: pkgconfig(libxfce4windowing-0)
 
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
@@ -56,6 +58,10 @@ desktop-file-validate %buildroot%_desktopdir/org.buddiesofbudgie.budgie-desktop-
 %_sysconfdir/xdg/autostart/org.buddiesofbudgie.budgie-desktop-view-autostart.desktop
 
 %changelog
+* Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.0-alt1
+- new version 10.10.0
+- add Wayland support via gtk-layer-shell
+
 * Sat Mar 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - initial build for ALT Sisyphus
 

@@ -2,12 +2,14 @@
 
 Name: budgie-user-indicator-redux
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Manage your user session from the Budgie panel
 License: GPL-2.0
 Group: Graphical desktop/Other
 Url: https://github.com/EbonJaeger/budgie-user-indicator-redux
+
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 
@@ -18,7 +20,7 @@ BuildRequires: vala
 BuildRequires: intltool
 BuildRequires: cmake
 BuildRequires: pkgconfig(accountsservice)
-BuildRequires: pkgconfig(budgie-2.0)
+BuildRequires: pkgconfig(budgie-3.0)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(vapigen)
 BuildRequires: sassc
@@ -35,6 +37,8 @@ the menu.
 
 %prep
 %setup
+# Update to budgie-3.0 API
+sed -i "s/budgie-2\.0/budgie-3.0/" meson.build
 
 %build
 %meson
@@ -53,6 +57,10 @@ the menu.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
+- rebuild with budgie-3.0 API for Budgie 10.10
+- add ExcludeArch: ix86
+
 * Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 

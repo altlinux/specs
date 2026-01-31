@@ -1,7 +1,7 @@
-%define po_package budgie-session-0
+%define po_package budgie-session-1
 
 Name: budgie-session
-Version: 0.9.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Budgie Desktop session manager
@@ -10,7 +10,9 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/BuddiesOfBudgie/budgie-session
 
-# Source-url: %url/releases/download/v{verson}/%name-v%version.tar.xz
+ExcludeArch: %ix86
+
+# Source-url: %url/releases/download/v%version/%name-v%version.tar.xz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -75,12 +77,16 @@ provide a stable session manager for Budgie 10.x
 %_libexecdir/budgie-session-check-accelerated-gles-helper
 %_libexecdir/budgie-session-ctl
 %_libexecdir/budgie-session-failed
+%_prefix/lib/budgie-session-compositor-ready
 %_man1dir/budgie-session*1.*
 %dir %_datadir/budgie-session/
 %_datadir/budgie-session/hardware-compatibility
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.SessionManager.gschema.xml
 
 %changelog
+* Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version (1.0.0)
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - initial build for ALT Sisyphus
 
