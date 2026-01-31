@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -127,7 +127,8 @@ BuildRequires:  openssh-server apache2 samba genisoimage
 Summary: gvfs fuse gateway
 Group: System/Kernel and hardware
 Requires: %name = %EVR
-Requires: %{get_dep fuse3}
+#Requires: %{get_dep fuse3}
+Requires: fuse3
 
 %package backend-smb
 Summary: Samba backend for gvfs
@@ -562,6 +563,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Sat Jan 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.58.1-alt1
+- 1.58.1
+
 * Thu Sep 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.58.0-alt1
 - 1.58.0
 
