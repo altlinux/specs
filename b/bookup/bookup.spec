@@ -6,7 +6,7 @@
 
 Name: bookup
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: A markdown note-taking application for Gnome
 License: GPL-3.0
@@ -35,8 +35,6 @@ BuildRequires: pkgconfig(sqlite3)
 BuildRequires: ctest
 %endif
 
-ExcludeArch: i586
-
 %description
 Bookup: A lightweight note-taking application
 
@@ -61,6 +59,9 @@ Features:
 %prep
 %setup
 sed -i "s/Categories=.*/Categories=GNOME;GTK;Office;WordProcessor;/" data/org.gnome.gitlab.ilhooq.Bookup.desktop.in
+%ifarch %ix86
+sed -i "s/\%lu/\%u/" src/bookup-window.c
+%endif
 
 %build
 %meson
@@ -86,5 +87,8 @@ sed -i "s/Categories=.*/Categories=GNOME;GTK;Office;WordProcessor;/" data/org.gn
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.5-alt2
+- Enabled build on i586.
+
 * Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus

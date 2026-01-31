@@ -2,7 +2,7 @@
 
 Name: inspectrum
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Tool for visualising captured radio signals
 License: GPL-3.0
@@ -10,8 +10,6 @@ Group: Engineering
 Url: https://github.com/miek/inspectrum
 
 Source: %name-%version.tar
-
-ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -46,6 +44,9 @@ Features:
 
 %prep
 %setup
+%ifarch %ix86
+sed -i "s/1UL/(unsigned int) 1/" src/traceplot.cpp
+%endif
 
 %build
 %cmake \
@@ -74,6 +75,9 @@ EOF
 %_desktopdir/inspectrum.desktop
 
 %changelog
+* Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
+- Enabled build on i586.
+
 * Sun Dec 07 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 

@@ -3,7 +3,7 @@
 
 Name: simple-viewer-gl
 Version: 3.05
-Release: alt1
+Release: alt2
 
 Summary: Simple and tiny image viewer based on OpenGL
 License: GPL-2.0
@@ -26,12 +26,12 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: giflib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libvxl-devel
+%ifnarch %ix86
 BuildRequires: libopenjpeg2.0-devel
+%endif
 BuildRequires: libwebp-devel
 BuildRequires: libcurl-devel
 BuildRequires: imlib2-devel
-
-ExcludeArch: i586
 
 %description
 Simple Viewer GL is a simple and tiny image viewer based on OpenGL.
@@ -56,7 +56,7 @@ sed -i "s|; cmake|; cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5|" Makefile
 %make_build
 
 %install
-%makeinstall_std PREFIX=/usr
+%makeinstall_std PREFIX=%_prefix
 install -Dm 644 sviewgl.desktop %buildroot%_desktopdir/sviewgl.desktop
 install -p -Dm644 res/Icon-16.png %buildroot%_datadir/icons/hicolor/16x16/apps/sviewgl.png
 install -p -Dm644 res/Icon-32.png %buildroot%_datadir/icons/hicolor/32x32/apps/sviewgl.png
@@ -69,5 +69,8 @@ install -p -Dm644 res/Icon-32.png %buildroot%_datadir/icons/hicolor/32x32/apps/s
 %_datadir/icons/hicolor/32x32/apps/sviewgl.png
 
 %changelog
+* Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 3.05-alt2
+- Enabled build on i586 without OpenJPEG. 
+
 * Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 3.05-alt1
 - Initial build for Sisyphus
