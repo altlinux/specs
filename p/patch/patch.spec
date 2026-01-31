@@ -1,6 +1,6 @@
 Name: patch
 Version: 2.7.6.0.27.7623
-Release: alt1
+Release: alt2
 
 Summary: The GNU patch command, for modifying/upgrading files
 License: GPLv3+
@@ -54,6 +54,10 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Jan 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.7.6.0.27.7623-alt2
+- Fix FTBFS with gcc14.
+- src/pch.c: Double free in another_hunk function (CVE-2019-20633).
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 2.7.6.0.27.7623-alt1
 - patch: v2.7.6-24-g76e7758 -> v2.7.6-27-g7623b2d.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4078-g702cba00f.
