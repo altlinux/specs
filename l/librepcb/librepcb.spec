@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librepcb
-Version: 1.3.0
+Version: 2.0.0
 Release: alt1
 
 Summary: A powerful, innovative and intuitive EDA suite for everyone
@@ -15,11 +15,13 @@ VCS:     https://github.com/LibrePCB/LibrePCB.git
 # Source-url: https://download.librepcb.org/releases/%version/%name-%version-source.zip
 Source: %name-%version.tar
 Source1: %name-vendor-%version.tar
+Source2: slint-vendor-%version.tar
+Source3: slint-cpp-vendor-%version.tar
 Patch: alt-qt6-support.patch
-
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules
+BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-declarative-devel
 #BuildRequires: qt6-quickcontrols2-devel
@@ -50,6 +52,7 @@ BuildRequires: libmuparser-devel
 BuildRequires: fontobene-qt6-devel
 BuildRequires: /proc
 BuildRequires: rust-cargo
+BuildRequires: chrpath
 
 %description
 LibrePCB is a free, cross-platform, easy-to-use electronic design automation
@@ -63,13 +66,17 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 студентов и профессионалов, от новичков до экспертов.
 
 %prep
-%setup -a1
+%setup -a1 -a2 -a3
 %autopatch -p1
 
 mv %name-vendor-%version libs/librepcb/rust-core/vendor
-pushd libs/librepcb/rust-core
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
+mv slint-vendor-%version libs/slint/vendor
+mv slint-cpp-vendor-%version libs/slint/api/cpp/vendor
+
+for i in libs/librepcb/rust-core libs/slint libs/slint/api/cpp; do
+	pushd "$i"
+	mkdir -p .cargo
+	cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -90,6 +97,7 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 strip = false
 EOF
 popd
+done
 
 %build
 %ifarch %e2k
@@ -111,10 +119,14 @@ popd
 %install
 %cmake_install
 
+# remove standard RPATH %_libdir
+chrpath -d %buildroot%_libdir/*.so
+
 %files
 %doc AUTHORS.md CONTRIBUTING.md README.md
 %_bindir/%name
 %_bindir/%name-cli
+%_libdir/*.so
 %_datadir/%name/
 %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
@@ -123,22 +135,25 @@ popd
 %_datadir/mime/packages/org.%name.LibrePCB.xml
 
 %changelog
+* Thu Jan 29 2026 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
-- new version (1.3.0) with rpmgs script
+- New version 1.3.0.
 
 * Sun Jan 26 2025 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
-- E2K: disable debuginfo (oversized for cpio)
+- E2K: disable debuginfo (oversized for cpio).
 
 * Thu Jan 23 2025 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
-- new version (1.2.0) with rpmgs script
+- New version 1.2.0.
 
 * Wed Sep 27 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
-- unbundle FONTOBENE_QT5
+- Unbundle FONTOBENE_QT5.
 
 * Tue Sep 26 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
-- new version (1.0.0) with rpmgs script
-- update BR
-- update %%description
+- New version 1.0.0.
+- Update BR.
+- Update %%description.
 
 * Sun May 28 2023 Anton Midyukov <antohami@altlinux.org> 0.1.7-alt1
-- Initial build
+- Initial build.
