@@ -1,9 +1,10 @@
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
+%define amnezia_xray_bindings_commit 281f9fe1ff9553d953a9c688cc91bb77e225f68b
 
 Name: amnezia-vpn
-Version: 4.8.11.4
+Version: 4.8.12.9
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -22,6 +23,10 @@ Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 Source2: qtkeychain-%qtkeychain_commit.tar
 # https://github.com/amnezia-vpn/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
 Source3: QSimpleCrypto-%qsimplecrypto_commit.tar
+# https://github.com/amnezia-vpn/amnezia-xray-bindings/archive/%amnezia_xray_bindings_commit/amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar.gz
+Source4: amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar
+
+Source5: vendor.tar
 
 Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
 Patch1: %name-openvpn-exec-path.patch
@@ -29,10 +34,11 @@ Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
 Patch4: %name-tun2socks-exec-path.patch
 Patch5: %name-tun2-sudo.patch
+Patch6: %name-fix-amenzia-xray-bindings-path.patch
 
+BuildRequires: golang
 BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
-BuildRequires: libssl-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-remoteobjects-devel
@@ -70,14 +76,24 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 This package contains systemd service files.
 
 %prep
-%setup -n amnezia-client-%version -b 1 -b 2 -b 3
+%setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4 -b 5
 %autopatch -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
 %__mv -Tf ../QSimpleCrypto-%qsimplecrypto_commit client/3rd/QSimpleCrypto
 
+%__rm -rf ../amnezia-xray-bindings
+%__mv -Tf ../amnezia-xray-bindings-%amnezia_xray_bindings_commit ../amnezia-xray-bindings
+%__mv -Tf ../vendor ../amnezia-xray-bindings/vendor
+
 %build
+# Build amnezia xray bindings
+pushd ../amnezia-xray-bindings
+%make_build
+popd
+
+# Build Amnezia VPN
 %add_optflags -Wno-error=return-type
 %cmake
 %cmake_build
@@ -123,6 +139,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Jan 31 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt1
+- Version 4.8.12.9
+
 * Thu Dec 11 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.11.4-alt1
 - Version 4.8.11.4
 

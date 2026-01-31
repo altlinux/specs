@@ -1,5 +1,5 @@
 Name: amneziawg-go
-Version: 0.2.13
+Version: 0.2.16
 Release: alt2
 Epoch: 1
 
@@ -33,6 +33,7 @@ extra layer of stealth, making it a superb choice for those seeking a fast and d
 %setup -a 1
 
 %build
+go env
 %make_build
 
 %install
@@ -43,6 +44,9 @@ extra layer of stealth, making it a superb choice for those seeking a fast and d
 %_bindir/%name
 
 %changelog
+* Sat Jan 31 2026 Nazarov Denis <nenderus@altlinux.org> 1:0.2.16-alt2
+- Update to 0.2.16
+
 * Mon Dec 29 2025 Nazarov Denis <nenderus@altlinux.org> 1:0.2.13-alt2
 - Rollback to 0.2.13 for correct work Amnezia VPN with AmneziaWG protocol (ALT #57204)
 
