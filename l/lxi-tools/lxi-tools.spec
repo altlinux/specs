@@ -3,7 +3,7 @@
 
 Name: lxi-tools
 Version: 2.8
-Release: alt2
+Release: alt3
 
 Summary: LAN eXtensions for Instrumentation (LXI) software interface
 License: BSD-3-Clause
@@ -11,8 +11,6 @@ Group: Engineering
 Url: https://github.com/lxi-tools/lxi-tools
 
 Source: %name-%version.tar
-
-ExcludeArch: loongarch64
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-cmake
@@ -62,6 +60,9 @@ sed -i "s|Categories=.*|Categories=Development;Electronics;|" data/io.github.lxi
 %_datadir/metainfo/io.github.lxi-tools.lxi-gui.appdata.xml
 
 %changelog
+* Sat Jan 31 2026 Nikolay Strelkov <snk@altlinux.org> 2.8-alt3
+- Enable build on loongarch64.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 2.8-alt2
 - Exclude loongarch64 arch as not buildable.
 
