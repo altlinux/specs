@@ -10,7 +10,7 @@
 %define webrtc_dir %webrtc_basedir/linux-x64-release
 
 Name: zed
-Version: 0.220.6
+Version: 0.221.5
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -28,20 +28,25 @@ Source3: update-metadata-releases.py
 Source4: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
 Patch0: %name-%version-alt.patch
 
-BuildRequires: /proc
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: cargo-about
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libssl-devel
-BuildRequires: libzstd-devel
+BuildRequires: libgit2-devel libssh2-devel libssl-devel
+BuildRequires: libzstd-devel zlib-devel bzip2-devel
 BuildRequires: libalsa-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libX11-devel
+BuildRequires: fontconfig-devel
 BuildRequires: python3
 BuildRequires: unzip
+BuildRequires: /usr/bin/protoc libprotobuf-devel
+BuildRequires: libvulkan-devel vulkan-validation-layers vulkan-headers
+BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-server-devel libwayland-egl-devel
 
 %description
 Code at the speed of thought - Zed is a high-performance, multiplayer code
@@ -58,6 +63,10 @@ unzip -o %webrtc_source -d %webrtc_basedir
 %build
 export RELEASE_VERSION="%version"
 export ZED_UPDATE_EXPLANATION="Please update zed using apt-get."
+export PROTOC="/usr/bin/protoc"
+export PROTOC_INCLUDE="/usr/include"
+export OPENSSL_NO_VENDOR=1
+export LIBGIT2_NO_VENDOR=1
 
 # Upstream says that licenses should be generated before
 # building the binaries. See the following for more info:
@@ -66,7 +75,7 @@ export ALLOW_MISSING_LICENSES=1
 ./script/generate-licenses
 
 export LK_CUSTOM_WEBRTC="%webrtc_dir"
-cargo build %_smp_mflags --release --offline --package zed --package cli
+%rust_build --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
@@ -97,6 +106,10 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Sat Jan 31 2026 Alexey Shabalin <shaba@altlinux.org> 0.221.5-alt1
+- Update to 0.221.5.
+- Build with system openssl and libgit2.
+
 * Mon Jan 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.220.6-alt1
 - Updated to 0.220.6.
 - Excluded aarch64 architecture.
