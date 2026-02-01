@@ -1,8 +1,8 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.6
-Release: alt2
+Version: 0.1.7
+Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
 License: GPL-3.0-or-later
@@ -50,6 +50,9 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %doc *.md
 
 %changelog
+* Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.7-alt1
+- 0.1.6 -> 0.1.7
+
 * Thu Jan 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt2
 - updated to git.e8a4f030
 - changed license tag
