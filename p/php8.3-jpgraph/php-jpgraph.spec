@@ -3,18 +3,18 @@
 %define confextensiondir %_sysconfdir/php/%php_extension
 %define extensiondir %php_moddir/%php_extension
 %define docdir %_docdir/%name-%version-%release
-%if "%_php_suffix" == "8.1"
+%if "%_php_suffix" == "%php_defver"
 %def_with pack_extension
 %endif
 
 Name: php%_php_suffix-%php_extension
-Version: 4.4.1
+Version: 4.4.3
 Release: alt%php_version.%php_release.1
 
 Summary: 2D graph plotting library for PHP
 License: %qpl1
 Group: System/Servers
-Url: http://jpgraph.net
+Url: https://jpgraph.net/
 BuildArch: noarch
 
 %if_with pack_extension
@@ -109,6 +109,9 @@ cp -a docs %buildroot%docdir/html/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Sun Feb 01 2026 Anton Farygin <rider@altlinux.org> 4.4.3-al1
+- 4.4.1 -> 4.4.3
 
 * Thu Dec 08 2022 Anton Farygin <rider@altlinux.ru> 4.4.1-alt%php_version.%php_release
 - separated the package to extension and package of dependencies for each supported version of PHP
