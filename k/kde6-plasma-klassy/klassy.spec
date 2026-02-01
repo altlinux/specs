@@ -1,10 +1,12 @@
 %define nameS klassy
+%define soname 6
 
 Name: kde6-plasma-klassy
-Version: 6.4.0
+Version: 6.4
 Release: alt1
+Epoch: 1
 
-Summary: Klassy is a highly customizable binary Window Decoration, Application Style and Global Theme plugin for recent versions of the KDE Plasma desktop
+Summary: Klassy is a highly customizable plugin for KDE Plasma
 License: MIT and BSD-3-Clause and CC0-1.0 and GPL-2.0-only and GPL-3.0-only
 Group: Graphical desktop/KDE
 
@@ -21,23 +23,32 @@ BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel pkgcon
 BuildRequires: plasma6-kdecoration-devel kf6-kwidgetsaddons-devel kf6-kconfigwidgets-devel
 
 %description
-%summary.
+Klassy is a highly customizable binary Window Decoration, Application Style and Global Theme
+plugin for recent versions of the KDE Plasma desktop.
 
 %package common
-Summary: %name common package
+Summary: Klassy common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
 %description common
-%name common package
+Klassy common package.
 
 %package devel
 Group: Development/KDE and QT
-Summary: Development files for %name
+Summary: Development files for Klassy
 Requires: kde-common
+Requires: libklassycommon%soname = %EVR
 %description devel
 The %name-devel package contains libraries and header files for
-developing applications that use %name.
+developing applications that use Klassy.
+
+%package -n libklassycommon%soname
+Group: System/Libraries
+Summary: Klassy library
+Requires: %name-common
+%description -n libklassycommon%soname
+Klassy library.
 
 %prep
 %setup
@@ -53,7 +64,6 @@ developing applications that use %name.
 %_bindir/%nameS-settings
 %_libdir/qt6/plugins/*/*.so
 %_libdir/qt6/plugins/org.kde.kdecoration?.kcm/klassydecoration/*/*.klpw
-%_libdir/libklassycommon?.so.*
 %_datadir/applications/*.desktop
 %_datadir/color-schemes/*.colors
 %_iconsdir/hicolor/scalable/apps/*.svgz
@@ -70,7 +80,14 @@ developing applications that use %name.
 %files devel
 %_libdir/cmake/Klassy
 
+%files -n libklassycommon%soname
+%_K6lib/libklassycommon?.so.%soname
+%_K6lib/libklassycommon?.so.%{soname}.*
+
 %changelog
+* Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:6.4-alt1
+- updated to git.2e76a993d4
+
 * Thu Jun 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 6.4.0-alt1
 - 6.3.5 -> 6.4.0
 
