@@ -15,8 +15,8 @@
 %endif
 
 Name:		bcc
-Version: 0.35.0
-Release: alt2
+Version: 0.36.0
+Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -38,9 +38,9 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: banner
 BuildRequires: bpftool
 BuildRequires: clang-devel
-BuildRequires: clang-devel-static
 BuildRequires: cmake
 BuildRequires: flex
+BuildRequires: gcc-c++
 BuildRequires: libdebuginfod-devel
 BuildRequires: libelf-devel-static
 BuildRequires: liblzma-devel
@@ -176,6 +176,8 @@ tar xf %SOURCE4 -C libbpf-tools
 # Poor man's pathfix.py
 grep -lrZx -e '#!/usr/bin/env python3\?' -e '#!/usr/bin/python' tools \
 	| xargs -0 sed -i '1s,#!.*,#!%__python3,'
+# https://github.com/iovisor/bcc/issues/5452
+sed -i 's/ -Werror / /' libbpf-tools/Makefile
 
 %build
 %define optflags_lto %nil
@@ -192,8 +194,6 @@ subst '/add_subdirectory(tests)/d' CMakeLists.txt
 subst '/add_subdirectory(examples)/d' CMakeLists.txt
 
 %remove_optflags -frecord-gcc-switches
-export CC=clang
-export CXX=clang++
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DREVISION_LAST=%version \
@@ -206,7 +206,7 @@ export CXX=clang++
 %cmake_build
 
 # LIBBPF_OBJ expects libbpf.a, but...
-%make_build -C libbpf-tools CFLAGS="%optflags" BPFTOOL=/usr/sbin/bpftool V=1
+%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool V=1
 
 %install
 %cmake_install
@@ -246,9 +246,9 @@ banner test
 # Simple smoke test, only if KVM is enabled
 # (Will fail on ppc64le w/o KVM).
 if [ -w /dev/kvm ]; then
-	LD_LIBRARY_PATH=%buildroot%_libdir \
-	PYTHONPATH=%buildroot%python3_sitelibdir \
+	export LD_LIBRARY_PATH=%buildroot%_libdir PYTHONPATH=%buildroot%python3_sitelibdir
 	vm-run --sbin %buildroot%_datadir/bcc/tools/cpudist 1 1
+	vm-run timeout -s2 --preserve-status 20 %buildroot%_datadir/bcc/tools/bindsnoop
 fi
 
 %post -n libbpf-tools
@@ -304,6 +304,11 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Wed Jan 28 2026 Vitaly Chikunov <vt@altlinux.org> 0.36.0-alt1
+- Update to v0.36.0 (2026-01-26).
+  + Support for kernels up to 6.18.
+- spec: Build with gcc instead of clang.
+
 * Mon Jul 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.35.0-alt2
 - NMU:
   + build on riscv64
@@ -311,6 +316,7 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 
 * Fri May 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.35.0-alt1
 - Update to v0.35.0 (2025-05-29).
+  + Support for kernels up to 6.14.
 
 * Sat Apr 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.34.0-alt1
 - Update to v0.34.0 (2025-04-11).
