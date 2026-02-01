@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Echo
-%define ver_major 2.1
+%define ver_major 3
 %define rdn_name io.github.lo2dev.%_name
 
 %def_disable check
@@ -27,7 +27,7 @@ Source: %_name-%version.tar
 
 %add_python3_path %_datadir/%name
 
-%define adw_ver 1.6
+%define adw_ver 1.8
 
 Requires: typelib(Adw) = 1
 Requires: dconf
@@ -73,6 +73,9 @@ sed -i 's|\(Exec=\)%name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.desktop
 
 
 %changelog
+* Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 3-alt1
+- 3
+
 * Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 
