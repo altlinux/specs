@@ -1,11 +1,12 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 17.2
+%define git_ver 17.3
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
 %define xdg_name org.gnome.shell.extensions.%_name
+%define gettext_domain %_name
 
 %def_disable bootstrap
 
@@ -13,8 +14,6 @@ Name: gnome-shell-extension-%_name
 Version: %git_ver
 Release: alt1%beta
 Epoch: 1
-
-%define gettext_domain %_name
 
 Summary: Tiling Gnome Shell extension
 Group: Graphical desktop/GNOME
@@ -49,7 +48,7 @@ Can be installed on Gnome Shells on X11 and Wayland.
 %prep
 %setup -n %_name-%git_ver%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-npm install && npm audit fix --force &&
+npm install --force && npm audit fix --force &&
 npm install --cpu ia32 esbuild &&
 #npm install --cpu aarch64 esbuild &&
 npm install --cpu arm64 esbuild &&
@@ -78,6 +77,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun Feb 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1:17.3-alt1
+- 17.3
+
 * Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1:17.2-alt1
 - 17.2
 
