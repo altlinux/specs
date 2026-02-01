@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.87.0
+Version: 0.93.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -16,6 +16,10 @@ Requires: ripgrep
 ExcludeArch: %ix86
 
 Source: %name-%version.tar
+BuildRequires: clang-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: git-core
 BuildRequires: help2man
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
@@ -51,10 +55,10 @@ EOF
 # Disable OOB updates.
 perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
 	END { die unless $x }' codex-rs/tui/src/updates.rs
-perl -0777 -pi -e 's/(pub fn get_upgrade_version\b[^{]+).*?^}/\1 { None }/sm and $x++;
-	END { die unless $x }' codex-rs/tui2/src/updates.rs
+test -e vendor/rama-boring-sys/patches
 
 %build
+RUST_BACKTRACE=full \
 cargo build \
 	--config=.cargo/vendor-config.toml \
 	--manifest-path=codex-rs/Cargo.toml \
@@ -91,6 +95,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sun Feb 01 2026 Vitaly Chikunov <vt@altlinux.org> 0.93.0-alt1
+- Update to rust-v0.93.0 (2026-01-30).
+
 * Sat Jan 17 2026 Vitaly Chikunov <vt@altlinux.org> 0.87.0-alt1
 - Update to rust-v0.87.0 (2026-01-16).
 
