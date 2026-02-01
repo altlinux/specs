@@ -4,7 +4,7 @@
 
 Name:    monado
 Version: 25.1.0
-Release: alt1
+Release: alt2
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
@@ -26,11 +26,6 @@ BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libffi-devel
 BuildRequires: libpcre2-devel liborc-devel libsurvive-devel libopenvr-devel
 BuildRequires: wayland-devel wayland-protocols
 BuildRequires: doxygen graphviz
-# Missing dependencies for the build.
-# depthai  LeapV2 LeapSDK ONNXRuntime Percetto
-Requires: libopenhmd
-Requires: librealsense
-Requires: libsurvive
 
 ExclusiveArch: x86_64
 
@@ -87,6 +82,9 @@ Summary: %name library
 %_libdir/libmonado.so.%{soname}.*
 
 %changelog
+* Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 25.1.0-alt2
+- spec cleanup
+
 * Wed Jan 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 25.1.0-alt1
 - 25.0.0 -> 25.1.0
 

@@ -1,21 +1,23 @@
-Name:    libsurvive
+%define soname 0
+
+Name: libsurvive
 Version: 1.01
-Release: alt1
+Release: alt2
 
 Summary: Open Source Lighthouse Tracking System
 License: MIT
-Group:   System/Libraries
-Url:     https://github.com/cntools/libsurvive
+Group: System/Libraries
+Url: https://github.com/cntools/libsurvive
+Vcs: https://github.com/cntools/libsurvive
 
-# Source-url: https://github.com/collabora/libsurvive/releases/download/v%version/libsurvive-v%version-source.zip
 Source:  %name-%version.tar
 
+ExcludeArch: %ix86
+
 BuildRequires: gcc-c++ cmake
-BuildRequires: zlib-devel eigen3 libX11-devel libusb-devel libpcap-devel
+BuildRequires: zlib-devel eigen3-compat-devel libX11-devel libusb-devel libpcap-devel
 BuildRequires: liblapack-devel libfreeglut-devel libudev-devel
 BuildRequires: libhidapi-devel libopencv-devel
-# Excluded as it currently breaks the build
-# BuildRequires: sciplot-devel
 
 %description
 Libsurvive is a set of tools and libraries that enable 6 dof tracking
@@ -26,11 +28,38 @@ generation of devices and should support any tracked object commercially availab
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %EVR
-
+Requires: %name%soname = %EVR
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package -n %name%soname
+Group: System/Libraries
+Summary: %name library
+Obsoletes: %name <= 1.01-alt1
+%description -n %name%soname
+%name library.
+
+%package tools
+Summary: Tools for %name
+Group: Other
+Requires: %name%soname = %EVR
+%description tools
+Tools for %name.
+
+%package plugins
+Summary: Plugins for %name
+Group: Other
+Requires: %name%soname = %EVR
+%description plugins
+Plugins for %name.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+%description common
+%name common package.
 
 %prep
 %setup
@@ -57,27 +86,30 @@ rm -r %buildroot%_libexecdir/*.a
 # Install udev rules
 install -Dpm0644 -t %buildroot%_udevrulesdir useful_files/81-vive.rules
 
-%files
-%doc LICENSE README.md
-%_bindir/sensors-readout
-%_bindir/survive-buttons
-%_bindir/survive-cli
-%_bindir/survive-solver
-%_bindir/survive-websocketd
-%_libdir/%name.so.0*
-%_libdir/%name/plugins/*
+%files common
+%doc LICENSE README.md docs
+
+%files -n %name%soname
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%{soname}.*
 %_udevrulesdir/81-vive.rules
 
+%files tools
+%_bindir/*
+
+%files plugins
+%_libdir/%name/plugins
+
 %files devel
-%doc docs/*.md
-%_bindir/api_example
-%_includedir/%name/*
-%_includedir/cnkalman
-%_includedir/cnmatrix
+%_includedir/*
 %_libdir/%name.so
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.01-alt2
+- FTBFS: rebuilded with eigen3-compat-devel.
+- Added ExcludeArch: ix86.
+
 * Wed Jan 15 2025 Sergey Palcheh <minergenon@altlinux.org> 1.01-alt1
 - initial build for ALT Sisyphus
 
