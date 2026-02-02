@@ -1,6 +1,6 @@
 Name:           retroarch-joypad-autoconfig
-Version:        1.17.0
-Release:        alt3
+Version:        1.22.0
+Release:        alt1
 Summary:        RetroArch Joypad Autoconfig Files
 License:        MIT
 Group:          Emulators
@@ -38,6 +38,9 @@ install -Dm0644 %SOURCE2 %{buildroot}%{_datadir}/libretro/autoconfig/udev/"8BitD
 %{_datadir}/libretro/autoconfig/*
 
 %changelog
+* Mon Feb 02 2026 Artyom Bystrov <arbars@altlinux.org> 1.22.0-alt1
+- Update to new version
+
 * Tue Dec 23 2025 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt3
 - Add config for 8BitDo Ultimate 2C Wireless.cfg
 
