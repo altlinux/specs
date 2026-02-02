@@ -5,8 +5,8 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: SDL
-Version: 1.2.14
-Release: alt10
+Version: 1.2.15
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: LGPL
@@ -54,8 +54,8 @@ This is the libraries, include files and other resources you can use
 to develop %name applications.
 
 %prep
-%setup
-%patch -p1
+%setup -q
+%patch0 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -90,9 +90,10 @@ autoconf
 %_datadir/aclocal/*
 %_mandir/man?/*
 
-# TODO: 1.2.15+
-
 %changelog
+* Fri Jan 30 2026 Valery Sinelnikov <greh@altlinux.org> 1.2.15-alt1
+- 1.2.15
+
 * Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.14-alt10
 - Fixed build with LTO.
 

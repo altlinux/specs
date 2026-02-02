@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.2.4
-Release: alt3
+Version: 7.2.6
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -112,7 +112,6 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch:		%name-%version-alt.patch
-Patch10:	http-curl.patch
 
 BuildPreReq: iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel libSDL2-devel-static
@@ -354,7 +353,6 @@ This package contains VirtualBox SDK for XPCOM.
 %prep
 %setup -q -n %distarchive
 %patch -p1
-%patch10 -p2
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -931,6 +929,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Jan 29 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.6-alt1
+- Update to newest version 7.2.6
+
 * Fri Dec 12 2025 Valery Sinelnikov <greh@altlinux.org> 7.2.4-alt3
 - Revert previous addition of libwayland-client and libX11 runtime dependencies
   as it was erroneous; the bug was fixed upstream in version 7.2.2(closes:56974)
