@@ -3,7 +3,7 @@
 
 Name:    cloud-init
 Version: 25.1.4
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -16,11 +16,6 @@ Source0: %name-%version.tar
 Source1: cloud-init-alt.cfg
 Source2: cloud-init-tmpfiles.conf
 Source3: ds-identify.cfg
-
-Source11: cloud-config
-Source12: cloud-final
-Source13: cloud-init
-Source14: cloud-init-local
 
 # Network configs
 Source31: 01_netplan.cfg
@@ -144,11 +139,6 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/cloud-init.conf
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/cloud/
 
-install -pD -m755 %SOURCE11 %buildroot%_initdir/cloud-config
-install -pD -m755 %SOURCE12 %buildroot%_initdir/cloud-final
-install -pD -m755 %SOURCE13 %buildroot%_initdir/cloud-init
-install -pD -m755 %SOURCE14 %buildroot%_initdir/cloud-init-local
-
 # Install network configs
 install -pD -m644 %SOURCE31 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 install -pD -m644 %SOURCE32 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
@@ -230,7 +220,6 @@ fi
 %config %_unitdir/sshd-keygen@.service.d/disable-sshd-keygen-if-cloud-init-active.conf
 %_datadir/bash-completion/completions/%name
 %_udevrulesdir/66-azure-ephemeral.rules
-%_initdir/*
 %_unitdir/*
 %_tmpfilesdir/*
 %_systemdgeneratordir/cloud-init-generator
@@ -242,6 +231,10 @@ fi
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Dec 16 2025 Nadezhda Fedorova <fedor@altlinux.org> 25.1.4-alt2
+- Disable sysv support.
+- Add dbus requirements for systemd units. 
+
 * Mon Jul 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 25.1.4-alt1
 - 25.1.4
 
