@@ -1,6 +1,6 @@
 Name:           siril
 Version:        1.4.1
-Release:        alt1
+Release:        alt2
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -72,19 +72,9 @@ s/(#.*if *\()([^()]*(\([^()]*(\([^()]*\)[^()]*)*\)[^()]*)*)\)/_xxxi=\\2,\\1_xxxi
 s/(#.*schedule\([^()]*, *)([^()]*)\)/_xxxs=\\2,\\1_xxxs)/;\
 s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
 	src/{registration,filters,stacking,rt,algos,gui,compositing,pixelMath,core,io}/*.c \
-	src/filters/{deconvolution/*.{c,hpp},nlbayes/*.cpp}
-sed -i '/omp critical (fftw)/d;/<fftw3.h>/a \
-__attribute__((noinline)) static void*fftwf_malloc_(std::size_t n){\
-#pragma omp critical(fftw)\
-void*p=fftwf_malloc(n);return p;}\
-__attribute__((noinline)) static void fftwf_free_(void*p){\
-#pragma omp critical(fftw)\
-fftwf_free(p);}\
-#define fftwf_malloc fftwf_malloc_\
-#define fftwf_free fftwf_free_' \
-	src/filters/deconvolution/fftw_allocator.hpp
+	src/filters/{deconvolution/*.{cpp,hpp},nlbayes/*.cpp}
+sed -i 's/throw std::bad_alloc();//' src/rt/boxblur.cc
 %add_optflags -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-unused-variable
-
 %endif
 
 %build
@@ -123,6 +113,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 03 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.1-alt2
+- Fix build on Elbrus (thanks to Ilya Kurdyukov)
+
 * Fri Jan 09 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
