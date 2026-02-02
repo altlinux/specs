@@ -1,7 +1,8 @@
 %global qt_module qtshadertools
+%def_enable glslang_bundle
 
 Name: qt6-shadertools
-Version: 6.9.3
+Version: 6.10.1
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -15,13 +16,20 @@ Url: http://qt.io/
 License: GPL-3.0-or-later
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: qtshadertools-unbundle-glslang.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
 %if_disabled bootstrap
 BuildRequires: qt6-tools
 %endif
-BuildRequires: cmake gcc-c++ glibc-devel qt6-base-devel
-BuildRequires: glslang libGLU-devel libxkbcommon-devel
+BuildRequires: /proc
+BuildRequires: cmake glibc-devel qt6-base-devel
+%if_disabled glslang_bundle
+BuildRequires: glslang glslang-devel libspirv-tools-devel
+%else
+BuildRequires: glslang
+%endif
+BuildRequires: libGLU-devel libxkbcommon-devel
 
 %description
 APIs and tools in this module provide the producer functionality for the shader pipeline
@@ -68,6 +76,9 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%if_disabled glslang_bundle
+%patch1 -p1
+%endif
 
 %build
 %if_enabled bootstrap
@@ -115,6 +126,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 

@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name PySide6
 %define mod_name pyside6
 
@@ -17,7 +16,7 @@
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
-Version: 6.9.1
+Version: 6.10.1
 Release: alt0.1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
@@ -27,8 +26,10 @@ URL: https://wiki.qt.io/Qt_for_Python
 
 # Download from https://www.nic.funet.fi/pub/mirrors/download.qt-project.org/official_releases/QtForPython/pyside6/PySide6-6.6.2-src/pyside-setup-everywhere-src-6.6.2.tar.xz
 Source: pyside-setup-everywhere-src-%version.tar
-Patch0: always-link-to-python-libraries.patch
-Patch1: pyside6-6.6.0-no-qtexampleicons.patch
+# FC
+Patch1: 0001-Always-link-to-python-libraries.patch
+Patch2: 0001-Fix-installation.patch
+Patch3: 0001-Revert-Modify-headers-installation-for-CMake-builds.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ninja
@@ -59,6 +60,10 @@ BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzma-devel
+BuildRequires: libedit-devel
+BuildRequires: libffi-devel
+BuildRequires: libcups-devel
+BuildRequires: libxkbcommon-devel
 
 # Common dependencies
 BuildRequires: qt6-base-devel
@@ -81,6 +86,8 @@ BuildRequires: qt6-3d-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-tools-devel
+BuildRequires: qt6-remoteobjects-devel
+BuildRequires: qt6-quick3d-devel
 
 %if_with check
 BuildRequires: xvfb-run
@@ -136,8 +143,9 @@ to Python, or even to get useful information to debug an application.
 
 %prep
 %setup -n pyside-setup-everywhere-src-%version
-%patch0 -p2
-%patch1 -p2
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 # Fix installation dir
@@ -153,11 +161,12 @@ else
 fi
 
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
+export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_LIBRARY_PATH
 
 %cmake -G Ninja \
   -DNUMPY_INCLUDE_DIR:STRING=%python3_sitelibdir/numpy/core/include \
   -DPYTHON_EXECUTABLE:STRING=python3 \
-  -DBUILD_TESTS=ON \
+  -DBUILD_TESTS:BOOL=OFF \
   -DQFP_NO_STRIP:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -186,6 +195,12 @@ for name in PySide6 shiboken6 shiboken6_generator; do
   cp -p $name.egg-info/{PKG-INFO,top_level.txt} \
         %buildroot%python3_sitelibdir/$name-%version-py%_python3_version.egg-info/
 done
+
+# Fix CMake config files to use correct absolute paths (OpenSUSE solution)
+# The upstream build is designed for wheel installation with relative paths,
+# but for system installation we need absolute paths
+sed -i 's#/typesystems#/share/PySide6/typesystems#g' %buildroot/%_libdir/cmake/PySide6/*.cmake
+sed -i 's#/glue#/share/PySide6/glue#g' %buildroot/%_libdir/cmake/PySide6/*.cmake
 
 %check
 export PATH=%_qt6_bindir:$PATH
@@ -264,6 +279,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt0.1
+- NMU: new version
+
 * Tue Jul 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt0.1
 - NMU: new version
 

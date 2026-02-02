@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.9.3
+Version: 6.10.1
 Release: alt1
 
 Group: System/Libraries
@@ -34,7 +34,7 @@ Url: http://qt.io/
 License: LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
 ExclusiveArch: %qt6_qtwebengine_arches
 
-Source: %qt_module-everywhere-src-%version.tar
+Source: %qt_module-everywhere-src-%version.tar.gz
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
 Patch1: alt-ftbfs.patch
@@ -44,8 +44,10 @@ Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
 Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
-Patch15: chromium-130-size-assertions.patch
-Patch16: qtwebengine-revert-create-eglimage.patch
+Patch15: qtwebengine-add-missing-pipewire-headers.patch
+Patch16: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
+Patch17: qtwebengine-fix-quick-popup-window-positioning-under-x11.patch
+Patch18: qtwebengine-move-gpu-info-logging-to-gpu-thread.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -56,6 +58,7 @@ Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires(pre): libavformat-devel
+BuildRequires: /proc
 BuildRequires: cmake libstdc++-devel-static
 BuildRequires: libxkbcommon-devel libxkbfile-devel
 %if_enabled system_ffmpeg
@@ -204,10 +207,10 @@ Obsoletes: %name < %EVR
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-pushd src/3rdparty/chromium
 %patch15 -p1
-popd
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
@@ -253,9 +256,6 @@ for f in \
     src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/third_party/lighthouse/report-assets/report-generator.js \
     src/3rdparty/chromium/third_party/devtools-frontend/src/front_end/diff/diff_match_patch.js
 do mkdir -p `dirname $f`; touch $f; done
-pushd src/3rdparty/chromium/third_party/jstemplate
-    cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
-popd
 # jQuery 
 cp %SOURCE100 examples/webenginewidgets/contentmanipulation/
 cp %SOURCE100 src/3rdparty/chromium/third_party/pycoverage/coverage/htmlfiles/
@@ -429,6 +429,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 

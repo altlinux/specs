@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.9.3
+Version: 6.10.1
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -47,6 +47,9 @@ Source1: qml6
 Source2: qml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
+# FC
+Patch1: qtdeclarative-qtqml-invalidate-fallback-lookups-after-each-call-from-aot-code.patch
+Patch2: qtdeclarative-quickshapes-make-module-public.patch
 
 %include %SOURCE1
 %qml6_req_skipall 1
@@ -436,9 +439,27 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickcontrols2fluentwinui3styleimpl
 %summary
 
+%package -n libqt6-quickshapesdesignhelpers
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickshapesdesignhelpers
+%summary
+
+%package -n libqt6-labssynchronizer
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-labssynchronizer
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
+%patch1 -p1
+%patch2 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -518,6 +539,11 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %endif
 %_qt6_examplesdir/*
 
+%files -n libqt6-labssynchronizer
+%_qt6_libdir//libQt6LabsSynchronizer.so.*
+%_qt6_qmldir/Qt/labs/synchronizer/
+%files -n libqt6-quickshapesdesignhelpers
+%_qt6_libdir//libQt6QuickShapesDesignHelpers.so.*
 %files -n libqt6-qml
 %_qt6_libdir/libQt?Qml.so.*
 %_qt6_qmldir/QML/
@@ -682,6 +708,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 

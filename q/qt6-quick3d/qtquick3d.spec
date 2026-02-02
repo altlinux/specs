@@ -4,7 +4,7 @@
 %define optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3d
-Version: 6.9.3
+Version: 6.10.1
 Release: alt1
 
 Group: System/Libraries
@@ -189,6 +189,10 @@ mkdir -p %buildroot/%_docdir/qt6/
 cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
+# relax depends on plugins files
+for f in %buildroot/%_libdir/cmake/Qt?*/{*,}/Qt*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 %files common
 %doc LICENSES/*
@@ -253,6 +257,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 

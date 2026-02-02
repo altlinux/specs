@@ -2,8 +2,8 @@
 %global qt_module qtwebview
 
 Name: qt6-webview
-Version: 6.9.3
-Release: alt2
+Version: 6.10.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt Web View
@@ -112,6 +112,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Dec 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
 - fix requires
 

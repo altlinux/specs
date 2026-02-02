@@ -33,8 +33,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.9.3
-Release: alt2
+Version: 6.10.1
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -54,11 +54,16 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
 Patch101: enable_skip_plugins.patch
+# upstream
+Patch200: qtbase-wayland-convey-preference-for-server-side-decorations.patch
+Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
+Patch202: qtbase-wayland-optimize-scroll-operations.patch
+Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
+Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -375,15 +380,34 @@ Requires: %name-common
 %description -n lib%gname-openglwidgets
 OpenGL widgets library for the Qt%major toolkit
 
+%package -n libqt6-waylandclient
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+%description -n libqt6-waylandclient
+%summary
+
+%package -n libqt6-wlshellintegration
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+%description -n libqt6-wlshellintegration
+%summary
+
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 #
 %patch100 -p1
 %patch101 -p1
+#
+%patch200 -p1
+%patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -628,7 +652,7 @@ done
 ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %buildroot/%_qt6_prefix/include
 
 # relax depends on sql plugins files
-for f in %buildroot/%_libdir/cmake/Qt?Sql/Qt*DriverPluginTargets.cmake ; do
+for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
     sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
 done
 
@@ -722,12 +746,14 @@ done
 %_qt6_libexecdir/qt-testrunner.py
 %_qt6_libexecdir/sanitizer-testrunner.py
 %_qt6_libexecdir/tracepointgen
+%_qt6_libexecdir/qtwaylandscanner
 #
 %dir %_qt6_headerdir
 %dir %_qt6_prefix/include/
 %_qt6_headerdir/Qt*/
 %dir %_qt6_prefix/mkspecs/
 %_qt6_archdatadir/mkspecs/
+%_qt6_datadir/wayland/
 %_qt6_prefix/lib/libQt%{major}*.prl
 %_qt6_libdir/libQt%{major}*.prl
 %_qt6_prefix/lib/libQt%{major}*.so
@@ -777,15 +803,19 @@ done
 %_qt6_plugindir/sqldrivers/libqsqlite2.so
 %endif
 
+%files -n lib%gname-waylandclient
+%_qt6_libdir/libQt6WaylandClient.so.*
+%_qt6_plugindir/wayland-decoration-client/
+%_qt6_plugindir/wayland-graphics-integration-client/
+%files -n lib%gname-wlshellintegration
+%_qt6_libdir/libQt6WlShellIntegration.so.*
+%_qt6_plugindir/wayland-shell-integration/
 %files -n lib%gname-core
 %_qt6_libdir/libQt%{major}Core.so.*
-
 %files -n lib%gname-concurrent
 %_qt6_libdir/libQt%{major}Concurrent.so.*
-
 %files -n lib%gname-dbus
 %_qt6_libdir/libQt%{major}DBus.so.*
-
 %files -n lib%gname-gui
 %_qt6_libdir/libQt%{major}Gui.so.*
 %_qt6_plugindir/egldeviceintegrations/*
@@ -795,49 +825,40 @@ done
 %_qt6_plugindir/platforms/*
 %_qt6_plugindir/platformthemes/*
 %_qt6_plugindir/xcbglintegrations/*
-
 %files -n lib%gname-network
 %_qt6_libdir/libQt%{major}Network.so.*
 %_qt6_plugindir/networkinformation/*
 %_qt6_plugindir/tls/*
-
 %files -n lib%gname-opengl
 %_qt6_libdir/libQt%{major}OpenGL.so.*
-
 %files -n lib%gname-printsupport
 %_qt6_libdir/libQt%{major}PrintSupport.so.*
 %_qt6_plugindir/printsupport/*
-
 %files -n lib%gname-sql
 %_qt6_libdir/libQt%{major}Sql.so.*
 %_qt6_plugindir/sqldrivers/libqsqlite.so
-
 %files -n lib%gname-test
 %_qt6_libdir/libQt%{major}Test.so.*
-
 %files -n lib%gname-widgets
 %_qt6_libdir/libQt%{major}Widgets.so.*
 #%_qt6_plugindir/accessible/*
-
 %files -n lib%gname-xml
 %_qt6_libdir/libQt%{major}Xml.so.*
-
 %files -n lib%gname-eglfsdeviceintegration
 %_qt6_libdir/libQt%{major}EglFSDeviceIntegration.so.*
-
 %files -n lib%gname-xcbqpa
 %_qt6_libdir/libQt%{major}XcbQpa.so.*
-
 %files -n lib%gname-eglfskmssupport
 %_qt6_libdir/libQt%{major}EglFsKmsSupport.so.*
-
 %files -n lib%gname-eglfskmsgbmsupport
 %_qt6_libdir/libQt%{major}EglFsKmsGbmSupport.so.*
-
 %files -n lib%gname-openglwidgets
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Tue Dec 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

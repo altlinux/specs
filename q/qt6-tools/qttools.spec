@@ -4,7 +4,7 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.9.3
+Version: 6.10.1
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -326,6 +326,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
+- new version
+
 * Thu Nov 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.3-alt1
 - new version
 
