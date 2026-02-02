@@ -4,7 +4,7 @@
 %define sover %major
 Name: projectm
 Version: 4.1.4
-Release: alt1
+Release: alt2
 
 %define libprojectm libprojectm%{major}_%{sover}
 %define libprojectm_playlist libprojectm%{major}-playlist%{sover}
@@ -82,6 +82,7 @@ mv projectm-eval vendor/
 	-DENABLE_CXX_INTERFACE:BOOL=TRUE \
 	-DINCLUDE-PROJECTM-PULSEAUDIO:BOOL=TRUE \
 	-DINCLUDE-PROJECTM-JACK:BOOL=TRUE \
+	-DENABLE_GLES:BOOL=TRUE \
 	#
 %cmake_build
 
@@ -105,6 +106,9 @@ mv projectm-eval vendor/
 %_libdir/cmake/projectM%{major}*/
 
 %changelog
+* Fri Jan 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.4-alt2
+- rebuilt with GLES enabled
+
 * Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 4.1.4-alt1
 - new version
 
