@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: pins
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Create and edit app shortcuts
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.5-alt1
+- 2.4.5
+
 * Sun Feb 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.4-alt1
 - 2.4.4
 

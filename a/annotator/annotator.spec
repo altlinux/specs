@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: annotator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Image annotation for Elementary OS
@@ -23,9 +23,10 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Patch1: annotator-1.2.1-alt-no-gtk3-dep.patch
 
-BuildRequires(pre): rpm-macros-meson
+Requires(pre): shared-mime-info
+
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson vala-tools
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gee-0.8)
@@ -34,6 +35,8 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(pangocairo)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(libarchive)
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
@@ -53,7 +56,6 @@ Annotate your images and let a picture say 1000 words.
 
 %prep
 %setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version
-%patch1
 
 %build
 %meson
@@ -71,11 +73,15 @@ Annotate your images and let a picture say 1000 words.
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_xdgmimedir/packages/%rdn_name.xml
+%_iconsdir/hicolor/scalable/mimetypes/application-%rdn_name.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
 %doc AUTHORS* README* TODO
 
-
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 

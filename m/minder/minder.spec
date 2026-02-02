@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: minder
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Mind-mapping application
@@ -26,7 +26,9 @@ Source: %name-%version.tar
 %define glib_ver 2.80
 %define gtk_ver 4.18
 
-BuildRequires(pre): rpm-macros-meson
+Requires(pre): shared-mime-info
+
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson vala-tools
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(glib-2.0)
@@ -68,11 +70,14 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_iconsdir/hicolor/*/mimetypes/application-%rdn_name.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
-%_datadir/mime/packages/%rdn_name.xml
+%_xdgmimedir/packages/%rdn_name.xml
 %doc AUTHORS* README*
 
 
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Mon Jan 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
