@@ -1,6 +1,6 @@
 Name: libretro-mame
-Version: 0.267
-Release: alt1
+Version: 0.285
+Release: alt2
 
 Summary: MAME libretro core (Arcade only)
 License: GPL2
@@ -8,7 +8,7 @@ Group: Emulators
 
 Url: https://github.com/libretro/mame
 Source: %name-%version.tar
-Patch2000: %name-e2k.patch
+Patch2000: libretro-arcades-mame-e2k.patch
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -52,6 +52,15 @@ install -Dp -m0644 ./mamearcade_libretro.so %buildroot%_libexecdir/libretro
 %_libexecdir/libretro/mamearcade_libretro.so
 
 %changelog
+* Mon Feb 02 2026 Artyom Bystrov <arbars@altlinux.org> 0.285-alt2
+- Fix name of package
+
+* Mon Feb 02 2026 Artyom Bystrov <arbars@altlinux.org> 0.285-alt1
+- Update to new version
+
+* Tue Aug 13 2024 Artyom Bystrov <arbars@altlinux.org> 0.267-alt2
+- Package was renamed
+
 * Fri Jul 12 2024 Artyom Bystrov <arbars@altlinux.org> 0.267-alt1
 - Update version
 
