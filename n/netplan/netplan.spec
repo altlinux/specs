@@ -1,5 +1,5 @@
 Name:    netplan
-Version: 1.1.2
+Version: 1.2
 Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
@@ -37,6 +37,7 @@ Source:  %name-%version.tar
 
 Patch1: netplan-1.1.1-alt-meson.patch
 Patch2: netplan-1.1.1-alt-libexec.patch
+Patch3: netplan-1.2-alt-configure-libexec.patch
 
 %description
 %summary
@@ -57,6 +58,12 @@ if [ '%python3_sitelibdir' != '%python3_sitelibdir_noarch' ]; then
 fi
 mkdir -p %buildroot%_sysconfdir/%name
 
+%post
+%post_systemd netplan-configure.service
+
+%preun
+%preun_systemd netplan-configure.service
+
 %files
 %python3_sitelibdir/%name
 %_sbindir/%name
@@ -68,12 +75,16 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_defaultdocdir/%name
 %_datadir/dbus-1/system-services/io.netplan.Netplan.service
 %_datadir/dbus-1/system.d/io.netplan.Netplan.conf
+%_unitdir/netplan-configure.service
 %dir %_sysconfdir/%name
 %doc *.md
 %_man5dir/%{name}*
 %_man8dir/%{name}*
 
 %changelog
+* Tue Dec 23 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.2-alt1
+- New version 1.2.
+
 * Fri Jan 31 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
 - New version 1.1.2.
 
