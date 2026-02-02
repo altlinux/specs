@@ -39,7 +39,7 @@
 %add_python3_req_skip frontend.appliers.ini_file
 
 Name: gpupdate
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: GPT applier
@@ -211,6 +211,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Feb 02 2026 Valery Sinelnikov <greh@altlinux.org> 0.14.1-alt1
+- Fixed:
+  get_dconf_dict call without username argument
+  Editing the cache size in the Yandex browser has returned
+
 * Thu Nov 27 2025 Valery Sinelnikov <greh@altlinux.org> 0.14.0-alt1
 - Added:
   Comprehensive plugin development documentation in English and Russian
