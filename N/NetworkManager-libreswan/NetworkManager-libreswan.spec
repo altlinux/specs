@@ -7,7 +7,7 @@
 %endif
 
 Name:           NetworkManager-libreswan
-Version:        1.2.26
+Version:        1.2.30
 Release:        alt1
 
 Group:          Networking/Other
@@ -99,6 +99,9 @@ This package contains files for GTK4 applications to use %name.
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Feb 02 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.30-alt1
+- New version.
+
 * Wed Jan 29 2025 Anton Meleshnikov <alton@altlinux.org> 1.2.26-alt1
 - New version 1.2.26.
 
