@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 3.0.2
+Version: 3.1.1
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -28,7 +28,7 @@ Requires: icon-theme-hicolor > 0
 Requires: coolercontrold = %EVR
 
 # rust daemon
-BuildRequires: /proc rust rust-cargo rpm-macros-rust
+BuildRequires: /proc rust rust-cargo rpm-macros-rust protobuf-compiler
 BuildRequires: pkgconfig(libdrm_amdgpu) pkgconfig(libdrm)
 
 # ui part
@@ -149,6 +149,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Mon Feb 02 2026 L.A. Kostis <lakostis@altlinux.ru> 3.1.1-alt1
+- 3.1.1.
+- BR: added protobuf-compiler (for daemon).
+
 * Wed Nov 05 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.2-alt1
 - 3.0.2.
 
