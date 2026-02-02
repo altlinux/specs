@@ -4,7 +4,7 @@
 
 Name: atuin
 Version: 18.11.0
-Release: alt1
+Release: alt2
 
 Summary: Magical shell history
 
@@ -19,6 +19,11 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+
+%ifarch loongarch64
+# need to rebuild aws-lc-sys
+BuildRequires: cmake rust-bindgen clang-devel
+%endif
 
 Requires: bash-preexec
 
@@ -124,6 +129,9 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Mon Feb 02 2026 Ilya Sorochan <k0tran@altlinux.org> 18.11.0-alt2
+- fix FTBFS on loongarch64
+
 * Fri Jan 23 2026 Boris Yumankulov <boria138@altlinux.org> 18.11.0-alt1
 - new version 18.11.0
 
