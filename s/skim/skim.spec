@@ -1,6 +1,6 @@
 Name:    skim
-Version: 0.15.7
-Release: alt2
+Version: 1.11.2
+Release: alt1
 
 Summary: Fuzzy Finder in rust
 License: MIT
@@ -50,7 +50,9 @@ directory = "vendor"
 EOF
 
 %build
-%rust_build
+# frizbee requires nightly toolchain
+%rust_build \
+    --no-default-features --features cli
 
 %install
 %rust_install sk
@@ -64,7 +66,8 @@ install -Dm 644 shell/completion.bash %buildroot%_datadir/bash-completion/comple
 install -Dm 644 plugin/skim.vim -t %buildroot%vim_runtime_dir/plugin/
 
 %check
-%rust_test
+SK=%buildroot%_bindir/sk
+[ "$(echo -e "apple\nbanana\ncherry" | "$SK" --filter "ban")" == banana ]
 
 %files
 %doc *.md
@@ -81,6 +84,9 @@ install -Dm 644 plugin/skim.vim -t %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Fri Jan 30 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.2-alt1
+- new version 1.11.2
+
 * Sun Jan 12 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.7-alt2
 - Fix completions path
 
