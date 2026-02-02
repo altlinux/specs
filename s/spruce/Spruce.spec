@@ -1,7 +1,7 @@
 %define oname io.github.shonubot.Spruce
 
 Name: spruce
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Lightweight cache cleaner and system maintenance tool
@@ -50,6 +50,9 @@ unused Flatpak runtimes in a clean, Adwaita-based GTK interface.
 %doc *.md
 
 %changelog
+* Tue Feb 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.8-alt1
+- 0.1.7 -> 0.1.8
+
 * Sun Feb 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.7-alt1
 - 0.1.6 -> 0.1.7
 
