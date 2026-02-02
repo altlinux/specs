@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 580
-%define nv_release 95
-%define nv_minor 05
-%define pkg_rel alt304
+%define nv_release 126
+%define nv_minor 09
+%define pkg_rel alt305
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 580.126.09-alt305
+- new version
+
 * Tue Nov 25 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt304
 - fix detect current loaded module version
 

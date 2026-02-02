@@ -19,9 +19,9 @@
 %endif
 
 %define nv_version 580
-%define nv_release 95
-%define nv_minor   05
-%define pkg_rel alt2
+%define nv_release 126
+%define nv_minor   09
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release
 %if "%nv_minor" != "%nil"
 %define nv_version_full %nv_version.%nv_release.%nv_minor
@@ -320,6 +320,9 @@ done
 %endif
 
 %changelog
+* Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 580.126.09-alt1
+- new version
+
 * Mon Dec 08 2025 Sergey V Turchin <zerg@altlinux.org> 580.95.05-alt2
 - don't fail nvidia-powerd service
 

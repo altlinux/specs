@@ -8,12 +8,12 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	580.95.05
+%define package_version	580.126.09
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		6.12
 %define karch x86_64 aarch64
 
@@ -310,7 +310,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Tue Jan 20 2026 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+* Mon Feb 02 2026 Sergey V Turchin <zerg at altlinux dot org> 580.126.09-alt1
+- new release (580.126.09)
+
+* Tue Jan 20 2026 Sergey V Turchin <zerg at altlinux dot org> 580.95.05-alt2
 - prepare for exclude i586 from build
 
 * Fri Oct 10 2025 Sergey V Turchin <zerg at altlinux dot org> 580.95.05-alt1
