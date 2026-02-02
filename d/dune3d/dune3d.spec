@@ -2,7 +2,7 @@
 %define app_id org.dune3d.dune3d
 
 Name: dune3d
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: 3D CAD application
@@ -51,5 +51,8 @@ fillets and chamfers.
 %doc README.md
 
 %changelog
+* Mon Feb 02 2026 Alexander Davydzik <paladindev@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Mon Mar 31 2025 Alexander Davydzik <paladindev@altlinux.org> 1.3.0-alt1
 - initial build
