@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.13
+Version: 0.1.14
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -47,8 +47,6 @@ ADT (Alt Diagnostic Tool) is a utility for diagnosing software problems using th
 %cmakeinstall_std
 mkdir -p %buildroot%_datadir/alterator/applications
 install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/applications
-install -p -D man/en/%name.man %buildroot%_mandir/man1/%name.1
-install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %find_lang --with-man %name
 
 %files -f %name.lang
@@ -63,6 +61,14 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Feb 02 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.14-alt1
+- make test results dialog modal
+- fix default command line options parsing
+- fix date configuring for man
+- fix Qt base default translations
+- rename application in about dialog
+- fix parsing of int and enum int variables (thx Valentin Kucenko)
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.13-alt1
 - Add 'exit_status = true' for new version of executor.
 - Rename desktop entry to be properly displayed in Gnome (thx Andrey Alekseev).
