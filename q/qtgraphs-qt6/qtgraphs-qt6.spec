@@ -1,14 +1,14 @@
 %define _name qtgraphs
 %define __name QtGraphs
 %define ___name Qt6Graphs
-%define ver_major 6.9
+%define ver_major 6.10
 %define libname lib%___name
 
 %def_enable docs
 %def_enable check
 
 Name: %_name-qt6
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: Qt Graphs library for data visualization
@@ -33,8 +33,6 @@ BuildRequires: pkgconfig(Qt6QuickWidgets)
 BuildRequires: pkgconfig(Qt6Test)
 # https://bugzilla.altlinux.org/56799
 BuildRequires: pkgconfig(Qt6Quick3D) qt6-quick3d
-# for qt >= 6.10
-#BuildRequires: pkgconfig(Qt6QuickShapesPrivate)
 BuildRequires: pkgconfig(Qt6PrintSupport)
 %{?_enable_check:BuildRequires: ctest}
 
@@ -109,6 +107,9 @@ This package provudes Qt Graphs examples.
 %_libdir/qt6/examples/*
 
 %changelog
+* Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 6.10.1-alt1
+- 6.10.1
+
 * Wed Nov 12 2025 Yuri N. Sedunov <aris@altlinux.org> 6.9.3-alt1
 - 6.9.3
 - new -examples subpackage
