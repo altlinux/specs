@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.19.0
+Version: 5.21.0
 Release: alt1
 Epoch: 1
 
@@ -32,7 +32,6 @@ Patch14: osquery-link-system-libraries.patch
 Patch15: osquery-no-examples-build.patch
 Patch16: osquery-lenses-install-dir.patch
 Patch17: osquery-bindir.patch
-Patch18: osquery-alt-fix-ftbfs.patch
 
 ExcludeArch: armh %ix86 ppc64le
 
@@ -153,6 +152,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Fri Dec 26 2025 Andrey Cherepanov <cas@altlinux.org> 1:5.21.0-alt1
+- New version.
+
 * Mon Nov 10 2025 Andrey Cherepanov <cas@altlinux.org> 1:5.19.0-alt1
 - Switch to official stable versions.
 
