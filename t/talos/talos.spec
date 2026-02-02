@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      1e50b9f8580855544fe0d6c045339b1b0af1cf02
+%global commit      1c937ea4482d1c4b45c3982057ef5295fd283add
 %global shortcommit %(c=%commit; echo ${c:0:7})
 %global altkernel 6.12.59-talos
 %define _libexecdir %prefix/libexec
@@ -13,7 +13,7 @@
 %endif
 
 Name: talos
-Version: 1.11.6
+Version: 1.12.2
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -205,6 +205,9 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon Feb 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.12.2-alt1
+- New version 1.12.2.
+
 * Wed Dec 24 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.11.6-alt1
 - New version 1.11.6.
 
