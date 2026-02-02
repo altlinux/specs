@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,9 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Feb 02 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.9.13-alt1
+- components: update doc version
+
 * Thu Jan 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.9.12-alt1
 - editions: update description
 
