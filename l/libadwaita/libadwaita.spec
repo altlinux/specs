@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 Epoch: 1
 
@@ -24,7 +24,8 @@ Url: https://gitlab.gnome.org/GNOME/libadwaita
 Vcs: https://gitlab.gnome.org/GNOME/libadwaita.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+Source: https://github.com/GNOME/libadwaita/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -146,6 +147,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.4-alt1
+- 1.8.4
+
 * Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.3-alt1
 - 1.8.3
 

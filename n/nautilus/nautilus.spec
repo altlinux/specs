@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -28,7 +28,8 @@ Url: https://apps.gnome.org/Nautilus
 Vcs: https://gitlab.gnome.org/GNOME/nautilus.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+Source: https://github.com/GNOME/nautilus/archive/%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -211,6 +212,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
+- 49.4
+
 * Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
 - 49.3
 
