@@ -1,51 +1,39 @@
-Group: System/Libraries
-%filter_from_requires /osgi(org.apache.ant*/d
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-%define fedora 34
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-BuildRequires: /usr/bin/git
 Name:           jacoco
-Version:        0.8.7
-Release:        alt1_6jpp11
+Version:        0.8.14
+Release:        alt1
+
 Summary:        Java Code Coverage for Eclipse
+Group:          System/Libraries
 License:        EPL-2.0
 URL:            http://www.eclemma.org/jacoco/
+VCS:            https://github.com/jacoco/jacoco.git
 BuildArch:      noarch
 
-Source0:        https://github.com/jacoco/jacoco/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        %name-%version.tar
 
-%if 0%{?fedora} >= 36
-Patch0:         0001-Upgrade-maven-reporting-api-to-3.1.0.patch
-%endif
-
-BuildRequires:  git
+BuildRequires:  javapackages-tools
+BuildRequires:  /proc
+BuildRequires:  rpm-build-java
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.ow2.asm:asm)
-BuildRequires:  mvn(org.ow2.asm:asm-analysis)
-BuildRequires:  mvn(org.ow2.asm:asm-commons)
-BuildRequires:  mvn(org.ow2.asm:asm-tree)
-# required by wrapper scripts
-Requires:       javapackages-tools
-Source44: import.info
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-reporting-api
+BuildRequires:  maven-plugin-build-helper
+BuildRequires:  buildnumber-maven-plugin
+BuildRequires:  exec-maven-plugin
+BuildRequires:  objectweb-asm
 
 %description
-JaCoCo is a free code coverage library for Java, 
-which has been created by the EclEmma team based on the lessons learned 
-from using and integration existing libraries over the last five years. 
+JaCoCo is a free code coverage library for Java, which has been created by the
+EclEmma team based on the lessons learned from using and integration existing
+libraries over the last five years.
 
 %package    maven-plugin
-Group: System/Libraries
+Group:      System/Libraries
 Summary:    A Jacoco plugin for maven
 
 %description maven-plugin
@@ -55,17 +43,6 @@ A Jacoco plugin for maven.
 
 %prep
 %setup -q
-git init -q
-git config user.name "rpmbuild"
-git config user.email "<rpmbuild>"
-git config gc.auto 0
-git add --force .
-git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
-%if 0%{?fedora} >= 36
-cat %_sourcedir/0001-Upgrade-maven-reporting-api-to-3.1.0.patch | git apply --index --reject  -p1 -
-git commit -q -m 0001-Upgrade-maven-reporting-api-to-3.1.0.patch --author "rpmbuild <rpmbuild>"
-%endif
-
 
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
@@ -79,11 +56,6 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
 # Remove enforcer plugin that causes build failure of 'Jacoco :: Maven Plugin'
 %pom_remove_plugin -r :maven-enforcer-plugin
-
-# Don't build jars with classifier ":nodeps:"
-%pom_remove_plugin :maven-shade-plugin \
-    org.jacoco.ant \
-    org.jacoco.cli
 
 %pom_remove_plugin -r :spotless-maven-plugin
 
@@ -114,7 +86,12 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %mvn_package :org.jacoco.build __noinstall
 
 %build
-%mvn_build -f -- -Dbuild.date=$(date +%Y/%m/%d) -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dbuild.date=$(date +%Y/%m/%d) \
+                 -Dproject.build.sourceEncoding=UTF-8 \
+                 -Dmaven.compiler.source=1.8 \
+                 -Dmaven.compiler.target=1.8 \
+                 -Dmaven.compiler.release=8 \
+                 #
 
 %install
 %mvn_install
@@ -123,18 +100,17 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
 echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm > %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
-# wrapper script
-%jpackage_script org.jacoco.cli.internal.Main "" "" jacoco/org.jacoco.cli:args4j:objectweb-asm:jacoco/org.jacoco.core:jacoco/org.jacoco.report jacococli true
-
 %files -f .mfiles
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
-%{_bindir}/jacococli
 %doc --no-dereference LICENSE.md
 %doc README.md
 
 %files maven-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Mon Feb 02 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.8.14-alt1
+- New version.
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0.8.7-alt1_6jpp11
 - new version
 
