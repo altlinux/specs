@@ -1,5 +1,5 @@
 Name: dwm
-Version: 6.7
+Version: 6.8
 Release: alt1
 
 Summary: Dynamic window manager for X
@@ -75,6 +75,9 @@ sed -i "s/VERSION/%version/;s/RELEASE/%release/" \
 %_niconsdir/%name.png
 
 %changelog
+* Tue Feb 03 2026 Ilya Mashkin <oddity@altlinux.ru> 6.8-alt1
+- 6.8
+
 * Sat Jan 17 2026 Ilya Mashkin <oddity@altlinux.ru> 6.7-alt1
 - 6.7
 
