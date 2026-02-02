@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    serie
-Version: 0.5.7
+Version: 0.6.0
 Release: alt1
 
 Summary: A rich git commit graph in your terminal, like magic
@@ -43,5 +43,8 @@ install -vpD %SOURCE2 .cargo/config.toml
 %_bindir/serie
 
 %changelog
+* Mon Feb 02 2026 Ilya Sorochan <k0tran@altlinux.org> 0.6.0-alt1
+- Update version.
+
 * Tue Jan 13 2026 Ilya Sorochan <k0tran@altlinux.org> 0.5.7-alt1
 - Initial build for Sisyphus.
