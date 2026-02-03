@@ -1,7 +1,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -95,6 +95,11 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 03 2026 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
+- added configurable shell commands via [commands] section in ~/.zoryn
+- added readline support in gen environment interactive prompts
+- fixed zoryn up to change to git root directory before running
+
 * Thu Jan 30 2026 Anton Farygin <rider@altlinux.org> 0.14.0-alt1
 - added terminal title display during long-running commands
 - added changelog bug closure syntax validation in check spec
