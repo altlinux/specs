@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 11.0.4
+Version: 11.0.5
 Release: alt1
 
 Summary: IT and asset management software
@@ -176,6 +176,13 @@ fi
 %files php8.4
 
 %changelog
+* Tue Feb 03 2026 Pavel Zilke <zidex@altlinux.org> 11.0.5-alt1
+- New version 11.0.4
+- Security fixes:
+ + CVE-2026-23624 : Session stealing on externally authenticated user change
+ + CVE-2026-22248 : Remote Code Execution via malicious upload
+ + CVE-2026-22247 : SSRF via Webhooks
+
 * Sat Dec 27 2025 Pavel Zilke <zidex@altlinux.org> 11.0.4-alt1
 - New version 11.0.4
 - Yesterday, 11.0.3 was shipped, but soon after a few annoying regressions has been detected, and so a need for new release.
