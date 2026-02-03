@@ -34,7 +34,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.10.1
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -277,6 +277,7 @@ Summary: Core library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common
 Requires: glibc-gconv-modules
+Conflicts: libqtgraphs-qt6 = %version
 %description -n lib%gname-core
 Core library for the Qt%major toolkit
 
@@ -856,6 +857,10 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt2
+- build docs
+- update conflicts
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - new version
 
