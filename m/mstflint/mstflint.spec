@@ -12,7 +12,7 @@
 %def_disable dpa
 
 Name: mstflint
-Version: 4.34.1.2
+Version: 4.34.1.3
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -91,6 +91,9 @@ rm -f  %buildroot%_libdir/%name/*.a
 %_man1dir/*
 
 %changelog
+* Tue Feb 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.34.1.3-alt1
+- v4.34.1-3
+
 * Thu Jan 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.34.1.2-alt1
 - v4.34.1-2
 
