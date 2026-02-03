@@ -12,7 +12,7 @@
 %define _runstatedir /run
 
 Name: krb5
-Version: 1.22.1
+Version: 1.22.2
 Release: alt1
 
 %if_without bootstrap
@@ -517,6 +517,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Tue Feb 03 2026 Ivan A. Melnikov <iv@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Thu Aug 21 2025 Ivan A. Melnikov <iv@altlinux.org> 1.22.1-alt1
 - 1.22.1 (Fixes: CVE-2025-57736)
 
