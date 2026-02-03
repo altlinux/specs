@@ -1,5 +1,5 @@
 Name: rest-server
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Rest Server is a high performance HTTP server that implements restic's REST backend API
@@ -47,6 +47,9 @@ install -D -m 644 %SOURCE2 %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Tue Feb 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.0-alt1
+- new version 0.14.0
+
 * Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
