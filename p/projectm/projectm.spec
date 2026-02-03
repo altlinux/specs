@@ -3,8 +3,8 @@
 %define major 4
 %define sover %major
 Name: projectm
-Version: 4.1.4
-Release: alt2
+Version: 4.1.6
+Release: alt1
 
 %define libprojectm libprojectm%{major}_%{sover}
 %define libprojectm_playlist libprojectm%{major}-playlist%{sover}
@@ -106,6 +106,9 @@ mv projectm-eval vendor/
 %_libdir/cmake/projectM%{major}*/
 
 %changelog
+* Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 4.1.6-alt1
+- new version
+
 * Fri Jan 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.4-alt2
 - rebuilt with GLES enabled
 
