@@ -6,8 +6,8 @@
 %define schema_file schemas/org.gnome.shell.extensions.%_name.gschema.xml
 
 Name: gnome-shell-extension-ui-tune
-Version: 1.10.0
-Release: alt2
+Version: 1.11.0
+Release: alt1
 Summary: Tunes overview UI of the gnome 40 a bit
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
@@ -27,7 +27,6 @@ usable.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %make_build gettext uuid=%uuid
@@ -50,6 +49,9 @@ cp -pr locale %buildroot%_datadir
 %doc README.md
 
 %changelog
+* Tue Feb 03 2026 Alexander Davydzik <paladindev@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+
 * Mon Aug 25 2025 Alexander Davydzik <paladindev@altlinux.org> 1.10.0-alt2
 - fixed gschema & locale paths
 
