@@ -10,7 +10,7 @@
 
 Name:    auditd-plugin-clickhouse-lite
 Version: 0.1.9
-Release: alt1
+Release: alt2
 Summary: A lightweight plugin for auditd daemon to send audit data to a Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -82,9 +82,13 @@ rm -fv %buildroot%_prefix%_sharedstatedir/clickhouse/user_scripts/pstree-resolve
 
 %files -n clickhouse-audit-utils
 %_bindir/clickhouse-audit-export
+%dir %_prefix/libexec/clickhouse-audit-export
 %_prefix/libexec/clickhouse-audit-export/*.sh
 
 %changelog
+* Tue Feb 03 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt2
+- Fix: Own %_prefix/libexec/clickhouse-audit-export.
+
 * Tue Feb 03 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt1
 - Fix: Make clickhouse-audit-utils package noarch.
 - Make auditd-plugin-clickhouse-lite support -V for version info.
