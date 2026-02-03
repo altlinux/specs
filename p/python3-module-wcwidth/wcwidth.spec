@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.14
+Version: 0.5.3
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
@@ -48,10 +48,7 @@ Terminal. It is implemented in python (no C library calls) and has no
 %pyproject_install
 
 %check
-# get rid of tox.ini as pytest's config:
-# [pytest] section and its cov cli options
-rm tox.ini
-%pyproject_run_pytest -ra tests
+%pyproject_run_pytest -vra -o=addopts=-Wignore tests
 
 %files
 %doc README.rst
@@ -59,6 +56,9 @@ rm tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1
+- 0.2.14 -> 0.5.3.
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 0.2.14-alt1
 - 0.2.13 -> 0.2.14.
 
