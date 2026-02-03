@@ -3,7 +3,7 @@
 
 Name: alt-tweaks
 Version: 0.2.2
-Release: alt3
+Release: alt4
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
 Group: Graphical desktop/GNOME
@@ -61,12 +61,15 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %_bindir/alt-tweaks
 %_desktopdir/%xdg_name.desktop
 %_datadir/alt-tweaks/
-%_datadir/polkit-1/actions/
+%_datadir/polkit-1/actions/*
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README*
 
 %changelog
+* Tue Feb  3 2026 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt4
+- Fix path to actions directory (ALT #57710)
+
 * Tue Sep 16 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt3
 - Add python3-module-yaml in Requires
 
