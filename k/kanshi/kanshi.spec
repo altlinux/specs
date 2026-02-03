@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kanshi
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Dynamic display configuration
@@ -49,6 +49,9 @@ protocol.
 %_man5dir/kanshi.5.xz
 
 %changelog
+* Tue Feb 03 2026 Andrey Kovalev <ded@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Jul 29 2025 Andrey Kovalev <ded@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
