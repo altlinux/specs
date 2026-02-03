@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 0.40.4
-Release: alt1
+Release: alt2
 
 Summary: Highly concurrent networking library
 License: MIT
@@ -20,6 +20,8 @@ Url: https://pypi.org/project/eventlet/
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+
+Patch: 0001-Revert-Emit-warning-on-startup-that-eventlet-is-depr.patch
 
 BuildArch: noarch
 
@@ -98,6 +100,7 @@ This package contains documentation for Eventlet.
 
 %prep
 %setup
+%patch -p1
 
 # requires thrift, python 2.7 only
 rm -rv eventlet/zipkin
@@ -139,6 +142,9 @@ and not test_raise_dns_tcp"
 %endif
 
 %changelog
+* Tue Feb 03 2026 Grigory Ustinov <grenka@altlinux.org> 0.40.4-alt2
+- NMU: suppress warnings, that ruins tests in other packages (Closes: #57743).
+
 * Wed Nov 26 2025 Anton Vyatkin <toni@altlinux.org> 0.40.4-alt1
 - new version 0.40.4
 
