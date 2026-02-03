@@ -1,6 +1,6 @@
 Name: noisetorch
 Version: 0.12.2
-Release: alt3
+Release: alt4
 
 Summary: Real-time microphone noise suppression on Linux
 
@@ -17,12 +17,13 @@ Source: %name-%version.tar
 Source2: %name-c-ringbuf-%version.tar
 
 Patch1: noisetorch-rnnoise.patch
+Patch2: noisetorch-system-ladspa.patch
 
-BuildRequires: gcc-c++
-BuildRequires: cmake
-#BuildRequires: git-core
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+
 BuildRequires: hicolor-icon-theme
-BuildRequires: golang >= 1.18
+
 BuildRequires: librnnoise-devel
 
 %description
@@ -35,26 +36,24 @@ keyboard, computer fans, trains and the likes.
 %prep
 %setup -a2
 %patch1 -p2
+%patch2 -p1
 
 %build
 pushd c/ladspa
-%make_build
+%make_build CFLAGS="%optflags"
 ldd rnnoise_ladspa.so
 popd
 go generate
 # -tags release would enable the auto-updater (update.go)
 
-GOOS=linux \
-%ifnarch loongarch64 %ix86
-CGO_ENABLED=0 \
-%endif
-go build -buildmode=pie \
-    -a -ldflags '-w -X main.version=%version -X main.distribution=rpm' .
+%gobuild \
+    -ldflags '-X main.version=%version -X main.distribution=rpm' .
 
 %install
 install -D -m 644 assets/icon/noisetorch.png %buildroot/%_iconsdir/hicolor/256x256/apps/noisetorch.png
 install -D -m 644 assets/noisetorch.desktop %buildroot/%_desktopdir/noisetorch.desktop
 install -D -m 755 noisetorch %buildroot/%_bindir/noisetorch
+install -D -m 755 c/ladspa/rnnoise_ladspa.so %buildroot/%_libdir/ladspa/rnnoise_ladspa.so
 
 %files
 %doc LICENSE
@@ -63,8 +62,14 @@ install -D -m 755 noisetorch %buildroot/%_bindir/noisetorch
 %_bindir/noisetorch
 %_desktopdir/noisetorch.desktop
 %_iconsdir/hicolor/256x256/apps/noisetorch.png
+%_libdir/ladspa/rnnoise_ladspa.so
 
 %changelog
+* Tue Feb 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12.2-alt4
+- install LADSPA plugin as system library instead of embedding
+  (this adds automatic dependency on librnnoise) (ALT bug 57603)
+- cleanup build: drop CGO_ENABLED=0, GOOS, -a, -w
+
 * Mon May 13 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.12.2-alt3
 - NMU: fixed FTBFS (enable cgo if required for PIE)
 
