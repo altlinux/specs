@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -92,6 +92,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Mon Feb 02 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.10-alt1
+- Updated icon.
+
 * Wed Jan 21 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.9-alt1
 - Fixed launched apps now may raise their windows on wayland.
   Thx Andrey Alekseev.
