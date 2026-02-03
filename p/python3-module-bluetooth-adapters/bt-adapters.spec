@@ -1,30 +1,24 @@
-%define _unpackaged_files_terminate_build 1
-%define pypi_name bluetooth-adapters
-%define mod_name bluetooth_adapters
-
-%def_with check
-
-Name: python3-module-%pypi_name
-Version: 2.1.0
+Name: python3-module-bluetooth-adapters
+Version: 2.1.1
 Release: alt1
 
 Summary: Tools to enumerate and find Bluetooth Adapters
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/bluetooth-adapters/
-Vcs: https://github.com/bluetooth-devices/bluetooth-adapters
+URL: https://pypi.org/project/bluetooth-adapters
+VCS: https://github.com/bluetooth-devices/bluetooth-adapters
+
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
+Source1: pyproject_deps.json
+
 BuildArch: noarch
-# manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-%endif
 
 %description
 %summary
@@ -33,9 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -44,13 +36,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=''
+%pyproject_run_pytest -o addopts=
 
 %files
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/bluetooth_adapters
+%python3_sitelibdir/bluetooth_adapters-%version.dist-info
 
 %changelog
+* Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.1-alt1
+- 2.1.1 released
+
 * Thu Sep 04 2025 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 0.20.2 -> 2.1.0.
 
