@@ -9,8 +9,8 @@
 %endif
 
 Name:    auditd-plugin-clickhouse-lite
-Version: 0.1.8
-Release: alt2
+Version: 0.1.9
+Release: alt1
 Summary: A lightweight plugin for auditd daemon to send audit data to a Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -18,14 +18,16 @@ License: GPLv3+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
-BuildRequires: boost-complete
+BuildRequires: gcc-c++ cmake ctest
+BuildRequires: boost-devel-headers
 BuildRequires: libclickhouse-cpp-devel
 BuildRequires: libaudit-devel
 BuildRequires: bats /proc
 
 %if_with dbtest
-BuildRequires: pytest3 python3(clickhouse_test) clickhouse-server
+BuildRequires: pytest3
+BuildRequires: python3-module-clickhouse_test >= 0.1.3
+BuildRequires: clickhouse-server clickhouse-client
 BuildRequires: python3(clickhouse_driver)
 %endif
 
@@ -40,6 +42,7 @@ database.
 Summary: Utilities to work with audit data stored in a Clickhouse database
 Group:   Monitoring
 License: GPLv3+
+BuildArch: noarch
 
 %description -n clickhouse-audit-utils
 Utilities to work with audit data stored in a Clickhouse database.
@@ -51,36 +54,61 @@ used to export the database records back to text (log) files.
 
 %build
 %add_optflags -Werror
-%cmake
+%cmake \
+%if_with dbtest
+      -DWITH_DBTEST=ON
+%else
+
+%endif # the empty line is needed to balance the \ above!
 %cmake_build
 
 %install
 %cmake_install
 
-install -D -m0755 clickhouse-audit-export \
-		%buildroot/%_bindir/clickhouse-audit-export
+# Postpone these (they are WIP stubs yet):
+rm -fv %buildroot%_sysconfdir/clickhouse-server/pstree_function.xml
+rm -fv %buildroot%_prefix%_sharedstatedir/clickhouse/user_scripts/pstree-resolver
 
 %check
-CLICKHOUSE_SERVER_CLEANUP=1 BUILD=%_cmake__builddir \
-    ./run-tests.sh normal \
-                   chunked \
-		   bench \
-%if_with dbtest
-		   db
-%endif
+%ctest --verbose
 
 %files
 %_prefix/libexec/%name
 %dir %_datadir/%name
-%_datadir/%name/init_db.sql
+%_datadir/%name/*.sql
 %config(noreplace) %attr(600,root,root) %_sysconfdir/audit/%name.conf
 %config(noreplace) %_sysconfdir/audit/plugins.d/clickhouse-lite.conf
 %config(noreplace) %_sysconfdir/logrotate.d/%name-logrotate.conf
 
 %files -n clickhouse-audit-utils
 %_bindir/clickhouse-audit-export
+%_prefix/libexec/clickhouse-audit-export/*.sh
 
 %changelog
+* Tue Feb 03 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.9-alt1
+- Fix: Make clickhouse-audit-utils package noarch.
+- Make auditd-plugin-clickhouse-lite support -V for version info.
+- Fix: Output raw audit data in 'TabSeparatedRaw' format to prevent
+  extra backslash escaping.
+- Make clickhouse-audit-export use the new export scripts.
+- Export raw audit records by subset of record IDs.
+- Fixed build without dbtest.
+- FIX: Filter by UID in all queries!
+- Partition all the tables by start of month.
+- Limit the process timeframe to 5 days.
+- Added 'build_info(start_id=ID)' parametrized view.
+- Added 'process_tree(start_id=ID)' parametrized view.
+- Index 'process_parts' by PID.
+- Minimize Boost dependencies.
+- Don't use FINAL in queries: aggregate the data in-query.
+- Fix: Do not count unsuccessful rpmbuild spawns.
+- Divide views and tables onto three separated groups:
+  1. the main AuditDataRaw table;
+  2. the pstree tables and views;
+  3. the rpmbuild tables and views.
+- Refactor rpmbuild index: include target, package name and version
+  and place into 'package_build_index' table.
+
 * Thu Apr 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt2
 - Disable database build test on arches where clickhouse-server is
   not available.
