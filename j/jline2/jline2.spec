@@ -9,12 +9,13 @@ BuildRequires: jpackage-11-compat
 %define _localstatedir %{_var}
 Name:           jline2
 Version:        2.14.6
-Release:        alt1_2jpp11
+Release:        alt2
 Summary:        Java library for handling console input
 License:        BSD
 URL:            http://jline.github.io/jline2/
 
 Source0:        https://github.com/jline/jline2/archive/jline-%{version}.tar.gz
+Patch0: 0001-Historysearchtest-no-tty-alt-patch.patch
 
 BuildArch:      noarch
 
@@ -37,7 +38,7 @@ familiar.
 
 %prep
 %setup -q -n jline2-jline-%{version}
-
+%autopatch -p1
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -89,6 +90,9 @@ find -name TerminalFactoryTest.java -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Feb 02 2026 Ivan Khanas <xeno@altlinux.org> 0:2.14.6-alt2
+- Fix FTBFS: terminal-dependent HistorySearchTest fails in buildroot (no supported TTY).
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 0:2.14.6-alt1_2jpp11
 - new version
 
