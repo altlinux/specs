@@ -1,27 +1,35 @@
 Name: python3-module-didl-lite
-Version: 1.4.1
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: DIDL-Lite (Digital Item Declaration Language) tools for Python
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/python-didl-lite/
+URL: https://pypi.org/project/python-didl-lite
+VCS: https://github.com/StevenLooman/python-didl-lite
 
 Provides: python3-module-python-didl-lite = %EVR
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_tox tox.ini testenv
 
 %build
 %pyproject_build
@@ -29,12 +37,17 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -o addopts=
+
 %files
-%doc LICENSE.* README.*
 %python3_sitelibdir/didl_lite
 %python3_sitelibdir/python_didl_lite-%version.dist-info
 
 %changelog
+* Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
+- 1.5.0 released
+
 * Wed Jul 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt2
 - provide pep503 name
 
