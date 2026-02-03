@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.8
+Version: 0.6.9
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -64,6 +64,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.9-alt1
+- Update app icon.
+
 * Tue Jan 27 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.8-alt1
 - Fix segmentation fault if alterator-manager is unactive (Closes: #57586).
 - Clarify 'manually installed' term for safe mode option (thx Maria Alexeeva).

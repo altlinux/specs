@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -51,6 +51,9 @@ and package repositories through apt and rpm.
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.9-alt1
+- Update app icon.
+
 * Wed Jan 28 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.8-alt1
 - Clarify 'manually installed' term for safe mode option (APT).
 - Add error dialog displaying if error was received during check

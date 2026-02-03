@@ -23,7 +23,7 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alt-systeminfo
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
@@ -34,7 +34,7 @@ URL: https://altlinux.space/alterator/alt-systeminfo
 Source: %name-%version.tar
 
 Requires: alterator-interface-application >= 0.1.1
-Requires: alterator-backend-systeminfo >= 0.3.2
+Requires: alterator-backend-systeminfo >= 0.4.2
 Requires: alterator-module-executor >= 0.1.29
 # Recommends: alterator-backend-edition >= 0.1.5
 # Recommends: alterator-backend-packages >= 0.1.4
@@ -92,6 +92,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.11-alt1
+- Updated icon.
+
 * Mon Feb 02 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.10-alt1
 - Updated icon.
 
