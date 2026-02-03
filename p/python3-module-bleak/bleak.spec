@@ -1,5 +1,5 @@
 Name: python3-module-bleak
-Version: 2.0.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
@@ -16,6 +16,7 @@ Autoreq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%add_pyproject_deps_check_filter bumble
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -30,6 +31,8 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %pyproject_deps_resync_check_poetry test
+# requires actual bt hardware
+rm -fr tests/integration
 
 %build
 %pyproject_build
@@ -38,13 +41,16 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %pyproject_install
 
 %check
-%pyproject_run_pytest tests
+%pyproject_run_pytest -o addopts=
 
 %files
 %python3_sitelibdir/bleak
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.1-alt1
+- 2.1.1 released
+
 * Fri Dec 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
 - 2.0.0 released
 
