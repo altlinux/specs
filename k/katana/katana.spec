@@ -2,7 +2,7 @@
 %define import_path github.com/projectdiscovery/katana
 
 Name: katana
-Version: 1.2.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Next-generation crawling and spidering framework
@@ -64,6 +64,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Feb 03 2026 Denis Rastyogin <gerben@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Tue Sep 16 2025 Denis Sergeev <zeff@altlinux.org> 1.2.2-alt1
 - 1.2.1 -> 1.2.2.
 
