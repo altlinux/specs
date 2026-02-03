@@ -3,7 +3,7 @@
 %def_without check
 
 Name: isa-l_crypto
-Version: 2.25.0
+Version: 2.26
 Release: alt1
 
 Summary: Intelligent Storage Acceleration Library with crypto
@@ -11,9 +11,11 @@ Summary: Intelligent Storage Acceleration Library with crypto
 License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/intel/isa-l_crypto
-Vcs: git://github.com/intel/isa-l_crypto.git
+VCS: https://github.com/intel/isa-l_crypto
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/intel/isa-l_crypto/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 # x86 and ppc64 fail to compile
 ExcludeArch: i586 ppc64le
@@ -39,6 +41,7 @@ The package provides development files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -66,6 +69,9 @@ The package provides development files for %name.
 %_libdir/libisal_crypto.so
 
 %changelog
+* Tue Feb 03 2026 Leontiy Volodin <lvol@altlinux.org> 2.26-alt1
+- New version 2.26.
+
 * Fri Jul 05 2024 Leontiy Volodin <lvol@altlinux.org> 2.25.0-alt1
 - New version 2.25.0.
 - Excluded build on ppc64le.
