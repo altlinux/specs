@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Flake8 plugin that warns about deprecated method calls
@@ -47,5 +47,8 @@ Requires: python3-module-flake8
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Feb 03 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Mon Aug 25 2025 Timofei Fedotov <sovtouch@altlinux.org> 2.2.1-alt1
 - Initial build for ALT Sisyphus.
