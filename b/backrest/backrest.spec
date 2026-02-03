@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/garethgeorge/backrest
 # git rev-parse --short v%version
-%global commit_hash b9181dc0
+%global commit_hash 4357723
 
 Name: backrest
-Version: 1.10.1
+Version: 1.11.2
 Release: alt1
 Summary: Web UI and orchestrator for restic backup
 License: GPL-3.0
@@ -17,6 +17,8 @@ Source1: vendor.tar
 Source2: node_modules.tar
 Source3: backrest.sysconfig
 Source4: backrest.service
+
+Patch: alt-fix-inlang-settings.patch
 
 ExclusiveArch: x86_64
 
@@ -37,6 +39,7 @@ to create repos, browse snapshots, and restore files.
 # npm --prefix webui install
 # git add webui/node_modules -f && git commit -m "Updated node modules."
 %setup -a 1 -a 2
+%patch -p1
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -77,6 +80,9 @@ touch %buildroot%_sysconfdir/backrest/config.json
 %doc LICENSE
 
 %changelog
+* Tue Feb 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.11.2-alt1
+- Updated to version 1.11.2.
+
 * Sun Nov 02 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.10.1-alt1
 - Updated to version 1.10.1.
 
