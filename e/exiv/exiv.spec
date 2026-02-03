@@ -16,7 +16,7 @@
 
 Name: exiv
 Version: 0.28.7
-Release: alt10
+Release: alt11
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -85,6 +85,10 @@ sed -i 's|\(VERSION.*{PROJECT_VERSION}\)|\1.0|' src/CMakeLists.txt
 %find_lang exiv2
 
 mv %buildroot/%_pkgconfigdir/exiv{2,}.pc
+install -d %buildroot/%_sysconfdir/alternatives/packages.d/
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
+%_pkgconfigdir/exiv2.pc %_pkgconfigdir/exiv.pc %version
+__EOF__
 
 %check
 %ctest
@@ -94,12 +98,16 @@ mv %buildroot/%_pkgconfigdir/exiv{2,}.pc
 %_libdir/libexiv2.so.*
 
 %files devel
+%config %_sysconfdir/alternatives/packages.d/%name-devel
 %_libdir/lib*.so
 %_includedir/exiv2/
 %_pkgconfigdir/exiv.pc
 %_libdir/cmake/exiv2/
 
 %changelog
+* Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.28.7-alt11
+- put pkgconfig-file on alternatives
+
 * Mon Feb 02 2026 Sergey V Turchin <zerg@altlinux.org> 0.28.7-alt10
 - package according Shared Libs Policy
 
