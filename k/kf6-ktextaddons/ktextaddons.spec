@@ -15,10 +15,10 @@
 %define libkf6textautogeneratetext libkf6textautogeneratetext%sover
 %define libtextautogenerategenericnetwork libtextautogenerategenericnetwork
 %define rccopy_sover 0
-%define libtextautogenerate_cmark_rc_copy libtextautogenerate-cmark-rc-copy%rccopy_sover
+%define libtextutils_cmark_rc_copy libtextutils-cmark-rc-copy%rccopy_sover
 
 Name: kf6-%rname
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 %K6init no_altplace
 
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-speech-devel qt6-tools-devel qt6-declarative-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-karchive-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kxmlgui-devel kf6-kio-devel
-BuildRequires: kf6-sonnet-devel kf6-syntax-highlighting-devel kf6-ktextwidgets-devel
+BuildRequires: kf6-sonnet-devel kf6-syntax-highlighting-devel kf6-ktextwidgets-devel kf6-kiconthemes-devel
 BuildRequires: libqtkeychain-qt6-devel
 
 %description
@@ -49,105 +49,105 @@ Common %name files
 %package -n %libkf6textaddonswidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textaddonswidgets
 %name library
 
 %package -n %libkf6texttranslator
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6texttranslator
 %name library
 
 %package -n %libkf6textedittexttospeech
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textedittexttospeech
 %name library
 
 %package -n %libkf6textgrammarcheck
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textgrammarcheck
 %name library
 
 %package -n %libkf6textemoticonscore
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textemoticonscore
 %name library
 
 %package -n %libkf6textemoticonswidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textemoticonswidgets
 %name library
 
 %package -n %libkf6textautocorrectionwidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textautocorrectionwidgets
 %name library
 
 %package -n %libkf6textautocorrectioncore
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textautocorrectioncore
 %name library
 
 %package -n %libkf6textutils
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textutils
 %name library
 
 %package -n %libkf6textcustomeditor
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textcustomeditor
 %name library
 
 %package -n %libkf6textautogeneratetext
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textautogeneratetext
 %name library
 
 %package -n %libkf6textspeechtotext
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkf6textspeechtotext
 %name library
 
 %package -n %libtextautogenerateollama
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libtextautogenerateollama
 %name library
 
-%package -n %libtextautogenerate_cmark_rc_copy
+%package -n %libtextutils_cmark_rc_copy
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
-%description -n %libtextautogenerate_cmark_rc_copy
+Requires: %name-common >= %EVR
+%description -n %libtextutils_cmark_rc_copy
 %name library
 
 %package -n %libtextautogenerategenericnetwork
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libtextautogenerategenericnetwork
 %name library
 
@@ -189,9 +189,9 @@ done
 %_K6plug/kf6/speechtotext/speechtotext_*.so
 %_K6plug/kf6/textautogeneratetext/autogeneratetext_*.so
 
-%files -n %libtextautogenerate_cmark_rc_copy
-%_K6lib/libtextautogenerate-cmark-rc-copy.so.*
-%_K6lib/libtextautogenerate-cmark-rc-copy.so.%rccopy_sover
+%files -n %libtextutils_cmark_rc_copy
+%_K6lib/libtextutils-cmark-rc-copy.so.*
+%_K6lib/libtextutils-cmark-rc-copy.so.%rccopy_sover
 %files -n %libtextautogenerategenericnetwork
 %_K6lib/libtextautogenerategenericnetwork.so.*
 %_K6lib/libtextautogenerategenericnetwork.so.%sover
@@ -243,6 +243,9 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1
+- new version
+
 * Wed Nov 19 2025 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt1
 - new version
 
