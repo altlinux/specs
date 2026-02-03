@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 25.12.1
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Terminals
@@ -35,6 +35,7 @@ Patch14: alt-fix-empty-profile.patch
 Patch15: alt-disable-colorfilter.patch
 Patch16: alt-new-tab-button.patch
 Patch17: alt-no-f10.patch
+Patch18: alt-fix-tab-prompts.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-xdg
@@ -103,6 +104,7 @@ Obsoletes: libkonsoleapp1 < %EVR
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 %build
 %K6build \
@@ -163,6 +165,9 @@ __EOF__
 
 
 %changelog
+* Thu Jan 29 2026 Oleg Solovyov <mcpain@altlinux.org> 25.12.1-alt2
+- change default profile tab prompt as set by shell
+
 * Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 
