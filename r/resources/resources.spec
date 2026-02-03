@@ -1,14 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.9
+%define ver_major 1.10
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: System monitor
@@ -90,6 +90,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- updated to v1.10.0-10-g80b38c2
+
 * Tue Nov 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
