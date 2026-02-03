@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
 
 %define _name easyeffects
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.1.1
+Version: 8.1.2
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -135,6 +135,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.2-alt1
+- 8.1.2
+
 * Sat Jan 31 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.1-alt1
 - 8.1.1
 
