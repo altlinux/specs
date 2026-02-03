@@ -1,5 +1,5 @@
 Name:    glpi-agent
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: GLPI Agent
@@ -132,6 +132,7 @@ find %buildroot -name .packlist -delete
 %config(noreplace) %_sysconfdir/%name/ssl-server-plugin.cfg
 %config(noreplace) %_sysconfdir/%name/toolbox-plugin.cfg
 %config(noreplace) %_sysconfdir/%name/basic-authentication-server-plugin.cfg
+%config(noreplace) %_sysconfdir/%name/snmp-advanced-support.cfg
 %_bindir/*
 %_datadir/%name
 %_sysconfdir/cron.hourly/%name
@@ -140,6 +141,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Feb 03 2026 Andrey Cherepanov <cas@altlinux.org> 1.16-alt1
+- New version.
+
 * Tue Jun 10 2025 Andrey Cherepanov <cas@altlinux.org> 1.15-alt1
 - New version.
 
