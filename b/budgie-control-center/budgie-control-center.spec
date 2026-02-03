@@ -8,7 +8,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-control-center
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A fork of GNOME Control Center for the Budgie 10 Series
@@ -185,9 +185,11 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.buddiesof
 %files common -f %name.lang
 %dir %_datadir/budgie/
 %dir %_datadir/%name/
+%dir %_datadir/%name/introduction/
 %dir %_datadir/%name/keyfile/
 %dir %_datadir/%name/keybindings/
 %dir %_datadir/%name/pixmaps/
+%_datadir/%name/introduction/introduction.template
 %_datadir/%name/keyfile/labwc_keyfile.ini
 %dir %_pixmapsdir/budgie-faces
 %dir %_pixmapsdir/budgie-faces/legacy
@@ -214,9 +216,14 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.buddiesof
 %_datadir/sounds/budgie/default/alerts/*.ogg
 
 %changelog
+* Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version 2.1.0
+- add introduction.template to files
+
 * Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0
 - use meson option to disable bluetooth instead of patch
+- add ExcludeArch: ix86
 
 * Fri Dec 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)

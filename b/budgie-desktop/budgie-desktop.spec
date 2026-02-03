@@ -7,7 +7,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-desktop
-Version: 10.10.0
+Version: 10.10.1
 Release: alt1
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
@@ -20,6 +20,9 @@ ExcludeArch: %ix86
 
 # Source0-url: %url/releases/download/v%version/%name-v%version.tar.xz
 Source0: %name-%version.tar
+
+# vapi for libxfce4windowing (needed until libxfce4windowing uses meson build)
+Patch1: add-libxfce4windowing-vapi.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: pkgconfig(accountsservice) >= 0.6.55
@@ -110,6 +113,7 @@ Documentation for budgie-desktop
 
 %prep
 %setup
+%patch1 -p1
 # Fix missing wnck dependency for appsys vapi consumers
 sed -i '/link_with: libappsys,/a \    dependencies: [dep_wnck],' src/appsys/meson.build
 
@@ -209,6 +213,10 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.1-alt1
+- new version 10.10.1
+- add libxfce4windowing-0.vapi patch (needed until libxfce4windowing uses meson)
+
 * Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.0-alt1
 - new version 10.10.0
 - add Wayland tools: grim, slurp, wlopm, swayidle, swaybg, swaylock, gammastep

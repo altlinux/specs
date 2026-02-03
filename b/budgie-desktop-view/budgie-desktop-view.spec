@@ -3,7 +3,7 @@
 %global vala_version 0.48
 
 Name: budgie-desktop-view
-Version: 10.10.0
+Version: 10.10.1
 Release: alt1
 
 Summary: Official Budgie desktop icons application / implementation
@@ -58,9 +58,13 @@ desktop-file-validate %buildroot%_desktopdir/org.buddiesofbudgie.budgie-desktop-
 %_sysconfdir/xdg/autostart/org.buddiesofbudgie.budgie-desktop-view-autostart.desktop
 
 %changelog
+* Mon Feb 02 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.1-alt1
+- new version 10.10.1
+
 * Sun Jan 11 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.0-alt1
 - new version 10.10.0
 - add Wayland support via gtk-layer-shell
+- add ExcludeArch: ix86
 
 * Sat Mar 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
 - initial build for ALT Sisyphus
