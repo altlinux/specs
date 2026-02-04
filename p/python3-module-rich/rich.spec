@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 14.2.0
+Version: 14.3.2
 Release: alt1
 Summary: Render rich text and beautiful formatting in the terminal
 License: MIT
@@ -56,6 +56,9 @@ code, tracebacks, and more - out of the box.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 14.3.2-alt1
+- 14.2.0 -> 14.3.2.
+
 * Thu Dec 04 2025 Stanislav Levin <slev@altlinux.org> 14.2.0-alt1
 - 14.1.0 -> 14.2.0.
 
