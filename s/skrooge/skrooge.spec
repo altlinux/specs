@@ -2,7 +2,7 @@
 
 Name: skrooge
 Version: 26.1.20
-Release: alt1
+Release: alt2
 Summary: A personal finances manager, powered by KDE
 License: %gpl2plus
 Group: Office
@@ -17,6 +17,7 @@ ExcludeArch: ppc64le armh %ix86
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: grantlee5-devel
 BuildRequires: kf6-karchive-devel
@@ -64,7 +65,9 @@ BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
+%ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel
+%endif
 
 Requires: libgrantlee_templates5
 Requires: kf6-kio
@@ -82,6 +85,11 @@ A personal finances manager, powered by KDE.
 %K6build -DSKG_CIPHER=OFF \
          -DQT_MAJOR_VERSION=6 \
          -DKDE_INSTALL_KXMLGUIDIR=%_K6xmlgui \
+%ifarch %qt6_qtwebengine_arches
+	 -DSKG_WEBENGINE=ON \
+%else
+	 -DSKG_WEBENGINE=OFF \
+%endif
          -DSKG_BUILD_TEST=OFF
 
 %install
@@ -108,6 +116,10 @@ A personal finances manager, powered by KDE.
 %_datadir/skrooge_source/*.json
 
 %changelog
+* Wed Feb 04 2026 Ivan A. Melnikov <iv@altlinux.org> 26.1.20-alt2
+- Build w/o qt6-webengine on architectures that don't have it
+  (fixes build on riscv64).
+
 * Sat Jan 24 2026 Andrey Cherepanov <cas@altlinux.org> 26.1.20-alt1
 - New version 26.1.20.
 
