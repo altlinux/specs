@@ -4,17 +4,18 @@
 
 Name: python3-module-%modulename
 Version: 18.10.0
-Release: alt2
+Release: alt3
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
 
 License: BSD-3-Clause
 Group: Development/Python3
 URL: http://www.cherrypy.org
-BuildArch: noarch
+VCS: https://github.com/cherrypy/cherrypy
 
-# git clone https://github.com/cherrypy/cherrypy
 Source: %name-%version.tar
+
+Patch: 1f75bc9eed8e0e385f64f368bd69f58d96fb8c2b.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
@@ -35,6 +36,8 @@ BuildRequires: python3-module-pytest-services
 # note: don't remove win32 module because other packages may rely on it
 %add_findreq_skiplist %python3_sitelibdir/%modulename/process/win32.py
 
+BuildArch: noarch
+
 %description
 Your CherryPy powered web applications are in fact stand-alone Python
 applications embedding their own multi-threaded web server. You can deploy
@@ -43,6 +46,7 @@ but it's possible to run a CherryPy application behind it.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -64,6 +68,9 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt3
+- Fixed FTBFS.
+
 * Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt2
 - Fixed FTBFS.
 
