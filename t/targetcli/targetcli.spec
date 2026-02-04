@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: targetcli
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Epoch: 1
 
@@ -65,6 +65,9 @@ install -m 644 systemd/* %buildroot%_unitdir/
 %python3_sitelibdir/%{pyproject_distinfo targetcli}/
 
 %changelog
+* Wed Feb 04 2026 Anton Vyatkin <toni@altlinux.org> 1:3.0.2-alt1
+- New version 3.0.2.
+
 * Tue Apr 08 2025 Anton Vyatkin <toni@altlinux.org> 1:3.0.1-alt1
 - New version 3.0.1.
 
