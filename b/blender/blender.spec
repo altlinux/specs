@@ -67,7 +67,7 @@
 
 Name: blender
 Version: 4.5.6
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -81,6 +81,8 @@ ExcludeArch: %ix86 %arm
 Source: %name-%version.tar
 # git lfs from blender git release
 Source1: blender-lfs-%version.tar
+# freedesktop thumbnailer file
+Source2: blender.thumbnailer
 # cheryy-picked upstream commits
 Patch1: %name-%version-%release.patch
 
@@ -261,7 +263,7 @@ scripting, rendering, compositing, post-production and game creation
 %package doc
 Summary: Documentation for Blender
 Group: Documentation
-Requires: %name = %EVR
+BuildArch: noarch
 
 %description doc
 Fully integrated creation suite, offering a broad range of essential
@@ -482,9 +484,13 @@ python3 doc/manpage/blender.1.py \
 %endif
 %cmake_install
 
+# Install thumbnailer for file managers
+install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
+
 %files
 %_bindir/*
 %_desktopdir/%name.desktop
+%_datadir/thumbnailers/%name.thumbnailer
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
@@ -527,6 +533,12 @@ python3 doc/manpage/blender.1.py \
 %endif
 
 %changelog
+* Tue Feb 04 2026 Anton Farygin <rider@altlinux.org> 4.5.6-alt2
+- added freedesktop thumbnailer file for generating .blend file previews
+  in file managers (Closes: #57740)
+- removed the blender dependency from the documentation package and made
+  it noarch (Closes: #54980)
+
 * Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 4.5.6-alt1
 - 4.5.5 -> 4.5.6
 
