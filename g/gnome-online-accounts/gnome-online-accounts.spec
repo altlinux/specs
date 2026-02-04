@@ -17,7 +17,7 @@
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Provide online accounts information
@@ -30,7 +30,8 @@ Vcs: https://gitlab.gnome.org/GNOME/gnome-online-accounts.git
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: https://github.com/GNOME/%name/archive/%version/%name-%version.tar.gz
 %endif
 
 Requires: lib%name = %EVR
@@ -180,6 +181,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Wed Feb 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.4-alt1
+- 3.56.4
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.3-alt1
 - 3.56.3
 
