@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.3
-Release:    alt1
+Release:    alt2
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -40,7 +40,7 @@ BuildRequires: ghc cabal-install rpm-build-haskell-vendored
 BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
 BuildRequires: libffi-devel libfreeglut-devel libgmp-devel liblua5.1-compat-devel
-BuildRequires: libphysfs-devel libqt5-quickshapes libpng-devel
+BuildRequires: libphysfs-devel libqt5-quickshapes libpng-devel zlib-devel
 BuildRequires: libswresample-devel qt5-tools-devel
 BuildRequires: desktop-file-utils chrpath
 
@@ -171,6 +171,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt2
+- Fixed FTBFS.
+
 * Tue Sep 23 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt1
 - Build new version.
 
