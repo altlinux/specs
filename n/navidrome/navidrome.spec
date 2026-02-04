@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/navidrome/navidrome
 # git rev-parse --short v%version
-%global commit_hash cc3cca607
+%global commit_hash 0c8f2a5
 
 Name: navidrome
-Version: 0.59.0
-Release: alt2
+Version: 0.60.0
+Release: alt1
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
 Group: System/Servers
@@ -37,11 +37,10 @@ It gives you freedom to listen to your music collection from any browser
 or mobile device. It's like your personal Spotify!
 
 %prep
-# ./alt/update_modules.sh
 %setup -a 1 -a 2
 # use system esbuild
 ln -sv %_bindir/esbuild ui
-sed -i "s/0.25.4/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
+sed -i "s/0.27.2/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -86,6 +85,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Wed Feb 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.60.0-alt1
+- Updated to version 0.60.0 (fix CVE-2026-25578, CVE-2026-25579).
+
 * Sat Jan 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.59.0-alt2
 - Fixed build with golang 1.25.6.
 
