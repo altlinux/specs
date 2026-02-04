@@ -1,10 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyproject-fmt
+%define mod_name pyproject_fmt
+# see for details pyproject-fmt/Cargo.toml
+%python3_set_limited_api 3.9
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.12.1
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -15,7 +18,8 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -55,10 +59,13 @@ cd pyproject-fmt
 %files
 %doc README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/pyproject_fmt/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
+- 2.6.0 -> 2.12.1.
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.5.1 -> 2.6.0.
 

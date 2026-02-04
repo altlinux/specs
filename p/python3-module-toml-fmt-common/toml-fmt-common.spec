@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Common logic to the TOML formatter
 License: MIT
@@ -55,6 +55,9 @@ to only be used by that project).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Thu Dec 11 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.1 -> 1.1.0.
 
