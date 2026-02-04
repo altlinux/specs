@@ -1,28 +1,28 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define _stripped_files_terminate_build 1
 %ifarch %ix86
 %set_verify_elf_method relaxed
 %else
 %set_verify_elf_method strict
 %endif
 
-%def_without check
+%def_with check
+%def_with openimageio
 
 # TODO: build docs
 
-%define soname 2.4
+%define soname 2.5
 
 Name: opencolorio
-Version: 2.4.2
+Version: 2.5.1
 Release: alt1
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
 Group: System/Libraries
 
-URL: https://%name.org/
+URL: https://opencolorio.org
+VCS: https://github.com/AcademySoftwareFoundation/OpenColorIO
 
-# https://github.com/imageworks/OpenColorIO.git
 Source: %name-%version.tar
 
 Patch1: %name-alt-install.patch
@@ -36,27 +36,26 @@ BuildRequires: help2man
 # If an ABI incompatible update is done in one, the other also needs to be
 # rebuilt.
 BuildRequires: openexr-devel
+%{?_with_openimageio:BuildRequires: libopenimageio-devel}
 
 # Libraries
-BuildRequires: libGL-devel libGLU-devel
-BuildRequires: libX11-devel libXmu-devel libXi-devel
-BuildRequires: libfreeglut-devel
 BuildRequires: libGLEW-devel
-BuildRequires: zlib-devel
+BuildRequires: libXi-devel
+BuildRequires: libXmu-devel
 BuildRequires: libexpat-devel
-BuildRequires: pystring-devel
-BuildRequires: pybind11-devel
-BuildRequires: python3-devel
+BuildRequires: libfreeglut-devel
 BuildRequires: liblcms2-devel
-BuildRequires: libyaml-cpp-devel
-BuildRequires: boost-devel
-BuildRequires: libimath29-devel
-BuildRequires: python3-module-imath
 BuildRequires: libminizip-ng-compat-devel
+BuildRequires: libyaml-cpp-devel
+BuildRequires: pybind11-devel
+BuildRequires: pystring-devel
+BuildRequires: zlib-devel
+BuildRequires: python3-devel
 
-# Test dependencies
+%if_with check
 BuildRequires: ctest
 BuildRequires: python3-module-numpy
+%endif
 
 %description
 OCIO enables color transforms and image display to be handled in a consistent
@@ -187,6 +186,7 @@ popd
 %_bindir/ociodisplay
 %_bindir/ociolutimage
 %_bindir/ociomakeclf
+%_bindir/ociomergeconfigs
 %_bindir/ocioperf
 %_bindir/ociowrite
 %_man1dir/*
@@ -201,6 +201,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Fri Jan 30 2026 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
+- Automatically updated to 2.5.1.
+
 * Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
 - Automatically updated to 2.4.2.
 
