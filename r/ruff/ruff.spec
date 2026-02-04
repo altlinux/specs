@@ -5,11 +5,11 @@
 
 %define ruff_pypi_name ruff
 %define ruff_import_name ruff
-%define ruff_version 0.14.13
+%define ruff_version 0.15.0
 
 %define ty_pypi_name ty
 %define ty_import_name ty
-%define ty_version 0.0.12
+%define ty_version 0.0.14
 
 %define bash_completionsdir %_datadir/bash-completion/completions
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
@@ -164,6 +164,10 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pep427_name %ty_pypi_name}-%ty_version.dist-info/
 
 %changelog
+* Wed Feb 04 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.0-alt1
+- Updated ruff to 0.15.0.
+- Updated ty to 0.0.14.
+
 * Tue Jan 20 2026 Anton Zhukharev <ancieg@altlinux.org> 0.14.13-alt1
 - Updated ruff to 0.14.13.
 - Updated ty to 0.0.12.
