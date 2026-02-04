@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,10 @@ done
 %_destdir
 
 %changelog
+* Wed Feb 04 2026 Valentin Sokolov <sova@altlinux.org> 0.7.1-alt1
+- Improve category hierarchy for LAPS policies
+- Improved description in LAPS policies (closes:57724)
+
 * Mon Nov 24 2025 Valentin Sokolov <sova@altlinux.org> 0.7.0-alt1
 - Added new policy: gpupdate_allow_trust_user_policy
 - Added a policy for enabling GPUpdate plugins
