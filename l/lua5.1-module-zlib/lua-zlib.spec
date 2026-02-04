@@ -4,7 +4,7 @@
 %global luaver 5.1
 
 Name: lua%luaver-module-zlib
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Simple streaming interface to zlib for Lua
@@ -14,6 +14,7 @@ Url: https://luarocks.org/modules/brimworks/lua-zlib
 Vcs: https://github.com/brimworks/lua-zlib
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-lua
@@ -30,6 +31,7 @@ returns a buffer of output).
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -47,15 +49,15 @@ returns a buffer of output).
 %lua test.lua
 
 %files
-%doc README
+%doc README.md LICENCE
 %lua_modulesdir/zlib.so
 
 %changelog
+* Tue Feb 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.4-alt1
+- Updated to 1.4.
+
 * Mon Jul 07 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.3-alt1
 - Updated to 1.3.
-
-* Thu Feb 06 2025 Ivan A. Melnikov <iv@altlinux.org> 1.2-alt2.git15d4bc8
-- build for lua 5.1
 
 * Fri Aug 04 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.2-alt2.git15d4bc8
 - fixed adding lua-zlib files to dependent packages' buildroot
