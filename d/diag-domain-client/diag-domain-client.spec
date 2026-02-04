@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -55,6 +55,11 @@ bats tests/report_test.bats
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Feb 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.1-alt1
+- fix: added missing description to .diag
+- docs: update man page with --compact flag option (thx Andrey Limachko)
+- feat: add --compact flag for minimal output mode (thx Andrey Limachko)
+
 * Fri Jan 23 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.0-alt1
 - build: added some missing requirements
 - fix: fixed report test (thnx liannnix@)
