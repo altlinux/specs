@@ -1,50 +1,81 @@
+%define pypi_name psutils
 %def_with check
 
 Name: psutils
-Version: 2.10
-Release: alt2
+Version: 3.3.14
+Release: alt1
 Epoch: 2
 
-Summary: PostScript utilities
-License: GPLv3
+Summary: PDF and PostScript document manipulation utilities
+License: GPL-3.0-or-later
 Group: Publishing
 
 Url: https://github.com/rrthomas/psutils
+VCS: https://github.com/rrthomas/psutils
 Source: %name-%version.tar
+Patch1: %name-%version-alt-version-fallback.patch
 
 BuildArch: noarch
-BuildRequires: gnulib help2man git-core
-BuildRequires: paper
-BuildRequires: perl(IPC/Run3.pm)
 
-%add_perl_lib_path %_datadir/%name
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-argparse-manpage
+BuildRequires: python3-module-puremagic
+BuildRequires: python3-module-pypdf
+BuildRequires: paper
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-datafiles
+BuildRequires: python3-module-wand
+BuildRequires: ghostscript
+BuildRequires: a2ps
+%endif
+
+Requires: paper
 
 %description
-psutils contains some utilities for manipulating PostScript documents.
-Page selections and rearrangement are supported, including arrengement
-into signatures for booklet printing, and page merging for n-up printing.
+PSUtils is a suite of utilities for manipulating PDF and PostScript
+documents. You can select and rearrange pages, including arrangement into
+signatures for booklet printing, combine multiple pages into a single page
+for n-up printing, and resize, flip and rotate pages.
 
 %prep
-%setup 
+%setup
+%patch1 -p1
 
 %build
-./bootstrap --skip-git --gnulib-srcdir=/usr/share/gnulib
-%configure
-%make_build
+%pyproject_build
 
 %install
-%makeinstall 
+%pyproject_install
 
 %check
-%make check
+%pyproject_run_pytest
 
 %files
-%doc COPYING README
-%_bindir/*
-%_datadir/%name
+%doc README.md COPYING
+%_bindir/epsffit
+%_bindir/extractres
+%_bindir/includeres
+%_bindir/psbook
+%_bindir/psjoin
+%_bindir/psnup
+%_bindir/psresize
+%_bindir/psselect
+%_bindir/pstops
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pypi_name}-%version.dist-info/
 %_man1dir/*
 
 %changelog
+* Tue Feb 04 2025 Anton Farygin <rider@altlinux.org> 2:3.3.14-alt1
+- 2.10 -> 3.3.14
+- upstream rewrote psutils in Python (was Perl + autotools)
+- now supports PDF in addition to PostScript
+- added version fallback patch for build time
+
 * Sun Oct 15 2023 Michael Shigorin <mike@altlinux.org> 2:2.10-alt2
 - fix build --without check
 
@@ -103,11 +134,3 @@ into signatures for booklet printing, and page merging for n-up printing.
 * Tue Mar 21 2000 Yoann Vandoorselaere <yoann@mandrakesoft.com> p17-4mdk
 - Fix group.
 
-* Fri Nov 12 1999 Giuseppe Ghibò <ghibo@linux-mandrake.com>
-- Rebuilt for Oxygen.
-
-* Fri Aug 27 1999 Giuseppe Ghibò <ghibo@linux-mandrake.com>
-- Ajusted perl path in scripts.
-
-* Fri Aug 13 1999 Giuseppe Ghibò <ghibo@linux-mandrake.com>
-- First spec file for Mandrake distribution.
