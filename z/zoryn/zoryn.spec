@@ -1,7 +1,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -95,6 +95,13 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
+- changed clone to not automatically add gitery remote (use --init-gitery)
+- fixed submit to create gitery repo and run init-db for new packages
+- fixed submit to use actual package Name instead of spec filename
+- fixed up to show correct next step hint (zoryn submit)
+- fixed check spec VCS URL validation for git-only servers
+
 * Mon Feb 03 2026 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
 - added configurable shell commands via [commands] section in ~/.zoryn
 - added readline support in gen environment interactive prompts
