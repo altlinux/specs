@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.0
-Release: alt3
+Version: 2.0.0
+Release: alt1
 
 Summary: Ordered dictionary
 
@@ -13,12 +13,11 @@ Group: Development/Python3
 Url: https://pypi.org/project/odict/
 Vcs: https://github.com/conestack/odict
 Source: %name-%version.tar
-Patch: odict-1.9.0-python3.13-support.patch
-Patch1: odict-1.9.0-use-abs-path-for-import.patch
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mod_name
+
 BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3-module-setuptools
+
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-fancy-pypi-readme
 
 BuildArch: noarch
 
@@ -29,8 +28,6 @@ existing item keeps it at its original position.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -39,17 +36,17 @@ existing item keeps it at its original position.
 %pyproject_install
 
 %check
-# see .github/workflows/test.yaml
-%pyproject_run -- python -m %pypi_name.tests
+%pyproject_run_pytest
 
 %files
 %doc *.rst
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*/tests.*
-%exclude %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Fri Oct 17 2025 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt3
 - Fixed FTBFS.
 
