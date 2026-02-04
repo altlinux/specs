@@ -2,7 +2,7 @@
 %define oname icinga2_usersyncd
 
 Name: icinga2-usersyncd
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Group: Monitoring
@@ -83,6 +83,10 @@ touch %buildroot%_localstatedir/icinga2/certs/icinga2-usersyncd.crt
 %python3_sitelibdir_noarch/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 04 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
+- Fixed signal handling.
+- Updated project URL.
+
 * Tue Jun 18 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
 - Package the README.
 - Added "SETUP" section to the README.
