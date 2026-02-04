@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name dbus-next
 %define mod_name dbus_next
 
@@ -6,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.3
-Release: alt4
+Release: alt5
 Summary: The next great DBus library for Python with asyncio support
 License: MIT
 Group: Development/Python3
@@ -14,14 +13,11 @@ Url: https://pypi.org/project/dbus-next/
 Vcs: https://github.com/altdesktop/python-dbus-next
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+# https://github.com/altdesktop/python-dbus-next/pull/171
+Patch: 37830c9972209746396f4c3f8344ce50a435b767.patch
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -35,9 +31,7 @@ The next great DBus library for Python.
 
 %prep
 %setup
-%patch0 -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%patch -p1
 
 %build
 %pyproject_build
@@ -63,6 +57,9 @@ The next great DBus library for Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt5
+- Fixed FTBFS.
+
 * Tue Mar 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.2.3-alt4
 - Fixed FTBFS (dbus 1.14.4).
 
