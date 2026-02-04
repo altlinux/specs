@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The reference implementation of Sass, written in Dart.
@@ -71,6 +71,9 @@ install -vDm644 -t %buildroot/%_datadir/%_name build/language/spec/embedded_sass
 %doc *.md
 
 %changelog
+* Wed Feb 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.97.3-alt1
+- 1.97.3
+
 * Tue Jan 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.97.2-alt1
 - 1.97.2
 
