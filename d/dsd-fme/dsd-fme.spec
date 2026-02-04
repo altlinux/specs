@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dsd-fme
-Version: 2025
+Version: 2026
 Release: alt1
 Summary: Digital Speech Decoder - Florida Man Edition
 License: MIT
@@ -51,8 +51,11 @@ P25 Phase 2, EDACS, YSF, M17, OP25 Capture Bin compatability, etc.
 %_bindir/%name
 
 %changelog
+* Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 2026-alt1
+- Update for new version.
+
 * Sun Jul 27 2025 Pavel Shilov <zerospirit@altlinux.org> 2025-alt1
-- 2024 -> 2025 
+- 2024 -> 2025
 
 * Tue Nov 19 2024 Pavel Shilov <zerospirit@altlinux.org> 2024-alt2
 - change product group

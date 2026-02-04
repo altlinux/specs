@@ -2,12 +2,13 @@
 %global import_path github.com/mr-karan/doggo
 
 Name: doggo
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Summary: Command-line DNS Client for Humans.
 License: GPL-3.0-only
 Group: Monitoring
 Url: https://github.com/mr-karan/doggo
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: vendor.tar
@@ -70,6 +71,9 @@ install -Dm644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %_bindir/%name-web
 
 %changelog
+* Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.1.4-alt1
+- 1.1.3 -> 1.1.4
+
 * Tue Dec 23 2025 Pavel Shilov <zerospirit@altlinux.org> 1.1.3-alt1
 - 1.1.2 -> 1.1.3
 

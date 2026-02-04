@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systemctl-tui
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 Summary: A fast, simple TUI for interacting with systemd services and their logs.
 License: MIT 
@@ -39,7 +39,7 @@ EOF
 
 # allow patching vendored rust code
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-  ./vendor/nix-0.24.3/.cargo-checksum.json
+  ./vendor/nix-0.29.0/.cargo-checksum.json
 
 %build
 %rust_build
@@ -52,6 +52,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 0.5.1-alt1
+- 0.4.0 -> 0.5.1
+
 * Thu Jul 03 2025 Pavel Shilov <zerospirit@altlinux.org> 0.4.0-alt1
 - Update version
 
