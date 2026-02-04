@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfilezilla
-Version: 0.51.1
+Version: 0.54.0
 Release: alt1
 Summary: Small and modern C++ library
 License: GPL-2.0-or-later
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://lib.filezilla-project.org/
 
 Source: %name-%version.tar
+Source999: watch
 
 BuildRequires: cppunit-devel doxygen gcc-c++ graphviz libnettle-devel
 BuildRequires: libgnutls-devel
@@ -80,6 +81,9 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.54.0-alt1
+- 0.51.1 -> 0.54.0
+
 * Wed Aug 13 2025 Anton Midyukov <antohami@altlinux.org> 0.51.1-alt1
 - new bersion (0.51.1)
 
