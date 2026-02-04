@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: cosmic-randr
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: COSMIC RandR
@@ -56,6 +56,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 

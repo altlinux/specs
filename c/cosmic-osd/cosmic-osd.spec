@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-osd
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: COSMIC OSD
@@ -46,7 +46,10 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch %ix86 aarch64
+    --config 'profile.release.lto=false'
+%endif
 
 %install
 just rootdir=%buildroot install
@@ -58,6 +61,9 @@ just rootdir=%buildroot install
 %_bindir/%name
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 

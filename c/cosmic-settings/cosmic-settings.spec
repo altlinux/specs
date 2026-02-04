@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-settings
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: COSMIC Settings
@@ -33,6 +33,8 @@ Requires: cosmic-randr
 Requires: iso-codes
 Requires: xkeyboard-config
 Requires: fonts-ttf-open-sans
+Requires: bluez
+Requires: ppd-service
 
 #? for VPN
 Requires: NetworkManager-openvpn-gtk4
@@ -93,6 +95,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 

@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-settings-daemon
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: COSMIC Settings Daemon
@@ -65,6 +65,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/polkit-1/rules.d/%name.rules
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 

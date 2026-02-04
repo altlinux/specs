@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: cosmic-applibrary
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: COSMIC App Library
@@ -41,7 +41,7 @@ Cosmic App Library is an application launcher for the COSMIC desktop
 that lists all installed applications in a grid.
 
 %prep
-%setup -n %name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
+%setup -n %{?_enable_snapshot:%name-%version%beta}%{?_disable_snapshot:%binary_name-%git_ver} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -64,6 +64,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Jan 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
