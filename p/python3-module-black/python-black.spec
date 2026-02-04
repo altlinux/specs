@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 25.12.0
+Version: 26.1.0
 Release: alt1
 Summary: The Uncompromising Code Formatter
 License: MIT
@@ -34,7 +34,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%set_pyproject_deps_check_filter tox pytest-cov pre-commit coverage
+# filtered by default by actually used
+BuildRequires: python3-module-mypy-extensions
 %pyproject_builddeps_metadata_extra d
 %pyproject_builddeps_check
 
@@ -64,7 +65,7 @@ Black makes code review faster by producing the smallest diffs possible.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test_requirements.txt
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -89,6 +90,9 @@ Black makes code review faster by producing the smallest diffs possible.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 26.1.0-alt1
+- 25.12.0 -> 26.1.0.
+
 * Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 25.12.0-alt1
 - 25.11.0 -> 25.12.0.
 

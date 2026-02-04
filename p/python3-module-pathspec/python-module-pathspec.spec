@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pathspec
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.1
+Version: 1.0.4
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
-License: MPL-2.0-no-copyleft-exception
+License: MPL-2.0
 Group: Development/Python
 Url: https://pypi.org/project/pathspec/
 VCS: https://github.com/cpburnz/python-pathspec.git
@@ -16,7 +17,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: pyproject_deps.json
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject
@@ -45,14 +47,16 @@ gitignore files.
 %pyproject_install
 
 %check
-%pyproject_run_unittest -v
+%pyproject_run_unittest discover -t . -s tests/ -v
 
 %files
-%doc *.rst
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
+- 0.12.1 -> 1.0.4.
+
 * Mon Mar 04 2024 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
 - 0.11.2 -> 0.12.1.
 
