@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 25.12.1
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: Terminals
@@ -36,6 +36,7 @@ Patch15: alt-disable-colorfilter.patch
 Patch16: alt-new-tab-button.patch
 Patch17: alt-no-f10.patch
 Patch18: alt-fix-tab-prompts.patch
+Patch19: alt-open-fileman.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-xdg
@@ -105,6 +106,7 @@ Obsoletes: libkonsoleapp1 < %EVR
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 %K6build \
@@ -165,6 +167,9 @@ __EOF__
 
 
 %changelog
+* Wed Feb 04 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt3
+- fix open file manager (closes: 57702)
+
 * Thu Jan 29 2026 Oleg Solovyov <mcpain@altlinux.org> 25.12.1-alt2
 - change default profile tab prompt as set by shell
 
