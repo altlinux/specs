@@ -4,9 +4,9 @@
 
 Name: lv2-%oname-plugins
 Version: 0.1.5
-Release: alt3
+Release: alt4
 
-Summary: An lv2 plug-in for broadband noise reduction
+Summary: An lv2 plug-in for broadband noise reduction (legacy)
 License: GPLv3+
 Group: Sound
 
@@ -14,6 +14,7 @@ Url: https://github.com/lucianodato/noise-repellent
 Source0: %name-%version.tar
 Source1: Home.md
 Patch1: build_no_x86isms.patch
+Patch2: mark-plugin-as-legacy-ttl.patch
 
 BuildRequires(pre): meson
 BuildRequires: pkgconfig(lv2)
@@ -34,10 +35,14 @@ reduction, featuring:
 * soft bypass
 * noise profile saved with the session
 
+This is a legacy version of the plugin. Please consider using new
+version (available as lv2-noise-repellent-new-plugins package)
+for new project.
+
 %prep
 %setup
 cp -a %SOURCE1 .
-%patch1 -p1
+%autopatch -p1
 
 %build
 %meson
@@ -55,6 +60,10 @@ install -p -m644 -t %buildroot%odir/ */*.ttl */*.so
 %doc Home.md
 
 %changelog
+* Thu Jan 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.1.5-alt4
+- Update plugin name and description to show that
+  it's a legacy version
+
 * Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1.5-alt3
 - Build on all architectures
 
