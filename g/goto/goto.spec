@@ -3,7 +3,7 @@
 
 Name: goto
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: %name is console SSH client application
 Group: Networking/Remote access
 License: MIT
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
 Requires: openssh
+Conflicts: grip-grab
 
 %description
 This is a tool for managing and organizing your SSH servers.
@@ -54,6 +55,9 @@ ln -s %buildroot_bindir/%name %buildroot%_bindir/gg
 %_bindir/gg
 
 %changelog
+* Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.1-alt2
+- Add conflicts with grip-grab.
+
 * Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.1-alt1
 - Update to new version 1.5.1.
 
