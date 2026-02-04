@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 License: Apache-2.0
@@ -56,6 +56,9 @@ export SODIUM_INSTALL=system
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 1.6.2-alt1
+- 1.6.1 -> 1.6.2.
+
 * Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
 - 1.5.0 -> 1.6.1.
 
