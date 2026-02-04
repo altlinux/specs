@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 7.0.1
+Version: 7.2
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -144,6 +144,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 7.2-alt1
+- 7.2.
+
 * Tue Apr 29 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
 - 7.0.1.
 
