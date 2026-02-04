@@ -5,8 +5,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 12.11.0
-Release: alt2
+Version: 13.0.0
+Release: alt1
 
 Summary: Thumbnails for Django
 License: BSD-3-Clause
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 04 2026 Alexander Burmatov <thatman@altlinux.org> 13.0.0-alt1
+- New 13.0.0 version.
+
 * Thu Oct 16 2025 Alexander Burmatov <thatman@altlinux.org> 12.11.0-alt2
 - Fix version.
 

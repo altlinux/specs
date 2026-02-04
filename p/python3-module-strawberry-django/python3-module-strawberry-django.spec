@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.74.1
+Version: 0.75.0
 Release: alt1
 
 Summary: Strawberry GraphQL Django extension
@@ -46,7 +46,6 @@ mutations and resolvers from Django models.
 
 %prep
 %setup -n %pypi_name-%version
-sed -i 's/version = "0.74.0"/version = "0.74.1"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -65,6 +64,9 @@ echo 'STATIC_URL = "/static/"' >> tests/django_settings.py
 %python3_sitelibdir/%{pyproject_distinfo strawberry_graphql_django}
 
 %changelog
+* Wed Feb 04 2026 Alexander Burmatov <thatman@altlinux.org> 0.75.0-alt1
+- New 0.75.0 version.
+
 * Wed Jan 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.74.1-alt1
 - New 0.74.1 version.
 
