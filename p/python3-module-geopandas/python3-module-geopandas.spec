@@ -7,8 +7,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
-Release: alt3
+Version: 1.1.2
+Release: alt1
 
 Summary: Python tools for geographic data
 License: BSD-3-Clause
@@ -19,7 +19,6 @@ Vcs: https://github.com/geopandas/geopandas
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch: geopandas-1.1.1-tests-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -59,7 +58,6 @@ This package contains tests for geopandas.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 # do not use versioneer
 sed -i 's/^dynamic = \["version"\]$/version = "%version"/' pyproject.toml
@@ -93,6 +91,9 @@ and not test_predicates_vector_vector[geom_almost_equals-args10]"
 %python3_sitelibdir/%pypi_name/conftest.py
 
 %changelog
+* Sun Feb 01 2026 Nikita Panov <nexxy@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+
 * Thu Oct 30 2025 Nikita Panov <nexxy@altlinux.org> 1.1.1-alt3
 - Improve tests (Closes: #54183).
 

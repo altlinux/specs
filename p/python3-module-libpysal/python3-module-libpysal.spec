@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.13.0
+Version: 4.14.1
 Release: alt1
 Summary: Core components of Python Spatial Analysis Library
 License: BSD-3-Clause
@@ -94,5 +94,8 @@ and not test_holes" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 03 2026 Nikita Panov <nexxy@altlinux.org> 4.14.1-alt1
+- New version 4.14.1.
+
 * Thu Sep 25 2025 Nikita Panov <nexxy@altlinux.org> 4.13.0-alt1
 - Initial build for Sisyphus
