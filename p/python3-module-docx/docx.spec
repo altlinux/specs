@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Create and update Microsoft Word .docx files
 
@@ -34,6 +34,12 @@ Source:  %name-%version.tar
 %prep
 %setup
 
+# HOTFIX for new pyparsing
+sed -i 's/delimitedList/DelimitedList/g' tests/unitutil/cxml.py
+sed -i 's/setParseAction/set_parse_action/g' tests/unitutil/cxml.py
+sed -i 's/parseString/parse_string/g' tests/unitutil/cxml.py
+sed -i 's/removeQuotes/remove_quotes/g' tests/unitutil/cxml.py
+
 %build
 %pyproject_build
 
@@ -49,6 +55,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/python_%modulename-%version.dist-info
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
+- Fixed FTBFS.
+
 * Thu Jun 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 
