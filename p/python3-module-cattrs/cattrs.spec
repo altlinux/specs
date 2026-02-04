@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 25.3.0
-Release: alt2
+Release: alt3
 
 Summary: Complex custom class converters for attrs
 
@@ -14,8 +14,6 @@ URL:     https://pypi.org/project/cattrs
 VCS:     https://github.com/python-attrs/cattrs
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
-
-BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -35,7 +33,10 @@ BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-msgspec
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-attrs
 %endif
+
+BuildArch: noarch
 
 %description
 cattrs is an open source Python library for structuring and unstructuring data.
@@ -80,6 +81,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 25.3.0-alt3
+- Fixed FTBFS.
+
 * Sun Oct 19 2025 Grigory Ustinov <grenka@altlinux.org> 25.3.0-alt2
 - Fixed FTBFS.
 
