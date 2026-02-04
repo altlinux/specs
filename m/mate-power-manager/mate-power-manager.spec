@@ -2,7 +2,7 @@
 
 Name: mate-power-manager
 Version: 1.28.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE power management service
 License: GPLv3+
@@ -56,6 +56,9 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %_man1dir/mate-power-*.1*
 
 %changelog
+* Wed Feb 04 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt2
+- fixed "Displays never sleep #114"
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
 - 1.28.1
 
