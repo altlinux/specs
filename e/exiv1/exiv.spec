@@ -15,8 +15,8 @@
 %define libexiv libexiv2_%sover
 
 Name: exiv1
-Version: 0.28.7
-Release: alt11
+Version: 1.00.0.9
+Release: alt1
 
 Summary: Command line tool to access EXIF data in image files
 License: GPL-2.0-or-later
@@ -64,9 +64,6 @@ exiv2 library.
 %prep
 %setup -n %rname-%version
 
-sed -i 's|set(EXIV2LIB_SOVERSION.*|set(EXIV2LIB_SOVERSION %sover)|' CMakeLists.txt
-sed -i 's|\(VERSION.*{PROJECT_VERSION}\)|\1.%sover|' src/CMakeLists.txt
-
 %build
 %add_optflags -Wno-deprecated-declarations %(getconf LFS_CFLAGS)
 %cmake \
@@ -106,6 +103,9 @@ __EOF__
 %_libdir/cmake/exiv2/
 
 %changelog
+* Wed Feb 04 2026 Sergey V Turchin <zerg@altlinux.org> 1.00.0.9-alt1
+- update to 1.00.0.9 f22a40e0
+
 * Tue Feb 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.28.7-alt11
 - put pkgconfig-file on alternatives
 
