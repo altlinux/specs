@@ -2,7 +2,7 @@
 %global import_path github.com/grafviktor/goto
 
 Name: goto
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: %name is console SSH client application
 Group: Networking/Remote access
@@ -54,6 +54,9 @@ ln -s %buildroot_bindir/%name %buildroot%_bindir/gg
 %_bindir/gg
 
 %changelog
+* Wed Feb 04 2026 Pavel Shilov <zerospirit@altlinux.org> 1.5.1-alt1
+- Update to new version 1.5.1.
+
 * Mon Dec 29 2025 Pavel Shilov <zerospirit@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus for close (ALT #57383).
 
