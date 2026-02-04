@@ -12,8 +12,8 @@
 %def_with bootstrap
 
 Name:           lib%oname
-Version:        3.0.12.0
-Release:        alt2
+Version: 3.0.15.0
+Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -115,7 +115,6 @@ Conflicts:      libxforms-demos
 Command-line tools to manipulate and get information on images using the
 %{name} library.
 
-
 %package -n %oname-iv
 Summary:        %oname based image viewer
 Group:          Other
@@ -124,7 +123,6 @@ Requires:       lib%oname%soname = %EVR
 %description -n %oname-iv
 A really nice image viewer, iv, based on %oname classes (and so will work
 with any formats for which plugins are available).
-
 
 %package devel
 Summary:        Documentation for %oname
@@ -137,7 +135,6 @@ Requires:       libopencv-devel
 
 %description devel
 Development files for package %name
-
 
 %prep
 %setup
@@ -224,6 +221,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 3.0.15.0-alt1
+- 3.0.12.0 -> 3.0.15.0
+
 * Thu Nov 27 2025 Anton Farygin <rider@altlinux.com> 3.0.12.0-alt2
 - enabled bootstrap
 
