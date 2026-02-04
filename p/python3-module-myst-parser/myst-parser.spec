@@ -1,13 +1,11 @@
-%define _unpackaged_files_terminate_build 1
-
 %define pypi_name myst-parser
 %define mod_name myst_parser
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.1
-Release: alt2
+Version: 5.0.0
+Release: alt1
 Summary: An extended commonmark compliant parser, with bridges to docutils/sphinx
 License: MIT
 Group: Development/Python3
@@ -17,19 +15,28 @@ Vcs: https://github.com/executablebooks/MyST-Parser
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-BuildRequires(pre): rpm-build-pyproject
-
-%pyproject_runtimedeps_metadata
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
 
 %if_with check
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-markdown-it-py
+BuildRequires: python3-module-mdit-py-plugins
+BuildRequires: python3-module-pygments
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-param-files
+BuildRequires: python3-module-pytest-regressions
+BuildRequires: python3-module-pyyaml
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx-tests
 BuildRequires: python3-module-sphinx-pytest
-%pyproject_builddeps_metadata_extra testing
-%pyproject_builddeps_metadata_extra linkify
+BuildRequires: python3-module-linkify-it-py
+BuildRequires: python3-module-sphinx-tests
 BuildRequires: python3-module-packaging
 %endif
 
@@ -67,8 +74,6 @@ See the MyST Parser documentation for more information.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -89,6 +94,9 @@ See the MyST Parser documentation for more information.
 %_bindir/myst-*
 
 %changelog
+* Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Sat May 31 2025 Andrey Limachko <liannnix@altlinux.org> 4.0.1-alt2
 - fixed FTBFS
 - spec: exclude sphynx tests
