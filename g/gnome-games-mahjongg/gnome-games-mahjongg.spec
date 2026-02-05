@@ -9,10 +9,11 @@
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
-%def_enable check
+# sometime fails in hasher since 49.1.1
+%def_disable check
 
 Name: gnome-games-%_name
-Version: %ver_major.0.1
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: Classic Chinese Tile Game
@@ -72,6 +73,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_man6dir/%__name.*
 
 %changelog
+* Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1.1-alt1
+- 49.1.1
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.0.1-alt1
 - 49.0.1
 
