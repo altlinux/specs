@@ -13,8 +13,8 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.63.1
-Release: alt1
+Version: 0.64.0
+Release: alt0.rc1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -35,6 +35,10 @@ BuildRequires: python3-module-numpy-testing
 %endif
 
 Source:  %name-%version.tar
+
+# This should stop endless updating of numpy
+# that causes multiple errors in other packages
+Requires: python3-module-numpy = 2.4.2
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pycc_distutils_usecase/
 
@@ -101,6 +105,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 0.64.0-alt0.rc1
+- Build new version.
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 0.63.1-alt1
 - Automatically updated to 0.63.1.
 
