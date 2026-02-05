@@ -1,12 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name sphinx_design
 %define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 Summary: A sphinx extension for designing beautiful, view size responsive web components
 License: MIT
 Group: Development/Python3
@@ -14,15 +13,18 @@ Url: https://pypi.org/project/sphinx_design
 Vcs: https://github.com/executablebooks/sphinx-design
 BuildArch: noarch
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-myst-parser
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-regressions
+BuildRequires: python3-module-sphinx
 # tests/conftest.py
 BuildRequires: python3-module-sphinx-tests
 %endif
@@ -32,8 +34,6 @@ BuildRequires: python3-module-sphinx-tests
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -50,6 +50,9 @@ BuildRequires: python3-module-sphinx-tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Automatically updated to 0.7.0.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
 - Mapped PyPI name to distro's one.
 
