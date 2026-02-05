@@ -1,11 +1,11 @@
 Name: python3-module-home-assistant-intents
-Version: 2025.12.2
+Version: 2026.1.28
 Release: alt1
 
 Summary: Intents for Home Assistant
 License: CC-BY-4.0
 Group: Development/Python
-Url: https://pypi.org/project/home-assistant-intents
+URL: https://pypi.org/project/home-assistant-intents
 VCS: https://github.com/OHF-Voice/intents
 
 Source0: %name-%version.tar
@@ -41,6 +41,9 @@ mkdir -p $O && python3 script/merged_output.py $O
 %python3_sitelibdir/home_assistant_intents-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.1.28-alt1
+- 2026.1.28 released
+
 * Fri Dec  5 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.12.2-alt1
 - 2025.12.2 released
 
