@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: MPV-based Video Player for Linux
@@ -25,6 +25,8 @@ Source: https://github.com/diegopvlk/%__name/archive/v%version/%__name-%version.
 %else
 Source: %__name-%version.tar
 %endif
+
+BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
@@ -70,6 +72,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Thu Feb 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Wed Feb 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - first build for Sisyphus
 
