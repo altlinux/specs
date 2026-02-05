@@ -4,19 +4,18 @@
 %def_enable tk
 
 Name: newt52
-Version: 0.52.24
+Version: 0.52.25
 Release: alt1
 
 Summary: A development library for text mode user interfaces
 
 License: LGPLv2
 Group: System/Libraries
-Url: https://fedorahosted.org/releases/n/e/newt/
-
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-
+Url: https://pagure.io/newt
+VCS: https://pagure.io/newt.git
 # Source-url: https://releases.pagure.org/newt/newt-%version.tar.gz
 Source: %name-%version.tar
+Source999: watch
 
 Requires: lib%name = %EVR
 Requires: slang
@@ -93,9 +92,6 @@ Static libraries for  lib%name-devel
 
 %prep
 %setup
-#patch -p1
-
-#subst s/^PYTHONVERS.*/PYTHONVERS=python%_python_version/ Makefile.in
 
 %build
 %configure --with-gpm-support %{subst_enable static}
@@ -136,6 +132,9 @@ rm -v %buildroot%_libdir/*.*a
 %endif
 
 %changelog
+* Thu Feb 05 2026 Anton Farygin <rider@altlinux.org> 0.52.25-alt1
+- 0.52.24 -> 0.52.25
+
 * Thu Jul 04 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.52.24-alt1
 - 0.52.24
 
