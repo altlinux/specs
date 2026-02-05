@@ -1,33 +1,30 @@
 Name: ardour
-Version: 8.12
-Release: alt2
+Version: 9.0
+Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
-Group:   Sound
-Url:     http://ardour.org/
-
-Requires: libsuil-gtk2
+Group: Sound
+URL: http://ardour.org/
 
 Source:  %name-%version-%release.tar
 
 BuildRequires: gcc-c++ itstool python3-base boost-devel libqm-dsp-devel readline-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(aubio)
+BuildRequires: pkgconfig(cairomm-1.0)
 BuildRequires: pkgconfig(cppunit)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(flac)
 BuildRequires: pkgconfig(fluidsynth)
-BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(glibmm-2.4)
-BuildRequires: pkgconfig(gthread-2.0)
-BuildRequires: pkgconfig(gtkmm-2.4)
 BuildRequires: pkgconfig(hidapi-hidraw)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(liblo)
+BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -36,6 +33,7 @@ BuildRequires: pkgconfig(lrdf)
 BuildRequires: pkgconfig(ltc)
 BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(pangomm-1.4)
 BuildRequires: pkgconfig(rubberband)
 BuildRequires: pkgconfig(samplerate)
@@ -44,9 +42,11 @@ BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(sord-0)
 BuildRequires: pkgconfig(soundtouch)
 BuildRequires: pkgconfig(sratom-0)
-BuildRequires: pkgconfig(suil-0)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(vamp-sdk)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xi)
 
 %description
 Ardour is a digital audio workstation. You can use it to record, edit
@@ -85,9 +85,6 @@ LC_ALL=C.utf8 ./waf configure \
 	--mandir=%_mandir \
 	--optimize \
 	--arch="%optflags" \
-%ifarch armh
-	--dist-target=armhf \
-%endif
 %ifarch aarch64
 	--dist-target=aarch64 \
 %endif
@@ -97,7 +94,6 @@ LC_ALL=C.utf8 ./waf configure \
 	--no-phone-home \
 	--freedesktop \
 	--use-external-libs \
-	--no-ytk \
 %ifarch %e2k
 	--cxx11 \
 	--keepflags \
@@ -121,20 +117,23 @@ done
 %find_lang --output ardour.lang --append ardour8 gtk2_ardour8 gtkmm2ext3
 
 %files -f ardour.lang
-%dir %_sysconfdir/ardour8
-%config(noreplace) %_sysconfdir/ardour8/*
+%dir %_sysconfdir/ardour9
+%config(noreplace) %_sysconfdir/ardour9/*
 %_udevrulesdir/*.rules
-%_bindir/ardour8*
+%_bindir/ardour9*
 %_libdir/lib*.so.*
-%_libdir/ardour8
-%_datadir/ardour8
-%_datadir/appdata/ardour8.appdata.xml
+%_libdir/ardour9
+%_datadir/ardour9
+%_datadir/appdata/ardour9.appdata.xml
 %_datadir/mime/packages/ardour.xml
-%_desktopdir/ardour8.desktop
+%_desktopdir/ardour9.desktop
 %_iconsdir/*/*/*/*.png
 %_man1dir/ardour.1*
 
 %changelog
+* Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.0-alt1
+- 9.0 released
+
 * Tue Dec 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 8.12-alt2
 - added explicit req on suil-gtk2
 
