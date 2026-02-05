@@ -3,7 +3,7 @@
 
 Name: openfreebuds
 Version: 0.17.1
-Release: alt1
+Release: alt2
 Summary: Open source app for HUAWEI FreeBuds
 License: GPL-3.0
 Group: Sound
@@ -18,7 +18,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pdm
 BuildRequires: python3-module-pdm-backend
-BuildRequires: python3-module-poetry
 BuildRequires: python3-module-PyQt6-devel
 BuildRequires: qt6-tools
 
@@ -64,10 +63,9 @@ QT interaface for openfreebuds.
 
 %build
 %pyproject_build
-find openfreebuds_qt/designer \
-    -type f \
-    -name "*.ui" \
-    -exec sh -c 'poetry run pyuic6 "$1" -o "${1%.ui}.py"' _ {} \;
+for ui in $(find openfreebuds_qt/designer -name "*.ui"); do
+    pyuic6 $ui -o ${ui%.ui}.py
+done
 lrelease-qt6 openfreebuds_qt/assets/i18n/*.ts
 
 %install
@@ -99,6 +97,9 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %exclude %python3_sitelibdir/openfreebuds_qt/designer/*.ui
 
 %changelog
+* Thu Feb 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt2
+- Fixed FTBFS.
+
 * Sat Oct 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt1
 - Updated to version 0.17.1.
 
