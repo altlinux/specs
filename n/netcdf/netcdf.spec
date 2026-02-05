@@ -10,7 +10,7 @@
 
 Name: netcdf
 Version: 4.9.3
-Release: alt2
+Release: alt3
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: NetCDF
 Group: System/Libraries
@@ -187,7 +187,8 @@ rm -fR udunits/expat
 %configure \
 	--enable-shared \
 	--enable-static=no \
-	--disable-hdf5 --disable-netcdf-4 --with-hdf5=no \
+	--enable-hdf5 \
+	--enable-netcdf-4 \
 	--enable-doxygen \
 	--enable-internal-docs \
 	--enable-v2 \
@@ -235,6 +236,9 @@ rm -f %buildroot%_libdir/hdf5/plugin/*.la
 %doc docs/html examples
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 4.9.3-alt3
+- built with netcdf-4 and hdf5 for python3 modules
+
 * Sat Jan 17 2026 Anton Farygin <rider@altlinux.org> 4.9.3-alt2
 - added upstream commit to fix build with MARKDOWN_STRICT=yes in doxygen
   from version 1.15.0
