@@ -5,7 +5,7 @@
 
 Name: pinta
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: An easy to use drawing and image editing program
 
@@ -33,6 +33,8 @@ BuildRequires: intltool
 BuildRequires: libadwaita-devel
 
 Requires: dotnet-%dotnet_version
+Requires: libadwaita >= 1.7
+Requires: libgtk4 >= 4.18
 
 %description
 Pinta is a free, open-source program for drawing and image editing.
@@ -74,6 +76,9 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=true
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Tue Feb 03 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.1-alt2
+- add requires: libadwaita, libgtk4
+
 * Sat Jan 17 2026 Alexander Kovalev <alexvk@altlinux.org> 3.1.1-alt1
 - new version 3.1.1
 
