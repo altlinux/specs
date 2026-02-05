@@ -3,7 +3,7 @@
 %define pypi_name doi2bib3
 
 Name: python3-module-%pypi_name
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: DOI/arXiv to BibTeX command line utility
@@ -55,6 +55,9 @@ A GUI frontend is available: Check out QuickBib.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.3-alt1
+- New version 0.5.3.
+
 * Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.2-alt1
 - New version 0.5.2.
 

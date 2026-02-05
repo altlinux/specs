@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: nwipe
-Version: 0.39
+Version: 0.40
 Release: alt1
 
 Summary: Utility to securely erase disks
@@ -14,6 +15,7 @@ Source: %name-%version.tar
 BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(libconfig)
 BuildRequires: pkgconfig(libparted)
+BuildRequires: gcc-c++
 
 Requires: /bin/readlink
 Requires: /usr/sbin/smartctl
@@ -43,6 +45,7 @@ This package includes documentation files for the %name.
 sed -i "s|/images/|images/|" README.md
 
 %build
+export CFLAGS="$CFLAGS -Wno-unused-function"
 %autoreconf
 %configure
 %make_build
@@ -62,5 +65,8 @@ sed -i "s|/images/|images/|" README.md
 %doc README.md ssd-guide.md images/
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.40-alt1
+- New version 0.40.
+
 * Fri Oct 17 2025 Nikolay Strelkov <snk@altlinux.org> 0.39-alt1
 - Initial build for Sisyphus

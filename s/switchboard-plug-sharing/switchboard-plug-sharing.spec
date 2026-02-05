@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.sharing
 
 Name: switchboard-plug-sharing
-Version: 8.0.2
+Version: 8.0.3
 Release: alt1
 
 Summary: Switchboard Sharing Plug
@@ -48,5 +48,8 @@ Switchboard plug for controlling media sharing.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.3-alt1
+- New version 8.0.3.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus
