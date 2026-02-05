@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: qstat
-Version: 2.17
+Version: 2.18
 Release: alt1
 Summary: Game server browsing utility
 License: Artistic-2.0
@@ -50,6 +50,9 @@ rm -f template/Makefile*
 %_bindir/qstat
 
 %changelog
+* Thu Feb 05 2026 Anton Farygin <rider@altlinux.org> 2.18-alt1
+- 2.17 -> 2.18
+
 * Wed Oct 13 2021 Konstantin Rybakov <kastet@altlinux.org> 2.17-alt1
 - Updated to upstream version 2.17. 
 
