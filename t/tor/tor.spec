@@ -10,7 +10,7 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.8.21
+Version: 0.4.8.22
 Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
@@ -140,7 +140,6 @@ fi
 %dir %docdir
 %docdir/*.html
 
-
 %defattr(640,root,%toruser,2710)
 %_tor_root
 %defattr(640,root,%toruser,3770)
@@ -151,6 +150,9 @@ fi
 %_var/cache/%name
 
 %changelog
+* Thu Feb 05 2026 Anton Farygin <rider@altlinux.org> 0.4.8.22-alt1
+- 0.4.8.21 -> 0.4.8.22
+
 * Mon Dec 08 2025 Anton Farygin <rider@altlinux.org> 0.4.8.21-alt1
 - 0.4.8.6 -> 0.4.8.21
 
