@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.6
+Version: 4.2.8
 Release: alt1
 
 Summary: Fixtures, reusable state for writing clean tests and more
@@ -44,6 +44,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 %pyproject_install
 
+# imported by python3-moodule-testresources
+install -D tests/helpers.py %buildroot%python3_sitelibdir/%oname/tests/helpers.py
+
 %check
 %tox_check_pyproject
 
@@ -53,6 +56,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 4.2.8-alt1
+- Automatically updated to 4.2.8.
+
 * Mon Aug 18 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.6-alt1
 - Automatically updated to 4.2.6.
 

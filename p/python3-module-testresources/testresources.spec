@@ -1,22 +1,23 @@
 %global pypi_name testresources
-%def_disable check
+%def_with check
 
 Name:           python3-module-%{pypi_name}
-Version:        2.0.1
-Release:        alt3
+Version:        2.0.2
+Release:        alt1
 Summary:        Testresources, a pyunit extension for managing expensive test resources
 
 Group:          Development/Python3
 License:        Apache-2.0 and BSD and GPLv2+
 # file testresources/tests/TestUtil.py is GPLv2+
-URL:            https://launchpad.net/testresources
-Source0:        %{name}-%{version}.tar
-BuildArch:      noarch
+URL:            https://pypi.org/project/testresources
+Source:         %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-fixtures
+
+BuildArch:      noarch
 
 %description
 testresources: extensions to python unittest to allow declarative use
@@ -24,24 +25,26 @@ of resources by test cases.
 
 %prep
 %setup
-# Remove bundled egg-info
-rm -rf lib/%{pypi_name}.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%{__python3} setup.py test
+%pyproject_run_pytest
 
 %files
 %doc README.rst NEWS doc
-%{python3_sitelibdir}/%{pypi_name}
-%{python3_sitelibdir}/%{pypi_name}-%{version}-py%_python3_version.egg-info
+%{python3_sitelibdir}/%pypi_name
+%{python3_sitelibdir}/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Built new version.
+- Built with check.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt3
 - Fixed FTBFS.
 
