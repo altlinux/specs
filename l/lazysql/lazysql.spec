@@ -3,7 +3,7 @@
 %global import_path github.com/jorgerojas26/lazysql
 
 Name:    lazysql
-Version: 0.4.3
+Version: 0.4.6
 Release: alt1
 
 Summary: A cross-platform TUI database management tool written in Go.
@@ -45,5 +45,8 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Jan 19 2026 Nikita Shmatko <nash@altlinux.org> 0.4.6-alt1
+- New version 0.4.6.
+
 * Wed Nov 26 2025 Nikita Shmatko <nash@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus.

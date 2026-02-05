@@ -2,7 +2,7 @@
 %define modulename pythontk
 
 Name:    python3-module-%modulename
-Version: 0.7.30
+Version: 0.7.54
 Release: alt1
 
 Summary: A collection of backend utilities for Python
@@ -35,20 +35,14 @@ Provides helper classes and convenience functions for common programming tasks.
 %install
 %pyproject_install
 
-#fix broken installation of map_converter.ui and map_packer.ui into /usr/ directory
-install -D -m 644 \
- %buildroot/usr/map_converter.ui \
- %buildroot%python3_sitelibdir/%modulename/img_utils/map_converter.ui
-install -D -m 644 \
- %buildroot/usr/map_packer.ui \
- %buildroot%python3_sitelibdir/%modulename/img_utils/map_packer.ui
-rm -f %buildroot/usr/map_{packer,converter}.ui
-
 %files
 %doc LICENSE docs/*.md
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Tue Jan 20 2026 Nikita Shmatko <nash@altlinux.org> 0.7.54-alt1
+- Updated version to 0.7.54.
+
 * Thu Oct 30 2025 Nikita Shmatko <nash@altlinux.org> 0.7.30-alt1
 - Initial build for Sisyphus.

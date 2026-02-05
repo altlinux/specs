@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1 
 
 Name:    nchat
-Version: 5.11.32
+Version: 5.12.21
 Release: alt1
 
 Summary: Terminal-based Telegram / WhatsApp client for Linux and macOS
@@ -70,5 +70,8 @@ tar -xvf %SOURCE1 -C lib/wmchat/go
 %_datadir/%name
 
 %changelog
+* Mon Jan 19 2026 Nikita Shmatko <nash@altlinux.org> 5.12.21-alt1
+- New version 5.12.21.
+
 * Mon Nov 24 2025 Nikita Shmatko <nash@altlinux.org> 5.11.32-alt1
 - Initial build for Sisyphus.
