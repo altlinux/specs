@@ -2,7 +2,7 @@
 %define oname icinga2_usersyncd
 
 Name: icinga2-usersyncd
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Group: Monitoring
@@ -83,6 +83,9 @@ touch %buildroot%_localstatedir/icinga2/certs/icinga2-usersyncd.crt
 %python3_sitelibdir_noarch/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
+- An improved signal handling based on a shared handler.
+
 * Wed Feb 04 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
 - Fixed signal handling.
 - Updated project URL.
