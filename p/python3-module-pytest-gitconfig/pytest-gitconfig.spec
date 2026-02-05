@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 Summary: Provide a Git config sandbox for testing
 License: MIT
@@ -22,8 +22,6 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-# not packaged in sisyphus
-%add_pyproject_deps_check_filter pytest-mypy-testing
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -56,6 +54,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.0 -> 0.9.0.
+
 * Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.0 -> 0.8.0.
 
