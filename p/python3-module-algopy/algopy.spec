@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
@@ -14,6 +14,8 @@ Url: https://pypi.python.org/pypi/algopy
 Vcs: https://github.com/b45ch1/algopy.git
 
 Source: %name-%version.tar
+
+Patch: algopy-fix-for-new-numpy.patch
 
 BuildArch: noarch
 
@@ -142,6 +144,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt2
+- Fixed compatibility with new numpy.
+
 * Wed Jun 18 2025 Anton Vyatkin <toni@altlinux.org> 0.7.2-alt1
 - New version 0.7.2.
 
