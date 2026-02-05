@@ -3,7 +3,7 @@
 Name: btrfs-assistant
 Version: 2.2
 Summary: GUI management tool to make managing a Btrfs filesystem easier
-Release: alt2
+Release: alt3
 License: GPL-3.0
 Group: Archiving/Backup
 URL: https://gitlab.com/btrfs-assistant/btrfs-assistant
@@ -43,12 +43,9 @@ The primary features it offers are:
 
 %prep
 %setup
-%ifarch %e2k
-# error: integer conversion resulted in a change of sign
-#   inline constexpr size_t variant_npos = -1;
-#   constexpr size_t __magic_monostate_hash = -7777;
-sed -i 's/-Werror/-Wno-error/g' src/CMakeLists.txt
-%endif
+# function invalidateFilter() is marked as deprecated in Qt 6.10
+# all warnings are treated as errors, making compilation failed with Qt 6.10
+sed -i '/target_compile_options/s/-Werror/-Wno-error/g' src/CMakeLists.txt
 
 %build
 %cmake
@@ -72,6 +69,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 %_datadir/polkit-1/actions/org.%name.pkexec.policy
 
 %changelog
+* Thu Feb 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.2-alt3
+- Fixed build with qt 6.10.
+
 * Thu Jan 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2-alt2
 - e2k build fix
 
@@ -93,4 +93,3 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 
 * Mon Dec 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.8-alt1
 - Initial build for ALT.
-
