@@ -1,6 +1,6 @@
 Name: acct
 Version: 6.6.4
-Release: alt1
+Release: alt2
 
 Summary: Utilities for monitoring process activities.
 License: GPLv3+
@@ -22,6 +22,8 @@ Patch3: acct-rh-doc.patch
 patch4: acct-rh-ub.patch
 Patch5: acct-deb-alt-doc.patch
 Patch6: acct-deb-alt-cross-build-support.patch
+Patch7: acct-rh-gcc15.patch
+Patch8: acct-rh-sprintf-overflow.patch
 
 Provides: psacct = %version-%release
 Obsoletes: psacct < %version-%release
@@ -39,14 +41,10 @@ summarizes information about previously executed commands.
 %prep
 %setup
 rm *.info
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%autopatch -p1
 
 %build
+%define optflags_lto %nil
 %autoreconf
 %configure --enable-linux-multiformat
 %make_build
@@ -95,6 +93,9 @@ install -pm700 %_sourcedir/mklog.sh \
 %doc AUTHORS README NEWS ChangeLog TODO
 
 %changelog
+* Thu Feb 05 2026 Vitaly Chikunov <vt@altlinux.org> 6.6.4-alt2
+- Fixed lastcomm abort triggered by FORTIFY_SOURCE.
+
 * Thu Nov 29 2018 Dmitry V. Levin <ldv@altlinux.org> 6.6.4-alt1
 - 6.6.1 -> 6.6.4.
 
