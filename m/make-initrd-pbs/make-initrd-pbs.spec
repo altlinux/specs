@@ -2,8 +2,8 @@
 %define child pbs
 
 Name: %parent-%child
-Version: 1.0.6
-Release: alt2
+Version: 1.0.7
+Release: alt1
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
 License: GPL-3.0
@@ -13,7 +13,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 Source: %name-%version.tar
 
 Requires: proxmox-backup-restore-daemon
-Requires: zfs-utils lvm2 btrfs-progs
+Requires: zfs-utils lvm2 btrfs-progs ntfs-3g
 Requires: make-initrd >= 2.2.6
 Requires: make-initrd-lvm make-initrd-mdadm make-initrd-luks
 Requires: make-initrd-iscsi make-initrd-multipath make-initrd-devmapper
@@ -32,6 +32,9 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Tue Feb 03 2026 Sergey Konev <darisishe@altlinux.org> 1.0.7-alt1
+- Add ntfs-3g as fallback for ntfs3
+
 * Thu Jun 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.6-alt2
 - NMU: build on loongarch64
 
