@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        2.0.0
-Release:        alt1
+Release:        alt2
 Summary:        Sphinx API for Web Apps
 License:        BSD-2-Clause
 Group:          Development/Python3
@@ -37,7 +37,7 @@ documentation into your Web application.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.rst
@@ -45,6 +45,9 @@ documentation into your Web application.
 %python3_sitelibdir/sphinxcontrib_websupport-%{version}.dist-info
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- Fixed FTBFS.
+
 * Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
