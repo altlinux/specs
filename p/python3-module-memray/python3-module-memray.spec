@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.17.2
+Version: 1.19.1
 Release: alt1
 
 Summary: A memory profiler for Python
@@ -13,27 +13,30 @@ Url: https://bloomberg.github.io/memray
 Vcs: https://github.com/bloomberg/memray.git
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 # https://github.com/bloomberg/memray/pull/785
 Patch0: 0001-Fix-imports-in-exercise-tests.patch
 # https://github.com/bloomberg/memray/pull/787
 Patch1: 0002-Fix-assertion-error-in-test.patch
 
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pkgconfig
+BuildRequires: python3-module-cython
 BuildRequires: /proc
 BuildRequires: gcc-c++
 BuildRequires: liblz4-devel
 BuildRequires: libunwind-devel
 BuildRequires: libdebuginfod-devel
-%pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-textual
 BuildRequires: /dev/pts
 BuildRequires: python3-module-greenlet-devel
 BuildRequires: python3-module-ipython
 BuildRequires: python3-module-pytest-textual-snapshot
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 %endif
 
 %description
@@ -55,8 +58,6 @@ TEXTUAL_VER=$(%__python3 -c "import textual; print(textual.__version__)")
 sed -i "s/\"textual\" *: *\"[0-9.]*\"/\"textual\": \"$TEXTUAL_VER\"/" \
   tests/conftest.py
 
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -76,5 +77,8 @@ sed -i "s/\"textual\" *: *\"[0-9.]*\"/\"textual\": \"$TEXTUAL_VER\"/" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 1.19.1-alt1
+- Build new version.
+
 * Sun Jun 29 2025 Ivan Khanas <xeno@altlinux.org> 1.17.2-alt1
 - First build for ALT.
