@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -67,6 +67,10 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.15-alt1
+- Fixed (thx Andrey Alekseev):
+  + parameters being parsed & serialized incorrectly
+
 * Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.14-alt1
 - Added (thx Andrey Alekseev):
   + ability to export parameters from main page

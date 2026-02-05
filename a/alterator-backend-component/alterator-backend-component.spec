@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -69,6 +69,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.3-alt1
+- Fix path for description file of category (thx Kirill Sharov).
+- Improve error messages (thx Kirill Sharov).
+
 * Tue Jan 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.2-alt1
 - Add DescriptionRaw method.
 - Complete missing information in help.
