@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2025.8.25
-Release: alt1
+Release: alt2
 
 Summary: Watch a Sphinx directory and rebuild the documentation when a change is detected
 
@@ -49,8 +49,7 @@ Also includes a livereload enabled web server.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.rst
@@ -59,6 +58,9 @@ Also includes a livereload enabled web server.
 %python3_sitelibdir/sphinx_autobuild-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 2025.8.25-alt2
+- Fixed FTBFS.
+
 * Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 2025.8.25-alt1
 - Automatically updated to 2025.8.25.
 
