@@ -6,7 +6,8 @@
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
-%global max_jobs 96
+# New llvm leads to intensive swapping with max_jobs >= 48
+%global max_jobs 42
 
 %global llvm_version 21.1
 
@@ -26,7 +27,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        144.0.7559.109
+Version:        144.0.7559.132
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -123,6 +124,9 @@ Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
 Patch066: 0066-DEBIAN-fix-rk3588-v4l2-av1-decoder.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
+# Backport only CVE fixes:
+Patch068: 0068-DEBIAN-CVE-2026-1861.patch
+Patch069: 0069-DEBIAN-CVE-2026-1862.patch
 
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-chromium-139-rust-FTBFS-suppress-warnings.patch
@@ -524,6 +528,8 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%targe
 export NINJA=samu
 %else
 export NINJA=ninja
+%endif
+
 if [ -r %target/toolchain.ninja ]; then
 	# We never perform incremental builds,
 	# so we do not need to maintain extensive deps logs,
@@ -534,7 +540,6 @@ if [ -r %target/toolchain.ninja ]; then
 		/^[[:space:]]\+depfile[[:space:]]=/d;
 	' %target/toolchain.ninja
 fi
-%endif
 
 n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
@@ -656,6 +661,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Feb 05 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.132-alt1
+- New version (144.0.7559.132).
+- Fixes:
+  + CVE-2026-1861: Heap buffer overflow in libvpx
+  + CVE-2026-1862: Type Confusion in V8
+
 * Wed Jan 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 144.0.7559.109-alt1
 - New version (144.0.7559.109).
 - Fixes:
