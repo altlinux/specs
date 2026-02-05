@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 26.0
+Version: 26.0.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -129,6 +129,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 26.0.1-alt1
+- 26.0 -> 26.0.1.
+
 * Mon Feb 02 2026 Stanislav Levin <slev@altlinux.org> 26.0-alt1
 - 25.3 -> 26.0.
 
