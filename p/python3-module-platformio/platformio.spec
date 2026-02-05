@@ -1,38 +1,37 @@
 Name: python3-module-platformio
-Version: 6.1.18
+Version: 6.1.19
 Release: alt1
 
 Summary: PlatformIO Core
 License: Apache-2.0
 Group: Development/Other
-Url: https://platformio.org/
+URL: https://platformio.org/
+VCS: https://github.com/platformio/platformio-core
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-
-# lemme cite requests/packages.py:
-# "I don't like it either. Just look the other way."
-%add_python3_req_skip requests.packages.urllib3.util.retry
-# can't happen
-%add_python3_req_skip msvcrt
-
-%set_python3_req_method strict
 
 %files
 %_bindir/pio
@@ -42,6 +41,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.19-alt1
+- 6.1.19 released
+
 * Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.18-alt1
 - 6.1.18 released
 
