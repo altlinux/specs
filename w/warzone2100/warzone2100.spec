@@ -1,5 +1,5 @@
 Name: warzone2100
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -117,6 +117,9 @@ rm %buildroot%_iconsdir/net.wz2100.warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.3-alt1
+- 4.6.3 released
+
 * Fri Jan 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.6.2-alt1
 - 4.6.2 released
 
