@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libusermetrics
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: library for retrieving anonymous metrics about users
@@ -187,7 +187,7 @@ This package installs the libusermetrics API documentation.
 %_qt5_qmldir/UserMetrics/*
 %dir %_libexecdir/%name
 %_libexecdir/%name/*
-%_sysconfdir/dbus-1/system.d/com.lomiri.UserMetrics.conf
+%_datadir/dbus-1/system.d/com.lomiri.UserMetrics.conf
 
 %files -n %{name}input
 %_libdir/%{name}input.so.1*
@@ -210,6 +210,9 @@ This package installs the libusermetrics API documentation.
 
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

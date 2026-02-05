@@ -6,8 +6,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lomiri-location-service
-Version: 3.3.0
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: Lomiri Location Service
 License: GPL-3.0-only and LGPL-3.0-only
@@ -42,6 +42,7 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: doxygen
+BuildRequires: pkgconfig(libunwind)
 
 Requires: lib%{name} = %{version}-%{release}
 
@@ -103,12 +104,6 @@ the Lomiri Location Service and test executables.
 %install
 %cmake_install
 
-mkdir -p %buildroot%_unitdir
-mv -vf %buildroot/lib/systemd/system/lomiri-location-service.service %buildroot/%_unitdir/
-
-mkdir -p %buildroot/usr/share/dbus-1
-mv -vf %buildroot/etc/dbus-1/system.d/ %buildroot/usr/share/dbus-1/
-
 %find_lang %name
 
 %post
@@ -121,7 +116,7 @@ mv -vf %buildroot/etc/dbus-1/system.d/ %buildroot/usr/share/dbus-1/
 %systemd_postun %name.service
 
 %check
-%ctest -j1 -VV -E '^(remote_providerd_test|delayed_service_test|daemon_and_cli_tests|ichnaea_reporter_test)'
+%ctest -j1 -VV -E '^(remote_providerd_test|delayed_service_test|daemon_and_cli_tests|ichnaea_reporter_test|acceptance_tests)'
 
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING.GPL COPYING.LGPL
@@ -162,6 +157,9 @@ mv -vf %buildroot/etc/dbus-1/system.d/ %buildroot/usr/share/dbus-1/
 %_datadir/doc/lomiri-location-service/*
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+
 * Sat Nov 15 2025 Nikolay Strelkov <snk@altlinux.org> 3.3.0-alt2
 - Applied repocop fix for arch-dep-package-consists-of-usr-share
 

@@ -7,7 +7,7 @@
 %define lomiri_intver 5.5.0
 
 Name: lomiri-ui-toolkit
-Version: 1.3.5902
+Version: 1.3.5903
 Release: alt1
 
 Summary: Qt Components for Lomiri
@@ -226,6 +226,9 @@ xvfb-run make -j1 check
 %exclude %_datadir/qt5/share/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-ui-toolkit-gallery.mo
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.5903-alt1
+- New version 1.3.5903.
+
 * Fri Dec 26 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.5902-alt1
 - New version 1.3.5902.
 

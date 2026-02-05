@@ -4,7 +4,7 @@
 %def_with check
 
 Name: libqtdbusmock
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 
 Summary: Library for mocking DBus interactions using Qt
@@ -96,5 +96,8 @@ This package contains header files needed for development.
 %_pkgconfigdir/libqtdbusmock-1.pc
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Fri Jul 18 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.1-alt1
 - Initial build for Sisyphus

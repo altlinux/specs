@@ -5,7 +5,7 @@
 %def_without check
 
 Name: biometryd
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: Mediates and multiplexes access to biometric devices
@@ -86,7 +86,6 @@ biometryd.
        -DENABLE_WERROR=OFF \
        -DWITH_HYBRIS=OFF \
        -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-       -Dqmlplugindump_exe=%_qt5_bindir/qmlplugindump \
        -DBUILD_TESTING=OFF
 %cmake_build
 
@@ -105,7 +104,6 @@ biometryd.
 %_qt5_qmldir/Biometryd/plugins.qmltypes
 %_qt5_qmldir/Biometryd/qmldir
 %_sysconfdir/dbus-1/system.d/com.ubports.biometryd.Service.conf
-%_sysconfdir/init/biometryd.conf
 
 %files -n lib%{name}
 %_libdir/libbiometry.so.1*
@@ -117,6 +115,9 @@ biometryd.
 %_pkgconfigdir/biometryd.pc
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
 - New version 0.3.3.
 

@@ -3,8 +3,8 @@
 %def_with check
 
 Name: morph-browser
-Version: 1.99.2
-Release: alt2
+Version: 1.99.3
+Release: alt1
 
 Summary: Web Browser for Lomiri
 License: GPL-3.0-only
@@ -63,7 +63,12 @@ and using the Lomiri UI components.
 %cmake \
        -DCLICK_MODE=off \
        -DCMAKE_INSTALL_PREFIX=%_prefix \
-       -DCMAKE_INSTALL_LIBDIR=%_lib
+       -DCMAKE_INSTALL_LIBDIR=%_lib \
+%if_with check
+       -DBUILD_TESTING=on
+%else
+       -DBUILD_TESTING=off
+%endif
 %cmake_build
 
 %install
@@ -93,6 +98,9 @@ and using the Lomiri UI components.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/morph-browser.mo
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.99.3-alt1
+- New version 1.99.3.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.99.2-alt2
 - Exclude loongarch64 and riscv64 arches as not buildable.
 

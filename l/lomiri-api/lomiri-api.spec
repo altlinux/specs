@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-api
-Version: 0.2.3
+Version: 0.3.0
 Release: alt1
 
 Summary: API for Lomiri shell integration
@@ -30,6 +30,7 @@ BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: doxygen
 BuildRequires: /usr/bin/dot
 BuildRequires: pkgconfig(gtest)
+BuildRequires: pkgconfig(libqtdbustest-1)
 
 %if_with check
 BuildRequires: ctest
@@ -107,8 +108,10 @@ This package contains the development files.
 %_libdir/liblomiri-api.so.0.2
 
 %files -n liblomiri-api-devel
-%dir %_includedir/lomiri
-%_includedir/lomiri/*
+%dir %_includedir/lomiri-api
+%_includedir/lomiri-api/*
+%dir %_includedir/lomiri-shell-api
+%_includedir/lomiri-shell-api/*
 %_libdir/liblomiri-api.so
 %_libdir/pkgconfig/*.pc
 
@@ -117,6 +120,9 @@ This package contains the development files.
 %_docdir/lib%{name}/*
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.3-alt1
 - New version 0.2.3.
 

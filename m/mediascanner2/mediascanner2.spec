@@ -6,7 +6,7 @@
 %def_with check
 
 Name: mediascanner2
-Version: 0.118
+Version: 0.200
 Release: alt1
 
 Summary: Media Scanner 2.0
@@ -112,7 +112,7 @@ export PATH=$PATH:/usr/share/qt5/bin
 
 %files -n lib%{name}
 %_libdir/libmediascanner-2.0.so.4
-%_libdir/libmediascanner-2.0.so.4.0.118
+%_libdir/libmediascanner-2.0.so.4.0.*
 %dir %_qt5_qmldir/MediaScanner.0.1
 %_qt5_qmldir/MediaScanner.0.1/libmediascanner-qml.so
 %_qt5_qmldir/MediaScanner.0.1/plugin.qmltypes
@@ -132,5 +132,8 @@ export PATH=$PATH:/usr/share/qt5/bin
 %_pkgconfigdir/mediascanner-2.0.pc
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.200-alt1
+- New version 0.200.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 0.118-alt1
 - Initial build for Sisyphus
