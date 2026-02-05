@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kgraphviewer
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 
 Summary: GraphViz dot graph viewer
@@ -95,6 +95,9 @@ sed -i "/^GenericName\[/d" src/org.kde.kgraphviewer.desktop
 %_K6link/lib*.so
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.2-alt1
+- New version 25.12.2.
+
 * Thu Jan 08 2026 Nikolay Strelkov <snk@altlinux.org> 25.12.1-alt1
 - New version 25.12.1.
 

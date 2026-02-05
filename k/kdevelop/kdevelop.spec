@@ -5,7 +5,7 @@
 
 Name: kdevelop
 Epoch: 3
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 
 Summary: Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
@@ -172,5 +172,8 @@ Summary: %{name} runtime libraries
 %_K6lib/kf6/devel/libKDev*.so
 
 %changelog
+* Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 3:25.12.2-alt1
+- New version 25.12.2.
+
 * Wed Feb 04 2026 Nikolay Strelkov <snk@altlinux.org> 3:25.12.1-alt1
 - Initial build of kf6-based KDevelop for Sisyphus.
