@@ -1,6 +1,6 @@
 Name:    libpldm
-Version: 0.12.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: Encoding and decoding of PLDM messages library
 License: Apache-2.0
@@ -31,13 +31,14 @@ Development files for deals with the encoding and decoding of PLDM messages
 %prep
 %setup
 
-%build
 # Switch off failed on i586 arches assertion
 %ifarch %ix86
 subst "/static_assert(alignof(struct pldm_fd) == PLDM_ALIGNOF_PLDM_FD,/d" \
 src/firmware_device/fd.c
 subst "/	      \"PLDM_ALIGNOF_PLDM_FD wrong\");/d" src/firmware_device/fd.c
 %endif
+
+%build
 %meson -Dabi=deprecated,stable -Dtests=true
 %meson_build
 
@@ -57,6 +58,9 @@ subst "/	      \"PLDM_ALIGNOF_PLDM_FD wrong\");/d" src/firmware_device/fd.c
 %_datadir/%name
 
 %changelog
+* Thu Feb 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.15.0-alt1
+- New version.
+
 * Wed Apr 30 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.12.0-alt2
 - Build for i586 without struct pldm_fd align assertion.
 - Added BuildReq doxygen
