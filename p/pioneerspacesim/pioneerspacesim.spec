@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pioneerspacesim
-Version: 20250501
+Version: 20260203
 Release: alt1
 
 Summary: A game of lonely space adventure
@@ -19,7 +19,6 @@ ExcludeArch: armh i586
 Source: %name-%version.tar
 
 Patch1: suse-use-system-fmt.patch
-Patch2: update-minimum-required-version-of-cmake-to-3.5.patch
 Patch3500: alt-profiler-loongarch-ftbfs-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -61,7 +60,6 @@ This package contains models, scripts and other data for the game.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch3500 -p1
 
 %build
@@ -106,6 +104,9 @@ find %buildroot%_bindir -type f ! -name 'pioneer*' -exec rename '' pioneer- {} \
 %_datadir/%name/
 
 %changelog
+* Thu Feb 05 2026 Anton Golubev <golubevan@altlinux.org> 20260203-alt1
+- new version
+
 * Tue May 06 2025 Anton Golubev <golubevan@altlinux.org> 20250501-alt1
 - new version
 - update minimum required version of CMake to 3.5
