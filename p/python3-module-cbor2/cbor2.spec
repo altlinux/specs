@@ -2,10 +2,13 @@
 %define pypi_name cbor2
 %define mod_name %pypi_name
 
+# build with limited api is not yet supported
+# %%python3_set_limited_api
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.7.1
+Version: 5.8.0
 Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 License: MIT
@@ -54,6 +57,9 @@ fully compatible with the original RFC 7049.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 5.8.0-alt1
+- 5.7.1 -> 5.8.0 (fixes: CVE-2025-68131).
+
 * Mon Oct 27 2025 Stanislav Levin <slev@altlinux.org> 5.7.1-alt1
 - 5.7.0 -> 5.7.1.
 
