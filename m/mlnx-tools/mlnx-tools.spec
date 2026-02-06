@@ -6,12 +6,13 @@
 %filter_from_requires /\/sbin\/systemctl/d
 %filter_from_requires \/sbin\/sysctl/d
 %filter_from_requires \/etc\/sysconfig/d
+%filter_from_requires /\/etc\/mlnx-release/d
 
 %define _udevrulesdir /lib/udev/rules.d
 %define _udevdir /lib/udev
 
 Name: mlnx-tools
-Version: 2601.0.2
+Version: 2601.0.3
 Release: alt1
 
 Summary: Mellanox userland tools and scripts
@@ -76,6 +77,9 @@ chmod +x %buildroot%python3_sitelibdir/%name/dcbnetlink.py
 %python3_sitelibdir/%name/
 
 %changelog
+* Fri Feb 06 2026 Leontiy Volodin <lvol@altlinux.org> 2601.0.3-alt1
+- New version 2601.0.3.
+
 * Fri Jan 30 2026 Leontiy Volodin <lvol@altlinux.org> 2601.0.2-alt1
 - New version 2601.0.2.
 
