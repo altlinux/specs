@@ -4,7 +4,7 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -64,10 +64,6 @@ Obsoletes: libpimdataexporterprivate5 < %EVR
 
 %prep
 %setup -n %rname-%version
-for d in po/*/docs/pimsettingexporter ; do
-    b_dir=`dirname "$d"`
-    [ -e "$b_dir/pimdataexporter" ] || cp -ar "$d" "$b_dir/pimdataexporter"
-done
 
 %build
 %K6build
@@ -100,6 +96,9 @@ done
 
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Fri Jan 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 

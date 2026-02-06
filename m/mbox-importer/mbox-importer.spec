@@ -1,7 +1,7 @@
 %define rname mbox-importer
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -47,6 +47,9 @@ PIM Mailbox importer.
 %_K6xdgapp/*mboximporter*.desktop
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Fri Jan 16 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 
