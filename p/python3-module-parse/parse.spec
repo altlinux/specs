@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.2
+Version: 1.21.0
 Release: alt1
 Summary: parse() is the opposite of format()
 License: MIT
@@ -15,6 +15,8 @@ Vcs: https://github.com/r1chardj0n3s/parse
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -45,12 +47,14 @@ Parse strings using a specification based on the Python format() syntax.
 %pyproject_run_pytest -ra -o=addopts=''
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 1.21.0-alt1
+- 1.20.2 -> 1.21.0.
+
 * Tue Jun 11 2024 Stanislav Levin <slev@altlinux.org> 1.20.2-alt1
 - 1.20.1 -> 1.20.2.
 
