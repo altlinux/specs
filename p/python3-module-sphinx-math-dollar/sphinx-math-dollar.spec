@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.3
 Release: alt1
 
 Summary: Sphinx extension to let you write LaTeX math using $$
@@ -34,9 +34,6 @@ sphinx-math-dollar is a Sphinx extension to let you write LaTeX math using $$.
 %prep
 %setup
 
-# hotfix for python3.12
-sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
-sed -i 's/readfp/read_file/' versioneer.py
 # fix egg-info
 sed -i -e 's/\(^\s\+git_refnames = \).*$/\1"%version"/' %realname/_version.py
 
@@ -55,6 +52,9 @@ sed -i -e 's/\(^\s\+git_refnames = \).*$/\1"%version"/' %realname/_version.py
 %python3_sitelibdir/%realname-%version.dist-info
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 1.3-alt1
+- Automatically updated to 1.3.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
 - Automatically updated to 1.2.1.
 
