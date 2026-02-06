@@ -2,7 +2,7 @@
 
 Name: xwaylandvideobridge
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Utility to allow streaming Wayland windows to X applications
 License: GPL-2.0-only OR GPL-3.0-or-later
@@ -10,6 +10,8 @@ Group: System/X11
 Url: https://invent.kde.org/system/xwaylandvideobridge
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
@@ -39,6 +41,7 @@ the control of the user at all times.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %K6build \
@@ -59,5 +62,8 @@ the control of the user at all times.
 %_K6data/qlogging-categories6/*.*categories
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
+- Fixed FTBFS with Qt 6.10.
+
 * Sat May 24 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus

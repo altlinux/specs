@@ -3,7 +3,7 @@
 
 Name: maui-fiery
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Convergent web browser based on Maui framework
 License: LGPL-3.0-only
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 Url: https://invent.kde.org/maui/fiery
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -37,6 +39,7 @@ Requires: libqt6-webenginequick
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -58,5 +61,8 @@ sed -i "s|Exec=fiery|Exec=org.kde.fiery|" %buildroot%_desktopdir/org.kde.fiery.d
 %_datadir/metainfo/org.kde.fiery.metainfo.xml
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.1-alt2
+- Fixed FTBFS with Qt 6.10.
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.1-alt1
 - Initial build for Sisyphus

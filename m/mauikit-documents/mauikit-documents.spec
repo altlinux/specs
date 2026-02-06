@@ -3,7 +3,7 @@
 
 Name: mauikit-documents
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: MauiKit QtQuick plugins for text editing
 License: LGPL-3.0-only
@@ -11,6 +11,8 @@ Group: Development/KDE and QT
 Url: https://invent.kde.org/maui/mauikit-documents
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -57,6 +59,7 @@ Requires: %{name} = %{version}-%{release}
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -94,5 +97,8 @@ Requires: %{name} = %{version}-%{release}
 %_libdir/libMauiKitDocuments4.so
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt2
+- Fixed FTBFS with Qt 6.10.
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt1
 - Initial build for Sisyphus

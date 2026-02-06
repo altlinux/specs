@@ -4,7 +4,7 @@
 %define appname io.elementary.settings.applications
 
 Name: switchboard-plug-applications
-Version: 8.2.0
+Version: 8.3.0
 Release: alt1
 
 Summary: Switchboard Applications Plug
@@ -50,5 +50,8 @@ Manage default and startup apps.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 8.3.0-alt1
+- New version 8.3.0.
+
 * Sun Sep 21 2025 Nikolay Strelkov <snk@altlinux.org> 8.2.0-alt1
 - Initial build for Sisyphus

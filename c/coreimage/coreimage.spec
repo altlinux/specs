@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: coreimage
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Image viewer for C Suite
@@ -39,7 +39,11 @@ Requires: corestuff
 %_bindir/coreimage
 %_desktopdir/cc.cubocore.CoreImage.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreImage.svg
+%_datadir/metainfo/cc.cubocore.CoreImage.metainfo.xml
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

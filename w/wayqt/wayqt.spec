@@ -2,7 +2,7 @@
 
 Name: wayqt
 Version: 0.3.0
-Release: alt2
+Release: alt3
 
 Summary: Qt-based wrapper for various wayland protocols
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(Qt6WaylandClient)
 BuildRequires: pkgconfig(libpng)
 
 %description
-%summary
+%summary.
 
 %package -n lib%{name}
 Summary: Library files for %name
@@ -84,6 +84,9 @@ projects.
 %_pkgconfigdir/wayqt-qt6.pc
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt3
+- Fixed FTBFS with Qt 6.10.
+
 * Sat Jan 24 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt2
 - Fix FTBFS by defining private_headers as bool in meson.build.
 

@@ -2,7 +2,7 @@
 
 Name: corestuff
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: An activity viewer for C Suite
 License: GPL-3.0-or-later
@@ -10,6 +10,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/cubocore/coreapps/corestuff
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
 
@@ -34,6 +36,7 @@ Requires: coregarage
 
 %prep
 %setup
+%patch -p1
 sed -i "s|System;|System;Monitor;|" cc.cubocore.CoreStuff.desktop
 
 %build
@@ -52,5 +55,8 @@ sed -i "s|System;|System;Monitor;|" cc.cubocore.CoreStuff.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreStuff.svg
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt2
+- Fixed FTBFS with Qt 6.10.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus
