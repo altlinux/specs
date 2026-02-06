@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Helpful pytest fixtures for sphinx extensions
@@ -54,9 +54,12 @@ after transforms, etc.
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/sphinx_pytest
-%python3_sitelibdir/*.dist-info
+%python3_sitelibdir/sphinx_pytest-%version.dist-info
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt1
+- Automatically updated to 0.3.0.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt1
 - Automatically updated to 0.2.0.
 - Build with check.
