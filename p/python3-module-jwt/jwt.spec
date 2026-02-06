@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.10.1
+Version: 2.11.0
 Release: alt1
 Summary: JSON Web Token implementation in Python
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -47,11 +49,13 @@ A Python implementation of RFC 7519.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
+- 2.10.1 -> 2.11.0.
+
 * Tue Jun 24 2025 Stanislav Levin <slev@altlinux.org> 2.10.1-alt1
 - 2.8.0 -> 2.10.1.
 
