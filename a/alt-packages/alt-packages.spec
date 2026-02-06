@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -19,7 +19,7 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: nlohmann-json-devel
 
-Requires: alterator-backend-packages >= 0.2.7
+Requires: alterator-backend-packages >= 0.2.12
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
 
@@ -51,6 +51,11 @@ and package repositories through apt and rpm.
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.10-alt1
+- Fix messages about manually installed packages (thx Oleg Chagaev).
+- Fix the counter of packages to be removed.
+- Fix closing the window of ongoing actions.
+
 * Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.9-alt1
 - Update app icon.
 
