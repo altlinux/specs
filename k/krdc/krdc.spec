@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -101,6 +101,9 @@ mv %buildroot/%_datadir/mime/packages/org.kde.krdc{,6}-mime.xml
 
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 

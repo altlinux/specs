@@ -11,7 +11,7 @@
 %add_findreq_skiplist %_K6data/%rname/scripts/*.py
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -102,6 +102,9 @@ done
 %_libdir/libktcore.so.*
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 

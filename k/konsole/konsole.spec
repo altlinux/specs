@@ -8,8 +8,8 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 25.12.1
-Release: alt3
+Version: 25.12.2
+Release: alt1
 %K6init no_altplace
 
 Group: Terminals
@@ -167,6 +167,9 @@ __EOF__
 
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Wed Feb 04 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt3
 - fix open file manager (closes: 57702)
 

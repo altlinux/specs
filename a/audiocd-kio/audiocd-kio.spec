@@ -4,7 +4,7 @@
 %define libaudiocdplugins libaudiocdplugins%sover
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -16,7 +16,6 @@ License: GPL-2.0-or-later
 Requires: lame
 
 Source: %rname-%version.tar
-Patch1: alt-docpath.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel
@@ -70,7 +69,6 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build \
@@ -107,6 +105,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 
