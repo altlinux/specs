@@ -1,18 +1,16 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname lazr.restfulclient
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 0.14.6
-Release: alt1.1
+Release: alt2
 
 Summary: A programmable lazr.restful client library
 
 License: LGPLv3
 Group: Development/Python3
-Url: https://launchpad.net/lazr.restfulclient
+URL:    https://pypi.org/project/lazr.restfulclient
 
 BuildArch: noarch
 
@@ -29,6 +27,7 @@ BuildRequires: python3-module-oauthlib
 BuildRequires: python3-module-wadllib
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-testtools
 %endif
 
 %py3_provides lazr.restfulclient
@@ -71,6 +70,9 @@ rm -rf src/lazr/restfulclient/tests/test_docs.py
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 0.14.6-alt2
+- Fixed FTBFS.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.14.6-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
