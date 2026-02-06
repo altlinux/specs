@@ -1,5 +1,5 @@
 Name: nwg-displays
-Version: 0.3.26
+Version: 0.3.27
 Release: alt1
 License: MIT
 
@@ -37,12 +37,16 @@ install -Dpm0755 %name.desktop -t %buildroot%_desktopdir/
 
 %files
 %_bindir/%name
+%_bindir/%name-*
 %python3_sitelibdir/nwg_displays
 %python3_sitelibdir/nwg_displays-*.egg-info
 %_pixmapsdir/%name.svg
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.27-alt1
+- new version 0.3.27 (with rpmrb script)
+
 * Thu Aug 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.26-alt1
 - new version 0.3.26 (with rpmrb script)
 
