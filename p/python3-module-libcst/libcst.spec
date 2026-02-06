@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.6
-Release: alt2
+Release: alt3
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -94,6 +94,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 1.8.6-alt3
+- Fixed FTBFS (black 26.1.0).
+
 * Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 1.8.6-alt2
 - Fixed FTBFS (usort 1.1.0).
 
