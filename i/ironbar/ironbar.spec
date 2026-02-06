@@ -1,9 +1,9 @@
 Name: ironbar
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 License: MIT
 
-Summary: Customisable Wayland gtk bar
+Summary: Customisable Wayland gtk4 bar
 
 Group: Graphical desktop/Other
 
@@ -21,18 +21,15 @@ BuildRequires: /proc
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(luajit)
 BuildRequires: pkgconfig(libinput)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(atk)
-BuildRequires: pkgconfig(gdk-3.0)
-BuildRequires: pkgconfig(gtk-layer-shell-0)
-BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
+
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(gtk4-layer-shell-0)
 
 %description
-A customisable and feature-rich GTK bar for wlroots 
+A customisable and feature-rich GTK4 bar for Wayland
 compositors, written in Rust. Ironbar is designed to support 
 anything from a lightweight bar to a full desktop panel with ease.
 
@@ -59,6 +56,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.18.0-alt1
+- new version (0.18.0) with rpmgs script
+
 * Thu Oct 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.17.1-alt1
 - new version (0.17.1) with rpmgs script
 
