@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2025.5.1
+Version: 2025.11.12
 Release: alt1
 
 Summary: Flexible test automation for Python
@@ -27,6 +27,7 @@ BuildRequires: python3-module-tox
 BuildRequires: python3-module-dependency-groups
 BuildRequires: python3-module-attrs
 BuildRequires: python3-module-cowsay
+BuildRequires: python3-module-humanize
 %endif
 
 BuildArch: noarch
@@ -48,10 +49,14 @@ for configuration.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-# test__create_venv_options uses conda
-# test_noxfile_script_mode_url_req tries to connect to github
-%pyproject_run_pytest -k 'not test__create_venv_options and not test_noxfile_no_script_mode and not test_noxfile_script_mode_url_req'
+# Skipped tests:
+# - test__create_venv_options requires conda
+# - test_main_requires requires alternative Python interpreters
+# - test_noxfile_script_mode installs from PyPI
+# - test_download_python_* uses uv to install alternative Python interpreters
+%pyproject_run_pytest -k "not test__create_venv_options[nox.virtualenv.CondaEnv.create-conda-CondaEnv] and \
+            not test_main_requires[sessions2-expected_order2] and not test_main_requires[sessions1-expected_order1] and\
+            not test_noxfile_script_mode and not test_noxfile_no_script_mode and not test_download_python_"
 
 %files
 %doc LICENSE *.md
@@ -61,6 +66,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 2025.11.12-alt1
+- Automatically updated to 2025.11.12.
+
 * Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 2025.5.1-alt1
 - Automatically updated to 2025.5.1.
 
