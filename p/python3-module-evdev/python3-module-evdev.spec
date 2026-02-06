@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: Python3 bindings to the generic input event interface
@@ -44,6 +44,9 @@ py.test3
 %doc README*
 
 %changelog
+* Fri Feb 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
+- 1.9.3
+
 * Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - 1.9.2
 
