@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -55,6 +55,15 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Thu Feb 05 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.6-alt1
+- Fixed:
+  + Components module help.
+  + Column-based output is used only in interactive mode, where terminal width can be determined.
+- Changed:
+  + Added check for interactive confirmation availability when installing, removing, or updating packages.
+- Added:
+  + `--yes` option for package apt install command.
+
 * Fri Jan 30 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.5-alt1
 - Fixed:
   + Services module usage help output.
