@@ -1,5 +1,5 @@
 Name: togo
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 License: MIT
 
@@ -45,5 +45,8 @@ install -D -m 0755 ./%name %buildroot%_bindir/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.1.0-alt1
+- new version (1.1.0) with rpmgs script
+
 * Sun Apr 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.0.1-alt1
 - Initial build
