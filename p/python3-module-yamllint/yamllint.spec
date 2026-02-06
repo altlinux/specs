@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name yamllint
+%define mod_name %pypi_name
 
 %def_with check
-%def_with docs
 
 Name: python3-module-%pypi_name
-Version: 1.37.1
+Version: 1.38.0
 Release: alt1
 Summary: A linter for YAML files
 License: GPLv3
@@ -17,7 +17,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Provides: yamllint = %EVR
 Obsoletes: yamllint <= 1.24.2-alt1
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -25,12 +26,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: /dev/pts
 %pyproject_builddeps_metadata
 %endif
-
-%if_with docs
-BuildRequires: python3-module-sphinx_rtd_theme
-%endif
-
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 A linter for YAML files.
@@ -47,35 +42,21 @@ indentation, etc.
 %build
 %pyproject_build
 
-%if_with docs
-# man page
-pushd docs
-make man
-popd
-%endif
-
 %install
 %pyproject_install
-
-%if_with docs
-# man page
-install -D -m0644 docs/_build/man/yamllint.1 %buildroot/%_man1dir/yamllint.1
-%endif
 
 %check
 %pyproject_run_unittest discover
 
 %files
-%doc README.rst CHANGELOG.rst
-%if_with docs
-%_man1dir/yamllint.1.*
-%endif
-
 %_bindir/yamllint
-%python3_sitelibdir/yamllint/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 1.38.0-alt1
+- 1.37.1 -> 1.38.0.
+
 * Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 1.37.1-alt1
 - 1.37.0 -> 1.37.1.
 
