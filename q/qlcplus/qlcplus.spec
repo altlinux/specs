@@ -1,7 +1,8 @@
 %def_with qmlui
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     qlcplus
-Version:  5.1.0
+Version:  5.2.0
 Release:  alt1
 
 Summary:  Q Light Controller Plus
@@ -9,10 +10,9 @@ Summary:  Q Light Controller Plus
 License:  Apache-2.0
 Group:    Other
 Url:      https://github.com/mcallegari/qlcplus
+Vcs:      https://github.com/mcallegari/qlcplus.git
 
 Source:   %name-%version.tar
-Patch1:   qlcplus-qmlui.patch
-Patch2:   qlcplus-fixtureeditor.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -44,20 +44,15 @@ commercial softwares.
 
 %prep
 %setup
-sed -ie '/UDEVRULESDIR/s|/etc/udev/rules.d|/usr/lib/udev/rules.d|' variables.pri variables.cmake
-%ifarch %ix86
-sed -ie "s/QMAKE_CXXFLAGS += -Werror/#&/g" variables.pri
-%endif
+sed -ie '/UDEVRULESDIR/s|/etc/udev/rules.d|/usr/lib/udev/rules.d|' variables.cmake
 export LANG="C.UTF-8"
-%if_with qmlui
-%autopatch -p1
-%endif
-# Temp hack:
-sed -ie 's!virtualconsole/vcaudiotrigger.cpp!virtualconsole/vcaudiotriggers.cpp!' qmlui/qlcplus_*.ts qmlui/qmlui.pro
 
 %build
 export LANG="C.UTF-8"
-%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch
+%add_optflags -Wno-error=odr
+%ifarch %ix86
+%add_optflags -Wno-error=sign-compare
+%endif
 %if_with qmlui
 ./translate.sh release qmlui
 %cmake -Dqmlui=ON
@@ -71,9 +66,10 @@ export LANG="C.UTF-8"
 export LANG="C.UTF-8"
 %cmake_install
 %if_with qmlui
-mv %buildroot/%_bindir/qlcplus-qml %buildroot/%_bindir/qlcplus
-sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot/%_datadir/applications/qlcplus.desktop
+mv %buildroot%_bindir/qlcplus-qml %buildroot%_bindir/qlcplus
+sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot%_datadir/applications/qlcplus.desktop
 %endif
+rm %buildroot%_libdir/*.a
 
 %files
 %_bindir/qlcplus
@@ -96,6 +92,9 @@ sed -i -e 's/Exec=qlcplus --open %f/Exec=qlcplus/g' %buildroot/%_datadir/applica
 %endif
 
 %changelog
+* Fri Feb 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
+- Update to 5.2.0.
+
 * Tue Jan 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.1.0-alt1
 - Update to 5.1.0.
 - Build with cmake.
