@@ -1,8 +1,8 @@
 %define xdg_name io.github.zefr0x.ianny
 
 Name: ianny
-Version: 2.1.1
-Release: alt2
+Version: 2.1.3
+Release: alt1
 License: GPL-3.0
 
 Summary: Break reminder app to prevent strain injuries
@@ -52,6 +52,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_sysconfdir/xdg/autostart/%xdg_name.desktop
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 2.1.3-alt1
+- new version 2.1.3 (with rpmrb script)
+
 * Fri Jul 04 2025 Ilya Sorochan <k0tran@altlinux.org> 2.1.1-alt2
 - add patch for old nix crate version (0.23.2) to enable build on loongarch64
 
