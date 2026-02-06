@@ -24,7 +24,7 @@ BuildRequires: libtinfo-devel
 
 Name:           diskscan
 Version:        0.21
-Release:        alt1
+Release:        alt2
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
@@ -53,6 +53,7 @@ the disk vendor decision making logic.
 %setup -q
 
 subst "s|VERSION 3.0.2|VERSION 3.5|" CMakeLists.txt
+subst 's|0.19|%version|' CMakeLists.txt
 
 %build
 %{suse_cmake}
@@ -68,6 +69,9 @@ subst "s|VERSION 3.0.2|VERSION 3.5|" CMakeLists.txt
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Fri Feb 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.21-alt2
+- fixed: version number
+
 * Sun Oct 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.21-alt1
 - 0.20 -> 0.21
 
