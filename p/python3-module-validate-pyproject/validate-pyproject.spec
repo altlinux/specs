@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name validate-pyproject
+%define mod_name validate_pyproject
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.24.1
+Version: 0.25
 Release: alt1
 Summary: Validation pyproject.toml files using JSON Schema
 License: MPL-2.0 and MIT and BSD-3-Clause
@@ -15,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: pyproject_deps.json
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -50,10 +53,13 @@ JSON Schema.
 %files
 %doc README.rst
 %_bindir/validate-pyproject
-%python3_sitelibdir/validate_pyproject/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 0.25-alt1
+- 0.24.1 -> 0.25.
+
 * Mon Mar 24 2025 Stanislav Levin <slev@altlinux.org> 0.24.1-alt1
 - 0.24 -> 0.24.1.
 
