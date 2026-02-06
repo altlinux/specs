@@ -2,7 +2,7 @@
 %define soname 6
 
 Name: kde6-plasma-klassy
-Version: 6.5
+Version: 6.5.1
 Release: alt1
 Epoch: 1
 
@@ -88,6 +88,9 @@ Klassy library.
 %_K6lib/libklassycommon?.so.%{soname}.*
 
 %changelog
+* Sat Feb 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:6.5.1-alt1
+- 6.5 -> 6.5.1
+
 * Thu Feb 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:6.5-alt1
 - 6.4 -> 6.5
 
