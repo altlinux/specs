@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 2.5.2
+Version: 2.5.4
 Release: alt1
 
 Summary: Python RADIUS Implementation
@@ -48,6 +48,9 @@ decoding responses.
 %doc *.rst
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 2.5.4-alt1
+- Automatically updated to 2.5.4.
+
 * Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 2.5.2-alt1
 - Automatically updated to 2.5.2.
 
