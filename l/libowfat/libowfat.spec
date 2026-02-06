@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libowfat
-Version: 0.32
+Version: 0.34
 Release: alt2
 Summary: Reimplementation of libdjb
 License: GPLv2
@@ -11,12 +11,14 @@ Group: System/Libraries
 Url: http://www.fefe.de/libowfat/
 
 Source: %name-%version.tar
-Patch0: %name-%version-alt-build-flags.patch
-Patch1: %name-%version-alt-no-dietlibc.patch
-Patch2: %name-%version-alt-no-man.patch
-Patch3: %name-%version-debian-fix-gcc10.patch
-Patch4: %name-%version-alt-fno-common.patch
-Patch5: %name-%version-alt-glibc-2.34-compat.patch
+Source999: watch
+Patch0: %name-0.34-alt-build-flags.patch
+Patch1: %name-0.34-alt-no-dietlibc.patch
+Patch2: %name-0.34-alt-no-man.patch
+Patch3: %name-0.34-debian-fix-gcc10.patch
+Patch4: %name-0.34-alt-fix-test-link.patch
+Patch5: %name-0.34-alt-fix-socket-accept-names.patch
+Patch6: %name-0.34-alt-fix-install.patch
 
 %package devel
 Summary: Headers and static lib for libowfat development
@@ -42,11 +44,15 @@ Install this package if you want do compile applications using the
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
-%patch3 -p1
+%patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 %build
+# Disable LTO - libowfat has multiple definitions of the same functions
+# in different .c files which breaks with LTO
+%define optflags_lto %nil
 %add_optflags %optflags_shared
 %add_optflags -D_FILE_OFFSET_BITS=64
 
@@ -69,8 +75,8 @@ make -f GNUmakefile install \
         CFLAGS="%optflags" \
         %nil
 
-ln -s libowfat.so.%version %buildroot%_libdir/libowfat.so.0
-ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
+ln -sf libowfat.so.%version %buildroot%_libdir/libowfat.so.0
+ln -sf libowfat.so.0 %buildroot%_libdir/libowfat.so
 
 %files
 %doc README TODO COPYING CHANGES
@@ -81,6 +87,13 @@ ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 0.34-alt2
+- fixed shared library versioning (LIB_VERSION/LIB_MAJOR conflict
+  with upstream VERSION variable)
+
+* Sun Jan 11 2026 Anton Farygin <rider@altlinux.org> 0.34-alt1
+- 0.32 -> 0.34
+
 * Tue Nov 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.32-alt2
 - Fixed build with new glibc.
 
