@@ -1,5 +1,5 @@
 Name: swaync
-Version: 0.12.3
+Version: 0.12.4
 Release: alt1
 
 Summary: A simple GTK notification daemon
@@ -46,6 +46,7 @@ A simple notification daemon with a GTK gui for notifications and the control ce
 
 %_userunitdir/swaync.service
 %_datadir/dbus-1/services/org.erikreider.swaync.service
+%_datadir/dbus-1/services/org.erikreider.swaync.cc.service
 %_datadir/glib-2.0/schemas/org.erikreider.swaync.gschema.xml
 
 %_man1dir/swaync*
@@ -61,6 +62,9 @@ A simple notification daemon with a GTK gui for notifications and the control ce
 %_datadir/fish/vendor_completions.d/swaync*
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.12.4-alt1
+- new version 0.12.4 (with rpmrb script)
+
 * Sat Dec 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.12.3-alt1
 - new version 0.12.3 (with rpmrb script)
 
