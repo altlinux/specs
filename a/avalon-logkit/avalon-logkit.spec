@@ -1,17 +1,10 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           avalon-logkit
-Epoch:          0
 Version:        2.1
-Release:        alt2_32jpp11
+Release:        alt3
+
 Summary:        Java logging toolkit
 License:        ASL 2.0
+Group:		Development/Java
 URL:            http://avalon.apache.org/
 BuildArch:      noarch
 
@@ -20,9 +13,14 @@ Source0:        http://archive.apache.org/dist/excalibur/%{name}/source/%{name}-
 Patch0001:      0001-Port-build-script-to-Maven-3.patch
 Patch0002:      0002-Port-to-Java-7.patch
 Patch0003:      0003-Fix-encoding.patch
+Patch0004:	0004-Replace-javax-with-jakarta.patch
 
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
-BuildRequires:  mvn(javax.mail:mail)
+BuildRequires:	unzip
+
+BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(log4j:log4j)
@@ -30,7 +28,6 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
 
 Provides:       deprecated()
-Source44: import.info
 
 %description
 LogKit is a logging toolkit designed for secure performance orientated
@@ -48,9 +45,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
+
 mv project.xml pom.xml
 
 # LogFactor5 is no longer distributed with log4j
@@ -78,8 +74,10 @@ rm -rf src/java/org/apache/log/output/lf5
     </plugin>
   </plugins>"
 
+%pom_change_dep javax.mail:mail jakarta.mail:jakarta.mail-api
+
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -91,6 +89,9 @@ rm -rf src/java/org/apache/log/output/lf5
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jan 30 2026 Evgeniy Serov <scala@altlinux.org> 2.1-alt3
+- Fix build with new jakarta mail.
+
 * Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1-alt2_32jpp11
 - jdk17 support
 
