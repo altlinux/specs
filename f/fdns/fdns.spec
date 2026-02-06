@@ -2,7 +2,7 @@
 %def_with check
 
 Name: fdns
-Version: 0.9.72
+Version: 0.9.76
 Release: alt1
 
 Summary: Firejail DNS-over-HTTPS Proxy Server
@@ -55,14 +55,21 @@ cd test/fdns
 %config(noreplace) %_sysconfdir/fdns/servers.local
 %config(noreplace) %_sysconfdir/fdns/resolver*
 %config(noreplace) %_sysconfdir/fdns/list*
+%config(noreplace) %_sysconfdir/fdns/hosts
+%config(noreplace) %_sysconfdir/fdns/whitelist
 %systemd_unitdir/fdns.service
 %_bindir/nxdomain
 %_bindir/fdns
+%_bindir/dnsc
 %_docdir/fdns
 %_datadir/bash-completion/completions/fdns
 %_man1dir/fdns*
+%_man1dir/dnsc.1*
 %_man1dir/nxdomain*
 
 %changelog
+* Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 0.9.76-alt1
+- 0.9.72 -> 0.9.76
+
 * Tue Mar 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.72-alt1
 - First build for ALT.
