@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.68
+%define kernel_sublevel	.69
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Feb 06 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.69-alt1
+- v6.12.69 (2026-02-06).
+- config: CONFIG_LEDS_PCA955X_GPIO=y (ALT#57765).
+
 * Fri Jan 30 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.68-alt1
 - v6.12.68 (2026-01-30).
 
