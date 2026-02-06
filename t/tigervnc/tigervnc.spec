@@ -3,7 +3,7 @@
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: A TigerVNC remote display system
@@ -228,7 +228,7 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # VNCSERVERARGS[1]="-geometry 800x600 -localhost"
 __EOF__
 
-install -D contrib/packages/rpm/el7/SOURCES/10-libvnc.conf \
+install -D contrib/packages/rpm/el8/SOURCES/10-libvnc.conf \
 	%buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
 
 install vncserver.pl %buildroot/%_bindir/vncserver
@@ -246,7 +246,6 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_libdir/X11/modules/extensions/libvnc.la
 %_man1dir/vncviewer.1*
 %_datadir/metainfo/org.tigervnc.vncviewer.metainfo.xml
-
 
 %files server
 %_initddir/vncserver
@@ -277,6 +276,9 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 1.16.0-alt1
+- 1.15.0 -> 1.16.0
+
 * Mon Feb 24 2025 Constantin Sunzow <protvin@altlinux.org> 1.15.0-alt1
 - Removed obsoleted tightpasswd.
 - Change license to SPDX format.
