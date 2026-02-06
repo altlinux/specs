@@ -2,7 +2,7 @@
 
 Name: quickshell
 Version: 0.2.1
-Release: alt2
+Release: alt3
 License: GPL-3.0 and LGPL-3.0
 
 Summary: Flexible toolkit for making desktop shells with QtQuick
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(jemalloc)
 BuildRequires: pkgconfig(CLI11)
 
 BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(gbm)
@@ -68,6 +69,9 @@ to build a complete desktop environment.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt3
+- fix FTBFS: add BuildRequires pkgconfig(wayland-cursor)
+
 * Sat Dec 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt2
 - add requires to qt6-declarative (ALT bug 56836)
 
