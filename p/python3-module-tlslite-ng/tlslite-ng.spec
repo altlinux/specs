@@ -4,8 +4,8 @@
 %define oname %mname-ng
 
 Name: python3-module-%oname
-Version: 0.7.5
-Release: alt2
+Version: 0.7.6
+Release: alt1
 
 Summary: Pure python implementation of SSL and TLS
 License: BSD & LGPLv2
@@ -87,6 +87,9 @@ killall -9 python3
 %doc docs/*
 
 %changelog
+* Fri Feb 06 2026 Alexander Danilov <admsasha@altlinux.org> 0.7.6-alt1
+- Updated to upstream version 0.7.6.
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.5-alt2
 - Build for python2 disabled.
 
