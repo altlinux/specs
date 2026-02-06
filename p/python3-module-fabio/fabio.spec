@@ -1,9 +1,5 @@
 %define oname fabio
 
-# [armh]
-# [00:01:02]   File "/usr/src/RPM/BUILD/python3-module-fabio-2023.6/build/lib/python3/site-packages/fabio/test/codecs/test_brukerimage.py", line 155, in test_linear
-# [00:01:02]     self.assertTrue(error < numpy.finfo(numpy.float32).eps, "Error is %s>1e-7" % error)
-# [00:01:02] AssertionError: False is not true : Error is 1.1920929e-07>1e-7
 %ifnarch armh
 %def_with check
 %else
@@ -11,7 +7,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 2024.4
+Version: 2025.10.0
 Release: alt1
 
 Summary: Image IO for fable
@@ -34,6 +30,9 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-h5py
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-glymur
+BuildRequires: python3-module-hdf5plugin
+BuildRequires: python3-module-PyQt5
+BuildRequires: python3-module-matplotlib-qt5
 %endif
 
 %description
@@ -46,10 +45,6 @@ floats)
 
 %prep
 %setup
-
-# Hotfix for 2024.4 unmet dependency python3(fabio._version)
-sed -i "s/\.\._version/\.\.version/" \
-    src/fabio/app/eiger2crysalis.py src/fabio/app/densify.py
 
 # remove some third-party bundled stuff
 rm -rv src/fabio/third_party/_local
@@ -71,12 +66,16 @@ python3 run_tests.py --installed
 %_bindir/eiger2crysalis
 %_bindir/fabio-convert
 %_bindir/fabio_viewer
+%_bindir/hdf2neggia
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.0.dist-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/test/*
 %exclude %python3_sitelibdir/%oname/benchmark/*
 
 %changelog
+* Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 2025.10.0-alt1
+- Automatically updated to 2025.10.0.
+
 * Fri Apr 12 2024 Grigory Ustinov <grenka@altlinux.org> 2024.4-alt1
 - Automatically updated to 2024.4.
 
