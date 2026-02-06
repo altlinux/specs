@@ -1,5 +1,5 @@
 Name: clipse
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 License: MIT
 
@@ -42,6 +42,9 @@ install -D -m 0755 ./clipse %buildroot/%_bindir/clipse
 %_bindir/clipse
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Sat Dec 27 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 
