@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.3
+Release: alt0.5
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -291,6 +291,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Feb 06 2026 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.5
+- Set correct documentation URL.
+
+* Thu Dec 25 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.4
+- Remove slides about zfs.
+
 * Fri Nov 07 2025 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.3
 - Fix slides in slideshow.
 

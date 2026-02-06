@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.7
+Release: alt0.8
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -290,6 +290,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Feb 06 2026 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.8
+- Set correct documentation URL.
+
 * Mon Jun 02 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.7
 - Updated slides for PVE
 - Better installer styling
