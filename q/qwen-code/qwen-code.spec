@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash d0fac54
+%global commit_hash 302ed9a
 
 Name: qwen-code
-Version: 0.7.2
+Version: 0.9.1
 Release: alt1
 Summary: AI-powered command-line workflow tool for developers
 License: Apache-2.0
@@ -49,8 +49,7 @@ node esbuild.config.js
 
 %install
 mkdir -p %buildroot%_bindir \
-         %buildroot%_libexecdir/%name/node_modules
-cp -r node_modules/tiktoken %buildroot%_libexecdir/%name/node_modules
+         %buildroot%_libexecdir/%name
 install -m 0644 dist/cli.js %buildroot%_libexecdir/%name
 install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 
@@ -60,6 +59,9 @@ install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 %doc LICENSE
 
 %changelog
+* Fri Feb 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.1-alt1
+- Updated to version 0.9.1.
+
 * Fri Jan 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.2-alt1
 - Updated to version 0.7.2.
 
