@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -127,6 +127,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt2
+- Fixed FTBFS with Qt 6.10.
+
 * Thu Jan 15 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
 - Build new version.
 
