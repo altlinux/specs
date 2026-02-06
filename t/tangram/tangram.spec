@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Tangram
-%define ver_major 3.4
+%define ver_major 3.5
 %define beta %nil
 %define rdn_name re.sonny.Tangram
 %define mozjs_ver 115
@@ -81,6 +81,9 @@ sed -i 's|\(^#!/usr/bin/\)env -S \(gjs -m\)|\1\2|' src/bin.js
 
 
 %changelog
+* Fri Feb 06 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
+- 3.5
+
 * Wed Oct 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - 3.4
 
