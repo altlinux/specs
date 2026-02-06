@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+# Upstream doesn't support C library versioning.
 %define abiversion 1
 
 Name: resvg
-Version: 0.45.1
+Version: 0.46.0
 Release: alt1
 
 Summary: An SVG rendering library writen in rust
@@ -69,14 +70,19 @@ verbose = true
 quiet = false
 
 [build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=2"]
 
 [profile.release]
 strip = false
 EOF
 
 %build
-%rust_build --all-features -p usvg -p resvg -p resvg-capi
+%rust_build --all-features -p usvg -p resvg
+
+# Cargo doesn’t yet provide a good way to pass specific rustflags to a package.
+# Passing -soname is required to generate SONAME header in output library as rust doesn't generate it by default.
+export RUSTFLAGS="-Clink-arg=-Wl,-soname,libresvg.so.%abiversion"
+%rust_build --all-features -p resvg-capi
 
 %install
 %rust_install resvg usvg
@@ -118,5 +124,9 @@ install -Dm 755 crates/c-api/ResvgQt.h %buildroot%_includedir/ResvgQt.h
 %_includedir/ResvgQt.h
 
 %changelog
+* Fri Feb 06 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.46.0-alt1
+- New version (0.46.0).
+- Fix C library SONAME header generation.
+
 * Tue Jul 29 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.45.1-alt1
 - Initial build.
