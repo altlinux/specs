@@ -30,7 +30,7 @@ python3(roman_numerals) \\\
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 8.2.1
+Version: 8.2.3
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -40,15 +40,14 @@ Url: http://sphinx-doc.org
 VCS: https://github.com/sphinx-doc/sphinx
 
 BuildArch: noarch
-
-# Source0-url: https://github.com/sphinx-doc/sphinx/archive/refs/tags/v%version.tar.gz
-Source0: sphinx-%version.tar.gz
+Source0: %name-%version.tar
 Source1: conf.py.template
 Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
 Patch2: python-sphinx-objects.patch
+Patch3: sphinx-8.2.3-alt-docutils-0.22-compat.patch
 
 Requires: python3-module-sphinx-sphinx-build-symlink
 Requires: %(echo "%dependencies")
@@ -166,7 +165,7 @@ multiple reStructuredText sources)
 This packages contains RPM macros for build with Sphinx.
 
 %prep
-%setup -n sphinx-%version
+%setup
 %autopatch -p1
 
 install -pm644 %SOURCE1 .
@@ -281,6 +280,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Fri Feb 06 2026 Anton Farygin <rider@altlinux.ru> 1:8.2.3-alt1
+- updated from 8.2.1 to 8.2.3
+
 * Thu Feb 27 2025 Fr. Br. George <george@altlinux.org> 1:8.2.1-alt1
 - Autobuild version bump to 8.2.1
 
