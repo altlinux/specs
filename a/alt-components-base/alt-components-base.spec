@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.9.13
+Version: 0.10.0
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.4
+BuildRequires: alterator-entry >= 0.4.8
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -157,6 +157,38 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Fri Feb 06 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.0-alt1
+- Update editions:
+  + add ldap-auth-client-sssd to the main section of the server edition
+  + add components to the base section of the server and domain editions:
+    nfs-utils, cifs-utils, screen, arj, network-configuration, network-utils,
+    ntfs-3g, btrfs-progs, jfsutils
+  + move documentation components from the base to the main section in server
+    and domain editions
+  + add a features section to server and domain editions
+  + update Kubernetes to 1.35 in the server edition
+- Update components:
+  + add new components: ldap-auth-client-sssd, alt-domain-ad-client-support,
+    alt-server-gnome-environment, alt-server-temporary-for-installer (hidden),
+    alt-server-virt-env, kubernetes1_34, kubernetes1_35, network-configuration,
+    network-utils, f2fs-tools, ntfs-3g, cifs-utils and nfs-utils.
+  + add iputils, traceroute, bind-utils and netlist packages to
+    network-diag-tools component
+  + add lftp package to network-utils component
+  + add pam-limits-desktop package to alt-server-defaults component
+  + add color-prompt-and-man package to base-special component
+  + add gpart, ncdu and parted, hdparm, sdparm and nvme packages to storage-base
+    component
+  + add hwclock and eject packages to hardware-tools component
+  + add su package to base-utils component
+  + add os-prober package to boot-utils component
+  + add dhcpcd package to etcnet component
+  + add ntpdate package to ntp-utils component
+  + add alterator-gpupdate legacy package to samba-ad-client-support component
+  + add product-features and alt-server-features categories
+  + update descriptions for etcnet, qemu-guest-agent, jfsutils and btrfs-progs
+    components
+
 * Mon Feb 02 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.9.13-alt1
 - components: update doc version
 
