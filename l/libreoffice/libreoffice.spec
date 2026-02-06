@@ -47,10 +47,10 @@
 %define optflags_debug -g1
 
 Name: libreoffice
-%define hversion 25.8
-%define urelease 4.2
+%define hversion 26.2
+%define urelease 0.3
 Version: %hversion.%urelease
-Release: alt3
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -226,6 +226,9 @@ BuildRequires: libargon2-devel
 BuildRequires: rhino
 # 25.8
 BuildRequires: libzstd-devel
+# 26.2
+BuildRequires: libmd4c-devel
+BuildRequires: libfast_float-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -842,6 +845,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 04 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.0.3-alt1
+- New version.
+
 * Tue Jan 13 2026 Andrey Cherepanov <cas@altlinux.org> 25.8.4.2-alt3
 - Returned build Qt6 and KDE6.
 
