@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phpldapadmin
-Version: 2.3.8
-Release: alt2
+Version: 2.3.9
+Release: alt1
 
 Summary: Handle the adminstration of LDAP server over the web
 Summary(ru_RU.UTF8): Управление LDAP сервером через web
@@ -87,6 +87,9 @@ install -m644  %name.conf %buildroot%apache2_sites_available
 %pla_home
 
 %changelog
+* Fri Feb 06 2026 Andrey Cherepanov <cas@altlinux.org> 2.3.9-alt1
+- New version.
+
 * Wed Jan 28 2026 Anton Farygin <rider@altlinux.org> 2.3.8-alt2
 - Use %%php_defver for default PHP version resolution.
 - Fix homepage URL and add VCS tag.
