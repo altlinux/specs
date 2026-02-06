@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
 Summary: A tool for generating OIDC identities
 License: Apache-2.0
@@ -51,5 +51,8 @@ GitHub Actions, GitLab pipelines and Google Cloud.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
+- 1.5.0 -> 1.6.1.
+
 * Wed Jan 22 2025 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.
