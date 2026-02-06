@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tomlkit
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.3
+Version: 0.14.0
 Release: alt1
 Summary: Style preserving TOML library
 License: MIT
@@ -16,7 +17,8 @@ Source: %name-%version.tar
 Source1: toml-test.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -52,10 +54,13 @@ documents from scratch using the provided helpers.
 
 %files
 %doc README.md
-%python3_sitelibdir/tomlkit/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 0.14.0-alt1
+- 0.13.3 -> 0.14.0.
+
 * Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 0.13.3-alt1
 - 0.13.2 -> 0.13.3.
 
