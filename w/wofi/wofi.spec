@@ -1,5 +1,5 @@
 Name: wofi
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 
 Summary: launcher/menu program for wlroots based wayland compositors such as sway
@@ -53,6 +53,9 @@ sed -i "s/deps = \[/&cc.find_library('m'), /" meson.build
 %_man3dir/*
 
 %changelog
+* Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.5.3-alt1
+- new version 1.5.3 (with rpmrb script)
+
 * Sat Dec 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.5.1-alt1
 - new version 1.5.1 (with rpmrb script)
 
