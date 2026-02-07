@@ -4,7 +4,7 @@
 
 Name: vkmark
 Version: 2025.01
-Release: alt1
+Release: alt1.1
 
 Summary: Vulkan benchmark
 License: LGPL-2.1-or-later
@@ -12,6 +12,9 @@ Group: Graphics
 Url: https://github.com/vkmark/vkmark
 
 Source0: %name-%version-%release.tar
+
+# https://github.com/%name/%name/pull/80
+Patch0: %name-fix-build-vulkan-headers-1.4.333.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake gcc-c++
@@ -31,6 +34,7 @@ scenes.
 
 %prep
 %setup -n %name-%version-%release
+%patch0 -p1
 
 %build
 %meson \
@@ -52,6 +56,9 @@ scenes.
 %_datadir/%name
 
 %changelog
+* Sat Feb 07 2026 Nazarov Denis <nenderus@altlinux.org> 2025.01-alt1.1
+- Fix build with Vulkan Headers 1.4.333
+
 * Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 2025.01-alt1
 - 2025.01
 - re-enable tests on %%ix86
