@@ -1,4 +1,4 @@
-%define git_version 58a7fab8be0a062d730ad7da874972fd3fba59fb
+%define git_version c92aebb279828e9c3c1f5d24613efca272649e62
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 19.2.3
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1880,8 +1880,11 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Sat Feb 07 2026 Alexey Shabalin <shaba@altlinux.org> 19.2.3-alt2
+- backport fixes from upstream (Fixes: CVE-2024-31884).
+
 * Thu Jul 31 2025 Alexey Shabalin <shaba@altlinux.org> 19.2.3-alt1
-- 19.2.3
+- 19.2.3 (Fixes: CVE-2025-52555)
 
 * Fri Apr 11 2025 Alexey Shabalin <shaba@altlinux.org> 19.2.2-alt1
 - 19.2.2
@@ -2357,4 +2360,3 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 
 * Mon Jun 11 2012 Alexei Takaseev <taf@altlinux.org> 0.47.2-alt1
 - Initial build for Sisyphus
-
