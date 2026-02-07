@@ -1,31 +1,24 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name mediafile
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
-Release: alt1.1
+Version: 0.14.0
+Release: alt1
 Summary: elegant audio file tagging
 License: MIT
 Group: Development/Python3
-Url: https://github.com/beetbox/mediafile
-Vcs: https://pypi.org/project/mediafile/
+Url: https://pypi.org/project/mediafile/
+Vcs: https://github.com/beetbox/mediafile
 
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-Patch1: fix-wav-frames.patch
 
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3-module-flit-core
+BuildRequires: python3-module-poetry
 BuildRequires: python3-module-mutagen
 BuildRequires: python3-module-filetype
-BuildRequires: python3(six)
-
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -36,11 +29,10 @@ BuildRequires: python3-module-standard-imghdr
 %py3_provides %pypi_name
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -55,11 +47,13 @@ BuildRequires: python3-module-standard-imghdr
 
 %files
 %doc *.rst
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/%pypi_name.py
+%python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
+- Automatically updated to 0.14.0.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1.1
 - NMU: fixed FTBFS.
 
