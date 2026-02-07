@@ -2,7 +2,7 @@
 
 Name: freecol
 Version: 1.2.0
-Release: alt3
+Release: alt4
 Summary: FreeCol is opensource Colonization clone.
 Url: http://freecol.org
 Vcs: https://github.com/FreeCol/freecol
@@ -19,7 +19,7 @@ Patch1: %name-0.11.6-fedora-source-encoding.patch
 #Patch2: CVE-2018-1000825.patch
 
 BuildRequires: rpm-build-java
-BuildRequires: ant ant-nodeps
+BuildRequires: ant
 BuildRequires: subversion
 BuildRequires: jpackage-11-compat junit 
 BuildRequires: git
@@ -72,6 +72,9 @@ install -p %SOURCE2 %buildroot%_niconsdir/%name.xpm
 %_niconsdir/%name.xpm
 
 %changelog
+* Sat Feb 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt4
+- FTBFS: builded without obsolete ant-nodeps package.
+
 * Sat Jan 31 2026 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt3
 - built with Java 11
 
