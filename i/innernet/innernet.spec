@@ -2,8 +2,8 @@
 #
 
 Name: innernet
-Version: 1.6.1
-Release: alt1.1
+Version: 1.7.1
+Release: alt1
 
 Summary: a private network system that uses WireGuard under the hood
 Summary(ru_RU.UTF-8): система построения сетей VPN на базе WireGuard
@@ -80,6 +80,7 @@ WireGuard.
 
 %prep
 %setup
+%patch0 -p1
 
 # Rust packages, update them before new build!
 tar xf %SOURCE1
@@ -89,7 +90,6 @@ install -Dm664 -- %SOURCE2 .cargo/config
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/nix-0.25.1/.cargo-checksum.json
 
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -170,6 +170,9 @@ install -m 0700 -d %buildroot/var/lib/%{name}-server
 
 
 %changelog
+* Sat Feb 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.7.1-alt1
+- New version (Closes: 57688)
+
 * Mon Apr 01 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt1.1
 - NMU: fix FTBFS on loongarch64
 
