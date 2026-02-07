@@ -1,22 +1,25 @@
 %define oname mimeparse
 
 Name: python3-module-%oname
-Version: 1.6.0
-Release: alt4.1
+Version: 2.0.0
+Release: alt1
 
 Summary: Basic functions for handling mime-types in python
+
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.org/project/python-mimeparse
+URL: https://pypi.org/project/python-mimeparse
+VCS: https://github.com/dbtsai/python-mimeparse
 
-# https://github.com/dbtsai/python-mimeparse.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3(json)
 BuildRequires: python3-module-legacy-cgi
 
+BuildArch: noarch
 
 %description
 This module provides basic functions for handling mime-types. It can handle
@@ -40,20 +43,24 @@ Contents:
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 mimeparse_test.py
 
 %files
 %doc README.rst LICENSE
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/python_mimeparse-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt4.1
 - Fixed FTBFS.
 
