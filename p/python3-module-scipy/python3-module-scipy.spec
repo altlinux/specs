@@ -1,34 +1,39 @@
-# errors on i586 and aarch64
+# FlexiBLAS/netlib on aarch64: 114 test failures due to numerical precision
+# differences vs OpenBLAS (see build-log.aarch64); tests only on x86_64
+%ifarch x86_64
+%def_with check
+%else
 %def_without check
+%endif
 %def_with pythran
 
 %define modname scipy
-%define ver_major 1.15
-%define ver_minor 3
+%define ver_major 1.17
+%define ver_minor 0
 
 %define numpy_version 1.16.5
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt1
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
 Group: Development/Python3
 
 Url: https://www.scipy.org/
-VCS: git://github.com/scipy/scipy.git
+VCS: https://github.com/scipy/scipy.git
 Source0: %name-%version.tar
 Source1: site.cfg
 # submodules by update-submodules.sh
 Source2: %name-%version-doc-source-_static-scipy-mathjax.tar
 Source3: %name-%version-scipy-_lib-array_api_compat.tar
 Source4: %name-%version-scipy-_lib-array_api_extra.tar
-Source5: %name-%version-scipy-_lib-boost_math.tar
+Source5: %name-%version-subprojects-boost_math-math.tar
 Source6: %name-%version-scipy-_lib-cobyqa.tar
 Source7: %name-%version-scipy-_lib-pocketfft.tar
 Source8: %name-%version-scipy-_lib-unuran.tar
-Source9: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
+Source9: %name-%version-subprojects-xsf.tar
 Source10: %name-%version-subprojects-highs.tar
 Source11: datasets.tar
 
@@ -49,13 +54,12 @@ BuildRequires: python3-module-pybind11
 %if_with pythran
 BuildRequires: python3-module-pythran
 %endif
-BuildRequires: libopenblas-devel
-
 %ifarch %e2k
 BuildRequires: eml-devel-compat-lapack
 BuildRequires: eml-devel-compat-blas
+BuildRequires: libopenblas-devel
 %else
-BuildRequires: liblapack-devel
+BuildRequires: libflexiblas-devel
 %endif
 
 Requires: %python3_sitelibdir_noarch
@@ -139,8 +143,8 @@ sed -i -e 's/lapack, /clapack, eml_algebra_mt, /g' -e 's/openblas, /blas, /g' si
 sed -i '/use-pythran/s/true/false/' meson_options.txt
 %endif
 %ifnarch %e2k
-# Solution for ALT#48852
-sed -i 's/lapack=openblas/lapack=lapack/' meson.build
+# Use FlexiBLAS for runtime backend switching (also fixes ALT#48852)
+sed -i -e "s/blas=openblas/blas=flexiblas/" -e "s/lapack=openblas/lapack=flexiblas/" meson.build
 %endif
 
 export SCIPY_USE_PYTHRAN=0%{?with_pythran}
@@ -191,7 +195,9 @@ done
 %check
 export XDG_CACHE_HOME=$PWD
 pushd %buildroot/%python3_sitelibdir
-pytest3 scipy -k 'not test_basic_functions and not test_cython and not TestDatasets'
+# test_gesdd_nan_error_message: LAPACK gesdd does not raise ValueError on NaN (implementation-specific)
+# test_kde_2d_weighted: rtol=5e-14 too tight for FlexiBLAS/netlib (5.2e-14 vs 5e-14)
+pytest3 scipy -k 'not test_basic_functions and not test_cython and not TestDatasets and not test_gesdd_nan_error_message and not test_kde_2d_weighted'
 rm -rv .pytest_cache
 
 for i in $(find %buildroot%python3_sitelibdir \
@@ -217,6 +223,9 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %_includedir/%modname-py3
 
 %changelog
+* Fri Feb 06 2026 Anton Farygin <rider@altlinux.org> 1.17.0-alt1
+- 1.15.3 -> 1.17.0
+
 * Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.15.3-alt3
 - Fixed previous fix.
 
