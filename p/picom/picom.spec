@@ -3,16 +3,15 @@
 
 Name: picom
 Version: 13
-Release: alt0.1
+Release: alt1
 Summary: A lightweight compositor for X11
-License: MPL-2.0 or MIT
+License: MPL-2.0 OR MIT
 Group: System/X11
 URL: https://github.com/yshui/picom
 VCS: https://github.com/yshui/picom
 Source: %name-%version.tar
 
 Obsoletes: compton < %EVR
-Provides: compton = %version
 
 BuildRequires: asciidoc-a2x
 BuildRequires: rpm-build-python3
@@ -74,8 +73,12 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_includedir/picom/
 
 %changelog
+* Sat Feb 07 2026 Anton Midyukov <antohami@altlinux.org> 13-alt1
+- New version 13.
+- Do not provide virtual package compton.
+
 * Tue Dec 09 2025 Anton Midyukov <antohami@altlinux.org> 13-alt0.1
-- 13-rc1
+- 13-rc1.
 
 * Wed Nov 13 2024 Anton Midyukov <antohami@altlinux.org> 12.5-alt1
 - New version 12.5.
