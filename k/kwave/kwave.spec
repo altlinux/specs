@@ -5,7 +5,7 @@
 %define libkwave libkwave%sover
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -113,6 +113,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 %_K6lib/libkwavegui.so.*
 
 %changelog
+* Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Mon Jan 19 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 
