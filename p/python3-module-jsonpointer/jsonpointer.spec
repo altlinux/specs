@@ -1,20 +1,23 @@
 %global pypi_name jsonpointer
-%global github_name python-json-pointer
 
 Name:       python3-module-%pypi_name
-Version:    2.0
-Release:    alt3
+Version:    3.0.0
+Release:    alt1
+
 Summary:    Resolve JSON Pointers in Python
+
 Group:      Development/Python3
+License:    BSD-3-Clause
+URL:        https://pypi.org/project/jsonpointer
+VCS:        https://github.com/stefankoegl/python-json-pointer
 
-License:    BSD
-URL:        https://github.com/stefankoegl/%github_name
-Source0:    %name-%version.tar
-
-BuildArch:  noarch
+Source:     %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
+BuildArch:  noarch
 
 %description
 Library to resolve JSON Pointers according to RFC 6901.
@@ -22,26 +25,27 @@ Library to resolve JSON Pointers according to RFC 6901.
 %prep
 %setup
 
-# Hotfix for python3.13
-sed -i 's/unittest.makeSuite/unittest.defaultTestLoader.loadTestsFromTestCase/g' $(grep -rl makeSuite)
-
 %build
-%python3_build
+%pyproject_build
 
 %install
 export LC_ALL=en_US.UTF-8
-%python3_install
+%pyproject_install
 
 %check
-%__python3 tests.py
+%pyproject_run_unittest
 
 %files
-%doc README.md
-%_bindir/*
-%python3_sitelibdir/*
-
+%doc LICENSE.txt README.md
+%_bindir/%pypi_name
+%python3_sitelibdir/%pypi_name.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Build new version.
+
 * Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 2.0-alt3
 - Fixed FTBFS.
 
