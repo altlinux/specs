@@ -1,9 +1,12 @@
+# https://github.com/ahshabbir/ddcbc-api required
+%def_enable snapshot
+
 %define _name Luminance
-%define ver_major 1.2
+%define ver_major 1.4
 %define rdn_name com.sidevesh.%_name
 
 Name: luminance
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple GTK application to control brightness of displays
@@ -13,33 +16,39 @@ Url: https://github.com/sidevesh/Luminance
 
 Vcs: https://github.com/sidevesh/Luminance.git
 
+%if_disabled snapshot
+Source: https://github.com/sidevesh/Luminance/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
+%endif
 
 Requires: dconf
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(ddcutil)
+BuildRequires: pkgconfig(udev)
 
 %description
-Luminance is a simple GTK application to control brightness of displays including
-external displays supporting DDC/CI.
+Luminance is a simple GTK application to control brightness of displays
+including external displays supporting DDC/CI.
 
 %prep
 %setup
 
 %build
-gcc $RPM_OPT_FLAGS $(pkg-config --cflags gtk4 libadwaita-1) \
--o build/app src/main.c $(pkg-config --libs gtk4 libadwaita-1) -l ddcutil
+%meson \
+    -Dbuildtype=release
+%nil
+%meson_build
 
 %install
-install -pD -m755 build/app %buildroot%_bindir/%rdn_name
-install -pD -m644 install_files/%rdn_name.desktop %buildroot%_desktopdir/%rdn_name.desktop
-install -pD -m644 install_files/44-backlight-permissions.rules %buildroot%_udevrulesdir/44-backlight-permissions.rules
-install -pD -m644 install_files/%rdn_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-install -pD -m644 icons/hicolor/scalable/apps/%rdn_name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%rdn_name.svg
-install -pD -m644 icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg %buildroot%_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
-
+%meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%rdn_name
@@ -47,10 +56,14 @@ install -pD -m644 icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg %buildroot%
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-#%_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/dbus-1/services/%rdn_name.service
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Mon Oct 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - updated to 1.2.0-1-g48380b5
 

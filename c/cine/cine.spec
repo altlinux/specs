@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: MPV-based Video Player for Linux
@@ -72,6 +72,9 @@ deliver a seamless viewing experience.
 %doc README.*
 
 %changelog
+* Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Thu Feb 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
