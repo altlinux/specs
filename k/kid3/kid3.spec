@@ -7,8 +7,8 @@
 
 %define rname kid3
 Name: %rname
-Version: 3.9.6
-Release: alt2
+Version: 3.9.7
+Release: alt1
 %K6init
 
 Group: Sound
@@ -231,6 +231,9 @@ done
 #%_K6dbus_iface/*id3*
 
 %changelog
+* Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 3.9.7-alt1
+- new version
+
 * Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 3.9.6-alt2
 - build with new taglib
 
