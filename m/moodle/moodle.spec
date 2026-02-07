@@ -2,7 +2,7 @@
 %def_without pam
 
 Name: moodle
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -30,6 +30,7 @@ Source20: %moodle_name.httpd2.conf
 Source21: %moodle_name.start.extra.conf
 Source22: %moodle_name.start.mods.conf
 Source23: %moodle_name.httpd2.inc.conf
+Patch0: moodle-alt-exclude-langpack-during-system-upgrade.patch
 
 # Language files
 # Download by elinks https://download.moodle.org/download.php/langpack/5.0/ru.zip for example
@@ -159,6 +160,7 @@ PAM (Pluggable Authentication Modules) authentication methods for Moodle
 
 %prep
 %setup
+%patch0 -p1
 rm -f public/filter/tex/*mimetex*
 rm -f lib/default.ttf
 
@@ -249,6 +251,11 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Fri Feb 06 2026 Andrey Cherepanov <cas@altlinux.org> 5.1.2-alt1
+- New version (fixes: CVE-2025-67857, CVE-2025-67856, CVE-2025-67855,
+  CVE-2025-67854, CVE-2025-67853, CVE-2025-67852, CVE-2025-67851,
+  CVE-2025-67850, CVE-2025-67849, CVE-2025-67848, CVE-2025-67847).
+
 * Sun Dec 07 2025 Andrey Cherepanov <cas@altlinux.org> 5.1.1-alt1
 - New version (fixes: CVE-2025-62401, CVE-2025-62400, CVE-2025-62399,
   CVE-2025-62398, CVE-2025-62397, CVE-2025-62396, CVE-2025-62395,
