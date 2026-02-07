@@ -3,7 +3,7 @@
 %define real_name Hash-Case
 
 Name: perl-Hash-Case
-Version: 1.05
+Version: 1.07
 Release: alt1
 
 Summary: base class for hashes with key-casing requirements
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Tue Oct 11 2011
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel
-BuildRequires: perl-Log-Report perl-Test-Pod
+# Automatically added by buildreq on Sat Feb 07 2026
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-CPAN-Meta perl-devel
 
 %description
 Perl module Hash::Case is the base class for various classes
@@ -44,6 +44,9 @@ which tie special treatment for the casing of keys.
 %perl_vendor_privlib/Hash/Case*
 
 %changelog
+* Sat Feb 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.07-alt1
+- New version
+
 * Tue May 05 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.05-alt1
 - New version
 
