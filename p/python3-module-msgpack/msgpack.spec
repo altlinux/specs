@@ -1,21 +1,23 @@
 %define oname msgpack
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 
 Summary: A Python 3 MessagePack (de)serializer
 
 Group: Development/Python3
-License: ASL 2.0
-URL: https://pypi.org/project/msgpack/
+License: Apache-2.0
+URL: https://pypi.org/project/msgpack
+VCS: https://github.com/msgpack/msgpack-python
 
-# Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 
 %description
@@ -28,17 +30,24 @@ This is a Python (de)serializer for MessagePack.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+cython3 %oname/_cmsgpack.pyx
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%doc COPYING
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
+%doc COPYING README.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Build new version.
+
 * Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - new version 1.1.0 (for python3.13)
 
