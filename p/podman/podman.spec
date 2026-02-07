@@ -13,7 +13,7 @@
 %endif
 
 Name:     podman
-Version:  5.7.0
+Version: 5.7.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -195,6 +195,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Sat Feb 07 2026 Anton Farygin <rider@altlinux.org> 5.7.1-alt1
+- New version 5.7.1.
+
 * Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 5.7.0-alt1
 - New version 5.7.0 (Fixes: CVE-2025-52881).
 
