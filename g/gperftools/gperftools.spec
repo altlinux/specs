@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lfs=relaxed,lint=relaxed
 
 Name: gperftools
-Version: 2.17.2
+Version: 2.18
 Release: alt1
 
 Provides: google-perftools
@@ -74,6 +74,9 @@ files for developing applications that use the %name package.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 2.18-alt1
+- Update to 2.18 (2026-01-25).
+
 * Fri Aug 15 2025 Vitaly Chikunov <vt@altlinux.org> 2.17.2-alt1
 - Update to 2.17.2 (2025-08-15).
 
