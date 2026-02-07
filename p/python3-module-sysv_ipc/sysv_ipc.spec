@@ -1,15 +1,18 @@
 %define oname sysv_ipc
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: System V IPC for Python - Semaphores, Shared Memory and Message Queues
 Group: Development/Python3
 License: GPLv3+
-Url: http://semanchuk.com/philip/%oname/
+URL:    https://pypi.org/project/sysv-ipc
+VCS:    https://github.com/osvenskan/sysv_ipc
 Source: %name-%version.tar
 
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 The sysv_ipc module which gives Python access to System V inter-process
@@ -30,17 +33,20 @@ directory demo2) shows how to use message queues.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc INSTALL LICENSE README ReadMe.html VERSION
+%doc INSTALL LICENSE README.md VERSION
 %python3_sitelibdir/%oname.*.so
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Build new version.
+
 * Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Build new version.
 
