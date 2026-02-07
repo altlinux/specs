@@ -1,0 +1,51 @@
+Name: args
+Version: 6.4.7
+Release: alt1
+
+Summary: A simple header-only C++ argument parser library
+License: MIT
+Group: Development/C++
+
+Url: https://github.com/Taywee/args
+VCS: https://github.com/Taywee/args
+
+Source:  %name-%version.tar
+
+BuildRequires: gcc-c++ cmake ctest
+
+%package -n lib%name-devel
+Summary: Development ARGS files
+Group: Development/C++
+%description -n lib%name-devel
+Development ARGS files.
+
+%description
+A simple header-only C++ argument parser library. Supposed to be
+flexible and powerful, and attempts to be compatible with the
+functionality of the Python standard argparse library (though not
+necessarily the API). 
+
+%prep
+%setup
+subst 's|DESTINATION lib/|DESTINATION %_libdir/|' CMakeLists.txt
+
+%build
+%cmake
+%cmake_build
+
+%install
+%cmake_install
+
+%check
+%ctest
+
+%files -n lib%name-devel
+%doc *.md CHANGELOG LICENSE
+%_includedir/%name.hxx
+%_libdir/cmake/%name
+%_pkgconfigdir/%name.pc
+
+%changelog
+* Sat Feb 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 6.4.7-alt1
+- Initial build for ALT Linux.
+
