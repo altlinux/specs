@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define oname pyaml
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.7.0
+Version: 26.2.1
 Release: alt1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
@@ -21,9 +20,7 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-# install_requires=
 BuildRequires: python3(yaml)
-
 BuildRequires: python3(unidecode)
 %endif
 
@@ -50,6 +47,9 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 26.2.1-alt1
+- Automatically updated to 26.2.1.
+
 * Fri Jul 11 2025 Stanislav Levin <slev@altlinux.org> 25.7.0-alt1
 - 25.5.0 -> 25.7.0.
 
