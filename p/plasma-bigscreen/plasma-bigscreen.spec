@@ -1,0 +1,134 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+Name: plasma-bigscreen
+Version: 6.4.80
+Release: alt1.git.6a767b37
+
+Summary: Plasma shell for TVs
+License: GPL-2.0-or-later
+Group: Graphical desktop/KDE
+Url: https://invent.kde.org/plasma/plasma-bigscreen
+
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-kf6
+
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: extra-cmake-modules
+
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: pkgconfig(Qt6Multimedia)
+BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires: pkgconfig(libcec)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(sdl3)
+BuildRequires: pkgconfig(wayland-cursor)
+
+BuildRequires: kf6-bluez-qt-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kirigami-devel
+BuildRequires: kf6-kcmutils-devel
+BuildRequires: kf6-kglobalaccel-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-ksvg-devel
+BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: plasma6-libkscreen-devel
+BuildRequires: plasma6-lib-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: plasma6-activities-devel
+BuildRequires: plasma6-activities-stats-devel
+BuildRequires: plasma-workspace-devel
+BuildRequires: qcoro6-devel
+BuildRequires: kf6-qqc2-breeze-style-devel
+
+BuildRequires: kde5-plasma-wayland-protocols
+
+# make sure that all Qml imports will be satisfied
+Requires: libkf6bluezqt
+Requires: plasma-workspace-qml
+Requires: libkf6coreaddons
+Requires: libkf6kcmutilsquick
+Requires: kdeconnect
+Requires: kf6-kirigami
+Requires: kf6-kirigami-addons
+Requires: libkf6itemmodels
+Requires: kf6-kdeclarative
+Requires: libkf6svg
+Requires: plasma6-layer-shell-qt
+Requires: milou
+Requires: libplasmaquick6
+Requires: plasma-nm
+Requires: plasma6-plasma5support
+Requires: plasma-nano
+Requires: powerdevil
+Requires: plasma-pa
+Requires: plasma-workspace
+Requires: libqt6-core5compat
+Requires: libqt6-multimediaquick
+Requires: libqt6-qml
+Requires: libqt6-qmlmodels
+Requires: libqt6-quick
+Requires: libqt6-quickcontrols2
+Requires: libqt6-quickeffects
+Requires: libqt6-quicklayouts
+Requires: libqt6-quicktemplates2
+Requires: libqt6-webenginequick
+Requires: kf6-qqc2-breeze-style
+
+Requires: kwayland-integration
+Requires: plasma6-breeze
+Requires: plasma-desktop
+Requires: plasma6-integration
+Requires: xdg-desktop-portal-kde
+Requires: kscreen
+Requires: kde-volume-control-7-pipewire
+
+ExcludeArch: %ix86 riscv64
+
+%description
+Plasma Bigscreen is an open-source user interface for TVs. Running on
+top of a Linux distribution, Plasma Bigscreen turns your TV or set-top
+box into a fully hackable device. A big launcher giving you easy access
+to any installed apps and skills. Controllable via voice or TV remote.
+
+%prep
+%setup
+sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
+sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
+
+%build
+%K6build
+
+%install
+%K6install
+
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
+%doc README.md
+%_K6bin/plasma-bigscreen-*
+%_K6plug/plasma/applets/org.kde.bigscreen.homescreen.so
+%_K6plug/plasma/kcms/systemsettings/kcm_mediacenter_*.so
+%dir %_K6qml/org/kde/bigscreen
+%_K6qml/org/kde/bigscreen/*
+%_K6xdgapp/*.desktop
+%_K6data/metainfo/*.xml
+%dir %_K6data/plasma/look-and-feel/org.kde.plasma.bigscreen
+%_K6data/plasma/look-and-feel/org.kde.plasma.bigscreen/*
+%dir %_K6data/plasma/plasmoids/org.kde.bigscreen.homescreen
+%_K6data/plasma/plasmoids/org.kde.bigscreen.homescreen/*
+%dir %_K6data/plasma/shells/org.kde.plasma.bigscreen
+%_K6data/plasma/shells/org.kde.plasma.bigscreen/*
+%dir %_K6data/sounds/plasma-bigscreen
+%_K6data/sounds/plasma-bigscreen/*
+%_K6data/wayland-sessions/plasma-bigscreen-wayland.desktop
+
+%changelog
+* Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 6.4.80-alt1.git.6a767b37
+- Initial build for Sisyphus
