@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Functors, Applicatives, And Monads in Python
@@ -59,6 +59,9 @@ in Python in production environments you should use FSlash instead.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Automatically updated to 1.0.0.
 
