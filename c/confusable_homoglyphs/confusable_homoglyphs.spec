@@ -1,5 +1,5 @@
 Name: confusable_homoglyphs
-Version: 3.2.0
+Version: 3.3.1
 Release: alt1
 
 Summary: A homoglyph is two or more very similar graphemes, characters, or glyphs
@@ -14,6 +14,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 
 Requires: python3-module-%name = %EVR
@@ -63,19 +65,18 @@ This package contains documentation for %name.
 %prep
 %setup
 
+%python3_fix_shebang .
+
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 # hotfix for python3.12
 sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
 sed -i 's/readfp/read_file/' versioneer.py
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
@@ -91,7 +92,8 @@ mv tests/ %buildroot/%python3_sitelibdir/%name/
 %_bindir/%name
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version.dist-info
 %exclude %python3_sitelibdir/%name/tests
 %exclude %python3_sitelibdir/*/pickle
 
@@ -105,6 +107,9 @@ mv tests/ %buildroot/%python3_sitelibdir/%name/
 %python3_sitelibdir/%name/tests
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+
 * Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
