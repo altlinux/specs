@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.6.0
-Release: alt2.1
+Version: 1.17.1
+Release: alt1
 
 Summary: Python library that is a collection of functions and objects for common network automation tasks
 License: Apache-2.0
@@ -44,8 +44,6 @@ The intention is to centralize these functions while keeping the library light.
 
 %install
 %pyproject_install
-rm -f %buildroot%python3_sitelibdir/LICENSE
-rm -f %buildroot%python3_sitelibdir/README.md
 
 %check
 %pyproject_run_pytest -k "not (test_is_fqdn_resolvable or test_fqdn_to_ip)"
@@ -56,6 +54,9 @@ rm -f %buildroot%python3_sitelibdir/README.md
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 1.17.1-alt1
+- Automatically updated to 1.17.1.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2.1
 - Fixed FTBFS.
 
