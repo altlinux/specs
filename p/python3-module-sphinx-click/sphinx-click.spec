@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 
 Summary: A Sphinx plugin to automatically document click-based applications
@@ -12,6 +12,8 @@ License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/sphinx-click
 VCS:     https://github.com/click-contrib/sphinx-click
+
+Source: %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -29,8 +31,6 @@ BuildRequires: python3-module-pytest-cov
 
 BuildArch: noarch
 
-Source: %name-%version.tar
-
 %description
 %summary
 
@@ -45,7 +45,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.rst
@@ -53,6 +53,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Mon Oct 13 2025 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Automatically updated to 6.1.0.
 
