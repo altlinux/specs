@@ -10,7 +10,7 @@
 %define webrtc_dir %webrtc_basedir/linux-x64-release
 
 Name: zed
-Version: 0.221.5
+Version: 0.222.4
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -106,6 +106,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Sat Feb 07 2026 Alexey Shabalin <shaba@altlinux.org> 0.222.4-alt1
+- Updated to 0.222.4.
+
 * Sat Jan 31 2026 Alexey Shabalin <shaba@altlinux.org> 0.221.5-alt1
 - Update to 0.221.5.
 - Build with system openssl and libgit2.
@@ -317,4 +320,3 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 
 * Thu Jul 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt1
 - Built for ALT Sisyphus.
-
