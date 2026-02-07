@@ -3,22 +3,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.8
+Version: 2.2.0
 Release: alt1
 
 Summary: Telnet server and client Protocol library using asyncio
 
 License: BSD-3-Clause
 Group: Development/Python3
-BuildArch: noarch
 URL: https://pypi.org/project/telnetlib3
 VCS: https://github.com/jquast/telnetlib3
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest-cov
@@ -26,6 +24,7 @@ BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-uvloop
+BuildRequires: /dev/pts
 %endif
 
 Conflicts: python-module-%oname
@@ -33,6 +32,8 @@ Obsoletes: python-module-%oname
 
 %py3_provides %oname
 %py3_requires asyncio
+
+BuildArch: noarch
 
 %description
 telnetlib3 is a Telnet Client and Server Protocol library for python.
@@ -57,6 +58,9 @@ telnetlib3 is a Telnet Client and Server Protocol library for python.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
+- Automatically updated to 2.2.0.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.8-alt1
 - Automatically updated to 2.0.8.
 
