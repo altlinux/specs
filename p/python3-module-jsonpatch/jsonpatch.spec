@@ -1,51 +1,52 @@
 %global pypi_name jsonpatch
-%global github_name python-json-patch
 
 Name: python3-module-%pypi_name
-Version: 1.32
-Release: alt2
+Version: 1.33
+Release: alt1
 
 Summary: Applying JSON Patches in Python
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/stefankoegl/%github_name
-BuildArch: noarch
+URL: https://pypi.org/project/jsonpatch
+VCS: https://github.com/stefankoegl/python-json-patch
 
-# Source0-url: https://github.com/stefankoegl/python-json-patch/archive/refs/tags/v%version.tar.gz
-Source0: %pypi_name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre):  rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-jsonpointer >= 1.9
 
+BuildArch: noarch
 
 %description
 Library to apply JSON Patches according to RFC 6902.
 
 %prep
-%setup -q -n %pypi_name-%version
-
-# Hotfix for python3.13
-# https://github.com/stefankoegl/python-json-patch/pull/159/commits/c54b939576d604f240d652de350def810f6f4748
-sed -i 's/unittest.makeSuite/unittest.defaultTestLoader.loadTestsFromTestCase/g' $(grep -rl makeSuite)
+%setup
 
 %build
 export LC_ALL=en_US.UTF-8
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 tests.py
+%pyproject_run_unittest
 
 %files
-%doc README.md COPYING
+%doc README.md LICENSE
 %_bindir/jsondiff
 %_bindir/jsonpatch
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%pypi_name.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 1.33-alt1
+- Build new version.
+
 * Sat Oct 18 2025 Grigory Ustinov <grenka@altlinux.org> 1.32-alt2
 - Fixed FTBFS.
 
