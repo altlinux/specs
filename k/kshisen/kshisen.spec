@@ -1,7 +1,7 @@
 %define rname kshisen
 
 Name: %rname
-Version: 25.12.1
+Version: 25.12.2
 Release: alt1
 %K6init
 
@@ -50,6 +50,9 @@ BuildRequires: kf6-kxmlgui-devel kf6-kcrash-devel kf6-kcolorscheme-devel kf6-kic
 
 
 %changelog
+* Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
+- new version
+
 * Tue Jan 20 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.1-alt1
 - new version
 
