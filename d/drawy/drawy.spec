@@ -1,7 +1,7 @@
 %define oname org.kde.drawy
 
 Name: drawy
-Version: 20260203
+Version: 20260207
 Release: alt1
 
 Summary: Drawy is a work-in-progress infinite whiteboard tool
@@ -21,7 +21,7 @@ BuildRequires: kf6-kcrash-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kwidgetsaddons-devel libzstd-devel
 BuildRequires: qt6-tools-devel kf6-kconfig-devel qt6-declarative-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kxmlgui-devel
-BuildRequires: kf6-kcolorscheme-devel
+BuildRequires: kf6-kcolorscheme-devel kf6-kiconthemes-devel
 
 %description
 Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++,
@@ -48,6 +48,9 @@ which aims to be a native-desktop alternative to the amazing web-based Excalidra
 %_datadir/locale/*/LC_MESSAGES/*.qm
 
 %changelog
+* Sun Feb 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260207-alt1
+- updated to git.48340e15c4
+
 * Wed Feb 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260203-alt1
 - updated to git.10c401f7c8
 
