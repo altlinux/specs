@@ -10,10 +10,12 @@
 %define sdl3_commit bdb72bb3f051de32c91f5deb439a50bfd51499dc
 %define sdl3_mixer_commit 4182794ea45fe28568728670c6f1583855d0e85c
 %define miniz_version 3.1.0
+%define cli11_commit bf5a16a26a34a9a7ad75f4a7705585e44675fef0
+%define aac_commit ee76460efbdb147e26d804c798949c23f174460b
 
 Name: shadps4
-Version: 0.13.0
-Release: alt1.1
+Version: 0.14.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -51,6 +53,10 @@ Source10: ext-SDL-%sdl3_commit.tar
 Source11: SDL_mixer-%sdl3_mixer_commit.tar
 # https://github.com/richgel999/miniz/archive/%miniz_version/miniz-%miniz_version.tar.gz
 Source12: miniz-%miniz_version.tar
+# https://github.com/shadexternals/CLI11/archive/%cli11_commit/CLI11-%cli11_commit.tar.gz
+Source13: CLI11-%cli11_commit.tar
+# https://android.googlesource.com/platform/external/aac/+archive/ee76460efbdb147e26d804c798949c23f174460b.tar.gz
+Source14: aac-%aac_commit.tar
 
 Patch0: %name-0.11.0-glslang-16-alt.patch
 
@@ -115,7 +121,7 @@ BuildRequires: zlib-ng-devel
 shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13 -b 14
 %patch0 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
@@ -130,6 +136,8 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
 %__mv -Tf ../SDL_mixer-%sdl3_mixer_commit externals/sdl3_mixer
 %__mv -Tf ../miniz-%miniz_version externals/miniz
+%__mv -Tf ../CLI11-%cli11_commit externals/CLI11
+%__mv -Tf ../aac-%aac_commit externals/aacdec/fdk-aac
 
 %build
 export CC="clang"
@@ -155,6 +163,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Sat Feb 07 2026 Nazarov Denis <nenderus@altlinux.org> 0.14.0-alt1
+- Version 0.14.0
+
 * Sat Jan 24 2026 Nazarov Denis <nenderus@altlinux.org> 0.13.0-alt1.1
 - Fix FTBFS
 
