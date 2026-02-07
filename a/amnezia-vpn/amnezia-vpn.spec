@@ -5,7 +5,7 @@
 
 Name: amnezia-vpn
 Version: 4.8.12.9
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -88,6 +88,10 @@ This package contains systemd service files.
 %__mv -Tf ../vendor ../amnezia-xray-bindings/vendor
 
 %build
+# Export AGW public key and S3 endpoint for work VPN from Amnezia
+export PROD_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAj5mxl/4DL3Sk89ntxs5G\nX3JawGQWIoq6rvNkOzNGuNgedNS2+pi6hZl3Izl1Io9om4KiUlMT6mgLO1hTr9q+\ns7CYhlvroFA7ErucF+9L+7FCt0Igi0kIK/R2/vxd/2HaUrorn/aSvvutkYwbfxqW\nSwtzE+RuBeDWGvEt937OW0oqYONPYv9E4T56Dz/EZ6v2t8ejAnKLbGD/GocMmipK\n7etFSiSMAB2RmaztqTq4NleBepfO80XpYlW9pCSXuHcE8wxHczkzxsbyMAMsG/K3\nvUQY6qPtohqqzSSBwa/8u2ptNHBeor7l7DdYXeR/Nqcc4z92VUkZ5lOVR4evkS5V\n/wQqp5tnOJEj3NjUhEhXFoNEapbZd1bh6iQoUk7jC1TdvKJ/nPKGZAsHRpr0rNKz\nfx/N/Oo6lr2yh/+ps6VxTkbPmB6E85WOO3UvjImZUY0XQdBjWle/4iJLdEC77Nr0\njXhdgeypucy6jkB6iBHMeVMlrNMEV7UxoBR/cCNx55zu/8sml5ByiDvCDT7sRomN\nNgVt5S/FaVjYuzFUifJ12ToChXFgESKFmuso7WluEaWvMIGREdrMrKQKHfYLOzWF\n2B5ZJDqw4o03fU4J/6rw61M1b+rjVpXMjPnzc2A+RgcjTvXv955gfZkwe4lt5wk/\n3j8zMVo3+zLrMTAaEeIUM0UCAwEAAQ==\n-----END PUBLIC KEY-----"
+export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/endpoints.json, https://storage.googleapis.com/lambda-list/endpoints.json"
+
 # Build amnezia xray bindings
 pushd ../amnezia-xray-bindings
 %make_build
@@ -139,6 +143,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Feb 07 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt2
+- Add AGW public key and S3 endpoint for work VPN from Amnezia (ALT #55896, #57788)
+
 * Sat Jan 31 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt1
 - Version 4.8.12.9
 
