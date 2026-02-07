@@ -2,7 +2,7 @@
 %define nameL qfluentwidgets
 
 Name: python3-module-PySide6-Fluent-Widgets
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: A fluent design widgets library based on PySide6
@@ -40,6 +40,9 @@ rm -r %buildroot%_prefix/lib
 %doc *.md LICENSE
 
 %changelog
+* Sun Feb 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11.1-alt1
+- 1.11.0 -> 1.11.1
+
 * Mon Jan 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11.0-alt1
 - 1.10.5 -> 1.11.0
 
