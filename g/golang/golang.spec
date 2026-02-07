@@ -50,8 +50,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.25.6
-Release: alt2
+Version: 1.25.7
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -375,6 +375,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Sat Feb 07 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.7-alt1
+- 1.25.7 (Fixes CVE-2025-61732, CVE-2025-61727).
+
 * Thu Jan 29 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.6-alt2
 - Package lib/wasm/wasm_exec.js (ALT#57661).
 
