@@ -9,7 +9,7 @@
 %endif
 
 Name: libbpf
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -42,7 +42,7 @@ Library and header files to build with libbpf.
 %setup
 
 %build
-%ifarch x86_64
+%if 0%{?fanalyzer}
 %add_optflags -fanalyzer -Werror
 %endif
 cd src
@@ -69,6 +69,12 @@ LD_LIBRARY_PATH=$PWD/src ./a.out -verbosity=99 -max_total_time=11
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 1.6.3-alt1
+- Update to v1.6.3 (2026-02-03).
+
+* Tue Nov 04 2025 Vitaly Chikunov <vt@altlinux.org> 1.6.2-alt2
+- spec: Remove unconditional -fanalyzer on x86_64.
+
 * Fri Aug 22 2025 Vitaly Chikunov <vt@altlinux.org> 1.6.2-alt1
 - Update to v1.6.2 (2025-08-21).
 
