@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: newelle
-Version: 1.2.0
-Release: alt3
+Version: 1.2.5
+Release: alt1
 
 Summary: Ultimate Virtual Assistant
 License: GPL-3.0-or-later
@@ -133,6 +133,9 @@ echo "         Please note that application can't work without these files."
 %_datadir/newelle/*
 
 %changelog
+* Sun Feb 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.5-alt1
+- New version 1.2.5.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt3
 - Added missed espeak, ffplay and ffmpeg run-time dependencies.
 - Removed unneeded wget run-time dependency.
