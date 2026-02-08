@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Python module to run and analyze benchmarks
@@ -54,6 +54,9 @@ rm -rv %buildroot%python3_sitelibdir/pyperf/tests/
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Feb 08 2026 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Mon Mar 10 2025 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Automatically updated to 2.9.0.
 
