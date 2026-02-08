@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.93.0
+Version: 0.98.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -79,10 +79,10 @@ help2man -N %buildroot%_bindir/%name > %buildroot%_man1dir/%name.1
 PATH=%buildroot%_bindir:$PATH
 codex --version | grep -Fx '%name-cli %version'
 # Test sandboxing.
-! codex debug landlock touch a || exit 2
-  codex debug landlock --full-auto touch a
+! codex sandbox landlock touch a || exit 2
+  codex sandbox landlock --full-auto touch a
   rm a
-! codex debug landlock --full-auto touch ../a || exit 2
+! codex sandbox landlock --full-auto touch ../a || exit 2
 ! grep -i 'Update available|api.github.com' %buildroot%_bindir/%name || exit 3
 
 %files
@@ -95,6 +95,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 0.98.0-alt1
+- Update to rust-v0.98.0 (2026-02-05).
+
 * Sun Feb 01 2026 Vitaly Chikunov <vt@altlinux.org> 0.93.0-alt1
 - Update to rust-v0.93.0 (2026-01-30).
 
