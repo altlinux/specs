@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.2
+Version: 2.3.0
 Release: alt1
 
 Summary: GMP/MPIR, MPFR, and MPC interface
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: libmpc-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -35,6 +36,7 @@ and more.
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -51,6 +53,9 @@ rm -rv gmpy2 build
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Feb 08 2026 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
 - Automatically updated to 2.2.2.
 
