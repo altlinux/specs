@@ -1,6 +1,6 @@
 Name: kernel-image-6.19
-Release: alt0.rc8
-%define kernel_src_version	6.18
+Release: alt1
+%define kernel_src_version	6.19
 %define kernel_base_version	6.19
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -590,6 +590,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Feb 08 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt1
+- Update to v6.19 (2026-02-08) release.
+- config: CONFIG_LEDS_PCA955X_GPIO=y.
+
 * Sun Feb 01 2026 Vitaly Chikunov <vt@altlinux.org> 6.19.0-alt0.rc8
 - Update to v6.19-rc8 (2026-02-01).
 
