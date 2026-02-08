@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dgop
-Version: 0.1.13
+Version: 0.2.0
 Release: alt1
 
 Summary: System monitoring CLI and REST API
@@ -42,6 +42,9 @@ install -Dm 755 %name -t %buildroot%_bindir
 %_bindir/dgop
 
 %changelog
+* Sun Feb 08 2026 Boris Yumankulov <boria138@altlinux.org> 0.2.0-alt1
+- new version 0.2.0
+
 * Fri Jan 23 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.13-alt1
 - new version 0.1.13
 
