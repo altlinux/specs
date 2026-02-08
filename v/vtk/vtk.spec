@@ -2,12 +2,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define ver 9.4
+%define ver 9.5
 %define soname 1
 
 Name: vtk
 Version: %ver.2
-Release: alt1.1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -16,25 +16,16 @@ Url: https://www.vtk.org/
 VCS: https://gitlab.kitware.com/vtk/vtk.git
 Source: %name-%version.tar
 
-# git submodules
-Source1: %name-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
-
 # Remote modules
 Source100: %name-%version-MomentInvariants.tar
 Source101: %name-%version-vtkDICOM.tar
 
 Patch1: vtk-9.3.0-alt-python-install-path.patch
-# Fix/hack for https://gitlab.kitware.com/vtk/vtk/-/issues/18220
-# Needed for itk-snap
-Patch2: vtk-9.1.0-alt-modules-autoinit.patch
-Patch3: vtk-9.1.0-alt-dont-fetch-remote-modules.patch
-Patch4: vtk-9.1.0-alt-compile-flags.patch
-Patch5: vtk-9.4.1-arch-fmt-11.patch
-Patch6: vtk-%version-alt.patch
-Patch7: vtk-9.4.1-fix-vtkparseproperties-getnth-setnth-detection.patch
-Patch8: vtk-9.4.1-fix-restore-visibility-of-findpoint-method.patch
-Patch9: vtk-9.4.2-fix-build-netcdf.patch
-Patch10: vtk-9.4.2-alt-fmt-12.patch
+Patch2: vtk-9.1.0-alt-dont-fetch-remote-modules.patch
+Patch3: vtk-9.1.0-alt-compile-flags.patch
+Patch4: vtk-9.4.2-alt-fmt-12.patch
+Patch5: vtk-9.5.2-alt-numpy2-in1d.patch
+Patch6: vtk-9.5.2-alt-streamtracer-use-after-free.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -45,12 +36,9 @@ BuildRequires: boost-filesystem-devel
 BuildRequires: boost-graph-parallel-devel
 BuildRequires: bzlib-devel
 BuildRequires: cmake
-BuildRequires: doxygen
 BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
-BuildRequires: gnuplot
 BuildRequires: graphviz
-BuildRequires: inkscape
 BuildRequires: jsoncpp-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libGLU-devel
@@ -105,9 +93,6 @@ BuildRequires: qt5-base-devel-static
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-phonon-devel
 BuildRequires: qt5-tools-devel
-BuildRequires: texlive-latex-base
-BuildRequires: texlive-latex-extra
-BuildRequires: texlive-science
 BuildRequires: tk-devel
 BuildRequires: zlib-devel
 
@@ -438,6 +423,13 @@ Group: System/Libraries
 
 %description -n libvtkIOLegacy%ver
 This package contains shared library of VTK: IOLegacy.
+
+%package -n libvtkIOLANLX3D%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOLANLX3D
+Group: System/Libraries
+
+%description -n libvtkIOLANLX3D%ver
+This package contains shared library of VTK: IOLANLX3D.
 
 %package -n libvtkIOMINC%ver
 Summary: Shared libraries of The Visualization Toolkit (VTK): IOMINC
@@ -859,18 +851,6 @@ BuildArch: noarch
 %description -n rpm-macros-vtk
 This package contain file with macros for building packages depended by VTK.
 
-%package doc
-Summary: Documentation for The Visualization Toolkit (VTK)
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains documentation for VTK.
 
 %package python3
 Summary: The Visualization Toolkit (VTK) Python bindings
@@ -981,7 +961,7 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 This package contains VTK QML plugin.
 
 %prep
-%setup -a1 -a100 -a101
+%setup -a100 -a101
 %autopatch -p1
 
 %ifarch %e2k
@@ -1031,13 +1011,16 @@ export PYTHON=%__python3
 %ifarch %e2k
 # ld: failed to set dynamic section sizes: memory exhausted
 %add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+%add_optflags -fno-lto
 %endif
 
 # remote module flags go last
 %cmake \
 	-DBUILD_SHARED_LIBS=ON \
+	-DCMAKE_SKIP_BUILD_RPATH=OFF \
+	-DCMAKE_BUILD_RPATH_USE_ORIGIN=ON \
 	-DCMAKE_INSTALL_QMLDIR=%_qt5_qmldir \
-	-DVTK_BUILD_DOCUMENTATION=ON \
+	-DVTK_BUILD_DOCUMENTATION=OFF \
 	-DVTK_BUILD_EXAMPLES=OFF \
 	-DVTK_BUILD_TESTING=OFF \
 	-DVTK_EXTRA_COMPILER_WARNINGS=ON \
@@ -1091,9 +1074,9 @@ export PYTHON=%__python3
 
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %cmake_build
-%cmake_build -t DoxygenDoc
 
 %install
+export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %cmakeinstall_std
 
 mkdir -p %buildroot%_rpmmacrosdir
@@ -1104,6 +1087,7 @@ EOF
 
 %files
 %doc Copyright.txt README.md
+%_datadir/doc/vtk-%ver/licenses
 %_bindir/vtkParseJava-%ver
 %_bindir/vtkWrapHierarchy-%ver
 %_bindir/vtkWrapJava-%ver
@@ -1296,6 +1280,10 @@ EOF
 %files -n libvtkIOLegacy%ver
 %_libdir/libvtkIOLegacy-%ver.so.%soname
 %_libdir/libvtkIOLegacy-%ver.so.%ver
+
+%files -n libvtkIOLANLX3D%ver
+%_libdir/libvtkIOLANLX3D-%ver.so.%soname
+%_libdir/libvtkIOLANLX3D-%ver.so.%ver
 
 %files -n libvtkIOMINC%ver
 %_libdir/libvtkIOMINC-%ver.so.%soname
@@ -1519,9 +1507,6 @@ EOF
 %_libdir/cmake/vtk-%ver
 %_libdir/vtk-%ver
 
-%files doc
-%_docdir/vtk-%ver
-
 %files examples
 %doc Examples
 
@@ -1543,7 +1528,6 @@ EOF
 
 %ifnarch %arm
 %files qt5
-%_qt5_qmldir/VTK.%ver
 %_libdir/libvtkGUISupportQtQuick-%ver.so.%soname
 %_libdir/libvtkGUISupportQtQuick-%ver.so.%ver
 %_libdir/libvtkGUISupportQtSQL-%ver.so.%soname
@@ -1558,6 +1542,22 @@ EOF
 %endif
 
 %changelog
+* Sun Feb 02 2026 Anton Farygin <rider@altlinux.com> 9.5.2-alt2
+- fixed vtkStreamTracer use-after-free in RequestData (InputData null guard)
+- fixed numpy 2.x compatibility (numpy.in1d -> numpy.isin)
+- disabled documentation build (removed doxygen, gnuplot, inkscape, texlive deps)
+- removed docs subpackage
+- added -fno-lto to fix build with LTO
+- added CMAKE_SKIP_BUILD_RPATH and CMAKE_BUILD_RPATH_USE_ORIGIN flags
+- fixed LD_LIBRARY_PATH in %%install for vtkWrapPythonInit to find libvtkWrappingTools
+
+* Sun Jan 26 2026 Anton Farygin <rider@altlinux.com> 9.5.2-alt1
+- 9.4.2 -> 9.5.2
+- removed vtk-m submodule (no longer needed)
+- removed patches merged upstream: fmt-11, findpoint, vtkparseproperties, netcdf
+- removed QML plugin (no longer installed by upstream)
+- added new subpackage libvtkIOLANLX3D
+
 * Fri Sep 19 2025 Nazarov Denis <nenderus@altlinux.org> 9.4.2-alt1.1
 - Fix build with fmt 12
 

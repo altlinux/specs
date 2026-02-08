@@ -20,7 +20,7 @@
 
 Name: gdcm
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform DICOM implementation
 License: BSD-3-Clause
@@ -31,6 +31,7 @@ VCS: https://git.code.sf.net/p/gdcm/gdcm.git
 Source0: %name-%version.tar
 Source1: gdcmData.tar
 Patch0: gdcm-3.0.1-unknown-use-copyright.patch
+Patch1: %name-%version-%release.patch
 Patch3: gdcm-3.0.24-alt-export-variables.patch
 
 BuildRequires(pre): rpm-build-java
@@ -42,6 +43,7 @@ BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: docbook5-style-xsl
 BuildRequires: doxygen
+BuildRequires: /usr/bin/latex
 BuildRequires: fontconfig-devel
 BuildRequires: gcc-c++
 BuildRequires: graphviz
@@ -393,6 +395,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Wed Feb 04 2026 Anton Farygin <rider@altlinux.org> 3.2.2-alt2
+- Fixed build with vtk 9.5.
+
 * Mon Oct 13 2025 Constantin Sunzow <protvin@altlinux.org> 3.2.2-alt1
 - New version.
 

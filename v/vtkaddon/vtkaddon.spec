@@ -2,7 +2,7 @@
 
 Name: vtkaddon
 Version: 0
-Release: alt3.git.63ccc90
+Release: alt4.git.2c1998e
 Summary: General-purpose features that may be integrated into VTK library in the future
 License: BSD-style
 Group: Development/Tools
@@ -90,6 +90,9 @@ This package provides Python bindings to vtkAddon.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 07 2026 Anton Farygin <rider@altlinux.org> 0-alt4.git.2c1998e
+- cherry-picked upstream fixes for VTK 9.5 compatibility (ALT #52640)
+
 * Tue Feb 11 2025 Constantin Sunzow <protvin@altlinux.org> 0-alt3.git.63ccc90
 - Rebuild from upstream branch for get vtkSingleton header needed by Slicer.
 
