@@ -1,25 +1,28 @@
-%define modname convertdate
+%define pypi_name convertdate
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39164
 %def_enable check
 
-Name: python3-module-%modname
-Version: 2.4.0
+Name: python3-module-%pypi_name
+Version: 2.4.1
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/convertdate/
-BuildArch: noarch
 
 Vcs: https://github.com/fitnr/convertdate.git
-Source: https://github.com/fitnr/%modname/archive/v%version/%modname-%version.tar.gz
+
+Source: https://github.com/fitnr/%pypi_name/archive/v%version/%pypi_name-%version.tar.gz
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-pymeeus python3-module-pytz}
+BuildRequires: python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest) python3(pymeeus)}
 
-%py3_provides %modname
-%py3_requires pytz pymeeus
+%py3_provides %pypi_name
+%py3_requires pymeeus
 
 %description
 Converts between Gregorian dates and other calendar systems. Calendars
@@ -27,24 +30,26 @@ included: Baha'i, French Republican, Hebrew, Indian Civil, Islamic,
 Julian, Mayan and Persian.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot/%python3_sitelibdir
-py.test-3 tests
+%pyproject_run_pytest
 
 %files
-%_bindir/censusgeocode
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc *.rst *.md
 
 %changelog
+* Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Sun Jan 23 2022 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
