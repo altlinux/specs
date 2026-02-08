@@ -15,7 +15,7 @@
 
 Name: %rname
 Version: 25.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -69,6 +69,7 @@ Obsoletes: kde5-cantor-common < %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: libspectre-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -150,6 +151,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Sun Feb 08 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
+- fix requires
+
 * Sat Feb 07 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
