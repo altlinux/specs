@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%nameD
-Version: 0.9.6
+Version: 1.0.0
 Release: alt1
 
 Summary: Stacked environment variable management system
@@ -55,6 +55,9 @@ Stacked environment variable management system
 %_bindir/whichenv
 
 %changelog
+* Mon Feb 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.9.6 -> 1.0.0
+
 * Tue Jan 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.6-alt1
 - 0.9.5 -> 0.9.6
 
