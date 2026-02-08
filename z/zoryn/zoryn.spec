@@ -1,7 +1,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.15.1
+Version: 0.16.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -30,6 +30,8 @@ BuildRequires: libev-devel
 
 %if_with check
 BuildRequires: ocaml-alcotest-devel >= 1.7.0
+BuildRequires: ocaml-crowbar-devel >= 0.2.2
+BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: git-core
 BuildRequires: git-subtree
 BuildRequires: gear
@@ -95,6 +97,20 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Feb 08 2026 Anton Farygin <rider@altlinux.org> 0.16.0-alt1
+- added apt config auto-generation in builder add for easy multi-branch setup
+- added builder run command for running commands inside hasher chroot
+- added task rebuild --skip and --skip-gyle-done options
+- added coverage-guided fuzzing for 9 libraries (73 targets)
+- changed task rebuild --all-subtasks to track build results with skip/retry
+- changed submit -b option to -B/--branch
+- changed task copy to not auto-start task (use --run)
+- fixed version normalize to strip all leading v/V prefixes
+- fixed check spec url_reachable to expand RPM macros
+- fixed up for spec files with composite macros
+- fixed up watch file parsing with trailing backslash in comments
+- fixed up to support watch files with regex patterns in URL directories
+
 * Tue Feb 04 2026 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
 - changed clone to not automatically add gitery remote (use --init-gitery)
 - fixed submit to create gitery repo and run init-db for new packages
