@@ -3,8 +3,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2.0b2
-Release: alt3
+Version: 0.3.2
+Release: alt1
 
 Summary: Streamline the Sphinx theme development workflow
 
@@ -63,6 +63,9 @@ standardised tools.
 %python3_sitelibdir/%{pyproject_distinfo sphinx_theme_builder}
 
 %changelog
+* Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 0.3.2-alt1
+- Automatically updated to 0.3.2.
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0b2-alt3
 - Disabled check, due click update.
 
