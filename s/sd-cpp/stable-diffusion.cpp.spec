@@ -10,7 +10,7 @@
 %endif
 
 Name: sd-cpp
-Version: 20260119
+Version: 20260204
 Release: alt1
 Summary: Diffusion model (SD, Flux, Wan, Qwen Image) inference in pure C/C++
 License: MIT
@@ -95,6 +95,9 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp-cli
 
 %changelog
+* Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 20260204-alt1
+- Update to master-493-65891d7 (2026-02-04).
+
 * Mon Jan 19 2026 Vitaly Chikunov <vt@altlinux.org> 20260119-alt1
 - Update to master-480-b87fe13-1-ga48b4a3a (2026-01-19).
 - Now supports FLUX.2-klein.
