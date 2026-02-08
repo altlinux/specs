@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.11
+Version: 3.2.0
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -40,6 +40,8 @@ BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-wcwidth
 BuildRequires: python3-module-pyperclip
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-rich-argparse
 %endif
 
 %description
@@ -98,8 +100,8 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-export PYTHONPATH=$PWD/_build/%python3_sitelibdir
-pytest3
+export TERM=xterm-256color
+%pyproject_run_pytest
 
 %files
 %doc LICENSE PKG-INFO *.md
@@ -117,6 +119,9 @@ pytest3
 %endif
 
 %changelog
+* Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Tue Jan 28 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.11-alt1
 - Automatically updated to 2.5.11.
 
