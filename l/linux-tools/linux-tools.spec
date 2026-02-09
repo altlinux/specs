@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 %define libexecdir /usr/libexec
 
-%define kernel_base_version 6.18
+%define kernel_base_version 6.19
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -453,6 +453,8 @@ CFLAGS=$EXTRA_CFLAGS %make_build selftests
 
 %make_build kvm_stat
 
+%make_build -C accounting
+
 %install
 banner install
 cd %kernel_source/tools
@@ -602,6 +604,7 @@ cp -a include/nolibc/sysroot/include %buildroot%_includedir/nolibc
 make kvm_stat_install INSTALL_ROOT=%buildroot
 install -Dpm644 kvm/kvm_stat/kvm_stat.service -t %buildroot%_unitdir
 
+install -p -m755 accounting/{delaytop,getdelays,procacct} -Dt %buildroot%_sbindir
 %check
 banner check
 cd %kernel_source/tools
@@ -705,6 +708,9 @@ fi
 %_datadir/misc/cpuid.csv
 %endif
 %_bindir/kernel-chktaint
+%_sbindir/delaytop
+%_sbindir/getdelays
+%_sbindir/procacct
 
 %files -n perf
 %_bindir/perf
@@ -827,6 +833,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Mon Feb 09 2026 Vitaly Chikunov <vt@altlinux.org> 6.19-alt1
+- Update to v6.19 (2026-02-08).
+
 * Thu Dec 11 2025 Vitaly Chikunov <vt@altlinux.org> 6.18-alt1
 - Update to v6.18 (2025-11-30).
 
