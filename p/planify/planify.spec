@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name planify
-%define ver_major 4.17
+%define ver_major 4.18
 %define rdn_name io.github.alainm23.%_name
 
 %def_disable check
@@ -102,6 +102,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 4.18.0-alt1
+- 4.18.0
+
 * Sat Dec 27 2025 Yuri N. Sedunov <aris@altlinux.org> 4.17.0-alt1
 - 4.17.0
 
