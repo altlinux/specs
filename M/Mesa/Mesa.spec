@@ -95,7 +95,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.3
-%define ver_minor 4
+%define ver_minor 5
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -297,10 +297,14 @@ tar -xf subprojects.tar
 export ALTWRAP_LLVM_VERSION=%llvmver
 %meson \
 	-Dplatforms=x11,wayland \
+	-Dlegacy-wayland=bind-wayland-display \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay, screenshot' \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec' \
+%ifarch x86_64
+	-Dintel-rt=true \
+%endif
 %ifarch %radeon_arches
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
@@ -478,6 +482,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Feb 09 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.5-alt1
+- 25.3.5
+- added legacy-wayland=bind-wayland-display (closes: #57679)
+
 * Sat Jan 24 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.4-alt1
 - 25.3.4
 
