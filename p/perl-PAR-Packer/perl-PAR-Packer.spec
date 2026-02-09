@@ -3,7 +3,7 @@
 %define real_name PAR-Packer
 
 Name: perl-PAR-Packer
-Version: 1.063
+Version: 1.064
 Release: alt1
 
 Summary: Perl module to generate stand-alone executables and ".par" archives
@@ -53,7 +53,7 @@ PAR archives.
 sed -e 's#MY::postamble#MY::depend#' -i Makefile.PL
 
 %build
-rm -f t/90-rt129312.t
+#rm -f t/90-rt129312.t
 
 %perl_vendor_build
 
@@ -74,6 +74,9 @@ mv -- %buildroot%_bindir/pp %buildroot%_bindir/par-pp
 
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.064-alt1
+- New version
+
 * Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.063-alt1
 - New version
 
