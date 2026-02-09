@@ -5,7 +5,7 @@
 
 Name: shadowsocks-rust
 Version: 1.24.0
-Release: alt1
+Release: alt2
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
 Group: Security/Networking
@@ -66,6 +66,8 @@ cargo install %_smp_mflags --offline --no-track --path .
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-server.service
+install -m0644 .gear/%name@.service %buildroot%_unitdir/%name-local@.service
+install -m0644 .gear/%name@.service %buildroot%_unitdir/%name-server@.service
 install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 
 %check
@@ -75,10 +77,14 @@ target/release/ssmanager --version | grep -Fx 'shadowsocks %version'
 %post
 %post_service %name-local
 %post_service %name-server
+%post_service '%name-local@*.service'
+%post_service '%name-server@*.service'
 
 %preun
 %preun_service %name-local
 %preun_service %name-server
+%preun_service '%name-local@*.service'
+%preun_service '%name-server@*.service'
 
 %files
 %doc README.md LICENSE examples/*
@@ -88,6 +94,9 @@ target/release/ssmanager --version | grep -Fx 'shadowsocks %version'
 %_bindir/ss*
 
 %changelog
+* Mon Feb 09 2026 Vitaly Chikunov <vt@altlinux.org> 1.24.0-alt2
+- Add templated systemd units.
+
 * Thu Dec 11 2025 Vitaly Chikunov <vt@altlinux.org> 1.24.0-alt1
 - Update to v1.24.0 (2025-12-11).
 
