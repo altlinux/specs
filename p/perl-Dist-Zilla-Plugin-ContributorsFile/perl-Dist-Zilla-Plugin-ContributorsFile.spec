@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-ContributorsFile
 
 Name: perl-Dist-Zilla-Plugin-ContributorsFile
-Version: 0.3.0
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Perl module to add a file listing all contributors
 
@@ -40,10 +40,13 @@ as found under the x_contributors key in the META files.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.mkdn SECURITY.md Changes
 %perl_vendor_privlib/Dist/Zilla/Plugin/ContributorsFile*
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.4.0-alt1
+- New version
+
 * Wed May 06 2020 Nikolay A. Fetisov <naf@altlinux.org> 0.3.0-alt2
 - Bump release to override autoimport package
 
