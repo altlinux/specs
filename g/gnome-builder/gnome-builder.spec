@@ -10,6 +10,7 @@
 %def_enable clang
 %def_enable sysprof
 %def_enable flatpak
+%def_enable manuals
 %def_disable docs
 %def_enable help
 %def_enable autotools
@@ -18,7 +19,7 @@
 
 Name: gnome-builder
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Builder - Develop software for GNOME
 License: GPL-3.0-or-later
@@ -73,7 +74,9 @@ Requires: typelib(Json) = 1.0
 %{?_with_autotools:Requires: automake autoconf libtool}
 #%{?_with_flatpak:Requires: flatpak-builder}
 Requires: meson %_bindir/git %_bindir/indent %_bindir/xmllint
-Requires: devhelp %_bindir/uncrustify %_bindir/ctags %_bindir/cmark
+#Requires: devhelp
+%{?_enable_manuals:Requires: manuals >= %ver_major}
+Requires: %_bindir/uncrustify %_bindir/ctags %_bindir/cmark
 Requires: libpeas2-python3-loader
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -141,6 +144,7 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
     %{subst_enable_meson_bool sysprof plugin_sysprof} \
     %{subst_enable_meson_bool docs docs} \
     %{subst_enable_meson_bool help help} \
+    %{subst_enable_meson_bool manuals plugin_manuals} \
     %{subst_enable_meson_bool flatpak plugin_flatpak} \
     %{subst_enable_meson_bool autotools plugin_autotools} \
 %nil
@@ -198,6 +202,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1.1
+- required manuals instead of devhelp (ALT #57434)
+
 * Wed Oct 29 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
