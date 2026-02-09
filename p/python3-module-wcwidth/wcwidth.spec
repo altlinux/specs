@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
@@ -51,11 +51,13 @@ Terminal. It is implemented in python (no C library calls) and has no
 %pyproject_run_pytest -vra -o=addopts=-Wignore tests
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.3 -> 0.6.0.
+
 * Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1
 - 0.2.14 -> 0.5.3.
 
