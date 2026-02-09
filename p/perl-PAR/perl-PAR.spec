@@ -3,7 +3,7 @@
 %define real_name PAR
 
 Name: perl-PAR
-Version: 1.020
+Version: 1.021
 Release: alt1
 
 Summary: Perl Archive Toolkit
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Fri Mar 09 2018
-# optimized out: perl perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Encode perl-IO-Compress perl-JSON-PP perl-Parse-CPAN-Meta perl-devel perl-parent python-base python-modules python3 python3-base python3-module-mpl_toolkits python3-module-zope ruby ruby-stdlibs
-BuildRequires: perl-Archive-Zip perl-CPAN-Meta perl-Digest-SHA
+# Automatically added by buildreq on Mon Feb 09 2026
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Digest-SHA perl-Encode perl-IO-Compress perl-JSON-PP perl-Parse-CPAN-Meta perl-devel perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: perl-Archive-Zip perl-CPAN-Meta perl-PAR-Dist perl-prefork
 
 %description
 Perl module PAR is a toolkit to create and use perl scripts
@@ -43,6 +43,9 @@ and modules stored inside compressed .par files.
 %perl_vendor_privlib/PAR*
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.021-alt1
+- New version
+
 * Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.020-alt1
 - New version
 
