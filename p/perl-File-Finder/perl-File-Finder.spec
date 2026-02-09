@@ -3,8 +3,8 @@
 %define real_name File-Finder
 
 Name: perl-File-Finder
-Version: 0.53
-Release: alt2
+Version: 1.01
+Release: alt1
 
 Summary: wrapper for File::Find module
 
@@ -49,5 +49,8 @@ syntax.
 %perl_vendor_privlib/File/Finder*
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.01-alt1
+- New version
+
 * Mon Jun 27 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.53-alt2
 - Initial build for ALT Linux Sisyphus
