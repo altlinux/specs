@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 Summary: Implements a fake file system that mocks the Python file system modules
 License: Apache-2.0
@@ -19,11 +19,10 @@ Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
 
@@ -39,9 +38,8 @@ modification to work with pyfakefs.
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -62,6 +60,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/{tests,pytest_tests}/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 6.0.0 -> 6.1.0.
+
 * Mon Dec 22 2025 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.10.1 -> 6.0.0.
 
