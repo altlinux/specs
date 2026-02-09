@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.1
+Version: 3.4.4
 Release: alt1
 
 Summary: Python command-line client for tldr pages
@@ -18,7 +18,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # previous name
 Provides: tldr = %EVR
@@ -61,7 +62,6 @@ install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%doc README.md
 %_man1dir/tldr.1*
 %_datadir/bash-completion/completions/%mod_name
 %_datadir/zsh/site-functions/_%mod_name
@@ -69,6 +69,9 @@ install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 # TODO: package http://github.com/tldr-pages/tldr itself
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 3.4.4-alt1
+- 3.4.1 -> 3.4.4.
+
 * Wed Jul 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
 - 3.4.0 -> 3.4.1.
 
