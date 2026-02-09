@@ -4,7 +4,7 @@
 %define libarchive libarchive%sover
 
 Name: libarchive
-Version: 3.8.1
+Version: 3.8.5
 Release: alt1
 
 Group: System/Libraries
@@ -125,6 +125,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 09 2026 Alexander Danilov <admsasha@altlinux.org> 3.8.5-alt1
+- new version 3.8.5
+
 * Thu Jul 10 2025 Sergey V Turchin <zerg@altlinux.org> 3.8.1-alt1
 - new version
 
