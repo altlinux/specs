@@ -10,8 +10,8 @@ ExcludeArch: %ix86
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.8.2
-Release:        alt6
+Version: 4.8.3
+Release: alt1
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -23,9 +23,8 @@ Source1:        Mayavi.desktop
 Source2:        tvtk_doc.desktop
 
 Patch1: %name-alt-test-dependencies.patch
-Patch2: drop-imghdr.patch
-Patch3: mayavi-pr1329-vtk9.4.patch
-Patch4: mayavi-pr1315-np2tests.patch
+Patch2: %name-4.8.3-alt-vtk9.4-attributecollection.patch
+Patch3: %name-4.8.3-alt-vtk9.5-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -217,6 +216,13 @@ export ETS_TOOLKIT=null
 %endif
 
 %changelog
+* Mon Feb 02 2026 Anton Farygin <rider@altlinux.org> 4.8.3-alt1
+- 4.8.2 -> 4.8.3
+- fixed VTK 9.5 compatibility: excluded Copy* methods with changed
+  signatures from get/set parsing in vtkDataSetAttributes
+- removed patches included in upstream 4.8.3: drop-imghdr,
+  mayavi-pr1329-vtk9.4, mayavi-pr1315-np2tests
+
 * Thu Jun 12 2025 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt6
 - Fixed FTBFS.
 
