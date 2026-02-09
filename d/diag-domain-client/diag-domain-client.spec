@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
@@ -55,6 +55,11 @@ bats tests/report_test.bats
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Feb 09 2026 Andrey Limachko <liannnix@altlinux.org> 0.7.2-alt1
+- Revert "chore: add 'exit_status = true' for new version of
+  executor"
+- fix: update display names
+
 * Wed Feb 04 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.7.1-alt1
 - fix: added missing description to .diag
 - docs: update man page with --compact flag option (thx Andrey Limachko)
