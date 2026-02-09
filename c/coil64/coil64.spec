@@ -1,18 +1,18 @@
 Name: coil64
-Version: 2.3.38
+Version: 2.4.39
 Release: alt1
 
 Summary: A inductance coil calculator
 License: GPLv3
 Group: Engineering
-Url: https://coil32.net
+URL: https://coil32.net
 VCS: https://github.com/radioacoustick/Coil64
 
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
-BuildRequires: pkgconfig(Qt5)
+BuildRequires: pkgconfig(Qt6) pkgconfig(Qt6Core5Compat)
 
 %description
 Coil64 is inductance coil calculator, that allows to calculate the single-layer
@@ -23,7 +23,7 @@ planar coils on PCB etc.
 %setup
 
 %build
-%qmake_qt5 -o Makefile Coil64.pro
+%qmake_qt6 -o Makefile Coil64.pro
 %make_build
 
 %install
@@ -38,6 +38,9 @@ install -pm0644 -D coil-0.png %buildroot%_iconsdir/hicolor/48x48/apps/coil64.png
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Feb 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.39-alt1
+- 2.4.39 released
+
 * Mon Nov 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.38-alt1
 - 2.3.38 released
 
