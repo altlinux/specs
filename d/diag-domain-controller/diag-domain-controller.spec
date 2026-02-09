@@ -2,7 +2,7 @@
 %define diagnostic_tool domain-controller
 
 Name: diag-%diagnostic_tool
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -43,9 +43,10 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Feb 09 2026 Andrey Limachko <liannnix@altlinux.org> 0.4.5-alt1
+- fix: update diag name and display names
+
 * Wed Dec 17 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.4.4-alt1
-- Revert "chore: add 'exit_status = true' for new version of
-  executor"
 - build: updated vertion in script
 - fix: fixed warnings on disabled samba in prediag
 - feat: added reverse_with_warnings prediag mode
