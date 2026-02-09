@@ -17,7 +17,7 @@
 %endif
 
 Name: bluez
-Version: 5.85
+Version: 5.86
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -259,6 +259,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 09 2026 L.A. Kostis <lakostis@altlinux.ru> 5.86-alt1
+- 5.86.
+
 * Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 5.85-alt1
 - 5.85.
 
