@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.5
+Version: 1.21.0
 Release: alt1
 Summary: Fast and readable async non-blocking network apps
 License: Apache-2.0
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,13 +51,15 @@ ln -sf /etc/pki/tls/certs/ca-bundle.crt \
 %pyproject_run_pytest -vra
 
 %files
-%doc *.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*/test
 %exclude %python3_sitelibdir/*/examples
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 1.21.0-alt1
+- 1.20.5 -> 1.21.0.
+
 * Mon Mar 17 2025 Stanislav Levin <slev@altlinux.org> 1.20.5-alt1
 - 1.20.0 -> 1.20.5.
 
