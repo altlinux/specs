@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerSecurityCheck
 
 Name: tuner-security-check
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Security check utility
@@ -46,5 +46,8 @@ Plugin for Tuner that runs security checks.
 %doc README.md
 
 %changelog
+* Mon Feb 09 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.4-alt1
+- New version 0.1.4.
+
 * Thu Jan 29 2026 Vladislav Petrukhin <vladp@altlinux.org> 0.1.3-alt1
 - Initial build
