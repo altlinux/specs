@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Archive::Tar::Wrapper
 
 Name: perl-Archive-Tar-Wrapper
-Version: 0.38
+Version: 0.42
 Release: alt1
 
 Summary: Perl wrapper around the 'tar' utility
@@ -9,9 +9,8 @@ Summary: Perl wrapper around the 'tar' utility
 License: %perl_license
 Group: Development/Perl
 URL: http://search.cpan.org/dist/Archive-Tar-Wrapper/
-#URL: https://github.com/mschilli/archive-tar-wrapper-perl
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 %define real_name Archive-Tar-Wrapper
@@ -20,11 +19,9 @@ Patch0: %real_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Fri Aug 17 2018
-# optimized out: perl perl-CPAN-Meta-Requirements perl-Class-XSAccessor perl-Encode perl-File-Which perl-JSON-PP perl-Number-WithError perl-Params-Util perl-Parse-CPAN-Meta perl-Statistics-CaseResampling perl-devel perl-parent perl-prefork python-base python-modules python3 python3-base python3-dev ruby sh3
-BuildRequires: libnss-mymachines perl-CPAN-Meta perl-Dumbbench perl-IPC-Run perl-Log-Log4perl
-
-BuildRequires: perl-File-Which
+# Automatically added by buildreq on Mon Feb 09 2026
+# optimized out: libgpg-error libnss-systemd perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-devel perl-parent python-modules python2-base python3 python3-base sh5
+BuildRequires: libnss-mymachines perl-CPAN-Meta perl-File-Which perl-IPC-Run perl-Log-Log4perl
 
 %description
 Archive::Tar::Wrapper is an API wrapper around the 'tar' command
@@ -44,11 +41,17 @@ files in the temporary directory on disk.
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README
 %perl_vendor_privlib/Archive*
 
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.42-alt1
+- New version
+
+* Wed May 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.40-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.38-alt1
 - New version
 
