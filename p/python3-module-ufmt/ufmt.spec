@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -77,7 +77,6 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %pyproject_run -- python3 -m %mod_name.tests -v
 
 %files
-%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
@@ -85,6 +84,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 2.9.1-alt1
+- 2.9.0 -> 2.9.1.
+
 * Fri Nov 14 2025 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
 - 2.8.0 -> 2.9.0.
 
