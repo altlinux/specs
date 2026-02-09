@@ -1,24 +1,23 @@
 Name: x16-emulator
-Version: r46
+Version: r49
 Release: alt1
 
 Summary: Emulator for the Commander X16 computer system
 License: BSD-2-Clause License
 Group: Emulators
 
-Url: https://www.commanderx16.com
-Source0: %name-%version.tar
+Url: https://github.com/X16Community/x16-emulator
+
+Source: %name-%version.tar
 Source1: commanderx16-logo.png
 Patch0: fix-rom-path.patch
+
 # https://github.com/commanderx16/x16-emulator/pull/362/commits/fa963e7dc20c4782f29c390ef9d028180f6ae5da
 Patch1: gcc11_workaround.patch
 
-BuildRequires(pre): ImageMagick-tools
+BuildRequires(pre): ImageMagick-tools rpm-macros-cmake cmake
 BuildRequires: gcc-c++ libSDL2-devel
-BuildRequires: zlib-devel
-%ifnarch %e2k
-BuildRequires: pandoc
-%endif
+BuildRequires: pandoc zlib-devel python3-dev
 Requires: x16-rom
 
 %description
@@ -27,7 +26,8 @@ It only depends on SDL2 and should compile on all modern
 operating systems.
 
 %prep
-%setup
+%setup -n %name-%version
+
 %patch0 -p1
 #patch1 -p1
 
@@ -36,13 +36,16 @@ operating systems.
 pandoc --from gfm --to html -c github-pandoc.css --standalone --metadata pagetitle="X16 Emulator" README.md --output README.html
 %endif
 
-%make_build OPTIMISE="%optflags -std=gnu++14"
+%make_build
 
 %install
+
 mkdir -p %buildroot%_docdir/%name/
 
 install -Dm0644 %SOURCE1 %buildroot%_liconsdir/%name.png
-install -Dm0755 x16emu %buildroot%_bindir/%name
+install -Dm0755 build/x16emu %buildroot%_bindir/%name
+install -Dm0755 build/makecart %buildroot%_bindir/makecart
+
 
 %ifnarch %e2k
 install -Dm644 README.html %buildroot%_docdir/%name/README.html
@@ -73,26 +76,21 @@ done
 %dir %_iconsdir/hicolor/64x64/apps
 %dir %_iconsdir/hicolor/128x128
 %dir %_iconsdir/hicolor/128x128/apps
-%dir %_docdir/%name/
 %doc README.md LICENSE
 %_bindir/%name
+%_bindir/makecart
 %_iconsdir/hicolor/*/apps/%name.png
 %_desktopdir/%name.desktop
-%ifnarch %e2k
 %_docdir/%name/README.html
 %_docdir/%name/github-pandoc.css
-%endif
 
 %changelog
-* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> r46-alt1
+* Mon Feb 09 2026 Artyom Bystrov <arbars@altlinux.org> r49-alt1
 - Update to new version
+- Switch to new upstream
 
-* Thu Jun 02 2022 Artyom Bystrov <arbars@altlinux.org> r38-alt4
-- Add GCC handle
-
-* Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> r38-alt3
-- E2K: build without pandoc (unavailable for now)
-- minor spec cleanup
+* Mon Feb 05 2024 Artyom Bystrov <arbars@altlinux.org> r46-alt1
+- Update to new version
 
 * Fri Sep 24 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt2
 - fixing build on gcc11

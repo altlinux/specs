@@ -1,5 +1,5 @@
 Name: x16-rom
-Version: r46
+Version: r49
 Release: alt1
 Summary: Commander X16 BASIC/KERNAL/DOS/GEOS ROM
 Group: Development/Tools
@@ -53,7 +53,10 @@ install -Dm644 %SOURCE2 %buildroot%_docdir/%name/github-pandoc.css
 %_docdir/%name/github-pandoc.css
 
 %changelog
-* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> r46-alt1
+* Mon Feb 09 2026 Artyom Bystrov <arbars@altlinux.org> r49-alt1
+- Update to new version
+
+* Mon Feb 05 2024 Artyom Bystrov <arbars@altlinux.org> r46-alt1
 - Update to new version
 
 * Wed Aug 11 2021 Artyom Bystrov <arbars@altlinux.org> r38-alt4
