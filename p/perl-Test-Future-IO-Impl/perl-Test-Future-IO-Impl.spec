@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Test-Future-IO-Impl
-Version: 0.15
+Version: 0.17
 Release: alt1
 
 Summary: acceptance tests for Future::IO implementations
@@ -45,6 +45,9 @@ of acceptance tests for implementations of Future::IO.
 %perl_vendor_privlib/Test/Future/IO/Impl*
 
 %changelog
+* Sat Feb 07 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.17-alt1
+- New version
+
 * Tue Nov 04 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.15-alt1
 - New version
 
