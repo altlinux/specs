@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 11.1
-Release: alt3
+Release: alt4
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -72,6 +72,9 @@ echo "use_edition=yes" >>%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Mon Feb 09 2026 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt4
+- 95-virt-env.sh: Rename to alt-server-virt-env
+
 * Fri Aug 29 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.1-alt3
 - Remove 35-disable-systemd-networkd.sh
 
