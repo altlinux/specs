@@ -9,7 +9,7 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Group: System/Servers
@@ -191,6 +191,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Mon Feb 09 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.4-alt1
+- new version
+
 * Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1
 - new version
 
