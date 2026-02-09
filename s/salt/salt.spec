@@ -2,12 +2,13 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3007.5
+Version: 3007.12
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
 URL: http://saltstack.org
 VCS: https://github.com/saltstack/salt
+# CVE track from release notes: https://docs.saltproject.io/en/latest/topics/releases/3007.6.html
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -203,7 +204,6 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %config(noreplace) %dir %_sysconfdir/salt
 %config(noreplace) %dir %_sysconfdir/salt/pki
 %python3_sitelibdir/*
-%_man7dir/salt.7.*
 
 %files master
 %config(noreplace) %_sysconfdir/salt/master
@@ -237,22 +237,12 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-ssh
 %_bindir/salt-syndic
 %_bindir/spm
-%_man1dir/salt.1.*
-%_man1dir/salt-master.1.*
-%_man1dir/salt-cp.1.*
-%_man1dir/salt-cloud.1.*
-%_man1dir/salt-key.1.*
-%_man1dir/salt-run.1.*
-%_man1dir/salt-syndic.1.*
-%_man1dir/salt-ssh.1.*
-%_man1dir/spm.1.*
 
 %files api
 %config(noreplace) %_sysconfdir/sysconfig/salt-api
 %_bindir/salt-api
 %_initdir/salt-api
 %_unitdir/salt-api.service
-%_man1dir/salt-api.1.*
 
 %files minion
 %config(noreplace) %_sysconfdir/salt/minion
@@ -268,11 +258,11 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-call
 %_bindir/salt-minion
 %_bindir/salt-proxy
-%_man1dir/salt-call.1.*
-%_man1dir/salt-minion.1.*
-%_man1dir/salt-proxy.1.*
 
 %changelog
+* Mon Feb 09 2026 Andrey Cherepanov <cas@altlinux.org> 3007.12-alt1
+- New version (fixes: CVE-2025-62349, CVE-2025-62348, CVE-2025-13836).
+
 * Wed Jul 02 2025 Andrey Cherepanov <cas@altlinux.org> 3007.5-alt1
 - New version.
 
@@ -284,7 +274,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 3007.2-alt1
 - New version
-  + (fixes: CVE-2024-38822, CVE-2024-38823, CVE-2024-38824, CVE-2024-38825, CVE-2025-22236, CVE-2025-22237, CVE-2025-22238, CVE-2025-22239, CVE-2025-22240, CVE-2025-22241, CVE-2025-22242)
+  + (fixes: CVE-2024-38822, CVE-2024-38823, CVE-2024-38824, CVE-2024-38825,
+    CVE-2025-22236, CVE-2025-22237, CVE-2025-22238, CVE-2025-22239,
+    CVE-2025-22240, CVE-2025-22241, CVE-2025-22242)
 
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 3007.1-alt3
 - salt-minion: fix sls search (ALT #54241).
