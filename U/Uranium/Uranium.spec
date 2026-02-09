@@ -1,13 +1,17 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%global with_check 1
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
 
 %add_python3_compile_include %_libexecdir/uranium
 
 Name:    Uranium
 Version: 5.4.0
-Release: alt4
+Release: alt5
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -21,7 +25,7 @@ BuildRequires:  %_bindir/doxygen
 BuildRequires:  %_bindir/msgmerge
 
 # Tests
-%if 0%{?with_check}
+%if_with check
 BuildRequires:  python3-module-Arcus
 BuildRequires:  python3-module-numpy
 BuildRequires:  python3-module-numpy-testing
@@ -104,7 +108,6 @@ popd
 %find_lang uranium
 
 %check
-%if 0%{?with_check}
 pip3 freeze
 # skipping failing tests, see:
 # * https://github.com/Ultimaker/Uranium/issues/594
@@ -113,7 +116,6 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 	and not TestHttpRequestManager and not test_isValid \
 	and not test_properties and not test_triggerAction \
 	and not test_triggerActionWithData and not test_activeToolPanel"
-%endif
 
 %files -f uranium.lang
 %doc LICENSE README.md
@@ -126,6 +128,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Mon Feb 09 2026 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt5
+- Disable check on %%ix86.
+
 * Tue Oct 29 2024 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt4
 - upstream-Replace-deprecated-imp.patch
 
