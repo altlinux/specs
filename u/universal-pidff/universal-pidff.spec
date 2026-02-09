@@ -1,7 +1,7 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: universal-pidff
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: Universal Force Feedback driver for Linux
@@ -61,6 +61,9 @@ cp -v Kbuild %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Mon Feb 09 2026 Mikhail Tergoev <fidel@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Thu Jul 24 2025 Mikhail Tergoev <fidel@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
