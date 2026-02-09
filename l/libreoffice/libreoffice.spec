@@ -50,7 +50,7 @@ Name: libreoffice
 %define hversion 26.2
 %define urelease 0.3
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -517,6 +517,9 @@ export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
 %else
 export CFLAGS="-fPIC %optflags"
 %endif
+%ifarch loongarch64
+export CFLAGS="$CFLAGS -flax-vector-conversions"
+%endif
 %if_disabled gtk4
 export CFLAGS="$CFLAGS -I%_includedir/gtk-3.0"
 %endif
@@ -845,6 +848,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Feb 08 2026 Ilya Sorochan <k0tran@altlinux.org> 26.2.0.3-alt2
+- Add `-flax-vector-conversions` flag for loongarch64 (Fixes FTBFS).
+
 * Wed Feb 04 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.0.3-alt1
 - New version.
 
