@@ -1,6 +1,6 @@
 Name: RTags
-Version: 2.41
-Release: alt3
+Version: 2.44
+Release: alt1
 
 Summary: Cross-reference client/server tool for C/C++
 License: GPLv3
@@ -21,7 +21,6 @@ to find symbols by name, including nested class and namespace scope.
 %setup
 
 %build
-%define optflags_lto %nil
 export CC=clang
 export CXX=clang++
 %cmake
@@ -38,6 +37,9 @@ export CXX=clang++
 %_man7dir/rdm.7*
 
 %changelog
+* Mon Feb 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.44-alt1
+- 2.44 released
+
 * Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.41-alt3
 - unpin clang version
 
