@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define soversion 1
-%define apiver 1
-%define soname %name-%{apiver}_%soversion
+%define apiver %soversion
 
 Name: foundry
 Version: 1.0.1
-Release: alt3
+Release: alt4
 
-Summary: A tool that brings core features of GNOME Builder into a library and CLI tool
+Summary: Foundry provides a platform for developer tools in GNOME
 License: LGPL-2.1
 Group: Development/Tools
 Url: https://gitlab.gnome.org/GNOME/foundry
@@ -48,19 +47,32 @@ BuildRequires: gir(Gtk)
 BuildRequires: gir(GtkSource)
 
 %description
-%summary.
+This tool aims to extract much of what makes GNOME Builder an IDE into a
+library and companion command-line tool.
 
-%package -n lib%soname
+Why?
+
+Because it seems like there is an opportunity to bring many of the automatic
+IDE features of Builder to a command line environment.
+To do this, foundry works similar to other developer environments where you
+source a bunch of things into your sub-shell. Except, in Foundry's case, there
+is a persistent program that lives above that sub-shell which may be interacted
+with using the foundry commands.
+This persistent ancestor process allows for a build manager, LSP management,
+SDK tooling, device management and more to run while you are in your shell.
+
+%package -n lib%name
 Group: Development/C
 Summary: A library that brings core features of GNOME Builder
+Obsoletes: libfoundry-1_1
 
-%description -n lib%soname
+%description -n lib%name
 %summary.
 
 %package -n lib%name-devel
 Group: Development/C
 Summary: Headers files and library symbolic links for lib%name
-Requires: lib%soname = %EVR
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 %summary.
@@ -70,7 +82,7 @@ required for building programs with lib%name.
 %package -n lib%name-gir
 Summary: GObject introspection data for lib%name
 Group: System/Libraries
-Requires: lib%soname = %EVR
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 %summary.
@@ -100,18 +112,20 @@ Requires: lib%name-devel = %EVR
 %files
 %_bindir/%name
 %_datadir/%name/
-%_datadir/metainfo/app.devsuite.Foundry.metainfo.xml
 %_datadir/bash-completion/completions/%name
+%_datadir/metainfo/app.devsuite.Foundry.metainfo.xml
 
-%files -n lib%soname
-%_libdir/lib%name-%apiver.so*
-%_libdir/lib%name-gtk-%apiver.so*
+%files -n lib%name
+%_libdir/lib%name-%apiver.so.%{soversion}*
+%_libdir/lib%name-gtk-%apiver.so.%{soversion}*
 %_datadir/glib-2.0/schemas/app.devsuite.foundry*
 
 %files -n lib%name-devel
-%_libdir/lib%name-%apiver/
 %_includedir/lib%name-%apiver/
 %_includedir/lib%name-gtk-%apiver/
+%_libdir/lib%name-%apiver.so
+%_libdir/lib%name-%apiver/
+%_libdir/lib%name-gtk-%apiver.so
 %_pkgconfigdir/lib%name-%apiver.pc
 %_pkgconfigdir/lib%name-gtk-%apiver.pc
 
@@ -124,6 +138,10 @@ Requires: lib%name-devel = %EVR
 %_girdir/FoundryGtk-%apiver.gir
 
 %changelog
+* Mon Feb 09 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt4
+- remove api version and soversion
+- update Summary and Description
+
 * Tue Jan 20 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt3
 - fix files paths
 
