@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.8.5
+Version: 11.8.6
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -96,12 +96,12 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 # git submodules
-Source101: libmariadb_v3.4.8.tar
+Source101: libmariadb_v3.4.9.tar
 Source102: rocksdb_v6.29.5.tar
-Source103: wsrep-lib_20251107.tar
-Source104: columnstore_25.10.1-1.tar
+Source103: wsrep-lib_20260209.tar
+Source104: columnstore_25.10.3-1.tar
 Source105: libmarias3_3.1.3.tar
-Source106: fmt_12.0.0.tar
+Source106: fmt_12.1.0.tar
 
 Patch0: %name-%version.patch
 
@@ -119,7 +119,7 @@ Patch33: mariadb-covscan-signexpr.patch
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
-Patch104: mariadb-11.8.4-disable-download-fmt.patch
+Patch104: mariadb-11.8.6-disable-download-fmt.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -1119,6 +1119,14 @@ fi
 %endif
 
 %changelog
+* Mon Feb 09 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt1
+- 11.8.6 (Fixes: CVE-2026-21968)
+- Update mariadb-11.8.6-disable-download-fmt.patch
+- Update columnstore to 25.10.3-1
+- Update fmt to 12.1.0
+- Update libmariadb to 3.4.9
+- Update wsrep-lib
+
 * Sat Nov 15 2025 Alexei Takaseev <taf@altlinux.org> 11.8.5-alt1
 - 11.8.5
 

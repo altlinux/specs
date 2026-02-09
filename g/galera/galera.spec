@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.24
+Version: 26.4.25
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
 Url: http://galeracluster.com/
-# VCS-git: https://github.com/codership/galera.git
+# VCS-git: https://github.com/MariaDB/galera.git
 Source: %name-%version.tar
 
 Source1: garbd.init
@@ -22,7 +22,7 @@ Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest
-BuildRequires: boost-devel boost-program_options-devel boost-signals-devel
+BuildRequires: boost-devel boost-program_options-devel boost-signals-devel boost-filesystem-devel
 BuildRequires: asio-devel
 BuildRequires: libcheck-devel libssl-devel zlib-devel
 
@@ -112,6 +112,11 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Mon Feb 09 2026 Alexei Takaseev <taf@altlinux.org> 26.4.25-alt1
+- 26.4.25
+- Change VCS URL to https://github.com/MariaDB/galera.git
+- Add BR boost-filesystem-devel
+
 * Thu Oct 23 2025 Alexei Takaseev <taf@altlinux.org> 26.4.24-alt1
 - 26.4.24
 
