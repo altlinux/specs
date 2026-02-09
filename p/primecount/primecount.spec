@@ -1,7 +1,7 @@
 %define soname 8
 
 Name: primecount
-Version: 8.1
+Version: 8.2
 Release: alt1
 
 Summary: Count the number of primes
@@ -88,6 +88,9 @@ ctest
 %_libdir/cmake/primecount/
 
 %changelog
+* Mon Feb 09 2026 Leontiy Volodin <lvol@altlinux.org> 8.2-alt1
+- New version 8.2.
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 8.1-alt1
 - New version 8.1.
 

@@ -1,7 +1,7 @@
 %define soname 12
 
 Name: primesieve
-Version: 12.12
+Version: 12.13
 Release: alt1
 Summary: A prime number generator
 License: BSD-2-Clause
@@ -85,6 +85,9 @@ ctest
 %_pkgconfigdir/primesieve.pc
 
 %changelog
+* Mon Feb 09 2026 Leontiy Volodin <lvol@altlinux.org> 12.13-alt1
+- New version 12.13.
+
 * Tue Jan 27 2026 Leontiy Volodin <lvol@altlinux.org> 12.12-alt1
 - New version 12.12.
 
