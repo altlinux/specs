@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.6.6
+Version: 0.7.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Mon Feb 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
+- gui: added: switching to the Sisyphus archive
+
 * Sat Jan 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.6-alt1
 - cli: fixed: check branch (ALT #57565)
 - cli: fixed: check ams lists
