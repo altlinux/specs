@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,10 @@ done
 %_destdir
 
 %changelog
+* Mon Feb 09 2026 Valentin Sokolov <sova@altlinux.org> 0.7.2-alt1
+- Improved LAPS_PasswordEncryptedPrincipal policy description
+- Fixed translations in Polkit/Udisk2
+
 * Wed Feb 04 2026 Valentin Sokolov <sova@altlinux.org> 0.7.1-alt1
 - Improve category hierarchy for LAPS policies
 - Improved description in LAPS policies (closes:57724)
