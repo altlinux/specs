@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: Python interface to the number theory library PARI/GP
 License: GPL-2.0
@@ -26,6 +26,9 @@ BuildRequires: libgmp-devel
 
 Source: %name-%version.tar
 
+# See ALT#57796
+Requires: python3-module-cysignals
+
 %description
 A Python interface to the number theory library PARI/GP.
 
@@ -44,6 +47,9 @@ A Python interface to the number theory library PARI/GP.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Feb 09 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt2
+- Added runtime dependency on cysignals (Closes: #57796).
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt1
 - Automatically updated to 2.2.4.
 
