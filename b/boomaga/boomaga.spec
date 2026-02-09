@@ -1,6 +1,6 @@
 Name: boomaga
 Version: 3.0.0
-Release: alt1.2
+Release: alt2
 Group: System/Configuration/Printing
 License: GPLv2 and LGPLv2+
 
@@ -16,7 +16,7 @@ Requires(pre): a2ps
 Requires(pre): cups
 Requires(pre): cups-filters
 Requires(pre): foomatic-db
-Requires: libsnappy
+Requires: libsnappy1
 Requires(preun): cups-common
 Requires(post): /usr/bin/paperconf
 
@@ -89,6 +89,9 @@ lpadmin -x "Boomaga" || :
 %_datadir/%name/translations/*.qm
 
 %changelog
+* Mon Feb 09 2026 Ulysses Apokin <ulysses@altlinux.org> 3.0.0-alt2
+- NMU: fixed requires to use the current libsnappy1
+
 * Wed Jul 19 2023 Mikhail Tergoev <fidel@altlinux.org> 3.0.0-alt1.2
 - NMU: replacement BR libpaper to /usr/bin/paperconf
 
