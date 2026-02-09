@@ -5,12 +5,12 @@
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 4.4
+%define ver_major 4.5
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Guide a worm around a maze
@@ -79,6 +79,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Mon Feb 09 2026 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- 4.5.0
+
 * Sat Nov 01 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
 - 4.4.2
 

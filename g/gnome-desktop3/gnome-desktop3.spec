@@ -19,7 +19,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -221,6 +221,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Feb 09 2026 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
+- 44.5
+
 * Fri Sep 05 2025 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 
