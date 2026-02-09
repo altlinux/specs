@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.64.49
+Version: 3.64.50
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -83,6 +83,27 @@ packages from vendor's sites.
 See https://bugzilla.altlinux.org/48465 for
 a discussion about epm play security.
 
+%package full
+Summary: Etersoft EPM package manager (optional useful tools)
+Group: System/Configuration/Packaging
+Requires: %name = %EVR
+# parallel gzip for 3x faster content index decompression (epm sf)
+Requires: pigz
+# fuzzy finder for interactive package selection (epm play, wildcard expansion)
+Requires: fzf
+# fast download utility with parallel connections (epm play, eget)
+Requires: aria2
+
+AutoProv:no
+AutoReq:no
+
+%description full
+This metapackage contains optional but useful dependencies
+for better EPM performance and user experience:
+- pigz: parallel gzip for faster content index search (3x speedup)
+- fzf: fuzzy finder for interactive package selection
+- aria2: fast download utility with parallel connections
+
 %prep
 %setup
 
@@ -156,7 +177,120 @@ EOF
 %config(noreplace) %_sysconfdir/eepm/play.d/*
 %endif
 
+%files full
+# metapackage, no files
+
 %changelog
+* Tue Feb 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.64.50-alt1
+- epm play: fix false positive detection of apps with BASEPKGNAME
+- epm-download: fix regex to match https:// URLs
+- epm-print: add epm-config subcommand to show config variables
+- epm-repolist: add --regex option and help, remove task detection
+- epm-removerepo: use --regex for patterns, return 0 when repo not found
+- epm-install-alt: use helper functions, fix task repo removal iteration
+- epm-list: add 'epm list TASK' to list packages from ALT task
+- epm: fix config loading path, make --verbose override quiet
+- epm: support --short with --version in any order
+- epm list: add --programs option
+- erc: add extract_appimage() with --appimage-offset support
+- epm-full_upgrade: add --no-stplr option
+- epm-full_upgrade: fix --no-epm-update-check description
+- epm play: add mediamtx media server
+- epm: set_sudo: check /dev/tty instead of isatty2 for password prompt
+- epm: fix running via symlink from another directory
+- epm repack kyodialog: allow system libQt5
+- epm-play: add --force to eget for IPFS DB download
+- epm-repack-rpm: add --keep-version to alien to preserve original release
+- epm repack: fix CVE: validate YAML output before eval and do safe parsing
+- epm pack.d: use erc unpack for squashfs extraction
+- epm play qsp-classic: fix download URL format (remove v prefix)
+- epm-repack: support pkg.tar.zst (new ArchLinux format)
+- distr_info: use pkg.tar.zst for ArchLinux/Manjaro
+- epm play: added Hytale Launcher (eterbug #18799)
+- epm prescription switch-to-nvidia: added lib for DLSS support (eterbug #18811)
+- epm play: added Stacer (eterbug #18829)
+- epm play: added flameshot (eterbug #18832)
+- epm play: added fresh-editor (eterbug #18777)
+- epm play: added Google Antigravity (eterbug #18837)
+- epm play: added anilabxmax (eterbug #18798)
+- epm play mailspring: added dependency to libcurl-openssl (eterbug #18852)
+- epm play: replace vkteams with vkworkspace support
+- epm play max: fix pkgurl (eterbug #18860)
+- distr_info: add AlterOS support (yum-rpm)
+- epm play pfusp: update to 2.2.2
+- epm play trainchinese: add TrainChinese Chinese learning application
+- epm pack winbox: fix version for beta releases (4.0beta47 -> 4.0~beta47)
+- epm requires: filter out lib requires with symbol versions
+- epm play revpdf: add Privacy-First PDF Editor
+- epm play fresh: add terminal text editor
+- epm play codex: add play/pack/repack
+- epm play kodak-i2000: add i2620 driver
+- epm repack pantum: move sane drivers to /usr/lib64
+- epm repack pfusp: move sane drivers to /usr/lib64
+- epm pack katusha-m247-sc: use /usr/lib64/sane
+- epm pack xerox-spl-driver: use /usr/lib64/sane
+- epm repack kodak-i11xx: add sane path repack
+- epm repack kodak-i2000: add sane path repack
+- epm repack brave: drop com.brave.Browser desktop file
+- epm play: add flameshot
+- epm play: add spo-anketa
+- serv: add is-active/is-running command
+- epm update: analyze apt-get errors and show recommendations
+- epm play: add happ
+- epm play: add stirling-pdf
+- epm download --url: fix for non-installed packages
+- epm repo set: preserve current mirror when switching branches
+- epm repack: skip forbidden requires check when no specific repack script
+- epm play: add thincast-client
+- epm repack pantum: remove duplicate multiarch path handling
+- epm play: add obs-studio-plugin-distroav
+- epm repack synology-drive: remove obsolete deb path handling
+- epm: skip reading stdin for commands with direct_args
+- epm pack.d/virtualbox-extpack: derive BASENAME from tarball name
+- epm release-upgrade: check /etc/altlinux-release for conflicts too
+- epm mark: fix dnf5 mark commands (user/dependency instead of install/remove)
+- epm whatprovides: add --installed option with --short support
+- epm query: fall back to provides when direct package query fails
+- epm query: fix dpkg virtual package query printing bogus output
+- epm whatprovides: fix --installed for dpkg via apt-cache showpkg
+- epm play fresh: fix play script
+- epm play tabby: rename to tabby-terminal
+- epm desktop: add de=variant support (kde=small, xfce=minimal)
+- epm-install-alt: handle kernel-image-* packages via update-kernel
+- epm play: add tabby
+- epm repack.d/common.sh: add add_obsoletes function
+- epm-Install: call epm_install instead of duplicating its logic
+- epm play qsp-classic: convert ~ to - in URL for pre-release versions
+- epm play tixati: use RELEASE from app-versions for URL
+- epm repomirrors: add ALT Linux mirror database (--list and --speedtest support)
+- epm repofix: use mirror database from epm-repomirrors
+- epm repofix: remove hardcoded mirror list, rewrite __subst_with_repo_url via epm-repomirrors
+- epm removerepo: comment lines in sources.list.d instead of deleting
+- epm addrepo: uncomment lines in sources.list.d if exists
+- epm repoenable: return error when nothing to uncomment for ^rpm patterns
+- eepm.spec: add eepm-full subpackage with optional dependencies
+- epm repack claude-code: disable update notifications
+- epm play claude-code: add latest channel support
+- epm play max: update for new package structure
+- epm play max: rename max-qt to max-wine, add obsoletes for migration
+- epm: add proxy settings support in config
+- epm install: install selected package from suggestions
+- epm play: install selected app from suggestions
+- epm install: fix recursive call to use epm_install_names
+- epm: localize fzf prompts for package/app selection
+- epm install: add aur/package support for Arch Linux
+- epm assure: add AUR fallback for Arch Linux, remove assure_exist_arch
+- epm-sh-functions: confirm: read from /dev/tty, add confirm_yes function
+- epm removerepo: fix order to delete from sources.list before disabling
+- epm repo list: add --disabled, --regexp alias, refactor options parsing
+- epm info: support file path to show owning package info
+- epm install: decouple from epm-repack, centralize repack-if-needed logic
+- epm-install-alt: warn instead of fatal for --nodeps with local repo
+- eepm.conf: add allow_repack_install and allow_thirdparty_install settings
+- epm mark: resolve virtual packages before marking
+- serv: fix --user support for journalctl and systemctl status checks
+- epm play: added Throne (eterbug #18873)
+
 * Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.64.49-alt1
 - epm repack freeplane: ignore libjawt.so
 - epm play: fix --installed check to return correct exit code
