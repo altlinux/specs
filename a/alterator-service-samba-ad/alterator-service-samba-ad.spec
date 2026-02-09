@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -13,10 +13,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires: alterator-entry
+%ifnarch %e2k
+BuildRequires: shellcheck
+%endif
 
-Requires: alterator-module-executor
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-service
-Requires: alterator-entry >= 0.4.5
+Requires: alterator-entry >= 0.4.8
 Requires: samba-dc
 Requires: krb5-kinit
 Requires: ldb-tools
@@ -24,6 +28,8 @@ Requires: samba-doc
 Requires: samba-dcerpc
 Requires: samba-winbind
 Requires: samba-winbind-clients
+Requires: diag-domain-controller >= 0.4.4
+Requires: alterator-service-chrony
 
 %description
 Service for Samba AD management.
@@ -43,13 +49,16 @@ install -p -D -m755 %service-status %buildroot%_bindir/%service-status
 install -p -D -m755 %service-configure %buildroot%_bindir/%service-configure
 install -p -D -m755 %service-functions %buildroot%_bindir/%service-functions
 install -p -D -m644 %service-entry-update %buildroot%_bindir/%service-entry-update
-install -p -D -m644 %service.backend %buildroot%_alterator_datadir/backends/%service.backend
-install -p -D -m644 %service.service %buildroot%_alterator_datadir/services/%service.service
-install -p -D -m644 parameters/provision-parameters.schema.json %buildroot%_datadir/%name/provision-parameters.schema.json
-install -p -D -m644 parameters/join-parameters.schema.json %buildroot%_datadir/%name/join-parameters.schema.json
+install -p -D -m644 alterator/%service.backend %buildroot%_alterator_datadir/backends/%service.backend
+install -p -D -m644 alterator/%service.service %buildroot%_alterator_datadir/services/%service.service
 install -pDm 644 %service.bash-completion \
      %buildroot%_datadir/bash-completion/completions/%service
-install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samba-ad/status.json
+
+%check
+find ./alterator/ -type f -exec alterator-entry validate {} \+
+%ifnarch %e2k
+find service-* -type f -exec shellcheck {} \+
+%endif
 
 %files
 %_bindir/%service
@@ -61,13 +70,21 @@ install -p -D -m644 status.json %buildroot%_localstatedir/alterator/service/samb
 %_alterator_datadir/backends/%service.backend
 %_alterator_datadir/services/%service.service
 %_datadir/bash-completion/completions/%service
-%_datadir/%name/provision-parameters.schema.json
-%_datadir/%name/join-parameters.schema.json
 %_localstatedir/alterator/service/samba-ad/
 %_localstatedir/alterator/service/samba-ad/config-backup
-%_localstatedir/alterator/service/samba-ad/status.json
 
 %changelog
+* Mon Feb 09 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.6-alt1
+- Add Alterator file validation. Add shellcheck.
+- Disable shellcheck rule 2034 and 2207 in completion file
+- Add dependencies
+- Add missed vars
+- Remove unused files
+- Move the alterator files to a separate folder
+- Change resource names
+- Add the ability to select available actions on a service
+- Update version-check workflow (thx Maria Alexeeva)
+
 * Thu Jan 29 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.5-alt1
 - Change from fqdn to short name in get hostname function
 - Fix incorrect netbios name in join function
