@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 Summary: Probabilistic data structures in python
 License: MIT
@@ -46,11 +46,13 @@ probabilistic data-structures to use in their work.
 %pyproject_run_pytest -vra
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
+- 0.6.2 -> 0.7.0.
+
 * Tue Dec 02 2025 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1
 - 0.6.1 -> 0.6.2.
 
