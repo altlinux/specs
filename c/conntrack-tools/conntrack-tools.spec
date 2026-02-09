@@ -1,11 +1,12 @@
 Name: conntrack-tools
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
-Url: http://netfilter.org
-Source0: http://netfilter.org/projects/conntrack-tools/files/%name-%version.tar
+Url: https://netfilter.org/
+VCS: https://git.netfilter.org/conntrack-tools
+Source0: %name-%version.tar
 
 Source11: conntrackd.conf
 Source12: conntrackd.sysconfig
@@ -68,6 +69,9 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %_man5dir/*
 
 %changelog
+* Mon Feb 09 2026 Anton Farygin <rider@altlinux.org> 1.4.9-alt1
+- 1.4.8 -> 1.4.9
+
 * Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.8-alt1
 - 1.4.8
 

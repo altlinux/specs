@@ -1,5 +1,5 @@
 Name: libnetfilter_conntrack
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Epoch: 1
 
@@ -45,6 +45,9 @@ interface (API) to the in-kernel connection tracking state table.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 09 2026 Anton Farygin <rider@altlinux.org> 1:1.1.1-alt1
+- 1.1.0 -> 1.1.1
+
 * Mon Oct 07 2024 Anton Farygin <rider@altlinux.ru> 1:1.1.0-alt1
 - 1.1.0
 
