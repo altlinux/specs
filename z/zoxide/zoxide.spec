@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: zoxide
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary:  A smarter cd command. Supports all major shells.
@@ -25,7 +25,6 @@ zoxide is a smarter cd command, inspired by z and autojump.
 It remembers which directories you use most frequently, so you can
 "jump" to them in just a few keystrokes.  zoxide works on all major
 shells.
-
 
 %prep
 %setup
@@ -72,6 +71,9 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 0.9.9-alt1
+- New version 0.9.9.
+
 * Fri Jun 06 2025 Egor Ignatov <egori@altlinux.org> 0.9.8-alt1
 - New version 0.9.8.
 
