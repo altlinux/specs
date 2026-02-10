@@ -1,3 +1,5 @@
+# https://github.com/briansmith/ring/discussions/2753
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyproject-fmt
 %define mod_name pyproject_fmt
@@ -7,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.12.1
+Version: 2.14.2
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -17,6 +19,7 @@ VCS: https://github.com/tox-dev/pyproject-fmt.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: vendor_rust.tar
+Source3: tombi_vendorer.py
 Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
@@ -34,6 +37,8 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup -a2
 %autopatch -p1
+%SOURCE3 --check
+mv vendor/_tombi_schemas/* ./
 mkdir .cargo
 cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_scm_init
@@ -46,6 +51,10 @@ cd pyproject-fmt
 
 %build
 cd pyproject-fmt
+export CARGO_TERM_VERBOSE=true
+# build with debug info
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_STRIP='none'
 %pyproject_build
 
 %install
@@ -57,12 +66,14 @@ cd pyproject-fmt
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.md
 %_bindir/%pypi_name
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 2.14.2-alt1
+- 2.12.1 -> 2.14.2.
+
 * Tue Feb 03 2026 Stanislav Levin <slev@altlinux.org> 2.12.1-alt1
 - 2.6.0 -> 2.12.1.
 
