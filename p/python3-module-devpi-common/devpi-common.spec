@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Summary: This package contains utility functions used by devpi-server and devpi-client
 License: MIT
@@ -50,11 +50,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
+- 4.1.0 -> 4.1.1.
+
 * Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 4.0.4 -> 4.1.0.
 

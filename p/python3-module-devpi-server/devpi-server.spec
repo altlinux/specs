@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.19.0
+Version: 6.19.1
 Release: alt1
 Summary: Reliable private and pypi.org caching server
 License: MIT
@@ -69,6 +69,9 @@ cd server
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 6.19.1-alt1
+- 6.19.0 -> 6.19.1.
+
 * Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 6.19.0-alt1
 - 6.17.0 -> 6.19.0.
 
