@@ -1,6 +1,6 @@
 Name: surguch
-Version: 0.4.3
-Release: alt2
+Version: 0.4.4
+Release: alt1
 Summary: Verification and creation of digitally signed pdf documents
 
 Source:  %name-%version.tar
@@ -50,6 +50,9 @@ of digitally signed pdf documents.
 
 
 %changelog
+* Tue Feb 10 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.4.4-alt1
+- update icons
+
 * Tue Dec 30 2025 Oleg Proskurin <proskur@altlinux.org> 0.4.3-alt2
 - Fix major mistakes in the .spec file (closes #57232).
 
