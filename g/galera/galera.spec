@@ -2,7 +2,7 @@
 
 Name: galera
 Version: 26.4.25
-Release: alt1
+Release: alt2
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -19,6 +19,7 @@ Source4: garbd.conf
 Source100: wsrep.tar
 
 Patch: %name-%version.patch
+Patch1: Fix_wsrep_api_version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest
@@ -58,6 +59,9 @@ replication engine see http://www.codership.com.
 %setup
 tar -xf %SOURCE100 -C wsrep/src
 %patch -p1
+pushd wsrep/src
+%patch1 -p1
+popd
 echo %release > GALERA_GIT_REVISION
 
 %build
@@ -112,6 +116,9 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Tue Feb 10 2026 Alexei Takaseev <taf@altlinux.org> 26.4.25-alt2
+- Fix wsrep-API version (ALT #57828)
+
 * Mon Feb 09 2026 Alexei Takaseev <taf@altlinux.org> 26.4.25-alt1
 - 26.4.25
 - Change VCS URL to https://github.com/MariaDB/galera.git
