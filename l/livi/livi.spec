@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 0.3
-%define git_tag 2db04dbf8d73f8f7ad9b5e15a6f3fc716e402fb3
+%define ver_major 0.4
+%define git_tag af89873f780f604f0c3e251237824dde78dcce97
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
 
 Name: livi
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Livi is a Light Video player for Wayland
@@ -32,6 +32,7 @@ Requires: gst-libav
 # since 0.2.0 "Allow to use gtk4paintablesink instead of in-tree sink"
 Requires: gst-plugin-gtk4
 Requires: dconf
+Requires: yt-dlp
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -69,6 +70,9 @@ simple.
 %doc README* NEWS
 
 %changelog
+* Tue Feb 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sat Jul 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
