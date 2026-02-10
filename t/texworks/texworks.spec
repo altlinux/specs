@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.10
+Version: 0.6.11
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -12,9 +12,9 @@ VCS: https://github.com/TeXworks/texworks
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-script-devel qt5-tools-devel-static
-BuildRequires: libhunspell-devel libdbus-devel libpoppler-qt5-devel unzip cmake
-BuildRequires: qt5-declarative-devel zlib-devel
+BuildRequires: gcc-c++ qt6-base-devel qt6-tools-devel-static qt6-5compat-devel
+BuildRequires: libhunspell-devel libdbus-devel libpoppler-qt6-devel unzip cmake
+BuildRequires: qt6-declarative-devel zlib-devel
 
 Source0: %name-%version.tar
 Source1: texworks-alt-icons.tar
@@ -57,7 +57,7 @@ User manual for TeXworks editor.
 %patch1 -p2
 
 %build
-%cmake_insource -DDESIRED_QT_VERSION=5
+%cmake_insource -DESIRED_QT_VERSION=6
 %make
 
 %install
@@ -85,6 +85,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-en.pdf
 
 %changelog
+* Tue Feb 10 2026 Grigory Ustinov <grenka@altlinux.org> 0.6.11-alt1
+- Automatically updated to 0.6.11.
+
 * Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.10-alt1
 - Automatically updated to 0.6.10.
 
