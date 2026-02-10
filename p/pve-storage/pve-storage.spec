@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 9.1.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -68,6 +68,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.0-alt2
+- Use OVA file itself as path to diskimage (Closes: 54360)
+
 * Thu Jan 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.0-alt1
 - 9.1.0
 

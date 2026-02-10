@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 9.1.4
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -26,6 +26,7 @@ BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall pve-ha
 BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.0.16 pve-qemu-system >= 10.1 pve-network
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
+BuildRequires: perl(Class/MethodMaker.pm)
 BuildRequires: pkgconf libpcre2-devel
 
 %description
@@ -80,6 +81,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt2
+- Add dependency to perl-Class-MethodMaker
+
 * Wed Jan 21 2026 Sergey Konev <darisishe@altlinux.org> 9.1.4-alt1
 - 9.1.4
 

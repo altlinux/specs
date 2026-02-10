@@ -14,7 +14,7 @@
 
 Name: pve-%rname
 Version: 10.1.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -45,7 +45,7 @@ Conflicts: %rname
 Provides: pve-qemu-kvm = %EVR
 
 BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel libalsa-devel libattr-devel libcap-devel
-BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
+BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel libgio-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(virglrenderer) liburing-devel libuuid-devel
@@ -179,7 +179,8 @@ export CFLAGS="%optflags"
         --enable-usb-redir \
         --enable-virglrenderer \
         --enable-virtfs \
-        --enable-zstd
+        --enable-zstd \
+        --enable-gio
 
 %make_build V=1
 
@@ -331,6 +332,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 1:10.1.2-alt2
+- BR: libgio to build 'dbus-vmstate' (Closes: 57805)
+
 * Fri Nov 07 2025 Alexey Shabalin <shaba@altlinux.org> 1:10.1.2-alt1
 - 10.1.2-1 (Fixes: CVE-2024-8354, CVE-2025-8860, CVE-2025-54566, CVE-2025-54567).
 
