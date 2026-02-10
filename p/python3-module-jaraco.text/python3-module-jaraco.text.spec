@@ -1,5 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jaraco.text
+%define ns_name jaraco
+%define mod_name text
 
 %def_with check
 
@@ -15,8 +17,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 4.0.0
-Release: alt1.1
+Version: 4.1.0
+Release: alt1
 Summary: Module for text manipulation
 License: MIT
 Group: Development/Python3
@@ -33,6 +35,8 @@ AutoReq: yes, nopython3
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
+# requires internet
+%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -62,10 +66,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%python3_sitelibdir/jaraco/*
+%dir %python3_sitelibdir/%ns_name/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 4.0.0 -> 4.1.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
