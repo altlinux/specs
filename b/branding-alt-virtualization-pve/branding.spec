@@ -19,8 +19,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.0
-Release: alt0.8
+Version: 11.1
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -42,7 +42,8 @@ License: GPLv2+
 %define variant PVE Edition
 %define variant_id pve
 %define distro_name %component_name %variant %version%status_en
-%define distro_name_ru Альт Виртуализации редакция PVE %version%status
+%define distro_name_ru Альт Виртуализация редакция PVE %version%status
+%define distro_logo basealt
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -214,7 +215,7 @@ cp /usr/share/distro-licenses/ALT_Product_License/license.{all,ru}.html.in notes
 autoconf
 THEME=%theme NAME='%component_name' VARIANT='%variant' VARIANT_ID='%variant_id' BRAND_FNAME='%brand' \
 BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' \
-PRODUCT_NAME='%distro_name' CODENAME='%codename' BRANCH='%altbranch' ./configure
+PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -290,6 +291,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Feb 10 2026 Sergey Konev <darisishe@altlinux.org> 11.1-alt1
+- 11.1
+- os-release: set docs version to 11.1, add LOGO line (Closes: 55555) 
+- Fix typo in RU distro name (Closes: 55595)
+
 * Fri Feb 06 2026 Alexander Burmatov <thatman@altlinux.org> 11.0-alt0.8
 - Set correct documentation URL.
 

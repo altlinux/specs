@@ -2,7 +2,7 @@
 
 
 Name: alterator-net-ifupdown2
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -44,6 +44,10 @@ Alterator module for PVE network setup
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Feb 04 2026 Sergey Konev <darisishe@altlinux.org> 1.0.4-alt1
+- Write short name to /etc/hostname
+(Required for PVE Ceph GUI to work properly)
+
 * Tue Apr 15 2025 Sergey Konev <darisishe@altlinux.org> 1.0.3-alt1
 - Switch to using openresolv (via ifupdown2 hooks) DNS managment
 
