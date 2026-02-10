@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    sccache
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: sccache is ccache with cloud storage
@@ -14,17 +14,7 @@ Url:     https://github.com/mozilla/sccache
 
 Source:   %name-%version.tar
 
-# cargo vendor-filterer  --all-features \
-#   --platform=aarch64-unknown-linux-gnu \
-#   --platform=armv7-unknown-linux-gnueabihf \
-#   --platform=loongarch64-unknown-linux-gnu \
-#   --platform=i686-unknown-linux-gnu \
-#   --platform=powerpc64le-unknown-linux-gnu \
-#   --platform=riscv64gc-unknown-linux-gnu \
-#   --platform=x86_64-unknown-linux-gnu \
-#   --exclude-crate-path zstd-sys#zstd \
-#   --exclude-crate-path openssl-src#openssl
-
+# Please use .gear/update-vendor.sh to update the vendored sources
 Source1:  vendor.tar
 
 Patch: %name-%version-%release.patch
@@ -77,6 +67,9 @@ EOF
 %doc README.md docs
 
 %changelog
+* Tue Feb 10 2026 Ivan A. Melnikov <iv@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jan 14 2026 Ivan A. Melnikov <iv@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
