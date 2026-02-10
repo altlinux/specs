@@ -2,7 +2,7 @@
 
 Name: hyprlax
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Buttery smooth parallax wallpaper daemon for wayland compositors
 License: MIT
@@ -24,6 +24,8 @@ Linux.
 
 %prep
 %setup
+# Dependence on builder CPU harms portability and reproducibility
+sed -i 's/-march=native//' Makefile
 
 %build
 %make_build
@@ -38,5 +40,8 @@ install -Dpm 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Feb 10 2026 Ilya Sorochan <k0tran@altlinux.org> 2.2.0-alt2
+- remove `-march=native` flag (fixes riscv64 FTBFS)
+
 * Wed Feb 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.2.0-alt1
 - initial build for ALT Linux
