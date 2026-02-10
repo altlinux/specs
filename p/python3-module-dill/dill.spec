@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: Serialize all of Python
 License: BSD
@@ -23,7 +23,6 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata
 %endif
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -68,7 +67,6 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %pyproject_run -- python3 dill/tests/__main__.py
 
 %files
-%doc README.md
 %_bindir/undill
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -80,6 +78,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %_bindir/get_gprof
 
 %changelog
+* Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
 * Wed Apr 16 2025 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - 0.3.9 -> 0.4.0.
 
