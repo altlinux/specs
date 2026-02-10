@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.3.10
+Version: 0.3.11
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -51,6 +51,9 @@ and package repositories through apt and rpm.
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Tue Feb 10 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.11-alt1
+- Update app icon (fix black background in KDE).
+
 * Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.10-alt1
 - Fix messages about manually installed packages (thx Oleg Chagaev).
 - Fix the counter of packages to be removed.
