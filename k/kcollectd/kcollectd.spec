@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kcollectd
-Version: 0.12.1
-Release: alt1.2
+Version: 0.12.2
+Release: alt1
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -18,19 +18,18 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 Patch1: %name-0.12.0-alt-desktop_fix.patch
-Patch2: %name-0.12.1-alt-fix-build-with-boost-1.85.0.patch
-Patch3: %name-0.12.1-alt-fix-build-const-correctness.patch
+Patch2: %name-0.12.1-alt-fix-build-const-correctness.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
 
-# Automatically added by buildreq on Tue May 19 2020
-# optimized out: boost-devel boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms pkg-config python-modules python2-base python3 python3-base python3-dev qt5-base-devel ruby ruby-stdlibs sh4 shared-mime-info xml-common xml-utils
-BuildRequires: appstream boost-filesystem-devel extra-cmake-modules kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel librrd-devel libssl-devel
+# Automatically added by buildreq on Tue Feb 10 2026
+# optimized out: boost-devel boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcolorscheme-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdoctools kf6-kguiaddons-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel libX11-devel libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-printsupport libqt6-qml libqt6-svg libqt6-waylandclient libqt6-widgets libqt6-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base qt6-base-devel qt6-svg-devel sh5 shared-mime-info vulkan-headers xml-common xml-utils xorg-proto-devel
+BuildRequires: appstream boost-filesystem-devel extra-cmake-modules fish gtk4-update-icon-cache kf6-kdoctools-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel qt6-declarative-devel librrd-devel libssl-devel
 
 
 %description
-Kcollectd is a graphical KDE5 frontend to collectd  that allows
+Kcollectd is a graphical KDE frontend  to collectd  that allows
 to view RRD files that have been created by collectd. It allows
 to easily navigate in the data with the mouse and can be used
 as a chart recorder.
@@ -41,7 +40,6 @@ as a chart recorder.
 
 %patch1
 %patch2 -p1
-%patch3 -p1
 
 mv -f -- COPYING COPYING.GPL3.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
@@ -73,6 +71,10 @@ mv -f %buildroot/%_desktopdir/net.aerusso.kcollectd.desktop %buildroot%_desktopd
 
 
 %changelog
+* Sun Feb 08 2026 Nikolay A. Fetisov <naf@altlinux.org> 0.12.2-alt1
+- New version
+  - Port to Qt6/KF6
+
 * Sun Oct 27 2024 Ivan A. Melnikov <iv@altlinux.org> 0.12.1-alt1.2
 - NMU: fix FTBFS
 
