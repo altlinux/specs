@@ -7,8 +7,8 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: 6.6.1
-Release: alt2
+Version: 6.6.2
+Release: alt1
 
 License: GPL-2.0-or-later
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -140,6 +140,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Tue Feb 10 2026 Anton Midyukov <antohami@altlinux.org> 6.6.2-alt1
+- New version 6.6.2.
+
 * Sat Jan 03 2026 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt2
 - cinnamon-session-wayland: add depend on xorg-xwayland.
 
