@@ -13,7 +13,7 @@ compressed files are anywhere from 20 - 100 percent bigger.
 
 Name: libsnappy
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Google fast compression/decompression library
 Group: System/Libraries
@@ -44,6 +44,7 @@ BuildRequires: ctest
 %package -n %name%soversion
 Summary: %summary
 Group: System/Libraries
+Obsoletes: libsnappy < %EVR
 
 %description -n %name%soversion
 %descr
@@ -90,6 +91,9 @@ install -Dpm 0644 %oname.pc %buildroot%_pkgconfigdir/%oname.pc
 %_libdir/cmake/Snappy/
 
 %changelog
+* Tue Feb 10 2026 Ulysses Apokin <ulysses@altlinux.org> 1.2.2-alt2
+- Fixed conflicts with file from package libsnappy-1.1.7 (ALT #57822).
+
 * Fri Feb 06 2026 Ulysses Apokin <ulysses@altlinux.org> 1.2.2-alt1
 - New version.
 - Corrected as per shared libs policy.
