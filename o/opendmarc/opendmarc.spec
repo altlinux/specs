@@ -1,6 +1,6 @@
 Name: opendmarc
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: A Domain-based Message Authentication, Reporting & Conformance (DMARC) milter and library
 
 License: BSD and Sendmail
@@ -13,6 +13,13 @@ Source1: %name.sysconfig
 Source2: %name.service
 Patch1: opendmarc-1.4.0-ticket159-179.patch
 Patch2: opendmarc-python3.patch
+# Patch for non security bug cve-2024-25768
+# https://github.com/trusteddomainproject/OpenDMARC/issues/256
+Patch3: cve-2024-25768.patch
+Patch4: 0001-Fix-configure-Correctly-persist-SPF-include-and-libr.patch
+Patch5: 223.patch
+Patch6: 224.patch
+Patch7: 225.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libbsd-devel
@@ -156,6 +163,9 @@ exit 0
 %_libdir/*.so
 
 %changelog
+* Tue Feb 10 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt2
+- Used patches from Fedora (fixes: CVE-2024-25768).
+
 * Sun May 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - New version.
 
