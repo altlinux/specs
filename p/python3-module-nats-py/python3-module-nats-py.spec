@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.13.1
 Release: alt1
 
 Summary: Python3 client for NATS
@@ -38,14 +38,22 @@ An asyncio Python client for the NATS messaging system.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipenv Pipfile dev-packages
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
+for workspace in nats nats-server nats-core; do
+pushd $workspace
 %pyproject_build
+popd
+done
 
 %install
+for workspace in nats nats-server nats-core; do
+pushd $workspace
 %pyproject_install
+popd
+done
 
 %check
 %pyproject_run_pytest -vra -o=addopts=-Wignore
@@ -54,8 +62,13 @@ An asyncio Python client for the NATS messaging system.
 %doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/nats_core-0.1.0.dist-info
+%python3_sitelibdir/nats_server-0.0.0.dist-info
 
 %changelog
+* Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 2.13.1-alt1
+- Updated to 2.13.1.
+
 * Wed Mar 26 2025 Anton Zhukharev <ancieg@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0.
 

@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.6.3
+Version: 0.6.6
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -15,42 +15,24 @@ BuildArch: noarch
 VCS: https://github.com/airtai/FastStream
 Url: https://faststream.airt.ai/latest/
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
 Patch0: %name-%version-alt.patch
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-uv-build
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-pytest-retry
-BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-covdefaults
-BuildRequires: python3-module-fast-depends
-BuildRequires: python3-module-typer
-BuildRequires: python3-module-pydantic
-BuildRequires: python3-module-pydantic-settings
-BuildRequires: python3-module-opentelemetry-sdk
-BuildRequires: python3-module-dirty-equals
-BuildRequires: python3-module-prometheus_client
-BuildRequires: python3-module-fastapi
-BuildRequires: python3-module-watchfiles
-BuildRequires: python3-module-yaml
-BuildRequires: python3-module-httpx
-BuildRequires: python3-module-uvloop
-BuildRequires: python3-module-uvicorn
-BuildRequires: python3-module-psutil
-
-BuildRequires: python3-module-aio-pika
-BuildRequires: python3-module-kafka
-BuildRequires: python3-module-confluent-kafka
-BuildRequires: python3-module-aiokafka
-BuildRequires: python3-module-redis-py
-BuildRequires: python3-module-nats-py
-
-BuildRequires: /proc
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra cli
+%pyproject_builddeps_metadata_extra confluent
+%pyproject_builddeps_metadata_extra kafka
+%pyproject_builddeps_metadata_extra nats
+%pyproject_builddeps_metadata_extra rabbit
+%pyproject_builddeps_metadata_extra redis
 %endif
+BuildRequires: /proc
 
 %description
 FastStream simplifies the process of writing producers and consumers for message
@@ -60,6 +42,8 @@ automatically.
 %prep
 %setup
 %patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -77,6 +61,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 0.6.6-alt1
+- New version 0.6.6.
+
 * Thu Nov 06 2025 Egor Ignatov <egori@altlinux.org> 0.6.3-alt1
 - New version 0.6.3.
 
