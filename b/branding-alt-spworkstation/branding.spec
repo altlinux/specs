@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.11
+Release: alt0.12
 Epoch: 1
 Url: https://altsp.su
 
@@ -211,6 +211,17 @@ PreReq(post): libgio
 %description mate-settings
 MATE settings for %distro_name
 
+%package menu
+BuildArch: noarch
+Summary: Menu merge for %distro_name
+License: Distributable
+Group:   Graphical desktop/Other
+Requires: altlinux-freedesktop-menu-common
+%branding_add_conflicts %flavour menu
+
+%description menu
+Menu merge for %distro_name.
+
 %package slideshow
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
@@ -267,6 +278,8 @@ install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-
 install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
 popd
 
+#menu
+install -pDm644 menu/50-applications.menu %buildroot%_sysconfdir/xdg/menus/applications-merged/50-applications.menu
 
 #bootloader
 %post bootloader
@@ -344,6 +357,9 @@ fi
 %_datadir/glib-2.0/schemas/50_gnome-desktop-a11y.gschema.override
 %_datadir/glib-2.0/schemas/50_arcmenu-apps-show-generic-names.gschema.override
 
+%files menu
+%_sysconfdir/xdg/menus/applications-merged/50-applications.menu
+
 %files slideshow
 %_sysconfdir/alterator/slideshow.conf
 %_datadir/install2/slideshow
@@ -359,6 +375,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Feb 10 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.12
+- Add menu subpackage.
+
 * Fri Jan 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.11
 - gnome-settings: show generic names in arcmenu by default.
 
