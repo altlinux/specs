@@ -4,14 +4,15 @@
 %define commonname hasherc_common
 
 Name: hasherc
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: A tool for building packages for ALT operating systems in containers
 License: GPL-3.0-or-later
 Group: Development/Tools
-Url: https://altlinux.space/alt-gnome/hasherc
-Vcs: https://altlinux.space/alt-gnome/hasherc.git
+URL: https://altlinux.space/alt-gnome/hasherc
+VCS: https://altlinux.space/alt-gnome/hasherc.git
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -49,6 +50,9 @@ NOT FULL REPLACEMENT FOR HASHER
 %python3_sitelibdir_noarch/%commonname/
 
 %changelog
+* Mon Feb 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.4.0-alt1
+- New version: 0.4.0.
+
 * Sat Jun 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.3.0-alt1
 - New version: 0.3.0
 
