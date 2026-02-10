@@ -5,7 +5,7 @@
 
 Name: rabbitmq-server
 Version: 4.2.3
-Release: alt1
+Release: alt2
 
 Summary: The RabbitMQ server
 License: MPL-1.1
@@ -68,16 +68,15 @@ popd
 
 %build
 export LANG=en_US.UTF-8
-export VERSION=%version
 #FIXME: 3.13.7: parallel build fails
-%make_build -j1 V=1
+%make_build -j1 V=1 PROJECT_VERSION="%version"
 
 %install
 export LANG=en_US.UTF-8
 %makeinstall_std \
-        VERSION="%version" \
-        PREFIX=%_prefix \
-        install-bin install-man
+    PROJECT_VERSION="%version" \
+    PREFIX=%_prefix \
+    install-bin install-man
 
 
 mkdir -p %buildroot%_localstatedir/%oname/mnesia
@@ -156,6 +155,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Feb 10 2026 Egor Ignatov <egori@altlinux.org> 4.2.3-alt2
+- Fix version detection (closes #57811)
+
 * Thu Jan 29 2026 Egor Ignatov <egori@altlinux.org> 4.2.3-alt1
 - 4.2.3 (closes: #57719)
 
