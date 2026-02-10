@@ -1,8 +1,8 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.30.5
-Release: alt2
+Version: 1.30.7
+Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: Apache-2.0 and ISC and MIT and Zlib
@@ -142,6 +142,9 @@ exit $ret
 
 
 %changelog
+* Tue Feb 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.30.7-alt1
+- NMU: 1.30.7 (fix FTBFS)
+
 * Fri Sep 12 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.30.5-alt2
 - e2k build fix
 
