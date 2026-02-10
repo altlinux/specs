@@ -3,7 +3,7 @@
 
 Name: amdgpu_top
 Version: 0.11.2
-Release: alt1
+Release: alt2
 
 Summary: Tool that display AMD GPU utilization
 Group: System/Configuration/Hardware
@@ -16,7 +16,7 @@ BuildRequires: libdrm-devel
 BuildRequires: /proc rust rust-cargo rust-cargo-c rpm-macros-rust
 
 # x86 fails to compile with type overflow errors
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86
 
 %description
 amdgpu_top is tool that display AMD GPU information gathered from performance
@@ -58,6 +58,10 @@ install -pm644 docs/%name.1 %buildroot%_man1dir/
 %_man1dir/%name.1*
 
 %changelog
+* Tue Feb 10 2026 Ivan A. Melnikov <iv@altlinux.org> 0.11.2-alt2
+- NMU: Replace ExclusiveArch with ExcludeArch to build on
+  loongarch64 and riscv64.
+
 * Mon Feb 09 2026 L.A. Kostis <lakostis@altlinux.ru> 0.11.2-alt1
 - 0.11.2.
 
