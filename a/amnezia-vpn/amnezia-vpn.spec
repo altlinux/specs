@@ -5,30 +5,30 @@
 
 Name: amnezia-vpn
 Version: 4.8.12.9
-Release: alt3
+Release: alt4
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
 Group: System/Servers
 
 Url: https://amnezia.org/
-Vcs: https://github.com/amnezia-vpn/amnezia-client
+Vcs: https://github.com/%name/amnezia-client
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/amnezia-vpn/amnezia-client/archive/%version/amnezia-client-%version.tar.gz
+# https://github.com/%name/amnezia-client/archive/%version/amnezia-client-%version.tar.gz
 Source0: amnezia-client-%version.tar
 # https://github.com/frankosterfeld/qtkeychain/archive/%sort_filter_proxy_model_commit/qtkeychain-%sort_filter_proxy_model_commit.tar.gz
 Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 # https://github.com/frankosterfeld/qtkeychain/archive/%qtkeychain_commit/qtkeychain-%qtkeychain_commit.tar.gz
 Source2: qtkeychain-%qtkeychain_commit.tar
-# https://github.com/amnezia-vpn/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
+# https://github.com/%name/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
 Source3: QSimpleCrypto-%qsimplecrypto_commit.tar
-# https://github.com/amnezia-vpn/amnezia-xray-bindings/archive/%amnezia_xray_bindings_commit/amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar.gz
+# https://github.com/%name/amnezia-xray-bindings/archive/%amnezia_xray_bindings_commit/amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar.gz
 Source4: amnezia-xray-bindings-%amnezia_xray_bindings_commit.tar
 
 Source5: vendor.tar
 
-Patch1: %name-tun2-sudo.patch
+Patch0: %name-tun2-sudo.patch
 
 BuildRequires: golang
 BuildRequires: libsecret-devel
@@ -47,7 +47,8 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
-Requires: amneziawg-go
+Requires: amnezia-tun2socks >= 2.5.4
+Requires: amneziawg-go >= 0.2.15
 Requires: cloak-client
 Requires: libnss-resolve
 Requires: openvpn
@@ -55,8 +56,6 @@ Requires: qt6-5compat
 Requires: qt6-declarative
 Requires: qt6-svg
 Requires: shadowsocks-libev
-Requires: tun2socks
-Requires: xray-core
 
 %description client
 Amnezia is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
@@ -72,15 +71,13 @@ This package contains systemd service files.
 
 %prep
 %setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4 -b 5
-%autopatch -p1
+%patch0 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
 %__mv -Tf ../QSimpleCrypto-%qsimplecrypto_commit client/3rd/QSimpleCrypto
 
-%__rm -rf ../amnezia-xray-bindings
-%__mv -Tf ../amnezia-xray-bindings-%amnezia_xray_bindings_commit ../amnezia-xray-bindings
-%__mv -Tf ../vendor ../amnezia-xray-bindings/vendor
+%__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_commit/vendor
 
 %build
 # Export AGW public key and S3 endpoint for work VPN from Amnezia
@@ -88,14 +85,14 @@ export PROD_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEF
 export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/, https://storage.googleapis.com/lambda-list/"
 
 # Build amnezia xray bindings
-pushd ../amnezia-xray-bindings
+pushd ../amnezia-xray-bindings-%amnezia_xray_bindings_commit
 %make_build
 popd
 
 # Fix utilites exec path
 sed \
     -e 's|return Utils::executable("../../client/bin/openvpn", true);|return Utils::usrExecutable("openvpn");|' \
-    -e 's|return Utils::executable("../../client/bin/tun2socks", true);|return Utils::usrExecutable("tun2socks");|' \
+    -e 's|return Utils::executable("../../client/bin/tun2socks", true);|return Utils::usrExecutable("amnezia-tun2socks");|' \
     -i client/utilities.cpp
 
 # Fix WireGuard GO exec path
@@ -114,7 +111,7 @@ sed \
     -e 's|set(OPENSSL_USE_STATIC_LIBS TRUE)|set(OPENSSL_USE_STATIC_LIBS FALSE)|' \
     -i client/cmake/3rdparty.cmake
 sed \
-    -e 's|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../client/3rd-prebuilt/3rd-prebuilt/amnezia_xray")|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../amnezia-xray-bindings")|' \
+    -e 's|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../client/3rd-prebuilt/3rd-prebuilt/amnezia_xray")|set(AMNEZIA_XRAY_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../amnezia-xray-bindings-%amnezia_xray_bindings_commit")|' \
     -e 's|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64/amnezia_xray.a")|set(AMNEZIA_XRAY_LIB_PATH "${AMNEZIA_XRAY_ROOT_DIR}/build/amnezia_xray.a")|' \
     -e 's|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/linux/x86_64")|set(AMNEZIA_XRAY_INCLUDE_DIR "${AMNEZIA_XRAY_ROOT_DIR}/build")|' \
     -e 's|set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/linux/include")|set(OPENSSL_INCLUDE_DIR "%_includedir")|' \
@@ -168,6 +165,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Feb 10 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt4
+- Switch to use fork tun2socks from Amnezia for XRay protocol
+
 * Mon Feb 09 2026 Nazarov Denis <nenderus@altlinux.org> 4.8.12.9-alt3
 - Fix work VPN from Amnezia
 
