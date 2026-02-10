@@ -1,5 +1,5 @@
 Name: libpng16
-Version: 1.6.54
+Version: 1.6.55
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -79,6 +79,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Tue Feb 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.55-alt1
+- 1.6.55 (fixes: CVE-2026-25646)
+
 * Thu Jan 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.54-alt1
 - 1.6.54 (fixes: CVE-2026-22695, CVE-2026-22801)
 
