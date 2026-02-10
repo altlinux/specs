@@ -2,7 +2,7 @@
 %def_without pkgtests
 
 Name: python3-module-%oname
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3(sphinx_rtd_theme)
 BuildPreReq: python3-module-requests
 BuildPreReq: python3-module-urllib3
 
@@ -94,6 +95,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Tue Feb 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.9.0-alt1
+- NMU: New version.
+
 * Wed Oct 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.8.0-alt1
 - NMU: New version.
 - tests package removed by upstream.

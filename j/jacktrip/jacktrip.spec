@@ -1,5 +1,5 @@
 Name:    jacktrip
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: JackTrip: multi-machine audio network performance over the Internet
@@ -11,7 +11,6 @@ VCS:     https://github.com/jacktrip/jacktrip
 Packager: Sergey Gvozdetskiy <serjigva@altlinux.org>
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-fix-meson.patch
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -36,7 +35,7 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 
 %prep
 %setup
-%patch
+subst 's/qmake6/qmake-qt6/g' ./meson.build
 
 %build
 %meson \
@@ -61,6 +60,9 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Feb 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.7.2-alt1
+- 2.7.1 -> 2.7.2
+
 * Thu Oct 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.7.1-alt1
 - 2.6.0 -> 2.7.1
 
