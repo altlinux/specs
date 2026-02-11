@@ -1,11 +1,11 @@
 Name: python3-module-bleak-esphome
-Version: 3.4.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Bleak backend of ESPHome
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bleak-esphome
+URL: https://pypi.org/project/bleak-esphome
 VCS: https://github.com/bluetooth-devices/bleak-esphome
 
 Source0: %name-%version.tar
@@ -37,13 +37,16 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %pyproject_install
 
 %check
-%pyproject_run_pytest -o addopts= tests
+%pyproject_run_pytest -o addopts=
 
 %files
 %python3_sitelibdir/bleak_esphome
 %python3_sitelibdir/bleak_esphome-%version.dist-info
 
 %changelog
+* Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.6.0-alt1
+- 3.6.0 released
+
 * Mon Dec 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.4.0-alt1
 - 3.4.0 released
 

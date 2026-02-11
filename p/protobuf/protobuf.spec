@@ -19,7 +19,7 @@
 %endif
 
 # normal package may include python3 or java support
-%def_with python3
+%def_without python3
 %def_with java
 %def_with ruby
 %else
@@ -35,7 +35,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.25.5
-Release: alt6
+Release: alt7
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -480,6 +480,9 @@ popd
 
 
 %changelog
+* Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.25.5-alt7
+- python bindings packaged elsewhere (closes: 55941)
+
 * Wed Feb 26 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt6
 - Compile and provide utf8_range as a part of libprotobuf.so and
   libprotobuf-lite.so.
