@@ -1,5 +1,5 @@
 Name: libsuil
-Version: 0.10.24
+Version: 0.10.26
 Release: alt1
 
 Summary: A lightweight C library for loading and wrapping LV2 plugin UIs
@@ -97,6 +97,9 @@ This package contains the headers and development libraries for suil.
 %_includedir/suil-0
 
 %changelog
+* Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.26-alt1
+- 0.10.26 released
+
 * Fri Nov 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.24-alt1
 - 0.10.24 released
 
