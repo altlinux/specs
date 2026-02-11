@@ -1,3 +1,4 @@
+# always use snapshot
 %def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
@@ -13,7 +14,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.59
+Version: %ver_major.60
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -29,8 +30,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 Patch: gnumeric-1.12.56-alt-desktop.patch
-
-Patch10: gnumeric-1.12.59-up-HEAD.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %EVR
@@ -128,20 +127,18 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
-%patch10 -p1
 
 # prevent linking against libpython3.x.a
 sed -i s'@\-L\$PY_LIB_DIR@@' configure.ac
+# missing include
+sed -i 's/#include <glib\/gi18n.h>/&\n#include <stdbool.h>/' src/sstest.c
 
 subst 's@zz-application\/zz-winassoc-xls;@@' %rdn_name.desktop.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%if_enabled snapshot
+# always use autogen.sh instead of autoreconf
 NOCONFIGURE=1 ./autogen.sh
-%else
-%autoreconf
-%endif
 %configure \
     --disable-schemas-compile \
     %{subst_with gnome} \
@@ -166,9 +163,8 @@ NOCONFIGURE=1 ./autogen.sh
 %_libdir/goffice/%goffice_api_ver/plugins/%name/%name.so
 %_libdir/goffice/%goffice_api_ver/plugins/%name/plugin.xml
 %{?_with_python:%python3_sitelibdir/gi/overrides/*}
-%doc AUTHORS ChangeLog NEWS BUGS README COPYING HACKING
+%doc AUTHORS ChangeLog NEWS README COPYING
 
-%exclude %_libdir/%name/%version/plugins/*/*.la
 %exclude %_libdir/goffice/%goffice_api_ver/plugins/%name/%name.la
 # requires no more existing python(gsf)
 %{?_with_python:%exclude %_libdir/%name/%version/plugins/gnome-glossary}
@@ -200,6 +196,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_pkgconfigdir/*
 
 %changelog
+* Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.60-alt1
+- 1.12.60
+
 * Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.59-alt1
 - updated to GNUMERIC_1_12_59-5-gd1531d1d5
 
