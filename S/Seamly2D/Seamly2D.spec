@@ -1,6 +1,6 @@
 Name: Seamly2D
 Release: alt1
-Version: 2026.2.2.214
+Version: 2026.2.10.1835
 
 Summary: Open source patternmaking software
 Group: Other
@@ -41,6 +41,9 @@ chrpath -d %buildroot/%_bindir/{seamly2d,seamlyme}
 %_datadir/seamly2d
 
 %changelog
+* Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 2026.2.10.1835-alt1
+- Automatically updated to 2026.2.10.1835.
+
 * Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 2026.2.2.214-alt1
 - Automatically updated to 2026.2.2.214.
 
