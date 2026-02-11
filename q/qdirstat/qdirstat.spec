@@ -1,5 +1,5 @@
 Name: qdirstat
-Version: 1.9
+Version: 2.0
 Release: alt1
 Summary: Qt-based directory statistics
 Group: File tools
@@ -11,16 +11,18 @@ Source1: %name.appdata.xml
 Source2: %name.svg
 
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(Qt5)
+#BuildRequires: pkgconfig(Qt5)
+BuildRequires:  pkgconfig(Qt6Widgets)
+BuildRequires:  pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: libappstream-glib
 BuildRequires: desktop-file-utils
 
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 #BuildRequires: qt5-tools-devel-static
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-script-devel
+BuildRequires: qt6-svg-devel
+#BuildRequires: qt6-script-devel
 BuildRequires: perl-Encode-Escape perl-URI-Escape-XS perl-URI perl-URI-Encode
 
 
@@ -32,14 +34,14 @@ QDirStat is a graphical application to show where your disk space has gone
 and to help you to clean it up.
 
 This is a Qt-only port of the old Qt3/KDE3-based KDirStat, now based on the
- latest Qt 5. It does not need any KDE libs or infrastructure. It runs on
+ latest Qt 6. It does not need any KDE libs or infrastructure. It runs on
  every X11-based desktop on Linux, BSD and other Unix-like systems.
 
 %prep
 %setup -n %name-%version
 
 %build
-%qmake_qt5
+%qmake_qt6
 %make_build
 
 
@@ -68,6 +70,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Feb 11 2026 Ilya Mashkin <oddity@altlinux.ru> 2.0-alt1
+- 2.0
+- Build with Qt6
+
 * Tue Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9-alt1
 - 1.9
 
