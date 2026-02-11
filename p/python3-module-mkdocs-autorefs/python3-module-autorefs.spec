@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Automatically link across pages in MkDocs
@@ -64,6 +64,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
+- Automatically updated to 1.4.4.
+
 * Mon Sep 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Automatically updated to 1.4.3.
 
