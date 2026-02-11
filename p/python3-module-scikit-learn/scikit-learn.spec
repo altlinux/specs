@@ -1,11 +1,11 @@
 %define oname scikit-learn
 
 # CPU time limit exceeded
-# 1.5.2 passes check on local machine
+# 1.8.0 passes check on local machine
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.5.2
+Version: 1.8.0
 Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
@@ -38,9 +38,13 @@ BuildRequires: python3-module-joblib
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-threadpoolctl
 BuildRequires: python3-module-contourpy
+BuildRequires: python3-module-pytest-xdist
 %endif
 
 %py3_provides sklearn
+
+%add_python3_req_skip cupy.cuda.device
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/sklearn/externals
 
 %description
 scikit-learn is a Python module for machine learning built on top of
@@ -69,7 +73,7 @@ export BLAS=openblas
 
 %check
 pushd %buildroot%python3_sitelibdir
-py.test3 -vv
+py.test3 --pyargs sklearn -n auto
 rm -rv .pytest_cache
 popd
 
@@ -84,6 +88,9 @@ popd
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
 %changelog
+* Wed Feb 11 2026 Anton Vyatkin <toni@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt1
 - Automatically updated to 1.5.2.
 
