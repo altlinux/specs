@@ -9,8 +9,8 @@
 %define libzstd_soname 1
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.11
-Release: alt2
+Version: 3.8.12
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -24,7 +24,6 @@ Patch3: Fix-privkey-verify-broken-test.patch
 Patch8: fix-32bit-LTS.patch
 Patch10: tests-Don-t-use-lscpu.patch
 Patch11: tests-Fix-work-with-ALT-faketime.patch
-Patch12: Use-python3.patch
 Patch13: Pass-path-to-static-leancrypto-library-as-argument.patch
 
 %def_with leancrypto
@@ -197,7 +196,6 @@ This package contains the GnuTLS API Reference Manual.
 %patch8 -p1
 %patch10 -p1
 %patch11 -p2
-%patch12 -p1
 %patch13 -p2
 %ifarch %e2k
 # error: expression preceding parentheses of apparent call must have (pointer-to-) function type
@@ -335,6 +333,10 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Wed Feb 11 2026 Mikhail Efremov <sem@altlinux.org> 3.8.12-alt1
+- Dropped obsoleted patch.
+- Updated to 3.8.12 (fixes: CVE-2026-1584, CVE-2025-14831).
+
 * Thu Nov 27 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.8.11-alt2
 - e2k build fix
 
