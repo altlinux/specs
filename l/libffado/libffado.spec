@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 2
 %define org org.ffado
 
 Name: libffado
-Version: 2.4.9
+Version: 2.5.0
 Release: alt1
 
 Summary: Free firewire audio driver library
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Sound
 
 Url: http://www.ffado.org/
@@ -24,6 +25,17 @@ BuildRequires: python3-module-PyQt5-devel python3-module-dbus
 BuildRequires: scons libconfig-c++-devel
 
 %description
+The FFADO project aims to provide a generic, open-source solution for the
+support of FireWire based audio devices for the Linux platform. It is the
+successor of the FreeBoB project.
+
+%package -n %{name}%{soname}
+Summary: Free firewire audio driver library
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %{name}%{soname}
 The FFADO project aims to provide a generic, open-source solution for the
 support of FireWire based audio devices for the Linux platform. It is the
 successor of the FreeBoB project.
@@ -73,7 +85,7 @@ sed -i 's|-m32||' SConstruct
 
 %build
 export CFLAGS="%optflags" \
-export CXXFLAGS="%optflags --std=gnu++11" \
+export CXXFLAGS="%optflags --std=gnu++11"; \
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; \
 scons -j$NPROCS \
 	PREFIX=%prefix \
@@ -93,7 +105,7 @@ scons DESTDIR=%buildroot install
 # remove unpackaged files
 rm -f %buildroot%_libdir/libffado/static_info.txt ||:
 
-%files
+%files -n %{name}%{soname}
 %doc AUTHORS ChangeLog LICENSE.* README
 %_libdir/libffado.so.*
 
@@ -118,6 +130,12 @@ rm -f %buildroot%_libdir/libffado/static_info.txt ||:
 %python3_sitelibdir_noarch/ffado
 
 %changelog
+* Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.0-alt1
+- 2.5.0.
+- Use modern SDPX tag for license.
+- Rename according Shared smthg policy.
+- Fix documentation build (add missing sphinx theme).
+
 * Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.9-alt1
 - 2.4.9.
 - BR: remove imp (obsoleted code removed by upstream).
