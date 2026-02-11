@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.13
+Version: 0.5.0
 Release: alt1
 
 Summary: A library of shell functions
@@ -79,6 +79,9 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Wed Feb 11 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.0-alt1
+- Updated to 0.5.0.
+
 * Wed Feb 08 2023 Alexey Gladkov <legion@altlinux.ru> 0.4.13-alt1
 - More manpages fixes.
 
