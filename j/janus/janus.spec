@@ -4,7 +4,7 @@
 %def_without aes_gcm
 
 Name: janus
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -28,9 +28,10 @@ Patch4: janus-0.10.0-debian-2002_force_tolerate_recent_doxygen.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sat May 23 2020
-# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libcairo-gobject libgdk-pixbuf libgio-devel libgpg-error libgupnp-igd libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libssl-devel libx265-176 perl pkg-config python-modules python2-base python3 python3-base python3-dev ruby ruby-stdlibs sh4
-BuildRequires: doxygen fonts-bitmap-cyrillic fonts-ttf-dejavu gengetopt glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libpcap-devel libsrtp2-devel zlib-devel
+# Automatically added by buildreq on Mon Feb 09 2026
+# optimized out: fontconfig fonts-ttf-dejavu glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libavcodec-devel libavutil-devel libcairo-gobject libcap-devel libgdk-pixbuf libgio-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c4 libsasl2-3 libssl-devel libx265-215 ocl-icd perl pkg-config python-modules python2-base python3 python3-base samba-common-libs sh5
+BuildRequires: doxygen glibc-devel-static graphviz libavformat-devel libconfig-devel libcurl-devel libjansson-devel libmicrohttpd-devel libnice-devel libogg-devel libpcap-devel libsrtp2-devel libwebsockets-devel perl-parent zlib-devel
+
 BuildRequires: libssl-devel
 
 %{?_with_websockets:BuildRequires: libwebsockets-devel}
@@ -78,7 +79,6 @@ This package contains Janus documentation in HTML format.
 Summary: Janus WebRTC server header files
 Group: Development/C
 Requires: %name = %version-%release
-BuildArch: noarch
 
 %description devel
 Janus is a general purpose WebRTC Gateway with a minimal footprint.
@@ -189,10 +189,13 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 %files devel
 %_includedir/%name
-
+%_pkgconfigdir/%name-gateway.pc
 
 
 %changelog
+* Mon Feb 09 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.4.0-alt1
+- New version
+
 * Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.3.3-alt1
 - New version
   - Refactored logging internals
