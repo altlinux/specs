@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.8.5
+Version: 1.10.3
 Release: alt1
 
 Summary: Pipe Viewer
@@ -46,7 +46,7 @@ ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 popd
 
 %files -f %name.lang
-%doc docs/NEWS.md docs/TODO.md docs/ACKNOWLEDGEMENTS.md docs/DEVELOPERS.md
+%doc docs/NEWS.md docs/ACKNOWLEDGEMENTS.md docs/DEVELOPERS.md
 %doc --no-dereference docs/COPYING
 
 %_bindir/%name
@@ -54,6 +54,9 @@ popd
 %exclude %_datadir/doc
 
 %changelog
+* Wed Feb 11 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.3-alt1
+- New version
+
 * Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.8.5-alt1
 - New version
 
