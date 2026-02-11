@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-cosmic
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: COSMIC Desktop Portal
@@ -80,6 +80,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - 1.0.5
 
