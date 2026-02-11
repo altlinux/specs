@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.5
+Version: 3.1.3
 Release: alt1
 
 Summary: Jupyter Kernels for the Spyder console
@@ -19,11 +19,14 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not packaged yet
+%add_pyproject_deps_check_filter 'polars$'
 %pyproject_builddeps_metadata_extra test
 BuildRequires: xvfb-run
 BuildRequires: python3-module-pandas-tests
@@ -53,11 +56,13 @@ code inside Spyder.
 %pyproject_run -- xvfb-run -- pytest -vra
 
 %files
-%doc AUTHORS.txt CHANGELOG.md LICENSE.txt README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 10 2026 Stanislav Levin <slev@altlinux.org> 3.1.3-alt1
+- 3.0.5 -> 3.1.3.
+
 * Wed Jun 25 2025 Stanislav Levin <slev@altlinux.org> 3.0.5-alt1
 - 2.5.2 -> 3.0.5.
 
