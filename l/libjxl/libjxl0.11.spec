@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -146,6 +146,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2 (fixed CVE-2025-12474, CVE-2026-1837)
+
 * Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1.1
 - disabled GIMP plugin build
 
