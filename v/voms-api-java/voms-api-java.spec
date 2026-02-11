@@ -1,28 +1,23 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-%define fedora 34
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:		voms-api-java
-Version:	3.3.2
-Release:	alt2_6jpp11
+Version:	3.3.5
+Release:	alt1
 Summary:	Virtual Organization Membership Service Java API
 
-License:	ASL 2.0
+License:	Apache-2.0
+Group:	    Development/Other
 URL:		https://wiki.italiangrid.it/VOMS
 Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
+BuildRequires(pre):	 rpm-macros-java
 BuildRequires:	maven-local
-BuildRequires:	mvn(eu.eu-emi.security:canl) >= 2.6
+BuildRequires:	/proc rpm-build-java
+BuildRequires:	java-17-openjdk-devel
+
+BuildRequires:	mvn(eu.eu-emi.security:canl)
 BuildRequires:	mvn(junit:junit)
-BuildRequires:	mvn(org.hamcrest:hamcrest-library)
 BuildRequires:	mvn(org.mockito:mockito-core)
-Requires:	mvn(eu.eu-emi.security:canl) >= 2.6
+Requires:	mvn(eu.eu-emi.security:canl) >= 2.8.3
 Source44: import.info
 
 %description
@@ -49,39 +44,23 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 # Remove unused dependency
 %pom_remove_dep net.jcip:jcip-annotations
 
-# Use default location for javadoc output
-%pom_xpath_remove "//pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:outputDirectory"
-%pom_xpath_remove "//pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
-
-%if %{?fedora}%{!?fedora:0} >= 33 || %{?rhel}%{!?rhel:0} >= 8
 # F33+ and EPEL8+ doesn't use the maven-javadoc-plugin to generate javadoc
 # Remove maven-javadoc-plugin configuration to avoid build failure
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
-%endif
 
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 
-# Cobertura no longer in Fedora due to licensing issues
-%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
-
-# Remove license plugin
-%pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
-
-# These tests fail due to changes to the ASN1TaggedObject class in
-# bouncycastle 1.70 - remove until fixed
-# https://github.com/italiangrid/voms-api-java/issues/28
-rm src/test/java/org/italiangrid/voms/test/ac/TestACGeneration.java
-rm src/test/java/org/italiangrid/voms/test/ac/TestFakeVOMSACService.java
+# Do not enforce requirements
+%pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc AUTHORS README.md
 %doc --no-dereference LICENSE
 
@@ -89,6 +68,9 @@ rm src/test/java/org/italiangrid/voms/test/ac/TestFakeVOMSACService.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jan 15 2026 Anton Meleshnikov <alton@altlinux.org> 3.3.5-alt1
+- new version
+
 * Fri Jan 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt2_6jpp11
 - fixed build
 

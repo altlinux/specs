@@ -23,12 +23,12 @@ BuildRequires: jpackage-default
 
 Name:		jglobus
 Version:	2.1.0
-Release:	alt2_27jpp11
+Release:	alt3
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
 #		ssl-proxies/src/main/java/org/globus/tools/GridCertRequest.java
-License:	ASL 2.0 and MIT
+License:	Apache-2.0 and MIT
 URL:		http://github.com/%{name}/
 Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-Release-%{version}.tar.gz
 #		DERObjectIdentifier is obsolete
@@ -82,6 +82,15 @@ Patch13:	%{name}-DEROutputStream-is-private.patch
 #		ASN1OutputStream constructor is private - use create() method
 #		https://github.com/jglobus/JGlobus/pull/183
 Patch14:	%{name}-constructor-not-public.patch
+#		DERBoolean is obsolete
+#		https://github.com/jglobus/JGlobus/pull/185
+Patch15:	%{name}-DERBoolean-is-obsolete.patch
+#		DERTaggedObject.getObject() was removed - use .getInstance() instead
+#		https://github.com/jglobus/JGlobus/pull/186
+Patch16:	%{name}-DERTaggedObject.getObject-was-removed-use-.getInstan.patch
+#		Reformat file to make linian happy
+#		https://github.com/jglobus/JGlobus/pull/187
+Patch17:	%{name}-Reformat-package.html-file.patch
 
 BuildArch:	noarch
 
@@ -104,7 +113,7 @@ BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-coyote)
 %endif
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk18on)
 Source44: import.info
 
 %description
@@ -114,7 +123,7 @@ GRAM, GridFTP and MyProxy.
 %package parent
 Group: Development/Java
 Summary:	Globus Java - parent pom file
-License:	ASL 2.0
+License:	Apache-2.0
 
 %description parent
 Globus Java libraries parent maven pom file
@@ -122,7 +131,7 @@ Globus Java libraries parent maven pom file
 %package ssl-proxies
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support
-License:	ASL 2.0 and MIT
+License:	Apache-2.0 and MIT
 %if ! %{gaxismodule}
 Obsoletes:	%{name}-axisg < %{version}-%{release}
 %endif
@@ -136,7 +145,7 @@ Globus Java library with SSL and proxy certificate support
 %package jsse
 Group: Development/Java
 Summary:	Globus Java - SSL support
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-ssl-proxies = %{version}-%{release}
 
 %description jsse
@@ -145,7 +154,7 @@ Globus Java library with SSL support
 %package gss
 Group: Development/Java
 Summary:	Globus Java - GSS-API implementation for SSL with proxies
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-jsse = %{version}-%{release}
 
 %description gss
@@ -154,7 +163,7 @@ Globus Java GSS-API implementation for SSL with proxies
 %package gram
 Group: Development/Java
 Summary:	Globus Java - Grid Resource Allocation and Management (GRAM)
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description gram
@@ -163,7 +172,7 @@ Globus Java library with GRAM support
 %package gridftp
 Group: Development/Java
 Summary:	Globus Java - GridFTP
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description gridftp
@@ -173,7 +182,7 @@ Globus Java library with GridFTP support
 %package ssl-proxies-tomcat
 Group: Development/Java
 Summary:	Globus Java - SSL and proxy certificate support for Tomcat
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-jsse = %{version}-%{release}
 
 %description ssl-proxies-tomcat
@@ -183,7 +192,7 @@ Globus Java library with SSL and proxy certificate support for Tomcat
 %package io
 Group: Development/Java
 Summary:	Globus Java - IO
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-gram = %{version}-%{release}
 Requires:	%{name}-gridftp = %{version}-%{release}
 
@@ -193,7 +202,7 @@ Globus Java library with IO utilities
 %package myproxy
 Group: Development/Java
 Summary:	Globus Java - MyProxy
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description myproxy
@@ -203,7 +212,7 @@ Globus Java library with MyProxy support
 %package axisg
 Group: Development/Java
 Summary:	Globus Java - Apache AXIS support
-License:	ASL 2.0
+License:	Apache-2.0
 Requires:	%{name}-gss = %{version}-%{release}
 
 %description axisg
@@ -213,7 +222,7 @@ Globus Java library with Apache AXIS support
 %package javadoc
 Group: Development/Java
 Summary:	Javadoc for %{name}
-License:	ASL 2.0 and MIT
+License:	Apache-2.0 and MIT
 BuildArch: noarch
 
 %description javadoc
@@ -236,6 +245,9 @@ This package contains the API documentation for %{name}.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
@@ -261,6 +273,9 @@ This package contains the API documentation for %{name}.
 %if ! %{tomcatmodule}
 %pom_disable_module ssl-proxies-tomcat
 %endif
+
+# Update bouncycastle version
+%pom_change_dep -r org.bouncycastle:bcprov-jdk15on org.bouncycastle:bcprov-jdk18on
 
 %build
 # Many tests requires network connections and a valid proxy certificate
@@ -301,6 +316,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Jan 15 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.0-alt3
+- fixed build with bouncycastle 1.80 (thanks fedora for patches)
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt2_27jpp11
 - update
 

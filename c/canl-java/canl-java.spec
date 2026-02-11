@@ -1,6 +1,6 @@
 Name: canl-java
 Version: 2.8.3
-Release: alt2
+Release: alt3
 Summary: EMI Common Authentication library - bindings for Java
 #		The main parts of the code are BSD
 #		Parts derived from glite security utils java are Apache 2.0
@@ -23,10 +23,10 @@ BuildRequires: maven-local
 BuildRequires: mvn(commons-io:commons-io) >= 2.4
 BuildRequires: mvn(junit:junit) >= 4.8
 BuildRequires: mvn(org.assertj:assertj-core)
-BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
-BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
-Requires: mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
-Requires: mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
+BuildRequires: mvn(org.bouncycastle:bcpkix-jdk18on) >= 1.69
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk18on) >= 1.69
+Requires: mvn(org.bouncycastle:bcpkix-jdk18on) >= 1.69
+Requires: mvn(org.bouncycastle:bcprov-jdk18on) >= 1.69
 
 %description
 This is the Java part of the EMI caNl -- the Common Authentication Library.
@@ -44,8 +44,6 @@ Javadoc documentation for EMI caNl.
 %patch0 -p1
 
 %pom_change_dep org.hamcrest:hamcrest-all org.hamcrest:hamcrest
-%pom_change_dep org.bouncycastle:bcprov-jdk18on org.bouncycastle:bcprov-jdk15on
-%pom_change_dep org.bouncycastle:bcpkix-jdk18on org.bouncycastle:bcpkix-jdk15on
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -78,6 +76,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Jan 14 2026 Anton Meleshnikov <alton@altlinux.org> 2.8.3-alt3
+- fixed FTBFS with bouncycastle 1.80
+
 * Tue Dec 09 2025 Anton Meleshnikov <alton@altlinux.org> 2.8.3-alt2
 - fixed FTBFS
 

@@ -1,29 +1,26 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:		voms-clients-java
-Version:	3.3.2
-Release:	alt1_7jpp11
+Version:	3.3.5
+Release:	alt1
 Summary:	Virtual Organization Membership Service Java clients
 
-License:	ASL 2.0
+License:	Apache-2.0
+Group:  	Development/Java
 URL:		https://wiki.italiangrid.it/VOMS
 Source0:	https://github.com/italiangrid/voms-clients/archive/v%{version}/%{name}-%{version}.tar.gz
 BuildArch:	noarch
 
+BuildRequires(pre):	 rpm-macros-alternatives rpm-macros-java
 BuildRequires:	maven-local
+BuildRequires:	/proc rpm-build-java
+BuildRequires:	java-17-openjdk-devel
+
+BuildRequires:	mvn(org.italiangrid:voms-api-java) >= 3.3.5
 BuildRequires:	mvn(commons-cli:commons-cli)
 BuildRequires:	mvn(commons-io:commons-io)
 BuildRequires:	mvn(junit:junit)
-BuildRequires:	mvn(org.italiangrid:voms-api-java)
-BuildRequires:	voms-api-java >= 3.3.2
-Requires:	voms-api-java >= 3.3.2
-
+BuildRequires:	asciidoctor
+Requires:	mvn(org.italiangrid:voms-api-java) >= 3.3.5
+Requires:	java-headless
 
 # Older versions of voms-clients did not have alternatives
 Conflicts:	voms-clients < 2.0.12
@@ -56,11 +53,15 @@ voms-proxy-init, voms-proxy-destroy and voms-proxy-info.
 # Don't do assembly
 %pom_remove_plugin :maven-assembly-plugin
 
-# Remove license plugin
-%pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
+# Run asciidoctor explicitly in the build section instead
+%pom_remove_plugin org.asciidoctor:asciidoctor-maven-plugin
 
 %build
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -j
+
+pushd man
+for x in *.adoc ; do asciidoctor -b manpage $x ; done
+popd
 
 %install
 %mvn_install
@@ -133,7 +134,6 @@ EOF
 %_altdir/voms-proxy-destroy_voms-clients-java
 %_altdir/voms-proxy-info_voms-clients-java
 %_altdir/voms-proxy-init_voms-clients-java
-%dir %{_javadir}/%{name}
 %{_bindir}/voms-proxy-destroy3
 %{_bindir}/voms-proxy-info3
 %{_bindir}/voms-proxy-init3
@@ -142,10 +142,13 @@ EOF
 %{_mandir}/man1/voms-proxy-init3.1*
 %{_mandir}/man5/vomsdir.5*
 %{_mandir}/man5/vomses.5*
-%doc AUTHORS README.md
+%doc README.md
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Jan 15 2026 Anton Meleshnikov <alton@altlinux.org> 3.3.5-alt1
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_7jpp11
 - update
 
