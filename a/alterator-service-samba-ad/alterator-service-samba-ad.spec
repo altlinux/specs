@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define service service-samba-ad
 Name: alterator-service-samba-ad
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: Service for Samba AD management
@@ -74,6 +74,10 @@ find service-* -type f -exec shellcheck {} \+
 %_localstatedir/alterator/service/samba-ad/config-backup
 
 %changelog
+* Tue Feb 10 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.7-alt1
+- Disable shellcheck 2119 and 2120
+- Add validation_hint
+
 * Mon Feb 09 2026 Evgenii Sozonov <arzdez@altlinux.org> 0.7.6-alt1
 - Add Alterator file validation. Add shellcheck.
 - Disable shellcheck rule 2034 and 2207 in completion file
