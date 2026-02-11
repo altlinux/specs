@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    forgejo-mcp
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 
 %global import_path codeberg.org/goern/forgejo-mcp/v%(echo %{version} | cut -d. -f1)
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Feb 11 2026 Maxim Slipenko <maks1ms@altlinux.org> 2.10.0-alt1
+- New version 2.10.0.
+
 * Sat Feb 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 2.9.1-alt1
 - New version 2.9.1.
 
