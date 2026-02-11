@@ -6,7 +6,7 @@
 %define sover 2
 
 Name: liburing
-Version: 2.13
+Version: 2.14
 Release: alt1
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -81,6 +81,7 @@ strace -v test/probe.t
 # https://github.com/axboe/liburing/issues/1207
 TEST_EXCLUDE="
 	conn-unreach.t
+	io-wq-unused-exit.t
 	min-timeout-wait.t
 %ifarch ppc64le
 	recvsend_bundle-inc.t
@@ -110,9 +111,12 @@ TEST_EXCLUDE="
 %_man3dir/IO_URING*.3*
 %_man3dir/__io_uring*.3*
 %_man3dir/io_uring*.3*
-%_man7dir/io_uring.7*
+%_man7dir/io_uring*.7*
 
 %changelog
+* Wed Feb 11 2026 Vitaly Chikunov <vt@altlinux.org> 2.14-alt1
+- Update to liburing-2.14 (2026-02-04).
+
 * Thu Dec 18 2025 Vitaly Chikunov <vt@altlinux.org> 2.13-alt1
 - Update to liburing-2.13 (2025-12-12).
 
