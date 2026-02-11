@@ -1,5 +1,8 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define abiversion 161
+%define ot_abiversion 21
+%define ot_version 3.3.1
 
 # TODO: with additional buildreqs it builds
 #    /usr/bin/osgQtBrowser
@@ -19,38 +22,36 @@
 
 Name: OpenSceneGraph
 Version: 3.6.5
-Release: alt4
+Release: alt5
 
 Summary: High performance real-time graphics toolkit
 License: LGPL-2.1-only WITH WxWindows-exception-3.1
 Group: System/Libraries
-
 Url: http://www.openscenegraph.org
-# Source-url: https://github.com/openscenegraph/OpenSceneGraph/archive/OpenSceneGraph-%version.tar.gz
+Vcs: https://github.com/openscenegraph/OpenSceneGraph
+
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 # thanks, Fedora
 Patch1: 0001-Cmake-fixes.patch
 # Upstream deactivated building osgviewerWX for obscure reasons
 # Reactivate for now.
-Patch2:         0002-Activate-osgviewerWX.patch
+Patch2: 0002-Activate-osgviewerWX.patch
 # Unset DOT_FONTNAME
-Patch3:         0003-Unset-DOT_FONTNAME.patch
+Patch3: 0003-Unset-DOT_FONTNAME.patch
 # Re-add osgframerenderer
-Patch4:         0004-Re-add-osgframerenderer.patch
+Patch4: 0004-Re-add-osgframerenderer.patch
 # Force osgviewerWX to always use X11 backend (wxGLCanvas is broken on Wayland)
-Patch5:         force-x11-backend.patch
+Patch5: force-x11-backend.patch
 # Minimal port to OpenEXR 3
 # https://github.com/openscenegraph/OpenSceneGraph/issues/1075
-Patch6:         OpenSceneGraph-openexr3.patch
-# Fix build against recent asio
-#Patch7:         OpenSceneGraph_asio.patch
+Patch6: OpenSceneGraph-openexr3.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: boost-asio-devel
-BuildRequires: doxygen graphviz
+BuildRequires: doxygen
+BuildRequires: graphviz
 BuildRequires: gcc-c++
 BuildRequires: libgif-devel
 BuildRequires: gnuplot
@@ -98,8 +99,6 @@ BuildRequires: gst-plugins1.0-devel
 
 BuildRequires: libgdal-devel
 
-Requires: lib%name
-
 %ifarch %e2k
 # error: cpio archive too big - 4321M
 %global __find_debuginfo_files %nil
@@ -109,34 +108,30 @@ Requires: lib%name
 The OpenSceneGraph is an OpenSource, cross platform graphics
 toolkit for the development of high performance graphics
 applications such as flight simulators, games, virtual reality
-and scientific visualization.  Based around the concept of
+and scientific visualization. Based around the concept of
 a SceneGraph, it provides an object oriented framework on top
 of OpenGL freeing the developer from implementing and optimizing
 low level graphics calls, and provides many additional utilities
 for rapid development of graphics applications.
 
-%package -n lib%name
+%package -n libOpenSceneGraph%abiversion
 Summary: Development files for OpenSceneGraph
 Group: System/Libraries
-Requires: libOpenThreads
+Obsoletes: libOpenSceneGraph <= 3.6.5-alt4
 
-%description -n lib%name
+%description -n libOpenSceneGraph%abiversion
 Runtime libraries files for OpenSceneGraph
 
-%package -n lib%name-devel
+%package -n libOpenSceneGraph-devel
 Summary: Development files for OpenSceneGraph
 Group: Development/C++
-Requires: lib%name
-Requires: libOpenThreads-devel
-Requires: pkgconfig
 
-%description -n lib%name-devel
+%description -n libOpenSceneGraph-devel
 Development files for OpenSceneGraph
 
 %package gdal
 Summary: OSG Gdal plugin
 Group: System/Libraries
-Requires: lib%name
 
 %description gdal
 OSG Gdal plugin.
@@ -144,7 +139,6 @@ OSG Gdal plugin.
 %package gstreamer
 Summary: OSG gstreamer plugin
 Group: System/Libraries
-Requires: lib%name
 
 %description gstreamer
 OSG gstreamer plugin.
@@ -152,7 +146,6 @@ OSG gstreamer plugin.
 %package inventor
 Summary: OSG inventor plugin
 Group: System/Libraries
-Requires: lib%name
 
 %description inventor
 OSG inventor plugin.
@@ -186,25 +179,143 @@ Group: Development/Documentation
 %description examples
 Sample applications for OpenSceneGraph
 
-%package -n libOpenThreads
+%package -n libOpenThreads%ot_abiversion
 Summary: OpenThreads
 Group: System/Libraries
-Provides: OpenThreads = %name-%version
+Provides: OpenThreads%ot_abiversion = OpenSceneGraph-%version
+Obsoletes: libOpenThreads <= 3.6.5-alt4
 
-%description -n libOpenThreads
+%description -n libOpenThreads%ot_abiversion
 OpenThreads is intended to provide a minimal & complete Object-Oriented
-(OO) thread interface for C++ programmers.  It is loosely modeled on the
-Java thread API, and the POSIX Threads standards.  The architecture of
+(OO) thread interface for C++ programmers. It is loosely modeled on the
+Java thread API, and the POSIX Threads standards. The architecture of
 the library is designed around "swappable" thread models which are
 defined at compile-time in a shared object library.
 
 %package -n libOpenThreads-devel
 Summary: Development files for OpenThreads
 Group: Development/C++
-Requires: libOpenThreads = %version-%release
 
 %description -n libOpenThreads-devel
 Development files for OpenThreads
+
+%package core-plugins
+Summary: OSG core plugins
+Group: System/Libraries
+
+%description core-plugins
+OSG core plugins.
+
+%package -n libosgAnimation%abiversion
+Summary: OSG library libosgAnimation
+Group: System/Libraries
+
+%description -n libosgAnimation%abiversion
+This package contains library libosgAnimation of OSG.
+
+%package -n libosgDB%abiversion
+Summary: OSG library libosgDB
+Group: System/Libraries
+
+%description -n libosgDB%abiversion
+This package contains library libosgDB of OSG.
+
+%package -n libosgFX%abiversion
+Summary: OSG library libosgFX
+Group: System/Libraries
+
+%description -n libosgFX%abiversion
+This package contains library libosgFX of OSG.
+
+%package -n libosgGA%abiversion
+Summary: OSG library libosgGA
+Group: System/Libraries
+
+%description -n libosgGA%abiversion
+This package contains library libosgGA of OSG.
+
+%package -n libosgManipulator%abiversion
+Summary: OSG library libosgManipulator
+Group: System/Libraries
+
+%description -n libosgManipulator%abiversion
+This package contains library libosgManipulator of OSG.
+
+%package -n libosgParticle%abiversion
+Summary: OSG library libosgParticle
+Group: System/Libraries
+
+%description -n libosgParticle%abiversion
+This package contains library libosgParticle of OSG.
+
+%package -n libosgPresentation%abiversion
+Summary: OSG library libosgPresentation
+Group: System/Libraries
+
+%description -n libosgPresentation%abiversion
+This package contains library libosgPresentation of OSG.
+
+%package -n libosgShadow%abiversion
+Summary: OSG library libosgShadow
+Group: System/Libraries
+
+%description -n libosgShadow%abiversion
+This package contains library libosgShadow of OSG.
+
+%package -n libosgSim%abiversion
+Summary: OSG library libosgSim
+Group: System/Libraries
+
+%description -n libosgSim%abiversion
+This package contains library libosgSim of OSG.
+
+%package -n libosgTerrain%abiversion
+Summary: OSG library libosgTerrain
+Group: System/Libraries
+
+%description -n libosgTerrain%abiversion
+This package contains library libosgTerrain of OSG.
+
+%package -n libosgText%abiversion
+Summary: OSG library libosgText
+Group: System/Libraries
+
+%description -n libosgText%abiversion
+This package contains library libosgText of OSG.
+
+%package -n libosgUI%abiversion
+Summary: OSG library libosgUI
+Group: System/Libraries
+
+%description -n libosgUI%abiversion
+This package contains library libosgUI of OSG.
+
+%package -n libosgUtil%abiversion
+Summary: OSG library libosgUtil
+Group: System/Libraries
+
+%description -n libosgUtil%abiversion
+This package contains library libosgUtil of OSG.
+
+%package -n libosgViewer%abiversion
+Summary: OSG library libosgViewer
+Group: System/Libraries
+
+%description -n libosgViewer%abiversion
+This package contains library libosgViewer of OSG.
+
+%package -n libosgVolume%abiversion
+Summary: OSG library libosgVolume
+Group: System/Libraries
+%description -n libosgVolume%abiversion
+This package contains library libosgVolume of OSG.
+
+%package -n libosgWidget%abiversion
+Summary: OSG library libosgWidget
+Group: System/Libraries
+
+%description -n libosgWidget%abiversion
+This package contains library libosgWidget of OSG.
 
 %prep
 %setup
@@ -247,8 +358,6 @@ doxygen -u doc/Doxyfiles/openthreads.doxyfile.cmake
 
 %install
 %cmake_install
-# Supposed to take OpenSceneGraph data
-mkdir -p %buildroot%_datadir/OpenSceneGraph
 
 # hack for 3.4.x (it is ok since 3.6.0)
 rm -rf %buildroot/usr/doc/
@@ -261,9 +370,76 @@ rm -rf %buildroot/usr/doc/
 %_bindir/osgfilecache
 %_bindir/present3D
 
-%files -n lib%name
+%files -n libOpenSceneGraph%abiversion
+%_libdir/libosg.so.%version
+%_libdir/libosg.so.%abiversion
+
+%files -n libosgAnimation%abiversion
+%_libdir/libosgAnimation.so.%abiversion
+%_libdir/libosgAnimation.so.%version
+
+%files -n libosgDB%abiversion
+%_libdir/libosgDB.so.%abiversion
+%_libdir/libosgDB.so.%version
+
+%files -n libosgFX%abiversion
+%_libdir/libosgFX.so.%abiversion
+%_libdir/libosgFX.so.%version
+
+%files -n libosgGA%abiversion
+%_libdir/libosgGA.so.%abiversion
+%_libdir/libosgGA.so.%version
+
+%files -n libosgManipulator%abiversion
+%_libdir/libosgManipulator.so.%abiversion
+%_libdir/libosgManipulator.so.%version
+
+%files -n libosgParticle%abiversion
+%_libdir/libosgParticle.so.%abiversion
+%_libdir/libosgParticle.so.%version
+
+%files -n libosgPresentation%abiversion
+%_libdir/libosgPresentation.so.%abiversion
+%_libdir/libosgPresentation.so.%version
+
+%files -n libosgShadow%abiversion
+%_libdir/libosgShadow.so.%abiversion
+%_libdir/libosgShadow.so.%version
+
+%files -n libosgSim%abiversion
+%_libdir/libosgSim.so.%abiversion
+%_libdir/libosgSim.so.%version
+
+%files -n libosgTerrain%abiversion
+%_libdir/libosgTerrain.so.%abiversion
+%_libdir/libosgTerrain.so.%version
+
+%files -n libosgText%abiversion
+%_libdir/libosgText.so.%abiversion
+%_libdir/libosgText.so.%version
+
+%files -n libosgUI%abiversion
+%_libdir/libosgUI.so.%abiversion
+%_libdir/libosgUI.so.%version
+
+%files -n libosgUtil%abiversion
+%_libdir/libosgUtil.so.%abiversion
+%_libdir/libosgUtil.so.%version
+
+%files -n libosgViewer%abiversion
+%_libdir/libosgViewer.so.%abiversion
+%_libdir/libosgViewer.so.%version
+
+%files -n libosgVolume%abiversion
+%_libdir/libosgVolume.so.%abiversion
+%_libdir/libosgVolume.so.%version
+
+%files -n libosgWidget%abiversion
+%_libdir/libosgWidget.so.%abiversion
+%_libdir/libosgWidget.so.%version
+
+%files core-plugins
 %_libdir/osgPlugins-%version
-%_libdir/libosg*.so.*
 %exclude %_libdir/osgPlugins-%version/osgdb_gstreamer.so
 %exclude %_libdir/osgPlugins-%version/osgdb_gdal.so
 %exclude %_libdir/osgPlugins-%version/osgdb_ogr.so
@@ -280,8 +456,7 @@ rm -rf %buildroot/usr/doc/
 %files inventor
 %_libdir/osgPlugins-%version/osgdb_iv.so
 
-%files -n lib%name-devel
-%doc %_cmake__builddir/doc/OpenSceneGraphReferenceDocs
+%files -n libOpenSceneGraph-devel
 %_includedir/osg*
 %_pkgconfigdir/openscenegraph*.pc
 %_libdir/libosg*.so
@@ -292,196 +467,29 @@ rm -rf %buildroot/usr/doc/
 #_bindir/osgviewerSDL
 
 %files examples
-%_bindir/osg2cpp
-%_bindir/osgbindlesstext
-%_bindir/osgdatabaserevisions
-%_bindir/osgdeferred
-%_bindir/osgfpdepth
-%_bindir/osgframerenderer
-%_bindir/osggpx
-%_bindir/osggraphicscost
-%_bindir/osgmultiviewpaging
-%_bindir/osgobjectcache
-%_bindir/osgoit
-%_bindir/osgoutline
-%_bindir/osgparticleshader
-%_bindir/osgposter
-#_bindir/osgqfont
-%_bindir/osgshadercomposition
-%_bindir/osgshadergen
-%_bindir/osgtexturecompression
-%_bindir/osgthreadedterrain
-%_bindir/osguniformbuffer
-%_bindir/osguserdata
-%_bindir/osguserstats
-%_bindir/osgvertexattributes
-%_bindir/osgvirtualprogram
-%_bindir/osganalysis
-%_bindir/osganimationeasemotion
-%_bindir/osganimationmorph
-%_bindir/osganimationhardware
-%_bindir/osganimationmakepath
-%_bindir/osganimationnode
-%_bindir/osganimationskinning
-%_bindir/osganimationsolid
-%_bindir/osganimationtimeline
-%_bindir/osganimationviewer
-%_bindir/osgautocapture
-#_bindir/osgbrowser
-%_bindir/osgcluster
-%_bindir/osgdrawinstanced
-%_bindir/osggameoflife
-%_bindir/osgmemorytest
-%_bindir/osgpackeddepthstencil
-%_bindir/osgpdf
-%_bindir/osgrobot
-%_bindir/osgsidebyside
-%_bindir/osgwidgetmessagebox
-%_bindir/osgwidgetperformance
-%_bindir/osgfont
-%_bindir/osgimagesequence
-%_bindir/osgkdtree
-%_bindir/osgscreencapture
-%_bindir/osgwidgetaddremove
-%_bindir/osgwidgetbox
-%_bindir/osgwidgetcanvas
-%_bindir/osgwidgetframe
-%_bindir/osgwidgetinput
-%_bindir/osgwidgetlabel
-%_bindir/osgwidgetmenu
-%_bindir/osgwidgetnotebook
-%_bindir/osgwidgetscrolled
-%_bindir/osgwidgetshader
-%_bindir/osgwidgetstyled
-%_bindir/osgwidgettable
-%_bindir/osgwidgetwindow
-%_bindir/osggeometryshaders
-%_bindir/osgmultiplerendertargets
-%_bindir/osgmultitexturecontrol
-%_bindir/osgocclusionquery
-%_bindir/osgsharedarray
-%_bindir/osgstereomatch
-%_bindir/osgtext3D
-%_bindir/osgthirdpersonview
-%_bindir/osgdepthpeeling
-%_bindir/osganimate
-%_bindir/osgautotransform
-%_bindir/osgbillboard
-%_bindir/osgblendequation
-%_bindir/osgcallback
-%_bindir/osgcamera
-%_bindir/osgcatch
-%_bindir/osgclip
-%_bindir/osgcompositeviewer
-%_bindir/osgcopy
-%_bindir/osgcubemap
-#_bindir/osgdelaunay
-%_bindir/osgdepthpartition
-%_bindir/osgdistortion
-%_bindir/osgfadetext
-%_bindir/osgforest
-%_bindir/osgfxbrowser
-#_bindir/osggeodemo
-%_bindir/osggeometry
-%_bindir/osghangglide
-%_bindir/osghud
-%_bindir/osgimpostor
-%_bindir/osgintersection
-#_bindir/osgintrospection
-%_bindir/osgkeyboard
-%_bindir/osgkeyboardmouse
-%_bindir/osglauncher
-%_bindir/osglight
-%_bindir/osglightpoint
-%_bindir/osglogicop
-%_bindir/osglogo
-%_bindir/osgmanipulator
-%_bindir/osgmotionblur
-%_bindir/osgmovie
-%_bindir/osgmultitexture
-%_bindir/osgoccluder
-%_bindir/osgpagedlod
-%_bindir/osgparametric
-%_bindir/osgparticle
-%_bindir/osgparticleeffects
-%_bindir/osgpick
-%_bindir/osgplanets
-%_bindir/osgpoints
-%_bindir/osgpointsprite
-%_bindir/osgprecipitation
-%_bindir/osgprerender
-%_bindir/osgprerendercubemap
-%_bindir/osgreflect
-%_bindir/osgsampler
-%_bindir/osgscalarbar
-%_bindir/osgscribe
-%_bindir/osgsequence
-%_bindir/osgshaders
-%_bindir/osgshadermultiviewport
-%_bindir/osgshaderpipeline
-%_bindir/osgshaderterrain
-%_bindir/osgshadow
-%_bindir/osgshape
-%_bindir/osgsimpleMDI
-%_bindir/osgsimplifier
-%_bindir/osgslice
-%_bindir/osgspacewarp
-%_bindir/osgspheresegment
-%_bindir/osgspotlight
-%_bindir/osgstereoimage
-%_bindir/osgteapot
-%_bindir/osgterrain
-%_bindir/osgtessellate
-%_bindir/osgtext
-%_bindir/osgtexture1D
-%_bindir/osgtexture2D
-%_bindir/osgtexture3D
-%_bindir/osgtexturerectangle
-%_bindir/osgunittests
-%_bindir/osgvertexprogram
-#_bindir/osgviewerGLUT
-%_bindir/osgviewerWX
-%_bindir/osgvolume
-%_bindir/osgvnc
-%_bindir/osgwindows
-
-%_bindir/osgphotoalbum
-%_bindir/osgsimulation
-
-%_bindir/osgatomiccounter
-%_bindir/osgcomputeshaders
-#_bindir/osgframerenderer
-%_bindir/osgkeystone
-%_bindir/osgmultiplemovies
-%_bindir/osgmultitouch
-%_bindir/osgoscdevice
-%_bindir/osgsimplegl3
-%_bindir/osgsimpleshaders
-%_bindir/osgtessellationshaders
-
-%_bindir/osgSSBO
-%_bindir/osgblenddrawbuffers
-%_bindir/osggpucull
-%_bindir/osgtexture2DArray
-%_bindir/osgtransferfunction
-%_bindir/osgtransformfeedback
-
-%_bindir/osgviewerGTK
-
-%_datadir/OpenSceneGraph
+%_bindir/osg*
+%exclude %_bindir/osgversion
+%exclude %_bindir/osgarchive
+%exclude %_bindir/osgconv
+%exclude %_bindir/osgviewer
+%exclude %_bindir/osgfilecache
+%exclude %_bindir/present3D
 %endif
 
-%files -n libOpenThreads
+%files -n libOpenThreads%ot_abiversion
 %doc AUTHORS.txt LICENSE.txt NEWS.txt README.md
-%_libdir/libOpenThreads.so.*
+%_libdir/libOpenThreads.so.%ot_version
+%_libdir/libOpenThreads.so.%ot_abiversion
 
 %files -n libOpenThreads-devel
-%doc %_cmake__builddir/doc/OpenThreadsReferenceDocs
 %_pkgconfigdir/openthreads.pc
 %_libdir/libOpenThreads.so
 %_includedir/OpenThreads
 
 %changelog
+* Wed Feb 11 2026 Pavel Petrykin <silverducks@altlinux.org> 3.6.5-alt5
+- Ensure compliance with Shared Libs Policy.
+
 * Mon Nov 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.6.5-alt4
 - FTBFS: fix:
   + build with boost-asio-devel

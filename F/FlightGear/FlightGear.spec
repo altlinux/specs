@@ -2,7 +2,7 @@
 
 Name: FlightGear
 Version: 2024.1.1
-Release: alt1
+Release: alt2
 
 Summary: Libre flight simulator
 License: GPL-2.0-or-later
@@ -20,6 +20,7 @@ Requires: FlightGear-data = %version
 
 BuildRequires: libsimgear-devel = %version
 BuildRequires: libOpenSceneGraph-devel >= 3.4.0
+BuildRequires: OpenSceneGraph-core-plugins
 BuildRequires: boost-devel >= 1.44
 BuildRequires: plib-devel >= 1.8.5
 BuildRequires: cppunit-devel
@@ -107,6 +108,9 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Feb 06 2026 Pavel Petrykin <silverducks@altlinux.org> 2024.1.1-alt2
+- Adjust BuildRequires due to OSG 3.6.5-alt5 changes.
+
 * Sat Jul 12 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
 - Fixes:
   + CVE-2025-0781 Bypass the sandboxing of Nasal scripts.
