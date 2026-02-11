@@ -23,7 +23,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 Epoch: 1
 
@@ -84,7 +84,6 @@ Source: %name-%version%beta.tar
 %define glycin_ver 2.0
 
 Requires: lib%name = %EVR
-Requires: glycin-%glycin_api_ver-loaders
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
@@ -155,6 +154,7 @@ Mutter is a Wayland display server and X11 window manager and compositor library
 %package -n lib%name
 Summary: Shared library for Mutter
 Group: System/Libraries
+Requires: glycin-%glycin_api_ver-loaders
 
 %description -n lib%name
 This package contains shared library needed to run Mutter.
@@ -314,6 +314,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1:49.4-alt1
+- 49.4
+
 * Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1:49.3-alt1
 - 49.3
 

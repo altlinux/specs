@@ -5,9 +5,7 @@
 %define beta %nil
 %define api_ver 17
 %define gst_api_ver 1.0
-#%define gvc_ver 5f9768a
-# https://gitlab.gnome.org/guidog/libgnome-volume-control/-/tree/phosh/0.52.1?ref_type=tags
-%define gvc_ver phosh-0.52.1
+%define gvc_ver 664eba4
 
 %def_enable x11
 %def_enable extensions_tool
@@ -17,7 +15,7 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -31,8 +29,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 %{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
-Source1: gvc-%gvc_ver.tar
-
 Patch3: %name-48.1-alt-invalid_user_shell.patch
 Patch4: %name-48.3-alt-no_yast-pardus_folders.patch
 
@@ -95,6 +91,7 @@ Requires: fonts-ttf-adwaita
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 # js/misc/dependencies.js
 Requires: typelib(AccountsService)
+Requires: typelib(Adw) = 1
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
 Requires: typelib(Clutter)
@@ -212,12 +209,9 @@ preferences and removing or disabling unwanted extensions.
 %set_typelibdir %_libdir/%name
 
 %prep
-%setup -n %name-%version%beta -a1 %{?_enable_snapshot:-a1
+%setup -n %name-%version%beta %{?_enable_snapshot:-a1
 mkdir subprojects/gvc
 cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
-rm -rf subprojects/gvc
-mv gvc-%gvc_ver subprojects/gvc
-
 %patch3 -b .shells
 %patch4 -b .default_folders
 
@@ -318,6 +312,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 49.4-alt1
+- 49.4
+
 * Wed Jan 21 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
 - 49.3
 
