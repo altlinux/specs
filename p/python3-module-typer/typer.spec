@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.1
+Version: 0.22.0
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: clean_coverage.py
+
+Provides: %name-slim = %EVR
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
@@ -84,6 +86,10 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.22.0-alt1
+- Updated to 0.22.0.
+- Added provide on typer-slim for backward compatibility (Closes: 57831).
+
 * Thu Jan 15 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.1-alt1
 - Updated to 0.21.1.
 
