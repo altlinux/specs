@@ -1,11 +1,11 @@
 Name: python3-module-marshmallow
-Version: 4.1.1
+Version: 4.1.2
 Release: alt1
 
 Summary: Simplified object serialization
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/marshmallow
+URL: https://pypi.org/project/marshmallow
 VCS: https://github.com/marshmallow-code/marshmallow
 
 Source0: %name-%version.tar
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/marshmallow-%version.dist-info
 
 %changelog
+* Wed Feb 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.2-alt1
+- 4.1.2 (closes: CVE-2025-68480)
+
 * Thu Dec 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.1-alt1
 - 4.1.1 released
 
