@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20251111
+%define orig_timestamp 20260210
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 33
+Version: 34
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -60,6 +60,71 @@ fi
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 2:34-alt1.20260210
+- New upstream microcode datafile 20260210:
+  + Updated security updates for INTEL-SA-01083.
+  + Security updates for INTEL-SA-01396.
+  + Update for functional issues in 10th Gen Core Processor Families.
+  + Update for functional issues in 11th Gen Core Processor.
+  + Update for functional issues in 12th Generation Core Processor Family.
+  + Update for functional issues in 13th Generation Core Processor.
+  + Update for functional issues in 13th/14th Gen Core Processor.
+  + Update for functional issues in 3rd Generation Xeon Processor Scalable
+    Family.
+  + Update for functional issues in 4th Gen Xeon Scalable Processors.
+  + Update for functional issues in 5th Gen Xeon Scalable Processors.
+  + Update for functional issues in Core Ultra Processor.
+  + Update for functional issues in Core Ultra Processor (Series 2).
+  + Update for functional issues in Processors and Core i3 N-Series.
+  + Update for functional issues in Xeon 6900/6700/6500 Series Processors
+    with P-cores.
+  + Update for functional issues in Xeon D-2700 Processor.
+  + Update for functional issues in Xeon E-2300 Processor.
+  + Update for functional issues in Xeon 6700P-B/6500P-B-Series SoC
+    with P-Cores.
+  + Updated microcodes:
+    sig 0x000606a6, pf_mask 0x87, rev 0xd000421
+    sig 0x000606c1, pf_mask 0x10, rev 0x10002f1
+    sig 0x000706e5, pf_mask 0x80, rev 0x00cc
+    sig 0x000806c1, pf_mask 0x80, rev 0x00be
+    sig 0x000806c2, pf_mask 0xc2, rev 0x003e
+    sig 0x000806d1, pf_mask 0xc2, rev 0x0058
+    sig 0x000806f4, pf_mask 0x87, rev 0x2b000661
+    sig 0x000806f4, pf_mask 0x10, rev 0x2c000421
+    sig 0x000806f5, pf_mask 0x87, rev 0x2b000661
+    sig 0x000806f5, pf_mask 0x10, rev 0x2c000421
+    sig 0x000806f6, pf_mask 0x87, rev 0x2b000661
+    sig 0x000806f6, pf_mask 0x10, rev 0x2c000421
+    sig 0x000806f7, pf_mask 0x87, rev 0x2b000661
+    sig 0x000806f8, pf_mask 0x87, rev 0x2b000661
+    sig 0x000806f8, pf_mask 0x10, rev 0x2c000421
+    sig 0x00090672, pf_mask 0x07, rev 0x003e
+    sig 0x00090675, pf_mask 0x07, rev 0x003e
+    sig 0x000906a3, pf_mask 0x80, rev 0x043b
+    sig 0x000906a4, pf_mask 0x80, rev 0x043b
+    sig 0x000906a4, pf_mask 0x40, rev 0x000c
+    sig 0x000a0671, pf_mask 0x02, rev 0x0065
+    sig 0x000a06a4, pf_mask 0xe6, rev 0x0028
+    sig 0x000a06d1, pf_mask 0x95, rev 0x1000405
+    sig 0x000a06d1, pf_mask 0x20, rev 0xa000133
+    sig 0x000a06e1, pf_mask 0x97, rev 0x10002f3
+    sig 0x000b0650, pf_mask 0x80, rev 0x000d
+    sig 0x000b0671, pf_mask 0x32, rev 0x0133
+    sig 0x000b0674, pf_mask 0x32, rev 0x0133
+    sig 0x000b06a2, pf_mask 0xe0, rev 0x6134
+    sig 0x000b06a3, pf_mask 0xe0, rev 0x6134
+    sig 0x000b06a8, pf_mask 0xe0, rev 0x6134
+    sig 0x000b06e0, pf_mask 0x19, rev 0x0021
+    sig 0x000b06f2, pf_mask 0x07, rev 0x003e
+    sig 0x000b06f5, pf_mask 0x07, rev 0x003e
+    sig 0x000b06f6, pf_mask 0x07, rev 0x003e
+    sig 0x000b06f7, pf_mask 0x07, rev 0x003e
+    sig 0x000c0652, pf_mask 0x82, rev 0x011b
+    sig 0x000c0662, pf_mask 0x82, rev 0x011b
+    sig 0x000c0664, pf_mask 0x82, rev 0x011b
+    sig 0x000c06a2, pf_mask 0x82, rev 0x011b
+    sig 0x000c06f2, pf_mask 0x87, rev 0x210002d3
+
 * Thu Nov 13 2025 L.A. Kostis <lakostis@altlinux.ru> 2:33-alt1.20251111
 - New upstream microcode datafile 20251111:
   + Update functional issues for Gen12th/13th/14th Core Processors
