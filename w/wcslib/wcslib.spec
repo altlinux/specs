@@ -2,7 +2,7 @@
 %define libwcs libwcs%sover
 
 Name: wcslib
-Version: 8.4
+Version: 8.5
 Release: alt1
 
 Group: System/Libraries
@@ -70,6 +70,9 @@ rm -rv %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 8.5-alt1
+- 8.5.
+
 * Sun Jul 06 2025 Grigory Ustinov <grenka@altlinux.org> 8.4-alt1
 - NMU: new version
 
