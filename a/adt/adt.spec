@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -61,6 +61,13 @@ install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/appl
 %_man1dir/%name.1*
 
 %changelog
+* Tue Feb 10 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.15-alt1
+- chore: update changelog (thx Andrey Alekseev)
+- fix: prevent QSpinBox from triggerring commitData early (thx Andrey Alekseev)
+- fix: prevent committing from setEditorData() (thx Andrey Alekseev)
+- chore: update changelog (thx Andrey Alekseev)
+- fix: remove --help-all option (thx Andrey Alekseev)
+
 * Mon Feb 02 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.14-alt1
 - make test results dialog modal
 - fix default command line options parsing
