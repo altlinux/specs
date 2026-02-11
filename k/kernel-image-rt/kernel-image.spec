@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.69
+%define kernel_sublevel	.70
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Feb 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.70-alt1
+- v6.12.70 (2026-02-11).
+- Additional patches for HDMI0 on RK3588.
+
 * Fri Feb 06 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.69-alt1
 - v6.12.69 (2026-02-06).
 - config: CONFIG_LEDS_PCA955X_GPIO=y (ALT#57765).
