@@ -99,7 +99,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -297,7 +297,6 @@ tar -xf subprojects.tar
 export ALTWRAP_LLVM_VERSION=%llvmver
 %meson \
 	-Dplatforms=x11,wayland \
-	-Dlegacy-wayland=bind-wayland-display \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay, screenshot' \
@@ -482,6 +481,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Feb 11 2026 Anton Midyukov <antohami@altlinux.org> 4:25.3.5-alt2
+- NMU: removed legacy-wayland=bind-wayland-display (Closes: 57839).
+
 * Mon Feb 09 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:25.3.5-alt1
 - 25.3.5
 - added legacy-wayland=bind-wayland-display (closes: #57679)
