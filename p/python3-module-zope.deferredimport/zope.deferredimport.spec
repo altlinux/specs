@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 6.1
 Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPL-2.1
@@ -20,8 +20,6 @@ Source1: %pyproject_deps_config_name
 AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-# setuptools(pkg_resources) is used by namespace root which is not used in ALT
-%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -54,14 +52,15 @@ rm -r src/zope/deferredimport/samples/
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc CHANGES.rst README.rst
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 5.1 -> 6.1.
+
 * Thu Aug 14 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1.
 
