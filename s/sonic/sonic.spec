@@ -3,7 +3,7 @@
 
 Name: sonic
 Version: 0.2.0.13+b1
-Release: alt1
+Release: alt2
 
 Summary: Simple utility to speed up or slow down speech
 License: Apache-2.0
@@ -12,6 +12,8 @@ Url: https://github.com/espeak-ng/sonic
 VCS: https://github.com/espeak-ng/sonic.git
 
 Source: %name-%version.tar
+
+Patch0: sover-fix.patch
 
 #BuildRequires:
 
@@ -46,6 +48,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%autopatch -p1
 %__subst 's|LIBDIR=\$(PREFIX)/lib|LIBDIR=%_libdir|g' Makefile
 
 %build
@@ -74,5 +77,8 @@ rm %buildroot%_libdir/*.a
 %doc README TODO doc
 
 %changelog
+* Wed Feb 11 2026 Artem Semenov <savoptik@altlinux.org> 0.2.0.13+b1-alt2
+- Fixed SONAME of libsonic: now set to libsonic.so.0
+
 * Wed Feb 11 2026 Artem Semenov <savoptik@altlinux.org> 0.2.0.13+b1-alt1
 - Initial build for Sisyphus

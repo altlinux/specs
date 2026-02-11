@@ -5,7 +5,7 @@
 
 Name: espeak-ng
 Version: 1.52.0
-Release: alt2
+Release: alt3
 
 Summary: eSpeak NG Text-to-Speech
 
@@ -35,6 +35,7 @@ BuildRequires: gcc-c++
 BuildRequires: ronn
 BuildRequires: kramdown
 BuildRequires: pcaudiolib-devel
+BuildRequires: libsonic-devel
 
 %description
 The eSpeak NG is a compact open source software text-to-speech synthesizer for 
@@ -200,6 +201,9 @@ ESPEAK_DATA_PATH=`pwd` LD_LIBRARY_PATH=src:${LD_LIBRARY_PATH} src/espeak-ng ...
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Wed Feb 11 2026 Artem Semenov <savoptik@altlinux.org> 1.52.0-alt3
+- Builded with sonic support
+
 * Fri Jan 16 2026 Artem Semenov <savoptik@altlinux.org> 1.52.0-alt2
 - Created compatibility package fore libespeak-devel
 - Created compatibility package fore libespeak
