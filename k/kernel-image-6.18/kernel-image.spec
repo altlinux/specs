@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Feb 11 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.10-alt1
+- v6.18.10 (2026-02-11).
+
 * Fri Feb 06 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.9-alt1
 - v6.18.9 (2026-02-06).
 - config: CONFIG_LEDS_PCA955X_GPIO=y.
