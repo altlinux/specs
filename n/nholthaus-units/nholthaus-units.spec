@@ -3,7 +3,7 @@
 %def_enable docs
 
 Name: nholthaus-units
-Version: 2.3.4
+Version: 2.3.5
 Release: alt1
 Summary: A compile-time, header-only, dimensional analysis and unit conversion library
 Group: Development/C++
@@ -77,6 +77,9 @@ cp -ar docs/man/man3/* %buildroot%_man3dir/
 %endif
 
 %changelog
+* Wed Feb 11 2026 L.A. Kostis <lakostis@altlinux.ru> 2.3.5-alt1
+- 2.3.5.
+
 * Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.4-alt1
 - 2.3.4.
 
