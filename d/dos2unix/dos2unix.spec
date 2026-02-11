@@ -1,5 +1,5 @@
 Name: dos2unix
-Version: 7.5.3
+Version: 7.5.4
 Release: alt1
 
 Summary: Text file format converter
@@ -43,6 +43,9 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Wed Feb 11 2026 Ilya Mashkin <oddity@altlinux.ru> 7.5.4-alt1
+- 7.5.4
+
 * Sun Nov 23 2025 Ilya Mashkin <oddity@altlinux.ru> 7.5.3-alt1
 - 7.5.3
 
