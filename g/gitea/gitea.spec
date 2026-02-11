@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.25.3
+Version: 1.25.4
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -123,8 +123,13 @@ useradd -r -g %name -c 'Gitea daemon' \
 %_datadir/zsh/site-functions/_gitea
 
 %changelog
+* Wed Feb 11 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.4-alt1
+- 1.25.4 (Fixes: CVE-2026-20736, CVE-2026-20750, CVE-2026-20883,
+  CVE-2026-20904, CVE-2026-20888, CVE-2026-20912, CVE-2026-20897,
+  CVE-2026-0798, CVE-2026-20800).
+
 * Wed Jan 07 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.3-alt1
-- 1.25.3.
+- 1.25.3 (Fixes: CVE-2025-69413).
 
 * Tue Sep 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.5-alt1
 - 1.24.5.
