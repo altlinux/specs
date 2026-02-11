@@ -3,7 +3,7 @@
 
 Name: candle
 Release: alt1
-Version: 10.12
+Version: 11.2
 
 Summary: %name application with G-Code visualizer written in Qt
 Group: Engineering
@@ -79,6 +79,9 @@ find %buildroot%_datadir/%name -type f -name '*.ts' -exec rm -f {} \;
 %_pixmapsdir/%name.ico
 
 %changelog
+* Wed Feb 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 11.2-alt1
+- new version
+
 * Wed Jan 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 10.12-alt1
 - new version
 
