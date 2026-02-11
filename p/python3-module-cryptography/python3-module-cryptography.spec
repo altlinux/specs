@@ -6,7 +6,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 46.0.2
+Version: 46.0.5
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -90,6 +90,9 @@ py.test3
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Feb 11 2026 Vladimir Didenko <cow@altlinux.ru> 46.0.5-alt1
+- new version (Fixes: CVE-2026-26007)
+
 * Tue Oct 14 2025 Vladimir Didenko <cow@altlinux.ru> 46.0.2-alt1
 - new version
 
