@@ -11,7 +11,7 @@
 
 Name: libfido2
 Version: 1.16.0
-Release: alt5
+Release: alt6
 
 Summary: Library functionality to communicate with a FIDO device over USB
 License: BSD-2-Clause
@@ -72,6 +72,8 @@ Provides command-line tools for libfido2.
 %prep
 %setup
 %autopatch -p1
+# uaccess tag is better than plugdev group
+sed -i 's/, GROUP="plugdev", MODE="0660"//' udev/70-u2f.rules
 
 %build
 %ifarch %e2k
@@ -111,6 +113,9 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %_man3dir/*.3*
 
 %changelog
+* Thu Feb 12 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt6
+- Removed 'plugdev' from 70-u2f.rules to use 'uaccess' only (ALT#57844).
+
 * Thu Jan 22 2026 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt5
 - Removed libfido2 obsoletion for future ABI version change (ALT#56956).
 
