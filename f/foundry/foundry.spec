@@ -3,9 +3,12 @@
 %define soversion 1
 %define apiver %soversion
 
+%def_with docs
+%def_with check
+
 Name: foundry
 Version: 1.0.1
-Release: alt4
+Release: alt5
 
 Summary: Foundry provides a platform for developer tools in GNOME
 License: LGPL-2.1
@@ -45,6 +48,10 @@ BuildRequires: gir(Peas)
 BuildRequires: gir(Json)
 BuildRequires: gir(Gtk)
 BuildRequires: gir(GtkSource)
+
+%if_with docs
+BuildRequires: gi-docgen
+%endif
 
 %description
 This tool aims to extract much of what makes GNOME Builder an IDE into a
@@ -97,17 +104,29 @@ Requires: lib%name-devel = %EVR
 %description -n lib%name-gir-devel
 %summary.
 
+%package -n lib%name-devel-doc
+Summary: Development documentation for lib%name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %EVR
+
+%description -n lib%name-devel-doc
+This package contains development documentation for lib%name.
+
 %prep
 %setup
 %autopatch -p1
 
 %build
-%meson
+%meson -Ddocs=true
 %meson_build
 
 %install
 %meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files
 %_bindir/%name
@@ -137,7 +156,16 @@ Requires: lib%name-devel = %EVR
 %_girdir/Foundry-%apiver.gir
 %_girdir/FoundryGtk-%apiver.gir
 
+%if_with docs
+%files -n lib%name-devel-doc
+%_docdir/foundry-1/
+%_docdir/foundry-gtk-1/
+%endif
+
 %changelog
+* Wed Feb 11 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt5
+- add documentation package
+
 * Mon Feb 09 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt4
 - remove api version and soversion
 - update Summary and Description
