@@ -100,7 +100,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.11
+Version: %{pybasever}.12
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -1099,6 +1099,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 3.13.12-alt1
+- Updated to upstream 3.13.12.
+
 * Sun Dec 07 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 3.13.11-alt1
 - Updated to upstream 3.13.11.
 
