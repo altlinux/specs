@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: isoinspector
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Tool that inspect ALT Linux distribution ISO/IMG images using ALTRepo API
@@ -18,6 +18,8 @@ Requires: fuseiso
 Requires: squashfuse
 Requires: libguestfs
 Requires: guestfs-data
+Requires: qemu-img
+Requires: qemu-kvm
 
 Source0: %name-%version.tar
 Patch1: %name-%version-%release.patch
@@ -41,9 +43,13 @@ install -Dm0755 isoinspector %buildroot%_bindir/isoinspector
 %doc LICENSE README.* AUTHORS.txt
 
 %changelog
+* Thu Feb 12 2026 Danil Shein <dshein@altlinux.org> 0.2.3-alt1
+- new version
+  + add missing runtime dependencies on Qemu
+
 * Thu Jan 29 2026 Danil Shein <dshein@altlinux.org> 0.2.2-alt1
 - new version 0.2.2
-  + fix image type detection
+  + fix image type detection (closes: #57704)
 
 * Thu Jan 22 2026 Danil Shein <dshein@altlinux.org> 0.2.1-alt1
 - new version 0.2.1
