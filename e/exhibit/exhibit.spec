@@ -1,9 +1,8 @@
 %define APP_ID io.github.nokse22.Exhibit
-# SPDX-License-Identifier: GPL-3.0-or-later
 
 Name:    exhibit
-Version: 1.5.0
-Release: alt1.e08cb9b.1
+Version: 1.6.0
+Release: alt1.g656eaea.7
 
 Summary: 3D models viewer
 License: GPL-3.0-or-later
@@ -18,18 +17,13 @@ Source: %name-%version.tar
 Patch1: config_path.patch
 Patch2: meson_build.patch
 
-BuildRequires(pre): rpm-macros-meson
-BuildRequires(pre): rpm-macros-python3
-
-BuildRequires: rpm-build-python3
-BuildRequires: meson
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): meson
 BuildRequires: libgtk4-devel
 BuildRequires: libadwaita-devel
-BuildRequires: %_bindir/appstreamcli desktop-file-utils blueprint-compiler
+BuildRequires: %_bindir/appstreamcli blueprint-compiler
 BuildRequires: itstool
 BuildRequires: gettext-tools
-
-Requires: libEGL-devel
 
 
 %description
@@ -38,7 +32,7 @@ from digital content to scientific datasets (including glTF, USD, STL, STEP,
 PLY, OBJ, FBX, Alembic).
 
 %prep
-%setup -q
+%setup
 
 %patch1 -p1
 %patch2 -p1
@@ -66,5 +60,8 @@ PLY, OBJ, FBX, Alembic).
 
 
 %changelog
+* Thu Jan 22 2026 Valentin Sokolov <sova@altlinux.org> 1.6.0-alt1.g656eaea.7
+- Update to version 1.6.0
+
 * Mon Apr 29 2025 Valentin Sokolov <sova@altlinux.org> 1.5.0-alt1.e08cb9b.1
 - Initial build for Sisyphus
