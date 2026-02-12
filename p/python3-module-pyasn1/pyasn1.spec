@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyasn1
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)
 License: BSD-2-Clause
@@ -15,7 +16,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,11 +48,13 @@ based on ASN.1 specification.
 %pyproject_run_unittest discover -s tests
 
 %files
-%doc README.md CHANGES.rst
-%python3_sitelibdir/pyasn1/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1
+- 0.6.1 -> 0.6.2 (fixes: CVE-2026-23490).
+
 * Wed Sep 11 2024 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
 - 0.6.0 -> 0.6.1.
 
