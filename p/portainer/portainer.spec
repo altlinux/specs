@@ -1,5 +1,9 @@
+# NOTE:
+# Do not send to the repository if binary files are packaged.
+# Only for the test tasks (pocket).
+
 Name: portainer
-Version: 2.33.6
+Version: 2.33.7
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -32,7 +36,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.11"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.24.13"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -115,6 +119,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Feb 12 2026 Leontiy Volodin <lvol@altlinux.org> 2.33.7-alt1
+- New LTS version 2.33.7 (Fixes: CVE-2025-61726, CVE-2025-68121).
+
 * Tue Dec 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.33.6-alt1
 - New LTS version 2.33.6 (Fixes: CVE-2025-62725, CVE-2025-47906,
   CVE-2025-47910, CVE-2025-47913, CVE-2024-25621, CVE-2025-47914,
