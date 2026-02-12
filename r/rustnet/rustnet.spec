@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           rustnet
-Version:        0.18.0
+Version:        1.0.0
 Release:        alt1
 
 Summary:        A cross-platform network monitoring terminal UI tool
@@ -10,13 +10,17 @@ Group:          Monitoring
 URL:            https://github.com/domcyrus/rustnet
 
 Source:         %name-%version.tar
+# Prepare using:
+# cargo-vendor-alt --exclude-crate-path libbpf-sys#elfutils \
+#                  --exclude-crate-path libbpf-sys#libbpf
 Source1:        vendor.tar
 
 Patch:          %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires:      pkgconfig(libbpf)
+BuildRequires:      pkgconfig(libelf)
 BuildRequires:      clang
-BuildRequires:      libelf-devel
 BuildRequires:      zlib-devel
 BuildRequires:      libpcap-devel
 
@@ -30,6 +34,11 @@ deep packet inspection, and a terminal user interface.
 %setup -a 1 -q
 %patch -p1
 %rust_prep
+# Disabling vendor build of libbpf and elfutils dependencies:
+sed -i \
+  's/libbpf-rs.*optional = true/&, default-features = false/' Cargo.toml
+sed -i \
+  's/libbpf-cargo.*optional = true/&, default-features = false/' Cargo.toml
 
 %build
 %rust_build
@@ -53,6 +62,10 @@ deep packet inspection, and a terminal user interface.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Thu Feb 12 2026 Sergey Savelev <medovi@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+- The system libraries libbpf and elfutils are used.
+
 * Mon Jan 12 2026 Sergey Savelev <medovi@altlinux.org> 0.18.0-alt1
 - New version 0.18.0.
 
