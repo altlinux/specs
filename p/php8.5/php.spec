@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  5
-%define _php_release_version 2
+%define _php_release_version 3
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -500,6 +500,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Thu Feb 12 2026 Anton Farygin <rider@altlinux.org> 8.5.3-alt1
+- 8.5.2 -> 8.5.3
+
 * Sun Jan 18 2026 Anton Farygin <rider@altlinux.org> 8.5.2-alt1
 - 8.5.1 -> 8.5.2
 
