@@ -1,12 +1,12 @@
 Name: libgnutls-guile
-Version: 4.0.1
+Version: 5.0.1
 Release: alt1
 
 Summary: Guile bindings for the GnuTLS library
 License: LGPLv2.1+ and GPLv3+
 Group: System/Libraries
-Url: https://gitlab.com/gnutls/guile
-Vcs: https://gitlab.com/gnutls/guile.git
+Url: https://codeberg.org/guile-gnutls/guile-gnutls
+Vcs: https://codeberg.org/guile-gnutls/guile-gnutls
 Source: guile-gnutls-%version.tar
 
 BuildRequires: libgnutls-devel >= 3.8.0
@@ -19,6 +19,7 @@ Guile-GnuTLS provides Guile bindings for the GnuTLS library.
 
 %prep
 %setup -n guile-gnutls-%version
+printf "%%s" "%version" >.tarball-version
 
 %build
 %autoreconf
@@ -42,6 +43,11 @@ Guile-GnuTLS provides Guile bindings for the GnuTLS library.
 %exclude %_libdir/guile/*/extensions/*.la
 
 %changelog
+* Thu Feb 12 2026 Mikhail Efremov <sem@altlinux.org> 5.0.1-alt1
+- Created .tarball-version file.
+- Updated Url and Vcs tags.
+- Updated to 5.0.1.
+
 * Wed Feb 19 2025 Mikhail Efremov <sem@altlinux.org> 4.0.1-alt1
 - Dropped obsoleted comment.
 - Updated to 4.0.1.
