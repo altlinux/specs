@@ -1,5 +1,5 @@
 Name:     kdiskmark
-Version:  3.1.4
+Version:  3.2.0
 Release:  alt1
 
 Summary:  A simple open-source disk benchmark tool for Linux distros
@@ -12,9 +12,12 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: cmake gcc-c++ qt5-base-devel qt5-tools-devel extra-cmake-modules
-BuildRequires: kf5-kauth-devel kf5-kcoreaddons-devel libpolkitqt5-qt5-devel
-Requires: libkf5auth fio
+BuildRequires: cmake gcc-c++ qt6-base-devel qt6-tools-devel extra-cmake-modules
+BuildRequires: kf6-kauth-devel kf6-kcoreaddons-devel libpolkitqt6-qt6-devel
+
+Requires: fio
+
+ExcludeArch: %ix86
 
 %description
 KDiskMark is an HDD and SSD benchmark tool with a very friendly graphical user
@@ -58,6 +61,9 @@ comprehensive benchmark result.
 %dir %_iconsdir/hicolor/64x64/apps
 
 %changelog
+* Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Build new version.
+
 * Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.4-alt1
 - Build new version.
 
