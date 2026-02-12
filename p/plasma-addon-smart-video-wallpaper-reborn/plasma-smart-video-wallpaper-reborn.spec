@@ -2,7 +2,7 @@
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
 Name: plasma-addon-smart-video-wallpaper-reborn
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
@@ -12,15 +12,7 @@ Group: Graphical desktop/KDE
 Url: https://store.kde.org/p/2139746
 Vcs: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn
 
-Source0: %name-%version.tar
-Source1: ru.po
-
-Patch: Header-2.9.0-alt-fixes.patch
-Patch1: config-2.9.0-alt-fixes.patch
-Patch2: main-2.9.0-alt-fixes.patch
-Patch3: metadata-2.4.0-alt-fixes.patch
-Patch4: CheckableValueListView-2.9.0-alt-fixes.patch
-Patch5: VideoSettingsDialog-2.9.0-alt-fixes.patch
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -31,6 +23,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules gcc-c++ pkgconfig(Qt6Qml)
 BuildRequires: qt6-multimedia-devel plasma6-lib-devel kf6-kpackage-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kwindowsystem-devel gettext-tools
+BuildRequires: kf6-ki18n-devel
 
 Requires: ffmpeg
 
@@ -39,8 +32,6 @@ Requires: ffmpeg
 
 %prep
 %setup
-cp -r -f %SOURCE1 package/translate/
-%autopatch -p0
 
 %build
 %K6cmake
@@ -50,18 +41,21 @@ cp -r -f %SOURCE1 package/translate/
 %K6install
 
 for locale in el_GR es nl pt_BR ru; do
- msgfmt package/translate/${locale}.po -o package/translate/${locale}.mo
- install -Dm 0644 package/translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
+ msgfmt translate/${locale}.po -o translate/${locale}.mo
+ install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
-%files
+%find_lang %nameLC --with-kde --all-name
+
+%files -f %nameLC.lang
 %_datadir/metainfo/%nameL.appdata.xml
-%exclude %_datadir/plasma/wallpapers/%nameL/translate
-%_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 %_datadir/plasma/wallpapers/%nameL/*
 %doc README.md
 
 %changelog
+* Fri Feb 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.10.0-alt1
+- 2.9.0 -> 2.10.0
+
 * Wed Jan 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.9.0-alt1
 - 2.8.1 -> 2.9.0
 
