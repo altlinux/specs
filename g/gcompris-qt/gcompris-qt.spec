@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 25.1.1
+Version: 26.0
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -10,7 +10,7 @@ URL:     http://www.gcompris.net
 
 Source:  %name-%version.tar
 Source1: submodules.tar
-#Source2: gcompris_qt.po
+Source2: gcompris_qt.po
 #Source3: gcompris_voices.po
 
 Patch0: gcompris-qt-box2d-disable-stripping.patch
@@ -30,6 +30,7 @@ BuildRequires: libssl-devel
 #BuildRequires: kf6-kdoctools-devel-static
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-wayland-devel
+BuildRequires: libqtgraphs-qt6-devel
 BuildRequires: libvulkan-devel
 BuildRequires: chrpath
 
@@ -74,7 +75,7 @@ GCompris - набор образовательных игр и программ 
 %setup
 tar xf %SOURCE1
 %patch0 -p1
-#install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
+install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
 #install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 # Remove geography activity due to non actial maps
 subst '/geography/d' src/activities/activities.txt
@@ -106,6 +107,10 @@ chrpath -d %buildroot%_libexecdir/qml/Box2D.2.0/libqmlbox2d.so
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Feb 05 2026 Andrey Cherepanov <cas@altlinux.org> 26.0-alt1
+- New version.
+- Completed Russian translation (thanks Olesya Gerasimenko).
+
 * Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 25.1.1-alt1
 - New version.
 
