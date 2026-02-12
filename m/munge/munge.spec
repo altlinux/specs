@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    munge
-Version: 0.5.17
+Version: 0.5.18
 Release: alt1
 
 Summary: MUNGE authentication service
@@ -144,6 +144,9 @@ fi
 %_libdir/lib%name.so.%abiversion.*
 
 %changelog
+* Wed Feb 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.18-alt1
+- New version.
+
 * Thu Nov 13 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.17-alt1
 - New version.
 - Spec improvements:

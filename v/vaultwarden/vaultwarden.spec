@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    vaultwarden
-Version: 1.35.2
+Version: 1.35.3
 Release: alt1
 
 Summary: Unofficial Bitwarden compatible server
@@ -98,6 +98,9 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Wed Feb 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.35.3-alt1
+- New version.
+
 * Mon Jan 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.35.2-alt1
 - New version.
 
