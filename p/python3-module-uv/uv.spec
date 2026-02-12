@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.10.0
+%define uv_version 0.10.2
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -78,6 +78,10 @@ export CARGO_TERM_VERBOSE=true
 %ifarch %ix86
 # fails with upstream's lto=fat
 export CARGO_PROFILE_RELEASE_LTO=false
+%else
+# build with debug info, fails on i586 with 'rustc-LLVM ERROR: out of memory'
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_STRIP='none'
 %endif
 %pyproject_build
 
@@ -128,7 +132,6 @@ popd
 %python3_sitelibdir/%{pep427_name %pypi_name_uv_build}-%uv_build_version.dist-info/
 
 %files -n %pypi_name
-%doc README.*
 %_bindir/uv
 %_bindir/uvx
 %bash_completions_dir/uv
@@ -138,6 +141,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 0.10.2-alt1
+- 0.10.0 -> 0.10.2.
+
 * Fri Feb 06 2026 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.30 -> 0.10.0.
 
