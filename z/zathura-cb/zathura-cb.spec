@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-cb
-Version: 0.1.12
+Version: 2026.02.03
 Release: alt1
 
 Summary: Comic book support for zathura
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 
-BuildRequires: libgirara-devel zathura-devel
+BuildRequires: libgirara-devel zathura-devel >= 2026.01.30
 BuildRequires: libgdk-pixbuf-devel libgio-devel
 BuildRequires: libcairo-devel libarchive-devel
 # For tests
@@ -48,6 +48,9 @@ The zathura-cb plugin adds comic book support to zathura.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Feb 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.02.03-alt1
+- Updated to 2026.02.03.
+
 * Wed Nov 12 2025 Mikhail Efremov <sem@altlinux.org> 0.1.12-alt1
 - Updated BR.
 - Updated to 0.1.12.

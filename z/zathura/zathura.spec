@@ -7,8 +7,8 @@
 %endif
 
 Name: zathura
-Version: 0.5.14
-Release: alt2
+Version: 2026.02.09
+Release: alt1
 
 Summary: A lightweight document viewer
 License: Zlib
@@ -19,8 +19,9 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgirara-devel >= 0.4.5-alt1
+BuildRequires: libgirara-devel >= 2026.02.03-alt1
 BuildRequires: libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
+BuildRequires: libcairo-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libjson-glib-devel
@@ -31,14 +32,16 @@ BuildRequires: librsvg-utils
 #For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: xvfb-run appstream desktop-file-utils}}
 
-Conflicts: zatura-pdf-poppler < 0.3.3-alt1
-Conflicts: zatura-djvu < 0.2.10-alt1
-Conflicts: zatura-ps < 0.2.8-alt1
-Conflicts: zatura-cb < 0.1.11-alt1
+Conflicts: zatura-pdf-poppler < 2026.02.03-alt1
+Conflicts: zatura-pdf-mupdf < 2026.02.03-alt1
+Conflicts: zatura-djvu < 2026.02.03-alt1
+Conflicts: zatura-ps < 2026.02.03-alt1
+Conflicts: zatura-cb < 2026.02.03-alt1
 
 %description
-zathura is a highly customizable and functional document viewer based on
-the girara user interface library and several document libraries.
+Zathura is a highly customizable and functional document viewer.
+It provides a minimalistic and space saving interface as well as an easy usage
+that mainly focuses on keyboard interaction.
 
 This package contains ALT-specific changes so it is NOT original software
 from https://pwmt.org.
@@ -91,6 +94,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Thu Feb 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.02.09-alt1
+- Updated to 2026.02.09.
+
 * Thu Nov 13 2025 Mikhail Efremov <sem@altlinux.org> 0.5.14-alt2
 - Disabled weston tests.
 - Made weston tests optional.

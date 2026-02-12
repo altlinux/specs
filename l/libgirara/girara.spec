@@ -1,5 +1,5 @@
 %define _name girara
-%define _soname 4
+%define _soname 5
 %define _unpackaged_files_terminate_build 1
 
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
@@ -9,10 +9,10 @@
 %endif
 
 Name: lib%_name
-Version: 0.4.5
+Version: 2026.02.04
 Release: alt1
 
-Summary: GTK-based minimalistic user interface library
+Summary: Common components for zathura
 License: Zlib
 Group: System/Libraries
 URL: https://pwmt.org/projects/girara
@@ -23,19 +23,16 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
-BuildRequires: libgtk+3-devel >= 3.4 libpango-devel
-%{?_enable_tests:BuildRequires: xvfb-run}
-%{?_enable_vala:BuildRequires: vala-tools}
+BuildRequires: glib2-devel >= 2.72
+BuildRequires: libgio-devel >= 2.72
 
 %description
-girara is a library that implements a user interface that focuses on
-simplicity and minimalism.
+Girara contains common datastructures and utilities for the zathura ecosystem.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
-Requires: libgtk+3-devel
 
 %description devel
 This package contains libraries and header files for
@@ -47,19 +44,17 @@ developing applications that use %name.
 
 %build
 %meson \
-	-Djson=disabled \
 	%{subst_enable_meson_feature tests tests}
 
 %meson_build -v
 
 %install
 %meson_install
-%find_lang %name-gtk3-%_soname
 
 %check
 %meson_test
 
-%files -f %name-gtk3-%_soname.lang
+%files
 %doc AUTHORS README.md LICENSE
 %_libdir/*.so.%_soname
 %_libdir/*.so.%_soname.*
@@ -70,6 +65,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Feb 11 2026 Mikhail Efremov <sem@altlinux.org> 2026.02.04-alt1
+- Updated to 2026.02.04.
+
 * Wed Dec 11 2024 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
 - Enabled tests again.
 - Used macros from rpm-macros-meson.
