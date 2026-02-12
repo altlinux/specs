@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.17
-Release: alt2
+Version: 5.15.18
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -84,7 +84,6 @@ Patch1013: alt-QTBUG-88599.patch
 Patch1014: alt-loongarch64-support.patch
 # Source: https://github.com/OpenMandrivaAssociation/qt5-qtbase/blob/master/qtbase-5.15.9-work-around-pyside2-brokenness.patch
 Patch1015: qt5-base-5.15.11-alt-qtbase-5.15.9-work-around-pyside2-brokenness.patch
-Patch1016: alt-xdg-current-desktop.patch
 #
 Patch2000: 9103-qtbase-5.15.13-qmenu_fix_shortcuts.patch
 
@@ -429,7 +428,6 @@ done
 %patch1013 -p1
 %patch1014 -p1
 %patch1015 -p1
-%patch1016 -p1
 #
 %patch2000 -p1
 
@@ -876,6 +874,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Feb 11 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
+- new version
+
 * Wed Dec 03 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt2
 - fix parse $XDG_CURRENT_DESKTOP
 

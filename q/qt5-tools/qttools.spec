@@ -6,7 +6,7 @@
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.17
+Version: 5.15.18
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -365,6 +365,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Feb 11 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
+- new version
+
 * Thu Aug 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
 - new version
 
