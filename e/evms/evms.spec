@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt90
+Release: alt91
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Feb 12 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt91
+- btrfs: fix crash when unmkfs'ing
+
 * Thu Sep 11 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt90
 - xfs: calculate free/used space (Closes: #49033)
 - imsm: fix free space calculations (Closes: #56006)
