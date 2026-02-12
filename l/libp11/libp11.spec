@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: libp11
-Version: 0.4.16
+Version: 0.4.17
 Release: alt1
 Summary: Library for using PKCS#11 modules
 License: LGPL-2.1-or-later
@@ -63,7 +63,6 @@ rm -r %buildroot%_docdir/%name
 %make VERBOSE=1 check
 
 %files
-%doc NEWS README.md
 %_libdir/libp11.so.*
 %engines_dir/libpkcs11.so
 %engines_dir/pkcs11.so
@@ -76,6 +75,9 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Thu Feb 12 2026 Stanislav Levin <slev@altlinux.org> 0.4.17-alt1
+- 0.4.16 -> 0.4.17.
+
 * Tue Jun 24 2025 Stanislav Levin <slev@altlinux.org> 0.4.16-alt1
 - 0.4.13 -> 0.4.16.
 
