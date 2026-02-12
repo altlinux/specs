@@ -13,7 +13,7 @@
 %def_without check
 
 Name: teleport
-Version: 18.6.1
+Version: 18.6.6
 Release: alt1
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
@@ -156,6 +156,9 @@ make test
 %_bindir/tbot
 
 %changelog
+* Wed Feb 04 2026 Artem Krasovskiy <aibure@altlinux.org> 18.6.6-alt1
+- New version 18.6.6.
+
 * Mon Dec 29 2025 Artem Krasovskiy <aibure@altlinux.org> 18.6.1-alt1
 - New version 18.6.1.
 
