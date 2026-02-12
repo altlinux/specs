@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: A simple plugin loading facility
 License: MIT
@@ -12,7 +12,7 @@ URL:     https://github.com/ironfroggy/straight.plugin
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -25,6 +25,9 @@ functionality and customization to your projects with their own plugins.
 
 %prep
 %setup -n %modulename-%version
+
+# imp module was removed in python3.12
+sed -i '/from imp import/d' straight/plugin/loaders.py
 
 %build
 %python3_build
@@ -39,6 +42,9 @@ functionality and customization to your projects with their own plugins.
 %python3_sitelibdir/*.pth
 
 %changelog
+* Thu Feb 12 2026 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1.1
+- NMU: Removed dependency on imp module.
+
 * Fri Sep 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version (ALT #38870).
 
