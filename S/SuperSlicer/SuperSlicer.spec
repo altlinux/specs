@@ -1,11 +1,12 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 %def_disable tests
+%_tune_parallel_build_by_procsize 3072
 
 Name: SuperSlicer
 Summary: A PrusaSlicer fork (which is a slic3r fork) (previously Slic3r++)
 Version: 2.7.61.10
-Release: alt3
+Release: alt4
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://superslicer.net
@@ -22,6 +23,7 @@ Patch2: 0011-Fix-GLEW-init.patch
 Patch3: 0005-cgal6.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-intro
 BuildRequires: libblosc-devel
 BuildRequires: cereal-devel
 BuildRequires: cgal-devel >= 5.6
@@ -146,6 +148,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Thu Feb 12 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.7.61.10-alt4
+- Add memory limit 3072 per thread.
+
 * Tue Jan 20 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.7.61.10-alt3
 - Recompiled using dynamic libraries.
 

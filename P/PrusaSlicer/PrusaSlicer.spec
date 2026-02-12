@@ -1,10 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%_tune_parallel_build_by_procsize 3072
 
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 Version: 2.9.4
-Release: alt3
+Release: alt4
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
@@ -25,6 +26,7 @@ Patch20: PrusaSlicer-2.9.4-adapting-to-eigen5.patch
 Patch21: PrusaSlicer-2.9.4-occt_wrapper-make-fix.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-intro
 BuildRequires: libblosc-devel
 BuildRequires: cereal-devel
 BuildRequires: cgal-devel >= 5.6
@@ -168,6 +170,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Thu Feb 12 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.9.4-alt4
+- Add memory limit 3072 per thread.
+
 * Tue Jan 20 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 2.9.4-alt3
 - Recompiled using dynamic libraries.
 
