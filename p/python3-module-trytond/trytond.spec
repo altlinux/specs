@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 7.8.3
+Version: 7.8.4
 Release: alt1
 
 Summary: Tryton server
@@ -81,6 +81,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Thu Feb 12 2026 Nikita Panov <nexxy@altlinux.org> 7.8.4-alt1
+- new version 7.8.4
+
 * Mon Jan 26 2026 Nikita Panov <nexxy@altlinux.org> 7.8.3-alt1
 - new version 7.8.3
 
