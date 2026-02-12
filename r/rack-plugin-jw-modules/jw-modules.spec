@@ -1,5 +1,5 @@
 Name: rack-plugin-jw-modules
-Version: 2.0.24
+Version: 2.0.30
 Release: alt1
 
 Summary: JW modules for VCV Rack
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Thu Feb 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.30-alt1
+- 2.0.30 released
+
 * Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.24-alt1
 - 2.0.24 released
 
