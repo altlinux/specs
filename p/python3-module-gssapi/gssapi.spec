@@ -2,13 +2,13 @@
 %define pypi_name gssapi
 %define mod_name %pypi_name
 
-# https://github.com/pythongssapi/python-gssapi/issues/369
-%python3_set_limited_api
+# setup.py:LIMITED_API_VERSION
+%python3_set_limited_api 3.11
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.10.1
+Version: 1.11.1
 Release: alt1
 Summary: Python GSSAPI Wrapper
 License: ISC
@@ -60,12 +60,14 @@ python -m unittest
 ENDUNITTEST
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 1.11.1-alt1
+- 1.10.1 -> 1.11.1.
+
 * Thu Nov 20 2025 Stanislav Levin <slev@altlinux.org> 1.10.1-alt1
 - 1.10.0 -> 1.10.1.
 
