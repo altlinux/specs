@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitlogue
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Playback of Git commits in the terminal as an animated story
@@ -10,6 +10,13 @@ Group: Development/Other
 URL: https://github.com/unhappychoice/gitlogue
 
 Source: %name-%version.tar
+# Prepare using:
+# cargo-vendor-alt \
+#   --exclude-crate-path libgit2-sys#libgit2 \
+#   --exclude-crate-path libssh2-sys#libssh2 \
+#   --exclude-crate-path libz-sys#src/zlib \
+#   --exclude-crate-path libz-sys#src/zlib-ng \
+#   --exclude-crate-path openssl-src#openssl
 Source1: vendor.tar
 
 Patch: %name-%version-%release.patch
@@ -55,5 +62,8 @@ export LIBGIT2_NO_VENDOR=1
 %doc README.md CHANGELOG.md
 
 %changelog
+* Thu Feb 12 2026 Sergey Savelev <medovi@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Mon Jan 19 2026 Sergey Savelev <medovi@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
