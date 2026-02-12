@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.56.0
-Release: alt2
+Version: 2.57.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -407,6 +407,24 @@ fi
 %endif
 
 %changelog
+* Thu Feb 12 2026 Anton Midyukov <antohami@altlinux.org> 2.57.0-alt1
+- Feature acpica:
+  + Added a new feature for ACPI table upgrade.
+  + Added auto-detection (guess/acpica) to include ACPI update data when
+  needed.
+- Feature luks-nuker:
+  + Added a new feature for secure wiping of encrypted partitions.
+  + Integrated with dialog helpers for interactive scenarios.
+- Feature nfsroot:
+  + Fixed nfsroot=auto handling (typo bugfix), restoring expected auto mode
+  behavior.
+- Feature sshfsroot:
+  + Fixed sshfsroot=auto handling (typo bugfix), restoring expected auto
+  mode behavior.
+- Feature runtime (root=SOURCE):
+  + Fixed root=SOURCE=* processing bug caused by typo.
+  + Improved reliability of boot source mounting for affected setups.
+
 * Mon Jan 19 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.56.0-alt2
 - e2k build fix
 
