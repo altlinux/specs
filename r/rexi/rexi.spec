@@ -3,7 +3,7 @@
 
 Name:       rexi
 Version:    1.2.1
-Release:    alt1
+Release:    alt2
 BuildArch:  noarch
 
 License:    MIT
@@ -51,6 +51,10 @@ Package contains python module for %name.
 %prep
 %setup
 %patch -p1
+# The project uses an old version of Textual.
+# In the test_ui.py test, the non-existent parameter
+# "renderable" needs to be replaced with the parameter "visual":
+sed -i 's/renderable/visual/g' tests/test_ui.py
 
 %build
 %pyproject_build
@@ -69,6 +73,9 @@ Package contains python module for %name.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 12 2026 Sergey Savelev <medovi@altlinux.org> 1.2.1-alt2
+- Fixed FTBFS: in the test_ui, the attribute has been changed from renderable to visual.
+
 * Fri Nov 21 2025 Sergey Savelev <medovi@altlinux.org> 1.2.1-alt1
 - New version 1.2.1.
 
