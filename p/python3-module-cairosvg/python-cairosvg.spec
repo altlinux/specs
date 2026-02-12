@@ -4,8 +4,8 @@
 %def_with check
 
 Name:               python3-module-cairosvg
-Version:            2.7.1
-Release:            alt1.2
+Version:            2.8.2
+Release:            alt1
 Summary:            A Simple SVG Converter for Cairo
 
 Group:              Development/Python3
@@ -13,7 +13,6 @@ License:            LGPLv3+
 URL:                https://pypi.org/project/CairoSVG/
 VCS:		    https://github.com/Kozea/CairoSVG.git
 Source0:            %name-%version.tar
-Patch0:             cairosvg-2.7.1-Use-underscore-in-setup.cfg-instead-of-deprecated-da.patch
 
 BuildArch:          noarch
 
@@ -43,7 +42,6 @@ http://www.cairosvg.org
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -65,6 +63,9 @@ rm -rf %buildroot%python3_sitelibdir/%modname/__pycache__/test_api.*
 %python3_sitelibdir/%{pyproject_distinfo cairosvg}/
 
 %changelog
+* Fri Feb 13 2026 Anton Vyatkin <toni@altlinux.org> 2.8.2-alt1
+- New version 2.8.2.
+
 * Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1.2
 - NMU: fixed FTBFS (setuptools 78.0.0).
 
