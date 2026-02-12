@@ -1,7 +1,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -46,6 +46,7 @@ Requires: git-core
 Requires: openssh-clients
 Requires: rsync
 Requires: alt-releases-matrix
+Requires: sisyphus_check
 
 %description
 Zoryn is a maintainer assistant that simplifies routine ALT Linux package
@@ -97,6 +98,16 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Thu Feb 12 2026 Anton Farygin <rider@altlinux.org> 0.17.0-alt1
+- added check packages command for post-build quality checks
+- added builder add --create-hasher-users flag
+- added fish shell completion
+- added builder name validation (alphanumeric only)
+- fixed gen environment SSH config Port and username docs
+- fixed hsh-rebuild template expansion for remote SSH builds
+- fixed check spec changelog_bugs position-based comparison
+- fixed build and builder help text examples
+
 * Sun Feb 08 2026 Anton Farygin <rider@altlinux.org> 0.16.0-alt1
 - added apt config auto-generation in builder add for easy multi-branch setup
 - added builder run command for running commands inside hasher chroot
