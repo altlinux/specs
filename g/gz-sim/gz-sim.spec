@@ -2,7 +2,7 @@
 %define soversion 10
 
 Name: gz-sim
-Version: 10.0.0
+Version: 10.1.0
 Release: alt1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
@@ -89,8 +89,16 @@ BuildRequires: qt6-5compat-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libzip-devel
 
-# gz deps
-Requires: gz-tools >= 2.0.0
+Requires: gz-common
+Requires: gz-fuel-tools
+Requires: gz-gui
+Requires: gz-msgs
+Requires: gz-physics
+Requires: gz-plugin
+Requires: gz-rendering
+Requires: gz-transport
+Requires: sdformat
+Requires: gz-tools
 
 %description
 Gazebo simulates multiple robots in a 3D environment
@@ -657,8 +665,8 @@ install -Dpm0644 "%_cmake__builddir"/gz-sim%soversion.desktop %buildroot%_deskto
 install -Dpm0644 "%_cmake__builddir"/gz-logo%soversion.svg %buildroot%_pixmapsdir/gz-logo%soversion.svg
 
 %check
-export GZ_SIM_SERVER_CONFIG_PATH="%buildroot/usr/share/gz/gz-sim/server.config"
-export GZ_SIM_SYSTEM_PLUGIN_PATH="%buildroot/usr/lib64"
+export GZ_SIM_SERVER_CONFIG_PATH="%buildroot%_datadir/gz/gz-sim/server.config"
+export GZ_SIM_SYSTEM_PLUGIN_PATH="%buildroot%_libdir"
 
 export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
@@ -679,7 +687,7 @@ excludes_python=(
   "world_TEST"
   "INTEGRATION_python_system_loader"
 )
-# These tests try to download from the internet. 
+# These tests try to download from the internet.
 # Build environment doesn't have a connection, so they are excluded.
 excludes_download=(
   "UNIT_SdfGenerator_TEST"
@@ -694,12 +702,12 @@ excludes_download=(
   "INTEGRATION_examples_build"
   "UNIT_Util_TEST"
 )
-# Other failing tests need further investigation.
+# See https://github.com/gazebosim/gz-sim/issues/3306
 excludes_other=(
-  "UNIT_Server_TEST"
   "UNIT_Gui_TEST"
   "INTEGRATION_apply_link_wrench_system"
   "INTEGRATION_material"
+  "INTEGRATION_thruster"
 )
 # This test is known to be problematic; See:
 # https://github.com/gazebosim/gz-sim/pull/1771
@@ -716,7 +724,7 @@ excludes_flaky_regex=$(IFS='|'; echo "${excludes_flaky[*]}")
 
 %ctest \
   --parallel 1 \
-  -E "$excludes_python_regex|$excludes_download_regex|$excludes_other_regex|$excludes_flaky" \
+  -E "$excludes_python_regex|$excludes_download_regex|$excludes_other_regex|$excludes_flaky_regex" \
   #
 trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
 
@@ -1050,6 +1058,13 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-sim*.pc
 
 %changelog
+* Mon Feb 2 2026 Pavel Petrykin <silverducks@altlinux.org> 10.1.0-alt1
+- New version.
+- Fix save world file dialog (ALT 57554).
+- Fix missing plugins (ALT 47207).
+- Fix segfault when selecting Sun or Ground_plane (ALT 46849).
+- Fix GUI not launching (ALT 57609).
+
 * Fri Dec 26 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
 - New version.
 
