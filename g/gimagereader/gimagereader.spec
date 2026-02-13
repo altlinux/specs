@@ -3,7 +3,7 @@
 
 Name: gimagereader
 Version: 3.4.3
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -15,6 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/manisandro/gImageReader/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: gimagereader-fix-adf-scanning-altbug-43745.patch
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
@@ -123,6 +125,7 @@ Common files for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -211,6 +214,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Feb 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt2
+- fix ADF/duplex multi-page scanning: call sane_start() between pages (ALT bug 43745)
+
 * Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt1
 - new version 3.4.3 (with rpmrb script)
 
