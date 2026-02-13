@@ -9,18 +9,18 @@
 
 %define java_home %_jvmdir/jre
 
-%define jss_version 5.6.0
+%define jss_version 5.8.0
 %define ldapjdk_version 5.6.0
-%define tomcat_version 9.0.62
-
+%define tomcat_version 10.1.46
 %define java_version 21
+%define nss_version 3.101
 
 # first dogtag-pki renamed from pki-core
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.6.1
-Release: alt2
+Version: 11.8.0
+Release: alt1
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
 Group: System/Servers
@@ -41,16 +41,12 @@ BuildRequires: cmake
 BuildRequires: sh4
 BuildRequires: libldap-devel
 BuildRequires: libapr1-devel
-
-BuildRequires: libnss-devel
+BuildRequires: libnss-devel >= %nss_version
 
 # java deps
 BuildRequires(pre): rpm-macros-java
 BuildRequires: java-devel >= %java_version
 BuildRequires: maven-local
-# https://bugzilla.altlinux.org/53331
-# BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api) >= %tomcat_version
-BuildRequires: tomcat-servlet-4.0-api >= %tomcat_version
 BuildRequires: mvn(commons-cli:commons-cli)
 BuildRequires: mvn(commons-codec:commons-codec)
 BuildRequires: mvn(commons-io:commons-io)
@@ -80,9 +76,12 @@ BuildRequires: mvn(org.jboss.resteasy:resteasy-servlet-initializer)
 BuildRequires: mvn(org.apache.tomcat:tomcat-catalina) >= %tomcat_version
 BuildRequires: mvn(org.apache.tomcat:tomcat-jaspic-api) >= %tomcat_version
 BuildRequires: mvn(org.apache.tomcat:tomcat-util-scan) >= %tomcat_version
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api) >= %tomcat_version
 BuildRequires: mvn(org.dogtagpki.jss:jss-base) >= %jss_version
 BuildRequires: mvn(org.dogtagpki.jss:jss-tomcat) >= %jss_version
 BuildRequires: mvn(org.dogtagpki.ldap-sdk:ldapjdk) >= %ldapjdk_version
+BuildRequires: tomcat-jakartaee-migration
+BuildRequires: /usr/bin/xmlstarlet
 
 # python deps
 BuildRequires(pre): rpm-build-python3
@@ -161,6 +160,9 @@ Requires: dogtag-pki-base
 Requires: java >= %java_version
 Provides: pki-base-java = %EVR
 Obsoletes: pki-base-java < %pki_rebranded_version
+# converted from the system one
+%add_findprov_skiplist %_datadir/pki/lib/jboss-jaxrs-api_2.0_spec-*.jar
+%add_findprov_skiplist %_datadir/pki/lib/jackson-*.jar
 
 Provides: dogtag-pki-base-java = %EVR
 Obsoletes: dogtag-pki-base-java < 11.1.0-alt1
@@ -184,7 +186,7 @@ Summary: Dogtag PKI Tools Package
 Group: System/Base
 Requires: dogtag-pki-java
 Requires: openldap-clients
-Requires: nss-utils
+Requires: nss-utils >= %nss_version
 Requires: p11-kit-trust
 Provides: pki-tools = %EVR
 Obsoletes: pki-tools < %pki_rebranded_version
@@ -201,7 +203,7 @@ Summary: Dogtag PKI Server Package
 Group: System/Base
 Requires: dogtag-pki-tools
 Requires: openssl
-Requires: tomcat >= %tomcat_version
+Requires: tomcat10 >= %tomcat_version
 Requires: mvn(org.dogtagpki.jss:jss-tomcat) >= %jss_version
 Provides: pki-server = %EVR
 Obsoletes: pki-server < %pki_rebranded_version
@@ -388,6 +390,50 @@ interface for Dogtag PKI Server.
 grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2/g'
 %python3_fix_shebang .
 
+mkdir -p base/common/lib
+pushd base/common/lib
+
+    # TODO: make it system deps
+    # migrate necessary files being copied around to jakarta 9.0 ee
+    JACKSON_VERSION=$(rpm -q jackson-annotations | sed -n 's/^jackson-annotations-\([^-]*\)-.*$/\1/p')
+    echo "JACKSON_VERSION: $JACKSON_VERSION"
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-annotations.jar \
+        jackson-annotations-$JACKSON_VERSION.jar
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-core.jar \
+        jackson-core-$JACKSON_VERSION.jar
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-databind.jar \
+        jackson-databind-$JACKSON_VERSION.jar
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-jaxrs-providers/jackson-jaxrs-base.jar \
+        jackson-jaxrs-base-$JACKSON_VERSION.jar
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-jaxrs-providers/jackson-jaxrs-json-provider.jar \
+        jackson-jaxrs-json-provider-$JACKSON_VERSION.jar
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE \
+        %_javadir/jackson-modules/jackson-module-jaxb-annotations.jar \
+        jackson-module-jaxb-annotations-$JACKSON_VERSION.jar
+
+    # Add local artifact so we can compile against the migrated jboss-jaxrs-api_2.0_spec-$JAXRS_VERSION.jar
+    # We could have used the maven install plugin but it's not available with standard rpms.
+    JAXRS_VERSION=$(rpm -q jboss-jaxrs-2.0-api | sed -n 's/^jboss-jaxrs-2.0-api-\([^-]*\)-.*$/\1.Final/p')
+    echo "JAXRS_VERSION: $JAXRS_VERSION"
+
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE "%_javadir/jboss-jaxrs-2.0-api.jar" jboss-jaxrs-api_2.0_spec-$JAXRS_VERSION.jar
+
+    mkdir -p ~/.m2/repository/pki-local/jboss-jaxrs-api_2.0_spec/$JAXRS_VERSION
+    # Copy over the jaxrs api so we can compile
+    cp jboss-jaxrs-api_2.0_spec-$JAXRS_VERSION.jar ~/.m2/repository/pki-local/jboss-jaxrs-api_2.0_spec/$JAXRS_VERSION/jboss-jaxrs-api_2.0_spec-$JAXRS_VERSION.jar
+popd
+
 # remove plugins not needed to build RPM
 %pom_remove_plugin org.codehaus.mojo:flatten-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-deploy-plugin
@@ -402,7 +448,7 @@ grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2
 %mvn_file org.dogtagpki.pki:pki-server pki/pki-server
 %mvn_file org.dogtagpki.pki:pki-server-webapp pki/pki-server-webapp
 %mvn_file org.dogtagpki.pki:pki-tomcat pki/pki-tomcat
-%mvn_file org.dogtagpki.pki:pki-tomcat-9.0 pki/pki-tomcat-9.0
+%mvn_file org.dogtagpki.pki:pki-tomcat-10.1 pki/pki-tomcat-10.1
 %mvn_file org.dogtagpki.pki:pki-ca pki/pki-ca
 %mvn_file org.dogtagpki.pki:pki-kra pki/pki-kra
 %mvn_file org.dogtagpki.pki:pki-ocsp pki/pki-ocsp
@@ -417,7 +463,7 @@ grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2
 %mvn_package org.dogtagpki.pki:pki-server pki-server
 %mvn_package org.dogtagpki.pki:pki-server-webapp pki-server
 %mvn_package org.dogtagpki.pki:pki-tomcat pki-server
-%mvn_package org.dogtagpki.pki:pki-tomcat-9.0 pki-server
+%mvn_package org.dogtagpki.pki:pki-tomcat-10.1 pki-server
 %mvn_package org.dogtagpki.pki:pki-ca pki-ca
 %mvn_package org.dogtagpki.pki:pki-kra pki-kra
 %mvn_package org.dogtagpki.pki:pki-ocsp pki-ocsp
@@ -430,7 +476,7 @@ grep -rEl '(\W|^)8080(\W|$)' | xargs sed -i 's/\(\W\|^\|\)8080\(\W\|$\)/\18090\2
 %mvn_build
 
 # build native binaries with CMake
-app_server=tomcat-9.0
+app_server=tomcat-10.1
 %add_optflags -I/usr/include/apu-1
 %cmake \
     -DVERSION=%version \
@@ -479,6 +525,14 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 # install filetrigger
 mkdir -p %buildroot%_rpmlibdir
 install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/dogtag-pki-base.filetrigger
+
+# remove dependency on local repo
+xmlstarlet edit --inplace \
+    -d "//_:dependency[_:groupId='com.fasterxml.jackson.core']" \
+    -d "//_:dependency[_:groupId='com.fasterxml.jackson.module']" \
+    -d "//_:dependency[_:groupId='com.fasterxml.jackson.jaxrs']" \
+    -d "//_:dependency[_:groupId='pki-local']" \
+    %buildroot%_datadir/maven-metadata/dogtag-pki-pki-java.xml
 
 %check
 
@@ -583,6 +637,7 @@ fi
 %_bindir/TokenInfo
 %_datadir/pki/tools/
 %_datadir/pki/lib/p11-kit-trust.so
+%_libdir/libpki-tps.so
 %_man1dir/AtoB.1.*
 %_man1dir/AuditVerify.1.*
 %_man1dir/BtoA.1.*
@@ -732,6 +787,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Wed Dec 24 2025 Stanislav Levin <slev@altlinux.org> 11.8.0-alt1
+- 11.6.1 -> 11.8.0.
+
 * Fri Dec 19 2025 Stanislav Levin <slev@altlinux.org> 11.6.1-alt2
 - Backported fixes for JDK 25 (closes: #57281).
 

@@ -4,7 +4,7 @@
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt3
+Release:        alt4
 
 Summary:        Framework for RESTful Web services and Java applications
 License:        Apache-2.0
@@ -17,6 +17,7 @@ Patch1:         0001-RESTEASY-2559-Improper-validation-of-response-header.patch
 Patch2:         0001-Remove-Log4jLogger.patch
 Patch3:		0001-Replace-javax.activation-imports-with-jakarta.activa.patch
 Patch4:		0001-Update-to-new-jakarta-xml-bind-namespace.patch
+Patch5:		rest-easy-jakarta.patch
 
 BuildArch:      noarch
 
@@ -29,7 +30,8 @@ BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  tomcat-servlet-4.0-api
+BuildRequires:  tomcat10-servlet-6.0-api
+BuildRequires:  tomcat-jakartaee-migration
 
 # Jackson 2
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
@@ -230,6 +232,12 @@ find -name '*.jar' -print -delete
 %install
 %mvn_install
 
+for f in %name-client.jar %name-jackson2-provider.jar %name-jaxrs.jar %name-servlet-initializer.jar
+do
+    fname="%buildroot%_javadir/resteasy/$f"
+    /usr/bin/javax2jakarta -logLevel=ALL -profile=EE "$fname" "$fname"
+done
+
 %files -n pki-%{name}
 %doc README.md
 %doc --no-dereference License.html
@@ -246,6 +254,9 @@ find -name '*.jar' -print -delete
 %files -n pki-%{name}-servlet-initializer -f .mfiles-servlet-initializer
 
 %changelog
+* Wed Jan 28 2026 Stanislav Levin <slev@altlinux.org> 3.0.26-alt4
+- Rebuilt with support and migration for tomcat10 and jakarta ee.
+
 * Tue Jan 20 2026 Evgeniy Serov <scala@altlinux.org> 3.0.26-alt3
 - Updated for compatibility with the new jaxb api.
 

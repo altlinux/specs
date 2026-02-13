@@ -4,14 +4,15 @@
 # used by mvn_build
 %def_without javadoc
 
-%define nss_version 3.97
+%define nss_version 3.101
 %define java_version 21
+%define tomcat_version 10.1.36
 
 # jss was renamed dogtag-jss
 %define jss_rebranded_version 5.2.0-alt1
 
 Name: jss
-Version: 5.6.0
+Version: 5.8.0
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -43,9 +44,9 @@ BuildRequires: mvn(org.slf4j:slf4j-jdk14)
 BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
 BuildRequires: mvn(org.opentest4j:opentest4j)
 # tomcat
-BuildRequires: mvn(org.apache.tomcat:tomcat-catalina) >= 9.0.62
-BuildRequires: mvn(org.apache.tomcat:tomcat-coyote) >= 9.0.62
-BuildRequires: mvn(org.apache.tomcat:tomcat-juli) >= 9.0.62
+BuildRequires: mvn(org.apache.tomcat:tomcat-catalina) >= %tomcat_version
+BuildRequires: mvn(org.apache.tomcat:tomcat-coyote) >= %tomcat_version
+BuildRequires: mvn(org.apache.tomcat:tomcat-juli) >= %tomcat_version
 
 # deps for tools/reproducible_jar.sh
 BuildRequires: zip
@@ -81,6 +82,7 @@ Group: System/Libraries
 # tomcatjss merged to jss
 Provides: tomcatjss = %EVR
 Obsoletes: tomcatjss <= 8.4.1-alt1
+Requires: tomcat10 >= %tomcat_version
 
 %description -n dogtag-jss-tomcat
 JSS Connector for Tomcat is a Java Secure Socket Extension (JSSE)
@@ -109,11 +111,11 @@ This package contains JSS tools.
 
 # specify Maven artifact locations
 %mvn_file org.dogtagpki.jss:jss-tomcat jss/jss-tomcat
-%mvn_file org.dogtagpki.jss:jss-tomcat-9.0 jss/jss-tomcat-9.0
+%mvn_file org.dogtagpki.jss:jss-tomcat-10.1 jss/jss-tomcat-10.1
 
 # specify Maven artifact packages
 %mvn_package org.dogtagpki.jss:jss-tomcat jss-tomcat
-%mvn_package org.dogtagpki.jss:jss-tomcat-9.0 jss-tomcat
+%mvn_package org.dogtagpki.jss:jss-tomcat-10.1 jss-tomcat
 
 %build
 # build Java code, run Java tests with Maven
@@ -196,6 +198,9 @@ ln -sr -t %buildroot{%_libdir/jss,%_javadir/jss/jss.jar}
 %_bindir/p7tool
 
 %changelog
+* Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 5.8.0-alt1
+- 5.6.0 -> 5.8.0.
+
 * Fri Feb 21 2025 Stanislav Levin <slev@altlinux.org> 5.6.0-alt1
 - 5.4.2 -> 5.6.0.
 

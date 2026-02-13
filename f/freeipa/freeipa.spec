@@ -4,11 +4,20 @@
 
 %ifarch %ix86 armh
 %def_with only_client
+%def_without modern_ui
 %else
 %def_without only_client
+# fails: Cannot find module '@rollup/rollup-linux-arm64-gnu'
+%ifarch aarch64
+%def_without modern_ui
+%else
+%def_with modern_ui
+%endif
 %endif
 
+# skip packaging of
 %def_without docs
+%def_without ipatests
 
 %if_without only_client
 %def_with fasttest
@@ -36,13 +45,15 @@
 
 %define bind_version 9.11
 %define bind_dyndb_ldap_version 11.1-alt7
-%define certmonger_version 0.79.17
+# https://pagure.io/freeipa/issue/9738
+%define certmonger_version 0.79.21
 # https://www.freeipa.org/release-notes/4-12-5.html
 # CVE-2025-7493 requires https://github.com/389ds/389-ds-base/issues/6857
 %define ds_version 3.1.3-alt3
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
-%define pki_version 10.10.5
+# https://pagure.io/freeipa/issue/9738
+%define pki_version 11.8.0
 %define python_ldap_version 3.2.0
 %define samba_version 4.7.6
 # RHBZ#1958909, RHBZ#1967906
@@ -54,8 +65,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.12.5
-Release: alt3
+Version: 4.13.0
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -64,6 +75,11 @@ Group: System/Base
 Url: http://www.freeipa.org/
 Source0: %name-%version.tar
 Source1: freeipa-server.filetrigger
+# https://git.altlinux.org/people/slev/public/updater_submodules.git
+%if_with modern_ui
+Source2: modules.tar
+Source3: vendor_nodejs.tar
+%endif
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -90,7 +106,7 @@ BuildRequires: libunistring-devel
 
 BuildRequires: 389-ds-base-devel >= %ds_version
 BuildRequires: samba-devel >= %samba_version
-BuildRequires: nodejs
+BuildRequires: /usr/bin/npm
 BuildRequires: python3(rjsmin)
 BuildRequires: python3-module-argcomplete
 %endif # only_client
@@ -311,6 +327,16 @@ Integrated DNS server is BIND 9. OpenDNSSEC provides key management.
 
 ###############################################################################
 
+%package server-encrypted-dns
+Summary: Support for encrypted DNS in IPA integrated DNS server
+Group: System/Base
+Requires: %name-client-encrypted-dns
+
+%description server-encrypted-dns
+Provides support for enabling DNS over TLS in the IPA integrated DNS server.
+
+###############################################################################
+
 %package server-trust-ad
 Summary: Virtual package to install packages required for Active Directory trusts
 Group: System/Base
@@ -369,6 +395,17 @@ and integration with Active Directory based infrastructures (Trusts).
 If your network uses IPA for authentication, this package should be
 installed on every client machine.
 This package provides command-line tools for IPA administrators.
+
+###############################################################################
+
+%package client-encrypted-dns
+Summary: Enable encrypted DNS support for IPA clients
+Group: System/Base
+Requires: unbound
+
+%description client-encrypted-dns
+This package enables support for installing IPA clients with encrypted DNS
+via DNS over TLS.
 
 ###############################################################################
 
@@ -510,6 +547,8 @@ If you are using IPA, you need to install this package.
 
 ###############################################################################
 
+%if_with ipatests
+
 %package -n python3-module-ipatests
 Summary: IPA tests and test tools
 Group: System/Base
@@ -537,8 +576,10 @@ This package contains tests that verify IPA functionality under Python 3.
 
 ###############################################################################
 
+%endif  # ipatests
+
 %prep
-%setup -n %name-%version
+%setup %{?_with_modern_ui:-a2 -a3}
 %if_with lint
 # we need it to generate cumulative patch without context
 git init
@@ -556,15 +597,25 @@ git add .
 git commit -am 'with our changes'
 %endif
 
+%if_without modern_ui
+touch install/freeipa-webui/Makefile.am
+%endif
+
 # Port 8080 is used by alterator-ahttpd-server
-if grep -rE --exclude-dir=.gear '(\W|^)8080(\W|$)' ; then
-    printf '%%s\n' 'Please change port 8080 to 8090 and commit'
-    exit 1
+if grep -rE --exclude-dir=.gear --exclude-dir=node_modules '(\W|^)8080(\W|$)' ; then
+    printf 'Warning: %%s\n' 'probably wrong port 8080, change to 8090'
 else
     [ "$?" -ne 1 ] && exit 1
 fi
 
 %build
+%if_with modern_ui
+# prebuild modern webui otherwise it will try `npm clean-install`
+# which requires internet.
+pushd install/freeipa-webui
+npm run build
+popd
+%endif
 
 export PYTHON=%__python3
 %autoreconf
@@ -572,7 +623,11 @@ export PYTHON=%__python3
 %if_without only_client
            --enable-server \
            --with-password-quality-lib=no \
+%if_with ipatests
            --with-ipatests \
+%else
+           --without-ipatests \
+%endif  # ipatests
 %else
            --disable-server \
            --without-ipatests \
@@ -628,7 +683,7 @@ rm %buildroot/%_libdir/samba/pdb/ipasam.la
 mkdir -p %buildroot%apache2_confdir/{sites-available,extra-available,extra-enabled}
 /bin/touch %buildroot%apache2_sites_available/ipa.conf
 /bin/touch %buildroot%apache2_extra_enabled/{ipa-kdc-proxy.conf,ipa-pki-proxy.conf,ipa-rewrite.conf}
-/bin/touch %buildroot%_datadir/ipa/html/{ca.crt,krb.con,krb5.ini,krbrealm.con}
+/bin/touch %buildroot%_datadir/ipa/html/ca.crt
 
 mkdir -p %buildroot%etc_systemd_dir/httpd2.service.d
 touch %buildroot%etc_systemd_dir/httpd2.service.d/ipa.conf
@@ -671,6 +726,11 @@ do
     register-python-argcomplete "$clitool" > "$clitool"
     install -p -m 0644 -D -t '%buildroot%bash_completions_dir' "$clitool"
 done
+
+%if_with modern_ui
+# deduplicate licenses
+rm %buildroot%_datadir/licenses/freeipa-server-common/modern-ui/COPYING
+%endif
 
 %endif # only_client
 
@@ -881,7 +941,6 @@ fi
 %_sbindir/ipa-ldap-updater
 %_sbindir/ipa-otptoken-import
 %_sbindir/ipa-compat-manage
-%_sbindir/ipa-nis-manage
 %_sbindir/ipa-managed-entries
 %_sbindir/ipactl
 %_sbindir/ipa-advise
@@ -890,6 +949,7 @@ fi
 %_sbindir/ipa-pkinit-manage
 %_sbindir/ipa-crlgen-manage
 %_sbindir/ipa-cert-fix
+%_sbindir/ipa-idrange-fix
 %_sbindir/ipa-acme-manage
 %_sbindir/ipa-migrate
 %_libexecdir/certmonger/dogtag-ipa-ca-renew-agent-submit
@@ -955,7 +1015,6 @@ fi
 %_man1dir/ipa-ca-install.1*
 %_man1dir/ipa-kra-install.1*
 %_man1dir/ipa-compat-manage.1*
-%_man1dir/ipa-nis-manage.1*
 %_man1dir/ipa-managed-entries.1*
 %_man1dir/ipa-ldap-updater.1*
 %_man1dir/ipa-backup.1*
@@ -967,6 +1026,7 @@ fi
 %_man1dir/ipa-pkinit-manage.1*
 %_man1dir/ipa-crlgen-manage.1*
 %_man1dir/ipa-cert-fix.1*
+%_man1dir/ipa-idrange-fix.1*
 %_man1dir/ipa-acme-manage.1*
 %_man1dir/ipa-migrate.1*
 %_man8dir/ipactl.8*
@@ -998,6 +1058,9 @@ fi
 %_datadir/ipa/html/*.html
 %dir %_datadir/ipa/migration/
 %_datadir/ipa/migration/index.html
+%if_with modern_ui
+%_datadir/ipa/modern-ui/
+%endif
 %_datadir/ipa/ui/
 %dir %_datadir/ipa/wsgi/
 %dir %_sysconfdir/ipa
@@ -1010,9 +1073,6 @@ fi
 %ghost %attr(0640,root,root) %config(noreplace) %apache2_extra_enabled/ipa-pki-proxy.conf
 %ghost %attr(0644,root,root) %config(noreplace) %_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
 %ghost %attr(0644,root,root) %config(noreplace) %_datadir/ipa/html/ca.crt
-%ghost %attr(0644,root,root) %_datadir/ipa/html/krb.con
-%ghost %attr(0644,root,root) %_datadir/ipa/html/krb5.ini
-%ghost %attr(0644,root,root) %_datadir/ipa/html/krbrealm.con
 %dir %_datadir/ipa/updates/
 %_datadir/ipa/updates/*
 %dir %_sharedstatedir/ipa
@@ -1046,9 +1106,12 @@ fi
 %_libexecdir/ipa/ipa-ods-exporter
 %_man1dir/ipa-dns-install.1*
 %_sbindir/ipa-dns-install
+%_datadir/ipa/ipa-dnssec.conf
 %attr(644,root,root) %_unitdir/ipa-dnskeysyncd.service
 %attr(644,root,root) %_unitdir/ipa-ods-exporter.socket
 %attr(644,root,root) %_unitdir/ipa-ods-exporter.service
+
+%files server-encrypted-dns
 
 %files server-trust-ad
 %_sbindir/ipa-adtrust-install
@@ -1062,9 +1125,12 @@ fi
 %_libexecdir/ipa/oddjob/com.redhat.idm.trust-fetch-domains
 %_altdir/winbind_krb5_locator.so
 
+%if_with ipatests
+
 %files -n python3-module-ipatests
 %python3_sitelibdir/ipatests/
 %python3_sitelibdir/ipatests-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/ipaplatform/test_fedora_legacy/
 %_bindir/ipa-run-tests
 %_bindir/ipa-test-config
 %_bindir/ipa-test-task
@@ -1072,7 +1138,8 @@ fi
 %_man1dir/ipa-test-config.1*
 %_man1dir/ipa-test-task.1*
 
-%endif # only_client
+%endif  # ipatests
+%endif  # only_client
 
 %files client
 %_sbindir/ipa-client-install
@@ -1111,6 +1178,8 @@ fi
 %_mandir/man1/ipa-client-automount.1*
 %python3_sitelibdir/ipaclient/install/ipa_client_automount.py
 
+%files client-encrypted-dns
+
 %files -n python3-module-ipaclient
 %python3_sitelibdir/ipaclient/
 %exclude %python3_sitelibdir/ipaclient/install/ipa_client_automount.py
@@ -1143,11 +1212,15 @@ fi
 %python3_sitelibdir/ipapython/
 %python3_sitelibdir/ipalib/
 %python3_sitelibdir/ipaplatform/
+%exclude %python3_sitelibdir/ipaplatform/test_fedora_legacy/
 %python3_sitelibdir/ipapython-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/ipalib-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Dec 29 2025 Stanislav Levin <slev@altlinux.org> 4.13.0-alt1
+- 4.12.5 -> 4.13.0.
+
 * Wed Nov 05 2025 Stanislav Levin <slev@altlinux.org> 4.12.5-alt3
 - Moved dns-related configs to server-dns subpackage (closes: #56645).
 
