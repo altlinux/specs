@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla
 
 Name: perl-Dist-Zilla
-Version: 6.032
+Version: 6.037
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -81,6 +81,9 @@ rm -f --  t/plugins/filefinders.t
 
 
 %changelog
+* Thu Feb 12 2026 Nikolay A. Fetisov <naf@altlinux.org> 6.037-alt1
+- New version
+
 * Thu May 30 2024 Nikolay A. Fetisov <naf@altlinux.org> 6.032-alt1
 - New version
 
