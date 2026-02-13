@@ -2,14 +2,15 @@
 %define _stripped_files_terminate_build 1
 
 Name: gamescope
-Version: 3.16.19
+Version: 3.16.20
 Release: alt1
 
 Summary: Micro-compositor for video games on Wayland
 
 Group: System/X11
 License: BSD-2-Clause
-Url: https://github.com/Plagman/gamescope
+Url: https://github.com/ValveSoftware/gamescope
+Vcs: https://github.com/ValveSoftware/gamescope.git
 
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
@@ -77,6 +78,9 @@ Gamescope is the micro-compositor optimized for running video games on Wayland.
 %setup -a1
 %autopatch -p1
 
+# set version without git
+sed -i "s/vcs_tag = .*/vcs_tag = '%version'/" src/meson.build
+
 # use system spirv headers
 sed -i 's^../thirdparty/SPIRV-Headers/include/spirv/^/usr/include/spirv/^' src/meson.build
 rm -rv thirdparty/SPIRV-Headers
@@ -110,11 +114,17 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %_bindir/gamescopectl
 %_bindir/gamescopereaper
 %_bindir/gamescopestream
+%_bindir/gamescope-type
 %_libdir/libVkLayer_FROG_gamescope_wsi_*.so
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 %_datadir/%name/
 
 %changelog
+* Fri Feb 13 2026 Ilya Sorochan <k0tran@altlinux.org> 3.16.20-alt1
+- 3.16.20
+- Update Url and add Vcs tag.
+- Use %%version in the build process (ALT bug: 55085).
+
 * Mon Jan 12 2026 Ilya Sorochan <k0tran@altlinux.org> 3.16.19-alt1
 - 3.16.19
 
