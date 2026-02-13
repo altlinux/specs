@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 147.0
+Version: 147.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -382,6 +382,11 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Feb 12 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-0818: CSS-based exfiltration of the content from partially encrypted emails when allowing remote content
+
 * Thu Jan 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 147.0-alt1
 - New version.
 - Fixes:
