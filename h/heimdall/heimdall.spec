@@ -1,25 +1,25 @@
 # SPEC file for heimdall package
 
 Name:    heimdall
-Version: 2.0.2
+Version: 2.2.2
 Release: alt1
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
 License: %bsdstyle
 Group:   Other
-URL:     http://www.glassechidna.com.au/heimdall
+URL:     https://git.sr.ht/~grimler/Heimdall
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
-Source:  https://git.sr.ht/~grimler/Heimdall/archive/v%{version}.tar.gz#/%name-%version.tar
+Source:  %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun May 14 2017
-# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base
-BuildRequires: cmake libusb-devel qt5-base-devel zlib-devel
+# Automatically added by buildreq on Thu Feb 12 2026
+# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base qt6-base-common sh5 vulkan-headers
+BuildRequires: libusb-devel qt6-base-devel zlib-devel
 
 %description
 Heimdall is a cross-platform open-source tool suite used to flash
@@ -61,9 +61,9 @@ install -m 0755 %_cmake__builddir/bin/* %buildroot%_bindir/
 mkdir -p -- %buildroot%_udevrulesdir
 install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
 
-
 %files
-%doc README.md LICENSE Linux/README
+%doc README.md LICENSE
+%doc doc/*.md
 
 %_bindir/%name
 
@@ -73,6 +73,11 @@ install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
 %_bindir/%name-frontend
 
 %changelog
+* Thu Feb 12 2026 Nikolay A. Fetisov <naf@altlinux.org> 2.2.2-alt1
+- New version
+  - Build with QT6
+- Update upstream URL
+
 * Fri Mar 01 2024 Ildar Mulyukov <ildar@altlinux.ru> 2.0.2-alt1
 - build from the fork: https://git.sr.ht/~grimler/Heimdall
 
