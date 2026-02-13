@@ -3,7 +3,7 @@
 %def_without check
 
 Name: quickbib
-Version: 0.5.91
+Version: 0.6.1
 Release: alt1
 
 Summary: Get BibTeX from a DOI - fast
@@ -65,6 +65,9 @@ sed -i "s|assets/icon/scalable/|%_iconsdir/hicolor/scalable/apps/|" README.md
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt1
+- New version 0.6.1.
+
 * Sun Feb 08 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.91-alt1
 - New version 0.5.91.
 

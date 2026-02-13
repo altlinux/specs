@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pinit
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Pin portable apps to the launcher
@@ -20,6 +20,7 @@ BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: git
 
 %description
 Pin shortcuts for portable apps like raw executable files, AppImage
@@ -55,6 +56,9 @@ rm -fv %buildroot%_datadir/locale/zh_Hans/LC_MESSAGES/*.mo
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Feb 08 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.1-alt1
+- New version 2.2.1.
+
 * Mon Aug 18 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 

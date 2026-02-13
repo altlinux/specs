@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tetzle
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: Jigsaw puzzle game
@@ -45,5 +45,8 @@ between currently in progress games.
 %_man6dir/%{name}.6*
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 3.0.4-alt1
+- New version 3.0.4.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.3-alt1
 - Initial build for Sisyphus

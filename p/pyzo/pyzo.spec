@@ -3,7 +3,7 @@
 %def_with check
 
 Name: pyzo
-Version: 4.20.0
+Version: 4.21.0
 Release: alt1
 
 Summary: interactive editor for scientific Python
@@ -119,5 +119,8 @@ xvfb-run --auto-servernum %__python3 pyzolauncher.py --test
 %_datadir/doc/pyzo/*
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 4.21.0-alt1
+- New version 4.21.0.
+
 * Wed Dec 24 2025 Nikolay Strelkov <snk@altlinux.org> 4.20.0-alt1
 - Initial build for Sisyphus

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wl-mirror
-Version: 0.18.4
+Version: 0.18.5
 Release: alt1
 
 Summary: Simple Wayland output mirror client
@@ -50,6 +50,9 @@ or screencopy protocols to work.
 %_man1dir/wl-present.*
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 0.18.5-alt1
+- New version 0.18.5.
+
 * Thu Feb 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.18.4-alt1
 - New version 0.18.4.
 

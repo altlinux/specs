@@ -3,7 +3,7 @@
 %define appname io.github.v81d.Wattage
 
 Name: wattage
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Application designed for monitoring the health and status of your power devices
@@ -23,6 +23,7 @@ BuildRequires: vala-tools
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: /usr/bin/blueprint-compiler
 
 %description
 Wattage is an application designed for monitoring the health and status
@@ -58,6 +59,9 @@ sed -i "s|data/icons|/usr/share/icons|" README.md
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt1
+- New version 1.3.1.
+
 * Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
