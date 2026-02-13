@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -15,13 +15,13 @@ BuildRequires: cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-dev
 BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
 BuildRequires: libpolkit-devel libjson-glib-devel
 
-Requires: alterator-manager >= 0.1.29
-Requires: alterator-module-executor >= 0.1.25
-Requires: alterator-backend-packages >= 0.2.8
-Requires: alterator-backend-component >= 0.3.0
-Requires: alterator-interface-edition >= 0.2.0
+Requires: alterator-manager >= 0.1.32
+Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-backend-packages >= 0.2.12
+Requires: alterator-backend-component >= 0.3.3
+Requires: alterator-interface-edition >= 0.4.1
 Requires: alterator-interface-diag >= 0.1.4
-Requires: alterator-backend-systeminfo >= 0.4.0
+Requires: alterator-backend-systeminfo >= 0.4.2
 Requires: alterator-interface-service >= 0.2.1-alt2
 Requires: libtomlc99 polkit libjson-glib
 
@@ -55,6 +55,14 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Thu Feb 12 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.7-alt1
+- Fixed:
+  + Displaying a message about the absence of diagnostic tools in the "diag list".
+  + Displaying a message about missing components in the "components list".
+- Added:
+  + Added support for disabling actions for services for the alterator-entry.
+  + Added support for hints for invalid for service values in accordance with the alterator-entry.
+
 * Thu Feb 05 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.6-alt1
 - Fixed:
   + Components module help.
@@ -86,9 +94,9 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 
 * Fri Dec 26 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.2.3-alt1
 - Changed (thx Andrey Alekseev):
-  + Order of parameter validation, parameter table output, and password 
+  + Order of parameter validation, parameter table output, and password
     confirmation. Parameters are only validated after the table is displayed.
-    Passwords are requested interactively only if all other 
+    Passwords are requested interactively only if all other
     parameters are valid.
 - Fixed (thx Pavel Khromov and Andrey Alekseev):
   + Removed parameters from command help that did not match their context.
