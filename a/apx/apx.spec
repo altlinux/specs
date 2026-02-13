@@ -3,7 +3,7 @@
 %global import_path github.com/Vanilla-OS/apx
 Name: apx
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Package manager with support for multiple sources
 License: GPL-3.0-only
@@ -85,5 +85,8 @@ echo "      https://www.altlinux.org/Podman for details."
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt2
+- Added 'apx list' command for apt-rpm package manager.
+
 * Tue Jan 20 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt1
 - Initial build for Sisyphus

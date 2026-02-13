@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: corepaint
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Paint app for C Suite
@@ -39,7 +39,11 @@ sed -i "s|Graphics;|Graphics;2DGraphics;|" cc.cubocore.CorePaint.desktop
 %_bindir/corepaint
 %_desktopdir/cc.cubocore.CorePaint.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CorePaint.svg
+%_datadir/metainfo/cc.cubocore.CorePaint.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

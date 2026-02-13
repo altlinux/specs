@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: coreshot
-Version: 5.0.0
-Release: alt2
+Version: 5.0.1
+Release: alt1
 
 Summary: Screen capture utility for C Suite
 License: GPL-3.0-or-later
@@ -43,8 +43,12 @@ sed -i "s|Utility;|Utility;FileTools;|" cc.cubocore.CoreShot.desktop
 %_bindir/coreshot
 %_desktopdir/cc.cubocore.CoreShot.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreShot.svg
+%_datadir/metainfo/cc.cubocore.CoreShot.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt2
 - Fixed FTBFS with  Qt 6.10.
 

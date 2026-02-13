@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: coreinfo
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: File information tool for C Suite
@@ -41,7 +41,11 @@ sed -i "s|Utility;|Utility;FileTools;|" cc.cubocore.CoreInfo.desktop
 %_bindir/coreinfo
 %_desktopdir/cc.cubocore.CoreInfo.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreInfo.svg
+%_datadir/metainfo/cc.cubocore.CoreInfo.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus

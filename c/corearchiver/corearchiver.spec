@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: corearchiver
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Archiver for C Suite
@@ -39,7 +39,11 @@ Requires: hicolor-icon-theme
 %_bindir/corearchiver
 %_desktopdir/cc.cubocore.CoreArchiver.desktop
 %_iconsdir/hicolor/scalable/apps/cc.cubocore.CoreArchiver.svg
+%_datadir/metainfo/cc.cubocore.CoreArchiver.metainfo.xml
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Tue Dec 30 2025 Nikolay Strelkov <snk@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus
