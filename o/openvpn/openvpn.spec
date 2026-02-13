@@ -7,6 +7,8 @@
 %def_with devel
 %def_with syslog
 
+%def_without dco
+
 %def_with management
 %def_with pkcs11
 %def_with http_proxy
@@ -16,7 +18,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.15
+Version: 2.6.19
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -53,13 +55,13 @@ Source14: %name-client@.service
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Thu Oct 26 2023
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcap-ng libgpg-error libpkcs11-helper libssl-devel perl pkg-config python-modules python2-base python3 python3-base python3-dev sh5 xz
-BuildRequires: cmake git-core glibc-devel-static iproute2 libcap-ng-devel liblz4-devel liblzo2-devel libselinux-devel net-tools time
+# Automatically added by buildreq on Thu Feb 12 2026
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcap-ng libgpg-error libpkcs11-helper libssl-devel openssl-config perl pkg-config python3 python3-base sh5 xz
+BuildRequires: cmake git-core glibc-devel-static iproute2 libcap-ng-devel liblz4-devel liblzo2-devel libpam-devel libpkcs11-helper-devel libselinux-devel libsystemd-devel net-tools time
 
 BuildRequires: python3-module-docutils
-#BuildRequires: lua5.4 libcrypto1.1
 
+%{?_with_dco:BuildRequires: libnl-devel}
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_pkcs11:BuildRequires: libpkcs11-helper-devel}
 %{?_with_plugins:BuildRequires: libpam-devel}
@@ -162,10 +164,9 @@ cp -f -- %SOURCE10 distro/systemd/tmpfiles-openvpn.conf
 %endif
 
 %configure \
-    --enable-iproute2 \
-    --with-iproute-path=/sbin/ip \
     --enable-password-save \
     --enable-lzo \
+    %{?_without_dco: --enable-iproute2 --with-iproute-path=/sbin/ip} \
     %{?_with_plugins:--enable-plugins --enable-plugin-auth-pam --enable-plugin-down-root} \
     %{?_with_management:--enable-management} \
     %{?_with_pkcs11:--enable-pkcs11} \
@@ -345,6 +346,16 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Tue Feb 12 2026 Nikolay A. Fetisov <naf@altlinux.org> 2.6.19-alt1
+- New version
+- Fixes:
+   + CVE-2025-13751: Windows/interactive service erroneous exit on error
+   + CVE-2025-13086: fix memcmp check for the HMAC 3-way handshake verification
+   + Fix errors checks in auth plugin/script handling
+   + Fix socket FDs leaking to child processes for incoming TCP connections
+   + Repair client-side interaction on reconnect between DCO event handling
+     and '--persist-tun'
+
 * Wed Nov 05 2025 Nikolay A. Fetisov <naf@altlinux.org> 2.6.15-alt1
 - New version
 - Fixes:
