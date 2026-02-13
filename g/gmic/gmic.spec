@@ -15,13 +15,13 @@
 # no tags
 %define zart_ver d014169
 # https://github.com/GreycLab/gmic-qt
-%define gmic_qt_ver v.3.5.0-7-gb55b8ca
+%define gmic_qt_ver v.3.5.0-8-gd4ecc26
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-314-gea62768f
+%define gmic_comm_ver gmic-3.4.3-423-ge55c3ec3
 
 Name: gmic
-Version: 3.6.4
-Release: alt1.1
+Version: 3.7.0
+Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -31,13 +31,16 @@ Url: https://gmic.eu
 Vcs: https://github.com/GreycLab/gmic.git
 
 %if_disabled snapshot
-Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
+#Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
+Source: https://github.com/GreycLab/%name/releases/download/v.%version/%{name}_%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 Source1: zart-%zart_ver.tar
 Source2: gmic-qt-%gmic_qt_ver.tar
 Source3: gmic-community-%gmic_comm_ver.tar
+
+#ExcludeArch: %ix86
 
 Requires: lib%name = %EVR
 
@@ -222,6 +225,12 @@ popd
 %gimpplugindir/plug-ins/%{name}_gimp_qt/%{name}_gimp_qt}
 
 %changelog
+* Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
+* Mon Dec 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.6-alt1
+- 3.6.6
+
 * Mon Dec 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1.1
 - fixed build of GIMP plugin
 
