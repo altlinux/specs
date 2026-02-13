@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 0.7.8
+Version: 0.8.0
 Release: alt1
 Summary: Mypyc runtime library
 License: MIT
@@ -48,11 +48,13 @@ cp -r lib-rt/* .
 %pyproject_run_pytest -vra smoke_tests.py
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.8 -> 0.8.0.
+
 * Wed Feb 04 2026 Stanislav Levin <slev@altlinux.org> 0.7.8-alt1
 - 0.7.5 -> 0.7.8.
 
