@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.93.0
+Version: 1.93.1
 Release: alt1
 Epoch: 1
 
@@ -468,6 +468,9 @@ rm -rf %rustdir
 %rustlibdir/wasm32-unknown-unknown/
 
 %changelog
+* Fri Feb 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.93.1-alt1
+- New version (1.93.1).
+
 * Wed Jan 28 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.93.0-alt1
 - New version (1.93.0).
 
