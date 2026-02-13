@@ -1,6 +1,6 @@
 Name: zyn-fusion
 Version: 3.0.6
-Release: alt4
+Release: alt5
 
 Summary: Zynaddsubfx UI
 License: LGPL-2.1
@@ -36,6 +36,9 @@ ln -srv %buildroot%_libdir/zyn-fusion/zest %buildroot%_bindir/zyn-fusion
 %_libdir/zyn-fusion
 
 %changelog
+* Fri Feb 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt5
+- 3.0.6-68-ge182fe0
+
 * Fri Sep 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt4
 - 3.0.6-58-g7ca265d
 
