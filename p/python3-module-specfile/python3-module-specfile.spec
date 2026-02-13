@@ -2,7 +2,7 @@
 %define pypi_name specfile
 
 Name: python3-module-%pypi_name
-Version: 0.38.0
+Version: 0.39.0
 Release: alt1
 
 Summary: A library for parsing and manipulating RPM spec files
@@ -52,5 +52,8 @@ sed -i 's/describe-name:.*/describe-name: %version/' .git_archival.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 13 2026 Alexey Shabalin <shaba@altlinux.org> 0.39.0-alt1
+- 0.39.0.
+
 * Sun Dec 21 2025 Alexey Shabalin <shaba@altlinux.org> 0.38.0-alt1
 - Initial build.
