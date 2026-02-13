@@ -1,7 +1,7 @@
 # SPEC file for gilolite package
 
 Name: gitolite
-Version: 3.6.13
+Version: 3.6.14
 Release: alt1
 
 Summary: Highly flexible server for git directory version tracker
@@ -90,8 +90,8 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 rm -rf -- contrib/t
 
 # Format documentation
-find doc/docs/ -name '*.mkd' | while read F; do
-    perl -MText::Markdown >${F/.mkd/.html} <$F \
+find doc/docs/ -name '*.md' | while read F; do
+    perl -MText::Markdown >${F/.md/.html} <$F \
         -e 'print Text::Markdown::markdown (join "", <>)'
 done
 
@@ -164,6 +164,10 @@ echo "---------------------------------------------------"
 
 
 %changelog
+* Thu Feb 12 2026 Nikolay A. Fetisov <naf@altlinux.org> 3.6.14-alt1
+- New version
+  - detect HEAD name in admin repo (don't require it be "master")
+
 * Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.6.13-alt1
 - New version
 
