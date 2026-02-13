@@ -3,7 +3,7 @@
 %def_with check
 
 Name: gitfourchette
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Comfortable Git UI for Linux
@@ -26,6 +26,7 @@ BuildRequires: python3(pytestqt)
 
 Requires: git
 Requires: python3(PyQt6)
+Requires: fuse
 
 # this command is only for Mac, so may be skipped
 %filter_from_requires /^.usr.bin.opendiff/d
@@ -63,11 +64,16 @@ install -Dm644 pkg/appimage/gitfourchette.desktop %buildroot%_desktopdir/gitfour
 %files
 %doc README.md
 %_bindir/gitfourchette
+%_bindir/gitfourchette-askpass
+%_bindir/gitfourchette-mount
 %_desktopdir/gitfourchette.desktop
 %_iconsdir/hicolor/256x256/apps/gitfourchette.png
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Sat Jan 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus
