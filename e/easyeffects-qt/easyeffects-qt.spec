@@ -6,7 +6,7 @@
 
 Name: %_name-qt
 Version: 8.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Audio effects for Pipewire applications
 License: GPL-3.0-or-later
@@ -21,7 +21,6 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-# no 32-bit qt6-webengine
 ExcludeArch: %ix86
 
 Conflicts: %_name < 8.0.0
@@ -78,7 +77,6 @@ BuildRequires: pkgconfig(Qt6Qml)
 BuildRequires: pkgconfig(Qt6Quick)
 BuildRequires: pkgconfig(Qt6QuickControls2)
 BuildRequires: pkgconfig(Qt6Widgets)
-BuildRequires: pkgconfig(Qt6WebEngineQuick)
 BuildRequires: pkgconfig(libportal-qt6)
 # KDE
 #BuildRequires: pkgconfig(KF6ConfigCore)
@@ -135,6 +133,9 @@ sed -i -E 's/plugin( .*map\(\)) \| std::views.*$/fix\1){auto\&plugin=fix.second;
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.2-alt1.1
+- removed useless since 8.0.7 QtWebEngine from BR
+
 * Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.2-alt1
 - 8.1.2
 
