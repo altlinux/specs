@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Minimon COSMIC Applet
@@ -53,7 +53,10 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch %ix86 aarch64
+    --config 'profile.release.lto=false'
+%endif
 
 %install
 just rootdir=%buildroot install
@@ -69,6 +72,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Fri Dec 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
