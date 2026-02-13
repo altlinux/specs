@@ -1,39 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: slapi-nis
-Version: 0.60.0
-Release: alt2
-
-Summary: NIS Server and Schema Compatibility plugins for Directory Server
+Version: 0.70.0
+Release: alt1
+Summary: Schema Compatibility plugins for Directory Server
 License: GPL-3.0
 Group: System/Base
 Url: http://pagure.io/slapi-nis/
+Vcs: https://pagure.io/slapi-nis/
+ExcludeArch: %ix86 armh
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
+Requires: 389-ds-base >= 1.3.5.6
 BuildRequires: 389-ds-base-devel
 BuildRequires: glibc-utils
 BuildRequires: libldap-devel
-BuildRequires: libnsl2-devel
-BuildRequires: libtirpc-devel
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libsss_nss_idmap-devel
 BuildRequires: pam-devel
-BuildRequires: /usr/bin/rpcgen
-
-ExcludeArch: %ix86 armh
-
-Requires: 389-ds-base >= 1.3.5.6
 
 %description
-This package provides two plugins for Red Hat and 389 Directory Server.
-
-The NIS Server plugin allows the directory server to act as a NIS server
-for clients, dynamically generating and updating NIS maps according to
-its configuration and the contents of the DIT, and serving the results to
-clients using the NIS protocol as if it were an ordinary NIS server.
-
 The Schema Compatibility plugin allows the directory server to provide an
 alternate view of entries stored in part of the DIT, optionally adding,
 dropping, or renaming attribute values, and optionally retrieving values
@@ -51,26 +38,41 @@ for attributes from multiple entries in the tree.
     --with-nsswitch \
     --with-pam \
     --with-pam-service=system-auth \
-    --with-tcp-wrappers=no \
-    --with-tirpc=yes \
     --enable-be-txns-by-default \
     --with-sss-nss-idmap \
-    --with-idviews
-sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
+    --with-idviews \
+    --disable-nis \
+
 %make_build
 
 %install
 %makeinstall_std
 
+%triggerin -- 389-ds-base
+instances=$(%_sbindir/dsctl -l)
+for inst in $instances ; do
+  if grep -q 'cn=NIS server,cn=plugins' %_sysconfdir/dirsrv/${inst}/dse.ldif
+  then
+    if %_bindir/ldapdelete -Y EXTERNAL \
+      -H ldapi://%%2fvar%%2frun%%2f${inst}.socket \
+      -r "cn=NIS Server,cn=plugins,cn=config" 2>/dev/null
+    then
+      %_sbindir/dsctl "$inst" restart ||:
+    else
+      echo "Cannot remove NIS server plugin from LDAP server ${inst} instance. Server will fail to start until it is removed."
+      echo "Remove 'cn=NIS Server,cn=plugins,cn=config' entry from %_sysconfdir/dirsrv/${inst}/dse.ldif"
+    fi
+  fi
+done
+
 %files
-%doc COPYING NEWS README STATUS doc/*.txt doc/examples/*.ldif doc/ipa
-%_man1dir/nisserver-plugin-defs.1.*
-%_libdir/dirsrv/plugins/nisserver-plugin.so
 %_libdir/dirsrv/plugins/schemacompat-plugin.so
-%_sbindir/nisserver-plugin-defs
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Thu Feb 05 2026 Stanislav Levin <slev@altlinux.org> 0.70.0-alt1
+- 0.60.0 -> 0.70.0.
+
 * Tue Jan 09 2024 Stanislav Levin <slev@altlinux.org> 0.60.0-alt2
 - Disabled build for armh.
 
