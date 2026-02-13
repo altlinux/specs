@@ -2,7 +2,7 @@
 %def_without check
 
 Name: jtreg
-Version: 8.1+1
+Version: 8.2+1
 Release: alt1
 
 Summary: Regression Test Harness for the OpenJDK platform: jtreg
@@ -95,5 +95,8 @@ make test
 %doc LICENSE README.md
 
 %changelog
+* Tue Feb 10 2026 Timofei Fedotov <sovtouch@altlinux.org> 8.2+1-alt1
+- Updated to 8.2+1.
+
 * Mon Nov 17 2025 Timofei Fedotov <sovtouch@altlinux.org> 8.1+1-alt1
 - Initial build for ALT Sisyphus.
