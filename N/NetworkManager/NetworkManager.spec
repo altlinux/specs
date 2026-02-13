@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.55.91
+Version: 1.56.0
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -102,9 +102,6 @@ Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 Requires: %name-ppp = %version-%release
 
-# In 126 version /usr/libexec/polkit-1/polkit-agent-helper-1 -> /usr/lib/polkit-1/polkit-agent-helper-1
-Conflicts: polkit < 126-alt1
-
 # Drop busctl from Requires:
 # it from NetworkManager.service and pulls systemd.
 %filter_from_requires /^\/usr\/bin\/busctl/d
@@ -139,6 +136,9 @@ Conflicts: NetworkManager-ssh < 1.1.0
 Conflicts: NetworkManager-gnome < 1.1.90
 
 Conflicts: dhcpcd < %dhcpcd_version
+
+# In 126 version /usr/libexec/polkit-1/polkit-agent-helper-1 -> /usr/lib/polkit-1/polkit-agent-helper-1
+Conflicts: polkit < 126-alt1
 
 Obsoletes: nmcli
 
@@ -649,6 +649,10 @@ fi
 %endif
 
 %changelog
+* Fri Feb 13 2026 Mikhail Efremov <sem@altlinux.org> 1.56.0-alt1
+- Moved the polkit conflict to daemon subpackage.
+- Updated to 1.56.0.
+
 * Tue Dec 16 2025 Mikhail Efremov <sem@altlinux.org> 1.55.91-alt1
 - Updated to 1.55.91 (1.56-rc2).
 
