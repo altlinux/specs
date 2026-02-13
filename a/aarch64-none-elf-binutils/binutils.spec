@@ -1,5 +1,5 @@
 Name: aarch64-none-elf-binutils
-Version: 2.45
+Version: 2.46
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
@@ -66,6 +66,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Fri Feb 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.46-alt1
+- 2.46 released
+
 * Wed Sep 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.45-alt1
 - 2.45 released
 
