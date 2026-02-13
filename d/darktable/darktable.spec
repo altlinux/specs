@@ -15,6 +15,8 @@
 %endif
 %def_enable libheif
 %def_enable jxl
+%def_enable map
+
 # lensfun a mandatory dependency
 #src/iop/lens.cc:
 #error lensfun 0.3.95 is not supported since its API is not backward compatible with lensfun stable release.
@@ -22,7 +24,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -84,7 +86,6 @@ BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
 # since 2.0
 BuildRequires: libpugixml-devel >= %pugixml_ver libcups-devel
-BuildRequires: libosm-gps-map1.0-devel
 BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: libgmic-devel libjasper-devel
@@ -95,6 +96,7 @@ Provides: lua%lua_ver_major(darktable)}
 %{?_enable_libavif:BuildRequires: libavif-devel >= %libavif_ver}
 %{?_enable_libheif:BuildRequires: libheif-devel}
 %{?_enable_jxl:BuildRequires: libjxl-devel}
+%{?_enable_map:BuildRequires: libosm-gps-map1.0-devel}
 # for not recommended build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -143,7 +145,8 @@ sed -i "/#pragma unroll/d" src/common/fast_guided_filter.h src/iop/channelmixerr
 -DUSE_OPENCL=OFF \
 %endif
 %{?_enable_system_libraw:-DDONT_USE_INTERNAL_LIBRAW=ON} \
-%{?_enable_system_lua:-DDONT_USE_INTERNAL_LUA=ON}
+%{?_enable_system_lua:-DDONT_USE_INTERNAL_LUA=ON} \
+%{?_disable_map:-DOSMGpsMap=OFF -DUSE_MAP=OFF}
 %nil
 %cmake_build
 
@@ -176,6 +179,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 5.4.1-alt1.1
+- made libosmgpsmap support optional
+
 * Fri Feb 06 2026 Yuri N. Sedunov <aris@altlinux.org> 5.4.1-alt1
 - 5.4.1
 
