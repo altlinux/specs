@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: plasma-bigscreen
-Version: 6.4.80
-Release: alt1.git.6a767b37
+Version: 6.5.80
+Release: alt1.git.989ac8b2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -101,6 +101,7 @@ to any installed apps and skills. Controllable via voice or TV remote.
 %setup
 sed -i "s|Categories=.*|Categories=KDE;Qt;Video;AudioVideo;Recorder;|" uvcviewer/org.kde.plasma.bigscreen.uvcviewer.desktop
 sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasma-bigscreen-swap-session.desktop.cmake
+sed -i "s|\${PROJECT_VERSION}|6.5.5|g" CMakeLists.txt
 
 %build
 %K6build
@@ -128,7 +129,12 @@ sed -i "s|Categories=.*|Categories=KDE;Qt;AudioVideo;Video;Audio;TV;|" bin/plasm
 %dir %_K6data/sounds/plasma-bigscreen
 %_K6data/sounds/plasma-bigscreen/*
 %_K6data/wayland-sessions/plasma-bigscreen-wayland.desktop
+%_K6lib/qt6/plugins/kf6/kded/kded_plasma_bigscreen_start.so
+%_K6data/dbus-1/interfaces/org.kde.biglauncher.xml
 
 %changelog
+* Fri Feb 14 2026 Nikolay Strelkov <snk@altlinux.org> 6.5.80-alt1.git.989ac8b2
+- Updated to newer commit to get gamepad support (closes: #57842).
+
 * Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 6.4.80-alt1.git.6a767b37
 - Initial build for Sisyphus
