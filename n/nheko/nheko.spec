@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.12.0
-Release: alt4
+Release: alt5
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -32,6 +32,9 @@ BuildRequires: libselinux-devel
 BuildRequires: libxcbutil-icccm-devel
 BuildRequires: asciidoc-a2x
 BuildRequires: libre2-devel
+%ifarch %e2k
+BuildRequires: clang llvm-devel
+%endif
 
 # Additional (runtime) dependencies
 Requires: qt6-multimedia libqt6-quickparticles
@@ -58,6 +61,10 @@ and less like an IRC client.
        -DUSE_BUNDLED_COEURL=OFF    \
        -DUSE_BUNDLED_LIBCURL=OFF   \
        -DUSE_BUNDLED_LIBEVENT=OFF  \
+%ifarch %e2k
+       -DCMAKE_CXX_COMPILER=clang++ \
+       -DCMAKE_CXX_FLAGS_RELEASE="-O2 -DNDEBUG" \
+%endif
        -DCMAKE_BUILD_TYPE=Release
 
 # Adjust nprocs for git.alt
@@ -78,6 +85,9 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Feb 14 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.12.0-alt5
+- e2k build fix
+
 * Thu Jan 22 2026 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt4
 - Fix to build with Qt-6.10 .
 
