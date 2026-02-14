@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: Installer configuration (Virtualization ONE)
 License: GPLv2
@@ -28,7 +28,7 @@ Requires: installer-stage2
 Requires: alterator-sysconfig
 Requires: alterator-datetime
 Requires: alterator-pkg
-Requires: alterator-blivet
+Requires: alterator-vm
 Requires: alterator-notes
 
 %description stage2
@@ -45,9 +45,8 @@ Provides: installer-%distro-stage3 = %version
 # modules
 Requires: alterator-users
 Requires: alterator-root
-Requires: alterator-net-eth dhcpcd
-Requires: alterator-net-bond alterator-net-bridge
-Requires: alterator-net-general
+Requires: alterator-luks
+Requires: alterator-net-ng
 Requires: alterator-notes
 Requires: installer-feature-online-repo
 Requires: installer-feature-powerbutton-stage3
@@ -77,6 +76,10 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Feb 13 2026 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.4
+- Use alterator-net-ng for network setup
+- Return to using alterator-vm instead of alterator-blivet
+
 * Fri Oct 24 2025 Alexander Burmatov <thatman@altlinux.org> 11.0.0-alt0.3
 - Fix last step (ALT #55975).
 

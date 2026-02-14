@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.177
+Version: 2.9.178
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Sat Feb 14 2026 Sergey Konev <darisishe@altlinux.org> 2.9.178-alt1
+- alterator-net-ng: initial translation.
+
 * Fri Feb 13 2026 Anton Midyukov <antohami@altlinux.org> 2.9.177-alt1
 - alterator-officer: initial translation.
 
