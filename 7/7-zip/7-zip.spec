@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: 7-zip
-Version: 25.01
+Version: 26.00
 Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
@@ -128,6 +128,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Sat Feb 14 2026 Fr. Br. George <george@altlinux.org> 26.00-alt1
+- Autobuild version bump to 26.00
+
 * Mon Aug 18 2025 Fr. Br. George <george@altlinux.org> 25.01-alt1
 - Autobuild version bump to 25.01
 - Fixes: CVE-2025-55188
