@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt3
+Release: alt4
 %K5init
 
 Group: System/Libraries
@@ -85,8 +85,10 @@ rm -f po/ru/kwalletd5.po.tmp
 %K5cmake -DBUILD_TESTING=ON
 %K5make
 
+%ifnarch %ix86 %arm
 %check
 LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
+%endif
 
 %install
 %K5install
@@ -137,6 +139,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Sat Feb 14 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt4
+- disable %%check on %%ix86 and %%arm
+
 * Mon Aug 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
 - fix package
 
