@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: pgpdump
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: A PGP packet visualizer
@@ -14,8 +14,14 @@ Vcs: https://github.com/kazu-yamamoto/pgpdump
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+}}
 
 %description
 pgpdump is a PGP packet visualizer which displays the packet format of
@@ -29,7 +35,8 @@ to understand.
 %setup
 
 %build
-%ifarch x86_64
+%if 0%{?fanalyzer}
+%define optflags_lto %nil
 %add_optflags -fanalyzer -Werror
 %endif
 %autoreconf
@@ -42,14 +49,22 @@ install -D pgpdump.1 %buildroot%_man1dir/pgpdump.1
 
 %check
 ./pgpdump -v |& grep -P '^pgpdump version \Q%version,'
-data/test.sh -v
+%ifarch %valgrind_arches
+%define valgrind valgrind -q --error-exitcode=2 --track-origins=yes
+sed -Ei.bak '/got=/s/"\$\{PGPDUMP\}"/%valgrind &/' test/test
+! diff -u test/test test/test.bak || exit 3
+%endif
+%make_build check
 
 %files
-%doc CHANGES COPYRIGHT README.md
+%doc ChangeLog.md COPYRIGHT README.md
 %_bindir/pgpdump
 %_man1dir/pgpdump.*
 
 %changelog
+* Fri Feb 13 2026 Vitaly Chikunov <vt@altlinux.org> 0.37-alt1
+- Update to v0.37 (2026-02-12).
+
 * Mon Jan 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.36-alt1
 - Update to v0.36 (2024-01-29).
 
