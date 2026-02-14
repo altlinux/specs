@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.7.1
-Release: alt2
+Version: 1.7.2
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later AND Zlib
@@ -113,7 +113,8 @@ mv innoextract launcher/lib/
 	-DENABLE_TEST=OFF \
 	-DFORCE_BUNDLED_FL=OFF \
 	-DENABLE_INNOEXTRACT=ON \
-	-DENABLE_GOLDMASTER=ON
+	-DENABLE_GOLDMASTER=ON \
+	-DENABLE_DISCORD=OFF
 
 %cmake_build
 
@@ -137,6 +138,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Feb 14 2026 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
+- New version 1.7.2.
+
 * Sat Jan 31 2026 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt2
 - Enable innoextract support.
 - Update URL, add VCS.
