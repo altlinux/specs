@@ -17,7 +17,7 @@
 %define def_desktop_wallpaper /usr/share/design-current/backgrounds/default.png
 
 # Enable compositing on ix86 and x86_64 only
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarc64
 %define xfwm4_compositing true
 %else
 %define xfwm4_compositing false
@@ -36,13 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.1
-Release: alt2
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: design-bootloader-source >= 7.3-alt1
-BuildRequires: cpio
-%endif
+Release: alt3
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -363,28 +357,12 @@ find %buildroot -name \*.in -delete
 mkdir -p %buildroot/%_sysconfdir/dconf/db/default.d/
 install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
 
-#bootloader
-%pre bootloader
-%ifarch %ix86 x86_64
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-%endif
-%ifarch %ix86 x86_64 aarch64
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
-
-%ifarch %ix86 x86_64 aarch64
-%preun bootloader
-[ $1 = 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    %__rm -f /boot/splash/message
-%endif
 
 %post indexhtml
 %_sbindir/indexhtml-update
@@ -396,10 +374,6 @@ sed -i '/pam_env\.so/ {
 ' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
 /boot/grub/themes/%theme
 
 #bootsplash
@@ -517,6 +491,10 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Sat Feb 14 2026 Anton Midyukov <antohami@altlinux.org> 11.1-alt3
+- NMU: Cleanup obsoletes gfxboot and /boot/splash (fix FBFS).
+- NMU: xfce-settings: enable compositing on aarch64.
+
 * Tue Dec 23 2025 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt2
 - Remove duplicate link to Yandex zen channel Basealt in indexhtml.
 - Update product-logo.png.
