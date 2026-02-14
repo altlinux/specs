@@ -2,7 +2,7 @@
 
 Name: libmtxclient
 Version: 0.10.0
-Release: alt2
+Release: alt3
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
@@ -20,6 +20,9 @@ BuildRequires: libgtest-devel libssl-devel zlib-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
 BuildRequires: libevent-devel libcurl-devel libcoeurl-devel
 BuildRequires: libre2-devel
+%ifarch %e2k
+BuildRequires: clang llvm-devel
+%endif
 
 %description
 Client API library for the Matrix protocol, built on top of Boost.Asio.
@@ -52,6 +55,10 @@ library.
        -DUSE_BUNDLED_OPENSSL=OFF \
        -DUSE_BUNDLED_COEURL=OFF  \
        -DUSE_BUNDLED_RE2=OFF  \
+%ifarch %e2k
+       -DCMAKE_CXX_COMPILER=clang++ \
+       -DCMAKE_CXX_FLAGS_RELEASE="-O2 -DNDEBUG" \
+%endif
        -DCMAKE_BUILD_TYPE=Release
 
 %cmake_build
@@ -77,6 +84,9 @@ library.
 %_libdir/*.so
 
 %changelog
+* Sat Feb 14 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.0-alt3
+- e2k build fix
+
 * Fri May 30 2025 Leontiy Volodin <lvol@altlinux.org> 0.10.0-alt2
 - Fix nheko rebuild.
 
