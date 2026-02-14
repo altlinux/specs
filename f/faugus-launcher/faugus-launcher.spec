@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: faugus-launcher
-Version: 1.13.11
+Version: 1.14.2
 Release: alt1
 
 Summary: A simple and lightweight app for running Windows games using UMU-Launcher
@@ -56,6 +56,9 @@ Requires: typelib(Gtk) = 3.0
 %_datadir/metainfo/faugus-launcher.metainfo.xml
 
 %changelog
+* Wed Feb 11 2026 Boris Yumankulov <boria138@altlinux.org> 1.14.2-alt1
+- new version 1.14.2
+
 * Mon Feb 02 2026 Boris Yumankulov <boria138@altlinux.org> 1.13.11-alt1
 - initial build for ALT Sisyphus
 
