@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: screen-orientation-manager
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Touchscreen Orientation Manager for touchscreen tablets (e.g. Surface RT/Touch screen ARM Chromebooks) running GNU/Linux with X11
@@ -73,5 +73,8 @@ sed -i "s|Categories=.*|Categories=GTK;Settings;HardwareSettings;|" io.github.ar
 %_datadir/screen-orientation-manager/rotation-scripts/r.sh
 
 %changelog
+* Sat Feb 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Sun Nov 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.2-alt1
 - Initial build for Sisyphus
