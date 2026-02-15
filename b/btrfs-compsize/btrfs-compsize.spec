@@ -2,7 +2,7 @@
 
 Name: btrfs-compsize
 Version: 1.5
-Release: alt2.gitd79eacf
+Release: alt3.gitd79eacf
 
 Summary: Utility for measuring compression ratio of files on btrfs
 License: GPLv2+
@@ -21,6 +21,8 @@ a report.
 
 %prep
 %setup
+# already defined in <btrfs/kerncompat.h> as a macro
+sed -i '/int IS_ALIGNED(/i #undef IS_ALIGNED' compsize.c
 
 %build
 %make_build
@@ -34,6 +36,9 @@ a report.
 %_man8dir/%oname.8*
 
 %changelog
+* Sun Feb 15 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5-alt3.gitd79eacf
+- e2k build fix
+
 * Sat Jan 18 2025 Andrey Limachko <liannnix@altlinux.org> 1.5-alt2.gitd79eacf
 - Resurrected in sisyphus from removed packages
 
