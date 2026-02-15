@@ -5,7 +5,7 @@
 
 Name: lomiri-content-hub
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: content sharing/picking service for Lomiri
 License: GPL-3.0-only and LGPL-3.0-only
@@ -13,6 +13,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/core/lomiri-content-hub
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-macros-qt5
@@ -99,6 +101,7 @@ Files and utilities needed for automated testing of content-hub
 
 %prep
 %setup
+%patch -p1
 
 sed -i '/^Comment/d' tools/send/lomiri-content-hub-send.desktop
 
@@ -198,6 +201,9 @@ echo "Categories=Development;Debugger;" >> tests/peers/sharer/lomiri-content-hub
 %endif
 
 %changelog
+* Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.2-alt2
+- Fixed FTBFS.
+
 * Fri Dec 26 2025 Nikolay Strelkov <snk@altlinux.org> 2.2.2-alt1
 - New version 2.2.2.
 

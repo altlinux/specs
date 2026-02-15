@@ -5,7 +5,7 @@
 
 Name: lomiri-download-manager
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: Lomiri Upload/Download Manager
 License: LGPL-3.0
@@ -13,6 +13,8 @@ Group: Graphical desktop/Other
 Url: https://gitlab.com/ubports/development/core/lomiri-download-manager
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-macros-systemd
@@ -88,6 +90,7 @@ This package contains the documentation of the Lomiri DownloadManager.
 
 %prep
 %setup
+%patch -p1
 
 sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock)|" tests/common/CMakeLists.txt
 
@@ -178,6 +181,9 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_docdir/%name/*
 
 %changelog
+* Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt2
+- Fixed FTBFS.
+
 * Sat Dec 13 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 

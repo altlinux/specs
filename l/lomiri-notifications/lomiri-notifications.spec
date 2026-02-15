@@ -4,7 +4,7 @@
 
 Name: lomiri-notifications
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Lomiri Notifications
 License: GPL-3.0-only
@@ -72,5 +72,8 @@ sending or receiving notifications. It is QML only.
 %_libdir/lomiri/qml/Lomiri/Notifications/qmldir
 
 %changelog
+* Sun Feb 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
+- Fixed FTBFS.
+
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
