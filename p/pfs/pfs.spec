@@ -20,18 +20,18 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.5
-Release: alt2%beta
+Version: %ver_major.7
+Release: alt1%beta
 
 Summary: Phosh File Selector Library
 Group: System/Libraries
 License: LGPL-3.0-or-later
-Url: https://gitlab.gnome.org/guidog/pfs
+Url: https://gitlab.gnome.org/World/Phosh/pfs
 
-Vcs: https://gitlab.gnome.org/guidog/pfs.git
+Vcs: https://gitlab.gnome.org/World/Phosh/pfs.git
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/guidog/pfs/-/archive/v%version/%name-v%version%beta.tar.gz
+Source: https://gitlab.gnome.org/World/Phosh/pfs/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -47,6 +47,7 @@ BuildRequires: meson >= %meson_ver rust-cargo patchelf
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_examples:BuildRequires: pkgconfig(libsystemd)}
 
 %description
 A widget for selecting files for Phosh.
@@ -152,11 +153,16 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%_name-demo
 %_desktopdir/%{xdg_name}Demo.desktop
 %_desktopdir/%xdg_name1.desktop
+%_userunitdir/%xdg_name1.service
+%_datadir/dbus-1/services/%xdg_name1.service
 %_iconsdir/hicolor/*/apps/%{xdg_name1}*.svg
 %_iconsdir/hicolor/*/apps/%{xdg_name}Demo*.svg
 %endif
 
 %changelog
+* Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.0.7-alt1
+- 0.0.7
+
 * Sun Nov 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.5-alt2
 - updated to v0.0.5-4-gd007e73 for 0.51.0
 

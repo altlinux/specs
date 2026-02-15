@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.52
+%define ver_major 0.53
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -11,9 +11,7 @@
 %define dev_uid 1000
 
 # since 0.41 gvc & libcallui subprojects use wrap-files
-#%define gvc_ver 5f9768a
-# https://gitlab.gnome.org/guidog/libgnome-volume-control/-/tree/phosh/0.52.1?ref_type=tags
-%define gvc_ver phosh-0.52.1
+%define gvc_ver d2442f45
 %define callui_ver 0.1.5
 
 # shared libs disabled by default
@@ -30,7 +28,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -83,7 +81,7 @@ Requires: fonts-ttf-google-lato
 # since 0.36
 Requires: /sbin/capsh
 # since 0.39, specific X-GNOME directories
-Requires: gnome-menus-x-gnome
+#Requires: gnome-menus-x-gnome
 # since 0.40.0
 Requires: sound-theme-phosh
 # since 0.45 to uninstall apps from app-grid
@@ -331,6 +329,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- 0.53.0
+
 * Thu Jan 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.1-alt1
 - 0.52.1
 

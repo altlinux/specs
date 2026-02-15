@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.52
+%define ver_major 0.53
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Stevia is a default keyboard for Phosh
@@ -149,6 +149,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Feb 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- 0.53.0
+
 * Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.1-alt1
 - 0.52.1
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.52
+%define ver_major 0.53
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -10,7 +10,7 @@
 # Linux dmabuf support unavailable
 %def_disable check
 
-%define gvc_ver 5f9768a
+%define gvc_ver d2442f45
 
 Name: phosh-mobile-settings
 Version: %ver_major.0
@@ -83,9 +83,10 @@ mv gmobile-%gmobile_ver subprojects/gmobile}
 
 mv gvc-%gvc_ver subprojects/gvc
 pushd subprojects/gvc
-for p in ../packagefiles/gvc/*.patch; do
-    patch -p1 -i $p; done
-popd
+# not needed with latest gvc
+#for p in ../packagefiles/gvc/*.patch; do
+#    patch -p1 -i $p; done
+#popd
 
 %build
 %meson
@@ -116,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- updated to v0.53.0-2-g6f77f42
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
 - 0.52.0
 

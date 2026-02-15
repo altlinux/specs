@@ -2,9 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.52
+%define ver_major 0.53
 %define beta %nil
-%define pfs_ver c9bd3394
+%define pfs_ver 0.0.7
 
 %define _name phosh
 # phrosh portal
@@ -37,14 +37,14 @@ Source2: %name-%version%beta-cargo.tar
 %define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
 %define gsds_ver 47
-#%%define pfs_ver 0.0.5
 
 Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
+Requires: libphosh-file-selector >= %pfs_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson rust-cargo /usr/bin/rst2man
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: pkgconfig(libpfs-0)
+BuildRequires: pkgconfig(libpfs-0) >= %pfs_ver
 BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
@@ -59,7 +59,8 @@ portal.
 cp -r pfs-%pfs_ver subprojects/pfs
 %{?_enable_bootstrap:
 [ -d .cargo ] || mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+cargo vendor --no-delete -s subprojects/pfs/Cargo.toml \
+| sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
@@ -95,8 +96,13 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %doc NEWS README*
 
+%exclude %_datadir/glib-2.0/schemas/mobi.phosh.FileSelector.gschema.xml
+%exclude %_datadir/locale/*/*/pfs.mo
 
 %changelog
+* Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
+- 0.53.0
+
 * Sat Jan 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.52.0-alt1
 - 0.52.0
 

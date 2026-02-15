@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System monitor
@@ -90,6 +90,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Tue Feb 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - updated to v1.10.0-10-g80b38c2
 
