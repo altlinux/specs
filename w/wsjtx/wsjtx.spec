@@ -1,0 +1,185 @@
+Name: wsjtx
+Version: 2.7.0
+Release: alt1
+Summary: WSJT-X is a computer program used for weak-signal radio communication
+License: GPL-3.0
+Group: Engineering
+Url: https://wsjt.sourceforge.io/wsjtx.html
+
+# Source-url: https://sourceforge.net/projects/wsjt/files/%name-%version/%name-%version.tgz
+Source: %name-%version.tar
+Patch0: wsjtx-2.7.0-ru-translation-fix.patch
+
+Buildrequires(pre): rpm-macros-cmake
+Buildrequires(pre): rpm-macros-qt5
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
+BuildRequires: hamlib-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-log-devel
+BuildRequires: libgomp-devel
+BuildRequires: libfftw3-devel
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: pkgconfig(Qt5Multimedia)
+BuildRequires: pkgconfig(Qt5SerialPort)
+BuildRequires: ImageMagick-tools
+BuildRequires: dos2unix
+BuildRequires: asciidoctor
+BuildRequires: asciidoc-a2x
+
+Provides: %name-data = %EVR
+Obsoletes: %name-data < %EVR
+
+%description
+WSJT-X implements communication protocols or "modes" called FST4, FST4W, FT4,
+FT8, JT4, JT9, JT65, Q65, MSK144, and WSPR, as well as one called Echo for
+detecting and measuring your own radio signals reflected from the Moon.
+These modes were designed for making reliable, confirmed QSOs under extreme
+weak-signal conditions.
+
+JT4, JT9, and JT65 use nearly identical message structure and source encoding
+(the efficient compression of standard messages used for minimal QSOs). They
+use timed 60-second T/R sequences synchronized with UTC.  JT4 and JT65 were
+designed for EME ("moonbounce") on the VHF/UHF/microwave bands.  JT9 is
+optimized for the MF and HF bands.  It is about 2 dB more sensitive than JT65
+while using less than 10%% of the bandwidth.  Q65 offers submodes with a wide
+range of T/R sequence lengths and tone spacings; it is highly recommended for
+EME, ionospheric scatter, and other weak signal work on VHF, UHF, and microwave
+bands.
+
+FT4 and FT8 are operationally similar but use T/R cycles only 7.5 and 15 s long,
+respectively.  MSK144 is designed for Meteor Scatter on the VHF bands.  These
+modes offer enhanced message formats with support for nonstandard callsigns and
+some popular contests.
+
+FST4 and FST4W are designed particularly for the LF and MF bands. On these bands
+their fundamental sensitivities are better than other WSJT-X modes with the same
+sequence lengths, approaching the theoretical limits for their rates of
+information throughput. FST4 is optimized for two-way QSOs, while FST4W is for
+quasi-beacon transmissions of WSPR-style messages. FST4 and FST4W do not require
+the strict, independent time synchronization and phase locking of modes like
+EbNaut.
+
+WSPR mode implements a protocol designed for probing potential propagation paths
+with low-power transmissions.  WSPR is fully implemented within WSJT-X,
+including programmable "band-hopping".
+
+%prep
+%setup
+
+# remove bundled hamlib
+rm -f src/hamlib*
+tar -xzf src/%name.tgz
+
+# remove archive
+rm -f src/%name.tgz*
+
+%autopatch -p1
+
+pushd %name
+# convert CR + LF to LF
+dos2unix *.iss *.txt
+
+# fix desktop file
+sed -i 's/Name=wsjtx/Name=WSJT-X/' wsjtx.desktop
+popd
+
+%build
+%define optflags_lto %nil
+
+pushd %name
+%cmake
+%cmake_build
+popd
+
+%install
+pushd %name
+%cmake_install
+
+for x in 16 32 48; do
+    mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
+    magick %buildroot%_pixmapsdir/wsjtx_icon.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/wsjtx_icon.png
+done
+
+# fix docs
+install -p -m 0644 -t %buildroot%_docdir/%name GUIcontrols.txt jt9.txt \
+  v1.7_Features.txt wsjtx_changelog.txt
+
+# add translations
+mkdir -p %buildroot%_qt5_translationdir
+install -p -m 0644 -t %buildroot%_qt5_translationdir %_target_platform/wsjtx_*.qm
+%find_lang --with-qt %name
+
+popd
+
+%files -f %name/%name.lang
+%_bindir/*
+%_desktopdir/*.desktop
+%_man1dir/*
+%exclude %_pixmapsdir/*
+%_liconsdir/wsjtx_icon.png
+%_niconsdir/wsjtx_icon.png
+%_miconsdir/wsjtx_icon.png
+%_datadir/%name
+%_docdir/%name
+
+%changelog
+* Sun Feb 15 2026 Alexander Kovalev <alexvk@altlinux.org> 2.7.0-alt1
+- new version 2.7.0
+- cleanup spec
+- update summary, URL and description
+- fix name in desktop file
+- add translations
+- add patch to fix some typos in russian translation
+
+* Sat Mar 12 2022 Anton Midyukov <antohami@altlinux.org> 2.5.4-alt1
+- new version (2.5.4) with rpmgs script (Closes: 42108)
+- cleanup spec
+- drop old patches
+- obsoletes data subpackage
+
+* Sat Aug 28 2021 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt2
+- disable LTO compiler flag
+
+* Sun Aug 16 2020 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt1
+- new version (2.2.2) with rpmgs script
+
+* Sun Jan 12 2020 Anton Midyukov <antohami@altlinux.org> 2.1.2-alt1
+- new version (2.1.2) with rpmgs script
+
+* Thu Oct 24 2019 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- new version (2.1.0) with rpmgs script
+
+* Sun Dec 23 2018 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- new version (2.0.0) with rpmgs script
+
+* Wed Jun 27 2018 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt1.S1
+- new version 1.9.1
+
+* Wed May 16 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt2.S1
+- Added alt-cmake.patch (thanks darktemplar)
+
+* Mon May 14 2018 Anton Midyukov <antohami@altlinux.org> 1.9.0-alt1.S1
+- Release candidate 1.9.0-RC4
+
+* Thu Nov 23 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt2.S1
+- Release 1.8.0
+- Build with system hamlib
+- Build with system boost
+- Enable build documentation
+- Exclusive arch x86-64
+
+* Mon Sep 04 2017 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- Release candidate 2
+
+* Wed Aug 02 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt2
+- Fix requires
+
+* Tue Jan 31 2017 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
+- new version (1.7.0) with rpmgs script
+
+* Thu Oct 20 2016 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
+- Initial build for Alt Linux Sisyphus.
