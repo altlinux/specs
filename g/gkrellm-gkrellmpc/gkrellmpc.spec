@@ -1,21 +1,21 @@
+%define git 0aef2b2e6a
 %define plugin gkrellmpc
 
 Name: gkrellm-%plugin
-Version: 0.1_beta10
-Release: alt4.qa1
+Version: 0.2.0
+Release: alt1.g%{git}
 
 Summary: GKrellM plugin to control Music Player Daemon
-License: GPL
+License: GPL-2.0-only
 Group: Monitoring
-Url: http://www.musicpd.org/wiki/moin.cgi/GKrellMPC
-Source: http://www.topfx.com/dist/gkrellmpc-%version.tar.gz
-Patch0: gkrellmpc-0.1_beta10-alt-makefile-fixes.patch
-Patch1: gkrellmpc-0.1_beta10-alt-memleaks-fixes.patch
-Patch2: gkrellmpc-0.1_beta10-alt-fd-leak-fix.patch
+Url: https://git.srcbox.net/gkrellm/gkrellmpc
+Vcs: https://git.srcbox.net/gkrellm/gkrellmpc
+Source: %plugin-%version.tar
 
 Requires: gkrellm >= 2.0
 
-BuildPreReq: gkrellm-devel libgtk+2-devel libcurl-devel
+BuildRequires(pre): meson
+BuildRequires: gkrellm-devel libgtk+2-devel libcurl-devel
 
 %description
 GKrellMPC is a GKrellm plugin to control Music Player Daemon.
@@ -25,24 +25,24 @@ GKrellMPC is a GKrellm plugin to control Music Player Daemon.
 %add_optflags %optflags_debug
 %endif
 
-%setup -q -n gkrellmpc-%version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
-%__subst 's|^CFLAGS +=.*|\0 %optflags|' Makefile
+%setup -q -n %plugin-%version
 
 %build
-%make_build 
+%meson -Dplugindir=%_libdir/gkrellm2/plugins
+%meson_build
 
 %install
-mkdir -p %buildroot%_libdir/gkrellm2/plugins
-install -m755 %plugin.so %buildroot%_libdir/gkrellm2/plugins/%plugin.so
+%meson_install
+%find_lang %plugin
 
-%files
-%doc README.txt Changelog
+%files -f %plugin.lang
+%doc README.md CHANGELOG.md
 %_libdir/gkrellm2/plugins/%plugin.so
 
 %changelog
+* Sun Feb 15 2026 L.A. Kostis <lakostis@altlinux.ru> 0.2.0-alt1.g0aef2b2e6a
+- Use alternate fork (which still supported).
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1_beta10-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
