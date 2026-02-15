@@ -1,6 +1,6 @@
 Name: lziprecover
-Version: 1.25
-Release: alt3
+Version: 1.26
+Release: alt1
 
 Summary: LZMA compressed file recovery
 License: GPLv2+
@@ -42,6 +42,9 @@ make check
 %_infodir/%name.info*
 
 %changelog
+* Mon Feb 16 2026 Michael Shigorin <mike@altlinux.org> 1.26-alt1
+- new version (watch file uupdate)
+
 * Sat Aug 16 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt3
 - added %%check
 
