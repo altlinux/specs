@@ -1,29 +1,25 @@
 Name: pdfmixtool
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 License: GPL-3.0-only
 Group: Office
 Url: https://www.scarpetta.eu/pdfmixtool
 Vcs: https://gitlab.com/scarpetta/pdfmixtool
 
-# Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
 Source: %name-%version.tar
-Patch0: %name-1.1-alt-desktop.patch
-Patch1: pdf_info-1.2.1-alt-build.patch
+Patch: %name-1.1-alt-desktop.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: libqpdf-devel
 BuildRequires: qt6-base-devel
-
 BuildRequires: libnettle-devel
 BuildRequires: zlib-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libidn2-devel
 BuildRequires: libp11-kit-devel
-
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: libGraphicsMagick-c++-devel
@@ -52,8 +48,7 @@ PDF, извлекать страницы из файла PDF, редактиро
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p1
+%patch -p2
 
 %build
 %cmake \
@@ -72,6 +67,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Mon Feb 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2
+
 * Thu Jan 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt2
 - FTBFS:fix: variable 'std::istringstream ss' has initializer but incomplete type
 
