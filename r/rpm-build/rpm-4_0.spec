@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.209
+Version: 4.0.4.210
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -410,6 +410,7 @@ fi
 %rpmattr %_rpmlibdir/files.*
 %rpmattr %config %_rpmlibdir/*-files.req.list
 %rpmattr %_rpmlibdir/lib.*
+%rpmattr %_rpmlibdir/mksysusers
 %rpmattr %_rpmlibdir/pam.*
 %rpmattr %_rpmlibdir/percolate
 %rpmattr %_rpmlibdir/pkgconfig.*
@@ -422,6 +423,7 @@ fi
 %rpmattr %_rpmlibdir/suggest_bpp
 %rpmattr %_rpmlibdir/symlinks.*
 %rpmattr %_rpmlibdir/systemd-services.*
+%rpmattr %_rpmlibdir/sysusers.*
 %rpmattr %_rpmlibdir/tmpdir.sh
 %rpmattr %_rpmlibdir/verify-elf
 %rpmattr %_rpmlibdir/*.awk
@@ -451,6 +453,11 @@ fi
 %files checkinstall
 
 %changelog
+* Wed Jan 14 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.210-alt1
+- vt@:
+  + Made rpmbuild --eval work without the fake error termination.
+- Added provides generation for sysusers.d entries in packages (inactive).
+
 * Fri Dec 12 2025 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.209-alt1
 - Added -bk/-tk command line options to rpmbuild.
   "--short-circuit -bk" would then be a natural equivalent to ALT-specific "-bt".
