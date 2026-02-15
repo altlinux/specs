@@ -1,7 +1,8 @@
+%global _unpackaged_files_terminate_build 1
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -92,12 +93,22 @@ developing applications that use %name.
 %_man1dir/zoryn*.1*
 %_datadir/bash-completion/completions/zoryn
 %_datadir/zsh/site-functions/_zoryn
+%_datadir/fish/vendor_completions.d/zoryn.fish
 
 %files -n ocaml-%name -f ocaml-files.runtime
 
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Feb 15 2026 Anton Farygin <rider@altlinux.org> 0.17.1-alt1
+- added HTTP response size limits (64 MB) and download size limits (50 GB)
+- added DNS rebinding SSRF protection via CURLOPT_PREREQFUNCTION
+- changed gen environment to enable parallel builds by default
+- changed builder add to create hasher users by default
+- fixed gen environment hasher workdir to use local $USER
+- fixed builder add to not include obsolete download command
+- fixed lock files to use restrictive permissions (0o600)
+
 * Thu Feb 12 2026 Anton Farygin <rider@altlinux.org> 0.17.0-alt1
 - added check packages command for post-build quality checks
 - added builder add --create-hasher-users flag
