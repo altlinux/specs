@@ -7,7 +7,7 @@
 %filter_from_requires '/^python3\(modtools/d'
 
 Name: carla
-Version: 2.5.8
+Version: 2.5.10
 Release: alt1
 
 Summary: A featureful audio plugin host
@@ -17,8 +17,7 @@ Group: Sound
 URL: https://kx.studio/Applications:Carla
 
 Source: %name-%version.tar
-# part of upstream/hotfix-2.5
-Patch1: 0001-Adjust-for-liblo-API-breakage-dont-define-lo_message.patch
+Patch2: 0002-Import-pyliblo3-unconditionally.patch
 
 BuildRequires: rpm-build-python3
 BuildRequires: make gcc-c++
@@ -69,7 +68,7 @@ This package includes development files for libcarla.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %ifarch %e2k
 %add_optflags -mno-sse
@@ -133,6 +132,9 @@ make features # log build configuration
 %_pkgconfigdir/carla-*.pc
 
 %changelog
+* Thu Sep 18 2025 Arseny Maslennikov <arseny@altlinux.org> 2.5.10-alt1
+- 2.5.8 -> 2.5.10.
+
 * Thu May 02 2024 Arseny Maslennikov <arseny@altlinux.org> 2.5.8-alt1
 - 2.5.7 -> 2.5.8.
 
