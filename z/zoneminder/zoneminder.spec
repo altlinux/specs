@@ -6,13 +6,13 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.37.74
+Version: 1.38.0
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
 VCS: https://github.com/ZoneMinder/ZoneMinder
-Url: https://zoneminder.com/
+Url: https://zoneminder.org/
 Source: %name-%version-alt.tar
 Source4: zoneminder.conf
 Source5: README.alt
@@ -107,7 +107,6 @@ install -d %buildroot%_var/run
 rm -rf %buildroot%prefix/%_lib/perl5/vendor_perl/*.*/*-*
 rm -rf %buildroot%prefix/%_lib/perl5/*.*/*-*
 
-
 install -m 755 -d %buildroot%_var/log/zoneminder
 for dir in events images temp
 do
@@ -125,7 +124,6 @@ sed -si 's,@phpver@,%phpver,g' %buildroot%_sysconfdir/fpm%phpver/php-fpm.d/fpm-z
 mkdir -p %buildroot/%_cachedir/%name
 
 ln -s ../../../../..%_cachedir/%name %buildroot%_datadir/%name/www/cache
-
 
 rm -f %buildroot%perl_vendor_archlib/perllocal.pod
 mkdir -p %buildroot%_datadir/%name/db
@@ -171,7 +169,6 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/polkit-1/*/*
 %exclude %_datadir/%name/www/api
 
-
 %files nginx
 %doc README-nginx-ru.alt
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
@@ -181,6 +178,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Sat Feb 07 2026 Anton Farygin <rider@altlinux.org> 1.38.0-alt1
+- 1.37.74 -> 1.38.0
+
 * Mon Jan 19 2026 Anton Farygin <rider@altlinux.org> 1.37.74-alt1
 - update to 1.37.74
 
@@ -417,7 +417,7 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 * Wed May 10 2017 Anton Farygin <rider@altlinux.ru> 1.30.4-alt1
 - new version
 
-* Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1
+* Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1.1
 - added ubt tag to facilitate the backporting process
 
 * Mon Jan 16 2017 Anton Farygin <rider@altlinux.ru> 1.30.0-alt1
