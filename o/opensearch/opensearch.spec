@@ -1,7 +1,7 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: Open source distributed and RESTful search engine
@@ -141,6 +141,9 @@ find /usr/share/opensearch/modules -name \*.old | while read i;do mv "${i}" "${i
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Feb 14 2026 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version.
+
 * Thu Dec 18 2025 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt1
 - New version.
 
