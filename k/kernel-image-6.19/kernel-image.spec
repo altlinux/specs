@@ -2,7 +2,7 @@ Name: kernel-image-6.19
 Release: alt1
 %define kernel_src_version	6.19
 %define kernel_base_version	6.19
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest1
@@ -590,6 +590,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Feb 16 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.2-alt1
+- v6.19.2 (2026-02-16).
+
 * Mon Feb 16 2026 Kernel Bot <kernelbot@altlinux.org> 6.19.1-alt1
 - v6.19.1 (2026-02-16).
 - config-aarch64: CONFIG_RTC_DRV_HYM8563=m.
