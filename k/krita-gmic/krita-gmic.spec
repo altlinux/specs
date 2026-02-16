@@ -7,14 +7,14 @@
 
 Name: krita-gmic
 Version: 3.2.4.1
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: GREYC's Magic Image Converter for Krita
 License: CECILL-2.0 and GPL-3.0
 Url: https://files.kde.org/krita/build/dependencies/
 
-Requires: gmic
+#Requires: gmic
 
 Source: gmic-patched-%version.tar
 
@@ -55,5 +55,8 @@ popd
 %doc gmic-qt/README*
 
 %changelog
+* Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 3.2.4.1-alt2
+- clean requires
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 3.2.4.1-alt1
 - initial build
