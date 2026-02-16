@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 Name: hyprlax
-Version: 2.2.0
-Release: alt2
+Version: 2.2.1
+Release: alt1
 
 Summary: Buttery smooth parallax wallpaper daemon for wayland compositors
 License: MIT
@@ -12,11 +13,15 @@ VCS: https://github.com/sandwichfarm/hyprlax
 
 # Source-url: https://github.com/sandwichfarm/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch1: %name-%version-alt.patch
 
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: libwayland-egl-devel
 BuildRequires: libglvnd-devel
 BuildRequires: libcheck-devel
+%if_with check
+BuildRequires: /proc
+%endif
 
 %description
 Dynamic parallax wallpaper engine with multi-compositor support for
@@ -24,6 +29,9 @@ Linux.
 
 %prep
 %setup
+%if_with check
+%patch1 -p1
+%endif
 # Dependence on builder CPU harms portability and reproducibility
 sed -i 's/-march=native//' Makefile
 
@@ -40,6 +48,9 @@ install -Dpm 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Feb 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.2.1-alt1
+- new version
+
 * Tue Feb 10 2026 Ilya Sorochan <k0tran@altlinux.org> 2.2.0-alt2
 - remove `-march=native` flag (fixes riscv64 FTBFS)
 
