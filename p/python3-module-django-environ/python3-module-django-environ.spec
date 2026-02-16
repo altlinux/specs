@@ -5,19 +5,18 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
-Summary: Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application.
+Summary: Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application
 License: MIT
 Group: Development/Python3
 Url: https://django-environ.readthedocs.io/en/latest/
+Vcs: https://github.com/joke2k/django-environ.git
 BuildArch: noarch
 
-# VCS:https://github.com/joke2k/django-environ
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch1: python3-module-django-environ-0.12.0-upstream-fix-ftbfs-postgres-cluster-test.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -39,7 +38,6 @@ setdefault method, to avoid to overwrite the real environ.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -55,8 +53,10 @@ setdefault method, to avoid to overwrite the real environ.
 %python3_sitelibdir/environ/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
-
 %changelog
+* Mon Feb 16 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 0.12.1-alt1
+- New version (0.12.1).
+
 * Sat Jul 05 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.12.0-alt1
 - New version (0.12.0).
 
