@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/flannel-io/cni-plugin
 
-%define git_commit e38aaba71b9d0c4ae810585bae578e00c735dba0
+%define git_commit 0940aaf4a0edda6c9bcd9bc34b3466a0d579ddda
 %define git_commit_short %(c="%git_commit"; echo "${c:0:8}")
 
 Name: cni-plugin-flannel
 Epoch: 1
-Version: 1.8.0.2
+Version: 1.9.0.1
 Release: alt1
 
 Summary: A CNI network plugin that is powered by flannel
@@ -68,6 +68,9 @@ rm %buildroot%_bindir/cni-plugin
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Mon Feb 16 2026 Alexander Stepchenko <geochip@altlinux.org> 1:1.9.0.1-alt1
+- 1.8.0.2 -> 1.9.0.1.
+
 * Thu Oct 30 2025 Alexander Stepchenko <geochip@altlinux.org> 1:1.8.0.2-alt1
 - 1.7.1.2 -> 1.8.0.2.
 

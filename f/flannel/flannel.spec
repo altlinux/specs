@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.27.4
+Version: 0.28.1
 Release: alt1
 
 Summary: flannel is a network fabric for containers
@@ -20,8 +20,8 @@ Source3: flannel-docker.conf
 Source4: flannel-tmpfiles.conf
 Patch: %name-%version.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: /proc
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.24.7
 
 %description
 Flannel is a simple and easy way to configure
@@ -57,6 +57,13 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Feb 16 2026 Alexander Stepchenko <geochip@altlinux.org> 0.28.1-alt1
+- 0.27.4 -> 0.28.1.
+- Fixes:
+  + CVE-2025-47914: Malformed constraint may cause denial of service in golang.org/x/crypto/ssh/agent
+  + CVE-2025-58181: Unbounded memory consumption in golang.org/x/crypto/ssh
+  + CVE-2025-67499: CNI Plugins Portmap nftables backend intercepts non-local traffic
+
 * Thu Oct 30 2025 Alexander Stepchenko <geochip@altlinux.org> 0.27.4-alt1
 - 0.27.3 -> 0.27.4.
 
