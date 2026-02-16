@@ -12,15 +12,13 @@ BuildRequires: jpackage-default
 %global classpath batik:xml-commons-apis:xml-commons-apis-ext:xmlgraphics-commons
 
 Name:           batik
-Version:        1.14
-Release:        alt1_3jpp11
+Version:        1.19
+Release:        alt1
 Summary:        Scalable Vector Graphics for Java
-License:        ASL 2.0 and W3C
+License:        Apache-2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
 Source0:        http://archive.apache.org/dist/xmlgraphics/batik/source/batik-src-%{version}.zip
 Source1:        %{name}-security.policy
-
-Patch1:         0001-Fix-imageio-codec-lookup.patch
 
 BuildArch:      noarch
 
@@ -191,13 +189,8 @@ Demonstrations and samples for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-%patch1 -p1
-
 cp -p %{SOURCE1} batik-svgrasterizer/src/main/resources/org/apache/batik/apps/rasterizer/resources/rasterizer.policy
 cp -p %{SOURCE1} batik-svgbrowser/src/main/resources/org/apache/batik/apps/svgbrowser/resources/svgbrowser.policy
-
-# It's an uberjar, it shouldn't have requires
-%pom_xpath_inject pom:dependency '<optional>true</optional>' batik-all
 
 # Generate OSGi metadata
 for pom in `find -mindepth 2 -name pom.xml -not -path ./batik-all/pom.xml`; do
@@ -251,7 +244,7 @@ rm batik-script/src/main/java/org/apache/batik/script/jacl/JaclInterpreter.java
 export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="128m",maxmemory="512m",' build.xml
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
@@ -317,6 +310,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.19-alt1
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.14-alt1_3jpp11
 - java11 build
 

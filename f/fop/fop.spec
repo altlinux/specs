@@ -11,21 +11,21 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.7
-Release:        alt1_2jpp11
-# ASL 1.1:
+Version:        2.11
+Release:        alt1
+# Apache-1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
-# rest is ASL 2.0
-License:        ASL 2.0 and ASL 1.1
+# rest is Apache-2.0
+License:        Apache-2.0 and Apache-1.1
 URL:            https://xmlgraphics.apache.org/fop
-Source0:        https://www.apache.org/dist/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
+Source0:        https://downloads.apache.org/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
 Source1:        %{name}.script
 Source2:        batik-pdf-MANIFEST.MF
 Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
-#Patch0:        fop-xmlunit.patch
-Patch1:		0001-Main.patch
-Patch2:		0002-Use-sRGB.icc-color-profile-from-colord-package.patch
+Patch1:         0001-Main.patch
+Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
 Patch4:         0004-Port-to-QDox-2.0.patch
+Patch5:         fop-2.11-alt-fix-compilation.patch
 
 BuildArch:      noarch
 
@@ -39,6 +39,8 @@ Requires:       javapackages-tools
 BuildRequires:  apache-commons-io
 BuildRequires:  apache-commons-logging
 BuildRequires:  batik
+BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk18on)
+BuildRequires:  mvn(org.bouncycastle:bcprov-jdk18on)
 BuildRequires:  fontbox
 BuildRequires:  javapackages-local
 BuildRequires:  junit
@@ -53,7 +55,7 @@ BuildRequires:  mvn(javax.servlet:servlet-api)
 BuildRequires:  pdfbox
 BuildRequires:  qdox
 BuildRequires:  xml-maven-plugin
-BuildRequires:  xmlgraphics-commons >= 1.5
+BuildRequires:  xmlgraphics-commons >= 2.8
 BuildRequires:  xmlunit
 BuildRequires:  xmlunit-assertj
 BuildRequires:  xmlunit-core
@@ -79,7 +81,8 @@ Javadoc for %{name}.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch4 -p1
+%patch4 -p2
+%patch5 -p2
 
 
 cp %{SOURCE4} LICENSE-1.1
@@ -92,6 +95,13 @@ rm -f fop/lib/*.jar fop/lib/build/*.jar
 %pom_remove_dep com.sun.media:jai-codec fop-core
 %pom_remove_dep net.sf.offo:fop-hyph fop-core
 %pom_remove_dep net.sf.saxon:saxon fop-core
+
+%pom_change_dep org.bouncycastle:bcpkix-jdk15to18:1.78.1 \
+org.bouncycastle:bcpkix-jdk18on:1.80 fop-core
+
+%pom_change_dep org.bouncycastle:bcprov-jdk15to18:1.78.1 \
+org.bouncycastle:bcprov-jdk18on:1.80 fop-core
+
 # Update to current xmlunit
 %pom_change_dep xmlunit:xmlunit org.xmlunit:xmlunit-core fop-core
 %pom_add_dep org.xmlunit:xmlunit-assertj3 fop-core
@@ -104,7 +114,7 @@ rm fop-core/src/main/java/org/apache/fop/util/bitmap/JAIMonochromeBitmapConverte
 %build
 # Skip tests for now, make dirs needed by build but created by tests
 mkdir -p fop-events/target/test-classes
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 
 %install
@@ -140,6 +150,9 @@ touch $RPM_BUILD_ROOT/etc/fop.conf
 
 
 %changelog
+* Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.11-alt1
+- new version
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7-alt1_2jpp11
 - new version
 

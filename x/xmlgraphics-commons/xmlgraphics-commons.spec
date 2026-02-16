@@ -4,16 +4,17 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmlgraphics-commons
-Version:        2.7
-Release:        alt2_2jpp11
+Version:        2.11
+Release:        alt1
 Epoch:          0
 Summary:        XML Graphics Commons
 
-License:        ASL 2.0
-URL:            http://xmlgraphics.apache.org/
-Source0:        http://archive.apache.org/dist/xmlgraphics/commons/source/xmlgraphics-commons-%{version}-src.tar.gz
-
+License:        Apache-2.0
+URL:            https://xmlgraphics.apache.org/commons
+Source0:        https://www.apache.org/dist/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
 BuildArch:      noarch
+
+Patch1:         xmlgraphics-commons-2.11-alt-fix-compilation.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
@@ -43,12 +44,12 @@ This package contains API documentation for %{name}.
 
 %prep
 %setup -q %{name}-%{version}
+%patch1 -p2
 
 find -name "*.jar" -delete
 
 # Disable plugins not needed for RPM build
 %pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :findbugs-maven-plugin
 
 # Make into OSGi bundle
 %pom_xpath_inject pom:project '<packaging>bundle</packaging>'
@@ -62,7 +63,7 @@ find -name "*.jar" -delete
 
 %build
 %mvn_file : %{name}
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -75,6 +76,9 @@ find -name "*.jar" -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.11-alt1
+- new version
+
 * Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 0:2.7-alt2_2jpp11
 - fixed build (closes: #48160)
 

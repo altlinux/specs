@@ -1,20 +1,13 @@
 Name:          	pdfbox
-Version:       	2.0.26
-Release:       	alt2
+Version:       	3.0.6
+Release:       	alt1
 
 Summary:       	Apache PDFBox library for working with PDF documents
 License:       	Apache-2.0
 Group:		Development/Java
-URL:           	http://pdfbox.apache.org/
+URL:           	https://pdfbox.apache.org/
 
-Source0:       	http://archive.apache.org/dist/pdfbox/%{version}/pdfbox-%{version}-src.zip
-
-# Use system font instead of bundled font
-Patch0:        	pdfbox-use-system-liberation-font.patch
-# Use system icc profiles
-Patch1:        	pdfbox-use-system-icc-profiles-openicc.patch
-# Replace javax with jakarta
-Patch2:		0001-Replace-javax-with-jakarta.patch
+Source0:       	https://downloads.apache.org/pdfbox/%{version}/pdfbox-%{version}-src.zip
 
 BuildRequires:  /proc
 BuildRequires:  jpackage-default
@@ -27,18 +20,20 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
-BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires:  mvn(org.bouncycastle:bcprov-jdk18on)
+BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk18on)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.mockito:mockito-core)
 
+BuildRequires: picocli
 BuildRequires: 	fonts-ttf-dejavu
 BuildRequires: 	fonts-ttf-google-noto-emoji
 BuildRequires: 	fonts-ttf-liberation
 BuildRequires: 	icc-profiles-openicc
 BuildRequires: 	fontconfig libfontconfig1
 Requires:      	fonts-ttf-liberation
+Requires:      	mvn(org.apache.pdfbox:pdfbox-io)
 
 # TODO: Require liberation-sans-fonts >= 2 and don't ignore test failures
 
@@ -64,9 +59,9 @@ Group: 		Development/Java
 Requires:      	mvn(commons-logging:commons-logging)
 Requires:      	mvn(org.apache.pdfbox:fontbox)
 Requires:      	mvn(org.apache.pdfbox:pdfbox)
-Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk18on)
 # needed by wrapper script
 Requires:      	javapackages-tools
 Summary:       	Apache PDFBox Debugger
@@ -81,15 +76,23 @@ Requires:      	mvn(commons-logging:commons-logging)
 Requires:      	mvn(org.apache.pdfbox:fontbox)
 Requires:      	mvn(org.apache.pdfbox:pdfbox)
 Requires:      	mvn(org.apache.pdfbox:pdfbox-debugger)
-Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(org.apache.pdfbox:pdfbox-io)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk18on)
 # needed by wrapper script
 Requires:      	javapackages-tools
 Summary:       	Apache PDFBox Tools
 
 %description tools
 This package contains command line tools for Apache PDFBox.
+
+%package io
+Group:		Development/Java
+Summary:        Apache pdfbox-io
+
+%description io
+IO calasses subbpkg
 
 %package javadoc
 Group: 		Development/Java
@@ -123,17 +126,14 @@ Apache PDFBox Reactor POM.
 
 %package -n preflight
 Group: 		Development/Java
-# See: preflight/pom.xml
-Requires:      	mvn(jakarta.activation:jakarta.activation-api)
-Requires:	mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 # See: preflight/target/classes/META-INF/DEPENDENCIES
 Requires:      	mvn(commons-logging:commons-logging)
 Requires:      	mvn(org.apache.pdfbox:fontbox)
 Requires:      	mvn(org.apache.pdfbox:pdfbox)
 Requires:      	mvn(org.apache.pdfbox:xmpbox)
-Requires:      	mvn(org.bouncycastle:bcmail-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcpkix-jdk15on)
-Requires:      	mvn(org.bouncycastle:bcprov-jdk15on)
+Requires:      	mvn(org.bouncycastle:bcmail-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcpkix-jdk18on)
+Requires:      	mvn(org.bouncycastle:bcprov-jdk18on)
 # needed by wrapper script
 Requires:      	javapackages-tools
 Summary:        Apache Preflight
@@ -161,10 +161,6 @@ find -name 'sRGB.icc*' -print -delete
 find -name '*.icm' -print -delete
 find -name '*.ttf' -print -delete
 
-%patch0 -p1 -b .font
-%patch1 -b .openicc
-%patch2 -p1
-
 # Don't build apps (it's just a bundle of everything)
 %pom_disable_module preflight-app
 %pom_disable_module debugger-app
@@ -176,7 +172,6 @@ find -name '*.ttf' -print -delete
 # Disable plugins not needed for RPM builds
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 %pom_remove_plugin -r :apache-rat-plugin
-%pom_remove_plugin -r :maven-deploy-plugin
 %pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
@@ -213,6 +208,9 @@ sed -i -e '/\(OptionsAndNamesNotNumbers\|RadioButtonWithOptions\)/i\@org.junit.I
 # These test fail for unknown reasons
 rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTest.java
 
+#change bouncycastle version
+%pom_xpath_set "pom:properties/pom:bouncycastle.version" "1.80" parent
+
 # install all libraries in _javadir
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-debugger %{name}-debugger
@@ -221,14 +219,6 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %mvn_file :preflight preflight
 %mvn_file :xmpbox xmpbox
 %mvn_file :fontbox fontbox
-
-%pom_xpath_set 'pom:source' 8 parent
-%pom_xpath_set 'pom:target' 8 parent
-
-%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api preflight
-
-# Revert jaxb annotation dependency
-%pom_change_dep javax.xml.bind:jaxb-api jakarta.xml.bind:jakarta.xml.bind-api xmpbox preflight
 
 %build
 # Integration tests all require internet access to download test resources, so skip
@@ -246,12 +236,18 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 
 %files -f .mfiles-%{name}
 %doc README.md RELEASE-NOTES.txt
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files debugger -f .mfiles-%{name}-debugger
 %{_bindir}/pdfbox-debugger
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files tools -f .mfiles-%{name}-tools
 %{_bindir}/pdfbox
+%doc --no-dereference LICENSE.txt NOTICE.txt
+
+%files io -f .mfiles-pdfbox-io
+%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files -n fontbox -f .mfiles-fontbox
 %doc fontbox/README.txt
@@ -275,6 +271,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 3.0.6-alt1
+- new version
+
 * Wed Jan 21 2026 Evgeniy Serov <scala@altlinux.org> 2.0.26-alt2
 - Updated for compatibility with the new jaxb api.
 
