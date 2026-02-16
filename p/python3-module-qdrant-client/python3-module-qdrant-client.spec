@@ -3,7 +3,7 @@
 %define pypi_name_snake qdrant_client
 
 Name: python3-module-%pypi_name
-Version: 1.13.3
+Version: 1.16.2
 Release: alt1
 
 Summary: Client library for the Qdrant vector search engine
@@ -41,8 +41,13 @@ methods for frequently required operations, e.g. initial collection uploading.
 %files
 %python3_sitelibdir_noarch/%pypi_name_snake
 %python3_sitelibdir_noarch/%pypi_name_snake-%version.dist-info
+%exclude %python3_sitelibdir_noarch/%pypi_name_snake/local/tests
 %doc README.md
 
 %changelog
+* Mon Feb 16 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.2-alt1
+- Updated to version 1.16.2.
+- Excluded tests from package to avoid pytest dependency.
+
 * Mon Apr 14 2025 David Sultaniiazov <x1z53@altlinux.org> 1.13.3-alt1
 - Initial build
