@@ -6,7 +6,7 @@
 %define rdn_name com.sidevesh.%_name
 
 Name: luminance
-Version: %ver_major.2
+Version: %ver_major.6
 Release: alt1
 
 Summary: A simple GTK application to control brightness of displays
@@ -61,6 +61,9 @@ including external displays supporting DDC/CI.
 %doc README*
 
 %changelog
+* Mon Feb 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
+- 1.4.6
+
 * Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 

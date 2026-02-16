@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Follow your favorite video creators
@@ -84,6 +84,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Mon Feb 16 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Thu Feb 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - first build for Sisyphus
 
