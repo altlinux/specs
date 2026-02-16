@@ -1,7 +1,9 @@
 %define oname prometheus_client
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.20.0
+Version: 0.24.1
 Release: alt1
 
 Summary: The Python client for Prometheus
@@ -13,26 +15,35 @@ Group: Development/Python3
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/prometheus/client_python/archive/v%version.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
 BuildArch: noarch
 
 Provides: python3-module-%{pep503_name %oname} = %EVR
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro >= 2.1.4
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-decorator python3-module-pytest
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 The Python client for Prometheus.
 
 %prep
-%setup -n %oname-%version
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -47,6 +58,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Feb 12 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.24.1-alt1
+- New version.
+- rpm-build-pyproject is used for dependency management.
+
 * Mon Jul 29 2024 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
 - New version.
 - Built using pyproject macros.
