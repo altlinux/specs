@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 
 Group: System/Libraries
@@ -46,8 +46,6 @@ Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
 Patch15: qtwebengine-add-missing-pipewire-headers.patch
 Patch16: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
-Patch17: qtwebengine-fix-quick-popup-window-positioning-under-x11.patch
-Patch18: qtwebengine-move-gpu-info-logging-to-gpu-thread.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -64,7 +62,7 @@ BuildRequires: libxkbcommon-devel libxkbfile-devel
 %if_enabled system_ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libswresample-devel
 %endif
-BuildRequires: libvpx-devel
+BuildRequires: libvpx-devel libopenh264-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel libdrm-devel libgbm-devel libepoxy-devel
 BuildRequires: libgio-devel libkrb5-devel
@@ -209,8 +207,6 @@ Obsoletes: %name < %EVR
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
@@ -429,6 +425,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - new version
 

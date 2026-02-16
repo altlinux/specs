@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_qt6_examplesdir/*
 
 Name: qt6-webchannel
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 
 Group: System/Libraries
@@ -126,6 +126,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - new version
 

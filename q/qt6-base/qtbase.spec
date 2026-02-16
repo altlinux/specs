@@ -10,6 +10,8 @@
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 %add_findreq_skiplist %_qt6_plugindir/platformthemes/libqgtk?.so
+%add_findreq_skiplist %_qt6_libexecdir/*.py
+%add_findprov_skiplist %_qt6_libexecdir/*.py
 
 %def_enable sql_pgsql
 %def_enable sql_odbc
@@ -33,8 +35,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.10.1
-Release: alt3
+Version: 6.10.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -44,8 +46,10 @@ Release: alt3
 Group: System/Libraries
 Summary: Qt%major - QtBase components
 License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
-
 Url: http://qt.io/
+
+AutoReq: yes, nopython
+AutoProv: yes, nopython
 
 Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
@@ -73,6 +77,7 @@ Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 Patch1006: alt-singleclick.patch
 Patch1007: alt-xdg-current-desktop.patch
+Patch1008: python-shebang.patch
 #
 Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
@@ -419,6 +424,7 @@ Requires: %name-common
 %endif
 %patch1006 -p1
 %patch1007 -p1
+%patch1008 -p1
 #
 #%patch2000 -p1
 
@@ -747,6 +753,7 @@ done
 %_qt6_libexecdir/sanitizer-testrunner.py
 %_qt6_libexecdir/tracepointgen
 %_qt6_libexecdir/qtwaylandscanner
+%_qt6_libexecdir/qt_cyclonedx_generator.py
 #
 %dir %_qt6_headerdir
 %dir %_qt6_prefix/include/
@@ -856,6 +863,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt3
 - clean conflicts
 

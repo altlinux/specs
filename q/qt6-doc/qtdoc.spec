@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt6-doc
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 
 Group: Development/KDE and QT
@@ -94,6 +94,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_archdatadir/mkspecs/*doc*
 
 %changelog
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - new version
 

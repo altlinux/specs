@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.10.1
+Version: 6.10.2
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -48,8 +48,7 @@ Source2: qml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 # FC
-Patch1: qtdeclarative-qtqml-invalidate-fallback-lookups-after-each-call-from-aot-code.patch
-Patch2: qtdeclarative-quickshapes-make-module-public.patch
+Patch1: qtdeclarative-quickshapes-make-module-public.patch
 
 %include %SOURCE1
 %qml6_req_skipall 1
@@ -459,7 +458,6 @@ Requires: libqt6-core = %_qt6_version
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
 %patch1 -p1
-%patch2 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -708,6 +706,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Thu Feb 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.2-alt1
+- new version
+
 * Tue Jan 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.1-alt1
 - new version
 
