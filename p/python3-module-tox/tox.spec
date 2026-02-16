@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tox
 %define mod_name %pypi_name
+%define bash_completions_dir %_datadir/bash-completion/completions
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.35.0
+Version: 4.36.0
 Release: alt1
 
 Summary: Generic virtualenv management and test command line tool
@@ -20,8 +21,10 @@ Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra completion
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+%pyproject_builddeps_metadata_extra completion
 %if_with check
 BuildRequires: /proc
 # required by test_local_execute_terminal_size
@@ -57,11 +60,9 @@ can use for:
 %install
 %pyproject_install
 
-pushd %buildroot%_bindir
-for i in $(ls); do
-        mv $i $i.py3
-done
-popd
+mv %buildroot%_bindir/tox{,.py3}
+register-python-argcomplete tox.py3 > tox.py3
+install -p -m 0644 -D -t '%buildroot%bash_completions_dir' tox.py3
 
 %check
 export VIRTUALENV_SYSTEM_SITE_PACKAGES=YES
@@ -71,10 +72,14 @@ export PIP_NO_BUILD_ISOLATION=NO
 
 %files
 %_bindir/tox.py3
+%bash_completions_dir/tox.py3
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 4.36.0-alt1
+- 4.35.0 -> 4.36.0.
+
 * Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 4.35.0-alt1
 - 4.32.0 -> 4.35.0.
 
