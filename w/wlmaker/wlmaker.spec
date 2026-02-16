@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.6.2
+Version: 0.7.1
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -13,6 +13,8 @@ Source0: %name-%version.tar
 # and extract it to .gear/submodules/libbase.
 Source1: submodules.tar
 
+Patch: %name-%version-alt-link_inih-so.patch
+
 BuildRequires(pre): rpm-build-cmake ctest
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(wayland-client)
@@ -24,6 +26,8 @@ BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: pkgconfig(xcb-ewmh)
+BuildRequires: pkgconfig(libxdg-basedir)
+BuildRequires: pkgconfig(inih)
 
 BuildRequires: flex doxygen
 
@@ -43,6 +47,7 @@ Key features:
 
 %prep
 %setup -a1
+%patch
 
 %build
 %cmake
@@ -50,12 +55,6 @@ Key features:
 
 %install
 %cmake_install
-
-# Install default config files
-install -d %buildroot%_sysconfdir
-install -m644 -v \
-./etc/{style.plist,wlmaker.plist,wlmaker-state.plist,wlmaker-home.plist} \
-%buildroot%_sysconfdir
 
 %check
 %ctest \
@@ -66,14 +65,25 @@ install -m644 -v \
 %files
 %doc *.md LICENSE
 %_bindir/%name
+%_bindir/wlmtool
 %_bindir/wlmclock
-%_datadir/%name.desktop
-%_datadir/wlmclock.desktop
+%_bindir/wlmeyes
+%_bindir/wlmcpugraph
+%_bindir/wlmmemgraph
+%_bindir/wlmnetgraph
+%_datadir/applications/*.desktop
+%_datadir/wayland-sessions/%name.desktop
 %_datadir/%name
-%_iconsdir/%name
-%config(noreplace)%_sysconfdir/*.plist
+%_iconsdir/hicolor/48x48/apps/%name.png
+%_iconsdir/hicolor/64x64/apps/*.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_sysconfdir/xdg/%name
 
 %changelog
+* Mon Feb 16 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.7.1-alt1
+- 0.6.2 -> 0.7.1
+- Patched to link with libinih.
+
 * Mon Nov 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6.2-alt1
 - 0.6.1 -> 0.6.2
 
