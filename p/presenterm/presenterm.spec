@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           presenterm
-Version:        0.15.1
+Version:        0.16.0
 Release:        alt1
 
 Summary:        A markdown terminal slideshow tool
@@ -42,5 +42,8 @@ presentations into PDF format, and plenty of other features.
 %doc README.md CHANGELOG.md LICENSE
 
 %changelog
+* Mon Feb 16 2026 Sergey Savelev <medovi@altlinux.org> 0.16.0-alt1
+- New version 0.16.0.
+
 * Fri Nov 21 2025 Sergey Savelev <medovi@altlinux.org> 0.15.1-alt1
 - Initial build for Sisyphus.
