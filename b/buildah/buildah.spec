@@ -17,12 +17,13 @@
 %endif
 
 Name: buildah
-Version: 1.42.2
+Version: 1.43.0
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
-Url: https://%provider_prefix
+Url: https://buildah.io
+Vcs: https://github.com/containers/buildah.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -100,6 +101,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Feb 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.43.0-alt1
+- updated from 1.42.2 to 1.43.0
+
 * Mon Dec 08 2025 Alexey Shabalin <shaba@altlinux.org> 1.42.2-alt1
 - New version 1.42.2 (Fixes: CVE-2025-52881).
 
@@ -285,4 +289,3 @@ popd
 
 * Sun Sep 15 2019 Alexey Shabalin <shaba@altlinux.org> 1.11.2-alt1
 - Initial build for ALT
-
