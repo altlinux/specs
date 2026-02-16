@@ -23,7 +23,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2.4.2
-Release: alt1
+Release: alt2
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -92,6 +92,33 @@ Requires: python3-devel
 
 %description -n lib%oname-py3-devel
 This package contains development files of NumPy.
+
+%pre
+# Show warning for installation or upgrade of NumPy 2.4.x+
+# Only warn on x86_64 systems without SSE4.2 (X86_V2 baseline) support
+if [ "$(uname -m)" = "x86_64" ] && [ -f /proc/cpuinfo ]; then
+	grep -sq sse4_2 /proc/cpuinfo || {
+		echo "##########################################################################"
+		echo "#              Attention! NumPy 2.4.x and later versions                 #"
+		echo "##########################################################################"
+		echo "#  Please be aware of possible runtime errors on:                        #"
+		echo "#    - CPUs older than Nehalem (2009, without SSE4.2 support)            #"
+		echo "#    - QEMU/KVM virtual machines with kvm64/qemu64 CPU models            #"
+		echo "#    - Emulated CPUs without SSE4.2 instruction support                  #"
+		echo "#                                                                        #"
+		echo "#  Error message you might encounter:                                    #"
+		echo "#    RuntimeError: NumPy was built with baseline optimizations: (X86_V2) #"
+		echo "#    but your machine doesn't support: (X86_V2).                         #"
+		echo "#                                                                        #"
+		echo "#  For virtual machines, try using a CPU model with SSE4.2 support:      #"
+		echo "#    - QEMU: -cpu host (if host CPU supports SSE4.2)                     #"
+		echo "#    - QEMU: -cpu Nehalem or newer (SandyBridge, Haswell, etc.)          #"
+		echo "#    - libvirt/KVM: use host-passthrough or host-model CPU mode          #"
+		echo "#                                                                        #"
+		echo "#  For physical systems without SSE4.2, consider hardware upgrade.       #"
+		echo "##########################################################################"
+	} >&2
+fi
 
 %prep
 %setup -a2
@@ -172,6 +199,11 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri Feb 13 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.4.2-alt2
+- Added warning about possible runtime errors on virtual machines
+  with emulated CPUs (kvm64, qemu64) or on older CPUs without SSE4.2
+  support (pre-Nehalem, pre-2009).
+
 * Wed Feb 04 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.4.2-alt1
 - 2.4.1 -> 2.4.2
 
