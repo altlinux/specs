@@ -4,10 +4,11 @@
 %else
 %def_enable openmp
 %endif
+%define optflags_lto %nil
 
 Name: krita-gmic
-Version: 3.2.4.1
-Release: alt2
+Version: 3.5.0.1
+Release: alt1
 
 Group: Graphics
 Summary: GREYC's Magic Image Converter for Krita
@@ -40,7 +41,8 @@ multi-spectral image datasets.
 pushd gmic-qt
 %K5build \
     -DGMIC_QT_HOST=krita-plugin \
-    -DENABLE_SYSTEM_GMIC=FALSE \
+    -DENABLE_SYSTEM_GMIC:BOOL=OFF \
+    -DENABLE_LTO:BOOL=ON \
     #
 popd
 
@@ -55,6 +57,9 @@ popd
 %doc gmic-qt/README*
 
 %changelog
+* Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 3.5.0.1-alt1
+- new version
+
 * Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 3.2.4.1-alt2
 - clean requires
 
