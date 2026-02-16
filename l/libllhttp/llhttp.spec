@@ -2,7 +2,7 @@
 %define project_name llhttp
 
 Name: lib%project_name
-Version: 9.3.0
+Version: 9.3.1
 Release: alt1
 Summary: Port of http_parser to llparse
 License: MIT
@@ -48,7 +48,6 @@ cd release
 # run python's aiohttp tests
 
 %files
-%doc README.*
 %_libdir/%name.so.9.*
 
 %files -n %name-devel
@@ -58,5 +57,8 @@ cd release
 %_cmakedir/%project_name/*.cmake
 
 %changelog
+* Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 9.3.1-alt1
+- 9.3.0 -> 9.3.1.
+
 * Mon May 26 2025 Stanislav Levin <slev@altlinux.org> 9.3.0-alt1
 - Initial build for sisyphus.
