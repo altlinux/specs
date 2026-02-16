@@ -1,7 +1,7 @@
 %define src_dir %_usrsrc/%name-%version
 
 Name: xone
-Version: 0.4.8
+Version: 0.5.5
 Release: alt1
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
@@ -13,11 +13,11 @@ Url: https://github.com/dlundqvist/xone.git
 Source0: %name-%version.tar
 Source1: %name.sh
 
-Patch0: xone-0.3.4-alt-firmware-install.patch
+Patch0: xone-0.5.5-alt-firmware-install.patch
 
 Requires: dkms-%name = %EVR
 # needed for firmware.sh (download and unpack firmware for the wireless dongle):
-Requires: curl cabextract
+Requires: curl bsdtar
 
 BuildArch: noarch
 
@@ -72,6 +72,9 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Mon Feb 16 2026 Mikhail Tergoev <fidel@altlinux.org> 0.5.5-alt1
+- 0.5.5
+
 * Tue Oct 14 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.8-alt1
 - 0.4.8
 
