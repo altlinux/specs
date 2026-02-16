@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 Epoch: 1
 
@@ -119,7 +119,6 @@ cp -p systemd/README README.systemd
 install -pm0644 nfs.conf %buildroot%_sysconfdir/nfs.conf
 install -pm0644 support/nfsidmap/idmapd.conf %buildroot%_sysconfdir/idmapd.conf
 
-ln -s nfs-blkmap.service %buildroot%systemd_unitdir/blkmapd.service
 ln -s nfs-idmapd.service %buildroot%systemd_unitdir/idmapd.service
 ln -s nfs-server.service %buildroot%systemd_unitdir/nfs.service
 ln -s rpc-gssd.service %buildroot%systemd_unitdir/gssd.service
@@ -141,7 +140,6 @@ touch %buildroot%_localstatedir/nfs/nfsdcld/main.sqlite
 
 %post clients
 %post_service nfslock
-%post_service blkmapd
 %post_service gssd
 
 %post utils
@@ -149,7 +147,6 @@ touch %buildroot%_localstatedir/nfs/nfsdcld/main.sqlite
 
 %preun clients
 %preun_service nfslock
-%preun_service blkmapd
 %preun_service gssd
 
 %post server
@@ -253,11 +250,9 @@ touch /var/lock/subsys/rpc.svcgssd
 
 %config(noreplace) %_sysconfdir/nfs.conf
 
-%_initdir/blkmapd
 %_initdir/nfslock
 %_initdir/gssd
 
-%systemd_unitdir/blkmapd.service
 %systemd_unitdir/gssd.service
 %systemd_unitdir/nfslock.service
 
@@ -266,7 +261,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfs-utils.service
 %systemd_unitdir/auth-rpcgss-module.service
 %systemd_unitdir/var-lib-nfs-rpc_pipefs.mount
-%systemd_unitdir/nfs-blkmap.service
 %systemd_unitdir/rpc-statd.service
 %systemd_unitdir/rpc-statd-notify.service
 %systemd_unitdir/rpc-gssd.service
@@ -277,7 +271,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %_sbindir/rpc.gssd
 %_sbindir/rpc.statd
 %_sbindir/sm-notify
-%_sbindir/blkmapd
 %_sbindir/nfsidmap
 %_sbindir/nfsconf
 %_sbindir/rpcctl
@@ -286,7 +279,6 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man7dir/nfs.systemd.*
 %_man8dir/gssd.*
 %_man8dir/rpc.gssd*
-%_man8dir/blkmapd.*
 %_man8dir/statd.*
 %_man8dir/rpc.statd.*
 %_man8dir/rpcctl.*
@@ -322,6 +314,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Feb 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.5-alt1
+- 2.8.5 released
+
 * Fri Sep 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.4-alt1
 - 2.8.4 released
 
