@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.12
+Version: 0.2.13
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -18,6 +18,7 @@ Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.29
 Requires: apt >= 0.5.15lorg2-alt97
 Requires: logrotate
+Requires: util-linux
 
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires: make
@@ -64,6 +65,9 @@ through apt and rpm.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Mon Feb 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.13-alt1
+- Add cdrom source availability check before apt operations (thx Oleg Chagaev).
+
 * Fri Nov 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.12-alt1
 - Add 'exit_status = true' for new version of executor.
 
