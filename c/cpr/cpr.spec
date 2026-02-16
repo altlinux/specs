@@ -4,7 +4,7 @@
 %define sover 1
 
 Name: cpr
-Version: 1.14.1
+Version: 1.14.2
 Release: alt1
 
 Summary: C++ Requests: Curl for People, a spiritual port of Python Requests
@@ -70,6 +70,9 @@ applications that use %name.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Mon Feb 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.14.2-alt1
+- new version
+
 * Wed Feb 04 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.14.1-alt1
 - new version
 
