@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -100,6 +100,15 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 0.18.0-alt1
+- added --repo flag to builder add for apt config generation
+- added interactive repo input with TAB completion in builder add
+- added repo URL and apt config status to builder list
+- added beehive FTBFS status to task test-rebuild
+- fixed builder add apt-config generation for sources.list with [label] syntax
+- fixed builder add hasher satellite user detection
+- fixed builder add hasher_number validation for hasher-useradd
+
 * Sun Feb 15 2026 Anton Farygin <rider@altlinux.org> 0.17.1-alt1
 - added HTTP response size limits (64 MB) and download size limits (50 GB)
 - added DNS rebinding SSRF protection via CURLOPT_PREREQFUNCTION
