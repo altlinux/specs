@@ -5,7 +5,7 @@
 
 Name:    naps2
 Version: 8.2.0
-Release: alt3
+Release: alt4
 
 Summary: Scan documents to PDF and more, as simply as possible.
 License: GPL-2.0+
@@ -13,11 +13,12 @@ Group:   Other
 Url:     https://github.com/cyanfish/naps2
 
 Source: %name-%version.tar
+Patch0: %name-8.2.0-alt-fix-for-libpdfium-soname.patch
 
 BuildRequires(pre): rpm-macros-dotnet
 BuildRequires: dotnet-sdk-%dotnetver
 BuildRequires: /proc
-Requires: libpdfium-devel
+Requires: libpdfium0
 
 ExclusiveArch: x86_64
 
@@ -29,6 +30,7 @@ recognition (OCR) is available using Tesseract.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 sed -i 's#<RuntimeIdentifiers>linux-x64;linux-arm64</RuntimeIdentifiers>#<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>#' \
@@ -71,6 +73,10 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Mon Feb 16 2026 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt4
+- fix soname to allow runtime dependency on libpdfium0 instead
+  of libpdfium-devel
+
 * Mon Dec 08 2025 Nikolay Burykin <bne@altlinux.org> 8.2.0-alt3
 - added missing runtime dependency on libpdfium-devel (Closes: #57042)
 
