@@ -3,12 +3,13 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: esbuild
-Version: 0.27.0
+Version: 0.27.3
 Release: alt1
 Summary: An extremely fast JavaScript and CSS bundler and minifier
 Group: Development/Other
 License: MIT
 Url: https://esbuild.github.io
+Vcs: https://github.com/evanw/esbuild.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -44,6 +45,9 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Feb 16 2026 Alexey Shabalin <shaba@altlinux.org> 0.27.3-alt1
+- updated from 0.27.0 to 0.27.3
+
 * Fri Nov 14 2025 Alexey Shabalin <shaba@altlinux.org> 0.27.0-alt1
 - New version 0.27.0.
 
