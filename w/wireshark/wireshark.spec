@@ -10,7 +10,7 @@
 
 Name: wireshark
 Version: 4.6.3
-Release: alt1
+Release: alt2
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -24,7 +24,6 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libportaudio2-devel libssl-devel python3 unzip xml-utils xsltproc perl-Pod-Parser perl-devel
-BuildRequires: liblua5.1-compat-devel
 BuildRequires: libssh-devel
 BuildRequires: libnl-devel
 %if_with nghttp2
@@ -52,6 +51,8 @@ BuildRequires: libspeexdsp-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libcares-devel
+BuildRequires: libnghttp3-devel
+BuildRequires: liblua5-devel
 BuildRequires: git
 BuildRequires(pre):rpm-build-xdg
 
@@ -234,6 +235,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 4.6.3-alt2
+- built with http3 and lua support (Closes: #57865)
+
 * Fri Jan 16 2026 Anton Farygin <rider@altlinux.org> 4.6.3-alt1
 - 4.6.2 -> 4.6.3 (Fixes: CVE-2026-0959, CVE-2026-0960, CVE-2026-0961, CVE-2026-0962)
 
