@@ -4,13 +4,13 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.17.1
+Version: 1.17.2
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
-Url: https://github.com/containers/%name
-Vcs: https://github.com/containers/%name
+Url: https://github.com/containers/netavark
+Vcs: https://github.com/containers/netavark.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 ExcludeArch: %arm %ix86
@@ -79,6 +79,9 @@ NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 %_unitdir/*
 
 %changelog
+* Mon Feb 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.17.2-alt1
+- updated from 1.17.1 to 1.17.2
+
 * Fri Jan 09 2026 Alexey Shabalin <shaba@altlinux.org> 1.17.1-alt1
 - New version 1.17.1.
 
