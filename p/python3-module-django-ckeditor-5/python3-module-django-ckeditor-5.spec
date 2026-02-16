@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.18
+Version: 0.2.19
 Release: alt1
 Summary: CKEditor 5 for Django
 License: BSD-3-Clause
@@ -56,5 +56,8 @@ export PYTHONPATH=example/blog:$PYTHONPATH
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 15 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 0.2.19-alt1
+- New version (0.2.19).
+
 * Thu Dec 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 0.2.18-alt1
 - Initial build for ALT.
