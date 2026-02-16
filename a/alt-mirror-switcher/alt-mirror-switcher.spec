@@ -1,5 +1,5 @@
 Name: alt-mirror-switcher
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -85,6 +85,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Mon Feb 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
+- 0.7.0 -> 0.7.1
+
 * Mon Feb 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
 - gui: added: switching to the Sisyphus archive
 
