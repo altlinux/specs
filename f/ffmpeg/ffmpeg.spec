@@ -50,6 +50,7 @@
 %def_disable libglslang
 %def_enable libgme
 %def_enable libgsm
+%def_enable libharfbuzz
 %def_enable libjack
 # https://trac.ffmpeg.org/ticket/9112
 %def_disable liblensfun
@@ -163,7 +164,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version: 8.0.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -207,6 +208,7 @@ BuildRequires:	yasm
 %{?_enable_libglslang:BuildRequires: glslang-devel}
 %{?_enable_libgme:BuildRequires: libgme-devel}
 %{?_enable_libgsm:BuildRequires: libgsm-devel}
+%{?_enable_libharfbuzz:BuildRequires: libharfbuzz-devel}
 %{?_enable_libjack:BuildRequires: libjack-devel}
 %{?_enable_liblensfun:BuildRequires: liblensfun-devel}
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
@@ -590,6 +592,7 @@ xz Changelog
 	%{subst_enable libfribidi} \
 	%{subst_enable libglslang} \
 	%{subst_enable libgme} \
+	%{subst_enable libharfbuzz} \
 	%{subst_enable libgsm} \
 	%{subst_enable libilbc} \
 	%{subst_enable libjack} \
@@ -817,6 +820,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 2:8.0.1-alt2
+- built with libharfbuzz to enable drawtext support (closes: #56915)
+
 * Wed Dec 24 2025 Anton Farygin <rider@altlinux.org> 2:8.0.1-alt1
 - 8.0 -> 8.0.1
 
