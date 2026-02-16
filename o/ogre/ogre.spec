@@ -5,7 +5,7 @@
 
 Name: ogre
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: %name-%version-imgui.tar
 
 Patch1: ogre-alt-build.patch
+Patch2: ogre-14.3.4-alt-install-test-media.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel
@@ -88,6 +89,7 @@ samples.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 mkdir %_cmake__builddir
 pushd %_cmake__builddir &>/dev/null
@@ -122,6 +124,10 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %install
 %cmakeinstall_std
 
+%check
+cd %_cmake__builddir/bin
+./Test_Ogre
+
 %files
 %doc AUTHORS LICENSE
 %_bindir/Ogre*
@@ -132,6 +138,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %config(noreplace) %_datadir/OGRE-%ver_major/plugins.cfg
 %config(noreplace) %_datadir/OGRE-%ver_major/resources.cfg
 %_datadir/OGRE-%ver_major/Media
+%_datadir/OGRE-%ver_major/Tests
 
 %exclude %_datadir/OGRE-%ver_major/samples.cfg
 
@@ -155,6 +162,14 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_libdir/OGRE/Samples
 
 %changelog
+* Sat Feb 15 2026 Anton Farygin <rider@altlinux.ru> 14.3.4-alt2
+- fixed crash in Test_Ogre due to missing test media in installed package
+  (ALT #57711)
+- fixed relative media paths in installed resources.cfg to absolute paths
+- fixed MeshSerializer and FileSystemArchive tests to work with read-only
+  installed media directories
+- added %%check section to run tests during build
+
 * Wed Feb 26 2025 Anton Farygin <rider@altlinux.ru> 14.3.4-alt1
 - 14.2.6 -> 14.3.4
 
