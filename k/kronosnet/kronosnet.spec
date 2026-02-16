@@ -13,12 +13,12 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.32
+Version: 1.33
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
 Url: https://kronosnet.org
-# vcs-git: https://github.com/kronosnet/kronosnet
+Vcs: https://github.com/kronosnet/kronosnet.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -313,6 +313,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Mon Feb 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.33-alt1
+- updated from 1.32 to 1.33
+
 * Mon Oct 06 2025 Alexey Shabalin <shaba@altlinux.org> 1.32-alt1
 - 1.32
 
@@ -372,5 +375,4 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 
 * Tue Mar 05 2019 Alexey Shabalin <shaba@altlinux.org> 1.7-alt1
 - initial build for ALT
-
 
