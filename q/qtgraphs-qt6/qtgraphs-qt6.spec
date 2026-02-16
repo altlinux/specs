@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name-qt6
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Qt Graphs library for data visualization
@@ -20,7 +20,7 @@ Vcs: https://github.com/qt/qtgraphs.git
 
 Source: %url/archive/v%version/%_name-v%version.tar.gz
 
-%define qt_ver %ver_major
+%define qt_ver %version
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6
 BuildRequires: gcc-c++ cmake
@@ -85,6 +85,7 @@ This package provudes Qt Graphs examples.
 %_libdir/%{libname}Widgets.so.*
 %_qt6_qmldir/%__name/
 %_libdir/qt6/sbom/%_name-%version.spdx
+%_libdir/qt6/sbom/%_name-%version.cdx.json
 
 %files -n lib%name-devel
 %_qt6_headerdir/%__name/
@@ -107,6 +108,9 @@ This package provudes Qt Graphs examples.
 %_libdir/qt6/examples/*
 
 %changelog
+* Fri Feb 13 2026 Yuri N. Sedunov <aris@altlinux.org> 6.10.2-alt1
+- 6.10.2
+
 * Sun Jan 18 2026 Yuri N. Sedunov <aris@altlinux.org> 6.10.1-alt1
 - 6.10.1
 
