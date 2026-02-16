@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: winehelper
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -14,11 +14,12 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-Requires: wine
-Requires: ca-certificates
-Requires: p7zip
+Requires: wine winetricks
+Requires: p7zip zenity wmctrl
+Requires: glibc-core libstdc++6 glibc-pthread glibc-nss libunwind libunixODBC2 libgnutls30
+Requires: libnm libnss libnss-mdns libnsl1 libfreetype libcups libfontconfig1 ca-certificates
+Requires: ocl-icd libGL libEGL libvulkan1 xorg-dri-swrast xorg-dri-intel xorg-dri-radeon
 
-%add_findreq_skiplist %_datadir/%name/winetricks_*
 %add_findreq_skiplist %_datadir/%name/autoinstall/*
 %add_findreq_skiplist %_datadir/%name/manualinstall/*
 %add_findreq_skiplist %_datadir/%name/testinstall/*
@@ -47,7 +48,6 @@ install -Dm755 %name %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,testinstall,database,image}
 install -m755 dependencies.sh %buildroot%_datadir/%name/
-install -m755 winetricks_* %buildroot%_datadir/%name/
 install -m644 sha256sum.list %buildroot%_datadir/%name/
 install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
@@ -79,6 +79,26 @@ install -m755 %{name}_gui.py %buildroot%_datadir/%name/%{name}_gui.py
 %_datadir/%name/%{name}_gui.py
 
 %changelog
+* Fri Feb 13 2026 Mikhail Tergoev <fidel@altlinux.org> 0.9.0-alt1
+- updated to version 0.9.0
+- added wine-wow64 support
+- added wine-cpcsp_proxy support for wine-wow64
+- added an option to skip 32-bit dependency checking if wine-wow64 is used
+- added installation scripts: dialux 4, ksamu, emias
+- updated the ved-control installation script
+- tax programs have been migrated to 64-bit prefixes and wine-wow64
+- t-flex programs have been migrated to use wine-wow64
+- arm-kt programs have been migrated to use wine-wow64
+- improved base prefix creation
+- improved creation and unpacking of prefix backups
+- system winetricks is used
+- GUI: main functions fixed/improved
+- GUI: icon display fixed for shortcuts (desktop files)
+- GUI: added the ability to launch the "Wine Control Panel"
+- GUI: moved file association, ESYNC, FSYNC, DXVK, and VK3D to "Advanced Settings"
+- GUI: removed unused Wine versions
+- GUI: added a filter to limit Wine version usage based on prefix
+
 * Fri Oct 24 2025 Mikhail Tergoev <fidel@altlinux.org> 0.8.0-alt1
 - updated to version 0.8.0
 - added autodetection of .reg and .dll files to add them to the prefix registry
