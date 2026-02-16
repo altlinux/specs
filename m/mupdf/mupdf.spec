@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define somajor 26
-%define sominor 10
-%define soname %somajor.%sominor
+%define abiversion 27
+%define sominor 1
+%define soname %abiversion.%sominor
 %define python3_name python3-module-mupdf
 
 Name: mupdf
-Version: 1.26.10
+Version: 1.27.1
 Release: alt1
 Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
 Group: Office
@@ -34,18 +34,18 @@ BuildRequires: tesseract-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libXrandr-devel
 
-Requires: libmupdf%soname = %EVR
+Requires: libmupdf%abiversion = %EVR
 
-%package -n libmupdf%soname
+%package -n libmupdf%abiversion
 Summary: MuPDF library for PDF render
 Group: System/Libraries
 
 %package -n libmupdf-devel
 Summary: Development files for MuPDF library
 Group: Development/C
-Requires: libmupdf%soname = %EVR
+Requires: libmupdf%abiversion = %EVR
 
-%package -n libmupdfcpp%soname
+%package -n libmupdfcpp%abiversion
 Summary: C++ bindings for MuPDF
 Group: System/Libraries
 
@@ -53,18 +53,30 @@ Group: System/Libraries
 Summary: Python bindings for MuPDF
 Group: System/Libraries
 
+%package tools
+Summary: Command line tools for MuPDF
+Group: Office
+Conflicts: mupdf < 1.27.1
+
 %description
 MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
-%description -n libmupdf%soname
+
+%description -n libmupdf%abiversion
 MuPDF shared library
+
 %description -n libmupdf-devel
 Header files for the MuPDF shared library
 
-%description -n libmupdfcpp%soname
+%description -n libmupdfcpp%abiversion
 The mupdf package contains the mupdf C++ library files.
 
 %description -n %python3_name
 The python3 package contains low level mupdf python bindings.
+
+%description tools
+The mupdf-tools package contains the mutool command line tool for
+manipulating PDF, XPS, and E-book documents without graphical interface.
+Ideal for server environments where graphical libraries are not required.
 
 %prep
 %setup -a1 -a2 -a3
@@ -105,15 +117,14 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %doc CHANGES COPYING README
 %_bindir/mupdf-gl
 %_bindir/mupdf-x11
-%_bindir/mutool
-%_mandir/man1/*
+%_mandir/man1/mupdf.1*
 
-%files -n libmupdf%soname
-%_libdir/libmupdf.so.%somajor
+%files -n libmupdf%abiversion
+%_libdir/libmupdf.so.%abiversion
 %_libdir/libmupdf.so.%soname
 
-%files -n libmupdfcpp%soname
-%_libdir/libmupdfcpp.so.%somajor
+%files -n libmupdfcpp%abiversion
+%_libdir/libmupdfcpp.so.%abiversion
 %_libdir/libmupdfcpp.so.%soname
 
 %files -n libmupdf-devel
@@ -132,7 +143,16 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %python3_sitelibdir/mupdf/__pycache__/
 %python3_sitelibdir/mupdf/_mupdf.so
 
+%files tools
+%_bindir/mutool
+%_mandir/man1/mutool.1*
+
 %changelog
+* Thu Feb 12 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 1.27.1-alt1
+- New version (1.27.1).
+- Splited mutool into separate mupdf-tools subpackage.
+- Switched MuPDF library packages to ABI-based naming.
+
 * Tue Sep 30 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.10-alt1
 - New version (1.26.10).
 

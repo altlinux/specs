@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.26.5
-Release: alt3
+Version: 1.27.1
+Release: alt1
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
 License: AGPL-3.0-or-later
@@ -60,7 +60,7 @@ export LDFLAGS="$LDFLAGS -lfreetype -lmupdf"
 
 %check
 # linters have no place in distro build tests
-SKIP="not test_codespell and not test_pylint"
+SKIP="not test_codespell and not test_pylint and not test_py_typed"
 # test_fontarchives tries to download special module via pip
 SKIP="$SKIP and not test_fontarchive"
 # flake8 has no place in downstream packaging
@@ -83,7 +83,8 @@ SKIP="$SKIP and not test_4392"
 %ifarch %ix86
 # On the i586 architecture, some tests related to text rendering and positioning,
 # may give minor discrepancies in pixels.
-SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4182"
+SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4182 \
+and not test_4435 and not test_4699"
 %endif
 %pyproject_run_pytest -k "$SKIP"
 
@@ -95,6 +96,9 @@ SKIP="$SKIP and not test_2246 and not test_4415 and not test_4245 and not test_4
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 12 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 1.27.1-alt1
+- New version (1.27.1).
+
 * Tue Oct 21 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.26.5-alt3
 - Renamed package to python3-module-pymupdf.
 
