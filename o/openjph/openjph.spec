@@ -2,7 +2,7 @@
 %def_with check
 
 Name: openjph
-Version: 0.26.0
+Version: 0.26.3
 Release: alt1
 Summary: High-throughput JPEG 2000 (HTJ2K) encoder/decoder and library
 License: BSD-2-Clause
@@ -84,6 +84,9 @@ sed -i '/#else/,/#endif/ {
 %_libdir/cmake/openjph/
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 0.26.3-alt1
+- 0.26.0 -> 0.26.3
+
 * Fri Jan 02 2026 Anton Farygin <rider@altlinux.org> 0.26.0-alt1
 - 0.25.3 -> 0.26.0
 
