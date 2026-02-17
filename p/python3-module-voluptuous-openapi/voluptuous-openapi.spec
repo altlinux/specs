@@ -1,11 +1,11 @@
 Name: python3-module-voluptuous-openapi
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Convert voluptuous schemas to OpenAPI Schema object
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/voluptuous-openapi
+URL: https://pypi.org/project/voluptuous-openapi
 VCS: https://github.com/home-assistant-libs/voluptuous-openapi
 
 Source0: %name-%version.tar
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/voluptuous_openapi-%version.dist-info
 
 %changelog
+* Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
+- 0.3.0 released
+
 * Tue Oct 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
 - 0.2.0 released
 
