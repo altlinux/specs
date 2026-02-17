@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4.9
+Version: 4.4.10
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -71,6 +71,9 @@ popd
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 4.4.10-alt1
+- Build new version.
+
 * Wed Jan 28 2026 Grigory Ustinov <grenka@altlinux.org> 4.4.9-alt1
 - Build new version.
 
