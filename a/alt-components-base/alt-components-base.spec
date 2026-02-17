@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -157,6 +157,20 @@ done
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Feb 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.1-alt1
+- Update edition_server and edition_domain (thx Dmitriy Terekhin):
+  + add etcnet to base sections
+  + move kernel-modules-drm to base sections
+  + add kernel-modules-r8125 to base sections
+- Update components (thx Dmitriy Terekhin):
+  + add installer-feature-online-repo to alt-server-temporary-for-installer
+  + replace gnome-tweaks with tuner-tweaks
+  + add ptyxis and gnome-console-keybind to alt-server-gnome-environment
+  + rename legacy alterator packages
+  + add kernel-modules-r8125 component
+  + fix typo in alt-server-temporary-for-installer component
+  + remove mdns support and outdated settings
+
 * Fri Feb 06 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.10.0-alt1
 - Update editions:
   + add ldap-auth-client-sssd to the main section of the server edition
