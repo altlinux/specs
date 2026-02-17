@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: deskflow
-Version: 1.25.0
+Version: 1.26.0
 Release: alt1
 
 Summary: Share a single keyboard and mouse between multiple computers
@@ -68,6 +68,9 @@ is supported. Clipboard sharing is supported.
 %exclude %_datadir/licenses/deskflow
 
 %changelog
+* Tue Feb 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.26.0-alt1
+- New version 1.26.0.
+
 * Sun Nov 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.25.0-alt1
 - New version 1.25.0.
 

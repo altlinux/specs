@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: toolblex
-Version: 0.14.1
+Version: 0.15
 Release: alt1
 
 Summary: A multiplatform Bluetooth Low Energy (and Classic) device scanner and analyzer
@@ -44,7 +44,7 @@ Features:
 %prep
 %setup
 sed -i "s/Categories=.*/Categories=Network;Monitor;Qt;/" assets/linux/toolBLEx.desktop
-sed -i "s|assets/gfx/logos/||" README.md
+sed -i "s|assets/gfx/||" README.md
 sed -i "s|assets/COPYING|COPYING|g" README.md
 
 %build
@@ -56,7 +56,7 @@ sed -i "s|assets/COPYING|COPYING|g" README.md
 %cmake_install
 
 %files
-%doc LICENSE.md README.md assets/COPYING assets/gfx/logos/banner.svg
+%doc LICENSE.md README.md assets/COPYING assets/gfx/banner.svg
 %_bindir/toolBLEx
 %_datadir/appdata/toolBLEx.appdata.xml
 %_desktopdir/toolBLEx.desktop
@@ -65,5 +65,8 @@ sed -i "s|assets/COPYING|COPYING|g" README.md
 %_pixmapsdir/toolBLEx.svg
 
 %changelog
+* Tue Feb 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.15-alt1
+- New version 0.15.
+
 * Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 0.14.1-alt1
 - Initial build for Sisyphus
