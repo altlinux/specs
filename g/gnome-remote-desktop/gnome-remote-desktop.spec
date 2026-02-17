@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -68,7 +68,6 @@ Remote desktop daemon for GNOME using pipewire.
 %setup -n %name-%version%beta
 
 %build
-%add_optflags %(pkg-config --cflags winpr3)
 %meson \
     %{subst_enable_meson_bool rdp rdp} \
     %{subst_enable_meson_bool vnc vnc} \
@@ -111,6 +110,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Tue Feb 17 2026 Yuri N. Sedunov <aris@altlinux.org> 49.3-alt1
+- 49.3
+
 * Tue Dec 09 2025 Yuri N. Sedunov <aris@altlinux.org> 49.2-alt1
 - 49.2
 
