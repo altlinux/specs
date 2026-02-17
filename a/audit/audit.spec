@@ -5,8 +5,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: audit
-Version: 4.1.2
-Release: alt2
+Version: 4.1.3
+Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.0-or-later
@@ -286,6 +286,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 09 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt1
+- 4.1.2 -> 4.1.3
+
 * Mon Sep 15 2025 Egor Ignatov <egori@altlinux.org> 4.1.2-alt2
 - %%post: reload systemd units before restarting auditd
 - %%post: use 'service' command to start 'auditd' (closes: #50744)
