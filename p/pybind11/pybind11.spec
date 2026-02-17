@@ -3,7 +3,7 @@
 %def_with check
 
 Name: pybind11
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Seamless operability between C++11 and Python
@@ -97,9 +97,9 @@ ln -s %_datadir/pkgconfig/pybind11.pc %buildroot%python3_sitelibdir/pybind11/sha
 export SKIP_E2K=1
 %endif
 export PYTHONPATH=$PWD/noarch-alt-linux/tests
-ignore_tests="--ignore tests/test_embed/test_interpreter.py --ignore tests/test_embed/test_trampoline.py"
-ignore_tests="$ignore_tests --ignore tests/extra_python_package/test_files.py"
-py.test-3 $ignore_tests
+pushd noarch-alt-linux/tests
+py.test-3
+popd
 
 %files devel
 %doc README.rst LICENSE docs/*
@@ -113,6 +113,9 @@ py.test-3 $ignore_tests
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Feb 17 2026 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Tue Oct 28 2025 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 
