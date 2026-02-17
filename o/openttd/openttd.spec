@@ -5,7 +5,7 @@
 
 Name: openttd
 Version: 15.1
-Release: alt1
+Release: alt2
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
@@ -15,7 +15,8 @@ Url: https://www.openttd.org/
 VCS: https://github.com/OpenTTD/OpenTTD
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-15.0-alt.patch
+Patch0: %name-15.0-alt.patch
+Patch1: %name-15.1-alt-sdl2-wayland-fullscreen.patch
 
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
@@ -30,7 +31,8 @@ An open source clone of the Microprose game "Transport Tycoon Deluxe".
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 echo "%version	%daterev	0	%gitsnapshot	1	1" >.ottdrev
 echo "%version" >.version
 
@@ -50,6 +52,14 @@ echo "%version" >.version
 %_man6dir/*
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 15.1-alt2
+- keep openttd auto font size defaults to avoid oversized gui
+  text (closes: #57589)
+- auto-prefer wayland sdl backend in wayland sessions with
+  safe fallback (closes: #57590)
+- use sdl fullscreen desktop mode for single-display backends and keep
+  fullscreen on one monitor
+
 * Tue Jan 27 2026 Anton Farygin <rider@altlinux.org> 15.1-alt1
 - 15.0 -> 15.1
 
