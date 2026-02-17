@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.1.3
+Version: 6.1.4
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -33,7 +33,7 @@ BuildRequires: lightdm-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libei-devel
-BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel qt6-shadertools-devel
+BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel qt6-shadertools-devel qt6-wayland-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-kdeclarative-devel kf6-kiconthemes-devel plasma6-lib-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kauth-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcmutils-devel
@@ -107,6 +107,10 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Tue Feb 17 2026 Anton Golubev <golubevan@altlinux.org> 6.1.4-alt1
+- implement the capsLock and numLock properties of the KWin keyboard backend
+  (Closes: 57886)
+
 * Thu Jan 22 2026 Anton Golubev <golubevan@altlinux.org> 6.1.3-alt1
 - KCM fixes due to the update of the Plasma (Closes: 57435)
 
