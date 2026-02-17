@@ -1,48 +1,59 @@
-Name:           jacoco
-Version:        0.8.14
-Release:        alt1
+Name: jacoco
+Version: 0.8.14
+Release: alt2
 
-Summary:        Java Code Coverage for Eclipse
-Group:          System/Libraries
-License:        EPL-2.0
-URL:            http://www.eclemma.org/jacoco/
-VCS:            https://github.com/jacoco/jacoco.git
-BuildArch:      noarch
+Summary: Java Code Coverage for Eclipse
+Group: System/Libraries
+License: EPL-2.0
+Url: http://www.eclemma.org/jacoco/
+VCS: https://github.com/jacoco/jacoco.git
+BuildArch: noarch
 
-Source0:        %name-%version.tar
+Source0: %name-%version.tar
 
-BuildRequires:  javapackages-tools
-BuildRequires:  /proc
-BuildRequires:  rpm-build-java
-BuildRequires:  jpackage-default
-BuildRequires:  maven-local
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-reporting-api
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  buildnumber-maven-plugin
-BuildRequires:  exec-maven-plugin
-BuildRequires:  objectweb-asm
+# required by wrapper script
+Requires: javapackages-tools
+
+BuildRequires: javapackages-tools
+BuildRequires: /proc
+BuildRequires: rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-shade-plugin
+BuildRequires: maven-reporting-api
+BuildRequires: maven-plugin-build-helper
+BuildRequires: buildnumber-maven-plugin
+BuildRequires: exec-maven-plugin
+BuildRequires: objectweb-asm
 
 %description
 JaCoCo is a free code coverage library for Java, which has been created by the
 EclEmma team based on the lessons learned from using and integration existing
 libraries over the last five years.
 
-%package    maven-plugin
-Group:      System/Libraries
-Summary:    A Jacoco plugin for maven
+%package maven-plugin
+Group: System/Libraries
+Summary: A Jacoco plugin for maven
 
 %description maven-plugin
 A Jacoco plugin for maven.
 
 %{?javadoc_package}
 
+%package cli
+Group: Development/Tools
+Summary: Jacoco binary wrapper
+Requires: jacoco
+
+%description cli
+Jacoco binary wrapper.
+
 %prep
-%setup -q
+%setup
 
 find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
@@ -97,17 +108,25 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %mvn_install
 
 # ant config
-mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm > %{buildroot}%{_sysconfdir}/ant.d/%{name}
+mkdir -p %buildroot%_sysconfdir/ant.d
+echo %name %name/org.jacoco.ant objectweb-asm/asm > %buildroot%_sysconfdir/ant.d/%name
+
+# wrapper script
+%jpackage_script org.jacoco.cli.internal.Main "" "" jacoco/org.jacoco.cli:args4j:objectweb-asm:jacoco/org.jacoco.core:jacoco/org.jacoco.report jacococli true
 
 %files -f .mfiles
-%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%config(noreplace) %_sysconfdir/ant.d/%name
 %doc --no-dereference LICENSE.md
 %doc README.md
 
 %files maven-plugin -f .mfiles-maven-plugin
+%files cli
+%_bindir/jacococli
 
 %changelog
+* Mon Feb 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.8.14-alt2
+- Return jacococli.
+
 * Mon Feb 02 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.8.14-alt1
 - New version.
 
