@@ -3,9 +3,10 @@
 %define mod_name %pypi_name
 
 %def_with check
+%def_with bootstrap
 
 Name: python3-module-%pypi_name
-Version: 0.13.1
+Version: 0.16.3
 Release: alt1
 Summary: Buffer compression and transformation codecs for use
 License: MIT
@@ -13,19 +14,41 @@ Group: Development/Python3
 Url: https://pypi.org/project/numcodecs/
 Vcs: https://github.com/zarr-developers/numcodecs
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+Patch1: 0001-Unbundle-blosc.patch
+Patch2: 0002-Unbundle-zstd.patch
+Patch3: 0003-Unbundle-lz4.patch
+BuildRequires: git
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-py-cpuinfo
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-cython
 BuildRequires: libblosc-devel
 BuildRequires: libzstd-devel
 BuildRequires: liblz4-devel
 BuildRequires: libnumpy-py3-devel
 %if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_metadata_extra msgpack
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-pyzstd
+%endif
+
+# optional dependency
+%add_python3_req_skip pcodec
+
+%if_with bootstrap
+%add_python3_req_skip zarr.abc.codec
+%add_python3_req_skip zarr.abc.metadata
+%add_python3_req_skip zarr.core.array_spec
+%add_python3_req_skip zarr.core.buffer
+%add_python3_req_skip zarr.core.buffer.cpu
+%add_python3_req_skip zarr.core.common
 %endif
 
 %description
@@ -45,9 +68,14 @@ This package contains tests for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m "release"
+    git tag "%version"
+fi
 
 %build
 %pyproject_build
@@ -69,6 +97,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.16.3-alt1
+- Automatically updated to 0.16.3.
+
 * Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.13.1-alt1
 - 0.13.0 -> 0.13.1.
 
