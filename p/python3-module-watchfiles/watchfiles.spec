@@ -1,48 +1,49 @@
 Name: python3-module-watchfiles
-Version: 0.21.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Simple, modern file watching and code reload in python.
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/watchfiles/
+URL: https://pypi.org/project/watchfiles
+VCS: https://github.com/samuelcolvin/watchfiles
 
 Source0: %name-%version.tar
-Source1: crates.tar
-Patch3500: target-lexicon-loongarch64.patch
+Source1: pyproject_deps.json
+Source2: crates.tar
 
-BuildRequires: maturin >= 0.14.17
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-%if 0
-BuildRequires: python3(anyio)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(dirty_equals)
-%endif
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
+
+BuildRequires(pre): rpm-build-pyproject >= 0.2.0
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+
+%python3_set_limited_api
 
 %description
 %summary
 
 %prep
-%setup
+%setup -a2
 %ifdef bootstrap
 cargo vendor
-tar cf %SOURCE1 vendor
-%else
-tar xf %SOURCE1
-%patch3500 -p1
+tar cf %SOURCE2 .cargo vendor
 %endif
-sed -ri '/^version/ s,"[^"]+","%version",' Cargo.toml
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup dev
 
 %build
-export CARGO_HOME=${PWD}/cargo
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+rm -rf watchfiles
+%pyproject_run_pytest tests
 
 %files
 %_bindir/watchfiles
@@ -50,6 +51,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
+- 1.1.1 released
+
 * Mon Apr 22 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.21.0-alt2
 - NMU: restored LoongArch support
 
