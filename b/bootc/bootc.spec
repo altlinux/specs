@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.11.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -29,6 +29,7 @@ BuildRequires: rust-cargo
 BuildRequires: go-md2man
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(ostree-1) >= 2025.3
 
 %description
@@ -87,6 +88,9 @@ fi
 %_bindir/system-reinstall-bootc
 
 %changelog
+* Tue Feb 17 2026 Vladimir Romanov <rirusha@altlinux.org> 1.12.1-alt1
+- New version: 1.12.1.
+
 * Sun Dec 07 2025 Vladimir Romanov <rirusha@altlinux.org> 1.11.0-alt1
 - New version: 1.11.0.
 - Removed broken tests.
