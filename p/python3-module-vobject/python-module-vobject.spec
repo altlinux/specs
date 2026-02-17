@@ -1,7 +1,9 @@
 %define modulename vobject
 
+%def_with check
+
 Name: python3-module-%modulename
-Version: 0.9.7
+Version: 0.9.9
 Release: alt1
 
 Summary: Python module for parsing and generating vCard files
@@ -14,12 +16,16 @@ VCS: https://github.com/py-vobject/vobject
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Patch1: no-six.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 vobject is intended to be a full featured Python package for parsing
@@ -31,14 +37,22 @@ components are understood in a sophisticated way.
 
 %prep
 %setup
+%patch1 -p1
+
 # remove win32 files
 rm -f vobject/win32tz.py
+
+# fix version
+sed -i "s/version = attr: vobject.VERSION/version = %version/" setup.cfg
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_pytest -v -k 'not test_change_tz' tests.py
 
 %files
 %doc ACKNOWLEDGEMENTS.txt LICENSE-2.0.txt README.md
@@ -48,6 +62,9 @@ rm -f vobject/win32tz.py
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Feb 18 2026 Anton Vyatkin <toni@altlinux.org> 0.9.9-alt1
+- New version 0.9.9.
+
 * Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.7-alt1
 - Automatically updated to 0.9.7 (Closes: #50335).
 
