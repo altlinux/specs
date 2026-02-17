@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.19
+Version: 0.5.20
 Release: alt1
 
 Summary: Manager for game installation and execution
@@ -13,12 +13,13 @@ License: GPL-3.0-or-later and LGPL-2.1-or-later and MIT
 # ./lutris/gui/widgets/gi_composites.py contains license LGPL-2.1-or-later
 Group: Games/Other
 Url: https://lutris.net
-Vcs: https://github.com/lutris/lutris.git
+VCS: https://github.com/lutris/lutris
 
-Source: https://lutris.net/releases/lutris_%version.tar.xz
-Patch0: lutris-0.5.17-alt-GdkPixbuf.patch
+# Source-url: https://lutris.net/releases/lutris_%version.tar.xz
+Source: lutris_%version.tar
+Patch0: lutris-%version-%release.patch
 # Sometimes the Auto option does not work correctly, so it was decided to leave the option for now.
-Patch1: lutris-0.5.17-upstream-disable-the-GPUs-option-when-there-is-only-one-GPU.patch
+Patch2: lutris-0.5.17-upstream-disable-the-GPUs-option-when-there-is-only-one-GPU.patch
 
 Provides: python3(lutris.util.ubisoft)
 Conflicts: lutris-standalone
@@ -48,7 +49,7 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %prep
 %setup -n %name
 %patch0 -p1
-%patch1 -p1 -R
+%patch2 -p1 -R
 
 %build
 %if_enabled meson
@@ -72,15 +73,22 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %doc LICENSE
 %_bindir/%name
 %_datadir/%name/
-%_desktopdir/%appid.desktop
+%_desktopdir/%{appid}*.desktop
 %_iconsdir/hicolor/scalable/apps/%appid.svg
+%_iconsdir/hicolor/scalable/mimetypes/application-x-lutris.svg
 %_iconsdir/hicolor/??x??/apps/%appid.png
+%_iconsdir/hicolor/??x??/mimetypes/application-x-lutris.png
 %_iconsdir/hicolor/???x???/apps/%appid.png
+%_iconsdir/hicolor/???x???/mimetypes/application-x-lutris.png
 %python3_sitelibdir/%{name}*
 %_datadir/metainfo/%appid.metainfo.xml
+%_datadir/mime/packages/application-x-lutris.xml
 %_man1dir/%name.1.xz
 
 %changelog
+* Tue Feb 17 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.20-alt1
+- New version 0.5.20.
+
 * Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.19-alt1
 - New version 0.5.19.
 - Added vcs tag.
