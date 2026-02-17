@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
+Version: 6.1.1
 Release: alt1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPL-2.1
@@ -58,6 +58,9 @@ rm -r src/zope/deferredimport/samples/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Tue Feb 17 2026 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
+- 6.1 -> 6.1.1.
+
 * Wed Feb 11 2026 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 5.1 -> 6.1.
 
