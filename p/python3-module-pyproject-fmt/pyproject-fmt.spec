@@ -10,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.16.0
-Release: alt1
+Release: alt2
 Summary: Format pyproject.toml file
 License: MIT
 Group: Development/Python3
@@ -71,6 +71,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 17 2026 Stanislav Levin <slev@altlinux.org> 2.16.0-alt2
+- Fixed FTBFS (maturin 1.12.1).
+
 * Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 2.16.0-alt1
 - 2.15.2 -> 2.16.0.
 
