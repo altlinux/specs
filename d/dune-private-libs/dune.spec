@@ -26,7 +26,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.21.0
+Version: 3.21.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -353,6 +353,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 3.21.1-alt1
+- 3.21.0 -> 3.21.1
+
 * Tue Jan 13 2026 Anton Farygin <rider@altlinux.org> 3.21.0-alt1
 - 3.20.2 -> 3.21.0
 
