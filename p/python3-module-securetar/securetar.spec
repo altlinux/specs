@@ -1,11 +1,11 @@
 Name: python3-module-securetar
-Version: 2025.2.1
+Version: 2026.2.0
 Release: alt1
 
 Summary: Secure Tarfile library
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/securetar/
+URL: https://pypi.org/project/securetar
 VCS: https://github.com/pvizeli/securetar
 
 Source0: %name-%version.tar
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/securetar-%version.dist-info
 
 %changelog
+* Tue Feb 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.2.0-alt1
+- 2026.2.0 released
+
 * Tue Oct 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.2.1-alt1
 - 2025.2.1 released
 
