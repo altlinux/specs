@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: Manage your Julia dependencies from Python
@@ -53,6 +53,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.1.23-alt1
+- Automatically updated to 0.1.23.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.22-alt1
 - Automatically updated to 0.1.22.
 
