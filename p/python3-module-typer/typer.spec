@@ -1,9 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name typer
+%define module_name %pypi_name
+%define slim_pypi_name typer-slim
+%define slim_module_name typer_slim
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 0.24.0
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -17,11 +20,10 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: clean_coverage.py
 
-Provides: %name-slim = %EVR
-
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
+BuildRequires: python3-module-wheel
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /proc
@@ -47,6 +49,19 @@ The key features are:
   complex trees of commands and groups of subcommands, with options and
   arguments.
 
+%package slim
+Summary: A slimmed-down version of Typer
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description slim
+There used to be a slimmed-down version of Typer called typer-slim,
+which didn't include the dependencies rich and shellingham, nor the
+typer command.
+
+However, since version 0.22.0, it has been stopped supporting, and
+typer-slim now simply installs (all of) Typer.
+
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -56,10 +71,20 @@ The key features are:
 %endif
 
 %build
-%pyproject_build
+for tiangolo_build_package in %slim_pypi_name %pypi_name; do
+	export TIANGOLO_BUILD_PACKAGE="$tiangolo_build_package"
+	%pyproject_build
+done
 
 %install
 %pyproject_install
+pushd dist/
+%__python3 -m wheel unpack %slim_module_name-%version-py3-none-any.whl
+%__cp -a %slim_module_name-%version/%{pyproject_distinfo %slim_pypi_name} \
+	%buildroot%python3_sitelibdir
+popd
+%__mkdir_p %buildroot%_docdir/%name-%version
+%__ln_s %name-%version %buildroot%_docdir/%name-slim-%version
 
 %check
 # Clean of the using coverage module, because we don't needs to it.
@@ -82,13 +107,22 @@ export TERM="xterm-256color"
 %files
 %_bindir/%pypi_name
 %doc README.md LICENSE docs
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
+%files slim
+%_docdir/%name-slim-%version
+%python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
+
 %changelog
+* Tue Feb 17 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt1
+- Updated to 0.24.0.
+- Dropped the provide for typer-slim in favor of creating a subpackage
+  that includes the typer-slim metadata directory (Closes: 57831).
+
 * Wed Feb 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.22.0-alt1
 - Updated to 0.22.0.
-- Added provide on typer-slim for backward compatibility (Closes: 57831).
+- Added provide on typer-slim for backward compatibility.
 
 * Thu Jan 15 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.1-alt1
 - Updated to 0.21.1.
