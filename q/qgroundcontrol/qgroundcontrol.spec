@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgroundcontrol
-Version: 5.0.7
+Version: 5.0.8
 Release: alt1
 
 Summary: Ground Control Station (GCS) designed for UAVs
@@ -177,5 +177,8 @@ install -Dm 644 build/org.mavlink.qgroundcontrol.desktop %buildroot%_datadir/app
 %_datadir/applications/org.mavlink.qgroundcontrol.desktop
 
 %changelog
+* Tue Feb 17 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.8-alt1
+- Update version.
+
 * Tue Jan 13 2026 Ilya Muhamadeev <nicourced@altlinux.org> 5.0.7-alt1
 - Initial build.
