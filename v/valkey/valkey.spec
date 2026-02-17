@@ -1,18 +1,14 @@
 %global _unpackaged_files_terminate_build 1
 %define valkey_user      _valkey
 %define valkey_group     _valkey
-%ifarch x86_64
 %def_disable check
-%else
-%def_disable check
-%endif
 
 # tls as no,module,yes
 %define tls yes
 
 Name: valkey
-Version: 8.1.4
-Release: alt2
+Version: 9.0.2
+Release: alt1
 
 Summary: A persistent key-value database
 License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
@@ -119,9 +115,6 @@ Redis API.
 %prep
 %setup
 %autopatch -p1
-%ifarch %e2k
-sed -i 's/-Werror/-Wno-error/g' deps/hiredis/Makefile
-%endif
 
 # See https://bugzilla.redhat.com/2240293
 # See https://src.fedoraproject.org/rpms/jemalloc/blob/rawhide/f/jemalloc.spec#_34
@@ -137,8 +130,10 @@ sed -e 's/--with-lg-quantum/--with-lg-page=16 --with-lg-quantum/' -i deps/Makefi
 USE_MALLOC=
 %ifarch %e2k
 USE_MALLOC="USE_JEMALLOC=no MALLOC=libc"
+USE_WERROR="USE_WERROR=0"
 %else
 USE_MALLOC="USE_JEMALLOC=yes"
+USE_WERROR="USE_WERROR=1"
 %endif
 %if "%tls" == "yes"
 BUILD_TLS="BUILD_TLS=yes"
@@ -148,7 +143,7 @@ BUILD_TLS="BUILD_TLS=module"
 BUILD_TLS=""
 %endif
 
-%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC $BUILD_TLS USE_SYSTEMD=yes BUILD_RDMA=module
+%global make_flags CXXFLAGS="%optflags" CFLAGS="%optflags" OPTIMIZATION="" DEBUG_FLAGS="" DEBUG="" V="echo" PREFIX=%buildroot%_prefix $USE_MALLOC $USE_WERROR $BUILD_TLS USE_SYSTEMD=yes BUILD_RDMA=module
 
 %make_build %make_flags all
 
@@ -270,6 +265,9 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Thu Feb 12 2026 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt1
+- New version 9.0.2
+
 * Wed Nov 26 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.4-alt2
 - Fixed load modules without execute permissions (ALT#57024).
 - Drop sub-package for TLS module: TLS as module not supported by sentinel.
