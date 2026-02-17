@@ -6,8 +6,8 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.22.1
-Release: alt3
+Version: 6.23.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -149,6 +149,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
+- new version
+
 * Fri Jan 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.22.1-alt3
 - update (closes: 57621)
 
