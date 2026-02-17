@@ -3,7 +3,7 @@
 %define abiversion 1
 
 Name: resvg
-Version: 0.46.0
+Version: 0.47.0
 Release: alt1
 
 Summary: An SVG rendering library writen in rust
@@ -124,6 +124,9 @@ install -Dm 755 crates/c-api/ResvgQt.h %buildroot%_includedir/ResvgQt.h
 %_includedir/ResvgQt.h
 
 %changelog
+* Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.47.0-alt1
+- New version (0.47.0).
+
 * Fri Feb 06 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.46.0-alt1
 - New version (0.46.0).
 - Fix C library SONAME header generation.
