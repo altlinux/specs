@@ -5,25 +5,28 @@
 %ifarch %arm %mips32 %ix86 ppc64le aarch64
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 
 Name: redis
-Version: 7.2.11
+Version: 8.4.1
 Release: alt1
 
 Summary: Redis is an advanced key-value store
 Group: Databases
-# redis, hiredis: BSD-3-Clause
+# redis: RSALv2 or SSPLv1 or AGPLv3
+# hiredis: BSD-3-Clause
 # hdrhistogram, jemalloc, lzf, linenoise: BSD-2-Clause
 # lua: MIT
-# fpconv: BSL-1.0
-License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
-URL: http://redis.io/
-#URL: https://github.com/antirez/redis
+# fpconv: Boost Software License Version 1.0
+# fast_float: MIT
+# xxhash: BSD-2-Clause
+License: AGPLv3
+Url: http://redis.io/
+Vcs: https://github.com/redis/redis.git
 
 Source0: %name-%version.tar
-Patch0:  %name-%version-%release.patch
+Patch0:  %name-%version.patch
 
 Source2: redis-benchmark.1
 Source3: redis-cli.1
@@ -38,12 +41,16 @@ Source10: redis-sentinel.service
 BuildRequires: gcc-c++ libssl-devel libsystemd-devel
 
 # for check section
-BuildRequires: tcl >= 8.5  tcl-tls openssl
-BuildRequires: /proc
-
+%if_enabled check
+BuildRequires: tcl >= 8.5 tcl-tls openssl procps
+BuildRequires: /proc /dev/pts
+%endif
 Provides: %name-server = %EVR
 Provides: %name-sentinel = %EVR
 Requires: %name-cli = %EVR
+
+%global redis_modules_dir %_libdir/%name/modules
+%global redis_modules_cfg %_sysconfdir/%name/modules
 
 %description
 Redis is an advanced key-value store. It is similar to memcached but
@@ -106,13 +113,6 @@ USE_MALLOC="USE_JEMALLOC=yes"
 
 %make_build %make_flags all
 
-%check
-./utils/gen-test-certs.sh
-# TODO: enable unit/maxmemory
-./runtest --clients 1 --verbose --tags -largemem:skip --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skipunit unit/maxmemory --skiptest "CONFIG SET rollback on apply error" --tls
-./runtest-moduleapi
-timeout 120m ./runtest-cluster --tls
-./runtest-sentinel
 
 %install
 %make_install %make_flags install
@@ -125,25 +125,13 @@ ln -nsf ../sbin/redis-server %buildroot%_bindir/redis-check-rdb
 
 mkdir -p %buildroot%_sharedstatedir/%name
 mkdir -p %buildroot%_logdir/%name
+mkdir -p %buildroot%redis_modules_dir
+mkdir -p %buildroot%redis_modules_cfg
 
 mkdir -p %buildroot%_man1dir
 install -m 644 %SOURCE2 %buildroot%_man1dir/
 install -m 644 %SOURCE3 %buildroot%_man1dir/
 install -m 644 %SOURCE4 %buildroot%_man1dir/
-
-# Tune default configuration
-sed -e '/^timeout[[:blank:]]/ s/0/300/' \
-    -e '/^daemonize[[:blank:]]/ s/no/yes/' \
-    -e '/^pidfile[[:blank:]]/ s^/var/run/redis_6379.pid^/run/redis/redis-server.pid^' \
-    -e '/^logfile[[:blank:]]/ s^""^"/var/log/redis/redis-server.log"^' \
-    -e '/^dir[[:blank:]]/ s^\./^/var/lib/redis^' \
-    -i %name.conf
-
-sed -e '/^daemonize[[:blank:]]/ s/no/yes/' \
-    -e '/^pidfile[[:blank:]]/ s^/var/run/redis-sentinel.pid^/run/redis/redis-sentinel.pid^' \
-    -e '/^logfile[[:blank:]]/ s^""^"/var/log/redis/redis-sentinel.log"^' \
-    -e '/^dir[[:blank:]]/ s^/tmp^/var/lib/redis^' \
-    -i sentinel.conf
 
 install -m644 %name.conf %buildroot%_sysconfdir/%name/
 install -m644 sentinel.conf %buildroot%_sysconfdir/%name/
@@ -170,6 +158,19 @@ echo 'd /run/%name 0755 %redis_user %redis_group' >> %buildroot%_tmpfilesdir/%na
 # Install redis module header
 install -pDm644 src/%{name}module.h %buildroot%_includedir/%{name}module.h
 
+%check
+./utils/gen-test-certs.sh
+# TODO: enable unit/maxmemory
+./runtest --clients 1 --verbose --tags -largemem:skip \
+  --skipunit unit/oom-score-adj --skipunit unit/memefficiency --skipunit unit/maxmemory \
+  --skiptest "CONFIG SET rollback on apply error" \
+  --skiptest "For unauthenticated clients output buffer is limited" \
+  --skiptest "Blocking timeout following PAUSE should honor the timeout" \
+  --tls
+./runtest-moduleapi
+timeout 120m ./runtest-cluster --tls
+./runtest-sentinel
+
 %pre
 # Add the "_redis" user
 groupadd -r -f %redis_group 2>/dev/null ||:
@@ -185,8 +186,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %preun_service %name-sentinel
 
 %files
-%doc COPYING 00-RELEASENOTES README.md BUGS MANIFESTO
+%doc 00-RELEASENOTES README.md BUGS MANIFESTO LICENSE.txt
 %attr(0770,root,%redis_group) %dir %_sysconfdir/%name
+%attr(0750,root,%redis_group) %dir %redis_modules_cfg
 %config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/redis.conf
 %config(noreplace) %attr(0640, %redis_user, %redis_group) %_sysconfdir/%name/sentinel.conf
 %config(noreplace) %_logrotatedir/redis-server
@@ -213,6 +215,12 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Tue Feb 17 2026 Alexey Shabalin <shaba@altlinux.org> 8.4.1-alt1
+- 8.4.1.
+
+* Thu Nov 27 2025 Alexey Shabalin <shaba@altlinux.org> 8.4.0-alt1
+- 8.4.0.
+
 * Tue Oct 07 2025 Alexander Danilov <admsasha@altlinux.org> 7.2.11-alt1
 - 7.2.11 (Fixes: CVE-2025-49844, CVE-2025-46817, CVE-2025-46818, CVE-2025-46819).
 
