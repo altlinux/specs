@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.21.9
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2375,6 +2375,14 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Tue Feb 17 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt3
+- Added support for AD site links replication scheduling (thx Vladimir Rubanov):
+  + implemented site-link and connection management commands
+  + added schedule control with nTDSConnection creation per [MS-ADTS] 6.2.2.3.4.5
+  + added schedule presets and fixed offset handling
+  + updated documentation for site-link and connection commands
+  + added schedule interval tests
+
 * Fri Oct 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.9-alt2
 - Add support of intersite scheduled replication (thx Vladimir Rubanov):
   + python.netcmd: implement commands to list connections and control schedule
