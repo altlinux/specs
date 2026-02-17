@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,10 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Feb 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.9-alt1
+- Add internal components support in editions2packages
+  (thx Dmitriy Terekhin).
+
 * Mon Feb 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.4.8-alt1
 - Add a validation hint in components (thx Andrey Alekseev).
 - Add internal lists of components or packages for editions.
