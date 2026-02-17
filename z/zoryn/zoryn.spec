@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -100,6 +100,15 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 0.19.0-alt1
+- added changelog date validation to spec check
+- added --host, --arch, --branch filter options to builder list
+- fixed deadlock on remote builders in builder clean
+- fixed batch builds to use parallel multi-builder mode
+- fixed batch build log filenames to include batch value
+- fixed builder add to include --target for cross-architecture builds
+- fixed builder status to report unavailable remote builders
+
 * Mon Feb 16 2026 Anton Farygin <rider@altlinux.org> 0.18.0-alt1
 - added --repo flag to builder add for apt config generation
 - added interactive repo input with TAB completion in builder add
