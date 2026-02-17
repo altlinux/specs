@@ -1,6 +1,6 @@
 Name: zenith
 Version: 0.14.3
-Release: alt1
+Release: alt2
 
 Summary: In terminal graphical metrics for your *nix system
 License: MIT
@@ -12,6 +12,8 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 # openSUSE patch for build in aarch64
 Patch: 001-strip-cargo-config.patch
+Patch1: 002-crate-nix-0.23-loongarch64-support.patch
+Patch2: 003-crate-heim-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc clang-devel
@@ -46,6 +48,12 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
+%patch1 -p1
+%patch2 -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/nix-0.23.2/.cargo-checksum.json \
+     ./vendor/heim-*/.cargo-checksum.json
+
 %build
 %rust_build
 
@@ -61,6 +69,9 @@ install -Dm 0644 assets/%name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 17 2026 Ilya Sorochan <k0tran@altlinux.org> 0.14.3-alt2
+- Add patches for nix and heim-* crates for loongarch64.
+
 * Fri Feb 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.14.3-alt1
 - Initial build for ALT Linux.
 
