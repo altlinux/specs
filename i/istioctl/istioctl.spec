@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.28.3
+Version: 1.29.0
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -11,7 +11,7 @@ Vcs: https://github.com/istio/istio
 
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source0: %name-%version.tar
-# go mod vendor
+# cd istio/ && go mod vendor -o ../vendor && cd ../
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
 
@@ -87,6 +87,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Feb 17 2026 Leontiy Volodin <lvol@altlinux.org> 1.29.0-alt1
+- New version 1.29.0.
+
 * Wed Jan 21 2026 Leontiy Volodin <lvol@altlinux.org> 1.28.3-alt1
 - New version 1.28.3.
 
