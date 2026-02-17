@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.8
-Release: alt1
+Release: alt2
 
 Summary: Unified slicing for all Python data structures
 License: MIT
@@ -19,6 +19,14 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-pandas 
 BuildRequires: python3-module-torch
 %endif
+
+AutoReq: 	nopython3
+Requires: 	python3-base
+Requires: 	python3-module-numpy
+Requires: 	python3-module-pandas
+Requires: 	python3(pytest)
+Requires: 	python3-module-scipy
+Requires: 	pytorch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -49,5 +57,9 @@ It supports many data types including:
 %python3_sitelibdir/%pypi_name-%version-*.egg-info
 
 %changelog
+* Wed Feb 04 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt2
+- Disabled python3 autorequires to avoid torch dependencies.
+- Switched to virtual dependency on pytorch.
+
 * Thu Nov 06 2025 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt1
 - Initial build for Sisyphus.
