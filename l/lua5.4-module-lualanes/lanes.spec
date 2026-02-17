@@ -4,7 +4,7 @@
 
 Name: lua5.4-module-lualanes
 Version: 3.17.2
-Release: alt1_lr%luarocks_revision
+Release: alt2_lr%luarocks_revision
 
 Summary: Lanes is a lightweight, native, lazy evaluating multithreading library for Lua 5.1 to 5.4
 License: MIT
@@ -28,7 +28,6 @@ BuildRequires(pre): rpm-macros-lua
 BuildRequires: lua5.4-luarocks
 BuildRequires: liblua5.4-devel
 BuildRequires: lua5.4-module-luasocket
-BuildRequires: lua5.4-module-luasocket-devel
 # Dependency required for linda_perf test
 BuildRequires: rpm-build-vm
 
@@ -90,6 +89,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Tue Feb 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 3.17.2-alt2_lr0
+- Fix FTBFS by removing dependency on luasocket-devel.
+
 * Tue Dec 23 2025 Sergey Zhidkih <rx1513@altlinux.org> 3.17.2-alt1_lr0
 - New version (3.17.2).
 
