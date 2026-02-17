@@ -1,9 +1,9 @@
 %define pypi_name zarr
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.1.3
+Version: 3.1.5
 Release: alt1
 
 Summary: An implementation of chunked, compressed, N-dimensional arrays for Python
@@ -29,6 +29,7 @@ BuildRequires: python3-module-numpydoc
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-tomlkit
 BuildRequires: python3-module-crc32c
+BuildRequires: python3-module-google-crc32c
 BuildRequires: python3-module-hypothesis
 %endif
 
@@ -67,5 +68,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
+- Automatically updated to 3.1.5.
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 3.1.3-alt1
 - Initial build for Sisyphus.

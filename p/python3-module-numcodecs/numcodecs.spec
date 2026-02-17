@@ -1,12 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name numcodecs
 %define mod_name %pypi_name
 
 %def_with check
-%def_with bootstrap
+%def_without bootstrap
 
 Name: python3-module-%pypi_name
-Version: 0.16.3
+Version: 0.16.5
 Release: alt1
 Summary: Buffer compression and transformation codecs for use
 License: MIT
@@ -97,6 +96,9 @@ fi
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.16.5-alt1
+- Automatically updated to 0.16.5.
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.16.3-alt1
 - Automatically updated to 0.16.3.
 
