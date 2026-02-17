@@ -3,7 +3,7 @@
 %define realname p1_mysql
 
 Name: erlang-%realname
-Version: 1.0.27
+Version: 1.0.28
 Release: alt1
 Summary: Pure Erlang MySQL driver
 Group: Development/Erlang
@@ -40,6 +40,9 @@ This is an Erlang MySQL driver.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 1.0.28-alt1
+- 1.0.27 -> 1.0.28
+
 * Wed Jan 21 2026 Anton Farygin <rider@altlinux.org> 1.0.27-alt1
 - 1.0.26 -> 1.0.27
 
