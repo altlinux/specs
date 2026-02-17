@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.35.0
-Release: alt1
+Release: alt2
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -245,6 +245,9 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 1.35.0-alt2
+- Fix build with php 8.5 (upstream commit ad736f9).
+
 * Sun Sep 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.35.0-alt1
 - Update to 1.35.0 (2025-08-26) (Fixes: CVE-2025-1695).
 
