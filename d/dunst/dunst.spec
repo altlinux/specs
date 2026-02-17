@@ -2,22 +2,28 @@
 %def_enable check
 
 Name: dunst
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
+
 Summary: Lightweight replacement for the notification-daemons
 License: BSD
 Group: Graphical desktop/Other
 Url: https://dunst-project.org
 Vcs: https://github.com/dunst-project/dunst.git
-Source: %name-%version.tar.gz
+
+Source: %name-%version.tar
 
 %if_enabled check
 BuildRequires: librsvg wayland-protocols dbus
 %endif
 
-# Automatically added by buildreq on Sun Jan 23 2022
-# optimized out: bash4 dbus fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXrender-devel libcairo-devel libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libwayland-client libwayland-client-devel libwayland-cursor perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators pkg-config python3 python3-base sh4 shared-mime-info wayland-devel xorg-proto-devel
-BuildRequires: libXScrnSaver-devel libXinerama-devel libXrandr-devel libnotify-devel libpango-devel libwayland-cursor-devel perl-Pod-Usage
+BuildRequires: libXScrnSaver-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libnotify-devel
+BuildRequires: libpango-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: perl-Pod-Usage
 
 %filter_from_requires /^systemd/d
 
@@ -53,6 +59,9 @@ sed -i '/RUN_SUITE(suite_draw)/d' test/test.c
 %_sysconfdir/%name
 
 %changelog
+* Tue Feb 17 2026 Ulysses Apokin <ulysses@altlinux.org> 1.13.1-alt1
+- New version.
+
 * Tue Sep 09 2025 Ulysses Apokin <ulysses@altlinux.org> 1.13.0-alt1
 - Autobuild version bump to 1.13.0
 
