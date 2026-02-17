@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 17.0.0
+Version: 17.0.1
 Release: alt1
 
 Summary: Unicodedata backport for python 2 updated to the latest unicode version
@@ -44,6 +44,9 @@ backports support for named aliases and named sequences to python2.
 %python3_sitelibdir/unicodedata2.cpython*.so
 
 %changelog
+* Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 17.0.1-alt1
+- Automatically updated to 17.0.1.
+
 * Mon Jan 26 2026 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt1
 - Automatically updated to 17.0.0.
 
