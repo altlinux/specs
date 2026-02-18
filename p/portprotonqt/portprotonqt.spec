@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: A modern GUI for PortProton project
@@ -13,10 +13,11 @@ Url: https://git.linux-gaming.ru/Boria138/PortProtonQt
 
 Source: %name-%version.tar
 
+BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: libvulkan-devel
 
-Requires: qt6-svg xdg-utils udev
+Requires: qt6-svg udev pciutils mesa-info
 
 ExclusiveArch: x86_64
 
@@ -27,29 +28,30 @@ ExclusiveArch: x86_64
 %setup
 
 %build
-%pyproject_build
+%meson -Dpython_purelibdir=%python3_sitelibdir -Dudev_rulesdir=%_udevrulesdir
+%meson_build
 
 %install
-%pyproject_install
-cp -rv build-aux/share %buildroot/usr/
-mv -v %buildroot/usr/lib %buildroot/usr/lib64
+%meson_install
+%find_lang %name
 
-# Rule for Gamepad mouse emulation
-mkdir -p %buildroot/%_udevrulesdir
-cp -rv build-aux/lib/udev/rules.d/60-portprotonqt.rules %buildroot/%_udevrulesdir/
-
-%files
-%doc LICENSE *.md
+%files -f %name.lang
+%doc LICENSE
 %_bindir/portprotonqt
+%_bindir/vk_gpu_info
 %_desktopdir/%xdg_name.desktop
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_datadir/bash-completion/completions/portprotonqt
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_udevrulesdir/60-portprotonqt.rules
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Feb 18 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.11-alt1
+- new version 0.1.11
+- switch pyproject to meson
+- add log dependency
+
 * Wed Jan 14 2026 Boris Yumankulov <boria138@altlinux.org> 0.1.10-alt1
 - new version 0.1.10
 
