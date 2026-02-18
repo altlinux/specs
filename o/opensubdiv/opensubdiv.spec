@@ -14,7 +14,7 @@
 
 Name: opensubdiv
 Version: %soname
-Release: alt2
+Release: alt3
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: TOST
@@ -133,6 +133,7 @@ An Open-Source subdivision surface library documentation
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %cmake \
+	-DCMAKE_CXX_STANDARD=17 \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DPYTHON_EXECUTABLE=%_bindir/python3 \
 	-DCMAKE_LIBDIR_BASE=%_lib \
@@ -166,6 +167,9 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Feb 18 2026 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt3
+- Fix FTBFS with new Ptex (std::clamp is C++17 feature).
+
 * Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 3.7.0-alt2
 - aarch64: enable CUDA.
 - devel: add cuda deps.
