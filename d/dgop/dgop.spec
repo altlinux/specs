@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%global import_path github.com/AvengeMedia/dgop
 
 Name: dgop
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: System monitoring CLI and REST API
@@ -14,6 +15,7 @@ Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
 
+BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 
 %description
@@ -32,16 +34,27 @@ Features:
 %setup -a1
 
 %build
-# %golang_build cmd/cli builds %_bindir/cli; replaced with go build -o %name
-go build -o %name ./cmd/cli
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+%golang_prepare
+
+cd .build/src/%import_path
+%golang_build cmd/dgop
 
 %install
-install -Dm 755 %name -t %buildroot%_bindir
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
+%golang_install
 
 %files
 %_bindir/dgop
 
 %changelog
+* Wed Feb 18 2026 Boris Yumankulov <boria138@altlinux.org> 0.2.2-alt1
+- new version 0.2.2
+- use go macros to build
+
 * Sun Feb 08 2026 Boris Yumankulov <boria138@altlinux.org> 0.2.0-alt1
 - new version 0.2.0
 
