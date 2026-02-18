@@ -1,0 +1,49 @@
+%global import_path github.com/kubescape/kubescape
+%define _unpackaged_files_terminate_build 1
+
+Name: kubescape
+Version: 4.0.0
+Release: alt1
+Summary: Kubernetes security CLI tool
+License: Apache-2.0
+Group: Development/Other
+URL: https://kubescape.io/
+VCS: https://github.com/kubescape/kubescape
+
+ExclusiveArch: %go_arches
+Source0: %name-%version.tar
+Source1: vendor.tar
+
+BuildRequires(pre): rpm-build-golang
+
+%description
+Kubescape is an open-source Kubernetes security platform CLI that performs
+risk analysis, compliance checks, and security scanning for Kubernetes
+clusters and manifests. See https://github.com/kubescape/kubescape for details.
+
+%prep
+%setup -a1
+
+%build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+%golang_prepare
+
+cd .build/src/%import_path
+export LDFLAGS="$LDFLAGS -X main.date=$(date +%%Y-%%m-%%d)"
+export LDFLAGS="$LDFLAGS -X main.version=%version"
+%golang_build .
+
+%install
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
+%golang_install
+
+%files
+%doc README.md
+%_bindir/%name
+
+%changelog
+* Wed Feb 18 2026 Alexey Rodygin <alehandro@altlinux.org> 4.0.0-alt1
+- Initial build for ALT Linux
