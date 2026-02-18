@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Remote connections manager
@@ -28,8 +28,18 @@ Source1: %__name-%version-cargo.tar
 
 ExcludeArch: %ix86
 
+Requires: openssh-clients
+Requires: sshpass
+
+# Optional runtime dependencies
+#Recommends:     freerdp
+#Recommends:     tigervnc
+#Recommends:     virt-viewer
+#Recommends:     picocom
+#Recommends:     kubectl
+
 BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo >= 1.80
+BuildRequires: rust-cargo >= 1.88
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(vte-2.91-gtk4)
 BuildRequires: pkgconfig(alsa)
@@ -78,6 +88,9 @@ install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/%rdn_name.svg \
 %doc *.md docs/*.md
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
+- 0.8.7
+
 * Mon Feb 16 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
 - first build for Sisyphus
 
