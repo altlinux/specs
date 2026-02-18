@@ -1,5 +1,5 @@
 Name:    netbox-ip-monitor
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Visual representation of IP addresses
@@ -41,6 +41,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %_defaultdocdir/%name/README
 
 %changelog
+* Thu Feb 19 2026 Alexander Burmatov <thatman@altlinux.org> 0.1.4-alt1
+- Update version to 0.1.4.
+
 * Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 0.1.3-alt1
 - Update version to 0.1.3.
 

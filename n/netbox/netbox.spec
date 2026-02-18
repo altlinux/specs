@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.5.2
+Version: 4.5.3
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -22,17 +22,17 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-mkdocs-material >= 9.7.1
 BuildRequires: python3-module-mkdocs-material-extensions
-BuildRequires: python3-module-mkdocstrings >= 1.0.2
-BuildRequires: python3-module-mkdocstrings-python >= 2.0.1
+BuildRequires: python3-module-mkdocstrings >= 1.0.3
+BuildRequires: python3-module-mkdocstrings-python >= 2.0.2
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 5.2.10
+Requires: python3-module-django >= 5.2.11
 Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 6.2.0
 Requires: python3-module-django-filter >= 25.2
 Requires: python3-module-django-htmx >= 1.27.0
 Requires: python3-module-django-graphiql-debug-toolbar >= 0.2.0
-Requires: python3-module-django-mptt >= 0.17
+Requires: python3-module-django-mptt >= 0.18
 Requires: python3-module-django-pglocks >= 1.0.4
 Requires: python3-module-django-prometheus >= 2.4.1
 Requires: python3-module-django-redis >= 6.0.0
@@ -48,18 +48,18 @@ Requires: python3-module-drf-spectacular-sidecar >= 2026.1.1
 Requires: python3-module-feedparser >= 6.0.12
 Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
-Requires: python3-module-markdown >= 3.10.1
+Requires: python3-module-markdown >= 3.10.2
 Requires: python3-module-netaddr >= 1.3.0
-Requires: python3-module-nh3 >= 0.3.2
-Requires: python3-module-pillow >= 12.1.0
+Requires: python3-module-nh3 >= 0.3.3
+Requires: python3-module-pillow >= 12.1.1
 Requires: python3-module-psycopg >= 3.3.2
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-requests >= 2.32.5
 Requires: python3-module-rq >= 2.6.1
 Requires: python3-module-social-app-django >= 5.7.0
-Requires: python3-module-social-core >= 4.8.3
+Requires: python3-module-social-core >= 4.8.5
 Requires: python3-module-sorl-thumbnail >= 13.0.0
-Requires: python3-module-strawberry-graphql >= 0.291.0
+Requires: python3-module-strawberry-graphql >= 0.295.0
 Requires: python3-module-strawberry-django >= 0.75.0
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.9.0
@@ -209,6 +209,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Feb 18 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.3-alt1
+- New 4.5.3 version.
+
 * Wed Feb 04 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.2-alt1
 - New 4.5.2 version.
 

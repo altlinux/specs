@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Python bindings to the ammonia HTML sanitization library
@@ -55,6 +55,9 @@ export CARGO_NET_OFFLINE=true
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 18 2026 Alexander Burmatov <thatman@altlinux.org> 0.3.3-alt1
+- Updated to 0.3.3.
+
 * Wed Nov 12 2025 Alexander Burmatov <thatman@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 

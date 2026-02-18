@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Utilities for implementing a modified pre-order traversal tree in django
@@ -53,6 +53,9 @@ python3 -m django test
 %python3_sitelibdir/django_mptt-%version.0.dist-info/
 
 %changelog
+* Wed Feb 18 2026 Alexander Burmatov <thatman@altlinux.org> 0.18-alt1
+- New 0.18 version.
+
 * Wed Apr 16 2025 Alexander Burmatov <thatman@altlinux.org> 0.17-alt1
 - New 0.17 version.
 

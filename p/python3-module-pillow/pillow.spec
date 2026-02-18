@@ -1,5 +1,5 @@
 Name: python3-module-pillow
-Version: 12.1.0
+Version: 12.1.1
 Release: alt1
 
 Summary: Python Imaging Library
@@ -60,6 +60,9 @@ PIL is the Python Imaging Library by Fredrik Lundh and Contributors.
 %python3_sitelibdir/pillow-%version.dist-info
 
 %changelog
+* Wed Feb 18 2026 Alexander Burmatov <thatman@altlinux.org> 12.1.1-alt1
+- 12.1.1 released
+
 * Tue Jan 13 2026 Alexander Burmatov <thatman@altlinux.org> 12.1.0-alt1
 - 12.1.0 released
 
