@@ -2,7 +2,7 @@
 %define import_path github.com/control-theory/gonzo
 
 Name: gonzo
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Gonzo! The Go based TUI log analysis tool
@@ -35,7 +35,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 export VERSION="%version"
 export COMMIT="unknown"
-export BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+export BUILD_TIME=$(date -u +"%%Y-%%m-%%dT%%H:%%M:%%SZ")
 export GO_VERSION=$(go version | cut -d' ' -f3)
 export LDFLAGS="-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.buildTime=${BUILD_TIME} -X main.goVersion=${GO_VERSION}"
 pushd $BUILDDIR/src/$IMPORT_PATH
@@ -52,6 +52,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Feb 18 2026 Artem Krasovskiy <aibure@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Fri Dec 12 2025 Artem Krasovskiy <aibure@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
