@@ -1,6 +1,6 @@
 Name:    pascalabcnet
 Version: 3.11.1.3756
-Release: alt1
+Release: alt2
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -52,13 +52,7 @@ tar xf %SOURCE2
 pabcnetc Utils/DefaultLanguageResMaker/LanguageResMaker.pas
 export DOTNET_NUGET_SIGNATURE_VERIFICATION=false
 export NUGET_PACKAGES=${PWD}/nuget_packages
-dotnet build \
-	--source ${PWD}/nuget_packages \
-	PascalABCNETLinux.sln
-cd ReleaseGenerators
-mono ../bin/pabcnetc.exe RebuildStandartModulesMono.pas /rebuild
-# Build modules
-for i in bin/Lib/*.pas;do pabcnetcclear "$i" ||:;done
+sh _RebuildRelease.sh
 
 %install
 # Install executables and modules
@@ -137,6 +131,9 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 3.11.1.3756-alt2
+- Used _RebuildRelease.sh for build.
+
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 3.11.1.3756-alt1
 - New version.
 - Built all modules in Lib directory (including TurtleABC).
