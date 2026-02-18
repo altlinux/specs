@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: Module for text manipulation
 License: MIT
@@ -35,8 +35,6 @@ AutoReq: yes, nopython3
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
-# requires internet
-%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -71,6 +69,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 13 2026 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
+- 4.1.0 -> 4.2.0.
+
 * Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 4.0.0 -> 4.1.0.
 
