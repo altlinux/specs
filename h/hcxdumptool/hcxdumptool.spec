@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hcxdumptool
-Version: 7.1.0
+Version: 7.1.2
 Release: alt1
 
 Summary: Small tool to capture packets from wlan devices
@@ -35,6 +35,9 @@ the WPA protocol.
 %doc README.md license.txt changelog
 
 %changelog
+* Wed Feb 18 2026 Artem Krasovskiy <aibure@altlinux.org> 7.1.2-alt1
+- New version 7.1.2.
+
 * Wed Feb 04 2026 Artem Krasovskiy <aibure@altlinux.org> 7.1.0-alt1
 - New version 7.1.0.
 
