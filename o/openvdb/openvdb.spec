@@ -11,26 +11,27 @@
 %set_verify_elf_method strict
 %endif
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 %def_with cuda
 %else
 %def_without cuda
 %endif
 
-%define soname 12.0
+%define soname 13.0
 
 Name: openvdb
-Version: 12.0.1
-Release: alt1
+Version: 13.0.0
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: Apache-2.0
 URL: https://www.openvdb.org
 
 # https://github.com/AcademySoftwareFoundation/openvdb
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: CPM.cmake
 
-Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
+Patch: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel
@@ -51,7 +52,7 @@ BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
 BuildRequires: python3-module-nanobind
 %if_with cuda
-BuildRequires: nvidia-cuda-devel-static
+BuildRequires: nvidia-cuda-devel-static libnccl-devel
 %endif
 
 %description
@@ -121,6 +122,8 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 	cmake/config/OpenVDBVersions.cmake
 %endif
 
+cp -f %SOURCE1 cmake/CPM.cmake
+
 %build
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
@@ -131,8 +134,6 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 	-DUSE_IMATH_HALF=ON \
 	-DUSE_LOG4CPLUS=ON \
 	-DOPENVDB_BUILD_PYTHON_MODULE=ON \
-	-DUSE_NUMPY:BOOL=ON \
-	-DPYOPENVDB_INSTALL_DIRECTORY=%python3_sitelibdir \
 	-DPython_EXECUTABLE=%_bindir/python3 \
 	-DOPENVDB_USE_IMATH_HALF:BOOL=ON \
 	-DOPENVDB_IMATH_VERSION=3 \
@@ -140,9 +141,10 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 	-DCMAKE_BUILD_TYPE=%build_type \
 	-Dnanobind_DIR=%python3_sitelibdir_noarch/nanobind/cmake \
 %ifarch x86_64
-	-DOPENVDB_SIMD=AVX \
+	-DOPENVDB_SIMD=SSE42 \
 %endif
 %if_with cuda
+	-DCPM_USE_LOCAL_PACKAGES=ON \
 	-DNANOVDB_USE_CUDA=ON \
 	-DNANOVDB_CUDA_KEEP_PTX=ON \
 	-DNANOVDB_USE_INTRINSICS=ON \
@@ -177,6 +179,21 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt2
+- aarch64: enable cuda.
+- nanovdb: use system nccl and cccl.
+- build: remove obsoleted flags.
+
+* Fri Nov 14 2025 L.A. Kostis <lakostis@altlinux.ru> 13.0.0-alt1
+- 13.0.0.
+
+* Tue Sep 16 2025 L.A. Kostis <lakostis@altlinux.ru> 12.1.0-alt1
+- 12.1.0.
+
+* Thu Jul 10 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.1-alt2
+- BR: AVX->SSE42 (to fix issues on Celeron/Atom Nxxx CPUs which
+  lack AVX entirely).
+
 * Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.1-alt1
 - 12.0.1.
 
