@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 # git rev-parse --short v%version
-%global commit_hash 302ed9a
+%global commit_hash 135b47d
 
 Name: qwen-code
-Version: 0.9.1
+Version: 0.10.5
 Release: alt1
 Summary: AI-powered command-line workflow tool for developers
 License: Apache-2.0
@@ -36,6 +36,7 @@ tee packages/{core,cli}/src/generated/git-commit.{js,ts} <<EOF
 export const GIT_COMMIT_INFO = '%commit_hash';
 export const CLI_VERSION = '%version';
 EOF
+sed -i 's/npm run build:assets && //' packages/cli/package.json
 # use system esbuild
 ln -sv %_bindir/esbuild .
 sed -i "s/0.25.6/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
@@ -59,6 +60,9 @@ install -m 0755 %SOURCE4 %buildroot%_bindir/qwen
 %doc LICENSE
 
 %changelog
+* Wed Feb 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.5-alt1
+- Updated to version 0.10.5.
+
 * Fri Feb 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.1-alt1
 - Updated to version 0.9.1.
 
