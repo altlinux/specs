@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 Epoch: 1
 
@@ -60,6 +60,9 @@ rendering performance: ultimate speed and context preprocessor features.
 %doc README*
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1:3.2.5-alt1
+- 3.2.5
+
 * Tue Dec 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1:3.2.4-alt1
 - 3.2.4
 
