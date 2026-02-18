@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name zope.tal
 %define ns_name zope
 %define mod_name tal
@@ -7,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Zope3 Template Attribute Languate
 License: ZPL-2.1
@@ -16,23 +15,24 @@ Url: https://pypi.org/project/zope.tal/
 VCS: https://github.com/zopefoundation/zope.tal.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
 # setuptools(pkg_resources) is used by namespace root which is not used in ALT
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
-%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope.i18nmessageid
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
 %endif
+
+%add_python3_req_skip cStringIO
 
 %description
 The Zope3 Template Attribute Languate (TAL) specifies the custom
@@ -46,8 +46,6 @@ TALES (see the 'zope.tales' package for more).
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -61,7 +59,7 @@ TALES (see the 'zope.tales' package for more).
 %files
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/zope_tal-%version.dist-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/runtest.*
@@ -69,6 +67,9 @@ TALES (see the 'zope.tales' package for more).
 %exclude %python3_sitelibdir/%ns_name/%mod_name/benchmark/
 
 %changelog
+* Thu Feb 19 2026 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1.1
+- Demodernized packaging for backport to stable branches.
+
 * Mon Sep 08 2025 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
 - 5.1 -> 5.1.1.
 
