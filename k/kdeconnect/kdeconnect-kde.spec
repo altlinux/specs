@@ -8,7 +8,7 @@
 
 Name: kdeconnect
 Version: 25.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Communications
@@ -23,6 +23,7 @@ Provides: kde-connect = %version
 Requires: libqt6-quickparticles
 Requires: /usr/bin/sshfs qca-qt6-ossl
 Requires: kf6-kirigami kf6-kirigami-addons
+Requires: kf6-kconfig kf6-qqc2-desktop-style libkf6sonnetui
 # sms
 Requires: libkf6peoplewidgets
 #Requires: kpeoplevcard
@@ -146,6 +147,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Wed Feb 18 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt2
+- fix requires (closes: 57918)
+
 * Fri Feb 06 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.2-alt1
 - new version
 
