@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: schedtool
 Version: 1.3.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Tool for setting and querying scheduling parameters
 License: GPL
@@ -12,6 +12,7 @@ Packager: Gleb Stiblo <ulfr@altlinux.ru>
 Source0: %name-%version.tar.bz2
 Patch01: Makefile.patch
 Patch02: schedtool-1.2.4-for-SCHED_ISO3.patch
+Patch03: schedtool-1.3.0-c99.patch
 
 %description
 schedtool can set all scheduling parameters Linux is capable of or dis-
@@ -32,6 +33,7 @@ schedtool now supports setting the  CPU-affinity  introduced  in  linux
 %setup -q
 %patch01 -p1
 #patch02 -p1
+%patch03 -p1
 
 %build
 %make_build affinity_hack
@@ -47,6 +49,9 @@ schedtool now supports setting the  CPU-affinity  introduced  in  linux
 %_bindir/*
 
 %changelog
+* Wed Feb 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt2
+- fixed FTBFS
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
