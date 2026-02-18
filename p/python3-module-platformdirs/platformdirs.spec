@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.5.1
+Version: 4.9.2
 Release: alt1
 Summary: Determining appropriate platform-specific dirs
 License: MIT
@@ -23,7 +23,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -39,6 +40,9 @@ location.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -50,11 +54,13 @@ location.
 %pyproject_run_pytest -vra tests -Wignore
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 17 2026 Stanislav Levin <slev@altlinux.org> 4.9.2-alt1
+- 4.5.1 -> 4.9.2.
+
 * Mon Dec 08 2025 Stanislav Levin <slev@altlinux.org> 4.5.1-alt1
 - 4.5.0 -> 4.5.1.
 
