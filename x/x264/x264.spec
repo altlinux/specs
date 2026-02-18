@@ -1,12 +1,13 @@
 Name: x264
 Version: 164
-Release: alt1.1
+Release: alt2
 
 Summary: CLI H.264 encoder
 License: GPLv2
 Group: Video
 
-Url: http://www.videolan.org/x264.html
+Url: https://www.videolan.org/developers/x264.html
+VCS: https://code.videolan.org/videolan/x264.git
 Source: %name-%version-%release.tar
 
 BuildRequires: nasm
@@ -68,6 +69,9 @@ install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 %_bindir/countquant_x264.pl
 
 %changelog
+* Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 164-alt2
+- fixed build with ffmpeg 8.0
+
 * Wed May 31 2023 Michael Shigorin <mike@altlinux.org> 164-alt1.1
 - E2K: fix build (ilyakurdyukov@)
 - minor spec cleanup
