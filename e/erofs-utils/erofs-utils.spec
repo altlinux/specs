@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name-utils
-Version: 1.8.10
+Version: 1.9
 Release: alt1
 
 Summary: Userspace tools for EROFS
@@ -17,6 +17,7 @@ Vcs: https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-1.9-alt-man-install.patch
 
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(zlib)
@@ -34,7 +35,7 @@ Userspace tools for Enhanced Read-Only File System.
 Summary: EROFS fuse3 driver
 Group: System/Kernel and hardware
 Requires: %name = %EVR
-Requires: %{get_dep fuse3}
+Requires: fuse3
 
 %description -n fuse-%_name
 This package provides EROFS driver for FUSE3.
@@ -42,6 +43,7 @@ This package provides EROFS driver for FUSE3.
 %prep
 %setup
 %patch -p1
+%patch1
 
 %build
 %autoreconf
@@ -57,10 +59,12 @@ This package provides EROFS driver for FUSE3.
 %make -k check VERBOSE=1
 
 %files
+%_sbindir/mount.erofs
 %_bindir/dump.erofs
 %_bindir/fsck.erofs
 %_bindir/mkfs.erofs
 %_man1dir/*
+%_man8dir/mount.erofs.8*
 %{?_enable_fuse:%exclude %_man1dir/erofsfuse.1*}
 %doc ChangeLog README*
 
@@ -70,6 +74,9 @@ This package provides EROFS driver for FUSE3.
 %_man1dir/erofsfuse.1*}
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Sat Dec 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.10-alt1
 - 1.8.10
 
