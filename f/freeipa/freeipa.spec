@@ -65,7 +65,7 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.13.0
+Version: 4.13.1
 Release: alt1
 
 Summary: The Identity, Policy and Audit system
@@ -1218,6 +1218,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Feb 16 2026 Stanislav Levin <slev@altlinux.org> 4.13.1-alt1
+- 4.13.0 -> 4.13.1.
+
 * Mon Dec 29 2025 Stanislav Levin <slev@altlinux.org> 4.13.0-alt1
 - 4.12.5 -> 4.13.0.
 
