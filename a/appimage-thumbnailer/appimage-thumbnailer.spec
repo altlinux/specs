@@ -2,16 +2,17 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name appimage-thumbnailer
-%define ver_major 3.0
+%define ver_major 4.0
 
 # DwarFS tools: dwarfsextract, dwarfsck required
 %def_disable bundle_dwarfs
 %define dwarfs_ver = 0.14.1
-
+%def_disable bundle_squashfs
+%define squashfs_ver 4.6.1
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: AppImage Thumbnailer
@@ -36,6 +37,7 @@ ExclusiveArch: x86_64 aarch64
 Requires: dwarfs-tools >= %dwarfs_ver
 # if kernel < 3.18
 Requires: fuse-dwarfs
+Requires: squashfs-tools >= %squashfs_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -52,7 +54,8 @@ freedesktop.org spec.
 
 %build
 %meson \
-    %{subst_enable_meson_bool bundle_dwarfs bundle_dwarfs}
+    %{subst_enable_meson_bool bundle_dwarfs bundle_dwarfs} \
+    %{subst_enable_meson_bool bundle_squashfs bundle_squashfs} \
 %nil
 %meson_build
 
@@ -69,6 +72,9 @@ freedesktop.org spec.
 %doc README*
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
