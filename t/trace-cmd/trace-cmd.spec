@@ -7,8 +7,8 @@
 # Also requires `unresolved=normal`
 %def_without python
 
-%define trace_cmd_version 3.3.3
-%define libtracecmd_version 1.5.4
+%define trace_cmd_version 3.4
+%define libtracecmd_version 1.5.5
 
 Name:     trace-cmd
 Version: %trace_cmd_version
@@ -39,7 +39,7 @@ BuildRequires: asciidoc
 BuildRequires: banner
 BuildRequires: chrpath
 BuildRequires: libaudit-devel
-BuildRequires: libtraceevent-devel
+BuildRequires: libtraceevent-devel >= 1.9.0
 BuildRequires: libtracefs-devel
 BuildRequires: libzstd-devel
 BuildRequires: swig
@@ -167,6 +167,9 @@ EOF
 %endif
 
 %changelog
+* Wed Feb 18 2026 Vitaly Chikunov <vt@altlinux.org> 3.4-alt1
+- Update to trace-cmd-v3.4 + libtracecmd-1.5.5 (2026-02-05).
+
 * Mon Aug 11 2025 Vitaly Chikunov <vt@altlinux.org> 3.3.3-alt1
 - Update to trace-cmd-v3.3.3 + libtracecmd-1.5.4 (2025-08-01).
 - libtracecmd packaged with correct version 1.5.4 instead of trace-cmd's
