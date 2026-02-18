@@ -4,13 +4,14 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.15
+Version: 6.2.0
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
 
 License: GPLv3
 Url: https://www.knot-resolver.cz/
+Vcs: https://gitlab.nic.cz/knot/knot-resolver.git
 Source0: %name-%version.tar
 Source11: lua-aho-corasick.tar
 
@@ -24,7 +25,7 @@ Obsoletes: knot-resolver-core < %EVR
 Provides: knot-resolver-manager = %EVR
 Obsoletes: knot-resolver-manager < %EVR
 
-BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd rpm-macros-python3
+BuildRequires(pre): meson >= 0.53 rpm-macros-luajit rpm-macros-systemd rpm-macros-python3
 BuildRequires: gcc-c++ luajit
 BuildRequires: python3-module-setuptools
 BuildRequires: pkgconfig(cmocka)
@@ -33,6 +34,7 @@ BuildRequires: pkgconfig(libknot) >= 3.1
 BuildRequires: pkgconfig(libzscanner) >= 3.1
 BuildRequires: pkgconfig(libdnssec) >= 3.1
 BuildRequires: pkgconfig(libnghttp2)
+BuildRequires: pkgconfig(libngtcp2) >= 1.11.0
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
 BuildRequires: pkgconfig(libuv) >= 1.27
@@ -167,6 +169,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Wed Feb 18 2026 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt1
+- updated from 6.0.15 to 6.2.0
+
 * Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.15-alt1
 - 6.0.15
 

@@ -8,12 +8,13 @@
 %def_enable quic
 
 Name: knot
-Version: 3.4.8
+Version: 3.5.3
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
 License: GPL-3.0-or-later
 Url: https://www.knot-dns.cz
+Vcs: https://gitlab.nic.cz/knot/knot-dns.git
 Source0: %name-%version.tar
 Patch0: %name-%version.patch
 
@@ -206,6 +207,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Tue Feb 17 2026 Alexey Shabalin <shaba@altlinux.org> 3.5.3-alt1
+- updated from 3.4.8 to 3.5.3
+
 * Thu Sep 04 2025 Alexey Shabalin <shaba@altlinux.org> 3.4.8-alt1
 - New version 3.4.8.
 
