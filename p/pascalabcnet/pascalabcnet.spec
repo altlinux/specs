@@ -1,5 +1,5 @@
 Name:    pascalabcnet
-Version: 3.11.0.3705
+Version: 3.11.1.3756
 Release: alt1
 
 Summary: PascalABC.NET programming language  
@@ -57,6 +57,8 @@ dotnet build \
 	PascalABCNETLinux.sln
 cd ReleaseGenerators
 mono ../bin/pabcnetc.exe RebuildStandartModulesMono.pas /rebuild
+# Build modules
+for i in bin/Lib/*.pas;do pabcnetcclear "$i" ||:;done
 
 %install
 # Install executables and modules
@@ -135,6 +137,10 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 3.11.1.3756-alt1
+- New version.
+- Built all modules in Lib directory (including TurtleABC).
+
 * Tue Dec 09 2025 Andrey Cherepanov <cas@altlinux.org> 3.11.0.3705-alt1
 - New version (ALT #53475).
 - Built using dotnet.
