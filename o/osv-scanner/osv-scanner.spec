@@ -2,7 +2,7 @@
 %define import_path github.com/google/osv-scanner/v2
 
 Name: osv-scanner
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Vulnerability scanner written in Go which uses the data provided by https://osv.dev
@@ -36,7 +36,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 pushd $BUILDDIR/src/$IMPORT_PATH
-export DATE=$(date -u +"%Y-%m-%d")
+export DATE=$(date -u +"%%Y-%%m-%%d")
 export LDFLAGS="-X '%import_path/cmd/osv-scanner/internal/cmd.date=${DATE}'"
 %golang_build cmd/osv-scanner
 popd
@@ -51,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Feb 18 2026 Artem Krasovskiy <aibure@altlinux.org> 2.3.3-alt1
+- New version 2.3.3.
+
 * Tue Jan 27 2026 Artem Krasovskiy <aibure@altlinux.org> 2.3.2-alt1
 - New version 2.3.2.
 
