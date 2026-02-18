@@ -1,13 +1,11 @@
 Name:    kafka
-Version: 3.9.1
-Release: alt3
+Version: 4.1.1
+Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
 Group:   System/Servers
 Url:     https://github.com/apache/kafka
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 
@@ -16,7 +14,6 @@ Source1: gradle-cache.tar
 Source4: kafka.logrotate
 Source5: kafka.service
 Source6: kafka.sysconfig
-Source7: zookeeper.service
 Patch0: kafka-pathes.patch
 
 BuildRequires(pre): /proc rpm-build-java
@@ -25,7 +22,8 @@ BuildRequires: maven-local
 BuildRequires: gradle
 
 AutoReqProv: yes, noosgi-fc
-Requires: java >= 21.0.0
+Requires: java-21-openjdk
+Requires(post): java-21-openjdk
 # Require native library and override bad library from vendoring jar
 Requires: libzstd-jni
 
@@ -60,28 +58,30 @@ ln -s ../../../etc/kafka %buildroot%_libexecdir/%name/config
 install -Dpm0644 %SOURCE4 %buildroot%_logrotatedir/%name
 install -Dpm0644 %SOURCE5 %buildroot%_unitdir/%name.service
 install -Dpm0644 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%name
-install -Dpm0644 %SOURCE7 %buildroot%_unitdir/zookeeper.service
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_sharedstatedir/%name
 
 %pre
 getent group kafka >/dev/null || /usr/sbin/groupadd -r kafka
 getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
-  -g kafka -d %{_prefix}/%{name} -s /bin/bash -c "Kafka" kafka
+  -g kafka -d %_sharedstatedir/%name -s /bin/bash -c "Kafka" kafka
 
 %preun
 %preun_service %name.service
-%preun_service zookeeper.service
 
 %post
+# Generate meta.properties if needed
+if [ ! -e %_logdir/%name/meta.properties ]; then
+	export JAVA_HOME=/usr/lib/jvm/java-21
+	usermod -d /var/lib/kafka kafka ||:
+	su - kafka -c '/usr/lib/kafka/bin/kafka-storage.sh format -t $(/usr/lib/kafka/bin/kafka-storage.sh random-uuid) -c /etc/kafka/server.properties --standalone'
+fi
 %post_service %name.service
-%post_service zookeeper.service
 
 %files
 %doc README.md
 %_libexecdir/%name
 %_unitdir/%name.service
-%_unitdir/zookeeper.service
 %attr(0750,kafka,kafka) %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -90,6 +90,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Feb 03 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
+- New version.
+
 * Wed Dec 17 2025 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt3
 - Built strictly with Java 21.
 
