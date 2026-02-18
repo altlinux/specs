@@ -1,5 +1,5 @@
 Name:    kafka
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
@@ -10,11 +10,14 @@ Url:     https://github.com/apache/kafka
 ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: %name-%version.tar
+# cd gradle; rm -rf build-scan-data daemon native notifications workers caches/8.* .tmp/
 Source1: gradle-cache.tar
 Source4: kafka.logrotate
 Source5: kafka.service
 Source6: kafka.sysconfig
+
 Patch0: kafka-pathes.patch
+Patch1: kafka-alt-use-gradle-8.x.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-devel
@@ -35,7 +38,7 @@ low-latency platform for handling real-time data feeds.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 test -d ~/.gradle && rm -rf ~/.gradle
 tar xf %SOURCE1 -C ~
 rm -rf bin/windows
@@ -90,6 +93,9 @@ fi
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.0-alt1
+- New version.
+
 * Tue Feb 03 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
 - New version.
 
