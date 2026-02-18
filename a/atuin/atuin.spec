@@ -3,8 +3,8 @@
 %def_with check
 
 Name: atuin
-Version: 18.11.0
-Release: alt2
+Version: 18.12.1
+Release: alt1
 
 Summary: Magical shell history
 
@@ -129,6 +129,9 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Wed Feb 18 2026 Boris Yumankulov <boria138@altlinux.org> 18.12.1-alt1
+- new version 18.12.1
+
 * Mon Feb 02 2026 Ilya Sorochan <k0tran@altlinux.org> 18.11.0-alt2
 - fix FTBFS on loongarch64
 
