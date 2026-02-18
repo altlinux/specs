@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ License: LGPL-2.0-or-later
 Requires: /usr/bin/openssl
 
 Source: %rname-%version.tar
+Patch1: kdebug-503474-avc444.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -61,6 +62,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -98,6 +100,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Wed Feb 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt2
+- add fix against kdebug#503474
+
 * Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
 - new version
 
