@@ -2,14 +2,10 @@
 %define redis_user      _redis
 %define redis_group     _redis
 
-%ifarch %arm %mips32 %ix86 ppc64le aarch64
 %def_disable check
-%else
-%def_disable check
-%endif
 
 Name: redis
-Version: 8.4.1
+Version: 8.6.0
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -113,7 +109,6 @@ USE_MALLOC="USE_JEMALLOC=yes"
 
 %make_build %make_flags all
 
-
 %install
 %make_install %make_flags install
 mkdir -p %buildroot%_sbindir
@@ -215,6 +210,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Wed Feb 18 2026 Alexey Shabalin <shaba@altlinux.org> 8.6.0-alt1
+- updated from 8.4.1 to 8.6.0
+
 * Tue Feb 17 2026 Alexey Shabalin <shaba@altlinux.org> 8.4.1-alt1
 - 8.4.1.
 
