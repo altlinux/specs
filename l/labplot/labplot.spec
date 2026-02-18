@@ -1,8 +1,9 @@
+ExcludeArch: %ix86
 %define _unpackaged_files_terminate_build 1
 %define soversion 2.12.0
 Name: labplot
 Version: 2.12.1
-Release: alt1
+Release: alt2
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -24,7 +25,7 @@ BuildRequires: liblz4-devel
 BuildRequires: libcerf-devel
 BuildRequires: libvulkan-devel
 BuildRequires: libpoppler-qt6-devel
-BuildRequires: eigen3
+BuildRequires: eigen3-devel
 BuildRequires: kf6-kparts-devel
 BuildRequires: kf6-purpose-devel
 BuildRequires: kf6-karchive-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
@@ -38,6 +39,12 @@ BuildRequires: libgsl-devel libhdf5-devel libnetcdf-devel
 BuildRequires: libxkbfile-devel xorg-xf86vidmodeproto-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: kf6-syntax-highlighting-devel
+BuildRequires: cantor-devel
+BuildRequires: libcfitsio-devel
+BuildRequires: libmatio-devel
+BuildRequires: libdiscount-devel
+BuildRequires: liborcus-devel libixion-devel
+BuildRequires: libzstd-devel
 
 %description
 This is a program for plotting of functions and data manipulation.
@@ -66,6 +73,19 @@ This package provides the shared library for LabPlot.
 %prep
 %setup
 
+# fix missing QElapsedTimer include (qt6 >= 6.10)
+sed -i '/#include <QIcon>/a #include <QElapsedTimer>' \
+    src/backend/worksheet/plots/cartesian/XYFourierFilterCurve.cpp
+
+# fix Eigen3 detection with new cmake config (eigen3 >= 5.0):
+# Eigen3Config.cmake sets Eigen3_FOUND/Eigen3_VERSION/Eigen3::Eigen,
+# but not legacy EIGEN3_FOUND/EIGEN3_INCLUDE_DIR/EIGEN3_VERSION_STRING
+sed -i '/find_package(Eigen3 QUIET)/a\    if(Eigen3_FOUND AND NOT DEFINED EIGEN3_FOUND)\n        set(EIGEN3_FOUND TRUE)\n        get_target_property(EIGEN3_INCLUDE_DIR Eigen3::Eigen INTERFACE_INCLUDE_DIRECTORIES)\n        set(EIGEN3_VERSION_STRING "${Eigen3_VERSION}")\n    endif()' CMakeLists.txt
+
+# fix missing INTERFACE_INCLUDE_DIRECTORIES in cantor-devel cmake config:
+# CantorTargets.cmake omits include dirs, so cantor/session.h is not found
+sed -i 's|    return()|    if(TARGET Cantor::cantorlibs)\n        get_target_property(_ci Cantor::cantorlibs INTERFACE_INCLUDE_DIRECTORIES)\n        if(NOT _ci)\n            find_path(_ci cantor/session.h PATH_SUFFIXES KF6)\n            if(_ci)\n                set_target_properties(Cantor::cantorlibs PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_ci}")\n            endif()\n        endif()\n    endif()\n    return()|' cmake/FindCantor.cmake
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -74,6 +94,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %build
 %K6build \
     -DQT_VERSION_MAJOR=6 \
+    -DQT_FIND_PRIVATE_MODULES=ON \
     -DENABLE_READSTAT:BOOL=OFF \
     -DENABLE_VECTOR_BLF:BOOL=OFF \
     -DENABLE_REPRODUCIBLE:BOOL=ON \
@@ -101,6 +122,14 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_K6link/liblabplot.so
 
 %changelog
+* Wed Feb 18 2026 Anton Farygin <rider@altlinux.org> 2.12.1-alt2
+- fixed build with qt6 >= 6.10 (Qt6GuiPrivate no longer auto-loaded,
+  missing QElapsedTimer include)
+- fixed build with eigen3 >= 5.0 (cmake variable name change)
+- enabled optional features: cantor, cfitsio, matio, discount,
+  orcus (ODS import), zstd (MCAP compression)
+- excluded %%ix86 because it's unusable
+
 * Tue Sep 09 2025 Anton Farygin <rider@altlinux.com> 2.12.1-alt1
 - 2.12.0 -> 2.12.1
 
