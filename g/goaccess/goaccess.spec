@@ -1,7 +1,7 @@
 Name: goaccess
 
 Summary: real-time web log analyzer
-Version: 1.9.4
+Version: 1.10.1
 Release: alt1
 
 URL: https://goaccess.io/
@@ -16,9 +16,9 @@ Group: Other
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jul 20 2021
-# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libtinfo-devel perl python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 shared-mime-info tzdata xz
-BuildRequires: glib2-devel libGeoIP-devel libncursesw-devel libssl-devel
+# Automatically added by buildreq on Wed Feb 18 2026
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgpg-error libncurses-devel libtinfo-devel perl python3 python3-base sh5 shared-mime-info tzdata xz
+BuildRequires: glib2-devel libGeoIP-devel libncursesw-devel libssl-devel zlib-devel
 
 
 %description
@@ -37,6 +37,7 @@ report on the fly.
 #%%add_optflags -fcommon
 %configure --with-getline \
            --with-openssl \
+           --with-zlib \
            --enable-geoip=legacy \
            --enable-utf8  \
            %nil
@@ -59,6 +60,16 @@ report on the fly.
 
 
 %changelog
+* Wed Feb 18 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.1-alt1
+- New version
+  - Added optional zlib support to parse compressed log files
+  - Refreshed the HTML dashboard styling and theme visuals
+  - Added sorting for panels in the HTML report.
+  - Several new TUI features
+  - Added city-level entries to the GEOLOCATION panel.
+  - Added the ability to prepend the virtual host to a request
+  - Updated browser and OS detection lists
+
 * Sun Nov 02 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.9.4-alt1
 - New version
 
