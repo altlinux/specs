@@ -1,15 +1,17 @@
-Name: ioping
-Version: 1.0
+Name:    ioping
+Version: 1.3
 Release: alt1
 Summary: simple disk I/O latency monitoring tool
 
-Group: File tools
-License: GPLv3+
-Url: https://github.com/koct9i/ioping
+Group:    File tools
+License:  %gpl3plus
+Url:      https://github.com/koct9i/ioping
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: ioping-%version.tar
-Patch: %name-%version-%release.patch
+Source0: %name-%version.tar
+Patch0:  %name-%version-%release.patch
+
+BuildRequires(pre): rpm-build-licenses
 
 %description
 This tool lets you monitor I/O latency in real time, in a way
@@ -17,7 +19,10 @@ similar to how ping(1) does for network latency.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+
+mv -f -- LICENSE LICENSE.orig
+ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/LICENSE) LICENSE
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" make
@@ -26,10 +31,18 @@ CFLAGS="$RPM_OPT_FLAGS" make
 %make_install install PREFIX=%prefix DESTDIR=%buildroot
 
 %files
-%attr(755,root,root) %_bindir/ioping
-%attr(644,root,root) %_man1dir/ioping.1.*
+%doc README.md changelog
+%doc --no-dereference LICENSE
+
+#%%attr(755,root,root) %_bindir/%name
+#%%attr(644,root,root) %_man1dir/%{name}*
+%_bindir/%name
+%_man1dir/%{name}*
 
 %changelog
+* Wed Feb 18 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.3-alt1
+- New version
+
 * Mon Mar 27 2017 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt1
 - 1.0
 
