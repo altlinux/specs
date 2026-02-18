@@ -4,7 +4,7 @@
 %define beta %nil
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1%beta
 
 Summary: COSMIC Wallpapers
@@ -37,6 +37,9 @@ Wallpapers for the COSMIC desktop environment.
 %doc README* LICENSE
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 

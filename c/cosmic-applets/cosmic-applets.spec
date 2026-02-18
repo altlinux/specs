@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-applets
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1%beta
 
 Summary: COSMIC Panel Applets
@@ -77,12 +77,17 @@ just rootdir=%buildroot install
 %_bindir/cosmic-applet-workspaces
 %_bindir/cosmic-panel-button
 %_desktopdir/*.desktop
+%_userunitdir/com.system76.CosmicStatusNotifierWatcher.service
+%_datadir/dbus-1/services/com.system76.CosmicStatusNotifierWatcher.service
 %_datadir/cosmic/com.system76.CosmicAppList/
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 #%doc README*
 
 %changelog
+* Wed Feb 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Wed Feb 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
