@@ -1,20 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch x86_64
-%define arch amd64
-%endif
-
-%ifarch i586
-%define arch 386
-%endif
-
-%ifarch aarch64
-%define arch arm64
-%endif
-
 Name: tgpt
 Version: 2.11.0
-Release: alt1
+Release: alt2
 
 Summary: tool that allows you to use AI in your Terminal
 License: GPL-3.0
@@ -25,6 +13,7 @@ URL: https://github.com/aandrew-me/tgpt.git
 Source: %name-%version.tar
 Source2: vendor.tar
 
+BuildRequires(pre): rpm-macros-golang
 BuildRequires: golang
 
 %description
@@ -36,16 +25,20 @@ use AI in your Terminal.
 
 %build
 CGO_ENABLED=0 \
-GOARCH=%arch \
-go build -mod=vendor -trimpath -ldflags="-s -w" -o ./build/tgpt-linux-%arch
+GOARCH=%go_hostarch \
+go build -mod=vendor -trimpath -ldflags="-s -w" -o ./build/tgpt-linux-%go_hostarch
 
 %install
-install -Dm 0755 build/tgpt-linux-%arch %buildroot%_bindir/tgpt
+install -Dm 0755 build/tgpt-linux-%go_hostarch %buildroot%_bindir/tgpt
 
 %files
 %doc README.md LICENSE
 %_bindir/tgpt
 
 %changelog
+* Wed Feb 18 2026 Ivan A. Melnikov <iv@altlinux.org> 2.11.0-alt2
+- NMU: Use %%go_hostarch macro to derive the architecture name for go
+  (fixes FTBFS on loongarch64).
+
 * Sun Jan 25 2026 Ilya Muhamadeev <nicourced@altlinux.org> 2.11.0-alt1
 - Initial build.
