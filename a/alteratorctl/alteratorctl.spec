@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -17,7 +17,7 @@ BuildRequires: libpolkit-devel libjson-glib-devel
 
 Requires: alterator-manager >= 0.1.32
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-backend-packages >= 0.2.12
+Requires: alterator-backend-packages >= 0.2.13
 Requires: alterator-backend-component >= 0.3.3
 Requires: alterator-interface-edition >= 0.4.1
 Requires: alterator-interface-diag >= 0.1.4
@@ -55,6 +55,11 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Wed Feb 18 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.8-alt1
+- Fixed:
+  + Components list assertions.
+  + Editions list double free.
+
 * Thu Feb 12 2026 Pavel Khromov <hromovpi@altlinux.org> 0.2.7-alt1
 - Fixed:
   + Displaying a message about the absence of diagnostic tools in the "diag list".
