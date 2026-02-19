@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cert-manager
-Version: 1.19.2
+Version: 1.19.3
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -60,7 +60,7 @@ export GOPATH="%go_path"
 
 mv %buildroot%_bindir/controller-binary %buildroot%_bindir/controller
 mv %buildroot%_bindir/cainjector-binary %buildroot%_bindir/cainjector
-mv %buildroot%_bindir/webhook-binary %buildroot%_bindir/webhook
+mv %buildroot%_bindir/webhook-binary %buildroot%_bindir/cm-webhook
 mv %buildroot%_bindir/acmesolver-binary %buildroot%_bindir/acmesolver
 mv %buildroot%_bindir/startupapicheck-binary %buildroot%_bindir/startupapicheck
 
@@ -70,11 +70,14 @@ rm -rf -- %buildroot%_datadir
 %files
 %_bindir/controller
 %_bindir/cainjector
-%_bindir/webhook
+%_bindir/cm-webhook
 %_bindir/acmesolver
 %_bindir/startupapicheck
 
 %changelog
+* Mon Feb 09 2026 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.3-alt1
+- 1.19.2 -> 1.19.3 (closes: #57676).
+
 * Fri Dec 12 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.19.2-alt1
 - 1.19.1 -> 1.19.2 (Fixes: CVE-2025-47914, CVE-2025-58181, CVE-2025-61727, CVE-2025-61729)
 
