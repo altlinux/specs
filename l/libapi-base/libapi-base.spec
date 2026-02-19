@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 6
-%define minor_version 0
+%define minor_version 1
 %define gir_name ApiBase
 
 %define sname libserialize
@@ -158,6 +158,9 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Thu Feb 19 2026 Vladimir Romanov <rirusha@altlinux.org> 6.1-alt1
+- New version: 6.1.
+
 * Thu Feb 19 2026 Vladimir Romanov <rirusha@altlinux.org> 6.0-alt1
 - New version: 6.0.
 
