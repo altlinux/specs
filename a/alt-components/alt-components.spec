@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.9
+Version: 0.6.10
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -27,8 +27,8 @@ BuildRequires: libexpected-devel
 BuildRequires: alterator-entry >= 0.4.6
 
 Requires: alterator-backend-packages >= 0.2.12
-Requires: alterator-backend-component >= 0.3.1
-Requires: alterator-module-executor >= 0.1.29-alt1
+Requires: alterator-backend-component >= 0.3.4
+Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-backend-systeminfo >= 0.4.2
 Requires: alterator-backend-edition >= 0.4.1
 Requires: libqbase
@@ -64,6 +64,11 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Feb 18 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.6.10-alt1
+- Fix display of components in transaction that includes virtual packages.
+- Sort components after categories in model.
+- Add displaying of components without category.
+
 * Tue Feb 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.9-alt1
 - Update app icon.
 

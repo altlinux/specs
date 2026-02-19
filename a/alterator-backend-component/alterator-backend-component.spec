@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -69,6 +69,11 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Wed Feb 18 2026 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.4-alt1
+- Fix batch_components1.Status incorrect result if system locale is not
+  English.
+- Fix missing consideration of virtual names in batch_components1.Status.
+
 * Thu Feb 05 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.3-alt1
 - Fix path for description file of category (thx Kirill Sharov).
 - Improve error messages (thx Kirill Sharov).
