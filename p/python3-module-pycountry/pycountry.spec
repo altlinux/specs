@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 24.6.1
+Version: 26.2.16
 Release: alt1
 
 Summary: ISO country, subdivision, language, currency and script definitions
@@ -19,7 +19,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry-core
 %if_with check
-BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-importlib-metadata
 %endif
 
@@ -42,6 +42,9 @@ This package contains tests for %oname
 %prep
 %setup
 
+sed -i '/--cov*/d' pyproject.toml
+sed -i '/required_plugins*/d' pyproject.toml
+
 %build
 %pyproject_build
 
@@ -49,7 +52,7 @@ This package contains tests for %oname
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.txt *.rst
@@ -62,6 +65,9 @@ This package contains tests for %oname
 
 
 %changelog
+* Thu Feb 19 2026 Anton Vyatkin <toni@altlinux.org> 26.2.16-alt1
+- New version 26.2.16.
+
 * Mon Jun 03 2024 Anton Vyatkin <toni@altlinux.org> 24.6.1-alt1
 - New version 24.6.1.
 
