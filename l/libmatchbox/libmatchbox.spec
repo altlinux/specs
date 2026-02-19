@@ -1,24 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen libICE-devel libSM-devel libcheck-devel pkgconfig(x11) pkgconfig(xft)
-# END SourceDeps(oneline)
+%def_disable static
+%define soname 1
+%define oname libmb
 
 Name: libmatchbox
-Version: 1.9
-Release: alt5
+Version: 1.14
+Release: alt1
+
 Summary: Libraries for the Matchbox Desktop
 License: LGPLv2+
 Group: System/Libraries
-Url: http://projects.o-hand.com/matchbox/
-Packager: Sugar Development Team <sugar@packages.altlinux.org>
 
-%def_disable static
+Url: https://git.yoctoproject.org/libmatchbox
+Vcs: https://git.yoctoproject.org/libmatchbox
 
-Source: http://matchbox-project.org/sources/%name/%version/%name-%version.tar.bz2
-Source1: %name.watch
-Patch: libmatchbox-1.9-alt-DSO.patch
-Patch10:	libmatchbox-1.9-add-needed.patch
-Patch11:	libmatchbox-1.9-libpng.patch
-Patch12: mbpixbuf-1.9-alt-build.patch
+Source: %name-%version.tar
 
 BuildRequires: pkg-config
 BuildRequires: libXft-devel
@@ -27,6 +22,12 @@ BuildRequires: libpango-devel
 BuildRequires: libpng-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libxsettings-client-devel
+BuildRequires: /usr/bin/doxygen
+BuildRequires: libICE-devel
+BuildRequires: libSM-devel
+BuildRequires: libcheck-devel
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xft)
 
 %description
 Matchbox is a base environment for the X Window System running on non-desktop
@@ -36,8 +37,6 @@ for which screen space, input mechanisms or system resources are limited.
 %package devel
 Summary: Header files for %name
 Group: Development/C
-Requires: %name = %version-%release
-
 %description devel
 Matchbox is a base environment for the X Window System running on non-desktop
 embedded platforms such as handhelds, set-top boxes, kiosks and anything else
@@ -47,20 +46,22 @@ for which screen space, input mechanisms or system resources are limited.
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
-
 %description devel-static
 Matchbox is a base environment for the X Window System running on non-desktop
 embedded platforms such as handhelds, set-top boxes, kiosks and anything else
 for which screen space, input mechanisms or system resources are limited.
 %endif
 
+%package -n %name%soname
+Group: System/Libraries
+Summary: %name library
+Obsoletes: %name <= 1.9-alt5
+
+%description -n %name%soname
+%name library.
+
 %prep
 %setup
-%patch -p2
-%patch10 -p1 -b .add-needed
-%patch11 -p1 -b .libpng
-%patch12 -p1
 
 %build
 autoreconf -fisv
@@ -75,15 +76,15 @@ autoreconf -fisv
 %install
 %make_install DESTDIR=%buildroot install
 
-%files
-%_libdir/*.so.*
+%files -n %name%soname
+%_libdir/%oname.so.%soname
+%_libdir/%oname.so.%{soname}.*
 
 %files devel
 %doc AUTHORS ChangeLog README COPYING
-%dir %{_includedir}/libmb
-%{_includedir}/libmb/*.h
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_includedir/%oname
+%_libdir/%oname.so
+%_pkgconfigdir/%oname.pc
 
 %if_enabled static
 %files devel-static
@@ -91,6 +92,13 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Thu Feb 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.14-alt1
+- 1.9 -> 1.14
+- chenged url tag
+- added vcs tag
+- droped old patchs
+- builded in accordance with Shared Libs Policy
+
 * Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.9-alt5
 - Fix FTBFS.
 
