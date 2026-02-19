@@ -1,11 +1,11 @@
-%define daterev 20260124
-%define gitsnapshot 119d71ae952bbf03f9d07f0c3bcfa9bee7e38234
+%define daterev 20260218
+%define gitsnapshot c91185ebd95f4bd8356465ee8a732aa058beb745
 %define version_major 15
 %define version_minor 0
 
 Name: openttd
-Version: 15.1
-Release: alt2
+Version: 15.2
+Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe"
 License: GPLv2
@@ -52,6 +52,9 @@ echo "%version" >.version
 %_man6dir/*
 
 %changelog
+* Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 15.2-alt1
+- 15.1 -> 15.2
+
 * Tue Feb 17 2026 Anton Farygin <rider@altlinux.org> 15.1-alt2
 - keep openttd auto font size defaults to avoid oversized gui
   text (closes: #57589)
