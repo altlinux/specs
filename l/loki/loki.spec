@@ -2,12 +2,13 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 3.6.3
+Version: 3.6.6
 Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: AGPL-3.0-only
 Group: Monitoring
 Url: https://grafana.com/loki
+Vcs: https://github.com/grafana/loki.git
 Source: %name-%version.tar
 Source1: loki.service
 Source2: promtail.service
@@ -157,6 +158,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Thu Feb 19 2026 Alexey Shabalin <shaba@altlinux.org> 3.6.6-alt1
+- updated from 3.6.3 to 3.6.6
+
 * Thu Jan 08 2026 Alexey Shabalin <shaba@altlinux.org> 3.6.3-alt1
 - New version 3.6.3.
 
