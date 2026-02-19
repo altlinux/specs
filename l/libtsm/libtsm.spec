@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libtsm
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 Summary: Terminal-emulator State Machine
 Group: System/Libraries
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Feb 19 2026 Alexey Shabalin <shaba@altlinux.org> 4.3.0-alt1
+- updated from 4.2.0 to 4.3.0
+
 * Thu Oct 16 2025 Alexey Shabalin <shaba@altlinux.org> 4.2.0-alt1
 - New version 4.2.0.
 
