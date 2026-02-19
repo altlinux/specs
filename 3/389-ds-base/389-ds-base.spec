@@ -18,7 +18,7 @@
 
 Name: 389-ds-base
 Version: 3.1.4
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -428,6 +428,12 @@ fi
 %endif
 
 %changelog
+* Wed Feb 18 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt2
+- Backported upstream fixes for:
+  + https://github.com/389ds/389-ds-base/issues/7096
+  + https://github.com/389ds/389-ds-base/issues/7118
+  + https://github.com/389ds/389-ds-base/issues/7172
+
 * Thu Dec 18 2025 Stanislav Levin <slev@altlinux.org> 3.1.4-alt1
 - 3.1.3 -> 3.1.4.
 
