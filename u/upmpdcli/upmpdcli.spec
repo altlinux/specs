@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.9.12
+Version: 1.9.13
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -121,8 +121,11 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Thu Feb 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.13-alt1
+- 1.9.13 released
+
 * Mon Feb 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.12-alt1
-- 0.9.12 released
+- 1.9.12 released
 
 * Mon Jan 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.11-alt1
 - 1.9.11 released
