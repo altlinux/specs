@@ -1,52 +1,96 @@
-# CMake option USE_PLUGIN_TELESCOPECONTROL
+# Floating point tests fails on %%ix86 arches
+%ifarch %qt6_qtwebengine_arches
+%def_with       check
+%endif
+
+# Extra documentation deps
+%def_with       doxygen
+%def_with       graphviz
+
+# System libraries
+%def_with       system_zlib
+%def_with       system_qtcompress
+
+%ifarch %qt6_qtwebengine_arches
+%def_with       qtwebengine
+%endif
+
+# text2speech nessasary only when media enabled
+%def_with       media
+%def_with       text2speech
+
+# exiv2 nessasary only when lensdistortion enabled
+%def_with       lensdistortion
+%def_with       exiv2
+
+# libgps nessasary only when gps enabled
+%def_with       gps
+%def_with       libgps
+
+%def_with       showmysky
+%def_with       xlsx
+%def_with       translation
+
 # requires libindi API incompatible with codebase
-%def_without telescopecontrol
+%def_with    telescopecontrol
 
 Name: stellarium
-Version: 25.3
+Version: 25.4
 Release: alt1
 
 Summary: Astronomical Sky Simulator
 
 License: GPLv2
 Group: Education
-Url: http://www.stellarium.org/
+Url: http://www.stellarium.org
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6-webengine rpm-build-python3
+# Fix version comparison to find Qt6TextToSpeech
+Patch: 59bb230370a4242806b19106b0dc7eba4d830e54.patch
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt6-webengine
 
 %add_python3_req_skip astropy astropy.coordinates astroquery.vizier percache
 
-BuildRequires: cmake ctest gcc-c++
+BuildRequires: cmake gcc-c++
 BuildRequires: qt6-base-devel
-BuildRequires: libCalcMySky-devel
-BuildRequires: pkgconfig(Qt6Charts)
-BuildRequires: pkgconfig(Qt6SerialPort)
-BuildRequires: pkgconfig(Qt6Multimedia)
-BuildRequires: pkgconfig(Qt6Positioning)
-BuildRequires: libQXlsx-devel
+BuildRequires: qt6-charts-devel
+BuildRequires: qt6-positioning-devel
+# Seems, that documentation is strictly nessesary=)
 BuildRequires: libmd4c-devel
-BuildRequires: doxygen
-%if_with telescopecontrol
-BuildRequires: pkgconfig(libindi)
-%endif
-BuildRequires: pkgconfig(nlopt)
-BuildRequires: pkgconfig(Qt6Linguist)
-BuildRequires: pkgconfig(exiv2)
-BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(expat)
 BuildRequires: perl-podlators
-%ifarch %qt6_qtwebengine_arches
-BuildRequires: pkgconfig(Qt6WebEngineWidgets)
-%endif
+# For python3 scripts
+BuildRequires: rpm-build-python3
+
+%{?_with_check:BuildRequires: ctest xvfb-run}
+
+%{?_with_doxygen:BuildRequires: doxygen}
+%{?_with_graphviz:BuildRequires: graphviz}
+
+%{?_with_system_zlib:BuildRequires: zlib-devel}
+%{?_with_qtwebengine:BuildRequires: qt6-webengine-devel}
+
+%{?_with_media:BuildRequires: qt6-multimedia-devel}
+%{?_with_text2speech:BuildRequires: qt6-speech-devel}
+
+%{?_with_lensdistortion:BuildRequires: libnlopt-devel}
+%{?_with_exiv2:BuildRequires: libexiv2-devel}
+
+%{?_with_gps:BuildRequires: qt6-serialport-devel}
+%{?_with_libgps:BuildRequires: libgps-devel}
+
+%{?_with_translation:BuildRequires: qt6-tools-devel}
+%{?_with_showmysky:BuildRequires: libCalcMySky-devel}
+%{?_with_xlsx:BuildRequires: libQXlsx-devel}
+%{?_with_telescopecontrol:BuildRequires: libindi-devel}
 
 # Disabled beacause of problems with translation encoding
 ExcludeArch: %ix86
 
-%ifnarch %e2k
-%define _optlevel s
-%endif
+# Large chunk of arch-independent data is better not duplicated
+Requires: %name-data = %EVR
 
 %description
 Stellarium is a free software available for Windows, Linux/Unix and MacOSX.
@@ -54,52 +98,90 @@ It renders 3D photo-realistic skies in real time. With stellarium, you
 really see what you can see with your eyes, binoculars or a small
 telescope.
 
+%package data
+Summary: Data files for %name
+License: GPLv2
+Group: Education
+BuildArch: noarch
+
+%description data
+Stellarium is a free software available for Windows, Linux/Unix and MacOSX.
+It renders 3D photo-realistic skies in real time. With stellarium, you
+really see what you can see with your eyes, binoculars or a small
+telescope.
+
+This package contains shared data files for Stellarium.
+
 %prep
 %setup
+%patch -p1
+
 %ifarch %e2k
+%define _optlevel s
 # lcc doesn't ignore unicode bom
 find -type f -print0 | xargs -r0 -- sed -i '1s/^\xEF\xBB\xBF//'
 %endif
 
+%{?_with_system_zlib:rm -rv src/external/zlib}
+%{?_with_system_qtcompress:rm -rv src/external/qtcompress}
+
 %build
+# Complaining on:
+# Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+# Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+# If this causes problems, reconfigure your locale. See the locale(1) manual
+# for more information.
+export LANG="en_US.UTF-8"
+
 %cmake \
-%if_without telescopecontrol
-       -DUSE_PLUGIN_TELESCOPECONTROL=NO \
-%endif
-%ifarch %qt6_qtwebengine_arches
-       -DENABLE_TESTING=YES \
-%endif
-       -DCMAKE_INSTALL_PREFIX=/usr
+    -DUSE_BUNDLED_QTCOMPRESS=%{without system_qtcompress} \
+    -DENABLE_GPS=%{with gps} \
+    -DENABLE_MEDIA=%{with media} \
+    -DENABLE_SHOWMYSKY=%{with showmysky} \
+    -DENABLE_XLSX=%{with xlsx} \
+    -DENABLE_NLS=%{with translation} \
+    -DUSE_PLUGIN_LENSDISTORTIONESTIMATOR=%{with lensdistortion} \
+    -DUSE_PLUGIN_TELESCOPECONTROL=%{with telescopecontrol} \
+    -DUSE_PLUGIN_MOSAICCAMERA=1 \
+    -DENABLE_TESTING=%{with check} \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DQT_NO_PRIVATE_MODULE_WARNING=ON
 %cmake_build
 
 %install
 %cmake_install
 
 # See ALT 25353
-find %buildroot -name 'DejaVuSans*.ttf' -delete
-
-%find_lang %name
-%find_lang %name-skycultures
+find %buildroot -name 'DejaVuSans*.ttf' -delete -print
 
 %check
-# Floating point tests fails on %%ix86 arches
-%ifarch %qt6_qtwebengine_arches
 # FIXME: Watch the upstream issue #2591.
 # Broken test excluded from suite.
-%ctest -E testCalendars
-%endif
+export LANG=en_US.UTF-8
+xvfb-run %ctest -E testCalendars
 
-%files -f %name.lang
+%files
 %doc ChangeLog README*
 %_bindir/%name
-%_datadir/%name
 %_mandir/man1/%name.1.xz
 %_datadir/applications/*.desktop
 %_datadir/metainfo/*.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/mime/packages/stellarium.xml
 
+%files data
+%_datadir/%name
+
 %changelog
+* Thu Feb 19 2026 Grigory Ustinov <grenka@altlinux.org> 25.4-alt1
+- Built new version (Closes: #57521).
+- Improved documetation building.
+- Built with gps support.
+- Built with speech output support.
+- Enabled Telescope Control plugin.
+- Enabled Mosaic Camera plugin.
+- Detached data in separate package.
+
 * Wed Oct 15 2025 Grigory Ustinov <grenka@altlinux.org> 25.3-alt1
 - Build new version.
 
