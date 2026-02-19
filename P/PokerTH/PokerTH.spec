@@ -1,30 +1,26 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 1.1.2
-Release: alt8
+Version: 2.0
+Release: alt1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
 License: AGPL-3.0+
 Url: http://www.pokerth.net/
+Vcs: https://github.com/pokerth/pokerth
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# https://github.com/pokerth/pokerth/issues/368
-Patch1: PokerTH-upstream-boost-compat-1.patch
-Patch2: PokerTH-upstream-boost-compat-2.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: ninja-build
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libgnutls-openssl-devel
+BuildRequires: websocketpp-devel
+BuildRequires: qt6-base-devel qt6-websockets-devel qt6-svg-devel qt6-tools-devel qt6-multimedia-devel qt6-declarative-devel
 
-Patch3: %name-%version-alt-boost-1.73.0-compat.patch
-
-# https://github.com/pokerth/pokerth/pull/427
-Patch4: PokerTH-1.1.2-upstream-boost-1.85.0-compat.patch
-
-BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
-
-BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel tinyxml-devel libircclient-devel libprotobuf-devel
-BuildPreReq: protobuf-compiler
+BuildRequires: zlib-devel libprotobuf-devel
+BuildRequires: protobuf-compiler
 
 Requires: %name-data = %version-%release
 
@@ -53,35 +49,25 @@ This package contents data files for %name.
 %setup
 %patch -p1
 
-pushd src/third_party/websocketpp
-%patch1 -p1
-%patch2 -p1
-popd
-
-%patch3 -p2
-%patch4 -p1
+# be shure that bundled websocketpp is not used
+rm -r src/third_party/websocketpp/
 
 %build
 %add_optflags -fno-strict-aliasing
+%cmake -DCMAKE_BUILD_TYPE:STRING=Release -G Ninja
+%cmake_build --config Release --target all
 
-# regenerate protobuf files
-qmake-qt5 pokerth_protocol.pro
-
-qmake-qt5 \
-	QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" \
-	pokerth.pro
-%make_build
-qmake-qt5 \
-	QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags" \
-	pokerth_game.pro
-%make_build
+# Fix QT paths in desktop files
+QT_PLUGIN_PATH="$(qmake-qt6 -query QT_INSTALL_PLUGINS 2>/dev/null)"
+[ -n "$QT_PLUGIN_PATH" ] || exit 1
+sed -ri "s|QT_PLUGIN_PATH=[^[:blank:]]+|QT_PLUGIN_PATH=$QT_PLUGIN_PATH|" pokerth.desktop
+QML_IMPORT_PATH="$(qmake-qt6 -query QT_INSTALL_QML 2>/dev/null)"
+[ -n "$QML_IMPORT_PATH" ] || exit 1
+sed -ri -e "s|QT_PLUGIN_PATH=[^[:blank:]]+|QT_PLUGIN_PATH=$QT_PLUGIN_PATH|" \
+        -e "s|QML_IMPORT_PATH=[^[:blank:]]+|QML_IMPORT_PATH=$QML_IMPORT_PATH|" pokerth_qml.desktop
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
-mkdir -p %buildroot%_bindir
-install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
+%cmake_install
 
 # remove bundled font (see ALT 25328)
 rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
@@ -95,6 +81,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Thu Feb 19 2026 Mikhail Efremov <sem@altlinux.org> 2.0-alt1
+- Updated to 2.0.
+
 * Mon May 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.1.2-alt8
 - NMU: fix FTBFS with new boost.
 
