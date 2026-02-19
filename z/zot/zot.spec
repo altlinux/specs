@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.13
+Version: 2.1.14
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -65,6 +65,8 @@ fi
 
 ln -sf %_bindir/esbuild %vite_esb_dir/bin/esbuild
 ln -sf %_bindir/esbuild %vite_nm/.bin/esbuild
+sed -i "s/0.25.12/$(rpm -q --qf '%{VERSION}' esbuild)/g" \
+    %vite_nm/esbuild/lib/main.js
 
 ln -sf %_bindir/rollup  zui/node_modules/.bin/rollup
 
@@ -145,6 +147,10 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Wed Feb 18 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.14-alt1
+- 2.1.13 -> 2.1.14
+- Fix rebuild error with system esbuild version.
+
 * Wed Jan 14 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.13-alt1
 - 2.1.8 -> 2.1.13
 - Change trivy and trivy-db modules source to altlinux.space in go.mod
