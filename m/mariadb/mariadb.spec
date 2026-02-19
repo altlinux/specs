@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.8.6
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -120,6 +120,8 @@ Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-11.8.6-disable-download-fmt.patch
+
+Patch200: mariadb-11.8.6-Fix-akonadi-crash.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -431,6 +433,8 @@ tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
+
+%patch200 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1119,6 +1123,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 19 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt2
+- Fix akonadi crash (ALT #57864)
+
 * Mon Feb 09 2026 Alexei Takaseev <taf@altlinux.org> 11.8.6-alt1
 - 11.8.6 (Fixes: CVE-2026-21968)
 - Update mariadb-11.8.6-disable-download-fmt.patch
