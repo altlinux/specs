@@ -2,7 +2,7 @@
 
 Name:    QXlsx
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Excel file(*.xlsx) reader/writer library
 License: MIT
@@ -11,6 +11,9 @@ Url:     https://qtexcel.github.io/QXlsx
 Vcs:     https://github.com/QtExcel/QXlsx
 
 Source: %name-%version.tar
+
+# Search for GuiPrivate package with Qt 6.10
+Patch: 90d762625750c6b2c73f6cd96b633e9158aed72e.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -36,10 +39,12 @@ Requires: lib%name%soversion = %EVR
 
 %prep
 %setup
+%patch -p1
 
 %build
 pushd QXlsx
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake -DBUILD_SHARED_LIBS=ON \
+       -DQT_NO_PRIVATE_MODULE_WARNING=ON
 %cmake_build
 popd
 
@@ -59,6 +64,9 @@ popd
 %_cmakedir/%{name}Qt6
 
 %changelog
+* Thu Feb 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt2
+- Fixed FTBFS.
+
 * Tue Jan 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.5.0-alt1
 - 1.4.9 -> 1.5.0.
 
