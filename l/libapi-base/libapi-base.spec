@@ -3,9 +3,12 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%define api_version 5
+%define api_version 6
 %define minor_version 0
 %define gir_name ApiBase
+
+%define sname libserialize
+%define gir_sname Serialize
 
 Name: libapi-base
 Version: %api_version.%minor_version
@@ -73,6 +76,41 @@ Requires: %name%api_version-gir = %EVR
 %description gir-devel
 %summary.
 
+%package -n %sname%api_version
+Summary: Serialization/Deserialoztion tools for vala
+Group: Development/C
+
+%description -n %sname%api_version
+%summary.
+
+%package -n %sname-devel
+Summary: Development files for %sname
+Group: Development/C
+
+Requires: %sname%api_version = %EVR
+
+%description -n %sname-devel
+%summary.
+
+%package -n %sname%api_version-gir
+Summary: Typelib files for %sname
+Group: System/Libraries
+
+Requires: %sname%api_version = %EVR
+
+%description -n %sname%api_version-gir
+%summary.
+
+%package -n %sname-gir-devel
+Summary: Development gir files for %sname for various bindings
+Group: Development/Other
+BuildArch: noarch
+
+Requires: %sname%api_version-gir = %EVR
+
+%description -n %sname-gir-devel
+%summary.
+
 %prep
 %setup
 
@@ -103,7 +141,26 @@ Requires: %name%api_version-gir = %EVR
 %files gir-devel
 %_girdir/%gir_name-%api_version.gir
 
+%files -n %sname%api_version
+%_libdir/%sname-%api_version.so.*
+
+%files -n %sname-devel
+%_libdir/%sname-%api_version.so
+%_includedir/%sname-%api_version.h
+%_pkgconfigdir/%sname-%api_version.pc
+%_vapidir/%sname-%api_version.vapi
+%_vapidir/%sname-%api_version.deps
+
+%files -n %sname%api_version-gir
+%_typelibdir/%gir_sname-%api_version.typelib
+
+%files -n %sname-gir-devel
+%_girdir/%gir_sname-%api_version.gir
+
 %changelog
+* Thu Feb 19 2026 Vladimir Romanov <rirusha@altlinux.org> 6.0-alt1
+- New version: 6.0.
+
 * Mon Jan 12 2026 Vladimir Romanov <rirusha@altlinux.org> 5.0-alt1
 - New version: 5.0.
 
