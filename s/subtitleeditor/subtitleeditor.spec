@@ -5,7 +5,7 @@
 %define rdn_name org.kitone.%_name
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Graphical subtitle editor with sound waves representation
@@ -28,7 +28,9 @@ Requires: gst-libav
 Requires: iso-codes
 
 BuildRequires: gcc-c++ intltool
-BuildRequires: libgtkmm3-devel libxml++3-devel
+BuildRequires: libgtkmm3-devel
+# prefered 4.0
+BuildRequires: libxml++4-devel
 BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-good%gst_api_ver
 BuildRequires: iso-codes-devel libenchant2-devel
 
@@ -66,6 +68,9 @@ waves, which makes it easier to synchronise subtitles to voices.
 %exclude %_libdir/*.so
 
 %changelog
+* Thu Feb 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.2-alt1
+- 0.56.2
+
 * Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
 - 0.56.1
 
