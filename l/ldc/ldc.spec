@@ -10,12 +10,13 @@
 
 Name: ldc
 Version: 1.41.0
-Release: alt1
+Release: alt2
 Summary: The LLVM-based D Compiler
 License: BSD-3-Clause and BSL-1.0 and Apache-2.0
 Group: Development/Other
 Url: https://github.com/ldc-developers/ldc
 VCS: https://github.com/ldc-developers/ldc
+Requires: zlib-devel
 
 Source0: %name-%version.tar
 Source1: phobos-%version.tar
@@ -188,5 +189,8 @@ ctest --test-dir %_cmake__builddir --output-on-failure \
 %_includedir/importc.h
 
 %changelog
+* Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 1.41.0-alt2
+- added zlib-devel to main package dependencies to fix the linker error
+
 * Thu Feb 19 2026 Anton Farygin <rider@altlinux.org> 1.41.0-alt1
 - initial build for ALT Linux
