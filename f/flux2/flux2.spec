@@ -3,7 +3,7 @@
 
 Name: flux2
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -29,7 +29,7 @@ export IMPORT_PATH="%import_path"
 %golang_prepare
 for file in ./cmd/flux/manifests/*-controller.yaml
 do
-  sed -e "s|image: fluxcd|image: registry.altlinux.org/%_priority_distbranch/flux2|" -i $file
+  sed -E -i 's|image: fluxcd/([a-z-]+):v?([^"]+)|image: registry.altlinux.org/%_priority_distbranch/flux-\1:\2|' "$file"
 done
 
 %build
@@ -50,5 +50,8 @@ export IGNORE_SOURCES=1
 %doc docs/*
 
 %changelog
+* Wed Feb 18 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.3.0-alt2
+- Update controller image names to new ALT registry layout.
+
 * Thu Oct 31 2024 Alexey Kostarev <kaf@altlinux.org> 2.3.0-alt1
 - Initial build.
