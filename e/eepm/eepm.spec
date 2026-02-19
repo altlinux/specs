@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.64.50
+Version: 3.64.51
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -181,6 +181,71 @@ EOF
 # metapackage, no files
 
 %changelog
+* Thu Feb 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.64.51-alt1
+- epsonscan2: fix JSON item index after API response changed
+- epm checkpkg: fallback to digest-only check for packages from other distros
+- epm play: added FluffyChat (Matrix messenger)
+- epm play: added IPFS Desktop
+- epmqf: add missing direct_args flag to fix symlink resolution
+- epm play mssql-server: fix Astra 1.7 install (use Ubuntu 18.04 packages)
+- epm play mssql-server: fix /var/opt/mssql ownership after install
+- epm install: use AUR helpers (yay, paru, pikaur, trizen) before makepkg fallback
+- epm ei: add missing direct_args flag to fix --list option
+- epm play flameshot: fix syntax error (duplicate ;;)
+- epm full-upgrade: fix epm version check (redirect only stderr)
+- epm release-upgrade: skip altlinux-release install when branding package owns /etc/altlinux-release
+- epm repack claude-code: pass TMPDIR as CLAUDE_CODE_TMPDIR
+- epm full-upgrade: use sudocmd for stplr upgrade
+- epm repo list: add deb822 .sources format support
+- epm repo: add deb822 enable/disable/remove support for apt-dpkg
+- epm install: add --update option to run update before install
+- epm: remove epm-Install, reimplement via install --update
+- epm sf: validate compressed contents_index files before use
+- epm packages/list: separate plain list from list with descriptions
+- epm play: add qms-lib (internet speed and quality testing tool)
+- epm play qms-speedtest: rename from qms-lib, rename binary to qms-speedtest
+- epm mark: add __epm_exclude_apply/restore helpers for temporary hold
+- epm upgrade/downgrade: add --exclude option to skip packages
+- epm play: add cfspeedtest (CLI for speed.cloudflare.com)
+- epm install: update apt cache after repo restore in repo/pkg syntax
+- epm play: added opencode (eterbug #18889)
+- epm play ventoy: fix patch apply (eterbug #18888)
+- epm play: added qoder (eterbug #18885)
+- epm play: added kiro-ide (eterbug #18883)
+- epm ql: passing a $quiet flag from `epm ql` to `ercat` tool
+- epm play: added zotero (eterbug #18895)
+- epm download: fix command exit code
+- epm play: added enpass (eterbug #18899)
+- epm play: added gemini-cli (eterbug #18898)
+- epm play: added qwen-code (eterbug #18897)
+- epm repack wps-office-cn: add provides wps-office
+- epm repo mirrors --speedtest: show URL in live output
+- epm requires: fix filtering of .so deps with symbol versions
+- epm release-upgrade: fix Rocky Linux upgrade to use target version URL
+- epm release_upgrade: pass -y to dnf upgrade when running in non-interactive mode
+- epm play xray-core: add Xray-core proxy platform
+- epm repoenable/disable: handle multiple matches
+- epm play mssql-tools: fix packages for Astra 1.7, add Astra 1.8 support
+- epm repack.d/generic-post.sh: sync forbidden paths with filesystem package
+- epm-sh-backend: use temporary APT directory for repo/package install
+- epm repack: fix system path removal and add missing common paths
+- epm play sing-box: add sing-box universal proxy platform
+- epm-sh-backend: extract reusable temporary APT directory functions
+- epm install/upgrade/download/downgrade: use temporary APT directory for tasks
+- epm play: add telemt (MTProxy server for Telegram)
+- epm-sh-functions: remove_on_exit: don't check file existence
+- epm repo addkey: use mktemp -u to avoid eget conflict with existing file
+- epm play: use mktemp -u for IPFS DB download, drop eget --force
+- epm addrepo: add Copr repository support (copr/owner/project)
+- epm removerepo: add Copr repository support (copr/owner/project)
+- epm-sh-backend: add copr/owner/project/package install syntax
+- epm play openvpn: use epm repo add copr/ syntax
+- epm: fix read from /dev/tty when it is not available
+- epm-sh-backend: use apt.conf file instead of -o command-line options
+- epm-kernel_update: pass APT_CONFIG for temporary repo to update-kernel
+- epm play: added WPS Office dictionaries
+- epm repack wps-office-dicts.sh: use common provide wps-office to require
+
 * Tue Feb 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.64.50-alt1
 - epm play: fix false positive detection of apps with BASEPKGNAME
 - epm-download: fix regex to match https:// URLs
