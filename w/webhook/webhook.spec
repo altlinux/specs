@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: webhook
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 Summary: A lightweight incoming webhook server to run shell commands
 License: MIT
@@ -57,6 +57,9 @@ kill %%1
 %_unitdir/%name.service
 
 %changelog
+* Wed Feb 18 2026 Vitaly Chikunov <vt@altlinux.org> 2.8.3-alt1
+- Update to 2.8.3 (2026-02-12).
+
 * Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 2.8.2-alt1
 - Update to 2.8.2 (2024-10-25).
 
