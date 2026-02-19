@@ -1,7 +1,7 @@
 %define nameL org.kde.olib.thermalmonitor
 
 Name: plasma-applet-thermalmonitor
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: A KDE Plasmoid for showing system temperatures
@@ -42,5 +42,8 @@ BuildRequires: kf6-kwindowsystem-devel
 %_datadir/plasma/plasmoids/%nameL/*
 
 %changelog
+* Fri Feb 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.7-alt1
+- 0.2.6 -> 0.2.7
+
 * Sun Apr 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt1
 - Initial build for ALT Linux.
