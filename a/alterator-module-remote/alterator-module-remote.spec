@@ -1,6 +1,6 @@
 Name: alterator-module-remote
-Version: 0.1.3
-Release: alt3
+Version: 0.1.4
+Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
 License: %gpl2only
@@ -34,6 +34,16 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Feb 18 2026 Ivan Savin <svn17@altlinux.org> 0.1.4-alt1
+- Add signal retransmission from a remote. Signals from the
+  org.altlinux.alterator sender on the remote machine are retransmitted to the
+  local d-bus. The signal's object path and signal name fields are replaced. In
+  the object path, two more sections are added before the last one. The first
+  is the word 'connection'. The second is the connection name. The executor
+  module appends a unique bus name to the signal name, replacing periods and
+  colons with underscores. When retransmitting, the unique bus name is replaced
+  with the connection name, separated by an underscore.
+
 * Fri Jan 23 2026 Ivan Savin <svn17@altlinux.org> 0.1.3-alt3
 - Add add secret scanning (alxvmr@).
 - Add .clang-format and CODESTYLE.md.
