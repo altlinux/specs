@@ -1,6 +1,6 @@
 Name: alterator-users
-Version: 10.27
-Release: alt2
+Version: 10.28
+Release: alt1
 
 Summary: alterator module for system users administration
 License: GPL
@@ -54,6 +54,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Tue Feb 17 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 10.28-alt1
+- Fix crash when the list of users is empty.
+
 * Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 10.27-alt2
 - Add runtime dependency on shadow-change.
 - Correct previous changelog entrie.
