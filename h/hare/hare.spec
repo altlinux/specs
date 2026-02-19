@@ -1,7 +1,7 @@
 %def_with check
 
 Name: hare
-Version: 0.25.2
+Version: 0.26.0
 Release: alt1
 Epoch: 1
 
@@ -54,6 +54,9 @@ cp configs/linux.mk config.mk
 %dir %_usrsrc/%name
 
 %changelog
+* Wed Feb 18 2026 Ulysses Apokin <ulysses@altlinux.org> 1:0.26.0-alt1
+- New version.
+
 * Mon Jan 26 2026 Ulysses Apokin <ulysses@altlinux.org> 1:0.25.2-alt1
 - New version.
 
