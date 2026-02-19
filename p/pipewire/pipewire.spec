@@ -6,7 +6,7 @@
 %endif
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.4
+%define ver_major 1.6
 %define ms_ver 0.4.2
 %define api_ver 0.3
 %define spa_api_ver 0.2
@@ -14,7 +14,6 @@
 %define libcamera_ver 0.2.0
 
 %def_enable gstreamer
-%def_enable systemd
 %def_enable jack_devel
 %define jackit_ver 1:1.9.22-alt1
 %define jack_ver 1.9.17
@@ -28,6 +27,9 @@
 %def_enable lv2
 %def_enable libcanberra
 %def_enable lc3
+%def_enable ffmpeg
+# https://bugzilla.altlinux.org/57618
+%def_disable onnxruntime
 # bluez5-backend-native-mm
 # https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/1379
 %def_enable mm
@@ -49,7 +51,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: Media Sharing Server
@@ -82,11 +84,11 @@ BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson >= %meson_ver libgio-devel libudev-devel libdbus-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
-BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel libopus-devel
+BuildRequires: pkgconfig(spandsp)
 %{?_enable_lc3:BuildRequires: liblc3-devel}
 %{?_enable_mm:BuildRequires: pkgconfig(ModemManager) >= %mm_ver}
 # LC3plus BT codec
@@ -108,7 +110,7 @@ BuildRequires: libebur128-devel
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 # fftw3f (filter-chain convolver)
 BuildRequires: pkgconfig(fftw3f)
-%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+BuildRequires: pkgconfig(systemd)
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_xfixes:BuildRequires: pkgconfig(xfixes)}
@@ -118,9 +120,11 @@ BuildRequires: pkgconfig(fftw3f)
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing-2)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
-
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_ffmpeg:BuildRequires: pkgconfig(libavcodec) pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavfilter) pkgconfig(libavutil) pkgconfig(libswscale)}
+%{?_enable_onnxruntime:BuildRequires: pkgconfig(libonnxruntime)}
 %{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) pkgconfig(libapparmor)}
 %{?_enable_docs:BuildRequires: doxygen graphviz /usr/bin/dot fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: doxygen}
@@ -231,9 +235,10 @@ export LIB=%_lib
 	%{subst_enable_meson_feature libcanberra libcanberra} \
 	%{subst_enable_meson_feature lc3 bluez5-codec-lc3} \
 	%{subst_enable_meson_feature mm bluez5-backend-native-mm} \
-	%{subst_enable_meson_feature systemd systemd} \
 	%{subst_enable_meson_feature selinux selinux} \
 	%{subst_enable_meson_feature snap snap} \
+	%{subst_enable_meson_feature ffmpeg ffmpeg} \
+	%{subst_enable_meson_feature onnxruntime onnxruntime} \
 	%{subst_enable_meson_feature systemd_system_service systemd-system-service} \
 	%{subst_enable_meson_feature examples examples} \
 	%{?_enable_media_session:-Dsession-managers='media-session'} \
@@ -305,6 +310,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 }
 %dir %_datadir/%name/filter-chain
 %_datadir/%name/filter-chain/demonic.conf
+%_datadir/%name/filter-chain/sink-dolby-pro-logic-ii.conf
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
 %_datadir/%name/filter-chain/sink-eq6.conf
 %_datadir/%name/filter-chain/sink-make-LFE.conf
@@ -322,8 +328,6 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 %_udevrulesdir/90-%name-alsa.rules
 %_datadir/alsa-card-profile/
-
-%if_enabled systemd
 %_userunitdir/%name.service
 %_userunitdir/%name.socket
 %_userunitdir/%name-pulse.service
@@ -337,7 +341,6 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_unitdir/%name-pulse.socket
 %_unitdir/%name-manager.socket
 }
-%endif
 
 %_datadir/alsa/alsa.conf.d/50-pipewire.conf
 %_datadir/alsa/alsa.conf.d/99-pipewire-default.conf
@@ -386,6 +389,8 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/pw-link
 %_bindir/pw-loopback
 %_bindir/pw-metadata
+%_bindir/pw-midi2play
+%_bindir/pw-midi2record
 %_bindir/pw-mididump
 %_bindir/pw-midiplay
 %_bindir/pw-midirecord
@@ -394,6 +399,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/pw-profiler
 %_bindir/pw-record
 %_bindir/pw-reserve
+%_bindir/pw-sysex
 %_bindir/pw-top
 %_bindir/pw-v4l2
 %_bindir/spa-acp-tool
@@ -401,6 +407,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/spa-json-dump
 %_bindir/spa-monitor
 %_bindir/spa-resample
+
 %if_enabled man
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
@@ -441,6 +448,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_pkgconfigdir/jackserver.pc
 
 %changelog
+* Thu Feb 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Jan 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.10-alt1
 - 1.4.10
 

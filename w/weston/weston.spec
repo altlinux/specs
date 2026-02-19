@@ -1,4 +1,4 @@
-%define ver_major 14.0
+%define ver_major 15.0
 %define api_ver_major 15
 %define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
@@ -117,7 +117,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.92
+Version: %ver_major.0
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -323,6 +323,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Thu Feb 19 2026 Yuri N. Sedunov <aris@altlinux.org> 15.0.0-alt1
+- 15.0.0
+
 * Tue Jan 13 2026 Yuri N. Sedunov <aris@altlinux.org> 14.0.92-alt1
 - 14.0.92
 
