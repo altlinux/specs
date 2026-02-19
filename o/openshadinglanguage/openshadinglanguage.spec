@@ -11,10 +11,10 @@
 %ifarch %e2k
 %define llvm_ver 13.0
 %else
-%define llvm_ver 20.1
+%define llvm_ver 21.1
 %endif
 
-%ifarch x86_64
+%ifarch x86_64 aarch64
 %def_with optix
 %filter_from_requires /libcudart\.so\.12/d
 %else
@@ -22,7 +22,7 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.14.7.0
+Version: 1.14.8.0
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -228,6 +228,13 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Thu Feb 19 2026 L.A. Kostis <lakostis@altlinux.ru> 1.14.8.0-alt0.1
+- 1.14.8.0.
+- compile w/ llvm21.1.
+
+* Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.7.0-alt0.2
+- aarch64: build with optix.
+
 * Wed Aug 06 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.7.0-alt0.1
 - 1.14.7.0.
 - x86_64: build with optix (fixed by upstream).

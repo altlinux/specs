@@ -1,6 +1,6 @@
 Name: optix
 Version: 9.0.0
-Release: alt1
+Release: alt2
 License: BSD-3-Clause AND NVIDIA-390
 Summary: NVIDIA OptiX 9.0 Programming API headers
 Group: Development/Other
@@ -12,7 +12,7 @@ Source: NVIDIA-OptiX-SDK-9.0.0-linux64-x86_64.tar
 BuildRequires: nvidia-cuda-devel
 
 # as we don't have cuda-toolkit on other arches
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 DirectX Raytracing (DXR),1 Vulkan 2 (through the VK_NV_ray_tracing extension) and the
@@ -51,5 +51,8 @@ install -pm644 -v -D include/internal/*.h %buildroot%_includedir/optix/internal
 %_includedir/*
 
 %changelog
+* Tue Nov 25 2025 L.A. Kostis <lakostis@altlinux.ru> 9.0.0-alt2
+- Enable for aarch64.
+
 * Sun Jul 20 2025 L.A. Kostis <lakostis@altlinux.ru> 9.0.0-alt1
 - Initial build for ALTLinux.
