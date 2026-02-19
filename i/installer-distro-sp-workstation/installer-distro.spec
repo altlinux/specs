@@ -1,7 +1,7 @@
 %define distro sp-workstation
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt3
+Release: alt4
 
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -45,7 +45,6 @@ Requires: installer-feature-network-settings-copy
 Requires: %name-common = %EVR
 Requires: x-cursor-theme-jimmac
 Requires: installer-feature-integalert-stage2
-Requires: installer-feature-gnome-keymap-stage2
 
 %description stage2
 %distro installer stage2 files.
@@ -90,6 +89,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Thu Feb 19 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt4
+- stage2: remove dependency on installer-feature-gnome-keymap-stage2.
+
 * Fri Jan 02 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt3
 - stage2: add dependency on installer-feature-gnome-keymap-stage2.
 
