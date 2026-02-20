@@ -5,7 +5,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -87,6 +87,9 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Fri Feb 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.0.7-alt1
+- Add new installer-common-base-stage2 to the squashfs packages.
+
 * Mon Oct 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.0.6-alt1
 - CLI: Disable debug output.
 - Wait until all the queued udev events are processed for the dev in use only.
