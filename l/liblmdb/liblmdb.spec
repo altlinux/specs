@@ -2,7 +2,7 @@
 %def_with check
 
 Name: liblmdb
-Version: 0.9.33
+Version: 0.9.35
 Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
@@ -83,6 +83,13 @@ make -C %name test
 %_man1dir/mdb_*
 
 %changelog
+* Wed Feb 18 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.9.35-alt1
+- Updated to 0.9.35.
+- Major fixes from upstream (basically from 0.9.34):
+  + fix race condition freeing spilled pages at end of transaction (ITS#9564)
+  + fix memleak in mdb_txn_begin for nested txns (ITS#10342)
+  + fix mdb_env_copy2 with values > (2GB-16) (ITS#10346)
+
 * Fri Oct 25 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.9.33-alt1
 - Updated to 0.9.33.
 - Major fixes from upstream:
