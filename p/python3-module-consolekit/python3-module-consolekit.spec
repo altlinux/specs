@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.0
+Version: 1.13.0
 Release: alt1
 
 Summary: Additional utilities for click
@@ -19,7 +19,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -52,11 +53,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
+- 1.9.0 -> 1.13.0.
+
 * Fri Jun 06 2025 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.8.1 -> 1.9.0.
 
