@@ -2,8 +2,8 @@
 %define abiversion 7
 
 Name: giflib
-Version: 5.2.2
-Release: alt2
+Version: 6.1.1
+Release: alt1
 Summary: A Library for Working with GIF Images.
 License: MIT
 Group: System/Libraries
@@ -11,7 +11,8 @@ Url: https://giflib.sourceforge.net/
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: alt-Clean-up-memory-better-at-end-of-run-CVE-2021-40633.patch
+#CVE was fixed
+#Patch1: alt-Clean-up-memory-better-at-end-of-run-CVE-2021-40633.patch
 
 BuildRequires: libtool
 BuildRequires: /usr/bin/convert 
@@ -65,10 +66,12 @@ done
 rm -f %buildroot%_libdir/libgif.a
 
 %files -n %name-devel
-%doc README
+%doc *.adoc TODO NEWS COPYING ChangeLog
 %_bindir/*
 %_libdir/*.so
+%_docdir/%name/
 %_man1dir/*.1*
+%_man7dir/*.7*
 %_includedir/gif_lib.h
 
 
@@ -77,6 +80,9 @@ rm -f %buildroot%_libdir/libgif.a
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 6.1.1-alt1
+- 5.2.2 -> 6.1.1
+
 * Fri Jul 25 2025 Pavel Shilov <zerospirit@altlinux.org> 5.2.2-alt2
 - Add explicit Conflicts with packages to resolve file and symlink overlaps.
 
