@@ -15,7 +15,7 @@
 
 Name: %rname
 Version: 6.5.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -133,6 +133,11 @@ for d in runners/*/*.json ; do
     sed -i '/EnabledByDefault/s|true|false|' $d
 done
 
+# disable applets by default
+for a in weather; do
+    sed -i '/EnabledByDefault/s|true|false|' $d applets/$a/metadata.json
+done
+
 %build
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
@@ -199,6 +204,9 @@ touch touch-%_arch
 
 
 %changelog
+* Thu Feb 19 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt2
+- disable weather applet by default
+
 * Thu Jan 15 2026 Sergey V Turchin <zerg@altlinux.org> 6.5.5-alt1
 - new version
 
