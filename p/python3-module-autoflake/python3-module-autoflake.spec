@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name autoflake
+%define mod_name autoflake
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
@@ -57,12 +58,15 @@ find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 
 %files
 %doc LICENSE README.md
-%_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name.py
-%python3_sitelibdir/__pycache__/%pypi_name.*.pyc
+%_bindir/autoflake
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.2-alt1
+- Updated to 2.3.2.
+
 * Sat Mar 30 2024 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
 - Updated to 2.3.1.
 
@@ -77,4 +81,3 @@ find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 
 * Thu Aug 03 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Built for ALT Sisyphus.
-
