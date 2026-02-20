@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.18.0
+Version: 1.26.0
 Release: alt1
 Summary: The official Python SDK for Model Context Protocol servers and clients.
 License: MIT
@@ -93,6 +93,9 @@ sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 1.26.0-alt1
+- 1.18.0 -> 1.26.0
+
 * Fri Oct 24 2025 Pavel Shilov <zerospirit@altlinux.org> 1.18.0-alt1
 - 1.12.4 -> 1.18.0
 

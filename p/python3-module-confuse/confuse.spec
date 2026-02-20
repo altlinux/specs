@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.2.0
 Release: alt1
 Summary: Painless YAML configuration
 License: MIT
@@ -22,6 +22,8 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3-module-flit-core
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-poetry
+BuildRequires: python3-module-typing_extensions
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -51,6 +53,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt1
+- 2.0.1 -> 2.2.0
+
 * Tue Aug 26 2025 Pavel Shilov <zerospirit@altlinux.org> 2.0.1-alt1
 - Initial build for Sisyphus.
 
