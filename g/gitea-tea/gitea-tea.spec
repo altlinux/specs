@@ -2,7 +2,7 @@
 %global import_path code.gitea.io/tea
 
 Name: gitea-tea
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 Summary: command line tool to interact with Gitea
 
@@ -15,7 +15,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.4
+BuildRequires: rpm-build-golang golang >= 1.25
 
 %description
 tea is a productivity helper for Gitea.
@@ -61,6 +61,9 @@ mkdir -p %buildroot%_datadir/{bash-completion/completions,fish/vendor_completion
 %_datadir/zsh/site-functions/_tea
 
 %changelog
+* Fri Feb 20 2026 Alexey Shabalin <shaba@altlinux.org> 0.12.0-alt1
+- updated from 0.11.1 to 0.12.0
+
 * Thu Jan 08 2026 Alexey Shabalin <shaba@altlinux.org> 0.11.1-alt1
 - New version 0.11.1.
 
