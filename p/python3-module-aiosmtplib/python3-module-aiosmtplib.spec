@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: asyncio SMTP client
@@ -56,5 +56,8 @@ It is an async version of the smtplib module, with similar APIs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 5.1.0-alt1
+- Updated to 5.1.0.
+
 * Tue Nov 11 2025 Anton Zhukharev <ancieg@altlinux.org> 5.0.0-alt1
 - Packaged for ALT Sisyphus.
