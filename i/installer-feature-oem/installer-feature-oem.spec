@@ -1,5 +1,5 @@
 Name: installer-feature-oem
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: OEM mode support for installer
@@ -47,6 +47,9 @@ Requires: %name-stage2 = %EVR
 %_datadir/install2/postinstall.d/40-oem-wayland.sh
 
 %changelog
+* Fri Feb 20 2026 Dmitry Terekhin <jqt4@altlinux.org> 0.4-alt1
+- Change editions base lists
+
 * Thu Dec 18 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - Add subpackage installer-feature-oem-wayland-only-stage2.
 
