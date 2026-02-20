@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.1.4
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Source1: %fallback_session_filename
 
 Patch1: add-russian-translations-to-desktop-files.patch
+Patch2: remove-numlock-indication.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
@@ -55,6 +56,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build \
@@ -107,6 +109,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Fri Feb 20 2026 Anton Golubev <golubevan@altlinux.org> 6.1.4-alt2
+- remove NumLock indication (Closes: 57905)
+
 * Tue Feb 17 2026 Anton Golubev <golubevan@altlinux.org> 6.1.4-alt1
 - implement the capsLock and numLock properties of the KWin keyboard backend
   (Closes: 57886)
