@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.16
+Version: 7.17
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri Feb 20 2026 Vitaly Lipatov <lav@altlinux.ru> 7.17-alt1
+- eget: support HTTP/2 in URL accessibility checks
+- eget: add --get-filesize option and url_get_size() function
+- eget: add --speedtest option for measuring download speed
+- eget: lazy backend detection, only check needed downloaders
+
 * Fri Jan 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.16-alt1
 - eget: add axel support
 - eget: add EGET_WGET_OPTIONS, EGET_CURL_OPTIONS, EGET_ARIA2_OPTIONS EGET_AXEL_OPTIONS
