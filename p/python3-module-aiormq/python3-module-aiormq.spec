@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiormq
-%define mod_name %pypi_name
+%define mod_name aiormq
 
 # tests require running amql broker
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.8.1
+Version: 6.9.2
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -55,11 +55,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc COPYING README.rst
+%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 6.9.2-alt1
+- Updated to 6.9.2.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 6.8.1-alt1
 - Updated to 6.8.1.
 
@@ -71,4 +74,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 6.7.4-alt1
 - Initial build for ALT Sisyphus.
-
