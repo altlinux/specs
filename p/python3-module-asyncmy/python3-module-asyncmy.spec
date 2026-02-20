@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name asyncmy
+%define mod_name asyncmy
 
 # tests require running mysqld, so they are disabled
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.2.10
+Version: 0.2.11
 Release: alt1
 
 Summary: A fast asyncio MySQL/MariaDB driver with replication protocol support
@@ -52,10 +53,13 @@ and aiomysql but rewrite core protocol with cython to speedup.
 
 %files
 %doc README.md LICENSE CHANGELOG.md
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.11-alt1
+- Updated to 0.2.11.
+
 * Tue Feb 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.2.10-alt1
 - Updated to 0.2.10.
 
