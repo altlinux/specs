@@ -2,7 +2,7 @@
 
 Name: ananicy-cpp
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Rewrite of ananicy in c++ for lower cpu and memory usage
 
@@ -57,6 +57,9 @@ Requires: ananicy-rules
 %_unitdir/ananicy-cpp.service
 
 %changelog
+* Thu Feb 12 2026 Ilya Sorochan <k0tran@altlinux.org> 1.1.1-alt2
+- add pregenerated vmlinux.h for loongarch and riscv (fixes FTBFS)
+
 * Wed Sep 10 2025 Boris Yumankulov <boria138@altlinux.org> 1.1.1-alt1
 - initial build for ALT Sisyphus
 
